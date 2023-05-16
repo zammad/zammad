@@ -1585,7 +1585,8 @@ msgstr "Are you sure?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
@@ -4763,6 +4764,12 @@ msgstr "Dezactivează"
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Disable Notifications"
 msgstr "Oprește notificările"
+
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"

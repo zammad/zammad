@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-04 09:06+0000\n"
-"Last-Translator: Rolf Schmidt <rolf@schmidt.ink>\n"
+"PO-Revision-Date: 2023-05-16 11:46+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/es/>\n"
 "Language: es-es\n"
@@ -117,19 +117,6 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_info/en.md.erb
-#, fuzzy
-#| msgid ""
-#| "# #{ticket.title}\n"
-#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-#| "Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
-#| "updated_at}_\n"
-#| "* Group: #{ticket.group.name}\n"
-#| "* Owner: #{ticket.owner.fullname}\n"
-#| "* State: #{t(ticket.state.name)}\n"
-#| "\n"
-#| "<% if @objects[:article] %>\n"
-#| "#{article.body_as_text}\n"
-#| "<% end %>\n"
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -143,9 +130,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Creado por #{current_user.longname} el #{ticket."
-"updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Último cambio el #{ticket.updated_at}_\n"
 "* Grupo: #{ticket.group.name}\n"
 "* Propietario: #{ticket.owner.fullname}\n"
 "* Estado: #{t(ticket.state.name)}\n"
@@ -645,10 +631,8 @@ msgid "%{model} can have full or granular access to group"
 msgstr "%{model} puede acceder parcial o totalmente al grupo"
 
 #: app/models/object_manager/attribute.rb
-#, fuzzy
-#| msgid "Queue already exists!"
 msgid "%{name} already exists"
-msgstr "¡La cola ya existe!"
+msgstr "La cola %{name} ya existe"
 
 #: app/models/object_manager/attribute.rb
 msgid "%{name} is a reserved word"
@@ -897,6 +881,8 @@ msgid ""
 "A webhook can be fired by triggers and schedulers, don't forget to define "
 "them!"
 msgstr ""
+"Un webhook puede dispararse con disparadores y programas, ¡no olvide "
+"definirlos!"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -1019,10 +1005,8 @@ msgid "Action"
 msgstr "Acción"
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Action execution"
-msgstr "¡Acción masiva ejecutada!"
+msgstr "Ejecución de acción"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
@@ -1035,10 +1019,8 @@ msgid "Activate the recursive processing of ticket triggers."
 msgstr "Active el procesamiento recursivo de disparadores de tickets."
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "Activated by"
-msgstr "Actividad"
+msgstr "Activado por"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -1180,10 +1162,8 @@ msgid "Add alarm to pending reminder and escalated tickets."
 msgstr "Añadir alarma para recordatorio de tickets pendientes y escalados."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Add bullet list"
 msgid "Add all values"
-msgstr "Añadir lista de asuntos"
+msgstr "Añadir todos los valores"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
@@ -1225,7 +1205,7 @@ msgstr "Añadir encabezado de segundo nivel"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Add selected values"
-msgstr ""
+msgstr "Añadir los valores elegidos"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -1242,7 +1222,7 @@ msgstr "Añadir encabezado de tercer nivel"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Add this class to a button on your page that should open the chat."
-msgstr "Añadir esta clase a un botón en la página que debería abrir el chat."
+msgstr "Añadir esta clase al botón de tu página de abrir un chat."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Additional Channels"
@@ -1284,27 +1264,6 @@ msgstr "Entrar con clave de Admin"
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Administration login to #{config.product_name}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>We received a request for an administration login for your #{config."
-#| "product_name} account <b>#{user.login}</b>.</div>\n"
-#| "<br>\n"
-#| "<div>Please, click on the link below (or copy and paste the URL into your "
-#| "browser) to proceed:</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-#| "name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</"
-#| "a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can log in.</div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to log in, please ignore this message.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Administration login to #{config.product_name}\n"
 "\n"
@@ -1328,23 +1287,23 @@ msgid ""
 msgstr ""
 "Inicio de sesión como administrador en #{config.product_name}\n"
 "\n"
-"<div>Buenos días, #{user.firstname}:</div>\n"
+"<div>Hola, #{user.firstname}:</div>\n"
 "<br>\n"
-"<div>Hemos recibido una solicitud de inicio de sesión para #{config."
-"product_name} en la cuenta <b>#{user.login}</b>.</div>\n"
+"<div>Hemos recibido una solicitud de inicio de sesión como administrador en "
+"#{config.product_name}, en la cuenta <b>#{user.login}</b>.</div>\n"
 "<br>\n"
-"<div>Pulse sobre el enlace a continuación (o copie la URL en un navegador) "
-"para continuar:</div>\n"
+"<div>Pulse sobre el enlace a continuación (o copie y pegue la URL en un "
+"navegador) para continuar:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
-"div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"token}</a></div>\n"
 "<br>\n"
 "<div>Este enlace abre una página donde podrá iniciar sesión.</div>\n"
 "<br>\n"
 "<div>Si no desea iniciar sesión puede ignorar este mensaje.</div>\n"
 "<br>\n"
-"<div>El equipo de #{config.product_name} </div>\n"
+"<div>El equipo de #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
@@ -1398,7 +1357,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/organization.coffee
 msgid "Agent and customer users can be grouped into organizations."
-msgstr ""
+msgstr "Los usuarios agentes y de clientes se pueden agrupar en organizaciones."
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -1436,10 +1395,8 @@ msgstr ""
 "aquí."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "All Tickets"
 msgid "All tickets"
-msgstr "All Tickets"
+msgstr "Todos los casos"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1496,7 +1453,7 @@ msgstr "Alternativamente, puede usar la API de Zammad para importar datos."
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
-msgstr ""
+msgstr "Siempre"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1607,7 +1564,7 @@ msgstr "Version de aplicacion"
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "App could not be verified."
-msgstr "La aplicación no pudo ser verificada."
+msgstr "Aplicación no verificada."
 
 #: db/seeds/settings.rb
 msgid "App credentials for Facebook."
@@ -1650,7 +1607,7 @@ msgstr "Aplicar borrador compartido"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Apply current defaults to all agents"
-msgstr ""
+msgstr "Aplicar los valores por defecto actuales a todos los agentes"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1681,10 +1638,8 @@ msgid "Are you sure to remove this article?"
 msgstr "¿Está seguro de que desea eliminar este artículo?"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Do you really want to delete \"%s\"?"
 msgid "Are you sure you want to delete \"%s\"?"
-msgstr "¿Confirma que desea eliminar el objeto \"%s\"?"
+msgstr "¿Seguro que desea eliminar \"%s\"?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
@@ -1716,14 +1671,19 @@ msgstr "¿Estás seguro?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
 msgstr ""
+"¿Seguro? Las notificaciones por defecto se aplicarán a todos los agentes "
+"activos. Este proceso puede tardar."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
 "Are you sure? The agent default notifications settings will be reset to the "
 "system default."
 msgstr ""
+"¿Seguro? Las notificaciones por defecto del agente se devolverán a los "
+"valores por defecto del sistema."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
@@ -1742,10 +1702,9 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "¿Seguro? Tienes cambios sin guardar que se perderán."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
-#, fuzzy
-#| msgid "Are you sure? You have changes that will get lost."
 msgid "Are you sure? Your notifications settings will be reset to default."
-msgstr "¿Seguro? Tiene cambios que se perderán."
+msgstr ""
+"¿Seguro? Los ajustes de notificaciones volverán a los valores por defecto."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -1833,16 +1792,16 @@ msgid ""
 "Assignment timeout in minutes if assigned agent is not working on it. Ticket "
 "will be shown as unassigend."
 msgstr ""
-"Tiempo de espera de asignación de tarea en minutos, si el agente no está "
-"trabajando en ella. El ticket se mostrará como \"no asignado\"."
+"Tiempo de espera de la tarea en minutos, si el agente asignado no está "
+"trabajando en ella. El caso pasará a mostrarse \"no asignado\"."
 
 #: app/models/user.rb
 msgid ""
 "At least one identifier (firstname, lastname, phone or email) for user is "
 "required."
 msgstr ""
-"Al menos un identificador (nombre, apellido, teléfono o email) para el "
-"usuario es obligatorio."
+"Se necesita al menos un identificador (nombre, apellido, teléfono o correo "
+"electrónico) para el usuario."
 
 #: app/models/postmaster_filter.rb
 msgid "At least one match rule is required, but none was provided."
@@ -1936,10 +1895,8 @@ msgstr "Atributos"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Attributes"
 msgid "Attributes to compare"
-msgstr "Atributos"
+msgstr "Atributos para comparar"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2230,7 +2187,7 @@ msgstr "¡Acción masiva ejecutada!"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action failed"
-msgstr "Acción masiva fallida"
+msgstr "La acción masiva ha fallado"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Bulk action stopped by error(s): %s!"
@@ -2534,10 +2491,8 @@ msgid "Change customer"
 msgstr "Cambiar cliente"
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Change order"
 msgid "Change date"
-msgstr "Modificar ordenación"
+msgstr "Cambiar fecha"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
@@ -2710,10 +2665,8 @@ msgid "Child"
 msgstr "Hijo"
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Close tab"
 msgid "Choose date"
-msgstr "Cerrar pestaña"
+msgstr "Elegir fecha"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
@@ -2988,10 +2941,8 @@ msgid "Configure Basic Settings"
 msgstr "Configuración Ajustes Básicos"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
-#, fuzzy
-#| msgid "Config"
 msgid "Confirm"
-msgstr "Configuración"
+msgstr "Confirmación"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
@@ -3004,21 +2955,6 @@ msgstr "Confirmar fusión"
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Confirm your #{config.product_name} account, #{user.firstname} #{user."
-#| "lastname}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>Confirm your email address to complete your #{config.product_name} "
-#| "account. It's easy, just click the link below.</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-#| "name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
-#| "a></div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Confirm your #{config.product_name} account, #{user.firstname} #{user."
 "lastname}\n"
@@ -3037,17 +2973,17 @@ msgstr ""
 "Confirme la cuenta de #{config.product_name}, #{user.firstname} #{user."
 "lastname}\n"
 "\n"
-"<div>Buenos días, #{user.firstname}:</div>\n"
+"<div>Hola, #{user.firstname}:</div>\n"
 "<br>\n"
-"<div>Confirme la dirección de correo electrónico para completar su registro "
-"en #{config.product_name}. Es sencillo, simplemente haga clic en el enlace "
+"<div>Confirme la dirección de correo electrónico para completar su cuenta de "
+"#{config.product_name}. Es sencillo, no hay más que pinchar en el enlace "
 "siguiente:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
-"a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
+"token}</a></div>\n"
 "<br>\n"
-"<div>El equipo de #{config.product_name} </div>\n"
+"<div>El equipo de #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
@@ -3548,10 +3484,8 @@ msgid "Custom"
 msgstr "Personalizada"
 
 #: app/assets/javascripts/app/models/webhook.coffee
-#, fuzzy
-#| msgid "Example Payload"
 msgid "Custom Payload"
-msgstr "Carga útil de ejemplo"
+msgstr "Contenido personalizado"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -3724,20 +3658,16 @@ msgid "Default Behavior"
 msgstr "Comportamiento por defecto"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
-#, fuzzy
-#| msgid "Disable Notifications"
 msgid "Default Notifications"
-msgstr "Desactivar Notificaciones"
+msgstr "Notificaciones por defecto"
 
 #: db/seeds/settings.rb
 msgid "Default Screen"
 msgstr "Pantalla por defecto"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Default Ticket Agent Notifications"
-msgstr "Bloquear notificaciones"
+msgstr "Notificaciones de agente por defecto para casos"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
@@ -3814,10 +3744,8 @@ msgstr ""
 "relevantes."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the default visibility for new notes."
 msgid "Define the default agent notifications for new users."
-msgstr "Visibilidad por defecto para nuevas notas."
+msgstr "Define las notificaciones de agente por defecto para usuarios nuevos."
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
@@ -4468,12 +4396,8 @@ msgstr ""
 "pestañas y la barra de título del navegador web."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the permission level used for lookups."
-msgstr ""
-"Define el back-end para las búsquedas de imágenes de usuarios y "
-"organizaciones."
+msgstr "Define el nivel de permiso empleado para búsquedas."
 
 #: db/seeds/settings.rb
 msgid "Defines the port of the websocket server."
@@ -4550,12 +4474,8 @@ msgstr ""
 "Define el comportamiento de la pestaña después de una acción del ticket."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the ticket states used for lookups."
-msgstr ""
-"Define el back-end para las búsquedas de imágenes de usuarios y "
-"organizaciones."
+msgstr "Define los estados de casos empleados para las búsquedas."
 
 #: db/seeds/settings.rb
 msgid "Defines the timeframe during which a self-created note can be deleted."
@@ -4592,10 +4512,9 @@ msgstr ""
 "(«caller ID») y los almacena para búsquedas de CTI."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the transaction backend to execute triggers."
 msgid "Defines the transaction backend which executes time based triggers."
-msgstr "Define el back-end de transacciones para ejecutar disparadores."
+msgstr ""
+"Define el back-end de transacciones para ejecutar disparadores de tiempo."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4617,11 +4536,15 @@ msgstr ""
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
+"Define el mensaje de aviso que se muestra cuando se presenta un caso que "
+"coincide."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
+"Define el título del aviso que se muestra cuando se presenta un caso que "
+"coincide."
 
 #: db/seeds/settings.rb
 msgid "Defines transaction backend."
@@ -4631,16 +4554,18 @@ msgstr "Define el back-end de transacciones."
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
-msgstr ""
+msgstr "Define si los casos que coinciden se muestran, en casos que ya existen."
 
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
-msgstr ""
+msgstr "Define qué atributos del caso se verifican antes de crear un caso."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
+"Define cuáles de los roles de usuario recibirán un aviso si hay casos que "
+"coincidan."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4831,10 +4756,8 @@ msgstr "Identificación de llamada o cola del destinatario"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enable Ticket creation"
 msgid "Detect Duplicate Ticket Creation"
-msgstr "Habilitar creación de Ticket"
+msgstr "Detectar creación de casos duplicados"
 
 #: db/seeds/settings.rb
 msgid "Developer System"
@@ -4894,6 +4817,15 @@ msgstr "Desactivar"
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Disable Notifications"
 msgstr "Desactivar Notificaciones"
+
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
+"Deshabilitar las notificaciones de todos los grupos deshabilita el límite. "
+"En lugar de esto, para deshabilitar notificaciones, utilice los ajustes de "
+"arriba."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -5062,10 +4994,8 @@ msgstr ""
 "segundos."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
-#, fuzzy
-#| msgid "Application"
 msgid "Duplicate Detection"
-msgstr "Aplicación"
+msgstr "Detección de duplicados"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
@@ -5416,14 +5346,16 @@ msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
+"Habilita un aviso a los usuarios durante la creación del caso si hay un caso "
+"que ya existe con los mismos atributos."
 
 #: db/seeds/settings.rb
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction."
 msgstr ""
-"Habilita un botón para la autenticación a través de %s. El botón "
-"redireccionará a /auth/sso al ser pulsado."
+"Habilita un botón para la autenticación por %s. El botón redireccionará a /"
+"auth/sso al ser pulsado."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Enables console logging."
@@ -6566,16 +6498,12 @@ msgid "HTML Sanitizer Processing Timeout"
 msgstr "Tiempo de espera máximo del limpiador de HTML"
 
 #: app/assets/javascripts/app/models/webhook.coffee
-#, fuzzy
-#| msgid "Basic Authentication"
 msgid "HTTP Basic Authentication Password"
-msgstr "Autenticación básica"
+msgstr "Clave de autenticación básica HTTP"
 
 #: app/assets/javascripts/app/models/webhook.coffee
-#, fuzzy
-#| msgid "Basic Authentication"
 msgid "HTTP Basic Authentication Username"
-msgstr "Autenticación básica"
+msgstr "Usuario de autenticación básica HTTP"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
@@ -6594,10 +6522,8 @@ msgid "Has processed"
 msgstr "Ha procesado"
 
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
-#, fuzzy
-#| msgid "%s subdomain"
 msgid "Has submenu"
-msgstr "%s subdominio"
+msgstr "Tiene submenú"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Has ticket open in tabs, but is not actively looking at the ticket."
@@ -6663,6 +6589,8 @@ msgid ""
 "Here you can create new tickets, customers and organizations (depending on "
 "your configured permissions)."
 msgstr ""
+"Aquí se pueden crear nuevos casos, clientes y organizaciones (dependiendo de "
+"los permisos configurados)."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid "Here you can create one."
@@ -7408,24 +7336,6 @@ msgstr "Invitación Enviada!"
 #. This is the template file app/views/mailer/user_invite/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_invite/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Invitation to #{config.product_name} at #{config.fqdn}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to "
-#| "#{config.product_name} - our customer support platform.</div>\n"
-#| "<br>\n"
-#| "<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.name}\">here</a> and set your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>Enjoy,</div>\n"
-#| "<br>\n"
-#| "<div>#{current_user.firstname} #{current_user.lastname}</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Invitation to #{config.product_name} at #{config.fqdn}\n"
 "\n"
@@ -7444,16 +7354,16 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"Invitación a #{config.product_name} a través de #{config.fqdn}\n"
+"Invitación a #{config.product_name} en #{config.fqdn}\n"
 "\n"
-"<div>Buenos días, #{user.firstname}:</div>\n"
+"<div>Hola, #{user.firstname}:</div>\n"
 "<br>\n"
 "<div>Mi nombre es (#{current_user.firstname} #{current_user.lastname}) y me "
-"gustaría invitarle a #{config.product_name}, nuestra plataforma de soporte.</"
-"div>\n"
+"gustaría invitarle a #{config.product_name}, nuestra plataforma de servicio "
+"al cliente.</div>\n"
 "<br>\n"
-"<div>Pulse en <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.name}\">este enlace</a> y establezca su "
+"<div>Pulse en <a href=\"#{config.http_type}://#{config.fqdn}/#"
+"password_reset_verify/#{token.token}\">este enlace</a> y establezca su "
 "contraseña.</div>\n"
 "<br>\n"
 "<div>Gracias,</div>\n"
@@ -8065,20 +7975,16 @@ msgstr "Coincidir con ninguno (NOT)"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Match all of the following"
 msgid "Match tickets in following states"
-msgstr "Coincide con todos los siguientes"
+msgstr "Casos en los estados siguientes"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
 msgstr "Material"
 
 #: app/models/webhook/pre_defined/mattermost.rb
-#, fuzzy
-#| msgid "Host Notification"
 msgid "Mattermost Notifications"
-msgstr "Notificación de host"
+msgstr "Notificaciones por Mattermost"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Mattermost, RocketChat"
@@ -8192,22 +8098,16 @@ msgid "Messages"
 msgstr "Mensajes"
 
 #: app/models/webhook/pre_defined/mattermost.rb
-#, fuzzy
-#| msgid "Creation Channels"
 msgid "Messaging Channel"
-msgstr "Creación de Canales"
+msgstr "Canal de mensajería"
 
 #: app/models/webhook/pre_defined/mattermost.rb
-#, fuzzy
-#| msgid "Icon URL"
 msgid "Messaging Icon URL"
-msgstr "URL de icono"
+msgstr "URL del icono de mensajería"
 
 #: app/models/webhook/pre_defined/mattermost.rb
-#, fuzzy
-#| msgid "Username"
 msgid "Messaging Username"
-msgstr "Nombre de Usuario"
+msgstr "Usuario de mensajería"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Meta Data"
@@ -8242,10 +8142,8 @@ msgid "Microsoft Application Registration Portal"
 msgstr "Portal de registro de aplicaciones de Microsoft"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb
-#, fuzzy
-#| msgid "Host Notification"
 msgid "Microsoft Teams Notifications"
-msgstr "Notificación de host"
+msgstr "Notificaciones de Microsoft Teams"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -9291,10 +9189,8 @@ msgid "Open ticket indicator"
 msgstr "Abrir indicador de tickets"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "Open tickets"
-msgstr "Tickets abiertos"
+msgstr "Casos abiertos"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
@@ -9632,10 +9528,8 @@ msgid "People who create Tickets ask for help."
 msgstr "Las personas que crean Tickets piden ayuda."
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
-#, fuzzy
-#| msgid "Information"
 msgid "Perform actions"
-msgstr "Información"
+msgstr "Ejecutar acciones"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
@@ -9644,7 +9538,7 @@ msgstr "Eliminar permanentemente la base de conocimiento"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
 msgid "Permission level for looking up tickets"
-msgstr ""
+msgstr "Nivell de permiso para buscar casos"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -9750,24 +9644,16 @@ msgid "Please enter a text."
 msgstr "Introduzca un texto."
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
-#, fuzzy
-#| msgid "Please enter a valid email address."
 msgid "Please enter a valid JSON string."
-msgstr "Introduzca una dirección de correo electrónico válida."
+msgstr "Introduzca una cadena JSON correcta."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Please enter a valid email address."
 msgstr "Introduzca una dirección de correo electrónico válida."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Please enter the endpoint and select the authentication method for "
-#| "accessing Exchange Web Services."
 msgid "Please enter the endpoint for accessing Exchange Web Services."
-msgstr ""
-"Introduzca el endpoint y seleccione el método de autenticación para acceder "
-"a Exchange Web Services."
+msgstr "Introduzca el punto de acceso a Exchange Web Services."
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
@@ -9865,14 +9751,12 @@ msgstr "Powered by"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
-#, fuzzy
-#| msgid "New Webhook"
 msgid "Pre-defined Webhook"
-msgstr "Nuevo webhook"
+msgstr "Webhook predefinido"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "Pre-defined webhook for %s."
-msgstr ""
+msgstr "Webhook predefinido para %s."
 
 #: db/seeds/settings.rb
 msgid "Pretty Date"
@@ -10126,7 +10010,7 @@ msgstr "Disparadores de ticket recursivos"
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers Loop Max."
-msgstr "Máximo número de disparadores de ticket recursivos."
+msgstr "Máximo número de disparadores de casos recursivos."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -10197,10 +10081,8 @@ msgid "Remove all"
 msgstr "Eliminar todos"
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Remove all"
 msgid "Remove all values"
-msgstr "Eliminar todos"
+msgstr "Eliminar todos los valores"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
@@ -10208,7 +10090,7 @@ msgstr "Eliminar formato"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
-msgstr ""
+msgstr "Eliminar los valores seleccionados"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
@@ -10355,49 +10237,20 @@ msgid "Reset overview order"
 msgstr "Restablecer orden de vista de resumen"
 
 #: app/assets/javascripts/app/models/setting.coffee
-#, fuzzy
-#| msgid "Sent successfully!"
 msgid "Reset successful."
-msgstr "¡Enviado con éxito!"
+msgstr "Reinicio correcto."
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Reset to default"
 msgstr "Restaurar valores por defecto"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Reset to default settings"
 msgstr "Restaurar valores por defecto"
 
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_reset/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Reset your #{config.product_name} password\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>We received a request to reset the password for your #{config."
-#| "product_name} account <b>#{user.login}</b>.</div>\n"
-#| "<br>\n"
-#| "<div>If you want to reset your password, click on the link below (or copy "
-#| "and paste the URL into your browser):</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.name}\">#{config.http_type}://#{config."
-#| "fqdn}/#password_reset_verify/#{token.name}</a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can change your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to reset your password, please ignore this "
-#| "message. Your password will not be reset.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Reset your #{config.product_name} password\n"
 "\n"
@@ -10421,9 +10274,9 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"Restablecer contraseña para #{config.product_name}\n"
+"Restablecer contraseña en #{config.product_name}\n"
 "\n"
-"<div>Buenos días #{user.firstname},</div>\n"
+"<div>Hola, #{user.firstname},</div>\n"
 "<br>\n"
 "<div>Hemos recibido una solicitud de restablecimiento de contraseña en "
 "#{config.product_name} para la cuenta <b>#{user.login}</b>.</div>\n"
@@ -10432,42 +10285,19 @@ msgstr ""
 "copie y pegue el enlace en su navegador):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}</a></div>\n"
+"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.token}</a></div>\n"
 "<br>\n"
 "<div>Este enlace abrirá una página donde podrá cambiar su contraseña.</div>\n"
 "<br>\n"
 "<div>Si no desea restablecer su contraseña puede ignorar este mensaje. La "
 "contraseña no se cambiará.</div>\n"
 "<br>\n"
-"<div>El equipo de #{config.product_name} </div>\n"
+"<div>El equipo de #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/signup_taken_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup_taken_reset/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Reset your #{config.product_name} password\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>You or someone else tried to sign up with this email address. "
-#| "However, this email is already being used.</div>\n"
-#| "<br>\n"
-#| "<div>If you want to reset your password, click on the link below (or copy "
-#| "and paste the URL into your browser):</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.name}\">#{config.http_type}://#{config."
-#| "fqdn}/#password_reset_verify/#{token.name}</a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can change your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to reset your password, please ignore this "
-#| "message. Your password will not be reset.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Reset your #{config.product_name} password\n"
 "\n"
@@ -10493,7 +10323,7 @@ msgid ""
 msgstr ""
 "Restablecer su contraseña de #{config.product_name} \n"
 "\n"
-"<div>Buenos días, #{user.firstname}:</div>\n"
+"<div>Hola, #{user.firstname}:</div>\n"
 "<br>\n"
 "<div>Usted u otra persona ha intentado registrarse con esta dirección de "
 "correo electrónico, pero esta dirección ya está registrada.</div>\n"
@@ -10502,11 +10332,11 @@ msgstr ""
 "continuación (o copie y pegue el enlace en su navegador):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}</a></div>\n"
+"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.token}</a></div>\n"
 "<br>\n"
-"<div>Este enlace le llevará a una página donde podrá cambiar la contraseña.</"
-"div>\n"
+"<div>Este enlace le llevará a una página donde podrá cambiar la "
+"contraseña.</div>\n"
 "<br>\n"
 "<div>Si no desea cambiar su contraseña, ignore este mensaje. Su contraseña "
 "no será restablecida.</div>\n"
@@ -10551,10 +10381,8 @@ msgid "Retweets are converted into tickets."
 msgstr "Los retweets se convierten en tickets."
 
 #: app/models/webhook/pre_defined/rocket_chat.rb
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Rocket Chat Notifications"
-msgstr "Bloquear notificaciones"
+msgstr "Notificaciones de Rocket Chat"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/role.coffee
@@ -10955,10 +10783,8 @@ msgid "Selected conditions"
 msgstr "Condiciones seleccionadas"
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Selector"
 msgid "Selective (default)"
-msgstr "Selector"
+msgstr "Selectivo (por defecto)"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Selector"
@@ -11139,7 +10965,7 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
 msgstr ""
-"Establecer notas para tipos de creación de tickets, mediante la selección de "
+"Establecer notas para tipos de creación de casos, mediante la selección de "
 "tipo."
 
 #: db/seeds/settings.rb
@@ -11289,11 +11115,11 @@ msgstr "Mostrar menos"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 msgid "Show matching ticket(s) in the warning"
-msgstr ""
+msgstr "Mostrar los casos que concuerdan en el aviso"
 
 #: db/seeds/settings.rb
 msgid "Show matching tickets in the warning"
-msgstr ""
+msgstr "Mostrar los casos en el aviso"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Show meta data"
@@ -11334,10 +11160,8 @@ msgid "Show title in form."
 msgstr "Muestre el título en forma."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "How to use it"
 msgid "Show to user roles"
-msgstr "Como usarlo"
+msgstr "Mostrar a roles de usuario"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -11427,10 +11251,8 @@ msgid "Signup Screen"
 msgstr "Pantalla de registro"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "%s tickets found"
 msgid "Similar tickets found"
-msgstr "%s tickets encontrados"
+msgstr "Casos parecidos encontrados"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
@@ -11485,10 +11307,8 @@ msgid "Slack"
 msgstr "Slack"
 
 #: app/models/webhook/pre_defined/slack.rb
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Slack Notifications"
-msgstr "Bloquear notificaciones"
+msgstr "Notificaciones por Slack"
 
 #: db/seeds/settings.rb
 msgid "Slack config"
@@ -12414,6 +12234,7 @@ msgstr "La expresión de búsqueda no existe o no es válida."
 #: app/models/webhook.rb
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
+"El contenido suministrado no es válido. Por favor, verifique la sintaxis."
 
 #: app/controllers/application_controller/authenticates.rb
 #: app/controllers/integration/check_mk_controller.rb
@@ -12435,23 +12256,19 @@ msgstr "No se pudo procesar la solicitud."
 
 #: lib/validations/verify_perform_rules_validator.rb
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
-msgstr "El atributo '%{attribute}' con valor %{key}, %{inner} no se encuentra."
+msgstr "¡Falta el valor '%{attribute}' necesario de %{key}, %{inner}!"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr "No se pudo localizar la credencial externa 'twitter'."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
-#, fuzzy
-#| msgid "The required parameter 'code' is missing."
 msgid "The required event field 'execution' is missing."
-msgstr "Falta el parámetro requerido 'code'."
+msgstr "Falta el campo de evento necesario 'ejecución'."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
-#, fuzzy
-#| msgid "The required parameter 'request_token' is missing."
 msgid "The required event field 'execution' is unknown or missing."
-msgstr "Falta el parámetro requerido 'request_token'."
+msgstr "Falta o no se reconoce el campo de evento necesario 'ejecución'."
 
 #: lib/idoit.rb
 msgid "The required field 'api_token' is missing from the config."
@@ -12537,10 +12354,8 @@ msgid "The required parameter 'locale' is missing."
 msgstr "Falta el parámetro requerido 'locale'."
 
 #: app/controllers/user_access_token_controller.rb
-#, fuzzy
-#| msgid "The required parameter 'area' is missing."
 msgid "The required parameter 'name' is missing."
-msgstr "Falta el parámetro requerido 'area'."
+msgstr "Falta el parámetro necesario 'nombre'."
 
 #: lib/external_credential/twitter.rb
 msgid "The required parameter 'oauth_token' is missing."
@@ -12605,10 +12420,8 @@ msgid "The retried security process failed!"
 msgstr "¡El proceso de seguridad reintentado ha fallado!"
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "The image is invalid."
 msgid "The selected date is invalid."
-msgstr "La imagen no es válida."
+msgstr "La fecha elegida no es válida."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -12633,16 +12446,12 @@ msgid "The setting 'ticket_number' was not configured."
 msgstr "El ajuste 'ticket_number' no se ha configurado."
 
 #: app/assets/javascripts/app/models/setting.coffee
-#, fuzzy
-#| msgid "The entry could not be created."
 msgid "The setting could not be reset."
-msgstr "No se pudo crear la entrada."
+msgstr "No se pudo reiniciar el ajuste."
 
 #: app/assets/javascripts/app/models/setting.coffee
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "The setting could not be updated."
-msgstr "No se pudo actualizar el objeto."
+msgstr "No se pudo actualizar el ajuste."
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
@@ -12955,6 +12764,8 @@ msgid ""
 "This is an example payload for your installation, including any custom "
 "objects. It is possible to further customize payload of each webhook."
 msgstr ""
+"Esto es un ejemplo de contenido de la instalación, incluyendo objetos "
+"personalizados. Es posible además personalizar el contenido de cada webhook."
 
 #: app/models/channel/email_parser.rb
 msgid ""
@@ -13043,14 +12854,8 @@ msgstr ""
 "llamadas en tiempo real."
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid ""
-#| "This signature is inactive, it won't be included in the reply. Change "
-#| "state <a href=\"#channels/email\">here</a>"
 msgid "This signature is inactive, it won't be included in the reply."
-msgstr ""
-"Esta firma está inactiva, no se incluirá en la respuesta. Cambie el estado "
-"<a href=\"#channels/email\">en este enlace</a>"
+msgstr "Esta firma está inactiva, no se incluirá en la respuesta."
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -13456,7 +13261,7 @@ msgstr "Tickets con \"%s\""
 
 #: db/seeds/settings.rb
 msgid "Tickets with the same attributes were found."
-msgstr ""
+msgstr "Hallados casos con los mismos atributos."
 
 #: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -13494,10 +13299,8 @@ msgid "Time Units Total"
 msgstr "Unidades de tiempo totales"
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Time Units"
 msgid "Time event"
-msgstr "Unidades de Tiempo"
+msgstr "Eventos de tiempo"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -13608,6 +13411,8 @@ msgid ""
 "To revert back to the default payload, simply turn off the \"Custom Payload"
 "\" switch above."
 msgstr ""
+"Para volver al contenido por defecto, no hay más que desactivar \"Contenido "
+"Personalizado\" arriba."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -13723,6 +13528,9 @@ msgid ""
 "updated, while triggers activated by time events are executed when certain "
 "times are reached (e.g. pending time, escalation)."
 msgstr ""
+"Los disparos activados por acciones se ejecutan cuando se crea o actualiza "
+"un caso, mientras que los disparos activados por tiempo se ejecutan al "
+"llegar a esos momentos (p.e., tiempo pendiente, escalado)."
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Triggers are …"
@@ -14506,17 +14314,13 @@ msgstr "Aviso"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Add a message"
 msgid "Warning message"
-msgstr "Añadir un mensaje"
+msgstr "Mensaje de aviso"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Warning"
 msgid "Warning title"
-msgstr "Aviso"
+msgstr "Título de aviso"
 
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid ""
@@ -14747,12 +14551,12 @@ msgid ""
 "When at least one field from conditions was updated or article was added and "
 "conditions match"
 msgstr ""
+"Cuando al menos un campo de las condiciones se actualice o el artículo se "
+"añada y coincidan las condiciones"
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "When conditions match"
-msgstr "Condiciones guardadas"
+msgstr "Cuando coinciden las condiciones"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "When notification is being sent."
@@ -14980,13 +14784,6 @@ msgid "You can create multiple chat topics."
 msgstr "Puedes crear múltiples temas de chat."
 
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
-#, fuzzy
-#| msgid ""
-#| "You can define different signatures for each group, which allows you to "
-#| "use a different signature for every department.\n"
-#| "\n"
-#| "Once you have created a signature here, you will also need to edit the "
-#| "groups where you want to use it."
 msgid ""
 "You can define a separate signature for each group to use a different "
 "signature for each department.\n"
@@ -14997,7 +14794,7 @@ msgstr ""
 "Puede definir firmas distintas para cada grupo, lo que permite usar una "
 "firma distinta para cada departamento.\n"
 "\n"
-"Una vez haya creado aquí su firma, deberá editar los grupos en los que desea "
+"Una vez haya creado aquí su firma, deberá además editar los grupos que deben "
 "utilizarla."
 
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -15537,10 +15334,8 @@ msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "no puede ser usado porque *_id y *_ids no están permitidos"
 
 #: app/models/knowledge_base/category.rb
-#, fuzzy
-#| msgid "cannot be a child of the parent"
 msgid "cannot be a subcategory of the parent category"
-msgstr "no puede ser descendiente"
+msgstr "no puede ser subcategoría de la categoría padre"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
@@ -15850,16 +15645,12 @@ msgid "has no agent access to this ticket"
 msgstr "agente sin acceso a este ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#, fuzzy
-#| msgid "reached"
 msgid "has reached"
-msgstr "alcanzado"
+msgstr "ha alcanzado"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#, fuzzy
-#| msgid "has changed"
 msgid "has reached warning"
-msgstr "fue modificado"
+msgstr "ha alcanzado alerta"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "here"
@@ -16541,15 +16332,15 @@ msgstr "hoy"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "trigger '%s' was performed because pending reminder was reached"
-msgstr ""
+msgstr "disparo '%s' se ejecutó porque se alcanzó el recordatorio de pendiente"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "trigger '%s' was performed because ticket was escalated"
-msgstr ""
+msgstr "disparo '%s' se ejecutó porque se escaló el caso"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "trigger '%s' was performed because ticket will escalate soon"
-msgstr ""
+msgstr "disparo '%s' se ejecutó porque el caso se escalará pronto"
 
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 msgid "try again"

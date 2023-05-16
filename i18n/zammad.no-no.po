@@ -1588,9 +1588,12 @@ msgid "Are you sure?"
 msgstr "Er du sikker?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+#, fuzzy
+#| msgid "Are you sure? You have unsaved changes that will get lost."
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
-msgstr ""
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
+msgstr "Er du sikker? Du har ulagrede endringer som vil gå tapt."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -4793,6 +4796,12 @@ msgstr "Deaktiver"
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Disable Notifications"
 msgstr "Deaktiver varslinger"
+
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"

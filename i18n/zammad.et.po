@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-03-31 03:05+0000\n"
+"PO-Revision-Date: 2023-05-12 03:05+0000\n"
 "Last-Translator: kirkkak <kirkka.kivilo@gmail.com>\n"
 "Language-Team: Estonian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/et/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.2\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -500,17 +500,15 @@ msgstr ""
 
 #: app/models/object_manager/attribute.rb
 msgid "%{name} already exists"
-msgstr ""
+msgstr "%{name} juba eksisteerib"
 
 #: app/models/object_manager/attribute.rb
 msgid "%{name} is a reserved word"
-msgstr ""
+msgstr "%{name} on reserveeritud sõna"
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
-#, fuzzy
-#| msgid "Total: %s"
 msgid "(state: %s)"
-msgstr "Kokku: %s"
+msgstr "(olek: %s)"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -1455,7 +1453,8 @@ msgstr "Oled sa kindel?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
@@ -2680,10 +2679,8 @@ msgid "Configure Basic Settings"
 msgstr "Seadista Liht Seaded"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
-#, fuzzy
-#| msgid "Config"
 msgid "Confirm"
-msgstr "Seadistus"
+msgstr "Kinnita"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
@@ -4309,13 +4306,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "Device"
-msgstr ""
+msgstr "Seade"
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: db/seeds/permissions.rb
 msgid "Devices"
-msgstr ""
+msgstr "Seadmed"
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 msgid "Dialog window with selections"
@@ -4362,20 +4359,24 @@ msgstr ""
 msgid "Disable Notifications"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
-msgstr ""
+msgstr "Loobu"
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Discard Changes"
-msgstr ""
+msgstr "Loobu Muudatustest"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Discard article"
-msgstr "Loo Test Pilet"
+msgstr "Loobu artiklist"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
@@ -4384,17 +4385,17 @@ msgstr "Loo Test Pilet"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Discard changes"
-msgstr ""
+msgstr "Loobu muudatustest"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Discard your unsaved changes"
-msgstr ""
+msgstr "Loobu salvestamata muudatustest"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Discard your unsaved changes."
-msgstr ""
+msgstr "Loobu salvestamata muudatustest."
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
@@ -4480,15 +4481,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/report/download_button.jst.eco
 msgid "Download %s record(s)"
-msgstr ""
+msgstr "Lae alla %s kirje(t)"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Download Certificate"
-msgstr ""
+msgstr "Lae alla Sertifikaat"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Download Private Key"
-msgstr ""
+msgstr "Lae alla Avalik Võti"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download and install the %s Migration Plugin on your %s instance."
@@ -4505,7 +4506,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 msgid "Drag to reorder"
-msgstr ""
+msgstr "Lohistage ümberjärjestamiseks"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
@@ -4582,9 +4583,8 @@ msgid "Editing"
 msgstr "Muutmine"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
-#, fuzzy
 msgid "Editing on Desktop"
-msgstr "suuna piletid"
+msgstr "Töölaual muutmine"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
@@ -12523,9 +12523,8 @@ msgid "Tickets are ordered by \"%s\" column (%s)."
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
-#, fuzzy
 msgid "Tickets assigned to me: %s of %s"
-msgstr "Mulle omistatud piletid: %s (kokku %s)"
+msgstr "Mulle omistatud piletid: %s %s -st"
 
 #: app/controllers/ticket_articles_controller.rb
 #: app/controllers/tickets_controller.rb
@@ -14011,10 +14010,8 @@ msgstr ""
 
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
-#, fuzzy
-#| msgid "Could not find source ticket!"
 msgid "You can no longer see the ticket."
-msgstr "Ei leia algset piletit!"
+msgstr "Sa ei näe enam piletit."
 
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "You can no longer see the user."
@@ -14101,10 +14098,8 @@ msgid "You have to allow access to your webcam."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-#, fuzzy
-#| msgid "You have escalated tickets"
 msgid "You have unsaved changes."
-msgstr "Sa eskaleerisid pileti"
+msgstr "Sul on salvestamata muudatusi."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "You need to add the following Javascript code snippet to your web page:"
@@ -14385,10 +14380,8 @@ msgid "at"
 msgstr ""
 
 #: app/models/object_manager/attribute.rb
-#, fuzzy
-#| msgid "A user is required!"
 msgid "at least one letter is required"
-msgstr "Kasutaja vajalik!"
+msgstr "vähemalt üks tähemärk on vajalik"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy

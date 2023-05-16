@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-04-18 03:05+0000\n"
-"Last-Translator: Hypee <pascal@hypee.com>\n"
+"PO-Revision-Date: 2023-05-12 03:05+0000\n"
+"Last-Translator: Edouard Bourguignon <madko77@gmail.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
 "Language: fr-fr\n"
@@ -898,10 +898,13 @@ msgid "A user is required!"
 msgstr "Un utilisateur est requis !"
 
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+#, fuzzy
 msgid ""
 "A webhook can be fired by triggers and schedulers, don't forget to define "
 "them!"
 msgstr ""
+"Un webhook peut être déclenché par des événements ou par planification, "
+"n'oubliez pas de les définir!"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -1232,7 +1235,7 @@ msgstr "Ajouter un titre de second niveau"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Add selected values"
-msgstr ""
+msgstr "Ajouter les valeurs sélectionnées"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -1410,7 +1413,7 @@ msgstr "Nom de l'agent + Séparateur d'expéditeurs + nom d'affichage du systèm
 
 #: app/assets/javascripts/app/controllers/organization.coffee
 msgid "Agent and customer users can be grouped into organizations."
-msgstr ""
+msgstr "Opérateurs et clients peuvent être groupés dans des organisations."
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -1507,7 +1510,7 @@ msgstr "Sinon, utilisez l'API Zammad pour importer les données."
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
-msgstr ""
+msgstr "Toujours"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1661,7 +1664,7 @@ msgstr "Appliquer le brouillon partagé"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Apply current defaults to all agents"
-msgstr ""
+msgstr "Appliquer les valeurs par défaut actuelles à tous les opérateurs"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1726,9 +1729,12 @@ msgid "Are you sure?"
 msgstr "Êtes-vous sûr ?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+#, fuzzy
+#| msgid "Are you sure? You have changes that will get lost."
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
-msgstr ""
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
+msgstr "Etes vous sûr ? Les modifications non sauvegardées seront perdues."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -2500,6 +2506,7 @@ msgstr ""
 #: app/models/sla.rb
 msgid "Cannot have both response time and update time."
 msgstr ""
+"Impossible d'avoir à la fois l'heure de réponse et l'heure de mise à jour."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #, fuzzy
@@ -4649,11 +4656,15 @@ msgstr ""
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
+"Définit le message d'attention qui est affiché quand un ticket correspondant "
+"est présent."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
+"Définit le titre d'attention qui est affiché quand un ticket correspondant "
+"est présent."
 
 #: db/seeds/settings.rb
 msgid "Defines transaction backend."
@@ -4664,15 +4675,21 @@ msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
 msgstr ""
+"Définit si les tickets correspondants sont affichés dans le cas de tickets "
+"déjà existants."
 
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
+"Définit quels attributs de tickets sont vérifiés avant la création d'un "
+"ticket."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
+"Définit quels rôles utilisateurs vont recevoir un avertissement dans le cas "
+"de tickets correspondants."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4928,6 +4945,12 @@ msgstr "Désactiver"
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Disable Notifications"
 msgstr "Désactiver les notifications"
+
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -5283,6 +5306,7 @@ msgstr "Email sortant"
 #: app/models/user.rb
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
+"L'adresse de courriel '%{email}' est déjà utilisée pour un autre utilisateur."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Email could not be verified. Please contact your administrator."
@@ -5453,6 +5477,8 @@ msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
+"Active un avertissement vers les utilisateurs durant la création du ticket "
+"si un ticket existe déjà avec les mêmes attributs."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5637,7 +5663,7 @@ msgstr "Entrer URL du lien"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Enter search and select a type to search for"
-msgstr ""
+msgstr "Entrer une recherche et selectionner un type à rechercher"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -6450,7 +6476,7 @@ msgstr "Revenir en arrière"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 msgid "Go home"
-msgstr ""
+msgstr "Retour à l'accueil"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -6701,6 +6727,8 @@ msgid ""
 "Here you can create new tickets, customers and organizations (depending on "
 "your configured permissions)."
 msgstr ""
+"Ici vous pouvez créer de nouveaux tickets, clients et organisations (en "
+"fonction de vos permissions configurées)."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid "Here you can create one."
@@ -7378,7 +7406,7 @@ msgstr "client_id reçu invalide !"
 
 #: app/models/user.rb
 msgid "Invalid email '%{email}'"
-msgstr ""
+msgstr "Invalide email '%{email}'"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
@@ -7893,7 +7921,7 @@ msgstr "Chargement du contenu"
 
 #: app/views/mobile/index.html.erb
 msgid "Loading failed, please try again later."
-msgstr ""
+msgstr "Chargement en échec, veuillez essayer ultérieurement."
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
@@ -9469,6 +9497,8 @@ msgid ""
 "Organization with specified ID was not found. Try checking the URL for "
 "errors."
 msgstr ""
+"L'organisation avec l'ID spécifié n'a pas été trouvée. Veuillez vérifier "
+"l'URL pour des erreurs."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
@@ -9560,7 +9590,7 @@ msgstr "Vue d'ensemble"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Overview bulk mask"
-msgstr ""
+msgstr "Masque d'aperçu de masse"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -9740,7 +9770,7 @@ msgstr "Supprimer définitivement la base de connaissance"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
 msgid "Permission level for looking up tickets"
-msgstr ""
+msgstr "Niveau de permission pour consulter des tickets"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -9972,7 +10002,7 @@ msgstr "Nouveau webhook"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "Pre-defined webhook for %s."
-msgstr ""
+msgstr "Webhook prédéfinit pour %s."
 
 #: db/seeds/settings.rb
 msgid "Pretty Date"
@@ -10080,7 +10110,7 @@ msgstr "Protocole"
 #: app/controllers/knowledge_base/categories_controller.rb
 #: lib/knowledge_base/menu_item_update_action.rb
 msgid "Provide position of all items in scope"
-msgstr ""
+msgstr "Fournit une position pour tous les éléments du périmètre"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Provider"
@@ -10317,7 +10347,7 @@ msgstr "Supprimer le formatage"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
-msgstr ""
+msgstr "Supprime les valeurs sélectionnées"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
@@ -10703,7 +10733,7 @@ msgstr "Annuler la migration"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Rollback of channel migration succeeded!"
-msgstr ""
+msgstr "Retour arrière pour la migration du canal réussi !"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Rows"
@@ -10984,6 +11014,8 @@ msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr ""
+"Les organisations secondaires sont seulement autorisées quand une "
+"organisation principale est renseignée."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
@@ -11234,11 +11266,11 @@ msgstr "Définir par défaut"
 
 #: db/seeds/settings.rb
 msgid "Set available ticket types"
-msgstr ""
+msgstr "Définit les types de ticket disponibles"
 
 #: db/seeds/settings.rb
 msgid "Set backend which is being used for import."
-msgstr ""
+msgstr "Définit le backend qui sera utilisé pour l'import."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -11271,6 +11303,8 @@ msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
 "limits"
 msgstr ""
+"Définit la fenêtre de temps en secondes. Si définit à 0 vous pourrez "
+"supprimer les notes sans limite de temps"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
 #, fuzzy
@@ -11346,7 +11380,7 @@ msgstr "Partagé"
 
 #: app/controllers/tickets_controller.rb
 msgid "Shared draft cannot be selected for this ticket."
-msgstr ""
+msgstr "Le brouillon partagé pour ce ticket ne peut pas être sélectionné."
 
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -11388,7 +11422,7 @@ msgstr "Brouillon"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Show Feed Icon"
-msgstr ""
+msgstr "Afficher l’icône Feed"
 
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
@@ -11402,10 +11436,12 @@ msgstr "Tout afficher…"
 #: db/seeds/settings.rb
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr ""
+"Afficher les semaines calendaires dans le sélectionneur des champs date/date "
+"et heure"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Show chat automatically"
-msgstr ""
+msgstr "Afficher le chat automatiquement"
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 msgid "Show less"
