@@ -2,13 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-05-15 12:06+0000\n"
+"Last-Translator: Jony <jcabero@orbea.com>\n"
+"Language-Team: Basque <https://translations.zammad.org/projects/zammad/"
+"zammad-stable/eu/>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -24,7 +27,7 @@ msgstr ""
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATE"
-msgstr ""
+msgstr "FORMATUA_DATA"
 
 #. Default date/time format to use for the current locale.
 #. These placeholders are supported:
@@ -39,12 +42,14 @@ msgstr ""
 #. - 'HH' - 2-digit hour (24h)
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
+#, fuzzy
 msgid "FORMAT_DATETIME"
-msgstr ""
+msgstr "FORMATUA-IRAUNGITZE-DATA"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#, fuzzy
 msgid " to "
-msgstr ""
+msgstr " to "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -53,6 +58,10 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"Database\" fitxategi erantsi guztiak datu-basean gordetzen ditu (ez da "
+"gomendatzen datu kopuru handiak gordetzeko). \"Filesystem\" gordetzen ditu "
+"datuak fitxategi-sisteman. Moduluen artean alda dezakezu, baita datuak galdu "
+"gabe ekoizten ari den sistema batean ere."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -74,6 +83,7 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_escalation/en.md.erb
+#, fuzzy
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -85,6 +95,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Eskatatuta #{ticket.escalation_at}_ an\n"
+"Tiketa (#{ticket.title})  \"#{ticket.customer.longname}\" eskalatu izan da \""
+"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -101,6 +120,16 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Azkenengo aktualizazioa #{ticket.updated_at}_\n"
+"* Talde: #{ticket.group.name}\n"
+"* Jabea: #{ticket.owner.fullname}\n"
+"* Egoera: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -116,6 +145,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Iritsi da abisua!_\n"
+"Tiket batek arreta behar du: (#{ticket.title}) bezeroarekin \"*#{ticket."
+"customer.longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -135,6 +173,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Eguneratuta #{current_user.longname}  #{ticket."
+"updated_at}_ an\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -150,6 +201,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Eskalatu izango da #{ticket.escalation_at}_\n"
+"Tiketa (#{ticket.title}) \"#{ticket.customer.longname}\" eskalatu izango da "
+"\"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -168,6 +228,18 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} hirugarrenen aplikazio batekin lotuta dagoen kontua\n"
+"\n"
+"<div>Kaixo #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Zure kontua lotu duzula dirudi <b>hirugarrenen aplikazio batekin</b> \""
+"#{t(provider)}\".</div>\n"
+"<br>\n"
+"<div>Ez bazara zuk izan, mesedez kendu lotura zure profiletik eta aldatu "
+"hirugarrenen aplikazioaren pasahitza. Baliteke norbaitek baimenik gabeko "
+"sarbidea lortu izana hirugarrenen zerbitzuan zure konturako.</div>\n"
+"<br>\n"
+"<div>Zure #{config.product_name} Taldea</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -198,6 +270,30 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} Hasi da saioa herrialde berri batetik\n"
+"\n"
+"<div>Kaixo #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Badirudi zure kontua gailu ezagun batekin erabili duzula<b>baina beste "
+"herrialde batetik</b> on \"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"Zure tresna: #{user_device.name}<br>\n"
+"Zure kokapena (erlatiboa): #{user_device.location}<br>\n"
+"Zure IP-a: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>Herrialdea zure gailu ezagunen zerrendara gehitu da, eta hemen ikus "
+"dezakezu:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>Izan ez bazara, kendu gailua, aldatu kontuaren pasahitza eta jarri "
+"administratzailearekin harremanetan. Baliteke norbaitek baimenik gabe sartu "
+"direla zure kontuan.</div>\n"
+"<br>\n"
+"<div>Zure#{config.product_name} Taldea</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -228,225 +324,259 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} hasi saioa gailu berri batetik\n"
+"\n"
+"<div>Kaixo #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Badirudi zure kontuan sartu zarela <b> beste gailu bat erabiliz:</b> \""
+"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"Zure tresna: #{user_device.name}<br>\n"
+"Zure kokapena (erlatiboa): #{user_device.location}<br>\n"
+"Zure IP-a: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>Zure gailua gailu ezagunen zerrendan gehitu da. Hemen ikus "
+"dezakezu:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>Izan ez bazara, kendu gailua, aldatu kontuaren pasahitza eta jarri "
+"administratzailearekin harremanetan. Baliteke norbaitek baimenik gabe sartu "
+"direla zure kontuan.</div>\n"
+"<br>\n"
+"<div>Zure #{config.product_name} Taldea</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "%s (confirm)"
-msgstr ""
+msgstr "%s (berretsi)"
 
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
-msgstr ""
+msgstr "%s (ezezaguna)"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "%s API Token"
-msgstr ""
+msgstr "%s API Tokena"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr ""
+msgstr "%s Atributu"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "%s Taldea"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s Migration"
-msgstr ""
+msgstr "%s Migrazioa"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
+msgstr "%s Rola"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s URL"
-msgstr ""
+msgstr "%s URLa"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "%s ago"
-msgstr ""
+msgstr "%s duela"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "%s attached files"
-msgstr ""
+msgstr "%s erantsitako fitxategiak"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
+"%s bukatu da datuen pribatasun-zeregin erabiltzailearen IDa ezabatzeko |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s created article for |%s|"
-msgstr ""
+msgstr "%s artikulua sortu da |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
+"%s datuen pribatutasun-zereginak sortu ditu erabiltzailearen IDa ezabatzeko "
+"|%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
 msgid "%s created group |%s|"
-msgstr ""
+msgstr "%s Taldea sortu da |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/organization.ts
 msgid "%s created organization |%s|"
-msgstr ""
+msgstr "%s Antolakuntza sortuta |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s created role |%s|"
-msgstr ""
+msgstr "%s rola sortuta |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "%s created ticket |%s|"
-msgstr ""
+msgstr "%s tiketa sortuta |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s created user |%s|"
-msgstr ""
+msgstr "%s erabiltzailea sortuta |%s|"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s credentials"
-msgstr ""
+msgstr "%s pasahitza"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s days ago"
-msgstr ""
+msgstr "%s duela egun"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
+#, fuzzy
 msgid "%s ended switch to |%s|!"
-msgstr ""
+msgstr "%s amaitzea aldatuta |%s|!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr ""
+msgstr "%s karpetak"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
+#, fuzzy
 msgid "%s groups to %s roles assignments"
-msgstr ""
+msgstr "%s taldeak %s esleitutako funtzioak"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s hours ago"
-msgstr ""
+msgstr "Duela %s ordu"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
-msgstr ""
+msgstr "%s inaktiboa da, aukeratu aktibo bat."
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
-msgstr ""
+msgstr "Duela %s minutu"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s months ago"
-msgstr ""
+msgstr "Duela %s Hilabete"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
-msgstr ""
+msgstr "%s objektu sortu dira."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been updated."
-msgstr ""
+msgstr "%s objektu aldatu dira."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) were deleted."
-msgstr ""
+msgstr "%s objektu ezabatu dira."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be created."
-msgstr ""
+msgstr "%s objetu sortuko dira."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be deleted."
-msgstr ""
+msgstr "%s objetu ezabatuko dira."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be updated."
-msgstr ""
+msgstr "%s objetu aldatuko dira."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s of my tickets are currently in process."
-msgstr ""
+msgstr "%s nire tiketak prozesuan daude."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
+#, fuzzy
 msgid "%s of my tickets escalated."
-msgstr ""
+msgstr "%s tiketak eskalatuta"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco
 msgid "%s people"
-msgstr ""
+msgstr "%s jende"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
+"%s OAuth erabiltzea gomendatzen du. %s iragarri zuen etorkizunean oinarrizko "
+"autentifikazio-euskarria murriztuko duela."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
-msgstr ""
+msgstr "%s derrigorrezkoa da!"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s started a new session"
-msgstr ""
+msgstr "%s sesio berri bat hasi du"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s subdomain"
-msgstr ""
+msgstr "%s azpidomeinua"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s switched to |%s|!"
-msgstr ""
+msgstr "%s aldatu |%s|!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
 msgid "%s tickets"
-msgstr ""
+msgstr "%s tiket"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "%s tickets found"
-msgstr ""
+msgstr "%s tiket aurkitu dira"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s updated article for |%s|"
-msgstr ""
+msgstr "%s artikulu eguneratua |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
+"%s datuen pribatutasun-ataza eguneratu da, erabiltzailearen ID ezabatzeko "
+"|%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
 msgid "%s updated group |%s|"
-msgstr ""
+msgstr "%s talde eguneratua |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/organization.ts

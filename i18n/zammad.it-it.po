@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-04 09:06+0000\n"
-"Last-Translator: Rolf Schmidt <rolf@schmidt.ink>\n"
+"PO-Revision-Date: 2023-05-15 12:06+0000\n"
+"Last-Translator: marcofenoglio <marco.fenoglio@gmail.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/it/>\n"
+"zammad-stable/it/>\n"
 "Language: it-it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -116,19 +116,6 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_info/en.md.erb
-#, fuzzy
-#| msgid ""
-#| "# #{ticket.title}\n"
-#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-#| "Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
-#| "updated_at}_\n"
-#| "* Group: #{ticket.group.name}\n"
-#| "* Owner: #{ticket.owner.fullname}\n"
-#| "* State: #{t(ticket.state.name)}\n"
-#| "\n"
-#| "<% if @objects[:article] %>\n"
-#| "#{article.body_as_text}\n"
-#| "<% end %>\n"
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -142,9 +129,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Creato da #{current_user.longname} alle #{ticket."
-"updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Aggiornato alle #{ticket.updated_at}_\n"
 "* Gruppo: #{ticket.group.name}\n"
 "* Proprietario: #{ticket.owner.fullname}\n"
 "* Stato: #{t(ticket.state.name)}\n"
@@ -250,6 +236,19 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"Account #{config.product_name} collegato con un'applicazione di terze parti\n"
+"\n"
+"<div>Ciao #{user.firstname},</div>\n"
+"<br>\n"
+"<div>sembra tu abbia collegato il tuo account <b>con un'applicazione di "
+"terze parti</b> \"#{t(provider)}\".</div>\n"
+"<br>\n"
+"<div>Se non sei stato tu, per favore rimuovi l'account collegato dal tuo "
+"profilo e cambia la tua password dell'applicazione coinvolta. Qualcuno "
+"potrebbe aver ottenuto accesso non autorizzato al tuo account su quel "
+"servizio.</div>\n"
+"<br>\n"
+"<div>Il team di #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -634,23 +633,19 @@ msgstr "%s% sono stati riaperti"
 
 #: app/models/concerns/has_group_relation_definition.rb
 msgid "%{model} can have full or granular access to group"
-msgstr ""
+msgstr "%{model} può avere accesso completo o puntuale al gruppo"
 
 #: app/models/object_manager/attribute.rb
-#, fuzzy
-#| msgid "Queue already exists!"
 msgid "%{name} already exists"
-msgstr "Esiste già questa coda!"
+msgstr "%{name} esiste già"
 
 #: app/models/object_manager/attribute.rb
 msgid "%{name} is a reserved word"
-msgstr ""
+msgstr "%{name} è una parola riservata"
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
-#, fuzzy
-#| msgid "Total: %s"
 msgid "(state: %s)"
-msgstr "Totale: %s"
+msgstr "(stato: %s)"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -889,6 +884,8 @@ msgid ""
 "A webhook can be fired by triggers and schedulers, don't forget to define "
 "them!"
 msgstr ""
+"Un webhook può essere attivato da trigger o pianificazione, non dimenticare "
+"di crearli!"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -1011,10 +1008,8 @@ msgid "Action"
 msgstr "Azione"
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Action execution"
-msgstr "Azione massiva eseguita!"
+msgstr "Esecuzione azione"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
@@ -1027,10 +1022,8 @@ msgid "Activate the recursive processing of ticket triggers."
 msgstr "Avvia l'elaborazione ricorsiva dei trigger dei ticket."
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "Activated by"
-msgstr "Attività"
+msgstr "Attivato da"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -1174,10 +1167,8 @@ msgstr ""
 "escalation."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Add bullet list"
 msgid "Add all values"
-msgstr "Aggiungi elenco puntato"
+msgstr "Aggiungi tutti i valori"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
@@ -1219,7 +1210,7 @@ msgstr "Aggiungi intestazione di secondo livello"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Add selected values"
-msgstr ""
+msgstr "Aggiungi i valori selezionati"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -2982,10 +2973,8 @@ msgid "Configure Basic Settings"
 msgstr "Configura Impostazioni Base"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
-#, fuzzy
-#| msgid "Config"
 msgid "Confirm"
-msgstr "Config"
+msgstr "Conferma"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"

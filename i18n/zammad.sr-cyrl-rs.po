@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-03 11:24+0000\n"
+"PO-Revision-Date: 2023-05-15 12:06+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
-"zammad/zammad-development/sr_Cyrl/>\n"
+"zammad/zammad-stable/sr_Cyrl/>\n"
 "Language: sr-cyrl-rs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.16.4\n"
 
 #. Default date format to use for the current locale.
@@ -130,8 +130,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Последњи пут измењено од стране #{current_user."
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Последњи пут измењено од стране #{current_user."
 "longname} у #{ticket.updated_at}_\n"
 "* Група: #{ticket.group.name}\n"
 "* Власник: #{ticket.owner.fullname}\n"
@@ -868,10 +868,6 @@ msgid "A user is required!"
 msgstr "Корисник је обавезан!"
 
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
-#, fuzzy
-#| msgid ""
-#| "A Webhook can be fired by Triggers and Schedulers, don't forget to define "
-#| "them!"
 msgid ""
 "A webhook can be fired by triggers and schedulers, don't forget to define "
 "them!"
@@ -1293,8 +1289,8 @@ msgstr ""
 "за наставак:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
-"a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"token}</a></div>\n"
 "<br>\n"
 "<div>Овај линк вас води на страницу за пријављивање.</div>\n"
 "<br>\n"
@@ -1390,8 +1386,6 @@ msgstr ""
 "овде."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "All Tickets"
 msgid "All tickets"
 msgstr "Сви тикети"
 
@@ -1888,10 +1882,8 @@ msgstr "Атрибути"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Attributes"
 msgid "Attributes to compare"
-msgstr "Атрибути"
+msgstr "Атрибути за поређење"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2963,8 +2955,8 @@ msgstr ""
 "Врло је једноставно, само кликните на линк испод.</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
-"a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
+"token}</a></div>\n"
 "<br>\n"
 "<div>Ваш #{config.product_name} тим</div>\n"
 
@@ -4340,10 +4332,8 @@ msgstr ""
 "наслову веб претраживача."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the permission level used for lookups."
-msgstr "Одређује позадински модул за тражење сличица корисника и организација."
+msgstr "Одређује ниво дозвола при претрази тикета."
 
 #: db/seeds/settings.rb
 msgid "Defines the port of the websocket server."
@@ -4412,10 +4402,8 @@ msgid "Defines the tab behaviour after a ticket action."
 msgstr "Одређује понашање прозора након радње тикета."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the ticket states used for lookups."
-msgstr "Одређује позадински модул за тражење сличица корисника и организација."
+msgstr "Одређује стања тикета која су обухваћена претрагом."
 
 #: db/seeds/settings.rb
 msgid "Defines the timeframe during which a self-created note can be deleted."
@@ -4473,11 +4461,13 @@ msgstr ""
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
+"Одређује поруку упозорења које ће бити приказано ако постоје слични тикети."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
+"Одређује наслов упозорења које ће бити приказано ако постоје слични тикети."
 
 #: db/seeds/settings.rb
 msgid "Defines transaction backend."
@@ -4488,15 +4478,19 @@ msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
 msgstr ""
+"Одређује да ли ће бити приказана листа тикета у случају да постоје слични "
+"тикети."
 
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
+"Одређује који атрибути тикета ће бити проверавани приликом отварања тикета."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
+"Одређује које корисничке улоге ће добити упозорење у случају сличних тикета."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4685,10 +4679,8 @@ msgstr "Одредишни ID позиваоца или ред"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enable Ticket creation"
 msgid "Detect Duplicate Ticket Creation"
-msgstr "Укључи отварање тикета"
+msgstr "Откривање дупликата тикета приликом отварања"
 
 #: db/seeds/settings.rb
 msgid "Developer System"
@@ -4912,10 +4904,8 @@ msgid ""
 msgstr "Услед неактивности, бићете аутоматски одјављени у наредних 30 секунди."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
-#, fuzzy
-#| msgid "Application"
 msgid "Duplicate Detection"
-msgstr "Апликација"
+msgstr "Откривање дупликата"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
@@ -5262,6 +5252,8 @@ msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
+"Укључује упозорење корисницима приликом отварања тикета уколико постоје "
+"слични тикети са истим атрибутима."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -7238,9 +7230,9 @@ msgstr ""
 "<div>Ја, (#{current_user.firstname} #{current_user.lastname}), позивам вас "
 "на #{config.product_name} - нашу платформу за корисничку подршку.</div>\n"
 "<br>\n"
-"<div>Кликните <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.token}\">овде</a> и подесите вашу лозинку.</"
-"div>\n"
+"<div>Кликните <a href=\"#{config.http_type}://#{config.fqdn}/#"
+"password_reset_verify/#{token.token}\">овде</a> и подесите вашу "
+"лозинку.</div>\n"
 "<br>\n"
 "<div>Срдачно,</div>\n"
 "<br>\n"
@@ -7848,10 +7840,8 @@ msgstr "Негација (NOT)"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Match all of the following"
 msgid "Match tickets in following states"
-msgstr "Уколико се следеће подудара"
+msgstr "Претражи тикете у следећим стањима"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
@@ -9056,8 +9046,6 @@ msgid "Open ticket indicator"
 msgstr "Отвори индикатор тикета"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "Open tickets"
 msgstr "Отворени тикети"
 
@@ -9404,7 +9392,7 @@ msgstr "Трајно обриши базу знања"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
 msgid "Permission level for looking up tickets"
-msgstr ""
+msgstr "Ниво дозвола при претраживању тикета"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -10968,11 +10956,11 @@ msgstr "Прикажи мање"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 msgid "Show matching ticket(s) in the warning"
-msgstr ""
+msgstr "Прикажи сличне тикете као део упозорења"
 
 #: db/seeds/settings.rb
 msgid "Show matching tickets in the warning"
-msgstr ""
+msgstr "Прикажи сличне тикете као део упозорења"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Show meta data"
@@ -11013,10 +11001,8 @@ msgid "Show title in form."
 msgstr "Прикажи наслов у форми."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "How to use it"
 msgid "Show to user roles"
-msgstr "Како се користи"
+msgstr "Прикажи корисничким улогама"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -11105,10 +11091,8 @@ msgid "Signup Screen"
 msgstr "Страна регистрације"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "%s tickets found"
 msgid "Similar tickets found"
-msgstr "%s тикет(а) пронађен(о)"
+msgstr "Пронажени слични тикети"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
@@ -12283,8 +12267,6 @@ msgid "The setting 'ticket_number' was not configured."
 msgstr "Подешавање ’ticket_number’ није постављено."
 
 #: app/assets/javascripts/app/models/setting.coffee
-#, fuzzy
-#| msgid "The setting could not be reseted."
 msgid "The setting could not be reset."
 msgstr "Није било могуће поништити подешавање."
 
@@ -12589,10 +12571,6 @@ msgid "This is a default maintenance message. Click here to change."
 msgstr "Ово је подразумевана порука одржавања. Кликните овде да је промените."
 
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
-#, fuzzy
-#| msgid ""
-#| "This is an example payload for your installation, including any custom "
-#| "objects. It is possible to further customize payload of each Webhook."
 msgid ""
 "This is an example payload for your installation, including any custom "
 "objects. It is possible to further customize payload of each webhook."
@@ -13083,7 +13061,7 @@ msgstr "Тикети са „%s”"
 
 #: db/seeds/settings.rb
 msgid "Tickets with the same attributes were found."
-msgstr ""
+msgstr "Пронађени су тикети са истим атрибутима."
 
 #: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -13226,16 +13204,12 @@ msgstr ""
 "непосредног превода притиском на „%s”."
 
 #: app/assets/javascripts/app/models/webhook.coffee
-#, fuzzy
-#| msgid ""
-#| "To revert back to default payload, simply turn off Custom Payload switch "
-#| "above."
 msgid ""
 "To revert back to the default payload, simply turn off the \"Custom Payload"
 "\" switch above."
 msgstr ""
-"За повратак на подразумеване податке, једноставно искључите дугме "
-"„Прилагођени подаци” изнад."
+"За повратак на подразумеване податке, једноставно искључите дугме „"
+"Прилагођени подаци” изнад."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -13349,8 +13323,8 @@ msgid ""
 "times are reached (e.g. pending time, escalation)."
 msgstr ""
 "Окидачи активирани радњама се извршавају по отварању или изменама, док се "
-"окидачи активирани временским догађајима извршавају по достизању времена "
-"(нпр. време чекања, ескалација)."
+"окидачи активирани временским догађајима извршавају по достизању времена ("
+"нпр. време чекања, ескалација)."
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Triggers are …"
@@ -13906,8 +13880,7 @@ msgstr "Успешно откључавање корисника!"
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
 msgid "User with specified ID was not found. Try checking the URL for errors."
-msgstr ""
-"Није пронађен корисник под траженим ID. Проверите URL путању на грешке."
+msgstr "Није пронађен корисник под траженим ID. Проверите URL путању на грешке."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"
@@ -14123,17 +14096,13 @@ msgstr "Упозорење"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Add a message"
 msgid "Warning message"
-msgstr "Напиши поруку"
+msgstr "Порука упозорења"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Warning"
 msgid "Warning title"
-msgstr "Упозорење"
+msgstr "Наслов упозорења"
 
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid ""

@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-03 11:24+0000\n"
+"PO-Revision-Date: 2023-05-15 12:06+0000\n"
 "Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/hu/>\n"
+"zammad-stable/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1400,8 +1400,6 @@ msgstr ""
 "Zammad rendszerhez."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "All Tickets"
 msgid "All tickets"
 msgstr "Összes jegy"
 
@@ -1613,7 +1611,7 @@ msgstr "Megosztott piszkozat alkalmazása"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Apply current defaults to all agents"
-msgstr ""
+msgstr "Jelenlegi alapértelmezett értékek alkalmazása minden ügynökre"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1680,12 +1678,16 @@ msgstr "Biztos benne?"
 msgid ""
 "Are you sure? Default notifications settings will be applied to all agents."
 msgstr ""
+"Biztos benne? Az alapértelmezett értesítési beállítások minden ügynökre "
+"alkalmazásra kerülnek."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
 "Are you sure? The agent default notifications settings will be reset to the "
 "system default."
 msgstr ""
+"Biztos benne? Az ügynök alapértelmezett értesítési beállításai visszaállnak "
+"a rendszer alapértelmezett értékére."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
@@ -4499,10 +4501,8 @@ msgid "Defines the tab behaviour after a ticket action."
 msgstr "Meghatározza a lap viselkedését egy jegykezelési művelet után."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the ticket states used for lookups."
-msgstr "Meghatározza a felhasználói és szervezeti képkeresés háttérrendszerét."
+msgstr "Meghatározza a kereséshez használt jegyállapotokat."
 
 #: db/seeds/settings.rb
 msgid "Defines the timeframe during which a self-created note can be deleted."
@@ -4566,11 +4566,15 @@ msgstr ""
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
+"Meghatározza a figyelmeztető üzenetet, amely akkor jelenik meg, ha van egy "
+"egyező jegy."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
+"Meghatározza a figyelmeztetés címét, amely akkor jelenik meg, ha van egy "
+"egyező jegy."
 
 #: db/seeds/settings.rb
 msgid "Defines transaction backend."
@@ -4581,6 +4585,8 @@ msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
 msgstr ""
+"Meghatározza, hogy a már létező jegyek esetén megjelenjenek-e az egyező "
+"jegyek."
 
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
@@ -4590,6 +4596,8 @@ msgstr ""
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
+"Meghatározza, hogy mely felhasználói szerepkörök kapjanak figyelmeztetést "
+"egyező jegyek esetén."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4779,10 +4787,8 @@ msgstr "Cél hívó fél azonosítója vagy várólista"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enable Ticket creation"
 msgid "Detect Duplicate Ticket Creation"
-msgstr "Jegy létrehozásának engedélyezése"
+msgstr "Duplikált jegyek létrehozásának észlelése"
 
 #: db/seeds/settings.rb
 msgid "Developer System"
@@ -5007,10 +5013,8 @@ msgstr ""
 "jelentkeztetve."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
-#, fuzzy
-#| msgid "Application"
 msgid "Duplicate Detection"
-msgstr "Alkalmazás"
+msgstr "Duplikátum észlelés"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
@@ -11178,10 +11182,8 @@ msgid "Show title in form."
 msgstr "A cím megjelenítése az űrlapon."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "How to use it"
 msgid "Show to user roles"
-msgstr "Hogyan kell használni"
+msgstr "Megjelenítés a felhasználói szerepköröknek"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -11270,10 +11272,8 @@ msgid "Signup Screen"
 msgstr "Regisztrációs képernyő"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "%s tickets found"
 msgid "Similar tickets found"
-msgstr "%s talált jegy"
+msgstr "Hasonló jegyek találhatók"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
@@ -12464,8 +12464,6 @@ msgid "The setting 'ticket_number' was not configured."
 msgstr "A 'ticket_number' beállítás nem volt konfigurálva."
 
 #: app/assets/javascripts/app/models/setting.coffee
-#, fuzzy
-#| msgid "The setting could not be reseted."
 msgid "The setting could not be reset."
 msgstr "A beállítást nem lehetett visszaállítani."
 
@@ -14300,17 +14298,13 @@ msgstr "Figyelmeztetés"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Add a message"
 msgid "Warning message"
-msgstr "Üzenet hozzáadása"
+msgstr "Figyelmeztető üzenet"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Warning"
 msgid "Warning title"
-msgstr "Figyelmeztetés"
+msgstr "Figyelmeztetés cím"
 
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid ""
