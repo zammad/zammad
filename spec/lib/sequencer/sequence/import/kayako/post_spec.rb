@@ -146,7 +146,7 @@ RSpec.describe Sequencer::Sequence::Import::Kayako::Post, sequencer: :sequence d
       process(process_payload)
       expect(Ticket::Article.last).to have_attributes(
         to:   'info@zammad.org',
-        body: "\n\n<img src=\"data:image/png;base64,MTIz\" style=\"width: 127px; height: 96.3263px;width:127px;height:96.3263px;\"><br><br>A Test with a inline image.<br>\n\n",
+        body: "\n\n<img src=\"data:image/png;base64,MTIz\" style=\"width: 127px; height: 96.3263px;\"><br><br>A Test with a inline image.<br>\n\n",
       )
     end
 

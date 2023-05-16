@@ -7,9 +7,11 @@ subject: AW:Installation [Ticket#11392]
 body: "Hallo.<br>Jetzt muss ich dir noch kurzfristig absagen für morgen.<br>Lass uns
   evtl morgen Tel.<br><br>Mfg eike <br><br><div>\n<div>Martin Edenhofer via Znuny
   Team --- Installation [Ticket#11392] ---</div><div>\n<br><table border=\"0\" cellspacing=\"0\"
-  cellpadding=\"0\">\n<tr>\n<td>Von:</td>\n<td>\"Martin Edenhofer via Znuny Team\"
-  &lt;support@example.com&gt;</td>\n</tr>\n<tr>\n<td>An</td>\n<td>eike.xx@xx-corpxx.com</td>\n</tr>\n<tr>\n<td>Datum:</td>\n<td>Mi.,
-  13.06.2012 14:30</td>\n</tr>\n<tr>\n<td>Betreff</td>\n<td>Installation [Ticket#11392]</td>\n</tr>\n</table>\n<hr>\n<br><pre>Hi
+  cellpadding=\"0\" style=\"width:100%;\">\n<tr>\n<td style=\"width: 96px;\">Von:</td>\n<td
+  style=\"width: auto;\">\"Martin Edenhofer via Znuny Team\" &lt;support@example.com&gt;</td>\n</tr>\n<tr>\n<td
+  style=\"width: 96px;\">An</td>\n<td style=\"width: auto;\">eike.xx@xx-corpxx.com</td>\n</tr>\n<tr>\n<td
+  style=\"width: 96px;\">Datum:</td>\n<td style=\"width: auto;\">Mi., 13.06.2012 14:30</td>\n</tr>\n<tr>\n<td
+  style=\"width: 96px;\">Betreff</td>\n<td style=\"width: auto;\">Installation [Ticket#11392]</td>\n</tr>\n</table>\n<hr>\n<br><pre>Hi
   Eike,\n\nanbei wie gestern telefonisch besprochen Informationen zur Vorbereitung.\n\na)
   Installation von http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm
   (dieses RPM ist RHEL kompatible) und dessen Abhängigkeiten.\n\nb) Installation von

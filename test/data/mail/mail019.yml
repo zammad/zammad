@@ -33,55 +33,55 @@ body: |-
 
   目前最热门的三个国家情况如下：</p><table style="border-collapse: collapse;" border="0" cellspacing="0" cellpadding="0">
   <tr>
-  <td style=" border: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 77.4pt; border: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <b>国家</b></p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 108pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <b>匈牙利</b></p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 126pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <b>葡萄牙</b></p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 114.7pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <b>西班牙</b></p></td>
   </tr>
   <tr>
-  <td style=" border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 77.4pt; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>投资金额</p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 108pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <span lang="EN-US"> 25</span>万欧元国债</p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 126pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <span lang="EN-US"> 50</span>万欧元以上房产</p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 114.7pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <span lang="EN-US"> 50</span>万欧元以上房产</p></td>
   </tr>
   <tr>
-  <td style=" border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 77.4pt; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>其他成本</p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 108pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <span lang="EN-US"> 4.5</span>万欧元</p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 126pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <span lang="EN-US"> 6</span>万欧元</p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 114.7pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <span lang="EN-US"> 6</span>万欧元</p></td>
   </tr>
   <tr>
-  <td style=" border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 77.4pt; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>处理速度</p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 108pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <span lang="EN-US"> 1</span>个月</p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 126pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <span lang="EN-US"> 2</span>个月</p></td>
-  <td style=" border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
+  <td style="width: 114.7pt; border-left: medium none currentcolor; border-right: 1pt solid windowtext; border-top: medium none currentcolor; border-bottom: 1pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0cm; padding-bottom: 0cm;" valign="top">
   <p>
   <span>预计<span lang="EN-US">2</span>个月</span></p></td>
   </tr>

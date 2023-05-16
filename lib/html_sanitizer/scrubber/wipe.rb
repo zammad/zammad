@@ -78,18 +78,32 @@ class HtmlSanitizer
         attributes_2_css.each do |key|
           next if !node[key]
 
-          if node['style'].blank?
-            node['style'] = ''
-          else
-            node['style'] += ';'
-          end
           value = node[key]
           node.delete(key)
           next if value.blank?
+          next if node_has_css?(node, key)
 
-          value += 'px' if !value.match?(%r{%|px|em}i)
-          node['style'] += "#{key}:#{value}"
+          node_set_style(node, key, value)
         end
+      end
+
+      def node_has_css?(node, key)
+        node['style'].present? && node['style']&.include?("#{key}:")
+      end
+
+      def node_init_style(node)
+        if node['style'].blank?
+          node['style'] = ''
+        else
+          node['style'] += ';'
+        end
+      end
+
+      def node_set_style(node, key, value)
+        node_init_style(node)
+
+        value += 'px' if !value.match?(%r{%|px|em}i)
+        node['style'] += "#{key}:#{value}"
       end
 
       def clear_css_classes(node)

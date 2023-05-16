@@ -77,6 +77,7 @@ Rails.application.config.html_sanitizer_css_properties_allowlist = {
     border-top-width border-right-width border-bottom-width border-left-width
     border-top-color border-right-color border-bottom-color border-left-color
     border-top-style border-right-style border-bottom-style border-left-style
+    width
   ],
   'th'    => %w[
     background background-color color font-size vertical-align
@@ -88,6 +89,7 @@ Rails.application.config.html_sanitizer_css_properties_allowlist = {
     border-top-width border-right-width border-bottom-width border-left-width
     border-top-color border-right-color border-bottom-color border-left-color
     border-top-style border-right-style border-bottom-style border-left-style
+    width
   ],
   'tr'    => %w[
     background background-color color font-size vertical-align
@@ -99,6 +101,7 @@ Rails.application.config.html_sanitizer_css_properties_allowlist = {
     border-top-width border-right-width border-bottom-width border-left-width
     border-top-color border-right-color border-bottom-color border-left-color
     border-top-style border-right-style border-bottom-style border-left-style
+    width
   ],
   'td'    => %w[
     background background-color color font-size vertical-align
@@ -110,6 +113,7 @@ Rails.application.config.html_sanitizer_css_properties_allowlist = {
     border-top-width border-right-width border-bottom-width border-left-width
     border-top-color border-right-color border-bottom-color border-left-color
     border-top-style border-right-style border-bottom-style border-left-style
+    width
   ],
 }
 
