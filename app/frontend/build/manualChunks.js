@@ -11,6 +11,11 @@ const graphqlIds = new Set()
 const matchers = [
   {
     vendor: false,
+    matcher: (id) => id.includes('commonjsHelpers.js'),
+    chunk: 'commonjsHelpers',
+  },
+  {
+    vendor: false,
     matcher: (id) => id === 'virtual:svg-icons-register',
     chunk: 'icons',
   },
@@ -56,6 +61,11 @@ const matchers = [
       return match
     },
     chunk: 'graphql',
+  },
+  {
+    vendor: true,
+    matcher: (id) => /node_modules\/@formkit/.test(id),
+    chunk: 'formkit',
   },
   {
     vendor: true,

@@ -437,6 +437,7 @@ const getResetFormValues = (
 ) => {
   const resetValues: FormValues = {}
   const dirtyNodes: FormKitNode[] = []
+  const dirtyValues: FormValues = {}
 
   const setResetFormValue = (
     name: string,
@@ -471,8 +472,7 @@ const getResetFormValues = (
 
     if (!resetDirty && formElement.context?.state.dirty) {
       dirtyNodes.push(formElement)
-      setResetFormValue(field, formElement._value as FormFieldValue, parentName)
-      return
+      dirtyValues[field] = formElement._value as FormFieldValue
     }
 
     if (field in values) {
@@ -496,6 +496,7 @@ const getResetFormValues = (
 
   return {
     dirtyNodes,
+    dirtyValues,
     resetValues,
   }
 }
@@ -514,7 +515,7 @@ const resetForm = (
 
   if (object) setInitialEntityObjectAttributeMap(object)
 
-  const { dirtyNodes, resetValues } = getResetFormValues(
+  const { dirtyNodes, dirtyValues, resetValues } = getResetFormValues(
     rootNode,
     values,
     object,
@@ -528,9 +529,8 @@ const resetForm = (
   )
 
   // keep dirty nodes as dirty
-  // TODO: check if we need to skip the formUpdater???
   dirtyNodes.forEach((node) => {
-    node.input(node._value, false)
+    node.input(dirtyValues[node.name], false)
   })
 
   formResetRunning.value = false

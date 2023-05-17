@@ -875,10 +875,12 @@ describe('Form.vue - Reset', () => {
 
     form.value.resetForm({ text: 'Some text' }, {}, { resetDirty: false })
     await waitForNextTick()
+
     expect(input).toHaveValue('New title')
     expect(textarea).toHaveValue('Some text')
     expect(example).toHaveValue('New example')
     expect(form.value.findNodeByName('title')?.context?.state.dirty).toBe(true)
+    expect(form.value.findNodeByName('text')?.context?.state.dirty).toBe(false)
     expect(form.value.findNodeByName('example')?.context?.state.dirty).toBe(
       true,
     )

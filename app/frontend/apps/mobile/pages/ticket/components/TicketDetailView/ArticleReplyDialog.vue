@@ -40,9 +40,10 @@ const articleFormGroupNodeContext = computed(
   () => props.articleFormGroupNode?.context,
 )
 
-const rememberArticleFormData = cloneDeep(
-  articleFormGroupNodeContext.value?._value,
-)
+const rememberArticleFormData = cloneDeep({
+  ...articleFormGroupNodeContext.value?._value,
+  __init: true,
+})
 
 const dialogFormIsDirty = computed(() => {
   if (!props.newTicketArticlePresent)

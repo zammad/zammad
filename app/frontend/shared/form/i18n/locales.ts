@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormKitValidationMessages } from '@formkit/validation'
+import { createMessageName } from '@formkit/validation'
 import type { FormKitLocale } from '@formkit/i18n'
 import { i18n } from '#shared/i18n.ts'
 import { commaSeparatedList, order } from '#shared/utils/formatter.ts'
@@ -150,6 +151,106 @@ const loadLocales = (): FormKitLocaleExtended => {
       alphanumeric() {
         /* <i18n case="Shown when the user-provided value contains non-alphanumeric characters."> */
         return i18n.t('This field can only contain letters and numbers.')
+        /* </i18n> */
+      },
+
+      /**
+       * The value have no letter.
+       * @see {@link https://formkit.com/essentials/validation#contains_alpha}
+       */
+      contains_alpha() {
+        /* <i18n case="Shown when the user-provided value contains only non-alphabetical characters."> */
+        return i18n.t('This field must contain alphabetical characters.')
+        /* </i18n> */
+      },
+
+      /**
+       * The value have no alphanumeric
+       * @see {@link https://formkit.com/essentials/validation#contains_alphanumeric}
+       */
+      contains_alphanumeric() {
+        /* <i18n case="Shown when the user-provided value contains only non-alphanumeric characters."> */
+        return i18n.t('This field must contain letters or numbers.')
+        /* </i18n> */
+      },
+
+      /**
+       * The value have no letter and/or spaces
+       * @see {@link https://formkit.com/essentials/validation#contains_alpha-spaces}
+       */
+      contains_alpha_spaces() {
+        /* <i18n case="Shown when the user-provided value contains only non-alphabetical and non-space characters."> */
+        return i18n.t('This field must contain letters or spaces.')
+        /* </i18n> */
+      },
+
+      /**
+       * The value have no symbol
+       * @see {@link https://formkit.com/essentials/validation#contains_symbol}
+       */
+      contains_symbol() {
+        /* <i18n case="Shown when the user-provided value contains only alphanumeric and space characters."> */
+        return i18n.t('This field must contain a symbol.')
+        /* </i18n> */
+      },
+
+      /**
+       * The value have no uppercase
+       * @see {@link https://formkit.com/essentials/validation#contains_uppercase}
+       */
+      contains_uppercase() {
+        /* <i18n case="Shown when the user-provided value contains only non-alphabetical-uppercase characters."> */
+        return i18n.t('This field must contain an uppercase letter.')
+        /* </i18n> */
+      },
+
+      /**
+       * The value have no lowercase
+       * @see {@link https://formkit.com/essentials/validation#contains_lowercase}
+       */
+      contains_lowercase() {
+        /* <i18n case="Shown when the user-provided value contains only non-alphabetical-lowercase characters."> */
+        return i18n.t('This field must contain a lowercase letter.')
+        /* </i18n> */
+      },
+
+      /**
+       *  The value have no numeric
+       * @see {@link https://formkit.com/essentials/validation#contains_numeric}
+       */
+      contains_numeric() {
+        /* <i18n case="Shown when the user-provided value have no numeric."> */
+        return i18n.t('This field must contain numbers.')
+        /* </i18n> */
+      },
+
+      /**
+       * The value is not symbol
+       * @see {@link https://formkit.com/essentials/validation#symbol}
+       */
+      symbol() {
+        /* <i18n case="Shown when the user-provided value contains alphanumeric and space characters."> */
+        return i18n.t('This field must be a symbol.')
+        /* </i18n> */
+      },
+
+      /**
+       * The value is not uppercase
+       * @see {@link https://formkit.com/essentials/validation#uppercase}
+       */
+      uppercase() {
+        /* <i18n case="Shown when the user-provided value contains non-alphabetical-uppercase characters."> */
+        return i18n.t('This field can only contain uppercase letters.')
+        /* </i18n> */
+      },
+
+      /**
+       * The value is not lowercase
+       * @see {@link https://formkit.com/essentials/validation#lowercase}
+       */
+      lowercase() {
+        /* <i18n case="Shown when the user-provided value contains non-alphabetical-lowercase characters."> */
+        return i18n.t('This field can only contain lowercase letters.')
         /* </i18n> */
       },
 
@@ -393,6 +494,27 @@ const loadLocales = (): FormKitLocaleExtended => {
       required() {
         /* <i18n case="Shown when a user does not provide a value to a required input."> */
         return i18n.t('This field is required.')
+        /* </i18n> */
+      },
+
+      /**
+       * Require one field.
+       * @see {@link https://formkit.com/essentials/validation#require-one}
+       */
+      require_one: ({ name, node, args: inputNames }) => {
+        const labels = inputNames
+          .map((name) => {
+            const dependentNode = node.at(name)
+            if (dependentNode) {
+              return createMessageName(dependentNode)
+            }
+            return false
+          })
+          .filter((name) => !!name)
+        labels.unshift(name)
+
+        /* <i18n case="Shown when the user-provided has not provided a value for at least one of the required fields."> */
+        return `${labels.join(' or ')} is required.`
         /* </i18n> */
       },
 
