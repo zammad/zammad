@@ -564,6 +564,15 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
         elem.base.obscured?
       rescue *page.driver.invalid_element_errors
         true
+      rescue Selenium::WebDriver::Error::UnknownError => e
+        # Newer Chrome versions may return the following error for a missing element:
+        #
+        #   unknown error: unhandled inspector error: {"code":-32000,"message":"No node with given id found"}
+        #   (Session info: chrome=113.0.5672.126)"
+        #
+        #   This error is currently unrecognized by `Selenium::WebDriver.invalid_element_errors`,
+        #   so we make an explicit exception.
+        e.to_s.include? '"code":-32000'
       end
     end
   end
