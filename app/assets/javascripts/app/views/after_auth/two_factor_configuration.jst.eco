@@ -1,0 +1,13 @@
+<div>
+  <div class="two-factor-auth">
+    <p>
+      <%- @T('You must protect your account with two-factor authentication.') %>
+    </p>
+    <p>
+      <%- @T('Choose your preferred two-factor authentication method to set it up.') %>
+    </p>
+    <div class="two-factor-auth-method-buttons">
+      <div class="loading icon"></div>
+    </div>
+  </div>
+</div>

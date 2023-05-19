@@ -6,7 +6,8 @@ module Gql::Mutations
 
     argument :input, Gql::Types::Input::LoginInputType, 'Login input fields.'
 
-    field :session_id, String, description: 'The current session'
+    field :session, Gql::Types::SessionType, description: 'The current session, if the login was successful.'
+    field :two_factor_required, Gql::Types::UserTwoFactorMethodsType, description: 'Two factor authentication methods available for the user about to log-in.'
 
     def self.authorize(...)
       true
@@ -14,24 +15,42 @@ module Gql::Mutations
 
     # reimplementation of `authenticate_with_password`
     def resolve(input:)
-
-      # Register user for subsequent auth checks.
-      user = authenticate(**input)
-
-      return unified_login_error if !user || !context[:current_user]
-
-      { session_id: context[:controller].session.id }
+      authenticate(**input)
     end
 
     private
 
-    def authenticate(login:, password:, remember_me: false)
-      auth = Auth.new(login, password)
-      if !auth.valid?
-        return
+    def authenticate(login:, password:, two_factor_method: nil, two_factor_payload: nil, remember_me: false)
+      auth = Auth.new(login, password, two_factor_method:, two_factor_payload:)
+
+      begin
+        auth.valid!
+      rescue Auth::Error::TwoFactorRequired => e
+        return {
+          two_factor_required: {
+            default_two_factor_method:    e.default_two_factor_method,
+            available_two_factor_methods: e.available_two_factor_methods,
+          }
+        }
+      rescue Auth::Error::Base => e
+        return error_response({ message: e.message })
       end
 
-      user = auth&.user
+      create_session(auth&.user, remember_me)
+
+      authenticate_result
+    end
+
+    def authenticate_result
+      {
+        session: {
+          id:         context[:controller].session.id,
+          after_auth: Auth::AfterAuth.run(context.current_user, context[:controller].session)
+        }
+      }
+    end
+
+    def create_session(user, remember_me)
       context[:controller].session.delete(:switched_from_user_id)
 
       # authentication_check_prerequesits is private
@@ -39,21 +58,18 @@ module Gql::Mutations
       context[:current_user] = user
 
       initiate_session_for(user, remember_me)
-
-      user
     end
 
     def initiate_session_for(user, remember_me)
       # TODO: Check if this can be moved to a central place, because it's also the same code in the sessions controller.
       context[:controller].request.env['rack.session.options'][:expire_after] = 1.year if remember_me
-      context[:controller].session[:persistent] = true
+      initiate_session_data
       user.activity_stream_log('session started', user.id, true)
     end
 
-    def unified_login_error
-      error_response({
-                       message: __('Login failed. Have you double-checked your credentials and completed the email verification step?')
-                     })
+    def initiate_session_data
+      context[:controller].session[:persistent] = true
+      context[:controller].session[:authentication_type] = 'password'
     end
   end
 end

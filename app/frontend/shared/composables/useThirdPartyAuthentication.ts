@@ -82,7 +82,7 @@ export const useThirdPartyAuthentication = () => {
   })
 
   return {
-    enabledProviders: enabledProviders.value,
-    hasEnabledProviders: enabledProviders.value.length > 0,
+    enabledProviders,
+    hasEnabledProviders: computed(() => enabledProviders.value.length > 0),
   }
 }

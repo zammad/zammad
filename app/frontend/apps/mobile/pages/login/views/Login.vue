@@ -6,35 +6,34 @@ import {
   useNotifications,
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
-import { useAuthenticationStore } from '#shared/stores/authentication.ts'
-import CommonLogo from '#shared/components/CommonLogo/CommonLogo.vue'
-import Form from '#shared/components/Form/Form.vue'
-import { type FormData, useForm } from '#shared/components/Form/index.ts'
-import UserError from '#shared/errors/UserError.ts'
-import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { usePublicLinksQuery } from '#shared/entities/public-links/graphql/queries/links.api.ts'
-import type {
-  PublicLinksQuery,
-  PublicLinkUpdatesSubscription,
-  PublicLinkUpdatesSubscriptionVariables,
-} from '#shared/graphql/types.ts'
-import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
-import { computed } from 'vue'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { PublicLinkUpdatesDocument } from '#shared/entities/public-links/graphql/subscriptions/currentLinks.api.ts'
+import { computed, reactive } from 'vue'
 import { useThirdPartyAuthentication } from '#shared/composables/useThirdPartyAuthentication.ts'
+import type { FormData } from '#shared/components/Form/index.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
+import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
+import type UserError from '#shared/errors/UserError.ts'
+import type {
+  EnumTwoFactorMethod,
+  UserTwoFactorMethods,
+} from '#shared/graphql/types.ts'
 import LoginThirdParty from '../components/LoginThirdParty.vue'
+import LoginCredentialsForm from '../components/LoginCredentialsForm.vue'
+import LoginHeader from '../components/LoginHeader.vue'
+import LoginTwoFactor from '../components/LoginTwoFactor.vue'
+import LoginTwoFactorMethods from '../components/LoginTwoFactorMethods.vue'
+import { usePublicLinks } from '../composable/usePublicLinks.ts'
+import type { LoginFlow, LoginFormData } from '../types/login.ts'
+import LoginFooter from '../components/LoginFooter.vue'
 
 const route = useRoute()
 const router = useRouter()
 
+const { notify } = useNotifications()
+
 // Output a hint when the session is no longer valid.
 // This could happen because the session was deleted on the server.
 if (route.query.invalidatedSession === '1') {
-  const { notify } = useNotifications()
-
   notify({
     message: __('The session is no longer valid. Please log in again.'),
     type: NotificationTypes.Warn,
@@ -43,144 +42,74 @@ if (route.query.invalidatedSession === '1') {
   router.replace({ name: 'Login' })
 }
 
-const authentication = useAuthenticationStore()
-
 const application = useApplicationStore()
 
-const loginSchema = defineFormSchema([
-  {
-    isLayout: true,
-    component: 'FormGroup',
-    children: [
-      {
-        name: 'login',
-        type: 'text',
-        label: __('Username / Email'),
-        placeholder: __('Username / Email'),
-        required: true,
-      },
-    ],
-  },
-  {
-    isLayout: true,
-    component: 'FormGroup',
-    children: [
-      {
-        name: 'password',
-        label: __('Password'),
-        placeholder: __('Password'),
-        type: 'password',
-        required: true,
-      },
-    ],
-  },
-  {
-    isLayout: true,
-    element: 'div',
-    attrs: {
-      class: 'mt-2.5 flex grow items-center justify-between text-white',
-    },
-    children: [
-      {
-        type: 'checkbox',
-        name: 'rememberMe',
-        label: __('Remember me'),
-        wrapperClass: '!h-6',
-      },
-      // TODO support if/then in form-schema
-      ...(application.config.user_lost_password
-        ? [
-            {
-              isLayout: true,
-              component: 'CommonLink',
-              props: {
-                class: 'text-right text-white',
-                link: '/#password_reset',
-              },
-              children: __('Forgot password?'),
-            },
-          ]
-        : []),
-    ],
-  },
-])
-
-interface LoginFormData {
-  login: string
-  password: string
-  rememberMe: boolean
-}
-
-const publicLinksQuery = new QueryHandler(
-  usePublicLinksQuery({
-    screen: EnumPublicLinksScreen.Login,
-  }),
-)
-
-publicLinksQuery.subscribeToMore<
-  PublicLinkUpdatesSubscriptionVariables,
-  PublicLinkUpdatesSubscription
->({
-  document: PublicLinkUpdatesDocument,
-  variables: {
-    screen: EnumPublicLinksScreen.Login,
-  },
-  updateQuery(_, { subscriptionData }) {
-    const publicLinks = subscriptionData.data.publicLinkUpdates?.publicLinks
-    // if we return empty array here, the actual query will be aborted, because we have fetchPolicy "cache-and-network"
-    // if we return existing value, it will throw an error, because "publicLinks" doesn't exist yet on the query result
-    if (!publicLinks) {
-      return null as unknown as PublicLinksQuery
-    }
-    return {
-      publicLinks,
-    }
-  },
-})
-
-const links = computed(() => {
-  const publicLinks = publicLinksQuery.result()
-
-  return publicLinks.value?.publicLinks || []
-})
-
-// TODO: workaround for disabled button state, will be changed in formkit.
-const { form, isDisabled } = useForm()
-
-const login = (formData: FormData<LoginFormData>) => {
-  const { notify, clearAllNotifications } = useNotifications()
-
-  // Clear notifications to avoid duplicated error messages.
-  clearAllNotifications()
-
-  return authentication
-    .login(formData.login, formData.password, formData.rememberMe)
-    .then(() => {
-      // TODO: maybe we need some additional logic for the ThirtParty-Login situtation.
-      const { redirect: redirectUrl } = route.query
-      if (typeof redirectUrl === 'string') {
-        router.replace(redirectUrl)
-      } else {
-        router.replace('/')
-      }
-    })
-    .catch((errors: UserError) => {
-      if (errors instanceof UserError) {
-        notify({
-          message: errors.generalErrors[0],
-          type: NotificationTypes.Error,
-        })
-      }
-    })
-}
+const { links } = usePublicLinks()
 
 const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
 
 const showPasswordLogin = computed(
-  () => application.config.user_show_password_login || !hasEnabledProviders,
+  () =>
+    application.config.user_show_password_login || !hasEnabledProviders.value,
 )
 
 const { forceDesktop } = useForceDesktop()
+const { twoFactorPlugins, twoFactorMethods } = useTwoFactorPlugins()
+
+const finishLogin = () => {
+  // TODO: maybe we need some additional logic for the ThirtParty-Login situtation.
+  const { redirect: redirectUrl } = route.query
+  if (typeof redirectUrl === 'string') {
+    router.replace(redirectUrl)
+  } else {
+    router.replace('/')
+  }
+}
+
+const loginFlow = reactive<LoginFlow>({
+  state: 'credentials',
+  allowedMethods: [],
+})
+
+const updateSecondFactor = (factor: EnumTwoFactorMethod) => {
+  loginFlow.twoFactor = factor
+  loginFlow.state = '2fa'
+}
+
+const askTwoFactor = (
+  twoFactor: UserTwoFactorMethods,
+  formData: FormData<LoginFormData>,
+) => {
+  loginFlow.credentials = formData
+  loginFlow.allowedMethods = twoFactor.availableTwoFactorMethods
+  updateSecondFactor(twoFactor.defaultTwoFactorMethod as EnumTwoFactorMethod)
+}
+
+const twoFactorAllowedMethods = computed(() => {
+  return twoFactorMethods.filter((method) =>
+    loginFlow.allowedMethods.includes(method.name),
+  )
+})
+
+const twoFactorPlugin = computed(() => {
+  return loginFlow.twoFactor ? twoFactorPlugins[loginFlow.twoFactor] : undefined
+})
+
+const loginPageTitle = computed(() => {
+  const productName = String(application.config.product_name)
+  if (loginFlow.state === 'credentials') return productName
+  if (loginFlow.state === '2fa') {
+    return twoFactorPlugin.value?.label ?? productName
+  }
+  return __('Try another method')
+})
+
+const showError = (error: UserError) => {
+  notify({
+    message: error.generalErrors[0],
+    type: NotificationTypes.Error,
+  })
+}
 </script>
 
 <template>
@@ -188,66 +117,36 @@ const { forceDesktop } = useForceDesktop()
     <main class="m-auto w-full max-w-md">
       <div class="flex grow flex-col justify-center">
         <div class="my-5 grow">
-          <div class="flex justify-center p-2">
-            <CommonLogo />
-          </div>
-          <h1 class="mb-6 flex justify-center p-2 text-2xl font-extrabold">
-            {{ $c.product_name }}
-          </h1>
-          <template v-if="$c.maintenance_mode">
-            <div
-              class="my-1 flex items-center rounded-xl bg-red px-4 py-2 text-white"
-            >
-              {{
-                $t(
-                  'Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.',
-                )
-              }}
-            </div>
-          </template>
-          <template v-if="$c.maintenance_login && $c.maintenance_login_message">
-            <!-- eslint-disable vue/no-v-html -->
-            <div
-              class="my-1 flex items-center rounded-xl bg-green px-4 py-2 text-white"
-              v-html="$c.maintenance_login_message"
-            ></div>
-          </template>
-          <Form
-            v-if="showPasswordLogin"
-            id="signin"
-            ref="form"
-            class="text-left"
-            :schema="loginSchema"
-            @submit="login($event as FormData<LoginFormData>)"
-          >
-            <template #after-fields>
-              <div
-                v-if="$c.user_create_account"
-                class="mt-4 flex grow items-center justify-center"
-              >
-                <span class="ltr:mr-1 rtl:ml-1">{{ $t('New user?') }}</span>
-                <CommonLink
-                  link="/#signup"
-                  class="cursor-pointer select-none !text-yellow underline"
-                >
-                  {{ $t('Register') }}
-                </CommonLink>
-              </div>
-              <FormKit
-                wrapper-class="mt-6 flex grow justify-center items-center"
-                input-class="py-2 px-4 w-full h-14 text-xl rounded-xl select-none"
-                variant="submit"
-                type="submit"
-                :disabled="isDisabled"
-              >
-                {{ $t('Sign in') }}
-              </FormKit>
-            </template>
-          </Form>
+          <LoginHeader :title="loginPageTitle" />
+          <LoginCredentialsForm
+            v-if="loginFlow.state === 'credentials' && showPasswordLogin"
+            @ask-two-factor="askTwoFactor"
+            @error="showError"
+            @finish="finishLogin"
+          />
+          <LoginTwoFactor
+            v-else-if="
+              loginFlow.state === '2fa' &&
+              twoFactorPlugin &&
+              loginFlow.credentials
+            "
+            :credentials="loginFlow.credentials"
+            :two-factor="twoFactorPlugin"
+            @error="showError"
+            @finish="finishLogin"
+          />
+          <LoginTwoFactorMethods
+            v-else-if="loginFlow.state === '2fa-select'"
+            :methods="twoFactorAllowedMethods"
+            @select="updateSecondFactor"
+          />
         </div>
       </div>
     </main>
-    <LoginThirdParty v-if="hasEnabledProviders" :providers="enabledProviders" />
+    <LoginThirdParty
+      v-if="hasEnabledProviders && loginFlow.state === 'credentials'"
+      :providers="enabledProviders"
+    />
     <section v-if="!showPasswordLogin" class="mb-6 w-full max-w-md text-center">
       <p>
         {{
@@ -260,6 +159,25 @@ const { forceDesktop } = useForceDesktop()
         {{ $t('Request the password login here.') }}
       </CommonLink>
     </section>
+    <section
+      v-if="loginFlow.state === '2fa' && twoFactorAllowedMethods.length > 1"
+    >
+      {{ $t('Having problems?') }}
+      <button
+        class="cursor-pointer pb-2 font-semibold leading-4 text-gray"
+        @click.prevent="loginFlow.state = '2fa-select'"
+      >
+        {{ $t('Try another method') }}
+      </button>
+    </section>
+    <div
+      v-if="
+        loginFlow.state !== 'credentials' && twoFactorAllowedMethods.length <= 1
+      "
+      class="pb-2 font-medium leading-4 text-gray"
+    >
+      {{ $t('Contact the administrator if you have any problems logging in.') }}
+    </div>
     <CommonLink
       link="/#login"
       class="font-medium leading-4 text-gray"
@@ -282,31 +200,6 @@ const { forceDesktop } = useForceDesktop()
         </CommonLink>
       </template>
     </nav>
-    <footer
-      class="mt-8 flex w-full max-w-md items-center justify-center border-t border-gray-600 py-2.5 align-middle font-medium leading-4 text-gray"
-    >
-      <CommonLink
-        v-if="application.hasCustomProductBranding"
-        link="https://zammad.org"
-        external
-        open-in-new-tab
-        class="ltr:mr-1 rtl:ml-1"
-      >
-        <img
-          :src="'/assets/images/icons/logo.svg'"
-          :alt="$t('Logo')"
-          class="h-6 w-6"
-        />
-      </CommonLink>
-      <span class="ltr:mr-1 rtl:ml-1">{{ $t('Powered by') }}</span>
-      <CommonLink
-        link="https://zammad.org"
-        external
-        open-in-new-tab
-        class="font-semibold"
-      >
-        {{ $t('Zammad') }}
-      </CommonLink>
-    </footer>
+    <LoginFooter />
   </div>
 </template>

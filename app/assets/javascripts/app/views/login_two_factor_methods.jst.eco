@@ -1,0 +1,26 @@
+<div class="login fullscreen">
+  <div class="fullscreen-center">
+    <div class="fullscreen-body">
+      <p><%- @T('Log in to %s', @C('fqdn')) %></p>
+      <div class="hero-unit">
+        <img class="company-logo" src="<%= @logoUrl %>" alt="<%= @C('product_name') %>">
+        <% for method in @twoFactorMethods: %>
+          <hr>
+          <p class="u-clickable js-select-two-factor-method" data-method="<%= method.key %>">
+            <%= @T method.label %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+
+    <p>
+      Having problems?
+      <a href="#" class="js-try-another"><%- @T('Try another sign-in method.') %></a>
+    </p>
+  </div>
+  <div class="poweredBy">
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logo') %></a>
+    <%- @T('Powered by') %>
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logotype', 'logotype') %></a>
+  </div>
+</div>

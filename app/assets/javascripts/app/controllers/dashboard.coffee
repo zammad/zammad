@@ -45,6 +45,7 @@ class App.Dashboard extends App.Controller
     @html localEl
 
   mayBeClues: =>
+    return if @Config.get('after_auth')
     return if !@clueAccess
     return if !@shown
     return if @Config.get('switch_back_to_possible')

@@ -1,0 +1,9 @@
+query session {
+  session {
+    id
+    afterAuth {
+      type
+      data
+    }
+  }
+}

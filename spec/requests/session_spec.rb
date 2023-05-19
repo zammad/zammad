@@ -76,6 +76,8 @@ RSpec.describe 'Sessions endpoints', type: :request do
       let(:fingerprint) { SecureRandom.urlsafe_base64(40) }
 
       before do
+        setting if defined?(setting)
+
         params = {
           fingerprint: fingerprint,
           username:    user.login,
@@ -89,6 +91,29 @@ RSpec.describe 'Sessions endpoints', type: :request do
         get '/api/v1/signshow', params: params, as: :json
 
         expect(json_response['session']).not_to include('password')
+      end
+
+      context 'when after auth modules are triggered' do
+        subject(:user) { create(:customer, roles: [role], password: password) }
+
+        let(:role)     { create(:role, name: '2FA') }
+
+        context 'with no enforcing roles' do
+          it 'returns nil' do
+            expect(json_response['after_auth']).to be_nil
+          end
+        end
+
+        context 'with enforcing roles' do
+          let(:setting) do
+            Setting.set('two_factor_authentication_enforce_role_ids', [role.id])
+            Setting.set('two_factor_authentication_method_authenticator_app', true)
+          end
+
+          it 'returns the after auth information' do
+            expect(json_response['after_auth']).to eq({ 'data' => {}, 'type' => 'TwoFactorConfiguration' })
+          end
+        end
       end
     end
   end
@@ -106,7 +131,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
       end
 
       let(:headers) { { 'X-Forwarded-User' => login } }
-      let(:login) { User.last.login }
+      let(:login)   { User.last.login }
 
       it 'returns a new user-session response' do
         get '/auth/sso', as: :json, headers: headers

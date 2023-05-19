@@ -1,0 +1,77 @@
+class App.AfterAuthTwoFactorConfiguration extends App.ControllerAfterAuthModal
+  head: __('Set up two-factor authentication')
+  buttonCancel: __('Cancel & Sign out')
+  buttonSubmit: false
+
+  events:
+    'click .js-configuration-method': 'selectConfigurationMethod'
+
+  constructor: (params) ->
+
+    # Remove the fade transition if requested.
+    if params.noFadeTransition
+      params.className = 'modal'
+
+    super(params)
+
+  content: ->
+    content = $(App.view('after_auth/two_factor_configuration')())
+
+    @fetchAvailableMethods()
+
+    content
+
+  fetchAvailableMethods: ->
+    # If user clicks cancel & sign out, modal may try to re-render during logout
+    # Since current user is no longer avaialble, it would throw a javascript error
+    return if !App.User.current()
+
+    @ajax(
+      id:      'two_factor_enabled_methods'
+      type:    'GET'
+      url:     "#{@apiPath}/users/#{App.User.current().id}/two_factor_enabled_methods"
+      success: @renderAvailableMethods
+    )
+
+  renderAvailableMethods: (data, status, xhr) =>
+    methodButtons = $(App.view('after_auth/two_factor_configuration/method_buttons')(
+      enabledMethods: @transformTwoFactorMethods(data)
+    ))
+
+    @$('.two-factor-auth-method-buttons').html(methodButtons)
+
+  transformTwoFactorMethods: (data) ->
+    return [] if _.isEmpty(data)
+
+    iteratee = (memo, item) ->
+      method = App.TwoFactorMethods.methodByKey(item.method)
+
+      return memo if !method
+
+      memo.push(_.extend(
+        {},
+        method,
+        disabled: item.configured
+      ))
+
+      memo
+
+    _.reduce(data, iteratee, [])
+
+  closeWithoutFade: =>
+    @el.removeClass('fade')
+    @close()
+
+  selectConfigurationMethod: (e) =>
+    e.preventDefault()
+
+    @closeWithoutFade()
+
+    configurationMethod = $(e.currentTarget).data('method')
+
+    return if _.isEmpty(configurationMethod)
+
+    new App['TwoFactorConfigurationMethod' + configurationMethod](
+      mode: 'after_auth'
+      successCallback: @fetchAfterAuth
+    )

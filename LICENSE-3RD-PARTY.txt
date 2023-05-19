@@ -133,6 +133,11 @@ Copyright: Faruk Ates (https://twitter.com/KuraFire)
            Richard Herrera (https://twitter.com/doctyper)
 License: MIT license & BSD license
 -----------------------------------------------------------------------------
+qrcodegen.js
+Source: https://www.nayuki.io/page/qr-code-generator-library
+Copyright: 2022, Project Nayuki
+License: MIT license
+-----------------------------------------------------------------------------
 rangy.js
 Source: https://github.com/timdown/rangy
 Copyright: 2015, Tim Down

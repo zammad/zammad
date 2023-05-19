@@ -12,6 +12,7 @@ class User < ApplicationModel
   include HasRoles
   include HasObjectManagerAttributes
   include HasTaskbars
+  include HasTwoFactor
   include User::Assets
   include User::Avatar
   include User::Search
@@ -61,7 +62,21 @@ class User < ApplicationModel
 
   store :preferences
 
-  association_attributes_ignored :online_notifications, :templates, :taskbars, :user_devices, :chat_sessions, :cti_caller_ids, :text_modules, :customer_tickets, :owner_tickets, :created_recent_views, :chat_agents, :data_privacy_tasks, :overviews, :mentions
+  association_attributes_ignored :online_notifications,
+                                 :templates,
+                                 :taskbars,
+                                 :user_devices,
+                                 :chat_sessions,
+                                 :cti_caller_ids,
+                                 :text_modules,
+                                 :customer_tickets,
+                                 :owner_tickets,
+                                 :created_recent_views,
+                                 :chat_agents,
+                                 :data_privacy_tasks,
+                                 :overviews,
+                                 :mentions,
+                                 :permissions
 
   activity_stream_permission 'admin.user'
 
@@ -70,8 +85,6 @@ class User < ApplicationModel
                                      :image,
                                      :image_source,
                                      :preferences
-
-  association_attributes_ignored :permissions
 
   history_attributes_ignored :password,
                              :last_login,

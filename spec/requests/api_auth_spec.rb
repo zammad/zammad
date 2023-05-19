@@ -25,6 +25,10 @@ RSpec.describe 'Api Auth', type: :request do
     create(:customer)
   end
 
+  before do
+    stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
+  end
+
   describe 'request handling' do
 
     it 'does basic auth - admin' do
@@ -82,6 +86,18 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response.header['Cache-Control']).to eq('max-age=0, private, must-revalidate')
       expect(json_response).to be_a(Array)
       expect(json_response).to be_truthy
+    end
+
+    context 'when using BasicAuth with TwoFactor' do
+      let!(:two_factor_pref) { create(:'user/two_factor_preference', user: admin) }
+
+      it 'rejects the log-in' do
+        two_factor_pref
+        authenticated_as(admin)
+        Setting.set('api_password_access', true)
+        get '/api/v1/sessions', params: {}, as: :json
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
 
     it 'does token auth - admin', last_admin_check: false do
@@ -387,12 +403,12 @@ RSpec.describe 'Api Auth', type: :request do
     end
 
     it 'does session auth - admin' do
-      create(:admin, login: 'api-admin@example.com', password: 'adminpw')
+      admin = create(:admin)
 
       get '/'
       token = response.headers['CSRF-TOKEN']
 
-      post '/api/v1/signin', params: { username: 'api-admin@example.com', password: 'adminpw', fingerprint: '123456789' }, headers: { 'X-CSRF-Token' => token }
+      post '/api/v1/signin', params: { username: admin.login, password: admin.password, fingerprint: '123456789' }, headers: { 'X-CSRF-Token' => token }
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(response).to have_http_status(:created)
 
@@ -401,6 +417,44 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
+    end
+
+    context 'when using session auth with TwoFactor' do
+      let(:admin)               { create(:admin) }
+      let(:two_factor_method)   { nil }
+      let(:two_factor_payload)  { nil }
+      let(:code)                { two_factor_pref.configuration[:code] }
+      let!(:two_factor_pref)    { create(:'user/two_factor_preference', user: admin) }
+
+      before do
+        get '/'
+        token = response.headers['CSRF-TOKEN']
+        post '/api/v1/signin', params: { username: admin.login, password: admin.password, two_factor_method: two_factor_method, two_factor_payload: two_factor_payload, fingerprint: '123456789' }, headers: { 'X-CSRF-Token' => token }
+      end
+
+      context 'without two factor token' do
+        it 'rejects the log-in' do
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+
+      context 'with wrong two factor token' do
+        let(:two_factor_payload) { 'wrong' }
+        let(:two_factor_method) { 'authenticator_app' }
+
+        it 'rejects the log-in' do
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+
+      context 'with correct two factor token' do
+        let(:two_factor_payload) { code }
+        let(:two_factor_method) { 'authenticator_app' }
+
+        it 'accepts the log-in' do
+          expect(response).to have_http_status(:created)
+        end
+      end
     end
 
     it 'does session auth - admin - only with valid CSRF token' do

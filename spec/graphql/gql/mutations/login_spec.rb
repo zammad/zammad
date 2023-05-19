@@ -3,7 +3,11 @@
 require 'rails_helper'
 
 # Login and logout work only via controller, so use type: request.
-RSpec.describe Gql::Mutations::Login, type: :request do
+RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
+
+  before do
+    stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
+  end
 
   context 'when logging on' do
     let(:agent_password) { 'some_test_password' }
@@ -12,7 +16,17 @@ RSpec.describe Gql::Mutations::Login, type: :request do
       <<~QUERY
         mutation login($input: LoginInput!) {
           login(input: $input) {
-            sessionId
+            session {
+              id
+              afterAuth {
+                type
+                data
+              }
+            }
+            twoFactorRequired {
+              defaultTwoFactorMethod
+              availableTwoFactorMethods
+            }
             errors {
               message
               field
@@ -22,12 +36,16 @@ RSpec.describe Gql::Mutations::Login, type: :request do
       QUERY
     end
     let(:password) { agent_password }
-    let(:fingerprint) { Faker::Number.unique.number(digits: 6).to_s }
+    let(:fingerprint)         { Faker::Number.unique.number(digits: 6).to_s }
+    let(:two_factor_method)   { nil }
+    let(:two_factor_payload)  { nil }
     let(:variables) do
       {
         input: {
-          login:    agent.login,
-          password: password,
+          login:            agent.login,
+          password:         password,
+          twoFactorMethod:  two_factor_method,
+          twoFactorPayload: two_factor_payload,
         }
       }
     end
@@ -47,47 +65,99 @@ RSpec.describe Gql::Mutations::Login, type: :request do
     end
 
     context 'with correct credentials' do
-      it 'returns session data' do
-        expect(graphql_response['data']['login']['sessionId']).to be_present
-      end
+      context 'without two factor authentication' do
+        it 'returns session data' do
+          expect(graphql_response['data']['login']['session']['id']).to be_present
+        end
 
-      it 'sets the :persistent session parameter' do
-        expect { execute_graphql_query }.to change { request&.session&.fetch(:persistent) }.to(true)
-      end
-
-      it 'adds an activity stream entry for the user’s session' do
-        # Create the user before the GraphQL query execution, so that we have only the activity stream
-        # change from the login.
-        agent
-
-        expect { execute_graphql_query }.to change(ActivityStream, :count).by(1)
-      end
-
-      context 'with remember me' do
-        let(:remember_me) { true }
-        let(:variables) do
-          {
-            input: {
-              login:      agent.login,
-              password:   password,
-              rememberMe: remember_me,
-            }
-          }
+        it 'sets the :persistent session parameter' do
+          expect { execute_graphql_query }.to change { request&.session&.fetch(:persistent) }.to(true)
         end
 
         it 'adds an activity stream entry for the user’s session' do
-          execute_graphql_query
-          expect(request.env['rack.session.options'][:expire_after]).to eq(1.year)
+          # Create the user before the GraphQL query execution, so that we have only the activity stream
+          # change from the login.
+          agent
+
+          expect { execute_graphql_query }.to change(ActivityStream, :count).by(1)
         end
 
-        context 'with not activated remember me' do
-          let(:remember_me) { false }
+        context 'with remember me' do
+          let(:remember_me) { true }
+          let(:variables) do
+            {
+              input: {
+                login:      agent.login,
+                password:   password,
+                rememberMe: remember_me,
+              }
+            }
+          end
 
           it 'adds an activity stream entry for the user’s session' do
             execute_graphql_query
-            expect(request.env['rack.session.options'][:expire_after]).to be_nil
+            expect(request.env['rack.session.options'][:expire_after]).to eq(1.year)
+          end
+
+          context 'with not activated remember me' do
+            let(:remember_me) { false }
+
+            it 'adds an activity stream entry for the user’s session' do
+              execute_graphql_query
+              expect(request.env['rack.session.options'][:expire_after]).to be_nil
+            end
           end
         end
+      end
+
+      context 'with after_auth information' do
+        before do
+          allow_any_instance_of(Auth::AfterAuth::TwoFactorConfiguration).to receive(:check).and_return(true)
+        end
+
+        it 'returns after_auth data' do
+          expect(graphql_response['data']['login']['session']['afterAuth']).to eq({ 'type' => 'TwoFactorConfiguration', 'data' => {} })
+        end
+      end
+
+      context 'with two factor authentication' do
+        let!(:two_factor_pref) { create(:'user/two_factor_preference', user: agent) }
+
+        context 'without token' do
+          it 'returns two factor availability data' do
+            expect(graphql_response['data']['login']['twoFactorRequired']).to eq(
+              {
+                'defaultTwoFactorMethod'    => 'authenticator_app',
+                'availableTwoFactorMethods' => ['authenticator_app']
+              }
+            )
+            expect(graphql_response['data']['login']['session']).not_to be_present
+          end
+        end
+
+        context 'with wrong token' do
+          let(:two_factor_method)  { :authenticator_app }
+          let(:two_factor_payload) { 'wrong' }
+
+          it 'fails with error message' do
+            expect(graphql_response['data']['login']['errors']).to eq(
+              [{
+                'message' => 'Login failed. Please double-check your two-factor authentication method.',
+                'field'   => nil
+              }]
+            )
+          end
+        end
+
+        context 'with correkt token' do
+          let(:two_factor_method) { :authenticator_app }
+          let(:two_factor_payload) { two_factor_pref.configuration[:code] }
+
+          it 'returns session data' do
+            expect(graphql_response['data']['login']['session']['id']).to be_present
+          end
+        end
+
       end
     end
 
@@ -105,10 +175,12 @@ RSpec.describe Gql::Mutations::Login, type: :request do
       let(:password) { 'wrong' }
 
       it 'fails with error message' do
-        expect(graphql_response['data']['login']['errors']).to eq([{
-                                                                    'message' => 'Login failed. Have you double-checked your credentials and completed the email verification step?',
-                                                                    'field'   => nil
-                                                                  }])
+        expect(graphql_response['data']['login']['errors']).to eq(
+          [{
+            'message' => 'Login failed. Have you double-checked your credentials and completed the email verification step?',
+            'field'   => nil
+          }]
+        )
       end
     end
 

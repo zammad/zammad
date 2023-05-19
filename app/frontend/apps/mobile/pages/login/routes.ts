@@ -17,6 +17,26 @@ const route: RouteRecordRaw[] = [
     },
   },
   {
+    path: '/login/after-auth',
+    name: 'LoginAfterAuth',
+    component: () => import('./views/LoginAfterAuth.vue'),
+    async beforeEnter(to) {
+      // don't open the page if there is nothing to show
+      const { useAfterAuthPlugins } = await import(
+        './after-auth/composable/useAfterAuthPlugins.ts'
+      )
+      const { currentPlugin } = useAfterAuthPlugins()
+      if (!currentPlugin.value) {
+        return to.redirectedFrom ? false : '/'
+      }
+    },
+    meta: {
+      requiresAuth: false,
+      requiredPermission: null,
+      hasOwnLandmarks: true,
+    },
+  },
+  {
     path: '/logout',
     name: 'Logout',
     component: {

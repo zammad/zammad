@@ -3,6 +3,61 @@
 require 'rails_helper'
 
 RSpec.describe 'Manage > Settings > Security', type: :system do
+  describe 'Manage Two-Factor Authentication' do
+    before do
+      visit '/#settings/security'
+
+      within :active_content do
+        click 'a[href="#two_factor_auth"]'
+      end
+    end
+
+    shared_examples 'switching a method on and off' do |method|
+      let(:method_setting)  { "two_factor_authentication_method_#{method}" }
+      let(:method_checkbox) { "setting-#{method_setting}" }
+
+      it "switches #{method} method on and off" do
+        expect(Setting.find_by(name: method_setting).state_current['value']).to be(false)
+
+        click "label[for='#{method_checkbox}']"
+
+        expect(Setting.find_by(name: method_setting).state_current['value']).to be(true)
+
+        click "label[for='#{method_checkbox}']"
+
+        expect(Setting.find_by(name: method_setting).state_current['value']).to be(false)
+      end
+    end
+
+    shared_examples 'configuring a user role setting' do |setting|
+      let(:setting_name) { "two_factor_authentication_#{setting}" }
+
+      it "configures a user role setting #{setting}" do
+        click "[data-attribute-name='#{setting_name}'] .columnSelect-column--sidebar .columnSelect-option", exact_text: 'Customer'
+        click "##{setting_name} .btn--primary"
+
+        expect(Setting.find_by(name: setting_name).state_current['value']).to include(
+          Role.find_by(name: 'Customer').id.to_s
+        )
+
+        click "[data-attribute-name='#{setting_name}'] .columnSelect-column--selected .columnSelect-option", exact_text: 'Customer'
+        click "##{setting_name} .btn--primary"
+
+        expect(Setting.find_by(name: setting_name).state_current['value']).not_to include(
+          Role.find_by(name: 'Customer').id.to_s
+        )
+      end
+    end
+
+    context 'with authenticator app method' do
+      it_behaves_like 'switching a method on and off', 'authenticator_app'
+    end
+
+    context 'with enforcing setup to certain user roles' do
+      it_behaves_like 'configuring a user role setting', 'enforce_role_ids'
+    end
+  end
+
   describe 'configure third-party applications' do
     shared_examples 'for third-party applications button in login page' do |**args|
       context "for third-party applications button in login page #{args.empty? ? '' : args.to_s}", authenticated_as: false do

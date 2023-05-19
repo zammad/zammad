@@ -15,6 +15,7 @@ require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/user/can_lookup_search_index_attributes_examples'
 require 'models/user/performs_geo_lookup_examples'
 require 'models/concerns/has_taskbars_examples'
+require 'rotp'
 
 RSpec.describe User, type: :model do
   subject(:user) { create(:user) }
@@ -823,6 +824,27 @@ RSpec.describe User, type: :model do
         expect(user).to have_attributes(firstname: 'Perkūnas', lastname: 'Ąžuolas')
       end
     end
+
+    describe '#two_factor_configured?' do
+      let(:user) { create(:user) }
+
+      context 'with no two factor configured' do
+        it 'returns false' do
+          expect(user.two_factor_configured?).to be(false)
+        end
+      end
+
+      context 'with two factor configured' do
+        before do
+          Setting.set('two_factor_authentication_method_authenticator_app', true)
+          create(:'user/two_factor_preference', user: user)
+        end
+
+        it 'returns true' do
+          expect(user.two_factor_configured?).to be(true)
+        end
+      end
+    end
   end
 
   describe 'Attributes:' do
@@ -1187,6 +1209,7 @@ RSpec.describe User, type: :model do
                      'Ticket::Flag'                       => { 'created_by_id' => 0 },
                      'PostmasterFilter'                   => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'PublicLink'                         => { 'created_by_id' => 1, 'updated_by_id' => 0 },
+                     'User::TwoFactorPreference'          => { 'created_by_id' => 1, 'updated_by_id' => 1, 'user_id' => 1 },
                      'OnlineNotification'                 => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Ticket'                             =>
                                                              { 'created_by_id' => 0, 'updated_by_id' => 0, 'owner_id' => 1, 'customer_id' => 3 },
@@ -1238,25 +1261,26 @@ RSpec.describe User, type: :model do
                      'Authorization'                      => { 'user_id' => 1 } }
 
       # delete objects
-      token                 = create(:token, user: user)
-      online_notification   = create(:online_notification, user: user)
-      taskbar               = create(:taskbar, user: user)
-      user_device           = create(:user_device, user: user)
-      cti_caller_id         = create(:cti_caller_id, user: user)
-      authorization         = create(:twitter_authorization, user: user)
-      recent_view           = create(:recent_view, created_by: user)
-      avatar                = create(:avatar, o_id: user.id)
-      overview              = create(:overview, created_by_id: user.id, user_ids: [user.id])
-      mention               = build(:mention, mentionable: create(:ticket), user: user).tap { |elem| elem.save!(validate: false) }
-      mention_created_by    = build(:mention, mentionable: create(:ticket), user: create(:agent), created_by: user).tap { |elem| elem.save!(validate: false) }
-      user_created_by       = create(:customer, created_by_id: user.id, updated_by_id: user.id, out_of_office_replacement_id: user.id)
-      chat_session          = create(:'chat/session', user: user)
-      chat_message          = create(:'chat/message', chat_session: chat_session)
-      chat_message2         = create(:'chat/message', chat_session: chat_session, created_by: user)
-      draft_start           = create(:ticket_shared_draft_start, created_by: user)
-      draft_zoom            = create(:ticket_shared_draft_zoom, created_by: user)
-      public_link           = create(:public_link, created_by: user)
-      user_overview_sorting = create(:'user/overview_sorting', user: user)
+      token                      = create(:token, user: user)
+      online_notification        = create(:online_notification, user: user)
+      taskbar                    = create(:taskbar, user: user)
+      user_device                = create(:user_device, user: user)
+      cti_caller_id              = create(:cti_caller_id, user: user)
+      authorization              = create(:twitter_authorization, user: user)
+      recent_view                = create(:recent_view, created_by: user)
+      avatar                     = create(:avatar, o_id: user.id)
+      overview                   = create(:overview, created_by_id: user.id, user_ids: [user.id])
+      mention                    = build(:mention, mentionable: create(:ticket), user: user).tap { |elem| elem.save!(validate: false) }
+      mention_created_by         = build(:mention, mentionable: create(:ticket), user: create(:agent), created_by: user).tap { |elem| elem.save!(validate: false) }
+      user_created_by            = create(:customer, created_by_id: user.id, updated_by_id: user.id, out_of_office_replacement_id: user.id)
+      chat_session               = create(:'chat/session', user: user)
+      chat_message               = create(:'chat/message', chat_session: chat_session)
+      chat_message2              = create(:'chat/message', chat_session: chat_session, created_by: user)
+      draft_start                = create(:ticket_shared_draft_start, created_by: user)
+      draft_zoom                 = create(:ticket_shared_draft_zoom, created_by: user)
+      public_link                = create(:public_link, created_by: user)
+      user_two_factor_preference = create(:'user/two_factor_preference', user: user)
+      user_overview_sorting      = create(:'user/overview_sorting', user: user)
       expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
@@ -1304,6 +1328,7 @@ RSpec.describe User, type: :model do
       expect { chat_session.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { chat_message.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { chat_message2.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { user_two_factor_preference.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { user_overview_sorting.reload }.to raise_exception(ActiveRecord::RecordNotFound)
 
       # move ownership objects

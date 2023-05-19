@@ -1387,6 +1387,10 @@ pre code {
     border-radius: 0;
     vertical-align: baseline;
   }
+
+  &.badge--primary {
+    background: var(--highlight);
+  }
 }
 
 .key-value {
@@ -3301,6 +3305,11 @@ kbd {
       margin-left: initial;
       margin-right: initial;
     }
+  }
+
+  .help-text {
+    margin-top: 10px;
+    text-align: left;
   }
 }
 
@@ -11219,6 +11228,12 @@ output {
   .settings-list-radio-cell {
     text-align: center;
   }
+
+  .settings-list-wrapping-cell {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 }
 
 .settings-list--roles-permissions {
@@ -12381,14 +12396,18 @@ output {
   position: relative;
   display: block;
 
+  &:not(a) {
+    cursor: default !important;
+  }
+
   .icon {
-    fill: var(--ghost-color);
+    fill: var(--ghost-color) !important;
     vertical-align: middle;
     margin: -2px 3px 0 0;
   }
 
   &.is-done .icon {
-    fill: var(--supergood-color);
+    fill: var(--supergood-color) !important;
   }
 }
 
@@ -14314,5 +14333,63 @@ span.is-disabled {
 
   .profile-groups-all-unchecked {
     margin-bottom: 10px;
+  }
+}
+
+.two-factor-auth {
+  .loading {
+    display: block;
+    margin: 25px auto;
+  }
+
+  &-method-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 382px;
+    margin: 25px auto 0;
+  }
+
+  &-method {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+
+  .is-disabled {
+    opacity: 0.33;
+  }
+
+  .method-form .form-group {
+    margin-bottom: 4px;
+  }
+
+  .authenticator-app {
+    --width: 306px;
+    --height: 306px;
+
+    position: relative;
+    width: var(--width);
+    margin: 0 auto;
+
+    .qr-code-canvas {
+      width: var(--width);
+      height: var(--height);
+      cursor: pointer;
+    }
+
+    .secret {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--width);
+      height: var(--height);
+      background: rgba(0, 0, 0, 0.9);
+      color: var(--text-inverted);
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
   }
 }

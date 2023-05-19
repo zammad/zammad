@@ -251,6 +251,7 @@ returns
     attributes.except!('password', 'token', 'tokens', 'token_ids')
   end
 
+  # overwrite this method in derived classes to filter attributes, e.g. app/models/user/assets.rb
   def filter_unauthorized_attributes(attributes)
     attributes
   end

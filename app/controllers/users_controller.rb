@@ -656,6 +656,18 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
     render json: { message: 'ok', user_login: current_user.login }, status: :ok
   end
 
+  def password_check
+    raise Exceptions::UnprocessableEntity, __('The parameter "password" is missing!') if params[:password].blank?
+
+    begin
+      Auth.new(current_user.login, params[:password], only_verify_password: true).valid!
+
+      render json: { success: true }, status: :ok
+    rescue Auth::Error::AuthenticationFailed
+      render json: { success: false }, status: :ok
+    end
+  end
+
 =begin
 
 Resource:
@@ -940,6 +952,12 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       delete:       params[:delete],
     )
     render json: result, status: :ok
+  end
+
+  def two_factor_enabled_methods
+    user = User.find(params[:id])
+
+    render json: { methods: user.two_factor_enabled_methods }, status: :ok
   end
 
   private

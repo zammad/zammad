@@ -5368,3 +5368,60 @@ Setting.create_if_not_exists(
   },
   frontend:    true
 )
+
+Setting.create_if_not_exists(
+  title:       __('Authenticator App'),
+  name:        'two_factor_authentication_method_authenticator_app',
+  area:        'Security::TwoFactorAuthentication',
+  description: __('Defines if the two-factor authentication method authenticator app is enabled or not.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'two_factor_authentication_method_authenticator_app',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller:   'SettingsAreaSwitch',
+    sub:          {},
+    permission:   ['admin.security'],
+    prio:         2000,
+    display_name: __('Authenticator App'),
+    help:         __('Get the security code from the authenticator app on your device.'),
+    icon:         'mobile-code',
+  },
+  state:       false,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Enforce the set up of the two-factor authentication'),
+  name:        'two_factor_authentication_enforce_role_ids',
+  area:        'Security::TwoFactorAuthentication',
+  description: __('Requires the set up of the two-factor authentication for certain user roles.'),
+  options:     {
+    form: [
+      {
+        display:   __('Enforced for user roles'),
+        null:      true,
+        name:      'two_factor_authentication_enforce_role_ids',
+        tag:       'column_select',
+        relation:  'Role',
+        translate: true,
+      },
+    ],
+  },
+  preferences: {
+    permission: ['admin.security'],
+    prio:       6000,
+  },
+  state:       [2],
+  frontend:    true
+)

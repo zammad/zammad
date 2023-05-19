@@ -27,6 +27,7 @@ module ApplicationController::Authenticates
     if %w[test development].include?(Rails.env) && ENV['FAKE_SELENIUM_LOGIN_USER_ID'].present? && session[:user_id].blank?
       session[:user_id] = ENV['FAKE_SELENIUM_LOGIN_USER_ID'].to_i
       session[:user_device_updated_at] = Time.zone.now
+      session[:authentication_type] = 'password'
     end
 
     # logger.debug 'authentication_check'
@@ -53,9 +54,15 @@ module ApplicationController::Authenticates
       end
 
       auth = Auth.new(username, password)
-      return authentication_check_prerequesits(auth.user, 'basic_auth') if auth.valid?
 
-      authentication_errors.push(__('Invalid BasicAuth credentials'))
+      begin
+        auth.valid!
+        return authentication_check_prerequesits(auth.user, 'basic_auth')
+      rescue Auth::Error::AuthenticationFailed
+        authentication_errors.push(__('Invalid BasicAuth credentials'))
+      rescue Auth::Error::TwoFactorRequired
+        authentication_errors.push(__('Two-factor authentication is not supported with HTTP BasicAuth.'))
+      end
     end
 
     # check http token based authentication
@@ -124,16 +131,12 @@ module ApplicationController::Authenticates
   def authentication_check_prerequesits(user, auth_type)
     raise Exceptions::Forbidden, __('Maintenance mode enabled!') if in_maintenance_mode?(user)
 
-    raise_unified_login_error if !user.active
+    raise Exceptions::NotAuthorized, Auth::Error::AuthenticationFailed::MESSAGE if !user.active
 
     current_user_set(user, auth_type)
     user_device_log(user, auth_type)
     logger.debug { "#{auth_type} for '#{user.login}'" }
     user
-  end
-
-  def raise_unified_login_error
-    raise Exceptions::NotAuthorized, __('Login failed. Have you double-checked your credentials and completed the email verification step?')
   end
 
   def authenticate_and_authorize!

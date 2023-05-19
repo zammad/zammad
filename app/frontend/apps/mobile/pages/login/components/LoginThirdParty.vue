@@ -17,7 +17,7 @@ const { fingerprint } = useFingerprint()
 </script>
 
 <template>
-  <section class="mb-16 mt-4 w-full max-w-md">
+  <section class="mb-16 mt-4 w-full max-w-md" data-test-id="loginThirdParty">
     <p class="p-3 text-center">
       {{
         $c.user_show_password_login

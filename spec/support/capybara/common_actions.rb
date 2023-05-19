@@ -21,7 +21,7 @@ module CommonActions
   #  )
   #
   # return [nil]
-  def login(username:, password:, remember_me: false, app: self.class.metadata[:app])
+  def login(username:, password:, remember_me: false, app: self.class.metadata[:app], skip_waiting: false)
     ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
     ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
 
@@ -42,7 +42,7 @@ module CommonActions
         click_button
       end
 
-      wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded', skip_clearing: true)
+      wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded', skip_clearing: true) if !skip_waiting
     else
       within('#login') do
         fill_in 'username', with: username

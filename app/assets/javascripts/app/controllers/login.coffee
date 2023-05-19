@@ -2,6 +2,8 @@ class Login extends App.ControllerFullPage
   events:
     'submit #login': 'login'
     'click .js-go-to-mobile': 'goToMobile'
+    'click .js-try-another':              'clickedTryAnotherTwoFactor'
+    'click .js-select-two-factor-method': 'clickedAnotherTwoFactor'
   className: 'login'
 
   constructor: ->
@@ -108,6 +110,36 @@ class Login extends App.ControllerFullPage
     # scroll to top
     @scrollTo()
 
+  renderTwoFactor: (data= {}) ->
+    @twoFactorMethod = data.twoFactorMethod
+
+    if availableMethods = data.twoFactorAvailableMethods
+      @twoFactorAvailableMethods = availableMethods
+
+    method = App.TwoFactorMethods.methodByKey(@twoFactorMethod)
+
+    @replaceWith App.view("login_two_factor_#{@twoFactorMethod}")(
+      errorMessage:              data.errorMessage
+      formPayload:               @formPayload
+      logoUrl:                   @logoUrl()
+      twoFactorMethodDetails:    method
+      twoFactorAvailableMethods: @twoFactorAvailableMethods
+    )
+
+    @$('[name="secure_code"]').trigger('focus')
+
+    # scroll to top
+    @scrollTo()
+
+  renderTwoFactorMethods: ->
+    methodsToShow = _.filter(App.TwoFactorMethods.sortedMethods(),
+      (elem) => _.includes(@twoFactorAvailableMethods, elem.key))
+
+    @replaceWith App.view('login_two_factor_methods')(
+      twoFactorMethods: methodsToShow
+      logoUrl:          @logoUrl()
+    )
+
   login: (e) ->
     e.preventDefault()
     e.stopPropagation()
@@ -116,7 +148,7 @@ class Login extends App.ControllerFullPage
     params = @formParam(e.target)
 
     # remember username
-    @username = params['username']
+    @formPayload = _.pick params, ['username', 'password', 'remember_me']
 
     # session create with login/password
     App.Auth.login(
@@ -139,16 +171,43 @@ class Login extends App.ControllerFullPage
 
     errorMessage = App.i18n.translateContent(details.error || 'Could not process your request')
 
-    # rerender login page
-    @render(
-      username:     @username
-      errorMessage: errorMessage
-    )
+    if config = details.two_factor_required
+      @renderTwoFactor(
+        twoFactorMethod:           config.default_two_factor_method
+        twoFactorAvailableMethods: config.available_two_factor_methods
+      )
+
+      return
+
+    if @twoFactorMethod
+      @renderTwoFactor(
+        twoFactorMethod: @twoFactorMethod
+        errorMessage: errorMessage
+      )
+    else
+      # rerender login page
+      @render(
+        errorMessage: errorMessage
+      )
 
     # login shake
     @delay(
       => @shake( @$('.hero-unit') )
       600
+    )
+
+  clickedTryAnotherTwoFactor: (e) ->
+    @preventDefaultAndStopPropagation(e)
+
+    @renderTwoFactorMethods()
+
+  clickedAnotherTwoFactor: (e) ->
+    @preventDefaultAndStopPropagation(e)
+
+    newMethod = e.target.closest('p').dataset['method']
+
+    @renderTwoFactor(
+      twoFactorMethod: newMethod
     )
 
   goToMobile: (e) ->

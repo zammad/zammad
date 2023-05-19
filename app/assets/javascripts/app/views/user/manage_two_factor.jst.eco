@@ -1,0 +1,7 @@
+<div>
+  <div class="js-attributes"></div>
+  <div class="form-controls">
+    <button type="submit" class="btn btn--secondary btn--danger js-remove-all"><%- @T('Remove all methods') %></button>
+    <button type="submit" class="btn btn--danger js-remove align-right"><%- @T('Remove method') %></button>
+  </div>
+</div>

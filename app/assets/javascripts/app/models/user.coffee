@@ -14,6 +14,7 @@ class App.User extends App.Model
     { name: 'created_at',       display: __('Created at'),    tag: 'datetime',  readonly: 1 },
     { name: 'updated_by_id',    display: __('Updated by'),    relation: 'User', readonly: 1 },
     { name: 'updated_at',       display: __('Updated at'),    tag: 'datetime',  readonly: 1 },
+    { name: 'two_factor_configured', tag: 'boolean', readonly: 1 },
   ]
   @configure_overview = [
 #    'login', 'firstname', 'lastname', 'email', 'updated_at',

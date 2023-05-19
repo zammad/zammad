@@ -147,6 +147,21 @@ class User extends App.ControllerSubContent
             )
         },
         {
+          name: 'manageTwoFactor'
+          display: __('Manage Two-Factor Authentication')
+          icon: 'two-factor'
+          class: 'create js-manageTwoFactor'
+          available: (user) ->
+            user.two_factor_configured
+          callback: (id) ->
+            user = App.User.find(id)
+            return if !user
+
+            new App.ControllerManageTwoFactor(
+              user: user
+            )
+        },
+        {
           name: 'delete'
           display: __('Delete')
           icon: 'trash'

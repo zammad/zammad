@@ -93,6 +93,9 @@ end
 gem 'doorkeeper'
 gem 'oauth2'
 
+# authentication - two factor
+gem 'rotp', require: false
+
 # authentication - third party
 gem 'omniauth-rails_csrf_protection'
 

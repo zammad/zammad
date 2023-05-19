@@ -834,5 +834,18 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :public_links, [:link], unique: true
     add_foreign_key :public_links, :users, column: :created_by_id
     add_foreign_key :public_links, :users, column: :updated_by_id
+
+    create_table :user_two_factor_preferences do |t|
+      t.string  :method,        limit: 100,               null: false
+      t.text    :configuration, limit: 500.kilobytes + 1, null: true
+      t.integer :user_id,                                 null: false
+      t.integer :updated_by_id,                           null: false
+      t.integer :created_by_id,                           null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index       :user_two_factor_preferences, %i[method user_id], unique: true
+    add_foreign_key :user_two_factor_preferences, :users, column: :user_id
+    add_foreign_key :user_two_factor_preferences, :users, column: :created_by_id
+    add_foreign_key :user_two_factor_preferences, :users, column: :updated_by_id
   end
 end

@@ -11,6 +11,7 @@ import initializeApolloClient from '#mobile/server/apollo/index.ts'
 import initializeRouter from '#mobile/router/index.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
+import { ensureAfterAuth } from './pages/login/after-auth/composable/useAfterAuthPlugins.ts'
 
 const { forceDesktopLocalStorage } = useForceDesktop()
 
@@ -60,4 +61,9 @@ export default async function mountApp(): Promise<void> {
   }
 
   app.mount('#app')
+
+  console.log('session', session)
+  if (session.afterAuth) {
+    await ensureAfterAuth(router, session.afterAuth)
+  }
 }

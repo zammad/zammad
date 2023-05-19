@@ -9,6 +9,7 @@ import { useLogoutMutation } from '#shared/graphql/mutations/logout.api.ts'
 import { clearApolloClientStore } from '#shared/server/apollo/client.ts'
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import testFlags from '#shared/utils/testFlags.ts'
+import { type EnumTwoFactorMethod } from '#shared/graphql/types.ts'
 import { useSessionStore } from './session.ts'
 import { useApplicationStore } from './application.ts'
 import { resetAndDisposeStores } from '.'
@@ -63,7 +64,11 @@ export const useAuthenticationStore = defineStore(
       login: string,
       password: string,
       rememberMe: boolean,
-    ): Promise<void> => {
+      twoFactor?: {
+        method: EnumTwoFactorMethod
+        payload: string
+      },
+    ) => {
       const loginMutation = new MutationHandler(
         useLoginMutation({
           variables: {
@@ -71,6 +76,8 @@ export const useAuthenticationStore = defineStore(
               login,
               password,
               rememberMe,
+              twoFactorMethod: twoFactor?.method,
+              twoFactorPayload: twoFactor?.payload,
             },
           },
           context: {
@@ -87,7 +94,7 @@ export const useAuthenticationStore = defineStore(
         return Promise.reject(result?.login?.errors)
       }
 
-      const newSessionId = result.login?.sessionId || null
+      const newSessionId = result.login?.session?.id || null
 
       if (newSessionId) {
         const session = useSessionStore()
@@ -99,7 +106,10 @@ export const useAuthenticationStore = defineStore(
         session.initialized = true
       }
 
-      return Promise.resolve()
+      return {
+        twoFactor: result.login?.twoFactorRequired,
+        afterAuth: result.login?.session?.afterAuth,
+      }
     }
 
     return {

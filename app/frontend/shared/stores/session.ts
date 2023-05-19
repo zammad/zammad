@@ -3,7 +3,7 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash-es'
-import { useSessionIdLazyQuery } from '#shared/graphql/queries/sessionId.api.ts'
+import { useSessionLazyQuery } from '#shared/graphql/queries/session.api.ts'
 import { useCurrentUserLazyQuery } from '#shared/graphql/queries/currentUser.api.ts'
 import {
   QueryHandler,
@@ -18,23 +18,24 @@ import type {
   CurrentUserQueryVariables,
   CurrentUserUpdatesSubscription,
   CurrentUserUpdatesSubscriptionVariables,
-  SessionIdQuery,
-  SessionIdQueryVariables,
+  SessionAfterAuth,
+  SessionQuery,
+  SessionQueryVariables,
 } from '#shared/graphql/types.ts'
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 import log from '#shared/utils/log.ts'
 import { useLocaleStore } from './locale.ts'
 
-let sessionIdQuery: QueryHandler<SessionIdQuery, SessionIdQueryVariables>
+let sessionIdQuery: QueryHandler<SessionQuery, SessionQueryVariables>
 
-const getSessionIdQuery = () => {
+const getSessionQuery = () => {
   if (sessionIdQuery) return sessionIdQuery
 
   const { fingerprint } = useFingerprint()
 
   sessionIdQuery = new QueryHandler(
-    useSessionIdLazyQuery({
+    useSessionLazyQuery({
       fetchPolicy: 'network-only',
       context: {
         error: {
@@ -69,14 +70,16 @@ export const useSessionStore = defineStore(
   'session',
   () => {
     const id = ref<Maybe<string>>(null)
+    const afterAuth = ref<Maybe<SessionAfterAuth>>(null)
     const initialized = ref(false)
 
     const checkSession = async (): Promise<string | null> => {
-      const sessionIdQuery = getSessionIdQuery()
-      const { data: result } = await sessionIdQuery.query()
+      const sessionQuery = getSessionQuery()
+      const { data: result } = await sessionQuery.query()
 
       // Refresh the current sessionId state.
-      id.value = result?.sessionId || null
+      id.value = result?.session.id || null
+      afterAuth.value = result?.session.afterAuth || null
 
       return id.value
     }
@@ -102,7 +105,7 @@ export const useSessionStore = defineStore(
 
       // Check if the locale is different, then a update is needed.
       const locale = useLocaleStore()
-      const userLocale = user.value?.preferences?.locale as string
+      const userLocale = user.value?.preferences?.locale as string | undefined
 
       if (
         userLocale &&
@@ -160,6 +163,7 @@ export const useSessionStore = defineStore(
 
     return {
       id,
+      afterAuth,
       initialized,
       checkSession,
       user,

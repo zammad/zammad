@@ -64,9 +64,10 @@ vi.stubGlobal('matchMedia', (media: string) => ({
 }))
 
 vi.mock('#shared/components/CommonNotifications/composable.ts', async () => {
-  const { default: originalUseNotifications } = await vi.importActual<any>(
-    '#shared/components/CommonNotifications/composable.ts',
-  )
+  const { useNotifications: originalUseNotifications } =
+    await vi.importActual<any>(
+      '#shared/components/CommonNotifications/composable.ts',
+    )
   let notifications: any
   const useNotifications = () => {
     if (notifications) return notifications

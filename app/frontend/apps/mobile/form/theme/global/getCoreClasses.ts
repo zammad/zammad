@@ -44,7 +44,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     textarea: addFloatingTextareaLabel(classes.textarea),
     checkbox: extendClasses(classes.checkbox, {
       outer: 'formkit-invalid:bg-red-dark formkit-errors:bg-red-dark',
-      wrapper: 'ltr:pl-2 rtl:pr-2 w-full justify-between',
+      wrapper: 'ltr:pl-2 rtl:pr-2 w-full select-none',
       label: 'formkit-required:required',
       input:
         'h-4 w-4 border-[1.5px] border-white rounded-sm bg-transparent focus:border-blue focus:bg-blue-highlight checked:focus:color-blue checked:bg-blue checked:border-blue checked:focus:bg-blue checked:hover:bg-blue',

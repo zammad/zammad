@@ -2,7 +2,7 @@
 
 class Auth
 
-  attr_reader :user, :password, :auth_user
+  attr_reader :user, :password, :auth_user, :two_factor_method, :two_factor_payload, :only_verify_password
 
   delegate :user, to: :auth_user
 
@@ -16,40 +16,60 @@ class Auth
   #
   # @example
   #  auth = Auth.new('admin@example.com', 'some+password')
-  def initialize(username, password)
-    @auth_user = username.present? ? Auth::User.new(username) : nil
-    @password = password
+  def initialize(username, password, two_factor_method: nil, two_factor_payload: nil, only_verify_password: false)
+    @auth_user                      = username.present? ? Auth::User.new(username) : nil
+    @password                       = password
+    @two_factor_payload             = two_factor_payload
+    @two_factor_method              = two_factor_method
     @increase_login_failed_attempts = false
+    @only_verify_password           = only_verify_password
   end
 
   # Validates the given credentials for the user to the configured auth backends which should
   # be performed.
   #
-  # @return [Boolean] true if the user was authenticated, otherwise false.
-  def valid?
-    # Wrap in a lock to synchronize concurrent requests.
-    validated = auth_user&.user&.with_lock do
-      next false if !auth_user.can_login?
-      next true if backends.valid?
+  # @return true if the user was authenticated, otherwise it raises an Exception.
+  def valid!
 
-      auth_user.increase_login_failed if increase_login_failed_attempts
-      false
-    end
-
-    if validated
-      auth_user.update_last_login
+    if verify_credentials!
+      auth_user.update_last_login if !only_verify_password
       return true
     end
 
-    avoid_brute_force_attack
-    false
+    wait_and_raise Auth::Error::AuthenticationFailed
   end
 
   private
 
-  # Sleep for a second to avoid brute force attacks.
-  def avoid_brute_force_attack
+  def verify_credentials!
+    # Wrap in a lock to synchronize concurrent requests.
+    auth_user&.user&.with_lock do
+      next false if !auth_user.can_login?
+
+      if !backends.valid?
+        # Failed log-in attempts are only recorded if the password backend requests so.
+        auth_user.increase_login_failed if increase_login_failed_attempts && !only_verify_password
+        next false
+      end
+      verify_two_factor!
+    end
+  end
+
+  def verify_two_factor!
+    return true if only_verify_password
+    return true if !auth_user.requires_two_factor?
+
+    if two_factor_method.blank?
+      raise Auth::Error::TwoFactorRequired, auth_user
+    end
+
+    auth_user.two_factor_payload_valid?(two_factor_method, two_factor_payload) || wait_and_raise(Auth::Error::TwoFactorFailed)
+  end
+
+  def wait_and_raise(...)
+    # Sleep for a second to avoid brute force attacks.
     sleep BRUTE_FORCE_SLEEP
+    raise(...)
   end
 
   def backends

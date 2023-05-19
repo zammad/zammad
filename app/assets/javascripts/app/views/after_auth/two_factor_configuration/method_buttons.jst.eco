@@ -1,0 +1,9 @@
+<% for method in @enabledMethods: %>
+  <div class="two-factor-auth-method">
+    <button class="btn btn--secondary js-configuration-method" type="button" data-method="<%= method.identifier %>" <% if method.disabled: %>disabled<% end %>>
+      <%- @Icon(method.icon) %>
+      <%- @T(method.label) %>
+    </button>
+    <p class="help-block text-center <% if method.disabled: %>is-disabled<% end %>"><%= method.helpMessage %></p>
+  </div>
+<% end %>

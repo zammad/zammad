@@ -54,4 +54,47 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
 
     expect(page).to have_link('new link', href: link.link)
   end
+
+  context 'when after auth is required' do
+    it 'requires setting up two factor auth' do
+      allow_any_instance_of(Auth::AfterAuth::TwoFactorConfiguration).to receive(:check).and_return(true)
+
+      visit '/login', skip_waiting: true
+
+      login(
+        username:     'admin@example.com',
+        password:     'test',
+        remember_me:  true,
+        skip_waiting: true,
+      )
+
+      expect(page).to have_content('The two-factor authentication is not configured yet')
+      expect_current_route '/login/after-auth'
+    end
+  end
+
+  context 'when logging in with two factor auth' do
+    let(:code)             { two_factor_pref.configuration[:code] }
+    let!(:two_factor_pref) { create(:'user/two_factor_preference', user: User.find_by(login: 'admin@example.com')) }
+
+    before do
+      stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
+    end
+
+    it 'can login with correct code' do
+      visit '/login', skip_waiting: true
+
+      login(
+        username:     'admin@example.com',
+        password:     'test',
+        remember_me:  true,
+        skip_waiting: true,
+      )
+
+      find_input('Security Code').type(code)
+      find_button('Sign in').click
+
+      expect_current_route '/'
+    end
+  end
 end

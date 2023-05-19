@@ -11,26 +11,26 @@ RSpec.describe Auth do
     stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
   end
 
-  describe '.valid?' do
-    it 'responds to valid?' do
-      expect(instance).to respond_to(:valid?)
+  describe '.valid!' do
+    it 'responds to valid!' do
+      expect(instance).to respond_to(:valid!)
     end
 
     context 'with an internal user' do
       context 'with valid credentials' do
         it 'check for valid credentials' do
-          expect(instance.valid?).to be true
+          expect(instance.valid!).to be true
         end
 
         it 'check for not increased failed login count' do
-          expect { instance.valid? }.not_to change { user.reload.login_failed }
+          expect { instance.valid! }.not_to change { user.reload.login_failed }
         end
 
         context 'when not case-sensitive' do
           let(:instance) { described_class.new(user.login.upcase, password) }
 
           it 'returns true' do
-            expect(instance.valid?).to be true
+            expect(instance.valid!).to be true
           end
         end
 
@@ -38,36 +38,36 @@ RSpec.describe Auth do
           let(:instance) { described_class.new(user.email, password) }
 
           it 'check for valid credentials' do
-            expect(instance.valid?).to be true
+            expect(instance.valid!).to be true
           end
         end
 
         context 'when previous login was' do
           context 'when never logged in' do
             it 'updates #last_login and #updated_at' do
-              expect { instance.valid? }.to change { user.reload.last_login }.and change { user.reload.updated_at }
+              expect { instance.valid! }.to change { user.reload.last_login }.and change { user.reload.updated_at }
             end
           end
 
           context 'when less than 10 minutes ago' do
             before do
-              instance.valid?
+              instance.valid!
               travel 9.minutes
             end
 
             it 'does not update #last_login and #updated_at' do
-              expect { instance.valid? }.to not_change { user.reload.last_login }.and not_change { user.reload.updated_at }
+              expect { instance.valid! }.to not_change { user.reload.last_login }.and not_change { user.reload.updated_at }
             end
           end
 
           context 'when more than 10 minutes ago' do
             before do
-              instance.valid?
+              instance.valid!
               travel 11.minutes
             end
 
             it 'updates #last_login and #updated_at' do
-              expect { instance.valid? }.to change { user.reload.last_login }.and change { user.reload.updated_at }
+              expect { instance.valid! }.to change { user.reload.last_login }.and change { user.reload.updated_at }
             end
           end
         end
@@ -76,27 +76,55 @@ RSpec.describe Auth do
       context 'with valid user and invalid password' do
         let(:instance) { described_class.new(user.login, 'wrong') }
 
-        it 'check for invalid credentials' do
-          expect(instance.valid?).to be false
-        end
-
-        it 'check for increased failed login count' do
-          expect { instance.valid? }.to change { user.reload.login_failed }.from(0).to(1)
+        it 'raises an error and increases the failed login count' do
+          expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed).and(change { user.reload.login_failed }.from(0).to(1))
         end
 
         it 'failed login avoids brute force attack' do
           allow(instance).to receive(:sleep)
-          instance.valid?
+          begin
+            instance.try(:valid!)
+          rescue Auth::Error::AuthenticationFailed
+            # no-op
+          end
           # sleep receives the stubbed value.
           expect(instance).to have_received(:sleep).with(0)
         end
+      end
+
+      context 'with valid user and required two factor' do
+        let!(:two_factor_pref) { create(:'user/two_factor_preference', user: user) }
+
+        context 'without valid two factor token' do
+          it 'raises an error and does not the failed login count' do
+            expect { instance.valid! }.to raise_error(Auth::Error::TwoFactorRequired).and(not_change { user.reload.login_failed })
+          end
+        end
+
+        context 'with an invalid two factor token' do
+          let(:instance) { described_class.new(user.login, password, two_factor_method: 'authenticator_app', two_factor_payload: 'wrong') }
+
+          it 'raises an error and does not increase the failed login count' do
+            expect { instance.valid! }.to raise_error(Auth::Error::TwoFactorFailed).and(not_change { user.reload.login_failed })
+          end
+        end
+
+        context 'with a valid two factor token' do
+          let(:code)     { two_factor_pref.configuration[:code] }
+          let(:instance) { described_class.new(user.login, password, two_factor_method: 'authenticator_app', two_factor_payload: code) }
+
+          it 'allows the log-in' do
+            expect(instance.valid!).to be true
+          end
+        end
+
       end
 
       context 'with inactive user login' do
         let(:user) { create(:user, active: false) }
 
         it 'returns false' do
-          expect(instance.valid?).to be false
+          expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed)
         end
       end
 
@@ -104,7 +132,7 @@ RSpec.describe Auth do
         let(:instance) { described_class.new('not_existing', password) }
 
         it 'returns false' do
-          expect(instance.valid?).to be false
+          expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed)
         end
       end
 
@@ -112,7 +140,7 @@ RSpec.describe Auth do
         let(:instance) { described_class.new('', password) }
 
         it 'returns false' do
-          expect(instance.valid?).to be false
+          expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed)
         end
       end
 
@@ -127,7 +155,7 @@ RSpec.describe Auth do
           let(:password) { '' }
 
           it 'returns false' do
-            expect(instance.valid?).to be false
+            expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed)
           end
         end
 
@@ -136,7 +164,7 @@ RSpec.describe Auth do
             let(:password) { '' }
 
             it 'returns false' do
-              expect(instance.valid?).to be false
+              expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed)
             end
           end
 
@@ -144,7 +172,7 @@ RSpec.describe Auth do
             let(:password) { nil }
 
             it 'returns false' do
-              expect(instance.valid?).to be false
+              expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed)
             end
           end
         end
@@ -184,7 +212,7 @@ RSpec.describe Auth do
           let(:password) { '' }
 
           it 'returns false' do
-            expect(instance.valid?).to be false
+            expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed)
           end
         end
 
@@ -192,7 +220,7 @@ RSpec.describe Auth do
           let(:password) { nil }
 
           it 'returns false' do
-            expect(instance.valid?).to be false
+            expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed)
           end
         end
       end
@@ -208,7 +236,7 @@ RSpec.describe Auth do
           end
 
           it 'returns true' do
-            expect(instance.valid?).to be true
+            expect(instance.valid!).to be true
           end
         end
 
@@ -219,12 +247,8 @@ RSpec.describe Auth do
             allow(ldap_user).to receive(:valid?).with(any_args).and_return(false)
           end
 
-          it 'returns false' do
-            expect(instance.valid?).to be false
-          end
-
-          it 'check for not increased failed login count' do
-            expect { instance.valid? }.not_to change { user.reload.login_failed }
+          it 'raises an error and does not increase the failed login count' do
+            expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed).and(not_change { user.reload.login_failed })
           end
         end
 
@@ -241,7 +265,7 @@ RSpec.describe Auth do
           end
 
           it 'returns true' do
-            expect(instance.valid?).to be true
+            expect(instance.valid!).to be true
           end
         end
 
@@ -252,12 +276,8 @@ RSpec.describe Auth do
             allow(ldap_user).to receive(:valid?).with(any_args).and_return(false)
           end
 
-          it 'returns false' do
-            expect(instance.valid?).to be false
-          end
-
-          it 'check for not increased failed login count' do
-            expect { instance.valid? }.to change { user.reload.login_failed }.from(0).to(1)
+          it 'raises an error and does not increase the failed login count' do
+            expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed).and(change { user.reload.login_failed }.from(0).to(1))
           end
         end
 
@@ -267,7 +287,7 @@ RSpec.describe Auth do
           end
 
           it 'returns true' do
-            expect(instance.valid?).to be true
+            expect(instance.valid!).to be true
           end
         end
 

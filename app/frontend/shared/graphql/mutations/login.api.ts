@@ -9,9 +9,19 @@ export type ReactiveFunction<TParam> = () => TParam;
 export const LoginDocument = gql`
     mutation login($input: LoginInput!) {
   login(input: $input) {
-    sessionId
+    session {
+      id
+      afterAuth {
+        type
+        data
+      }
+    }
     errors {
       ...errors
+    }
+    twoFactorRequired {
+      availableTwoFactorMethods
+      defaultTwoFactorMethod
     }
   }
 }

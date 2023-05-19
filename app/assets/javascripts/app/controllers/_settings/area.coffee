@@ -40,6 +40,12 @@ class App.SettingsArea extends App.Controller
     )
 
     elements = []
+
+    if @subtitle
+      subtitle = $('<h2/>')
+      subtitle.append(App.i18n.translateContent(@subtitle))
+      elements.push subtitle
+
     for setting in settings
       if setting.preferences.hidden isnt true
         if setting.preferences.controller && App[setting.preferences.controller]

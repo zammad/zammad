@@ -1,17 +1,62 @@
 class ProfilePassword extends App.ControllerSubContent
   @requiredPermission: 'user_preferences.password'
-  header: __('Password')
+  header: __('Password & Authentication')
   events:
     'submit form': 'update'
+    'click [data-type="setup"]':  'twoFactorMethodSetup'
+    'click [data-type="remove"]': 'twoFactorMethodRemove'
 
   constructor: ->
     super
-    @render()
 
-  render: =>
+    @controllerBind('config_update', (data) =>
+      return if data.name isnt 'two_factor_authentication_method_authenticator_app'
+
+      @preRender()
+    )
+
+    @preRender()
+
+  preRender: =>
+    if !@allowsTwoFactor()
+      @render()
+      return
+
+    @load()
+
+    @listenTo App.User.current(), 'two_factor_changed', =>
+      @load()
+
+  load: =>
+    @startLoading()
+
+    @ajax(
+      id:   'profile_two_factor'
+      type: 'GET'
+      url:  @apiPath + "/users/#{App.User.current().id}/two_factor_enabled_methods"
+      processData: true
+      success: (data, status, xhr) =>
+        @stopLoading()
+
+        @render(data)
+      error: (xhr) =>
+        @stopLoading()
+    )
+
+  allowsChangePassword: ->
+    App.Config.get('user_show_password_login') || @permissionCheck('admin.*')
+
+  allowsTwoFactor: ->
+    App.Config.get('two_factor_authentication_method_authenticator_app')
+
+  render: (twoFactorMethods) =>
 
     # item
-    html = $( App.view('profile/password')() )
+    html = $( App.view('profile/password')(
+      allowsChangePassword: @allowsChangePassword(),
+      allowsTwoFactor:      @allowsTwoFactor(),
+      twoFactorMethods:     @transformTwoFactorMethods(twoFactorMethods)
+    ) )
 
     configure_attributes = [
       { name: 'password_old', display: __('Current password'), tag: 'input', type: 'password', limit: 100, null: false, class: 'input', single: true  },
@@ -84,13 +129,80 @@ class ProfilePassword extends App.ControllerSubContent
 
     @formEnable( @$('form') )
 
+  transformTwoFactorMethods: (data) ->
+    return [] if _.isEmpty(data)
+
+    for elem in data
+      elem.details = App.TwoFactorMethods.methodByKey(elem.method) || {}
+
+      if elem.configured
+        elem.active_icon_class = 'checkmark'
+        elem.active_icon_parent_class = 'is-done'
+      else
+        elem.active_icon_class = 'small-dot'
+
+    _.sortBy data, (elem) -> elem.details.order
+
+  twoFactorMethodSetup: (e) ->
+    e.preventDefault()
+
+    key    = e.currentTarget.closest('tr').dataset.twoFactorKey
+    method = App.TwoFactorMethods.methodByKey(key)
+
+    new App["TwoFactorConfigurationMethod#{method.identifier}"](
+      container: @el.closest('.content')
+      successCallback: @load
+    )
+
+  twoFactorMethodRemove: (e) =>
+    e.preventDefault()
+
+    key     = e.currentTarget.closest('tr').dataset.twoFactorKey
+    method  = App.TwoFactorMethods.methodByKey(key)
+
+    new App.ControllerConfirm(
+      head: __('Are you sure?')
+      message: App.i18n.translateContent('Two-factor authentication method "%s" will be removed.', App.i18n.translateContent(method.label))
+      container: @el.closest('.content')
+      small: true
+      callback: =>
+        @ajax(
+          id:   'profile_two_factor_removal'
+          type: 'DELETE'
+          url:  @apiPath + "/users/#{App.User.current().id}/two_factor_remove_method"
+          processData: true
+          data: JSON.stringify(
+            method: key
+          )
+          success: (data, status, xhr) =>
+            @notify
+              type:      'success'
+              msg:       App.i18n.translateContent('Two-factor authentication method was removed.')
+              removeAll: true
+
+            @load()
+          error: (xhr, statusText) =>
+            data = JSON.parse(xhr.responseText)
+
+            message = data?.error || __('Could not remove two-factor authentication method')
+
+            @notify
+              type:      'error'
+              msg:       App.i18n.translateContent(message)
+              removeAll: true
+        )
+    )
+
 App.Config.set('Password', {
   prio: 2000,
-  name: __('Password'),
+  name: __('Password & Authentication'),
   parent: '#profile',
   target: '#profile/password',
   controller: ProfilePassword,
   permission: (controller) ->
-    return false if !App.Config.get('user_show_password_login') && !controller.permissionCheck('admin.*')
+    canChangePassword = App.Config.get('user_show_password_login') || controller.permissionCheck('admin.*')
+    twoFactorEnabled  = App.Config.get('two_factor_authentication_method_authenticator_app')
+
+    return false if !canChangePassword && !twoFactorEnabled
     return controller.permissionCheck('user_preferences.password')
 }, 'NavBarProfile')

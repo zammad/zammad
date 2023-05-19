@@ -66,4 +66,3 @@ const useNotifications = () => {
 }
 
 export { useNotifications }
-export default useNotifications

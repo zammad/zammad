@@ -7,6 +7,8 @@ module Gql::Types::Input
 
     argument :login, String, description: 'User name'
     argument :password, String, description: 'Password'
+    argument :two_factor_method, Gql::Types::Enum::TwoFactorMethodType, required: false, description: 'Two factor authentication method'
+    argument :two_factor_payload, String, required: false, description: 'Two factor authentication token'
     argument :remember_me, Boolean, required: false, description: 'Remember me - Session expire date will be set to one year'
   end
 end

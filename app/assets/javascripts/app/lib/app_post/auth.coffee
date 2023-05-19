@@ -129,6 +129,8 @@ class App.Auth
     # trigger auth ok with new session data
     App.Event.trigger('auth', data.session)
 
+    App.Config.set('after_auth', data.after_auth)
+
     # init of i18n
     preferences = App.Session.get('preferences')
     if preferences && preferences.locale
@@ -155,6 +157,8 @@ class App.Auth
     App.TaskManager.reset()
     App.Session.init()
     App.Ajax.abortAll()
+
+    App.Config.set('after_auth', null)
 
     # clear all in-memory data of all App.Model's
     for model_key, model_object of App

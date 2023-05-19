@@ -14,6 +14,7 @@
 
       <div class="hero-unit">
         <img class="company-logo" src="<%= @logoUrl %>" alt="<%= @C('product_name') %>">
+
         <% if @item.showAdminPasswordLogin || user_show_password_login: %>
           <form id="login">
             <% if @item.errorMessage: %>
@@ -26,7 +27,7 @@
               <div class="formGroup-label">
                 <label for="username"><%- @Ti('Username / email') %></label>
               </div>
-              <input id="username" name="username" type="text" class="form-control" value="<%= @item.username %>" autocapitalize="off" />
+              <input id="username" name="username" type="text" class="form-control" value="<%= @item.formPayload?.username %>" autocapitalize="off" />
             </div>
 
             <div class="form-group">

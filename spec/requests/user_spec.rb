@@ -1732,4 +1732,36 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       expect(User).to have_received(:reset_notifications_preferences!).with(agent)
     end
   end
+
+  describe 'POST /api/v1/users/password_check', :aggregate_failures, authenticated_as: :user do
+    let(:user) { create(:agent, login: 'benderrodriguez', password: 'beer') }
+
+    before { post '/api/v1/users/password_check', params: { password: password }, as: :json }
+
+    context 'with no password' do
+      let(:password) { nil }
+
+      it 'raises an error' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'with wrong password' do
+      let(:password) { 'wrong' }
+
+      it 'returns false' do
+        expect(response).to have_http_status(:ok)
+        expect(json_response['success']).to be false
+      end
+    end
+
+    context 'with correct password' do
+      let(:password) { 'beer' }
+
+      it 'returns true' do
+        expect(response).to have_http_status(:ok)
+        expect(json_response['success']).to be true
+      end
+    end
+  end
 end

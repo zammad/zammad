@@ -1,0 +1,57 @@
+<div class="login fullscreen">
+  <div class="fullscreen-center">
+    <div class="fullscreen-body">
+      <p><%- @T('Log in to %s', @C('fqdn')) %></p>
+      <div class="hero-unit">
+        <img class="company-logo" src="<%= @logoUrl %>" alt="<%= @C('product_name') %>">
+
+        <p>
+          <%= @T @twoFactorMethodDetails.label %>
+        </p>
+
+        <form id="login">
+          <% if @errorMessage: %>
+            <div class="alert alert--danger" role="alert">
+              <%= @errorMessage %>
+            </div>
+          <% end %>
+
+          <input name="username" type="hidden" value="<%= @formPayload.username %>" />
+          <input name="password" type="hidden" value="<%= @formPayload.password %>" />
+          <input name="remember_me" type="hidden" value="<%= @formPayload.remember_me %>" />
+          <input name="two_factor_method" type="hidden" value="authenticator_app" />
+
+          <div class="form-group">
+            <div class="formGroup-label">
+              <label for="security_code"><%- @Ti('Security Code') %></label>
+            </div>
+            <input id="security_code" name="two_factor_payload" type="text" class="form-control" autocomplete="off"/>
+
+            <p class="help-text"><%= @T @twoFactorMethodDetails.helpMessage  %></p>
+          </div>
+
+          <div class="form-controls">
+            <button class="btn btn--primary" type="submit"><%- @T('Sign in') %></button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <% if @twoFactorAvailableMethods.length > 1: %>
+      <p>
+        <%- @T('Having problems?') %>
+        <a href="#" class="js-try-another"><%- @T('Try another method') %></a>
+      </p>
+    <% else: %>
+      <p>
+        <%- @T('Contact the administrator if you have any problems logging in.') %>
+      </p>
+    <% end %>
+  </div>
+  <div class="poweredBy">
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logo') %></a>
+    <%- @T('Powered by') %>
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logotype', 'logotype') %></a>
+  </div>
+</div>

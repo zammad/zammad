@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'rotp'
 
 RSpec.describe 'Manage > Users', type: :system do
   describe 'switching to an alternative user', authenticated_as: :authenticate, authentication_type: :form do
@@ -317,6 +318,56 @@ RSpec.describe 'Manage > Users', type: :system do
     it 'does show all secondary organizations on edit' do
       tokens = page.all('div[data-attribute-name="organization_ids"] .token')
       expect(tokens.count).to eq(19)
+    end
+  end
+
+  describe 'Two-Factor Authentication', authenticated_as: :authenticate do
+    let(:admin)              { create(:admin) }
+    let(:agent)              { create(:agent) }
+    let(:two_factor_pref)    { create(:'user/two_factor_preference', user: agent) }
+
+    def authenticate
+      Setting.set('two_factor_authentication_enforce_role_ids', [])
+
+      two_factor_pref
+      admin
+    end
+
+    def open_configure_two_factor
+      row = find("tr[data-id=\"#{agent.id}\"]")
+      row.find('.js-action').click
+      row.find('.js-manageTwoFactor span').click
+    end
+
+    def expect_no_two_factor
+      row = find("tr[data-id=\"#{agent.id}\"]")
+      row.find('.js-action').click
+      expect(row).to have_no_css('.js-manageTwoFactor')
+    end
+
+    before do
+      visit '#manage/users'
+    end
+
+    it 'does remove the two-factor method' do
+      open_configure_two_factor
+
+      select 'Authenticator App', from: 'method'
+      click_on 'Remove method'
+      wait.until { !User::TwoFactorPreference.exists?(id: two_factor_pref.id) }
+
+      expect_no_two_factor
+    end
+
+    it 'does remove all two-factor methods' do
+      open_configure_two_factor
+
+      select 'Authenticator App', from: 'method'
+      click_on 'Remove all methods'
+      click_on 'Yes'
+      wait.until { !User::TwoFactorPreference.exists?(id: two_factor_pref.id) }
+
+      expect_no_two_factor
     end
   end
 end
