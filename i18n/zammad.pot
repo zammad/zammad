@@ -10556,7 +10556,7 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 msgid "The notifcation could not be deleted."
 msgstr ""
 

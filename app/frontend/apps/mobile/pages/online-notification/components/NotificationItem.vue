@@ -7,6 +7,9 @@ import type {
   Scalars,
 } from '#shared/graphql/types.ts'
 import type { AvatarUser } from '#shared/components/CommonUserAvatar/index.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import type { ApolloCache, InMemoryCache } from '@apollo/client'
+import { useOnlineNotificationDeleteMutation } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
 
 export interface Props {
   itemId: Scalars['ID']
@@ -18,24 +21,53 @@ export interface Props {
   createdBy?: Maybe<AvatarUser>
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'remove', id: Scalars['ID']): void
   (e: 'seen', id: Scalars['ID']): void
 }>()
+
+const updateCacheAfterRemoving = (
+  cache: ApolloCache<InMemoryCache>,
+  id: Scalars['ID'],
+) => {
+  const normalizedId = cache.identify({ id, __typename: 'OnlineNotification' })
+  cache.evict({ id: normalizedId })
+  cache.gc()
+}
+
+const removeNotificationMutation = new MutationHandler(
+  useOnlineNotificationDeleteMutation(() => ({
+    variables: { onlineNotificationId: props.itemId },
+    update(cache) {
+      updateCacheAfterRemoving(cache, props.itemId)
+    },
+  })),
+  {
+    errorNotificationMessage: __('The notifcation could not be deleted.'),
+  },
+)
+
+const loading = removeNotificationMutation.loading()
+
+const removeNotification = () => {
+  emit('remove', props.itemId)
+
+  return removeNotificationMutation.send()
+}
 </script>
 
 <template>
   <div class="flex">
-    <div class="flex items-center ltr:pr-2 rtl:pl-2">
-      <CommonIcon
-        name="mobile-delete"
-        class="cursor-pointer text-red"
-        size="tiny"
-        @click="$emit('remove', itemId)"
-      />
-    </div>
+    <button
+      class="flex items-center ltr:pr-2 rtl:pl-2"
+      :class="{ 'cursor-pointer': !loading, 'opacity-50': loading }"
+      :disabled="loading"
+      @click="removeNotification()"
+    >
+      <CommonIcon name="mobile-delete" class="text-red" size="tiny" />
+    </button>
     <div class="flex items-center ltr:pr-2 rtl:pl-2">
       <div
         role="status"

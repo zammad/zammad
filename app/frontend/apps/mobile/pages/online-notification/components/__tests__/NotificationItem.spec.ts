@@ -2,10 +2,19 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import type { Scalars } from '#shared/graphql/types.ts'
+import { OnlineNotificationDeleteDocument } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import NotificationItem from '../NotificationItem.vue'
 import type { Props } from '../NotificationItem.vue'
 
 const renderNotificationItem = (props: Partial<Props> = {}) => {
+  mockGraphQLApi(OnlineNotificationDeleteDocument).willResolve({
+    onlineNotificationDelete: {
+      errors: null,
+      success: true,
+    },
+  })
+
   return renderComponent(NotificationItem, {
     props: {
       itemId: '111',
