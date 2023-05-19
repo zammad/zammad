@@ -11026,6 +11026,14 @@ msgid "This field can only contain letters and spaces."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain lowercase letters."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain uppercase letters."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr ""
 
@@ -11062,11 +11070,31 @@ msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must be a symbol."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a lowercase letter."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a symbol."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain alphabetical characters."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain an uppercase letter."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -11079,6 +11107,18 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain between %s and %s characters."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or numbers."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or spaces."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain numbers."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts

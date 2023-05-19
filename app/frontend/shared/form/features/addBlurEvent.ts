@@ -12,7 +12,10 @@ const addBlurEvent = (node: FormKitNode) => {
 
     node.context.handlers.blur = (event?: FocusEvent) => {
       node.emit('blur', node.context?.value)
-      originalBlurHandler(event)
+      // if node was not destroyed
+      if (node.context) {
+        originalBlurHandler(event)
+      }
     }
   })
 }

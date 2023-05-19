@@ -21,6 +21,9 @@ describe('locales', () => {
 
   it('check the validation strings', () => {
     Object.keys(en.validation).forEach((key) => {
+      if (!staticLocaleValidation[key]) {
+        console.log(`Missing validation string "${key}".`)
+      }
       expect(staticLocaleValidation[key]).toBeTruthy()
     })
   })
