@@ -4,9 +4,15 @@ require 'rails_helper'
 
 RSpec.describe Channel::Driver::Facebook, integration: true, performs_jobs: true, required_envs: %w[FACEBOOK_ADMIN_USER_ID FACEBOOK_ADMIN_FIRSTNAME FACEBOOK_ADMIN_LASTNAME FACEBOOK_PAGE_1_ACCCESS_TOKEN FACEBOOK_PAGE_1_ID FACEBOOK_PAGE_1_NAME FACEBOOK_PAGE_1_POST_ID FACEBOOK_PAGE_1_POST_COMMENT_ID FACEBOOK_PAGE_2_ACCCESS_TOKEN FACEBOOK_PAGE_2_ID FACEBOOK_PAGE_2_NAME FACEBOOK_CUSTOMER_ID FACEBOOK_CUSTOMER_FIRSTNAME], use_vcr: true do
 
-  let!(:channel)          { create(:facebook_channel) }
+  let(:channel)           { create(:facebook_channel) }
   let(:page_access_token) { ENV['FACEBOOK_PAGE_1_ACCCESS_TOKEN'] }
   let(:page_client)       { Facebook.new page_access_token }
+
+  before do
+    # Make sure to use the correct time for the test, otherwise posts are getting too old.
+    travel_to(DateTime.parse('2023-05-04 18:00:00 UTC'))
+    channel
+  end
 
   # Cleanup of the test comment.
   after do
