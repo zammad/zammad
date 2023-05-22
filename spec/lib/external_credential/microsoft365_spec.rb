@@ -117,6 +117,26 @@ RSpec.describe ExternalCredential::Microsoft365 do
         channel = described_class.link_account(request_token, authorization_payload.merge(channel_id: channel.id))
         expect(channel.reload.options[:inbound][:options][:keep_on_server]).to be(true)
       end
+
+      context 'when users do not match', :aggregate_failures do
+        let(:existing_channel) do
+          ENV['MICROSOFT365_USER']          = 'zammad@outlook.com'
+          ENV['MICROSOFT365_CLIENT_ID']     = 'xxx'
+          ENV['MICROSOFT365_CLIENT_SECRET'] = 'xxx'
+          ENV['MICROSOFT365_CLIENT_TENANT'] = 'xxx'
+
+          create(:microsoft365_channel)
+        end
+
+        it 'generates a link to an error dialog & does not update the channel' do
+          link_account_response = described_class.link_account(request_token, authorization_payload.merge(channel_id: existing_channel.id))
+
+          expect(link_account_response).to eq("#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/microsoft365/error/user_mismatch")
+
+          expect(existing_channel.reload.options.dig(:inbound, :options, :user)).to eq('zammad@outlook.com')
+          expect(existing_channel.reload.options.dig(:outbound, :options, :user)).to eq('zammad@outlook.com')
+        end
+      end
     end
 
     context 'API errors' do

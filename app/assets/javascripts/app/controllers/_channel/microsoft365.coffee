@@ -131,6 +131,10 @@ class ChannelAccountOverview extends App.ControllerSubContent
       @error_code = undefined
       new App.AdminConsentInfo(container: @container)
 
+    if @error_code is 'user_mismatch'
+      @error_code = undefined
+      new App.UserMismatchInfo(container: @container)
+
   show: (params) =>
     for key, value of params
       if key isnt 'el' && key isnt 'shown' && key isnt 'match'
@@ -444,6 +448,18 @@ class App.AdminConsentInfo extends App.ControllerModal
 
   content: ->
     App.view('microsoft365/admin_consent')()
+
+  onSubmit: =>
+    @close()
+
+class App.UserMismatchInfo extends App.ControllerModal
+  buttonClose: true
+  small: true
+  buttonSubmit: __('Close')
+  head: __('User Mismatch')
+
+  content: ->
+    App.view('microsoft365/user_mismatch')()
 
   onSubmit: =>
     @close()
