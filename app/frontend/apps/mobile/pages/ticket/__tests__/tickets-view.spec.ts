@@ -148,7 +148,8 @@ it('takes filter from query', async () => {
   })
 })
 
-describe('paginating ticket list', () => {
+// TODO 2023-05-08 Sheremet V.A. rewrite test to run in Vitest browser mode
+describe.skip('paginating ticket list', () => {
   const emulateScroll = async (scroll: number) => {
     document.documentElement.scrollTop = scroll
     document.dispatchEvent(
