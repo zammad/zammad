@@ -8501,6 +8501,10 @@ msgstr ""
 msgid "Please select the authentication method that should be used to establish the connection to your Exchange server."
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid "Please start the reauthentication again and enter the correct credentials."
+msgstr ""
+
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
 msgstr ""
@@ -10658,6 +10662,10 @@ msgstr ""
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid "The entered user for reauthentication differs from the user that was used for setting up your Microsoft365 initially."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -11833,6 +11841,10 @@ msgstr ""
 msgid "To archive all outgoing emails from Zammad to external, you can store a BCC email address here."
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid "To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication process was aborted."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid "To be able to chat you need to select at least one chat topic from below!"
 msgstr ""
@@ -12440,6 +12452,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "User Filter"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "User Mismatch"
 msgstr ""
 
 #: db/seeds/settings.rb
