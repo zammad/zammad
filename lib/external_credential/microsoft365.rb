@@ -82,6 +82,14 @@ class ExternalCredential::Microsoft365
     if params[:channel_id]
       existing_channel = Channel.where(area: 'Microsoft365::Account').find(params[:channel_id])
 
+      # Check if current user of the channel is matching the user from the token.
+      token_user    = user_data[:preferred_username]&.downcase
+      inbound_user  = channel_user(existing_channel, :inbound)&.downcase
+      outbound_user = channel_user(existing_channel, :outbound)&.downcase
+      if (inbound_user.present? && inbound_user != token_user) || (outbound_user.present? && outbound_user != token_user)
+        return "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/microsoft365/error/user_mismatch"
+      end
+
       channel_options[:inbound][:options][:folder]         = existing_channel.options[:inbound][:options][:folder]
       channel_options[:inbound][:options][:keep_on_server] = existing_channel.options[:inbound][:options][:keep_on_server]
 
@@ -273,6 +281,10 @@ class ExternalCredential::Microsoft365
     return if split.blank?
 
     JSON.parse(Base64.decode64(split)).symbolize_keys
+  end
+
+  def self.channel_user(channel, key)
+    channel.options.dig(key.to_sym, :options, :user)
   end
 
 end
