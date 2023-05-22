@@ -162,7 +162,7 @@ class ProfilePassword extends App.ControllerSubContent
 
     new App.ControllerConfirm(
       head: __('Are you sure?')
-      message: App.i18n.translateContent('Two-factor authentication method "%s" will be removed.', App.i18n.translateContent(method.label))
+      message: App.i18n.translatePlain('Two-factor authentication method "%s" will be removed.', App.i18n.translatePlain(method.label))
       container: @el.closest('.content')
       small: true
       callback: =>
