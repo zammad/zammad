@@ -10663,7 +10663,7 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
-msgid "The entered user for reauthentication differs from the user that was used for setting up your Microsoft365 initially."
+msgid "The entered user for reauthentication differs from the user that was used for setting up your Microsoft365 channel initially."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
