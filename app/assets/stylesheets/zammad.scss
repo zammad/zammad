@@ -14345,7 +14345,7 @@ span.is-disabled {
   &-method-buttons {
     display: flex;
     flex-direction: column;
-    width: 382px;
+    max-width: 382px;
     margin: 25px auto 0;
   }
 
