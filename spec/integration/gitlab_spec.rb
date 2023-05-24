@@ -27,7 +27,7 @@ RSpec.describe GitLab, integration: true, required_envs: %w[GITLAB_ENDPOINT GITL
         },
         {
           color:      '#D1D100',
-          text_color: '#FFFFFF',
+          text_color: '#1F1E24',
           title:      'special'
         }
       ],
