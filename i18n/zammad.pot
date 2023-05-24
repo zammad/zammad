@@ -1007,7 +1007,7 @@ msgid "All tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-msgid "All user's two-factor authentication methods were removed successfully!"
+msgid "All two-factor authentication methods were removed for this user."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -2674,19 +2674,19 @@ msgid "Core Workflows are actions or constraints on selections in forms. Dependi
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-msgid "Could not load user's two-factor authentication configuration"
+msgid "Could not load the two-factor authentication configuration for this user."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-msgid "Could not remove all user's two-factor authentication methods"
+msgid "Could not remove all two-factor authentication methods for this user."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Could not remove the two-factor authentication method for this user."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Could not remove two-factor authentication method"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-msgid "Could not remove user's two-factor authentication method"
 msgstr ""
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
@@ -11110,6 +11110,10 @@ msgstr ""
 msgid "The two-factor authentication is not configured yet."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "The two-factor authentication method \"%s\" was removed for this user."
+msgstr ""
+
 #: app/controllers/user/two_factors_controller.rb
 msgid "The two-factor authentication method is not enabled."
 msgstr ""
@@ -12498,10 +12502,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
 msgid "User with specified ID was not found. Try checking the URL for errors."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-msgid "User's two-factor authentication method %s was removed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee

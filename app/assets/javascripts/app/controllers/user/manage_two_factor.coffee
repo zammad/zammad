@@ -34,7 +34,7 @@ class App.ControllerManageTwoFactor extends App.ControllerModal
 
         data = JSON.parse(xhr.responseText)
 
-        message = data?.error || __("Could not load user's two-factor authentication configuration")
+        message = data?.error || __('Could not load the two-factor authentication configuration for this user.')
 
         @showAlert message
     )
@@ -90,14 +90,14 @@ class App.ControllerManageTwoFactor extends App.ControllerModal
         method = App.TwoFactorMethods.methodByKey(params.method)
         @notify
           type:    'success'
-          msg:     App.i18n.translateInline("User's two-factor authentication method %s was removed.", method.label)
+          msg:     App.i18n.translatePlain('The two-factor authentication method "%s" was removed for this user.', App.i18n.translatePlain(method.label))
           timeout: 4000
 
         @close()
       error: (xhr, statusText) =>
         data = JSON.parse(xhr.responseText)
 
-        message = data?.error || __("Could not remove user's two-factor authentication method")
+        message = data?.error || __('Could not remove the two-factor authentication method for this user.')
 
         @showAlert(message)
         @formEnable(e)
@@ -124,14 +124,14 @@ class App.ControllerManageTwoFactor extends App.ControllerModal
 
             @notify
               type:    'success'
-              msg:     App.i18n.translateInline("All user's two-factor authentication methods were removed successfully!")
+              msg:     App.i18n.translateInline('All two-factor authentication methods were removed for this user.')
               timeout: 4000
 
             @close()
           error: (xhr, statusText) =>
             data = JSON.parse(xhr.responseText)
 
-            message = data?.error || __("Could not remove all user's two-factor authentication methods")
+            message = data?.error || __('Could not remove all two-factor authentication methods for this user.')
 
             @showAlert(message)
             @formEnable(e)
