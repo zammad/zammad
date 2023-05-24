@@ -18,6 +18,7 @@
     "hue-degree-notation": null,
     "function-no-unknown": null,
     "keyframes-name-pattern": null,
+    "media-feature-range-notation": "prefix",
     "no-descending-specificity": null,
     "no-duplicate-selectors": null,
     "number-max-precision": null,
