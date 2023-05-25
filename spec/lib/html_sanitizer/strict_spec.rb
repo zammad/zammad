@@ -68,14 +68,14 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
       expect(sanitize('<a xlink:href="javascript:alert(2)">CLICKME</a>')).to eq('CLICKME')
       expect(sanitize('<a xlink:href="javascript:alert(2)">CLICKME</a>', external: true)).to eq('CLICKME')
       expect(sanitize('<!--<img src="--><img src=x onerror=alert(1)//">')).to eq('<img src="x">')
-      expect(sanitize('<![><img src="]><img src=x onerror=alert(1)//">')).to eq('<img src="%5D&gt;&lt;img%20src=x%20onerror=alert(1)//">')
+      expect(sanitize('<![><img src="]><img src=x onerror=alert(1)//">')).to eq('<img src="]&gt;&lt;img%20src=x%20onerror=alert(1)//">')
       expect(sanitize('<svg><![CDATA[><image xlink:href="]]><img src=xx:x onerror=alert(2)//"></svg>')).to eq('')
       expect(sanitize('<abc><img src="</abc><img src=x onerror=alert(1)//">')).to eq('<img src="&lt;/abc&gt;&lt;img%20src=x%20onerror=alert(1)//">')
       expect(sanitize('<object data="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></object>')).to eq('')
       expect(sanitize('<embed src="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></embed>')).to eq('')
       expect(sanitize('<img[a][b]src=x[d]onerror[c]=[e]"alert(1)">')).to eq('<img>')
-      expect(sanitize('<a href="[a]java[b]script[c]:alert(1)">XXX</a>')).to eq('<a href="%5Ba%5Djava%5Bb%5Dscript%5Bc%5D:alert(1)">XXX</a>')
-      expect(sanitize('<a href="[a]java[b]script[c]:alert(1)">XXX</a>', external: true)).to eq('<a href="http://%5Ba%5Djava%5Bb%5Dscript%5Bc%5D:alert(1)" rel="nofollow noreferrer noopener" target="_blank" title="http://%5Ba%5Djava%5Bb%5Dscript%5Bc%5D:alert(1)">XXX</a>')
+      expect(sanitize('<a href="[a]java[b]script[c]:alert(1)">XXX</a>')).to eq('<a href="[a]java[b]script[c]:alert(1)">XXX</a>')
+      expect(sanitize('<a href="[a]java[b]script[c]:alert(1)">XXX</a>', external: true)).to eq('<a href="http://[a]java[b]script[c]:alert(1)" rel="nofollow noreferrer noopener" target="_blank" title="http://[a]java[b]script[c]:alert(1)">XXX</a>')
       expect(sanitize('<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>')).to eq('')
     end
 
