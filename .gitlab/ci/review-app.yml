@@ -116,6 +116,10 @@
             "value": "Zammad Review App ${APP_NAME}"
           },
           {
+            "name": "http_type",
+            "value": "http"
+          },
+          {
             "name": "fqdn",
             "value": "${APP_FQDN}"
           },

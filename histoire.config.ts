@@ -14,7 +14,7 @@ export default defineConfig({
         name: 'inject-fonts',
         transformIndexHtml() {
           return [
-            { tag: 'link', attrs: { rel: 'stylesheet', href: '/fonts.css' } },
+            { tag: 'link', attrs: { rel: 'stylesheet', href: '/assets/mobile/fonts.css' } },
           ]
         },
       },

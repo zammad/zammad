@@ -8,5 +8,5 @@ app/frontend/shared/graphql/types.ts
 public/assets/tests/**/*.js
 public/assets/form/**/*.js
 
-public/vite/**/*.js
-public/vite-dev/**/*.js
+public/assets/mobile/vite/**/*.js
+public/assets/mobile/vite-dev/**/*.js
