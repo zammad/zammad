@@ -4,10 +4,14 @@ class Auth::TwoFactor
 
   attr_reader :user, :all_methods
 
+  def self.method_classes
+    @method_classes ||= Auth::TwoFactor::Method.descendants
+  end
+
   def initialize(user)
     @user = user
 
-    @all_methods = Auth::TwoFactor::Method.descendants.map { |method| method.new(user) }
+    @all_methods = self.class.method_classes.map { |method| method.new(user) }
   end
 
   def enabled?

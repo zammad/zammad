@@ -4,7 +4,7 @@ module Gql::Types::Enum
   class TwoFactorMethodType < BaseEnum
     description 'Possible two factor authentication methods (availability depends on system configuration)'
 
-    Auth::TwoFactor::Method.descendants.each do |method|
+    Auth::TwoFactor.method_classes.each do |method|
       instance = method.new
       value instance.method_name, instance.method_name(human: true)
     end
