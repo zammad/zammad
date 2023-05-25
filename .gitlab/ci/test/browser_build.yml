@@ -9,7 +9,7 @@ browser:build:
       - public/assets/application-*
       - public/assets/knowledge_base*
       - public/assets/print-*
-      - public/vite
+      - public/assets/mobile/vite
   cache: !reference [.cache, read_only_full]
   variables:
     RAILS_ENV: 'production'

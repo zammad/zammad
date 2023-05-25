@@ -47,6 +47,8 @@
 # logfiles and tempfiles
 /log
 /public/assets/*.*
+/public/assets/mobile/vite
+/public/assets/mobile/vite-dev
 /public/assets/addons
 /public/assets/app
 /public/assets/custom
@@ -90,10 +92,6 @@
 
 # Backup files
 *~
-
-# Vite Ruby
-/public/vite
-/public/vite-dev
 
 # Vite PWA
 /app/frontend/dev-dist
