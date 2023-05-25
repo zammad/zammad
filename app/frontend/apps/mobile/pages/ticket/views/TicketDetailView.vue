@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, provide, ref, reactive } from 'vue'
+import { computed, provide, ref, reactive, toRef } from 'vue'
 import {
   onBeforeRouteLeave,
   onBeforeRouteUpdate,
@@ -159,7 +159,11 @@ const showArticleReplyDialog = () => {
   return openArticleReplyDialog({ updateFormLocation })
 }
 
-const { liveUserList } = useTicketLiveUser(ticket, isTicketAgent, isDirty)
+const { liveUserList } = useTicketLiveUser(
+  toRef(() => props.internalId),
+  isTicketAgent,
+  isDirty,
+)
 
 const refetchingStatus = ref(false)
 const updateRefetchingStatus = (status: boolean) => {

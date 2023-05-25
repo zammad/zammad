@@ -1,11 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ref, ComputedRef } from 'vue'
-import { ref, onBeforeUnmount, watch } from 'vue'
-import type {
-  TicketById,
-  TicketLiveAppUser,
-} from '#shared/entities/ticket/types.ts'
+import { type Ref, type ComputedRef, onBeforeMount } from 'vue'
+import { ref, watch } from 'vue'
+import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 import {
   MutationHandler,
   SubscriptionHandler,
@@ -14,14 +11,17 @@ import { EnumTaskbarApp } from '#shared/graphql/types.ts'
 import type { TicketLiveUser } from '#shared/graphql/types.ts'
 import { useAppName } from '#shared/composables/useAppName.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
+import { ensureGraphqlId } from '#shared/graphql/utils.ts'
+import { noop } from '@vueuse/shared'
 import { useTicketLiveUserUpsertMutation } from '../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
 import { useTicketLiveUserDeleteMutation } from '../graphql/mutations/live-user/delete.api.ts'
 import { useTicketLiveUserUpdatesSubscription } from '../graphql/subscriptions/live-user/ticketLiveUserUpdates.api.ts'
 
 export const useTicketLiveUser = (
-  ticket: Ref<TicketById | undefined>,
+  ticketInternalId: Ref<string>,
   isTicketAgent: ComputedRef<boolean>,
-  canSubmitForm: ComputedRef<boolean>,
+  editingForm: ComputedRef<boolean>,
 ) => {
   const liveUserList = ref<TicketLiveAppUser[]>([])
   const upsertMutation = new MutationHandler(useTicketLiveUserUpsertMutation())
@@ -29,23 +29,23 @@ export const useTicketLiveUser = (
 
   const { userId } = useSessionStore()
 
-  const updateLiveUser = async (editing = false) => {
-    if (!ticket.value) return
-
-    await upsertMutation.send({
-      id: ticket.value.id,
-      editing,
-      app: EnumTaskbarApp.Mobile,
-    })
+  const updateLiveUser = async (ticketInternalId: string, editing = false) => {
+    await upsertMutation
+      .send({
+        id: ensureGraphqlId('Ticket', ticketInternalId),
+        editing,
+        app: EnumTaskbarApp.Mobile,
+      })
+      .catch(noop)
   }
 
-  const deleteLiveUser = async () => {
-    if (!ticket.value) return
-
-    await deleteMutation.send({
-      id: ticket.value?.id,
-      app: EnumTaskbarApp.Mobile,
-    })
+  const deleteLiveUser = async (ticketInternalId: string) => {
+    await deleteMutation
+      .send({
+        id: ensureGraphqlId('Ticket', ticketInternalId),
+        app: EnumTaskbarApp.Mobile,
+      })
+      .catch(noop)
   }
 
   const appName = useAppName()
@@ -87,13 +87,11 @@ export const useTicketLiveUser = (
     return mappedLiveUsers
   }
 
-  const liveUserSubscritionEnabled = ref(false)
-
   const liveUserSubscription = new SubscriptionHandler(
     useTicketLiveUserUpdatesSubscription(
       () => ({
         userId,
-        key: `Ticket-${ticket.value?.internalId}`,
+        key: `Ticket-${ticketInternalId.value}`,
         app: EnumTaskbarApp.Mobile,
       }),
       () => ({
@@ -103,7 +101,7 @@ export const useTicketLiveUser = (
         // At the end a cache for the subscription is not really needed, but we should create an issue on
         // apollo client side, when we have a minimal reproduction.
         fetchPolicy: 'no-cache',
-        enabled: liveUserSubscritionEnabled.value && isTicketAgent.value,
+        enabled: isTicketAgent.value,
       }),
     ),
   )
@@ -114,29 +112,34 @@ export const useTicketLiveUser = (
     )
   })
 
-  watch(
-    () => ticket.value?.id,
-    async (ticketId, oldTicketId) => {
-      if (oldTicketId && ticketId !== oldTicketId) {
-        liveUserList.value = []
-        await deleteLiveUser()
-      }
+  onBeforeRouteUpdate(async (to, from) => {
+    const internalToId = to.params.internalId as string
+    const internalFromId = from.params.internalId as string
 
-      await updateLiveUser()
-
-      // Enable subscription, after ticket id is present.
-      if (!liveUserSubscritionEnabled.value)
-        liveUserSubscritionEnabled.value = true
-    },
-  )
-
-  // Update live user editing status, when can submit value changes
-  watch(canSubmitForm, async (canSubmit) => {
-    await updateLiveUser(canSubmit)
+    // update status when opening another ticket page without unmounting the page and don't block the page
+    if (internalToId !== internalFromId) {
+      liveUserList.value = []
+      deleteLiveUser(internalFromId)
+      updateLiveUser(internalToId)
+    }
   })
 
-  onBeforeUnmount(async () => {
-    await deleteLiveUser()
+  onBeforeRouteLeave(async (_, from) => {
+    const internalId = from.params.internalId as string
+
+    // update status when leaving to non-ticket page, but don't block the page
+    deleteLiveUser(internalId)
+  })
+
+  onBeforeMount(async () => {
+    // update status on opening the page. it is possible that this code will run,
+    // when user doesn't have access to the ticket, because we fail after the route is rendered
+    await updateLiveUser(ticketInternalId.value)
+  })
+
+  // Update live user editing status, when can submit value changes
+  watch(editingForm, async (canSubmit) => {
+    await updateLiveUser(ticketInternalId.value, canSubmit)
   })
 
   return {
