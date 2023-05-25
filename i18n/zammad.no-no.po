@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-09 03:30+0000\n"
-"Last-Translator: Svein-Erik Larsen <feinom@gmail.com>\n"
+"PO-Revision-Date: 2023-05-16 12:30+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Norwegian Bokmål <https://translations.zammad.org/projects/"
 "zammad/zammad-development/nb_NO/>\n"
 "Language: no-no\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -868,6 +868,7 @@ msgstr "Kontoer"
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
@@ -929,6 +930,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Aktiv"
@@ -1202,8 +1204,8 @@ msgstr ""
 "URL-en i din nettleser) for å fortsette:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
-"div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Lenken peker til en påloggingsside.</div>\n"
 "<br>\n"
@@ -1308,6 +1310,12 @@ msgstr "Alle datamaskiner og nettlesere som har tilgang til Zammad, vises her."
 #| msgid "All Tickets"
 msgid "All tickets"
 msgstr "Alle saker"
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "All two-factor authentication methods were removed for this user."
+msgstr "Autentisering"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1578,6 +1586,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1603,6 +1612,12 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid ""
+"Are you sure? The user will have to to reconfigure all two-factor "
+"authentication methods."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
@@ -1836,7 +1851,6 @@ msgstr "aug"
 msgid "August"
 msgstr "august"
 
-#: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Authentication"
 msgstr "Autentisering"
@@ -1867,9 +1881,28 @@ msgstr "Autentisering kreves"
 msgid "Authentication via %s"
 msgstr "Autentisering via %s"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Authentication"
+msgid "Authenticator App"
+msgstr "Autentisering"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Authentication via %s"
+msgid "Authenticator app secret"
+msgstr "Autentisering via %s"
+
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
 msgstr "Autorisasjon feilet"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Authy"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
@@ -2329,6 +2362,7 @@ msgid ""
 "Can't update password, your entered passwords do not match. Please try again!"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -2359,6 +2393,12 @@ msgstr "Avbryt"
 #: app/assets/javascripts/app/views/signup.jst.eco
 msgid "Cancel & Go Back"
 msgstr "Avbryt & gå tilbake"
+
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+#, fuzzy
+#| msgid "Sign out"
+msgid "Cancel & Sign out"
+msgstr "Logg ut"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -2676,6 +2716,10 @@ msgstr "Velg språket ditt."
 msgid "Choose your new password."
 msgstr "Velg ditt nye passord."
 
+#: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+msgid "Choose your preferred two-factor authentication method to set it up."
+msgstr ""
+
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Christmas holiday"
 msgstr "Juleferie"
@@ -2755,6 +2799,10 @@ msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "Click here"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+msgid "Click here to set up a two-factor authentication method."
 msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
@@ -2999,8 +3047,8 @@ msgstr ""
 "URL-en i din nettleser) for å fortsette:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
-"div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Lenken peker til en påloggingsside.</div>\n"
 "<br>\n"
@@ -3018,6 +3066,7 @@ msgstr "Bekreft/send inn dialog"
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #, fuzzy
 #| msgid "Configuration"
@@ -3095,6 +3144,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
 msgstr "Forbindelsestest vellykket"
+
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Contact the administrator if you have any problems logging in."
+msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -3200,6 +3254,31 @@ msgid ""
 "Core Workflows are actions or constraints on selections in forms. Depending "
 "on an action, it is possible to hide or restrict fields or to change the "
 "obligation to fill them in."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+#, fuzzy
+#| msgid "Authentication required"
+msgid ""
+"Could not load the two-factor authentication configuration for this user."
+msgstr "Autentisering kreves"
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Could not remove all two-factor authentication methods for this user."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+#, fuzzy
+#| msgid ""
+#| "Login failed. Have you double-checked your credentials and completed the "
+#| "email verification step?"
+msgid "Could not remove the two-factor authentication method for this user."
+msgstr ""
+"Innlogging feilet. Har du dobbeltsjekket legitimasjonen og fullført e-"
+"postbekreftelse?"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Could not remove two-factor authentication method"
 msgstr ""
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
@@ -3495,6 +3574,7 @@ msgstr "Nåværende bruker"
 msgid "Current password"
 msgstr "Nåværende passord"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
 msgid "Current password is wrong!"
 msgstr ""
@@ -3699,6 +3779,7 @@ msgstr "Dekrypteringen var vellykket."
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: db/seeds/settings.rb
 msgid "Default"
 msgstr "Default"
@@ -4063,6 +4144,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the two-factor authentication method authenticator app is enabled "
+"or not."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4687,6 +4774,7 @@ msgstr "Avdeling"
 #: app/assets/javascripts/app/views/integration/index.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Description"
@@ -5005,6 +5093,7 @@ msgstr "Påskeferie"
 #: app/assets/javascripts/app/views/knowledge_base/navigation.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -5481,6 +5570,16 @@ msgstr "Endepunkt"
 msgid "Endpoint Settings"
 msgstr "Ekspertinnstillinger"
 
+#: db/seeds/settings.rb
+msgid "Enforce the set up of the two-factor authentication"
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "How to use it"
+msgid "Enforced for user roles"
+msgstr "Slik bruker du det"
+
 #: db/seeds.rb
 msgid "English (United States)"
 msgstr ""
@@ -5532,6 +5631,11 @@ msgstr ""
 msgid "Enter the URL of your %s system"
 msgstr "Legg inn URL til %s"
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+msgid "Enter the code from your two-factor authenticator app."
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid ""
 "Enter the link provided by the plugin at the end of the installation to link "
@@ -5539,6 +5643,10 @@ msgid ""
 msgstr ""
 "Oppgi lenken som vises ved slutten av tilleggsinstallasjonen for å koble "
 "sammen de to systemene"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Enter the security code generated by the authenticator app:"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
@@ -6058,7 +6166,7 @@ msgid "Forgot Password Screen"
 msgstr "Glemt passord?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "Glemt passord?"
 
@@ -6258,6 +6366,11 @@ msgstr ""
 msgid "Get notified"
 msgstr "Konto ikke verifisert"
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: db/seeds/settings.rb
+msgid "Get the security code from the authenticator app on your device."
+msgstr ""
+
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
 msgstr "Få en tilgangsnøkkel"
@@ -6327,6 +6440,7 @@ msgstr ""
 msgid "Gmail"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
@@ -6375,6 +6489,12 @@ msgstr "Klienthemmelighet"
 msgid "Google App Credentials"
 msgstr "Google App Credentials"
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Google Authenticator"
+msgstr "Autentisering"
+
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 msgid "Google Client ID"
 msgstr ""
@@ -6418,6 +6538,7 @@ msgstr "Hilsen"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -6560,6 +6681,13 @@ msgstr ""
 msgid "Have a nice day."
 msgstr ""
 
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#, fuzzy
+#| msgid "in process"
+msgid "Having problems?"
+msgstr "under behandling"
+
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid "Header"
 msgstr ""
@@ -6633,6 +6761,12 @@ msgstr ""
 "for å finne alt, f.eks. §ols*§ eller §johan*sen§. Du kan også bruke ||doble "
 "anførselstegn|| for å søke etter setninger, f.eks. §\"en setning\"§."
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid ""
+"Here you can set up and manage two-factor authentication methods for your "
+"Zammad account."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
 #| msgid ""
@@ -6671,6 +6805,12 @@ msgstr "Her finner du de siste aktivitetene i systemet ditt."
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hi! Which one of our products?"
 msgstr "Hei! Hvilket produkt?"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Hide authenticator app secret"
+msgstr "Autentisering"
 
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
@@ -7373,6 +7513,10 @@ msgstr ""
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+msgid "Invalid security code! Please try again with a new code."
+msgstr ""
+
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr "Ugyldig valg for utvelgelse av saker"
@@ -7878,6 +8022,8 @@ msgid "Location of an external chat.css file."
 msgstr "Lokasjon av en ekstern chat.css-fil."
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 msgid "Log in to %s"
 msgstr ""
 
@@ -7892,8 +8038,7 @@ msgstr "Innlogging"
 msgid "Login Screen"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb
-#: app/graphql/gql/mutations/login.rb
+#: lib/auth/error/authentication_failed.rb
 msgid ""
 "Login failed. Have you double-checked your credentials and completed the "
 "email verification step?"
@@ -7901,8 +8046,20 @@ msgstr ""
 "Innlogging feilet. Har du dobbeltsjekket legitimasjonen og fullført e-"
 "postbekreftelse?"
 
+#: lib/auth/error/two_factor_failed.rb
+#, fuzzy
+#| msgid ""
+#| "Login failed. Have you double-checked your credentials and completed the "
+#| "email verification step?"
+msgid ""
+"Login failed. Please double-check your two-factor authentication method."
+msgstr ""
+"Innlogging feilet. Har du dobbeltsjekket legitimasjonen og fullført e-"
+"postbekreftelse?"
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue db/seeds/settings.rb
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
+#: db/seeds/settings.rb
 msgid "Logo"
 msgstr "Logo"
 
@@ -7973,6 +8130,13 @@ msgstr "Administrer %s innstillinger"
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
 msgstr "Administrer merker"
+
+#: app/assets/javascripts/app/controllers/user.coffee
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "Manage Two-Factor Authentication"
+msgstr "Autentisering"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
@@ -8234,6 +8398,12 @@ msgstr "Twitter App Credentials"
 #: db/seeds/settings.rb
 msgid "Microsoft Application Registration Portal"
 msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Microsoft Authenticator"
+msgstr "Autentisering"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb
 #, fuzzy
@@ -8501,6 +8671,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
@@ -8736,13 +8907,14 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #, fuzzy
 #| msgid "New User"
 msgid "New user?"
 msgstr "Ny Bruker"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -9314,6 +9486,10 @@ msgstr ""
 msgid "Open tickets"
 msgstr "Åpne saker"
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Open your authenticator app and scan the QR code below:"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
 #| msgid "Next in tab"
@@ -9531,6 +9707,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Eier"
@@ -9576,20 +9753,27 @@ msgstr "Forelder"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "Passord"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Password & Authentication"
+msgstr "Autentisering"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Password Access"
@@ -9734,6 +9918,7 @@ msgstr ""
 msgid "Phone Extension to Agent Mapping"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Velg et navn for applikasjonen, og vi gir deg et unikt tilgangstoken."
@@ -9860,6 +10045,13 @@ msgid ""
 "connection to your Exchange server."
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+#, fuzzy
+#| msgid "Authentication failed due to incorrect credentials."
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
+msgstr "Autentisering mislyktes på grunn av feilaktige innloggingsdetaljer."
+
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
 msgstr ""
@@ -9897,13 +10089,15 @@ msgstr "Postmaster-filter"
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Drevet av"
 
@@ -9915,6 +10109,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "Pre-defined webhook for %s."
 msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Please click the button below to create your first one."
+msgid "Press the button below to finish the set up."
+msgstr "Vennligst klikk på knappen nedenfor for å lage din første."
 
 #: db/seeds/settings.rb
 msgid "Pretty Date"
@@ -10200,7 +10400,7 @@ msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Register"
 msgstr ""
 
@@ -10222,7 +10422,7 @@ msgstr "Oppdater applikasjonen"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "Husk meg"
 
@@ -10248,6 +10448,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
@@ -10259,10 +10460,20 @@ msgstr "Fjern"
 msgid "Remove %s"
 msgstr "Fjern"
 
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Remove a configured two-factor authentication method"
+msgstr ""
+
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
 #| msgid "Remove"
 msgid "Remove all"
+msgstr "Fjern"
+
+#: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove all methods"
 msgstr "Fjern"
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -10276,6 +10487,12 @@ msgstr "Fjern"
 #| msgid "Removes the formatting"
 msgid "Remove formatting"
 msgstr "Fjerner formateringen"
+
+#: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove method"
+msgstr "Fjern"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
@@ -10403,6 +10620,11 @@ msgstr ""
 msgid "Requirements"
 msgstr "Krav"
 
+#: db/seeds/settings.rb
+msgid ""
+"Requires the set up of the two-factor authentication for certain user roles."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
@@ -10513,8 +10735,8 @@ msgstr ""
 "URL-en i din nettleser) for å fortsette:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
-"div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Lenken peker til en påloggingsside.</div>\n"
 "<br>\n"
@@ -10581,8 +10803,8 @@ msgstr ""
 "URL-en i din nettleser) for å fortsette:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
-"div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Lenken peker til en påloggingsside.</div>\n"
 "<br>\n"
@@ -10983,6 +11205,14 @@ msgstr ""
 msgid "Security"
 msgstr "Sikkerhet"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+#, fuzzy
+#| msgid "Security"
+msgid "Security Code"
+msgstr "Sikkerhet"
+
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Security Error"
@@ -11215,6 +11445,12 @@ msgstr ""
 msgid "Sessions"
 msgstr "Sesjoner"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Set Up"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #, fuzzy
 #| msgid "Create your first ticket"
@@ -11231,6 +11467,12 @@ msgstr "Sett artikkel som intern/offentlig"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Set as Default"
+msgstr "Sett som standard"
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+#, fuzzy
+#| msgid "Set as Default"
+msgid "Set as default"
 msgstr "Sett som standard"
 
 #: db/seeds/settings.rb
@@ -11292,6 +11534,13 @@ msgstr "Oppsett av nytt system"
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 msgid "Set up the communication channels you want to use with your Zammad."
 msgstr "Konfigurer kommunikasjonskanelene du ønsker å bruke med din Zammad."
+
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "Set up two-factor authentication"
+msgstr "Autentisering"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -11408,6 +11657,12 @@ msgstr "Vis søkedetaljer"
 msgid "Show all…"
 msgstr "Vis alle..."
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Authentication via %s"
+msgid "Show authenticator app secret"
+msgstr "Autentisering via %s"
+
 #: db/seeds/settings.rb
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr ""
@@ -11509,8 +11764,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Sign in"
 msgstr "Logg inn"
 
@@ -11808,6 +12065,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Status"
@@ -12393,6 +12651,12 @@ msgstr "Standard skriftstørrelse er 12px."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -12504,7 +12768,7 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr "%s objekt(er) er opprettet."
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The notifcation could not be deleted."
@@ -12556,6 +12820,10 @@ msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "The page you were looking for does not exist."
+msgstr ""
+
+#: app/controllers/users_controller.rb
+msgid "The parameter \"password\" is missing!"
 msgstr ""
 
 #: app/controllers/mentions_controller.rb
@@ -12666,6 +12934,14 @@ msgstr ""
 
 #: app/models/postmaster_filter.rb
 msgid "The required match value is missing."
+msgstr ""
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The required parameter \"method\" is missing."
+msgstr ""
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The required parameter \"payload\" is missing."
 msgstr ""
 
 #: lib/external_credential/facebook.rb
@@ -12888,6 +13164,20 @@ msgstr "%s objekt(er) er opprettet."
 msgid "The token for the admin password login is invalid."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+msgid "The two-factor authentication is not configured yet."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "The two-factor authentication method \"%s\" was removed for this user."
+msgstr "Autentisering"
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The two-factor authentication method is not enabled."
+msgstr ""
+
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 #, fuzzy
@@ -13065,6 +13355,18 @@ msgid "This field can only contain letters and spaces."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "This field can only contain lowercase letters."
+msgstr "Ugyldig passord, det må være minst % tegn!"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "This field can only contain uppercase letters."
+msgstr "Ugyldig passord, det må være minst % tegn!"
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr ""
 
@@ -13101,12 +13403,40 @@ msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must be a symbol."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain a lowercase letter."
+msgstr "Passordet må være minst ett siffer."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
 msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain a symbol."
+msgstr "Passordet må være minst ett siffer."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "This field must contain alphabetical characters."
+msgstr "Ugyldig passord, det må være minst % tegn!"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain an uppercase letter."
+msgstr "Passordet må være minst ett siffer."
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
@@ -13125,6 +13455,24 @@ msgstr "Passordet må være minst ett siffer."
 #| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "This field must contain between %s and %s characters."
 msgstr "Passordet må inneholde 2 små og 2 store tegn"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "This field must contain letters or numbers."
+msgstr "Ugyldig passord, det må være minst % tegn!"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "This field must contain letters or spaces."
+msgstr "Ugyldig passord, det må være minst % tegn!"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "This field must contain numbers."
+msgstr "Ugyldig passord, det må være minst % tegn!"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -13761,6 +14109,12 @@ msgid ""
 "email address here."
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
 "To be able to chat you need to select at least one chat topic from below!"
@@ -13805,6 +14159,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
 msgstr "For å velge plassholdere fra en liste, skriv inn \"::\"."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "To set up Authenticator App for your account, follow the steps below:"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #, fuzzy
@@ -13930,6 +14288,15 @@ msgstr "Utøser"
 msgid "Try again"
 msgstr "igjen"
 
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Try another method"
+msgstr ""
+
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
+msgid "Try another sign-in method."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
 msgstr ""
@@ -14028,6 +14395,41 @@ msgstr "Twitter Key"
 msgid "Twitter Secret"
 msgstr "Twitter Secret"
 
+#: app/frontend/apps/mobile/pages/login/after-auth/plugins/twoFactorSetup.ts
+#, fuzzy
+#| msgid "Authentication required"
+msgid "Two-Factor Authentication Configuration Is Required"
+msgstr "Autentisering kreves"
+
+#: app/assets/javascripts/app/controllers/_manage/security.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Two-factor Authentication"
+msgstr "Autentisering"
+
+#: app/assets/javascripts/app/controllers/_manage/security.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "Two-factor Authentication Methods"
+msgstr "Autentisering"
+
+#: app/controllers/application_controller/authenticates.rb
+msgid "Two-factor authentication is not supported with HTTP BasicAuth."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method \"%s\" will be removed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method was removed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+msgid "Two-factor authentication method was set up successfully."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -14090,6 +14492,12 @@ msgstr "Ikke-tildelte e-postadresser, legg de til en kanal eller slett de."
 
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid ""
+"Unless you already have it, install one of the following authenticator apps "
+"on your mobile device:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user.coffee
@@ -14421,6 +14829,10 @@ msgstr "Bruker (sensurert)"
 msgid "User Filter"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "User Mismatch"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
 msgstr ""
@@ -14473,7 +14885,7 @@ msgstr ""
 msgid "Username"
 msgstr "Brukernavn"
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #, fuzzy
 #| msgid "Username / email"
 msgid "Username / Email"
@@ -15355,6 +15767,10 @@ msgstr ""
 msgid "You have unsaved changes."
 msgstr "Kast dine ulagrede endringer."
 
+#: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+msgid "You must protect your account with two-factor authentication."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #, fuzzy
 #| msgid ""
@@ -15517,7 +15933,7 @@ msgstr "Kan ikke bekrefte e-post. Ta kontakt med administratoren din."
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
 msgstr ""
 
@@ -15571,7 +15987,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 #, fuzzy
 #| msgid ""
 #| "Zammad is currently in maintenance mode. Only administrators can login. "

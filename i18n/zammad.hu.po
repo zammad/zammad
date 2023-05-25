@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-16 03:05+0000\n"
+"PO-Revision-Date: 2023-05-25 03:05+0000\n"
 "Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hu/>\n"
@@ -995,6 +995,7 @@ msgstr "Fiókok"
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
@@ -1052,6 +1053,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Aktív"
@@ -1403,6 +1405,12 @@ msgstr ""
 msgid "All tickets"
 msgstr "Összes jegy"
 
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "All two-factor authentication methods were removed for this user."
+msgstr ""
+"Minden kétfaktoros hitelesítési módszer eltávolításra került ennél a "
+"felhasználónál."
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
 msgstr "Jövőbeli engedélyezése"
@@ -1665,6 +1673,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1693,6 +1702,14 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
 msgstr "Biztos benne? Az előkészített cikket eltávolítjuk."
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid ""
+"Are you sure? The user will have to to reconfigure all two-factor "
+"authentication methods."
+msgstr ""
+"Biztos benne? A felhasználónak újra kell konfigurálnia az összes kétfaktoros "
+"hitelesítési módszert."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? You have changes that will get lost."
@@ -1903,10 +1920,8 @@ msgstr "Tulajdonságok"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Attributes"
 msgid "Attributes to compare"
-msgstr "Tulajdonságok"
+msgstr "Összehasonlítandó tulajdonságok"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1920,7 +1935,6 @@ msgstr "Aug"
 msgid "August"
 msgstr "Augusztus"
 
-#: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Authentication"
 msgstr "Hitelesítés"
@@ -1951,9 +1965,24 @@ msgstr "Hitelesítés szükséges"
 msgid "Authentication via %s"
 msgstr "Hitelesítés ezzel: %s"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: db/seeds/settings.rb
+msgid "Authenticator App"
+msgstr "Hitelesítő alkalmazás"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Authenticator app secret"
+msgstr "Hitelesítő alkalmazás titok"
+
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
 msgstr "Az engedélyezés nem sikerült"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Authy"
+msgstr "Authy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
@@ -2384,6 +2413,7 @@ msgstr ""
 "Nem lehet frissíteni a jelszót, a megadott jelszavak nem egyeznek. Kérjük, "
 "próbálja meg újra!"
 
+#: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -2414,6 +2444,10 @@ msgstr "Mégse"
 #: app/assets/javascripts/app/views/signup.jst.eco
 msgid "Cancel & Go Back"
 msgstr "Mégse és visszalépés"
+
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+msgid "Cancel & Sign out"
+msgstr "Mégsem & Kijelentkezés"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -2706,6 +2740,10 @@ msgstr "Válassza ki a nyelvét."
 msgid "Choose your new password."
 msgstr "Válassza ki az új jelszavát."
 
+#: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+msgid "Choose your preferred two-factor authentication method to set it up."
+msgstr "A beállításhoz válassza ki a kívánt kétfaktoros hitelesítési módszert."
+
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Christmas holiday"
 msgstr "Karácsonyi ünnepek"
@@ -2780,6 +2818,10 @@ msgstr "Clearbit integráció"
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "Click here"
 msgstr "Kattintson ide"
+
+#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+msgid "Click here to set up a two-factor authentication method."
+msgstr "Kattintson ide a kétfaktoros hitelesítési módszer beállításához."
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -3002,6 +3044,7 @@ msgstr "Megerősítés/elküldés párbeszédpanel"
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 msgid "Confirmation"
 msgstr "Megerősítés"
@@ -3073,6 +3116,12 @@ msgstr "A kapcsolat visszautasítva"
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
 msgstr "A kapcsolat tesztje sikeres"
+
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Contact the administrator if you have any problems logging in."
+msgstr ""
+"Ha bármilyen problémája van a bejelentkezéssel, forduljon a rendszergazdához."
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -3174,6 +3223,29 @@ msgstr ""
 "Az Alap Munkafolyamatok az űrlapok kiválasztásaira vonatkozó műveletek vagy "
 "korlátozások. A művelettől függően lehetőség van a mezők elrejtésére vagy "
 "korlátozására, illetve a kitöltési kötelezettség megváltoztatására."
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid ""
+"Could not load the two-factor authentication configuration for this user."
+msgstr ""
+"Nem sikerült betölteni a kétfaktoros hitelesítési konfigurációt ehhez a "
+"felhasználóhoz."
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Could not remove all two-factor authentication methods for this user."
+msgstr ""
+"Nem sikerült eltávolítani az összes kétfaktoros hitelesítési módszert ennél "
+"a felhasználónál."
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Could not remove the two-factor authentication method for this user."
+msgstr ""
+"Nem sikerült eltávolítani a kétfaktoros hitelesítési módszert ennél a "
+"felhasználónál."
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Could not remove two-factor authentication method"
+msgstr "Nem sikerült eltávolítani a kétfaktoros hitelesítési módszert"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
@@ -3463,6 +3535,7 @@ msgstr "Aktuális felhasználó"
 msgid "Current password"
 msgstr "Aktuális jelszó"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
 msgid "Current password is wrong!"
 msgstr "Az aktuális jelszó rossz!"
@@ -3659,6 +3732,7 @@ msgstr "A dekódolás sikeres volt."
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: db/seeds/settings.rb
 msgid "Default"
 msgstr "Alapértelmezett"
@@ -4082,6 +4156,14 @@ msgid ""
 msgstr ""
 "Meghatározza, hogy a jegyfeltételek szerkesztője támogatja-e az összetett "
 "logikai kifejezéseket."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the two-factor authentication method authenticator app is enabled "
+"or not."
+msgstr ""
+"Meghatározza, hogy a kétfaktoros hitelesítési módszer hitelesítő alkalmazás "
+"engedélyezve van-e vagy sem."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4590,6 +4672,8 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
+"Meghatározza, hogy mely jegytulajdonságok kerülnek ellenőrzésre egy jegy "
+"létrehozása előtt."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4744,6 +4828,7 @@ msgstr "Részleg"
 #: app/assets/javascripts/app/views/integration/index.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Description"
@@ -4853,6 +4938,8 @@ msgid ""
 "Disabling the notifications from all groups will turn off the limit. "
 "Instead, to disable the notifications use the settings above."
 msgstr ""
+"Az összes csoport értesítéseinek letiltása kikapcsolja a korlátot. Ehelyett "
+"az értesítések letiltásához használja a fenti beállításokat."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -5040,6 +5127,7 @@ msgstr "Húsvét"
 #: app/assets/javascripts/app/views/knowledge_base/navigation.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -5375,6 +5463,8 @@ msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
+"Lehetővé teszi a felhasználók figyelmeztetését a jegy létrehozásakor, ha van "
+"egy meglévő jegy ugyanazokkal az tulajdonságokkal."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5520,6 +5610,14 @@ msgstr "Végpont"
 msgid "Endpoint Settings"
 msgstr "Végpont beállítások"
 
+#: db/seeds/settings.rb
+msgid "Enforce the set up of the two-factor authentication"
+msgstr "A kétfaktoros hitelesítés beállításának kényszerítése"
+
+#: db/seeds/settings.rb
+msgid "Enforced for user roles"
+msgstr "Felhasználói szerepkörök esetében érvényesített"
+
 #: db/seeds.rb
 msgid "English (United States)"
 msgstr "Angol (Egyesült Államok)"
@@ -5569,6 +5667,11 @@ msgstr "Adja meg a %s rendszerének altartományát"
 msgid "Enter the URL of your %s system"
 msgstr "Adja meg %s rendszerének URL címét"
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+msgid "Enter the code from your two-factor authenticator app."
+msgstr "Írja be a kódot a kétfaktoros hitelesítési alkalmazásból."
+
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid ""
 "Enter the link provided by the plugin at the end of the installation to link "
@@ -5576,6 +5679,10 @@ msgid ""
 msgstr ""
 "Írja be a bővítmény által a telepítés végén megadott hivatkozást a két "
 "rendszer összekapcsolásához"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Enter the security code generated by the authenticator app:"
+msgstr "Írja be a hitelesítő alkalmazás által generált biztonsági kódot:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 msgid "Enter time zone"
@@ -6092,7 +6199,7 @@ msgid "Forgot Password Screen"
 msgstr "Elfelejtett jelszó képernyő"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "Elfelejtette a jelszót?"
 
@@ -6277,6 +6384,12 @@ msgstr "Indulás"
 msgid "Get notified"
 msgstr "Kapjon értesítést"
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: db/seeds/settings.rb
+msgid "Get the security code from the authenticator app on your device."
+msgstr ""
+"Szerezze be a biztonsági kódot az eszközén lévő hitelesítő alkalmazásból."
+
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
 msgstr "Hozzáférési token beszerzése"
@@ -6342,6 +6455,7 @@ msgstr ""
 msgid "Gmail"
 msgstr "Gmail"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
@@ -6388,6 +6502,10 @@ msgstr "Google API konzol webhely"
 msgid "Google App Credentials"
 msgstr "Google alkalmazás hitelesítő adatok"
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Google Authenticator"
+msgstr "Google Hitelesítő"
+
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 msgid "Google Client ID"
 msgstr "Google ügyfél azonosító"
@@ -6429,6 +6547,7 @@ msgstr "Üdvözlés"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -6559,6 +6678,11 @@ msgstr "Hash"
 msgid "Have a nice day."
 msgstr "További szép napot."
 
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Having problems?"
+msgstr "Problémái vannak?"
+
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid "Header"
 msgstr "Fejléc"
@@ -6627,6 +6751,14 @@ msgstr ""
 "§*§ a bármi kereséséhez, pl. §smi*§ vagy §rosent*l§. Használhat ||"
 "idézőjeleket|| is a kifejezések kereséséhez: §\"valamilyen kifejezés\"§."
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid ""
+"Here you can set up and manage two-factor authentication methods for your "
+"Zammad account."
+msgstr ""
+"Itt állíthatja be és kezelheti a kétfaktoros hitelesítési módszereket a "
+"Zammad-fiókjához."
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
 "Here you can sign out, change the frontend language, and see your last "
@@ -6660,6 +6792,10 @@ msgstr "Itt találja a rendszere legfrissebb tevékenységeit."
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hi! Which one of our products?"
 msgstr "Üdvözlöm! Melyik termékünk?"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Hide authenticator app secret"
+msgstr "Hitelesítő alkalmazás titkának elrejtése"
 
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
@@ -7332,6 +7468,10 @@ msgstr ""
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Érvénytelen jogosultságok, ne zárja ki magát."
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+msgid "Invalid security code! Please try again with a new code."
+msgstr "Érvénytelen biztonsági kód! Kérjük, próbálja meg újra egy új kóddal."
+
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr "Érvénytelen jegyválasztó feltételek"
@@ -7823,6 +7963,8 @@ msgid "Location of an external chat.css file."
 msgstr "Egy külső chat.css fájl helye."
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 msgid "Log in to %s"
 msgstr "Bejelentkezés a %s rendszerbe"
 
@@ -7837,8 +7979,7 @@ msgstr "Bejelentkezés"
 msgid "Login Screen"
 msgstr "Bejelentkezési képernyő"
 
-#: app/controllers/application_controller/authenticates.rb
-#: app/graphql/gql/mutations/login.rb
+#: lib/auth/error/authentication_failed.rb
 msgid ""
 "Login failed. Have you double-checked your credentials and completed the "
 "email verification step?"
@@ -7846,8 +7987,16 @@ msgstr ""
 "A bejelentkezés nem sikerült. Ellenőrizte a hitelesítő adatokat és elvégezte "
 "az e-mail ellenőrző lépést?"
 
+#: lib/auth/error/two_factor_failed.rb
+msgid ""
+"Login failed. Please double-check your two-factor authentication method."
+msgstr ""
+"A bejelentkezés sikertelen. Kérjük, ellenőrizze még egyszer a kétfaktoros "
+"hitelesítési módszerét."
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue db/seeds/settings.rb
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
+#: db/seeds/settings.rb
 msgid "Logo"
 msgstr "Logó"
 
@@ -7925,6 +8074,11 @@ msgstr "%s beállítások kezelése"
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
 msgstr "Címkék kezelése"
+
+#: app/assets/javascripts/app/controllers/user.coffee
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Manage Two-Factor Authentication"
+msgstr "Kétfaktoros hitelesítés kezelése"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
@@ -8165,6 +8319,10 @@ msgstr "Microsoft 365 alkalmazás hitelesítő adatok"
 #: db/seeds/settings.rb
 msgid "Microsoft Application Registration Portal"
 msgstr "Microsoft alkalmazás regisztrációs portál"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Microsoft Authenticator"
+msgstr "Microsoft Authenticator"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb
 msgid "Microsoft Teams Notifications"
@@ -8410,6 +8568,7 @@ msgstr "Nagios integráció"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
@@ -8667,11 +8826,12 @@ msgstr ""
 "target=\"zammad_app\">Tekintse meg itt: #{config.product_name}</a>\n"
 "</div>\n"
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "New user?"
 msgstr "Új felhasználó?"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -9218,6 +9378,11 @@ msgstr "Nyitott jegy jelző"
 msgid "Open tickets"
 msgstr "Nyitott jegyek"
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Open your authenticator app and scan the QR code below:"
+msgstr ""
+"Nyissa meg a hitelesítési alkalmazását, és olvassa be az alábbi QR-kódot:"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
 msgstr "Lapokon megnyitva"
@@ -9414,6 +9579,7 @@ msgstr "Piszkozat felülírása"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Tulajdonos"
@@ -9459,20 +9625,25 @@ msgstr "Szülő"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "Jelszó"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Password & Authentication"
+msgstr "Jelszó és hitelesítés"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Password Access"
@@ -9563,7 +9734,7 @@ msgstr "Tudásbázis végleges törlése"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
 msgid "Permission level for looking up tickets"
-msgstr ""
+msgstr "Jegyek keresésének engedélyezési szintje"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -9605,6 +9776,7 @@ msgstr "Telefon (kimenő)"
 msgid "Phone Extension to Agent Mapping"
 msgstr "A telefonbővítmény ügynökhöz való hozzárendelése"
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Válasszon egy nevet az alkalmazásnak, és mi adunk egy egyedi tokent."
@@ -9724,6 +9896,13 @@ msgstr ""
 "Kérjük, válassza ki az Exchange kiszolgálójával való kapcsolat "
 "létrehozásához használandó hitelesítési módszert."
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
+msgstr ""
+"Kérjük, indítsa el az ismételt hitelesítést, és adja meg a helyes hitelesítő "
+"adatokat."
+
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
 msgstr "Kérjük, küldje el az egyéni címet a kódrészlet generálása előtt"
@@ -9761,13 +9940,15 @@ msgstr "Postmaster szűrő"
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Powered by"
 
@@ -9779,6 +9960,10 @@ msgstr "Előre definiált Webhook"
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "Pre-defined webhook for %s."
 msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Press the button below to finish the set up."
+msgstr "Kattintson az alábbi gombra a beállítás befejezéséhez."
 
 #: db/seeds/settings.rb
 msgid "Pretty Date"
@@ -10041,7 +10226,7 @@ msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Register"
 msgstr "Regisztráció"
 
@@ -10063,7 +10248,7 @@ msgstr "Alkalmazás újratöltése"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "Emlékezzen rám"
 
@@ -10089,6 +10274,7 @@ msgstr "Távoli"
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
@@ -10098,9 +10284,17 @@ msgstr "Eltávolítás"
 msgid "Remove %s"
 msgstr "%s eltávolítása"
 
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Remove a configured two-factor authentication method"
+msgstr "Konfigurált kétfaktoros hitelesítési módszer eltávolítása"
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
 msgstr "Az összes eltávolítása"
+
+#: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
+msgid "Remove all methods"
+msgstr "Minden módszer eltávolítása"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all values"
@@ -10109,6 +10303,10 @@ msgstr "Minden érték eltávolítása"
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
 msgstr "Formázás eltávolítása"
+
+#: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
+msgid "Remove method"
+msgstr "Módszer eltávolítása"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
@@ -10166,7 +10364,7 @@ msgstr "Válasz az utolsó cikkre"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Reply-To"
-msgstr ""
+msgstr "Válasz cím"
 
 #: db/seeds/permissions.rb
 msgid "Report Interface"
@@ -10225,6 +10423,13 @@ msgstr "A kötelező 'profile' paraméter hiányzik."
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Requirements"
 msgstr "Követelmények"
+
+#: db/seeds/settings.rb
+msgid ""
+"Requires the set up of the two-factor authentication for certain user roles."
+msgstr ""
+"A kétfaktoros hitelesítés beállítását igényli bizonyos felhasználói "
+"szerepkörök esetében."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -10739,6 +10944,12 @@ msgstr ""
 msgid "Security"
 msgstr "Biztonság"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+msgid "Security Code"
+msgstr "Biztonsági kód"
+
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Security Error"
@@ -10957,6 +11168,12 @@ msgstr "Munkamenet időtúllépés"
 msgid "Sessions"
 msgstr "Munkamenetek"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Set Up"
+msgstr "Beállítás"
+
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Set a title for your ticket"
 msgstr "Állítson be egy címet a jegyéhez"
@@ -10971,6 +11188,10 @@ msgstr "Cikk beállítása belsőre / nyilvánosra"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Set as Default"
+msgstr "Beállítás alapértelmezettként"
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Set as default"
 msgstr "Beállítás alapértelmezettként"
 
 #: db/seeds/settings.rb
@@ -11027,6 +11248,11 @@ msgstr "Új rendszer beállítása"
 msgid "Set up the communication channels you want to use with your Zammad."
 msgstr ""
 "Állítsa be a Zammad rendszerrel használni kívánt kommunikációs csatornákat."
+
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+msgid "Set up two-factor authentication"
+msgstr "Kétfaktoros hitelesítés beállítása"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -11126,6 +11352,10 @@ msgstr "Keresés részleteinek megjelenítése"
 msgid "Show all…"
 msgstr "Összes megjelenítése…"
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Show authenticator app secret"
+msgstr "Hitelesítő alkalmazás titkának megjelenítése"
+
 #: db/seeds/settings.rb
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "Naptári hetek megjelenítése a dátum/idő mezők kiválasztójában"
@@ -11140,11 +11370,11 @@ msgstr "Kevesebb mutatása"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 msgid "Show matching ticket(s) in the warning"
-msgstr ""
+msgstr "Egyező jegy(ek) megjelenítése a figyelmeztetésben"
 
 #: db/seeds/settings.rb
 msgid "Show matching tickets in the warning"
-msgstr ""
+msgstr "Egyező jegyek megjelenítése a figyelmeztetésben"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Show meta data"
@@ -11221,8 +11451,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Sign in"
 msgstr "Bejelentkezés"
 
@@ -11485,6 +11717,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Állapot"
@@ -12048,6 +12281,12 @@ msgstr "Az alapértelmezett betűméret 12px."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "A TicketHook és a jegy száma közötti elválasztó. Például ': '."
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -12150,7 +12389,7 @@ msgstr "A %s megjeleníthető jegyek száma elérte a limitet (%s fennmaradó)"
 msgid "The new ticket number could not be generated."
 msgstr "Az új jegyszámot nem sikerült generálni."
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 msgid "The notifcation could not be deleted."
 msgstr "Az értesítést nem lehetett törölni."
 
@@ -12193,6 +12432,10 @@ msgstr "Az oldal nem található"
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "The page you were looking for does not exist."
 msgstr "Az Ön által keresett oldal nem létezik."
+
+#: app/controllers/users_controller.rb
+msgid "The parameter \"password\" is missing!"
+msgstr "A \"jelszó\" paraméter hiányzik!"
 
 #: app/controllers/mentions_controller.rb
 msgid "The parameter 'mentionable_type' is invalid."
@@ -12302,7 +12545,15 @@ msgstr "A kötelező 'végpont' mező hiányzik a konfigurációból."
 
 #: app/models/postmaster_filter.rb
 msgid "The required match value is missing."
-msgstr ""
+msgstr "A szükséges egyeztetési érték hiányzik."
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The required parameter \"method\" is missing."
+msgstr "A szükséges \"method\" paraméter hiányzik."
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The required parameter \"payload\" is missing."
+msgstr "A szükséges \"payload\" paraméter hiányzik."
 
 #: lib/external_credential/facebook.rb
 msgid "The required parameter 'application_id' is missing."
@@ -12517,6 +12768,22 @@ msgid "The token for the admin password login is invalid."
 msgstr ""
 "A rendszergazdai jelszavas bejelentkezéshez használt token érvénytelen."
 
+#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+msgid "The two-factor authentication is not configured yet."
+msgstr "A kétfaktoros hitelesítés még nincs beállítva."
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+#, fuzzy
+#| msgid "User's two-factor authentication method %s was removed."
+msgid "The two-factor authentication method \"%s\" was removed for this user."
+msgstr ""
+"A felhasználó következő kétfaktoros hitelesítési módszere eltávolításra "
+"került: %s."
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The two-factor authentication method is not enabled."
+msgstr "A kétfaktoros hitelesítési módszer nincs engedélyezve."
+
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 msgid "The uploaded image could not be processed."
@@ -12672,6 +12939,14 @@ msgid "This field can only contain letters and spaces."
 msgstr "Ez a mező csak betűket és szóközöket tartalmazhat."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain lowercase letters."
+msgstr "Ez a mező csak kisbetűket tartalmazhat."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain uppercase letters."
+msgstr "Ez a mező csak nagybetűket tartalmazhat."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr "Ez a mező nem tartalmazhatja a \"%s\" értéket."
 
@@ -12710,12 +12985,32 @@ msgstr ""
 "\"."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must be a symbol."
+msgstr "Ennek a mezőnek egy szimbólumnak kell lennie."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr "Ennek a mezőnek \"%s\" típusúnak kell lennie."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a lowercase letter."
+msgstr "Ennek a mezőnek kisbetűt kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
 msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a symbol."
+msgstr "Ennek a mezőnek egy szimbólumot kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain alphabetical characters."
+msgstr "Ennek a mezőnek ábécés karaktereket kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain an uppercase letter."
+msgstr "Ennek a mezőnek nagybetűt kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain at least %s characters."
@@ -12728,6 +13023,18 @@ msgstr "Ennek a mezőnek legalább egy karaktert kell tartalmaznia."
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain between %s and %s characters."
 msgstr "Ennek a mezőnek %s és %s közötti karaktereket kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or numbers."
+msgstr "Ennek a mezőnek betűket vagy számokat kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or spaces."
+msgstr "Ennek a mezőnek betűket vagy szóközöket kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain numbers."
+msgstr "Ennek a mezőnek számokat kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -13259,7 +13566,7 @@ msgstr "Jegyek \"%s\"-vel"
 
 #: db/seeds/settings.rb
 msgid "Tickets with the same attributes were found."
-msgstr ""
+msgstr "Azonos tulajdonságokkal rendelkező jegyek találhatók."
 
 #: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -13368,6 +13675,12 @@ msgstr ""
 "Ha archiválni szeretné az összes Zammad rendszerből kimenő e-mailt, itt "
 "eltárolhat egy titkos másolat e-mail címet."
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
 "To be able to chat you need to select at least one chat topic from below!"
@@ -13414,6 +13727,10 @@ msgid "To select placeholders from a list, just enter \"::\"."
 msgstr ""
 "Ha helyőrzőket szeretne kiválasztani egy listából, csak írja be azt, hogy "
 "\"::\"."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "To set up Authenticator App for your account, follow the steps below:"
+msgstr "A Hitelesítő alkalmazás beállításához kövesse az alábbi lépéseket:"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid ""
@@ -13523,6 +13840,10 @@ msgid ""
 "updated, while triggers activated by time events are executed when certain "
 "times are reached (e.g. pending time, escalation)."
 msgstr ""
+"Az akciók által aktivált eseményindítók akkor kerülnek végrehajtásra, amikor "
+"egy jegyet létrehoznak vagy frissítenek, míg az időesemények által aktivált "
+"eseményindítók bizonyos időpontok elérésekor (pl. függőben lévő idő, "
+"eszkaláció) kerülnek végrehajtásra."
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Triggers are …"
@@ -13531,6 +13852,15 @@ msgstr "Az eseményindítók …"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Try again"
 msgstr "Próbálja újra"
+
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Try another method"
+msgstr "Próbáljon meg egy másik módszert"
+
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
+msgid "Try another sign-in method."
+msgstr "Próbáljon meg egy másik bejelentkezési módszert."
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
@@ -13621,6 +13951,37 @@ msgstr "Twitter Kulcs"
 msgid "Twitter Secret"
 msgstr "Twitter Titok"
 
+#: app/frontend/apps/mobile/pages/login/after-auth/plugins/twoFactorSetup.ts
+msgid "Two-Factor Authentication Configuration Is Required"
+msgstr "Kétfaktoros hitelesítési konfiguráció szükséges"
+
+#: app/assets/javascripts/app/controllers/_manage/security.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Two-factor Authentication"
+msgstr "Kétfaktoros hitelesítés"
+
+#: app/assets/javascripts/app/controllers/_manage/security.coffee
+msgid "Two-factor Authentication Methods"
+msgstr "Kétfaktoros hitelesítési módszerek"
+
+#: app/controllers/application_controller/authenticates.rb
+msgid "Two-factor authentication is not supported with HTTP BasicAuth."
+msgstr ""
+"A kétfaktoros hitelesítés nem támogatott a HTTP BasicAuth használatával."
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method \"%s\" will be removed."
+msgstr ""
+"A következő kétfaktoros hitelesítési módszer eltávolításra kerül: \"%s\"."
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method was removed."
+msgstr "A kétfaktoros hitelesítési módszer eltávolításra került."
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+msgid "Two-factor authentication method was set up successfully."
+msgstr "A kétfaktoros hitelesítési módszer beállítása sikeresen megtörtént."
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -13680,6 +14041,14 @@ msgstr ""
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid ""
+"Unless you already have it, install one of the following authenticator apps "
+"on your mobile device:"
+msgstr ""
+"Amennyiben még nem rendelkezik ilyennel, telepítse a következő hitelesítési "
+"alkalmazások egyikét mobileszközére:"
 
 #: app/assets/javascripts/app/controllers/user.coffee
 msgid "Unlock"
@@ -14039,6 +14408,10 @@ msgstr "Felhasználó (cenzúrázott):"
 msgid "User Filter"
 msgstr "Felhasználói szűrő"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "User Mismatch"
+msgstr "Felhasználó eltérés"
+
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
 msgstr "Felhasználói szervezet választó - e-mail"
@@ -14091,7 +14464,7 @@ msgstr ""
 msgid "Username"
 msgstr "Felhasználónév"
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Username / Email"
 msgstr "Felhasználónév / E-mail cím"
 
@@ -14537,6 +14910,8 @@ msgid ""
 "When at least one field from conditions was updated or article was added and "
 "conditions match"
 msgstr ""
+"Ha a feltételek közül legalább egy mezőt frissítettek vagy cikket adtak "
+"hozzá, és a feltételek megegyeznek"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "When conditions match"
@@ -14937,6 +15312,10 @@ msgstr "Engedélyeznie kell az Ön webkamerájához való hozzáférést."
 msgid "You have unsaved changes."
 msgstr "Vannak el nem mentett változtatásai."
 
+#: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+msgid "You must protect your account with two-factor authentication."
+msgstr "Fiókját kétfaktoros hitelesítéssel kell védenie."
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "You need to add the following Javascript code snippet to your web page:"
 msgstr "A következő Javascript kódrészletet kell hozzáadnia a weboldalához:"
@@ -15093,7 +15472,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
 
@@ -15139,7 +15518,7 @@ msgstr "Zammad felhasználói ügynök"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
@@ -15950,14 +16329,14 @@ msgstr "másnak kell lennie, mint %{count}"
 
 #: app/models/knowledge_base.rb
 msgid "must begin with a slash (\"/\")"
-msgstr ""
+msgstr "egy perjellel (\"/\") kell kezdődnie"
 
 msgid "must exist"
 msgstr "léteznie kell"
 
 #: app/models/knowledge_base.rb
 msgid "must not end with a slash (\"/\")"
-msgstr ""
+msgstr "nem végződhet perjellel (\"/\")"
 
 #: app/models/knowledge_base.rb
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
@@ -16433,6 +16812,10 @@ msgstr "...a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#~ msgid "Could not remove user's two-factor authentication method"
+#~ msgstr ""
+#~ "Nem sikerült eltávolítani a felhasználó kétfaktoros hitelesítési módszerét"
 
 #~ msgid "Need label!"
 #~ msgstr "Szükség van címkére!"

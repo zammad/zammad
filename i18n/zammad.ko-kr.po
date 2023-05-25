@@ -879,6 +879,7 @@ msgstr "계정"
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
@@ -938,6 +939,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "유효한"
@@ -1281,6 +1283,12 @@ msgstr "당신의 Zammad에 액세스 할 수있는 모든 컴퓨터와 브라�
 msgid "All tickets"
 msgstr "모든 Ticket"
 
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "All two-factor authentication methods were removed for this user."
+msgstr "인증"
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
 msgstr "기능 허용"
@@ -1545,6 +1553,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1568,6 +1577,12 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid ""
+"Are you sure? The user will have to to reconfigure all two-factor "
+"authentication methods."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
@@ -1805,7 +1820,6 @@ msgstr "8월"
 msgid "August"
 msgstr "8월"
 
-#: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Authentication"
 msgstr "인증"
@@ -1838,8 +1852,27 @@ msgstr ""
 msgid "Authentication via %s"
 msgstr "%s을 통해 인증"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Authentication"
+msgid "Authenticator App"
+msgstr "인증"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Authentication via %s"
+msgid "Authenticator app secret"
+msgstr "%s을 통해 인증"
+
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Authy"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
@@ -2297,6 +2330,7 @@ msgid ""
 "Can't update password, your entered passwords do not match. Please try again!"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -2327,6 +2361,12 @@ msgstr "취소"
 #: app/assets/javascripts/app/views/signup.jst.eco
 msgid "Cancel & Go Back"
 msgstr "취소 및 돌아 가기"
+
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+#, fuzzy
+#| msgid "Sign out"
+msgid "Cancel & Sign out"
+msgstr "로그 아웃"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -2644,6 +2684,10 @@ msgstr "언어를 변경합니다."
 msgid "Choose your new password."
 msgstr "새 암호를 선택합니다."
 
+#: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+msgid "Choose your preferred two-factor authentication method to set it up."
+msgstr ""
+
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Christmas holiday"
 msgstr "크리스마스 휴가"
@@ -2727,6 +2771,10 @@ msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "Click here"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+msgid "Click here to set up a two-factor authentication method."
 msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
@@ -2949,6 +2997,7 @@ msgstr "대화 상자를 제출 / 확인"
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #, fuzzy
 #| msgid "Configuration"
@@ -3026,6 +3075,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
 msgstr "연결 테스트 성공"
+
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Contact the administrator if you have any problems logging in."
+msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -3131,6 +3185,23 @@ msgid ""
 "Core Workflows are actions or constraints on selections in forms. Depending "
 "on an action, it is possible to hide or restrict fields or to change the "
 "obligation to fill them in."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid ""
+"Could not load the two-factor authentication configuration for this user."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Could not remove all two-factor authentication methods for this user."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Could not remove the two-factor authentication method for this user."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Could not remove two-factor authentication method"
 msgstr ""
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
@@ -3426,6 +3497,7 @@ msgstr "현재 사용자"
 msgid "Current password"
 msgstr "현재 비밀번호"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
 msgid "Current password is wrong!"
 msgstr ""
@@ -3630,6 +3702,7 @@ msgstr "연결 테스트 성공"
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: db/seeds/settings.rb
 msgid "Default"
 msgstr "기본"
@@ -3990,6 +4063,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the two-factor authentication method authenticator app is enabled "
+"or not."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4610,6 +4689,7 @@ msgstr "부서"
 #: app/assets/javascripts/app/views/integration/index.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Description"
@@ -4927,6 +5007,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/navigation.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -5397,6 +5478,16 @@ msgstr "엔드 포인트"
 msgid "Endpoint Settings"
 msgstr "고급 설정"
 
+#: db/seeds/settings.rb
+msgid "Enforce the set up of the two-factor authentication"
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "How to use it"
+msgid "Enforced for user roles"
+msgstr "이것을 어떻게 사용 하는가"
+
 #: db/seeds.rb
 msgid "English (United States)"
 msgstr ""
@@ -5450,12 +5541,21 @@ msgstr ""
 msgid "Enter the URL of your %s system"
 msgstr "당신의 %s 시스템의 URL을 입력"
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+msgid "Enter the code from your two-factor authenticator app."
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid ""
 "Enter the link provided by the plugin at the end of the installation to link "
 "the two systems"
 msgstr ""
 "두 시스템을 연결하기 위해 설치가 끝날 때 플러그인에서 제공하는 링크를 입력"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Enter the security code generated by the authenticator app:"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
@@ -5974,7 +6074,7 @@ msgid "Forgot Password Screen"
 msgstr "비밀번호를 잊으 셨나요?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "비밀번호를 잊으 셨나요?"
 
@@ -6173,6 +6273,11 @@ msgstr ""
 msgid "Get notified"
 msgstr "계정 확인되지"
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: db/seeds/settings.rb
+msgid "Get the security code from the authenticator app on your device."
+msgstr ""
+
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
 msgstr "액세스 토큰을 얻기"
@@ -6242,6 +6347,7 @@ msgstr ""
 msgid "Gmail"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
@@ -6290,6 +6396,12 @@ msgstr "클라이언트의 비밀"
 msgid "Google App Credentials"
 msgstr "구글앱 인증"
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Google Authenticator"
+msgstr "인증"
+
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 msgid "Google Client ID"
 msgstr ""
@@ -6333,6 +6445,7 @@ msgstr "환영"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -6475,6 +6588,13 @@ msgstr ""
 msgid "Have a nice day."
 msgstr ""
 
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#, fuzzy
+#| msgid "in process"
+msgid "Having problems?"
+msgstr "진행 중"
+
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid "Header"
 msgstr ""
@@ -6538,6 +6658,12 @@ msgid ""
 "quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid ""
+"Here you can set up and manage two-factor authentication methods for your "
+"Zammad account."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
 #| msgid ""
@@ -6577,6 +6703,12 @@ msgstr "여기에서 당신은 당신의 시스템의 최신 활동을 찾을 �
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hi! Which one of our products?"
 msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Hide authenticator app secret"
+msgstr "인증"
 
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
@@ -7235,6 +7367,10 @@ msgstr ""
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+msgid "Invalid security code! Please try again with a new code."
+msgstr ""
+
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr "잘못된 Ticket 선택 조건"
@@ -7740,6 +7876,8 @@ msgid "Location of an external chat.css file."
 msgstr "외부 chat.css 파일의 위치."
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 msgid "Log in to %s"
 msgstr ""
 
@@ -7754,15 +7892,20 @@ msgstr "로그인"
 msgid "Login Screen"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb
-#: app/graphql/gql/mutations/login.rb
+#: lib/auth/error/authentication_failed.rb
 msgid ""
 "Login failed. Have you double-checked your credentials and completed the "
 "email verification step?"
 msgstr ""
 
+#: lib/auth/error/two_factor_failed.rb
+msgid ""
+"Login failed. Please double-check your two-factor authentication method."
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue db/seeds/settings.rb
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
+#: db/seeds/settings.rb
 msgid "Logo"
 msgstr "심벌 마크"
 
@@ -7833,6 +7976,13 @@ msgstr "%s 설정 관리"
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
 msgstr "태그 관리"
+
+#: app/assets/javascripts/app/controllers/user.coffee
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "Manage Two-Factor Authentication"
+msgstr "인증"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
@@ -8094,6 +8244,12 @@ msgstr "트위터 앱 자격 증명"
 #: db/seeds/settings.rb
 msgid "Microsoft Application Registration Portal"
 msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Microsoft Authenticator"
+msgstr "인증"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb
 #, fuzzy
@@ -8361,6 +8517,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
@@ -8596,13 +8753,14 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #, fuzzy
 #| msgid "New User"
 msgid "New user?"
 msgstr "새로운 사용자"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -9172,6 +9330,10 @@ msgstr ""
 msgid "Open tickets"
 msgstr "오픈 Ticket"
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Open your authenticator app and scan the QR code below:"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
 #| msgid "Next in tab"
@@ -9389,6 +9551,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "소유자"
@@ -9432,20 +9595,27 @@ msgstr "부모의"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "암호"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Password & Authentication"
+msgstr "인증"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Password Access"
@@ -9590,6 +9760,7 @@ msgstr ""
 msgid "Phone Extension to Agent Mapping"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
@@ -9713,6 +9884,11 @@ msgid ""
 "connection to your Exchange server."
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
+msgstr ""
+
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
 msgstr ""
@@ -9750,13 +9926,15 @@ msgstr ""
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "에 의해 구동"
 
@@ -9768,6 +9946,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "Pre-defined webhook for %s."
 msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Please click the button below to create your first one."
+msgid "Press the button below to finish the set up."
+msgstr "첫 번째 하나를 만들려면 아래 버튼을 클릭하십시오."
 
 #: db/seeds/settings.rb
 msgid "Pretty Date"
@@ -10052,7 +10236,7 @@ msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Register"
 msgstr ""
 
@@ -10074,7 +10258,7 @@ msgstr "다시로드 응용 프로그램"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "날 기억해"
 
@@ -10100,6 +10284,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
@@ -10111,10 +10296,20 @@ msgstr "풀다"
 msgid "Remove %s"
 msgstr "풀다"
 
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Remove a configured two-factor authentication method"
+msgstr ""
+
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
 #| msgid "Remove"
 msgid "Remove all"
+msgstr "풀다"
+
+#: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove all methods"
 msgstr "풀다"
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -10128,6 +10323,12 @@ msgstr "풀다"
 #| msgid "Removes the formatting"
 msgid "Remove formatting"
 msgstr "서식을 제거합니다"
+
+#: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove method"
+msgstr "풀다"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
@@ -10254,6 +10455,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Requirements"
 msgstr "요구 사항"
+
+#: db/seeds/settings.rb
+msgid ""
+"Requires the set up of the two-factor authentication for certain user roles."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -10751,6 +10957,14 @@ msgstr ""
 msgid "Security"
 msgstr "보안"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+#, fuzzy
+#| msgid "Security"
+msgid "Security Code"
+msgstr "보안"
+
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Security Error"
@@ -10983,6 +11197,12 @@ msgstr ""
 msgid "Sessions"
 msgstr "세션"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Set Up"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #, fuzzy
 #| msgid "Create your first ticket"
@@ -11000,6 +11220,12 @@ msgstr "로 설정 기사 내부 공개 /"
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Set as Default"
 msgstr ""
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+#, fuzzy
+#| msgid "Restore Defaults"
+msgid "Set as default"
+msgstr "기본값으로 복원"
 
 #: db/seeds/settings.rb
 msgid "Set available ticket types"
@@ -11060,6 +11286,13 @@ msgstr "설정 새로운 시스템"
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 msgid "Set up the communication channels you want to use with your Zammad."
 msgstr "당신이 당신의 Zammad에 사용할 통신 채널을 설정합니다."
+
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "Set up two-factor authentication"
+msgstr "인증"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -11173,6 +11406,12 @@ msgstr "표시 상세 검색"
 msgid "Show all…"
 msgstr "모두 보이기..."
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
+#| msgid "Authentication via %s"
+msgid "Show authenticator app secret"
+msgstr "%s을 통해 인증"
+
 #: db/seeds/settings.rb
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr ""
@@ -11274,8 +11513,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Sign in"
 msgstr "로그인"
 
@@ -11561,6 +11802,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "상태"
@@ -12140,6 +12382,12 @@ msgstr "기본 글꼴 크기는 12 픽셀입니다."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -12250,7 +12498,7 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr "%s 객체 (들)이 생성된다."
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The notifcation could not be deleted."
@@ -12302,6 +12550,10 @@ msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "The page you were looking for does not exist."
+msgstr ""
+
+#: app/controllers/users_controller.rb
+msgid "The parameter \"password\" is missing!"
 msgstr ""
 
 #: app/controllers/mentions_controller.rb
@@ -12412,6 +12664,14 @@ msgstr ""
 
 #: app/models/postmaster_filter.rb
 msgid "The required match value is missing."
+msgstr ""
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The required parameter \"method\" is missing."
+msgstr ""
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The required parameter \"payload\" is missing."
 msgstr ""
 
 #: lib/external_credential/facebook.rb
@@ -12631,6 +12891,20 @@ msgstr "%s 객체 (들)이 생성된다."
 msgid "The token for the admin password login is invalid."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+msgid "The two-factor authentication is not configured yet."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "The two-factor authentication method \"%s\" was removed for this user."
+msgstr "인증"
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The two-factor authentication method is not enabled."
+msgstr ""
+
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 #, fuzzy
@@ -12796,6 +13070,18 @@ msgid "This field can only contain letters and spaces."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain 2 lower and 2 upper characters."
+msgid "This field can only contain lowercase letters."
+msgstr "비밀번호 낮은 2 개, 2 위 문자를 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain 2 lower and 2 upper characters."
+msgid "This field can only contain uppercase letters."
+msgstr "비밀번호 낮은 2 개, 2 위 문자를 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr ""
 
@@ -12832,12 +13118,40 @@ msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must be a symbol."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain a lowercase letter."
+msgstr "비밀번호에는 적어도 하나의 숫자가 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
 msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain a symbol."
+msgstr "비밀번호에는 적어도 하나의 숫자가 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain alphabetical characters."
+msgstr "비밀번호에는 적어도 하나의 숫자가 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain an uppercase letter."
+msgstr "비밀번호에는 적어도 하나의 숫자가 포함 할 필요가있다."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain at least %s characters."
@@ -12854,6 +13168,24 @@ msgstr "비밀번호에는 적어도 하나의 숫자가 포함 할 필요가있
 #| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "This field must contain between %s and %s characters."
 msgstr "비밀번호 낮은 2 개, 2 위 문자를 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain letters or numbers."
+msgstr "비밀번호에는 적어도 하나의 숫자가 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain letters or spaces."
+msgstr "비밀번호에는 적어도 하나의 숫자가 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain numbers."
+msgstr "비밀번호에는 적어도 하나의 숫자가 포함 할 필요가있다."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -13488,6 +13820,12 @@ msgid ""
 "email address here."
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
 "To be able to chat you need to select at least one chat topic from below!"
@@ -13532,6 +13870,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
 msgstr "단지 입력, 목록에서 자리를 선택하려면 \"::\"."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "To set up Authenticator App for your account, follow the steps below:"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #, fuzzy
@@ -13657,6 +13999,15 @@ msgstr "트리거"
 msgid "Try again"
 msgstr "다시"
 
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Try another method"
+msgstr ""
+
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
+msgid "Try another sign-in method."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
 msgstr ""
@@ -13755,6 +14106,39 @@ msgstr "트위터 키"
 msgid "Twitter Secret"
 msgstr "트위터 비밀"
 
+#: app/frontend/apps/mobile/pages/login/after-auth/plugins/twoFactorSetup.ts
+msgid "Two-Factor Authentication Configuration Is Required"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/security.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Two-factor Authentication"
+msgstr "인증"
+
+#: app/assets/javascripts/app/controllers/_manage/security.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "Two-factor Authentication Methods"
+msgstr "인증"
+
+#: app/controllers/application_controller/authenticates.rb
+msgid "Two-factor authentication is not supported with HTTP BasicAuth."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method \"%s\" will be removed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method was removed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+msgid "Two-factor authentication method was set up successfully."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -13817,6 +14201,12 @@ msgstr "할당되지 않은 이메일 주소는 채널에 할당하거나 삭제
 
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid ""
+"Unless you already have it, install one of the following authenticator apps "
+"on your mobile device:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user.coffee
@@ -14144,6 +14534,10 @@ msgstr ""
 msgid "User Filter"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "User Mismatch"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
 msgstr ""
@@ -14196,7 +14590,7 @@ msgstr ""
 msgid "Username"
 msgstr "사용자 이름"
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #, fuzzy
 #| msgid "Username / email"
 msgid "Username / Email"
@@ -15046,6 +15440,10 @@ msgstr ""
 msgid "You have unsaved changes."
 msgstr "저장되지 않은 변경 사항을 무시."
 
+#: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+msgid "You must protect your account with two-factor authentication."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #, fuzzy
 #| msgid ""
@@ -15206,7 +15604,7 @@ msgstr "이메일을 확인할 수 없습니다. 관리자에게 문의하시기
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
 msgstr ""
 
@@ -15260,7 +15658,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 #, fuzzy
 #| msgid ""
 #| "Zammad is currently in maintenance mode. Only administrators can login. "

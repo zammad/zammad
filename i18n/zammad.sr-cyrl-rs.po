@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-10 03:05+0000\n"
+"PO-Revision-Date: 2023-05-25 09:53+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -989,6 +989,7 @@ msgstr "Налози"
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
@@ -1046,6 +1047,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Активно"
@@ -1389,6 +1391,10 @@ msgstr ""
 msgid "All tickets"
 msgstr "Сви тикети"
 
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "All two-factor authentication methods were removed for this user."
+msgstr "Сви методи двофакторске аутентификације корисника су уклоњени."
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
 msgstr "Дозволи у будућности"
@@ -1650,6 +1656,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1665,7 +1672,7 @@ msgid ""
 "agents. This operation may take some time."
 msgstr ""
 "Да ли сте сигурни? Подразумевана подешавања обавештења ће бити примењена на "
-"све активне оператере. Ова операција може потрајати."
+"све оператере. Ова операција може потрајати."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -1678,6 +1685,14 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
 msgstr "Да ли сте сигурни? Ваше незапамћени чланак ће бити изгубљен."
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid ""
+"Are you sure? The user will have to to reconfigure all two-factor "
+"authentication methods."
+msgstr ""
+"Да ли сте сигурни? Корисник ће морати да поново подеси све методе "
+"двофакторске аутентификације."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? You have changes that will get lost."
@@ -1898,7 +1913,6 @@ msgstr "авг"
 msgid "August"
 msgstr "август"
 
-#: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Authentication"
 msgstr "Аутентификација"
@@ -1929,9 +1943,24 @@ msgstr "Неопходна аутентификација"
 msgid "Authentication via %s"
 msgstr "Аутентификација путем %s"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: db/seeds/settings.rb
+msgid "Authenticator App"
+msgstr "Апликација за аутентификацију"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Authenticator app secret"
+msgstr "Шифра апликације за аутентификацију"
+
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
 msgstr "Неуспела ауторизација"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Authy"
+msgstr "Authy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
@@ -2359,6 +2388,7 @@ msgstr ""
 "Није било могуће освежити лозинку, унете лозинке се не подударају. Молимо "
 "покушајте поново!"
 
+#: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -2389,6 +2419,10 @@ msgstr "Откажи"
 #: app/assets/javascripts/app/views/signup.jst.eco
 msgid "Cancel & Go Back"
 msgstr "Откажи и иди назад"
+
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+msgid "Cancel & Sign out"
+msgstr "Откажи и одјави се"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -2676,6 +2710,10 @@ msgstr "Изабери свој језик."
 msgid "Choose your new password."
 msgstr "Изабери своју нову лозинку."
 
+#: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+msgid "Choose your preferred two-factor authentication method to set it up."
+msgstr "Изабери свој пожељни метод двофакторске аутентификације за поставку."
+
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Christmas holiday"
 msgstr "Божићни празници"
@@ -2750,6 +2788,10 @@ msgstr "Clearbit интеграција"
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "Click here"
 msgstr "Кликни овде"
+
+#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+msgid "Click here to set up a two-factor authentication method."
+msgstr "Кликни овде за поставку метода двофакторске аутентификације."
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -2970,6 +3012,7 @@ msgstr "Потврди/пошаљи дијалог"
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 msgid "Confirmation"
 msgstr "Потврда"
@@ -3041,6 +3084,12 @@ msgstr "Веза је одбијена"
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
 msgstr "Проба везе је успела"
+
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Contact the administrator if you have any problems logging in."
+msgstr ""
+"Контактирајте администратора уколико имате проблема приликом пријављивања."
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -3142,6 +3191,26 @@ msgstr ""
 "Радни токови су радње или ограничења на селекције у формама. У зависности од "
 "радње, могуће је сакрити или ограничити поља или променити обавезу њиховог "
 "попуњавања."
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid ""
+"Could not load the two-factor authentication configuration for this user."
+msgstr ""
+"Није било могуће учитати конфигурацију двофакторске аутентификације "
+"корисника."
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Could not remove all two-factor authentication methods for this user."
+msgstr ""
+"Није било могуће уклонити све методе двофакторске аутентификације корисника."
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Could not remove the two-factor authentication method for this user."
+msgstr "Није било могуће уклонити метод двофакторске аутентификације корисника."
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Could not remove two-factor authentication method"
+msgstr "Није било могуће уклонити метод двофакторске аутентификације"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
@@ -3428,6 +3497,7 @@ msgstr "Тренутни корисник"
 msgid "Current password"
 msgstr "Тренутна лозинка"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
 msgid "Current password is wrong!"
 msgstr "Погрешна тренутна лозинка!"
@@ -3621,6 +3691,7 @@ msgstr "Успешно дешифровање."
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: db/seeds/settings.rb
 msgid "Default"
 msgstr "Подразумевано"
@@ -4002,6 +4073,14 @@ msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
 "Одређује да ли уредник услова тикета подржава комплексне логичке изразе."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the two-factor authentication method authenticator app is enabled "
+"or not."
+msgstr ""
+"Одређује да ли двофакторски метод апликације за аутентификацију укључен или "
+"не."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4638,6 +4717,7 @@ msgstr "Одељење"
 #: app/assets/javascripts/app/views/integration/index.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Description"
@@ -4747,8 +4827,8 @@ msgid ""
 "Disabling the notifications from all groups will turn off the limit. "
 "Instead, to disable the notifications use the settings above."
 msgstr ""
-"Искључивање обавештења свих група ће искључити ограничење. За искључивање "
-"обавештења користите подешавања изнад."
+"Искључивање обавештења из свих група ће уклонити ограничење. Уместо тога, за "
+"искључивање обавештења користите подешавања изнад."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -4935,6 +5015,7 @@ msgstr "Ускршњи празници"
 #: app/assets/javascripts/app/views/knowledge_base/navigation.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -5406,6 +5487,14 @@ msgstr "Путања"
 msgid "Endpoint Settings"
 msgstr "Подешавања путање"
 
+#: db/seeds/settings.rb
+msgid "Enforce the set up of the two-factor authentication"
+msgstr "Приморај поставку двофакторске аутентификације"
+
+#: db/seeds/settings.rb
+msgid "Enforced for user roles"
+msgstr "Приморано за корисничке улоге"
+
 #: db/seeds.rb
 msgid "English (United States)"
 msgstr "Енглески (Сједињене Државе)"
@@ -5455,12 +5544,22 @@ msgstr "Унеси поддомен твог %s система"
 msgid "Enter the URL of your %s system"
 msgstr "Унеси URL твог %s система"
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+msgid "Enter the code from your two-factor authenticator app."
+msgstr "Унеси код из своје двофакторске апликације за аутентификацију."
+
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid ""
 "Enter the link provided by the plugin at the end of the installation to link "
 "the two systems"
 msgstr ""
 "Унеси добијени линк од додатка на крају инсталације за повезивање два система"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Enter the security code generated by the authenticator app:"
+msgstr ""
+"Унеси сигурносни код генерисан од стране апликације за аутентификацију:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 msgid "Enter time zone"
@@ -5970,7 +6069,7 @@ msgid "Forgot Password Screen"
 msgstr "Страна заборављене лозинке"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "Заборављена лозинка?"
 
@@ -6153,6 +6252,12 @@ msgstr "Први кораци"
 msgid "Get notified"
 msgstr "Буди обавештен(а)"
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: db/seeds/settings.rb
+msgid "Get the security code from the authenticator app on your device."
+msgstr ""
+"Преузми сигурноси код из апликације за аутентификацију на свом уређају."
+
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
 msgstr "Добијање приступног кључа"
@@ -6216,6 +6321,7 @@ msgstr "Неуспео GitLab захтев! Молимо проверите да
 msgid "Gmail"
 msgstr "Gmail"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
@@ -6262,6 +6368,10 @@ msgstr "Google API Console сајт"
 msgid "Google App Credentials"
 msgstr "Креденцијали Google апликације"
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Google Authenticator"
+msgstr "Google Authenticator"
+
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 msgid "Google Client ID"
 msgstr "Google клијент ID"
@@ -6303,6 +6413,7 @@ msgstr "Поздрав"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -6433,6 +6544,11 @@ msgstr "Отисак"
 msgid "Have a nice day."
 msgstr "Желимо вам пријатан дан."
 
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Having problems?"
+msgstr "Имате проблема?"
+
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid "Header"
 msgstr "Заглавље"
@@ -6498,6 +6614,14 @@ msgstr ""
 "Овде можете извршити претрагу тикета, клијената и организација. Користите "
 "звездицу §*§ да пронађете било шта, нпр. §Петро*§ или §Вуч*ић§."
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid ""
+"Here you can set up and manage two-factor authentication methods for your "
+"Zammad account."
+msgstr ""
+"Овде можете поставити и подесити методе двофакторске аутентификације за ваш "
+"Zammad налог."
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
 "Here you can sign out, change the frontend language, and see your last "
@@ -6529,6 +6653,10 @@ msgstr "Овде можете пронаћи последње активност
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hi! Which one of our products?"
 msgstr "Здраво! Који тачно од наших производа?"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Hide authenticator app secret"
+msgstr "Сакриј шифру апликације за аутентификацију"
 
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
@@ -7189,6 +7317,10 @@ msgstr "Неисправни подаци, неопходан data:image у logo
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Неисправне дозволе, будите пажљиви да се не закључате."
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+msgid "Invalid security code! Please try again with a new code."
+msgstr "Неважећи сигурни код! Молимо покушајте поново са новим кодом."
+
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr "Неисправни избори услова тикета"
@@ -7679,6 +7811,8 @@ msgid "Location of an external chat.css file."
 msgstr "Локација екстерне chat.css датотеке."
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 msgid "Log in to %s"
 msgstr "Пријави се на %s"
 
@@ -7693,8 +7827,7 @@ msgstr "Пријави се"
 msgid "Login Screen"
 msgstr "Страна за пријављивање"
 
-#: app/controllers/application_controller/authenticates.rb
-#: app/graphql/gql/mutations/login.rb
+#: lib/auth/error/authentication_failed.rb
 msgid ""
 "Login failed. Have you double-checked your credentials and completed the "
 "email verification step?"
@@ -7702,8 +7835,16 @@ msgstr ""
 "Неуспешно пријављивање. Да ли сте проверили ваше креденцијале и потврдили "
 "имејл адресу?"
 
+#: lib/auth/error/two_factor_failed.rb
+msgid ""
+"Login failed. Please double-check your two-factor authentication method."
+msgstr ""
+"Неуспешно пријављивање. Молимо проверите ваш метод двофакторске "
+"аутентификације."
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue db/seeds/settings.rb
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
+#: db/seeds/settings.rb
 msgid "Logo"
 msgstr "Лого"
 
@@ -7780,6 +7921,11 @@ msgstr "Управљање %s подешавања"
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
 msgstr "Управљање ознакама"
+
+#: app/assets/javascripts/app/controllers/user.coffee
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Manage Two-Factor Authentication"
+msgstr "Управљање двофакторском аутентификацијом"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
@@ -8013,6 +8159,10 @@ msgstr "Креденцијали Microsoft 365 апликације"
 #: db/seeds/settings.rb
 msgid "Microsoft Application Registration Portal"
 msgstr "Регистрациони портал Microsoft 365 апликације"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Microsoft Authenticator"
+msgstr "Microsoft Authenticator"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb
 msgid "Microsoft Teams Notifications"
@@ -8258,6 +8408,7 @@ msgstr "Nagios интеграција"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
@@ -8515,11 +8666,12 @@ msgstr ""
 "target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
 "</div>\n"
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "New user?"
 msgstr "Нови корисник?"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -9058,6 +9210,11 @@ msgstr "Отвори индикатор тикета"
 msgid "Open tickets"
 msgstr "Отворени тикети"
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Open your authenticator app and scan the QR code below:"
+msgstr ""
+"Отворите своју апликацију за аутентификацију и скенирајте QR код испод:"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
 msgstr "Отворено у прозорима"
@@ -9252,6 +9409,7 @@ msgstr "Преиначи нацрт"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Власник"
@@ -9297,20 +9455,25 @@ msgstr "Надређени"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "Лозинка"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Password & Authentication"
+msgstr "Лозинка и аутентификација"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Password Access"
@@ -9443,6 +9606,7 @@ msgstr "Позив (одлазни)"
 msgid "Phone Extension to Agent Mapping"
 msgstr "Мапирање локала на оператере"
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Изаберите назив апликације, и добићете јединствени кључ."
@@ -9561,6 +9725,11 @@ msgstr ""
 "Молимо одаберите метод аутентификације за остваривање везе са вашим Exchange "
 "сервером."
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
+msgstr "Молимо покрените реаутентификацију и унесите исправне креденцијале."
+
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
 msgstr "Молимо унесите прилагођену адресу пре генерисања исечка"
@@ -9598,13 +9767,15 @@ msgstr "Postmaster филтер"
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Покреће"
 
@@ -9616,6 +9787,10 @@ msgstr "Повратни позив по шаблону"
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "Pre-defined webhook for %s."
 msgstr "Повратни позив по шаблону за %s."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Press the button below to finish the set up."
+msgstr "Кликните на дугме испод за довршавање поставке."
 
 #: db/seeds/settings.rb
 msgid "Pretty Date"
@@ -9876,7 +10051,7 @@ msgid ""
 msgstr ""
 "Референце - Претрага наставка и по In-Reply-To и References заглављима."
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Register"
 msgstr "Регистрација"
 
@@ -9898,7 +10073,7 @@ msgstr "Освежи апликацију"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "Запамти ме"
 
@@ -9924,6 +10099,7 @@ msgstr "Удаљено"
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
@@ -9933,9 +10109,17 @@ msgstr "Обриши"
 msgid "Remove %s"
 msgstr "Обриши %s"
 
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "Remove a configured two-factor authentication method"
+msgstr "Уклони подешен метод двофакторске аутентификације"
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
 msgstr "Обриши све"
+
+#: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
+msgid "Remove all methods"
+msgstr "Уклони све методе"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all values"
@@ -9944,6 +10128,10 @@ msgstr "Избриши све вредности"
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
 msgstr "Уклони форматирање"
+
+#: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
+msgid "Remove method"
+msgstr "Уклони метод"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
@@ -10060,6 +10248,12 @@ msgstr "Недостаје обавезан параметар ’profile’."
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Requirements"
 msgstr "Услови"
+
+#: db/seeds/settings.rb
+msgid ""
+"Requires the set up of the two-factor authentication for certain user roles."
+msgstr ""
+"Захтева поставку двофакторске аутентификације за одређене корисничке улоге."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -10568,6 +10762,12 @@ msgstr ""
 msgid "Security"
 msgstr "Безбедност"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+msgid "Security Code"
+msgstr "Сигурносни код"
+
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Security Error"
@@ -10785,6 +10985,12 @@ msgstr "Време истека сесије"
 msgid "Sessions"
 msgstr "Сесије"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Set Up"
+msgstr "Постави"
+
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Set a title for your ticket"
 msgstr "Одреди наслов свог тикета"
@@ -10799,6 +11005,10 @@ msgstr "Подеси чланак као интерни/јаван"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Set as Default"
+msgstr "Подеси као подразумевано"
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Set as default"
 msgstr "Подеси као подразумевано"
 
 #: db/seeds/settings.rb
@@ -10852,6 +11062,11 @@ msgstr "Подеси нови систем"
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 msgid "Set up the communication channels you want to use with your Zammad."
 msgstr "Подеси комуникационе канале које желиш да користиш у Zammad-у."
+
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+msgid "Set up two-factor authentication"
+msgstr "Постави двофакторску аутентификацију"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -10951,6 +11166,10 @@ msgstr "Прикажи детаље претраге"
 msgid "Show all…"
 msgstr "Прикажи све…"
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "Show authenticator app secret"
+msgstr "Прикажи шифру апликације за аутентификацију"
+
 #: db/seeds/settings.rb
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "Прикажи бројеве недеља у прозору поља датума (и времена)"
@@ -11046,8 +11265,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Sign in"
 msgstr "Пријави се"
 
@@ -11309,6 +11530,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Стање"
@@ -11865,6 +12087,14 @@ msgstr "Стандардна величина фонта је 12px."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Сепаратор између TicketHook и броја тикета. Нпр. ’: ’."
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
+msgstr ""
+"Унешени корисник за реаутентификацију се не поклапа са корисником који је "
+"иницијално подешен за ваш Microsoft365 канал."
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -11966,7 +12196,7 @@ msgstr "Достигнуто је ограничење од %s тикет(а) з
 msgid "The new ticket number could not be generated."
 msgstr "Није било могуће генерисати нови број тикета."
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 msgid "The notifcation could not be deleted."
 msgstr "Није било могуће обрисати обавештење."
 
@@ -12009,6 +12239,10 @@ msgstr "Страна није пронађена"
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "The page you were looking for does not exist."
 msgstr "Страна коју сте тражили не постоји."
+
+#: app/controllers/users_controller.rb
+msgid "The parameter \"password\" is missing!"
+msgstr "Није пронађен обавезни параметар „password”!"
 
 #: app/controllers/mentions_controller.rb
 msgid "The parameter 'mentionable_type' is invalid."
@@ -12113,6 +12347,14 @@ msgstr "Није пронађено обавезно поље ’endpoint’ у 
 #: app/models/postmaster_filter.rb
 msgid "The required match value is missing."
 msgstr "Није пронађена обавезна вредност подударања."
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The required parameter \"method\" is missing."
+msgstr "Није пронађен обавезни параметар „method”."
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The required parameter \"payload\" is missing."
+msgstr "Није пронађен обавезни параметар „payload”."
 
 #: lib/external_credential/facebook.rb
 msgid "The required parameter 'application_id' is missing."
@@ -12323,6 +12565,18 @@ msgstr "Није било могуће спојити тикете."
 msgid "The token for the admin password login is invalid."
 msgstr "Кључ за пријаву преко привремене лозинке администратора је неисправан."
 
+#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+msgid "The two-factor authentication is not configured yet."
+msgstr "Двофакторска аутентификација још није постављена."
+
+#: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
+msgid "The two-factor authentication method \"%s\" was removed for this user."
+msgstr "Метод двофакторске аутентификације корисника „%s” је уклоњен."
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "The two-factor authentication method is not enabled."
+msgstr "Метод двофакторске аутентификације није омогућен."
+
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 msgid "The uploaded image could not be processed."
@@ -12475,6 +12729,14 @@ msgid "This field can only contain letters and spaces."
 msgstr "Ово поље може садржати само слова и прореде."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain lowercase letters."
+msgstr "Ово поље може садржати само мала слова."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain uppercase letters."
+msgstr "Ово поље може садржати само велика слова."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr "Ово поље не може садржати вредност „%s”."
 
@@ -12511,12 +12773,32 @@ msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr "Ово поље не садржи исправан датум, молимо користите „%s” формат."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must be a symbol."
+msgstr "Ово поље мора бити симбол."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr "Ово поље мора бити типа „%s”."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a lowercase letter."
+msgstr "Ово поље мора садржати мало слово."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
 msgstr "Ово поље мора садржати број."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a symbol."
+msgstr "Ово поље мора садржати симбол."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain alphabetical characters."
+msgstr "Ово поље мора садржати алфанумеричке знакове."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain an uppercase letter."
+msgstr "Ово поље мора садржати велико слово."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain at least %s characters."
@@ -12529,6 +12811,18 @@ msgstr "Ово поље мора садржати најмање један зн
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain between %s and %s characters."
 msgstr "Ово поље мора садржати између %s и %s знак(ова)."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or numbers."
+msgstr "Ово поље мора садржати слова или бројеве."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or spaces."
+msgstr "Ово поље може садржати слова или прореде."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain numbers."
+msgstr "Ово поље мора садржати бројеве."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -13179,6 +13473,14 @@ msgstr ""
 "За архивирање свих Zammad одлазних имејл порука, овде можете подесити имејл "
 "адресу за BCC поље."
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
+msgstr ""
+"Да би избегли учитавање погрешног Microsoft365 сандучета, реаутентификација "
+"је прекинута."
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
 "To be able to chat you need to select at least one chat topic from below!"
@@ -13223,6 +13525,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
 msgstr "За избор вредности са списка, унесите „::”."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid "To set up Authenticator App for your account, follow the steps below:"
+msgstr ""
+"За постављање апликације за аутентификацију за ваш налог, пратите кораке "
+"испод:"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid ""
@@ -13343,6 +13651,15 @@ msgstr "Окидачи су …"
 msgid "Try again"
 msgstr "Покушај поново"
 
+#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Try another method"
+msgstr "Покушајте други метод"
+
+#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
+msgid "Try another sign-in method."
+msgstr "Покушајте други метод пријављивања."
+
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
 msgstr "Поновна успостава везе…"
@@ -13432,6 +13749,35 @@ msgstr "Twitter кључ"
 msgid "Twitter Secret"
 msgstr "Twitter шифра"
 
+#: app/frontend/apps/mobile/pages/login/after-auth/plugins/twoFactorSetup.ts
+msgid "Two-Factor Authentication Configuration Is Required"
+msgstr "Поставка двофакторске аутентификације је обавезна"
+
+#: app/assets/javascripts/app/controllers/_manage/security.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Two-factor Authentication"
+msgstr "Двофакторска аутентификација"
+
+#: app/assets/javascripts/app/controllers/_manage/security.coffee
+msgid "Two-factor Authentication Methods"
+msgstr "Методи двофакторске аутентификације"
+
+#: app/controllers/application_controller/authenticates.rb
+msgid "Two-factor authentication is not supported with HTTP BasicAuth."
+msgstr "Двофакторска аутентификација не подржава HTTP BasicAuth."
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method \"%s\" will be removed."
+msgstr "Метод двофакторске аутентификације „%s” ће бити уклоњен."
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method was removed."
+msgstr "Метод двофакторске аутентификације је уклоњен."
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+msgid "Two-factor authentication method was set up successfully."
+msgstr "Метод двофакторске аутентификације је успешно постављен."
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -13489,6 +13835,14 @@ msgstr "Недодељена имејл адреса, доделите је ка
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
 msgstr "Непозната грешка"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+msgid ""
+"Unless you already have it, install one of the following authenticator apps "
+"on your mobile device:"
+msgstr ""
+"Уколико ће већ немате, инсталирајте једну од следећих апликација за "
+"аутентификацију на ваш уређај:"
 
 #: app/assets/javascripts/app/controllers/user.coffee
 msgid "Unlock"
@@ -13845,6 +14199,10 @@ msgstr "Корисник (цензурисани):"
 msgid "User Filter"
 msgstr "Филтер корисника"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "User Mismatch"
+msgstr "Корисник се не подудара"
+
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
 msgstr "Избор услова организације корисника - имејл"
@@ -13896,7 +14254,7 @@ msgstr ""
 msgid "Username"
 msgstr "Корисничко име"
 
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Username / Email"
 msgstr "Корисничко име / имејл"
 
@@ -14739,6 +15097,10 @@ msgstr "Морате да дозволите приступ вашој каме�
 msgid "You have unsaved changes."
 msgstr "Имате несачуване измене."
 
+#: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+msgid "You must protect your account with two-factor authentication."
+msgstr "Морате заштитити ваш налог двофакторском аутентификацијом."
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "You need to add the following Javascript code snippet to your web page:"
 msgstr "Морате да додате следећи исечак Javascript кода на вашу веб страну:"
@@ -14895,7 +15257,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
 
@@ -14941,7 +15303,7 @@ msgstr "Zammad User Agent"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
@@ -16230,6 +16592,10 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Could not remove user's two-factor authentication method"
+#~ msgstr ""
+#~ "Није било могуће уклонити кориснички метод двофакторске аутентификације"
 
 #~ msgid "Need label!"
 #~ msgstr "Неопходан label параметар!"
