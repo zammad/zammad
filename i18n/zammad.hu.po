@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-15 12:06+0000\n"
+"PO-Revision-Date: 2023-05-25 03:05+0000\n"
 "Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -1676,10 +1676,11 @@ msgstr "Biztos benne?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
 msgstr ""
-"Biztos benne? Az alapértelmezett értesítési beállítások minden ügynökre "
-"alkalmazásra kerülnek."
+"Biztos benne? Az alapértelmezett értesítési beállítások minden aktív "
+"ügynökre alkalmazásra kerülnek. Ez a művelet eltarthat egy ideig."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -1902,10 +1903,8 @@ msgstr "Tulajdonságok"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Attributes"
 msgid "Attributes to compare"
-msgstr "Tulajdonságok"
+msgstr "Összehasonlítandó tulajdonságok"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -4427,10 +4426,8 @@ msgstr ""
 "webböngésző címsorában jelenik meg."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the permission level used for lookups."
-msgstr "Meghatározza a felhasználói és szervezeti képkeresés háttérrendszerét."
+msgstr "Meghatározza a keresésekhez használt jogosultsági szintet."
 
 #: db/seeds/settings.rb
 msgid "Defines the port of the websocket server."
@@ -4591,6 +4588,8 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
+"Meghatározza, hogy mely jegytulajdonságok kerülnek ellenőrzésre egy jegy "
+"létrehozása előtt."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4848,6 +4847,14 @@ msgstr "Letilt"
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Disable Notifications"
 msgstr "Értesítések kikapcsolása"
+
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
+"Az összes csoport értesítéseinek letiltása kikapcsolja a korlátot. Ehelyett "
+"az értesítések letiltásához használja a fenti beállításokat."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -5370,6 +5377,8 @@ msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
+"Lehetővé teszi a felhasználók figyelmeztetését a jegy létrehozásakor, ha van "
+"egy meglévő jegy ugyanazokkal az tulajdonságokkal."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -6424,6 +6433,7 @@ msgstr "Üdvözlés"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -9210,8 +9220,6 @@ msgid "Open ticket indicator"
 msgstr "Nyitott jegy jelző"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "Open tickets"
 msgstr "Nyitott jegyek"
 
@@ -9411,6 +9419,7 @@ msgstr "Piszkozat felülírása"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Tulajdonos"
@@ -9560,7 +9569,7 @@ msgstr "Tudásbázis végleges törlése"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
 msgid "Permission level for looking up tickets"
-msgstr ""
+msgstr "Jegyek keresésének engedélyezési szintje"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -9720,6 +9729,13 @@ msgid ""
 msgstr ""
 "Kérjük, válassza ki az Exchange kiszolgálójával való kapcsolat "
 "létrehozásához használandó hitelesítési módszert."
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
+msgstr ""
+"Kérjük, indítsa el az ismételt hitelesítést, és adja meg a helyes hitelesítő "
+"adatokat."
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -10163,7 +10179,7 @@ msgstr "Válasz az utolsó cikkre"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Reply-To"
-msgstr ""
+msgstr "Válasz cím"
 
 #: db/seeds/permissions.rb
 msgid "Report Interface"
@@ -11137,11 +11153,11 @@ msgstr "Kevesebb mutatása"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 msgid "Show matching ticket(s) in the warning"
-msgstr ""
+msgstr "Egyező jegy(ek) megjelenítése a figyelmeztetésben"
 
 #: db/seeds/settings.rb
 msgid "Show matching tickets in the warning"
-msgstr ""
+msgstr "Egyező jegyek megjelenítése a figyelmeztetésben"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Show meta data"
@@ -11482,6 +11498,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Állapot"
@@ -12045,6 +12062,12 @@ msgstr "Az alapértelmezett betűméret 12px."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "A TicketHook és a jegy száma közötti elválasztó. Például ': '."
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -12299,7 +12322,7 @@ msgstr "A kötelező 'végpont' mező hiányzik a konfigurációból."
 
 #: app/models/postmaster_filter.rb
 msgid "The required match value is missing."
-msgstr ""
+msgstr "A szükséges egyeztetési érték hiányzik."
 
 #: lib/external_credential/facebook.rb
 msgid "The required parameter 'application_id' is missing."
@@ -12669,6 +12692,18 @@ msgid "This field can only contain letters and spaces."
 msgstr "Ez a mező csak betűket és szóközöket tartalmazhat."
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field can only contain letters and numbers."
+msgid "This field can only contain lowercase letters."
+msgstr "Ez a mező csak betűket és számokat tartalmazhat."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field can only contain alphabetical characters."
+msgid "This field can only contain uppercase letters."
+msgstr "Ez a mező csak ábécés karaktereket tartalmazhat."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr "Ez a mező nem tartalmazhatja a \"%s\" értéket."
 
@@ -12707,11 +12742,41 @@ msgstr ""
 "\"."
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain a number."
+msgid "This field must be a symbol."
+msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr "Ennek a mezőnek \"%s\" típusúnak kell lennie."
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain at least one character."
+msgid "This field must contain a lowercase letter."
+msgstr "Ennek a mezőnek legalább egy karaktert kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
+msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain a number."
+msgid "This field must contain a symbol."
+msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field can only contain alphabetical characters."
+msgid "This field must contain alphabetical characters."
+msgstr "Ez a mező csak ábécés karaktereket tartalmazhat."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain a number."
+msgid "This field must contain an uppercase letter."
 msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -12725,6 +12790,24 @@ msgstr "Ennek a mezőnek legalább egy karaktert kell tartalmaznia."
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain between %s and %s characters."
 msgstr "Ennek a mezőnek %s és %s közötti karaktereket kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain a number."
+msgid "This field must contain letters or numbers."
+msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field can only contain letters and spaces."
+msgid "This field must contain letters or spaces."
+msgstr "Ez a mező csak betűket és szóközöket tartalmazhat."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain a number."
+msgid "This field must contain numbers."
+msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -13256,7 +13339,7 @@ msgstr "Jegyek \"%s\"-vel"
 
 #: db/seeds/settings.rb
 msgid "Tickets with the same attributes were found."
-msgstr ""
+msgstr "Azonos tulajdonságokkal rendelkező jegyek találhatók."
 
 #: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -13364,6 +13447,12 @@ msgid ""
 msgstr ""
 "Ha archiválni szeretné az összes Zammad rendszerből kimenő e-mailt, itt "
 "eltárolhat egy titkos másolat e-mail címet."
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
@@ -13520,6 +13609,10 @@ msgid ""
 "updated, while triggers activated by time events are executed when certain "
 "times are reached (e.g. pending time, escalation)."
 msgstr ""
+"Az akciók által aktivált eseményindítók akkor kerülnek végrehajtásra, amikor "
+"egy jegyet létrehoznak vagy frissítenek, míg az időesemények által aktivált "
+"eseményindítók bizonyos időpontok elérésekor (pl. függőben lévő idő, "
+"eszkaláció) kerülnek végrehajtásra."
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Triggers are …"
@@ -14036,6 +14129,10 @@ msgstr "Felhasználó (cenzúrázott):"
 msgid "User Filter"
 msgstr "Felhasználói szűrő"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "User Mismatch"
+msgstr "Felhasználó eltérés"
+
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
 msgstr "Felhasználói szervezet választó - e-mail"
@@ -14534,6 +14631,8 @@ msgid ""
 "When at least one field from conditions was updated or article was added and "
 "conditions match"
 msgstr ""
+"Ha a feltételek közül legalább egy mezőt frissítettek vagy cikket adtak "
+"hozzá, és a feltételek megegyeznek"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "When conditions match"
@@ -15947,14 +16046,14 @@ msgstr "másnak kell lennie, mint %{count}"
 
 #: app/models/knowledge_base.rb
 msgid "must begin with a slash (\"/\")"
-msgstr ""
+msgstr "egy perjellel (\"/\") kell kezdődnie"
 
 msgid "must exist"
 msgstr "léteznie kell"
 
 #: app/models/knowledge_base.rb
 msgid "must not end with a slash (\"/\")"
-msgstr ""
+msgstr "nem végződhet perjellel (\"/\")"
 
 #: app/models/knowledge_base.rb
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"

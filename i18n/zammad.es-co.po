@@ -1613,9 +1613,15 @@ msgid "Are you sure?"
 msgstr "Esta seguro?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+#, fuzzy
+#| msgid ""
+#| "Are you sure you want to reload? You have unsaved changes that will get "
+#| "lost"
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
 msgstr ""
+"¿Seguro que quieres recargar? Tienes cambios sin guardar que se perderán"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -4911,6 +4917,12 @@ msgstr "Desactivar"
 msgid "Disable Notifications"
 msgstr "Desactivar notificaciones"
 
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
 msgstr "Descartar"
@@ -6544,6 +6556,7 @@ msgstr "Saludo"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -9629,6 +9642,7 @@ msgstr "Sobrescribir borrador"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Propietario"
@@ -9959,6 +9973,13 @@ msgid ""
 "Please select the authentication method that should be used to establish the "
 "connection to your Exchange server."
 msgstr ""
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+#, fuzzy
+#| msgid "Authentication failed, invalid credentials!"
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
+msgstr "¡La autenticación falló, las credenciales son inválidas!"
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -11793,6 +11814,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Estado"
@@ -12384,6 +12406,12 @@ msgstr "El tamaño de fuente predeterminado es 12px."
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "El divisor entre TicketHook y el número de boleto. P.ej. ': '."
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -13090,6 +13118,18 @@ msgid "This field can only contain letters and spaces."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one special character."
+msgid "This field can only contain lowercase letters."
+msgstr "La contraseña debe contener al menos un carácter especial."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one special character."
+msgid "This field can only contain uppercase letters."
+msgstr "La contraseña debe contener al menos un carácter especial."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr ""
 
@@ -13130,12 +13170,40 @@ msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must be a symbol."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one special character."
+msgid "This field must contain a lowercase letter."
+msgstr "La contraseña debe contener al menos un carácter especial."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
 msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one special character."
+msgid "This field must contain a symbol."
+msgstr "La contraseña debe contener al menos un carácter especial."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one special character."
+msgid "This field must contain alphabetical characters."
+msgstr "La contraseña debe contener al menos un carácter especial."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one special character."
+msgid "This field must contain an uppercase letter."
+msgstr "La contraseña debe contener al menos un carácter especial."
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
@@ -13154,6 +13222,24 @@ msgstr "La contraseña debe contener al menos un carácter especial."
 #| msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgid "This field must contain between %s and %s characters."
 msgstr "La contraseña debe contener 2 minúsculas y 2 mayúsculas."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one special character."
+msgid "This field must contain letters or numbers."
+msgstr "La contraseña debe contener al menos un carácter especial."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one special character."
+msgid "This field must contain letters or spaces."
+msgstr "La contraseña debe contener al menos un carácter especial."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one special character."
+msgid "This field must contain numbers."
+msgstr "La contraseña debe contener al menos un carácter especial."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -13804,6 +13890,12 @@ msgid ""
 msgstr ""
 "Para archivar todos los correos electrónicos salientes de Zammad a externos, "
 "puede almacenar una dirección de correo electrónico BCC aquí."
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
@@ -14463,6 +14555,12 @@ msgstr "Usuario (censurado)"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "User Filter"
 msgstr "Filtro de usuario"
+
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+#, fuzzy
+#| msgid "regex mismatch"
+msgid "User Mismatch"
+msgstr "discrepancia de expresiones regulares"
 
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"

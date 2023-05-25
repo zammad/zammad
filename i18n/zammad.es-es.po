@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-16 11:46+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2023-05-20 03:05+0000\n"
+"Last-Translator: Alfredo Sola <alfredo@sola.es>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/es/>\n"
 "Language: es-es\n"
@@ -130,8 +130,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Último cambio el #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Último cambio el #{ticket.updated_at}_\n"
 "* Grupo: #{ticket.group.name}\n"
 "* Propietario: #{ticket.owner.fullname}\n"
 "* Estado: #{t(ticket.state.name)}\n"
@@ -1296,8 +1296,8 @@ msgstr ""
 "navegador) para continuar:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}</a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Este enlace abre una página donde podrá iniciar sesión.</div>\n"
 "<br>\n"
@@ -1357,7 +1357,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/organization.coffee
 msgid "Agent and customer users can be grouped into organizations."
-msgstr "Los usuarios agentes y de clientes se pueden agrupar en organizaciones."
+msgstr ""
+"Los usuarios agentes y de clientes se pueden agrupar en organizaciones."
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -1670,8 +1671,13 @@ msgid "Are you sure?"
 msgstr "¿Estás seguro?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+#, fuzzy
+#| msgid ""
+#| "Are you sure? Default notifications settings will be applied to all "
+#| "agents."
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
 msgstr ""
 "¿Seguro? Los ajustes de notificaciones por defecto se aplicarán a todos los "
 "agentes."
@@ -2979,8 +2985,8 @@ msgstr ""
 "siguiente:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}</a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>El equipo de #{config.product_name}</div>\n"
 
@@ -4553,7 +4559,8 @@ msgstr "Define el back-end de transacciones."
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
-msgstr "Define si los casos que coinciden se muestran, en casos que ya existen."
+msgstr ""
+"Define si los casos que coinciden se muestran, en casos que ya existen."
 
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
@@ -4816,6 +4823,15 @@ msgstr "Desactivar"
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Disable Notifications"
 msgstr "Desactivar Notificaciones"
+
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
+"Deshabilitar las notificaciones de todos los grupos deshabilita el límite. "
+"En lugar de esto, para deshabilitar notificaciones, utilice los ajustes de "
+"arriba."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -6398,6 +6414,7 @@ msgstr "Saludo"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -7352,8 +7369,8 @@ msgstr ""
 "gustaría invitarle a #{config.product_name}, nuestra plataforma de servicio "
 "al cliente.</div>\n"
 "<br>\n"
-"<div>Pulse en <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.token}\">este enlace</a> y establezca su "
+"<div>Pulse en <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.token}\">este enlace</a> y establezca su "
 "contraseña.</div>\n"
 "<br>\n"
 "<div>Gracias,</div>\n"
@@ -9379,6 +9396,7 @@ msgstr "Sobreescribir borrador"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Propietario"
@@ -9690,6 +9708,13 @@ msgstr ""
 "Seleccione el método de autenticación que debería usarse para conectar con "
 "su servidor Exchange."
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+#, fuzzy
+#| msgid "Authentication failed due to incorrect credentials."
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
+msgstr "Autenticación fallida: credenciales incorrectas."
+
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
 msgstr ""
@@ -10000,7 +10025,7 @@ msgstr "Disparadores de ticket recursivos"
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers Loop Max."
-msgstr "Máximo número de disparadores de casos recursivos."
+msgstr "Máximo número de disparos de casos recursivos."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -10325,8 +10350,8 @@ msgstr ""
 "#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
 "#{token.token}</a></div>\n"
 "<br>\n"
-"<div>Este enlace le llevará a una página donde podrá cambiar la "
-"contraseña.</div>\n"
+"<div>Este enlace le llevará a una página donde podrá cambiar la contraseña.</"
+"div>\n"
 "<br>\n"
 "<div>Si no desea cambiar su contraseña, ignore este mensaje. Su contraseña "
 "no será restablecida.</div>\n"
@@ -10954,9 +10979,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
-msgstr ""
-"Establecer notas para tipos de creación de casos, mediante la selección de "
-"tipo."
+msgstr "Establecer notas para tipos de creación de casos, eligiendo por tipo."
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types."
@@ -11451,6 +11474,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Estado"
@@ -12018,6 +12042,12 @@ msgstr "El tamaño de fuente por defecto es 12px."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 "El divisor entre el TicketHook y el número de ticket. Por ejemplo: ' : '."
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -12643,6 +12673,18 @@ msgid "This field can only contain letters and spaces."
 msgstr "Este campo solamente puede contener letras y espacios."
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field can only contain letters and numbers."
+msgid "This field can only contain lowercase letters."
+msgstr "Este campo solamente puede contener letras y números."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field can only contain alphabetical characters."
+msgid "This field can only contain uppercase letters."
+msgstr "Este campo solamente puede contener caracteres alfabéticos."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr "Este campo no puede contener el valor \"%s\"."
 
@@ -12679,11 +12721,41 @@ msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr "Este campo no contiene una fecha válida, utilice el formato \"%s\"."
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain a number."
+msgid "This field must be a symbol."
+msgstr "Este campo debe contener un número."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr "Este campo debe ser del tipo \"%s\"."
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain at least one character."
+msgid "This field must contain a lowercase letter."
+msgstr "Este campo debe contener al menos un carácter."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
+msgstr "Este campo debe contener un número."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain a number."
+msgid "This field must contain a symbol."
+msgstr "Este campo debe contener un número."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field can only contain alphabetical characters."
+msgid "This field must contain alphabetical characters."
+msgstr "Este campo solamente puede contener caracteres alfabéticos."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain a number."
+msgid "This field must contain an uppercase letter."
 msgstr "Este campo debe contener un número."
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -12697,6 +12769,24 @@ msgstr "Este campo debe contener al menos un carácter."
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain between %s and %s characters."
 msgstr "Este campo debe contener entre %s y %s caracteres."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain a number."
+msgid "This field must contain letters or numbers."
+msgstr "Este campo debe contener un número."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field can only contain letters and spaces."
+msgid "This field must contain letters or spaces."
+msgstr "Este campo solamente puede contener letras y espacios."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "This field must contain a number."
+msgid "This field must contain numbers."
+msgstr "Este campo debe contener un número."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -13361,6 +13451,12 @@ msgstr ""
 "Para conservar una copia de todos los correos electrónicos salientes desde "
 "Zammad a destinatarios externos, puede configurar aquí una dirección de "
 "copia oculta (BCC o CCO)."
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
@@ -14037,6 +14133,12 @@ msgstr "Usuario (censurado):"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "User Filter"
 msgstr "Filtro de usuarios"
+
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+#, fuzzy
+#| msgid "regex mismatch"
+msgid "User Mismatch"
+msgstr "desajuste de expresiones regulares"
 
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"

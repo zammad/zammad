@@ -1557,9 +1557,12 @@ msgid "Are you sure?"
 msgstr "Emin misiniz?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+#, fuzzy
+#| msgid "Are you sure? You have changes that will get lost."
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
-msgstr ""
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
+msgstr "Emin misiniz? Kaybolacak değişiklikleriniz var."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -4932,6 +4935,12 @@ msgstr "Disable"
 msgid "Disable Notifications"
 msgstr "Disable Notifications"
 
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
 msgstr "Discard"
@@ -6670,6 +6679,7 @@ msgstr "Karşılama"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -9979,6 +9989,7 @@ msgstr "True"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Sahip"
@@ -10341,6 +10352,13 @@ msgid ""
 "Please select the authentication method that should be used to establish the "
 "connection to your Exchange server."
 msgstr "True"
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+#, fuzzy
+#| msgid "Authentication failed due to incorrect credentials."
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
+msgstr "Yanlış kimlik bilgilerinden dolayı yetkilendirme başarısız oldu."
 
 #: app/controllers/knowledge_base/manage_controller.rb
 #, fuzzy
@@ -12310,6 +12328,7 @@ msgstr "True"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Durum"
@@ -12929,6 +12948,12 @@ msgstr "The default font size is 12px."
 #, fuzzy
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "True"
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -13682,6 +13707,16 @@ msgstr "True"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
+msgid "This field can only contain lowercase letters."
+msgstr "True"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+msgid "This field can only contain uppercase letters."
+msgstr "True"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
 msgid "This field can't contain the value \"%s\"."
 msgstr "True"
 
@@ -13728,12 +13763,38 @@ msgstr "True"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
+msgid "This field must be a symbol."
+msgstr "True"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
 msgid "This field must be of the type \"%s\"."
 msgstr "True"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain a lowercase letter."
+msgstr "Password needs to contain at least one digit."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
 msgid "This field must contain a number."
+msgstr "True"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+msgid "This field must contain a symbol."
+msgstr "True"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+msgid "This field must contain alphabetical characters."
+msgstr "True"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+msgid "This field must contain an uppercase letter."
 msgstr "True"
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -13753,6 +13814,21 @@ msgstr "Password needs to contain at least one digit."
 #| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "This field must contain between %s and %s characters."
 msgstr "Password needs to contain 2 lower and 2 upper characters."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+msgid "This field must contain letters or numbers."
+msgstr "True"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+msgid "This field must contain letters or spaces."
+msgstr "True"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+msgid "This field must contain numbers."
+msgstr "True"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
@@ -14425,6 +14501,12 @@ msgid ""
 "To archive all outgoing emails from Zammad to external, you can store a BCC "
 "email address here."
 msgstr "True"
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 #, fuzzy
@@ -15126,6 +15208,12 @@ msgstr "Kullanıcı (sansürlenmiş)"
 #, fuzzy
 msgid "User Filter"
 msgstr "True"
+
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+#, fuzzy
+#| msgid "regex mismatch"
+msgid "User Mismatch"
+msgstr "regex mismatch"
 
 #: db/seeds/settings.rb
 #, fuzzy

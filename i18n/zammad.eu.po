@@ -96,10 +96,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Eskatatuta #{ticket.escalation_at}_ an\n"
-"Tiketa (#{ticket.title})  \"#{ticket.customer.longname}\" eskalatu izan da \""
-"#{ticket.escalation_at}\"!\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Eskatatuta #{ticket.escalation_at}_ an\n"
+"Tiketa (#{ticket.title})  \"#{ticket.customer.longname}\" eskalatu izan da "
+"\"#{ticket.escalation_at}\"!\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -121,8 +121,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Azkenengo aktualizazioa #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Azkenengo aktualizazioa #{ticket.updated_at}_\n"
 "* Talde: #{ticket.group.name}\n"
 "* Jabea: #{ticket.owner.fullname}\n"
 "* Egoera: #{t(ticket.state.name)}\n"
@@ -146,8 +146,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Iritsi da abisua!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Iritsi da abisua!_\n"
 "Tiket batek arreta behar du: (#{ticket.title}) bezeroarekin \"*#{ticket."
 "customer.longname}*\".\n"
 "\n"
@@ -174,8 +174,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Eguneratuta #{current_user.longname}  #{ticket."
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Eguneratuta #{current_user.longname}  #{ticket."
 "updated_at}_ an\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -202,8 +202,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Eskalatu izango da #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Eskalatu izango da #{ticket.escalation_at}_\n"
 "Tiketa (#{ticket.title}) \"#{ticket.customer.longname}\" eskalatu izango da "
 "\"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -232,8 +232,8 @@ msgstr ""
 "\n"
 "<div>Kaixo #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Zure kontua lotu duzula dirudi <b>hirugarrenen aplikazio batekin</b> \""
-"#{t(provider)}\".</div>\n"
+"<div>Zure kontua lotu duzula dirudi <b>hirugarrenen aplikazio batekin</b> "
+"\"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>Ez bazara zuk izan, mesedez kendu lotura zure profiletik eta aldatu "
 "hirugarrenen aplikazioaren pasahitza. Baliteke norbaitek baimenik gabeko "
@@ -286,8 +286,8 @@ msgstr ""
 "<div>Herrialdea zure gailu ezagunen zerrendara gehitu da, eta hemen ikus "
 "dezakezu:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Izan ez bazara, kendu gailua, aldatu kontuaren pasahitza eta jarri "
 "administratzailearekin harremanetan. Baliteke norbaitek baimenik gabe sartu "
@@ -328,8 +328,8 @@ msgstr ""
 "\n"
 "<div>Kaixo #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Badirudi zure kontuan sartu zarela <b> beste gailu bat erabiliz:</b> \""
-"#{user_device.created_at}\":</div>\n"
+"<div>Badirudi zure kontuan sartu zarela <b> beste gailu bat erabiliz:</b> "
+"\"#{user_device.created_at}\":</div>\n"
 "<br>\n"
 "<div>\n"
 "Zure tresna: #{user_device.name}<br>\n"
@@ -337,11 +337,11 @@ msgstr ""
 "Zure IP-a: #{user_device.ip}<br>\n"
 "</div>\n"
 "<br>\n"
-"<div>Zure gailua gailu ezagunen zerrendan gehitu da. Hemen ikus "
-"dezakezu:</div>\n"
+"<div>Zure gailua gailu ezagunen zerrendan gehitu da. Hemen ikus dezakezu:</"
+"div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Izan ez bazara, kendu gailua, aldatu kontuaren pasahitza eta jarri "
 "administratzailearekin harremanetan. Baliteke norbaitek baimenik gabe sartu "
@@ -414,8 +414,8 @@ msgstr "%s artikulua sortu da |%s|"
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
-"%s datuen pribatutasun-zereginak sortu ditu erabiltzailearen IDa ezabatzeko "
-"|%s|"
+"%s datuen pribatutasun-zereginak sortu ditu erabiltzailearen IDa ezabatzeko |"
+"%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
@@ -570,8 +570,8 @@ msgstr "%s artikulu eguneratua |%s|"
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
-"%s datuen pribatutasun-ataza eguneratu da, erabiltzailearen ID ezabatzeko "
-"|%s|"
+"%s datuen pribatutasun-ataza eguneratu da, erabiltzailearen ID ezabatzeko |"
+"%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
@@ -1574,7 +1574,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
@@ -4458,6 +4459,12 @@ msgstr ""
 msgid "Disable Notifications"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
 msgstr ""
@@ -5922,6 +5929,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -8748,6 +8756,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr ""
@@ -9049,6 +9058,11 @@ msgstr ""
 msgid ""
 "Please select the authentication method that should be used to establish the "
 "connection to your Exchange server."
+msgstr ""
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
 msgstr ""
 
 #: app/controllers/knowledge_base/manage_controller.rb
@@ -10726,6 +10740,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr ""
@@ -11249,6 +11264,12 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
+msgstr ""
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -11832,6 +11853,14 @@ msgid "This field can only contain letters and spaces."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain lowercase letters."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain uppercase letters."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr ""
 
@@ -11868,11 +11897,31 @@ msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must be a symbol."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a lowercase letter."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a symbol."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain alphabetical characters."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain an uppercase letter."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -11885,6 +11934,18 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain between %s and %s characters."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or numbers."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or spaces."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain numbers."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -12462,6 +12523,12 @@ msgstr ""
 msgid ""
 "To archive all outgoing emails from Zammad to external, you can store a BCC "
 "email address here."
+msgstr ""
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee
@@ -13076,6 +13143,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "User Filter"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "User Mismatch"
 msgstr ""
 
 #: db/seeds/settings.rb

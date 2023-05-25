@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-15 12:06+0000\n"
+"PO-Revision-Date: 2023-05-24 11:56+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/sr_Cyrl/>\n"
@@ -130,8 +130,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Последњи пут измењено од стране #{current_user."
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Последњи пут измењено од стране #{current_user."
 "longname} у #{ticket.updated_at}_\n"
 "* Група: #{ticket.group.name}\n"
 "* Власник: #{ticket.owner.fullname}\n"
@@ -1289,8 +1289,8 @@ msgstr ""
 "за наставак:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}</a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Овај линк вас води на страницу за пријављивање.</div>\n"
 "<br>\n"
@@ -1661,10 +1661,11 @@ msgstr "Да ли сте сигурни?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
 msgstr ""
 "Да ли сте сигурни? Подразумевана подешавања обавештења ће бити примењена на "
-"све оператере."
+"све оператере. Ова операција може потрајати."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -2955,8 +2956,8 @@ msgstr ""
 "Врло је једноставно, само кликните на линк испод.</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}</a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Ваш #{config.product_name} тим</div>\n"
 
@@ -4741,6 +4742,14 @@ msgstr "Искључи"
 msgid "Disable Notifications"
 msgstr "Искључи обавештења"
 
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
+"Искључивање обавештења из свих група ће уклонити ограничење. Уместо тога, за "
+"искључивање обавештења користите подешавања изнад."
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
 msgstr "Откажи"
@@ -6294,6 +6303,7 @@ msgstr "Поздрав"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -7230,9 +7240,9 @@ msgstr ""
 "<div>Ја, (#{current_user.firstname} #{current_user.lastname}), позивам вас "
 "на #{config.product_name} - нашу платформу за корисничку подршку.</div>\n"
 "<br>\n"
-"<div>Кликните <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.token}\">овде</a> и подесите вашу "
-"лозинку.</div>\n"
+"<div>Кликните <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.token}\">овде</a> и подесите вашу лозинку.</"
+"div>\n"
 "<br>\n"
 "<div>Срдачно,</div>\n"
 "<br>\n"
@@ -9243,6 +9253,7 @@ msgstr "Преиначи нацрт"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Власник"
@@ -9551,6 +9562,11 @@ msgid ""
 msgstr ""
 "Молимо одаберите метод аутентификације за остваривање везе са вашим Exchange "
 "сервером."
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
+msgstr "Молимо покрените реаутентификацију и унесите исправне креденцијале."
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -11300,6 +11316,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Стање"
@@ -11855,6 +11872,14 @@ msgstr "Стандардна величина фонта је 12px."
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Сепаратор између TicketHook и броја тикета. Нпр. ’: ’."
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
+msgstr ""
+"Унешени корисник за реаутентификацију се не поклапа са корисником који је "
+"иницијално подешен за ваш Microsoft365 канал."
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -12466,6 +12491,14 @@ msgid "This field can only contain letters and spaces."
 msgstr "Ово поље може садржати само слова и прореде."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain lowercase letters."
+msgstr "Ово поље може садржати само мала слова."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain uppercase letters."
+msgstr "Ово поље може садржати само велика слова."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr "Ово поље не може садржати вредност „%s”."
 
@@ -12502,12 +12535,32 @@ msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr "Ово поље не садржи исправан датум, молимо користите „%s” формат."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must be a symbol."
+msgstr "Ово поље мора бити симбол."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr "Ово поље мора бити типа „%s”."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a lowercase letter."
+msgstr "Ово поље мора садржати мало слово."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
 msgstr "Ово поље мора садржати број."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a symbol."
+msgstr "Ово поље мора садржати симбол."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain alphabetical characters."
+msgstr "Ово поље мора садржати алфанумеричке знакове."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain an uppercase letter."
+msgstr "Ово поље мора садржати велико слово."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain at least %s characters."
@@ -12520,6 +12573,18 @@ msgstr "Ово поље мора садржати најмање један зн
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain between %s and %s characters."
 msgstr "Ово поље мора садржати између %s и %s знак(ова)."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or numbers."
+msgstr "Ово поље мора садржати слова или бројеве."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or spaces."
+msgstr "Ово поље може садржати слова или прореде."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain numbers."
+msgstr "Ово поље мора садржати бројеве."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -13170,6 +13235,14 @@ msgstr ""
 "За архивирање свих Zammad одлазних имејл порука, овде можете подесити имејл "
 "адресу за BCC поље."
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
+msgstr ""
+"Да би избегли учитавање погрешног Microsoft365 сандучета, реаутентификација "
+"је прекинута."
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
 "To be able to chat you need to select at least one chat topic from below!"
@@ -13208,8 +13281,8 @@ msgid ""
 "To revert back to the default payload, simply turn off the \"Custom Payload"
 "\" switch above."
 msgstr ""
-"За повратак на подразумеване податке, једноставно искључите дугме „"
-"Прилагођени подаци” изнад."
+"За повратак на подразумеване податке, једноставно искључите дугме "
+"„Прилагођени подаци” изнад."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -13323,8 +13396,8 @@ msgid ""
 "times are reached (e.g. pending time, escalation)."
 msgstr ""
 "Окидачи активирани радњама се извршавају по отварању или изменама, док се "
-"окидачи активирани временским догађајима извршавају по достизању времена ("
-"нпр. време чекања, ескалација)."
+"окидачи активирани временским догађајима извршавају по достизању времена "
+"(нпр. време чекања, ескалација)."
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Triggers are …"
@@ -13836,6 +13909,10 @@ msgstr "Корисник (цензурисани):"
 msgid "User Filter"
 msgstr "Филтер корисника"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "User Mismatch"
+msgstr "Корисник се не подудара"
+
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
 msgstr "Избор услова организације корисника - имејл"
@@ -13880,7 +13957,8 @@ msgstr "Успешно откључавање корисника!"
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
 msgid "User with specified ID was not found. Try checking the URL for errors."
-msgstr "Није пронађен корисник под траженим ID. Проверите URL путању на грешке."
+msgstr ""
+"Није пронађен корисник под траженим ID. Проверите URL путању на грешке."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"

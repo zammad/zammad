@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-15 12:06+0000\n"
+"PO-Revision-Date: 2023-05-24 11:56+0000\n"
 "Last-Translator: JPB <jeffreypeerboom@eijsden-margraten.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/nl/>\n"
@@ -82,7 +82,7 @@ msgstr ""
 "Ticket##{ticket.number}>: Aangemaakt door #{current_user.longname} op "
 "#{ticket.updated_at}_\n"
 "* Groep: #{ticket.group.name}\n"
-"* Eigenaar: #{ticket.owner.fullname}\n"
+"* Behandelaar: #{ticket.owner.fullname}\n"
 "* Status: #{t(ticket.state.name)}\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -129,10 +129,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: laatst bijgewerkt op #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: laatst bijgewerkt op #{ticket.updated_at}_\n"
 "* Groep: #{ticket.group.name}\n"
-"* Eigenaar: #{ticket.owner.fullname}\n"
+"* Behandelaar: #{ticket.owner.fullname}\n"
 "* Status: #{t(ticket.state.name)}\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -183,7 +183,7 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Geupdated door #{current_user.longname} op "
+"Ticket##{ticket.number}>: Geüpdatet door #{current_user.longname} op "
 "#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -212,7 +212,7 @@ msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
 "Ticket##{ticket.number}>: Zal escaleren op #{ticket.escalation_at}_\n"
-"De ticket (#{ticket.title}) van \"#{ticket.customer.longname}\" zal "
+"Het ticket (#{ticket.title}) van \"#{ticket.customer.longname}\" zal "
 "escaleren op \"#{ticket.escalation_at}\"!\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -236,17 +236,17 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"#{config.product_name} account gekoppeld aan een third-party application\n"
+"#{config.product_name} account gekoppeld aan een third-party applicatie\n"
 "\n"
 "<div>Hallo #{user.firstname},</div>\n"
 "<br>\n"
 "<div>Het lijkt erop dat je account <b>gekoppeld is aan een third-party "
-"application</b> \"#{t(provider)}\".</div>\n"
+"applicatie</b> \"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>Als jij dit niet was, verwijder dan het gekoppelde account uit je "
 "profiel en wijzig het wachtwoord van je externe applicatie. Iemand heeft "
 "mogelijk ongeoorloofde toegang verkregen tot je account op de service van "
-"derden.</div>\n"
+"derde partij.</div>\n"
 "<br>\n"
 "<div>Het #{config.product_name}-team</div>\n"
 
@@ -377,7 +377,7 @@ msgstr "%s API Token"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr "%s Attribuut"
+msgstr "%s Kenmerk"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
@@ -438,12 +438,12 @@ msgstr "%s maakte organisatie |%s| aan"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s created role |%s|"
-msgstr "%s maakte de rol met de naam: |%s|"
+msgstr "%s maakte de rol |%s| aan"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "%s created ticket |%s|"
-msgstr "%s maakte ticket '|%s|' aan"
+msgstr "%s maakte ticket |%s| aan"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
@@ -463,7 +463,7 @@ msgstr "%s dagen geleden"
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
-msgstr "%s beëindigde de wisseling naar |%s|!"
+msgstr "%s beëindigde de overschakeling naar |%s|!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -496,11 +496,11 @@ msgstr "%s maanden geleden"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
-msgstr "%s object(en) zijn gecreëerd."
+msgstr "%s object(en) zijn aangemaakt."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been updated."
-msgstr "%s object(en) zijn geüpdated."
+msgstr "%s object(en) zijn bijgewerkt."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) were deleted."
@@ -508,7 +508,7 @@ msgstr "%s object(en) zijn verwijderd."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be created."
-msgstr "%s object(en) worden gecreëerd."
+msgstr "%s object(en) worden aangemaakt."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be deleted."
@@ -516,7 +516,7 @@ msgstr "%s object(en) worden verwijderd."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be updated."
-msgstr "%s object(en) worden geüpdated."
+msgstr "%s object(en) worden bijgewerkt."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s of my tickets are currently in process."
@@ -1291,8 +1291,8 @@ msgstr ""
 "om verder te gaan:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config. fqdn}/#login/admin/#{token."
-"token}</a></div>\n"
+"token}\">#{config.http_type}://#{config. fqdn}/#login/admin/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Deze link brengt je naar een pagina waar je kunt inloggen.</div>\n"
 "<br>\n"
@@ -1662,10 +1662,11 @@ msgstr "Weet je het zeker?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
-"Are you sure? Default notifications settings will be applied to all agents."
+"Are you sure? Default notifications settings will be applied to all active "
+"agents. This operation may take some time."
 msgstr ""
 "Weet je het zeker? De standaardinstellingen voor meldingen worden toegepast "
-"op alle behandelaren."
+"op alle active behandelaren. Deze handeling kan enige tijd in beslag nemen."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -1857,7 +1858,7 @@ msgstr "Belangrijk! Dit is je login en wachtwoord nadat de import compleet is."
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 msgid "Attribute"
-msgstr "Attribuut"
+msgstr "Kenmerk"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Attribute '%s' is required in the mapping"
@@ -2962,8 +2963,8 @@ msgstr ""
 "voltooien. Het is eenvoudig, klik gewoon op de onderstaande link.</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn} /#email_verify/#{token."
-"token}</a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn} /#email_verify/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Het #{config.product_name}-team</div>\n"
 
@@ -3726,7 +3727,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define the default agent notifications for new users."
-msgstr "Definieer de standaard behandelaar-notificaties voor nieuwe gebruikers."
+msgstr ""
+"Definieer de standaard behandelaar-notificaties voor nieuwe gebruikers."
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
@@ -4451,7 +4453,8 @@ msgstr "Stel de transactie-backend in om triggers uit te voeren."
 
 #: db/seeds/settings.rb
 msgid "Defines the transaction backend to send agent notifications."
-msgstr "Bepaalt de transactie-backend om behandelaar-notificaties te verzenden."
+msgstr ""
+"Bepaalt de transactie-backend om behandelaar-notificaties te verzenden."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4769,6 +4772,15 @@ msgstr "Uitschakelen"
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Disable Notifications"
 msgstr "Meldingen uitschakelen"
+
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid ""
+"Disabling the notifications from all groups will turn off the limit. "
+"Instead, to disable the notifications use the settings above."
+msgstr ""
+"Als je de meldingen van alle groepen uitschakelt, wordt de limiet "
+"uitgeschakeld. Gebruik in plaats daarvan de bovenstaande instellingen om de "
+"meldingen uit te schakelen."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -5290,7 +5302,7 @@ msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction."
 msgstr ""
-"Activeer de knop voor gebruik authenticatie via %s. The knop zal "
+"Activeer de knop voor gebruik authenticatie via %s. De knop zal "
 "doorverwijzen naar /auth/sso bij gebruikersinteractie."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
@@ -5403,7 +5415,7 @@ msgstr "Versleuteld"
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Encryption"
-msgstr "Versleuteling"
+msgstr "Encryptie"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Encryption:"
@@ -5855,7 +5867,7 @@ msgstr "Bestand te groot, max. %s MB toegestaan."
 
 #: db/seeds/settings.rb
 msgid "Filesystem"
-msgstr "Bestandssyteem"
+msgstr "Bestandssysteem"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -6157,7 +6169,7 @@ msgstr "Genereer gebruikers gebaseerde statistieken."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Generic API to integrate VoIP service provider with real-time push."
-msgstr "Generieke API om VoIP-diensten te integreren met real-time push."
+msgstr "Generieke API om VoIP-Services te integreren met real-time push."
 
 #: db/seeds/settings.rb
 msgid "Geo Calendar Service"
@@ -6329,6 +6341,7 @@ msgstr "Begroeting"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -7278,9 +7291,9 @@ msgstr ""
 "<div>Ik (#{current_user.firstname} #{current_user.lastname}) nodig je uit "
 "voor #{config.product_name} - ons klantondersteuningsplatform.</div>\n"
 "<br>\n"
-"<div>Klik <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.token}\">hier</a> en stel je wachtwoord "
-"in.</div>\n"
+"<div>Klik <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.token}\">hier</a> en stel je wachtwoord in.</"
+"div>\n"
 "<br>\n"
 "<div>Veel plezier,</div>\n"
 "<br>\n"
@@ -9301,6 +9314,7 @@ msgstr "Concept overschrijven"
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Behandelaar"
@@ -9610,6 +9624,11 @@ msgid ""
 msgstr ""
 "Selecteer de authenticatiemethode die moet worden gebruikt om de verbinding "
 "met de Exchange-server tot stand te brengen."
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"Please start the reauthentication again and enter the correct credentials."
+msgstr "Start de herauthenticatie opnieuw en voer de juiste inloggegevens in."
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -10194,8 +10213,8 @@ msgstr ""
 "onderstaande link (of kopieert en plakt de URL in de browser):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn} /#"
-"password_reset_verify/#{token.token}</a></div>\n"
+"#{token.token}\">#{config.http_type}://#{config.fqdn} /"
+"#password_reset_verify/#{token.token}</a></div>\n"
 "<br>\n"
 "<div>Deze link brengt je naar een pagina waar je het wachtwoord kunt "
 "wijzigen.</div>\n"
@@ -10242,8 +10261,8 @@ msgstr ""
 "onderstaande link (of kopieert en plakt de URL in de browser):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn} /#"
-"password_reset_verify/#{token.token}</a></div>\n"
+"#{token.token}\">#{config.http_type}://#{config.fqdn} /"
+"#password_reset_verify/#{token.token}</a></div>\n"
 "<br>\n"
 "<div>Deze link brengt je naar een pagina waar je het wachtwoord kunt "
 "wijzigen.</div>\n"
@@ -10398,7 +10417,7 @@ msgstr "SLA tijden"
 
 #: app/assets/javascripts/app/controllers/sla.coffee
 msgid "SLAs"
-msgstr "SLAs"
+msgstr "SLA's"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -10542,7 +10561,7 @@ msgstr "Taakplanningen zijn …"
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
-msgstr "scherm"
+msgstr "Scherm"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Script can be located under: ||%s|| and needs to be executable."
@@ -10824,7 +10843,7 @@ msgstr "Servicemelding"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Services"
-msgstr "Diensten"
+msgstr "Services"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee
@@ -11367,6 +11386,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Status"
@@ -11928,6 +11948,14 @@ msgstr "De standaard lettergrootte is 12px."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 "Het koppelteken tussen de Ticket-hook en Ticket-nummer. Bijvoorbeeld ':'."
+
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
+msgstr ""
+"De ingevoerde gebruiker voor herauthenticatie verschilt van de gebruiker die "
+"aanvankelijk werd gebruikt voor het instellen van uw Microsoft 365 kanaal."
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -12548,6 +12576,14 @@ msgid "This field can only contain letters and spaces."
 msgstr "Dit veld kan alleen letters en spaties bevatten."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain lowercase letters."
+msgstr "Dit veld mag geen hoofdletters bevatten."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain uppercase letters."
+msgstr "Dit veld mag alleen hoofdletters bevatten."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr "Dit veld kan niet de waarde \"%s\" bevatten."
 
@@ -12584,12 +12620,32 @@ msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr "Dit veld bevat geen correcte datum. Gebruik de opbouw \"%s\"."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must be a symbol."
+msgstr "Dit veld moet één symbool zijn."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr "Dit veld moet van het type \"%s\" zijn."
 
 #: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a lowercase letter."
+msgstr "Dit veld moet een kleine letter bevatten."
+
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
 msgstr "Dit veld moet een getal bevatten."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a symbol."
+msgstr "Dit veld moet een symbool bevatten."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain alphabetical characters."
+msgstr "Dit veld moet alfabetische tekens bevatten."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain an uppercase letter."
+msgstr "Dit veld moet een hoofdletter bevatten."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain at least %s characters."
@@ -12602,6 +12658,18 @@ msgstr "Dit veld moet minimaal 1 karakter bevatten."
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain between %s and %s characters."
 msgstr "Dit veld moet minimaal %s en maximaal %s karakters bevatten."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or numbers."
+msgstr "Dit veld moet letters of cijfers bevatten."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain letters or spaces."
+msgstr "Dit veld moet letters en spaties bevatten."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain numbers."
+msgstr "Dit veld moet getallen bevatten."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -12822,8 +12890,8 @@ msgstr ""
 "<div>Hallo #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"\tHet ticket (#{ticket.title}) is samengevoegd met een ander ticket door \""
-"<b>#{current_user.longname}</b>\".\n"
+"\tHet ticket (#{ticket.title}) is samengevoegd met een ander ticket door "
+"\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -13268,6 +13336,14 @@ msgstr ""
 "Om alle uitgaande e-mails van Zammad naar klanten te archiveren, kun je hier "
 "een BCC e-mailadres opslaan."
 
+#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+msgid ""
+"To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
+"process was aborted."
+msgstr ""
+"Om te voorkomen dat een onjuist Microsoft 365-postvak wordt opgehaald, is "
+"het authenticatieproces afgebroken."
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
 "To be able to chat you need to select at least one chat topic from below!"
@@ -13622,7 +13698,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Update"
-msgstr "Opslaan"
+msgstr "Update"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Update Database"
@@ -13942,6 +14018,10 @@ msgstr "Gebruiker (gecensureerd):"
 msgid "User Filter"
 msgstr "Gebruikerfilter"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "User Mismatch"
+msgstr "Gebruiker mismatch"
+
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
 msgstr "Gebruikersorganisatie selector - e-mail"
@@ -14056,9 +14136,9 @@ msgstr ""
 "\n"
 "1. Als **behandelaar** heb je niet alleen een overzicht van de openstaande "
 "tickets voor één persoon maar een **overzicht van hun hele organisatie**.\n"
-"2. Als **klant** kun je ook de **tickets die je collega's hebben aangemaakt**"
-" controleren en hun tickets wijzigen (indien uw organisatie op \"gedeeld\" "
-"staat, wat per organisatie kan worden gedefinieerd)."
+"2. Als **klant** kun je ook de **tickets die je collega's hebben "
+"aangemaakt** controleren en hun tickets wijzigen (indien uw organisatie op "
+"\"gedeeld\" staat, wat per organisatie kan worden gedefinieerd)."
 
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/object_manager_attributes.rb
@@ -14653,8 +14733,8 @@ msgid ""
 "of agents."
 msgstr ""
 "Je kunt **overzichten** maken voor uw behandelaren en uw klanten. Deze "
-"hebben vele doelen, zoals het dienen als een takenlijst voor de behandelaren."
-"\n"
+"hebben vele doelen, zoals het dienen als een takenlijst voor de "
+"behandelaren.\n"
 "\n"
 "Je kunt ook overzichten maken en deze beperken tot specifieke Behandelaren "
 "of tot groepen Behandelaren."
@@ -14779,7 +14859,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "You can use the following script to post the data to %s."
-msgstr "Je kunt het volgende script gebruiken om de gegevens in %s te plaatsen."
+msgstr ""
+"Je kunt het volgende script gebruiken om de gegevens in %s te plaatsen."
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You currently don't have any tickets."
@@ -15973,11 +16054,11 @@ msgstr "in afwachting van actie"
 
 #: db/seeds/ticket_states.rb
 msgid "pending close"
-msgstr "wacht op sluiten"
+msgstr "Wacht op sluiten"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "pending reminder"
-msgstr "verstuur herinnering"
+msgstr "opschorten"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee
 #: db/seeds/ticket_article_types.rb
