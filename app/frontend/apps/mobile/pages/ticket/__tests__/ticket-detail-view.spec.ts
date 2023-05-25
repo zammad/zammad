@@ -1,49 +1,40 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-const now = new Date(2022, 1, 1, 0, 0, 0, 0)
-vi.setSystemTime(now)
+vi.hoisted(() => {
+  const now = new Date(2022, 1, 1, 0, 0, 0, 0)
+  vi.setSystemTime(now)
+})
 
 import type { TicketArticleRetrySecurityProcessMutation } from '#shared/graphql/types.ts'
-
-const { getNode } = await import('@formkit/core')
-const { ApolloError } = await import('@apollo/client/errors')
-const { TicketArticleRetrySecurityProcessDocument } = await import(
-  '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api.ts'
-)
-const { convertToGraphQLId } = await import('#shared/graphql/utils.ts')
-const { getAllByTestId, getByLabelText, getByRole } = await import(
-  '@testing-library/vue'
-)
-const { getByIconName } = await import(
-  '#tests/support/components/iconQueries.ts'
-)
-const { getTestRouter } = await import(
-  '#tests/support/components/renderComponent.ts'
-)
-const { visitView } = await import('#tests/support/components/visitView.ts')
-const { mockAccount } = await import('#tests/support/mock-account.ts')
-const { mockGraphQLApi, mockGraphQLSubscription } = await import(
-  '#tests/support/mock-graphql-api.ts'
-)
-const { mockPermissions } = await import('#tests/support/mock-permissions.ts')
-const { nullableMock, waitUntil } = await import('#tests/support/utils.ts')
-const { flushPromises } = await import('@vue/test-utils')
-const { TicketDocument } = await import('../graphql/queries/ticket.api.ts')
-const { TicketArticlesDocument } = await import(
-  '../graphql/queries/ticket/articles.api.ts'
-)
-const { TicketArticleUpdatesDocument } = await import(
-  '../graphql/subscriptions/ticketArticlesUpdates.api.ts'
-)
-const { TicketUpdatesDocument } = await import(
-  '../graphql/subscriptions/ticketUpdates.api.ts'
-)
-const { defaultArticles, defaultTicket, mockTicketDetailViewGql } =
-  await import('./mocks/detail-view.ts')
-const { mockArticleQuery } = await import('./mocks/articles.ts')
-const { clearTicketArticlesLoadedState } = await import(
-  '../composable/useTicketArticlesVariables.ts'
-)
+import { getNode } from '@formkit/core'
+import { ApolloError } from '@apollo/client/errors'
+import { TicketArticleRetrySecurityProcessDocument } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { getAllByTestId, getByLabelText, getByRole } from '@testing-library/vue'
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockAccount } from '#tests/support/mock-account.ts'
+import {
+  mockGraphQLApi,
+  mockGraphQLSubscription,
+} from '#tests/support/mock-graphql-api.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { nullableMock, waitUntil } from '#tests/support/utils.ts'
+import { flushPromises } from '@vue/test-utils'
+import { TicketLiveUserUpsertDocument } from '../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
+import { TicketLiveUserDeleteDocument } from '../graphql/mutations/live-user/delete.api.ts'
+import { TicketDocument } from '../graphql/queries/ticket.api.ts'
+import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api.ts'
+import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api.ts'
+import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api.ts'
+import {
+  defaultArticles,
+  defaultTicket,
+  mockTicketDetailViewGql,
+} from './mocks/detail-view.ts'
+import { mockArticleQuery } from './mocks/articles.ts'
+import { clearTicketArticlesLoadedState } from '../composable/useTicketArticlesVariables.ts'
 
 beforeEach(() => {
   mockPermissions(['ticket.agent'])
@@ -189,6 +180,12 @@ describe('user avatars', () => {
 
 test("redirects to error page, if can't find ticket", async () => {
   const { calls } = mockGraphQLApi(TicketDocument).willFailWithNotFoundError(
+    'The ticket 9866 could not be found',
+  )
+  mockGraphQLApi(TicketLiveUserDeleteDocument).willFailWithNotFoundError(
+    'The ticket 9866 could not be found',
+  )
+  mockGraphQLApi(TicketLiveUserUpsertDocument).willFailWithNotFoundError(
     'The ticket 9866 could not be found',
   )
   mockGraphQLApi(TicketArticlesDocument).willFailWithNotFoundError(

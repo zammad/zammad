@@ -62,7 +62,6 @@ export default async function mountApp(): Promise<void> {
 
   app.mount('#app')
 
-  console.log('session', session)
   if (session.afterAuth) {
     await ensureAfterAuth(router, session.afterAuth)
   }

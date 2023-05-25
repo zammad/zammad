@@ -30,6 +30,8 @@ module Gql::Subscriptions
     end
 
     def transform_tasks(taskbar_item)
+      return [] if taskbar_item.blank?
+
       taskbar_item
         .preferences
         .fetch(:tasks, [])
