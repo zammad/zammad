@@ -101,7 +101,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/avatar.rb",
-      "line": 425,
+      "line": 427,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object_id).constantize",
       "render_path": null,
@@ -218,7 +218,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `safe_constantize` called on parameter value",
       "file": "app/controllers/tests_controller.rb",
-      "line": 33,
+      "line": 37,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "params.fetch(:exception, \"StandardError\").safe_constantize",
       "render_path": null,
@@ -444,13 +444,47 @@
       "note": "https://brakemanscanner.org/docs/warning_types/redirect/"
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "a9e68e841f16226b94c736d272962dd57d02c2333ead2855f2494dfb2c994de7",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/knowledge_base/public/answers/show.html.erb",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "prepare_rich_text(find_answer(find_category(params[:category]).answers, params[:answer]).translation.content.body_with_urls)",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "KnowledgeBase::Public::AnswersController",
+          "method": "show",
+          "line": 11,
+          "file": "app/controllers/knowledge_base/public/answers_controller.rb",
+          "rendered": {
+            "name": "knowledge_base/public/answers/show",
+            "file": "app/views/knowledge_base/public/answers/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "knowledge_base/public/answers/show"
+      },
+      "user_input": "params[:category]",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
       "fingerprint": "b4e5b1ad22930f849b12cbdf519dced6ec46b6cc653504f0a8e910c0a9590d61",
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/object_manager/attribute.rb",
-      "line": 899,
+      "line": 901,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object_lookup_id).constantize",
       "render_path": null,
@@ -519,7 +553,7 @@
       "check_name": "SSLVerify",
       "message": "SSL certificate verification was bypassed",
       "file": "app/controllers/integration/exchange_controller.rb",
-      "line": 92,
+      "line": 93,
       "link": "https://brakemanscanner.org/docs/warning_types/ssl_verification_bypass/",
       "code": "Autodiscover::Client.new(:email => params[:user], :password => params[:password]).http.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE",
       "render_path": null,
@@ -542,7 +576,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/channel/email_parser.rb",
-      "line": 157,
+      "line": 160,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Setting.get(setting.name).constantize",
       "render_path": null,
@@ -565,7 +599,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/channel/email_parser.rb",
-      "line": 322,
+      "line": 325,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Setting.get(setting.name).constantize",
       "render_path": null,
@@ -588,7 +622,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `safe_constantize` called on model attribute",
       "file": "app/models/online_notification.rb",
-      "line": 39,
+      "line": 38,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object_lookup_id).safe_constantize",
       "render_path": null,
@@ -654,7 +688,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/graphql/gql/resolvers/belongs_to_resolver.rb",
-      "line": 29,
+      "line": 18,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object.send(field.through_key)).constantize",
       "render_path": null,
@@ -746,7 +780,7 @@
       "check_name": "RegexDoS",
       "message": "Model attribute used in regular expression",
       "file": "app/models/ticket.rb",
-      "line": 1143,
+      "line": 1187,
       "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
       "code": "/#{Setting.get(\"send_no_auto_response_reg_exp\")}/i",
       "render_path": null,
@@ -764,6 +798,6 @@
       "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2023-03-17 13:38:18 +0200",
-  "brakeman_version": "5.4.1"
+  "updated": "2023-05-25 10:34:24 +0200",
+  "brakeman_version": "6.0.0"
 }
