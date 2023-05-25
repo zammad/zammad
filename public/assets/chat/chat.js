@@ -1104,11 +1104,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         'Online': 'Online',
         'Scroll down to see new messages': 'Scorri verso il basso per vedere i nuovi messaggi',
         'Send': 'Invia',
-        'Since you didn\'t respond in the last %s minutes your conversation was closed.': '',
-        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': '',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Dato che non hai risposto negli ultimi %s minuti, la conversazione è stata chiusa.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Dato che non hai risposto negli ultimi %s minuti, la conversazione con <strong>%s</strong> è stata chiusa.',
         'Start new conversation': 'Avvia una nuova chat',
         'Today': 'Oggi',
-        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': '',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Siamo spiacenti, ci vuole più tempo del previsto per ottenere uno spazio libero. Riprova più tardi o inviaci un\'e-mail. Grazie!',
         'You are on waiting list position <strong>%s</strong>.': 'Sei alla posizione <strong>%s</strong> della lista di attesa.'
       },
       'nl': {
