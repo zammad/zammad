@@ -10,6 +10,7 @@ import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButt
 import { useDialog } from '#shared/composables/useDialog.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import CommonRefetch from '#mobile/components/CommonRefetch/CommonRefetch.vue'
+import { useRoute, useRouter } from 'vue-router'
 import { ticketInformationPlugins } from './plugins/index.ts'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 
@@ -54,6 +55,9 @@ const types = computed<CommonButtonOption[]>(() => {
 })
 
 const { stickyStyles, headerElement } = useStickyHeader()
+
+const route = useRoute()
+const router = useRouter()
 </script>
 
 <template>
@@ -102,8 +106,8 @@ const { stickyStyles, headerElement } = useStickyHeader()
     as="tabs"
     controls="route-ticket-information-tabpanel"
     :options="types"
-    :model-value="($route.name as string)"
-    @update:model-value="$router.replace({ name: $event as string })"
+    :model-value="(route.name as string)"
+    @update:model-value="router.replace({ name: $event as string })"
   />
   <div
     id="route-ticket-information-tabpanel"
