@@ -27,7 +27,6 @@ set -e
 : "${ZAMMAD_RAILSSERVER_HOST:=zammad-railsserver}"
 : "${ZAMMAD_RAILSSERVER_PORT:=3000}"
 : "${ZAMMAD_READY_FILE:=${ZAMMAD_DIR}/tmp/zammad.ready}"
-: "${ZAMMAD_TMP_DIR:=/tmp/zammad}"
 : "${ZAMMAD_WEBSOCKET_HOST:=zammad-websocket}"
 : "${ZAMMAD_WEBSOCKET_PORT:=6042}"
 : "${ZAMMAD_WEB_CONCURRENCY:=0}"
@@ -44,11 +43,7 @@ function check_zammad_ready {
 if [ "$1" = 'zammad-init' ]; then
   # install / update zammad
   test -f "${ZAMMAD_READY_FILE}" && rm "${ZAMMAD_READY_FILE}"
-  # shellcheck disable=SC2086
-  rsync -a ${RSYNC_ADDITIONAL_PARAMS} --delete --exclude 'public/assets/images/*' --exclude 'storage/fs/*' "${ZAMMAD_TMP_DIR}/" "${ZAMMAD_DIR}"
-  # shellcheck disable=SC2086
-  rsync -a ${RSYNC_ADDITIONAL_PARAMS} "${ZAMMAD_TMP_DIR}"/public/assets/images/ "${ZAMMAD_DIR}"/public/assets/images
-
+  
   until (echo > /dev/tcp/"${POSTGRESQL_HOST}"/"${POSTGRESQL_PORT}") &> /dev/null; do
     echo "zammad railsserver waiting for postgresql server to be ready..."
     sleep 5
