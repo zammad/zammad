@@ -96,13 +96,13 @@ const sendCredentials = (formData: FormData<LoginFormData>) => {
   clearAllNotifications()
 
   return authentication
-    .login(formData.login, formData.password, formData.rememberMe)
+    .login(formData)
     .then(({ twoFactor, afterAuth }) => {
       if (afterAuth) {
         return ensureAfterAuth(router, afterAuth)
       }
 
-      if (!twoFactor || !twoFactor.defaultTwoFactorMethod) {
+      if (!twoFactor || !twoFactor.defaultTwoFactorAuthenticationMethod) {
         emit('finish')
       } else {
         emit(

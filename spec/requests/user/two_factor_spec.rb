@@ -3,10 +3,10 @@
 require 'rails_helper'
 require 'rotp'
 
-RSpec.describe 'User', performs_jobs: true, type: :request do
+RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request do
   let(:agent)              { create(:agent) }
   let(:admin)              { create(:admin) }
-  let(:two_factor_pref)    { create(:'user/two_factor_preference', user: agent) }
+  let(:two_factor_pref)    { create(:'user/two_factor_preference', :authenticator_app, user: agent) }
   let(:two_factor_enabled) { true }
 
   before do |example|
@@ -24,10 +24,10 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
     authenticated_as(action_user, token: create(:token, user: action_user, permissions: permissions))
   end
 
-  describe 'DELETE /users/:id/two_factor_remove_method' do
+  describe 'DELETE /users/:id/two_factor_remove_authentication_method' do
     context 'when agent' do
       it 'gets the result', :aggregate_failures do
-        delete "/api/v1/users/#{agent.id}/two_factor_remove_method", params: { method: 'authenticator_app' }, as: :json
+        delete "/api/v1/users/#{agent.id}/two_factor_remove_authentication_method", params: { method: 'authenticator_app' }, as: :json
 
         expect(response).to have_http_status(:ok)
         expect { two_factor_pref.reload }.to raise_error(ActiveRecord::RecordNotFound)
@@ -36,7 +36,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
     context 'when admin', as: :admin do
       it 'gets the result', :aggregate_failures do
-        delete "/api/v1/users/#{agent.id}/two_factor_remove_method", params: { method: 'authenticator_app' }, as: :json
+        delete "/api/v1/users/#{agent.id}/two_factor_remove_authentication_method", params: { method: 'authenticator_app' }, as: :json
 
         expect(response).to have_http_status(:ok)
         expect { two_factor_pref.reload }.to raise_error(ActiveRecord::RecordNotFound)
@@ -44,10 +44,10 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
     end
   end
 
-  describe 'DELETE /users/:id/two_factor_remove_all_methods' do
+  describe 'DELETE /users/:id/two_factor_remove_all_authentication_methods' do
     context 'when agent' do
       it 'gets the result', :aggregate_failures do
-        delete "/api/v1/users/#{agent.id}/two_factor_remove_all_methods", as: :json
+        delete "/api/v1/users/#{agent.id}/two_factor_remove_all_authentication_methods", as: :json
 
         expect(response).to have_http_status(:ok)
         expect { two_factor_pref.reload }.to raise_error(ActiveRecord::RecordNotFound)
@@ -56,7 +56,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
     context 'when admin', as: :admin do
       it 'gets the result', :aggregate_failures do
-        delete "/api/v1/users/#{agent.id}/two_factor_remove_all_methods", as: :json
+        delete "/api/v1/users/#{agent.id}/two_factor_remove_all_authentication_methods", as: :json
 
         expect(response).to have_http_status(:ok)
         expect { two_factor_pref.reload }.to raise_error(ActiveRecord::RecordNotFound)
@@ -64,13 +64,13 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
     end
   end
 
-  describe 'GET /users/two_factor_enabled_methods' do
+  describe 'GET /users/two_factor_enabled_authentication_methods' do
     context 'with disabled authenticator app method' do
       let(:two_factor_enabled) { false }
       let(:two_factor_pref)    { nil }
 
       it 'returns nothing', :aggregate_failures do
-        get "/api/v1/users/#{agent.id}/two_factor_enabled_methods", as: :json
+        get "/api/v1/users/#{agent.id}/two_factor_enabled_authentication_methods", as: :json
 
         expect(response).to have_http_status(:ok)
         expect(json_response).to be_blank
@@ -81,7 +81,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       let(:two_factor_pref) { nil }
 
       it 'returns the correct result', :aggregate_failures do
-        get "/api/v1/users/#{agent.id}/two_factor_enabled_methods", as: :json
+        get "/api/v1/users/#{agent.id}/two_factor_enabled_authentication_methods", as: :json
 
         expect(response).to have_http_status(:ok)
         expect(json_response.first).to eq({
@@ -94,7 +94,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
     context 'with having authenticator app configured' do
       it 'returns the correct result', :aggregate_failures do
-        get "/api/v1/users/#{agent.id}/two_factor_enabled_methods", as: :json
+        get "/api/v1/users/#{agent.id}/two_factor_enabled_authentication_methods", as: :json
 
         expect(response).to have_http_status(:ok)
         expect(json_response.first).to eq({
@@ -107,13 +107,15 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
   end
 
   describe 'POST /users/two_factor_verify_configuration' do
-    let(:two_factor_pref)   { nil }
-    let(:params)            { {} }
-    let(:method)            { 'authenticator_app' }
-    let(:verification_code) { ROTP::TOTP.new(configuration[:secret]).now }
-    let(:configuration)     { agent.auth_two_factor.method_object(method).configuration_options }
+    let(:recover_codes_enabled) { true }
+    let(:two_factor_pref)       { nil }
+    let(:params)                { {} }
+    let(:method)                { 'authenticator_app' }
+    let(:verification_code)     { ROTP::TOTP.new(configuration[:secret]).now }
+    let(:configuration)         { agent.auth_two_factor.authentication_method_object(method).configuration_options }
 
     before do
+      Setting.set('two_factor_authentication_recovery_codes', recover_codes_enabled)
       post '/api/v1/users/two_factor_verify_configuration', params: params, as: :json
     end
 
@@ -138,20 +140,64 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
         end
       end
 
-      context 'with correct verification code' do
+      context 'with correct verification code', :aggregate_failures do
         it 'verified is true' do
           expect(json_response['verified']).to be(true)
+          expect(json_response['recovery_codes']).to eq(agent.reload.two_factor_preferences.recovery_codes.configuration[:codes])
+        end
+
+        context 'with disabled recovery codes' do
+          let(:recover_codes_enabled) { false }
+
+          it 'verified is true (but without recovery codes)' do
+            expect(json_response['verified']).to be(true)
+            expect(json_response['recovery_codes']).to be_nil
+          end
         end
       end
     end
   end
 
-  describe 'GET /users/two_factor_method_configuration/:method' do
+  describe 'POST /users/two_factor_recovery_codes_generate' do
+    let(:recover_codes_enabled) { true }
+    let(:current_codes) { [] }
+
+    before do
+      Setting.set('two_factor_authentication_recovery_codes', recover_codes_enabled)
+      current_codes
+      post '/api/v1/users/two_factor_recovery_codes_generate', params: {}, as: :json
+    end
+
+    context 'with disabled recovery codes' do
+      let(:recover_codes_enabled) { false }
+
+      it 'does not generate codes' do
+        expect(json_response).to be_nil
+      end
+    end
+
+    context 'without existing recovery codes' do
+      it 'does not generate codes' do
+        expect(json_response).to eq(agent.reload.two_factor_preferences.recovery_codes.configuration[:codes])
+      end
+    end
+
+    context 'with existing recovery codes' do
+      let(:current_codes) { Auth::TwoFactor::RecoveryCodes.new(agent).generate }
+
+      it 'does not generate codes', :aggregate_failures do
+        expect(json_response).not_to eq(current_codes)
+        expect(json_response).to eq(agent.reload.two_factor_preferences.recovery_codes.configuration[:codes])
+      end
+    end
+  end
+
+  describe 'GET /users/two_factor_authentication_method_configuration/:method' do
     let(:two_factor_pref)   { nil }
     let(:method)            { 'authenticator_app' }
 
     before do
-      get "/api/v1/users/two_factor_method_configuration/#{method}", as: :json
+      get "/api/v1/users/two_factor_authentication_method_configuration/#{method}", as: :json
     end
 
     context 'with invalid params' do

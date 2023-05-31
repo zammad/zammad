@@ -53,6 +53,28 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
       it_behaves_like 'switching a method on and off', 'authenticator_app'
     end
 
+    context 'with recovery codes' do
+      let(:method_setting) { 'two_factor_authentication_recovery_codes' }
+
+      it 'allows to switch recovery codes on and off' do
+        expect(Setting.find_by(name: method_setting).state_current['value']).to be(true)
+
+        within "##{method_setting}" do
+          select 'no', from: method_setting
+          click_on 'Submit'
+        end
+
+        expect(Setting.find_by(name: method_setting).state_current['value']).to be(false)
+
+        within "##{method_setting}" do
+          select 'yes', from: method_setting
+          click_on 'Submit'
+        end
+
+        expect(Setting.find_by(name: method_setting).state_current['value']).to be(true)
+      end
+    end
+
     context 'with enforcing setup to certain user roles' do
       it_behaves_like 'configuring a user role setting', 'enforce_role_ids'
     end

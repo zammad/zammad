@@ -27,9 +27,9 @@ class App.AfterAuthTwoFactorConfiguration extends App.ControllerAfterAuthModal
     return if !App.User.current()
 
     @ajax(
-      id:      'two_factor_enabled_methods'
+      id:      'two_factor_enabled_authentication_methods'
       type:    'GET'
-      url:     "#{@apiPath}/users/#{App.User.current().id}/two_factor_enabled_methods"
+      url:     "#{@apiPath}/users/#{App.User.current().id}/two_factor_enabled_authentication_methods"
       success: @renderAvailableMethods
     )
 
@@ -73,5 +73,7 @@ class App.AfterAuthTwoFactorConfiguration extends App.ControllerAfterAuthModal
 
     new App['TwoFactorConfigurationMethod' + configurationMethod](
       mode: 'after_auth'
-      successCallback: @fetchAfterAuth
+      successCallback: =>
+        @fetchAfterAuth()
+        App.User.current().trigger('two_factor_changed')
     )

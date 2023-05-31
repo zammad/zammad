@@ -2,23 +2,31 @@
 
 class Controllers::User::TwoFactorsControllerPolicy < Controllers::ApplicationControllerPolicy
 
-  def two_factor_enabled_methods?
+  def two_factor_enabled_authentication_methods?
     admin_access? || access?
   end
 
-  def two_factor_remove_method?
+  def two_factor_remove_authentication_method?
     admin_access? || access?
   end
 
-  def two_factor_remove_all_methods?
+  def two_factor_remove_all_authentication_methods?
     admin_access? || access?
+  end
+
+  def two_factor_personal_configuration?
+    true
   end
 
   def two_factor_verify_configuration?
     true
   end
 
-  def two_factor_method_configuration?
+  def two_factor_authentication_method_configuration?
+    true
+  end
+
+  def two_factor_recovery_codes_generate?
     true
   end
 

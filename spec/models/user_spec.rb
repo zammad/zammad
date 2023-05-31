@@ -837,7 +837,7 @@ RSpec.describe User, type: :model do
       context 'with two factor configured' do
         before do
           Setting.set('two_factor_authentication_method_authenticator_app', true)
-          create(:'user/two_factor_preference', user: user)
+          create(:'user/two_factor_preference', :authenticator_app, user: user)
         end
 
         it 'returns true' do
@@ -1279,7 +1279,7 @@ RSpec.describe User, type: :model do
       draft_start                = create(:ticket_shared_draft_start, created_by: user)
       draft_zoom                 = create(:ticket_shared_draft_zoom, created_by: user)
       public_link                = create(:public_link, created_by: user)
-      user_two_factor_preference = create(:'user/two_factor_preference', user: user)
+      user_two_factor_preference = create(:'user/two_factor_preference', :authenticator_app, user: user)
       user_overview_sorting      = create(:'user/overview_sorting', user: user)
       expect(overview.reload.user_ids).to eq([user.id])
 

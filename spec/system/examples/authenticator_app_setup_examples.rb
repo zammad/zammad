@@ -5,12 +5,18 @@ require 'rotp'
 RSpec.shared_examples 'authenticator app setup' do
   let(:password_check) { true }
 
-  it 'sets up authenticator app method' do
-    setup_authenticator_app_method(user: agent, password_check: password_check)
+  it 'sets up authenticator app method with recovery codes' do
+    Setting.set('two_factor_authentication_recovery_codes', true)
+    setup_authenticator_app_method(user: agent, password_check: password_check, expect_recovery_codes: true)
+  end
+
+  it 'sets up authenticator app method without recovery codes' do
+    Setting.set('two_factor_authentication_recovery_codes', false)
+    setup_authenticator_app_method(user: agent, password_check: password_check, expect_recovery_codes: false)
   end
 end
 
-def setup_authenticator_app_method(user:, password_check:)
+def setup_authenticator_app_method(user:, password_check:, expect_recovery_codes: false)
   in_modal do
     if password_check
       expect(page).to have_text('Set up two-factor authentication: Password')
@@ -30,6 +36,14 @@ def setup_authenticator_app_method(user:, password_check:)
     fill_in 'Security Code', with: security_code
 
     click_button 'Set Up'
+
+    if expect_recovery_codes
+      any_code = user.two_factor_preferences.recovery_codes.configuration[:codes].sample
+
+      expect(page).to have_text('Set up two-factor authentication: Recovery Codes')
+      expect(page).to have_text(any_code)
+      click_button "OK, I've saved my recovery codes"
+    end
   end
 
   expect(page).to have_no_css('.modal')

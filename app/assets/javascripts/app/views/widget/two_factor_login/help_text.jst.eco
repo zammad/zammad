@@ -1,0 +1,10 @@
+<% if @twoFactorAvailableAnotherMethod: %>
+  <p>
+    <%- @T('Having problems?') %>
+    <a href="#" class="js-try-another"><%- @T('Try another method') %></a>
+  </p>
+<% else: %>
+  <p>
+    <%- @T('Contact the administrator if you have any problems logging in.') %>
+  </p>
+<% end %>

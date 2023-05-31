@@ -92,6 +92,7 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
   context 'when managing two factor authentication' do
     before do
       Setting.set('two_factor_authentication_method_authenticator_app', true)
+      Setting.set('two_factor_authentication_recovery_codes', false)
       Setting.set('two_factor_authentication_enforce_role_ids', [])
     end
 
@@ -120,11 +121,19 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
           expect(page).to have_text('Default')
         end
       end
+
+      it 'does not show recovery codes button' do
+        expect(page).to have_no_text('recovery codes')
+      end
     end
 
     context 'with a configured method' do
+      let(:recovery_codes_enabled) { true }
+
       before do
-        create(:user_two_factor_preference, user: user)
+        Setting.set('two_factor_authentication_recovery_codes', recovery_codes_enabled)
+        create(:user_two_factor_preference, :authenticator_app, user: user)
+
         visit 'profile/password'
       end
 
@@ -148,6 +157,29 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
 
         within('tr[data-two-factor-key="authenticator_app"]') do
           expect(page).to have_css('.icon.icon-small-dot')
+        end
+      end
+
+      it 'allows to regenerate recovery codes' do
+        click '.js-generate-recovery-codes'
+
+        in_modal do
+          fill_in 'Password', with: user.password_plain
+
+          click_button 'Next'
+
+          any_code = user.two_factor_preferences.recovery_codes.configuration[:codes].sample
+
+          expect(page).to have_text('Set up two-factor authentication: Recovery Codes')
+          expect(page).to have_text(any_code)
+        end
+      end
+
+      context 'when recovery codes disabled' do
+        let(:recovery_codes_enabled) { false }
+
+        it 'does not show recovery codes button if recovery codes disabled' do
+          expect(page).to have_no_text('recovery codes')
         end
       end
     end

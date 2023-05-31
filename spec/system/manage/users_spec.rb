@@ -324,7 +324,7 @@ RSpec.describe 'Manage > Users', type: :system do
   describe 'Two-Factor Authentication', authenticated_as: :authenticate do
     let(:admin)              { create(:admin) }
     let(:agent)              { create(:agent) }
-    let(:two_factor_pref)    { create(:'user/two_factor_preference', user: agent) }
+    let(:two_factor_pref)    { create(:user_two_factor_preference, :authenticator_app, user: agent) }
 
     def authenticate
       Setting.set('two_factor_authentication_enforce_role_ids', [])

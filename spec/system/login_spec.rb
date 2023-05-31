@@ -25,39 +25,101 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
   end
 
   context 'with enabled two factor authentication' do
-    let(:token)            { two_factor_pref.configuration[:code] }
-    let!(:two_factor_pref) { create(:'user/two_factor_preference', user: User.find_by(login: 'admin@example.com')) }
+    let(:user)               { User.find_by(login: 'admin@example.com') }
+    let!(:authenticator_2fa) { create(:user_two_factor_preference, :authenticator_app, user:) }
 
     before do
+      authenticator_2fa
       stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
-      visit '/'
+    end
 
-      within('#login') do
-        fill_in 'username', with: 'admin@example.com'
-        fill_in 'password', with: 'test'
+    context 'with authenticator app' do
+      let(:token) { authenticator_2fa.configuration[:code] }
 
-        click_button
+      before do
+        visit '/'
+
+        within('#login') do
+          fill_in 'username', with: 'admin@example.com'
+          fill_in 'password', with: 'test'
+
+          click_button
+        end
+      end
+
+      it 'login with correct payload' do
+        within('#login') do
+          fill_in 'security_code', with: token
+
+          click_button
+        end
+
+        expect(page).to have_no_selector('#login')
+      end
+
+      it 'login with wrong payload' do
+        within('#login') do
+          fill_in 'security_code', with: 'asd'
+
+          click_button
+        end
+
+        expect(page).to have_css('#login .alert')
       end
     end
 
-    it 'login with correct payload' do
-      within('#login') do
-        fill_in 'security_code', with: token
+    context 'with recovery code' do
+      let(:token)        { 'token' }
+      let(:recovery_2fa) { create(:user_two_factor_preference, :recovery_codes, token:, user:) }
 
-        click_button
+      before do
+        recovery_2fa
+        Setting.set('two_factor_authentication_recovery_codes', recovery_codes_enabled)
+
+        visit '/'
+
+        within('#login') do
+          fill_in 'username', with: 'admin@example.com'
+          fill_in 'password', with: 'test'
+
+          click_button
+        end
       end
 
-      expect(page).to have_no_selector('#login')
-    end
+      context 'when recovery code is enabled' do
+        let(:recovery_codes_enabled) { true }
 
-    it 'login with wrong payload' do
-      within('#login') do
-        fill_in 'security_code', with: 'asd'
+        before do
+          click_on 'Try another method'
+          click_on 'recovery codes'
+        end
 
-        click_button
+        it 'login with correct payload' do
+          within('#login') do
+            fill_in 'security_code', with: token
+            click_button
+          end
+
+          expect(page).to have_no_selector('#login')
+        end
+
+        it 'login with wrong payload' do
+          within('#login') do
+            fill_in 'security_code', with: 'wrong token'
+            click_button
+          end
+
+          expect(page).to have_css('#login .alert')
+        end
       end
 
-      expect(page).to have_css('#login .alert')
+      context 'when recovery code is disabled' do
+        let(:recovery_codes_enabled) { false }
+
+        it 'recovery code link is hidden' do
+          expect(page).to have_no_text 'Try another method'
+        end
+      end
     end
   end
 end

@@ -4,11 +4,13 @@ Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
   # two-factor
-  match api_path + '/users/:id/two_factor_remove_method',             to: 'user/two_factors#two_factor_remove_method',        via: :delete
-  match api_path + '/users/:id/two_factor_remove_all_methods',        to: 'user/two_factors#two_factor_remove_all_methods',   via: :delete
-  match api_path + '/users/:id/two_factor_enabled_methods',           to: 'user/two_factors#two_factor_enabled_methods',      via: :get
-  match api_path + '/users/two_factor_method_configuration/:method',  to: 'user/two_factors#two_factor_method_configuration', via: :get
-  match api_path + '/users/two_factor_verify_configuration',          to: 'user/two_factors#two_factor_verify_configuration', via: :post
+  match api_path + '/users/:id/two_factor_remove_authentication_method',            to: 'user/two_factors#two_factor_remove_authentication_method',        via: :delete
+  match api_path + '/users/:id/two_factor_remove_all_authentication_methods',       to: 'user/two_factors#two_factor_remove_all_authentication_methods',   via: :delete
+  match api_path + '/users/:id/two_factor_enabled_authentication_methods',          to: 'user/two_factors#two_factor_enabled_authentication_methods',      via: :get
+  match api_path + '/users/two_factor_personal_configuration',                      to: 'user/two_factors#two_factor_personal_configuration',              via: :get
+  match api_path + '/users/two_factor_authentication_method_configuration/:method', to: 'user/two_factors#two_factor_authentication_method_configuration', via: :get
+  match api_path + '/users/two_factor_verify_configuration',                        to: 'user/two_factors#two_factor_verify_configuration',                via: :post
+  match api_path + '/users/two_factor_recovery_codes_generate',                     to: 'user/two_factors#two_factor_recovery_codes_generate',             via: :post
 
   # users
   match api_path + '/users/search',                to: 'users#search',                via: %i[get post option]
@@ -44,6 +46,6 @@ Zammad::Application.routes.draw do
   match api_path + '/users/email_verify',          to: 'users#email_verify',          via: :post
   match api_path + '/users/email_verify_send',     to: 'users#email_verify_send',     via: :post
 
-  match api_path + '/users/admin_password_auth',            to: 'users#admin_password_auth_send',       via: :post
-  match api_path + '/users/admin_password_auth_verify',     to: 'users#admin_password_auth_verify',     via: :post
+  match api_path + '/users/admin_password_auth',        to: 'users#admin_password_auth_send',   via: :post
+  match api_path + '/users/admin_password_auth_verify', to: 'users#admin_password_auth_verify', via: :post
 end

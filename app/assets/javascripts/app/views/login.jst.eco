@@ -16,7 +16,7 @@
         <img class="company-logo" src="<%= @logoUrl %>" alt="<%= @C('product_name') %>">
 
         <% if @item.showAdminPasswordLogin || user_show_password_login: %>
-          <form id="login">
+          <form id="login" class="js-form">
             <% if @item.errorMessage: %>
               <div class="alert alert--danger" role="alert">
                 <%= @item.errorMessage %>
@@ -89,40 +89,45 @@
         <% end %>
       </div>
 
-    <% if user_show_password_login: %>
-      <p>
-        <%- @T("You're already registered with your email address if you've been in touch with our Support team.") %><br>
-        <% if @C('user_lost_password'): %>
-          <%- @T('You can request your password') %> <a href="#password_reset"><%- @T('here') %></a>.
-        <% end %>
-      </p>
-    <% end %>
+      <div class="js-footer">
 
-    <% if !user_show_password_login: %>
-      <p>
-        <%- @T('If you have problems with the third-party login you can request a one-time password login as an admin.') %><br>
-        <a class="text-muted" href="#admin_password_auth"><%- @T('Request the password login here.') %></a>
-      </p>
-    <% end %>
+      <% if user_show_password_login: %>
+        <p>
+          <%- @T("You're already registered with your email address if you've been in touch with our Support team.") %><br>
+          <% if @C('user_lost_password'): %>
+            <%- @T('You can request your password') %> <a href="#password_reset"><%- @T('here') %></a>.
+          <% end %>
+        </p>
+      <% end %>
 
-    <% show_user_create_account = @C('user_create_account') && user_show_password_login %>
-    <% if show_user_create_account || !_.isEmpty(@public_links): %>
-      <hr>
-      <p>
-        <% if show_user_create_account: %>
-          <a href="#signup"><%- @T('Register as a new customer') %></a>
-        <% end %>
-        <% for link, link_index in @public_links: %>
-          <% if link_index > 0 || show_user_create_account: %> | <% end %>
-          <a href="<%= link.link %>" title="<% if link.description: %><%= link.description %><% else: %><%= link.title %><% end %>"<% if link.new_tab: %> target="_blank"<% end %>><%= link.title %></a>
-        <% end %>
-      </p>
-    <% end %>
-    <% if @show_mobile_link: %>
-      <p>
-        <a href="#" class="align-center js-go-to-mobile"><%- @T('Continue to mobile') %></a>
-      </p>
-    <% end %>
+      <% if !user_show_password_login: %>
+        <p>
+          <%- @T('If you have problems with the third-party login you can request a one-time password login as an admin.') %><br>
+          <a class="text-muted" href="#admin_password_auth"><%- @T('Request the password login here.') %></a>
+        </p>
+      <% end %>
+
+      <% show_user_create_account = @C('user_create_account') && user_show_password_login %>
+      <% if show_user_create_account || !_.isEmpty(@public_links): %>
+        <hr>
+        <p>
+          <% if show_user_create_account: %>
+            <a href="#signup"><%- @T('Register as a new customer') %></a>
+          <% end %>
+          <% for link, link_index in @public_links: %>
+            <% if link_index > 0 || show_user_create_account: %> | <% end %>
+            <a href="<%= link.link %>" title="<% if link.description: %><%= link.description %><% else: %><%= link.title %><% end %>"<% if link.new_tab: %> target="_blank"<% end %>><%= link.title %></a>
+          <% end %>
+        </p>
+      <% end %>
+      <% if @show_mobile_link: %>
+        <p>
+          <a href="#" class="align-center js-go-to-mobile"><%- @T('Continue to mobile') %></a>
+        </p>
+      <% end %>
+
+      </div>
+
     </div>
   </div>
   <div class="poweredBy">

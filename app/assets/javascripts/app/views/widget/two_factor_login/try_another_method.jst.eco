@@ -1,0 +1,15 @@
+<% for method in @twoFactorMethods: %>
+  <hr>
+  <p class="u-clickable js-select-two-factor-method" data-method="<%= method.key %>">
+    <%= @T method.label %>
+  </p>
+<% end %>
+
+<% if @twoFactorHasRecoveryCodes: %>
+  <p>
+    <%- @T('Or, use one of your') %>
+    <a href="#" class="js-select-two-factor-method btn--text btn--secondary" data-method="recovery_codes">
+      <%- @T('recovery codes') %>
+    </a>
+  </p>
+<% end %>

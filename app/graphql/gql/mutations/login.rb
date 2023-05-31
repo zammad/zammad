@@ -20,16 +20,25 @@ module Gql::Mutations
 
     private
 
-    def authenticate(login:, password:, two_factor_method: nil, two_factor_payload: nil, remember_me: false)
-      auth = Auth.new(login, password, two_factor_method:, two_factor_payload:)
+    def authenticate(login:, password:, two_factor_authentication: nil, two_factor_recovery: nil, remember_me: false)
+      auth = begin
+        if two_factor_authentication.present?
+          Auth.new(login, password, **two_factor_authentication)
+        elsif two_factor_recovery.present?
+          Auth.new(login, password, two_factor_method: 'recovery_codes', two_factor_payload: two_factor_recovery[:recovery_code])
+        else
+          Auth.new(login, password)
+        end
+      end
 
       begin
         auth.valid!
       rescue Auth::Error::TwoFactorRequired => e
         return {
           two_factor_required: {
-            default_two_factor_method:    e.default_two_factor_method,
-            available_two_factor_methods: e.available_two_factor_methods,
+            default_two_factor_authentication_method:    e.default_two_factor_authentication_method,
+            available_two_factor_authentication_methods: e.available_two_factor_authentication_methods,
+            recovery_codes_available:                    e.recovery_codes_available
           }
         }
       rescue Auth::Error::Base => e

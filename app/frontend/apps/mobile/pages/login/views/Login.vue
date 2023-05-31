@@ -7,14 +7,14 @@ import {
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useThirdPartyAuthentication } from '#shared/composables/useThirdPartyAuthentication.ts'
 import type { FormData } from '#shared/components/Form/index.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import type UserError from '#shared/errors/UserError.ts'
 import type {
-  EnumTwoFactorMethod,
+  EnumTwoFactorAuthenticationMethod,
   UserTwoFactorMethods,
 } from '#shared/graphql/types.ts'
 import LoginThirdParty from '../components/LoginThirdParty.vue'
@@ -22,6 +22,7 @@ import LoginCredentialsForm from '../components/LoginCredentialsForm.vue'
 import LoginHeader from '../components/LoginHeader.vue'
 import LoginTwoFactor from '../components/LoginTwoFactor.vue'
 import LoginTwoFactorMethods from '../components/LoginTwoFactorMethods.vue'
+import LoginRecoveryCode from '../components/LoginRecoveryCode.vue'
 import { usePublicLinks } from '../composable/usePublicLinks.ts'
 import type { LoginFlow, LoginFormData } from '../types/login.ts'
 import LoginFooter from '../components/LoginFooter.vue'
@@ -69,11 +70,35 @@ const finishLogin = () => {
 const loginFlow = reactive<LoginFlow>({
   state: 'credentials',
   allowedMethods: [],
+  recoveryCodesAvailable: false,
 })
 
-const updateSecondFactor = (factor: EnumTwoFactorMethod) => {
+const statePreviousMap = {
+  credentials: null,
+  '2fa': 'credentials',
+  '2fa-select': '2fa',
+  'recovery-code': '2fa-select',
+} satisfies Record<string, LoginFlow['state'] | null>
+
+const states = ref<LoginFlow['state'][]>([loginFlow.state])
+
+const goBack = () => {
+  const preivousState = statePreviousMap[loginFlow.state] || 'credentials'
+  loginFlow.state = preivousState
+  // if we go to the first state, reset credentials
+  if (preivousState === 'credentials') {
+    loginFlow.credentials = undefined
+  }
+}
+
+const updateState = (state: LoginFlow['state']) => {
+  states.value.push(state)
+  loginFlow.state = state
+}
+
+const updateSecondFactor = (factor: EnumTwoFactorAuthenticationMethod) => {
   loginFlow.twoFactor = factor
-  loginFlow.state = '2fa'
+  updateState('2fa')
 }
 
 const askTwoFactor = (
@@ -81,8 +106,11 @@ const askTwoFactor = (
   formData: FormData<LoginFormData>,
 ) => {
   loginFlow.credentials = formData
-  loginFlow.allowedMethods = twoFactor.availableTwoFactorMethods
-  updateSecondFactor(twoFactor.defaultTwoFactorMethod as EnumTwoFactorMethod)
+  loginFlow.recoveryCodesAvailable = twoFactor.recoveryCodesAvailable
+  loginFlow.allowedMethods = twoFactor.availableTwoFactorAuthenticationMethods
+  updateSecondFactor(
+    twoFactor.defaultTwoFactorAuthenticationMethod as EnumTwoFactorAuthenticationMethod,
+  )
 }
 
 const twoFactorAllowedMethods = computed(() => {
@@ -98,6 +126,7 @@ const twoFactorPlugin = computed(() => {
 const loginPageTitle = computed(() => {
   const productName = String(application.config.product_name)
   if (loginFlow.state === 'credentials') return productName
+  if (loginFlow.state === 'recovery-code') return __('Recovery Code')
   if (loginFlow.state === '2fa') {
     return twoFactorPlugin.value?.label ?? productName
   }
@@ -110,10 +139,25 @@ const showError = (error: UserError) => {
     type: NotificationTypes.Error,
   })
 }
+
+const hasAlternativeLoginMethod = computed(() => {
+  return (
+    twoFactorAllowedMethods.value.length > 1 || loginFlow.recoveryCodesAvailable
+  )
+})
 </script>
 
 <template>
   <div class="flex h-full min-h-screen flex-col items-center px-6 pb-4 pt-6">
+    <div v-if="statePreviousMap[loginFlow.state]" class="flex w-full">
+      <button
+        class="cursor-pointer"
+        :aria-label="__('Go back')"
+        @click="goBack"
+      >
+        <CommonIcon name="mobile-chevron-left" decorative />
+      </button>
+    </div>
     <main class="m-auto w-full max-w-md">
       <div class="flex grow flex-col justify-center">
         <div class="my-5 grow">
@@ -135,13 +179,38 @@ const showError = (error: UserError) => {
             @error="showError"
             @finish="finishLogin"
           />
+          <LoginRecoveryCode
+            v-else-if="
+              loginFlow.state === 'recovery-code' && loginFlow.credentials
+            "
+            :credentials="loginFlow.credentials"
+            @error="showError"
+            @finish="finishLogin"
+          />
           <LoginTwoFactorMethods
             v-else-if="loginFlow.state === '2fa-select'"
             :methods="twoFactorAllowedMethods"
+            :recovery-codes-available="loginFlow.recoveryCodesAvailable"
             @select="updateSecondFactor"
+            @use-recovery-code="updateState('recovery-code')"
           />
         </div>
       </div>
+      <section
+        v-if="
+          (loginFlow.state === '2fa' || loginFlow.state === 'recovery-code') &&
+          hasAlternativeLoginMethod
+        "
+        class="text-center"
+      >
+        {{ $t('Having problems?') }}
+        <button
+          class="cursor-pointer pb-2 font-semibold leading-4 text-gray"
+          @click.prevent="updateState('2fa-select')"
+        >
+          {{ $t('Try another method') }}
+        </button>
+      </section>
     </main>
     <LoginThirdParty
       v-if="hasEnabledProviders && loginFlow.state === 'credentials'"
@@ -159,21 +228,8 @@ const showError = (error: UserError) => {
         {{ $t('Request the password login here.') }}
       </CommonLink>
     </section>
-    <section
-      v-if="loginFlow.state === '2fa' && twoFactorAllowedMethods.length > 1"
-    >
-      {{ $t('Having problems?') }}
-      <button
-        class="cursor-pointer pb-2 font-semibold leading-4 text-gray"
-        @click.prevent="loginFlow.state = '2fa-select'"
-      >
-        {{ $t('Try another method') }}
-      </button>
-    </section>
     <div
-      v-if="
-        loginFlow.state !== 'credentials' && twoFactorAllowedMethods.length <= 1
-      "
+      v-if="loginFlow.state !== 'credentials' && !hasAlternativeLoginMethod"
       class="pb-2 font-medium leading-4 text-gray"
     >
       {{ $t('Contact the administrator if you have any problems logging in.') }}

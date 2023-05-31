@@ -2573,7 +2573,7 @@ msgstr ""
 msgid "Connection test successful"
 msgstr ""
 
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Contact the administrator if you have any problems logging in."
 msgstr ""
@@ -2649,6 +2649,7 @@ msgid "Copied!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Copy"
 msgstr ""
 
@@ -3377,6 +3378,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines if recovery codes can be used by the user when losing access to their device and cannot receive two-factor authentication codes."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4416,6 +4421,10 @@ msgid "Enable REST API using tokens (not username/email address and password). E
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Enable Recovery Codes"
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Enable Ticket creation"
 msgstr ""
 
@@ -4644,6 +4653,11 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
+#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
+msgid "Enter one of your unused recovery codes."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
@@ -5250,6 +5264,10 @@ msgstr ""
 msgid "Generate Token"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Generate recovery codes"
+msgstr ""
+
 #: db/seeds/schedulers.rb
 msgid "Generate user-based stats."
 msgstr ""
@@ -5366,6 +5384,7 @@ msgid "Go Back"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Go back"
 msgstr ""
 
@@ -5567,7 +5586,7 @@ msgstr ""
 msgid "Have a nice day."
 msgstr ""
 
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Having problems?"
 msgstr ""
@@ -5839,6 +5858,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "If you have problems with the third-party login you can request a one-time password login as an admin."
+msgstr ""
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "If you lose your recovery codes it's possible to generate new ones. This action is going to invalidate previous recovery codes."
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
@@ -6686,8 +6709,6 @@ msgid "Location of an external chat.css file."
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 msgid "Log in to %s"
 msgstr ""
 
@@ -7862,6 +7883,10 @@ msgstr ""
 msgid "OK, I've copied my token"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+msgid "OK, I've saved my recovery codes"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 msgid "OTRS"
 msgstr ""
@@ -8021,6 +8046,14 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
 msgid "Or sign in using"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactorMethods.vue
+msgid "Or use one of your recovery codes."
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+msgid "Or, use one of your"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
@@ -8485,6 +8518,10 @@ msgstr ""
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
+msgid "Please save your recovery codes listed below somewhere safe. You can use them to sign in if you lose access to another two-factor method:"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Please select a ticket to merge into."
 msgstr ""
@@ -8542,8 +8579,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
@@ -8608,6 +8643,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Previously owned tickets (%s in total):"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+msgid "Print"
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -8807,6 +8846,21 @@ msgstr ""
 msgid "Records that exist in the import data (but not in Zammad) will always be created."
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Recover codes can be used to access your account in the event you lose access to other two-factor authentication methods."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method/recovery_codes.coffee
+#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Recovery Code"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
+msgid "Recovery Codes"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
 msgstr ""
@@ -8817,6 +8871,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "References - Search for follow-up also in In-Reply-To or References headers."
+msgstr ""
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Regenerate recovery codes"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
@@ -9440,7 +9498,7 @@ msgid "Security"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 msgid "Security Code"
 msgstr ""
@@ -9919,8 +9977,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
 msgid "Sign in"
@@ -11991,13 +12050,9 @@ msgstr ""
 msgid "Try again"
 msgstr ""
 
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try another method"
-msgstr ""
-
-#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
-msgid "Try another sign-in method."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
@@ -12376,6 +12431,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Use one line per URI"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
+msgid "Use one of your safely stored recovery codes."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -14248,6 +14307,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+msgid "recovery codes"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee

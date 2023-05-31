@@ -3,9 +3,10 @@
 require 'rails_helper'
 require 'rotp'
 
-RSpec.describe Auth::TwoFactor::Method, current_user_id: 1 do
-  let(:user)     { create(:user) }
-  let(:instance) { described_class.new(user) }
+RSpec.describe Auth::TwoFactor::AuthenticationMethod, current_user_id: 1 do
+  subject(:instance) { described_class.new(user) }
+
+  let(:user) { create(:user) }
 
   shared_examples 'responding to provided instance method' do |method|
     it "responds to '.#{method}'" do
@@ -43,8 +44,8 @@ RSpec.describe Auth::TwoFactor::Method, current_user_id: 1 do
 
   it_behaves_like 'returning expected value', :available?, true
   it_behaves_like 'returning expected value', :enabled?, nil
-  it_behaves_like 'returning expected value', :method_name, 'method', assertion: 'eq'
-  it_behaves_like 'returning expected value', :related_setting_name, 'two_factor_authentication_method_method', assertion: 'eq'
+  it_behaves_like 'returning expected value', :method_name, 'authentication_method', assertion: 'eq'
+  it_behaves_like 'returning expected value', :related_setting_name, 'two_factor_authentication_method_authentication_method', assertion: 'eq'
 
   describe '#create_user_config' do
     let(:secret) { ROTP::Base32.random_base32 }
@@ -63,12 +64,21 @@ RSpec.describe Auth::TwoFactor::Method, current_user_id: 1 do
   end
 
   describe '#destroy_user_config' do
-    before { create(:'user/two_factor_preference', method: 'method', user: user) }
+    before { create(:'user/two_factor_preference', :authenticator_app, method: 'authentication_method', user: user) }
 
     it 'removes two factor configuration for the user' do
       instance.destroy_user_config
 
       expect(user.reload.two_factor_preferences).to be_empty
+    end
+
+    context 'with existing recovery codes' do
+      it 'deletes recovery code', :aggregate_failures do
+        instance.destroy_user_config
+
+        expect(user.reload.two_factor_preferences.authentication_methods).to be_empty
+        expect(user.reload.two_factor_preferences.recovery_codes).to be_nil
+      end
     end
   end
 end

@@ -954,10 +954,10 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     render json: result, status: :ok
   end
 
-  def two_factor_enabled_methods
+  def two_factor_enabled_authentication_methods
     user = User.find(params[:id])
 
-    render json: { methods: user.two_factor_enabled_methods }, status: :ok
+    render json: { methods: user.two_factor_enabled_authentication_methods }, status: :ok
   end
 
   private

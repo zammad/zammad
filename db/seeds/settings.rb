@@ -5402,6 +5402,33 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Enable Recovery Codes'),
+  name:        'two_factor_authentication_recovery_codes',
+  area:        'Security::TwoFactorAuthentication',
+  description: __('Defines if recovery codes can be used by the user when losing access to their device and cannot receive two-factor authentication codes.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'two_factor_authentication_recovery_codes',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    prio:       5000,
+    permission: ['admin.security'],
+  },
+  state:       true,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       __('Enforce the set up of the two-factor authentication'),
   name:        'two_factor_authentication_enforce_role_ids',
   area:        'Security::TwoFactorAuthentication',

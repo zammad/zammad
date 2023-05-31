@@ -1,0 +1,27 @@
+<h3 class="text-center">
+  <%= @T @twoFactorMethodDetails.label %>
+</h3>
+
+<% if @errorMessage: %>
+  <div class="alert alert--danger" role="alert">
+    <%= @errorMessage %>
+  </div>
+<% end %>
+
+<input name="username" type="hidden" value="<%= @formPayload.username %>" />
+<input name="password" type="hidden" value="<%= @formPayload.password %>" />
+<input name="remember_me" type="hidden" value="<%= @formPayload.remember_me %>" />
+<input name="two_factor_method" type="hidden" value="<%= @twoFactorMethodDetails.key %>" />
+
+<div class="form-group">
+  <div class="formGroup-label">
+    <label for="security_code"><%- @Ti(@inputFieldLabel) %></label>
+  </div>
+  <input id="security_code" name="two_factor_payload" type="text" class="form-control" autocomplete="off"/>
+
+  <p class="help-text"><%= @T @twoFactorMethodDetails.helpMessage  %></p>
+</div>
+
+<div class="form-controls">
+  <button class="btn btn--primary" type="submit"><%- @T('Sign in') %></button>
+</div>

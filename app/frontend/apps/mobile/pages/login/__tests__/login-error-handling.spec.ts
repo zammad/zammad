@@ -5,7 +5,7 @@ import {
   mockPublicLinksSubscription,
 } from '#shared/entities/public-links/__tests__/mocks/mockPublicLinks.ts'
 import { LoginDocument } from '#shared/graphql/mutations/login.api.ts'
-import { EnumTwoFactorMethod } from '#shared/graphql/types.ts'
+import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 
@@ -60,8 +60,12 @@ describe('testing login error handling', () => {
           session: null,
           errors: null,
           twoFactorRequired: {
-            availableTwoFactorMethods: [EnumTwoFactorMethod.AuthenticatorApp],
-            defaultTwoFactorMethod: EnumTwoFactorMethod.AuthenticatorApp,
+            availableTwoFactorAuthenticationMethods: [
+              EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
+            ],
+            defaultTwoFactorAuthenticationMethod:
+              EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
+            recoveryCodesAvailable: false,
           },
         },
       },
@@ -71,7 +75,7 @@ describe('testing login error handling', () => {
           errors: [
             {
               message:
-                'Login failed. Have you double-checked your credentials and completed the email verification step?',
+                'Login failed. Please double-check your two-factor authentication method.',
             },
           ],
           twoFactorRequired: null,
@@ -95,7 +99,7 @@ describe('testing login error handling', () => {
 
     expect(view.getByTestId('notification')).toBeInTheDocument()
     expect(view.getByTestId('notification')).toHaveTextContent(
-      'Login failed. Have you double-checked your credentials and completed the email verification step?',
+      'Login failed. Please double-check your two-factor authentication method.',
     )
   })
 })

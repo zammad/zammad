@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'rotp'
 
-RSpec.describe Auth::TwoFactor do
+RSpec.describe Auth::TwoFactor, current_user_id: 1 do
   let(:user)     { create(:user) }
   let(:instance) { described_class.new(user) }
 
@@ -18,14 +18,14 @@ RSpec.describe Auth::TwoFactor do
   end
 
   it_behaves_like 'responding to provided instance method', :enabled?
-  it_behaves_like 'responding to provided instance method', :available_methods
-  it_behaves_like 'responding to provided instance method', :enabled_methods
+  it_behaves_like 'responding to provided instance method', :available_authentication_methods
+  it_behaves_like 'responding to provided instance method', :enabled_authentication_methods
   it_behaves_like 'responding to provided instance method', :verify?
   it_behaves_like 'responding to provided instance method', :verify_configuration?
-  it_behaves_like 'responding to provided instance method', :all_methods
-  it_behaves_like 'responding to provided instance method', :method_object
-  it_behaves_like 'responding to provided instance method', :user_methods
-  it_behaves_like 'responding to provided instance method', :user_default_method
+  it_behaves_like 'responding to provided instance method', :all_authentication_methods
+  it_behaves_like 'responding to provided instance method', :authentication_method_object
+  it_behaves_like 'responding to provided instance method', :user_authentication_methods
+  it_behaves_like 'responding to provided instance method', :user_default_authentication_method
   it_behaves_like 'responding to provided instance method', :user_setup_required?
   it_behaves_like 'responding to provided instance method', :user_configured?
 
@@ -44,31 +44,31 @@ RSpec.describe Auth::TwoFactor do
   end
 
   it_behaves_like 'returning expected value', :enabled?, true
-  it_behaves_like 'returning expected value', :available_methods, Auth::TwoFactor::Method::AuthenticatorApp, assertion: 'include'
-  it_behaves_like 'returning expected value', :enabled_methods, Auth::TwoFactor::Method::AuthenticatorApp, assertion: 'include'
-  it_behaves_like 'returning expected value', :all_methods, Auth::TwoFactor::Method::AuthenticatorApp, assertion: 'include'
+  it_behaves_like 'returning expected value', :available_authentication_methods, Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp, assertion: 'include'
+  it_behaves_like 'returning expected value', :enabled_authentication_methods, Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp, assertion: 'include'
+  it_behaves_like 'returning expected value', :all_authentication_methods, Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp, assertion: 'include'
 
   describe '#method_object' do
-    before { create(:'user/two_factor_preference', user: user) }
+    before { create(:'user/two_factor_preference', :authenticator_app, user: user) }
 
     it 'returns expected value' do
-      expect(instance.method_object('authenticator_app')).to be_a(Auth::TwoFactor::Method::AuthenticatorApp)
+      expect(instance.authentication_method_object('authenticator_app')).to be_a(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
     end
   end
 
-  describe '#user_methods' do
-    before { create(:'user/two_factor_preference', user: user) }
+  describe '#user_authentication_methods' do
+    before { create(:'user/two_factor_preference', :authenticator_app, user: user) }
 
     it 'returns expected value' do
-      expect(instance.user_methods).to include(Auth::TwoFactor::Method::AuthenticatorApp)
+      expect(instance.user_authentication_methods).to include(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
     end
   end
 
-  describe '#user_default_method' do
-    before { create(:'user/two_factor_preference', user: user) }
+  describe '#user_default_authentication_method' do
+    before { create(:'user/two_factor_preference', :authenticator_app, user: user) }
 
     it 'returns expected value' do
-      expect(instance.user_default_method).to be_a(Auth::TwoFactor::Method::AuthenticatorApp)
+      expect(instance.user_default_authentication_method).to be_a(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
     end
   end
 
@@ -103,27 +103,42 @@ RSpec.describe Auth::TwoFactor do
       Setting.set('two_factor_authentication_method_authenticator_app', true)
     end
 
+    shared_examples 'reovery codes present' do |configured|
+      before do
+        Auth::TwoFactor::RecoveryCodes.new(user).generate
+      end
+
+      it 'returns expected value' do
+        expect(instance.user_configured?).to be(configured)
+      end
+    end
+
     context 'when a method is configured' do
-      before { create(:'user/two_factor_preference', user: user) }
+      before { create(:'user/two_factor_preference', :authenticator_app, user: user) }
 
       it 'returns expected value' do
         expect(instance.user_configured?).to be(true)
       end
+
+      it_behaves_like 'reovery codes present', true
     end
 
     context 'when a method is not configured' do
       it 'returns expected value' do
         expect(instance.user_configured?).to be(false)
       end
+
+      it_behaves_like 'reovery codes present', false
     end
+
   end
 
-  describe '#verify' do
+  describe '#verify?' do
     let(:secret) { ROTP::Base32.random_base32 }
     let(:last_otp_at) { 1_256_953_732 } # 2009-10-31T01:48:52Z
 
     let(:two_factor_pref) do
-      create(:'user/two_factor_preference',
+      create(:'user/two_factor_preference', :authenticator_app,
              user:          user,
              method:        method,
              configuration: configuration)
@@ -192,6 +207,29 @@ RSpec.describe Auth::TwoFactor do
         let(:configuration) { nil }
 
         it_behaves_like 'returning false result'
+      end
+
+      context 'with used recovery code' do
+        let(:method) { 'recovery_codes' }
+        let(:current_codes)   { Auth::TwoFactor::RecoveryCodes.new(user).generate }
+        let(:code)            { current_codes.first }
+        let(:two_factor_pref) { nil }
+
+        before do
+          current_codes
+        end
+
+        it 'returns true result' do
+          expect(instance.verify?(method, code)).to be true
+        end
+
+        context 'with invalid code provided' do
+          let(:code) { 'wrong' }
+
+          it 'returns false result' do
+            expect(instance.verify?(method, code)).to be false
+          end
+        end
       end
     end
   end

@@ -20,8 +20,9 @@ export const LoginDocument = gql`
       ...errors
     }
     twoFactorRequired {
-      availableTwoFactorMethods
-      defaultTwoFactorMethod
+      availableTwoFactorAuthenticationMethods
+      defaultTwoFactorAuthenticationMethod
+      recoveryCodesAvailable
     }
   }
 }

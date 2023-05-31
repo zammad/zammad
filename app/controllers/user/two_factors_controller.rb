@@ -3,39 +3,62 @@
 class User::TwoFactorsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
-  def two_factor_remove_method
-    params_user.two_factor_destroy_method(params[:method])
+  def two_factor_remove_authentication_method
+    params_user.two_factor_destroy_authentication_method(params[:method])
 
     render json: {}, status: :ok
   end
 
-  def two_factor_remove_all_methods
-    params_user.two_factor_destroy_all_methods
+  def two_factor_remove_all_authentication_methods
+    params_user.two_factor_destroy_all_authentication_methods
 
     render json: {}, status: :ok
   end
 
-  def two_factor_enabled_methods
-    render json: params_user.two_factor_enabled_methods, status: :ok
+  def two_factor_enabled_authentication_methods
+    render json: params_user.two_factor_enabled_authentication_methods, status: :ok
+  end
+
+  def two_factor_personal_configuration
+    result = {
+      enabled_authentication_methods: current_user.two_factor_enabled_authentication_methods,
+      recovery_codes_exist:           current_user.auth_two_factor.user_recovery_codes_exists?,
+    }
+
+    render json: result, status: :ok
   end
 
   def two_factor_verify_configuration
     raise Exceptions::UnprocessableEntity, __('The required parameter "method" is missing.')  if !params[:method]
     raise Exceptions::UnprocessableEntity, __('The required parameter "payload" is missing.') if !params[:payload]
 
-    render json: { verified: two_factor_verify_configuration? }, status: :ok
+    verified = two_factor_verify_configuration?
+
+    result = {
+      verified: verified,
+    }
+
+    if verified
+      result[:recovery_codes] = current_user.two_factor_recovery_codes_generate
+    end
+
+    render json: result, status: :ok
   end
 
-  def two_factor_method_configuration
+  def two_factor_authentication_method_configuration
     method_name = params[:method]
 
     raise Exceptions::UnprocessableEntity, __('The required parameter "method" is missing.') if method_name.blank?
 
-    two_factor_method = current_user.auth_two_factor.method_object(method_name)
+    two_factor_method = current_user.auth_two_factor.authentication_method_object(method_name)
 
     raise Exceptions::UnprocessableEntity, __('The two-factor authentication method is not enabled.') if !two_factor_method&.enabled? || !two_factor_method&.available?
 
     render json: { configuration: two_factor_method.configuration_options }, status: :ok
+  end
+
+  def two_factor_recovery_codes_generate
+    render json: current_user.two_factor_recovery_codes_generate(force: true), status: :ok
   end
 
   private

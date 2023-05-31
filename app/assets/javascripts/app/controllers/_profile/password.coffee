@@ -33,7 +33,7 @@ class ProfilePassword extends App.ControllerSubContent
     @ajax(
       id:   'profile_two_factor'
       type: 'GET'
-      url:  @apiPath + "/users/#{App.User.current().id}/two_factor_enabled_methods"
+      url:  @apiPath + '/users/two_factor_personal_configuration'
       processData: true
       success: (data, status, xhr) =>
         @stopLoading()
@@ -49,13 +49,16 @@ class ProfilePassword extends App.ControllerSubContent
   allowsTwoFactor: ->
     App.Config.get('two_factor_authentication_method_authenticator_app')
 
-  render: (twoFactorMethods) =>
+  render: (data = {}) =>
 
     # item
     html = $( App.view('profile/password')(
-      allowsChangePassword: @allowsChangePassword(),
-      allowsTwoFactor:      @allowsTwoFactor(),
-      twoFactorMethods:     @transformTwoFactorMethods(twoFactorMethods)
+      allowsChangePassword:   @allowsChangePassword(),
+      allowsTwoFactor:        @allowsTwoFactor(),
+      hasConfiguredTwoFactor: _.any(data.enabled_authentication_methods, (elem) -> elem.configured)
+      twoFactorMethods:       @transformTwoFactorMethods(data.enabled_authentication_methods)
+      recoveryCodesEnabled:   App.Config.get('two_factor_authentication_recovery_codes')
+      recoveryCodesExist:     data.recovery_codes_exist
     ) )
 
     configure_attributes = [
@@ -146,7 +149,7 @@ class ProfilePassword extends App.ControllerSubContent
   twoFactorMethodSetup: (e) ->
     e.preventDefault()
 
-    key    = e.currentTarget.closest('tr').dataset.twoFactorKey
+    key    = e.currentTarget.closest('[data-two-factor-key]').dataset.twoFactorKey
     method = App.TwoFactorMethods.methodByKey(key)
 
     new App["TwoFactorConfigurationMethod#{method.identifier}"](
@@ -169,7 +172,7 @@ class ProfilePassword extends App.ControllerSubContent
         @ajax(
           id:   'profile_two_factor_removal'
           type: 'DELETE'
-          url:  @apiPath + "/users/#{App.User.current().id}/two_factor_remove_method"
+          url:  @apiPath + "/users/#{App.User.current().id}/two_factor_remove_authentication_method"
           processData: true
           data: JSON.stringify(
             method: key

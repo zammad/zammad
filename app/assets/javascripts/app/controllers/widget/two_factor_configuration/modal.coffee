@@ -21,7 +21,10 @@ class App.TwoFactorConfigurationModal extends App.ControllerModal
   next: (modalOptions = {}) =>
     @close()
 
-    constructor = @nextModalClass()
+    modalOptions.container ||= @container
+    modalOptions.successCallback ||= @successCallback
+
+    constructor = modalOptions.nextModalClass || @nextModalClass()
 
     new constructor(_.extend(
       {},
@@ -31,6 +34,20 @@ class App.TwoFactorConfigurationModal extends App.ControllerModal
       buttonCancel: @buttonCancel
       onCancel: @onCancel
     ))
+
+  finalizeConfigurationWizard: (data, modalOptions = {}) =>
+    if recovery_codes = data?.recovery_codes
+      @next(_.extend(
+        {},
+        modalOptions,
+        prefetchedRecoveryCodes: recovery_codes
+        nextModalClass:          App.TwoFactorConfigurationModalRecoveryCodes
+      ))
+      return
+
+    @closeWithFade()
+    @successCallback() if @successCallback
+    return
 
   onSubmit: ->
     @notify

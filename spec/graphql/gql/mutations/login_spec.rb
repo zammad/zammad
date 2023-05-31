@@ -24,8 +24,9 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
               }
             }
             twoFactorRequired {
-              defaultTwoFactorMethod
-              availableTwoFactorMethods
+              defaultTwoFactorAuthenticationMethod
+              availableTwoFactorAuthenticationMethods
+              recoveryCodesAvailable
             }
             errors {
               message
@@ -36,16 +37,16 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
       QUERY
     end
     let(:password) { agent_password }
-    let(:fingerprint)         { Faker::Number.unique.number(digits: 6).to_s }
-    let(:two_factor_method)   { nil }
-    let(:two_factor_payload)  { nil }
+    let(:fingerprint)               { Faker::Number.unique.number(digits: 6).to_s }
+    let(:two_factor_authentication) { nil }
+    let(:two_factor_recovery)       { nil }
     let(:variables) do
       {
         input: {
-          login:            agent.login,
-          password:         password,
-          twoFactorMethod:  two_factor_method,
-          twoFactorPayload: two_factor_payload,
+          login:                   agent.login,
+          password:                password,
+          twoFactorAuthentication: two_factor_authentication,
+          twoFactorRecovery:       two_factor_recovery
         }
       }
     end
@@ -121,14 +122,15 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
       end
 
       context 'with two factor authentication' do
-        let!(:two_factor_pref) { create(:'user/two_factor_preference', user: agent) }
+        let!(:two_factor_pref) { create(:user_two_factor_preference, :authenticator_app, user: agent) }
 
         context 'without token' do
           it 'returns two factor availability data' do
             expect(graphql_response['data']['login']['twoFactorRequired']).to eq(
               {
-                'defaultTwoFactorMethod'    => 'authenticator_app',
-                'availableTwoFactorMethods' => ['authenticator_app']
+                'defaultTwoFactorAuthenticationMethod'    => 'authenticator_app',
+                'availableTwoFactorAuthenticationMethods' => ['authenticator_app'],
+                'recoveryCodesAvailable'                  => false
               }
             )
             expect(graphql_response['data']['login']['session']).not_to be_present
@@ -136,8 +138,12 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
         end
 
         context 'with wrong token' do
-          let(:two_factor_method)  { :authenticator_app }
-          let(:two_factor_payload) { 'wrong' }
+          let(:two_factor_authentication) do
+            {
+              twoFactorMethod:  :authenticator_app,
+              twoFactorPayload: 'wrong'
+            }
+          end
 
           it 'fails with error message' do
             expect(graphql_response['data']['login']['errors']).to eq(
@@ -150,8 +156,12 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
         end
 
         context 'with correkt token' do
-          let(:two_factor_method) { :authenticator_app }
-          let(:two_factor_payload) { two_factor_pref.configuration[:code] }
+          let(:two_factor_authentication) do
+            {
+              twoFactorMethod:  :authenticator_app,
+              twoFactorPayload: two_factor_pref.configuration[:code]
+            }
+          end
 
           it 'returns session data' do
             expect(graphql_response['data']['login']['session']['id']).to be_present

@@ -56,9 +56,9 @@ class App.TwoFactorConfigurationModalAuthenticatorApp extends App.TwoFactorConfi
 
   fetchInitialConfiguration: (callback) =>
     @ajax(
-      id:      'two_factor_method_configuration'
+      id:      'two_factor_authentication_method_configuration'
       type:    'GET'
-      url:     "#{@apiPath}/users/two_factor_method_configuration/#{@method.key}"
+      url:     "#{@apiPath}/users/two_factor_authentication_method_configuration/#{@method.key}"
       success: callback
     )
 
@@ -86,8 +86,7 @@ class App.TwoFactorConfigurationModalAuthenticatorApp extends App.TwoFactorConfi
       processData: true
       success: (data, status, xhr) =>
         if data?.verified
-          @closeWithFade()
-          super # handle success callback in the base class
+          @finalizeConfigurationWizard(data)
           return
 
         @formValidate( form: e.target, errors:

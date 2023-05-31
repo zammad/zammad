@@ -33,16 +33,7 @@ class App.TwoFactorConfigurationModalPasswordCheck extends App.TwoFactorConfigur
       processData: true
       success: (data, status, xhr) =>
         if data?.success
-          @close()
-
-          # Pass the modal options to the next modal instance.
-          @next(
-            container: @container
-            successCallback: @successCallback
-          )
-
-          # We are not calling `super`, since we do not want to call success callback yet.
-
+          @next()
           return
 
         @formValidate( form: e.target, errors:

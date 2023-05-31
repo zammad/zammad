@@ -3,9 +3,10 @@
 require 'rails_helper'
 require 'rotp'
 
-RSpec.describe Auth::TwoFactor::Method::AuthenticatorApp do
-  let(:user)     { create(:user) }
-  let(:instance) { described_class.new(user) }
+RSpec.describe Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp do
+  subject(:instance) { described_class.new(user) }
+
+  let(:user) { create(:user) }
 
   shared_examples 'responding to provided instance method' do |method|
     it "responds to '.#{method}'" do
@@ -21,7 +22,7 @@ RSpec.describe Auth::TwoFactor::Method::AuthenticatorApp do
     let(:last_otp_at) { 1_256_953_732 } # 2009-10-31T01:48:52Z
 
     let(:two_factor_pref) do
-      create(:'user/two_factor_preference',
+      create(:'user/two_factor_preference', :authenticator_app,
              user:          user,
              method:        'authenticator_app',
              configuration: configuration)

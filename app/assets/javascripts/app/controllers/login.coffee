@@ -110,35 +110,39 @@ class Login extends App.ControllerFullPage
     # scroll to top
     @scrollTo()
 
-  renderTwoFactor: (data= {}) ->
+  renderTwoFactor: (data = {}) ->
     @twoFactorMethod = data.twoFactorMethod
-
-    if availableMethods = data.twoFactorAvailableMethods
-      @twoFactorAvailableMethods = availableMethods
 
     method = App.TwoFactorMethods.methodByKey(@twoFactorMethod)
 
-    @replaceWith App.view("login_two_factor_#{@twoFactorMethod}")(
-      errorMessage:              data.errorMessage
-      formPayload:               @formPayload
-      logoUrl:                   @logoUrl()
-      twoFactorMethodDetails:    method
-      twoFactorAvailableMethods: @twoFactorAvailableMethods
+    methodLogin = new App["TwoFactorLoginMethod#{method.identifier}"](
+      errorMessage: data.errorMessage
+      loginContext: @
+      method:       method
     )
 
-    @$('[name="secure_code"]').trigger('focus')
+    methodLoginElements = methodLogin.render(
+      errorMessage: data.errorMessage
+    )
 
-    # scroll to top
-    @scrollTo()
+    @el.find('.js-form').html   methodLoginElements.form
+    @el.find('.js-footer').html methodLoginElements.footer
+
+    # Remove all other elements below the form.
+    @el.find('.js-form').nextAll().remove()
+
+    methodLogin.postRender()
 
   renderTwoFactorMethods: ->
     methodsToShow = _.filter(App.TwoFactorMethods.sortedMethods(),
       (elem) => _.includes(@twoFactorAvailableMethods, elem.key))
 
-    @replaceWith App.view('login_two_factor_methods')(
-      twoFactorMethods: methodsToShow
-      logoUrl:          @logoUrl()
+    @el.find('.js-form').html App.view('widget/two_factor_login/try_another_method')(
+      twoFactorMethods:          methodsToShow
+      twoFactorHasRecoveryCodes: @twoFactorHasRecoveryCodes
     )
+
+    @el.find('.js-footer').html App.view('widget/two_factor_login/help_text')()
 
   login: (e) ->
     e.preventDefault()
@@ -172,9 +176,12 @@ class Login extends App.ControllerFullPage
     errorMessage = App.i18n.translateContent(details.error || 'Could not process your request')
 
     if config = details.two_factor_required
+      @twoFactorAvailableMethods       = config.available_two_factor_authentication_methods
+      @twoFactorHasRecoveryCodes       = config.recovery_codes_available
+      @twoFactorAvailableAnotherMethod = config.available_two_factor_authentication_methods.length > 1 || (config.recovery_codes_available && config.available_two_factor_authentication_methods.length > 0)
+
       @renderTwoFactor(
-        twoFactorMethod:           config.default_two_factor_method
-        twoFactorAvailableMethods: config.available_two_factor_methods
+        twoFactorMethod: config.default_two_factor_authentication_method
       )
 
       return
@@ -204,7 +211,7 @@ class Login extends App.ControllerFullPage
   clickedAnotherTwoFactor: (e) ->
     @preventDefaultAndStopPropagation(e)
 
-    newMethod = e.target.closest('p').dataset['method']
+    newMethod = e.target.closest('[data-method]').dataset['method']
 
     @renderTwoFactor(
       twoFactorMethod: newMethod

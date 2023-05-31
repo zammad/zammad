@@ -8,6 +8,7 @@ import type { TwoFactorPlugin } from '#shared/entities/two-factor/types.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { computed } from 'vue'
+import { useForm } from '#shared/components/Form/index.ts'
 import type { LoginFormData, TwoFactorFormData } from '../types/login.ts'
 
 const props = defineProps<{
@@ -47,6 +48,7 @@ const schema: FormSchemaNode[] = [
 
 const { clearAllNotifications } = useNotifications()
 const authentication = useAuthenticationStore()
+const { form, isDisabled } = useForm()
 
 const confirmTwoFactor = (formData: FormData<TwoFactorFormData>) => {
   // Clear notifications to avoid duplicated error messages.
@@ -54,9 +56,14 @@ const confirmTwoFactor = (formData: FormData<TwoFactorFormData>) => {
   const { login, password, rememberMe } = props.credentials
 
   return authentication
-    .login(login, password, rememberMe, {
-      payload: formData.code,
-      method: props.twoFactor.name,
+    .login({
+      login,
+      password,
+      rememberMe,
+      twoFactorAuthentication: {
+        payload: formData.code,
+        method: props.twoFactor.name,
+      },
     })
     .then(() => {
       emit('finish')
@@ -71,6 +78,7 @@ const confirmTwoFactor = (formData: FormData<TwoFactorFormData>) => {
 
 <template>
   <Form
+    ref="form"
     :schema="schema"
     @submit="confirmTwoFactor($event as FormData<TwoFactorFormData>)"
   >
@@ -79,6 +87,7 @@ const confirmTwoFactor = (formData: FormData<TwoFactorFormData>) => {
         wrapper-class="mt-6 flex grow justify-center items-center"
         input-class="py-2 px-4 w-full h-14 text-xl rounded-xl select-none"
         variant="submit"
+        :disabled="isDisabled"
         type="submit"
       >
         {{ $t('Sign in') }}

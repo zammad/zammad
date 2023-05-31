@@ -74,14 +74,18 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
   end
 
   context 'when logging in with two factor auth' do
-    let(:code)             { two_factor_pref.configuration[:code] }
-    let!(:two_factor_pref) { create(:'user/two_factor_preference', user: User.find_by(login: 'admin@example.com')) }
+    let(:user)                 { User.find_by(login: 'admin@example.com') }
+    let(:code)                 { two_factor_pref.configuration[:code] }
+    let(:recover_code_enabled) { false }
+    let!(:two_factor_pref)     { create(:'user/two_factor_preference', :authenticator_app, user:) }
+    let(:token)                { 'token' }
+    let(:recovery_2fa)         { create(:user_two_factor_preference, :recovery_codes, token:, user:) }
 
     before do
       stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
-    end
+      recovery_2fa if recover_code_enabled
+      Setting.set('two_factor_authentication_recovery_codes', recover_code_enabled)
 
-    it 'can login with correct code' do
       visit '/login', skip_waiting: true
 
       login(
@@ -90,11 +94,41 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
         remember_me:  true,
         skip_waiting: true,
       )
+    end
+
+    it 'can login with correct code' do
+      expect(page).to have_no_text('Try another method')
 
       find_input('Security Code').type(code)
       find_button('Sign in').click
 
       expect_current_route '/'
     end
+
+    context 'when logging in with recovery code' do
+      let(:recover_code_enabled) { true }
+
+      before do
+        find_button('Try another method').click
+        find_button('Or use one of your recovery codes.').click
+      end
+
+      it 'can login with correct code' do
+        find_input('Recovery Code').type(token)
+        find_button('Sign in').click
+
+        expect_current_route '/'
+      end
+
+      it 'shows an error with incorrect code' do
+        find_input('Recovery Code').type('incorrect')
+        find_button('Sign in').click
+
+        expect(page).to have_text('Please double-check your two-factor authentication method')
+
+        expect_current_route '/login'
+      end
+    end
   end
+
 end

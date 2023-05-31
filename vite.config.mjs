@@ -125,7 +125,7 @@ export default defineConfig(({ mode, command }) => {
               '**/*.spec.*',
               '**/__tests__/**/*',
               'app/frontend/tests/**/*',
-              '!app/frontend/**',
+              '!app/frontend/**/*',
             ],
       },
     },

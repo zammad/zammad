@@ -1,0 +1,1 @@
+class App.TwoFactorLoginMethodAuthenticatorApp extends App.TwoFactorLoginMethod

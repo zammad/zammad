@@ -11,8 +11,9 @@ mutation login($input: LoginInput!) {
       ...errors
     }
     twoFactorRequired {
-      availableTwoFactorMethods
-      defaultTwoFactorMethod
+      availableTwoFactorAuthenticationMethods
+      defaultTwoFactorAuthenticationMethod
+      recoveryCodesAvailable
     }
   }
 }

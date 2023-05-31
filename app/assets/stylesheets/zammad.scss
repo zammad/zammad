@@ -11234,6 +11234,10 @@ output {
     align-items: center;
     flex-wrap: wrap;
   }
+
+  .settings-list--bottom-button {
+    margin-top: 10px;
+  }
 }
 
 .settings-list--roles-permissions {
@@ -14333,6 +14337,22 @@ span.is-disabled {
 
   .profile-groups-all-unchecked {
     margin-bottom: 10px;
+  }
+}
+
+.profile-two-factor {
+  table {
+    margin-bottom: 16px;
+  }
+
+  .recovery-codes {
+    p {
+      margin: 12px 0;
+    }
+
+    p:last-of-type {
+      margin: 0;
+    }
   }
 }
 

@@ -2,34 +2,41 @@
 
 class Auth::TwoFactor
 
-  attr_reader :user, :all_methods
+  attr_reader :user, :all_authentication_methods
 
-  def self.method_classes
-    @method_classes ||= Auth::TwoFactor::Method.descendants
+  def self.authentication_method_classes
+    @authentication_method_classes ||= Auth::TwoFactor::AuthenticationMethod.descendants
   end
 
   def initialize(user)
     @user = user
 
-    @all_methods = self.class.method_classes.map { |method| method.new(user) }
+    @all_authentication_methods = self.class.authentication_method_classes.map { |authentication_method| authentication_method.new(user) }
   end
 
   def enabled?
-    enabled_methods.present?
+    enabled_authentication_methods.present?
   end
 
-  def available_methods
-    all_methods.select(&:available?)
+  def available_authentication_methods
+    enabled_authentication_methods.select(&:available?)
   end
 
-  def enabled_methods
-    available_methods.select(&:enabled?)
+  def enabled_authentication_methods
+    all_authentication_methods.select(&:enabled?)
   end
 
   def verify?(method, payload)
     return false if method.nil?
 
-    method_object = method_object(method)
+    method_object = begin
+      if method.eql?('recovery_codes')
+        recovery_codes_object
+      else
+        authentication_method_object(method)
+      end
+    end
+
     return false if method_object.nil?
 
     result = method_object.verify(payload)
@@ -44,31 +51,31 @@ class Auth::TwoFactor
   def verify_configuration?(method, payload, configuration)
     return false if method.nil?
 
-    method_object = method_object(method)
-    return false if method_object.nil?
+    authentication_method_object = authentication_method_object(method)
+    return false if authentication_method_object.nil?
 
-    result = method_object.verify(payload, configuration)
+    result = authentication_method_object.verify(payload, configuration)
 
     return false if !result[:verified]
 
-    method_object.create_user_config(result.except(:verified))
+    authentication_method_object.create_user_config(result.except(:verified))
 
     true
   end
 
-  def method_object(method)
-    all_methods.find { |all_method| all_method.method_name.eql?(method) }
+  def authentication_method_object(method)
+    all_authentication_methods.find { |all_authentication_method| all_authentication_method.method_name.eql?(method) }
   end
 
-  def user_methods
-    enabled_methods.select { |method| user_two_factor_configuration.key?(method.method_name.to_sym) }
+  def user_authentication_methods
+    enabled_authentication_methods.select { |method| user_two_factor_configuration.key?(method.method_name.to_sym) }
   end
 
-  def user_default_method
+  def user_default_authentication_method
     # TODO: For now, the first method defines the default method for a user.
     #   In the long run, this should be selectable by the user.
 
-    enabled_methods.first
+    enabled_authentication_methods.first
   end
 
   def user_setup_required?
@@ -76,15 +83,29 @@ class Auth::TwoFactor
   end
 
   def user_configured?
-    user_methods.present?
+    user_authentication_methods.present?
+  end
+
+  def user_recovery_codes_exists?
+    return false if !recovery_codes_enabled?
+
+    recovery_codes_object.exists?
+  end
+
+  def recovery_codes_enabled?
+    recovery_codes_object.enabled?
   end
 
   private
 
-  def user_two_factor_configuration
-    return if user.two_factor_preferences.nil?
+  def recovery_codes_object
+    @recovery_codes_object ||= Auth::TwoFactor::RecoveryCodes.new(user)
+  end
 
-    user.two_factor_preferences.to_h do |two_factor_pref|
+  def user_two_factor_configuration
+    return if user.two_factor_preferences.authentication_methods.nil?
+
+    user.two_factor_preferences.authentication_methods.to_h do |two_factor_pref|
       [
         two_factor_pref.method.to_sym,
         two_factor_pref.configuration,

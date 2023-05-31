@@ -26,8 +26,9 @@ class SessionsController < ApplicationController
   rescue Auth::Error::TwoFactorRequired => e
     render json: {
       two_factor_required: {
-        default_two_factor_method:    e.default_two_factor_method,
-        available_two_factor_methods: e.available_two_factor_methods,
+        default_two_factor_authentication_method:    e.default_two_factor_authentication_method,
+        available_two_factor_authentication_methods: e.available_two_factor_authentication_methods,
+        recovery_codes_available:                    e.recovery_codes_available
       }
     }, status: :unprocessable_entity
   rescue Auth::Error::Base => e

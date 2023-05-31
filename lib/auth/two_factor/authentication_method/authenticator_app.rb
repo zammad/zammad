@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class Auth::TwoFactor::Method::AuthenticatorApp < Auth::TwoFactor::Method
+class Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp < Auth::TwoFactor::AuthenticationMethod
   def verify(payload, configuration = user_two_factor_preference_configuration)
     return verify_result(false) if payload.blank? || configuration.blank?
 
@@ -15,7 +15,7 @@ class Auth::TwoFactor::Method::AuthenticatorApp < Auth::TwoFactor::Method
     return verify_result(false) if timestamp.blank?
 
     # Return new configuration hash with the updated timestamp.
-    verify_result(true, configuration, { last_otp_at: timestamp })
+    verify_result(true, configuration: configuration, new_configuration: { last_otp_at: timestamp })
   end
 
   def configuration_options
@@ -37,15 +37,5 @@ class Auth::TwoFactor::Method::AuthenticatorApp < Auth::TwoFactor::Method
   def totp(secret)
     require 'rotp' # Only load when it is actually used
     ROTP::TOTP.new(secret, issuer: issuer)
-  end
-
-  def verify_result(verified, configuration = nil, new_configuration = nil)
-    return { verified: false } if !verified
-
-    {
-      **configuration,
-      verified: true,
-      **new_configuration,
-    }
   end
 end

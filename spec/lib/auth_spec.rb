@@ -93,7 +93,7 @@ RSpec.describe Auth do
       end
 
       context 'with valid user and required two factor' do
-        let!(:two_factor_pref) { create(:'user/two_factor_preference', user: user) }
+        let!(:two_factor_pref) { create(:user_two_factor_preference, :authenticator_app, user: user) }
 
         context 'without valid two factor token' do
           it 'raises an error and does not the failed login count' do

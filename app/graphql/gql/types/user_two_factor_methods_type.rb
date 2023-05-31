@@ -5,7 +5,8 @@ module Gql::Types
 
     description 'Two factor authentication methods available for the user about to log-in.'
 
-    field :default_two_factor_method, Gql::Types::Enum::TwoFactorMethodType
-    field :available_two_factor_methods, [Gql::Types::Enum::TwoFactorMethodType], null: false
+    field :default_two_factor_authentication_method, Gql::Types::Enum::TwoFactorAuthenticationMethodType
+    field :available_two_factor_authentication_methods, [Gql::Types::Enum::TwoFactorAuthenticationMethodType], null: false
+    field :recovery_codes_available, Boolean, null: false
   end
 end

@@ -9,10 +9,24 @@ import { useLogoutMutation } from '#shared/graphql/mutations/logout.api.ts'
 import { clearApolloClientStore } from '#shared/server/apollo/client.ts'
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import testFlags from '#shared/utils/testFlags.ts'
-import { type EnumTwoFactorMethod } from '#shared/graphql/types.ts'
+import {
+  type EnumTwoFactorAuthenticationMethod,
+  type LoginInput,
+} from '#shared/graphql/types.ts'
 import { useSessionStore } from './session.ts'
 import { useApplicationStore } from './application.ts'
 import { resetAndDisposeStores } from '.'
+
+interface LoginOptions {
+  login: string
+  password: string
+  rememberMe: boolean
+  twoFactorAuthentication?: {
+    method: EnumTwoFactorAuthenticationMethod
+    payload: string
+  }
+  recoveryCode?: string
+}
 
 export const useAuthenticationStore = defineStore(
   'authentication',
@@ -60,25 +74,34 @@ export const useAuthenticationStore = defineStore(
       }
     }
 
-    const login = async (
-      login: string,
-      password: string,
-      rememberMe: boolean,
-      twoFactor?: {
-        method: EnumTwoFactorMethod
-        payload: string
-      },
-    ) => {
+    const login = async ({
+      login,
+      password,
+      rememberMe,
+      twoFactorAuthentication,
+      recoveryCode,
+    }: LoginOptions) => {
+      const loginInput: LoginInput = {
+        login,
+        password,
+        rememberMe,
+      }
+
+      if (twoFactorAuthentication) {
+        loginInput.twoFactorAuthentication = {
+          twoFactorMethod: twoFactorAuthentication.method,
+          twoFactorPayload: twoFactorAuthentication.payload,
+        }
+      } else if (recoveryCode) {
+        loginInput.twoFactorRecovery = {
+          recoveryCode,
+        }
+      }
+
       const loginMutation = new MutationHandler(
         useLoginMutation({
           variables: {
-            input: {
-              login,
-              password,
-              rememberMe,
-              twoFactorMethod: twoFactor?.method,
-              twoFactorPayload: twoFactor?.payload,
-            },
+            input: loginInput,
           },
           context: {
             headers: {
