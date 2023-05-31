@@ -69,6 +69,22 @@ RSpec.describe SearchIndexBackend do
 
         it { is_expected.to be_an(Array).and not_include(nil).and be_empty }
       end
+
+      context 'when user has a signature detection' do
+        let(:user)        { create(:agent, preferences: { signature_detection: 'Hamburg' }) }
+        let(:record_type) { 'Ticket'.freeze }
+        let(:record)      { create(:ticket, created_by: user) }
+
+        before do
+          record.search_index_update_backend
+          described_class.refresh
+        end
+
+        it 'does not find the ticket record' do
+          result = described_class.search('Hamburg', record_type, sort_by: ['updated_at'], order_by: ['desc'])
+          expect(result).to eq([])
+        end
+      end
     end
 
     context 'search with date that requires time zone conversion', time_zone: 'Europe/Vilnius' do

@@ -8,6 +8,7 @@ class User
       attributes = super
       attributes['fullname'] = fullname
       attributes.delete('password')
+      attributes['preferences']&.delete('signature_detection')
 
       if include_references
         attributes['permissions'] = []
