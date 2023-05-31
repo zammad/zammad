@@ -558,7 +558,7 @@ GEM
     telephone_number (1.4.20)
     terser (1.1.15)
       execjs (>= 0.3.0, < 3)
-    test-unit (3.5.8)
+    test-unit (3.5.9)
       power_assert
     thor (1.2.2)
     thread_safe (0.3.6)
