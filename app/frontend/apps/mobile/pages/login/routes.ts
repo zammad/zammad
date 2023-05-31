@@ -24,7 +24,9 @@ const route: RouteRecordRaw[] = [
         const [{ useAuthenticationStore }, { useNotifications }] =
           await Promise.all([
             import('#shared/stores/authentication.ts'),
-            import('#shared/components/CommonNotifications/composable.ts'),
+            import(
+              '#shared/components/CommonNotifications/useNotifications.ts'
+            ),
           ])
 
         const { clearAllNotifications } = useNotifications()

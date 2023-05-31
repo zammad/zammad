@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CommonNotifications from './CommonNotifications.vue'
-import { useNotifications } from './composable.ts'
+import { useNotifications } from './useNotifications.ts'
 import type { NewNotification } from './types.ts'
 import { NotificationTypes } from './types.ts'
 

@@ -3,12 +3,12 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
-import { useNotifications } from '#shared/components/CommonNotifications/composable.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import type { Notification } from '#shared/components/CommonNotifications/types.ts'
 import { markup } from '#shared/utils/markup.ts'
 
 const notificationTypeClassMap = {
-  warn: 'bg-yellow text-white',
+  warn: 'bg-yellow text-black',
   success: 'bg-green text-white',
   error: 'bg-red/60 text-white',
   info: 'bg-white text-black',

@@ -6,4 +6,4 @@ export {
   type NewNotification,
 } from './types.ts'
 
-export { default as useNotifications } from './composable.ts'
+export { useNotifications } from './useNotifications.ts'

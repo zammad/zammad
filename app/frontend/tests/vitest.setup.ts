@@ -63,29 +63,33 @@ vi.stubGlobal('matchMedia', (media: string) => ({
   removeEventListener: vi.fn(),
 }))
 
-vi.mock('#shared/components/CommonNotifications/composable.ts', async () => {
-  const { default: originalUseNotifications } = await vi.importActual<any>(
-    '#shared/components/CommonNotifications/composable.ts',
-  )
-  let notifications: any
-  const useNotifications = () => {
-    if (notifications) return notifications
-    const result = originalUseNotifications()
-    notifications = {
-      notify: vi.fn(result.notify),
-      notifications: result.notifications,
-      removeNotification: vi.fn(result.removeNotification),
-      clearAllNotifications: vi.fn(result.clearAllNotifications),
-      hasErrors: vi.fn(result.hasErrors),
+vi.mock(
+  '#shared/components/CommonNotifications/useNotifications.ts',
+  async () => {
+    const { useNotifications: originalUseNotifications } =
+      await vi.importActual<any>(
+        '#shared/components/CommonNotifications/useNotifications.ts',
+      )
+    let notifications: any
+    const useNotifications = () => {
+      if (notifications) return notifications
+      const result = originalUseNotifications()
+      notifications = {
+        notify: vi.fn(result.notify),
+        notifications: result.notifications,
+        removeNotification: vi.fn(result.removeNotification),
+        clearAllNotifications: vi.fn(result.clearAllNotifications),
+        hasErrors: vi.fn(result.hasErrors),
+      }
+      return notifications
     }
-    return notifications
-  }
 
-  return {
-    useNotifications,
-    default: useNotifications,
-  }
-})
+    return {
+      useNotifications,
+      default: useNotifications,
+    }
+  },
+)
 
 // don't rely on tiptap, because it's not supported in JSDOM
 vi.mock(
