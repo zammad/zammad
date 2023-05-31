@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useNotifications } from '#shared/components/CommonNotifications/composable.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import Form from '#shared/components/Form/Form.vue'
 import type { FormData, FormSchemaNode } from '#shared/components/Form/types.ts'
 import type { TwoFactorPlugin } from '#shared/entities/two-factor/types.ts'

@@ -6,7 +6,7 @@ import {
   type ExtendedRenderResult,
 } from '#tests/support/components/index.ts'
 import { waitForTimeout } from '#tests/support/utils.ts'
-import { useNotifications } from '../composable.ts'
+import { useNotifications } from '../useNotifications.ts'
 import { NotificationTypes } from '../types.ts'
 import CommonNotifications from '../CommonNotifications.vue'
 
