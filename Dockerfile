@@ -1,32 +1,17 @@
-FROM node:16.18.0-slim as node
+FROM ruby:3.1.3
+ENV RAILS_ENV=development
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client git libimlib2-dev yarn
+WORKDIR /opt/zammad
+COPY . /opt/zammad/
+RUN bundle install
 
+# Add a script to be executed every time the container starts.
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+EXPOSE 3000
 
-FROM ruby:3.1.3-slim AS builder
-ARG DEBIAN_FRONTEND=noninteractive
-ARG RAILS_ENV=production
-ARG ZAMMAD_TMP_DIR=/tmp/zammad
-COPY --from=node /opt /opt
-COPY --from=node /usr/local/bin /usr/local/bin
-SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
-WORKDIR ${ZAMMAD_TMP_DIR}
-COPY . .
-RUN contrib/docker/setup.sh builder
-
-
-# note: zammad is currently incompatible to alpine because of:
-# https://github.com/docker-library/ruby/issues/113
-FROM ruby:3.1.3-slim
-ARG DEBIAN_FRONTEND=noninteractive
-ARG ZAMMAD_USER=zammad
-ENV RAILS_ENV=production
-ENV RAILS_LOG_TO_STDOUT=true
-ENV ZAMMAD_DIR=/opt/zammad
-ENV ZAMMAD_TMP_DIR=/tmp/zammad
-COPY --from=builder ${ZAMMAD_TMP_DIR} ${ZAMMAD_TMP_DIR}
-COPY --from=builder /usr/local/bundle /usr/local/bundle
-COPY --from=builder ${ZAMMAD_TMP_DIR}/contrib/docker/docker-entrypoint.sh /
-WORKDIR ${ZAMMAD_TMP_DIR}
-RUN contrib/docker/setup.sh runner
-ENTRYPOINT ["/docker-entrypoint.sh"]
-USER zammad
-WORKDIR ${ZAMMAD_DIR}
+# Configure the main process to run when running the image
+CMD ["rails", "server", "-b", "0.0.0.0"]

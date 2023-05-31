@@ -1,0 +1,25 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+  redis:
+    image: "redis:7-alpine"
+    ports:
+      - 6379
+    volumes:
+    - ./tmp/redis_data:/var/lib/redis/data
+
+
+volumes:
+  redis_data:
+    driver: local
