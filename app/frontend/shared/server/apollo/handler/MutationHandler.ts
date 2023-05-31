@@ -9,7 +9,7 @@ import BaseHandler from './BaseHandler.ts'
 
 export default class MutationHandler<
   TResult = OperationMutationResult,
-  TVariables = OperationVariables,
+  TVariables extends OperationVariables = OperationVariables,
 > extends BaseHandler<
   TResult,
   TVariables,

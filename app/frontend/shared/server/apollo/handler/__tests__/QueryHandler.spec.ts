@@ -11,7 +11,7 @@ import { useNotifications } from '#shared/components/CommonNotifications/index.t
 import type { ApolloError, ApolloQueryResult } from '@apollo/client/core'
 import { NetworkStatus } from '@apollo/client/core'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
+import { waitForNextTick, waitUntilSpyCalled } from '#tests/support/utils.ts'
 import QueryHandler from '../QueryHandler.ts'
 
 const queryFunctionCallSpy = vi.fn()
@@ -66,7 +66,9 @@ const mockClient = (error = false, errorType = 'GraphQL') => {
 const waitFirstResult = (queryHandler: QueryHandler<any, any>) =>
   new Promise<ApolloQueryResult<any> | ApolloError>((resolve) => {
     queryHandler.onResult((res) => {
-      resolve(res)
+      if (res.data) {
+        resolve(res)
+      }
     })
     queryHandler.onError((err) => {
       resolve(err)
@@ -128,11 +130,12 @@ describe('QueryHandler', () => {
       expect.assertions(2)
 
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
-      expect(queryHandlerObject.loading().value).toBe(true)
+      const loading = queryHandlerObject.loading()
+      expect(loading.value).toBe(true)
 
       await waitFirstResult(queryHandlerObject)
 
-      expect(queryHandlerObject.loading().value).toBe(false)
+      expect(loading.value).toBe(false)
     })
 
     it('supports lazy queries', async () => {
@@ -199,7 +202,9 @@ describe('QueryHandler', () => {
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
       queryHandlerObject.onResult((result) => {
-        expect(result.data).toEqual(querySampleResult)
+        if (result.data) {
+          expect(result.data).toEqual(querySampleResult)
+        }
       })
       await waitFirstResult(queryHandlerObject)
     })
@@ -267,6 +272,7 @@ describe('QueryHandler', () => {
         })
 
         await waitFirstResult(queryHandlerObject)
+        await waitUntilSpyCalled(errorCallbackSpy)
 
         expect(errorCallbackSpy).toHaveBeenCalledWith({
           type: 'Exceptions::Unknown',
