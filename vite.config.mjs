@@ -126,7 +126,7 @@ export default defineConfig(({ mode, command }) => {
               '**/__tests__/**/*',
               (path) =>
                 !path.includes('app/frontend') ||
-                path.includes('forntend/tests'),
+                path.includes('frontend/tests'),
             ],
       },
     },
