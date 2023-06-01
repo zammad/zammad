@@ -27,14 +27,14 @@ import testFlags from '#shared/utils/testFlags.ts'
 import log from '#shared/utils/log.ts'
 import { useLocaleStore } from './locale.ts'
 
-let sessionIdQuery: QueryHandler<SessionQuery, SessionQueryVariables>
+let sessionQuery: QueryHandler<SessionQuery, SessionQueryVariables>
 
 const getSessionQuery = () => {
-  if (sessionIdQuery) return sessionIdQuery
+  if (sessionQuery) return sessionQuery
 
   const { fingerprint } = useFingerprint()
 
-  sessionIdQuery = new QueryHandler(
+  sessionQuery = new QueryHandler(
     useSessionLazyQuery({
       fetchPolicy: 'network-only',
       context: {
@@ -51,7 +51,7 @@ const getSessionQuery = () => {
     },
   )
 
-  return sessionIdQuery
+  return sessionQuery
 }
 
 let currentUserQuery: QueryHandler<CurrentUserQuery, CurrentUserQueryVariables>

@@ -28,7 +28,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
       )
 
       if (
-        operation.operationName !== 'sessionId' &&
+        operation.operationName !== 'session' &&
         type === GraphQLErrorTypes.NotAuthorized
       ) {
         // Reset authenticated state after an unathenticated error type.
