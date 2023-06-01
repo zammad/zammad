@@ -15,15 +15,17 @@ RSpec.shared_examples 'authenticator app setup' do
 end
 
 def setup_authenticator_app_method(user:, password_check:, expect_recovery_codes: false)
-  in_modal do
-    if password_check
+  if password_check
+    in_modal do
       expect(page).to have_text('Set up two-factor authentication: Password')
 
       fill_in 'Password', with: password_check
 
       click_button 'Next'
     end
+  end
 
+  in_modal do
     expect(page).to have_text('Set up two-factor authentication: Authenticator App')
 
     click '.qr-code-canvas'
@@ -34,8 +36,10 @@ def setup_authenticator_app_method(user:, password_check:, expect_recovery_codes
     fill_in 'Security Code', with: security_code
 
     click_button 'Set Up'
+  end
 
-    if expect_recovery_codes
+  if expect_recovery_codes
+    in_modal do
       any_code = user.two_factor_preferences.recovery_codes.configuration[:codes].sample
 
       expect(page).to have_text('Set up two-factor authentication: Recovery Codes')

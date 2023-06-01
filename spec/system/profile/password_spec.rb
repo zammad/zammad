@@ -165,13 +165,17 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
         click '.js-generate-recovery-codes'
 
         in_modal do
+          expect(page).to have_text('Set up two-factor authentication: Password')
+
           fill_in 'Password', with: user.password_plain
 
           click_button 'Next'
+        end
+
+        in_modal do
+          expect(page).to have_text('Set up two-factor authentication: Recovery Codes')
 
           any_code = user.two_factor_preferences.recovery_codes.configuration[:codes].sample
-
-          expect(page).to have_text('Set up two-factor authentication: Recovery Codes')
           expect(page).to have_text(any_code)
         end
       end
