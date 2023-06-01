@@ -61,6 +61,48 @@ RSpec.describe Auth::TwoFactor::AuthenticationMethod, current_user_id: 1 do
 
       expect(user.two_factor_preferences).to include(User::TwoFactorPreference)
     end
+
+    context 'with existing configuration' do
+      let!(:two_factor_pref) { create(:user_two_factor_preference, :security_keys, method: 'authentication_method', user: user) }
+      let(:data) do
+        {
+          'credentials' => [
+            *two_factor_pref.configuration[:credentials],
+            {
+              'external_id' => Faker::Alphanumeric.alpha(number: 70),
+              'public_key'  => Faker::Alphanumeric.alpha(number: 128),
+              'nickname'    => Faker::Lorem.unique.word,
+              'sign_count'  => '0',
+              'created_at'  => Time.zone.now,
+            },
+          ]
+        }
+      end
+
+      it 'updates two factor configuration for the user' do
+        instance.create_user_config(data)
+
+        expect(two_factor_pref.reload.configuration).to eq(data)
+      end
+    end
+  end
+
+  describe '#update_user_config' do
+    let!(:two_factor_pref) { create(:user_two_factor_preference, :authenticator_app, method: 'authentication_method', user: user) }
+    let(:secret)           { ROTP::Base32.random_base32 }
+    let(:data) do
+      {
+        'code'             => two_factor_pref.configuration[:code],
+        'secret'           => secret,
+        'provisioning_uri' => ROTP::TOTP.new(secret, issuer: 'Zammad CI').provisioning_uri(user.login),
+      }
+    end
+
+    it 'updates two factor configuration for the user' do
+      instance.update_user_config(data)
+
+      expect(two_factor_pref.reload.configuration).to eq(data)
+    end
   end
 
   describe '#destroy_user_config' do

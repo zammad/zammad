@@ -23,7 +23,7 @@ class Auth::TwoFactor::Method
 
   def create_user_config(configuration)
     return if configuration.blank?
-    return if user_two_factor_preference.present?
+    return update_user_config(configuration) if user_two_factor_preference.present?
 
     two_factor_prefs = User::TwoFactorPreference.new(
       method:        method_name,
