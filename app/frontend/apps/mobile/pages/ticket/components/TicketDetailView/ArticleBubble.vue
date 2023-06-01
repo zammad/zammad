@@ -14,7 +14,7 @@ import type {
 } from '#shared/graphql/types.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 import type { ImageViewerFile } from '#shared/composables/useImageViewer.ts'
-import useImageViewer from '#shared/composables/useImageViewer.ts'
+import { useImageViewer } from '#shared/composables/useImageViewer.ts'
 import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
 import stopEvent from '#shared/utils/events.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'

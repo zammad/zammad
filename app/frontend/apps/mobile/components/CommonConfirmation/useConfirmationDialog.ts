@@ -6,7 +6,7 @@ import type { ConfirmationOptions } from './types.ts'
 
 const confirmationDialog: Ref<ConfirmationOptions | undefined> = ref()
 
-const useConfirmation = () => {
+const useConfirmationDialog = () => {
   const showConfirmation = (confirmationOptions: ConfirmationOptions) => {
     confirmationDialog.value = confirmationOptions
   }
@@ -39,4 +39,4 @@ const useConfirmation = () => {
   }
 }
 
-export default useConfirmation
+export { useConfirmationDialog }

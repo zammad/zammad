@@ -21,7 +21,7 @@ import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectio
 import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import CommonSectionMenuLink from '#mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
-import { useRawHTMLIcon } from '#shared/components/CommonIcon/index.ts'
+import { useRawHTMLIcon } from '#shared/components/CommonIcon/useRawHTMLIcon.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 import { useHeader } from '#mobile/composables/useHeader.ts'
 import { i18n } from '#shared/i18n.ts'

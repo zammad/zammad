@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormKitNode } from '@formkit/core'
-import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import {
   useNotifications,
   NotificationTypes,
@@ -38,7 +38,7 @@ export const useTicketsMerge = (
   const { notify } = useNotifications()
   const router = useRouter()
 
-  const { waitForConfirmation } = useConfirmation()
+  const { waitForConfirmation } = useConfirmationDialog()
 
   let localOptions: Record<string, AutocompleteSearchMergeTicketEntry> = {}
 

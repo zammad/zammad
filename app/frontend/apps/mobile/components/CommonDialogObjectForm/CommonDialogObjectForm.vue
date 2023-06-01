@@ -2,11 +2,7 @@
 
 <script setup lang="ts">
 import type { ObjectLike } from '#shared/types/utils.ts'
-import {
-  type FormSchemaNode,
-  type FormData,
-  useForm,
-} from '#shared/components/Form/index.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
 import { closeDialog } from '#shared/composables/useDialog.ts'
 import type {
   EnumFormUpdaterId,
@@ -16,6 +12,8 @@ import type {
 import type {
   FormFieldValue,
   FormSchemaField,
+  FormSchemaNode,
+  FormSubmitData,
 } from '#shared/components/Form/types.ts'
 import type { OperationMutationFunction } from '#shared/types/server/apollo/handler.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
@@ -24,7 +22,7 @@ import { useObjectAttributes } from '#shared/entities/object-attributes/composab
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import { useConfirmationDialog } from '../CommonConfirmation/index.ts'
+import { useConfirmationDialog } from '../CommonConfirmation/useConfirmationDialog.ts'
 
 export interface Props {
   name: string
@@ -98,9 +96,9 @@ const changedFormField = (
   emit('changedField', fieldName, newValue, oldValue)
 }
 
-const saveObject = async (formData: FormData) => {
+const saveObject = async (FormSubmitData: FormSubmitData) => {
   const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-    useObjectAttributeFormData(objectAttributesLookup.value, formData)
+    useObjectAttributeFormData(objectAttributesLookup.value, FormSubmitData)
 
   const result = await updateMutation.send({
     id: props.object?.id,

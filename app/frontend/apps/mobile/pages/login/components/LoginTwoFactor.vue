@@ -3,7 +3,10 @@
 <script setup lang="ts">
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import Form from '#shared/components/Form/Form.vue'
-import type { FormData, FormSchemaNode } from '#shared/components/Form/types.ts'
+import type {
+  FormSubmitData,
+  FormSchemaNode,
+} from '#shared/components/Form/types.ts'
 import type { TwoFactorPlugin } from '#shared/entities/two-factor/types.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
@@ -15,7 +18,7 @@ import { useTwoFactorMethodInitiateAuthenticationMutation } from '#shared/graphq
 import type { LoginFormData, TwoFactorFormData } from '../types/login.ts'
 
 export interface Props {
-  credentials: FormData<LoginFormData>
+  credentials: FormSubmitData<LoginFormData>
   twoFactor: TwoFactorPlugin
 }
 
@@ -131,7 +134,7 @@ onMounted(async () => {
   <Form
     v-if="twoFactor.form !== false"
     :schema="schema"
-    @submit="login(($event as FormData<TwoFactorFormData>).code)"
+    @submit="login(($event as FormSubmitData<TwoFactorFormData>).code)"
   >
     <template #after-fields>
       <FormKit

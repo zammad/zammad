@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import Form from '#shared/components/Form/Form.vue'
-import { useForm } from '#shared/components/Form/composable.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
 import { createMessage, getNode, type FormKitNode } from '@formkit/core'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'

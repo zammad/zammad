@@ -9,8 +9,8 @@ import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 import { closeDialog } from '#shared/composables/useDialog.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
-import type { FormRef } from '#shared/components/Form/index.ts'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/index.ts'
+import type { FormRef } from '#shared/components/Form/types.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 
 interface Props {
   name: string

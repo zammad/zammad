@@ -18,7 +18,8 @@ import { EnumFormUpdaterId } from '#shared/graphql/types.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import Form from '#shared/components/Form/Form.vue'
-import { useForm, type FormData } from '#shared/components/Form/index.ts'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
 import {
   NotificationTypes,
   useNotifications,
@@ -28,11 +29,11 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { TicketInformation } from '#mobile/entities/ticket/types.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import { getOpenedDialogs } from '#shared/composables/useDialog.ts'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
-import { useCommonSelect } from '#mobile/components/CommonSelect/composable.ts'
+import { useCommonSelect } from '#mobile/components/CommonSelect/useCommonSelect.ts'
 import { useTicketEdit } from '../composable/useTicketEdit.ts'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation.ts'
 import { useTicketQuery } from '../graphql/queries/ticket.api.ts'
@@ -115,7 +116,7 @@ const { isTicketAgent } = useTicketView(ticket)
 
 const { notify } = useNotifications()
 
-const saveTicketForm = async (formData: FormData) => {
+const saveTicketForm = async (formData: FormSubmitData) => {
   const updateFormData = currentArticleType.value?.updateForm
   if (updateFormData) {
     formData = updateFormData(formData)
@@ -197,7 +198,7 @@ provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
 
 useOnlineNotificationSeen(ticket)
 
-const { waitForConfirmation } = useConfirmation()
+const { waitForConfirmation } = useConfirmationDialog()
 
 onBeforeRouteLeave(async () => {
   if (!isDirty.value) return true
@@ -307,7 +308,7 @@ const bannerTransitionDuration = VITE_TEST_MODE ? 0 : { enter: 300, leave: 200 }
         use-object-attributes
         :aria-hidden="!formVisible"
         :class="formVisible ? 'visible' : 'hidden'"
-        @submit="saveTicketForm($event as FormData)"
+        @submit="saveTicketForm($event as FormSubmitData)"
       />
     </CommonLoader>
   </Teleport>

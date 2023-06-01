@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { FormHandlerExecution } from '#shared/components/Form/index.ts'
+import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import type {
   ChangedField,
   FormHandler,

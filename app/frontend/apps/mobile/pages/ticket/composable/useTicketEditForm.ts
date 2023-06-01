@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormHandlerFunction } from '#shared/components/Form/index.ts'
-import { FormHandlerExecution } from '#shared/components/Form/index.ts'
+import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import { createArticleTypes } from '#shared/entities/ticket-article/action/plugins/index.ts'
 import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
@@ -12,6 +11,7 @@ import { computed, shallowRef } from 'vue'
 import type {
   ChangedField,
   ReactiveFormSchemData,
+  FormHandlerFunction,
 } from '#shared/components/Form/types.ts'
 import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type { FormKitNode } from '@formkit/core'

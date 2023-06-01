@@ -9,7 +9,7 @@ import {
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { computed, reactive, ref } from 'vue'
 import { useThirdPartyAuthentication } from '#shared/composables/useThirdPartyAuthentication.ts'
-import type { FormData } from '#shared/components/Form/index.ts'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import type UserError from '#shared/errors/UserError.ts'
@@ -103,9 +103,9 @@ const updateSecondFactor = (factor: EnumTwoFactorAuthenticationMethod) => {
 
 const askTwoFactor = (
   twoFactor: UserTwoFactorMethods,
-  formData: FormData<LoginFormData>,
+  FormSubmitData: FormSubmitData<LoginFormData>,
 ) => {
-  loginFlow.credentials = formData
+  loginFlow.credentials = FormSubmitData
   loginFlow.recoveryCodesAvailable = twoFactor.recoveryCodesAvailable
   loginFlow.allowedMethods = twoFactor.availableTwoFactorAuthenticationMethods
   updateSecondFactor(

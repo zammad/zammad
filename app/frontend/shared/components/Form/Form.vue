@@ -56,7 +56,7 @@ import { FormHandlerExecution, FormValidationVisibility } from './types.ts'
 import { getNodeByName as getFormkitFieldNode } from './utils.ts'
 import type {
   ChangedField,
-  FormData,
+  FormSubmitData,
   FormFieldAdditionalProps,
   FormFieldValue,
   FormHandler,
@@ -105,7 +105,7 @@ export interface Props {
   // After this method is called, form resets its values and state. If you need to call something afterwards,
   // like make route navigation, you can return a function from the submit handler, which will be called after the form reset.
   onSubmit?: (
-    values: FormData,
+    values: FormSubmitData,
   ) => Promise<void | (() => void)> | void | (() => void)
 }
 
@@ -269,7 +269,7 @@ const onSubmitRaw = () => {
   }
 }
 
-const onSubmit = (values: FormData) => {
+const onSubmit = (values: FormSubmitData) => {
   // Needs to be checked, because the 'onSubmit' function is not required.
   if (!props.onSubmit) return undefined
 

@@ -18,7 +18,7 @@ import {
 } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import type { RouteLocationRaw } from 'vue-router'
-import { useRawHTMLIcon } from '#shared/components/CommonIcon/index.ts'
+import { useRawHTMLIcon } from '#shared/components/CommonIcon/useRawHTMLIcon.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 import type { FormFieldContext } from '../../types/field.ts'
 import useValue from '../../composables/useValue.ts'

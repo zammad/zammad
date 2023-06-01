@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormValues } from '#shared/components/Form/index.ts'
+import type { FormValues } from '#shared/components/Form/types.ts'
 import type { FieldEditorProps } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { ConfigList } from '#shared/types/store.ts'

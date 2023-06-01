@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormData } from '#shared/components/Form/index.ts'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import type { FieldRecipientContact } from '#shared/components/Form/fields/FieldRecipient/index.ts'
 import type {
   EditorContentType,
@@ -100,7 +100,7 @@ export interface AppSpecificTicketArticleType {
     options: TicketArticleSelectionOptions,
   ): void
   // TODO use actual type instead of FormValues
-  updateForm?(formValues: FormData): FormData
+  updateForm?(formValues: FormSubmitData): FormSubmitData
 }
 
 export interface TicketArticleType

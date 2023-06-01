@@ -3,14 +3,17 @@
 <script setup lang="ts">
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
 import Form from '#shared/components/Form/Form.vue'
-import { useForm } from '#shared/components/Form/composable.ts'
-import type { FormData, FormSchemaNode } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import type {
+  FormSubmitData,
+  FormSchemaNode,
+} from '#shared/components/Form/types.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import type { LoginFormData, RecoveryCodeFormData } from '../types/login.ts'
 
 const props = defineProps<{
-  credentials: FormData<LoginFormData>
+  credentials: FormSubmitData<LoginFormData>
 }>()
 
 const emit = defineEmits<{
@@ -40,7 +43,9 @@ const { clearAllNotifications } = useNotifications()
 const authentication = useAuthenticationStore()
 const { form, isDisabled } = useForm()
 
-const enterRecoveryCode = (formData: FormData<RecoveryCodeFormData>) => {
+const enterRecoveryCode = (
+  FormSubmitData: FormSubmitData<RecoveryCodeFormData>,
+) => {
   // Clear notifications to avoid duplicated error messages.
   clearAllNotifications()
   const { login, password, rememberMe } = props.credentials
@@ -50,7 +55,7 @@ const enterRecoveryCode = (formData: FormData<RecoveryCodeFormData>) => {
       login,
       password,
       rememberMe,
-      recoveryCode: formData.code,
+      recoveryCode: FormSubmitData.code,
     })
     .then(() => {
       emit('finish')
@@ -67,7 +72,7 @@ const enterRecoveryCode = (formData: FormData<RecoveryCodeFormData>) => {
   <Form
     ref="form"
     :schema="schema"
-    @submit="enterRecoveryCode($event as FormData<RecoveryCodeFormData>)"
+    @submit="enterRecoveryCode($event as FormSubmitData<RecoveryCodeFormData>)"
   >
     <template #after-fields>
       <FormKit

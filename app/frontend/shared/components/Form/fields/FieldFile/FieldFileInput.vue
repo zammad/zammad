@@ -3,9 +3,9 @@
 import { toRef, computed, ref } from 'vue'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import useImageViewer from '#shared/composables/useImageViewer.ts'
+import { useImageViewer } from '#shared/composables/useImageViewer.ts'
 import { convertFileList } from '#shared/utils/files.ts'
-import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/add.api.ts'
@@ -72,7 +72,7 @@ const onFileChanged = async ($event: Event) => {
   input.files = null
 }
 
-const { waitForConfirmation } = useConfirmation()
+const { waitForConfirmation } = useConfirmationDialog()
 
 const removeFile = async (file: FileUploaded) => {
   const fileId = file.id

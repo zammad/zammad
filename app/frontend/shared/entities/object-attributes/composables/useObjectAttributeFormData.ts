@@ -14,7 +14,7 @@ import type { Primitive } from 'type-fest'
 
 export const useObjectAttributeFormData = (
   objectAttributes: Map<string, ObjectManagerFrontendAttribute>,
-  formData: FormValues,
+  values: FormValues,
 ) => {
   const internalObjectAttributeValues: Record<string, FormFieldValue> = {}
   const additionalObjectAttributeValues: ObjectAttributeValueInput[] = []
@@ -38,9 +38,9 @@ export const useObjectAttributeFormData = (
     return value
   }
 
-  Object.keys(formData).forEach((fieldName) => {
+  Object.keys(values).forEach((fieldName) => {
     const objectAttribute = objectAttributes.get(fieldName)
-    const value = formData[fieldName]
+    const value = values[fieldName]
 
     if (!objectAttribute || value === undefined) return
 

@@ -22,7 +22,7 @@ import {
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
 import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api.ts'
-import type { FormRef, FormValues, FormSchemaField } from '..'
+import type { FormRef, FormValues, FormSchemaField } from '../types.ts'
 
 const wrapperParameters = {
   form: true,

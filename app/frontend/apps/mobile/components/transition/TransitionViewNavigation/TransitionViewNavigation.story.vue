@@ -3,7 +3,7 @@
 <script setup lang="ts">
 // TODO doesn't work as expected
 import { defineComponent, h, ref } from 'vue'
-import { useViewTransition } from './composable.ts'
+import { useViewTransition } from './useViewTransition.ts'
 import TransitionViewNavigation from './TransitionViewNavigation.vue'
 import { ViewTransitions } from './types.ts'
 

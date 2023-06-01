@@ -7,11 +7,11 @@ import type {
   TicketArticle,
   TicketById,
 } from '#shared/entities/ticket/types.ts'
-import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import type { TicketArticleActionPlugin, TicketArticleAction } from './types.ts'
 
 const deleteAction = async (ticket: TicketById, article: TicketArticle) => {
-  const { waitForConfirmation } = useConfirmation()
+  const { waitForConfirmation } = useConfirmationDialog()
 
   const confirmed = await waitForConfirmation(
     __('Are you sure to remove this article?'),

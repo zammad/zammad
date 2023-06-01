@@ -23,7 +23,7 @@ import {
 import type { AccountAvatarActiveQuery } from '#shared/graphql/types.ts'
 import { useRouter } from 'vue-router'
 import { useHeader } from '#mobile/composables/useHeader.ts'
-import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
@@ -145,7 +145,7 @@ const removeAvatar = () => {
   })
 }
 
-const { showConfirmation } = useConfirmation()
+const { showConfirmation } = useConfirmationDialog()
 
 const confirmRemoveAvatar = async () => {
   if (!canRemoveAvatar()) return

@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { usePrivateIcon } from './composable.ts'
+import { usePrivateIcon } from './usePrivateIcon.ts'
 import type { Animations, Sizes } from './types.ts'
 
 export interface Props {

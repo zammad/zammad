@@ -35,7 +35,7 @@ export interface FormValues {
   [index: string]: FormFieldValue
 }
 
-export type FormData<TFormValues = FormValues> = FormKitGroupValue &
+export type FormSubmitData<TFormValues = FormValues> = FormKitGroupValue &
   TFormValues & {
     formId: string
   }

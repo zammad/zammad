@@ -15,7 +15,7 @@ import CommonShowMoreButton from '#mobile/components/CommonShowMoreButton/Common
 import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/index.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 import { useTicketSubscribe } from '../../composable/useTicketSubscribe.ts'

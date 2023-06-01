@@ -6,7 +6,7 @@ import {
 } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-import useConfirmationDialog from '../composable.ts'
+import { useConfirmationDialog } from '../useConfirmationDialog.ts'
 import CommonConfirmation from '../CommonConfirmation.vue'
 
 let wrapper: ExtendedRenderResult

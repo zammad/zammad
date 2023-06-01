@@ -5,7 +5,7 @@ import type {
   TicketById,
   TicketLiveAppUser,
 } from '#shared/entities/ticket/types.ts'
-import type { FormRef, FormValues } from '#shared/components/Form/index.ts'
+import type { FormRef, FormValues } from '#shared/components/Form/types.ts'
 import type {
   TicketQuery,
   TicketQueryVariables,

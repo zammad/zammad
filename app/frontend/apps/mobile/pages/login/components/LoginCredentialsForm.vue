@@ -2,7 +2,8 @@
 
 <script setup lang="ts">
 import Form from '#shared/components/Form/Form.vue'
-import { type FormData, useForm } from '#shared/components/Form/index.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import UserError from '#shared/errors/UserError.ts'
@@ -19,7 +20,7 @@ const emit = defineEmits<{
   (
     e: 'askTwoFactor',
     twoFactor: Required<UserTwoFactorMethods>,
-    formData: FormData<LoginFormData>,
+    FormSubmitData: FormSubmitData<LoginFormData>,
   ): void
 }>()
 
@@ -91,12 +92,12 @@ const { clearAllNotifications } = useNotifications()
 const authentication = useAuthenticationStore()
 const router = useRouter()
 
-const sendCredentials = (formData: FormData<LoginFormData>) => {
+const sendCredentials = (FormSubmitData: FormSubmitData<LoginFormData>) => {
   // Clear notifications to avoid duplicated error messages.
   clearAllNotifications()
 
   return authentication
-    .login(formData)
+    .login(FormSubmitData)
     .then(({ twoFactor, afterAuth }) => {
       if (afterAuth) {
         return ensureAfterAuth(router, afterAuth)
@@ -108,7 +109,7 @@ const sendCredentials = (formData: FormData<LoginFormData>) => {
         emit(
           'askTwoFactor',
           twoFactor as Required<UserTwoFactorMethods>,
-          formData,
+          FormSubmitData,
         )
       }
     })
@@ -126,7 +127,7 @@ const sendCredentials = (formData: FormData<LoginFormData>) => {
     ref="form"
     class="text-left"
     :schema="loginSchema"
-    @submit="sendCredentials($event as FormData<LoginFormData>)"
+    @submit="sendCredentials($event as FormSubmitData<LoginFormData>)"
   >
     <template #after-fields>
       <div

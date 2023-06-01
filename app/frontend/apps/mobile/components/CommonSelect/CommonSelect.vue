@@ -11,7 +11,7 @@ import type { Ref } from 'vue'
 import { onUnmounted, computed, nextTick, ref } from 'vue'
 import testFlags from '#shared/utils/testFlags.ts'
 import CommonSelectItem from './CommonSelectItem.vue'
-import { useCommonSelect } from './composable.ts'
+import { useCommonSelect } from './useCommonSelect.ts'
 import type { CommonSelectInternalInstance } from './types.ts'
 
 export interface Props {

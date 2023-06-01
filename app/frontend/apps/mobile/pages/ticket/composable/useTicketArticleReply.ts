@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormRef } from '#shared/components/Form/index.ts'
+import type { FormRef } from '#shared/components/Form/types.ts'
 import { useDialog } from '#shared/composables/useDialog.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type { Ref, ShallowRef } from 'vue'

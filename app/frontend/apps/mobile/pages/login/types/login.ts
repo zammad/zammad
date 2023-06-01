@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormData } from '#shared/components/Form/types.ts'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import type { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 
 export interface LoginFormData {
@@ -22,5 +22,5 @@ export interface LoginFlow {
   allowedMethods: EnumTwoFactorAuthenticationMethod[]
   recoveryCodesAvailable: boolean
   twoFactor?: EnumTwoFactorAuthenticationMethod
-  credentials?: FormData<LoginFormData>
+  credentials?: FormSubmitData<LoginFormData>
 }

@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { RouteLocationNormalized } from 'vue-router'
-import { useViewTransition } from '#mobile/components/transition/TransitionViewNavigation/index.ts'
+import { useViewTransition } from '#mobile/components/transition/TransitionViewNavigation/useViewTransition.ts'
 import viewTransition from '../viewTransition.ts'
 
 const getViewTransition = () => {

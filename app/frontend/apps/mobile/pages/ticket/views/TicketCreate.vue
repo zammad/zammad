@@ -10,12 +10,16 @@ import {
   EnumObjectManagerObjects,
   type TicketCreateInput,
 } from '#shared/graphql/types.ts'
-import { useMultiStepForm, useForm } from '#shared/components/Form/index.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import { useMultiStepForm } from '#shared/components/Form/useMultiStepForm.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
 import { useTicketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
 import { useTicketFormOganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
-import type { FormData, FormSchemaNode } from '#shared/components/Form/types.ts'
+import type {
+  FormSubmitData,
+  FormSchemaNode,
+} from '#shared/components/Form/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
@@ -31,9 +35,8 @@ import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEdit
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
-// No usage of "type" because of: https://github.com/typescript-eslint/typescript-eslint/issues/5468
 import { errorOptions } from '#mobile/router/error.ts'
-import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import {
   useTicketDuplicateDetectionHandler,
   type TicketDuplicateDetectionPayload,
@@ -303,7 +306,7 @@ const smimeIntegration = computed(
   () => (application.config.smime_integration as boolean) || {},
 )
 
-const createTicket = async (formData: FormData<TicketFormData>) => {
+const createTicket = async (formData: FormSubmitData<TicketFormData>) => {
   const { notify } = useNotifications()
 
   const { attributesLookup: ticketObjectAttributesLookup } =
@@ -423,7 +426,7 @@ watch(
 useEventListener('scroll', setIsScrolledToBottom)
 useEventListener('resize', setIsScrolledToBottom)
 
-const { waitForConfirmation } = useConfirmation()
+const { waitForConfirmation } = useConfirmationDialog()
 
 onBeforeRouteLeave(async () => {
   if (!isDirty.value) return true
@@ -535,7 +538,7 @@ export default {
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
       :autofocus="true"
       use-object-attributes
-      @submit="createTicket($event as FormData<TicketFormData>)"
+      @submit="createTicket($event as FormSubmitData<TicketFormData>)"
     />
   </div>
   <footer

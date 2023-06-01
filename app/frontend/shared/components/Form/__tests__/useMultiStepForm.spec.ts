@@ -4,7 +4,7 @@ import { computed, ref } from 'vue'
 import { type FormKitPlugin, getNode } from '@formkit/core'
 import Form from '#shared/components/Form/Form.vue'
 import type { Props } from '#shared/components/Form/Form.vue'
-import { useMultiStepForm } from '#shared/components/Form/composable.ts'
+import { useMultiStepForm } from '#shared/components/Form/useMultiStepForm.ts'
 import {
   type ExtendedMountingOptions,
   renderComponent,

@@ -5,8 +5,8 @@ import { computed, reactive, watch } from 'vue'
 import type {
   FormValues,
   FormRef,
-  FormData,
-} from '#shared/components/Form/index.ts'
+  FormSubmitData,
+} from '#shared/components/Form/types.ts'
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import type { TicketUpdateInput } from '#shared/graphql/types.ts'
@@ -88,7 +88,7 @@ export const useTicketEdit = (
     }
   }
 
-  const editTicket = async (formData: FormData) => {
+  const editTicket = async (formData: FormSubmitData) => {
     if (!ticket.value) return undefined
 
     if (!formData.owner_id) {

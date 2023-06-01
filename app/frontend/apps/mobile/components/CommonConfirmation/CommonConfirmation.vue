@@ -3,11 +3,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
-import useConfirmation from './composable.ts'
+import { useConfirmationDialog } from './useConfirmationDialog.ts'
 
 // TODO: Add a story for this component.
 
-const { confirmationDialog } = useConfirmation()
+const { confirmationDialog } = useConfirmationDialog()
 
 const localState = computed({
   get: () => !!confirmationDialog.value,

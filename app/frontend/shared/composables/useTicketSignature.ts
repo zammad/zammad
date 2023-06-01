@@ -5,10 +5,10 @@ import type {
   FormHandler,
   FormHandlerFunction,
   FormValues,
-} from '#shared/components/Form/index.ts'
-import { FormHandlerExecution } from '#shared/components/Form/index.ts'
+  ChangedField,
+} from '#shared/components/Form/types.ts'
+import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
-import type { ChangedField } from '#shared/components/Form/types.ts'
 import { useTicketSignatureLazyQuery } from '#shared/graphql/queries/ticketSignature.api.ts'
 import {
   convertToGraphQLId,

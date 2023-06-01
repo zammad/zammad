@@ -1,10 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { FormHandlerExecution } from '#shared/components/Form/index.ts'
-import type {
-  FormHandlerFunction,
-  FormHandler,
-} from '#shared/components/Form/index.ts'
+import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { Organization, Scalars } from '#shared/graphql/types.ts'
 import type { AutoCompleteCustomerOption } from '#shared/components/Form/fields/FieldCustomer/index.ts'
@@ -13,6 +9,8 @@ import type {
   FormSchemaField,
   ReactiveFormSchemData,
   ChangedField,
+  FormHandlerFunction,
+  FormHandler,
 } from '#shared/components/Form/types.ts'
 import { getAutoCompleteOption } from '#shared/entities/organization/utils/getAutoCompleteOption.ts'
 

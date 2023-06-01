@@ -74,4 +74,4 @@ const useImageViewer = (viewFiles: MaybeRef<ImageViewerFile[]>) => {
   }
 }
 
-export default useImageViewer
+export { useImageViewer }

@@ -2,7 +2,8 @@
 
 <script setup lang="ts">
 import Form from '#shared/components/Form/Form.vue'
-import { type FormData, useForm } from '#shared/components/Form/index.ts'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
 import {
   EnumObjectManagerObjects,
   type TicketCustomerUpdateInput,
@@ -24,7 +25,7 @@ import type {
   TicketById,
   TicketCustomerUpdateFormData,
 } from '#shared/entities/ticket/types.ts'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/index.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 
 export interface Props {
   name: string
@@ -74,7 +75,7 @@ const changeCustomerMutation = new MutationHandler(
 const { notify } = useNotifications()
 
 const changeCustomer = async (
-  formData: FormData<TicketCustomerUpdateFormData>,
+  formData: FormSubmitData<TicketCustomerUpdateFormData>,
 ) => {
   const input = {
     customerId: convertToGraphQLId('User', formData.customer_id),
@@ -143,7 +144,9 @@ const changeCustomer = async (
       :handlers="[useTicketFormOganizationHandler()]"
       :initial-entity-object="ticket"
       use-object-attributes
-      @submit="changeCustomer($event as FormData<TicketCustomerUpdateFormData>)"
+      @submit="
+        changeCustomer($event as FormSubmitData<TicketCustomerUpdateFormData>)
+      "
     />
   </CommonDialog>
 </template>

@@ -5,10 +5,8 @@ import type {
   RouteLocationNormalized,
   NavigationGuardNext,
 } from 'vue-router'
-import {
-  useViewTransition,
-  ViewTransitions,
-} from '#mobile/components/transition/TransitionViewNavigation/index.ts'
+import { useViewTransition } from '#mobile/components/transition/TransitionViewNavigation/useViewTransition.ts'
+import { ViewTransitions } from '#mobile/components/transition/TransitionViewNavigation/types.ts'
 
 const transitionViewGuard: NavigationGuard = (
   to: RouteLocationNormalized,
