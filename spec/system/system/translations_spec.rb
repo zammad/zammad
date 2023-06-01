@@ -131,4 +131,18 @@ RSpec.describe 'System > Translations', type: :system do
     end
   end
 
+  context 'Inline translation not working in overview-administration#4478' do
+    before do
+      visit '#manage/overviews'
+    end
+
+    it 'does change an overview translation' do
+      page.send_keys [*hot_keys, 't']
+      page.first('.table-overview table tbody tr td span.translation').click
+      page.send_keys ['overview-issue-4478']
+      find('#global-search').click
+      page.send_keys [*hot_keys, 't']
+      wait.until { Translation.where("target LIKE '%overview-issue-4478%'").count == 1 }
+    end
+  end
 end

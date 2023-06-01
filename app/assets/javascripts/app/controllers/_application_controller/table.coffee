@@ -463,7 +463,7 @@ class App.ControllerTable extends App.Controller
               callback(click..., e)
       )
 
-    if @dndCallback
+    if @dndCallback && !App.Config.get('translation_inline')
       dndOptions =
         tolerance:            'pointer'
         distance:             15
