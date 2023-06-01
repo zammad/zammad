@@ -404,4 +404,4 @@ class Modal extends App.ControllerModal
   head: __('Lost network connection!')
 
   content: ->
-    __('Trying to reconnect…')
+    App.i18n.translateInline('Trying to reconnect…')
