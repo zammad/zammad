@@ -20,7 +20,7 @@ const emit = defineEmits<{
   (
     e: 'askTwoFactor',
     twoFactor: Required<UserTwoFactorMethods>,
-    FormSubmitData: FormSubmitData<LoginFormData>,
+    formData: FormSubmitData<LoginFormData>,
   ): void
 }>()
 
@@ -92,12 +92,12 @@ const { clearAllNotifications } = useNotifications()
 const authentication = useAuthenticationStore()
 const router = useRouter()
 
-const sendCredentials = (FormSubmitData: FormSubmitData<LoginFormData>) => {
+const sendCredentials = (formData: FormSubmitData<LoginFormData>) => {
   // Clear notifications to avoid duplicated error messages.
   clearAllNotifications()
 
   return authentication
-    .login(FormSubmitData)
+    .login(formData)
     .then(({ twoFactor, afterAuth }) => {
       if (afterAuth) {
         return ensureAfterAuth(router, afterAuth)
@@ -109,7 +109,7 @@ const sendCredentials = (FormSubmitData: FormSubmitData<LoginFormData>) => {
         emit(
           'askTwoFactor',
           twoFactor as Required<UserTwoFactorMethods>,
-          FormSubmitData,
+          formData,
         )
       }
     })

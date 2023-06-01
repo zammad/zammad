@@ -103,9 +103,9 @@ const updateSecondFactor = (factor: EnumTwoFactorAuthenticationMethod) => {
 
 const askTwoFactor = (
   twoFactor: UserTwoFactorMethods,
-  FormSubmitData: FormSubmitData<LoginFormData>,
+  formData: FormSubmitData<LoginFormData>,
 ) => {
-  loginFlow.credentials = FormSubmitData
+  loginFlow.credentials = formData
   loginFlow.recoveryCodesAvailable = twoFactor.recoveryCodesAvailable
   loginFlow.allowedMethods = twoFactor.availableTwoFactorAuthenticationMethods
   updateSecondFactor(

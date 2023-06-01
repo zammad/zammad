@@ -43,9 +43,7 @@ const { clearAllNotifications } = useNotifications()
 const authentication = useAuthenticationStore()
 const { form, isDisabled } = useForm()
 
-const enterRecoveryCode = (
-  FormSubmitData: FormSubmitData<RecoveryCodeFormData>,
-) => {
+const enterRecoveryCode = (formData: FormSubmitData<RecoveryCodeFormData>) => {
   // Clear notifications to avoid duplicated error messages.
   clearAllNotifications()
   const { login, password, rememberMe } = props.credentials
@@ -55,7 +53,7 @@ const enterRecoveryCode = (
       login,
       password,
       rememberMe,
-      recoveryCode: FormSubmitData.code,
+      recoveryCode: formData.code,
     })
     .then(() => {
       emit('finish')

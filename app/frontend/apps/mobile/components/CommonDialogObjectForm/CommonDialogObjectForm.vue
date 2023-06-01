@@ -96,9 +96,9 @@ const changedFormField = (
   emit('changedField', fieldName, newValue, oldValue)
 }
 
-const saveObject = async (FormSubmitData: FormSubmitData) => {
+const saveObject = async (formData: FormSubmitData) => {
   const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-    useObjectAttributeFormData(objectAttributesLookup.value, FormSubmitData)
+    useObjectAttributeFormData(objectAttributesLookup.value, formData)
 
   const result = await updateMutation.send({
     id: props.object?.id,
