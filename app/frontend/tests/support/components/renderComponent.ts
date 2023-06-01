@@ -91,8 +91,26 @@ let router: MockedRouter
 export const getTestPlugins = () => [...plugins]
 export const getTestRouter = () => router
 
+// cannot use "as const" here, because ESLint fails with obscure error :shrug:
+const routerMethods = [
+  'push',
+  'replace',
+  'back',
+  'go',
+  'forward',
+] as unknown as ['push']
+
+const ensureRouterSpy = () => {
+  if (!router) return
+
+  routerMethods.forEach((name) => vi.spyOn(router, name))
+}
+
 const initializeRouter = (routes?: RouteRecordRaw[]) => {
-  if (routerInitialized) return
+  if (routerInitialized) {
+    ensureRouterSpy()
+    return
+  }
 
   let localRoutes: RouteRecordRaw[] = [
     {
@@ -133,19 +151,20 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
     writable: true,
     configurable: true,
   })
-  // cannot use "as const" here, because ESLint fails with obscure error :shrug:
-  const methods = ['push', 'replace', 'back', 'go', 'forward'] as unknown as [
-    'push',
-  ]
 
-  methods.forEach((name) => vi.spyOn(router, name))
+  ensureRouterSpy()
+
   router.mockMethods = () => {
-    methods.forEach((name) =>
+    routerMethods.forEach((name) =>
       vi.mocked(router[name]).mockImplementation(() => Promise.resolve()),
     )
   }
   router.restoreMethods = () => {
-    methods.forEach((name) => vi.mocked(router[name]).mockRestore())
+    routerMethods.forEach((name) => {
+      if (vi.isMockFunction(router[name])) {
+        vi.mocked(router[name]).mockRestore()
+      }
+    })
   }
 
   plugins.push(router)
