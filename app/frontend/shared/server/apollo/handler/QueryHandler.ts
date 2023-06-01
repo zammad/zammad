@@ -250,7 +250,7 @@ export default class QueryHandler<
   }
 
   public onResult(
-    callback: (result: ApolloQueryResult<TResult>) => void,
+    callback: (result: ApolloQueryResult<TResult | undefined>) => void,
   ): void {
     this.operationResult.onResult(callback)
   }

@@ -21,7 +21,7 @@ import {
 
 export default abstract class BaseHandler<
   TResult = OperationResult,
-  TVariables = OperationVariables,
+  TVariables extends OperationVariables = OperationVariables,
   TOperationReturn extends OperationReturn<
     TResult,
     TVariables

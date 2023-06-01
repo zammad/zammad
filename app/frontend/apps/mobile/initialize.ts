@@ -13,9 +13,6 @@ import initializeForm from '#mobile/form/index.ts'
 import { initializeObjectAttributes } from './initializer/objectAttributes.ts'
 
 export default function initializeApp(app: App) {
-  // TODO remove when Vue 3.3 released
-  app.config.unwrapInjectedRef = true
-
   initializeAppName('mobile')
   initializeStore(app)
   initializeGlobalComponents(app)

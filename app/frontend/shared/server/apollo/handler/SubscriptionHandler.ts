@@ -13,7 +13,7 @@ import BaseHandler from './BaseHandler.ts'
 
 export default class SubscriptionHandler<
   TResult = OperationSubscriptionsResult,
-  TVariables = OperationVariables,
+  TVariables extends OperationVariables = OperationVariables,
 > extends BaseHandler<
   TResult,
   TVariables,

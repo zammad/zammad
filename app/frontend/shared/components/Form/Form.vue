@@ -1076,7 +1076,7 @@ const initializeFormSchema = () => {
         executeFormHandler(FormHandlerExecution.Initial, localInitialValues)
       }
 
-      if (queryResult?.data.formUpdater) {
+      if (queryResult?.data?.formUpdater) {
         updateChangedFields(
           changeFields.value
             ? merge(queryResult.data.formUpdater, changeFields.value)

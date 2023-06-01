@@ -3,6 +3,7 @@
 import type { ViewerOptions } from '#shared/composables/useImageViewer.ts'
 import type { Ref } from 'vue'
 import { nextTick } from 'vue'
+import type { Mock } from 'vitest'
 import type { MockGraphQLInstance } from './mock-graphql-api'
 
 const state = Symbol('test:state')
@@ -65,6 +66,10 @@ export const waitUntil = async (
 
 export const waitUntilApisResolved = (...mockApis: MockGraphQLInstance[]) => {
   return waitUntil(() => mockApis.every((mock) => mock.calls.resolve))
+}
+
+export const waitUntilSpyCalled = (spy: Mock) => {
+  return waitUntil(() => spy.mock.calls.length > 0)
 }
 
 // The apollo cache always asks for a field, even if it's marked as optional
