@@ -31,7 +31,6 @@ import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEdit
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
-import TicketDuplicateDetectionDialog from '#mobile/components/Ticket/TicketDuplicateDetectionDialog.vue'
 // No usage of "type" because of: https://github.com/typescript-eslint/typescript-eslint/issues/5468
 import { errorOptions } from '#mobile/router/error.ts'
 import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
@@ -175,6 +174,10 @@ const ticketMetaInformationSection = getFormSchemaGroupSection(
         {
           name: 'ticket_duplicate_detection',
           type: 'hidden',
+          value: {
+            count: 0,
+            items: [],
+          },
         },
         {
           screen: 'create_top',
@@ -440,7 +443,8 @@ const { signatureHandling } = useTicketSignature()
 
 const ticketDuplicateDetectionDialog = useDialog({
   name: 'duplicate-ticket-detection',
-  component: async () => TicketDuplicateDetectionDialog,
+  component: () =>
+    import('#mobile/components/Ticket/TicketDuplicateDetectionDialog.vue'),
 })
 
 const showTicketDuplicateDetectionDialog = (
