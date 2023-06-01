@@ -12,7 +12,7 @@ class App.TwoFactorConfigurationModal extends App.ControllerModal
 
   closeWithFade: =>
     @el.addClass('fade')
-    $('.modal-backdrop').addClass('fade')
+    @el.closest('.modal-backdrop').addClass('fade')
     @close()
 
   nextModalClass: ->

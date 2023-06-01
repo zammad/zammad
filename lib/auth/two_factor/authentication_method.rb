@@ -3,12 +3,16 @@
 class Auth::TwoFactor::AuthenticationMethod < Auth::TwoFactor::Method
   include Mixin::RequiredSubPaths
 
+  # Implement it in the real method itself if you need it.
+  # This needs to be used for e.g. sending out e-mails or SMS.
+  def initiate_authentication; end
+
   # TODO: Add documentation.
   def verify(payload, configuration = user_two_factor_preference_configuration)
     raise NotImplementedError
   end
 
-  def configuration_options
+  def initiate_configuration
     raise NotImplementedError
   end
 
@@ -19,8 +23,6 @@ class Auth::TwoFactor::AuthenticationMethod < Auth::TwoFactor::Method
   def related_setting_name
     "two_factor_authentication_method_#{method_name}"
   end
-
-  private
 
   def user_two_factor_preference
     user&.two_factor_preferences&.authentication_methods&.find_by(method: method_name)

@@ -44,6 +44,14 @@ class Auth::TwoFactor::Method
     user.two_factor_preferences.find_by(method: method_name)&.destroy
   end
 
+  def user_two_factor_preference
+    raise NotImplementedError
+  end
+
+  def user_two_factor_preference_configuration
+    user_two_factor_preference&.configuration
+  end
+
   private
 
   def verify_result(verified, configuration: {}, new_configuration: {})
@@ -58,13 +66,5 @@ class Auth::TwoFactor::Method
 
   def related_setting_name
     raise NotImplementedError
-  end
-
-  def user_two_factor_preference
-    raise NotImplementedError
-  end
-
-  def user_two_factor_preference_configuration
-    user_two_factor_preference&.configuration
   end
 end

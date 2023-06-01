@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-require 'rotp'
-
 RSpec.shared_examples 'authenticator app setup' do
   let(:password_check) { true }
 
@@ -47,5 +45,5 @@ def setup_authenticator_app_method(user:, password_check:, expect_recovery_codes
   end
 
   expect(page).to have_no_css('.modal')
-  expect(user.two_factor_configured?).to be(true)
+  expect(user.reload.two_factor_configured?).to be(true)
 end

@@ -48,6 +48,18 @@ class Auth::TwoFactor
     true
   end
 
+  def initiate_authentication(method)
+    return {} if method.nil?
+
+    method_object = method_object(method)
+    return {} if method_object.nil?
+
+    result = method_object.initiate_authentication
+    return {} if result.nil?
+
+    result
+  end
+
   def verify_configuration?(method, payload, configuration)
     return false if method.nil?
 
@@ -72,10 +84,10 @@ class Auth::TwoFactor
   end
 
   def user_default_authentication_method
-    # TODO: For now, the first method defines the default method for a user.
-    #   In the long run, this should be selectable by the user.
+    default_method = user.preferences.dig(:two_factor_authentication, :default)
+    return if default_method.nil?
 
-    enabled_authentication_methods.first
+    user_authentication_methods.find { |method| method.method_name.eql?(default_method) }
   end
 
   def user_setup_required?
@@ -83,7 +95,7 @@ class Auth::TwoFactor
   end
 
   def user_configured?
-    user_authentication_methods.present?
+    !user_default_authentication_method.nil?
   end
 
   def user_recovery_codes_exists?

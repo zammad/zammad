@@ -50,18 +50,21 @@ Object.defineProperty(Element.prototype, 'scrollIntoView', { value: vi.fn() })
 
 require.extensions['.css'] = () => ({})
 
-vi.stubGlobal('requestAnimationFrame', (cb: () => void) => {
+globalThis.requestAnimationFrame = (cb) => {
   setTimeout(cb, 0)
-})
-
-vi.stubGlobal('scrollTo', vi.fn())
-vi.stubGlobal('matchMedia', (media: string) => ({
+  return 0
+}
+globalThis.scrollTo = vi.fn<any>()
+globalThis.matchMedia = (media: string) => ({
   matches: false,
   media,
   onchange: null,
+  addListener: vi.fn(),
+  removeListener: vi.fn(),
+  dispatchEvent: vi.fn(),
   addEventListener: vi.fn(),
   removeEventListener: vi.fn(),
-}))
+})
 
 vi.mock(
   '#shared/components/CommonNotifications/useNotifications.ts',

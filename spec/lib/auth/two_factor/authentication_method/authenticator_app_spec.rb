@@ -15,14 +15,14 @@ RSpec.describe Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp do
   end
 
   it_behaves_like 'responding to provided instance method', :verify
-  it_behaves_like 'responding to provided instance method', :configuration_options
+  it_behaves_like 'responding to provided instance method', :initiate_configuration
 
   describe '#verify' do
     let(:secret)      { ROTP::Base32.random_base32 }
     let(:last_otp_at) { 1_256_953_732 } # 2009-10-31T01:48:52Z
 
     let(:two_factor_pref) do
-      create(:'user/two_factor_preference', :authenticator_app,
+      create(:user_two_factor_preference, :authenticator_app,
              user:          user,
              method:        'authenticator_app',
              configuration: configuration)
@@ -92,7 +92,7 @@ RSpec.describe Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp do
     end
   end
 
-  describe '#configuration_options' do
+  describe '#initiate_configuration' do
     let(:issuer) { Faker::Internet.unique.domain_word }
     let(:secret) { ROTP::Base32.random_base32 }
 
@@ -105,10 +105,10 @@ RSpec.describe Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp do
       # Mock calls to `ROTP::Base32#random_base32` so they always return the same secret.
       allow(ROTP::Base32).to receive(:random_base32).and_return(secret)
 
-      expect(instance.configuration_options).to eq({
-                                                     secret:           secret,
-                                                     provisioning_uri: "otpauth://totp/#{CGI.escape(issuer)}:#{CGI.escape(user.login)}?secret=#{secret}&issuer=#{CGI.escape(issuer)}",
-                                                   })
+      expect(instance.initiate_configuration).to eq({
+                                                      secret:           secret,
+                                                      provisioning_uri: "otpauth://totp/#{CGI.escape(issuer)}:#{CGI.escape(user.login)}?secret=#{secret}&issuer=#{CGI.escape(issuer)}",
+                                                    })
     end
   end
 end

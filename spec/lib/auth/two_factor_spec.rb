@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'rotp'
 
 RSpec.describe Auth::TwoFactor, current_user_id: 1 do
   let(:user)     { create(:user) }
@@ -49,25 +48,27 @@ RSpec.describe Auth::TwoFactor, current_user_id: 1 do
   it_behaves_like 'returning expected value', :all_authentication_methods, Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp, assertion: 'include'
 
   describe '#method_object' do
-    before { create(:'user/two_factor_preference', :authenticator_app, user: user) }
+    before { create(:user_two_factor_preference, :authenticator_app, user: user) }
 
     it 'returns expected value' do
       expect(instance.authentication_method_object('authenticator_app')).to be_a(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
     end
   end
 
-  describe '#user_authentication_methods' do
-    before { create(:'user/two_factor_preference', :authenticator_app, user: user) }
+  describe '#user_methods' do
+    before { create(:user_two_factor_preference, :authenticator_app, user: user) }
 
     it 'returns expected value' do
       expect(instance.user_authentication_methods).to include(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
     end
   end
 
-  describe '#user_default_authentication_method' do
-    before { create(:'user/two_factor_preference', :authenticator_app, user: user) }
+  describe '#user_default_method' do
+    before { create(:user_two_factor_preference, :authenticator_app, user: user) }
 
     it 'returns expected value' do
+      # 'user' variable is cached + was created before the preference was set.
+      user.reload
       expect(instance.user_default_authentication_method).to be_a(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
     end
   end
@@ -103,7 +104,7 @@ RSpec.describe Auth::TwoFactor, current_user_id: 1 do
       Setting.set('two_factor_authentication_method_authenticator_app', true)
     end
 
-    shared_examples 'reovery codes present' do |configured|
+    shared_examples 'recovery codes present' do |configured|
       before do
         Auth::TwoFactor::RecoveryCodes.new(user).generate
       end
@@ -114,21 +115,28 @@ RSpec.describe Auth::TwoFactor, current_user_id: 1 do
     end
 
     context 'when a method is configured' do
-      before { create(:'user/two_factor_preference', :authenticator_app, user: user) }
+      before do
+        create(:user_two_factor_preference, :authenticator_app, user: user)
+
+        # 'user' variable is cached + was created before the preference was set.
+        user.reload
+      end
 
       it 'returns expected value' do
         expect(instance.user_configured?).to be(true)
       end
 
-      it_behaves_like 'reovery codes present', true
+      it_behaves_like 'recovery codes present', true
     end
 
     context 'when a method is not configured' do
+      before { user.reload }
+
       it 'returns expected value' do
         expect(instance.user_configured?).to be(false)
       end
 
-      it_behaves_like 'reovery codes present', false
+      it_behaves_like 'recovery codes present', false
     end
 
   end
@@ -138,7 +146,7 @@ RSpec.describe Auth::TwoFactor, current_user_id: 1 do
     let(:last_otp_at) { 1_256_953_732 } # 2009-10-31T01:48:52Z
 
     let(:two_factor_pref) do
-      create(:'user/two_factor_preference', :authenticator_app,
+      create(:user_two_factor_preference, :authenticator_app,
              user:          user,
              method:        method,
              configuration: configuration)

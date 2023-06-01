@@ -23,7 +23,7 @@ interface LoginOptions {
   rememberMe: boolean
   twoFactorAuthentication?: {
     method: EnumTwoFactorAuthenticationMethod
-    payload: string
+    payload: unknown
   }
   recoveryCode?: string
 }

@@ -5,6 +5,7 @@ import type { UseMutationReturn } from '@vue/apollo-composable'
 import type { OperationVariables } from '@apollo/client/core'
 import UserError from '#shared/errors/UserError.ts'
 import type { OperationMutationResult } from '#shared/types/server/apollo/handler.ts'
+import type { UserErrors } from '#shared/types/error.ts'
 import BaseHandler from './BaseHandler.ts'
 
 export default class MutationHandler<
@@ -24,7 +25,7 @@ export default class MutationHandler<
 
         if (result.data) {
           const { errors } = Object.values(result.data)[0] as {
-            errors: UserError[]
+            errors: UserErrors
           }
 
           if (errors) {

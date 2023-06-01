@@ -23,6 +23,10 @@ class Auth
     @two_factor_method              = two_factor_method
     @increase_login_failed_attempts = false
     @only_verify_password           = only_verify_password
+
+    return if !@two_factor_payload.is_a?(Hash)
+
+    @two_factor_payload = @two_factor_payload.symbolize_keys
   end
 
   # Validates the given credentials for the user to the configured auth backends which should

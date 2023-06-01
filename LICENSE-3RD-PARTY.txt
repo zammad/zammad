@@ -173,6 +173,11 @@ Source: http://spinejs.com
 Copyright: 2011 Alex MacCaw <info@eribium.org>
 License: MIT license
 -----------------------------------------------------------------------------
+webauthn-json
+Source: https://github.com/github/webauthn-json
+Copyright: 2019 GitHub, Inc.
+License: MIT license
+-----------------------------------------------------------------------------
 word_filter.js
 Source: https://gist.github.com/sbrin/6801034
 Copyright: 2015, sbrin - https://github.com/sbrin

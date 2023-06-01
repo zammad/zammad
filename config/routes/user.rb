@@ -4,13 +4,16 @@ Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
   # two-factor
-  match api_path + '/users/:id/two_factor_remove_authentication_method',            to: 'user/two_factors#two_factor_remove_authentication_method',        via: :delete
-  match api_path + '/users/:id/two_factor_remove_all_authentication_methods',       to: 'user/two_factors#two_factor_remove_all_authentication_methods',   via: :delete
-  match api_path + '/users/:id/two_factor_enabled_authentication_methods',          to: 'user/two_factors#two_factor_enabled_authentication_methods',      via: :get
-  match api_path + '/users/two_factor_personal_configuration',                      to: 'user/two_factors#two_factor_personal_configuration',              via: :get
-  match api_path + '/users/two_factor_authentication_method_configuration/:method', to: 'user/two_factors#two_factor_authentication_method_configuration', via: :get
-  match api_path + '/users/two_factor_verify_configuration',                        to: 'user/two_factors#two_factor_verify_configuration',                via: :post
-  match api_path + '/users/two_factor_recovery_codes_generate',                     to: 'user/two_factors#two_factor_recovery_codes_generate',             via: :post
+  match api_path + '/users/:id/two_factor_remove_authentication_method',                     to: 'user/two_factors#two_factor_remove_authentication_method',                 via: :delete
+  match api_path + '/users/:id/two_factor_remove_all_authentication_methods',                to: 'user/two_factors#two_factor_remove_all_authentication_methods',            via: :delete
+  match api_path + '/users/:id/two_factor_enabled_authentication_methods',                   to: 'user/two_factors#two_factor_enabled_authentication_methods',               via: :get
+  match api_path + '/users/two_factor_personal_configuration',                               to: 'user/two_factors#two_factor_personal_configuration',                       via: :get
+  match api_path + '/users/two_factor_authentication_method_initiate_configuration/:method', to: 'user/two_factors#two_factor_authentication_method_initiate_configuration', via: :get
+  match api_path + '/users/two_factor_authentication_method_configuration/:method',          to: 'user/two_factors#two_factor_authentication_method_configuration',          via: :get
+  match api_path + '/users/two_factor_authentication_method_configuration/:method',          to: 'user/two_factors#two_factor_authentication_method_configuration_save',     via: :put
+  match api_path + '/users/two_factor_verify_configuration',                                 to: 'user/two_factors#two_factor_verify_configuration',                         via: :post
+  match api_path + '/users/two_factor_default_authentication_method',                        to: 'user/two_factors#two_factor_default_authentication_method',                via: :post
+  match api_path + '/users/two_factor_recovery_codes_generate',                              to: 'user/two_factors#two_factor_recovery_codes_generate',                      via: :post
 
   # users
   match api_path + '/users/search',                to: 'users#search',                via: %i[get post option]

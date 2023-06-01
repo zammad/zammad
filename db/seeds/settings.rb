@@ -5370,6 +5370,38 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Security Keys'),
+  name:        'two_factor_authentication_method_security_keys',
+  area:        'Security::TwoFactorAuthentication',
+  description: __('Defines if the two-factor authentication method security keys is enabled or not.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'two_factor_authentication_method_security_keys',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller:   'SettingsAreaSwitch',
+    sub:          {},
+    permission:   ['admin.security'],
+    prio:         1000,
+    display_name: __('Security Keys'),
+    help:         __('Complete the sign in with your security key.'),
+    icon:         'security-key',
+  },
+  state:       false,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       __('Authenticator App'),
   name:        'two_factor_authentication_method_authenticator_app',
   area:        'Security::TwoFactorAuthentication',

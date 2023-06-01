@@ -25,18 +25,56 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
   end
 
   context 'with enabled two factor authentication' do
-    let(:user)               { User.find_by(login: 'admin@example.com') }
-    let!(:authenticator_2fa) { create(:user_two_factor_preference, :authenticator_app, user:) }
+    let(:user) { User.find_by(login: 'admin@example.com') }
 
-    before do
-      authenticator_2fa
-      stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
+    context 'with security keys method' do
+      before do
+        skip('Mocking of Web Authentication API is currently supported only in Chrome.') if Capybara.current_driver != :zammad_chrome
+
+        stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
+        visit '/'
+
+        # TODO: Remove once our CI runs only in secure context.
+        is_secure_context = page.execute_script('return window.isSecureContext;')
+        skip('Test currently unsupported in insecure contexts.') if !is_secure_context
+
+        # We can only mock the security key within the loaded app.
+        two_factor_pref
+
+        refresh
+
+        within('#login') do
+          fill_in 'username', with: 'admin@example.com'
+          fill_in 'password', with: 'test'
+
+          click_button
+        end
+      end
+
+      context 'with the configured security key present' do
+        let(:two_factor_pref) { create(:user_two_factor_preference, :mocked_security_keys, user: user, page: page) }
+
+        it 'signs in with the correct security key present' do
+          expect(page).to have_no_selector('#login')
+        end
+      end
+
+      context 'with the incorrect security key present' do
+        let(:two_factor_pref) { create(:user_two_factor_preference, :mocked_security_keys, user: user, page: page, wrong_key: true) }
+
+        it 'shows error and retry button' do
+          expect(page).to have_css('#login .alert')
+          expect(page).to have_css('.js-retry')
+        end
+      end
     end
 
-    context 'with authenticator app' do
-      let(:token) { authenticator_2fa.configuration[:code] }
+    context 'with authenticator app method' do
+      let(:token)            { two_factor_pref.configuration[:code] }
+      let!(:two_factor_pref) { create(:user_two_factor_preference, :authenticator_app, user: user) }
 
       before do
+        stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
         visit '/'
 
         within('#login') do
@@ -69,11 +107,12 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
     end
 
     context 'with recovery code' do
-      let(:token)        { 'token' }
-      let(:recovery_2fa) { create(:user_two_factor_preference, :recovery_codes, token:, user:) }
+      let(:token)           { 'token' }
+      let(:two_factor_pref) { create(:user_two_factor_preference, :authenticator_app, user: user) }
+      let(:recovery_2fa)    { create(:user_two_factor_preference, :recovery_codes, recovery_code: token, user: user) }
 
       before do
-        recovery_2fa
+        two_factor_pref && recovery_2fa
         Setting.set('two_factor_authentication_recovery_codes', recovery_codes_enabled)
 
         visit '/'

@@ -10,6 +10,9 @@ Zammad::Application.routes.draw do
   # sso
   match '/auth/sso',                        to: 'sessions#create_sso',           via: %i[get post]
 
+  # two factor
+  match api_path + '/auth/two_factor_initiate_authentication/:method', to: 'sessions#two_factor_authentication_method_initiate_authentication', via: :post
+
   # sessions
   match api_path + '/signin',               to: 'sessions#create',               via: :post
   match api_path + '/signshow',             to: 'sessions#show',                 via: %i[get post]

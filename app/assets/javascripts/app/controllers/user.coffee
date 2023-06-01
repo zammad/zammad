@@ -152,7 +152,9 @@ class User extends App.ControllerSubContent
           icon: 'two-factor'
           class: 'create js-manageTwoFactor'
           available: (user) ->
-            user.two_factor_configured
+            if user.preferences && user.preferences.two_factor_authentication && user.preferences.two_factor_authentication.default
+              return true
+            return false
           callback: (id) ->
             user = App.User.find(id)
             return if !user

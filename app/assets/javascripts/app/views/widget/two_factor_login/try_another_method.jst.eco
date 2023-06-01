@@ -1,15 +1,26 @@
-<% for method in @twoFactorMethods: %>
-  <hr>
-  <p class="u-clickable js-select-two-factor-method" data-method="<%= method.key %>">
-    <%= @T method.label %>
-  </p>
-<% end %>
+<h3 class="text-center">
+  <%= @T('Try Another Method') %>
+</h3>
+<div class="two-factor-auth">
+  <div class="two-factor-auth-method-buttons">
+  <% for method in @twoFactorMethods: %>
+    <div class="form-group">
+      <button class="btn btn--fullWidth js-select-two-factor-method <% if @defaultTwoFactorMethod is method.key: %>btn--primary<% end %>" type="button" data-method="<%= method.key %>">
+        <%- @Icon(method.icon) %>
+        <%- @T(method.label) %>
+      </button>
+      <p class="help-block"><%= @T(method.description) %></p>
+    </div>
+  <% end %>
+  </div>
 
-<% if @twoFactorHasRecoveryCodes: %>
-  <p>
-    <%- @T('Or, use one of your') %>
-    <a href="#" class="js-select-two-factor-method btn--text btn--secondary" data-method="recovery_codes">
-      <%- @T('recovery codes') %>
-    </a>
-  </p>
-<% end %>
+  <% if @twoFactorHasRecoveryCodes: %>
+    <p>
+      <%- @T('Or, use one of your') %>
+      <a href="#" class="js-select-two-factor-method btn--text btn--secondary" data-method="recovery_codes">
+        <%- @T('recovery codes') %>
+      </a>
+    </p>
+  <% end %>
+
+</div>

@@ -58,6 +58,15 @@ module User::HasTwoFactor
     Auth::TwoFactor::RecoveryCodes.new(self).generate
   end
 
+  def two_factor_update_default_method(method_name)
+    current_prefs = preferences
+
+    current_prefs[:two_factor_authentication] ||= {}
+    current_prefs[:two_factor_authentication][:default] = method_name
+
+    update!(preferences: current_prefs)
+  end
+
   private
 
   def two_factor_authentication_method_configured?(method)

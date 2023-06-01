@@ -45,23 +45,75 @@ class User::TwoFactorsController < ApplicationController
     render json: result, status: :ok
   end
 
-  def two_factor_authentication_method_configuration
-    method_name = params[:method]
+  def two_factor_authentication_method_initiate_configuration
+    check_method!
+    check_two_factor_method!
 
-    raise Exceptions::UnprocessableEntity, __('The required parameter "method" is missing.') if method_name.blank?
-
-    two_factor_method = current_user.auth_two_factor.authentication_method_object(method_name)
-
-    raise Exceptions::UnprocessableEntity, __('The two-factor authentication method is not enabled.') if !two_factor_method&.enabled? || !two_factor_method&.available?
-
-    render json: { configuration: two_factor_method.configuration_options }, status: :ok
+    render json: { configuration: @two_factor_method.initiate_configuration }, status: :ok
   end
 
   def two_factor_recovery_codes_generate
     render json: current_user.two_factor_recovery_codes_generate(force: true), status: :ok
   end
 
+  def two_factor_default_authentication_method
+    check_method!
+    check_two_factor_method!
+
+    current_user.two_factor_update_default_method(@method_name)
+
+    render json: {}, status: :ok
+  end
+
+  def two_factor_authentication_method_configuration
+    check_method!
+    check_two_factor_method!
+    fetch_user_two_factor_preference!
+
+    render json: { configuration: @user_two_factor_preference.configuration }, status: :ok
+  end
+
+  def two_factor_authentication_method_configuration_save
+    check_method!
+    check_two_factor_method!
+    fetch_user_two_factor_preference!
+
+    if params[:configuration].nil?
+      current_user.two_factor_destroy_authentication_method(params[:method])
+    else
+      @user_two_factor_preference.update!(configuration: params[:configuration].permit!.to_h)
+    end
+
+    render json: {}, status: :ok
+  end
+
   private
+
+  def check_method!
+    raise Exceptions::UnprocessableEntity, __('The required parameter "method" is missing.') if params[:method].blank?
+
+    @method_name ||= params[:method]
+
+    true
+  end
+
+  def check_two_factor_method!
+    two_factor_method = current_user.auth_two_factor.authentication_method_object(@method_name)
+    raise Exceptions::UnprocessableEntity, __('The two-factor authentication method is not enabled.') if !two_factor_method&.enabled? || !two_factor_method&.available?
+
+    @two_factor_method ||= two_factor_method
+
+    true
+  end
+
+  def fetch_user_two_factor_preference!
+    pref = @two_factor_method.user_two_factor_preference
+    raise Exceptions::UnprocessableEntity, __('There is no stored configuration for this two-factor authentication method.') if pref.blank? || pref.configuration&.blank?
+
+    @user_two_factor_preference ||= pref
+
+    true
+  end
 
   def params_user
     User.find(params[:id])

@@ -77,9 +77,6 @@ returns
         data = organization.assets(data)
       end
 
-      # two-factor
-      local_attributes['two_factor_configured'] = two_factor_configured?
-
       data[ app_model ][ id ] = local_attributes
 
       # add organization

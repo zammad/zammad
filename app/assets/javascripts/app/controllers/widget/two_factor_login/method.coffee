@@ -1,17 +1,17 @@
 class App.TwoFactorLoginMethod extends App.Controller
-  preVerify: false
-  inputFieldLabel:     __('Security Code')
+  initiate:        false
+  inputFieldLabel: __('Security Code')
 
   render: (params) =>
     form:   @renderForm(params)
     footer: @renderFooter(params)
 
-  renderForm: (params) =>
+  renderForm: (params = {}) =>
     App.view('widget/two_factor_login/security_code')(
-      errorMessage:           params.errorMessage
+      errorMessage:           params.errorMessage or @errorMessage
       formPayload:            @loginContext.formPayload
-      twoFactorMethodDetails: @method
       inputFieldLabel:        @inputFieldLabel
+      twoFactorMethodDetails: @method
     )
 
   renderFooter: (params) =>
@@ -25,17 +25,17 @@ class App.TwoFactorLoginMethod extends App.Controller
     # scroll to top
     @scrollTo()
 
-    @fetchPreVerifyConfiguration() if @preVerify and !@errorMessage
+    @fetchInitiateConfiguration() if @initiate and !@errorMessage
 
-  fetchPreVerifyConfiguration: =>
+  fetchInitiateConfiguration: =>
     @ajax(
-      id:          'two_factor_pre_verify_configuration'
+      id:          'two_factor_initiate_authentication'
       type:        'POST'
       data:        JSON.stringify(@loginContext.formPayload)
       processData: true
-      url:         "#{@apiPath}/users/two_factor_pre_verify_configuration/#{@method.key}"
-      success:     @preVerifyCallback
+      url:         "#{@apiPath}/auth/two_factor_initiate_authentication/#{@method.key}"
+      success:     @initiateCallback
     )
 
-  preVerifyCallback: (data, xhr, status) ->
-    throw 'You need to implement preVerifyCallback(data, xhr, status) method'
+  initiateCallback: (data, xhr, status) ->
+    throw 'You need to implement initiateCallback(data, xhr, status) method'

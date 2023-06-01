@@ -41,8 +41,6 @@ class Auth::TwoFactor::RecoveryCodes < Auth::TwoFactor::Method
     user_two_factor_preference.present?
   end
 
-  private
-
   def user_two_factor_preference
     user&.two_factor_preferences&.recovery_codes
   end

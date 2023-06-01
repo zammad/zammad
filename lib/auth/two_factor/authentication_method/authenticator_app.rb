@@ -9,7 +9,7 @@ class Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp < Auth::TwoFactor:
 
     last_otp_at = configuration[:last_otp_at]
 
-    timestamp = totp(secret).verify(payload, after: last_otp_at)
+    timestamp = totp(secret).verify(payload, drift_behind: 15, after: last_otp_at)
 
     # The provided code is invalid if we don't get a timestamp value.
     return verify_result(false) if timestamp.blank?
@@ -18,7 +18,7 @@ class Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp < Auth::TwoFactor:
     verify_result(true, configuration: configuration, new_configuration: { last_otp_at: timestamp })
   end
 
-  def configuration_options
+  def initiate_configuration
     require 'rotp' # Only load when it is actually used
     secret = ROTP::Base32.random_base32
 

@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+require 'system/examples/security_keys_setup_examples'
 require 'system/examples/authenticator_app_setup_examples'
 
 RSpec.describe 'After Auth', type: :system do
@@ -41,6 +42,16 @@ RSpec.describe 'After Auth', type: :system do
       end
 
       it_behaves_like 'showing the modal'
+
+      context 'with security keys method' do
+        before do
+          click_button 'Security Keys'
+        end
+
+        include_examples 'security keys setup' do
+          let(:password_check) { false }
+        end
+      end
 
       context 'with authenticator app method' do
         before do

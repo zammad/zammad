@@ -77,9 +77,9 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
     let(:user)                 { User.find_by(login: 'admin@example.com') }
     let(:code)                 { two_factor_pref.configuration[:code] }
     let(:recover_code_enabled) { false }
-    let!(:two_factor_pref)     { create(:'user/two_factor_preference', :authenticator_app, user:) }
+    let!(:two_factor_pref)     { create(:user_two_factor_preference, :authenticator_app, user:) }
     let(:token)                { 'token' }
-    let(:recovery_2fa)         { create(:user_two_factor_preference, :recovery_codes, token:, user:) }
+    let(:recovery_2fa)         { create(:user_two_factor_preference, :recovery_codes, recovery_code: token, user:) }
 
     before do
       stub_const('Auth::BRUTE_FORCE_SLEEP', 0)

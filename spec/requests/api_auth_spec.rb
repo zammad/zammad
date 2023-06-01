@@ -89,7 +89,7 @@ RSpec.describe 'Api Auth', type: :request do
     end
 
     context 'when using BasicAuth with TwoFactor' do
-      let!(:two_factor_pref) { create(:'user/two_factor_preference', :authenticator_app, user: admin) }
+      let!(:two_factor_pref) { create(:user_two_factor_preference, :authenticator_app, user: admin) }
 
       it 'rejects the log-in' do
         two_factor_pref
@@ -424,7 +424,7 @@ RSpec.describe 'Api Auth', type: :request do
       let(:two_factor_method)   { nil }
       let(:two_factor_payload)  { nil }
       let(:code)                { two_factor_pref.configuration[:code] }
-      let!(:two_factor_pref)    { create(:'user/two_factor_preference', :authenticator_app, user: admin) }
+      let!(:two_factor_pref)    { create(:user_two_factor_preference, :authenticator_app, user: admin) }
 
       before do
         get '/'

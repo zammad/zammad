@@ -1245,6 +1245,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
 msgstr ""
@@ -2411,6 +2412,15 @@ msgstr ""
 msgid "Company Inc."
 msgstr ""
 
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+msgid "Complete sign-in with your hardware security key."
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
+#: db/seeds/settings.rb
+msgid "Complete the sign in with your security key."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Complete translations"
 msgstr ""
@@ -2690,6 +2700,10 @@ msgstr ""
 msgid "Could not remove two-factor authentication method"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Could not set two-factor authentication method as default"
+msgstr ""
+
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
 msgstr ""
@@ -2863,6 +2877,7 @@ msgstr ""
 msgid "Created Internal Article"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -3422,6 +3437,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines if the two-factor authentication method authenticator app is enabled or not."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines if the two-factor authentication method security keys is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5303,6 +5322,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
+msgid "Getting key information from the browser..."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -7244,6 +7267,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -7298,6 +7322,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Name Identifier Format"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Name for this security key"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -7494,6 +7522,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -8846,10 +8875,6 @@ msgstr ""
 msgid "Records that exist in the import data (but not in Zammad) will always be created."
 msgstr ""
 
-#: app/assets/javascripts/app/views/profile/password.jst.eco
-msgid "Recover codes can be used to access your account in the event you lose access to other two-factor authentication methods."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/recovery_codes.coffee
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
@@ -8859,6 +8884,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
 msgid "Recovery Codes"
+msgstr ""
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Recovery codes can be used to access your account in the event you lose access to other two-factor authentication methods."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -8908,6 +8937,7 @@ msgstr ""
 msgid "Remote"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
@@ -9157,6 +9187,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/result.jst.eco
 msgid "Result:"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+msgid "Retry"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -9508,6 +9544,34 @@ msgstr ""
 msgid "Security Error"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Security Key"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: db/seeds/settings.rb
+msgid "Security Keys"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Security key \"%s\" will be removed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Security key set up failed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+msgid "Security key verification failed."
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+msgid "Security keys are hardware devices that can be used as your two-factor authentication method."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
@@ -9719,6 +9783,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Set Up"
 msgstr ""
@@ -10621,6 +10686,12 @@ msgstr ""
 msgid "The admin consent request was sent to your administrator."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+msgid "The application is not running in a secure context."
+msgstr ""
+
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
 msgid "The article could not be deleted."
 msgstr ""
@@ -11173,7 +11244,9 @@ msgstr ""
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr ""
 
+#: app/controllers/sessions_controller.rb
 #: app/controllers/user/two_factors_controller.rb
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
 msgid "The two-factor authentication method is not enabled."
 msgstr ""
 
@@ -11185,6 +11258,11 @@ msgstr ""
 #: lib/external_credential/exchange.rb
 #: lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
+msgstr ""
+
+#: app/controllers/sessions_controller.rb
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
+msgid "The username or password is incorrect."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
@@ -11258,6 +11336,10 @@ msgstr ""
 #: app/controllers/import_zendesk_controller.rb
 #: lib/email_helper/probe.rb
 msgid "There is no route to this host."
+msgstr ""
+
+#: app/controllers/user/two_factors_controller.rb
+msgid "There is no stored configuration for this two-factor authentication method."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
@@ -11900,6 +11982,10 @@ msgstr ""
 msgid "To"
 msgstr ""
 
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+msgid "To add a new security key for your account, press the button below."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "To archive all outgoing emails from Zammad to external, you can store a BCC email address here."
 msgstr ""
@@ -12046,6 +12132,10 @@ msgstr ""
 msgid "Triggers are …"
 msgstr ""
 
+#: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+msgid "Try Another Method"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Try again"
 msgstr ""
@@ -12053,6 +12143,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try another method"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+msgid "Try using your security key again."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
@@ -12164,8 +12259,16 @@ msgstr ""
 msgid "Two-factor authentication method \"%s\" will be removed."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+msgid "Two-factor authentication method could not be initiated."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Two-factor authentication method was removed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method was set as default."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
@@ -12664,6 +12767,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Verify sending and receiving"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+msgid "Verifying key information..."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco

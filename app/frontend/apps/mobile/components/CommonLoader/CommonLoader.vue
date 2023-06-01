@@ -7,7 +7,7 @@ import { markup } from '#shared/utils/markup.ts'
 
 interface Props {
   loading?: boolean
-  error?: string
+  error?: string | null
   position?: 'center' | 'right' | 'left'
 }
 

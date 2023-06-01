@@ -121,9 +121,7 @@ class Login extends App.ControllerFullPage
       method:       method
     )
 
-    methodLoginElements = methodLogin.render(
-      errorMessage: data.errorMessage
-    )
+    methodLoginElements = methodLogin.render()
 
     @el.find('.js-form').html   methodLoginElements.form
     @el.find('.js-footer').html methodLoginElements.footer
@@ -138,6 +136,7 @@ class Login extends App.ControllerFullPage
       (elem) => _.includes(@twoFactorAvailableMethods, elem.key))
 
     @el.find('.js-form').html App.view('widget/two_factor_login/try_another_method')(
+      defaultTwoFactorMethod:    @defaultTwoFactorMethod
       twoFactorMethods:          methodsToShow
       twoFactorHasRecoveryCodes: @twoFactorHasRecoveryCodes
     )
@@ -176,12 +175,16 @@ class Login extends App.ControllerFullPage
     errorMessage = App.i18n.translateContent(details.error || 'Could not process your request')
 
     if config = details.two_factor_required
+      @defaultTwoFactorMethod          = config.default_two_factor_authentication_method
       @twoFactorAvailableMethods       = config.available_two_factor_authentication_methods
       @twoFactorHasRecoveryCodes       = config.recovery_codes_available
       @twoFactorAvailableAnotherMethod = config.available_two_factor_authentication_methods.length > 1 || (config.recovery_codes_available && config.available_two_factor_authentication_methods.length > 0)
 
+
+
       @renderTwoFactor(
-        twoFactorMethod: config.default_two_factor_authentication_method
+        twoFactorMethod:           @defaultTwoFactorMethod
+        twoFactorAvailableMethods: @twoFactorAvailableMethods
       )
 
       return
@@ -211,10 +214,11 @@ class Login extends App.ControllerFullPage
   clickedAnotherTwoFactor: (e) ->
     @preventDefaultAndStopPropagation(e)
 
-    newMethod = e.target.closest('[data-method]').dataset['method']
+    newMethod = e.target.dataset['method']
 
     @renderTwoFactor(
-      twoFactorMethod: newMethod
+      twoFactorMethod:           newMethod
+      twoFactorAvailableMethods: @twoFactorAvailableMethods
     )
 
   goToMobile: (e) ->

@@ -104,6 +104,7 @@
     "@formkit/utils": "^0.17.2",
     "@formkit/validation": "^0.17.2",
     "@formkit/vue": "^0.17.2",
+    "@github/webauthn-json": "^2.1.1",
     "@rails/actioncable": "6.1.7",
     "@tiptap/core": "^2.0.3",
     "@tiptap/extension-blockquote": "^2.0.3",

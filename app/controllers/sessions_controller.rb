@@ -241,6 +241,24 @@ class SessionsController < ApplicationController
     render json: {}
   end
 
+  def two_factor_authentication_method_initiate_authentication
+    %i[username password method].each do |param|
+      raise Exceptions::UnprocessableEntity, "The required parameter '#{param}' is missing." if params[param].blank?
+    end
+
+    auth = Auth.new(params[:username], params[:password], only_verify_password: true)
+    begin
+      auth.valid!
+    rescue Auth::Error::AuthenticationFailed
+      raise Exceptions::UnprocessableEntity, __('The username or password is incorrect.')
+    end
+
+    two_factor_method = auth.user.auth_two_factor.authentication_method_object(params[:method])
+    raise Exceptions::UnprocessableEntity, __('The two-factor authentication method is not enabled.') if !two_factor_method&.enabled? || !two_factor_method&.available?
+
+    render json: two_factor_method.initiate_authentication, status: :ok
+  end
+
   private
 
   def authenticate_with_password

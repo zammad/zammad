@@ -261,4 +261,48 @@ RSpec.describe 'Sessions endpoints', type: :request do
       end
     end
   end
+
+  describe 'POST /auth/two_factor_initiate_authentication/:method' do
+    let(:user)                       { create(:user, password: 'dummy') }
+    let(:params)                     { {} }
+    let(:method)                     { 'security_keys' }
+    let(:user_two_factor_preference) { nil }
+
+    before do
+      if defined?(user_two_factor_preference)
+        user_two_factor_preference
+        user.reload
+      end
+
+      post "/api/v1/auth/two_factor_initiate_authentication/#{method}", params: params, as: :json
+    end
+
+    context 'with missing params' do
+      it 'returns an error' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'with valid params' do
+      let(:user_two_factor_preference) { create(:user_two_factor_preference, :security_keys, user: user) }
+      let(:params)                     { { username: user.login, password: password, method: method } }
+
+      context 'with invalid user/password' do
+        let(:password) { 'invalid' }
+
+        it 'returns an error' do
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+
+      context 'with valid user/password' do
+        let(:password) { 'dummy' }
+
+        it 'returns options for initiation phase', :aggregate_failures do
+          expect(response).to have_http_status(:ok)
+          expect(json_response).to include('challenge')
+        end
+      end
+    end
+  end
 end

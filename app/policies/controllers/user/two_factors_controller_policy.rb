@@ -22,11 +22,23 @@ class Controllers::User::TwoFactorsControllerPolicy < Controllers::ApplicationCo
     true
   end
 
+  def two_factor_recovery_codes_generate?
+    true
+  end
+
+  def two_factor_default_authentication_method?
+    true
+  end
+
+  def two_factor_authentication_method_initiate_configuration?
+    true
+  end
+
   def two_factor_authentication_method_configuration?
     true
   end
 
-  def two_factor_recovery_codes_generate?
+  def two_factor_authentication_method_configuration_save?
     true
   end
 

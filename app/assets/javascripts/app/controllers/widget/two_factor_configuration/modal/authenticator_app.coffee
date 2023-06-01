@@ -56,9 +56,9 @@ class App.TwoFactorConfigurationModalAuthenticatorApp extends App.TwoFactorConfi
 
   fetchInitialConfiguration: (callback) =>
     @ajax(
-      id:      'two_factor_authentication_method_configuration'
+      id:      'two_factor_authentication_method_initiate_configuration'
       type:    'GET'
-      url:     "#{@apiPath}/users/two_factor_authentication_method_configuration/#{@method.key}"
+      url:     "#{@apiPath}/users/two_factor_authentication_method_initiate_configuration/#{@method.key}"
       success: callback
     )
 

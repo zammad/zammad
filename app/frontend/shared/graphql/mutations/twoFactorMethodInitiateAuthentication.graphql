@@ -1,0 +1,16 @@
+mutation twoFactorMethodInitiateAuthentication(
+  $login: String!
+  $password: String!
+  $twoFactorMethod: EnumTwoFactorAuthenticationMethod!
+) {
+  twoFactorMethodInitiateAuthentication(
+    login: $login
+    password: $password
+    twoFactorMethod: $twoFactorMethod
+  ) {
+    initiationData
+    errors {
+      ...errors
+    }
+  }
+}

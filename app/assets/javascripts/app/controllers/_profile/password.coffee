@@ -3,14 +3,16 @@ class ProfilePassword extends App.ControllerSubContent
   header: __('Password & Authentication')
   events:
     'submit form': 'update'
-    'click [data-type="setup"]':  'twoFactorMethodSetup'
-    'click [data-type="remove"]': 'twoFactorMethodRemove'
+    'click [data-type="setup"]':   'twoFactorMethodSetup'
+    'click [data-type="edit"]':    'twoFactorMethodSetup'
+    'click [data-type="remove"]':  'twoFactorMethodRemove'
+    'click [data-type="default"]': 'twoFactorMethodDefault'
 
   constructor: ->
     super
 
     @controllerBind('config_update', (data) =>
-      return if data.name isnt 'two_factor_authentication_method_authenticator_app'
+      return if not /^two_factor_authentication_method_/.test(data.name)
 
       @preRender()
     )
@@ -47,7 +49,10 @@ class ProfilePassword extends App.ControllerSubContent
     App.Config.get('user_show_password_login') || @permissionCheck('admin.*')
 
   allowsTwoFactor: ->
-    App.Config.get('two_factor_authentication_method_authenticator_app')
+    _.some(
+      App.Config.all(),
+      (state, setting) -> /^two_factor_authentication_method_/.test(setting) and state
+    )
 
   render: (data = {}) =>
 
@@ -194,6 +199,35 @@ class ProfilePassword extends App.ControllerSubContent
               msg:       App.i18n.translateContent(message)
               removeAll: true
         )
+    )
+
+  twoFactorMethodDefault: (e) =>
+    e.preventDefault()
+
+    @ajax(
+      id:   'profile_two_factor_default_authentication_method'
+      type: 'POST'
+      url:  @apiPath + '/users/two_factor_default_authentication_method'
+      processData: true
+      data: JSON.stringify(
+        method: e.currentTarget.closest('tr').dataset.twoFactorKey
+      )
+      success: (data, status, xhr) =>
+        @notify
+          type:      'success'
+          msg:       App.i18n.translateContent('Two-factor authentication method was set as default.')
+          removeAll: true
+
+        @load()
+      error: (xhr, statusText) =>
+        data = JSON.parse(xhr.responseText)
+
+        message = data?.error || __('Could not set two-factor authentication method as default')
+
+        @notify
+          type:      'error'
+          msg:       App.i18n.translateContent(message)
+          removeAll: true
     )
 
 App.Config.set('Password', {

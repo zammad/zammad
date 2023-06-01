@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'rotp'
 
 RSpec.describe 'Manage > Users', type: :system do
   describe 'switching to an alternative user', authenticated_as: :authenticate, authentication_type: :form do

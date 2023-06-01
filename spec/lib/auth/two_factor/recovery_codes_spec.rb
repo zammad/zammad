@@ -92,7 +92,7 @@ RSpec.describe Auth::TwoFactor::RecoveryCodes, current_user_id: 1 do
 
   describe '#exists?' do
     let(:two_factor_pref_recovery_codes) do
-      create(:'user/two_factor_preference', :authenticator_app,
+      create(:user_two_factor_preference, :authenticator_app,
              user:          user,
              method:        'recovery_codes',
              configuration: {})

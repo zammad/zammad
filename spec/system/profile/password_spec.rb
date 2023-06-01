@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'system/examples/security_keys_setup_examples'
 require 'system/examples/authenticator_app_setup_examples'
 
 RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
@@ -180,6 +181,20 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
 
         it 'does not show recovery codes button if recovery codes disabled' do
           expect(page).to have_no_text('recovery codes')
+        end
+      end
+
+      context 'with security keys method' do
+        before do
+          within('tr[data-two-factor-key="security_keys"]') do
+            click '.js-action'
+
+            find('a', text: 'Set Up').click
+          end
+        end
+
+        include_examples 'security keys setup' do
+          let(:current_user) { user }
         end
       end
     end

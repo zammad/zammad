@@ -35,12 +35,12 @@ RSpec.describe Auth::TwoFactor::AuthenticationMethod, current_user_id: 1 do
   it_behaves_like 'responding to provided instance method', :enabled?
   it_behaves_like 'responding to provided instance method', :method_name
   it_behaves_like 'responding to provided instance method', :related_setting_name
-  it_behaves_like 'responding to provided instance method', :configuration_options
+  it_behaves_like 'responding to provided instance method', :initiate_configuration
   it_behaves_like 'responding to provided instance method', :create_user_config
   it_behaves_like 'responding to provided instance method', :destroy_user_config
 
   it_behaves_like "raising 'NotImplemented' error for base methods", :verify, [ nil, nil ]
-  it_behaves_like "raising 'NotImplemented' error for base methods", :configuration_options
+  it_behaves_like "raising 'NotImplemented' error for base methods", :initiate_configuration
 
   it_behaves_like 'returning expected value', :available?, true
   it_behaves_like 'returning expected value', :enabled?, nil
@@ -64,7 +64,7 @@ RSpec.describe Auth::TwoFactor::AuthenticationMethod, current_user_id: 1 do
   end
 
   describe '#destroy_user_config' do
-    before { create(:'user/two_factor_preference', :authenticator_app, method: 'authentication_method', user: user) }
+    before { create(:user_two_factor_preference, :authenticator_app, method: 'authentication_method', user: user) }
 
     it 'removes two factor configuration for the user' do
       instance.destroy_user_config

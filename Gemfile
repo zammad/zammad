@@ -95,6 +95,7 @@ gem 'oauth2'
 
 # authentication - two factor
 gem 'rotp', require: false
+gem 'webauthn', require: false
 
 # authentication - third party
 gem 'omniauth-rails_csrf_protection'
