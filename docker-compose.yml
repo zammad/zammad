@@ -2,22 +2,28 @@ services:
   web:
     build: .
     ports:
-      - "3000:3000"
+      - 3000:3000
     depends_on:
       - db
-      - redis
+    links:
+      - redis:redis
+    volumes:
+      - ./:/opt/zammad
   db:
     image: postgres
+    restart: always
+    ports:
+      - 5432:5432
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
   redis:
-    image: "redis:7-alpine"
+    image: "redis"
     ports:
-      - 6379
+      - 6379:6379
     volumes:
-    - ./tmp/redis_data:/var/lib/redis/data
+      - ./tmp/redis_data:/var/lib/redis/data
 
 
 volumes:
