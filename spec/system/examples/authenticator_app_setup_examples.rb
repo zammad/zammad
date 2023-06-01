@@ -40,10 +40,12 @@ def setup_authenticator_app_method(user:, password_check:, expect_recovery_codes
 
   if expect_recovery_codes
     in_modal do
-      any_code = user.two_factor_preferences.recovery_codes.configuration[:codes].sample
+      stored_codes_amount    = user.two_factor_preferences.recovery_codes.configuration[:codes].count
+      displayed_codes_amount = find('.two-factor-auth code').text.tr("\n", ' ').split.count
 
       expect(page).to have_text('Set up two-factor authentication: Recovery Codes')
-      expect(page).to have_text(any_code)
+      expect(stored_codes_amount).to eq(displayed_codes_amount)
+
       click_button "OK, I've saved my recovery codes"
     end
   end

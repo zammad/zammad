@@ -175,8 +175,12 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
         in_modal do
           expect(page).to have_text('Set up two-factor authentication: Recovery Codes')
 
-          any_code = user.two_factor_preferences.recovery_codes.configuration[:codes].sample
-          expect(page).to have_text(any_code)
+          stored_codes_amount    = user.two_factor_preferences.recovery_codes.configuration[:codes].count
+          displayed_codes_amount = find('.two-factor-auth code').text.tr("\n", ' ').split.count
+
+          expect(stored_codes_amount).to eq(displayed_codes_amount)
+
+          expect(page).to have_button("OK, I've saved my recovery codes")
         end
       end
 

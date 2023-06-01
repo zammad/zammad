@@ -150,7 +150,7 @@ FactoryBot.define do
 
       configuration do
         {
-          codes: [recovery_code],
+          codes: [PasswordHash.crypt(recovery_code)],
         }
       end
     end

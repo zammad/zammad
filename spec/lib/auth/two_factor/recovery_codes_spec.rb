@@ -24,10 +24,12 @@ RSpec.describe Auth::TwoFactor::RecoveryCodes, current_user_id: 1 do
 
   describe '#verify' do
     let(:current_codes) { instance.generate }
-    let(:code) { current_codes.first }
+    let(:current_hashed_codes) { user.reload.two_factor_preferences.recovery_codes.configuration[:codes] }
+    let(:code)                 { current_codes.first }
 
     before do
       current_codes
+      current_hashed_codes
     end
 
     context 'when code is correct' do
@@ -46,6 +48,7 @@ RSpec.describe Auth::TwoFactor::RecoveryCodes, current_user_id: 1 do
 
       before do
         current_codes
+        current_hashed_codes
       end
 
       it 'returns false' do
@@ -55,7 +58,7 @@ RSpec.describe Auth::TwoFactor::RecoveryCodes, current_user_id: 1 do
       it 'current code list is untouched' do
         instance.verify(code)
 
-        expect(user.reload.two_factor_preferences.find_by(method: 'recovery_codes').configuration[:codes]).to eq(current_codes)
+        expect(user.reload.two_factor_preferences.recovery_codes.configuration[:codes]).to eq(current_hashed_codes)
       end
     end
   end
@@ -72,20 +75,22 @@ RSpec.describe Auth::TwoFactor::RecoveryCodes, current_user_id: 1 do
     it 'codes are saved in two factor preferences' do
       instance.generate
 
-      expect(user.reload.two_factor_preferences.find_by(method: 'recovery_codes').configuration[:codes].length).to eq(described_class.const_get(:NUMBER_OF_CODES))
+      expect(user.reload.two_factor_preferences.recovery_codes.configuration[:codes].length).to eq(described_class.const_get(:NUMBER_OF_CODES))
     end
 
     context 'when codes already exist' do
-      let(:current_codes) { instance.generate }
+      let(:current_codes)        { instance.generate }
+      let(:current_hashed_codes) { user.reload.two_factor_preferences.recovery_codes.configuration[:codes] }
 
       before do
         current_codes
+        current_hashed_codes
       end
 
       it 'codes are saved in two factor preferences' do
         instance.generate
 
-        expect(user.reload.two_factor_preferences.find_by(method: 'recovery_codes').configuration[:codes]).not_to be(current_codes)
+        expect(user.reload.two_factor_preferences.recovery_codes.configuration[:codes]).not_to be(current_hashed_codes)
       end
     end
   end

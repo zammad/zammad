@@ -9,9 +9,10 @@ class Auth::TwoFactor::RecoveryCodes < Auth::TwoFactor::Method
 
     configuration = user_two_factor_preference_configuration
 
-    return verify_result(false) if configuration[:codes].exclude?(code)
+    hashed_code = configuration[:codes].detect { |saved_code| PasswordHash.verified?(saved_code, code) }
+    return verify_result(false) if hashed_code.blank?
 
-    configuration[:codes].delete(code)
+    configuration[:codes].delete(hashed_code)
 
     verify_result(true, new_configuration: configuration)
   end
@@ -24,10 +25,12 @@ class Auth::TwoFactor::RecoveryCodes < Auth::TwoFactor::Method
       codes << SecureRandom.hex(CODE_LENGTH / 2)
     end
 
+    hashed_codes = codes.map { |code| PasswordHash.crypt(code) }
+
     if exists?
-      update_user_config({ codes: codes })
+      update_user_config({ codes: hashed_codes })
     else
-      create_user_config({ codes: codes })
+      create_user_config({ codes: hashed_codes })
     end
 
     codes

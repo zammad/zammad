@@ -142,7 +142,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
       context 'with correct verification code', :aggregate_failures do
         it 'verified is true' do
           expect(json_response['verified']).to be(true)
-          expect(json_response['recovery_codes']).to eq(agent.reload.two_factor_preferences.recovery_codes.configuration[:codes])
+          expect(json_response['recovery_codes'].length).to eq(10)
         end
 
         context 'with disabled recovery codes' do
@@ -176,17 +176,16 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
     end
 
     context 'without existing recovery codes' do
-      it 'does not generate codes' do
-        expect(json_response).to eq(agent.reload.two_factor_preferences.recovery_codes.configuration[:codes])
+      it 'does generate codes' do
+        expect(json_response.length).to eq(10)
       end
     end
 
     context 'with existing recovery codes' do
       let(:current_codes) { Auth::TwoFactor::RecoveryCodes.new(agent).generate }
 
-      it 'does not generate codes', :aggregate_failures do
+      it 'does not generate codes' do
         expect(json_response).not_to eq(current_codes)
-        expect(json_response).to eq(agent.reload.two_factor_preferences.recovery_codes.configuration[:codes])
       end
     end
   end
