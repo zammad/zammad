@@ -20,6 +20,8 @@ import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { getNode } from '@formkit/core'
 import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import { setupView } from '#tests/support/mock-user.ts'
+import { waitFor } from '@testing-library/vue'
+import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
 import { TicketCreateDocument } from '../graphql/mutations/create.api.ts'
 
 const visitTicketCreate = async (path = '/tickets/create') => {
@@ -43,6 +45,11 @@ const visitTicketCreate = async (path = '/tickets/create') => {
 
   const mockFormUpdater = mockGraphQLApi(FormUpdaterDocument).willResolve({
     formUpdater: {
+      ticket_duplicate_detection: {
+        show: true,
+        hidden: false,
+        value: { count: 0, items: [] },
+      },
       group_id: {
         show: true,
         options: [
@@ -358,6 +365,20 @@ describe('Creating new ticket as customer', () => {
 
     expect(view.queryByLabelText('Organization')).toBeInTheDocument()
   })
+
+  it("doesn't show 'are you sure' dialog if duplicate protection is enabled and no changes were done", async () => {
+    mockTicketOverviews()
+
+    const { view } = await visitTicketCreate()
+
+    await view.events.click(view.getByLabelText('Go home'))
+
+    await waitFor(() => {
+      expect(view.queryByText('Additional information')).not.toBeInTheDocument()
+    })
+
+    expect(view.queryByText('Confirm dialog')).not.toBeInTheDocument()
+  })
 })
 
 describe('Creating new ticket as user having customer & agent permissions', () => {
@@ -378,8 +399,8 @@ describe('Creating new ticket as user having customer & agent permissions', () =
   })
 })
 
-describe('redirects', () => {
-  test('correctly redirects from ticket create hash-based routes', async () => {
+describe('Create ticket page redirects back', () => {
+  it('correctly redirects from ticket create hash-based routes', async () => {
     setupView('agent')
     await visitTicketCreate('/#ticket/create')
     const router = getTestRouter()
@@ -387,7 +408,7 @@ describe('redirects', () => {
     expect(route.name).toBe('TicketCreate')
   })
 
-  test('correctly redirects from ticket create with id hash-based routes', async () => {
+  it('correctly redirects from ticket create with id hash-based routes', async () => {
     setupView('agent')
     await visitTicketCreate('/#ticket/create/id/13214124')
     const router = getTestRouter()
