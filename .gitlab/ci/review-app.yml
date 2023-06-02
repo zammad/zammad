@@ -3,6 +3,8 @@
     # Assign an unprivileged port for the web server based on MR ID.
     - |
       APP_PORT=$(( $CI_MERGE_REQUEST_ID % 64000 + 1024 ))
+      WS_PORT=$(( $APP_PORT + 1000 ))
+      ASSETS_PORT=$(( $APP_PORT + 2000 ))
       echo "Assigned port number $APP_PORT."
   build_docker_compose_files:
     - !reference [.review_app_scripts, assign_port]
@@ -14,9 +16,15 @@
       ---
       version: '3'
       services:
+        zammad-railsserver:
+          ports:
+            - "127.0.0.1:${APP_PORT}:3000"
+        zammad-websocket:
+          ports:
+            - "127.0.0.1:${WS_PORT}:6042"
         zammad-nginx:
           ports:
-            - "127.0.0.1:${APP_PORT}:8080"
+            - "127.0.0.1:${ASSETS_PORT}:8080"
         zammad-backup:
           profiles:
             - do-not-start
@@ -117,7 +125,7 @@
           },
           {
             "name": "http_type",
-            "value": "http"
+            "value": "https"
           },
           {
             "name": "fqdn",
@@ -141,13 +149,52 @@
         listen [::]:443 ssl http2;
         server_name ${APP_SLUG}.${SERVER_NAME};
 
-        location / {
-            proxy_redirect off;
-            proxy_set_header Host \$host;
-            proxy_set_header X-Real-IP \$remote_addr;
-            proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        client_max_body_size 50M;
 
-            proxy_pass http://127.0.0.1:${APP_PORT};
+        location ~ ^/(assets/|robots.txt|humans.txt|favicon.ico|apple-touch-icon.png) {
+          expires max;
+          proxy_pass http://127.0.0.1:${ASSETS_PORT};
+        }
+
+        location / {
+          proxy_set_header Host \$http_host;
+          proxy_set_header CLIENT_IP \$remote_addr;
+          proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto \$scheme;
+
+          # Change this line in an SSO setup
+          proxy_set_header X-Forwarded-User "";
+
+          proxy_read_timeout 300;
+          proxy_pass http://127.0.0.1:${APP_PORT};
+
+          gzip on;
+          gzip_types text/plain text/xml text/css image/svg+xml application/javascript application/x-javascript application/json application/xml;
+          gzip_proxied any;
+        }
+
+        # legacy web socket server
+        location /ws {
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade \$http_upgrade;
+          proxy_set_header Connection "Upgrade";
+          proxy_set_header CLIENT_IP \$remote_addr;
+          proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto \$scheme;
+          proxy_read_timeout 86400;
+          proxy_pass http://127.0.0.1:${WS_PORT};
+        }
+
+        # action cable
+        location /cable {
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade \$http_upgrade;
+          proxy_set_header Connection "Upgrade";
+          proxy_set_header CLIENT_IP \$remote_addr;
+          proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto \$scheme;
+          proxy_read_timeout 86400;
+          proxy_pass http://127.0.0.1:${APP_PORT};
         }
       }
       VHOST_CONFIG
@@ -184,6 +231,7 @@
     - echo "Perform docker clean-up…"
     - docker image  prune --all --force
     - docker volume prune --all --force
+    - docker network prune --force
 
 review-app:deploy:
   extends:
@@ -194,7 +242,7 @@ review-app:deploy:
     # If starting did not complete, bring down the container again to free up resources.
     - |
       echo "Deploy review app…"
-      ${DOCKER_COMPOSE_COMMAND} up -d || FAILED=true
+      ${DOCKER_COMPOSE_COMMAND} up --force-recreate --detach || FAILED=true
       if [ $FAILED ]
       then
         ${DOCKER_COMPOSE_COMMAND} down
