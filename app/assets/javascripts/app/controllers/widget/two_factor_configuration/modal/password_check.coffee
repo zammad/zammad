@@ -1,7 +1,7 @@
 class App.TwoFactorConfigurationModalPasswordCheck extends App.TwoFactorConfigurationModal
   buttonSubmit: __('Next')
   buttonClass: 'btn--primary'
-  head: __('Password')
+  head: __('Confirm Password')
 
   content: ->
     configure_attributes = [
@@ -33,7 +33,12 @@ class App.TwoFactorConfigurationModalPasswordCheck extends App.TwoFactorConfigur
       processData: true
       success: (data, status, xhr) =>
         if data?.success
-          @next()
+          if @successCallback && !@container
+            @close()
+            @successCallback()
+          else
+            @next()
+
           return
 
         @formValidate( form: e.target, errors:

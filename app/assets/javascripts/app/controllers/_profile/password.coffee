@@ -2,11 +2,12 @@ class ProfilePassword extends App.ControllerSubContent
   @requiredPermission: 'user_preferences.password'
   header: __('Password & Authentication')
   events:
-    'submit form': 'update'
-    'click [data-type="setup"]':   'twoFactorMethodSetup'
-    'click [data-type="edit"]':    'twoFactorMethodSetup'
-    'click [data-type="remove"]':  'twoFactorMethodRemove'
-    'click [data-type="default"]': 'twoFactorMethodDefault'
+    'submit form':                       'update'
+    'click .js-generate-recovery-codes': 'twoFactorMethodGenerateRecoveryCodes'
+    'click [data-type="setup"]':         'twoFactorMethodSetup'
+    'click [data-type="edit"]':          'twoFactorMethodSetup'
+    'click [data-type="remove"]':        'twoFactorMethodRemove'
+    'click [data-type="default"]':       'twoFactorMethodDefault'
 
   constructor: ->
     super
@@ -162,18 +163,16 @@ class ProfilePassword extends App.ControllerSubContent
       successCallback: @load
     )
 
-  twoFactorMethodRemove: (e) =>
+  twoFactorMethodRemove: (e) ->
     e.preventDefault()
 
     key     = e.currentTarget.closest('tr').dataset.twoFactorKey
     method  = App.TwoFactorMethods.methodByKey(key)
 
-    new App.ControllerConfirm(
-      head: __('Are you sure?')
-      message: App.i18n.translatePlain('Two-factor authentication method "%s" will be removed.', App.i18n.translatePlain(method.label))
-      container: @el.closest('.content')
-      small: true
-      callback: =>
+    new App.TwoFactorConfigurationModalPasswordCheck(
+      headPrefix: __('Remove two-factor authentication')
+      buttonSubmit: 'Remove'
+      successCallback: =>
         @ajax(
           id:   'profile_two_factor_removal'
           type: 'DELETE'
@@ -228,6 +227,14 @@ class ProfilePassword extends App.ControllerSubContent
           type:      'error'
           msg:       App.i18n.translateContent(message)
           removeAll: true
+    )
+
+  twoFactorMethodGenerateRecoveryCodes: (e) =>
+    e.preventDefault()
+
+    new App.TwoFactorConfigurationMethodRecoveryCodes(
+      container: @el.closest('.content')
+      successCallback: @load
     )
 
 App.Config.set('Password', {

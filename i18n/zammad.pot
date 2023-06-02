@@ -1239,7 +1239,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -2482,6 +2481,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid "Confirm"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+msgid "Confirm Password"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
@@ -5282,12 +5285,17 @@ msgstr ""
 msgid "Generate Token"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method/recovery_codes.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Generate recovery codes"
 msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Generate user-based stats."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+msgid "Generated Recovery Codes"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
@@ -8879,7 +8887,6 @@ msgstr ""
 msgid "Recovery Code"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
 msgid "Recovery Codes"
 msgstr ""
@@ -8989,6 +8996,10 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Remove two-factor authentication"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -12251,10 +12262,6 @@ msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "Two-factor authentication is not supported with HTTP BasicAuth."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
-msgid "Two-factor authentication method \"%s\" will be removed."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue

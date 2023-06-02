@@ -153,7 +153,9 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
         end
 
         in_modal do
-          click_on 'Yes'
+          fill_in 'Password', with: user.password_plain
+
+          click_on 'Remove'
         end
 
         within('tr[data-two-factor-key="authenticator_app"]') do
@@ -165,7 +167,7 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
         click '.js-generate-recovery-codes'
 
         in_modal do
-          expect(page).to have_text('Set up two-factor authentication: Password')
+          expect(page).to have_text('Generate recovery codes: Confirm Password')
 
           fill_in 'Password', with: user.password_plain
 
@@ -173,7 +175,7 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
         end
 
         in_modal do
-          expect(page).to have_text('Set up two-factor authentication: Recovery Codes')
+          expect(page).to have_text('Generated Recovery Codes')
 
           stored_codes_amount    = user.two_factor_preferences.recovery_codes.configuration[:codes].count
           displayed_codes_amount = find('.two-factor-auth code').text.tr("\n", ' ').split.count

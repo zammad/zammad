@@ -37,7 +37,7 @@ end
 def setup_security_keys_method(user:, password_check:)
   in_modal do
     if password_check
-      expect(page).to have_text('Set up two-factor authentication: Password')
+      expect(page).to have_text('Set up two-factor authentication: Confirm Password')
 
       fill_in 'Password', with: user.password_plain
 
@@ -56,7 +56,7 @@ def setup_security_keys_method(user:, password_check:)
 
     click_button 'Next'
 
-    expect(page).to have_text('Set up two-factor authentication: Recovery Codes')
+    expect(page).to have_text('Generated Recovery Codes')
 
     click_button "OK, I've saved my recovery codes"
   end
