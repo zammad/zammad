@@ -234,6 +234,15 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
     end
 
     context 'with valid params' do
+      context 'with no stored two-factor preference' do
+        let(:two_factor_pref) { nil }
+
+        it 'returns nothing', :aggregate_failures do
+          expect(response).to have_http_status(:ok)
+          expect(json_response['configuration']).to be_empty
+        end
+      end
+
       it 'returns configuration', :aggregate_failures do
         expect(response).to have_http_status(:ok)
         expect(json_response['configuration']).to include('secret').and include('code').and include('provisioning_uri')

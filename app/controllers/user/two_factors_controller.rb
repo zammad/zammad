@@ -68,7 +68,9 @@ class User::TwoFactorsController < ApplicationController
   def two_factor_authentication_method_configuration
     check_method!
     check_two_factor_method!
-    fetch_user_two_factor_preference!
+    fetch_user_two_factor_preference!(raise_exception: false)
+
+    return render json: { configuration: {} }, status: :ok if @user_two_factor_preference.nil?
 
     render json: { configuration: @user_two_factor_preference.configuration }, status: :ok
   end
@@ -106,9 +108,14 @@ class User::TwoFactorsController < ApplicationController
     true
   end
 
-  def fetch_user_two_factor_preference!
+  def fetch_user_two_factor_preference!(raise_exception: true)
     pref = @two_factor_method.user_two_factor_preference
-    raise Exceptions::UnprocessableEntity, __('There is no stored configuration for this two-factor authentication method.') if pref.blank? || pref.configuration.blank?
+
+    if pref.blank? || pref.configuration.blank?
+      raise Exceptions::UnprocessableEntity, __('There is no stored configuration for this two-factor authentication method.') if raise_exception
+
+      return
+    end
 
     @user_two_factor_preference ||= pref
 
