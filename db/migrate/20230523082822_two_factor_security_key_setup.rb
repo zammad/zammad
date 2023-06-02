@@ -30,7 +30,7 @@ class TwoFactorSecurityKeySetup < ActiveRecord::Migration[6.1]
         permission:   ['admin.security'],
         prio:         1000,
         display_name: 'Security Keys',
-        help:         'Complete the sign in with your security key.',
+        help:         'Complete the sign-in with your security key.',
         icon:         'security-key',
       },
       state:       false,

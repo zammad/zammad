@@ -8,7 +8,7 @@ export default {
   name: EnumTwoFactorAuthenticationMethod.SecurityKeys,
   label: __('Security Keys'),
   order: 100,
-  helpMessage: __('Complete sign-in with your hardware security key.'),
+  helpMessage: __('Complete the sign-in with your security key.'),
   errorHelpMessage: __('Try using your security key again.'),
   form: false,
   async setup(

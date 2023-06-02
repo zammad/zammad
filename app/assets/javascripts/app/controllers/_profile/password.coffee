@@ -234,6 +234,7 @@ class ProfilePassword extends App.ControllerSubContent
 
     new App.TwoFactorConfigurationMethodRecoveryCodes(
       container: @el.closest('.content')
+      overrideHeadPrefix: __('Generate recovery codes')
       successCallback: @load
     )
 

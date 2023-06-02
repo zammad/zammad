@@ -2410,13 +2410,10 @@ msgstr ""
 msgid "Company Inc."
 msgstr ""
 
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
-msgid "Complete sign-in with your hardware security key."
-msgstr ""
-
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 #: db/seeds/settings.rb
-msgid "Complete the sign in with your security key."
+msgid "Complete the sign-in with your security key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
@@ -3398,7 +3395,7 @@ msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if recovery codes can be used by the user when losing access to their device and cannot receive two-factor authentication codes."
+msgid "Defines if recovery codes can be used by users in the event they lose access to other two-factor authentication methods."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5285,17 +5282,13 @@ msgstr ""
 msgid "Generate Token"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method/recovery_codes.coffee
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Generate recovery codes"
 msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Generate user-based stats."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
-msgid "Generated Recovery Codes"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
@@ -9415,6 +9408,10 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+msgid "Save Codes"
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
@@ -9578,7 +9575,7 @@ msgid "Security key verification failed."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
-msgid "Security keys are hardware devices that can be used as your two-factor authentication method."
+msgid "Security keys are hardware or software credentials that can be used as your two-factor authentication method."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
@@ -11991,10 +11988,6 @@ msgstr ""
 msgid "To"
 msgstr ""
 
-#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
-msgid "To add a new security key for your account, press the button below."
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "To archive all outgoing emails from Zammad to external, you can store a BCC email address here."
 msgstr ""
@@ -12021,6 +12014,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "To make translations easier you can enable and disable the inline translation feature by pressing \"%s\"."
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+msgid "To register a new security key with your account, press the button below."
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee

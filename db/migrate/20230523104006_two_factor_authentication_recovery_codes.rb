@@ -9,7 +9,7 @@ class TwoFactorAuthenticationRecoveryCodes < ActiveRecord::Migration[6.1]
       title:       'Enable Recovery Codes',
       name:        'two_factor_authentication_recovery_codes',
       area:        'Security::TwoFactorAuthentication',
-      description: 'Defines if recovery codes can be used by the user when losing access to their device and cannot receive two-factor authentication codes.',
+      description: 'Defines if recovery codes can be used by users in the event they lose access to other two-factor authentication methods.',
       options:     {
         form: [
           {

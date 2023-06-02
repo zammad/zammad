@@ -56,7 +56,7 @@ def setup_security_keys_method(user:, password_check:)
 
     click_button 'Next'
 
-    expect(page).to have_text('Generated Recovery Codes')
+    expect(page).to have_text('Set up two-factor authentication: Save Codes')
 
     click_button "OK, I've saved my recovery codes"
   end

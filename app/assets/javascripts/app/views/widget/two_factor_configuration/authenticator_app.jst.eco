@@ -1,4 +1,4 @@
-<div class="main two-factor-auth flex">
+<div class="two-factor-auth flex">
   <p><%= @T('To set up Authenticator App for your account, follow the steps below:') %></p>
   <ol>
     <li>

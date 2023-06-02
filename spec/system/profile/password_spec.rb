@@ -175,7 +175,7 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
         end
 
         in_modal do
-          expect(page).to have_text('Generated Recovery Codes')
+          expect(page).to have_text('Generate recovery codes: Save Codes')
 
           stored_codes_amount    = user.two_factor_preferences.recovery_codes.configuration[:codes].count
           displayed_codes_amount = find('.two-factor-auth code').text.tr("\n", ' ').split.count

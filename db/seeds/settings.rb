@@ -5394,7 +5394,7 @@ Setting.create_if_not_exists(
     permission:   ['admin.security'],
     prio:         1000,
     display_name: __('Security Keys'),
-    help:         __('Complete the sign in with your security key.'),
+    help:         __('Complete the sign-in with your security key.'),
     icon:         'security-key',
   },
   state:       false,
@@ -5437,7 +5437,7 @@ Setting.create_if_not_exists(
   title:       __('Enable Recovery Codes'),
   name:        'two_factor_authentication_recovery_codes',
   area:        'Security::TwoFactorAuthentication',
-  description: __('Defines if recovery codes can be used by the user when losing access to their device and cannot receive two-factor authentication codes.'),
+  description: __('Defines if recovery codes can be used by users in the event they lose access to other two-factor authentication methods.'),
   options:     {
     form: [
       {

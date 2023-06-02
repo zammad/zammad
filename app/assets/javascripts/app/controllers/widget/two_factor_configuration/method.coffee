@@ -1,6 +1,6 @@
 class App.TwoFactorConfigurationMethod extends App.Controller
   passwordCheck: true
-  passwordCheckHeadPrefix: null
+  overrideHeadPrefix: null
 
   constructor: (params) ->
     super
@@ -26,11 +26,11 @@ class App.TwoFactorConfigurationMethod extends App.Controller
           )
       )
 
+    if @overrideHeadPrefix
+      modalOptions.overrideHeadPrefix = @overrideHeadPrefix
+
     # Show password check first, if requested.
     if @passwordCheck
-      if @passwordCheckHeadPrefix
-        modalOptions.headPrefix = @passwordCheckHeadPrefix
-
       return new App.TwoFactorConfigurationModalPasswordCheck(
         _.extend(
           {},

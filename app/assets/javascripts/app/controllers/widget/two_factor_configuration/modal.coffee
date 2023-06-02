@@ -7,8 +7,11 @@ class App.TwoFactorConfigurationModal extends App.ControllerModal
   shown: true
   className: 'modal' # no automatic fade transitions
 
-  render: ->
-    super
+  constructor: (params) ->
+    if params.overrideHeadPrefix
+      params.headPrefix = params.overrideHeadPrefix
+
+    super(params)
 
   closeWithFade: =>
     @el.addClass('fade')
@@ -21,8 +24,9 @@ class App.TwoFactorConfigurationModal extends App.ControllerModal
   next: (modalOptions = {}) =>
     @close()
 
-    modalOptions.container ||= @container
-    modalOptions.successCallback ||= @successCallback
+    modalOptions.container          ||= @container
+    modalOptions.overrideHeadPrefix ||= @overrideHeadPrefix
+    modalOptions.successCallback    ||= @successCallback
 
     constructor = modalOptions.nextModalClass || @nextModalClass()
 

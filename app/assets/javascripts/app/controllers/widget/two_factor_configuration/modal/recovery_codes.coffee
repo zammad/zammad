@@ -11,8 +11,7 @@ class App.TwoFactorConfigurationModalRecoveryCodes extends App.TwoFactorConfigur
       text: __('Copy')
     }
   ]
-  headPrefix: ''
-  head: __('Generated Recovery Codes')
+  head: __('Save Codes')
   events:
     'click .js-print': 'print'
     'click .js-copy':  'copy'
