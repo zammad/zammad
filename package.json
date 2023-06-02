@@ -146,9 +146,9 @@
     "vue-router": "^4.2.1",
     "vue3-draggable-resizable": "^1.6.5",
     "vuedraggable": "^4.1.0",
-    "workbox-core": "^6.5.4",
-    "workbox-precaching": "^6.5.4",
-    "workbox-window": "^6.5.4"
+    "workbox-core": "^7.0.0",
+    "workbox-precaching": "^7.0.0",
+    "workbox-window": "^7.0.0"
   },
   "resolutions": {
     "loader-utils": "^3.2.1",
