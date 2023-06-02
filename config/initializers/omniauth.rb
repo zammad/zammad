@@ -23,12 +23,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :linked_in_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database'
 
   # google database connect
-  provider :google_oauth2_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database', {
-    authorize_options: {
-      access_type:     'online',
-      approval_prompt: '',
-    }
-  }
+  provider :google_oauth2_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database', access_type: 'online', prompt: ''
 
   # github database connect
   provider :github_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database'
