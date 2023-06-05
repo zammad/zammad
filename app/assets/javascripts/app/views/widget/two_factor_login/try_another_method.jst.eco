@@ -1,5 +1,5 @@
 <h3 class="text-center">
-  <%= @T('Try Another Method') %>
+  <%= @T('Try another method') %>
 </h3>
 <div class="two-factor-auth">
   <div class="two-factor-auth-method-buttons">
