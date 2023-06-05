@@ -108,7 +108,7 @@ class User::TwoFactorsController < ApplicationController
 
   def fetch_user_two_factor_preference!
     pref = @two_factor_method.user_two_factor_preference
-    raise Exceptions::UnprocessableEntity, __('There is no stored configuration for this two-factor authentication method.') if pref.blank? || pref.configuration&.blank?
+    raise Exceptions::UnprocessableEntity, __('There is no stored configuration for this two-factor authentication method.') if pref.blank? || pref.configuration.blank?
 
     @user_two_factor_preference ||= pref
 
