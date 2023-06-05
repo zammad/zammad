@@ -1,15 +1,15 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
-import icons from 'virtual:svg-icons-names' // eslint-disable-line import/no-unresolved
+import '#shared/components/CommonIcon/injectIcons.ts'
 import { type Ref, ref, computed } from 'vue'
 import CommonIcon from './CommonIcon.vue'
 import type { Animations, Sizes } from './types.ts'
+import { useIcons } from './useIcons.ts'
 
-const iconNames = computed(() =>
-  icons.map((icon) => icon.slice('icon-'.length)),
-)
+const { symbols } = useIcons()
+
+const iconNames = computed(() => symbols.map(([icon]) => icon))
 
 const size: Ref<Sizes | undefined> = ref()
 const sizes = ['xs', 'tiny', 'small', 'base', 'medium', 'large']

@@ -2,12 +2,7 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "lib": ["DOM", "WebWorker", "dom.iterable"],
-    "types": [
-      "vitest/globals",
-      "vite/client",
-      "vite-plugin-svg-icons/client",
-      "vite-plugin-pwa/client"
-    ]
+    "types": ["vitest/globals", "vite/client", "vite-plugin-pwa/client"]
   },
   "include": [
     "app/frontend/**/*",

@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import './prepare.js'
+
 import '#mobile/styles/main.scss'
-import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
+import '#shared/components/CommonIcon/injectIcons.ts'
 
 import './commands.js'
 
@@ -9,9 +11,6 @@ import './commands.js'
 globalThis.process.env = {
   DEBUG_PRINT_LIMIT: 5000,
 }
-
-// eslint-disable-next-line no-underscore-dangle
-window.__ = (str) => str
 
 Cypress.Screenshot.defaults({ capture: 'viewport' })
 

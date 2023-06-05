@@ -62,6 +62,10 @@ const createInput = (
 
   initializeFieldDefinition(definition, {}, { ...options, schema })
 
+  if (!definition.schemaMemoKey) {
+    definition.schemaMemoKey = `${Math.random()}`
+  }
+
   return definition
 }
 

@@ -16,11 +16,6 @@ const matchers = [
   },
   {
     vendor: false,
-    matcher: (id) => id === 'virtual:svg-icons-register',
-    chunk: 'icons',
-  },
-  {
-    vendor: false,
     matcher: (id) => id.includes('vite/preload-helper'),
     chunk: 'vite',
   },

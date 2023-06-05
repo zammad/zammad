@@ -13,6 +13,7 @@ import type {
   ImportGlobEagerOutput,
   ImportGlobEagerDefault,
 } from '#shared/types/utils.ts'
+import { useIcons } from '#shared/components/CommonIcon/useIcons.ts'
 import createFieldPlugin from './core/createFieldPlugin.ts'
 import createValidationPlugin from './core/createValidationPlugin.ts'
 import createI18nPlugin from './core/createI18nPlugin.ts'
@@ -48,6 +49,8 @@ export const buildFormKitPluginConfig = (
   appSpecificPlugins: FormKitPlugin[] = [],
   appSpecificTheme: FormAppSpecificTheme = {},
 ) => {
+  const { icons: customIcons } = useIcons()
+
   return {
     plugins: [
       createFieldPlugin(appSpecificFieldModules),
@@ -59,6 +62,7 @@ export const buildFormKitPluginConfig = (
         {
           checkboxDecorator: checkIcon,
           radioDecorator: checkIcon,
+          ...customIcons,
         },
         undefined,
         () => undefined,
