@@ -55,5 +55,6 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
     `),
     arrow: `${arrow} formkit-arrow flex items-center formkit-disabled:opacity-30`,
     messages: 'px-2',
+    suffixIcon: 'text-white fill-current flex justify-center items-center',
   }
 }

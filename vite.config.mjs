@@ -4,11 +4,11 @@
 import { createRequire } from 'module'
 import { defineConfig } from 'vite'
 import VuePlugin from '@vitejs/plugin-vue'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { VitePWA } from 'vite-plugin-pwa'
 import { resolve, dirname } from 'node:path'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import svgIconsPlugin from './app/frontend/build/iconsPlugin.mjs'
 import tsconfig from './tsconfig.base.json' assert { type: 'json' }
 
 const dir = dirname(fileURLToPath(import.meta.url))
@@ -23,32 +23,6 @@ export default defineConfig(({ mode, command }) => {
 
   const require = createRequire(import.meta.url)
 
-  const svgPlugin = createSvgIconsPlugin({
-    // Specify the directory containing all icon assets assorted by sets.
-    iconDirs: [
-      resolve(dir, 'app/frontend/shared/components/CommonIcon/assets'),
-    ],
-
-    // Specify symbolId format to include directory as icon set and filename as icon name.
-    symbolId: 'icon-[dir]-[name]',
-
-    svgoOptions: {
-      plugins: [{ name: 'preset-default' }],
-    },
-  })
-
-  if (isStory) {
-    // Patch svg plugin for stories, because it's not working with SSR.
-    const svgConfigResolved = svgPlugin.configResolved
-    svgConfigResolved({ command: 'build' })
-    delete svgPlugin.configResolved
-    const { load } = svgPlugin
-    svgPlugin.load = function fakeLoad(id) {
-      // @ts-expect-error the plugin is not updated
-      return load?.call(this, id, true)
-    }
-  }
-
   const plugins = [
     VuePlugin({
       template: {
@@ -60,7 +34,7 @@ export default defineConfig(({ mode, command }) => {
         },
       },
     }),
-    svgPlugin,
+    svgIconsPlugin(),
   ]
 
   // Ruby plugin is not needed inside of the vitest context and has some side effects.

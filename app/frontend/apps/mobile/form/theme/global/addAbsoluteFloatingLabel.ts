@@ -53,5 +53,6 @@ export const addAbsoluteFloatingLabel = (classes: Classes = {}) => {
       `),
     arrow: `${arrow} formkit-arrow flex items-center`,
     messages: 'px-2',
+    suffixIcon: 'text-white fill-current flex justify-center items-center',
   }
 }

@@ -2,7 +2,7 @@
 
 import type { App } from 'vue'
 
-import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
+import '#shared/components/CommonIcon/injectIcons.ts'
 import '#mobile/styles/main.scss'
 
 import initializeStore from '#shared/stores/index.ts'

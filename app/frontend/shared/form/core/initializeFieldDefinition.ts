@@ -7,6 +7,7 @@ import {
   outer,
   inner,
   wrapper,
+  icon,
   help,
   messages,
   message,
@@ -47,7 +48,13 @@ const initializeFieldDefinition = (
   if (options.schema) {
     const wrapperSchema = wrapper(
       label('$label'),
-      inner(prefix(), options.schema(), suffix()),
+      inner(
+        icon('prefix', 'label'),
+        prefix(),
+        options.schema(),
+        suffix(),
+        icon('suffix'),
+      ),
     )
     const blockSchema = [wrapperSchema]
 
