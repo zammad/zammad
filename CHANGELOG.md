@@ -109,3 +109,5 @@
 - Read-only view for tickets contains misleading elements [1679](https://github.com/zammad/zammad/issues/1679) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)]
 - Wrong value in session timeout [4322](https://github.com/zammad/zammad/issues/4322) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - Updating group settings causes huge numbers of delayed jobs [4306](https://github.com/zammad/zammad/issues/4306) [[bug](https://github.com/zammad/zammad/labels/bug)] [[search](https://github.com/zammad/zammad/labels/search)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+
+
