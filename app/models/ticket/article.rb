@@ -284,6 +284,7 @@ returns
   def attributes_with_association_names(empty_keys: false)
     attributes = super
     add_attachments_to_attributes(attributes)
+    add_time_unit_to_attributes(attributes)
     Ticket::Article.insert_urls(attributes)
   end
 
@@ -315,6 +316,11 @@ returns
 
   def add_attachments_to_attributes(attributes)
     attributes['attachments'] = attachments.map(&:attributes_for_display)
+    attributes
+  end
+
+  def add_time_unit_to_attributes(attributes)
+    attributes['time_unit'] = ticket_time_accounting&.time_unit.presence || nil
     attributes
   end
 
