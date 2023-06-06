@@ -625,7 +625,7 @@ RSpec.describe 'Ticket Create', type: :system do
         # verify issue
         content = find('.sidebar-git-issue-content')
         expect(content).to have_text('#1575 GitHub integration')
-        expect(content).to have_text('feature backlog')
+        expect(content).to have_text('enhancement')
         expect(content).to have_text('integration')
         expect(content).to have_text('4.0')
         expect(content).to have_text('Thorsten')
