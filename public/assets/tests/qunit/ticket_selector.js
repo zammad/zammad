@@ -861,6 +861,10 @@ window.onload = function() {
     ticket.pending_time = compareDate.toISOString();
     testTimeToday(assert, 'ticket.pending_time', false, ticket);
 
+    // Value missing.
+    ticket.pending_time = '';
+    testTimeToday(assert, 'ticket.pending_time', false, ticket);
+
     // -------------------------
     // BEFORE TIME
     // -------------------------
@@ -888,7 +892,7 @@ window.onload = function() {
     testTimeBeforeRelative(assert, 'ticket.pending_time', 1, 'year', false, ticket);
 
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() - 60 * 60 * 365 * 2 * 1000);
+    compareDate.setTime( compareDate.getTime() - 60 * 60 * 24 * 365 * 2 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeBeforeRelative(assert, 'ticket.pending_time', 1, 'year', true, ticket);
 
@@ -914,15 +918,32 @@ window.onload = function() {
     ticket.pending_time = compareDate.toISOString();
     testTimeAfterRelative(assert, 'ticket.pending_time', 1, 'day', true, ticket);
 
+    // week
+    ticket.pending_time = new Date().toISOString();
+    testTimeAfterRelative(assert, 'ticket.pending_time', 1, 'week', false, ticket);
+
+    compareDate = new Date();
+    compareDate.setTime( compareDate.getTime() + 60 * 60 * 24 * 14 * 1000);
+    ticket.pending_time = compareDate.toISOString();
+    testTimeAfterRelative(assert, 'ticket.pending_time', 1, 'week', true, ticket);
+
+    // month
+    ticket.pending_time = new Date().toISOString();
+    testTimeAfterRelative(assert, 'ticket.pending_time', 1, 'month', false, ticket);
+
+    compareDate = new Date();
+    compareDate.setTime( compareDate.getTime() + 60 * 60 * 24 * 60 * 1000);
+    ticket.pending_time = compareDate.toISOString();
+    testTimeAfterRelative(assert, 'ticket.pending_time', 1, 'month', true, ticket);
+
     // year
     ticket.pending_time = new Date().toISOString();
     testTimeAfterRelative(assert, 'ticket.pending_time', 1, 'year', false, ticket);
 
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() + 60 * 60 * 365 * 2 * 1000);
+    compareDate.setTime( compareDate.getTime() + 60 * 60 * 24 * 365 * 2 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeAfterRelative(assert, 'ticket.pending_time', 1, 'year', true, ticket);
-
 
     // -------------------------
     // WITHIN LAST TIME
