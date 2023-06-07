@@ -63,7 +63,7 @@ class KnowledgeBase
     end
 
     def update_single_child(child)
-      inherited_permissions = child.permissions_effective
+      inherited_permissions = (child.parent || child.knowledge_base).permissions_effective
 
       child.permissions.each do |child_permission|
         mark_permission_for_cleanup_if_needed(child_permission, inherited_permissions)

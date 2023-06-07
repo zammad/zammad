@@ -81,6 +81,23 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
               .to contain_exactly have_attributes(role: role_editor, access: 'editor', permissionable: knowledge_base)
           end
         end
+
+        context 'when child category has another role permission' do
+          before do
+            create(:knowledge_base_permission, permissionable: category, role: role_another, access: 'reader')
+          end
+
+          it 'removes conflicting permissions on descendant role but keeps another role' do
+            described_class.new(knowledge_base).update! role_editor => 'editor'
+            category.reload
+
+            expect(category.permissions_effective)
+              .to contain_exactly(
+                have_attributes(role: role_editor,  access: 'editor', permissionable: knowledge_base),
+                have_attributes(role: role_another, access: 'reader', permissionable: category),
+              )
+          end
+        end
       end
 
       context 'when saving role on KB category' do
@@ -114,6 +131,24 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
 
             expect(child_category.permissions_effective)
               .to contain_exactly have_attributes(role: role_editor, access: 'editor', permissionable: category)
+          end
+
+          context 'when child category has another role permission' do
+            before do
+              create(:knowledge_base_permission, permissionable: child_category, role: role_another, access: 'reader')
+            end
+
+            it 'removes conflicting permissions on descendant role but keeps another role' do
+              described_class.new(category).update! role_editor => 'none'
+              category.reload
+              child_category.reload
+
+              expect(child_category.permissions_effective)
+                .to contain_exactly(
+                  have_attributes(role: role_editor,  access: 'none',   permissionable: category),
+                  have_attributes(role: role_another, access: 'reader', permissionable: child_category),
+                )
+            end
           end
         end
 
