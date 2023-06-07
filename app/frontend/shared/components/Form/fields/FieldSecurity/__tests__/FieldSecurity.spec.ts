@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
+import Form from '#shared/components/Form/Form.vue'
 import { renderComponent } from '#tests/support/components/index.ts'
 
 const renderSecurityField = (props: any = {}) => {
@@ -87,5 +88,36 @@ describe('FieldSecurity', () => {
 
     expect(encrypt).toHaveAttribute('aria-selected', 'false')
     expect(sign).toHaveAttribute('aria-selected', 'false')
+  })
+
+  it("doesn't submit form on click", async () => {
+    const onSubmit = vi.fn()
+    const view = renderComponent(Form, {
+      form: true,
+      formField: true,
+      props: {
+        onSubmit,
+        schema: [
+          {
+            type: 'security',
+            name: 'security',
+            label: 'Security',
+            props: {
+              allowed: ['encryption', 'sign'],
+            },
+          },
+        ],
+      },
+    })
+
+    await view.events.click(
+      await view.findByRole('option', { name: 'Encrypt' }),
+    )
+
+    expect(onSubmit).not.toHaveBeenCalled()
+
+    await view.events.click(await view.findByRole('option', { name: 'Sign' }))
+
+    expect(onSubmit).not.toHaveBeenCalled()
   })
 })

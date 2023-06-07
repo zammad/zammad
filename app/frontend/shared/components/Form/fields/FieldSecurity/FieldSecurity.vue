@@ -67,6 +67,7 @@ useTraverseOptions(optionsContainer, { direction: 'horizontal' })
     <button
       v-for="{ option, label, icon } of options"
       :key="option"
+      type="button"
       role="option"
       class="flex select-none items-center gap-1 rounded-md px-2 py-1 text-base"
       :class="{

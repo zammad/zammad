@@ -509,9 +509,10 @@ export default {
       <div class="flex items-center justify-self-end text-base">
         <CommonButton
           variant="submit"
+          form="ticket-create"
+          type="submit"
           :disabled="submitButtonDisabled"
           transparent-background
-          @click="formSubmit"
         >
           {{ $t('Create') }}
         </CommonButton>
