@@ -16,9 +16,9 @@ RSpec.describe GitHub, integration: true, required_envs: %w[GITHUB_ENDPOINT GITH
       assignees:  ['Thorsten'],
       labels:     [
         {
-          color:      '#fef2c0',
+          color:      '#84b6eb',
           text_color: '#000000',
-          title:      'feature backlog'
+          title:      'enhancement'
         },
         {
           color:      '#bfdadc',
