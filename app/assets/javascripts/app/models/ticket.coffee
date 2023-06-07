@@ -234,12 +234,19 @@ class App.Ticket extends App.Model
       conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 1000 ) )
     else if condition['range'] == 'day'
       conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 24 * 1000 ) )
+    else if condition['range'] == 'week'
+      conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 24 * 7 * 1000 ) )
     else if condition['range'] == 'month'
-      conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 30 * 1000 ) )
+      conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 24 * 30 * 1000 ) )
     else if condition['range'] == 'year'
-      conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 365 * 1000 ) )
+      conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 24 * 365 * 1000 ) )
+    else
+      throw "Unknown range: #{condition.range}"
 
     conditionValue
+
+  @_datesOnSameDay: (date1, date2) ->
+    date1.getFullYear() == date2.getFullYear() && date1.getMonth() == date2.getMonth() && date1.getDate() == date2.getDate()
 
   @_selectorMatch: (object, objectName, attributeName, condition) ->
     conditionValue = condition.value
@@ -303,7 +310,7 @@ class App.Ticket extends App.Model
         else if condition.operator == 'is not'
           result = true if objectValue.toString().trim().toLowerCase() isnt loopConditionValue.toString().trim().toLowerCase()
         else if condition.operator == 'today'
-          result = true if new Date(objectValue.toString()).toISOString().substring(0, 10) == new Date().toISOString().substring(0, 10)
+          result = true if @_datesOnSameDay(new Date(objectValue.toString()), new Date())
         else if condition.operator == 'after (absolute)'
           result = true if new Date(objectValue.toString()) > new Date(loopConditionValue.toString())
         else if condition.operator == 'before (absolute)'
