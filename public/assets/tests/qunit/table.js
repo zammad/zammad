@@ -874,6 +874,35 @@ QUnit.test('Overview grouping does not work with multi_tree_select #4408', asser
   assert.deepEqual(el.find('tbody > tr > td[colspan=1]').map(function() { return $(this).text() }).get(), ['some data 1', 'some data 2, some data 3'], '#4408 - correct group descriptions')
 });
 
+QUnit.test('Table - numeric sort', assert => {
+  $('#qunit').append('<hr><h1>Table - numeric sort</h1><div id="table-data10"></div>')
+  var el = $('#table-data10')
+
+  object_data = [
+    { number: 4501, title: 'Ticket 10', time_unit: 10 },
+    { number: 4502, title: 'Ticket 25', time_unit: 25 },
+    { number: 4503, title: 'Ticket 50', time_unit: 50 },
+  ]
+
+  new App.ControllerTable({
+    tableId:        'numericsort',
+    el:             el,
+    overview:       ['number', 'title', 'time_unit'],
+    attribute_list: [
+      { name: 'number', display: '#', tag: 'input', type: 'text', limit: 100, null: true, readonly: 1, width: '68px' },
+      { name: 'title', display: 'Title', tag: 'input', type: 'text', limit: 100, null: false },
+      { name: 'time_unit', display: 'Accounted Time', readonly: 1, width: '12%', tag: 'float' },
+    ],
+    objects: object_data,
+  })
+
+  click_sort(el, 3)
+  assert.ok(_.isEqual(list_items(el, 3), ['10', '25', '50']), 'Sorting by time unit ASC is fine')
+
+  click_sort(el, 3)
+  assert.ok(_.isEqual(list_items(el, 3), ['50', '25', '10']), 'Sorting by time unit DESC is fine')
+});
+
 function click_sort(table, column_number) {
   table
     .find(`table > thead > tr > th:nth-child(${column_number}) > .js-sort`)

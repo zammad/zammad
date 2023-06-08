@@ -754,6 +754,8 @@ class App.ControllerTable extends App.Controller
           '\uFFFF'
       )
 
+    modelAttributes = App[@model]?.configure_attributes || []
+
     localObjects is undefined
     if orderBy
       for header in @headers
@@ -782,6 +784,13 @@ class App.ControllerTable extends App.Controller
                       localItem = localItem.name.toLowerCase()
                     return localItem
                 return ''
+
+              if header.tag is 'float' || modelAttributes[header.name]?.tag is 'float'
+                return parseFloat(item[header.name])
+
+              if header.tag is 'integer' || modelAttributes[header.name]?.tag is 'integer'
+                return parseInt(item[header.name])
+
               item[header.name]
           )
           if orderDirection is 'DESC'
@@ -822,6 +831,13 @@ class App.ControllerTable extends App.Controller
                         localItem = localItem.name.toLowerCase()
                       return localItem
                   return ''
+
+                if attribute.tag is 'float' || modelAttributes[attribute.name]?.tag is 'float'
+                  return parseFloat(item[attribute.name])
+
+                if attribute.tag is 'integer' || modelAttributes[attribute.name]?.tag is 'integer'
+                  return parseInt(item[attribute.name])
+
                 item[attribute.name]
             )
             if orderDirection is 'DESC'
