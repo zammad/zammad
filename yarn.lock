@@ -9998,6 +9998,11 @@ tippy.js@^6.3.7:
   dependencies:
     "@popperjs/core" "^2.9.0"
 
+tiptap-text-direction@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/tiptap-text-direction/-/tiptap-text-direction-0.3.0.tgz#9195b7e2f5f256356ed9396f7fae3399df0bf245"
+  integrity sha512-n5PduD4RmjsorlImOmh/CHmjmIJHgprMmcPJDp6RwebjYgyvCCtgTFlF3Sbx2CI67MN/RKpyfY4/zv25SAf2pg==
+
 title-case@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/title-case/-/title-case-3.0.3.tgz#bc689b46f02e411f1d1e1d081f7c3deca0489982"
