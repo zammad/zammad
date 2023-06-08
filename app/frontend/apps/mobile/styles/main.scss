@@ -53,6 +53,14 @@
   a {
     @apply text-blue;
   }
+
+  [dir='rtl'] {
+    text-align: right;
+  }
+
+  [dir='ltr'] {
+    text-align: left;
+  }
 }
 
 @layer base {

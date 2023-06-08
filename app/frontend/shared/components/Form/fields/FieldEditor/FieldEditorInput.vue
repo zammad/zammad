@@ -281,7 +281,7 @@ onMounted(() => {
   <div class="p-2">
     <EditorContent
       ref="editorVueInstance"
-      class="text-base"
+      class="text-base ltr:text-left rtl:text-right"
       data-test-id="field-editor"
       :editor="editor"
     />

@@ -9,6 +9,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Paragraph from '@tiptap/extension-paragraph'
 import HardBreak from '@tiptap/extension-hard-break'
 import CharacterCount from '@tiptap/extension-character-count'
+import TextDirection from 'tiptap-text-direction'
 
 import type { Extensions } from '@tiptap/core'
 
@@ -42,6 +43,13 @@ export const getPlainExtensions = (): Extensions => [
   }),
   HardBreakPlain,
   CharacterCount,
+  TextDirection.configure({
+    defaultDirection: document.documentElement.getAttribute('dir') as
+      | 'ltr'
+      | 'rtl'
+      | null,
+    types: ['paragraph', 'heading'],
+  }),
 ]
 
 export const getHtmlExtensions = (): Extensions => [
@@ -85,6 +93,13 @@ export const getHtmlExtensions = (): Extensions => [
     autolink: false,
   }),
   UserLink,
+  TextDirection.configure({
+    defaultDirection: document.documentElement.getAttribute('dir') as
+      | 'ltr'
+      | 'rtl'
+      | null,
+    types: ['paragraph', 'heading'],
+  }),
 ]
 
 export const getCustomExtensions = (
