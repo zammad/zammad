@@ -4983,6 +4983,10 @@ msgstr ""
 msgid "Feedback Form"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+msgid "File '%s' is uploading"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 msgid "File too big, max. %s MB allowed."

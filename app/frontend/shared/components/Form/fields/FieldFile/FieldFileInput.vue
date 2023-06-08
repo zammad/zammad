@@ -31,6 +31,8 @@ const uploadFiles = computed<FileUploaded[]>({
   },
 })
 
+const loadingFiles = ref<FileUploaded[]>([])
+
 const addFileMutation = new MutationHandler(useFormUploadCacheAddMutation({}))
 const addFileLoading = addFileMutation.loading()
 
@@ -48,9 +50,22 @@ const canInteract = computed(
 
 const fileInput = ref<HTMLInputElement>()
 
+const reset = (input: HTMLInputElement) => {
+  loadingFiles.value = []
+  input.value = ''
+  input.files = null
+}
+
 const onFileChanged = async ($event: Event) => {
   const input = $event.target as HTMLInputElement
   const { files } = input
+
+  loadingFiles.value = Array.from(files || []).map((file) => ({
+    name: file.name,
+    size: file.size,
+    type: file.type,
+  }))
+
   const uploads = await convertFileList(files)
 
   const data = await addFileMutation.send({
@@ -60,7 +75,10 @@ const onFileChanged = async ($event: Event) => {
 
   const uploadedFiles = data?.formUploadCacheAdd?.uploadedFiles
 
-  if (!uploadedFiles) return
+  if (!uploadedFiles) {
+    reset(input)
+    return
+  }
 
   const previewableFile = uploadedFiles.map((file, index) => ({
     ...file,
@@ -68,8 +86,7 @@ const onFileChanged = async ($event: Event) => {
   }))
 
   uploadFiles.value = [...uploadFiles.value, ...previewableFile]
-  input.value = ''
-  input.files = null
+  reset(input)
 }
 
 const { waitForConfirmation } = useConfirmationDialog()
@@ -141,7 +158,7 @@ useTraverseOptions(filesContainer, {
     <div class="ShadowGradient TopGradient absolute h-5 w-full"></div>
   </div>
   <div
-    v-if="uploadFiles.length"
+    v-if="uploadFiles.length || loadingFiles.length"
     ref="filesContainer"
     class="max-h-48 overflow-auto px-4 pt-4"
     :class="{
@@ -157,6 +174,13 @@ useTraverseOptions(filesContainer, {
       :download-url="uploadFile.content"
       @preview="canInteract && showImage(uploadFile)"
       @remove="canInteract && removeFile(uploadFile)"
+    />
+    <CommonFilePreview
+      v-for="(uploadFile, idx) of loadingFiles"
+      :key="uploadFile.id || `${uploadFile.name}${idx}`"
+      :file="uploadFile"
+      loading
+      no-remove
     />
   </div>
   <div v-if="uploadFiles.length > 2" class="relative w-full">

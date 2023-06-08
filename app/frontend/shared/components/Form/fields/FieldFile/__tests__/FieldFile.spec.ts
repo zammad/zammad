@@ -8,6 +8,8 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
 import { waitUntil } from '#tests/support/utils.ts'
+import { createDeferred } from '#shared/utils/helpers.ts'
+import type { FormUploadCacheAddMutation } from '#shared/graphql/types.ts'
 import { FormUploadCacheAddDocument } from '../graphql/mutations/uploadCache/add.api.ts'
 import { FormUploadCacheRemoveDocument } from '../graphql/mutations/uploadCache/remove.api.ts'
 
@@ -257,5 +259,37 @@ describe('Fields - FieldFile', () => {
     expect(fileButton).toBeDisabled()
     await view.events.click(fileButton)
     expect(clickEvent).not.toHaveBeenCalled()
+  })
+
+  it('files have spinner while uploading', async () => {
+    const file = new File([], 'foo.png', { type: 'image/png' })
+    const uploadedFileQuery: FormUploadCacheAddMutation = {
+      formUploadCacheAdd: {
+        uploadedFiles: [
+          {
+            id: '1',
+            name: file.name,
+            size: file.size,
+            type: file.type,
+          },
+        ],
+      },
+    }
+    const mockAdd = mockGraphQLApi(FormUploadCacheAddDocument).willResolve(null)
+    const view = renderFileInput()
+    const { promise, resolve } = createDeferred<{
+      data: FormUploadCacheAddMutation
+    }>()
+    mockAdd.spies.resolve.mockResolvedValue(promise)
+
+    await view.events.upload(view.getByTestId('fileInput'), [file])
+    expect(
+      await view.findByLabelText("File 'foo.png' is uploading"),
+    ).toBeInTheDocument()
+
+    resolve({ data: uploadedFileQuery })
+    expect(
+      await view.findByRole('link', { name: 'Preview foo.png' }),
+    ).toBeInTheDocument()
   })
 })

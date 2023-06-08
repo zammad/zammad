@@ -13,6 +13,7 @@ export interface Props {
 
   downloadUrl?: string
   previewUrl?: string
+  loading?: boolean
 
   noPreview?: boolean
   noRemove?: boolean
@@ -103,6 +104,13 @@ const onFileClick = (event: Event) => {
           :src="previewUrl"
           :alt="$t('Image of %s', file.name)"
           @error="imageFailed = true"
+        />
+        <CommonIcon
+          v-else-if="loading"
+          size="base"
+          :label="$t('File \'%s\' is uploading', file.name)"
+          name="mobile-loading"
+          animation="spin"
         />
         <CommonIcon v-else size="base" decorative :name="icon" />
       </div>
