@@ -13,7 +13,7 @@ class App.Ticket extends App.Model
       { name: 'pending_time',             display: __('Pending till'), tag: 'datetime', null: true, width: '130px' },
       { name: 'priority_id',              display: __('Priority'),     tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', width: '54px', edit: true, customer: true },
       { name: 'article_count',            display: __('Article#'),     readonly: 1, width: '12%' },
-      { name: 'time_unit',                display: __('Accounted Time'),          readonly: 1, width: '12%' },
+      { name: 'time_unit',                display: __('Accounted Time'),          readonly: 1, width: '12%', tag: 'float' },
       { name: 'escalation_at',            display: __('Escalation at'),           tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
       { name: 'first_response_escalation_at', display: __('Escalation at (First Response Time)'), tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
       { name: 'update_escalation_at', display: __('Escalation at (Update Time)'), tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
