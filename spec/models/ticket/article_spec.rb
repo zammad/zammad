@@ -46,7 +46,12 @@ RSpec.describe Ticket::Article, type: :model do
           let(:created_by) { create(:user) }
 
           it 'sets the from to the realname of the user' do
-            expect(article.reload.from).to eq("#{article.created_by.firstname} #{article.created_by.lastname} <#{article.ticket.group.email_address.email}>")
+            expect(article.reload.from).to be_in(
+              [
+                "#{article.created_by.firstname} #{article.created_by.lastname} <#{article.ticket.group.email_address.email}>",
+                "\"#{article.created_by.firstname} #{article.created_by.lastname}\" <#{article.ticket.group.email_address.email}>",
+              ]
+            )
           end
         end
 

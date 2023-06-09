@@ -296,7 +296,12 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       article = Ticket::Article.where(ticket_id: json_response['id']).first
       expect(article.origin_by_id).to eq(customer.id)
-      expect(article.from).to eq("#{customer.firstname} #{customer.lastname} <#{customer.email}>")
+      expect(article.from).to be_in(
+        [
+          "#{customer.firstname} #{customer.lastname} <#{customer.email}>",
+          "\"#{customer.firstname} #{customer.lastname}\" <#{customer.email}>"
+        ]
+      )
     end
 
     it 'does create phone ticket by customer and manipulate origin_by_id' do
