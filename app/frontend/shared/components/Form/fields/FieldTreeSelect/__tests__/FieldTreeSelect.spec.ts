@@ -6,16 +6,8 @@ import { FormKit } from '@formkit/vue'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { i18n } from '#shared/i18n.ts'
 import { getNode } from '@formkit/core'
-
-// Mock IntersectionObserver feature by injecting it into the global namespace.
-//   More info here: https://vitest.dev/guide/mocking.html#globals
-const IntersectionObserverMock = vi.fn(() => ({
-  disconnect: vi.fn(),
-  observe: vi.fn(),
-  takeRecords: vi.fn(),
-  unobserve: vi.fn(),
-}))
-vi.stubGlobal('IntersectionObserver', IntersectionObserverMock)
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import { EnumTextDirection } from '#shared/graphql/types.ts'
 
 const testOptions = [
   {
@@ -1396,5 +1388,28 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
     })
 
     expect(wrapper.getByTestId('field-treeselect')).toHaveClass('formkit-input')
+  })
+})
+
+describe('Form - Field - TreeSelect - Visuals', () => {
+  it('arrow changes direction when locale changes', async () => {
+    const view = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        type: 'treeselect',
+        options: testOptions,
+      },
+    })
+
+    expect(view.getByIconName('mobile-chevron-right')).toBeInTheDocument()
+
+    const locale = useLocaleStore()
+    locale.localeData = {
+      dir: EnumTextDirection.Rtl,
+    } as any
+
+    await expect(
+      view.findByIconName('mobile-chevron-left'),
+    ).resolves.toBeInTheDocument()
   })
 })

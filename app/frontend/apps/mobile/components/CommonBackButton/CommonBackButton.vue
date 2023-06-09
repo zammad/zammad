@@ -26,11 +26,11 @@ const isHomeButton = computed(() => {
   return true
 })
 
-const { localeData } = useLocaleStore()
+const locale = useLocaleStore()
 
 const icon = computed(() => {
   if (isHomeButton.value) return 'mobile-home'
-  if (localeData?.dir === 'rtl') return 'mobile-chevron-right'
+  if (locale.localeData?.dir === 'rtl') return 'mobile-chevron-right'
   return 'mobile-chevron-left'
 })
 </script>

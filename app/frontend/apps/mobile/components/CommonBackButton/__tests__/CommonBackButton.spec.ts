@@ -3,6 +3,8 @@
 import { i18n } from '#shared/i18n.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { flushPromises } from '@vue/test-utils'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import { EnumTextDirection } from '#shared/graphql/types.ts'
 import CommonBackButton from '../CommonBackButton.vue'
 
 // $walker.back not tested because there is a unit test for it
@@ -97,5 +99,30 @@ describe('rendering common back button', () => {
     })
 
     expect(view.container).toHaveTextContent('Back')
+  })
+
+  it('back button changes direction when locale changes', async () => {
+    window.history.replaceState(
+      { back: '/tickets/1/information/customer' },
+      '/tickets/1/information/customer',
+    )
+
+    const view = renderComponent(CommonBackButton, {
+      router: true,
+      props: {
+        fallback: '/',
+      },
+    })
+
+    expect(view.getByIconName('mobile-chevron-left')).toBeInTheDocument()
+
+    const locale = useLocaleStore()
+    locale.localeData = {
+      dir: EnumTextDirection.Rtl,
+    } as any
+
+    await expect(
+      view.findByIconName('mobile-chevron-right'),
+    ).resolves.toBeInTheDocument()
   })
 })

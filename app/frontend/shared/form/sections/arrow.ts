@@ -2,28 +2,25 @@
 
 import type { FormKitSchemaNode } from '@formkit/core'
 import { createSection } from '@formkit/inputs'
-import { useLocaleStore } from '#shared/stores/locale.ts'
 
-export const arrow = createSection('arrow', () => {
-  const locale = useLocaleStore()
-
-  return {
-    $el: 'div',
-    attrs: {
-      class: '$classes.arrow',
-    },
-    children: [
-      {
-        $cmp: 'CommonIcon',
-        props: {
-          size: 'base',
-          class: 'shrink-0',
-          name: `mobile-chevron-${
-            locale.localeData?.dir === 'rtl' ? 'left' : 'right'
-          }`,
-          decorative: true,
-        },
+export const arrow = createSection(
+  'arrow',
+  () =>
+    ({
+      $el: 'div',
+      attrs: {
+        class: '$classes.arrow',
       },
-    ],
-  } as FormKitSchemaNode
-})
+      children: [
+        {
+          $cmp: 'CommonIcon',
+          props: {
+            size: 'base',
+            class: 'shrink-0',
+            name: '$arrowIconName',
+            decorative: true,
+          },
+        },
+      ],
+    } as FormKitSchemaNode),
+)

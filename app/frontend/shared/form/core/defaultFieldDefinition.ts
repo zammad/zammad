@@ -5,6 +5,7 @@ import type { FormDefaultProps } from '#shared/types/form.ts'
 import hideField from '../features/hideField.ts'
 import translateWrapperProps from '../features/translateWrapperProps.ts'
 import addBlurEvent from '../features/addBlurEvent.ts'
+import formLocaleDir from '../features/formLocaleDir.ts'
 
 const defaultProps: (keyof FormDefaultProps)[] = [
   'formId',
@@ -16,7 +17,7 @@ const defaultProps: (keyof FormDefaultProps)[] = [
 const defaulfFieldDefinition: Required<
   Pick<FormKitTypeDefinition, 'props' | 'features'>
 > = {
-  features: [translateWrapperProps, hideField, addBlurEvent],
+  features: [translateWrapperProps, hideField, addBlurEvent, formLocaleDir],
   props: defaultProps,
 }
 

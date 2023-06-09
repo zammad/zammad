@@ -48,6 +48,16 @@ Object.defineProperty(Element.prototype, 'scroll', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollBy', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollIntoView', { value: vi.fn() })
 
+// Mock IntersectionObserver feature by injecting it into the global namespace.
+//   More info here: https://vitest.dev/guide/mocking.html#globals
+const IntersectionObserverMock = vi.fn(() => ({
+  disconnect: vi.fn(),
+  observe: vi.fn(),
+  takeRecords: vi.fn(),
+  unobserve: vi.fn(),
+}))
+globalThis.IntersectionObserver = IntersectionObserverMock as any
+
 require.extensions['.css'] = () => ({})
 
 vi.stubGlobal('requestAnimationFrame', (cb: () => void) => {
