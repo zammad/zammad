@@ -47,7 +47,7 @@ module Ticket::Article::AddsMetadataGeneral
 
     # in case the customer is using origin_by_id, force it to current session user
     # and set sender to Customer
-    if !TicketPolicy.new(created_by, ticket).agent_read_access?
+    if !created_by.permissions?('ticket.agent')
       self.origin_by_id = created_by_id
       self.sender = Ticket::Article::Sender.lookup(name: 'Customer')
     end

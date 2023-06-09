@@ -2489,4 +2489,91 @@ RSpec.describe 'Ticket', type: :request do
       expect(SearchIndexBackend.search(delete_article_body, 'Ticket', limit: 1)).to be_blank
     end
   end
+
+  describe 'Agent with being "ticket.agent" and "ticket.customer" is creating + updating a ticket', :aggregate_failures, authenticated_as: :user do
+    let(:group_only_create) { create(:group) }
+    let(:user)              { create(:agent_and_customer) }
+
+    before do
+      skip 'This test requires some changes to the metadata concerns for the Ticket::Article model which are not done yet.'
+
+      user.group_names_access_map = {
+        group_only_create.name => %w[create],
+      }
+    end
+
+    it 'contains correct information for sender if agent sets himself as customer and responds' do
+      params = {
+        title:       'Test title for issue #4647',
+        group_id:    group_only_create.id,
+        customer_id: user.id,
+        article:     {
+          type:     'web',
+          internal: false,
+          sender:   'Customer',
+          subject:  'Test subject',
+          body:     SecureRandom.uuid,
+        },
+      }
+
+      post '/api/v1/tickets', params: params, as: :json
+
+      expect(response).to have_http_status(:created)
+
+      ticket = Ticket.last
+
+      expect(ticket.customer_id).to eq(user.id)
+      expect(ticket.articles.first).to have_attributes(
+        sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+        from:   "#{user.fullname} <#{user.email}>",
+      )
+
+      response_params = {
+        article: {
+          body: SecureRandom.uuid,
+        },
+      }
+      put "/api/v1/tickets/#{ticket.id}", params: response_params, as: :json
+
+      expect(response).to have_http_status(:ok)
+
+      expect(ticket.reload.articles.last.sender.name).to eq('Customer')
+    end
+  end
+
+  describe 'Article contains wrong "origin_by" + "from" information', :aggregate_failures, authenticated_as: :user do
+    let(:api_role) do
+      role = create(:role, name: 'API', permission_names: ['ticket.agent'])
+      role.group_names_access_map = {
+        Group.first.name => %w[create change],
+      }
+      role
+    end
+
+    let(:user) { create(:user, roles: [api_role]) }
+
+    it 'contains correct "origin_by" + "from" information' do
+      params = {
+        title:       'Test title for issue #4647',
+        group_id:    Group.first.id,
+        customer_id: 'guess:dummy@example.com',
+        article:     {
+          type:     'web',
+          internal: false,
+          sender:   'Customer',
+          subject:  'Test subject',
+          body:     SecureRandom.uuid,
+        },
+      }
+
+      post '/api/v1/tickets', params: params, as: :json
+
+      expect(response).to have_http_status(:created)
+
+      expect(Ticket.last.articles.first).to have_attributes(
+        origin_by_id: User.find_by(email: 'dummy@example.com').id,
+        from:         '  <dummy@example.com>',
+      )
+    end
+  end
 end

@@ -425,5 +425,47 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
         end
       end
     end
+
+    context 'with an agent that has a specific role limited to create/update permission', authenticated_as: :user do
+      let(:user) { create(:user, roles: [api_role]) }
+
+      let(:api_role) do
+        role = create(:role, name: 'API', permission_names: ['ticket.agent'])
+        role.group_names_access_map = {
+          Group.first.name => %w[read create change], # FIXME: 'read' should not be required!
+        }
+        role
+      end
+
+      let(:input_payload) do
+        {
+          title:      'Test title for issue #4647',
+          groupId:    gql.id(Group.first),
+          customerId: gql.id(customer),
+          article:    article_payload,
+        }
+      end
+
+      let(:article_payload) do
+        {
+          type:     'web',
+          internal: false,
+          sender:   'Customer',
+          subject:  'Test subject',
+          body:     SecureRandom.uuid,
+        }
+      end
+
+      before { Trigger.destroy_all } # triggers may cause additional articles to be created
+
+      it 'contains correct "origin_by" + "from" information' do
+        gql.execute(query, variables: variables)
+
+        expect(Ticket.last.articles.last).to have_attributes(
+          origin_by_id: customer.id,
+          from:         "#{customer.fullname} <#{customer.email}>",
+        )
+      end
+    end
   end
 end
