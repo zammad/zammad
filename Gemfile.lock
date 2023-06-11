@@ -119,7 +119,7 @@ GEM
     builder (3.2.4)
     byebug (11.1.3)
     byk (1.1.0)
-    capybara (3.39.1)
+    capybara (3.39.2)
       addressable
       matrix
       mini_mime (>= 0.1.3)
@@ -456,7 +456,7 @@ GEM
       ffi (~> 1.0)
     rchardet (1.8.0)
     redis (4.8.1)
-    regexp_parser (2.8.0)
+    regexp_parser (2.8.1)
     rexml (3.2.5)
     rotp (6.2.2)
     rspec-core (3.12.2)
