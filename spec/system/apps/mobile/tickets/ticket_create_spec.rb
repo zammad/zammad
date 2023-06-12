@@ -26,7 +26,9 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
   end
 
   def check_is_focused(element)
-    expect(page.driver.browser.switch_to.active_element).to eql(element.native)
+    wait.until do
+      page.driver.browser.switch_to.active_element == element.native
+    end
   end
 
   before do
