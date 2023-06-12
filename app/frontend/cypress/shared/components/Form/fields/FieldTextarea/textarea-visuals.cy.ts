@@ -66,4 +66,14 @@ describe('testing visuals for "FieldTextarea"', () => {
         checkFormMatchesSnapshot()
       })
   })
+
+  it(`renders hidden textarea`, () => {
+    mountFormField('textarea', { label: 'textarea', labelSrOnly: true })
+    checkFormMatchesSnapshot()
+    cy.get('textarea')
+      .type('Some text')
+      .then(() => {
+        checkFormMatchesSnapshot({ subTitle: 'filled' })
+      })
+  })
 })

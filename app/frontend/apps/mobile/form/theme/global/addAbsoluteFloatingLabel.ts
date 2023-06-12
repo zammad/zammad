@@ -40,6 +40,7 @@ export const addAbsoluteFloatingLabel = (classes: Classes = {}) => {
         placeholder:text-transparent
         focus-within:pt-8
         formkit-populated:pt-8
+        formkit-label-hidden:pt-2
       `),
     label: clean(`
         ${label}

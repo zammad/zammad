@@ -27,4 +27,14 @@ describe('testing visuals for "FieldSearch"', () => {
     mountFormField('search', { label: 'search', disabled: true })
     checkFormMatchesSnapshot()
   })
+
+  it(`renders hidden search`, () => {
+    mountFormField('search', { label: 'search', labelSrOnly: true })
+    checkFormMatchesSnapshot()
+    cy.get('input')
+      .type(input)
+      .then(() => {
+        checkFormMatchesSnapshot({ subTitle: 'filled' })
+      })
+  })
 })

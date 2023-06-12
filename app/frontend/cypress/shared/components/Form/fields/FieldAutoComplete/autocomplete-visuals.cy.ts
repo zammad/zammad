@@ -148,5 +148,20 @@ describe('testing visuals for "FieldAutocomplete"', () => {
         },
       })
     })
+
+    it(`renders hidden ${type}`, () => {
+      mountFormField(type, { label: type, labelSrOnly: true })
+      checkFormMatchesSnapshot({ type })
+    })
+
+    it(`renders selected hidden ${type}`, () => {
+      mountFormField(type, {
+        label: type,
+        value: 0,
+        options,
+        labelSrOnly: true,
+      })
+      checkFormMatchesSnapshot({ type })
+    })
   })
 })

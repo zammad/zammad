@@ -33,4 +33,9 @@ describe('testing visuals for "FieldRadio"', () => {
     })
     checkFormMatchesSnapshot()
   })
+
+  it(`renders hidden radio`, () => {
+    mountFormField('radio', { label: 'Radio', labelSrOnly: true })
+    checkFormMatchesSnapshot()
+  })
 })

@@ -80,5 +80,15 @@ describe('testing visuals for "FieldDate"', () => {
       })
       checkFormMatchesSnapshot({ type })
     })
+
+    it(`renders hidden ${type}`, () => {
+      mountFormField(type, { label: type, labelSrOnly: true })
+      checkFormMatchesSnapshot({ type })
+      cy.findByLabelText(type)
+        .type(`${input}{enter}`)
+        .then(() => {
+          checkFormMatchesSnapshot({ subTitle: 'filled', type })
+        })
+    })
   })
 })
