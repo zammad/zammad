@@ -54,6 +54,7 @@ class TimeAccountingsController < ApplicationController
     end
 
     if !params[:download]
+      results = results.last(params[:limit].to_i) if params[:limit]
       render json: results
       return
     end
@@ -150,6 +151,8 @@ class TimeAccountingsController < ApplicationController
         }
         results.push result
       end
+
+      results = results.last(params[:limit].to_i) if params[:limit]
       render json: results
       return
     end
@@ -262,6 +265,7 @@ class TimeAccountingsController < ApplicationController
       return
     end
 
+    results = results.last(params[:limit].to_i) if params[:limit]
     render json: results
   end
 
@@ -337,6 +341,7 @@ class TimeAccountingsController < ApplicationController
       return
     end
 
+    results = results.last(params[:limit].to_i) if params[:limit]
     render json: results
   end
 end

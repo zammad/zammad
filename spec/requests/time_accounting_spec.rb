@@ -11,12 +11,14 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
 
   describe '/api/v1/time_accounting/log/by_activity' do
     context 'when requesting a JSON response' do
-      it 'responds with an JSON' do
+      before do
         ticket = create(:ticket, customer: admin)
         create(:ticket_time_accounting, ticket: ticket, created_by_id: admin.id)
         create(:ticket_time_accounting, ticket: ticket, created_by_id: agent.id)
-
         authenticated_as(admin)
+      end
+
+      it 'responds with an JSON' do
         get "/api/v1/time_accounting/log/by_activity/#{year}/#{month}", as: :json
 
         expect(json_response.first).to include('agent' => admin.fullname)
@@ -24,6 +26,12 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
 
         expect(json_response.second).to include('agent' => agent.fullname)
         expect(json_response.second).to include('customer' => admin.fullname)
+      end
+
+      it 'respects :limit' do
+        get "/api/v1/time_accounting/log/by_activity/#{year}/#{month}?limit=1", as: :json
+
+        expect(json_response.count).to be 1
       end
     end
 

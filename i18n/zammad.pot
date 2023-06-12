@@ -4174,6 +4174,10 @@ msgstr ""
 msgid "Download Private Key"
 msgstr ""
 
+#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+msgid "Download all records"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
@@ -8002,6 +8006,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Only packages from known, trusted, and verified sources should be installed."
+msgstr ""
+
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
+msgid "Only the 20 most recent records are displayed. Download to view the full list."
 msgstr ""
 
 #: db/seeds/settings.rb

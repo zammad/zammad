@@ -177,7 +177,7 @@ class ByActivity extends App.Controller
     @ajax(
       id:    'by_activity'
       type:  'GET'
-      url:   "#{@apiPath}/time_accounting/log/by_activity/#{@year}/#{@month}"
+      url:   "#{@apiPath}/time_accounting/log/by_activity/#{@year}/#{@month}?limit=21"
       processData: true
       success: (data, status, xhr) =>
         @render(data)
@@ -197,7 +197,7 @@ class ByTicket extends App.Controller
     @ajax(
       id:    'by_ticket'
       type:  'GET'
-      url:   "#{@apiPath}/time_accounting/log/by_ticket/#{@year}/#{@month}"
+      url:   "#{@apiPath}/time_accounting/log/by_ticket/#{@year}/#{@month}?limit=21"
       processData: true
       success: (data, status, xhr) =>
         @render(data)
@@ -217,7 +217,7 @@ class ByCustomer extends App.Controller
     @ajax(
       id:    'by_customer'
       type:  'GET'
-      url:   "#{@apiPath}/time_accounting/log/by_customer/#{@year}/#{@month}"
+      url:   "#{@apiPath}/time_accounting/log/by_customer/#{@year}/#{@month}?limit=21"
       processData: true
       success: (data, status, xhr) =>
         @render(data)
@@ -237,7 +237,7 @@ class ByOrganization extends App.Controller
     @ajax(
       id:    'by_organization'
       type:  'GET'
-      url:   "#{@apiPath}/time_accounting/log/by_organization/#{@year}/#{@month}"
+      url:   "#{@apiPath}/time_accounting/log/by_organization/#{@year}/#{@month}?limit=21"
       processData: true
       success: (data, status, xhr) =>
         @render(data)

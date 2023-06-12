@@ -10,12 +10,15 @@
     <th><%- @T('Time Units') %>
   </thead>
   <tbody>
-  <% for row in @rows: %>
+  <% for row in @rows.slice(-20): %>
   <tr>
     <td><a href="#organization/profile/<%- row.organization.id %>"><%= row.organization.name %></a>
     <td><%= row.time_unit %>
   <% end %>
   </tbody>
 </table>
+<% if @rows.length > 20: %>
+  <p class="help-text"><%- @T('Only the 20 most recent records are displayed. Download to view the full list.') %></p>
+<% end %>
 </div>
 <% end %>

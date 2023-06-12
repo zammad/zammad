@@ -17,7 +17,7 @@
     <th><%- @T('Closed At') %>
   </thead>
   <tbody>
-  <% for row in @rows: %>
+  <% for row in @rows.slice(-20): %>
   <tr>
     <td><a href="#ticket/zoom/<%- row.ticket.id %>"><%= row.ticket.number %></a>
     <td title="<%= row.ticket.title %>"><%= row.ticket.title || '-' %>
@@ -31,5 +31,8 @@
   <% end %>
   </tbody>
 </table>
+<% if @rows.length > 20: %>
+  <p class="help-text"><%- @T('Only the 20 most recent records are displayed. Download to view the full list.') %></p>
+<% end %>
 </div>
 <% end %>
