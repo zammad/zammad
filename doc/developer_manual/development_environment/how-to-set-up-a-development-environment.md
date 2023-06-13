@@ -22,7 +22,7 @@ brew install postgresql forego imlib2 openssl@1.1 direnv geckodriver chromedrive
 For Linux:
 
 ```screen
-sudo apt install postgresql libimlib2 openssl direnv shellcheck
+sudo apt install postgresql libimlib2 libimlib2-dev openssl direnv shellcheck
 ```
 
 Unfortunately there is no `forego` package / binary available for Linux. We recommend to build
