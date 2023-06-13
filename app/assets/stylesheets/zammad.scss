@@ -226,8 +226,9 @@ html {
 
 body {
   font-family: 'Fira Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  line-height: 1.45;
   font-weight: normal;
+  font-variant-ligatures: none;
+  line-height: 1.45;
   background: var(--background-primary);
   height: 100%;
   color: var(--text-normal);
