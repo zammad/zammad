@@ -2095,7 +2095,7 @@ export type TicketCreatePayload = {
   __typename?: 'TicketCreatePayload';
   /** Errors encountered during execution of the mutation. */
   errors?: Maybe<Array<UserError>>;
-  /** The created ticket. */
+  /** The created ticket. If this is present but empty, the mutation was successful but the user has no rights to view the new ticket. */
   ticket?: Maybe<Ticket>;
 };
 
@@ -2285,7 +2285,7 @@ export type TicketUpdatePayload = {
   __typename?: 'TicketUpdatePayload';
   /** Errors encountered during execution of the mutation. */
   errors?: Maybe<Array<UserError>>;
-  /** The updated ticket. */
+  /** The updated ticket. If this is present but empty, the mutation was successful but the user has no rights to view the updated ticket. */
   ticket?: Maybe<Ticket>;
 };
 

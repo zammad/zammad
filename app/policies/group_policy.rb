@@ -4,7 +4,7 @@ class GroupPolicy < ApplicationPolicy
   def show?
     return true if admin?
 
-    return true if user.group_access?(record, 'read')
+    return true if user.group_access?(record, %w[read create change])
 
     if user.permissions?('ticket.customer')
       return group_is_customer_group? || group_has_customer_tickets? ? customer_field_scope : false

@@ -147,6 +147,23 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
         end
       end
 
+      context 'when moving the ticket into a group with only :change permission' do
+        let(:group) { create(:group) }
+
+        before do
+          user.groups << group
+          user.group_names_access_map = { user.groups.first.name => %w[read change], group.name => ['change'] }
+        end
+
+        it 'updates the ticket, but returns an error trying to access the new ticket' do
+          gql.execute(query, variables: variables)
+          expect(ticket.reload.group_id).to eq(group.id)
+          expect(gql.result.payload['data']['ticketUpdate']).to eq({ 'ticket' => nil, 'errors' => nil })  # Mutation did run, but data retrieval was not authorized.
+          expect(gql.result.payload['errors'].first['message']).to eq('Access forbidden by Gql::Types::TicketType')
+          expect(gql.result.payload['errors'].first['extensions']['type']).to eq('Exceptions::Forbidden')
+        end
+      end
+
       context 'with no permission to the group' do
         let(:group) { create(:group) }
 
