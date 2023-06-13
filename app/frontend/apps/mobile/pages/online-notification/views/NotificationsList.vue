@@ -34,7 +34,7 @@ const notifications = computed(
     ) as OnlineNotification[],
 )
 
-const seenNotification = (id: Scalars['ID']) => {
+const seenNotification = (id: Scalars['ID']['output']) => {
   const seenNotificationMutation = new MutationHandler(
     useOnlineNotificationMarkAllAsSeenMutation({
       variables: { onlineNotificationIds: [id] },

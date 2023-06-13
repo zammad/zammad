@@ -75,7 +75,7 @@ export const useTicketFormOganizationHandler = (): FormHandler => {
     }
 
     const setOrganizationField = (
-      customerId: Scalars['ID'],
+      customerId: Scalars['ID']['output'],
       organization?: Maybe<Partial<Organization>>,
     ) => {
       if (!organization) return

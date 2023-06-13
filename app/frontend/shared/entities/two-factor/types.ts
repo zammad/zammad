@@ -18,7 +18,7 @@ export interface TwoFactorPlugin {
   label: string
   order: number
   icon: AppSpecificRecord<string>
-  setup?(data: Scalars['JSON']): Promise<TwoFactorSetupResult>
+  setup?(data: Scalars['JSON']['input']): Promise<TwoFactorSetupResult>
   form?: boolean
   helpMessage?: string
   errorHelpMessage?: string

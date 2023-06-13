@@ -72,7 +72,9 @@ describe('NotificationItem.vue', () => {
 
     expect(view.emitted().remove).toBeTruthy()
 
-    const emittedRemove = view.emitted().remove as Array<Array<Scalars['ID']>>
+    const emittedRemove = view.emitted().remove as Array<
+      Array<Scalars['ID']['output']>
+    >
     expect(emittedRemove[0][0]).toBe('111')
   })
 
@@ -88,7 +90,9 @@ describe('NotificationItem.vue', () => {
 
     expect(view.emitted().seen).toBeTruthy()
 
-    const emittedSeen = view.emitted().seen as Array<Array<Scalars['ID']>>
+    const emittedSeen = view.emitted().seen as Array<
+      Array<Scalars['ID']['output']>
+    >
     expect(emittedSeen[0][0]).toBe('111')
   })
 })

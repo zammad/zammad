@@ -12,7 +12,7 @@ import type { ApolloCache, InMemoryCache } from '@apollo/client'
 import { useOnlineNotificationDeleteMutation } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
 
 export interface Props {
-  itemId: Scalars['ID']
+  itemId: Scalars['ID']['output']
   objectName: string
   typeName: string
   seen: boolean
@@ -24,13 +24,13 @@ export interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'remove', id: Scalars['ID']): void
-  (e: 'seen', id: Scalars['ID']): void
+  (e: 'remove', id: Scalars['ID']['output']): void
+  (e: 'seen', id: Scalars['ID']['output']): void
 }>()
 
 const updateCacheAfterRemoving = (
   cache: ApolloCache<InMemoryCache>,
-  id: Scalars['ID'],
+  id: Scalars['ID']['output'],
 ) => {
   const normalizedId = cache.identify({ id, __typename: 'OnlineNotification' })
   cache.evict({ id: normalizedId })

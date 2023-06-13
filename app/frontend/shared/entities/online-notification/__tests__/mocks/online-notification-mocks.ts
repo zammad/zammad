@@ -12,7 +12,7 @@ type OnlineNotificationNode = LastArrayElement<
 >['node']
 
 export const mockOnlineNotification = (
-  id: Scalars['ID'],
+  id: Scalars['ID']['output'],
   mockNotification: Partial<OnlineNotificationNode>,
 ): OnlineNotificationNode => {
   return {

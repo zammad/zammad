@@ -50,5 +50,5 @@ export type MaybeRecord<K> = {
 export type ObjectLike = Record<string, any>
 
 export interface ObjectWithId {
-  id: Scalars['ID']
+  id: Scalars['ID']['output']
 }

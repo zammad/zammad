@@ -6,7 +6,7 @@ import { useReactiveNow } from '#shared/composables/useReactiveNow.ts'
 import type { Scalars } from '#shared/graphql/types.ts'
 
 export interface Props {
-  escalationAt?: Maybe<Scalars['ISO8601DateTime']>
+  escalationAt?: Maybe<Scalars['ISO8601DateTime']['output']>
 }
 
 const props = defineProps<Props>()
