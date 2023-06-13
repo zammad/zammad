@@ -811,7 +811,7 @@ perform active triggers on ticket
     local_options[:loop_count] ||= 0
     local_options[:loop_count] += 1
 
-    ticket_trigger_recursive_max_loop = Setting.get('ticket_trigger_recursive_max_loop')&.to_i || 10 # rubocop:disable Lint/RedundantSafeNavigation
+    ticket_trigger_recursive_max_loop = Setting.get('ticket_trigger_recursive_max_loop')&.to_i || 10
     if local_options[:loop_count] > ticket_trigger_recursive_max_loop
       message = "Stopped perform_triggers for this object (Ticket/#{ticket.id}), because loop count was #{local_options[:loop_count]}!"
       logger.info { message }

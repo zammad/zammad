@@ -15,7 +15,7 @@ class CanPaginate::Pagination
   end
 
   def page
-    @params[:page]&.to_i || 1 # rubocop:disable Lint/RedundantSafeNavigation
+    @params[:page]&.to_i || 1
   end
 
   def offset
