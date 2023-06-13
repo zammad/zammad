@@ -138,6 +138,25 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
         end
       end
 
+      context 'when creating the ticket in a group with only :create permission' do
+        let(:group)         { create(:group) }
+        let(:owner)         { create(:agent, groups: [group]) }
+        let(:input_payload) { input_base_payload.merge(ownerId: gql.id(owner)) }
+
+        before do
+          user.groups << group
+          user.group_names_access_map = { user.groups.first.name => ['full'], group.name => ['create'] }
+        end
+
+        it 'creates the ticket in the correct group, but returns an error trying to access the new ticket' do
+          expect { gql.execute(query, variables: variables) }.to change(Ticket, :count).by(1)
+          expect(Ticket.last.group.id).to eq(group.id)
+          expect(gql.result.payload['data']['ticketCreate']).to eq({ 'ticket' => nil, 'errors' => nil }) # Mutation did run, but data retrieval was not authorized.
+          expect(gql.result.payload['errors'].first['message']).to eq('Access forbidden by Gql::Types::TicketType')
+          expect(gql.result.payload['errors'].first['extensions']['type']).to eq('Exceptions::Forbidden')
+        end
+      end
+
       context 'with no permission to the group' do
         let(:group) { create(:group) }
 
@@ -432,7 +451,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
       let(:api_role) do
         role = create(:role, name: 'API', permission_names: ['ticket.agent'])
         role.group_names_access_map = {
-          Group.first.name => %w[read create change], # FIXME: 'read' should not be required!
+          Group.first.name => %w[create],
         }
         role
       end

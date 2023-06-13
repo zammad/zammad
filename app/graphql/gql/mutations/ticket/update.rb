@@ -7,7 +7,7 @@ module Gql::Mutations
     argument :ticket_id, GraphQL::Types::ID, loads: Gql::Types::TicketType, description: 'The ticket to be updated'
     argument :input, Gql::Types::Input::Ticket::UpdateInputType, description: 'The ticket data'
 
-    field :ticket, Gql::Types::TicketType, description: 'The updated ticket.'
+    field :ticket, Gql::Types::TicketType, description: 'The updated ticket. If this is present but empty, the mutation was successful but the user has no rights to view the updated ticket.'
 
     def self.authorize(_obj, ctx)
       ctx[:current_user].permissions?(['ticket.agent', 'ticket.customer'])

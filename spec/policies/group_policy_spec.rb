@@ -17,9 +17,40 @@ describe GroupPolicy do
     let(:user) { create(:agent) }
 
     context 'when user has access to group' do
-      before { user.groups << record }
+      before do
+        user.groups << record
+        user.group_names_access_map = { record.name => permissions }
+      end
 
-      it { is_expected.to permit_actions(:show) }
+      context 'with full access' do
+        let(:permissions) { ['full'] }
+
+        it { is_expected.to permit_actions(:show) }
+      end
+
+      context 'with read access' do
+        let(:permissions) { ['read'] }
+
+        it { is_expected.to permit_actions(:show) }
+      end
+
+      context 'with create access' do
+        let(:permissions) { ['create'] }
+
+        it { is_expected.to permit_actions(:show) }
+      end
+
+      context 'with change access' do
+        let(:permissions) { ['change'] }
+
+        it { is_expected.to permit_actions(:show) }
+      end
+
+      context 'with overview access' do
+        let(:permissions) { ['overview'] }
+
+        it { is_expected.to forbid_actions(:show) }
+      end
     end
 
     context 'when user does not have access to group' do
