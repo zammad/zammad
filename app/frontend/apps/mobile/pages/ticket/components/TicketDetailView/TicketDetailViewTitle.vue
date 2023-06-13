@@ -8,9 +8,6 @@ import CommonTicketEscalationIndicator from '#shared/components/CommonTicketEsca
 import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
-import { useTicketInformation } from '../../composable/useTicketInformation.ts'
-
-const { ticket } = useTicketInformation()
 
 interface Props {
   ticket: TicketById
