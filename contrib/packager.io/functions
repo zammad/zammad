@@ -228,6 +228,23 @@ function create_webserver_config () {
   ${INIT_CMD} restart ${WEBSERVER_CMD}
 }
 
+function enforce_redis () {
+  echo "# Enforcing Redis..."
+
+  local REDIS_SERVICE_NAME=""
+  if [ "${OS}" == "DEBIAN" ]; then
+      REDIS_SERVICE_NAME="redis-server"
+  else
+      REDIS_SERVICE_NAME="redis"
+  fi
+
+  echo "# Creating Redis bootstart"
+  ${INIT_CMD} enable ${REDIS_SERVICE_NAME}
+
+  echo "# Starting Redis server"
+  ${INIT_CMD} start ${REDIS_SERVICE_NAME}
+}
+
 function setup_elasticsearch () {
   echo "# Configuring Elasticsearch..."
 
