@@ -1204,6 +1204,7 @@ RSpec.describe User, type: :model do
                      'Ticket::SharedDraftStart'           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'Ticket::SharedDraftZoom'            => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'Ticket::TimeAccounting'             => { 'created_by_id' => 0 },
+                     'Ticket::TimeAccounting::Type'       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Ticket::State'                      => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Ticket::Flag'                       => { 'created_by_id' => 0 },
                      'PostmasterFilter'                   => { 'created_by_id' => 0, 'updated_by_id' => 0 },

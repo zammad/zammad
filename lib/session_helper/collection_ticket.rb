@@ -27,6 +27,12 @@ module SessionHelper::CollectionTicket
     Ticket::Article::Sender.all.each do |item|
       assets = item.assets(assets)
     end
+
+    collections[ Ticket::TimeAccounting::Type.to_app_model ] = []
+    Ticket::TimeAccounting::Type.all.each do |item|
+      assets = item.assets(assets)
+    end
+
     if user.permissions?(['ticket.agent', 'admin.channel_email'])
 
       collections[ Macro.to_app_model ] = []

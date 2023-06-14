@@ -16,6 +16,7 @@ import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSe
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
+import TicketObjectAttributes from '../../components/TicketDetailView/TicketObjectAttributes.vue'
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 import { useTicketSubscribe } from '../../composable/useTicketSubscribe.ts'
@@ -158,6 +159,8 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
       group_id: 'group.name',
     }"
   />
+
+  <TicketObjectAttributes v-if="isTicketAgent && ticket" :ticket="ticket" />
 
   <TicketTags
     v-if="isTicketAgent && isTicketEditable && ticket"

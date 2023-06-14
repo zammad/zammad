@@ -25,10 +25,11 @@ class App.ControllerObserver extends App.Controller
 
     # rerender, e. g. on language change
     if @globalRerender
-      @controllerBind('ui:rerender', =>
+      @rerenderCallback = =>
         @lastAttributes = undefined
         @maybeRender(App[@model].fullLocal(@object_id))
-      )
+
+      @controllerBind('ui:rerender', @rerenderCallback)
 
   subscribe: (object, typeOfChange) =>
     @maybeRender(object, typeOfChange)

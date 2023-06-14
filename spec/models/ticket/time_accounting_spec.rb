@@ -60,6 +60,72 @@ RSpec.describe Ticket::TimeAccounting, type: :model do
           expect(ticket.reload.time_unit).to eq(0)
         end
       end
+
+      context 'when using time accounting type' do
+        subject!(:time_accounting) { create(:'ticket/time_accounting', :for_article, type: type) }
+
+        let(:type) { nil }
+
+        context 'without a type' do
+          it 'does not have a type' do
+            expect(time_accounting.type).to be_nil
+          end
+        end
+
+        context 'with a type' do
+          let(:type) { create(:ticket_time_accounting_type) }
+
+          it 'does not have a type' do
+            expect(time_accounting.type.name).to eq(type.name)
+          end
+
+          it 'can edit a time accounting type' do
+            other_type = create(:ticket_time_accounting_type)
+            time_accounting.update!(type: other_type)
+
+            expect(time_accounting.reload.type.name).to eq(other_type.name)
+          end
+
+          it 'can remove time accounting type' do
+            time_accounting.update!(type: nil)
+
+            expect(time_accounting.reload.type).to be_nil
+          end
+        end
+      end
+    end
+  end
+
+  describe 'validation' do
+    describe 'article uniqueness' do
+      let(:ticket)  { create(:ticket) }
+      let(:article) { create(:ticket_article, ticket: ticket) }
+
+      before do
+        create(:ticket_time_accounting, ticket: ticket, ticket_article: article)
+      end
+
+      it 'allows multiple ticket article items per ticket' do
+        another_article = create(:ticket_article, ticket: ticket)
+        item            = create(:ticket_time_accounting, ticket: ticket, ticket_article: another_article)
+
+        expect(item).to be_persisted
+      end
+
+      it 'allows multiple article-less items per ticket' do
+        expect(
+          [
+            create(:ticket_time_accounting, ticket: ticket),
+            create(:ticket_time_accounting, ticket: ticket),
+          ]
+        ).to all(be_persisted)
+      end
+
+      it 'does not allow multiple articles for same ticket' do
+        item = build(:ticket_time_accounting, ticket: ticket, ticket_article: article)
+
+        expect(item).not_to be_valid
+      end
     end
   end
 end

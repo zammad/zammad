@@ -1,0 +1,27 @@
+<div class="settings-entry--stretched">
+  <h2><%- @T('Accounted Time') %></h2>
+  <div class="well">
+    <div class="btn-group btn-group--full" role="group" aria-label="">
+      <% for item in @timeRangeYear: %>
+        <div class="btn btn--text btn--large js-timePickerYear<%- ' is-selected' if @year is item %>" data-type="<%= item %>"><%= item %></div>
+      <% end %>
+    </div>
+
+    <div class="btn-group btn-group--full" role="group" aria-label="">
+      <% for month, i in @timeRangeMonth: %>
+        <div class="btn btn--text btn--large js-timePickerMonth<%- ' is-selected' if @month is i+1 %>" data-type="<%= i+1 %>"><%= @T(month) %></div>
+      <% end %>
+    </div>
+  </div>
+  <h3><%- @T('Activity') %> <a href="<%- @C('api_path') %>/time_accounting/log/by_activity/<%= @year %>/<%= @month %>?download=true" class="js-downloadByActivity btn btn--action" data-type="attachment"><%- @Icon('download') %><span><%- @T('Download all records') %></span></a></h3>
+  <div class="js-tableActivity"></div>
+  <br>
+  <h3><%- @T('Ticket') %> <a href="<%- @C('api_path') %>/time_accounting/log/by_ticket/<%= @year %>/<%= @month %>?download=true" class="js-downloadByTicket btn btn--action" data-type="attachment"><%- @Icon('download') %><span><%- @T('Download all records') %></a></span></h3>
+  <div class="js-tableTicket"></div>
+  <br>
+  <h3><%- @T('Customer') %> <a href="<%- @C('api_path') %>/time_accounting/log/by_customer/<%= @year %>/<%= @month %>?download=true" class="js-downloadByCustomer btn btn--action" data-type="attachment"><%- @Icon('download') %><span><%- @T('Download all records') %></span></a></h3>
+  <div class="js-tableCustomer"></div>
+  <br>
+  <h3><%- @T('Organization') %> <a href="<%- @C('api_path') %>/time_accounting/log/by_organization/<%= @year %>/<%= @month %>?download=true" class="js-downloadByOrganization btn btn--action" data-type="attachment"><%- @Icon('download') %><span><%- @T('Download all records') %></span></a></h3>
+  <div class="js-tableOrganization"></div>
+</div>

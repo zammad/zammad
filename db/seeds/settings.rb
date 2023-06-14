@@ -3819,6 +3819,78 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Time Accounting Unit'),
+  name:        'time_accounting_unit',
+  area:        'Web::Base',
+  description: __('Defines the unit to be shown next to the time accounting input field.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.time_accounting'],
+  },
+  state:       '',
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Time Accounting Custom Unit'),
+  name:        'time_accounting_unit_custom',
+  area:        'Web::Base',
+  description: __('Defines the custom unit to be shown next to the time accounting input field.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.time_accounting'],
+  },
+  state:       '',
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Time Accounting Types'),
+  name:        'time_accounting_types',
+  area:        'Web::Base',
+  description: __('Defines if the time accounting types are enabled.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.time_accounting'],
+  },
+  state:       false,
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Time Accounting Default Type'),
+  name:        'time_accounting_type_default',
+  area:        'Web::Base',
+  description: __('Defines the default time accounting type.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.time_accounting'],
+  },
+  state:       '',
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       __('New Tags'),
   name:        'tag_new',
   area:        'Web::Base',

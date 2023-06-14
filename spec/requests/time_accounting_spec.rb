@@ -9,23 +9,55 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
   let(:year)     { Time.current.year }
   let(:month)    { Time.current.month }
 
-  describe '/api/v1/time_accounting/log/by_activity' do
+  describe '/api/v1/time_accounting/log/by_activity', authenticated_as: :admin do
     context 'when requesting a JSON response' do
+      let(:ticket)           { create(:ticket, customer: admin) }
+      let(:time_accounting1) { create(:ticket_time_accounting, :for_type, ticket: ticket, created_by_id: admin.id) }
+      let(:time_accounting2) { create(:ticket_time_accounting, ticket: ticket, created_by_id: agent.id) }
+
       before do
-        ticket = create(:ticket, customer: admin)
-        create(:ticket_time_accounting, ticket: ticket, created_by_id: admin.id)
-        create(:ticket_time_accounting, ticket: ticket, created_by_id: agent.id)
-        authenticated_as(admin)
+        time_accounting1 && time_accounting2
       end
 
-      it 'responds with an JSON' do
-        get "/api/v1/time_accounting/log/by_activity/#{year}/#{month}", as: :json
+      context 'with time_accounting_types switched on' do
+        before do
+          Setting.set('time_accounting_types', true)
+        end
 
-        expect(json_response.first).to include('agent' => admin.fullname)
-        expect(json_response.first).to include('customer' => admin.fullname)
+        it 'responds with an JSON' do
+          get "/api/v1/time_accounting/log/by_activity/#{year}/#{month}", as: :json
 
-        expect(json_response.second).to include('agent' => agent.fullname)
-        expect(json_response.second).to include('customer' => admin.fullname)
+          expect(json_response.first).to include(
+            'time_unit'    => time_accounting1.time_unit.to_s,
+            'type'         => time_accounting1.type.name,
+            'customer'     => admin.fullname,
+            'organization' => '-',
+            'agent'        => admin.fullname,
+          )
+
+          expect(json_response.second).to include(
+            'time_unit'    => time_accounting2.time_unit.to_s,
+            'type'         => '-',
+            'customer'     => admin.fullname,
+            'organization' => '-',
+            'agent'        => agent.fullname,
+          )
+        end
+      end
+
+      context 'with time_accounting_types switched off' do
+        it 'responds with an JSON' do
+          get "/api/v1/time_accounting/log/by_activity/#{year}/#{month}", as: :json
+
+          expect(json_response.first).to include(
+            'time_unit'    => time_accounting1.time_unit.to_s,
+            'customer'     => admin.fullname,
+            'organization' => '-',
+            'agent'        => admin.fullname,
+          )
+
+          expect(json_response.first).not_to have_key('type')
+        end
       end
 
       it 'respects :limit' do
@@ -43,7 +75,6 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
 
         create(:ticket_time_accounting, ticket_id: ticket.id, ticket_article_id: article.id)
 
-        authenticated_as(admin)
         get "/api/v1/time_accounting/log/by_activity/#{year}/#{month}?download=true", params: {}
 
         expect(response).to have_http_status(:ok)

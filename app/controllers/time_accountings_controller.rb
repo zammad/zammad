@@ -12,12 +12,13 @@ class TimeAccountingsController < ApplicationController
     end_periode = start_periode.end_of_month
 
     records = []
-    Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :ticket_article_id, :time_unit, :created_by_id, :created_at).each do |record|
+    Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :ticket_article_id, :time_unit, :type_id, :created_by_id, :created_at).each do |record|
       records.push record
     end
 
     customers     = {}
     organizations = {}
+    types         = {}
     agents        = {}
     results       = []
     records.each do |record|
@@ -26,7 +27,8 @@ class TimeAccountingsController < ApplicationController
 
       customers[ticket.customer_id]         ||= User.lookup(id: ticket.customer_id).fullname
       organizations[ticket.organization_id] ||= Organization.lookup(id: ticket.organization_id)&.name
-      agents[record[3]]                     ||= User.lookup(id: record[3])
+      types[record[3]]                      ||= Ticket::TimeAccounting::Type.lookup(id: record[3])&.name
+      agents[record[4]]                     ||= User.lookup(id: record[4])
 
       result = if params[:download]
                  [
@@ -34,20 +36,22 @@ class TimeAccountingsController < ApplicationController
                    ticket.title,
                    customers[ticket.customer_id] || '-',
                    organizations[ticket.organization_id] || '-',
-                   agents[record[3]].fullname,
-                   agents[record[3]].login,
+                   agents[record[4]].fullname,
+                   agents[record[4]].login,
                    record[2],
-                   record[4]
+                   *([types[record[3]] || '-'] if Setting.get('time_accounting_types')),
+                   record[5]
                  ]
                else
                  {
                    ticket:       ticket.attributes,
                    time_unit:    record[2],
+                   type:         ((types[record[3]] || '-') if Setting.get('time_accounting_types')),
                    customer:     customers[ticket.customer_id] || '-',
                    organization: organizations[ticket.organization_id] || '-',
-                   agent:        agents[record[3]].fullname,
-                   created_at:   record[4],
-                 }
+                   agent:        agents[record[4]].fullname,
+                   created_at:   record[5],
+                 }.compact
                end
 
       results.push result
@@ -89,6 +93,12 @@ class TimeAccountingsController < ApplicationController
         width:     10,
         data_type: 'float'
       },
+      *(if Setting.get('time_accounting_types')
+          [{
+            name:  __('Activity Type'),
+            width: 20,
+          }]
+        end),
       {
         name:  __('Created at'),
         width: 20,

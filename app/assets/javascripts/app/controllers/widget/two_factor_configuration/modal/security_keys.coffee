@@ -64,10 +64,11 @@ class App.TwoFactorConfigurationModalSecurityKeys extends App.TwoFactorConfigura
     credential = @credentials.find((credential) -> credential.external_id is id)
 
     new App.ControllerConfirm(
-      head: __('Are you sure?')
-      message: App.i18n.translatePlain('Security key "%s" will be removed.', credential.nickname)
-      container: @el.closest('.content')
-      small: true
+      head:        __('Are you sure?')
+      message:     App.i18n.translatePlain('Security key "%s" will be removed.', credential.nickname)
+      buttonClass: 'btn--danger'
+      container:   @el.closest('.content')
+      small:       true
       callback: =>
         @removeSecurityKey(id)
     )

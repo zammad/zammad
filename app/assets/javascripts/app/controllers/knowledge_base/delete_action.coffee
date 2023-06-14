@@ -21,9 +21,10 @@ class App.KnowledgeBaseDeleteAction
       head:      __('Delete')
       # ControllerConfirm performs another (unneeded) translateContent which does also escape special characters, so
       #   use translatePlain here.
-      message:   App.i18n.translatePlain('Do you really want to delete "%s"?', translation?.title)
-      callback:  @doDelete
-      container: @parentController.el
+      message:     App.i18n.translatePlain('Do you really want to delete "%s"?', translation?.title)
+      buttonClass: 'btn--danger'
+      callback:    @doDelete
+      container:   @parentController.el
       onSubmit: ->
         @formDisable(@el)
         @callback(@)

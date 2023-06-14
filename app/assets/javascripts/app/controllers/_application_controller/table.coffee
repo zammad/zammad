@@ -147,8 +147,11 @@ class App.ControllerTable extends App.Controller
     @overviewAttributes ||= @overview || @model.configure_overview || []
     @attributesListRaw ||= @attribute_list || @model.configure_attributes || {}
     @attributesList = App.Model.attributesGet(false, @attributesListRaw)
+
     @destroy = @model.configure_delete
     @clone = @model.configure_clone
+    @setAsDefault = @model.configure_set_as_default
+    @unsetDefault = @model.configure_unset_default
 
     throw 'overviewAttributes needed' if _.isEmpty(@overviewAttributes)
     throw 'attributesList needed' if _.isEmpty(@attributesList)
@@ -663,6 +666,38 @@ class App.ControllerTable extends App.Controller
           new App.ControllerGenericDestroyConfirm
             item:      item
             container: @container
+
+    if @setAsDefault
+      @actions.push
+        name: 'setAsDefault'
+        icon: 'reload'
+        display: __('Set as default')
+        class: 'js-set-as-default'
+        available: (item) => !@model.is_default(item)
+        callback: (id) =>
+          item = @model.find(id)
+          new App.ControllerConfirm
+            message: App.i18n.translatePlain('Are you sure you want to set "%s" as default?', item.name)
+            item:      item
+            container: @container
+            callback:  =>
+              @model.set_as_default(item)
+
+    if @unsetDefault
+      @actions.push
+        name: 'unsetDefault'
+        icon: 'inactive-reload'
+        display: __('Unset default')
+        class: 'js-unset-default'
+        available: (item) => @model.is_default(item)
+        callback: (id) =>
+          item = @model.find(id)
+          new App.ControllerConfirm
+            message: App.i18n.translatePlain('Are you sure you want to unset "%s" as default?', item.name)
+            item:      item
+            container: @container
+            callback:  =>
+              @model.unset_default(item)
 
     if @actions.length
       @headers.push

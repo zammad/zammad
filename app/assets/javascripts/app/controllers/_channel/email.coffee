@@ -142,7 +142,8 @@ class ChannelEmailAccountOverview extends App.Controller
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     new App.ControllerConfirm(
-      message: __('Are you sure?')
+      message:     __('Are you sure?')
+      buttonClass: 'btn--danger'
       callback: =>
         @ajax(
           id:   'email_delete'

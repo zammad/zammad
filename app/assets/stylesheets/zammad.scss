@@ -2258,6 +2258,10 @@ fieldset > .form-group {
   position: relative;
 }
 
+.controls--grow {
+  flex-grow: 1;
+}
+
 .controls-label {
   margin: 11px 10px 0;
   flex-shrink: 0;
@@ -4047,6 +4051,14 @@ ol.tabs li {
 
   .btn + .btn:not(.align-right) {
     @include bidi-style(margin-left, 20px, margin-right, 10px);
+  }
+
+  &--inline {
+    margin-top: 0;
+
+    & > * {
+      @include bidi-style(margin-right, 10px, margin-left, 10px);
+    }
   }
 }
 
@@ -8120,6 +8132,7 @@ a.list-group-item.active > .badge,
 
 .tags,
 .links,
+.time-units,
 .link_kb_answers {
   margin: 20px 0;
 }

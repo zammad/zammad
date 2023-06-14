@@ -8,8 +8,7 @@ module CreatesTicketArticles
   def article_create(ticket, params)
 
     # create article if given
-    form_id = params[:form_id]
-    params.delete(:form_id)
+    form_id = params.delete(:form_id)
     subtype = params.delete(:subtype)
 
     # check min. params
@@ -27,8 +26,14 @@ module CreatesTicketArticles
       params[:sender_id] = Ticket::Article::Sender.lookup(name: sender).id
     end
 
-    # remember time accounting
-    time_unit = params[:time_unit]
+    # remember time accounting values
+    if params[:time_unit].present?
+      accounted_time_params = {
+        time_unit: params[:time_unit],
+        type_id:   params[:accounted_time_type_id],
+        type:      params[:accounted_time_type],
+      }
+    end
 
     clean_params = Ticket::Article.association_name_to_id_convert(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
@@ -114,11 +119,14 @@ module CreatesTicketArticles
     article.save!
 
     # account time
-    if time_unit.present?
+    if accounted_time_params.present?
+      clean_accounted_time_params = Ticket::TimeAccounting.association_name_to_id_convert(accounted_time_params)
+      clean_accounted_time_params = Ticket::TimeAccounting.param_cleanup(clean_accounted_time_params, true)
+
       Ticket::TimeAccounting.create!(
         ticket_id:         article.ticket_id,
         ticket_article_id: article.id,
-        time_unit:         time_unit
+        **clean_accounted_time_params,
       )
     end
 

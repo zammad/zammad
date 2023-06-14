@@ -2,7 +2,7 @@ class App.ControllerConfirm extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: __('Yes')
-  buttonClass: 'btn--danger'
+  buttonClass: 'btn--success'
   head: __('Confirmation')
   small: true
 

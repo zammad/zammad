@@ -1,0 +1,40 @@
+<div class="settings-entry">
+  <div class="form-group">
+    <div class="page-header-title">
+      <h2><%- @T('Selector') %></h2>
+    </div>
+    <p><%- @T('Enable time accounting for following matching tickets.') %></p>
+    <div class="js-selector"></div>
+  </div>
+
+  <div class="form-group">
+    <div class="page-header-title">
+      <h2><%- @T('Unit') %></h2>
+    </div>
+    <p><%- @T('Define the unit to be shown next to the time accounting input field.') %></p>
+    <div class="formGroup-label">
+      <label for="timeAccountingUnit"><%- @T('Time accounting unit') %></label>
+    </div>
+    <div class="form-controls form-controls--inline">
+      <div class="controls controls--select">
+        <select id="timeAccountingUnit" class="form-control">
+          <% if @timeUnits: %>
+            <% for row in @timeUnits: %>
+              <option value="<%= row.value %>" <% if row.value is @timeAccountingUnit: %>selected<%end %>><%= @T(row.display) %></option>
+            <% end %>
+          <% end %>
+        </select>
+        <%- @Icon('arrow-down') %>
+      </div>
+      <div class="controls controls--grow">
+        <input id="timeAccountingCustomUnit" class="form-control" type="text" value="<%= @timeAccountingCustomUnit %>" style="<% if @timeAccountingUnit isnt 'custom': %>display: none<% end %>">
+      </div>
+    </div>
+    <p class="help-text"><%- @T('The chosen unit will be used for display only and will not affect stored values.') %></p>
+  </div>
+
+  <div class="double-spacer"></div>
+
+  <button type="submit" class="btn btn--primary js-timeAccountingSettings"><%- @T('Save') %></button>
+  <button type="submit" class="btn btn--danger js-timeAccountingSettingsReset"><%- @T('Reset') %></button>
+</div>

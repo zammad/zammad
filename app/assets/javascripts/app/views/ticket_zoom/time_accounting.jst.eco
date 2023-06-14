@@ -1,3 +1,0 @@
-<form>
-  <input type="text" name="time_unit" placeholder="<%- @T('Please enter the time you want to record.') %>"/>
-</form>

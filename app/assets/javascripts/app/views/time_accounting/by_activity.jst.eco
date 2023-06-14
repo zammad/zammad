@@ -12,6 +12,9 @@
     <th><%- @T('Organization') %>
     <th><%- @T('Agent') %>
     <th><%- @T('Time Units') %>
+    <% if @C('time_accounting_types'): %>
+      <th><%- @T('Activity Type') %>
+    <% end %>
     <th><%- @T('Created At') %>
   </thead>
   <tbody>
@@ -23,6 +26,9 @@
     <td><%= row.organization %>
     <td><%= row.agent %>
     <td><%= row.time_unit %>
+    <% if @C('time_accounting_types'): %>
+      <td><%= row.type %>
+    <% end %>
     <td><%- @humanTime(row.ticket.created_at) %>
   <% end %>
   </tbody>

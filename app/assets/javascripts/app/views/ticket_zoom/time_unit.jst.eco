@@ -1,4 +1,9 @@
 <div>
   <label><%- @T('Accounted Time') %></label>
-  <div><%= @ticket.time_unit %></div>
+  <div class="accounted-time-value">
+    <%= @ticket.time_unit %>
+    <% if @timeAccountingDisplayUnit: %>
+      <span class="text-muted"><%- @T(@timeAccountingDisplayUnit) %></span>
+    <% end %>
+  </div>
 </div>

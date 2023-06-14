@@ -9,5 +9,9 @@ FactoryBot.define do
     trait :for_article do
       ticket_article { create(:'ticket/article', ticket: ticket) }
     end
+
+    trait :for_type do
+      type { create(:ticket_time_accounting_type) }
+    end
   end
 end

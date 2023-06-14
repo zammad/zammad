@@ -224,10 +224,25 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_foreign_key :ticket_article_flags, :ticket_articles, column: :ticket_article_id
     add_foreign_key :ticket_article_flags, :users, column: :created_by_id
 
+    create_table :ticket_time_accounting_types do |t|
+      t.column :name,                 :string, limit: 250, null: false
+      t.column :note,                 :string, limit: 250, null: true
+      t.column :active,               :boolean,            null: false, default: true
+      t.column :updated_by_id,        :integer,            null: false
+      t.column :created_by_id,        :integer,            null: false
+      t.timestamps limit: 3, null: false
+    end
+
+    add_index :ticket_time_accounting_types, [:name], unique: true
+
+    add_foreign_key :ticket_time_accounting_types, :users, column: :created_by_id
+    add_foreign_key :ticket_time_accounting_types, :users, column: :updated_by_id
+
     create_table :ticket_time_accountings do |t|
       t.references :ticket,                                       null: false
       t.references :ticket_article,                               null: true
       t.column :time_unit,      :decimal, precision: 6, scale: 2, null: false
+      t.column :type_id,        :integer,                         null: true
       t.column :created_by_id,  :integer,                         null: false
       t.timestamps limit: 3, null: false
     end
@@ -238,6 +253,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_foreign_key :ticket_time_accountings, :tickets
     add_foreign_key :ticket_time_accountings, :ticket_articles
     add_foreign_key :ticket_time_accountings, :users, column: :created_by_id
+    add_foreign_key :ticket_time_accountings, :ticket_time_accounting_types, column: :type_id
 
     create_table :ticket_counters do |t|
       t.column :content,              :string, limit: 100, null: false

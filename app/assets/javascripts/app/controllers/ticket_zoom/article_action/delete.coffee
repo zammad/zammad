@@ -64,9 +64,10 @@ class Delete
       )
 
     new App.ControllerConfirm(
-      message: __('Are you sure?')
-      callback: callback
-      container: ui.el.closest('.content')
+      message:     __('Are you sure?')
+      buttonClass: 'btn--danger'
+      callback:    callback
+      container:   ui.el.closest('.content')
     )
 
     true

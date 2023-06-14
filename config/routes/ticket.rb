@@ -17,6 +17,10 @@ Zammad::Application.routes.draw do
     end
   end
 
+  scope Rails.configuration.api_path do
+    resources '/tickets/:ticket_id/time_accountings', controller: 'ticket/time_accountings', only: %i[index show create update destroy]
+  end
+
   # tickets
   match api_path + '/tickets/search',                                to: 'tickets#search',            via: %i[get post]
   match api_path + '/tickets/selector',                              to: 'tickets#selector',          via: :post

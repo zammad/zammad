@@ -109,8 +109,9 @@ class App.ControllerManageTwoFactor extends App.ControllerModal
     @formDisable(e)
 
     new App.ControllerConfirm(
-      head: __('Confirmation')
-      message: __('Are you sure? The user will have to to reconfigure all two-factor authentication methods.')
+      head:        __('Confirmation')
+      message:     __('Are you sure? The user will have to to reconfigure all two-factor authentication methods.')
+      buttonClass: 'btn--danger'
       onCancel: =>
         @formEnable(e)
       onClose: =>

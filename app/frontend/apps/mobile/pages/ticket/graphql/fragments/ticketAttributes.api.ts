@@ -77,6 +77,7 @@ export const TicketAttributesFragmentDoc = gql`
     agentReadAccess
   }
   tags
+  timeUnit
   subscribed
   preferences
   stateColorCode

@@ -109,6 +109,8 @@ class App.KnowledgeBaseSidebarAttachments extends App.Controller
     @dropContainer.removeClass('is-dropTarget')
 
 class DeleteConfirm extends App.ControllerConfirm
+  buttonClass: 'btn--danger'
+
   content: ->
     App.i18n.translateContent('Do you really want to delete "%s"?', @attachment.filename)
   onSubmit: ->

@@ -1,0 +1,13 @@
+<div class="settings-entry">
+  <div class="form-group">
+    <div class="page-header-title">
+      <h2><%- @T('Activity Type') %></h2>
+    </div>
+    <p><%- @T('Enable activity type selection. This would allow agents to select one of the types below when adding accounted time.') %></p>
+    <div class="js-types"></div>
+  </div>
+  <button type="submit" class="btn btn--primary js-timeAccountingTypes"><%- @T('Save') %></button>
+  <button type="submit" class="btn btn--danger js-timeAccountingTypesReset"><%- @T('Reset') %></button>
+</div>
+
+<div class="js-table-container"></div>

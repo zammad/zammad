@@ -31,9 +31,10 @@ class App.SettingTicketNotifications extends App.ControllerSubContent
     e.preventDefault()
 
     new App.ControllerConfirm(
-      message: __('Are you sure? The agent default notifications settings will be reset to the system default.')
-      callback: -> App.Setting.reset('ticket_agent_default_notifications', notify: true)
-      container: @el.closest('.content')
+      message:     __('Are you sure? The agent default notifications settings will be reset to the system default.')
+      buttonClass: 'btn--danger'
+      callback:    -> App.Setting.reset('ticket_agent_default_notifications', notify: true)
+      container:   @el.closest('.content')
     )
 
   applyDefaultNotificationsToAll: (e) =>

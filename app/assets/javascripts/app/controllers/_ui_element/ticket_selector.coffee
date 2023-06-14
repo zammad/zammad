@@ -127,13 +127,14 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
       # In case the selector contains expert conditions, warn the user before switching off the expert mode.
       if !newValue and @isSelectorIncompatible(@params[attribute.name])
         return new App.ControllerConfirm(
-          head: __('Are you sure?')
-          message: __('Ticket selector contains expert conditions. If you turn off the expert mode, it can lead to data loss in your condition attributes.')
-          callback: callback
+          head:        __('Are you sure?')
+          message:     __('Ticket selector contains expert conditions. If you turn off the expert mode, it can lead to data loss in your condition attributes.')
+          buttonClass: 'btn--danger'
+          callback:    callback
           onCancel: ->
             toggleSwitch.prop('checked', true)
           container: @el
-          small: true
+          small:     true
         )
 
       callback()

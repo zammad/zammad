@@ -147,7 +147,8 @@ class ProfileNotification extends App.ControllerSubContent
 
   reset: (e) =>
     new App.ControllerConfirm(
-      message: __('Are you sure? Your notifications settings will be reset to default.')
+      message:     __('Are you sure? Your notifications settings will be reset to default.')
+      buttonClass: 'btn--danger'
       callback: =>
         @ajax(
           id:          'preferences_notifications_reset'

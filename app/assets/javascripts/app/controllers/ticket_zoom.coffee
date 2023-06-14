@@ -967,8 +967,9 @@ class App.TicketZoom extends App.Controller
       cancelCallback: =>
         @submitEnable(e)
       submitCallback: (params) =>
-        if params.time_unit
-          ticket.article.time_unit = params.time_unit
+        ticket.article.time_unit              = params.time_unit
+        ticket.article.accounted_time_type_id = params.accounted_time_type_id
+
         @submitPost(e, ticket, macro)
     )
 

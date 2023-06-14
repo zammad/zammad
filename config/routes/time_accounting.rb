@@ -8,4 +8,7 @@ Zammad::Application.routes.draw do
   match api_path + '/time_accounting/log/by_customer/:year/:month',     to: 'time_accountings#by_customer',     via: :get
   match api_path + '/time_accounting/log/by_organization/:year/:month', to: 'time_accountings#by_organization', via: :get
 
+  scope Rails.configuration.api_path do
+    resources '/time_accounting/types', controller: 'time_accounting/types', only: %i[index create update]
+  end
 end
