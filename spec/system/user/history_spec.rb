@@ -2,48 +2,51 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket history', time_zone: 'Europe/London', type: :system do
+RSpec.describe 'User history', authenticated_as: :authenticate, time_zone: 'Europe/London', type: :system do
   let(:group)         { Group.find_by(name: 'Users') }
   let(:customer)      { create(:customer, organization: organization) }
-  let!(:session_user) { User.find_by(login: 'admin@example.com') }
+  let(:locale)        { 'de-de' }
+  let(:session_user)  { create(:admin, preferences: { locale: locale }) }
   let(:organization)  { create(:organization) }
   let(:org_name_1)    { 'organization test 1' }
   let(:org_name_2)    { 'organization test 2' }
   let(:org_1)         { create(:organization, name: org_name_1) }
   let(:org_2)         { create(:organization, name: org_name_2) }
-  let(:locale)        { 'de-de' }
 
-  before do
+  def authenticate
     freeze_time
 
     travel_to Time.zone.parse('2021-01-22 13:40:00')
     current_time = Time.current
-    customer.update! firstname: 'Customer'
-    customer.update! email: 'test@example.com'
-    customer.update! country: 'Germany'
-    customer.update! out_of_office_start_at: current_time
-    customer.update! last_login: current_time
-    customer.organizations << [org_1, org_2]
+    customer.update!(
+      firstname:              'Customer',
+      email:                  'test@example.com',
+      country:                'Germany',
+      out_of_office_start_at: current_time,
+      last_login:             current_time,
+      organizations:          [organization, org_1, org_2]
+    )
 
     travel_to Time.zone.parse('2021-04-06 23:30:00')
     current_time = Time.current
-    customer.update! lastname: 'Example'
-    customer.update! mobile: '5757473827'
-    customer.update! out_of_office_end_at: current_time
-    customer.update! last_login: current_time
-    customer.organizations.delete(org_2)
+    customer.update!(
+      lastname:             'Example',
+      mobile:               '5757473827',
+      out_of_office_end_at: current_time,
+      last_login:           current_time,
+      organizations:        [organization, org_1]
+    )
 
     travel_back
 
-    session_user.preferences[:locale] = locale
-    session_user.save!
+    session_user
+  end
 
-    visit '/'
+  before do
+    visit '/' if locale != 'en'
 
     # Suppress the modal dialog that invites to contributions for translations that are < 90% as this breaks the tests for de-de.
-    page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
-
-    refresh
+    page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))" if locale != 'en'
 
     visit "#user/profile/#{customer.id}"
 
