@@ -22,11 +22,10 @@ export default () => ({
   name: 'zammad-plugin-svgo',
   enforce: 'pre',
   /**
-   * @param {string} code
    * @param {string} id
    * @returns {{code: string}}
    */
-  async transform(code, id) {
+  async load(id) {
     if (id.endsWith('.svg?symbol')) {
       const filepath = id.replace(/\?.*$/, '')
       const svgContent = optimizeSvg(filepath)
