@@ -28,6 +28,8 @@ create_initscripts
 
 stop_zammad
 
+enforce_redis
+
 update_or_install
 
 set_env_vars
