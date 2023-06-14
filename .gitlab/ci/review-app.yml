@@ -16,6 +16,14 @@
       ---
       version: '3'
       services:
+        zammad-init:
+          environment:
+            - MEMCACHE_SERVERS=\${MEMCACHE_SERVERS}
+            - POSTGRESQL_USER=\${POSTGRES_USER}
+            - POSTGRESQL_PASS=\${POSTGRES_PASS}
+            - REDIS_URL=\${REDIS_URL}
+            - ZAMMAD_HTTP_TYPE=https
+            - ZAMMAD_FQDN=${APP_FQDN}
         zammad-railsserver:
           ports:
             - "127.0.0.1:${APP_PORT}:3000"
