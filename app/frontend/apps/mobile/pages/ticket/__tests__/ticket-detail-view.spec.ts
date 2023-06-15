@@ -842,6 +842,21 @@ it('correctly redirects from ticket hash-based routes', async () => {
   expect(route.params).toEqual({ internalId: '1' })
 })
 
+it('correctly redirects from ticket hash-based routes with other ids', async () => {
+  const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+    ticketView: 'agent',
+  })
+
+  await visitView('/#ticket/zoom/1/20')
+  await waitUntilTicketLoaded()
+
+  const router = getTestRouter()
+  const route = router.currentRoute.value
+
+  expect(route.name).toBe('TicketDetailArticlesView')
+  expect(route.params).toEqual({ internalId: '1' })
+})
+
 it("scrolls to the bottom the first time, but doesn't trigger rescroll on subsequent updates", async () => {
   const newArticlesQuery = mockArticleQuery(
     {
