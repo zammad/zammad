@@ -16,6 +16,7 @@ import type {
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import { edgesToArray } from '#shared/utils/helpers.ts'
+import { useRoute } from 'vue-router'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
@@ -55,6 +56,17 @@ const refetchArticlesQuery = (pageSize: Maybe<number>) => {
   articlesQuery.refetch({
     ticketId: ticketId.value,
     pageSize,
+  })
+}
+
+const loadPreviousArticles = async () => {
+  markTicketArticlesLoaded(ticketId.value)
+  await articlesQuery.fetchMore({
+    variables: {
+      pageSize: null,
+      loadDescription: false,
+      beforeCursor: result.value?.articles.pageInfo.startCursor,
+    },
   })
 }
 
@@ -200,7 +212,35 @@ if (result.value && window.history?.state?.scroll) {
   scrolledToBottom.value = true
 }
 
-const scrollToBottom = () => {
+const route = useRoute()
+
+let ignoreQuery = false
+
+const scrollElement = (element: Element) => {
+  scrolledToBottom.value = true
+  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  return true
+}
+
+// scroll to the article in the hash or to the last available article
+const initialScroll = async () => {
+  if (route.hash) {
+    const articleNode = document.querySelector(route.hash)
+
+    if (articleNode) {
+      return scrollElement(articleNode)
+    }
+
+    if (!articleNode && !ignoreQuery) {
+      ignoreQuery = true
+      await loadPreviousArticles()
+      const node = document.querySelector(route.hash)
+      if (node) {
+        return scrollElement(node)
+      }
+    }
+  }
+
   const internalId = articles.value[articles.value.length - 1]?.internalId
   if (!internalId) return false
 
@@ -210,31 +250,18 @@ const scrollToBottom = () => {
 
   if (!lastArticle) return false
 
-  scrolledToBottom.value = true
-  lastArticle.scrollIntoView({ behavior: 'smooth', block: 'end' })
-  return true
+  return scrollElement(lastArticle)
 }
 
 if (!scrolledToBottom.value) {
   const stopScrollWatch = watch(
     () => articles.value.length,
-    () => {
-      const scrolled = scrollToBottom()
+    async () => {
+      const scrolled = await initialScroll()
       if (scrolled) stopScrollWatch()
     },
     { immediate: true, flush: 'post' },
   )
-}
-
-const loadPreviousArticles = async () => {
-  markTicketArticlesLoaded(ticketId.value)
-  await articlesQuery.fetchMore({
-    variables: {
-      pageSize: null,
-      loadDescription: false,
-      beforeCursor: result.value?.articles.pageInfo.startCursor,
-    },
-  })
 }
 
 const { stickyStyles, headerElement } = useStickyHeader([

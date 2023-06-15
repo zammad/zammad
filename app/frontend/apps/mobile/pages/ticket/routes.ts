@@ -68,6 +68,11 @@ const routes: RouteRecordRaw[] = [
       level: 2,
     },
   },
+  {
+    path: '/ticket/zoom/:internalId(\\d+)/:articleId(\\d+)',
+    redirect: (to) =>
+      `/tickets/${to.params.internalId}#article-${to.params.articleId}`,
+  },
 ]
 
 export default routes
