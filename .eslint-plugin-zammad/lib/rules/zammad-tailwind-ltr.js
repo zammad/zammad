@@ -42,9 +42,11 @@ const parsePossibleClassString = (classesList) => {
     const match = className.match(new RegExp(`^(${baseClass})-([^\n]+)`))
     if (!match) return
     const [, prefix, value] = match
+    const counterpart = `${counterparts[prefix]}-${value}` // pl-2 pr-2 is the same with or without ltr/rtl
+    if (classes.includes(counterpart)) return
     errors.push({
       remove: className,
-      add: [`rtl:${counterparts[prefix]}-${value}`, `ltr:${className}`],
+      add: [`rtl:${counterpart}`, `ltr:${className}`],
     })
   })
 

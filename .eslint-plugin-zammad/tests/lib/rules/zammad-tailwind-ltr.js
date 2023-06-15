@@ -38,6 +38,22 @@ ruleTester.run('zammad-tailwind-ltr', rule, {
       filename: 'test.ts',
       code: `{ name: 'ltr:pl-2 rtl:pr-2' }`,
     },
+    {
+      filename: 'test.js',
+      code: `'pl-2 pr-2'`,
+    },
+    {
+      filename: 'test.js',
+      code: `{ name: 'pl-2 pr-2' }`,
+    },
+    {
+      filename: 'test.js',
+      code: `{ name: 'left-0 right-0' }`,
+    },
+    {
+      filename: 'test.js',
+      code: `'left-0 right-0'`,
+    },
   ],
   invalid: [
     {
@@ -102,18 +118,6 @@ ruleTester.run('zammad-tailwind-ltr', rule, {
     },
     {
       filename: 'test.js',
-      code: `'pl-2 pr-2'`,
-      output: `'rtl:pr-2 ltr:pl-2 rtl:pl-2 ltr:pr-2'`,
-      errors: [{ message: error }],
-    },
-    {
-      filename: 'test.js',
-      code: `{ name: 'pl-2 pr-2' }`,
-      output: `{ name: 'rtl:pr-2 ltr:pl-2 rtl:pl-2 ltr:pr-2' }`,
-      errors: [{ message: error }],
-    },
-    {
-      filename: 'test.js',
       code: `{ name: 'rtl:pl-2 pr-2' }`,
       output: `{ name: 'rtl:pl-2 ltr:pr-2' }`,
       errors: [{ message: error }],
@@ -164,6 +168,12 @@ ruleTester.run('zammad-tailwind-ltr', rule, {
       filename: 'test.ts',
       code: `'!-translate-x-2'`,
       output: `'rtl:!translate-x-2 ltr:!-translate-x-2'`,
+      errors: [{ message: error }],
+    },
+    {
+      filename: 'test.js',
+      code: `'left-0 right-1'`,
+      output: `'rtl:right-0 ltr:left-0 rtl:left-1 ltr:right-1'`,
       errors: [{ message: error }],
     },
   ],
