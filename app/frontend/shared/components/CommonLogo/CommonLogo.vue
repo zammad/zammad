@@ -14,5 +14,9 @@ const logoUrl = computed(() => {
 </script>
 
 <template>
-  <img class="h-40 w-40" :src="logoUrl" :alt="($c.product_name as string)" />
+  <img
+    class="max-h-32 max-w-[14rem]"
+    :src="logoUrl"
+    :alt="($c.product_name as string)"
+  />
 </template>
