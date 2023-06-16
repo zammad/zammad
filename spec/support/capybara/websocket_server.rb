@@ -12,11 +12,15 @@ RSpec.configure do |config|
 
       websocket_server = Thread.new do
         WebsocketServer.run(
-          p: port,
-          b: '0.0.0.0',
-          s: false,
-          v: false,
-          d: false,
+          p:           port,
+          b:           '0.0.0.0',
+          s:           true,
+          v:           false,
+          d:           false,
+          tls_options: {
+            private_key_file: "#{Dir.home}/.localhost/localhost.key",
+            cert_chain_file:  "#{Dir.home}/.localhost/localhost.crt",
+          }
         )
       end
     end

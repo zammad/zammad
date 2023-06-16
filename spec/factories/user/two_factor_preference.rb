@@ -124,9 +124,6 @@ FactoryBot.define do
 
       before(:create) do
         Setting.set('two_factor_authentication_method_security_keys', true)
-
-        # Web Authentication API requires that the current hostname matches the configured FQDN of the system.
-        Setting.set('fqdn', "#{Capybara.app_host.gsub(%r{^https?://}, '')}:#{Capybara.current_session.server.port}")
       end
 
       configuration do

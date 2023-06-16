@@ -136,12 +136,14 @@
   }
   var hostname = window.location.hostname;
   var port = window.location.port;
+  var protocol = window.location.protocol;
+  var wsProtocol = protocol === 'https:' ? 'wss:' : 'ws:';
   var params = getSearchParameters();
-  var host = 'ws://'+ (location.host || 'localhost').split(':')[0] +':6042'
+  var host = wsProtocol + '//'+ (location.host || 'localhost').split(':')[0] +':6042'
   if (params['port']) {
-    host = 'ws://' + hostname + ':' + params['port']
+    host = wsProtocol + '//' + hostname + ':' + params['port']
   }
-  cssUrl = 'http://' + hostname + ':' + port + '/assets/chat/chat.css'
+  cssUrl = protocol + '//' + hostname + ':' + port + '/assets/chat/chat.css'
 
   var chat = new ZammadChat({
     chatId: 1,

@@ -12,8 +12,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
     host = 'http://localhost:3000'
 
     if ENV['CI'].present?
-      ip_address = Socket.ip_address_list.detect(&:ipv4_private?).ip_address
-      host = "http://#{ip_address}:3000"
+      host = 'http://build:3000'
     end
 
     host

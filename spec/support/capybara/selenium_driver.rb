@@ -63,6 +63,9 @@ def build_chrome_driver(app, user_agent: nil)
     driver_args[:options].add_argument "--user-agent=\"#{user_agent}\""
   end
 
+  driver_args[:options].add_argument '--allow-insecure-localhost'
+  driver_args[:options].add_argument '--ignore-certificate-errors'
+
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
   ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
 

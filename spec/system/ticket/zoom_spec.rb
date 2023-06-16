@@ -2654,7 +2654,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     let(:body) do
-      "<img style='width: 1004px; max-width: 100%;' src=\\\"data:image/png;base64,#{image_as_base64}\\\"><br>"
+      "<img style='width: 1004px; max-width: 100%;' src='data:image/png;base64,#{image_as_base64}'><br>"
     end
 
     let(:article) { create(:ticket_article, ticket: ticket, body: body, content_type: 'text/html') }
@@ -2680,7 +2680,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     context 'with image and embedded link' do
       let(:body) do
         "<a href='https://zammad.com' title='Zammad' target='_blank'>
-<img style='width: 1004px; max-width: 100%;' src=\\\"data:image/png;base64,#{image_as_base64}\\\">
+<img style='width: 1004px; max-width: 100%;' src='data:image/png;base64,#{image_as_base64}'>
 </a><br>"
       end
 

@@ -2,7 +2,7 @@
 
 require 'vcr'
 
-VCR_IGNORE_MATCHING_HOSTS = %w[elasticsearch selenium ci-service- zammad.org zammad.com znuny.com google.com login.microsoftonline.com 2btx5w.webhook.office.com github.com].freeze
+VCR_IGNORE_MATCHING_HOSTS = %w[build elasticsearch selenium ci-service- zammad.org zammad.com znuny.com google.com login.microsoftonline.com 2btx5w.webhook.office.com github.com].freeze
 VCR_IGNORE_MATCHING_REGEXPS = [
   %r{^192\.168\.\d+\.\d+$},   # typical home network address
   %r{^172\.17\.0\.\d+$},      # docker

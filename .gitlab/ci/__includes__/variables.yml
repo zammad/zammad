@@ -1,5 +1,6 @@
 # Global variables added to the ENV of each job and service container.
 variables:
+  FF_NETWORK_PER_BUILD: 1  # https://docs.gitlab.com/runner/configuration/feature-flags.html
   # for faster translation loading
   Z_LOCALES: "en-us:de-de"
   RAILS_ENV: "test"

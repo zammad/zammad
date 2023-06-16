@@ -273,6 +273,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     little-plugger (1.1.4)
+    localhost (1.1.10)
     logging (2.3.1)
       little-plugger (~> 1.1)
       multi_json (~> 1.14)
@@ -703,6 +704,7 @@ DEPENDENCIES
   json
   koala
   listen
+  localhost
   mail
   messagebird-rest
   mime-types

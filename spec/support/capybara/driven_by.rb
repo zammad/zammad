@@ -5,27 +5,20 @@ require_relative './set_up'
 RSpec.configure do |config|
   capybara_examples_performed = 0
 
+  Capybara.register_server :puma_wrapper do |app, port, host, **_options|
+    # Remember the dynamically assigned port.
+    $capybara_port = port # rubocop:disable Style/GlobalVars
+    # Start a silenced Puma as application server.
+    Capybara.servers[:puma].call(app, port, host, Silent: true, Host: 'ssl://0.0.0.0', Threads: '0:16')
+  end
+  Capybara.server   = :puma_wrapper
+  # See https://docs.gitlab.com/runner/executors/docker.html#create-a-network-for-each-job
+  Capybara.app_host = ENV['CI'].present? ? 'https://build' : 'https://localhost'
+
   config.before(:each, type: :system) do |example|
 
-    Capybara.register_server :puma_wrapper do |app, port, host, **_options|
-
-      # update fqdn Setting according to random assigned Rack server port
-      Setting.set('fqdn', "#{host}:#{port}")
-
-      # start a silenced Puma as application server
-      Capybara.servers[:puma].call(app, port, host, Silent: true, Host: '0.0.0.0', Threads: '0:16')
-    end
-    Capybara.server = :puma_wrapper
-
-    # set the Host from gather container IP for CI runs
-    if ENV['CI'].present?
-      ip_address = Socket.ip_address_list.detect(&:ipv4_private?).ip_address
-      Capybara.app_host = "http://#{ip_address}"
-    end
-
-    if Capybara.app_host.nil?
-      Capybara.app_host = 'http://localhost'
-    end
+    Setting.set('http_type', 'https')
+    Setting.set('fqdn', ENV['CI'].present? ? "build:#{$capybara_port}" : "localhost:#{$capybara_port}") # rubocop:disable Style/GlobalVars
 
     browser_name = ENV.fetch('BROWSER', 'firefox')
 

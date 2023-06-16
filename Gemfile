@@ -245,6 +245,9 @@ group :development, :test do
 
   # Slack helper for testing
   gem 'slack-ruby-client', require: false
+
+  # self-signed localhost certificates for puma / capybara
+  gem 'localhost'
 end
 
 # To permanently extend Zammad with additional gems, you can specify them in Gemfile.local.

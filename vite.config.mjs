@@ -8,12 +8,13 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { resolve, dirname } from 'node:path'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { homedir } from 'os'
 import svgIconsPlugin from './app/frontend/build/iconsPlugin.mjs'
 import tsconfig from './tsconfig.base.json' assert { type: 'json' }
 
 const dir = dirname(fileURLToPath(import.meta.url))
 
-const SSL_PATH = resolve(dir, 'config', 'ssl')
+const SSL_PATH = resolve(homedir(), '.localhost')
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default defineConfig(({ mode, command }) => {

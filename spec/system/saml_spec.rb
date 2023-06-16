@@ -56,7 +56,6 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
     auth_saml_credentials[:uid_attribute] = uid_attribute if uid_attribute
     Setting.set('auth_saml_credentials', auth_saml_credentials)
     Setting.set('auth_saml', true)
-    Setting.set('fqdn', zammad_base_url.gsub(%r{^https?://}, ''))
   end
 
   # Shared_examples does not work.

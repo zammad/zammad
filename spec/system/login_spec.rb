@@ -34,10 +34,6 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
         stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
         visit '/'
 
-        # TODO: Remove once our CI runs only in secure context.
-        is_secure_context = page.execute_script('return window.isSecureContext;')
-        skip('Test currently unsupported in insecure contexts.') if !is_secure_context
-
         # We can only mock the security key within the loaded app.
         two_factor_pref
 

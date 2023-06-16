@@ -3,7 +3,6 @@
     - !reference [.scripts, zammad_ci_test_prepare]
     - bundle exec rspec -t integration --profile 10 spec/system
   variables:
-    FF_NETWORK_PER_BUILD: 1 # https://docs.gitlab.com/runner/configuration/feature-flags.html
     IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
 
 capybara:integration:chrome:

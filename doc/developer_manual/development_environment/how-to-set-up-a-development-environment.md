@@ -154,24 +154,9 @@ $ bundle install
 
 ## Using HTTPS
 
-To enable HTTPS in your development environment, you need to generate self-signed SSL certificates.
-For this, you need to install [`mkcert`](https://github.com/FiloSottile/mkcert#installation).
-
-You could simply use our script to generate the certificates:
-
-```screen
-$ sh contrib/ssl/generate-ssl.sh
-```
-
-This will create `localhost.crt` and `localhost.key` files and put them inside `config/ssl`. It is possible to use the environment variable `ZAMMAD_BIND_IP` or the first script argument to pass down more domains or IPs for these certificates.
-
-Now you can run Zammad:
+Zammad uses the gem `localhost` to automatically generate self-signed certificates. This will place `~./localhost/localhost.crt` and `~/.localhost/localhost.key` files if needed. Then you can use one of the following commands:
 
 ```sh
-# to run Desktop Zammad
-$ RAILS_ENV=development forego start -f Procfile.dev-https
-
-# to run Mobile Zammad
 $ VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -f Procfile.dev-https
 # or
 $ yarn dev:https
