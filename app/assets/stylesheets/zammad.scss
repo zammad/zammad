@@ -12,6 +12,7 @@ $mobileNavigationWidthOpen: 220px;
   --button-background-active: hsl(0, 0, 98%);
   --button-active: hsl(204, 7%, 28%);
   --button-active-active: hsla(0, 0%, 0%, 0.55);
+  --button-primary-text: var(--text-inverted);
   --button-primary-background: hsl(203, 65%, 55%);
   --button-primary-background-active: hsl(203, 65%, 45%);
   --header-primary: hsl(202, 8%, 28%);
@@ -22,9 +23,11 @@ $mobileNavigationWidthOpen: 220px;
   --text-muted-alt: hsl(197, 16%, 65%);
   --text-link: hsl(204, 72%, 50%);
   --text-inverted: white;
+  --text-active: white;
   --text-nav: hsl(204, 72%, 50%);
-  --menu-text: hsl(0, 0%, 74%);
-  --menu-icon: hsl(206, 5%, 42%);
+  --text-button-primary: var(--button-primary-background);
+  --text-button-primary-active: var(--button-primary-background-active);
+  --text-button-secondary: var(--interactive-muted);
   --nav-icon: hsl(0, 0%, 50%);
   --highlight: hsl(205, 90%, 60%);
   --interactive-primary: black;
@@ -81,6 +84,31 @@ $mobileNavigationWidthOpen: 220px;
   --file-icon-color: hsl(198, 18%, 86%);
   --tag-text: hsl(198, 5%, 41%);
   --tag-background: hsl(198, 19%, 92%);
+  --fullscreen-background: var(--background-tertiary);
+  --fullscreen-text: var(--text-muted);
+  --fullscreen-text-link: var(--text-inverted);
+  --fullscreen-text-muted: hsl(233, 7%, 26%);
+  --fullscreen-drop-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  --menu-text: hsl(0, 0%, 74%);
+  --menu-text-active: white;
+  --menu-text-open: white;
+  --menu-text-closed: white;
+  --menu-text-escalating: white;
+  --menu-background-active: var(--button-primary-background);
+  --menu-icon: hsl(206, 5%, 42%);
+  --menu-icon-secondary: hsl(0, 0%, 30%);
+  --menu-icon-secondary-hover-background: var(--text-inverted);
+  --menu-switch-background: hsl(0, 0%, 5%);
+  --menu-switch-pointer: var(--background-tertiary);
+  --menu-switch-pointer-active: var(--menu-text-active);
+  --menu-background-primary: var(--background-quaternary);
+  --menu-background-primary-hover: hsla(0, 0%, 0%, 0.3);
+  --menu-background-secondary: var(--background-tertiary);
+  --menu-close-tab-background: var(--background-tertiary);
+  --menu-close-tab-opacity: 0.3;
+  --menu-border: none;
+  --menu-border-secondary: none;
 }
 
 // dark mode
@@ -96,7 +124,6 @@ $mobileNavigationWidthOpen: 220px;
   --text-muted: hsl(213, 3%, 60%);
   --text-muted-alt: hsl(213, 8%, 61%);
   --text-link: hsl(202, 72%, 50%);
-  --text-inverted: white;
   --text-nav: hsl(205, 1%, 84%);
   --nav-icon: hsl(0, 0%, 50%);
   --highlight: hsl(205, 90%, 60%);
@@ -772,7 +799,7 @@ pre code {
   }
 
   &--primary {
-    color: var(--text-inverted);
+    color: var(--button-primary-text);
     background: var(--button-primary-background);
 
     &:active {
@@ -838,7 +865,7 @@ pre code {
     font-size: inherit;
     margin: -10px;
     padding: 10px;
-    color: var(--button-primary-background);
+    color: var(--text-button-primary);
     border: none;
     background: none;
     vertical-align: baseline;
@@ -872,12 +899,12 @@ pre code {
     }
 
     &:active {
-      color: var(--button-primary-background-active);
+      color: var(--text-button-primary-active);
       background: none;
     }
 
     &.btn--secondary {
-      color: var(--interactive-muted);
+      color: var(--text-button-secondary);
       text-decoration: underline;
 
       &:active {
@@ -905,7 +932,7 @@ pre code {
 
     &.btn--subtle {
       text-decoration: underline;
-      color: var(--interactive-muted);
+      color: var(--text-button-secondary);
 
       &:active {
         opacity: 0.75;
@@ -3239,7 +3266,7 @@ kbd {
   color: var(--text-normal);
   background-color: var(--background-secondary);
   border-radius: 6px;
-  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: var(--fullscreen-drop-shadow);
 
   @include phone {
     width: auto;
@@ -3263,7 +3290,7 @@ kbd {
 .darkBackground,
 .login {
   padding: 10px;
-  background: var(--background-tertiary);
+  background: var(--fullscreen-background);
 }
 
 .content.getstarted {
@@ -3279,10 +3306,10 @@ kbd {
 .request_admin_password_auth,
 .signup {
   padding: 24px;
-  color: var(--text-muted);
+  color: var(--fullscreen-text);
 
   a {
-    color: var(--text-inverted);
+    color: var(--fullscreen-text-link);
 
     &.text-muted {
       color: inherit;
@@ -3371,7 +3398,7 @@ kbd {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: hsl(233, 7%, 26%);
+  color: var(--fullscreen-text-muted);
   margin: 34px 0 10px -16px;
 
   @include rtl(margin, 34px -16px 10px 0);
@@ -3409,7 +3436,7 @@ kbd {
 }
 
 .fullscreen p {
-  color: var(--text-muted);
+  color: var(--fullscreen-text);
 }
 
 .fullscreen-center {
@@ -4367,7 +4394,8 @@ footer {
 
 .navigation {
   width: $navigationWidth;
-  background: var(--background-quaternary);
+  background: var(--menu-background-primary);
+  border: var(--menu-border);
   position: relative;
   container-name: navigation;
   container-type: inline-size;
@@ -4459,25 +4487,20 @@ footer {
   }
 
   &:hover {
-    background: hsla(0, 0%, 0%, 0.3);
+    background: var(--menu-background-primary-hover);
     border-bottom-color: hsla(230, 4%, 84%, 0.1);
   }
 
   &.is-active,
   &.is-hovered {
-    background: none;
-    color: var(--text-inverted);
+    background: var(--menu-background-active);
+    color: var(--menu-text-active);
   }
 
   &.is-active .menu-item-icon,
   &.is-active .dropdown-icon,
   &.is-hovered .menu-item-icon {
     fill: currentColor;
-  }
-
-  &.is-active,
-  &.is-hovered {
-    background: var(--button-primary-background);
   }
 
   &.is-active .zammad-switch {
@@ -4487,7 +4510,7 @@ footer {
     }
 
     label::after {
-      background: var(--text-inverted);
+      background: var(--menu-switch-pointer-active);
     }
   }
 
@@ -4600,7 +4623,8 @@ footer {
 }
 
 .tasks {
-  background: var(--background-tertiary);
+  background: var(--menu-background-secondary);
+  border-right: var(--menu-border-secondary);
   flex: 1;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
@@ -4685,7 +4709,7 @@ footer {
 }
 
 .tasks-navigation .nav-tab:not(.is-active):hover {
-  background: var(--background-quaternary);
+  background: var(--menu-background-primary);
   border-bottom-color: hsla(230, 4%, 84%, 0.1);
 }
 
@@ -4705,8 +4729,8 @@ footer {
 .nav-tab.is-active,
 .nav-tab.nav-tab--search:hover,
 .nav-tab.nav-tab--search.is-hover {
-  background: #389ed9;
-  color: var(--text-inverted);
+  background: var(--menu-background-active);
+  color: var(--menu-text-active);
 
   .nav-tab-icon .icon {
     fill: currentColor;
@@ -4790,7 +4814,7 @@ footer {
 .nav-tab-close-inner {
   width: 19px;
   height: 19px;
-  background-color: var(--background-tertiary);
+  background-color: var(--menu-close-tab-background);
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -4805,7 +4829,7 @@ footer {
   width: 9px;
   height: 9px;
   fill: var(--text-inverted);
-  opacity: 0.3;
+  opacity: var(--menu-close-tab-opacity);
 }
 
 .nav-tab-close:hover svg {
@@ -4822,6 +4846,7 @@ footer {
 
 .nav-tab.task-state-open.is-active {
   background-color: var(--ok-color);
+  color: var(--menu-text-open);
 }
 
 .task-state-open-color {
@@ -4834,6 +4859,7 @@ footer {
 
 .nav-tab.task-state-closed.is-active {
   background-color: var(--supergood-color);
+  color: var(--menu-text-closed);
 }
 
 .task-state-closed-color {
@@ -4846,6 +4872,7 @@ footer {
 
 .nav-tab.task-state-escalating.is-active {
   background-color: var(--superbad-color);
+  color: var(--menu-text-escalating);
 }
 
 .task-state-escalating-color {
@@ -4955,8 +4982,8 @@ footer {
   width: 100%;
   padding: 5px 33px;
   height: 30px;
-  color: #ececec;
-  background: #31373b;
+  color: var(--menu-text);
+  background: var(--menu-background-secondary);
   line-height: 20px;
   outline: none;
   border: none;
@@ -5012,9 +5039,8 @@ input[type='search']::-webkit-search-decoration {
   @include bidi-style(left, 10px, right, auto);
 
   z-index: 2;
-  opacity: 0.5;
-  fill: var(--text-inverted);
-  transition: 0.1s 0s;
+  fill: var(--menu-icon);
+  transition: opacity 0.1s;
   pointer-events: none;
 }
 
@@ -5097,7 +5123,7 @@ input[type='search']::-webkit-search-decoration {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.21);
   background: hsl(360, 71%, 60%);
   border-radius: 10px;
-  border: 2px solid var(--background-quaternary);
+  border: 2px solid var(--menu-background-primary);
 }
 
 .search .logo .activity-counter:empty {
@@ -5107,7 +5133,7 @@ input[type='search']::-webkit-search-decoration {
 .global-search-menu {
   @extend .zIndex-7;
 
-  background: var(--background-quaternary);
+  background: var(--menu-background-primary);
   position: absolute;
   left: 0;
   right: 0;
@@ -5119,7 +5145,7 @@ input[type='search']::-webkit-search-decoration {
 
   .divider {
     height: 1px;
-    background: #2f3238;
+    background: var(--menu-background-secondary);
     margin: 14px 0 17px;
   }
 }
@@ -5187,7 +5213,7 @@ input[type='search']::-webkit-search-decoration {
 
 .user-menu > li {
   flex: 1;
-  background: var(--background-quaternary);
+  background: var(--menu-background-primary);
 }
 
 .user-menu .list-button {
@@ -5220,7 +5246,7 @@ input[type='search']::-webkit-search-decoration {
   right: 4px;
   bottom: 4px;
   left: 4px;
-  background: var(--text-inverted);
+  background: var(--menu-icon-secondary-hover-background);
 }
 
 .user-menu > li.is-active .list-button::before {
@@ -5236,7 +5262,7 @@ input[type='search']::-webkit-search-decoration {
 .user-menu-icon {
   width: 20px;
   height: 20px;
-  fill: hsl(0, 0%, 30%);
+  fill: var(--menu-icon-secondary);
 }
 
 .user-menu-icon.icon-plus {
@@ -5244,7 +5270,7 @@ input[type='search']::-webkit-search-decoration {
 }
 
 .user-menu > li:hover .user-menu-icon {
-  fill: hsl(232, 10%, 16%);
+  fill: var(--menu-background-primary);
 }
 
 .user-menu > li.is-active .user-menu-icon {
@@ -5714,7 +5740,7 @@ li.add .dropdown-nose {
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
-  color: var(--text-inverted);
+  color: var(--text-active);
   background: var(--background-active);
   border-color: var(--background-modifier-border);
 }
@@ -5760,7 +5786,7 @@ li.add .dropdown-nose {
 
 a.list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
-  color: var(--text-inverted);
+  color: var(--text-active);
   background: none;
 }
 
@@ -10827,15 +10853,11 @@ output {
 
   &.zammad-switch--dark {
     label {
-      background: hsl(234, 10%, 5%);
-    }
-
-    label::before {
-      background: hsl(233, 10%, 10%);
+      background: var(--menu-switch-background);
     }
 
     label::after {
-      background: var(--background-tertiary);
+      background: var(--menu-switch-pointer);
     }
   }
 
