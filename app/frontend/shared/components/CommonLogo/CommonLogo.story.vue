@@ -7,7 +7,7 @@ import CommonLogo from './CommonLogo.vue'
 
 const CustomLogo = () => {
   const application = useApplicationStore()
-  application.config.product_logo = 'icons/logotype.svg'
+  application.config.product_logo = 'logo_timestamp'
   return h(CommonLogo)
 }
 </script>

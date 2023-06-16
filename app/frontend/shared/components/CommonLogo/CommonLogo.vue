@@ -4,12 +4,10 @@
 import { computed } from 'vue'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
-const assetsPath = '/assets/images'
 const application = useApplicationStore()
 
 const logoUrl = computed(() => {
-  if (!application.hasCustomProductBranding) return `${assetsPath}/logo.svg`
-  return `${assetsPath}/${application.config.product_logo}`
+  return `/api/v1/system_assets/product_logo/${application.config.product_logo}`
 })
 </script>
 

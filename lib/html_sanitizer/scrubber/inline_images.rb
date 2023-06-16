@@ -43,7 +43,7 @@ class HtmlSanitizer
       end
 
       def parse_inline_image(data, cid)
-        file_attributes = StaticAssets.data_url_attributes(data)
+        file_attributes = ImageHelper.data_url_attributes(data)
         filename        = "image#{@attachments_inline.length + 1}.#{file_attributes[:file_extention]}"
 
         {

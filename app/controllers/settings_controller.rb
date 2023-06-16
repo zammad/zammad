@@ -42,38 +42,16 @@ class SettingsController < ApplicationController
       return
     end
 
-    # validate image
-    if !clean_params[:logo].match?(%r{^data:image}i)
-      render json: {
-        result:  'invalid',
-        message: __('Invalid payload, need data:image in logo param'),
-      }
-      return
-    end
-
-    # process image
-    file = StaticAssets.data_url_attributes(clean_params[:logo])
-    if !file[:content] || !file[:mime_type]
-      render json: {
-        result:  'invalid',
-        message: __('The uploaded image could not be processed.'),
-      }
-      return
-    end
-
-    # store image 1:1
-    StaticAssets.store_raw(file[:content], file[:mime_type])
-
-    # store resized image 1:1
     setting = Setting.lookup(name: 'product_logo')
-    if params[:logo_resize] && params[:logo_resize] =~ %r{^data:image}i
 
-      # data:image/png;base64
-      file = StaticAssets.data_url_attributes(params[:logo_resize])
-
-      # store image 1:1
-      setting.state = StaticAssets.store(file[:content], file[:mime_type])
+    if (logo_timestamp = Service::SystemAssets::ProductLogo.store(params[:logo], params[:logo_resize]))
+      setting.state = logo_timestamp
       setting.save!
+    else
+      render json: {
+        result:  'invalid',
+        message: __('The uploaded image could not be processed. Need data:image in logo or logo_resize param.'),
+      }
     end
 
     render json: {

@@ -332,7 +332,6 @@ Metrics/AbcSize:
     - 'lib/sessions/event/login.rb'
     - 'lib/sessions/node.rb'
     - 'lib/signature_detection.rb'
-    - 'lib/static_assets.rb'
     - 'lib/stats.rb'
     - 'lib/stats/ticket_channel_distribution.rb'
     - 'lib/stats/ticket_escalation.rb'
@@ -673,7 +672,6 @@ Metrics/ModuleLength:
     - 'lib/sessions.rb'
     - 'lib/sessions/node.rb'
     - 'lib/signature_detection.rb'
-    - 'lib/static_assets.rb'
     - 'lib/transaction_dispatcher.rb'
     - 'spec/support/capybara/common_actions.rb'
 

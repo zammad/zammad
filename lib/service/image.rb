@@ -72,14 +72,7 @@ returns
       backend = load_adapter_by_setting('image_backend')
       return if !backend
 
-      result = backend.organization_suggest(domain)
-
-      # sync logo to assets folder
-      if result
-        StaticAssets.sync
-      end
-
-      result
+      backend.organization_suggest(domain)
     end
 
   end

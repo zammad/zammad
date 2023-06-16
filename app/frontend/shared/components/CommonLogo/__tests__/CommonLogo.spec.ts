@@ -10,6 +10,7 @@ describe('CommonLogo.vue', () => {
     const wrapper = renderComponent(CommonLogo, { store: true })
     const application = useApplicationStore()
 
+    application.config.product_logo = 1234
     application.config.product_name = 'Zammad Custom Logo'
 
     await nextTick()
@@ -17,14 +18,14 @@ describe('CommonLogo.vue', () => {
     const img = wrapper.container.querySelector('img')
 
     expect(img).toHaveAttribute('alt', 'Zammad Custom Logo')
-    expect(img).toHaveAttribute('src', '/assets/images/logo.svg')
+    expect(img).toHaveAttribute('src', '/api/v1/system_assets/product_logo/1234')
   })
 
   it('renders default zammad logo', async () => {
     const wrapper = renderComponent(CommonLogo, { store: true })
     const application = useApplicationStore()
 
-    application.config.product_logo = 'icons/logotype.svg'
+    application.config.product_logo = 'logo.svg'
     delete application.config.product_name
 
     await nextTick()
@@ -32,6 +33,6 @@ describe('CommonLogo.vue', () => {
     const img = wrapper.container.querySelector('img')
 
     expect(img).not.toHaveAttribute('alt')
-    expect(img).toHaveAttribute('src', '/assets/images/icons/logotype.svg')
+    expect(img).toHaveAttribute('src', '/api/v1/system_assets/product_logo/logo.svg')
   })
 })

@@ -5,7 +5,7 @@ class Service::Avatar::ImageValidate < Service::Base
     begin
       raise if image_data.nil?
 
-      data = image_data.is_a?(String) ? StaticAssets.data_url_attributes(image_data) : image_data
+      data = image_data.is_a?(String) ? ImageHelper.data_url_attributes(image_data) : image_data
     rescue
       return error(message: __('The image is invalid.'))
     end

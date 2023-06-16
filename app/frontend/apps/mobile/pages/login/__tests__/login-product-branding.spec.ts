@@ -33,7 +33,7 @@ describe('testing login product branding', () => {
     expect(logo).toBeInTheDocument()
     expect(logo).toHaveAttribute(
       'src',
-      `/assets/images/${applicationConfig.product_logo}`,
+      `/api/v1/system_assets/product_logo/${applicationConfig.product_logo}`,
     )
   })
 

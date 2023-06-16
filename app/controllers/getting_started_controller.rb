@@ -126,7 +126,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # validate image
     if params[:logo] && params[:logo] =~ %r{^data:image}i
-      file = StaticAssets.data_url_attributes(params[:logo])
+      file = ImageHelper.data_url_attributes(params[:logo])
       if !file[:content] || !file[:mime_type]
         messages[:logo] = __('The uploaded image could not be processed.')
       end
@@ -150,23 +150,8 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       return
     end
 
-    # save image
-    if params[:logo] && params[:logo] =~ %r{^data:image}i
-
-      # data:image/png;base64
-      file = StaticAssets.data_url_attributes(params[:logo])
-
-      # store image 1:1
-      StaticAssets.store_raw(file[:content], file[:mime_type])
-    end
-
-    if params[:logo_resize] && params[:logo_resize] =~ %r{^data:image}i
-
-      # data:image/png;base64
-      file = StaticAssets.data_url_attributes(params[:logo_resize])
-
-      # store image 1:1
-      settings[:product_logo] = StaticAssets.store(file[:content], file[:mime_type])
+    if (logo_timestamp = Service::SystemAssets::ProductLogo.store(params[:logo], params[:logo_resize]))
+      settings[:product_logo] = logo_timestamp
     end
 
     # set changed settings

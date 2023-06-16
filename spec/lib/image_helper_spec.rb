@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe StaticAssets do
+RSpec.describe ImageHelper do
   describe '.data_url_attributes' do
     it 'raises error if empty string given' do
       expect { described_class.data_url_attributes('') }.to raise_error(%r{Unable to parse data url})

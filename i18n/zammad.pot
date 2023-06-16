@@ -6326,10 +6326,6 @@ msgstr ""
 msgid "Invalid password, it must contain at least 2 lowercase and 2 uppercase characters!"
 msgstr ""
 
-#: app/controllers/settings_controller.rb
-msgid "Invalid payload, need data:image in logo param"
-msgstr ""
-
 #: lib/knowledge_base/permissions_update.rb
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
@@ -11080,10 +11076,6 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
-#: lib/static_assets.rb
-msgid "The raw logo could not be read."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "The report could not be generated"
 msgstr ""
@@ -11341,8 +11333,11 @@ msgid "The two-factor authentication method is not enabled."
 msgstr ""
 
 #: app/controllers/getting_started_controller.rb
-#: app/controllers/settings_controller.rb
 msgid "The uploaded image could not be processed."
+msgstr ""
+
+#: app/controllers/settings_controller.rb
+msgid "The uploaded image could not be processed. Need data:image in logo or logo_resize param."
 msgstr ""
 
 #: lib/external_credential/exchange.rb

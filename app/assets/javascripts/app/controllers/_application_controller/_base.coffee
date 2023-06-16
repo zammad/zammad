@@ -405,7 +405,7 @@ class App.Controller extends Spine.Controller
     Spine.Route.matchRoutes(newLocation)
 
   logoUrl: ->
-    "#{@Config.get('image_path')}/#{@Config.get('product_logo')}"
+    "/api/v1/system_assets/product_logo/#{@Config.get('product_logo')}"
 
   selectAll: (e) ->
     e.currentTarget.focus()

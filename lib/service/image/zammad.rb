@@ -81,9 +81,9 @@ class Service::Image::Zammad
     image = organization(domain)
     return false if !image
 
-    # store image 1:1
-    product_logo = StaticAssets.store_raw(image[:content], image[:mime_type])
-    Setting.set('product_logo', product_logo)
+    logo_timestamp = Service::SystemAssets::ProductLogo.store_logo(image)
+
+    Setting.set('product_logo', logo_timestamp)
 
     true
   end
