@@ -92,8 +92,8 @@ QUnit.test( "model ui basic tests", assert => {
   assert.equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " datetime="2014-11-07T23:43:08.000Z" title="11/07/2014 11:43 pm">11/07/2014</time>')
   assert.equal( App.viewPrint( ticket, 'date' ), '02/07/2015')
   assert.equal( App.viewPrint( ticket, 'textarea' ), '<div>some new</div><div>line</div>')
-  assert.equal( App.viewPrint( ticket, 'link1' ), '<a href="http://zammad.com" target="blank">closed</a>')
-  assert.equal( App.viewPrint( ticket, 'link2' ), '<a href="http://zammad.com" target="blank">closed</a>')
+  assert.equal( App.viewPrint( ticket, 'link1' ), '<a href="http://zammad.com" target="_blank">closed</a>')
+  assert.equal( App.viewPrint( ticket, 'link2' ), '<a href="http://zammad.com" target="_blank">closed</a>')
   assert.equal( App.viewPrint( ticket, 'multiselect' ), 'One, Two, Three', 'multiselect test 1')
 
   let stub = sinon.stub(App.Config, 'get')
@@ -115,8 +115,8 @@ QUnit.test( "model ui basic tests", assert => {
   assert.equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " datetime="2014-11-07T23:43:08.000Z" title="07.11.2014 23:43">07.11.2014</time>')
   assert.equal( App.viewPrint( ticket, 'date' ), '07.02.2015')
   assert.equal( App.viewPrint( ticket, 'textarea' ), '<div>some new</div><div>line</div>')
-  assert.equal( App.viewPrint( ticket, 'link1' ), '<a href="http://zammad.com" target="blank">geschlossen</a>')
-  assert.equal( App.viewPrint( ticket, 'link2' ), '<a href="http://zammad.com" target="blank">closed</a>')
+  assert.equal( App.viewPrint( ticket, 'link1' ), '<a href="http://zammad.com" target="_blank">geschlossen</a>')
+  assert.equal( App.viewPrint( ticket, 'link2' ), '<a href="http://zammad.com" target="_blank">closed</a>')
   assert.equal( App.viewPrint( ticket, 'multiselect' ), 'One, Two, Three', 'multiselect test 2')
 
 

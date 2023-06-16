@@ -188,7 +188,7 @@ class App extends Spine.Controller
     if !isHtmlEscape
       value = App.Utils.htmlEscape(value)
 
-    "<a href=\"#{App.Utils.replaceTags(attributeConfig.linktemplate, placeholderObjects, true)}\" target=\"blank\">#{value}</a>"
+    "<a href=\"#{App.Utils.replaceTags(attributeConfig.linktemplate, placeholderObjects, true)}\" target=\"_blank\">#{value}</a>"
 
   @view: (name) ->
     template = (params = {}) ->
