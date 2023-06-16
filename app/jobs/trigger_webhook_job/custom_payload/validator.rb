@@ -38,6 +38,7 @@ module TriggerWebhookJob::CustomPayload::Validator
         return "\#{#{display} / #{e.message}}"
       end
 
+      return '' if value.nil?
       return validate_value!(value, display) if index == methods.size - 1
 
       reference = value

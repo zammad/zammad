@@ -120,6 +120,25 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
       end
     end
 
+    context 'when the placeholder contains valid object and method, but the value is nil' do
+      let(:record) do
+        {
+          'ticket.organization.name' => '#{ticket.organization.name}',
+          'ticket.title'             => '#{ticket.title}'
+        }.to_json
+      end
+      let(:json_data) do
+        {
+          'ticket.organization.name' => '',
+          'ticket.title'             => ticket.title
+        }
+      end
+
+      it 'returns an empty string' do
+        expect(generate).to eq(json_data)
+      end
+    end
+
     context 'when the placeholder contains multiple valid object and method' do
       let(:record) do
         {
