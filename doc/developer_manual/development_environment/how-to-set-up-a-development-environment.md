@@ -43,7 +43,7 @@ sudo chmod +x /usr/local/lib/chrome/chromedriver-109.0.5414.74
 sudo ln -sf /usr/local/lib/chrome/chromedriver-109.0.5414.74 /usr/local/bin/chromedriver
 ```
 
-Beware chromedriver version has to match your installed chrome browser version.
+Beware chromedriver version has to match your installed Chrome browser version.
 
 ## RVM
 
@@ -154,10 +154,58 @@ $ bundle install
 
 ## Using HTTPS
 
-Zammad uses the gem `localhost` to automatically generate self-signed certificates. This will place `~./localhost/localhost.crt` and `~/.localhost/localhost.key` files if needed. Then you can use one of the following commands:
+Zammad uses the gem `localhost` to automatically generate self-signed certificates. This will place `~./localhost/localhost.crt` and `~/.localhost/localhost.key` files if needed. Then you can use one of the following commands to start the development server:
 
 ```sh
-$ VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -f Procfile.dev-https
+$ VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -f Procfile.dev-https
 # or
 $ yarn dev:https
 ```
+
+The application will be listening on [https://localhost:3000](https://localhost:3000).
+
+### Self-signed Certificate Exemption
+
+By default, the browser will not allow you to access an HTTPS site with a self-signed certificate. You will need to add an exemption by clicking on **Advanced** and choosing **Proceed (unsafe)** or **Accept the Risk and Continue**.
+
+In Firefox, you will also have to add an exemption for WebSocket addresses, since they use a different port. Visit [https://localhost:6042](https://localhost:6042) and [https://localhost:3036](https://localhost:3036) to kick-start the process and then try to reload the app.
+
+### Signed Certificate Issued via Let's Encrypt
+
+Sometimes, using self-signed certificates might not be enough, due to some platforms still not executing the app in a secure context. You can issue a proper signed certificate via [Let's Encrypt](https://letsencrypt.org/) service for free. As a pre-requisite, you will need an access to a DNS table of a custom domain and a local instance of [Docker](https://www.docker.com/).
+
+First, decide on a subdomain for your app, i.e. if you own `example.com` you may want to use `localhost.example.com`.
+
+Next, run the following Docker container to start the DNS01 challenge process to verify you own the domain in question:
+
+```sh
+$ docker run --rm -it -v /path/to/certs:/etc/letsencrypt certbot/dns-cloudflare certonly --manual --preferred-challenges dns --email you@example.com --agree-tos --no-eff-email --key-type rsa -d localhost.example.com
+```
+
+Where:
+
+* `/path/to/certs` is a local directory where your certificate files will be stored
+* `you@example.com` is your email address
+* `localhost.example.com` is the FQDN of your subdomain
+
+When asked to deploy a DNS TXT record by certbot, open the DNS table of your domain. Add a TXT record with suggested name in form of `_acme-challenge.localhost.example.com.` and suggested random value. Save the record and wait some seconds for changes to propagate (this may depend on your DNS host).
+
+Then, press Enter to continue the challenge process. If the certbot identifies your DNS record, it will automatically issue an appropriate certificate. Do not proceed if there was an error logged, resolve it first.
+
+Next, backup your current self-signed certificate files (if they exist) and create symbolic links to the new ones:
+
+```sh
+$ cd ~/.localhost
+$ mv localhost.crt localhost.crt.self-signed
+$ mv localhost.key localhost.key.self-signed
+$ ln -s /path/to/certs/live/localhost.example.com/cert.pem ~/.localhost/localhost.crt
+$ ln -s /path/to/certs/live/localhost.example.com/privkey.pem ~/.localhost/localhost.key
+```
+
+You may need to adjust the paths depending on your subdomain name.
+
+Next, add an A DNS record for your subdomain that points to your local IP. You can find out your local IP via `ifconfig` or a similar command.
+
+For example, if your local IP is `192.168.0.39` and your subdomain is `localhost.example.com`, add an A DNS record with the name of `localhost` and point it to `192.168.0.39`. This will allow you to access the app from within your local network only by using the proper FQDN: perfect for testing the app on mobile devices.
+
+Finally, start the development server with `yarn dev:https` command. You can now access the app via [https://localhost.example.com:3000](https://localhost.example.com:3000) and it should show up as a trusted site.
