@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "imports": {
+    "#tests/*": "./tests/*",
+    "#shared/*": "./shared/*",
+    "#mobile/*": "./apps/mobile/*",
+    "#cy/*": "../../.cypress/*"
+  }
+}

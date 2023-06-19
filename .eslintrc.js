@@ -53,26 +53,7 @@ module.exports = {
 
     'no-restricted-imports': 'off',
 
-    // Disable the following rule, because it's not relevant for the tool chain and test envoirment.
-    'import/no-extraneous-dependencies': [
-      'error',
-      {
-        devDependencies: [
-          'histoire.config.ts',
-          'tailwind.config.js',
-          'vite.config.*',
-          'app/frontend/build/**',
-          'app/frontend/**/*.spec.*',
-          'app/frontend/**/__tests__/**/*',
-          'app/frontend/tests/**/*',
-          'app/frontend/**/*.stories.ts',
-          'app/frontend/**/*.story.vue',
-          'app/frontend/**/*.story.vue',
-          'app/frontend/stories/**/*.ts',
-          'app/frontend/cypress/**/*',
-        ],
-      },
-    ],
+    'import/no-extraneous-dependencies': 'off',
 
     'import/extensions': ['error', 'ignorePackages'],
 

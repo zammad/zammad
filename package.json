@@ -22,12 +22,6 @@
   "engines": {
     "node": ">=16"
   },
-  "imports": {
-    "#tests/*": "./app/frontend/tests/*",
-    "#shared/*": "./app/frontend/shared/*",
-    "#mobile/*": "./app/frontend/apps/mobile/*",
-    "#cy/*": ".cypress/*"
-  },
   "packageManager": "yarn@1.22.19",
   "devDependencies": {
     "@graphql-codegen/cli": "^3.3.1",
