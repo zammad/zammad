@@ -732,13 +732,7 @@ to send no browser reload event, pass false
     # sent maintenance message to clients
     if send_event
       if execute_db_count.nonzero?
-        if ENV['APP_RESTART_CMD']
-          AppVersion.set(true, 'restart_auto')
-          sleep 4
-          AppVersionRestartJob.perform_later(ENV['APP_RESTART_CMD'])
-        else
-          AppVersion.set(true, 'restart_manual')
-        end
+        Zammad::Restart.perform
       elsif execute_config_count.nonzero?
         AppVersion.set(true, 'config_changed')
       end
