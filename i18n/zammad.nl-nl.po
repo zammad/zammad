@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-24 11:56+0000\n"
+"PO-Revision-Date: 2023-06-14 03:05+0000\n"
 "Last-Translator: JPB <jeffreypeerboom@eijsden-margraten.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
 "development/nl/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.17\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -640,6 +640,18 @@ msgstr "%{name} is een gereserveerd woord"
 msgid "(state: %s)"
 msgstr "(status: %s)"
 
+#: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
+msgid ""
+"**Activity Types** can be used to group the different ticket time accounting "
+"entries together. For example, entries that are relevant to a \"Billing\" "
+"type.\n"
+"\n"
+"When you enable the recording of the activity type, the users will be able "
+"to select a type from this list. Additionally, a column with an associated "
+"activity type will be rendered for an entry in the **Activity** table under "
+"the **Accounted Time** tab."
+msgstr ""
+
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
 "**Data Privacy** helps you to delete and verify the removal of existing data "
@@ -947,9 +959,12 @@ msgstr "Account bestaat reeds!"
 msgid "Account not verified"
 msgstr "Account niet geverifieerd"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
 #: app/graphql/gql/types/overview_type.rb
 msgid "Accounted Time"
 msgstr "Verantwoorde tijd"
@@ -1042,6 +1057,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
+#: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
@@ -1057,13 +1073,30 @@ msgstr "Actief"
 msgid "Active Agents"
 msgstr "Actieve Behandelaren"
 
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 msgid "Activity"
 msgstr "Activiteit"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Activity Stream"
 msgstr "Activiteitenlog"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_types.coffee
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/types.jst.eco
+#: app/controllers/time_accountings_controller.rb
+#, fuzzy
+#| msgid "Activity"
+msgid "Activity Type"
+msgstr "Activiteit"
+
+#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_types.coffee
+#, fuzzy
+#| msgid "Activity"
+msgid "Activity Types"
+msgstr "Activiteit"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
@@ -1393,13 +1426,10 @@ msgid "All tickets"
 msgstr "Alle tickets"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
-#| msgid ""
-#| "All user's two-factor authentication methods were removed successfully!"
 msgid "All two-factor authentication methods were removed for this user."
 msgstr ""
-"Alle methoden voor twee-factor-authenticatie van de gebruiker zijn "
-"verwijderd!"
+"Alle methoden voor twee-factor-authenticatie van deze gebruiker zijn "
+"verwijderd."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1613,7 +1643,7 @@ msgstr "Huidige standaardwaarden toepassen op alle behandelaren"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Apr"
 msgstr "Apr"
@@ -1654,6 +1684,18 @@ msgstr ""
 "Weet je zeker dat je opnieuw wilt laden? Alle niet opgeslagen aanpassingen "
 "gaan verloren"
 
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
+#, fuzzy
+#| msgid "Are you sure you want to delete \"%s\"?"
+msgid "Are you sure you want to set \"%s\" as default?"
+msgstr "Wil je echt \"%s\" verwijderen?"
+
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
+#, fuzzy
+#| msgid "Are you sure you want to delete \"%s\"?"
+msgid "Are you sure you want to unset \"%s\" as default?"
+msgstr "Wil je echt \"%s\" verwijderen?"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -1662,12 +1704,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
 msgstr "Weet je het zeker?"
@@ -1908,7 +1950,7 @@ msgstr "Attributen om te vergelijken"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Aug"
 msgstr "aug"
@@ -2836,7 +2878,6 @@ msgstr "Dupliceer"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "Close"
 msgstr "Sluit"
 
@@ -2912,6 +2953,12 @@ msgstr "Communicatie"
 msgid "Company Inc."
 msgstr "Bedrijfsnaam B.V."
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: db/seeds/settings.rb
+msgid "Complete the sign-in with your security key."
+msgstr "Voltooi de aanmelding met je beveiligingssleutel."
+
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Complete translations"
 msgstr "Voltooide vertalingen"
@@ -2925,7 +2972,7 @@ msgid "Compose your message…"
 msgstr "Stel je bericht op…"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_settings.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Conditions for affected objects"
@@ -2975,6 +3022,10 @@ msgstr "Configureer Basisinstellingen"
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid "Confirm"
 msgstr "Bevestig"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+msgid "Confirm Password"
+msgstr "Bevestig wachtwoord"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
@@ -3098,7 +3149,7 @@ msgstr "Verbinding geweigerd"
 msgid "Connection test successful"
 msgstr "Verbindingstest geslaagd"
 
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Contact the administrator if you have any problems logging in."
 msgstr "Neem contact op met de beheerder als je problemen hebt met inloggen."
@@ -3174,6 +3225,7 @@ msgid "Copied!"
 msgstr "Gekopiëerd!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Copy"
 msgstr "Kopie"
 
@@ -3205,29 +3257,28 @@ msgstr ""
 "beperken of om de verplichting om ze in te vullen te wijzigen."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
-#| msgid "Could not load user's two-factor authentication configuration"
 msgid ""
 "Could not load the two-factor authentication configuration for this user."
 msgstr ""
-"Kan de twee-factor-authenticatieconfiguratie van de gebruiker niet laden"
+"Kan de twee-factor-authenticatieconfiguratie van de gebruiker niet laden."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
-#| msgid "Could not remove all user's two-factor authentication methods"
 msgid "Could not remove all two-factor authentication methods for this user."
 msgstr ""
-"Kan niet alle twee-factor-authenticatiemethoden van de gebruiker verwijderen"
+"Kan niet alle twee-factor-authenticatiemethoden van de gebruiker verwijderen."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
-#| msgid "Could not remove two-factor authentication method"
 msgid "Could not remove the two-factor authentication method for this user."
-msgstr "Kan twee-factor-authenticatiemethode niet verwijderen"
+msgstr ""
+"Kan twee-factor-authenticatiemethode niet verwijderen van deze gebruiker."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Could not remove two-factor authentication method"
 msgstr "Kan twee-factor-authenticatiemethode niet verwijderen"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Could not set two-factor authentication method as default"
+msgstr "Kan twee-factor-authenticatiemethode niet als standaard instellen"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
@@ -3447,6 +3498,7 @@ msgstr "Externe Notitie aangemaakt"
 msgid "Created Internal Article"
 msgstr "Interne Notitie aangemaakt"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -3570,10 +3622,10 @@ msgstr "Aangepast adres niet ingesteld"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
@@ -3682,7 +3734,7 @@ msgstr "Dagen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Dec"
 msgstr "dec"
@@ -3709,6 +3761,7 @@ msgstr "Decodering gelukt."
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
+#: app/assets/javascripts/app/views/generic/table_row.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -3814,6 +3867,10 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr "Definieer het maximum aantal getoonde tickets in overzichten."
+
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+msgid "Define the unit to be shown next to the time accounting input field."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -4045,6 +4102,15 @@ msgid "Defines if generic CTI integration is enabled or not."
 msgstr "Zet de generieke CTI-integratie aan of uit."
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines if recovery codes can be used by users in the event they lose access "
+"to other two-factor authentication methods."
+msgstr ""
+"Herstelcodes kunnen worden gebruikt door gebruikers om toegang te krijgen "
+"tot hun account in het geval de gebruiker de toegang tot andere twee-factor-"
+"authenticatiemethoden verliest."
+
+#: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "Zet desipgate.io-integratie (http://www.sipgate.io) aan of uit."
 
@@ -4104,11 +4170,25 @@ msgstr ""
 "ondersteunt."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the default screen."
+msgid "Defines if the time accounting types are enabled."
+msgstr "Bepaald de standaard schermconfiguratie."
+
+#: db/seeds/settings.rb
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
 msgstr ""
 "Zet de verificatie-app voor authenticatie met twee factoren aan of uit."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the two-factor authentication method security keys is enabled or "
+"not."
+msgstr ""
+"Stel in of de twee-factor-authenticatiemethode beveiligingssleutels zijn "
+"ingeschakeld of niet."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4360,6 +4440,11 @@ msgid "Defines the backend for user and organization image lookups."
 msgstr "Bepaald de backend voor gebruikers en organisatie image lookups."
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines the custom unit to be shown next to the time accounting input field."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines the default calendar tickets subscription settings."
 msgstr "Bepaald de standaard abonnementsinstellingen voor agendatickets."
 
@@ -4373,6 +4458,12 @@ msgstr "Bepaalt de standaard systeemtaal."
 
 #: db/seeds/settings.rb
 msgid "Defines the default system timezone."
+msgstr "Bepaalt de standaard tijdzone voor het systeem."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the default system timezone."
+msgid "Defines the default time accounting type."
 msgstr "Bepaalt de standaard tijdzone voor het systeem."
 
 #: db/seeds/settings.rb
@@ -4572,6 +4663,10 @@ msgid ""
 msgstr ""
 "Stel de transaction-backend in om klant en organisatie gegevens van Clearbit "
 "(http://www.clearbit.com) op te halen."
+
+#: db/seeds/settings.rb
+msgid "Defines the unit to be shown next to the time accounting input field."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4999,6 +5094,10 @@ msgstr "Download Certificaat"
 msgid "Download Private Key"
 msgstr "Download Private Key"
 
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
+msgid "Download all records"
+msgstr "Download alle items"
+
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Download en installeer de %s Migration Plugin op de %'s instance."
@@ -5290,8 +5389,18 @@ msgstr ""
 "gebruikersprofiel opnemen."
 
 #: db/seeds/settings.rb
+msgid "Enable Recovery Codes"
+msgstr "Herstelcodes inschakelen"
+
+#: db/seeds/settings.rb
 msgid "Enable Ticket creation"
 msgstr "Activeer aanmaken van tickets"
+
+#: app/assets/javascripts/app/views/time_accounting/types.jst.eco
+msgid ""
+"Enable activity type selection. This would allow agents to select one of the "
+"types below when adding accounted time."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enable auto assignment for following matching tickets."
@@ -5350,7 +5459,7 @@ msgstr ""
 msgid "Enable ticket auto assignment."
 msgstr "Auto-ticket-toewijzing inschakelen."
 
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 msgid "Enable time accounting for following matching tickets."
 msgstr "Activeer tijdsregistratie voor de volgende tickets."
 
@@ -5573,6 +5682,11 @@ msgstr "Invoergegevens invoeren"
 msgid "Enter link URL"
 msgstr "Voer URL in"
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
+#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
+msgid "Enter one of your unused recovery codes."
+msgstr "Voer een van je ongebruikte herstelcodes in."
+
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Enter search and select a type to search for"
 msgstr "Ga zoeken en selecteer een type om naar te zoeken"
@@ -5602,6 +5716,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Enter the security code generated by the authenticator app:"
 msgstr "Voer de beveiligingscode van je twee-factor-authenticatie-app in:"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
+#, fuzzy
+#| msgid "Please enter the time you want to record."
+msgid "Enter the time you want to record"
+msgstr "Vul hier jouw tijd in die je wenst te verwerken."
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 msgid "Enter time zone"
@@ -5949,7 +6069,7 @@ msgstr "Functie niet ingeschakeld!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Feb"
 msgstr "feb"
@@ -5966,6 +6086,10 @@ msgstr "Feedback"
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Feedback Form"
 msgstr "Feedback formulier"
+
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+msgid "File '%s' is uploading"
+msgstr "Bestand '%s' wordt geüpload"
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
@@ -6270,6 +6394,11 @@ msgstr "Genereer Access Token voor |%s|"
 msgid "Generate Token"
 msgstr "Genereer Token"
 
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Generate recovery codes"
+msgstr "Genereer herstelcodes"
+
 #: db/seeds/schedulers.rb
 msgid "Generate user-based stats."
 msgstr "Genereer gebruikers gebaseerde statistieken."
@@ -6306,6 +6435,10 @@ msgstr "Haal de beveiligingscode op via de authenticator-app op je apparaat."
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
 msgstr "Toegangstoken krijgen"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
+msgid "Getting key information from the browser..."
+msgstr "Sleutel informatie ophalen uit de browser..."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -6386,6 +6519,7 @@ msgid "Go Back"
 msgstr "Terug"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Go back"
 msgstr "Ga terug"
 
@@ -6590,7 +6724,7 @@ msgstr "Hash"
 msgid "Have a nice day."
 msgstr "Een fijne dag gewenst."
 
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Having problems?"
 msgstr "Is er een probleem?"
@@ -6945,6 +7079,14 @@ msgid ""
 msgstr ""
 "Als je problemen hebt met de third-party login kan je een wachtwoord voor "
 "éénmalige aanmelding aanvragen als admin."
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid ""
+"If you lose your recovery codes it's possible to generate new ones. This "
+"action is going to invalidate previous recovery codes."
+msgstr ""
+"Als je de herstelcodes verliest, is het mogelijk om nieuwe te genereren. "
+"Deze actie maakt eerdere herstelcodes ongeldig."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
@@ -7367,10 +7509,6 @@ msgstr ""
 "Ongeldig wachtwoord, het moet minimaal 2 kleine letters en 2 hoofdletters "
 "bevatten!"
 
-#: app/controllers/settings_controller.rb
-msgid "Invalid payload, need data:image in logo param"
-msgstr "Ongeldige payload, data:image nodig in logo parameter"
-
 #: lib/knowledge_base/permissions_update.rb
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Ongeldige rechten, sluit jezelf niet buiten."
@@ -7481,7 +7619,7 @@ msgstr "Notities per pagina"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jan"
 msgstr "jan"
@@ -7506,7 +7644,7 @@ msgstr "Aanmelden bij %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jul"
 msgstr "jul"
@@ -7518,7 +7656,7 @@ msgstr "juli"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jun"
 msgstr "jun"
@@ -7873,8 +8011,6 @@ msgid "Location of an external chat.css file."
 msgstr "Locatie van een extern chat.css bestand."
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 msgid "Log in to %s"
 msgstr "Aanmelden bij %s"
 
@@ -8024,7 +8160,7 @@ msgstr "Mapping"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mar"
 msgstr "mrt"
@@ -8115,7 +8251,7 @@ msgstr "Maximaal aantal getoonde tickets in overzichten"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "May"
 msgstr "mei"
@@ -8430,6 +8566,7 @@ msgstr "Nagios integratie"
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -8454,6 +8591,7 @@ msgstr "Nagios integratie"
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
+#: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/twitter.coffee
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee
@@ -8484,6 +8622,10 @@ msgstr "Naam"
 #: db/seeds/settings.rb
 msgid "Name Identifier Format"
 msgstr "Name Identifier Format"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Name for this security key"
+msgstr "Naam voor deze beveiligingssleutel"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Name of form submit button"
@@ -8552,6 +8694,12 @@ msgstr "Nieuw"
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
 msgstr "Nieuw Access Token is"
+
+#: app/assets/javascripts/app/controllers/time_accounting_types.coffee
+#, fuzzy
+#| msgid "Activity"
+msgid "New Activity Type"
+msgstr "Activiteit"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "New Application"
@@ -8734,6 +8882,7 @@ msgstr "Nieuwe gebruiker?"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -9014,6 +9163,7 @@ msgstr "Niet gevonden"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
@@ -9086,7 +9236,7 @@ msgstr "Notificaties"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Nov"
 msgstr "nov"
@@ -9120,13 +9270,16 @@ msgid "OAuth2 token is expired!"
 msgstr "OAuth2-token is verlopen!"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "OK"
 msgstr "OK"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "OK, I've copied my token"
 msgstr "Oke, ik heb mijn token gekopieerd"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+msgid "OK, I've saved my recovery codes"
+msgstr "OK, ik heb mijn herstelcodes opgeslagen"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 msgid "OTRS"
@@ -9149,7 +9302,7 @@ msgstr "Objects"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Oct"
 msgstr "okt"
@@ -9222,6 +9375,17 @@ msgid ""
 msgstr ""
 "Alleen pakketten van bekende, vertrouwde en geverifieerde bronnen mogen "
 "worden geïnstalleerd."
+
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
+msgid ""
+"Only the 20 most recent records are displayed. Download to view the full "
+"list."
+msgstr ""
+"Alleen de 20 meest recente records worden weergegeven. Klik op download om "
+"de volledige lijst te bekijken."
 
 #: db/seeds/settings.rb
 msgid "Only used internally to propagate current web app version to clients."
@@ -9301,6 +9465,14 @@ msgstr "Of migreer van een ander systeem."
 msgid "Or sign in using"
 msgstr "Of login met"
 
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactorMethods.vue
+msgid "Or use one of your recovery codes."
+msgstr "Of gebruik een van je herstelcodes."
+
+#: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+msgid "Or, use one of your"
+msgstr "Of gebruik een van je"
+
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: db/seeds/permissions.rb
 msgid "Order of Overviews"
@@ -9317,11 +9489,11 @@ msgstr "Volgorde van overzichten"
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/pages/organization/routes.ts
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
@@ -9747,10 +9919,6 @@ msgstr "Voer a.u.b. een geldig email-adres in."
 msgid "Please enter the endpoint for accessing Exchange Web Services."
 msgstr "Voer het endpoint in voor toegang tot Exchange Web Services."
 
-#: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
-msgid "Please enter the time you want to record."
-msgstr "Vul hier jouw tijd in die je wenst te verwerken."
-
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Please enter your Exchange credentials."
 msgstr "Voer de Exchange-credentials in."
@@ -9771,6 +9939,15 @@ msgstr "Voeg a.u.b. een correcte URL toe."
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Ontvanger nodig in \"TO\" of \"CC\"."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
+msgid ""
+"Please save your recovery codes listed below somewhere safe. You can use "
+"them to sign in if you lose access to another two-factor method:"
+msgstr ""
+"Bewaar de onderstaande herstelcodes op een veilige plek. Je kunt ze "
+"gebruiken om in te loggen als je geen toegang meer heeft tot een andere "
+"tweefactormethode:"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Please select a ticket to merge into."
@@ -9835,8 +10012,6 @@ msgstr "Postmaster-filter"
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
@@ -9902,6 +10077,10 @@ msgstr "Vorige in overzicht"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Previously owned tickets (%s in total):"
 msgstr "Voormalig toegewezen tickets (in totaal %s):"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+msgid "Print"
+msgstr "Print"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -10106,6 +10285,24 @@ msgstr ""
 "Records die bestaan in de te importeren data (maar niet in Zammad) worden "
 "altijd aangemaakt."
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method/recovery_codes.coffee
+#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Recovery Code"
+msgstr "Herstelcode"
+
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
+msgid "Recovery Codes"
+msgstr "Herstelcodes"
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid ""
+"Recovery codes can be used to access your account in the event you lose "
+"access to other two-factor authentication methods."
+msgstr ""
+"Herstelcodes kunnen worden gebruikt om toegang te krijgen tot je account in "
+"het geval je de toegang tot andere tweefactorauthenticatiemethoden verliest."
+
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
 msgstr "Recursieve tickettriggers"
@@ -10119,6 +10316,10 @@ msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 "Referenties - Zoek naar follow-up ook in In-Reply-To of References-headers."
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Regenerate recovery codes"
+msgstr "Genereer herstelcodes opnieuw"
 
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Register"
@@ -10151,6 +10352,7 @@ msgstr "Onthoud mij"
 msgid "Remote"
 msgstr "Remote"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
@@ -10205,6 +10407,10 @@ msgstr "Verwijder methode"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
 msgstr "Verwijder geselecteerde waardes"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Remove two-factor authentication"
+msgstr "Verwijder twee-factor-authenticatie"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
@@ -10332,7 +10538,8 @@ msgstr "Zend verificatiemail opnieuw"
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
 msgstr "Opnieuw"
@@ -10486,6 +10693,12 @@ msgstr "Beperk to slechts de volgende gebruikers"
 #: app/assets/javascripts/app/views/generic/object_import/result.jst.eco
 msgid "Result:"
 msgstr "Resultaat:"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+msgid "Retry"
+msgstr "Opnieuw proberen"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
@@ -10694,7 +10907,8 @@ msgstr "zaterdag"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -10703,6 +10917,10 @@ msgstr "zaterdag"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Save"
 msgstr "Opslaan"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+msgid "Save Codes"
+msgstr "Codes opslaan"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -10834,7 +11052,7 @@ msgid "Security"
 msgstr "Beveiliging"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 msgid "Security Code"
 msgstr "Beveiligingscode"
@@ -10843,6 +11061,38 @@ msgstr "Beveiligingscode"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Security Error"
 msgstr "Beveiligingsfout"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Security Key"
+msgstr "Veiligheidssleutel"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: db/seeds/settings.rb
+msgid "Security Keys"
+msgstr "Veiligheidssleutels"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Security key \"%s\" will be removed."
+msgstr "Beveiligingssleutel \"%s\" wordt verwijderd."
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Security key set up failed."
+msgstr "Het instellen van de beveiligingssleutel is mislukt."
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+msgid "Security key verification failed."
+msgstr "Verificatie van beveiligingssleutel mislukt."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+msgid ""
+"Security keys are hardware or software credentials that can be used as your "
+"two-factor authentication method."
+msgstr ""
+"Beveiligingssleutels zijn hardware of software referenties die kunnen worden "
+"gebruikt als je twee-factor-authenticatiemethode."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -10913,7 +11163,7 @@ msgstr "Geselecteerde voorwaarden"
 msgid "Selective (default)"
 msgstr "Selectief (standaard)"
 
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 msgid "Selector"
 msgstr "Keuzeschakelaar"
 
@@ -11006,7 +11256,7 @@ msgstr "Succesvol verzonden!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sep"
 msgstr "sep"
@@ -11059,6 +11309,7 @@ msgstr "Sessies"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Set Up"
 msgstr "Configureren"
@@ -11079,6 +11330,7 @@ msgstr "Zet notitie op intern/openbaar"
 msgid "Set as Default"
 msgstr "Zet als standaard"
 
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Set as default"
 msgstr "Zet als standaard"
@@ -11160,6 +11412,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -11339,8 +11592,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
 msgid "Sign in"
@@ -11440,6 +11694,7 @@ msgstr "Sipgate"
 msgid "Site"
 msgstr "Site"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
@@ -12034,6 +12289,12 @@ msgstr "Het actieve rapportage profiel kon niet worden gevonden."
 msgid "The admin consent request was sent to your administrator."
 msgstr "Het beheerderstoestemmingsverzoek is naar de beheerder verzonden."
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+msgid "The application is not running in a secure context."
+msgstr "De applicatie draait niet in een beveiligde context."
+
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
 msgid "The article could not be deleted."
 msgstr "De notitie kon niet verwijderd worden."
@@ -12113,6 +12374,12 @@ msgid ""
 msgstr ""
 "De chat zal verschijnen wanneer een verbinding met de server is gemaakt en "
 "er een medewerker online is om mee te chatten."
+
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+msgid ""
+"The chosen unit will be used for display only and will not affect stored "
+"values."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "The configuration of Zammad has changed, please reload your browser."
@@ -12392,10 +12659,6 @@ msgstr "De opgegeven payload is ongeldig. Controleer uw syntaxis."
 msgid "The provided token is invalid."
 msgstr "Het verstrekte token is ongeldig."
 
-#: lib/static_assets.rb
-msgid "The raw logo could not be read."
-msgstr "Het logo kon niet worden gelezen."
-
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "The report could not be generated"
 msgstr "Het rapport kon niet worden gegenereert"
@@ -12657,18 +12920,26 @@ msgid "The two-factor authentication is not configured yet."
 msgstr "Twee-factor-authenticatie is nog niet geconfigureerd."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
-#| msgid "User's two-factor authentication method %s was removed."
 msgid "The two-factor authentication method \"%s\" was removed for this user."
-msgstr "De twee-factor-authenticatiemethode %s van de gebruiker is verwijderd."
+msgstr ""
+"De twee-factor-authenticatiemethode %s van deze gebruiker is verwijderd."
 
+#: app/controllers/sessions_controller.rb
 #: app/controllers/user/two_factors_controller.rb
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
 msgid "The two-factor authentication method is not enabled."
 msgstr "De twee-factor-authenticatiemethode is niet ingeschakeld."
 
 #: app/controllers/getting_started_controller.rb
-#: app/controllers/settings_controller.rb
 msgid "The uploaded image could not be processed."
+msgstr "De geuploade afbeelding kon niet verwerkt worden."
+
+#: app/controllers/settings_controller.rb
+#, fuzzy
+#| msgid "The uploaded image could not be processed."
+msgid ""
+"The uploaded image could not be processed. Need data:image in logo or "
+"logo_resize param."
 msgstr "De geuploade afbeelding kon niet verwerkt worden."
 
 #: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
@@ -12676,6 +12947,11 @@ msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 "De 'preferred_username' van de gebruiker kan niet worden geëxtraheerd uit "
 "'id_token'."
+
+#: app/controllers/sessions_controller.rb
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
+msgid "The username or password is incorrect."
+msgstr "De gebruikersnaam of het wachtwoord is niet correct."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -12770,6 +13046,13 @@ msgstr ""
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
 msgid "There is no route to this host."
 msgstr "Er is geen route naar deze host."
+
+#: app/controllers/user/two_factors_controller.rb
+msgid ""
+"There is no stored configuration for this two-factor authentication method."
+msgstr ""
+"Er is geen opgeslagen configuratie voor deze twee-factor-"
+"authenticatiemethode."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "There was no Knowledge Base created."
@@ -13096,7 +13379,7 @@ msgstr "donderdag"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts
 #: db/seeds/permissions.rb
@@ -13484,14 +13767,37 @@ msgstr "Tijd"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Time Accounting"
 msgstr "Tijdsregistratie"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "Time Accounting Custom Unit"
+msgstr "Tijdsregistratie"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Time Accounting Selector"
+msgid "Time Accounting Default Type"
+msgstr "Tijdsregistratie keuzes"
+
+#: db/seeds/settings.rb
 msgid "Time Accounting Selector"
 msgstr "Tijdsregistratie keuzes"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "Time Accounting Types"
+msgstr "Tijdsregistratie"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "Time Accounting Unit"
+msgstr "Tijdsregistratie"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
@@ -13505,6 +13811,12 @@ msgstr "Tijdseenheden"
 #: lib/excel_sheet/ticket.rb
 msgid "Time Units Total"
 msgstr "Totaal aantal tijdseenheden"
+
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "Time accounting unit"
+msgstr "Tijdsregistratie"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Time event"
@@ -13622,6 +13934,13 @@ msgid ""
 msgstr ""
 "Om vertalingen gemakkelijker te maken kun je de inline vertaalfunctie in- en "
 "uitschakelen door op \"%s\"te drukken."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+msgid ""
+"To register a new security key with your account, press the button below."
+msgstr ""
+"Om een nieuwe beveiligingssleutel in je account toe te voegen, druk je op de "
+"onderstaande knop."
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
@@ -13758,18 +14077,23 @@ msgstr ""
 msgid "Triggers are …"
 msgstr "Triggers zijn …"
 
+#: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+msgid "Try Another Method"
+msgstr "Probeer een andere methode"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Try again"
 msgstr "Probeer opnieuw"
 
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try another method"
 msgstr "Probeer een andere methode"
 
-#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
-msgid "Try another sign-in method."
-msgstr "Probeer een andere inlogmethode."
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+msgid "Try using your security key again."
+msgstr "Probeer uw beveiligingssleutel opnieuw te gebruiken."
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
@@ -13877,13 +14201,17 @@ msgstr "Methoden voor twee-factor-authenticatie"
 msgid "Two-factor authentication is not supported with HTTP BasicAuth."
 msgstr "Twee-factor-authenticatie wordt niet ondersteund met HTTP BasicAuth."
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
-msgid "Two-factor authentication method \"%s\" will be removed."
-msgstr "Twee-factor-authenticatiemethode \"%s\" wordt verwijderd."
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+msgid "Two-factor authentication method could not be initiated."
+msgstr "De twee-factor-authenticatiemethode kon niet worden gestart."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Two-factor authentication method was removed."
 msgstr "Twee-factor-authenticatiemethode is verwijderd."
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method was set as default."
+msgstr "Twee-factor-authenticatiemethode is als standaard ingesteld."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
 msgid "Two-factor authentication method was set up successfully."
@@ -13944,6 +14272,10 @@ msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 "Niet-toegewezen e-mailadressen, wijs ze toe aan een kanaal of verwijder ze."
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+msgid "Unit"
+msgstr ""
+
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
 msgstr "Onbekende fout"
@@ -13967,6 +14299,12 @@ msgstr "Ongelezen notificatie"
 #: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
 msgid "Unread notifications"
 msgstr "Ongelezen notificaties"
+
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
+#, fuzzy
+#| msgid "Reset to default"
+msgid "Unset default"
+msgstr "Herstel naar standaard"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Unsigned"
@@ -14224,6 +14562,10 @@ msgstr "Dubbelklik om het niveau van de regel aan te passen."
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Use one line per URI"
 msgstr "Gebruik één lijn per URI"
+
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
+msgid "Use one of your safely stored recovery codes."
+msgstr "Gebruik een van uw veilig opgeslagen herstelcodes."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -14483,6 +14825,10 @@ msgstr "Verificatie e-mail kon niet verzonden worden."
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Verify sending and receiving"
 msgstr "Verifieer verzenden en ontvangen"
+
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+msgid "Verifying key information..."
+msgstr "Sleutelgegevens verifiëren..."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
@@ -15685,6 +16031,12 @@ msgstr "Huidige gebruiker"
 msgid "current user organization"
 msgstr "huidige gebruikers organisatie"
 
+#: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
+#, fuzzy
+#| msgid "customer"
+msgid "custom unit"
+msgstr "klant"
+
 #: lib/calendar_subscriptions/tickets.rb
 msgid "customer"
 msgstr "klant"
@@ -15929,6 +16281,13 @@ msgstr "Verberg"
 msgid "hour"
 msgstr "uur"
 
+#: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+#, fuzzy
+#| msgid "Hour(s)"
+msgid "hour(s)"
+msgstr "Uren"
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "hours"
@@ -16078,6 +16437,7 @@ msgstr "is geen Gebruiker"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr "is geen kleur. Alleen Hex-, RGB- en HSL-kleuren worden ondersteund."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 msgid "is not a number"
 msgstr "is geen getal"
 
@@ -16193,6 +16553,13 @@ msgstr "bericht"
 msgid "minute"
 msgstr "minuut"
 
+#: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+#, fuzzy
+#| msgid "Minute(s)"
+msgid "minute(s)"
+msgstr "Minuut(en)"
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "minutes"
 msgstr "minuten"
@@ -16265,6 +16632,7 @@ msgid "new & open"
 msgstr "nieuw & open"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
@@ -16277,6 +16645,10 @@ msgstr "nee"
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "no issues"
 msgstr "Geen problemen"
+
+#: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
+msgid "no unit"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -16373,9 +16745,18 @@ msgstr "Publiek"
 msgid "published"
 msgstr "gepubliseerd"
 
+#: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+msgid "quarter-hour(s)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "bereikt"
+
+#: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+msgid "recovery codes"
+msgstr "herstelcodes"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "regex match"
@@ -16506,10 +16887,6 @@ msgstr "sipgate.io configuratie"
 #: db/seeds/settings.rb
 msgid "sipgate.io integration"
 msgstr "sipgate.io integratie"
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
-msgid "skip"
-msgstr "overslaan"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -16670,6 +17047,7 @@ msgid "within next (relative)"
 msgstr "binnen de komende"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
@@ -16720,6 +17098,32 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#~ msgid "Invalid payload, need data:image in logo param"
+#~ msgstr "Ongeldige payload, data:image nodig in logo parameter"
+
+#~ msgid "The raw logo could not be read."
+#~ msgstr "Het logo kon niet worden gelezen."
+
+#~ msgid "skip"
+#~ msgstr "overslaan"
+
+#~ msgid "Complete sign-in with your hardware security key."
+#~ msgstr "Voltooi de aanmelding met je hardware beveiligingssleutel."
+
+#~ msgid ""
+#~ "Defines if recovery codes can be used by the user when losing access to "
+#~ "their device and cannot receive two-factor authentication codes."
+#~ msgstr ""
+#~ "Stel in of herstelcodes kunnen worden gebruikt door de gebruiker wanneer "
+#~ "de toegang tot zijn apparaat wordt verloren en geen twee-factor-"
+#~ "authenticatiecodes kunnen worden ontvangen."
+
+#~ msgid "Two-factor authentication method \"%s\" will be removed."
+#~ msgstr "Twee-factor-authenticatiemethode \"%s\" wordt verwijderd."
+
+#~ msgid "Try another sign-in method."
+#~ msgstr "Probeer een andere inlogmethode."
 
 #~ msgid "Could not remove user's two-factor authentication method"
 #~ msgstr ""

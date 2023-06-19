@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-25 03:05+0000\n"
+"PO-Revision-Date: 2023-06-19 08:52+0000\n"
 "Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hu/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.17\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -647,6 +647,18 @@ msgstr "%{name} egy foglalt szó"
 msgid "(state: %s)"
 msgstr "(állapot: %s)"
 
+#: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
+msgid ""
+"**Activity Types** can be used to group the different ticket time accounting "
+"entries together. For example, entries that are relevant to a \"Billing\" "
+"type.\n"
+"\n"
+"When you enable the recording of the activity type, the users will be able "
+"to select a type from this list. Additionally, a column with an associated "
+"activity type will be rendered for an entry in the **Activity** table under "
+"the **Accounted Time** tab."
+msgstr ""
+
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
 "**Data Privacy** helps you to delete and verify the removal of existing data "
@@ -953,9 +965,12 @@ msgstr "A fiók már létezik!"
 msgid "Account not verified"
 msgstr "A fiók nincs ellenőrizve"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
 #: app/graphql/gql/types/overview_type.rb
 msgid "Accounted Time"
 msgstr "Elszámolt idő"
@@ -1048,6 +1063,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
+#: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
@@ -1063,13 +1079,26 @@ msgstr "Aktív"
 msgid "Active Agents"
 msgstr "Aktív ügynökök"
 
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 msgid "Activity"
 msgstr "Tevékenység"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Activity Stream"
 msgstr "Tevékenységi folyam"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_types.coffee
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/types.jst.eco
+#: app/controllers/time_accountings_controller.rb
+msgid "Activity Type"
+msgstr "Tevékenységtípus"
+
+#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_types.coffee
+msgid "Activity Types"
+msgstr "Tevékenységtípusok"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
@@ -1623,7 +1652,7 @@ msgstr "Jelenlegi alapértelmezett értékek alkalmazása minden ügynökre"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Apr"
 msgstr "ápr"
@@ -1665,6 +1694,16 @@ msgstr ""
 "Biztos, hogy újra szeretné tölteni? Vannak el nem mentett módosításai, "
 "amelyek elvesznek"
 
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
+msgid "Are you sure you want to set \"%s\" as default?"
+msgstr ""
+"Biztos, hogy alapértelmezettként szeretné beállítani a következőt: \"%s\"?"
+
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
+msgid "Are you sure you want to unset \"%s\" as default?"
+msgstr ""
+"Biztos, hogy nem akarja alapértelmezettként beállítani a következőt: \"%s\"?"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -1673,12 +1712,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
 msgstr "Biztos benne?"
@@ -1925,7 +1964,7 @@ msgstr "Összehasonlítandó tulajdonságok"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Aug"
 msgstr "Aug"
@@ -2853,7 +2892,6 @@ msgstr "Klónozás"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "Close"
 msgstr "Bezárás"
 
@@ -2931,6 +2969,12 @@ msgstr "Kommunikáció"
 msgid "Company Inc."
 msgstr "Cég Zrt."
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: db/seeds/settings.rb
+msgid "Complete the sign-in with your security key."
+msgstr "Fejezze be a bejelentkezést a biztonsági kulcsával."
+
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Complete translations"
 msgstr "Teljes fordítások"
@@ -2944,7 +2988,7 @@ msgid "Compose your message…"
 msgstr "Fogalmazza meg üzenetét…"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_settings.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Conditions for affected objects"
@@ -2994,6 +3038,10 @@ msgstr "Alap beállítások konfigurálása"
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid "Confirm"
 msgstr "Megerősítés"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+msgid "Confirm Password"
+msgstr "Jelszó megerősítése"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
@@ -3117,7 +3165,7 @@ msgstr "A kapcsolat visszautasítva"
 msgid "Connection test successful"
 msgstr "A kapcsolat tesztje sikeres"
 
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Contact the administrator if you have any problems logging in."
 msgstr ""
@@ -3194,6 +3242,7 @@ msgid "Copied!"
 msgstr "Másolva!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Copy"
 msgstr "Másolás"
 
@@ -3246,6 +3295,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Could not remove two-factor authentication method"
 msgstr "Nem sikerült eltávolítani a kétfaktoros hitelesítési módszert"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Could not set two-factor authentication method as default"
+msgstr ""
+"Nem sikerült alapértelmezettként beállítani a kétfaktoros hitelesítési "
+"módszert"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
@@ -3467,6 +3522,7 @@ msgstr "Létrehozott külső cikk"
 msgid "Created Internal Article"
 msgstr "Létrehozott belső cikk"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -3590,10 +3646,10 @@ msgstr "Egyéni cím nincs beállítva"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
@@ -3702,7 +3758,7 @@ msgstr "Nap"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Dec"
 msgstr "dec"
@@ -3729,6 +3785,7 @@ msgstr "A dekódolás sikeres volt."
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
+#: app/assets/javascripts/app/views/generic/table_row.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -3836,6 +3893,12 @@ msgstr ""
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr ""
 "Az áttekintésekben megjelenített jegyek maximális számának meghatározása."
+
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+msgid "Define the unit to be shown next to the time accounting input field."
+msgstr ""
+"Határozza meg az időelszámolási beviteli mező mellett megjelenítendő "
+"egységet."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -4090,6 +4153,15 @@ msgstr ""
 "Meghatározza, hogy az általános CTI integráció engedélyezve van-e vagy sem."
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines if recovery codes can be used by users in the event they lose access "
+"to other two-factor authentication methods."
+msgstr ""
+"Meghatározza, hogy a helyreállítási kódokat használhatják-e a felhasználók "
+"abban az esetben, ha elveszítik a hozzáférést más kétfaktoros hitelesítési "
+"módszerekhez."
+
+#: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr ""
 "Meghatározza, hogy a sipgate.io (http://www.sipgate.io) engedélyezve van-e "
@@ -4158,12 +4230,24 @@ msgstr ""
 "logikai kifejezéseket."
 
 #: db/seeds/settings.rb
+msgid "Defines if the time accounting types are enabled."
+msgstr "Meghatározza, hogy az időelszámolási típusok engedélyezve vannak-e."
+
+#: db/seeds/settings.rb
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
 msgstr ""
 "Meghatározza, hogy a kétfaktoros hitelesítési módszer hitelesítő alkalmazás "
 "engedélyezve van-e vagy sem."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the two-factor authentication method security keys is enabled or "
+"not."
+msgstr ""
+"Meghatározza, hogy a kétfaktoros hitelesítési módszer biztonsági kulcsai "
+"engedélyezve vannak-e vagy sem."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4426,6 +4510,13 @@ msgid "Defines the backend for user and organization image lookups."
 msgstr "Meghatározza a felhasználói és szervezeti képkeresés háttérrendszerét."
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines the custom unit to be shown next to the time accounting input field."
+msgstr ""
+"Meghatározza az időelszámolási beviteli mező mellett megjelenítendő egyéni "
+"egységet."
+
+#: db/seeds/settings.rb
 msgid "Defines the default calendar tickets subscription settings."
 msgstr ""
 "Meghatározza az alapértelmezett naptárjegyek feliratkozási beállításait."
@@ -4441,6 +4532,10 @@ msgstr "Meghatározza a rendszer alapértelmezett nyelvét."
 #: db/seeds/settings.rb
 msgid "Defines the default system timezone."
 msgstr "Meghatározza a rendszer alapértelmezett időzónáját."
+
+#: db/seeds/settings.rb
+msgid "Defines the default time accounting type."
+msgstr "Meghatározza az alapértelmezett időelszámolási típust."
 
 #: db/seeds/settings.rb
 msgid "Defines the default visibility for new notes."
@@ -4642,6 +4737,11 @@ msgid ""
 msgstr ""
 "Meghatározza a tranzakciós háttérrendszert, amely a Clearbitből (http://www."
 "clearbit.com) származó ügyfél- és szervezeti információkat gazdagítja."
+
+#: db/seeds/settings.rb
+msgid "Defines the unit to be shown next to the time accounting input field."
+msgstr ""
+"Meghatározza az időelszámolási beviteli mező mellett megjelenítendő egységet."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5069,6 +5169,10 @@ msgstr "Tanúsítvány letöltése"
 msgid "Download Private Key"
 msgstr "Privát kulcs letöltése"
 
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
+msgid "Download all records"
+msgstr "Az összes bejegyzés letöltése"
+
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Töltse le és telepítse a %s migrációs bővítményt a %s példányára."
@@ -5365,8 +5469,21 @@ msgstr ""
 "létrehoznia a felhasználói profilban."
 
 #: db/seeds/settings.rb
+msgid "Enable Recovery Codes"
+msgstr "Helyreállítási kódok engedélyezése"
+
+#: db/seeds/settings.rb
 msgid "Enable Ticket creation"
 msgstr "Jegy létrehozásának engedélyezése"
+
+#: app/assets/javascripts/app/views/time_accounting/types.jst.eco
+msgid ""
+"Enable activity type selection. This would allow agents to select one of the "
+"types below when adding accounted time."
+msgstr ""
+"Engedélyezze a tevékenységtípus kiválasztását. Ez lehetővé teszi az ügynökök "
+"számára, hogy az elszámolt idő hozzáadásakor az alábbi típusok egyikét "
+"kiválasszák."
 
 #: db/seeds/settings.rb
 msgid "Enable auto assignment for following matching tickets."
@@ -5427,7 +5544,7 @@ msgstr ""
 msgid "Enable ticket auto assignment."
 msgstr "Engedélyezze a jegyek automatikus hozzárendelését."
 
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 msgid "Enable time accounting for following matching tickets."
 msgstr "Engedélyezze az idő elszámolását a következő egyező jegyek esetében."
 
@@ -5654,6 +5771,11 @@ msgstr "Adja meg a hitelesítő adatokat"
 msgid "Enter link URL"
 msgstr "Adja meg a kapcsolat URL címét"
 
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
+#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
+msgid "Enter one of your unused recovery codes."
+msgstr "Adja meg az egyik fel nem használt helyreállítási kódját."
+
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Enter search and select a type to search for"
 msgstr "Írja be a keresést, és válasszon ki egy típust a kereséshez"
@@ -5683,6 +5805,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Enter the security code generated by the authenticator app:"
 msgstr "Írja be a hitelesítő alkalmazás által generált biztonsági kódot:"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
+msgid "Enter the time you want to record"
+msgstr "Adja meg az időt, amit rögzíteni szeretne"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 msgid "Enter time zone"
@@ -6032,7 +6158,7 @@ msgstr "A funkció nincs engedélyezve!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Feb"
 msgstr "febr."
@@ -6049,6 +6175,10 @@ msgstr "Visszajelzés"
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Feedback Form"
 msgstr "Visszajelzés űrlap"
+
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+msgid "File '%s' is uploading"
+msgstr "A következő fájl feltöltése folyamatban van: '%s'"
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
@@ -6354,6 +6484,11 @@ msgstr "Hozzáférési token generálása |%s| számára"
 msgid "Generate Token"
 msgstr "Token generálása"
 
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Generate recovery codes"
+msgstr "Visszaállítási kódok generálása"
+
 #: db/seeds/schedulers.rb
 msgid "Generate user-based stats."
 msgstr "Felhasználó-alapú statisztikák generálása."
@@ -6393,6 +6528,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
 msgstr "Hozzáférési token beszerzése"
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
+msgid "Getting key information from the browser..."
+msgstr "Kulcsinformációk lekérése a böngészőből..."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -6475,6 +6614,7 @@ msgid "Go Back"
 msgstr "Vissza"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Go back"
 msgstr "Menjen vissza"
 
@@ -6678,7 +6818,7 @@ msgstr "Hash"
 msgid "Have a nice day."
 msgstr "További szép napot."
 
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Having problems?"
 msgstr "Problémái vannak?"
@@ -7029,6 +7169,14 @@ msgid ""
 msgstr ""
 "Amennyiben problémái vannak a harmadik féltől származó bejelentkezéssel, "
 "kérhet egyszeri jelszavas bejelentkezést rendszergazdaként."
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid ""
+"If you lose your recovery codes it's possible to generate new ones. This "
+"action is going to invalidate previous recovery codes."
+msgstr ""
+"Ha elveszíti a helyreállítási kódokat, lehetőség van újak létrehozására. Ez "
+"a művelet érvényteleníti a korábbi helyreállítási kódokat."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
@@ -7459,11 +7607,6 @@ msgstr ""
 "Érvénytelen jelszó, legalább 2 kis- és 2 nagybetűs karaktert kell "
 "tartalmaznia!"
 
-#: app/controllers/settings_controller.rb
-msgid "Invalid payload, need data:image in logo param"
-msgstr ""
-"Érvénytelen hasznos terhelés, a data:image szükséges a logo paraméterében"
-
 #: lib/knowledge_base/permissions_update.rb
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Érvénytelen jogosultságok, ne zárja ki magát."
@@ -7572,7 +7715,7 @@ msgstr "Oldalanként megjelenített"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jan"
 msgstr "jan."
@@ -7597,7 +7740,7 @@ msgstr "Csatlakozzon a következőhöz: %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jul"
 msgstr "júl."
@@ -7609,7 +7752,7 @@ msgstr "július"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jun"
 msgstr "jún."
@@ -7963,8 +8106,6 @@ msgid "Location of an external chat.css file."
 msgstr "Egy külső chat.css fájl helye."
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 msgid "Log in to %s"
 msgstr "Bejelentkezés a %s rendszerbe"
 
@@ -8116,7 +8257,7 @@ msgstr "Hozzárendelés"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mar"
 msgstr "márc."
@@ -8207,7 +8348,7 @@ msgstr "Az áttekintésekben megjelenített jegyek maximális száma"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "May"
 msgstr "május"
@@ -8271,22 +8412,16 @@ msgid "Messages"
 msgstr "Üzenetek"
 
 #: app/models/webhook/pre_defined/mattermost.rb
-#, fuzzy
-#| msgid "Creation Channels"
 msgid "Messaging Channel"
-msgstr "Csatornák létrehozása"
+msgstr "Üzenetküldő csatorna"
 
 #: app/models/webhook/pre_defined/mattermost.rb
-#, fuzzy
-#| msgid "Icon URL"
 msgid "Messaging Icon URL"
-msgstr "Ikon URL"
+msgstr "Üzenetküldő ikon URL"
 
 #: app/models/webhook/pre_defined/mattermost.rb
-#, fuzzy
-#| msgid "Username"
 msgid "Messaging Username"
-msgstr "Felhasználónév"
+msgstr "Üzenetküldő felhasználónév"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Meta Data"
@@ -8528,6 +8663,7 @@ msgstr "Nagios integráció"
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -8552,6 +8688,7 @@ msgstr "Nagios integráció"
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
+#: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/twitter.coffee
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee
@@ -8582,6 +8719,10 @@ msgstr "Név"
 #: db/seeds/settings.rb
 msgid "Name Identifier Format"
 msgstr "Név azonosító formátum"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Name for this security key"
+msgstr "Ennek a biztonsági kulcsnak a neve"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Name of form submit button"
@@ -8650,6 +8791,10 @@ msgstr "Új"
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
 msgstr "Az új hozzáférési token"
+
+#: app/assets/javascripts/app/controllers/time_accounting_types.coffee
+msgid "New Activity Type"
+msgstr "Új tevékenységtípus"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "New Application"
@@ -8832,6 +8977,7 @@ msgstr "Új felhasználó?"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -9113,6 +9259,7 @@ msgstr "Nem található"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
@@ -9186,7 +9333,7 @@ msgstr "Értesítések"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Nov"
 msgstr "nov."
@@ -9220,13 +9367,16 @@ msgid "OAuth2 token is expired!"
 msgstr "Az OAuth2 token lejárt!"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "OK"
 msgstr "OK"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "OK, I've copied my token"
 msgstr "OK, lemásoltam a tokenemet"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+msgid "OK, I've saved my recovery codes"
+msgstr "Rendben, elmentettem a visszaállítási kódjaimat"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 msgid "OTRS"
@@ -9249,7 +9399,7 @@ msgstr "Objektumok"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Oct"
 msgstr "okt."
@@ -9323,6 +9473,17 @@ msgid ""
 msgstr ""
 "Csak ismert, megbízható és ellenőrzött forrásból származó csomagokat szabad "
 "telepíteni."
+
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
+msgid ""
+"Only the 20 most recent records are displayed. Download to view the full "
+"list."
+msgstr ""
+"Csak a 20 legfrissebb bejegyzés jelenik meg. A teljes lista megtekintéséhez "
+"töltse le."
 
 #: db/seeds/settings.rb
 msgid "Only used internally to propagate current web app version to clients."
@@ -9405,6 +9566,14 @@ msgstr "Vagy költözzön át egy másik rendszerből."
 msgid "Or sign in using"
 msgstr "vagy jelentkezzen be a következő használatával"
 
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactorMethods.vue
+msgid "Or use one of your recovery codes."
+msgstr "Vagy használja az egyik helyreállítási kódját."
+
+#: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+msgid "Or, use one of your"
+msgstr "Vagy használja az Ön egyik"
+
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: db/seeds/permissions.rb
 msgid "Order of Overviews"
@@ -9421,11 +9590,11 @@ msgstr "Az áttekintések sorrendje"
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/pages/organization/routes.ts
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
@@ -9851,10 +10020,6 @@ msgstr "Kérjük, adjon meg egy érvényes e-mail címet."
 msgid "Please enter the endpoint for accessing Exchange Web Services."
 msgstr "Kérjük, adja meg az Exchange webszolgáltatások elérésének végpontját."
 
-#: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
-msgid "Please enter the time you want to record."
-msgstr "Kérjük, adja meg a rögzíteni kívánt időpontot."
-
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Please enter your Exchange credentials."
 msgstr "Kérjük, adja meg az Exchange hitelesítő adatait."
@@ -9875,6 +10040,15 @@ msgstr "Kérjük, adjon meg egy érvényes URL címet."
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Kérjük, adja meg a címzettet a \"TO\" vagy \"CC\" mezőben."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
+msgid ""
+"Please save your recovery codes listed below somewhere safe. You can use "
+"them to sign in if you lose access to another two-factor method:"
+msgstr ""
+"Kérjük, mentse az alább felsorolt helyreállítási kódokat biztonságos helyre. "
+"Ezeket használhatja a bejelentkezéshez, ha elveszíti a hozzáférést egy másik "
+"kétfaktoros módszerhez:"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Please select a ticket to merge into."
@@ -9940,8 +10114,6 @@ msgstr "Postmaster szűrő"
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
@@ -10007,6 +10179,10 @@ msgstr "Előző az áttekintésben"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Previously owned tickets (%s in total):"
 msgstr "Korábban birtokolt jegyek (összesen %s):"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+msgid "Print"
+msgstr "Nyomtatás"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -10213,6 +10389,24 @@ msgstr ""
 "Az importált adatokban (de nem a Zammad rendszerben) létező bejegyzések "
 "mindig létre fognak jönni."
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method/recovery_codes.coffee
+#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
+msgid "Recovery Code"
+msgstr "Visszaállítási kód"
+
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
+msgid "Recovery Codes"
+msgstr "Visszaállítási kódok"
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid ""
+"Recovery codes can be used to access your account in the event you lose "
+"access to other two-factor authentication methods."
+msgstr ""
+"A helyreállítási kódokkal akkor is hozzáférhet a fiókjához, ha elveszíti a "
+"hozzáférést más kétfaktoros hitelesítési módszerekhez."
+
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
 msgstr "Rekurzív jegy eseményindítók"
@@ -10225,6 +10419,10 @@ msgstr ""
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Regenerate recovery codes"
+msgstr "Visszaállítási kódok újragenerálása"
 
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Register"
@@ -10257,6 +10455,7 @@ msgstr "Emlékezzen rám"
 msgid "Remote"
 msgstr "Távoli"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
@@ -10311,6 +10510,10 @@ msgstr "Módszer eltávolítása"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
 msgstr "Kiválasztott értékek eltávolítása"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Remove two-factor authentication"
+msgstr "Kétfaktoros hitelesítés eltávolítása"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
@@ -10440,7 +10643,8 @@ msgstr "Ellenőrző e-mail újraküldése"
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
 msgstr "Visszaállítás"
@@ -10596,6 +10800,12 @@ msgstr "Csak a következő felhasználókra korlátozva"
 #: app/assets/javascripts/app/views/generic/object_import/result.jst.eco
 msgid "Result:"
 msgstr "Eredmény:"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+msgid "Retry"
+msgstr "Újrapróbálkozás"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
@@ -10805,7 +11015,8 @@ msgstr "szombat"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -10814,6 +11025,10 @@ msgstr "szombat"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Save"
 msgstr "Mentés"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+msgid "Save Codes"
+msgstr "Kódok mentése"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -10945,7 +11160,7 @@ msgid "Security"
 msgstr "Biztonság"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 msgid "Security Code"
 msgstr "Biztonsági kód"
@@ -10954,6 +11169,38 @@ msgstr "Biztonsági kód"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Security Error"
 msgstr "Biztonsági hiba"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Security Key"
+msgstr "Biztonsági kulcs"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: db/seeds/settings.rb
+msgid "Security Keys"
+msgstr "Biztonsági kulcsok"
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Security key \"%s\" will be removed."
+msgstr "A következő biztonsági kulcs eltávolításra kerül: \"%s\"."
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+msgid "Security key set up failed."
+msgstr "A biztonsági kulcs beállítása nem sikerült."
+
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+msgid "Security key verification failed."
+msgstr "A biztonsági kulcs ellenőrzése nem sikerült."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+msgid ""
+"Security keys are hardware or software credentials that can be used as your "
+"two-factor authentication method."
+msgstr ""
+"A biztonsági kulcsok olyan hardveres vagy szoftveres hitelesítő adatok, "
+"amelyek kétfaktoros hitelesítési módszerként használhatók."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -11024,7 +11271,7 @@ msgstr "Kiválasztott feltételek"
 msgid "Selective (default)"
 msgstr "Szelektív (alapértelmezett)"
 
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 msgid "Selector"
 msgstr "Választó"
 
@@ -11117,7 +11364,7 @@ msgstr "Sikeresen elküldve!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
-#: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sep"
 msgstr "szept."
@@ -11170,6 +11417,7 @@ msgstr "Munkamenetek"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Set Up"
 msgstr "Beállítás"
@@ -11190,6 +11438,7 @@ msgstr "Cikk beállítása belsőre / nyilvánosra"
 msgid "Set as Default"
 msgstr "Beállítás alapértelmezettként"
 
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Set as default"
 msgstr "Beállítás alapértelmezettként"
@@ -11271,6 +11520,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee
+#: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -11451,8 +11701,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
 msgid "Sign in"
@@ -11550,8 +11801,9 @@ msgstr "Sipgate"
 
 #: db/seeds/settings.rb
 msgid "Site"
-msgstr ""
+msgstr "Oldal"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
@@ -12147,6 +12399,12 @@ msgid "The admin consent request was sent to your administrator."
 msgstr ""
 "A rendszergazdai hozzájárulási kérelmet elküldtük a rendszergazdájának."
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+msgid "The application is not running in a secure context."
+msgstr "Az alkalmazás nem biztonságos környezetben fut."
+
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
 msgid "The article could not be deleted."
 msgstr "A cikket nem lehetett törölni."
@@ -12229,6 +12487,14 @@ msgstr ""
 "A csevegő akkor jelenik meg, ha a kapcsolat létrejött a szerverrel, és ha "
 "van online egy operátor, akivel cseveghetsz."
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+msgid ""
+"The chosen unit will be used for display only and will not affect stored "
+"values."
+msgstr ""
+"A kiválasztott egység csak a kijelzőn jelenik meg, és nem befolyásolja a "
+"tárolt értékeket."
+
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
@@ -12286,6 +12552,8 @@ msgid ""
 "The entered user for reauthentication differs from the user that was used "
 "for setting up your Microsoft365 channel initially."
 msgstr ""
+"Az újbóli hitelesítéshez megadott felhasználó eltér a Microsoft365-csatorna "
+"eredeti beállításához használt felhasználótól."
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -12503,10 +12771,6 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr "A megadott token érvénytelen."
 
-#: lib/static_assets.rb
-msgid "The raw logo could not be read."
-msgstr "A nyers logó nem olvasható."
-
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "The report could not be generated"
 msgstr "A jelentést nem lehetett létrehozni"
@@ -12524,16 +12788,12 @@ msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr "A kötelező 'ExternalCredential' 'twitter' nem található."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
-#, fuzzy
-#| msgid "The required parameter 'code' is missing."
 msgid "The required event field 'execution' is missing."
-msgstr "A kötelező 'code' paraméter hiányzik."
+msgstr "A szükséges 'execution' eseménymező hiányzik."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
-#, fuzzy
-#| msgid "The required parameter 'request_token' is missing."
 msgid "The required event field 'execution' is unknown or missing."
-msgstr "A kötelező 'request_token' paraméter hiányzik."
+msgstr "A szükséges 'execution' eseménymező ismeretlen vagy hiányzik."
 
 #: lib/idoit.rb
 msgid "The required field 'api_token' is missing from the config."
@@ -12773,27 +13033,39 @@ msgid "The two-factor authentication is not configured yet."
 msgstr "A kétfaktoros hitelesítés még nincs beállítva."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
-#| msgid "User's two-factor authentication method %s was removed."
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr ""
 "A felhasználó következő kétfaktoros hitelesítési módszere eltávolításra "
 "került: %s."
 
+#: app/controllers/sessions_controller.rb
 #: app/controllers/user/two_factors_controller.rb
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
 msgid "The two-factor authentication method is not enabled."
 msgstr "A kétfaktoros hitelesítési módszer nincs engedélyezve."
 
 #: app/controllers/getting_started_controller.rb
-#: app/controllers/settings_controller.rb
 msgid "The uploaded image could not be processed."
 msgstr "A feltöltött képet nem sikerült feldolgozni."
+
+#: app/controllers/settings_controller.rb
+msgid ""
+"The uploaded image could not be processed. Need data:image in logo or "
+"logo_resize param."
+msgstr ""
+"A feltöltött képet nem sikerült feldolgozni. Szükség van a logo vagy "
+"logo_resize paraméterben szereplő data:image adatra."
 
 #: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 "A felhasználó 'preferred_username' értékét nem sikerült kinyerni az "
 "'id_token'-ből."
+
+#: app/controllers/sessions_controller.rb
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
+msgid "The username or password is incorrect."
+msgstr "A felhasználónév vagy a jelszó helytelen."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -12889,6 +13161,11 @@ msgstr ""
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
 msgid "There is no route to this host."
 msgstr "Nincs útvonal ehhez a gazdagéphez."
+
+#: app/controllers/user/two_factors_controller.rb
+msgid ""
+"There is no stored configuration for this two-factor authentication method."
+msgstr "Ehhez a kétfaktoros hitelesítési módszerhez nincs tárolt konfiguráció."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "There was no Knowledge Base created."
@@ -12986,7 +13263,7 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be a symbol."
-msgstr "Ennek a mezőnek egy szimbólumnak kell lennie."
+msgstr "Ennek a mezőnek tartalmaznia kell szimbólumot."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
@@ -12994,7 +13271,7 @@ msgstr "Ennek a mezőnek \"%s\" típusúnak kell lennie."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a lowercase letter."
-msgstr "Ennek a mezőnek kisbetűt kell tartalmaznia."
+msgstr "Ennek a mezőnek tartalmaznia kell kisbetűt."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
@@ -13002,7 +13279,7 @@ msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a symbol."
-msgstr "Ennek a mezőnek egy szimbólumot kell tartalmaznia."
+msgstr "Ennek a mezőnek tartalmaznia kell szimbólumot."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain alphabetical characters."
@@ -13010,7 +13287,7 @@ msgstr "Ennek a mezőnek ábécés karaktereket kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain an uppercase letter."
-msgstr "Ennek a mezőnek nagybetűt kell tartalmaznia."
+msgstr "Ennek a mezőnek tartalmaznia kell nagybetűt."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain at least %s characters."
@@ -13034,7 +13311,7 @@ msgstr "Ennek a mezőnek betűket vagy szóközöket kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain numbers."
-msgstr "Ennek a mezőnek számokat kell tartalmaznia."
+msgstr "Ennek a mezőnek tartalmaznia kell számokat."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -13138,6 +13415,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "This service allows you to connect %s with %s."
 msgstr ""
+"Ez a szolgáltatás lehetővé teszi Önnek, hogy a %s és a %s között kapcsolatot "
+"létesítsen."
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "This service enables Zammad to connect with your Exchange server."
@@ -13213,7 +13492,7 @@ msgstr "csütörtök"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts
 #: db/seeds/permissions.rb
@@ -13581,14 +13860,29 @@ msgstr "Idő"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Time Accounting"
 msgstr "Időelszámolás"
 
 #: db/seeds/settings.rb
+msgid "Time Accounting Custom Unit"
+msgstr "Időelszámolási egyéni egység"
+
+#: db/seeds/settings.rb
+msgid "Time Accounting Default Type"
+msgstr "Időelszámolás alapértelmezett típusa"
+
+#: db/seeds/settings.rb
 msgid "Time Accounting Selector"
 msgstr "Időelszámolás választó"
+
+#: db/seeds/settings.rb
+msgid "Time Accounting Types"
+msgstr "Időelszámolási típusok"
+
+#: db/seeds/settings.rb
+msgid "Time Accounting Unit"
+msgstr "Időelszámolási egység"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
@@ -13602,6 +13896,10 @@ msgstr "Időegységek"
 #: lib/excel_sheet/ticket.rb
 msgid "Time Units Total"
 msgstr "Időegységek összesen"
+
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+msgid "Time accounting unit"
+msgstr "Időelszámolási egység"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Time event"
@@ -13680,6 +13978,8 @@ msgid ""
 "To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
 "process was aborted."
 msgstr ""
+"A nem megfelelő Microsoft365 postafiók lekérdezésének elkerülése érdekében "
+"az újbóli hitelesítési folyamat megszakadt."
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
@@ -13715,6 +14015,13 @@ msgid ""
 msgstr ""
 "A fordítások megkönnyítése érdekében a \"%s\" megnyomásával engedélyezheti "
 "és letilthatja a beépített fordítási funkciót."
+
+#: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+msgid ""
+"To register a new security key with your account, press the button below."
+msgstr ""
+"Egy új biztonsági kulcs regisztrálásához a fiókjához, nyomja meg az alábbi "
+"gombot."
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
@@ -13849,18 +14156,23 @@ msgstr ""
 msgid "Triggers are …"
 msgstr "Az eseményindítók …"
 
+#: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+msgid "Try Another Method"
+msgstr "Próbáljon meg egy másik módszert"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Try again"
 msgstr "Próbálja újra"
 
-#: app/assets/javascripts/app/views/login_two_factor_authenticator_app.jst.eco
+#: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try another method"
 msgstr "Próbáljon meg egy másik módszert"
 
-#: app/assets/javascripts/app/views/login_two_factor_methods.jst.eco
-msgid "Try another sign-in method."
-msgstr "Próbáljon meg egy másik bejelentkezési módszert."
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+msgid "Try using your security key again."
+msgstr "Próbálja meg újra használni a biztonsági kulcsát."
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
@@ -13969,14 +14281,17 @@ msgid "Two-factor authentication is not supported with HTTP BasicAuth."
 msgstr ""
 "A kétfaktoros hitelesítés nem támogatott a HTTP BasicAuth használatával."
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
-msgid "Two-factor authentication method \"%s\" will be removed."
-msgstr ""
-"A következő kétfaktoros hitelesítési módszer eltávolításra kerül: \"%s\"."
+#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+msgid "Two-factor authentication method could not be initiated."
+msgstr "A kétfaktoros hitelesítési módszert nem lehetett elindítani."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Two-factor authentication method was removed."
 msgstr "A kétfaktoros hitelesítési módszer eltávolításra került."
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+msgid "Two-factor authentication method was set as default."
+msgstr "A kétfaktoros hitelesítési módszer alapértelmezettként lett beállítva."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
 msgid "Two-factor authentication method was set up successfully."
@@ -14038,6 +14353,10 @@ msgstr ""
 "Nem hozzárendelt e-mail címek, hozzárendelheti őket egy csatornához vagy "
 "törölheti őket."
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+msgid "Unit"
+msgstr "Egység"
+
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
@@ -14061,6 +14380,10 @@ msgstr "Olvasatlan értesítés"
 #: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
 msgid "Unread notifications"
 msgstr "Olvasatlan értesítések"
+
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
+msgid "Unset default"
+msgstr "Alapértelmezett beállítás megszüntetése"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Unsigned"
@@ -14318,6 +14641,10 @@ msgstr "A sor szintjének megváltoztatásához használja a dupla kattintást."
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Use one line per URI"
 msgstr "Egy sor használata URI-nként"
+
+#: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
+msgid "Use one of your safely stored recovery codes."
+msgstr "Használja a biztonságosan tárolt helyreállítási kódok egyikét."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -14577,6 +14904,10 @@ msgstr "Az ellenőrző e-mailt nem sikerült elküldeni."
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Verify sending and receiving"
 msgstr "Küldés és fogadás ellenőrzése"
+
+#: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+msgid "Verifying key information..."
+msgstr "Kulcsinformációk ellenőrzése..."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
@@ -15777,6 +16108,10 @@ msgstr "aktuális felhasználó"
 msgid "current user organization"
 msgstr "aktuális felhasználói szervezet"
 
+#: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
+msgid "custom unit"
+msgstr "egyéni egység"
+
 #: lib/calendar_subscriptions/tickets.rb
 msgid "customer"
 msgstr "ügyfél"
@@ -15888,7 +16223,7 @@ msgstr "szerkesztés"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s"
-msgstr ""
+msgstr "szerkesztett %s"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s by %s"
@@ -15956,11 +16291,11 @@ msgstr "fax"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in"
-msgstr ""
+msgstr "töltse ki"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
-msgstr ""
+msgstr "töltse ki az üres helyet"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -16019,6 +16354,11 @@ msgstr "elrejtés"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "hour"
+msgstr "óra"
+
+#: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+msgid "hour(s)"
 msgstr "óra"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -16171,6 +16511,7 @@ msgstr "nem egy Felhasználó"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr "nem egy szín. Csak a Hex, RGB és HSL színek támogatottak."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 msgid "is not a number"
 msgstr "nem egy szám"
 
@@ -16286,6 +16627,11 @@ msgstr "üzenet"
 msgid "minute"
 msgstr "perc"
 
+#: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+msgid "minute(s)"
+msgstr "perc"
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "minutes"
 msgstr "perc"
@@ -16358,6 +16704,7 @@ msgid "new & open"
 msgstr "új & megnyitás"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
@@ -16370,6 +16717,10 @@ msgstr "nem"
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "no issues"
 msgstr "nincs hiba"
+
+#: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
+msgid "no unit"
+msgstr "nincs egység"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -16466,9 +16817,18 @@ msgstr "nyilvános"
 msgid "published"
 msgstr "publikált"
 
+#: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+msgid "quarter-hour(s)"
+msgstr "negyedóra"
+
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "elérte"
+
+#: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+msgid "recovery codes"
+msgstr "helyreállítási kódok"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "regex match"
@@ -16599,10 +16959,6 @@ msgstr "sipgate.io konfiguráció"
 #: db/seeds/settings.rb
 msgid "sipgate.io integration"
 msgstr "sipgate.io integráció"
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
-msgid "skip"
-msgstr "kihagyás"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -16762,6 +17118,7 @@ msgid "within next (relative)"
 msgstr "a következőn belül (relatív)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
@@ -16812,6 +17169,23 @@ msgstr "...a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#~ msgid "Invalid payload, need data:image in logo param"
+#~ msgstr ""
+#~ "Érvénytelen hasznos terhelés, a data:image szükséges a logo paraméterében"
+
+#~ msgid "The raw logo could not be read."
+#~ msgstr "A nyers logó nem olvasható."
+
+#~ msgid "skip"
+#~ msgstr "kihagyás"
+
+#~ msgid "Two-factor authentication method \"%s\" will be removed."
+#~ msgstr ""
+#~ "A következő kétfaktoros hitelesítési módszer eltávolításra kerül: \"%s\"."
+
+#~ msgid "Try another sign-in method."
+#~ msgstr "Próbáljon meg egy másik bejelentkezési módszert."
 
 #~ msgid "Could not remove user's two-factor authentication method"
 #~ msgstr ""
