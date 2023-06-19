@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-15 12:06+0000\n"
-"Last-Translator: kirkkak <kirkka.kivilo@gmail.com>\n"
+"PO-Revision-Date: 2023-06-15 03:05+0000\n"
+"Last-Translator: fluidum <erkkoisok@gmail.com>\n"
 "Language-Team: Estonian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/et/>\n"
 "Language: et\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.17\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -56,6 +56,9 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"Andmebaas\" hoiab kõiki infosüsteemi üles laetud manuseid andmebaasis (ei "
+"ole soovitatud suurte andmehulkade puhul). \"Failisüsteem\" säilitab failid "
+"otse failisüsteemi. Sa saad igal ajal antud seadistust muuta."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -246,7 +249,7 @@ msgstr "%s (tundmatu)"
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "%s API Token"
-msgstr "%s API Tooken"
+msgstr "%s API pääse"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -842,10 +845,8 @@ msgid "Activate the recursive processing of ticket triggers."
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "Activated by"
-msgstr "Aktiivsus"
+msgstr "Aktiveeritud"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -954,7 +955,7 @@ msgstr "Lisa Privaatvõti"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
 msgid "Add Tag"
-msgstr "Lisa Silt"
+msgstr "Lisa Välje"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Add Telegram Bot"
@@ -1134,6 +1135,8 @@ msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
 msgstr ""
+"Peale tarkvarapakkide paigaldamist, uuendamist või eemaldamist on vaja "
+"serveri poolel käivitada järgnevad käsud:"
 
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Age"
@@ -1193,10 +1196,8 @@ msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "All Tickets"
 msgid "All tickets"
-msgstr "Kõik Piletid"
+msgstr "Kõik piletid"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1250,7 +1251,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
-msgstr ""
+msgstr "Alati"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1419,11 +1420,11 @@ msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
 msgid "Are you sure to remove this article?"
-msgstr ""
+msgstr "Oled sa kindel, et soovid eemaldada selle artikli?"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure you want to delete \"%s\"?"
-msgstr ""
+msgstr "Oled sa kindel, et soovid kustutada \"%s\"?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
@@ -1433,6 +1434,7 @@ msgstr ""
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
+"Oled sa kindel, et soovid taaslaadida? Sinu salvestamata muudatused kustuvad"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -1502,7 +1504,7 @@ msgstr "Artikli Tüüp"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Article actions"
-msgstr "Artiklli tegevused"
+msgstr "Artikli tegevused"
 
 #: app/models/ticket.rb
 msgid ""
@@ -4645,11 +4647,11 @@ msgstr "E-post"
 
 #: app/models/report.rb
 msgid "Email (in)"
-msgstr ""
+msgstr "E-post (sisse)"
 
 #: app/models/report.rb
 msgid "Email (out)"
-msgstr ""
+msgstr "E-post (välja)"
 
 #: db/seeds/settings.rb
 msgid "Email - full quote"
@@ -4671,7 +4673,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid "Email Accounts"
-msgstr ""
+msgstr "E-posti Kontod"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -4680,31 +4682,31 @@ msgstr ""
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Email Address"
-msgstr "E-maili aadress"
+msgstr "E-posti Aadress"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Email Inbound"
-msgstr "E-Post Sisse"
+msgstr "E-post Sisse"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Email Notification"
-msgstr "E-maili teavitus"
+msgstr "E-posti Teavitus"
 
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 msgid "Email Notifications"
-msgstr ""
+msgstr "E-posti teavitused"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Email Outbound"
-msgstr "E-Post Välja"
+msgstr "E-post Välja"
 
 #: app/models/user.rb
 msgid "Email address '%{email}' is already used for another user."
-msgstr ""
+msgstr "E-posti aadress '%{email}' on juba kasutusel kellegi teise poolt."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Email could not be verified. Please contact your administrator."
@@ -8510,10 +8512,8 @@ msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "Open"
 msgid "Open %s"
-msgstr "Avatud"
+msgstr "Avatud %s"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco
 msgid "Open Ticket# %s"
@@ -8526,10 +8526,8 @@ msgid "Open Tickets"
 msgstr "Avatud Piletid"
 
 #: app/assets/javascripts/app/models/public_link.coffee
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "Open in new tab"
-msgstr "Avatud Piletid"
+msgstr "Ava uuel väljel"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open macro selection"
@@ -8544,16 +8542,12 @@ msgid "Open ticket indicator"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "Open tickets"
-msgstr "Avatud Piletid"
+msgstr "Ava piletid"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "Opened in tabs"
-msgstr "Avatud Piletid"
+msgstr "Avatud väljel"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -8577,10 +8571,8 @@ msgstr "Logi sisse"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "New Overview"
 msgid "Order of Overviews"
-msgstr "Uus Ülevaade"
+msgstr "Ülevaadete järjestus"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -8609,7 +8601,7 @@ msgstr "Organisatsioon"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 msgid "Organization & Department Name"
-msgstr ""
+msgstr "Organisatsiooni & Osakonna Nimi"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Organization Name"
@@ -8621,16 +8613,12 @@ msgid "Organization Support"
 msgstr ""
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "Organization could not be updated."
-msgstr "Objekti ei ole võimalik uuendada."
+msgstr "Organisatsiooni ei ole võimalik uuendada."
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
-#, fuzzy
-#| msgid "My Organization Tickets"
 msgid "Organization tickets"
-msgstr "Minu Organisatsiooni Piletid"
+msgstr "Organisatsiooni piletid"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
 msgid ""
@@ -8648,19 +8636,15 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 #: db/seeds/permissions.rb
 msgid "Organizations"
-msgstr "Asutused"
+msgstr "Organisatsioonid"
 
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
-#, fuzzy
-#| msgid "My Organization Tickets"
 msgid "Organizations with \"%s\""
-msgstr "Minu Organisatsiooni Piletid"
+msgstr "Organisatsioonid \"%s\""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
-#, fuzzy
-#| msgid "Organization"
 msgid "Organizer"
-msgstr "Organisatsioon"
+msgstr "Organiseerija"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "Origin By"
@@ -14219,29 +14203,25 @@ msgid "Your API key."
 msgstr ""
 
 #: public/assets/form/form.js
-#, fuzzy
-#| msgid "Email"
 msgid "Your Email"
-msgstr "E-post"
+msgstr "Sinu Meiliaadress"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
-msgstr ""
+msgstr "Sinu Meili Konfiguratsioon"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
-msgstr ""
+msgstr "Sinu Logo"
 
 #: public/assets/form/form.js
 msgid "Your Message…"
 msgstr "Sinu Teade…"
 
 #: public/assets/form/form.js
-#, fuzzy
-#| msgid "Name"
 msgid "Your Name"
-msgstr "Nimi"
+msgstr "Sinu Nimi"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
@@ -14303,7 +14283,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Zammad"
-msgstr ""
+msgstr "Zammad"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid ""
@@ -14363,7 +14343,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 msgid "Zendesk"
-msgstr ""
+msgstr "Zendesk"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Zip"
@@ -14426,15 +14406,13 @@ msgstr "ja"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
-msgstr ""
+msgstr "arhiveeritud"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
-#, fuzzy
-#| msgid "pending"
 msgid "ascending"
-msgstr "ootel"
+msgstr "kasvav"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 #, fuzzy
@@ -14636,16 +14614,12 @@ msgstr "kustuta"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
-#, fuzzy
-#| msgid "pending"
 msgid "descending"
-msgstr "ootel"
+msgstr "kahanev"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "New password"
 msgid "developer password"
-msgstr "Uus parool"
+msgstr "arendaja parool"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
@@ -14703,19 +14677,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/drox.jst.eco
 msgid "edit"
-msgstr ""
+msgstr "redigeeri"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s"
-msgstr ""
+msgstr "redigeeritud %s"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s by %s"
-msgstr ""
+msgstr "redigeeritud %s poolt %s"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s by me"
-msgstr ""
+msgstr "redigeeritud %s minu poolt"
 
 #: db/seeds/ticket_article_types.rb
 msgid "email"
@@ -14723,7 +14697,7 @@ msgstr "e-post"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "email sent to '%s'"
-msgstr ""
+msgstr "e-post saadetud '%s'"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
@@ -14747,10 +14721,8 @@ msgid "escalation"
 msgstr "eskalatsioon"
 
 #: app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue
-#, fuzzy
-#| msgid "escalation"
 msgid "escalation %s"
-msgstr "eskalatsioon"
+msgstr "eskalatsioon %s"
 
 #: db/seeds/macros.rb
 msgid "example macro"
@@ -14777,7 +14749,7 @@ msgstr ""
 
 #: db/seeds/ticket_article_types.rb
 msgid "fax"
-msgstr ""
+msgstr "faks"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in"

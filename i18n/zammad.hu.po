@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-25 03:05+0000\n"
+"PO-Revision-Date: 2023-06-19 08:52+0000\n"
 "Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.17\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -8122,22 +8122,16 @@ msgid "Messages"
 msgstr "Üzenetek"
 
 #: app/models/webhook/pre_defined/mattermost.rb
-#, fuzzy
-#| msgid "Creation Channels"
 msgid "Messaging Channel"
-msgstr "Csatornák létrehozása"
+msgstr "Üzenetküldő csatorna"
 
 #: app/models/webhook/pre_defined/mattermost.rb
-#, fuzzy
-#| msgid "Icon URL"
 msgid "Messaging Icon URL"
-msgstr "Ikon URL"
+msgstr "Üzenetküldő ikon URL"
 
 #: app/models/webhook/pre_defined/mattermost.rb
-#, fuzzy
-#| msgid "Username"
 msgid "Messaging Username"
-msgstr "Felhasználónév"
+msgstr "Üzenetküldő felhasználónév"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Meta Data"
@@ -11331,7 +11325,7 @@ msgstr "Sipgate"
 
 #: db/seeds/settings.rb
 msgid "Site"
-msgstr ""
+msgstr "Oldal"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
@@ -12067,6 +12061,8 @@ msgid ""
 "The entered user for reauthentication differs from the user that was used "
 "for setting up your Microsoft365 channel initially."
 msgstr ""
+"Az újbóli hitelesítéshez megadott felhasználó eltér a Microsoft365-csatorna "
+"eredeti beállításához használt felhasználótól."
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -12301,16 +12297,12 @@ msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr "A kötelező 'ExternalCredential' 'twitter' nem található."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
-#, fuzzy
-#| msgid "The required parameter 'code' is missing."
 msgid "The required event field 'execution' is missing."
-msgstr "A kötelező 'code' paraméter hiányzik."
+msgstr "A szükséges 'execution' eseménymező hiányzik."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
-#, fuzzy
-#| msgid "The required parameter 'request_token' is missing."
 msgid "The required event field 'execution' is unknown or missing."
-msgstr "A kötelező 'request_token' paraméter hiányzik."
+msgstr "A szükséges 'execution' eseménymező ismeretlen vagy hiányzik."
 
 #: lib/idoit.rb
 msgid "The required field 'api_token' is missing from the config."
@@ -12692,16 +12684,12 @@ msgid "This field can only contain letters and spaces."
 msgstr "Ez a mező csak betűket és szóközöket tartalmazhat."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field can only contain letters and numbers."
 msgid "This field can only contain lowercase letters."
-msgstr "Ez a mező csak betűket és számokat tartalmazhat."
+msgstr "Ez a mező csak kisbetűket tartalmazhat."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field can only contain alphabetical characters."
 msgid "This field can only contain uppercase letters."
-msgstr "Ez a mező csak ábécés karaktereket tartalmazhat."
+msgstr "Ez a mező csak nagybetűket tartalmazhat."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
@@ -12742,42 +12730,32 @@ msgstr ""
 "\"."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain a number."
 msgid "This field must be a symbol."
-msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
+msgstr "Ennek a mezőnek tartalmaznia kell szimbólumot."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr "Ennek a mezőnek \"%s\" típusúnak kell lennie."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain at least one character."
 msgid "This field must contain a lowercase letter."
-msgstr "Ennek a mezőnek legalább egy karaktert kell tartalmaznia."
+msgstr "Ennek a mezőnek tartalmaznia kell kisbetűt."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
 msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain a number."
 msgid "This field must contain a symbol."
-msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
+msgstr "Ennek a mezőnek tartalmaznia kell szimbólumot."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field can only contain alphabetical characters."
 msgid "This field must contain alphabetical characters."
-msgstr "Ez a mező csak ábécés karaktereket tartalmazhat."
+msgstr "Ennek a mezőnek ábécés karaktereket kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain a number."
 msgid "This field must contain an uppercase letter."
-msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
+msgstr "Ennek a mezőnek tartalmaznia kell nagybetűt."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain at least %s characters."
@@ -12792,22 +12770,16 @@ msgid "This field must contain between %s and %s characters."
 msgstr "Ennek a mezőnek %s és %s közötti karaktereket kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain a number."
 msgid "This field must contain letters or numbers."
-msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
+msgstr "Ennek a mezőnek betűket vagy számokat kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field can only contain letters and spaces."
 msgid "This field must contain letters or spaces."
-msgstr "Ez a mező csak betűket és szóközöket tartalmazhat."
+msgstr "Ennek a mezőnek betűket vagy szóközöket kell tartalmaznia."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain a number."
 msgid "This field must contain numbers."
-msgstr "Ennek a mezőnek egy számot kell tartalmaznia."
+msgstr "Ennek a mezőnek tartalmaznia kell számokat."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -12911,6 +12883,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "This service allows you to connect %s with %s."
 msgstr ""
+"Ez a szolgáltatás lehetővé teszi Önnek, hogy a %s és a %s között kapcsolatot "
+"létesítsen."
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "This service enables Zammad to connect with your Exchange server."
@@ -13453,6 +13427,8 @@ msgid ""
 "To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
 "process was aborted."
 msgstr ""
+"A nem megfelelő Microsoft365 postafiók lekérdezésének elkerülése érdekében "
+"az újbóli hitelesítési folyamat megszakadt."
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
@@ -15605,7 +15581,7 @@ msgstr "szerkesztés"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s"
-msgstr ""
+msgstr "szerkesztett %s"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s by %s"
@@ -15673,11 +15649,11 @@ msgstr "fax"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in"
-msgstr ""
+msgstr "töltse ki"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
-msgstr ""
+msgstr "töltse ki az üres helyet"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco

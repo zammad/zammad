@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-20 03:05+0000\n"
-"Last-Translator: Alfredo Sola <alfredo@sola.es>\n"
+"PO-Revision-Date: 2023-06-14 03:05+0000\n"
+"Last-Translator: Lerrand <lerrand@gmail.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/es/>\n"
 "Language: es-es\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.17\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1222,7 +1222,7 @@ msgstr "Añadir encabezado de tercer nivel"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Add this class to a button on your page that should open the chat."
-msgstr "Añadir esta clase al botón de tu página de abrir un chat."
+msgstr "Añadir esta clase a un botón en su página que debería abrir el chat."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Additional Channels"
@@ -1565,7 +1565,7 @@ msgstr "Version de aplicacion"
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "App could not be verified."
-msgstr "Aplicación no verificada."
+msgstr "No se ha podido verificar la aplicación."
 
 #: db/seeds/settings.rb
 msgid "App credentials for Facebook."
@@ -1671,16 +1671,12 @@ msgid "Are you sure?"
 msgstr "¿Estás seguro?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
-#, fuzzy
-#| msgid ""
-#| "Are you sure? Default notifications settings will be applied to all "
-#| "agents."
 msgid ""
 "Are you sure? Default notifications settings will be applied to all active "
 "agents. This operation may take some time."
 msgstr ""
 "¿Seguro? Los ajustes de notificaciones por defecto se aplicarán a todos los "
-"agentes."
+"agentes activos. Esta operación llevará un tiempo."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -2947,7 +2943,7 @@ msgstr "Configuración Ajustes Básicos"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid "Confirm"
-msgstr "Confirmación"
+msgstr "Confirmar"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
@@ -9709,11 +9705,10 @@ msgstr ""
 "su servidor Exchange."
 
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
-#, fuzzy
-#| msgid "Authentication failed due to incorrect credentials."
 msgid ""
 "Please start the reauthentication again and enter the correct credentials."
-msgstr "Autenticación fallida: credenciales incorrectas."
+msgstr ""
+"Comience de nuevo la reautenticación e introduzca credenciales correctas."
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -12048,6 +12043,8 @@ msgid ""
 "The entered user for reauthentication differs from the user that was used "
 "for setting up your Microsoft365 channel initially."
 msgstr ""
+"El usuario introducido para reautenticación es distinto del usuario que se "
+"utilizó inicialmente para configurar su canal Microsoft 365."
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -12673,16 +12670,12 @@ msgid "This field can only contain letters and spaces."
 msgstr "Este campo solamente puede contener letras y espacios."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field can only contain letters and numbers."
 msgid "This field can only contain lowercase letters."
-msgstr "Este campo solamente puede contener letras y números."
+msgstr "Este campo solamente puede contener letras minúsculas."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field can only contain alphabetical characters."
 msgid "This field can only contain uppercase letters."
-msgstr "Este campo solamente puede contener caracteres alfabéticos."
+msgstr "Este campo solamente puede contener letras mayúsculas."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
@@ -12721,42 +12714,32 @@ msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr "Este campo no contiene una fecha válida, utilice el formato \"%s\"."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain a number."
 msgid "This field must be a symbol."
-msgstr "Este campo debe contener un número."
+msgstr "Este campo debe contener un símbolo."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr "Este campo debe ser del tipo \"%s\"."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain at least one character."
 msgid "This field must contain a lowercase letter."
-msgstr "Este campo debe contener al menos un carácter."
+msgstr "Este campo debe contener al menos una letra minúscula."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
 msgstr "Este campo debe contener un número."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain a number."
 msgid "This field must contain a symbol."
-msgstr "Este campo debe contener un número."
+msgstr "Este campo debe contener un símbolo."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field can only contain alphabetical characters."
 msgid "This field must contain alphabetical characters."
-msgstr "Este campo solamente puede contener caracteres alfabéticos."
+msgstr "Este campo debe contener caracteres alfabéticos."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain a number."
 msgid "This field must contain an uppercase letter."
-msgstr "Este campo debe contener un número."
+msgstr "Este campo debe contener una letra mayúscula."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain at least %s characters."
@@ -12771,22 +12754,16 @@ msgid "This field must contain between %s and %s characters."
 msgstr "Este campo debe contener entre %s y %s caracteres."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain a number."
 msgid "This field must contain letters or numbers."
-msgstr "Este campo debe contener un número."
+msgstr "Este campo debe contener letras o números."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field can only contain letters and spaces."
 msgid "This field must contain letters or spaces."
-msgstr "Este campo solamente puede contener letras y espacios."
+msgstr "Este campo debe contener letras o espacios."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "This field must contain a number."
 msgid "This field must contain numbers."
-msgstr "Este campo debe contener un número."
+msgstr "Este campo debe contener números."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
@@ -13457,6 +13434,8 @@ msgid ""
 "To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
 "process was aborted."
 msgstr ""
+"Se ha interrumpido el proceso de reautenticación con el fin de evitar "
+"conexiones a un buzón Microsoft 365 incorrecto."
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
@@ -14135,10 +14114,8 @@ msgid "User Filter"
 msgstr "Filtro de usuarios"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
-#, fuzzy
-#| msgid "regex mismatch"
 msgid "User Mismatch"
-msgstr "desajuste de expresiones regulares"
+msgstr "Discordancia de usuario"
 
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
