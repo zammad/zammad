@@ -1,0 +1,19 @@
+#{config.product_name} login from a new device
+
+<div>Hi #{user.firstname},</div>
+<br>
+<div>It looks like you logged into your account <b>using a new device</b> on "#{user_device.created_at}":</div>
+<br>
+<div>
+Your device: #{user_device.name}<br>
+Your location (relative): #{user_device.location}<br>
+Your IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Your device has been added to your list of known devices, which you can view here:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>If this wasn't you, please remove the device, change your account password, and contact your administrator. Somebody might have gained unauthorized access to your account.</div>
+<br>
+<div>Your #{config.product_name} Team</div>
