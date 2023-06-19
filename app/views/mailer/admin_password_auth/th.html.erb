@@ -1,0 +1,15 @@
+เข้าสู่ระบบการดูแลระบบเพื่อ #{config.product_name}
+
+<div>Hi #{user.firstname},</div>
+<br>
+<div>เราได้รับคําขอสําหรับผู้ดูแลระบบสําหรับบัญชี #{config.product_name} ของคุณ <b>#{user.login}</b>.</div><br><div>
+
+โปรดคลิกที่ลิงค์ด้านล่าง (หรือคัดลอกและวาง URL ลงในเบราว์เซอร์ของคุณ) เพื่อดําเนินการต่อ: </div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</a></div><br><div>ลิงก์นี้จะนําคุณไปยังหน้าเว็บที่คุณสามารถเข้าสู่ระบบได้</div>
+<br><div>หากคุณ
+
+
+ไม่ต้องการเข้าสู่ระบบโปรดเพิกเฉยต่อข้อความนี้</div>
+<br>
+<div>ทีม #{config.product_name} ของคุณ</div>

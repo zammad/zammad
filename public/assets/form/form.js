@@ -133,6 +133,15 @@ $(function() {
         'Your Message…': 'Su mensaje…',
         'Your Name': 'tu Nombre',
       },
+      'et': {
+        'Attachments': 'Manused',
+        'Email': 'E-post',
+        'Message': 'Teade',
+        'Name': 'Nimi',
+        'Your Email': 'Sinu Meiliaadress',
+        'Your Message…': 'Sinu Teade…',
+        'Your Name': 'Sinu Nimi',
+      },
       'fr': {
         'Attachments': 'Pièces jointes',
         'Email': 'E-mail',
