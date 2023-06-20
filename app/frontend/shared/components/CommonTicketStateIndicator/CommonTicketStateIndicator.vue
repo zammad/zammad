@@ -67,7 +67,7 @@ const backgroundClass = computed(() => {
       class="text-xs uppercase leading-[14px] ltr:ml-[2px] rtl:mr-[2px]"
       aria-hidden="true"
     >
-      {{ label }}
+      {{ $t(label) }}
     </div>
   </div>
 </template>
