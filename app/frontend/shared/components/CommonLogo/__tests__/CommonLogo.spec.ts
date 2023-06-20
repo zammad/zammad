@@ -18,7 +18,10 @@ describe('CommonLogo.vue', () => {
     const img = wrapper.container.querySelector('img')
 
     expect(img).toHaveAttribute('alt', 'Zammad Custom Logo')
-    expect(img).toHaveAttribute('src', '/api/v1/system_assets/product_logo/1234')
+    expect(img).toHaveAttribute(
+      'src',
+      '/api/v1/system_assets/product_logo/1234',
+    )
   })
 
   it('renders default zammad logo', async () => {
@@ -33,6 +36,9 @@ describe('CommonLogo.vue', () => {
     const img = wrapper.container.querySelector('img')
 
     expect(img).not.toHaveAttribute('alt')
-    expect(img).toHaveAttribute('src', '/api/v1/system_assets/product_logo/logo.svg')
+    expect(img).toHaveAttribute(
+      'src',
+      '/api/v1/system_assets/product_logo/logo.svg',
+    )
   })
 })

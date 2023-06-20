@@ -11412,6 +11412,7 @@ output {
     &.is-inactive {
       opacity: 0.73;
       text-decoration: line-through;
+      pointer-events: none;
     }
   }
 

@@ -30,7 +30,7 @@ const {
   getSelectedOptionIcon,
   getSelectedOptionLabel,
   getSelectedOptionStatus,
-  setupMissingOptionHandling,
+  setupMissingOrDisabledOptionHandling,
 } = useSelectOptions(toRef(props.context, 'options'), contextReactive)
 
 const select = ref<CommonSelectInstance>()
@@ -48,7 +48,7 @@ const openSelectDialog = () => {
 useFormBlock(contextReactive, openSelectDialog)
 
 useSelectPreselect(sortedOptions, contextReactive)
-setupMissingOptionHandling()
+setupMissingOrDisabledOptionHandling()
 </script>
 
 <template>

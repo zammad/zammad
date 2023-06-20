@@ -8,9 +8,4 @@
     <%- @Icon('arrow-right', 'recipientList-arrow') %>
   </span>
   <% end %>
-  <% if @option.inactive is true: %>
-    <span>
-      <%- @Ti('inactive') %>
-    </span>
-  <% end %>
 </li>

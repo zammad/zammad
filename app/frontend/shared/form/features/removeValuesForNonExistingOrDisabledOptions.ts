@@ -10,7 +10,7 @@ import type {
 type OptionValueLookup = Dictionary<SelectOption>
 type SelectValueWithoutBoolean = Exclude<SelectValue, boolean>
 
-const removeValuesForNonExistingOptions = (node: FormKitNode) => {
+const removeValuesForNonExistingOrDisabledOptions = (node: FormKitNode) => {
   const handleNewInputValue = (
     payload: SelectValueWithoutBoolean | SelectValueWithoutBoolean[],
     context: FormKitFrameworkContext,
@@ -18,17 +18,21 @@ const removeValuesForNonExistingOptions = (node: FormKitNode) => {
     const optionValueLookup = context.optionValueLookup as OptionValueLookup
 
     if (Array.isArray(payload)) {
-      // TODO: Workaround, because currently the "nulloption" exists also for multiselect fields (#4513).
+      // TODO: Workaround for empty string, because currently the "nulloption" exists also for multiselect fields (#4513).
       const availableValues = payload.filter(
         (selectValue: string | number) =>
-          typeof optionValueLookup[selectValue] !== 'undefined' ||
+          (typeof optionValueLookup[selectValue] !== 'undefined' &&
+            !optionValueLookup[selectValue].disabled) ||
           selectValue === '',
       ) as SelectValue[]
 
       return availableValues
     }
 
-    if (typeof optionValueLookup[payload] === 'undefined') {
+    if (
+      typeof optionValueLookup[payload] === 'undefined' ||
+      optionValueLookup[payload].disabled
+    ) {
       if (typeof optionValueLookup[node.props._init] === 'undefined') {
         const getPreselectValue = context.getPreselectValue as () => SelectValue
 
@@ -59,4 +63,4 @@ const removeValuesForNonExistingOptions = (node: FormKitNode) => {
   })
 }
 
-export default removeValuesForNonExistingOptions
+export default removeValuesForNonExistingOrDisabledOptions

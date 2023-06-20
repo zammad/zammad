@@ -12,23 +12,23 @@ class App.UiElement.ApplicationTreeSelect extends App.UiElement.ApplicationUiEle
     newOptions = []
     nullFound = false
     for option, index in options
-      enabled = false
-      for value in values
-        valueArray  = value.split('::')
-        optionArray = option['value'].split('::')
-        continue if valueArray[valueDepth] isnt optionArray[valueDepth]
-        enabled = true
-        break
-
+      enabled = _.contains(values, option.value)
       if nullExists && !option.value && !nullFound
         nullFound = true
         enabled   = true
 
-      if !enabled
-        continue
+      activeChildren = false
+      if option.value && option.children && option.children.length > 0
+        for value in values
+          if value && value.startsWith(option.value + '::')
+            activeChildren = true
 
-      if option['children'] && option['children'].length
-        option['children'] = @filterTreeOptions(values, valueDepth + 1, option['children'], nullExists)
+      if activeChildren
+        option.inactive = !enabled
+        option.children = @filterTreeOptions(values, valueDepth + 1, option.children, nullExists)
+      else
+        option.children = undefined
+        continue if !enabled
 
       newOptions.push(option)
 
@@ -45,6 +45,16 @@ class App.UiElement.ApplicationTreeSelect extends App.UiElement.ApplicationUiEle
       attribute.multiple = 'multiple'
     else
       attribute.multiple = ''
+
+    # make sure only available values are set. For the tree selects
+    # we want also to render values which are not selectable but rendered as disabled
+    # e.g. child nodes where the parent node is disabled. Because of this we need
+    # to make sure to not render these values as selected
+    if attribute.value && attribute.filter
+      if attribute.multiple
+        attribute.value = _.intersection(attribute.value, attribute.filter)
+      else if !_.contains(attribute.filter, attribute.value)
+        attribute.value = ''
 
     # add deleted historical options if required
     @addDeletedOptions(attribute, params)
