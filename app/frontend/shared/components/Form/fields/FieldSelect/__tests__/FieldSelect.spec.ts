@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { SetRequired } from 'type-fest'
 import { cloneDeep, keyBy } from 'lodash-es'
 import { getByText, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
@@ -7,6 +8,7 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { i18n } from '#shared/i18n.ts'
 import { getNode } from '@formkit/core'
 import { waitForNextTick } from '#tests/support/utils.ts'
+import type { SelectOption } from '../types.ts'
 
 // Mock IntersectionObserver feature by injecting it into the global namespace.
 //   More info here: https://vitest.dev/guide/mocking.html#globals
@@ -18,7 +20,7 @@ const IntersectionObserverMock = vi.fn(() => ({
 }))
 vi.stubGlobal('IntersectionObserver', IntersectionObserverMock)
 
-const testOptions = [
+const testOptions: SetRequired<SelectOption, 'label'>[] = [
   {
     value: 0,
     label: 'Item A',
@@ -536,6 +538,53 @@ describe('Form - Field - Select - Options', () => {
     await waitForNextTick(true)
 
     expect(wrapper.getByRole('listitem')).toHaveTextContent('Item A')
+  })
+
+  it('remove values for disabled option on value update (multiple)', async () => {
+    const optionsProp = cloneDeep(testOptions)
+    optionsProp[2].disabled = true
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        id: 'select',
+        ...commonProps,
+        type: 'select',
+        value: [0, 1],
+        options: optionsProp,
+        multiple: true,
+      },
+    })
+
+    expect(wrapper.getAllByRole('listitem')).toHaveLength(2)
+
+    // Change values with one which not exists inside the options (e.g. coming from core workflow).
+    const node = getNode('select')
+    await node?.settled
+    node?.input([1, 2])
+
+    await waitForNextTick(true)
+
+    expect(wrapper.getAllByRole('listitem')).toHaveLength(1)
+  })
+
+  it('remove values for disabled option on initial value (multiple)', async () => {
+    const optionsProp = cloneDeep(testOptions)
+    optionsProp[2].disabled = true
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        id: 'select',
+        ...commonProps,
+        type: 'select',
+        value: [0, 1, 2],
+        options: optionsProp,
+        multiple: true,
+      },
+    })
+
+    expect(wrapper.getAllByRole('listitem')).toHaveLength(2)
   })
 })
 

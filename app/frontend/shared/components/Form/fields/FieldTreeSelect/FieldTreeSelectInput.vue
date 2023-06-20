@@ -99,7 +99,7 @@ const {
   getSelectedOptionLabel,
   getSelectedOptionStatus,
   getDialogFocusTargets,
-  setupMissingOptionHandling,
+  setupMissingOrDisabledOptionHandling,
 } = useSelectOptions(flatOptions, toRef(props, 'context'))
 
 const openModal = () => {
@@ -148,7 +148,7 @@ const onInputClick = () => {
 
 useSelectPreselect(flatOptions, contextReactive)
 useFormBlock(contextReactive, onInputClick)
-setupMissingOptionHandling()
+setupMissingOrDisabledOptionHandling()
 </script>
 
 <template>

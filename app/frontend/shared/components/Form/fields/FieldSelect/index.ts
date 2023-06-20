@@ -3,7 +3,7 @@
 import createInput from '#shared/form/core/createInput.ts'
 import addLink from '#shared/form/features/addLink.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
-import removeValuesForNonExistingOptions from '#shared/form/features/removeValuesForNonExistingOptions.ts'
+import removeValuesForNonExistingOptions from '#shared/form/features/removeValuesForNonExistingOrDisabledOptions.ts'
 import FieldSelectInput from './FieldSelectInput.vue'
 
 const fieldDefinition = createInput(

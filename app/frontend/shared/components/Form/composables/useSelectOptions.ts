@@ -72,6 +72,19 @@ const useSelectOptions = <
     keyBy(translatedOptions.value, 'value'),
   )
 
+  const disabledOptionValueLookup = computed(() => {
+    return Object.values(optionValueLookup.value).reduce(
+      (disabledValues: SelectValue[], option) => {
+        if (option.disabled) {
+          disabledValues.push(option.value)
+        }
+
+        return disabledValues
+      },
+      [],
+    )
+  })
+
   const sortedOptions = computed(() => {
     const { sorting } = context.value
 
@@ -147,13 +160,25 @@ const useSelectOptions = <
     return targetElements
   }
 
-  const handleValuesForNonExistingOptions = () => {
+  const handleValuesForNonExistingOrDisabledOptions = (
+    rejectNonExistentValues?: boolean,
+  ) => {
     if (!hasValue.value || context.value.pendingValueUpdate) return
+
+    const localRejectNonExistentValues = rejectNonExistentValues ?? true
 
     if (context.value.multiple) {
       const availableValues = currentValue.value.filter(
-        (selectValue: string | number) =>
-          typeof optionValueLookup.value[selectValue] !== 'undefined',
+        (selectValue: string | number) => {
+          const selectValueOption = optionValueLookup.value[selectValue]
+          return (
+            (localRejectNonExistentValues &&
+              typeof selectValueOption !== 'undefined' &&
+              selectValueOption?.disabled !== true) ||
+            (!localRejectNonExistentValues &&
+              selectValueOption?.disabled !== true)
+          )
+        },
       ) as SelectValue[]
 
       if (availableValues.length !== currentValue.value.length) {
@@ -163,14 +188,19 @@ const useSelectOptions = <
       return
     }
 
-    if (typeof optionValueLookup.value[currentValue.value] === 'undefined')
+    const currentValueOption = optionValueLookup.value[currentValue.value]
+    if (
+      (localRejectNonExistentValues &&
+        typeof currentValueOption === 'undefined') ||
+      currentValueOption?.disabled
+    )
       clearValue(false)
   }
 
-  // Setup a mechanism to handle missing options, including:
+  // Setup a mechanism to handle missing and disabled options, including:
   //   - appending historical options for current values
   //   - clearing value in case options are missing
-  const setupMissingOptionHandling = () => {
+  const setupMissingOrDisabledOptionHandling = () => {
     const { historicalOptions } = context.value
 
     // When we are in a "create" form situation and no 'rejectNonExistentValues' flag
@@ -186,7 +216,7 @@ const useSelectOptions = <
     // Remember current optionValueLookup in node context.
     context.value.optionValueLookup = optionValueLookup
 
-    // TODO: Workaround, because currently the "nulloption" exists also for multiselect fields (#4513).
+    // TODO: Workaround for empty string, because currently the "nulloption" exists also for multiselect fields (#4513).
     if (context.value.multiple) {
       watch(
         () =>
@@ -240,14 +270,15 @@ const useSelectOptions = <
       )
     }
 
-    // Reject non-existent values during the initialization phase.
-    //   Note that this behavior is controlled by a dedicated flag.
-    if (context.value.rejectNonExistentValues)
-      handleValuesForNonExistingOptions()
+    // Reject non-existent or disabled option values during the initialization phase (note that
+    //  the non-existent values behavior is controlled by a dedicated flag).
+    handleValuesForNonExistingOrDisabledOptions(
+      context.value.rejectNonExistentValues,
+    )
 
-    // Set up a watcher that clears a missing option value on subsequent mutations of the options prop.
-    //   In this case, the dedicated flag is ignored.
-    watch(() => options.value, handleValuesForNonExistingOptions)
+    // Set up a watcher that clears a missing option value or disabled options on subsequent mutations
+    //  of the options prop (in this case, the dedicated "rejectNonExistentValues" flag is ignored).
+    watch(options, () => handleValuesForNonExistingOrDisabledOptions())
   }
 
   return {
@@ -262,7 +293,7 @@ const useSelectOptions = <
     getSelectedOptionStatus,
     selectOption,
     getDialogFocusTargets,
-    setupMissingOptionHandling,
+    setupMissingOrDisabledOptionHandling,
     appendedOptions,
   }
 }

@@ -592,3 +592,119 @@ QUnit.test("searchable_select submenu and option list check", assert => {
   }, 300)
 
 });
+
+QUnit.test("[Core Workflow] Remove option does not work with tree select node that has sub-options #4407", assert => {
+  $('#forms').append('<hr><h1>Remove option does not work with tree select node that has sub-options #4407 form8</h1><form id="form8"></form>')
+  var el = $('#form8')
+
+  attribute = {
+    "name": "ts4407",
+    "display": "ts4407",
+    "tag": "tree_select",
+    "null": true,
+    "nulloption": true,
+    "translate": true,
+    "filter": ["aa", "bb::aaa", "dd::aaa::bbb"],
+    "options": [
+      {
+        "value": "aa",
+        "name": "aa yes",
+        "children": [
+          {
+            "value": "aa::aaa",
+            "name": "aa yes1",
+          },
+          {
+            "value": "aa::aab",
+            "name": "aa yes2",
+          },
+        ]
+      },
+      {
+        "value": "bb",
+        "name": "bb yes",
+        "children": [
+          {
+            "value": "bb::aaa",
+            "name": "bb yes1",
+          },
+          {
+            "value": "bb::aab",
+            "name": "bb yes2",
+          },
+        ]
+      },
+      {
+        "value": "cc",
+        "name": "cc yes",
+        "children": [
+          {
+            "value": "cc::aaa",
+            "name": "cc yes1",
+          },
+          {
+            "value": "cc::aab",
+            "name": "cc yes2",
+          },
+        ]
+      },
+      {
+        "value": "dd",
+        "name": "dd yes",
+        "children": [
+          {
+            "value": "dd::aaa",
+            "name": "dd yes1",
+            "children": [
+              {
+                "value": "dd::aaa::bbb",
+                "name": "dd yes2",
+              },
+            ]
+          },
+        ]
+      }
+    ],
+  }
+
+  element = App.UiElement.tree_select.render(attribute)
+
+  // children are removed
+  assert.equal(false, element.find("[data-value='aa::aaa']").length > 0)
+
+  // one child removed, one child allowed
+  assert.equal(true, element.find("[data-value='bb::aaa'] span.searchableSelect-option-text:not(.is-inactive)").length > 0)
+  assert.equal(false, element.find("[data-value='bb::aab']").length > 0)
+  assert.equal(true, element.find("[data-value='bb'] span.searchableSelect-option-text.is-inactive").length > 0)
+
+  // parent and childs removed
+  assert.equal(false, element.find("[data-value='cc']").length > 0)
+  assert.equal(false, element.find("[data-value='cc::aaa']").length > 0)
+  assert.equal(false, element.find("[data-value='cc::aab']").length > 0)
+
+  // level 3 child allowed
+  assert.equal(true, element.find("[data-value='dd'] span.searchableSelect-option-text.is-inactive").length > 0)
+  assert.equal(true, element.find("[data-value='dd::aaa'] span.searchableSelect-option-text.is-inactive").length > 0)
+  assert.equal(true, element.find("[data-value='dd::aaa::bbb'] span.searchableSelect-option-text:not(.is-inactive)").length > 0)
+
+  attribute.value = 'aa'
+  element = App.UiElement.tree_select.render(attribute)
+  assert.equal('aa yes', element.find(".js-input").val())
+
+  attribute.value = 'aa::aaa'
+  element = App.UiElement.tree_select.render(attribute)
+  assert.equal('-', element.find(".js-input").val())
+
+  attribute.tag = 'multi_tree_select'
+  attribute.multiple = true
+
+  attribute.value = ['aa']
+  element = App.UiElement.tree_select.render(attribute)
+  assert.equal(true, element.find(".token[data-value='aa']").length > 0)
+
+  attribute.value = ['aa::aaa']
+  element = App.UiElement.tree_select.render(attribute)
+  assert.equal(false, element.find(".token[data-value='aa::aaa']").length > 0)
+
+  el.append(element)
+});
