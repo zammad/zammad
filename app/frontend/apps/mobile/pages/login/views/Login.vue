@@ -130,7 +130,7 @@ const loginPageTitle = computed(() => {
   if (loginFlow.state === '2fa') {
     return twoFactorPlugin.value?.label ?? productName
   }
-  return __('Try another method')
+  return __('Try Another Method')
 })
 
 const showError = (error: UserError) => {
