@@ -13,23 +13,26 @@ set -e
 : "${NGINX_PORT:=8080}"
 : "${NGINX_SERVER_NAME:=_}"
 : "${NGINX_SERVER_SCHEME:=\$scheme}"
+: "${POSTGRESQL_DB:=zammad_production}"
+: "${POSTGRESQL_DB_CREATE:=true}"
 : "${POSTGRESQL_HOST:=zammad-postgresql}"
 : "${POSTGRESQL_PORT:=5432}"
 : "${POSTGRESQL_USER:=zammad}"
 : "${POSTGRESQL_PASS:=zammad}"
-: "${POSTGRESQL_DB:=zammad_production}"
-: "${POSTGRESQL_DB_CREATE:=true}"
 : "${RAILS_ENV:=production}"
 : "${RAILS_LOG_TO_STDOUT:=true}"
-: "${RAILS_TRUSTED_PROXIES:=['127.0.0.1', '::1']}"
+: "${RAILS_TRUSTED_PROXIES:=127.0.0.1,::1}"
 : "${RSYNC_ADDITIONAL_PARAMS:=--no-perms --no-owner}"
 : "${ZAMMAD_DIR:=/opt/zammad}"
 : "${ZAMMAD_RAILSSERVER_HOST:=zammad-railsserver}"
 : "${ZAMMAD_RAILSSERVER_PORT:=3000}"
-: "${ZAMMAD_READY_FILE:=${ZAMMAD_DIR}/tmp/zammad.ready}"
+: "${ZAMMAD_READY_FILE:=${ZAMMAD_DIR}/var/zammad.ready}"
 : "${ZAMMAD_WEBSOCKET_HOST:=zammad-websocket}"
 : "${ZAMMAD_WEBSOCKET_PORT:=6042}"
 : "${ZAMMAD_WEB_CONCURRENCY:=0}"
+
+ESCAPED_POSTGRESQL_PASS=$(echo "$POSTGRESQL_PASS" | sed -e 's/[\/&]/\\&/g')
+export DATABASE_URL="postgres://${POSTGRESQL_USER}:${ESCAPED_POSTGRESQL_PASS}@${POSTGRESQL_HOST}:${POSTGRESQL_PORT}/${POSTGRESQL_DB}"
 
 function check_zammad_ready {
   sleep 15
@@ -43,19 +46,11 @@ function check_zammad_ready {
 if [ "$1" = 'zammad-init' ]; then
   # install / update zammad
   test -f "${ZAMMAD_READY_FILE}" && rm "${ZAMMAD_READY_FILE}"
-  
+
   until (echo > /dev/tcp/"${POSTGRESQL_HOST}"/"${POSTGRESQL_PORT}") &> /dev/null; do
     echo "zammad railsserver waiting for postgresql server to be ready..."
     sleep 5
   done
-
-  # configure database
-  # https://stackoverflow.com/questions/407523/escape-a-string-for-a-sed-replace-pattern
-  ESCAPED_POSTGRESQL_PASS=$(echo "$POSTGRESQL_PASS" | sed -e 's/[\/&]/\\&/g')
-  sed -e "s#.*adapter:.*#  adapter: postgresql#g" -e "s#.*database:.*#  database: ${POSTGRESQL_DB}#g" -e "s#.*username:.*#  username: ${POSTGRESQL_USER}#g" -e "s#.*password:.*#  password: ${ESCAPED_POSTGRESQL_PASS}\\n  host: ${POSTGRESQL_HOST}\\n  port: ${POSTGRESQL_PORT}#g" < contrib/packager.io/database.yml.pkgr > config/database.yml
-
-  # configure trusted proxies
-  sed -i -e "s#config.action_dispatch.trusted_proxies =.*#config.action_dispatch.trusted_proxies = ${RAILS_TRUSTED_PROXIES}#" config/environments/production.rb
 
   # check if database exists / update to new version
   echo "initialising / updating database..."
@@ -67,7 +62,7 @@ if [ "$1" = 'zammad-init' ]; then
     bundle exec rake db:seed
 
     # create autowizard.json on first install
-    if base64 -d <<< ${AUTOWIZARD_JSON} &>> /dev/null; then
+    if base64 -d <<< "${AUTOWIZARD_JSON}" &>> /dev/null; then
       echo "Saving autowizard json payload..."
       base64 -d <<< "${AUTOWIZARD_JSON}" > auto_wizard.json
     fi
@@ -90,7 +85,7 @@ if [ "$1" = 'zammad-init' ]; then
       bundle exec rails r "Setting.set('es_password', \"${ELASTICSEARCH_PASS}\")"
     fi
 
-    until (echo > /dev/tcp/${ELASTICSEARCH_HOST}/${ELASTICSEARCH_PORT}) &> /dev/null; do
+    until (echo > /dev/tcp/"${ELASTICSEARCH_HOST}/${ELASTICSEARCH_PORT}") &> /dev/null; do
       echo "zammad railsserver waiting for elasticsearch server to be ready..."
       sleep 5
     done
@@ -111,6 +106,9 @@ if [ "$1" = 'zammad-init' ]; then
 
   # create install ready file
   echo 'zammad-init' > "${ZAMMAD_READY_FILE}"
+
+  # chown var
+  chown -R zammad:zammad "${ZAMMAD_DIR}/var"
 fi
 
 
@@ -134,8 +132,6 @@ fi
 
 # zammad-railsserver
 if [ "$1" = 'zammad-railsserver' ]; then
-  test -f /opt/zammad/tmp/pids/server.pid && rm /opt/zammad/tmp/pids/server.pid
-
   check_zammad_ready
 
   echo "starting railsserver... with WEB_CONCURRENCY=${ZAMMAD_WEB_CONCURRENCY}"

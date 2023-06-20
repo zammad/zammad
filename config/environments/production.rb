@@ -1,5 +1,18 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+def env_trusted_proxies
+  return nil if ENV['RAILS_TRUSTED_PROXIES'].blank?
+
+  if ENV['RAILS_TRUSTED_PROXIES'].strip.start_with?('[')
+    # Backwards compatibility for Docker environments setting the variable to a
+    #   Ruby literal like "['127.0.0.1', '::1']".
+    eval(ENV['RAILS_TRUSTED_PROXIES']) # rubocop:disable Security/Eval
+  else
+    # The regular way: variable contains a list if IP addresses/masks: "127.0.0.1,::1"
+    ENV['RAILS_TRUSTED_PROXIES'].split(',').select(&:present?)
+  end
+end
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -97,9 +110,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # overwrite default Rails TRUSTED_PROXIES
-  # because otherwise IPs from private ranges will be
-  # ignored for Session logging and fall back to localhost
-  # see https://github.com/zammad/zammad/issues/742
-  config.action_dispatch.trusted_proxies = ['127.0.0.1', '::1']
+  # Overwrite default Rails TRUSTED_PROXIES because otherwise IPs from private ranges will be
+  # ignored for Session logging and fall back to localhost (https://github.com/zammad/zammad/issues/742).
+  config.action_dispatch.trusted_proxies = env_trusted_proxies || ['127.0.0.1', '::1']
 end
