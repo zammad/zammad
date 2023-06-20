@@ -75,6 +75,9 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
       expect { find_outer('Security') }.not_to raise_error
       expect(find_button('Encrypt', disabled: !encrypt).disabled?).to be(!encrypt)
       expect(find_button('Sign', disabled: !sign).disabled?).to be(!sign)
+
+      click('button[aria-describedby="tooltip-security-security"]')
+      expect(page).to have_css('[aria-label="Security Information"]')
     end
   end
 

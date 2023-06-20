@@ -1,9 +1,9 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useSharedVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
 import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
-import { objectAttributesConfig } from './config.ts'
 import { useDisplayObjectAttributes } from './useDisplayObjectAttributes.ts'
 
 export interface Props {
@@ -17,6 +17,7 @@ export interface Props {
 const props = defineProps<Props>()
 
 const { fields } = useDisplayObjectAttributes(props)
+const { objectAttributes: objectAttributesConfig } = useSharedVisualConfig()
 </script>
 
 <template>

@@ -20,8 +20,12 @@ import CommonConfirmation from '#mobile/components/CommonConfirmation/CommonConf
 import { imageViewerOptions } from '#shared/composables/useImageViewer.ts'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '#shared/router/walker.ts'
-import { initializeObjectAttributes } from '#mobile/initializer/objectAttributes.ts'
+import { initializeMobileVisuals } from '#mobile/initializer/mobileVisuals.ts'
 import { i18n } from '#shared/i18n.ts'
+import {
+  setupCommonVisualConfig,
+  type SharedVisualConfig,
+} from '#shared/composables/useSharedVisualConfig.ts'
 import buildIconsQueries from './iconQueries.ts'
 import buildLinksQueries from './linkQueries.ts'
 import { setTestState, waitForNextTick } from '../utils.ts'
@@ -41,6 +45,7 @@ export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   vModel?: {
     [prop: string]: unknown
   }
+  visuals?: SharedVisualConfig
 }
 
 type UserEvent = ReturnType<(typeof userEvent)['setup']>
@@ -335,7 +340,12 @@ const renderComponent = <Props>(
   }
 
   initializeApplicationConfig()
-  initializeObjectAttributes()
+
+  if (wrapperOptions.visuals) {
+    setupCommonVisualConfig(wrapperOptions.visuals)
+  } else {
+    initializeMobileVisuals()
+  }
 
   if (wrapperOptions?.form && wrapperOptions?.formField) {
     defaultWrapperOptions.props ||= {}

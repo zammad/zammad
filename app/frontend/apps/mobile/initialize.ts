@@ -10,7 +10,7 @@ import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
 import { initializeAppName } from '#shared/composables/useAppName.ts'
 import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
 import initializeForm from '#mobile/form/index.ts'
-import { initializeObjectAttributes } from './initializer/objectAttributes.ts'
+import { initializeMobileVisuals } from './initializer/mobileVisuals.ts'
 
 export default function initializeApp(app: App) {
   initializeAppName('mobile')
@@ -18,7 +18,7 @@ export default function initializeApp(app: App) {
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
   initializeForm(app)
-  initializeObjectAttributes()
+  initializeMobileVisuals()
 
   return app
 }

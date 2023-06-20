@@ -3,14 +3,23 @@
 <script setup lang="ts">
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { computed, ref, toRef } from 'vue'
+import CommonTooltip from '#shared/components/CommonTooltip/CommonTooltip.vue'
+import type { TooltipItemDescriptor } from '#shared/components/CommonTooltip/types.ts'
+import { i18n } from '#shared/i18n.ts'
 import useValue from '../../composables/useValue.ts'
-import type { SecurityOption, SecurityValue, SecurityAllowed } from './types.ts'
+import type {
+  SecurityOption,
+  SecurityValue,
+  SecurityAllowed,
+  SecurityMessages,
+} from './types.ts'
 import type { FormFieldContext } from '../../types/field.ts'
 
 interface FieldSecurityProps {
   context: FormFieldContext<{
     disabled?: boolean
     allowed?: SecurityAllowed
+    securityMessages?: SecurityMessages
   }>
 }
 
@@ -53,6 +62,33 @@ const toggleOption = (name: SecurityOption) => {
 const optionsContainer = ref<HTMLElement>()
 
 useTraverseOptions(optionsContainer, { direction: 'horizontal' })
+
+const tooltipMessages = computed(() => {
+  const messages: TooltipItemDescriptor[] = []
+  if (props.context.securityMessages?.encryption) {
+    const message = i18n.t(
+      props.context.securityMessages.encryption.message,
+      ...(props.context.securityMessages.encryption.messagePlaceholder || []),
+    )
+    messages.push({
+      type: 'text',
+      label: `${i18n.t('Encryption:')} ${message}`,
+    })
+  }
+
+  if (props.context.securityMessages?.sign) {
+    const message = i18n.t(
+      props.context.securityMessages.sign.message,
+      ...(props.context.securityMessages.sign.messagePlaceholder || []),
+    )
+    messages.push({
+      type: 'text',
+      label: `${i18n.t('Sign:')} ${message}`,
+    })
+  }
+
+  return messages
+})
 </script>
 
 <template>
@@ -64,6 +100,15 @@ useTraverseOptions(optionsContainer, { direction: 'horizontal' })
     aria-multiselectable="true"
     aria-orientation="horizontal"
   >
+    <CommonTooltip
+      v-if="tooltipMessages.length"
+      :name="`security-${context.node.name}`"
+      :messages="tooltipMessages"
+      :heading="__('Security Information')"
+    >
+      <!-- TODO: use another icon when we figure out desktop icons -->
+      <CommonIcon name="mobile-info" size="small" />
+    </CommonTooltip>
     <button
       v-for="{ option, label, icon } of options"
       :key="option"

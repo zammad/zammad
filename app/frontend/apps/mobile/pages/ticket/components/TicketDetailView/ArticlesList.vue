@@ -86,6 +86,6 @@ const filterAttachments = (article: TicketArticle) => {
   </section>
   <CommonSectionPopup
     v-model:state="articleContextShown"
-    :items="contextOptions"
+    :messages="contextOptions"
   />
 </template>

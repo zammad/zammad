@@ -6,3 +6,11 @@ export interface AttributeDeclaration {
   component: Component
   dataTypes: string[]
 }
+
+export interface ObjectAttributesConfig {
+  outer: string | Component
+  wrapper: string | Component
+  classes: {
+    link?: string
+  }
+}

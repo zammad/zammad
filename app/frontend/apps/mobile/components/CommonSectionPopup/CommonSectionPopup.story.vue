@@ -15,14 +15,16 @@ const alert = (msg: string) => window.alert(msg)
       <button @click="state = true">Open Popup</button>
       <CommonSectionPopup
         v-model:state="state"
-        :items="[
+        :messages="[
           {
+            type: 'button',
             label: 'Some Item',
             onAction() {
               alert('clicked!')
             },
           },
           {
+            type: 'link',
             label: 'Some Link',
             link: '/',
           },

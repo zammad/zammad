@@ -7,15 +7,19 @@ import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 import { onClickOutside, onKeyUp, useVModel } from '@vueuse/core'
 import { nextTick, type Ref, shallowRef, watch } from 'vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
-import type { PopupItem } from './types.ts'
+import type { PopupItemDescriptor } from './types.ts'
 
 export interface Props {
-  items?: PopupItem[]
+  messages?: PopupItemDescriptor[]
   state: boolean
   noRefocus?: boolean
   zIndex?: number
-  label?: string
+  heading?: string
 }
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
@@ -30,9 +34,9 @@ const hidePopup = (cancel = true) => {
   localState.value = false
 }
 
-const onItemClick = (item: PopupItem) => {
+const onItemClick = (item: PopupItemDescriptor) => {
   if (item.onAction) item.onAction()
-  if (!item.noHideOnSelect) {
+  if (item.type !== 'text' && !item.noHideOnSelect) {
     hidePopup(false)
   }
 }
@@ -88,6 +92,17 @@ const transition = VITE_TEST_MODE
       leaveActiveClass: 'window-open',
       leaveToClass: 'window-close',
     }
+
+const getComponentNameByType = (type: PopupItemDescriptor['type']) => {
+  if (type === 'link') return 'CommonLink'
+  if (type === 'button') return CommonButton
+  return 'div'
+}
+
+const getClassesByType = (type: PopupItemDescriptor['type']) => {
+  if (type === 'text') return 'text-left pt-3 last:pb-3'
+  return 'cursor-pointer h-14 items-center justify-center border-b border-gray-300 text-center last:border-0'
+}
 </script>
 
 <template>
@@ -103,16 +118,19 @@ const transition = VITE_TEST_MODE
         @click="void 0"
         @keydown.esc="hidePopup()"
       >
-        <div ref="wrapper" class="wrapper" role="alert" :aria-label="label">
-          <div class="flex w-full flex-col rounded-xl bg-black">
+        <div ref="wrapper" class="wrapper" role="alert" :aria-label="heading">
+          <div v-bind="$attrs" class="flex w-full flex-col rounded-xl bg-black">
+            <h1 v-if="heading" class="w-full pt-3 text-center text-lg">
+              {{ heading }}
+            </h1>
             <slot name="header" />
             <component
-              :is="item.link ? 'CommonLink' : CommonButton"
-              v-for="item in items"
+              :is="getComponentNameByType(item.type)"
+              v-for="item in messages"
               :key="item.label"
               :link="item.link"
-              class="flex h-14 w-full cursor-pointer items-center justify-center border-b border-gray-300 text-center last:border-0"
-              :class="item.class"
+              class="flex w-full items-center px-4"
+              :class="[getClassesByType(item.type), item.class]"
               :variant="!item.link && item.buttonVariant"
               :transparent-background="!item.link"
               v-bind="item.attributes"

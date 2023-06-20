@@ -4,19 +4,21 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
 import CommonSectionPopup from '../CommonSectionPopup.vue'
-import type { PopupItem } from '../types.ts'
+import type { PopupItemDescriptor } from '../types.ts'
 
 const html = String.raw
 
 describe('popup behaviour', () => {
   it('renders list', async () => {
     const onAction = vi.fn()
-    const items: PopupItem[] = [
+    const messages: PopupItemDescriptor[] = [
       {
+        type: 'link',
         label: 'Link',
         link: '/',
       },
       {
+        type: 'button',
         label: 'Action',
         onAction,
       },
@@ -24,7 +26,7 @@ describe('popup behaviour', () => {
 
     const view = renderComponent(CommonSectionPopup, {
       props: {
-        items,
+        messages,
       },
       router: true,
       vModel: {
@@ -32,7 +34,7 @@ describe('popup behaviour', () => {
       },
     })
 
-    const [linkItem, actionItem] = items
+    const [linkItem, actionItem] = messages
 
     const link = view.getByText(linkItem.label)
     const action = view.getByText(actionItem.label)
@@ -52,7 +54,7 @@ describe('popup behaviour', () => {
 
     const view = renderComponent(CommonSectionPopup, {
       props: {
-        items: [],
+        messages: [],
       },
       vModel: {
         state,
@@ -82,12 +84,14 @@ describe('popup behaviour', () => {
 
     document.body.appendChild(externalForm)
 
-    const items: PopupItem[] = [
+    const messages: PopupItemDescriptor[] = [
       {
+        type: 'link',
         label: 'Link',
         link: '/',
       },
       {
+        type: 'button',
         label: 'Action',
         onAction: vi.fn(),
       },
@@ -95,7 +99,7 @@ describe('popup behaviour', () => {
 
     const view = renderComponent(CommonSectionPopup, {
       props: {
-        items,
+        messages,
       },
       router: true,
       vModel: {
@@ -132,7 +136,7 @@ describe('popup behaviour', () => {
 
     const view = renderComponent(CommonSectionPopup, {
       props: {
-        items: [],
+        messages: [],
       },
       router: true,
       vModel: {
@@ -160,7 +164,7 @@ describe('popup behaviour', () => {
 
     const view = renderComponent(CommonSectionPopup, {
       props: {
-        items: [],
+        messages: [],
         noRefocus: true,
       },
       router: true,
@@ -179,11 +183,13 @@ describe('popup behaviour', () => {
   })
 
   it('closes list after clicking', async () => {
-    const items: PopupItem[] = [
+    const messages: PopupItemDescriptor[] = [
       {
+        type: 'button',
         label: 'Hide Popup',
       },
       {
+        type: 'button',
         label: 'Keep Popup',
         noHideOnSelect: true,
       },
@@ -191,7 +197,7 @@ describe('popup behaviour', () => {
 
     const view = renderComponent(CommonSectionPopup, {
       props: {
-        items,
+        messages,
       },
       router: true,
       vModel: {
@@ -199,7 +205,7 @@ describe('popup behaviour', () => {
       },
     })
 
-    const [hideItem, keepItem] = items
+    const [hideItem, keepItem] = messages
 
     await view.events.click(view.getByText(keepItem.label))
 
@@ -208,5 +214,30 @@ describe('popup behaviour', () => {
     await view.events.click(view.getByText(hideItem.label))
 
     expect(view.queryByTestId('popupWindow')).not.toBeInTheDocument()
+  })
+
+  it('renders text message', async () => {
+    const messages: PopupItemDescriptor[] = [
+      {
+        type: 'text',
+        label: 'Some kind of text',
+      },
+    ]
+
+    const view = renderComponent(CommonSectionPopup, {
+      props: {
+        messages,
+      },
+      router: true,
+      vModel: {
+        state: true,
+      },
+    })
+
+    expect(view.getByText('Some kind of text')).toBeInTheDocument()
+
+    await view.events.click(view.getByText('Some kind of text'))
+
+    expect(view.queryByTestId('popupWindow')).toBeInTheDocument()
   })
 })

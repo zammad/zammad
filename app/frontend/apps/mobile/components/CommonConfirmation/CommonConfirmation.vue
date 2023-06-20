@@ -18,6 +18,7 @@ const localState = computed({
 
 const item = computed(() => {
   return {
+    type: 'button' as const,
     label: confirmationDialog.value?.buttonTitle || __('OK'),
     buttonVariant: confirmationDialog.value?.buttonVariant,
     onAction: confirmationDialog.value?.confirmCallback,
@@ -36,8 +37,8 @@ const callCancelCallback = (isCancel: boolean) => {
 <template>
   <CommonSectionPopup
     v-model:state="localState"
-    :items="[item]"
-    :label="__('Confirm dialog')"
+    :messages="[item]"
+    :heading="__('Confirm dialog')"
     @close="callCancelCallback"
   >
     <template #header>

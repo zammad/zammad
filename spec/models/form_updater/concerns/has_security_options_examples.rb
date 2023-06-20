@@ -99,14 +99,28 @@ RSpec.shared_examples 'HasSecurityOptions' do |type:|
         end
       end
 
-      it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
+      it_behaves_like 'resolving security field', expected_result: {
+        allowed:          [],
+        value:            [],
+        securityMessages: {
+          'encryption' => { message: "Can't find S/MIME encryption certificates for: smime2@example.com", messagePlaceholder: [] },
+          'sign'       => { message: 'Certificate not found.', messagePlaceholder: [] }
+        }
+      }
 
       context 'with recipient certificate present' do
         before do
           create(:smime_certificate, fixture: recipient_email_address)
         end
 
-        it_behaves_like 'resolving security field', expected_result: { allowed: ['encryption'], value: ['encryption'] }
+        it_behaves_like 'resolving security field', expected_result: {
+          allowed:          ['encryption'],
+          value:            ['encryption'],
+          securityMessages: {
+            'encryption' => { message: 'Certificates found for %s.', messagePlaceholder: ['smime2@example.com'] },
+            'sign'       => { message: 'Certificate not found.', messagePlaceholder: [] }
+          }
+        }
       end
     end
 

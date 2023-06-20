@@ -121,3 +121,32 @@ describe('FieldSecurity', () => {
     expect(onSubmit).not.toHaveBeenCalled()
   })
 })
+
+describe('rendering security messages', () => {
+  it("doesn't render if there are no messages", () => {
+    const view = renderSecurityField({
+      allowed: ['encryption', 'sign'],
+      securityMessages: {},
+    })
+
+    expect(view.queryByTestId('tooltipTrigger')).not.toBeInTheDocument()
+  })
+
+  it('renders both messages correctly', async () => {
+    const view = renderSecurityField({
+      allowed: ['encryption', 'sign'],
+      securityMessages: {
+        encryption: { message: 'Custom encryption message' },
+        sign: { message: 'Custom sign message' },
+      },
+    })
+
+    await view.events.click(view.getByTestId('tooltipTrigger'))
+
+    expect(view.baseElement).toHaveTextContent(
+      'Encryption: Custom encryption message',
+    )
+    expect(view.baseElement).toHaveTextContent('Sign: Custom sign message')
+    expect(view.baseElement).toHaveTextContent('Security Information')
+  })
+})

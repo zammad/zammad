@@ -118,6 +118,7 @@ const popupItems = computed(() =>
   hasError.value
     ? [
         {
+          type: 'button' as const,
           label: __('Try again'),
           onAction: tryAgain,
           noHideOnSelect: true,
@@ -162,7 +163,7 @@ const popupItems = computed(() =>
       :label="$t('Signed')"
     />
   </button>
-  <CommonSectionPopup v-model:state="showPopup" :items="popupItems">
+  <CommonSectionPopup v-model:state="showPopup" :messages="popupItems">
     <template #header>
       <div
         class="flex flex-col items-center gap-2 border-b border-b-white/10 p-4"
@@ -180,7 +181,7 @@ const popupItems = computed(() =>
             'text-orange': !hasError && security.signingSuccess === false,
           }"
         >
-          {{ $t('Sign') }}: {{ $t(security.signingMessage) }}
+          {{ $t('Sign:') }} {{ $t(security.signingMessage) }}
         </div>
         <div
           v-if="security.encryptionMessage"
@@ -189,7 +190,7 @@ const popupItems = computed(() =>
             'text-orange': !hasError && security.encryptionSuccess === false,
           }"
         >
-          {{ $t('Encryption') }}: {{ $t(security.encryptionMessage) }}
+          {{ $t('Encryption:') }} {{ $t(security.encryptionMessage) }}
         </div>
         <div v-if="!security.encryptionMessage && !security.signingMessage">
           {{ $t('No security information available.') }}

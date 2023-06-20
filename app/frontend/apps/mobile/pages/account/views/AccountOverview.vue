@@ -225,7 +225,7 @@ const { forceDesktop } = useForceDesktop()
       </FormKit>
     </div>
 
-    <CommonSectionPopup v-model:state="showInstallIOSPopup" :items="[]">
+    <CommonSectionPopup v-model:state="showInstallIOSPopup" :messages="[]">
       <template #header>
         <section class="inline-flex min-h-[54px] items-center p-3">
           <span v-html="installPWAMessage" />

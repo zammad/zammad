@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { PopupItem } from '#mobile/components/CommonSectionPopup/index.ts'
+import type { PopupItemDescriptor } from '#mobile/components/CommonSectionPopup/index.ts'
 import { useDialog } from '#shared/composables/useDialog.ts'
 import { computed, nextTick, ref, shallowRef } from 'vue'
 import type {
@@ -92,7 +92,7 @@ export const useTicketArticleContext = () => {
     return typeof getEditorValue === 'function' ? getEditorValue(type) : ''
   }
 
-  const contextOptions = computed<PopupItem[]>(() => {
+  const contextOptions = computed<PopupItemDescriptor[]>(() => {
     const ticket = ticketForContext.value
     const article = articleForContext.value
 
@@ -106,10 +106,11 @@ export const useTicketArticleContext = () => {
     const actions = createArticleActions(ticket, article, 'mobile', {
       recalculate,
       onDispose,
-    }).map((action) => {
+    }).map<PopupItemDescriptor>((action) => {
       const { perform, link, label } = action
-      if (!perform) return action
+      if (!perform) return { ...action, type: 'link' }
       return {
+        type: link ? 'link' : 'button',
         label,
         link,
         onAction: () =>
@@ -125,6 +126,7 @@ export const useTicketArticleContext = () => {
     return [
       ...actions,
       {
+        type: 'button',
         label: __('Show meta data'),
         onAction() {
           metadataDialog.open({

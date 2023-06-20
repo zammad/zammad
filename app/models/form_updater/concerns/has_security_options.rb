@@ -1,7 +1,9 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-module FormUpdater::Concerns::HasSecurityOptions
+module FormUpdater::Concerns::HasSecurityOptions # rubocop:disable Metrics/ModuleLength
   extend ActiveSupport::Concern
+
+  # TODO: we do want to split this up into multiple concerns during the PGP implementation (or maybe a service?).
 
   def resolve
     if smime_active? && email_channel? && agent?
@@ -9,6 +11,7 @@ module FormUpdater::Concerns::HasSecurityOptions
 
       result['security'][:allowed] = smime_allowed_values
       result['security'][:value] = smime_default_value
+      result['security'][:securityMessages] = @messages if @messages.present?
     end
 
     super
@@ -34,6 +37,11 @@ module FormUpdater::Concerns::HasSecurityOptions
 
   def smime_allowed_values
     result = []
+
+    # default messages
+    # TODO: Make no sense to add these messages to the result for empty group and sender?
+    add_encryption_message(__('No recipient found.'))
+    add_sign_message(__('Certificate not found.'))
 
     result.push('encryption') if smime_encryption?
     result.push('sign') if smime_sign?
@@ -109,9 +117,26 @@ module FormUpdater::Concerns::HasSecurityOptions
     begin
       certs = SMIMECertificate.for_recipipent_email_addresses!(recipients)
 
-      result = certs.none?(&:expired?) if certs
-    rescue
+      result = get_encryption_result(certs, recipients)
+    rescue => e
       result = false
+      add_encryption_message(e.message)
+    end
+
+    result
+  end
+
+  def get_encryption_result(certs, recipients)
+    result = false
+
+    if certs
+      result = certs.none?(&:expired?)
+
+      if certs.any?(&:expired?)
+        add_encryption_message(__('Certificates found for %s, but expired.'), [recipients.join(', ')])
+      else
+        add_encryption_message(__('Certificates found for %s.'), [recipients.join(', ')])
+      end
     end
 
     result
@@ -134,11 +159,49 @@ module FormUpdater::Concerns::HasSecurityOptions
       from = list.addresses.first.to_s
       cert = SMIMECertificate.for_sender_email_address(from)
 
-      result = !cert.expired? if cert
-    rescue
+      result = get_sign_result(cert, group.email_address.email)
+    rescue NoMethodError
       result = false
+      add_sign_message(__('Invalid email address.'))
+    rescue => e
+      result = false
+      add_sign_message(e.message)
     end
 
     result
+  end
+
+  def get_sign_result(cert, email)
+    result = false
+
+    if cert
+      result = !cert.expired?
+
+      if cert.expired?
+        add_sign_message(__('Certificate for %s found, but expired.'), [email])
+      else
+        add_sign_message(__('Certificate for %s found.'), [email])
+      end
+    else
+      add_sign_message(__('No certificate for %s found.'), [email])
+    end
+
+    result
+  end
+
+  def add_encryption_message(message, placeholders = [])
+    add_message('encryption', message, placeholders)
+  end
+
+  def add_sign_message(message, placeholders = [])
+    add_message('sign', message, placeholders)
+  end
+
+  def add_message(option, message, placeholders)
+    @messages ||= {}
+    @messages[option] = {
+      message:            message,
+      messagePlaceholder: placeholders,
+    }
   end
 end
