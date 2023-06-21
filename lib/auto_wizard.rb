@@ -153,9 +153,7 @@ returns
   end
 
   def self.file_location
-    auto_wizard_file_name = 'auto_wizard.json'
-    Rails.root.join(auto_wizard_file_name)
-
+    Rails.root.join(ENV['AUTOWIZARD_RELATIVE_PATH'].presence || 'auto_wizard.json')
   end
   private_class_method :file_location
 end

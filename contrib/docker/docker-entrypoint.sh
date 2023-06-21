@@ -3,6 +3,7 @@
 set -e
 
 : "${AUTOWIZARD_JSON:=''}"
+: "${AUTOWIZARD_RELATIVE_PATH:='var/auto_wizard.json'}"
 : "${ELASTICSEARCH_ENABLED:=true}"
 : "${ELASTICSEARCH_HOST:=zammad-elasticsearch}"
 : "${ELASTICSEARCH_PORT:=9200}"
@@ -64,7 +65,7 @@ if [ "$1" = 'zammad-init' ]; then
     # create autowizard.json on first install
     if base64 -d <<< "${AUTOWIZARD_JSON}" &>> /dev/null; then
       echo "Saving autowizard json payload..."
-      base64 -d <<< "${AUTOWIZARD_JSON}" > auto_wizard.json
+      base64 -d <<< "${AUTOWIZARD_JSON}" > "${AUTOWIZARD_RELATIVE_PATH}"
     fi
   else
     bundle exec rails r "Rails.cache.clear"
