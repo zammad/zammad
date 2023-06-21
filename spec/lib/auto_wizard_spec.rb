@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe AutoWizard do
   describe '.enabled?' do
-    context 'with no "auto_wizard.json" file in project root' do
+    context 'without "auto_wizard.json" file in project root' do
       before { FileUtils.rm(Rails.root.join('auto_wizard.json'), force: true) }
 
       it 'returns false' do
@@ -22,6 +22,31 @@ RSpec.describe AutoWizard do
       it 'returns true' do
         expect(described_class.enabled?).to be(true)
       end
+    end
+
+    context 'with "auto_wizard.json" file in custom directory' do
+      before do
+        allow(ENV).to receive(:[]).with('AUTOWIZARD_RELATIVE_PATH').and_return('var/auto_wizard.json')
+      end
+
+      context 'with file present' do
+        around do |example|
+          FileUtils.touch(Rails.root.join('var/auto_wizard.json'))
+          example.run
+          FileUtils.rm(Rails.root.join('var/auto_wizard.json'))
+        end
+
+        it 'returns true' do
+          expect(described_class.enabled?).to be(true)
+        end
+      end
+
+      context 'with file missing' do
+        it 'returns true' do
+          expect(described_class.enabled?).to be(false)
+        end
+      end
+
     end
   end
 
