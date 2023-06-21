@@ -17,7 +17,7 @@ module User::UpdatesTicketOrganization
     return true if !saved_change_to_attribute?('organization_id')
 
     # update last 100 tickets of user
-    tickets = Ticket.where(customer_id: id).limit(100)
+    tickets = Ticket.where(customer_id: id, organization_id: old_organization_id).limit(100)
     tickets.each do |ticket|
       next if ticket.organization_id == organization_id
 
@@ -26,5 +26,9 @@ module User::UpdatesTicketOrganization
         ticket.save!
       end
     end
+  end
+
+  def old_organization_id
+    previous_changes['organization_id'].first
   end
 end
