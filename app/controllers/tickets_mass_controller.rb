@@ -43,7 +43,7 @@ class TicketsMassController < ApplicationController
     @tickets = Ticket.find params[:ticket_ids]
 
     @tickets.each do |elem|
-      authorize!(elem, :follow_up?)
+      authorize!(elem, :agent_update_access?)
     end
   rescue Pundit::NotAuthorizedError => e
     render json: { error: true, ticket_id: e.record.id }, status: :unprocessable_entity

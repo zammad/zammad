@@ -7744,6 +7744,10 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco
+msgid "No macros available."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr ""
@@ -9747,6 +9751,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
+msgid "Selected tickets do not match any macros."
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
@@ -13477,6 +13485,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
 msgid "You have insufficient rights to view this user."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
+msgid "You have no change permission or you are a customer for some of the selected tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco

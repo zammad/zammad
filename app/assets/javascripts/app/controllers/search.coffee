@@ -105,15 +105,16 @@ class App.Search extends App.Controller
       tabs: @tabs
     ))
 
-    @controllerTicketBatch.releaseController() if @controllerTicketBatch
-    @controllerTicketBatch = new App.TicketBatch(
-      el:       elLocal.filter('.js-batch-overlay')
-      parent:   @
-      parentEl: elLocal
-      appEl:    @appEl
-      batchSuccess: =>
-        @search(0, true)
-    )
+    if App.User.current().permission('ticket.agent')
+      @controllerTicketBatch.releaseController() if @controllerTicketBatch
+      @controllerTicketBatch = new App.TicketBatch(
+        el:       elLocal.filter('.js-batch-overlay')
+        parent:   @
+        parentEl: elLocal
+        appEl:    @appEl
+        batchSuccess: =>
+          @search(0, true)
+      )
 
     @html elLocal
     if @query

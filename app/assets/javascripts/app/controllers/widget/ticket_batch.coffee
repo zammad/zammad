@@ -43,35 +43,35 @@ class App.TicketBatch extends App.Controller
     ))
 
   renderOptionsMacros: =>
+    ticketsGroupIds = @parentEl
+      .find('[name="bulk"]:checked')
+      .toArray()
+      .map (elem) ->
+        App.Ticket.find(elem.value).group_id
 
-    @possibleMacros = []
-    macros          = App.Macro.getList()
+    userGroupIds = App.User.current().allGroupIds('change').map (elem) -> parseInt(elem)
 
-    items = @parentEl.find('[name="bulk"]:checked')
+    if !_.isEmpty(_.difference(ticketsGroupIds, userGroupIds))
+      @batchMacro.html $(App.view('ticket_overview/batch_overlay_macro')(
+        errorMessage: __('You have no change permission or you are a customer for some of the selected tickets.')
+      ))
 
-    group_ids =[]
-    for item in items
-      ticket = App.Ticket.find($(item).val())
-      group_ids.push ticket.group_id
+      return
 
-    group_ids = _.uniq(group_ids)
+    possibleMacros = App.Macro
+      .getList()
+      .filter (elem) ->
+        _.isEmpty(elem.group_ids) || _.isEmpty(_.difference(ticketsGroupIds, elem.group_ids))
 
-    for macro in macros
+    if _.isEmpty(possibleMacros)
+      @batchMacro.html $(App.view('ticket_overview/batch_overlay_macro')(
+        errorMessage: __('Selected tickets do not match any macros.')
+      ))
 
-      # push if no group_ids exists
-      if _.isEmpty(macro.group_ids) && !_.includes(@possibleMacros, macro)
-        @possibleMacros.push macro
-
-      # push if group_ids are equal
-      if _.isEqual(macro.group_ids, group_ids) && !_.includes(@possibleMacros, macro)
-        @possibleMacros.push macro
-
-      # push if all group_ids of tickets are in macro.group_ids
-      if !_.isEmpty(macro.group_ids) && _.isEmpty(_.difference(group_ids,macro.group_ids)) && !_.includes(@possibleMacros, macro)
-        @possibleMacros.push macro
+      return
 
     @batchMacro.html $(App.view('ticket_overview/batch_overlay_macro')(
-      macros: @possibleMacros
+      macros: possibleMacros
     ))
 
   startDragItem: (event) =>

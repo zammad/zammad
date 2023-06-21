@@ -33,15 +33,16 @@ class App.TicketOverview extends App.Controller
       view: @view
     )
 
-    @controllerTicketBatch.releaseController() if @controllerTicketBatch
-    @controllerTicketBatch = new App.TicketBatch(
-      el:           elLocal.filter('.js-batch-overlay')
-      parent:       @
-      parentEl:     elLocal
-      appEl:        @appEl
-      batchSuccess: =>
-        @render()
-    )
+    if App.User.current().permission('ticket.agent')
+      @controllerTicketBatch.releaseController() if @controllerTicketBatch
+      @controllerTicketBatch = new App.TicketBatch(
+        el:           elLocal.filter('.js-batch-overlay')
+        parent:       @
+        parentEl:     elLocal
+        appEl:        @appEl
+        batchSuccess: =>
+          @render()
+      )
 
     @contentController.releaseController() if @contentController
     @contentController = new Table(

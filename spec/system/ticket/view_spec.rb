@@ -108,6 +108,104 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
       end
     end
 
+    describe 'when agent cannot change some of the tickets' do
+      let(:agent) { create(:agent) }
+
+      def authenticate
+        macro_without_group
+
+        agent
+          .tap { |user| user.user_groups.create! group: ticket1.group, access: 'full' }
+          .tap { |user| user.user_groups.create! group: ticket2.group, access: 'overview' }
+      end
+
+      before do
+        visit '#ticket/view/all_open'
+      end
+
+      it 'show macros if agent cannot change selected tickets' do
+        display_macro_batches ticket1
+
+        within(:active_content) do
+          expect(page).to have_no_text(%r{No macros available}i)
+            .and(have_selector(:macro_batch, macro_without_group.id))
+        end
+      end
+
+      it 'show no macros if agent cannot change selected tickets' do
+        display_macro_batches ticket2
+
+        within(:active_content) do
+          expect(page).to have_text(%r{No macros available}i)
+            .and(have_text(%r{no change permission}i))
+            .and(have_no_selector(:macro_batch, macro_without_group.id))
+        end
+      end
+    end
+
+    describe 'when user is agent-customer' do
+      let(:agent_customer) { create(:agent_and_customer) }
+
+      def authenticate
+        ticket1.update!(customer: agent_customer)
+        ticket2
+
+        macro_without_group && macro_group1 && macro_group2
+
+        agent_customer
+          .tap { |user| user.groups << ticket2.group }
+      end
+
+      before do
+        visit '#ticket/view/all_open'
+      end
+
+      it 'show no macros if the ticket is customer-like' do
+        display_macro_batches ticket1
+
+        within :active_content do
+          expect(page).to have_text(%r{No macros available}i)
+            .and(have_text(%r{no change permission}i))
+            .and(have_no_selector(:macro_batch, macro_without_group.id))
+            .and(have_no_selector(:macro_batch, macro_group1.id))
+            .and(have_no_selector(:macro_batch, macro_group2.id))
+        end
+      end
+
+      it 'show macros if tickets are only agent-like' do
+        display_macro_batches ticket2
+
+        within :active_content do
+          expect(page).to have_no_text(%r{No macros available}i)
+            .and(have_selector(:macro_batch, macro_without_group.id))
+            .and(have_no_selector(:macro_batch, macro_group1.id))
+            .and(have_selector(:macro_batch, macro_group2.id))
+        end
+      end
+    end
+
+    describe 'when user is customer' do
+      let(:customer) { create(:customer) }
+
+      def authenticate
+        ticket1.update!(customer: customer)
+
+        customer
+      end
+
+      before do
+        visit '#ticket/view/my_tickets'
+      end
+
+      it 'shows no overlay' do
+        display_macro_batches ticket1
+
+        within :active_content do
+          expect(page).to have_no_selector('.batch-overlay-backdrop')
+        end
+      end
+    end
+
     context 'with macro batch overlay' do
       shared_examples "adding 'small' class to macro element" do
         it 'adds a "small" class to the macro element' do
