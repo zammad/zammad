@@ -486,6 +486,8 @@ RSpec.describe 'User endpoint', type: :request do
 
       context 'organization assignment' do
 
+        # We need a primary org to be able to assign secondary orgs.
+        let(:requested)         { create(:user, organization: create(:organization)) }
         let(:new_organizations) { create_list(:organization, 2) }
 
         context 'parameter organizations' do
