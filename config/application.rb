@@ -3,7 +3,6 @@
 require_relative 'boot'
 
 require 'rails/all'
-require_relative 'issue_2656_workaround_for_rails_issue_33600'
 require_relative '../lib/zammad/safe_mode'
 
 # DO NOT REMOVE THIS LINE - see issue #2037
