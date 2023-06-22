@@ -24,11 +24,11 @@ detect_database
 
 detect_webserver
 
+enforce_redis
+
 create_initscripts
 
 stop_zammad
-
-enforce_redis
 
 update_or_install
 
