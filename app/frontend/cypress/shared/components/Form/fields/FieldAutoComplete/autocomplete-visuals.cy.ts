@@ -76,6 +76,10 @@ describe('testing visuals for "FieldAutocomplete"', () => {
       })
       checkFormMatchesSnapshot({ type })
     })
+    it(`renders basic ${type} with help`, () => {
+      mountFormField(type, { label: type, options, help: 'Help Message!' })
+      checkFormMatchesSnapshot({ type })
+    })
 
     it(`renders selected ${type}`, () => {
       mountFormField(type, { label: type, options, value: 0 })

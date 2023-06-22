@@ -55,6 +55,14 @@ describe('testing visuals for "FieldInput"', () => {
       checkFormMatchesSnapshot({ type })
     })
 
+    it(`renders ${type} with help`, () => {
+      mountFormField(type, {
+        label: type,
+        help: 'Help message!',
+      })
+      checkFormMatchesSnapshot({ type })
+    })
+
     it(`renders linked ${type}`, () => {
       mountFormField(type, { label: type, link: '/' })
       checkFormMatchesSnapshot({ type })

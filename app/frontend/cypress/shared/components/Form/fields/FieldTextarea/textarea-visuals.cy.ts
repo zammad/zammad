@@ -52,6 +52,14 @@ describe('testing visuals for "FieldTextarea"', () => {
     checkFormMatchesSnapshot()
   })
 
+  it('renders textarea with help', () => {
+    mountFormField('textarea', {
+      label: 'textarea',
+      help: 'Help Message!',
+    })
+    checkFormMatchesSnapshot()
+  })
+
   it(`renders disabled textarea`, () => {
     mountFormField('textarea', { label: 'textarea', disabled: true })
     checkFormMatchesSnapshot()

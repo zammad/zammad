@@ -190,6 +190,11 @@ describe('testing visuals for "FieldTreeSelect"', () => {
     checkFormMatchesSnapshot()
   })
 
+  it(`renders treeselect with help`, () => {
+    mountFormField('treeselect', { label: 'treeselect', help: 'Help Message!' })
+    checkFormMatchesSnapshot()
+  })
+
   it(`renders selected hidden treeselect`, () => {
     mountFormField('treeselect', {
       label: 'treeselect',

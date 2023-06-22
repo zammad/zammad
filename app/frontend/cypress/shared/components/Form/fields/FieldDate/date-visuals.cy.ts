@@ -28,6 +28,17 @@ describe('testing visuals for "FieldDate"', () => {
         })
     })
 
+    it(`renders help for ${type}`, () => {
+      mountFormField(type, {
+        label: 'Date',
+        maxDate: '2021-02-01',
+        help: 'Help message!',
+      })
+      cy.findByLabelText('Date').then(() => {
+        checkFormMatchesSnapshot({ subTitle: 'help', type })
+      })
+    })
+
     it(`renders required ${type}`, () => {
       mountFormField(type, {
         label: 'Date',

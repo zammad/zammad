@@ -51,4 +51,13 @@ describe('testing visuals for "FieldToggle"', () => {
     mountFormField('toggle', { label: 'Toggle', labelSrOnly: true })
     checkFormMatchesSnapshot()
   })
+
+  it(`renders toggle with help`, () => {
+    mountFormField('toggle', {
+      label: 'Toggle',
+      variants,
+      help: 'Help Message!',
+    })
+    checkFormMatchesSnapshot()
+  })
 })

@@ -29,6 +29,14 @@ describe('testing visuals for "FieldCheckbox"', () => {
       })
     })
 
+    it('renders checkbox with help', () => {
+      mountFormField('checkbox', { label: 'Checkbox', help: 'Help Message!' })
+      cy.get('.formkit-outer').then(($el) => {
+        $el.css('min-height', '24px')
+        checkFormMatchesSnapshot()
+      })
+    })
+
     it('renders default invalid checkbox', () => {
       mountFormField('checkbox', {
         label: 'Checkbox',

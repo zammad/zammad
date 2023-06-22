@@ -20,6 +20,11 @@ describe('testing visuals for "FieldTags"', () => {
     checkFormMatchesSnapshot()
   })
 
+  it('renders tags with help', () => {
+    mountFormField('tags', { label: 'tags', help: 'Help Message!' })
+    checkFormMatchesSnapshot()
+  })
+
   it('renders required tags', () => {
     mountFormField('tags', { label: 'tags', required: true })
     checkFormMatchesSnapshot()

@@ -92,6 +92,11 @@ describe('testing visuals for "FieldSelect"', () => {
     checkFormMatchesSnapshot()
   })
 
+  it('renders select with help', () => {
+    mountFormField('select', { label: 'select', help: 'Help Message!' })
+    checkFormMatchesSnapshot()
+  })
+
   it('renders selected select', () => {
     mountFormField('select', { label: 'select', options, value })
     checkFormMatchesSnapshot()
