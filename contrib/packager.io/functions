@@ -229,6 +229,11 @@ function create_webserver_config () {
 }
 
 function enforce_redis () {
+  if [ -n "${REDIS_URL}" ]; then
+    echo "# Redis URL ${REDIS_URL} found."
+    return 0
+  fi
+
   echo "# Enforcing Redis..."
 
   local REDIS_SERVICE_NAME=""
@@ -238,11 +243,25 @@ function enforce_redis () {
       REDIS_SERVICE_NAME="redis"
   fi
 
-  echo "# Creating Redis bootstart"
-  ${INIT_CMD} enable ${REDIS_SERVICE_NAME}
+  if [ -n "$(which redis-server 2> /dev/null)" ]; then
+    echo "# Creating Redis bootstart"
+    ${INIT_CMD} enable ${REDIS_SERVICE_NAME}
 
-  echo "# Starting Redis server"
-  ${INIT_CMD} start ${REDIS_SERVICE_NAME}
+    echo "# Starting Redis server"
+    ${INIT_CMD} restart ${REDIS_SERVICE_NAME}
+    if [ $? -eq 0 ]; then
+      echo "# Redis server is running."
+      return 0
+    fi
+  fi
+
+  echo "It seems no redis server runs locally."
+  echo "Please install Redis following the instructions at https://redis.io/docs/getting-started/ or set the REDIS_URL environment variable."
+  echo "e.g. export REDIS_URL=redis://your.redis.server:6379"
+  echo
+  echo "Please try again the Zammad package installation."
+
+  return 1
 }
 
 function setup_elasticsearch () {

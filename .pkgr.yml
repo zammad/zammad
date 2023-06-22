@@ -42,7 +42,7 @@ targets:
       - postgresql|mariadb-server
       - libimlib2
       - shared-mime-info
-      - redis
+      - redis-server
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -55,7 +55,7 @@ targets:
       - postgresql|mariadb-server
       - libimlib2
       - shared-mime-info
-      - redis
+      - redis-server
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -68,7 +68,7 @@ targets:
       - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
-      - redis
+      - redis-server
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -81,7 +81,7 @@ targets:
       - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
-      - redis
+      - redis-server
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -94,7 +94,7 @@ targets:
       - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
-      - redis
+      - redis-server
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -107,7 +107,7 @@ targets:
       - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
-      - redis
+      - redis-server
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -120,7 +120,6 @@ targets:
       - postgresql-server
       - libImlib2-1
       - imlib2
-      - redis
     build_dependencies:
       # Add packages required for build that are not in the official SLES repo.
       # Direct URLs must be used since we cannot add repos on packager.io
@@ -139,7 +138,6 @@ targets:
       - libImlib2-1
       - imlib2
       - shared-mime-info
-      - redis
     build_dependencies:
       # Add packages required for build that are not in the official SLES repo.
       # Direct URLs must be used since we cannot add repos on packager.io
