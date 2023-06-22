@@ -41,6 +41,7 @@ add tags for certain object
       tag_item_id:   tag_item_id,
       o_id:          data[:o_id],
       created_by_id: data[:created_by_id],
+      sourceable:    data[:sourceable],
     )
 
     # touch reference
@@ -89,7 +90,10 @@ or by ids
       tag_item_id:   data[:tag_item_id],
       o_id:          data[:o_id],
     )
-    result.each(&:destroy)
+    result.each do |item|
+      item.sourceable = data[:sourceable]
+      item.destroy
+    end
 
     # touch reference
     touch_reference_by_params(data)

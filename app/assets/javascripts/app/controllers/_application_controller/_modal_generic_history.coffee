@@ -10,6 +10,7 @@ class App.GenericHistory extends App.ControllerModal
 
   constructor: ->
     super
+    @reverse = false
     @fetch()
 
   content: =>
@@ -28,41 +29,62 @@ class App.GenericHistory extends App.ControllerModal
     @renderPopovers()
 
   sortorder: =>
-    @items = @items.reverse()
+    @reverse = !@reverse
     @update()
 
   T: (name) ->
     App.i18n.translateInline(name)
 
+  sourceableTypeDisplayName: (type) ->
+    {
+      'PostmasterFilter': __('Postmaster Filter'),
+      'Job': __('Scheduler'),
+    }[type] || type
+
   reworkItems: (items) ->
     newItems = []
     newItem = {}
+    lastSource = '_'
     lastUserId = undefined
     lastTime   = undefined
     items = clone(items)
     for item in items
-
       if item.object is 'Ticket::Article'
         item.object = 'Article'
       if item.object is 'Ticket::SharedDraftZoom'
         item.object = 'Draft'
 
-      data = item
-      data.created_by = App.User.find( item.created_by_id )
-
       currentItemTime = new Date( item.created_at )
       lastItemTime    = new Date( new Date( lastTime ).getTime() + (15 * 1000) )
 
       # start new section if user or time has changed
-      if lastUserId isnt item.created_by_id || currentItemTime > lastItemTime
-        lastTime   = item.created_at
-        lastUserId = item.created_by_id
+      if _.isEmpty(newItem) || currentItemTime > lastItemTime
+        lastTime = item.created_at
         if !_.isEmpty(newItem)
           newItems.push newItem
         newItem =
           created_at: item.created_at
           created_by: App.User.find( item.created_by_id )
-          records: []
+          sources: []
+
+      recordsSource = _.findWhere(newItem.sources, { sourceable_id: item.sourceable_id })
+      if !recordsSource
+        recordsSource = {
+          sourceable_id: item.sourceable_id,
+          sourceable_type: @sourceableTypeDisplayName(item.sourceable_type),
+          sourceable_name: item.sourceable_name,
+          users: []
+        }
+        newItem.sources.push(recordsSource)
+
+      recordsUser = _.findWhere(recordsSource.users, { id: item.created_by_id })
+      if !recordsUser
+        recordsUser = {
+          id: item.created_by_id,
+          object: App.User.find(item.created_by_id),
+          records: [],
+        }
+        recordsSource.users.push(recordsUser)
 
       # build content
       content = ''
@@ -79,7 +101,7 @@ class App.GenericHistory extends App.ControllerModal
           when 'escalation_warning'
             __("trigger '%s' was performed because ticket will escalate soon")
 
-        content = App.i18n.translateContent(message, item.value_to)
+        content = App.i18n.translateContent(message, item.sourceable_name)
       else if item.type is 'received_merge'
         ticket = App.Ticket.find( item.id_from )
         ticket_link = if ticket
@@ -118,10 +140,13 @@ class App.GenericHistory extends App.ControllerModal
         else if item.value_from
           content += " &rarr; '-'"
 
-      newItem.records.push content
+      recordsUser.records.push content
 
     if !_.isEmpty(newItem)
       newItems.push newItem
+
+    if @reverse
+      newItems = newItems.reverse()
 
     newItems
 

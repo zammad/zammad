@@ -12,7 +12,8 @@ RSpec.shared_examples 'HasTags' do
         .with(object:        described_class.name,
               o_id:          subject.id,
               item:          item_name,
-              created_by_id: nil)
+              created_by_id: nil,
+              sourceable:    nil)
 
       subject.tag_add(item_name)
     end
@@ -23,7 +24,8 @@ RSpec.shared_examples 'HasTags' do
         .with(object:        described_class.name,
               o_id:          subject.id,
               item:          item_name,
-              created_by_id: 1)
+              created_by_id: 1,
+              sourceable:    nil)
 
       subject.tag_add(item_name, 1)
     end
@@ -38,7 +40,8 @@ RSpec.shared_examples 'HasTags' do
         .with(object:        described_class.name,
               o_id:          subject.id,
               item:          item_name,
-              created_by_id: nil)
+              created_by_id: nil,
+              sourceable:    nil)
 
       subject.tag_remove(item_name)
     end
@@ -49,7 +52,8 @@ RSpec.shared_examples 'HasTags' do
         .with(object:        described_class.name,
               o_id:          subject.id,
               item:          item_name,
-              created_by_id: 1)
+              created_by_id: 1,
+              sourceable:    nil)
 
       subject.tag_remove(item_name, 1)
     end

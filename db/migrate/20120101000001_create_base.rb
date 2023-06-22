@@ -412,6 +412,8 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.references :history_type,                   null: false
       t.references :history_object,                 null: false
       t.references :history_attribute,              null: true
+      t.references :sourceable, polymorphic: true,  null: true
+      t.string  :sourceable_name,      limit: 500,  null: true
       t.integer :o_id,                              null: false
       t.integer :related_o_id,                      null: true
       t.integer :related_history_object_id,         null: true

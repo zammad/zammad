@@ -652,6 +652,7 @@ perform changes on ticket
 
         if new_value
           self[attribute] = new_value
+          history_change_source_attribute(performable, attribute)
           changed = true
           next
         end
@@ -665,11 +666,11 @@ perform changes on ticket
         case value['operator']
         when 'add'
           tags.each do |tag|
-            tag_add(tag, current_user_id || 1)
+            tag_add(tag, current_user_id || 1, sourceable: performable)
           end
         when 'remove'
           tags.each do |tag|
-            tag_remove(tag, current_user_id || 1)
+            tag_remove(tag, current_user_id || 1, sourceable: performable)
           end
         else
           logger.error "Unknown #{attribute} operator #{value['operator']}"
@@ -712,6 +713,8 @@ perform changes on ticket
       end
 
       self[attribute] = value['value']
+      history_change_source_attribute(performable, attribute)
+
       logger.debug { "set #{object_name}.#{attribute} = #{value['value'].inspect} for ticket_id #{id}" }
     end
 
@@ -722,7 +725,7 @@ perform changes on ticket
     perform_article.each do |key, value|
       raise __("Article could not be created. An unsupported key other than 'article.note' was provided.") if key != 'article.note'
 
-      add_trigger_note(id, value, objects, perform_origin)
+      add_trigger_note(id, value, objects, perform_origin, performable)
     end
 
     perform_notification.each do |key, value|
@@ -730,10 +733,10 @@ perform changes on ticket
       # send notification
       case key
       when 'notification.sms'
-        send_sms_notification(value, article, perform_origin)
+        send_sms_notification(value, article, perform_origin, performable)
         next
       when 'notification.email'
-        send_email_notification(value, article, perform_origin)
+        send_email_notification(value, article, perform_origin, performable)
       when 'notification.webhook'
         TriggerWebhookJob.perform_later(performable,
                                         self,
@@ -761,7 +764,7 @@ perform changes on ticket
 
 =end
 
-  def add_trigger_note(ticket_id, note, objects, perform_origin)
+  def add_trigger_note(ticket_id, note, objects, perform_origin, performable)
     rendered_subject = NotificationFactory::Mailer.template(
       templateInline: note[:subject],
       objects:        objects,
@@ -774,7 +777,7 @@ perform changes on ticket
       quote:          true,
     )
 
-    Ticket::Article.create!(
+    article = Ticket::Article.new(
       ticket_id:     ticket_id,
       subject:       rendered_subject,
       content_type:  'text/html',
@@ -789,6 +792,8 @@ perform changes on ticket
       updated_by_id: 1,
       created_by_id: 1,
     )
+    article.history_change_source_attribute(performable, 'created')
+    article.save!
   end
 
 =begin
@@ -1105,7 +1110,7 @@ returns a hex color code
     }
   end
 
-  def send_email_notification(value, article, perform_origin)
+  def send_email_notification(value, article, perform_origin, performable)
     # value['recipient'] was a string in the past (single-select) so we convert it to array if needed
     value_recipient = Array(value['recipient'])
 
@@ -1340,7 +1345,7 @@ returns a hex color code
       preferences[:security] = security
     end
 
-    message = Ticket::Article.create(
+    message = Ticket::Article.new(
       ticket_id:     id,
       to:            recipient_string,
       subject:       subject,
@@ -1353,6 +1358,8 @@ returns a hex color code
       updated_by_id: 1,
       created_by_id: 1,
     )
+    message.history_change_source_attribute(performable, 'created')
+    message.save!
 
     attachments_inline.each do |attachment|
       Store.create!(
@@ -1411,7 +1418,7 @@ returns a hex color code
       .select { |user| user.mobile.present? }
   end
 
-  def send_sms_notification(value, article, perform_origin)
+  def send_sms_notification(value, article, perform_origin, performable)
     sms_recipients = build_sms_recipients_list(value, article)
 
     if sms_recipients.blank?
@@ -1438,7 +1445,7 @@ returns a hex color code
     ).render.html2text.tr(' ', ' ') # convert non-breaking space to simple space
 
     # attributes content_type is not needed for SMS
-    Ticket::Article.create(
+    article = Ticket::Article.new(
       ticket_id:     id,
       subject:       'SMS notification',
       to:            sms_recipients_to,
@@ -1454,6 +1461,8 @@ returns a hex color code
       updated_by_id: 1,
       created_by_id: 1,
     )
+    article.history_change_source_attribute(performable, 'created')
+    article.save!
   end
 
   def trigger_based_notification?(user)

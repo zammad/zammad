@@ -7,6 +7,7 @@ FactoryBot.define do
 
       history_type { 'update' }
       history_attribute { 'state' }
+      related_history_object { nil }
     end
 
     o_id          { o.id }
@@ -22,6 +23,18 @@ FactoryBot.define do
 
     history_object_id do
       History.object_lookup(o.class.name).id
+    end
+
+    related_history_object_id do
+      next if related_history_object.blank?
+
+      History.object_lookup(related_history_object.class.name).id
+    end
+
+    related_o_id do
+      next if related_history_object.blank?
+
+      related_history_object.id
     end
   end
 end

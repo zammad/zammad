@@ -4,13 +4,27 @@
 <hr>
 
 <% for item in @items: %>
-  <span class="user-popover" data-id="<%= item.created_by.id %>"><%= item.created_by.displayName() %></span> -
-  <%- @humanTime(item.created_at) %>
-  <ul>
-    <% for content in item.records: %>
-    <li><%- content %></li>
+  <div><%- @humanTime(item.created_at) %></div>
+  <div class="history-row-list">
+    <% for source in item.sources: %>
+      <% for source_user in source.users: %>
+        <span<% if !source.sourceable_name: %> class="user-popover" data-id="<%= source_user.id %>"<% end %>>
+        <% if source.sourceable_name: %>
+          <%= @T(source.sourceable_type) %>: <%= @T(source.sourceable_name) %>
+        <% else if source_user.id == 1: %>
+          <%- @T('System') %>
+        <% else: %>
+          <%= source_user.object.displayName() %>
+        <% end %>
+        </span>
+        <ul>
+          <% for content in source_user.records: %>
+          <li><%- content %></li>
+          <% end %>
+        </ul>
+     <% end %>
     <% end %>
-  </ul>
+  </div>
   <hr>
 <% end %>
 

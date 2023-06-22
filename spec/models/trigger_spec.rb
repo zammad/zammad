@@ -1382,4 +1382,112 @@ RSpec.describe Trigger, type: :model do
       end
     end
   end
+
+  describe 'Log Trigger and Scheduler in Ticket History #4604' do
+    let(:ticket) { create(:ticket) }
+
+    context 'when title attribute' do
+      it 'does create history entries for the trigger' do
+        ticket && trigger
+        TransactionDispatcher.commit
+        expect(History.last).to have_attributes(
+          o_id:       ticket.id,
+          value_to:   'triggered',
+          sourceable: trigger
+        )
+      end
+    end
+
+    context 'when group associated attribute' do
+      let(:group) { create(:group) }
+
+      let(:perform) do
+        { 'ticket.group_id'=>{ 'value'=> group.id.to_s } }
+      end
+
+      it 'does create history entries with source information' do
+        ticket && trigger
+        TransactionDispatcher.commit
+        expect(History.last).to have_attributes(
+          o_id:       ticket.id,
+          value_to:   group.name,
+          sourceable: trigger
+        )
+      end
+    end
+
+    context 'when internal note article' do
+      let(:perform) do
+        { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'Test body note' } }
+      end
+
+      it 'does create history entries with source information' do
+        ticket && trigger
+        TransactionDispatcher.commit
+        expect(History.last).to have_attributes(
+          o_id:         Ticket::Article.last.id,
+          related_o_id: ticket.id,
+          sourceable:   trigger
+        )
+      end
+    end
+
+    context 'when email notification article' do
+      let(:perform) do
+        {
+          'notification.email' => {
+            'recipient' => 'ticket_customer',
+            'subject'   => 'foo',
+            'body'      => 'some body with &gt;snip&lt;#{article.body_as_html}&gt;/snip&lt;', # rubocop:disable Lint/InterpolationCheck
+          }
+        }
+      end
+
+      it 'does create history entries with source information' do
+        ticket && trigger
+        TransactionDispatcher.commit
+        expect(History.last).to have_attributes(
+          o_id:         Ticket::Article.last.id,
+          related_o_id: ticket.id,
+          sourceable:   trigger
+        )
+      end
+    end
+
+    context 'when tags are added' do
+      let(:tag) { SecureRandom.uuid }
+      let(:perform) do
+        { 'ticket.tags'=>{ 'operator' => 'add', 'value' => tag } }
+      end
+
+      it 'does create history entries with source information' do
+        ticket && trigger
+        TransactionDispatcher.commit
+        expect(History.last).to have_attributes(
+          history_type_id: History::Type.find_by(name: 'added').id,
+          o_id:            ticket.id,
+          sourceable:      trigger,
+          value_to:        tag,
+        )
+      end
+    end
+
+    context 'when tags are removed' do
+      let(:tag) { SecureRandom.uuid }
+      let(:perform) do
+        { 'ticket.tags'=>{ 'operator' => 'remove', 'value' => tag } }
+      end
+
+      it 'does create history entries with source information' do
+        ticket&.tag_add(tag, 1) && trigger
+        TransactionDispatcher.commit
+        expect(History.last).to have_attributes(
+          history_type_id: History::Type.find_by(name: 'removed').id,
+          o_id:            ticket.id,
+          sourceable:      trigger,
+          value_to:        tag,
+        )
+      end
+    end
+  end
 end

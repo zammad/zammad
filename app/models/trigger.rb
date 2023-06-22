@@ -24,7 +24,7 @@ class Trigger < ApplicationModel
   def performed_on(object, activator_type:)
     return if !time_based?
 
-    history_scope(object, activator_type:).create value_to: name
+    history_scope(object, activator_type:).create sourceable_name: name
   end
 
   def performable_on?(object, activator_type:)
@@ -48,12 +48,11 @@ class Trigger < ApplicationModel
   def history_scope(object, activator_type:)
     History
       .where(
-        history_object_id:         History.object_lookup(object.class.name).id,
-        o_id:                      object.id,
-        history_type_id:           History.type_lookup('time_trigger_performed').id,
-        related_history_object_id: History.object_lookup(self.class.name).id,
-        related_o_id:              id,
-        value_from:                activator_type
+        history_object_id: History.object_lookup(object.class.name).id,
+        o_id:              object.id,
+        history_type_id:   History.type_lookup('time_trigger_performed').id,
+        sourceable:        self,
+        value_from:        activator_type
       )
   end
 end

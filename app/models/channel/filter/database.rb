@@ -66,6 +66,7 @@ module Channel::Filter::Database
               next if mail[ 'x-zammad-ticket-tags'.downcase.to_sym ].include?(tag)
 
               mail[ 'x-zammad-ticket-tags'.downcase.to_sym ].push tag
+              mail[:'x-zammad-ticket-tags-source'] = filter
             end
           when 'remove'
             tags.each do |tag|
@@ -73,6 +74,7 @@ module Channel::Filter::Database
 
               tag.strip!
               mail[ 'x-zammad-ticket-tags'.downcase.to_sym ] -= [tag]
+              mail[:'x-zammad-ticket-tags-source'] = filter
             end
           end
           next
@@ -84,6 +86,7 @@ module Channel::Filter::Database
         end
 
         mail[ key.downcase.to_sym ] = meta['value']
+        mail[:"#{key.downcase}-source"] = filter
       end
     end
 

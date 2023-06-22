@@ -7,6 +7,11 @@ module Tag::WritesToTicketHistory
   included do
     after_create  :write_tag_added_to_ticket_history
     after_destroy :write_tag_removed_to_ticket_history
+
+    # used to forward the sourceable to the tag model
+    # to keep track of added and removed tags by
+    # postmaster filters, triggers and schedulers
+    attr_accessor :sourceable
   end
 
   private
@@ -22,6 +27,7 @@ module Tag::WritesToTicketHistory
       history_attribute: 'tag',
       value_to:          tag_item.name,
       created_by_id:     created_by_id,
+      sourceable:        sourceable,
     )
   end
 
@@ -36,6 +42,7 @@ module Tag::WritesToTicketHistory
       history_attribute: 'tag',
       value_to:          tag_item.name,
       created_by_id:     created_by_id,
+      sourceable:        sourceable,
     )
   end
 end

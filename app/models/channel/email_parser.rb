@@ -270,7 +270,7 @@ returns
       # apply tags to ticket
       if mail[:'x-zammad-ticket-tags'].present?
         mail[:'x-zammad-ticket-tags'].each do |tag|
-          ticket.tag_add(tag)
+          ticket.tag_add(tag, sourceable: mail[:'x-zammad-ticket-tags-source'])
         end
       end
 
@@ -480,7 +480,7 @@ returns
             Rails.logger.info "set_attributes_by_x_headers assign #{item_object.class} #{key}=#{assoc_object.id}"
 
             item_object[key] = assoc_object.id
-
+            item_object.history_change_source_attribute(mail[:"#{header}-source"], key)
           end
         end
       end
@@ -490,10 +490,11 @@ returns
       if suffix
         header = "x-zammad-#{header_name}-#{suffix}-#{key}"
       end
-      if mail[header.to_sym]
-        Rails.logger.info "set_attributes_by_x_headers header #{header} found. Assign #{key}=#{mail[header.to_sym]}"
-        item_object[key] = mail[header.to_sym]
-      end
+      next if !mail[header.to_sym]
+
+      Rails.logger.info "set_attributes_by_x_headers header #{header} found. Assign #{key}=#{mail[header.to_sym]}"
+      item_object[key] = mail[header.to_sym]
+      item_object.history_change_source_attribute(mail[:"#{header}-source"], key)
     end
   end
 

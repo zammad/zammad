@@ -6,9 +6,26 @@ module HasHistory
   included do
     attr_accessor :history_changes_last_done
 
-    after_create  :history_create
-    after_update  :history_update
+    after_create  :history_prefill, :history_create, :history_change_source_clear
+    after_update  :history_update, :history_change_source_clear
     after_destroy :history_destroy
+  end
+
+  def history_prefill
+    return if @history_changes_source.blank?
+
+    @history_changes_source.each do |key, value|
+      next if !value.is_a?(PostmasterFilter)
+
+      attribute_name  = history_attribute_name(key)
+      attribute_value = history_attribute_changes(key, [nil, self[key]])
+
+      data = {
+        history_attribute: attribute_name,
+      }.merge(attribute_value)
+
+      history_log('set', created_by_id, data)
+    end
   end
 
 =begin
@@ -59,51 +76,66 @@ log object update history with all updated attributes, if configured - will be e
       next if ignored_attributes.include?(key.to_sym)
 
       # get attribute name
-      attribute_name = key.to_s
-      if attribute_name[-3, 3] == '_id'
-        attribute_name = attribute_name[ 0, attribute_name.length - 3 ]
-      end
+      attribute_name  = history_attribute_name(key)
+      attribute_value = history_attribute_changes(key, value)
 
-      value_id = []
-      value_str = [ value[0], value[1] ]
-      if key.to_s[-3, 3] == '_id'
-        value_id[0] = value[0]
-        value_id[1] = value[1]
+      data = {
+        history_attribute: attribute_name,
+      }.merge(attribute_value)
 
-        if respond_to?(attribute_name) && send(attribute_name)
-          relation_class = send(attribute_name).class
-          if relation_class && value_id[0]
-            relation_model = relation_class.lookup(id: value_id[0])
-            if relation_model
-              if relation_model['name']
-                value_str[0] = relation_model['name']
-              elsif relation_model.respond_to?(:fullname)
-                value_str[0] = relation_model.send(:fullname)
-              end
+      # logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
+      history_log('updated', updated_by_id, data)
+    end
+  end
+
+  def history_attribute_name(key)
+    attribute_name = key.to_s
+    if attribute_name[-3, 3] == '_id'
+      attribute_name = attribute_name[ 0, attribute_name.length - 3 ]
+    end
+    attribute_name
+  end
+
+  def history_attribute_changes(key, value_changes)
+    attribute_name  = history_attribute_name(key)
+    value_id        = []
+    value_str       = [ value_changes[0], value_changes[1] ]
+
+    if key.to_s[-3, 3] == '_id'
+      value_id[0] = value_changes[0]
+      value_id[1] = value_changes[1]
+
+      if respond_to?(attribute_name) && send(attribute_name)
+        relation_class = send(attribute_name).class
+        if relation_class && value_id[0]
+          relation_model = relation_class.lookup(id: value_id[0])
+          if relation_model
+            if relation_model['name']
+              value_str[0] = relation_model['name']
+            elsif relation_model.respond_to?(:fullname)
+              value_str[0] = relation_model.send(:fullname)
             end
           end
-          if relation_class && value_id[1]
-            relation_model = relation_class.lookup(id: value_id[1])
-            if relation_model
-              if relation_model['name']
-                value_str[1] = relation_model['name']
-              elsif relation_model.respond_to?(:fullname)
-                value_str[1] = relation_model.send(:fullname)
-              end
+        end
+        if relation_class && value_id[1]
+          relation_model = relation_class.lookup(id: value_id[1])
+          if relation_model
+            if relation_model['name']
+              value_str[1] = relation_model['name']
+            elsif relation_model.respond_to?(:fullname)
+              value_str[1] = relation_model.send(:fullname)
             end
           end
         end
       end
-      data = {
-        history_attribute: attribute_name,
-        value_from:        value_str[0].to_s,
-        value_to:          value_str[1].to_s,
-        id_from:           value_id[0],
-        id_to:             value_id[1],
-      }
-      # logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
-      history_log('updated', updated_by_id, data)
     end
+
+    {
+      value_from: value_str[0].to_s,
+      value_to:   value_str[1].to_s,
+      id_from:    value_id[0],
+      id_to:      value_id[1],
+    }
   end
 
 =begin
@@ -144,6 +176,8 @@ returns
       updated_at:             updated_at,
       created_at:             updated_at,
     ).merge!(history_log_attributes)
+
+    attributes[:sourceable] = @history_changes_source.try(:delete, attributes[:history_attribute]) || @history_changes_source.try(:delete, "#{attributes[:history_attribute]}_id") || @history_changes_source&.dig(type)
 
     History.add(attributes)
   end
@@ -237,6 +271,21 @@ returns
     @history_relation_object ||= self.class.instance_variable_get(:@history_relation_object) || []
   end
 
+  def history_change_source_clear
+    @history_changes_source = nil
+    @history_changes_source_last = nil
+  end
+
+  def history_change_source_attribute(source, attribute)
+    return if source.blank?
+    return if [Job, Trigger, PostmasterFilter].exclude?(source.class)
+    return if !source.persisted?
+
+    @history_changes_source ||= {}
+    @history_changes_source[attribute] = source
+    @history_changes_source_last       = source
+  end
+
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
 =begin
@@ -269,6 +318,5 @@ end
       @history_relation_object ||= []
       @history_relation_object |= attributes
     end
-
   end
 end

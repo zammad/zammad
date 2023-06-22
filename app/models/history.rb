@@ -9,6 +9,7 @@ class History < ApplicationModel
   belongs_to :history_type,      class_name: 'History::Type', optional: true
   belongs_to :history_object,    class_name: 'History::Object', optional: true
   belongs_to :history_attribute, class_name: 'History::Attribute', optional: true
+  belongs_to :sourceable, polymorphic: true, optional: true
 
 =begin
 
@@ -60,6 +61,8 @@ add a new history entry for an object
       history_type_id:           history_type.id,
       history_object_id:         history_object.id,
       history_attribute_id:      history_attribute_id,
+      sourceable:                data[:sourceable],
+      sourceable_name:           data[:sourceable].try(:name),
       related_history_object_id: related_history_object_id,
       related_o_id:              data[:related_o_id],
       value_from:                data[:value_from],

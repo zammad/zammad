@@ -16,12 +16,13 @@ add an tag to model
 
 =end
 
-  def tag_add(name, current_user_id = nil)
+  def tag_add(name, current_user_id = nil, sourceable: nil)
     Tag.tag_add(
       object:        self.class.to_s,
       o_id:          id,
       item:          name,
       created_by_id: current_user_id,
+      sourceable:    sourceable,
     )
   end
 
@@ -34,12 +35,13 @@ remove an tag of model
 
 =end
 
-  def tag_remove(name, current_user_id = nil)
+  def tag_remove(name, current_user_id = nil, sourceable: nil)
     Tag.tag_remove(
       object:        self.class.to_s,
       o_id:          id,
       item:          name,
       created_by_id: current_user_id,
+      sourceable:    sourceable,
     )
   end
 
