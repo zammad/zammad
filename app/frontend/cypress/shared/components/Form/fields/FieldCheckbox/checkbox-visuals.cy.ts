@@ -48,5 +48,10 @@ describe('testing visuals for "FieldCheckbox"', () => {
         checkFormMatchesSnapshot()
       })
     })
+
+    it(`renders hidden checkbox`, () => {
+      mountFormField('checkbox', { label: 'Checkbox', labelSrOnly: true })
+      checkFormMatchesSnapshot()
+    })
   })
 })

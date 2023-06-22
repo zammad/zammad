@@ -74,5 +74,15 @@ describe('testing visuals for "FieldInput"', () => {
       mountFormField(type, { label: type, disabled: true })
       checkFormMatchesSnapshot({ type })
     })
+
+    it(`renders hidden ${type}`, () => {
+      mountFormField(type, { label: type, labelSrOnly: true })
+      checkFormMatchesSnapshot({ type })
+      cy.get('input')
+        .type(input)
+        .then(() => {
+          checkFormMatchesSnapshot({ subTitle: 'filled', type })
+        })
+    })
   })
 })

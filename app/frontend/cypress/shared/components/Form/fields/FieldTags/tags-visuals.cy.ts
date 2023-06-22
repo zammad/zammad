@@ -73,4 +73,18 @@ describe('testing visuals for "FieldTags"', () => {
     })
     checkFormMatchesSnapshot()
   })
+
+  it(`renders hidden tags`, () => {
+    mountFormField('tags', { label: 'tags', labelSrOnly: true })
+    checkFormMatchesSnapshot()
+  })
+
+  it(`renders selected hidden tags`, () => {
+    mountFormField('tags', {
+      label: 'tags',
+      value: ['some', 'thing'],
+      labelSrOnly: true,
+    })
+    checkFormMatchesSnapshot()
+  })
 })

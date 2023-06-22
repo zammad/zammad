@@ -46,4 +46,9 @@ describe('testing visuals for "FieldToggle"', () => {
     mountFormField('toggle', { label: 'Toggle', variants, required: true })
     checkFormMatchesSnapshot()
   })
+
+  it(`renders hidden toggle`, () => {
+    mountFormField('toggle', { label: 'Toggle', labelSrOnly: true })
+    checkFormMatchesSnapshot()
+  })
 })

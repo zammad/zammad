@@ -184,4 +184,19 @@ describe('testing visuals for "FieldTreeSelect"', () => {
     })
     checkFormMatchesSnapshot()
   })
+
+  it(`renders hidden treeselect`, () => {
+    mountFormField('treeselect', { label: 'treeselect', labelSrOnly: true })
+    checkFormMatchesSnapshot()
+  })
+
+  it(`renders selected hidden treeselect`, () => {
+    mountFormField('treeselect', {
+      label: 'treeselect',
+      value: 1,
+      options,
+      labelSrOnly: true,
+    })
+    checkFormMatchesSnapshot()
+  })
 })

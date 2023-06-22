@@ -167,4 +167,19 @@ describe('testing visuals for "FieldSelect"', () => {
     })
     checkFormMatchesSnapshot()
   })
+
+  it(`renders hidden select`, () => {
+    mountFormField('select', { label: 'select', labelSrOnly: true })
+    checkFormMatchesSnapshot()
+  })
+
+  it(`renders selected hidden select`, () => {
+    mountFormField('select', {
+      label: 'select',
+      value: 0,
+      options,
+      labelSrOnly: true,
+    })
+    checkFormMatchesSnapshot()
+  })
 })
