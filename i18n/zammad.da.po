@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-06-19 08:52+0000\n"
+"PO-Revision-Date: 2023-06-22 03:05+0000\n"
 "Last-Translator: holstix <holstix@live.dk>\n"
 "Language-Team: Danish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/da/>\n"
@@ -375,7 +375,7 @@ msgstr "%s oprettet organisation |%s|"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s created role |%s|"
-msgstr "%s oprettet rolle |%s|"
+msgstr "%s oprettede rolle |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
@@ -506,12 +506,12 @@ msgstr "%s tickets fundet"
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s updated article for |%s|"
-msgstr "%s opdateret artikel for |%s|"
+msgstr "%s opdaterede artikel for |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s updated data privacy task to delete user ID |%s|"
-msgstr "%s opdateret data-oprydningsopgave for sletning af bruger ID |%s|"
+msgstr "%s opdaterede data-oprydningsopgave for sletning af bruger ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
@@ -2432,7 +2432,7 @@ msgstr "Kanal - Web"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
-msgstr "Kanal Distribution"
+msgstr "Kanal Fordeling"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Channels"
@@ -2651,7 +2651,6 @@ msgstr "Klon"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "Close"
 msgstr "Luk"
 
@@ -7403,7 +7402,7 @@ msgstr "Administrer notifikationsindstillinger"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Management"
-msgstr "Ledelse"
+msgstr "Administration"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Manually open chat"
@@ -8495,7 +8494,6 @@ msgid "OAuth2 token is expired!"
 msgstr "OAuth2 token er udløbet!"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "OK"
 msgstr "OK"
 
@@ -9448,11 +9446,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
 msgid "Recently Viewed Tickets"
-msgstr "Nyligt Sete Sager"
+msgstr "Senest Sete Sager"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee
 msgid "Recently viewed"
-msgstr ""
+msgstr "Senest set"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
@@ -9492,7 +9490,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco
 msgid "Related Answers"
-msgstr ""
+msgstr "Relaterede Svar"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Reload application"
@@ -9583,7 +9581,7 @@ msgstr "Genåbnet"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "Reopening rate"
-msgstr "Genåbning rate"
+msgstr "Genåbningsprocent"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -9625,12 +9623,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "Report Profile"
-msgstr "Rapportér profil"
+msgstr "Rapport Profil"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 #: db/seeds/permissions.rb
 msgid "Report Profiles"
-msgstr "Rapportér Profiler"
+msgstr "Rapport Profiler"
 
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/views/report/main.jst.eco
@@ -10056,11 +10054,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee db/seeds/permissions.rb
 msgid "Scheduler"
-msgstr "Planlægger"
+msgstr "Opgavestyring"
 
 #: app/assets/javascripts/app/controllers/job.coffee
 msgid "Schedulers"
-msgstr "Planlæggere"
+msgstr "Opgavestyringer"
 
 #: app/assets/javascripts/app/controllers/job.coffee
 msgid "Schedulers are …"
@@ -11038,10 +11036,8 @@ msgid "Subscribed Tickets"
 msgstr "Fulgte Sager"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#, fuzzy
-#| msgid "My assigned Tickets"
 msgid "Subscribers"
-msgstr "Mine tildelte sager"
+msgstr "Følgere"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
@@ -14015,7 +14011,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "With templates you can pre-fill ticket attributes."
-msgstr ""
+msgstr "Med skabeloner kan du forududfylde sagsoplysninger."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -14564,7 +14560,7 @@ msgstr "asignar tickets"
 
 #: app/assets/javascripts/app/views/generic/datetime.jst.eco
 msgid "at"
-msgstr "på"
+msgstr "kl"
 
 #: app/models/object_manager/attribute.rb
 #, fuzzy
@@ -14692,13 +14688,11 @@ msgstr "Indeholder ikke en"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco
 msgid "created"
-msgstr "creado"
+msgstr "oprettet"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
-#, fuzzy
-#| msgid "created"
 msgid "created %s"
-msgstr "creado"
+msgstr "oprettet %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -15072,7 +15066,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco
-#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
 msgid "inactive"
 msgstr "inaktiv"
 

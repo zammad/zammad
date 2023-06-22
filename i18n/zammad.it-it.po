@@ -1301,13 +1301,13 @@ msgstr ""
 "procedere:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}</a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Questo collegamento porta a una pagina da cui potrai accedere.</div>\n"
 "<br>\n"
-"<div>Se non hai necessità di accedere, puoi ignorare questo messaggio.</div>"
-"\n"
+"<div>Se non hai necessità di accedere, puoi ignorare questo messaggio.</"
+"div>\n"
 "<br>\n"
 "<div>Il team #{config.product_name}</div>\n"
 
@@ -2809,7 +2809,6 @@ msgstr "Clone"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "Close"
 msgstr "Chiudi"
 
@@ -2981,12 +2980,12 @@ msgstr ""
 "\n"
 "<div>Buongiorno #{user.firstname},</div>\n"
 "<br>\n"
-"<div>confermare l'indirizzo email per completare la registrazione su #{config"
-".product_name}. Cliccare sul link riportato sotto.</div>\n"
+"<div>confermare l'indirizzo email per completare la registrazione su "
+"#{config.product_name}. Cliccare sul link riportato sotto.</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}</a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Sempre cordiali saluti</div>\n"
 "<br>\n"
@@ -7329,9 +7328,9 @@ msgstr ""
 "invitarti a collegarti a #{config.product_name} - la nostra piattaforma di "
 "supporto utenti.</div>\n"
 "<br>\n"
-"<div>Clicca <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.token}\">qui</a> e imposta la tua "
-"password.</div>\n"
+"<div>Clicca <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.token}\">qui</a> e imposta la tua password.</"
+"div>\n"
 "<br>\n"
 "<div>Grazie,</div>\n"
 "<br>\n"
@@ -9002,7 +9001,6 @@ msgid "OAuth2 token is expired!"
 msgstr "Il token OAuth2 è scaduto!"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "OK"
 msgstr "OK"
 
@@ -15774,7 +15772,6 @@ msgstr "in corso"
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco
-#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
 msgid "inactive"
 msgstr "disattivato"
 

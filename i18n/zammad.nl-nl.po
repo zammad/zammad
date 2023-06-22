@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2023-05-24 11:56+0000\n"
 "Last-Translator: JPB <jeffreypeerboom@eijsden-margraten.nl>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
-"zammad-stable/nl/>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
+"stable/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2788,7 +2788,6 @@ msgstr "Dupliceer"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "Close"
 msgstr "Sluit"
 
@@ -8963,7 +8962,6 @@ msgid "OAuth2 token is expired!"
 msgstr "OAuth2-token is verlopen!"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "OK"
 msgstr "OK"
 
@@ -15724,7 +15722,6 @@ msgstr "In behandeling"
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco
-#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
 msgid "inactive"
 msgstr "inactief"
 

@@ -2896,7 +2896,6 @@ msgstr "Cloner"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "Close"
 msgstr "Fermer"
 
@@ -9265,7 +9264,6 @@ msgid "OAuth2 token is expired!"
 msgstr "Le token OAuth2 a expiré !"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "OK"
 msgstr "OK"
 
@@ -14186,8 +14184,8 @@ msgid ""
 msgstr ""
 "Les déclencheurs activés par des actions sont exécutés à chaque fois qu'un "
 "ticket est créé ou mis à jour, tandis que les déclencheurs activés par des "
-"événements temporels sont exécutés quand un temps spécifique est atteint ("
-"par exemple temps d'attente, escalade)."
+"événements temporels sont exécutés quand un temps spécifique est atteint "
+"(par exemple temps d'attente, escalade)."
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Triggers are …"
@@ -16597,7 +16595,6 @@ msgstr "en cours"
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco
-#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
 msgid "inactive"
 msgstr "inactif"
 

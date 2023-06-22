@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2023-06-12 12:18+0000\n"
 "Last-Translator: SUMONCHAI WONGPITAK <sumonchai@gmail.com>\n"
-"Language-Team: Thai <https://translations.zammad.org/projects/zammad/"
-"zammad-stable/th/>\n"
+"Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
+"stable/th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1293,16 +1293,15 @@ msgstr ""
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>เราได้รับคําขอสําหรับผู้ดูแลระบบสําหรับบัญชี #{config.product_name} "
-"ของคุณ <b>#{user.login}</b>.</div><br><div>\n"
+"<div>เราได้รับคําขอสําหรับผู้ดูแลระบบสําหรับบัญชี #{config.product_name} ของคุณ <b>#{user."
+"login}</b>.</div><br><div>\n"
 "\n"
-"โปรดคลิกที่ลิงค์ด้านล่าง (หรือคัดลอกและวาง URL ลงในเบราว์เซอร์ของคุณ) "
-"เพื่อดําเนินการต่อ: </div>\n"
+"โปรดคลิกที่ลิงค์ด้านล่าง (หรือคัดลอกและวาง URL ลงในเบราว์เซอร์ของคุณ) เพื่อดําเนินการต่อ: </"
+"div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</a>"
-"</div><br><div>ลิงก์นี้จะนําคุณไปยังหน้าเว็บที่คุณสามารถเข้าสู่ระบบได้</div>"
-"\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
+"a></div><br><div>ลิงก์นี้จะนําคุณไปยังหน้าเว็บที่คุณสามารถเข้าสู่ระบบได้</div>\n"
 "<br><div>หากคุณ\n"
 "\n"
 "\n"
@@ -1506,8 +1505,8 @@ msgstr ""
 "div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"ตั๋วอีกใบถูกรวมเข้ากับตั๋ว (#{ticket.title}) โดย \"<b>#{current_user."
-"longname}</b>\"\n"
+"ตั๋วอีกใบถูกรวมเข้ากับตั๋ว (#{ticket.title}) โดย \"<b>#{current_user.longname}</b>"
+"\"\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -2826,7 +2825,6 @@ msgstr "ลอกแบบ"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "Close"
 msgstr "ปิด"
 
@@ -8873,7 +8871,6 @@ msgid "OAuth2 token is expired!"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "OK"
 msgstr ""
 
@@ -15549,7 +15546,6 @@ msgstr "อยู่ในระหว่างการดำเนินงา
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco
-#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
 msgid "inactive"
 msgstr "ไม่ได้ใช้งาน"
 
