@@ -86,6 +86,11 @@ class User extends App.ControllerSubContent
         App.Group.fetch()
         @renderResult(user_ids)
 
+      hideOrganizationHelp = (params, attribute, attributes, classname, form, ui) ->
+        return if App.Config.get('ticket_organization_reassignment')
+
+        form.find('[name="organization_id"]').closest('.form-group').find('.help-message').addClass('hide')
+
       item.secondaryOrganizations(0, 1000, =>
         new App.ControllerGenericEdit(
           id: item.id
@@ -98,6 +103,7 @@ class User extends App.ControllerSubContent
           genericObject: 'User'
           callback: rerender
           container: @el.closest('.content')
+          handlers: [hideOrganizationHelp]
         )
       )
 

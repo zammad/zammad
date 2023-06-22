@@ -12,6 +12,11 @@ class App.UserProfileActionRow extends App.ControllerObserverActionRow
     )
 
   editUser: (user) =>
+    hideOrganizationHelp = (params, attribute, attributes, classname, form, ui) ->
+      return if App.Config.get('ticket_organization_reassignment')
+
+      form.find('[name="organization_id"]').closest('.form-group').find('.help-message').addClass('hide')
+
     user.secondaryOrganizations(0, 1000, =>
       new App.ControllerGenericEdit(
         id: user.id
@@ -22,6 +27,7 @@ class App.UserProfileActionRow extends App.ControllerObserverActionRow
           object: __('User')
           objects: __('Users')
         container: @el.closest('.content')
+        handlers: [hideOrganizationHelp]
       )
     )
 

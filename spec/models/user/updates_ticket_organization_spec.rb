@@ -16,23 +16,32 @@ RSpec.describe User::UpdatesTicketOrganization, type: :model do
 
   context 'when #customer.organization is updated' do
     context 'when set to nil' do
-      it 'automatically updates to #customer’s new value' do
+      it "automatically updates to #customer's new value" do
         ticket.save
 
-        expect { customer.update(organization: nil) }
-          .to change { ticket.reload.organization }.to(nil)
+        expect { customer.update(organization: nil) }.to change { ticket.reload.organization }.to(nil)
       end
     end
 
     context 'when #customer.organization is updated to a different organization' do
-      let(:old_org) { customer.organization }
-      let(:new_org) { create(:organization) }
+      let!(:old_org) { customer.organization }
+      let!(:new_org) { create(:organization) }
 
-      it 'automatically updates to #customer’s new value' do
+      context "when 'ticket_organization_reassignment' is set to false" do
+        before { Setting.set('ticket_organization_reassignment', false) }
+
+        it "does not automatically update to #customer's new value" do
+          ticket.save
+          customer.update!(organization: new_org)
+
+          expect(ticket.reload.organization).to eq(old_org)
+        end
+      end
+
+      it "automatically updates to #customer's new value" do
         ticket.save
 
-        expect { customer.update(organization: new_org) }
-          .to change { ticket.reload.organization }.to(new_org)
+        expect { customer.update(organization: new_org) }.to change { ticket.reload.organization }.to(new_org)
       end
 
       it 'has made all changes with user id 1' do

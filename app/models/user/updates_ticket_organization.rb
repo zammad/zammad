@@ -13,6 +13,8 @@ module User::UpdatesTicketOrganization
 
   def user_update_ticket_organization
 
+    return true if !Setting.get('ticket_organization_reassignment')
+
     # check if organization has changed
     return true if !saved_change_to_attribute?('organization_id')
 

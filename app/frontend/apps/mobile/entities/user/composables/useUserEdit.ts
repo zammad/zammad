@@ -9,6 +9,7 @@ import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
 } from '#shared/graphql/types.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 
 export const useUserEdit = () => {
@@ -48,12 +49,37 @@ export const useUserEdit = () => {
     },
   }
 
+  const application = useApplicationStore()
+
   const openEditUserDialog = async (user: ConfidentTake<UserQuery, 'user'>) => {
     dialog.openDialog({
       object: user,
       mutation: useUserUpdateMutation,
       schema,
       formChangeFields,
+      onChangedField: (fieldName, newValue) => {
+        if (
+          fieldName === 'organization_id' &&
+          application.config.ticket_organization_reassignment
+        ) {
+          formChangeFields.organization_id ||= {}
+
+          let msg = __(
+            "Attention! Changing the organization will update the user's most recent tickets to the new organization.",
+          )
+          let helpClass = 'text-yellow'
+
+          if (user.organization?.internalId === newValue) {
+            msg = ''
+            helpClass = ''
+          }
+
+          formChangeFields.organization_id.help = msg
+
+          // TODO: helpClass is not reactive right now, should be fine with a future FormKit version
+          formChangeFields.organization_id.helpClass = helpClass
+        }
+      },
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserEdit,
       errorNotificationMessage: __('User could not be updated.'),
     })

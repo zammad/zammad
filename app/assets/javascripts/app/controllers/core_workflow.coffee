@@ -29,7 +29,6 @@ class CoreWorkflow extends App.ControllerSubContent
       container: @el.closest('.content')
       veryLarge: true
       handlers: [
-        App.FormHandlerCoreWorkflow.run
         App.FormHandlerAdminCoreWorkflow.run
       ]
     )

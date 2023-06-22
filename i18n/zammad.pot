@@ -1444,6 +1444,11 @@ msgstr ""
 msgid "Attendees"
 msgstr ""
 
+#: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
+msgid "Attention! Changing the organization will update the user's most recent tickets to the new organization."
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "Attention: These will also be your login and password after the import is completed."
 msgstr ""
@@ -2692,6 +2697,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Controls if by updating the primary organization of a user, the 100 most recent existing tickets for this user are updated as well."
 msgstr ""
 
 #: lib/sessions/event/chat_transfer.rb
@@ -7800,6 +7809,10 @@ msgstr ""
 msgid "No template created yet."
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "No tickets are updated."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "No token!"
 msgstr ""
@@ -11013,6 +11026,10 @@ msgstr ""
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "The most recent tickets are updated."
+msgstr ""
+
 #: app/models/ticket/number.rb
 msgid "The new ticket number could not be generated."
 msgstr ""
@@ -11820,6 +11837,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Ticket Number ignore system_id"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Organization Reassignment"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/routes.ts

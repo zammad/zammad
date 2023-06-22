@@ -5556,3 +5556,31 @@ Setting.create_if_not_exists(
   state:       [2],
   frontend:    true
 )
+
+Setting.create_if_not_exists(
+  title:       __('Ticket Organization Reassignment'),
+  name:        'ticket_organization_reassignment',
+  area:        'Ticket::Base',
+  description: __('Controls if by updating the primary organization of a user, the 100 most recent existing tickets for this user are updated as well.'),
+  options:     {
+    form: [
+      {
+        display:   '',
+        null:      false,
+        name:      'ticket_organization_reassignment',
+        tag:       'boolean',
+        options:   {
+          true  => __('The most recent tickets are updated.'),
+          false => __('No tickets are updated.'),
+        },
+        translate: true,
+      },
+    ],
+  },
+  state:       true,
+  preferences: {
+    prio:       4000,
+    permission: ['admin.ticket'],
+  },
+  frontend:    true
+)

@@ -11,6 +11,8 @@ class App.ControllerForm extends App.Controller
 
     if !@handlers
       @handlers = [ App.FormHandlerCoreWorkflow.run ]
+    else
+      @handlers.unshift App.FormHandlerCoreWorkflow.run
 
     if @handlersConfig
       for key, value of @handlersConfig
