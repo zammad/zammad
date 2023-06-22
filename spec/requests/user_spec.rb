@@ -1676,6 +1676,34 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
     end
   end
 
+  describe 'PUT /api/v1/users/{id}', authenticated_as: :admin do
+    let(:admin) { create(:admin) }
+    let(:agent) { create(:agent) }
+
+    context 'with secondary organizations' do
+      let(:primary_org) { create(:organization) }
+      let(:secondary_org) { create(:organization) }
+
+      before { put "/api/v1/users/#{agent.id}", params: params, as: :json }
+
+      context 'with primary organization' do
+        let(:params) { { organization_id: primary_org.id, organization_ids: [secondary_org.id] } }
+
+        it 'succeeds' do
+          expect(response).to have_http_status(:success)
+        end
+      end
+
+      context 'without primary organization' do
+        let(:params) { { organization_ids: [secondary_org.id] } }
+
+        it 'fails with validation error' do
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+    end
+  end
+
   describe 'PUT /api/v1/users/unlock/{id}' do
     let(:admin) { create(:admin) }
     let(:agent)    { create(:agent) }

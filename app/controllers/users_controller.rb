@@ -121,7 +121,6 @@ class UsersController < ApplicationController
       clean_params = User.association_name_to_id_convert(params)
       clean_params = User.param_cleanup(clean_params, true)
       clean_params[:screen] = 'edit'
-      user.update!(clean_params)
 
       # presence and permissions were checked via `check_attributes_by_current_user_permission`
       privileged_attributes = params.slice(:role_ids, :roles, :group_ids, :groups, :organization_ids, :organizations)
@@ -129,6 +128,8 @@ class UsersController < ApplicationController
       if privileged_attributes.present?
         user.associations_from_param(privileged_attributes)
       end
+
+      user.update!(clean_params)
     end
 
     if response_expand?
