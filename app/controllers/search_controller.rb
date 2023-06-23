@@ -17,16 +17,16 @@ class SearchController < ApplicationController
     # convert objects string into array of class names
     # e.g. user-ticket-another_object = %w( User Ticket AnotherObject )
     objects = if params[:objects]
-                params[:objects].split('-').map(&:camelize)
+                params[:objects].split('-').map(&:camelize).map(&:constantize)
               else
-                Setting.get('models_searchable')
+                Models.searchable
               end
 
     assets = {}
     result = []
     Service::Search.new(current_user: current_user).execute(
       term:    query,
-      objects: objects.map(&:constantize),
+      objects: objects,
       options: { limit: limit, ids: params[:ids] },
     ).each do |item|
       assets = item.assets(assets)

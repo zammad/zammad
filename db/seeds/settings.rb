@@ -3353,19 +3353,6 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Defines searchable models.'),
-  name:        'models_searchable',
-  area:        'Models::Base',
-  description: __('Defines the searchable models.'),
-  options:     {},
-  state:       Models.searchable.map(&:to_s),
-  preferences: {
-    authentication: true,
-  },
-  frontend:    true,
-)
-
-Setting.create_if_not_exists(
   title:       __('Default Screen'),
   name:        'default_controller',
   area:        'Core',

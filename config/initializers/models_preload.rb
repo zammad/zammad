@@ -1,12 +1,10 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-# update settings for searchable models
-
+# Ensure all models are preloaded, as Zammad uses reflections
+#   which rely on all model classes being present.
 Rails.application.reloader.to_prepare do
   begin
-    next if !Setting.exists?(name: 'models_searchable')
-
-    Setting.set('models_searchable', Models.searchable.map(&:to_s))
+    Models.all
   rescue ActiveRecord::StatementInvalid
     nil
   end

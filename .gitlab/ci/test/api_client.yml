@@ -21,6 +21,7 @@ api_client:php:
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_URL: "http://localhost:3000"
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_USERNAME: "admin@example.com"
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_PASSWORD: "test"
+    ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_DEBUG: 0
   script:
     - RAILS_ENV=test bundle exec rake db:create
     - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"

@@ -303,6 +303,9 @@ class SessionsController < ApplicationController
     # https://github.com/zammad/zammad/issues/4263
     config['auth_saml_display_name'] = Setting.get('auth_saml_credentials')[:display_name]
 
+    # Announce searchable models to the front end.
+    config['models_searchable'] = Models.searchable.map(&:to_s)
+
     # remember if we can switch back to user
     if session[:switched_from_user_id]
       config['switch_back_to_possible'] = true

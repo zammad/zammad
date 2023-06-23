@@ -3614,10 +3614,6 @@ msgid "Defines processing timeout for the html sanitizer."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines searchable models."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines sync transaction backend."
 msgstr ""
 
@@ -3759,10 +3755,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the random application secret."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines the searchable models."
 msgstr ""
 
 #: db/seeds/settings.rb
