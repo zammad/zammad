@@ -126,6 +126,8 @@ returns
         channels: channels
       }
     end
+
+    # 'no' actually means 'no criteria' or 'for all tickets'.
     return if !data['criteria']['no']
 
     {
