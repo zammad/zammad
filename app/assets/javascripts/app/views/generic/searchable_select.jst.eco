@@ -38,7 +38,7 @@
     <span class="searchableSelect-autocomplete-invisible js-autocomplete-invisible"></span>
     <span class="searchableSelect-autocomplete-visible js-autocomplete-visible"></span>
   </div>
-  <% if !@attribute.ajax: %><%- @Icon('arrow-down', 'dropdown-arrow') %><% end %>
+  <% if !@attribute.ajax or @attribute.showArrowIcon: %><%- @Icon('arrow-down', 'dropdown-arrow') %><% end %>
   <div class="small loading icon"></div>
 </div>
 <div class="dropdown-menu dropdown-menu-left dropdown-menu--has-submenu js-dropdown">

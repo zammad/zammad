@@ -293,7 +293,11 @@ class App.SearchableSelect extends Spine.Controller
     @visiblePart.text('')
     @invisiblePart.text('')
 
-  selectValue: (key, value) =>
+  selectValue: (key, value, loadData = false) =>
+    if loadData
+      @input.val ''
+      @onInput(null, false)
+
     @input.val value
     @shadowInput.val key
 
@@ -493,8 +497,8 @@ class App.SearchableSelect extends Spine.Controller
     @shadowInput.trigger('change')
     token.remove()
 
-  onInput: (event) =>
-    @toggle() if not @isOpen
+  onInput: (event, doToggle = true) =>
+    @toggle() if not @isOpen && doToggle
 
     @query = @input.val()
     @filterByQuery @query
