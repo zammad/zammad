@@ -46,6 +46,7 @@ export default defineConfig(({ mode, command }) => {
     plugins.push(RubyPlugin())
     plugins.push(
       ...VitePWA({
+        disable: isTesting || !!process.env.VITE_TEST_MODE,
         // should be generated on ruby side
         manifest: false,
         registerType: 'prompt',
