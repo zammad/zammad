@@ -9,16 +9,17 @@ class App.UiElement.autocompletion_ajax_customer_organization
 
     # selectable search
     searchableAjaxSelectObject = new App.CustomerOrganizationAjaxSelect(
-      delegate:      form
+      delegate:        form
       attribute:
-        value:       params[attribute.name] || attribute.value
-        valueName:   valueName
-        name:        attribute.name
-        id:          params.organization_id || attribute.id
-        placeholder: App.i18n.translateInline('Search…')
-        limit:       40
-        relation:    attribute.relation
-        ajax:        true
-        multiple:    attribute.multiple
+        value:         params[attribute.name] || attribute.value
+        valueName:     valueName
+        name:          attribute.name
+        id:            params.organization_id || attribute.id
+        placeholder:   App.i18n.translateInline('Search…')
+        limit:         40
+        relation:      attribute.relation
+        ajax:          true
+        multiple:      attribute.multiple
+        showArrowIcon: true
     )
     searchableAjaxSelectObject.element()

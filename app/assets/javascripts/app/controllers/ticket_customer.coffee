@@ -10,11 +10,11 @@ class App.TicketCustomer extends App.ControllerModal
       organization_id: { name: 'organization_id', display: __('Organization'), tag: 'autocompletion_ajax_customer_organization', multiple: false, null: false, relation: 'Organization', autocapitalize: false, translate: false },
     }
     @controller = new App.ControllerForm(
-      model: App.Ticket
+      model:           App.Ticket
       mixedAttributes: configure_attributes
-      screen: 'edit'
-      autofocus:      true,
-      handlersConfig: [App.TicketZoomFormHandlerMultiOrganization],
+      screen:          'edit'
+      autofocus:       true,
+      handlersConfig:  [App.TicketZoomFormHandlerMultiOrganization],
     )
     @controller.form
 

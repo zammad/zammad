@@ -22,6 +22,6 @@ class App.TicketZoomFormHandlerMultiOrganization
       if customer.organization_id
         customer_organization = App.Organization.find(customer.organization_id)
         if customer_organization
-          organization_id.get(0).selectValue(customer_organization.id, customer_organization.name)
+          organization_id.get(0).selectValue(customer_organization.id, customer_organization.name, true)
 
 App.Config.set('200-MultiOrganization', App.TicketZoomFormHandlerMultiOrganization, 'TicketCreateFormHandler')
