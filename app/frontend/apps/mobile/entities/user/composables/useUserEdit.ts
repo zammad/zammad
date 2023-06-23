@@ -31,27 +31,27 @@ export const useUserEdit = () => {
     { showDirtyMark: true },
   )
 
-  const formChangeFields: Record<string, Partial<FormSchemaField>> = {
-    note: {
-      props: {
-        meta: {
-          mentionText: {
-            disabled: true,
-          },
-          mentionKnowledgeBase: {
-            disabled: true,
-          },
-          mentionUser: {
-            disabled: true,
-          },
-        },
-      },
-    },
-  }
-
   const application = useApplicationStore()
 
   const openEditUserDialog = async (user: ConfidentTake<UserQuery, 'user'>) => {
+    const formChangeFields: Record<string, Partial<FormSchemaField>> = {
+      note: {
+        props: {
+          meta: {
+            mentionText: {
+              disabled: true,
+            },
+            mentionKnowledgeBase: {
+              disabled: true,
+            },
+            mentionUser: {
+              disabled: true,
+            },
+          },
+        },
+      },
+    }
+
     dialog.openDialog({
       object: user,
       mutation: useUserUpdateMutation,
