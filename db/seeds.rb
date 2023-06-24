@@ -8,6 +8,11 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
 
+if User.any?
+  warn 'Database already has data, skipping seed.'
+  return
+end
+
 # clear old caches to start from scratch
 Rails.cache.clear
 
