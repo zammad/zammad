@@ -106,5 +106,11 @@ RSpec.describe EmailAddressValidation do
 
       include_examples 'email address validity', valid: false, check_mx: false
     end
+
+    describe 'which starts with +' do
+      let(:email_address) { '+123@example.org' }
+
+      include_examples 'email address validity', valid: true, check_mx: false
+    end
   end
 end
