@@ -24,6 +24,8 @@ export interface TicketInformation {
   showArticleReplyDialog: () => void
   liveUserList?: Ref<TicketLiveAppUser[]>
   refetchingStatus: Ref<boolean>
+  newArticlesIds: Set<string>
+  scrollDownState: Ref<boolean>
   scrolledToBottom: Ref<boolean>
   updateRefetchingStatus: (newStatus: boolean) => void
 }

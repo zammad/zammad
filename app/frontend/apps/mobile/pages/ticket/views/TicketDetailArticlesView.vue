@@ -6,8 +6,10 @@ import { noop } from 'lodash-es'
 import { useHeader } from '#mobile/composables/useHeader.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import {
+  convertToGraphQLId,
+  getIdFromGraphQLId,
+} from '#shared/graphql/utils.ts'
 import type {
   PageInfo,
   TicketArticleUpdatesSubscription,
@@ -17,10 +19,11 @@ import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import { edgesToArray } from '#shared/utils/helpers.ts'
 import { useRoute } from 'vue-router'
+import { useSessionStore } from '#shared/stores/session.ts'
+import { useEventListener } from '@vueuse/core'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
-import TicketReplyButton from '../components/TicketDetailView/TicketDetailViewReplyButton.vue'
 import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api.ts'
 import { useTicketInformation } from '../composable/useTicketInformation.ts'
 import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api.ts'
@@ -87,6 +90,60 @@ const adjustPageInfoAfterDeletion = (nextEndCursorEdge?: Maybe<string>) => {
   return newPageInfo
 }
 
+const {
+  ticket,
+  liveUserList,
+  ticketQuery,
+  scrolledToBottom,
+  newArticlesIds,
+  scrollDownState,
+} = useTicketInformation()
+
+const scrollElement = (element: Element) => {
+  scrolledToBottom.value = true
+  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  return true
+}
+
+const session = useSessionStore()
+
+const scheduleMyArticleScroll = async (
+  articleInternalId: number,
+  originalTime = new Date().getTime(),
+): Promise<void> => {
+  // try to scroll for 5 seconds
+  const difference = new Date().getTime() - originalTime
+  if (difference >= 5000 || typeof document === 'undefined') return
+
+  const element = document.querySelector(
+    `#article-${articleInternalId}`,
+  ) as HTMLDivElement | null
+
+  if (!element) {
+    return new Promise((r) => requestAnimationFrame(r)).then(() =>
+      scheduleMyArticleScroll(articleInternalId, originalTime),
+    )
+  }
+
+  if (element.dataset.createdBy === session.userId) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
+
+const isAtTheBottom = () => {
+  const scrollHeight =
+    document.querySelector('main')?.scrollHeight || window.innerHeight
+  const scrolledHeight = window.scrollY + window.innerHeight
+  const scrollToBottom = scrollHeight - scrolledHeight
+  return scrollToBottom < 20
+}
+
+const hasScroll = () => {
+  const scrollHeight =
+    document.querySelector('main')?.scrollHeight || window.innerHeight
+  return scrollHeight > window.innerHeight
+}
+
 articlesQuery.subscribeToMore<
   TicketArticleUpdatesSubscriptionVariables,
   TicketArticleUpdatesSubscription
@@ -146,6 +203,10 @@ articlesQuery.subscribeToMore<
     }
 
     if (updates.addArticle) {
+      scrollDownState.value = hasScroll()
+      newArticlesIds.add(updates.addArticle.id)
+      scheduleMyArticleScroll(getIdFromGraphQLId(updates.addArticle.id))
+
       const needRefetch =
         !previousArticlesEdges[previousArticlesEdgesCount - 1] ||
         updates.addArticle.createdAt <=
@@ -166,10 +227,6 @@ articlesQuery.subscribeToMore<
     return previous
   },
 }))
-
-const { ticket, liveUserList, ticketQuery, scrolledToBottom } =
-  useTicketInformation()
-const { isTicketEditable } = useTicketView(ticket)
 
 const isLoadingTicket = computed(() => {
   return ticketQuery.loading().value && !ticket.value
@@ -216,12 +273,6 @@ const route = useRoute()
 
 let ignoreQuery = false
 
-const scrollElement = (element: Element) => {
-  scrolledToBottom.value = true
-  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  return true
-}
-
 // scroll to the article in the hash or to the last available article
 const initialScroll = async () => {
   if (route.hash) {
@@ -253,21 +304,31 @@ const initialScroll = async () => {
   return scrollElement(lastArticle)
 }
 
-if (!scrolledToBottom.value) {
-  const stopScrollWatch = watch(
-    () => articles.value.length,
-    async () => {
-      const scrolled = await initialScroll()
-      if (scrolled) stopScrollWatch()
-    },
-    { immediate: true, flush: 'post' },
-  )
-}
+const stopScrollWatch = watch(
+  () => articles.value.length,
+  async () => {
+    if (hasScroll() && !isAtTheBottom()) {
+      scrollDownState.value = true
+    }
+    const scrolled = await initialScroll()
+    if (scrolled) stopScrollWatch()
+  },
+  { immediate: true, flush: 'post' },
+)
 
 const { stickyStyles, headerElement } = useStickyHeader([
   isLoadingTicket,
   ticket,
 ])
+
+useEventListener(
+  window.document,
+  'scroll',
+  () => {
+    scrollDownState.value = !isAtTheBottom()
+  },
+  { passive: true },
+)
 </script>
 
 <template>
@@ -291,7 +352,11 @@ const { stickyStyles, headerElement } = useStickyHeader([
       <TicketTitle v-if="ticket" :ticket="ticket" />
     </CommonLoader>
   </div>
-  <div class="flex flex-1 flex-col pb-safe-20" :style="stickyStyles.body">
+  <div
+    id="ticket-articles-list"
+    class="flex flex-1 flex-col"
+    :style="stickyStyles.body"
+  >
     <CommonLoader
       data-test-id="loader-list"
       :loading="isLoadingTicket"
@@ -306,5 +371,4 @@ const { stickyStyles, headerElement } = useStickyHeader([
       />
     </CommonLoader>
   </div>
-  <TicketReplyButton v-if="isTicketEditable" class="z-10" />
 </template>

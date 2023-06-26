@@ -25,6 +25,7 @@ import { isStandalone } from '#shared/utils/pwa.ts'
 import { useArticleToggleMore } from '../../composable/useArticleToggleMore.ts'
 import { useArticleAttachments } from '../../composable/useArticleAttachments.ts'
 import ArticleSecurityBadge from './ArticleSecurityBadge.vue'
+import { useArticleSeen } from '../../composable/useArticleSeen.ts'
 
 interface Props {
   position: 'left' | 'right'
@@ -41,6 +42,7 @@ interface Props {
 const props = defineProps<Props>()
 const emit = defineEmits<{
   (e: 'showContext'): void
+  (e: 'seen'): void
 }>()
 
 const session = useSessionStore()
@@ -213,6 +215,8 @@ onMounted(() => {
     populateInlineAttachments(bubbleElement.value)
   }
 })
+
+useArticleSeen(bubbleElement, emit)
 </script>
 
 <template>
@@ -225,6 +229,7 @@ onMounted(() => {
       'Right flex-row-reverse': position === 'right',
       Left: position === 'left',
     }"
+    :data-created-by="user?.id"
   >
     <div
       class="h-6 w-6 self-end"

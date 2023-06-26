@@ -144,7 +144,7 @@ const close = () => {
       </FormKit>
       <div
         class="transition-all"
-        :class="{ 'pb-12': needSpaceForSaveBanner }"
+        :class="{ 'pb-16': needSpaceForSaveBanner }"
       ></div>
     </div>
   </CommonDialog>

@@ -30,9 +30,9 @@ import { useTicketView } from '#shared/entities/ticket/composables/useTicketView
 import type { TicketInformation } from '#mobile/entities/ticket/types.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
-import { getOpenedDialogs } from '#shared/composables/useDialog.ts'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
+import { getOpenedDialogs } from '#shared/composables/useDialog.ts'
 import { useCommonSelect } from '#mobile/components/CommonSelect/useCommonSelect.ts'
 import { useTicketEdit } from '../composable/useTicketEdit.ts'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation.ts'
@@ -41,6 +41,7 @@ import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.ap
 import { useTicketArticleReply } from '../composable/useTicketArticleReply.ts'
 import { useTicketEditForm } from '../composable/useTicketEditForm.ts'
 import { useTicketLiveUser } from '../composable/useTicketLiveUser.ts'
+import TicketDetailViewActions from '../components/TicketDetailView/TicketDetailViewActions.vue'
 
 interface Props {
   internalId: string
@@ -172,13 +173,18 @@ const updateRefetchingStatus = (status: boolean) => {
 }
 
 const scrolledToBottom = ref(false)
+const scrollDownState = ref(false)
 
 onBeforeRouteUpdate((to, from) => {
   // reset if we opened another ticket from the same page (via ticket merge, for example)
   if (to.params.internalId !== from.params.internalId) {
     scrolledToBottom.value = false
   }
+
+  scrollDownState.value = false
 })
+
+const newArticlesIds = reactive(new Set<string>())
 
 provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
   ticketQuery,
@@ -193,6 +199,8 @@ provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
   showArticleReplyDialog,
   liveUserList,
   refetchingStatus,
+  newArticlesIds,
+  scrollDownState,
   updateRefetchingStatus,
 })
 
@@ -250,8 +258,20 @@ const ticketEditSchemaData = reactive({
 
 const { isOpened: commonSelectOpened } = useCommonSelect()
 
+const showReplyButton = computed(() => {
+  if (articleReplyDialog.isOpened.value) return false
+
+  return canUpdateTicket.value
+})
+
+const showSrollDown = computed(() => {
+  if (articleReplyDialog.isOpened.value) return false
+
+  return scrollDownState.value
+})
+
 // show banner only in "articles list", "ticket information" and "create article" views
-const showSaveBanner = computed(() => {
+const showBottomBanner = computed(() => {
   const dialogs = getOpenedDialogs()
 
   if (
@@ -261,29 +281,17 @@ const showSaveBanner = computed(() => {
   )
     return false
 
-  return canUpdateTicket.value && isDirty.value
-})
-
-const bannerClasses = computed(() => {
-  // move "save" button up, when there is "add reply" button
-  if (
-    route.name === 'TicketDetailArticlesView' &&
-    !articleReplyDialog.isOpened.value
+  return (
+    (canUpdateTicket.value && isDirty.value) ||
+    showReplyButton.value ||
+    showSrollDown.value
   )
-    return '-translate-y-12'
-
-  return null
 })
-
-const bannerTransitionDuration = VITE_TEST_MODE ? 0 : { enter: 300, leave: 200 }
 </script>
 
 <template>
   <RouterView />
-  <div
-    class="transition-all"
-    :class="{ 'pb-safe-12': needSpaceForSaveBanner }"
-  ></div>
+  <div class="pb-safe-16"></div>
   <!-- submit form is always present in the DOM, so we can access FormKit validity state -->
   <!-- if it's visible, it's moved to the [data-ticket-edit-form] element, which is in TicketInformationDetail -->
   <Teleport v-if="canUpdateTicket" :to="formLocation">
@@ -313,56 +321,16 @@ const bannerTransitionDuration = VITE_TEST_MODE ? 0 : { enter: 300, leave: 200 }
     </CommonLoader>
   </Teleport>
   <Teleport to="body">
-    <Transition
-      :duration="bannerTransitionDuration"
-      enter-from-class="TransitionUnderScreen"
-      enter-active-class="translate-y-0"
-      enter-to-class="-translate-y-1/3"
-      leave-from-class="-translate-y-1/3"
-      leave-active-class="TransitionUnderScreen"
-      leave-to-class="TransitionUnderScreen"
-    >
-      <div
-        v-if="showSaveBanner"
-        class="mb-safe fixed bottom-2 z-10 flex rounded-lg bg-gray-300 text-white transition ltr:left-2 ltr:right-2 rtl:left-2 rtl:right-2"
-        :class="bannerClasses"
-      >
-        <div class="relative flex flex-1 items-center gap-2 p-1.5">
-          <div class="flex-1 text-sm ltr:pl-1 rtl:pr-1">
-            {{ $t('You have unsaved changes.') }}
-          </div>
-          <FormKit
-            variant="submit"
-            input-class="font-semibold text-base px-4 py-1 !text-black formkit-variant-primary:bg-yellow rounded select-none"
-            wrapper-class="flex justify-center items-center"
-            type="button"
-            form="form-ticket-edit"
-            @click.prevent="submitForm"
-          >
-            {{ $t('Save') }}
-          </FormKit>
-          <div
-            v-if="canSubmit && !isFormValid"
-            role="status"
-            :aria-label="$t('Validation failed')"
-            class="absolute bottom-7 h-5 w-5 cursor-pointer rounded-full bg-red text-center text-xs leading-5 text-black ltr:right-2 rtl:left-2"
-            @click="submitForm"
-          >
-            <CommonIcon
-              class="mx-auto h-5"
-              name="mobile-close"
-              size="tiny"
-              decorative
-            />
-          </div>
-        </div>
-      </div>
-    </Transition>
+    <TicketDetailViewActions
+      :form-invalid="canSubmit && !isFormValid"
+      :new-replies-count="newArticlesIds.size"
+      :new-article-present="newTicketArticlePresent"
+      :can-reply="showReplyButton"
+      :can-save="canUpdateTicket && isDirty"
+      :can-scroll-down="showSrollDown"
+      :hidden="!showBottomBanner"
+      @reply="showArticleReplyDialog"
+      @save="submitForm"
+    />
   </Teleport>
 </template>
-
-<style scoped>
-.TransitionUnderScreen {
-  transform: translateY(calc(100% + var(--safe-bottom)));
-}
-</style>

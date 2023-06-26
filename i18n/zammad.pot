@@ -238,6 +238,10 @@ msgstr ""
 msgid "%s months ago"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+msgid "%s new replies"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
 msgstr ""
@@ -422,6 +426,10 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+msgid "1 new reply"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -868,7 +876,7 @@ msgid "Add ordered list"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Add reply"
 msgstr ""
 
@@ -4331,7 +4339,7 @@ msgid "Edit mask"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Edit reply"
 msgstr ""
 
@@ -9520,7 +9528,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Save"
 msgstr ""
 
@@ -9582,6 +9590,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Script can be located under: ||%s|| and needs to be executable."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+msgid "Scroll down"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+msgid "Scroll down to see %s new replies"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
@@ -12897,7 +12913,7 @@ msgstr ""
 msgid "VIP"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Validation failed"
 msgstr ""
 
@@ -13525,10 +13541,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "You have to allow access to your webcam."
-msgstr ""
-
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-msgid "You have unsaved changes."
 msgstr ""
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco

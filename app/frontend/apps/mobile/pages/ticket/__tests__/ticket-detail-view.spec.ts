@@ -764,8 +764,6 @@ describe('ticket add/edit reply article', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Done' }))
 
-    expect(view.queryByText('You have unsaved changes.')).toBeInTheDocument()
-
     await view.events.click(
       view.getByRole('button', { name: 'Show ticket actions' }),
     )

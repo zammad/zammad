@@ -2,8 +2,10 @@
 
 import { i18n } from '#shared/i18n.ts'
 import type { Ref } from 'vue'
-import { computed } from 'vue'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import { controlledComputed } from '@vueuse/shared'
+import { useSessionStore } from '#shared/stores/session.ts'
+import { useTicketInformation } from './useTicketInformation.ts'
 
 interface ArticleRow {
   type: 'article-bubble'
@@ -50,10 +52,14 @@ export const useTicketArticleRows = (
   articles: Ref<TicketArticle[]>,
   totalCount: Ref<number>,
 ) => {
-  const rows = computed(() => {
+  const { newArticlesIds } = useTicketInformation()
+  const session = useSessionStore()
+
+  const rows = controlledComputed(articles, () => {
     const rows: TicketArticleRow[] = []
     const dates = new Set<string>()
     const needMoreButton = articles.value.length < totalCount.value
+    let hasNew = false
     // assuming it is sorted by createdAt
     articles.value.forEach((article, index) => {
       const date = i18n.date(article.createdAt)
@@ -94,6 +100,19 @@ export const useTicketArticleRows = (
           type: 'more',
           key: 'more',
           count: totalCount.value - articles.value.length,
+        })
+      }
+      const next = articles.value[index + 1]
+      if (
+        !hasNew &&
+        next &&
+        session.userId !== next.author.id &&
+        newArticlesIds.has(next.id)
+      ) {
+        hasNew = true
+        rows.push({
+          type: 'new',
+          key: 'new',
         })
       }
     })

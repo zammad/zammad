@@ -185,4 +185,62 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
       expect(page).to have_selector('[role="comment"]', count: 6)
     end
   end
+
+  it 'doesn\'t render "new replies" button if there is not scrollbar' do
+    create_articles(2)
+    visit_ticket
+
+    expect(page).to have_no_text('new')
+
+    create_articles(1)
+
+    wait_for_ticket_articles(number: 2)
+
+    expect(page).to have_text('new')
+
+    expect(page).to have_no_text('0 new replies')
+    expect(page).to have_no_text('1 new reply')
+
+    expect(page).to have_no_button('Scroll down to see 0 new replies')
+    expect(page).to have_no_button('Scroll down to see 1 new replies')
+  end
+
+  it 'adds "new" banner when new articles are added' do
+    # create a lot of articles so there is a scrollbar
+
+    create_articles(7)
+    visit_ticket
+
+    expect(page).to have_no_text('new')
+
+    # ensure we are at the bottom before creating new articles
+    page.scroll_to :bottom
+
+    create_articles(2)
+    wait_for_ticket_articles(number: 2)
+
+    expect(page).to have_text('new')
+    expect(page).to have_text('2 new replies')
+
+    find_button('Scroll down to see 2 new replies').click
+
+    # we stop rendering "new" only if we already saw articles and we received a new one
+    # or if user navigated between pages back and forth
+    expect(page).to have_text('new')
+    expect(page).to have_no_text('2 new replies')
+  end
+
+  it 'scroll down is persistent' do
+    create_articles(7)
+    visit_ticket
+
+    page.scroll_to :top
+
+    expect(page).to have_button('Scroll down')
+
+    click_link(ticket.title)
+    click_button('Go back')
+
+    expect(page).to have_button('Scroll down')
+  end
 end

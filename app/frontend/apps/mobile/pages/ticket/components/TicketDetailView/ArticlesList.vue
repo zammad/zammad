@@ -15,6 +15,7 @@ import { useTicketArticleRows } from '../../composable/useTicketArticlesRows.ts'
 import { useTicketArticleContext } from '../../composable/useTicketArticleContext.ts'
 import ArticleSystem from './ArticleSystem.vue'
 import ArticleDeliveryMessage from './ArticleDeliveryMessage.vue'
+import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 
 interface Props {
   articles: TicketArticle[]
@@ -42,6 +43,12 @@ const filterAttachments = (article: TicketArticle) => {
     (file) => !file.preferences || !file.preferences['original-format'],
   )
 }
+
+const { newArticlesIds } = useTicketInformation()
+
+const markSeen = (id: string) => {
+  newArticlesIds.delete(id)
+}
 </script>
 
 <template>
@@ -63,17 +70,20 @@ const filterAttachments = (article: TicketArticle) => {
         :ticket-internal-id="ticket.internalId"
         :article-id="row.article.id"
         :attachments="filterAttachments(row.article)"
+        @seen="markSeen(row.key)"
         @show-context="showArticleContext(row.article, ticket)"
       />
       <ArticleDeliveryMessage
         v-if="row.type === 'delivery'"
         :content="row.content"
         :gap="rows[idx - 1]?.type === 'article-bubble' ? 'big' : 'small'"
+        @seen="markSeen(row.key)"
       />
       <ArticleSystem
         v-if="row.type === 'system'"
         :to="row.to"
         :subject="row.subject"
+        @seen="markSeen(row.key)"
       />
       <ArticleSeparatorDate v-if="row.type === 'date'" :date="row.date" />
       <ArticleSeparatorNew v-if="row.type === 'new'" />
