@@ -437,17 +437,19 @@ class App.UiElement.ApplicationAction
 
     elementRow.find('.js-setAttribute > .flex > .js-value').removeClass('hide').html(item)
 
+  @recpientVariables: ->
+    {
+      'article_last_sender': __('Sender of last article')
+      'ticket_owner': __('Owner')
+      'ticket_customer': __('Customer')
+      'ticket_agents': __('All agents')
+    }
+
   @buildNotificationArea: (notificationType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
 
     return if elementRow.find(".js-setNotification .js-body-#{notificationType}").get(0)
 
     elementRow.find('.js-setNotification').empty()
-
-    options =
-      'article_last_sender': __('Sender of last article')
-      'ticket_owner': __('Owner')
-      'ticket_customer': __('Customer')
-      'ticket_agents': __('All agents')
 
     name = "#{attribute.name}::notification.#{notificationType}"
 
@@ -460,7 +462,7 @@ class App.UiElement.ApplicationAction
       meta.recipient = [meta.recipient]
 
     columnSelectOptions = []
-    for key, value of options
+    for key, value of @recpientVariables()
       selected = undefined
       for recipient in meta.recipient
         if key is recipient
