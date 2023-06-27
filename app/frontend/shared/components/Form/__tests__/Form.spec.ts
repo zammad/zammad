@@ -770,14 +770,17 @@ describe('Form.vue - Empty', () => {
 })
 
 describe('Form.vue - Reset', () => {
-  const renderForm = async (formUpdaterId?: EnumFormUpdaterId) => {
+  const renderForm = async ({
+    formUpdaterId,
+    onSubmit,
+  }: { formUpdaterId?: EnumFormUpdaterId; onSubmit?: () => unknown } = {}) => {
     return new Promise<{
       view: ExtendedRenderResult
       form: Ref<FormRef>
     }>((resolve) => {
       const view = renderComponent(
         {
-          template: `<div><Form ref="form" id="form-ticket-create" :schema="schema" :form-updater-id="formUpdaterId" /></div>`,
+          template: `<div><Form ref="form" id="form-ticket-create" :schema="schema" :form-updater-id="formUpdaterId" @submit="onSubmit" /></div>`,
           components: {
             Form,
           },
@@ -793,6 +796,11 @@ describe('Form.vue - Reset', () => {
                 name: 'text',
                 label: 'Textarea',
                 value: 'Some text',
+              },
+              {
+                type: 'submit',
+                name: 'submit',
+                label: 'Submit',
               },
               {
                 type: 'group',
@@ -814,7 +822,7 @@ describe('Form.vue - Reset', () => {
                 resolve({ view, form: form as Ref<FormRef> })
               })
             })
-            return { schema, form, formUpdaterId }
+            return { schema, form, formUpdaterId, onSubmit }
           },
         } as any,
         {
@@ -822,6 +830,20 @@ describe('Form.vue - Reset', () => {
         },
       )
     })
+  }
+
+  const assertDirty = (element: HTMLElement) => {
+    expect(element.closest('.formkit-outer')).toHaveAttribute(
+      'data-dirty',
+      'true',
+    )
+  }
+
+  const assertNotDirty = (element: HTMLElement) => {
+    expect(element.closest('.formkit-outer')).not.toHaveAttribute(
+      'data-dirty',
+      'true',
+    )
   }
 
   it('resets all values to original ones', async () => {
@@ -933,9 +955,9 @@ describe('Form.vue - Reset', () => {
       },
     )
 
-    const { view, form } = await renderForm(
-      EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
-    )
+    const { view, form } = await renderForm({
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+    })
 
     await waitUntil(() => form.value.formNode)
     await getNode('form-ticket-create')?.settled
@@ -968,5 +990,33 @@ describe('Form.vue - Reset', () => {
         }),
       }),
     )
+  })
+
+  it('correctly resets state to dirty when form is submitted', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(true)
+    const { view, form } = await renderForm({ onSubmit })
+
+    const input = view.getByLabelText('Title')
+    await view.events.type(input, 'New title')
+
+    assertDirty(input)
+
+    await view.events.click(view.getByRole('button', { name: 'Submit' }))
+
+    expect(onSubmit).toHaveBeenCalledTimes(1)
+
+    assertNotDirty(input)
+
+    // restore to the initial value of empty string
+    await view.events.clear(input)
+
+    assertDirty(input)
+    expect(form.value.formNode.context?.state.dirty).toBe(true)
+
+    await view.events.type(input, 'New title')
+
+    assertNotDirty(input)
+
+    expect(form.value.formNode.context?.state.dirty).toBe(false)
   })
 })

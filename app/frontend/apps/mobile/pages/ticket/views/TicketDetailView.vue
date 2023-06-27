@@ -86,7 +86,7 @@ ticketQuery.subscribeToMore<
 const formLocation = ref('body')
 const formVisible = computed(() => formLocation.value !== 'body')
 
-const { form, canSubmit, isDirty, formSubmit } = useForm()
+const { form, canSubmit, isDirty, formSubmit, formReset } = useForm()
 
 const { initialTicketValue, isTicketFormGroupValid, editTicket } =
   useTicketEdit(ticket, form)
@@ -135,7 +135,11 @@ const saveTicketForm = async (formData: FormSubmitData) => {
       // Reset article form after ticket update and reseted form.
       return () => {
         newTicketArticlePresent.value = false
-        closeArticleReplyDialog()
+        closeArticleReplyDialog().then(() => {
+          // after the dialog is closed, form changes value from reseted { ticket, article } to { ticket }
+          // which makes it dirty, so we reset it again to be just { ticket }
+          formReset({ ticket: formData.ticket })
+        })
       }
     }
   } catch (errors) {
