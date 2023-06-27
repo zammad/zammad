@@ -117,6 +117,9 @@ fi
 if [ "$1" = 'zammad-nginx' ]; then
   check_zammad_ready
 
+  # Make sure that also the nginx container has custom logo files.
+  ZAMMAD_SAFE_MODE=1 bundle exec rails r "StaticAssets.sync"
+
   # configure nginx
   sed -e "s#\(listen\)\(.*\)80#\1\2${NGINX_PORT}#g" \
       -e "s#proxy_set_header X-Forwarded-Proto .*;#proxy_set_header X-Forwarded-Proto ${NGINX_SERVER_SCHEME};#g" \
