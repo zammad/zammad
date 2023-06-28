@@ -575,7 +575,7 @@ GEM
     telephone_number (1.4.20)
     terser (1.1.16)
       execjs (>= 0.3.0, < 3)
-    test-unit (3.6.0)
+    test-unit (3.6.1)
       power_assert
     thor (1.2.2)
     thread_safe (0.3.6)
