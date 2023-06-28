@@ -39,7 +39,7 @@ module CommonActions
 
         find_toggle('Remember me').toggle_on if remember_me
 
-        click_button
+        click_button('Sign in')
       end
 
       wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded', skip_clearing: true) if !skip_waiting

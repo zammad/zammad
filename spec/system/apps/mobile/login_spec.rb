@@ -27,7 +27,7 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
     expect(cookie[:expires]).to be_nil
   end
 
-  it 'Login and redirect to requsted url' do
+  it 'Login and redirect to requested url' do
     visit '/notifications', skip_waiting: true
 
     expect_current_route '/login?redirect=/notifications'
