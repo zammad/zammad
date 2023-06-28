@@ -63,6 +63,28 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
       )
     end
 
+    it 'doesn\'t show "save" button when part of ticket is changed and article is added' do
+      visit "/tickets/#{ticket.id}/information"
+
+      wait_for_form_to_settle('form-ticket-edit')
+
+      find_input('Ticket title').type('foobar')
+
+      find_button('Go back').click
+      find_button('Add reply').click
+
+      expect(find_select('Article Type', visible: :all)).to have_selected_option('Note')
+      expect(find_select('Visibility', visible: :all)).to have_selected_option('Internal')
+
+      text = find_editor('Text')
+      expect(text).to have_text_value('', exact: true)
+      text.type('This is a note')
+
+      save_article
+
+      expect(page).to have_no_button('Save')
+    end
+
     it 'creates a public note' do
       open_article_dialog
 
@@ -334,7 +356,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
     # TODO: test security settings
   end
 
-  context 'when creating a new article as an customer', authenticated_as: :customer do
+  context 'when creating a new article as a customer', authenticated_as: :customer do
     it 'creates an article with web type' do
       open_article_dialog
 

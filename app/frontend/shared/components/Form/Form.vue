@@ -25,7 +25,7 @@ import type {
   FormKitSchemaComponent,
   FormKitMessageProps,
 } from '@formkit/core'
-import { getNode, createMessage, reset } from '@formkit/core'
+import { getNode, createMessage } from '@formkit/core'
 import type { Except, SetRequired } from 'type-fest'
 import { refDebounced, watchOnce } from '@vueuse/shared'
 import getUuid from '#shared/utils/getUuid.ts'
@@ -51,6 +51,7 @@ import type { FormUpdaterTrigger } from '#shared/types/form.ts'
 import type { EntityObject } from '#shared/types/entity.ts'
 import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 import { parseGraphqlId } from '#shared/graphql/utils.ts'
+import { cloneAny } from '@formkit/utils'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api.ts'
 import { FormHandlerExecution, FormValidationVisibility } from './types.ts'
 import { getNodeByName as getFormkitFieldNode } from './utils.ts'
@@ -288,8 +289,19 @@ const onSubmit = (values: FormData) => {
       .then((afterReset) => {
         // it's possible to destroy Form before this is called
         if (!formNode.value) return
-        reset(formNode.value, values)
-        if (typeof afterReset === 'function') afterReset()
+        formNode.value.reset(values)
+        // "dirty" check checks "_init" instead of "initial"
+        // "initial" is updated with resetValues in "reset" function, but "_init" is static
+        // TODO: keep an eye on https://github.com/formkit/formkit/issues/791
+        formNode.value.props._init = cloneAny(formNode.value.props.initial)
+        formNode.value.walk((node) => {
+          if (node.name in flatValues) {
+            node.props._init = cloneAny(flatValues[node.name])
+          } else if (node.name in values) {
+            node.props._init = cloneAny(values[node.name])
+          }
+        })
+        afterReset?.()
       })
       .catch((errors: UserError) => {
         if (errors instanceof UserError) {
@@ -302,13 +314,9 @@ const onSubmit = (values: FormData) => {
       })
   }
 
-  if (formNode.value) {
-    reset(formNode.value, values)
-  }
+  formNode.value?.reset(values)
 
-  if (typeof submitResult === 'function') {
-    submitResult()
-  }
+  submitResult?.()
 
   return submitResult
 }
@@ -479,7 +487,7 @@ const getResetFormValues = (
       setResetFormValue(field, values[field], parentName)
       return
     }
-    if (parentName && parentName in values) {
+    if (parentName && parentName in values && values[parentName]) {
       const value = (values[parentName] as Record<string, FormFieldValue>)[
         field
       ]
@@ -523,8 +531,7 @@ const resetForm = (
     resetDirty,
   )
 
-  reset(
-    groupNode || rootNode,
+  ;(groupNode || rootNode)?.reset(
     Object.keys(resetValues).length ? resetValues : undefined,
   )
 
