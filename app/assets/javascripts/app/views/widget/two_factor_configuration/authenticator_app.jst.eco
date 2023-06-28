@@ -31,7 +31,7 @@
       </p>
     </li>
     <li>
-      <p><%= @T('Press the button below to finish the set up.') %></p>
+      <p><%= @T('Press the button below to finish the setup.') %></p>
     </li>
   </ol>
 </div>

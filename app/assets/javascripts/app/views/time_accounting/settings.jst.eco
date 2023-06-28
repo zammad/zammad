@@ -11,7 +11,7 @@
     <div class="page-header-title">
       <h2><%- @T('Unit') %></h2>
     </div>
-    <p><%- @T('Define the unit to be shown next to the time accounting input field.') %></p>
+    <p><%- @T('Defines the unit to be shown next to the time accounting input field.') %></p>
     <div class="formGroup-label">
       <label for="timeAccountingUnit"><%- @T('Time accounting unit') %></label>
     </div>

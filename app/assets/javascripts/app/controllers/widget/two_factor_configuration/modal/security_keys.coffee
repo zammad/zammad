@@ -189,7 +189,7 @@ class App.TwoFactorConfigurationModalSecurityKeyRegister extends App.TwoFactorCo
       success: callback
     )
 
-  showError: (message = __('Security key set up failed.')) =>
+  showError: (message = __('Security key setup failed.')) =>
     @el.find('.main').hide()
     @showAlert(message)
     @el.find('.js-submit').removeClass('hidden')
