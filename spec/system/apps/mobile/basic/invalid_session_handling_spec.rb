@@ -8,7 +8,7 @@ RSpec.describe 'Mobile > Basic > Invalid session handling', app: :mobile, authen
   let(:ticket) { create(:ticket, group: group) }
 
   it 'clears the authenticated flag when session check fails' do
-    visit '/login', skip_waiting: true
+    visit '/login'
 
     login(
       username: agent.login,
@@ -20,8 +20,6 @@ RSpec.describe 'Mobile > Basic > Invalid session handling', app: :mobile, authen
     expect_current_route "/tickets/#{ticket.id}"
 
     delete_cookie('^_zammad.+?')
-
-    sleep 3.seconds
 
     visit "/tickets/#{ticket.id}"
 
