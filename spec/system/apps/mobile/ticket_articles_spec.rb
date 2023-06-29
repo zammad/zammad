@@ -84,7 +84,13 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
       expect(page).to have_text(articles.last.body)
 
+      # Ensure to scroll to the bottom of the page before clicking the context menu.
+      page.scroll_to :bottom
+
       all('[data-name="article-context"]').last.click
+
+      expect(page).to have_button('Delete Article')
+
       click_on 'Delete Article'
       click_on 'OK'
 
