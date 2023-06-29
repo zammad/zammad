@@ -1208,11 +1208,11 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Apply Draft"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
 msgstr ""
 
@@ -1280,9 +1280,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
 msgstr ""
 
@@ -2108,8 +2108,8 @@ msgstr ""
 msgid "Changes could not be loaded."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-#: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 msgid "Changes could not be saved."
 msgstr ""
 
@@ -2574,7 +2574,7 @@ msgstr ""
 msgid "Confirmation"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Confirmation failed."
 msgstr ""
 
@@ -2807,7 +2807,7 @@ msgstr ""
 msgid "Create Channel"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
 msgstr ""
 
@@ -3919,7 +3919,7 @@ msgstr ""
 msgid "Delete File"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Delete Knowledge Base"
 msgstr ""
 
@@ -4186,7 +4186,7 @@ msgstr ""
 msgid "Do you really want to delete \"%s\"?"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Do you really want to delete this draft?"
 msgstr ""
 
@@ -8363,7 +8363,7 @@ msgstr ""
 msgid "Overviews are …"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
 msgstr ""
 
@@ -8524,7 +8524,7 @@ msgstr ""
 msgid "Perform actions"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
 msgstr ""
 
@@ -9533,7 +9533,7 @@ msgstr ""
 msgid "Save Codes"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
 msgstr ""
@@ -10078,7 +10078,7 @@ msgstr ""
 msgid "Show %s more"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Show Draft"
 msgstr ""
 
@@ -10802,7 +10802,7 @@ msgstr ""
 msgid "The API token could not be found."
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee
 msgid "The Knowledge Base could not be created."
 msgstr ""
 
@@ -11147,7 +11147,7 @@ msgstr ""
 msgid "The report could not be generated"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr ""
 
@@ -11455,11 +11455,11 @@ msgstr ""
 msgid "There are too many people in the chat queue."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr ""
 
@@ -13118,8 +13118,8 @@ msgstr ""
 msgid "Web (in)"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
-#: app/assets/javascripts/app/views/knowledge_base/server_snippet.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee
 msgid "Web Server Configuration"
 msgstr ""
 
@@ -13365,7 +13365,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Yes"
 msgstr ""
 
