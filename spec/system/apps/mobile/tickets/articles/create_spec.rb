@@ -7,7 +7,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
   let(:group)     { Group.find_by(name: 'Users') }
   let(:agent)     { create(:agent, groups: [group]) }
   let(:customer)  { create(:customer) }
-  let(:ticket)    { create(:ticket, customer: customer, group: group) }
+  let(:ticket)    { create(:ticket, customer: customer, group: group, owner: agent) }
 
   def wait_for_ticket_edit(number: 1)
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql', number: number)
@@ -69,7 +69,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
       wait_for_form_to_settle('form-ticket-edit')
 
       find_input('Ticket title').type('foobar')
-      find_button('Add reply').click
+      click_button('Add reply')
 
       expect(find_select('Article Type', visible: :all)).to have_selected_option('Note')
       expect(find_select('Visibility', visible: :all)).to have_selected_option('Internal')
