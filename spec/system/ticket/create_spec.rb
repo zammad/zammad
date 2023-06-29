@@ -684,6 +684,7 @@ RSpec.describe 'Ticket Create', type: :system do
       within :active_content do
         page.find('input#fileUpload_1[data-initialized="true"]', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
         await_empty_ajax_queue
+        expect(page).to have_css('.attachments .attachment-delete', visible: :all)
         find('.js-cancel').click
       end
 
