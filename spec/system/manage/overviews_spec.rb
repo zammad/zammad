@@ -223,7 +223,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
             within '.ticket_selector' do
               fill_in 'condition::ticket.owner_id::value_completion',	with: owner_one.firstname
 
-              first('.recipientList-entry.js-object').click
+              find("[data-object-id='#{owner_one.id}'].js-object").click
             end
           end
 
