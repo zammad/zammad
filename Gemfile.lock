@@ -611,7 +611,7 @@ GEM
     unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
     uri (0.12.1)
-    vcr (6.1.0)
+    vcr (6.2.0)
     version_gem (1.1.2)
     viewpoint (1.1.1)
       httpclient
