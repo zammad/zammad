@@ -11,6 +11,154 @@ RSpec.describe Channel::Filter::Database, type: :channel_filter do
     I can haz anvil!
   RAW
 
+  describe '.filter_matches?' do
+    let(:filter) { create(:postmaster_filter, match: { 'from' => { 'operator' => operator, 'value' => value } }) }
+
+    shared_examples 'the filter matches' do
+      it 'matches' do
+        expect(described_class.filter_matches?(mail_hash, filter)).to be true
+      end
+    end
+
+    shared_examples 'the filter does not match' do
+      it 'matches' do
+        expect(described_class.filter_matches?(mail_hash, filter)).to be false
+      end
+    end
+
+    context "with operator 'contains'" do
+      let(:operator) { 'contains' }
+
+      context 'with matching string' do
+        let(:value) { 'a' }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with matching upcased string' do
+        let(:value) { 'A' }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with non-matching string' do
+        let(:value) { 'x' }
+
+        include_examples 'the filter does not match'
+      end
+    end
+
+    context "with operator 'contains not'" do
+      let(:operator) { 'contains not' }
+
+      context 'with matching string' do
+        let(:value) { 'a' }
+
+        include_examples 'the filter does not match'
+      end
+
+      context 'with matching upcased string' do
+        let(:value) { 'A' }
+
+        include_examples 'the filter does not match'
+      end
+
+      context 'with non-matching string' do
+        let(:value) { 'x' }
+
+        include_examples 'the filter matches'
+      end
+    end
+
+    context "with operator 'is'" do
+      let(:operator) { 'is' }
+
+      context 'with matching string' do
+        let(:value) { 'daffy.duck@acme.corp' }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with matching upcased string' do
+        let(:value) { 'Daffy.Duck@acme.corp' }
+
+        include_examples 'the filter does not match'
+      end
+
+      context 'with non-matching string' do
+        let(:value) { 'other.address@example.com' }
+
+        include_examples 'the filter does not match'
+      end
+    end
+
+    context "with operator 'is not'" do
+      let(:operator) { 'is not' }
+
+      context 'with matching string' do
+        let(:value) { 'daffy.duck@acme.corp' }
+
+        include_examples 'the filter does not match'
+      end
+
+      context 'with matching upcased string' do
+        let(:value) { 'Daffy.Duck@acme.corp' }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with non-matching string' do
+        let(:value) { 'other.address@example.com' }
+
+        include_examples 'the filter matches'
+      end
+    end
+
+    context "with operator 'starts with'" do
+      let(:operator) { 'starts with' }
+
+      context 'with matching string' do
+        let(:value) { 'daffy.duck' }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with matching upcased string' do
+        let(:value) { 'Daffy.Duck' }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with non-matching string' do
+        let(:value) { 'other.address' }
+
+        include_examples 'the filter does not match'
+      end
+    end
+
+    context "with operator 'ends with'" do
+      let(:operator) { 'ends with' }
+
+      context 'with matching string' do
+        let(:value) { 'acme.corp' }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with matching upcased string' do
+        let(:value) { 'ACME.corp' }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with non-matching string' do
+        let(:value) { 'example.com' }
+
+        include_examples 'the filter does not match'
+      end
+    end
+  end
+
   describe 'Cannot set date for pending close status in postmaster filter #4206', db_strategy: :reset do
     before do
       freeze_time

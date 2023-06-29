@@ -265,4 +265,205 @@ RSpec.describe Ticket::Selector::Sql do
       expect(count).to eq(1)
     end
   end
+
+  describe '.condition_sql' do
+    # We test this monstrous method indirectly though ".selectors" :(
+
+    before do
+      Ticket.destroy_all
+      ticket
+    end
+
+    describe 'input fields' do
+
+      let(:agent) { create(:agent, groups: [Group.first]) }
+      let(:ticket) { create(:ticket, title: 'Some really nice title', owner: agent, group: Group.first) }
+      let(:condition) do
+        { operator: 'AND', conditions: [ {
+          name:     'ticket.title',
+          operator: operator,
+          value:    value,
+        } ] }
+      end
+
+      shared_examples 'finds the ticket' do
+        it 'finds the ticket' do
+          expect(Ticket.selectors(condition, { current_user: agent }).first).to eq 1
+        end
+      end
+
+      shared_examples 'does not find the ticket' do
+        it 'does not find the ticket' do
+          expect(Ticket.selectors(condition, { current_user: agent }).first).to eq 0
+        end
+      end
+
+      describe "operator 'contains'" do
+        let(:operator) { 'contains' }
+
+        context 'with matching string' do
+          let(:value) { 'Some' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { 'SOME' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { 'Other' }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+      describe "operator 'contains not'" do
+        let(:operator) { 'contains not' }
+
+        context 'with matching string' do
+          let(:value) { 'Some' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { 'SOME' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { 'Other' }
+
+          include_examples 'finds the ticket'
+        end
+      end
+
+      describe "operator 'is'" do
+        let(:operator) { 'is' }
+
+        context 'with matching string' do
+          let(:value) { 'Some really nice title' }
+
+          include_examples 'finds the ticket'
+        end
+
+        # Skip for MySQL as it handles IN case insensitive.
+        context 'with matching upcased string', db_adapter: :postgresql do
+          let(:value) { 'SOME really nice title' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { 'Another title' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with empty value' do
+          let(:ticket) { create(:ticket, title: '', owner: agent, group: Group.first) }
+
+          context 'with non-matching filter value' do
+            let(:value) { 'Another title' }
+
+            include_examples 'does not find the ticket'
+          end
+
+          context 'with empty filter value' do
+            let(:value) { '' }
+
+            include_examples 'finds the ticket'
+          end
+        end
+      end
+
+      describe "operator 'is not'" do
+        let(:operator) { 'is not' }
+
+        context 'with matching string' do
+          let(:value) { 'Some really nice title' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        # Skip for MySQL as it handles IN case insensitive.
+        context 'with matching upcased string', db_adapter: :postgresql do
+          let(:value) { 'SOME really nice title' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { 'Another title' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with empty value' do
+          let(:ticket) { create(:ticket, title: '', owner: agent, group: Group.first) }
+
+          context 'with non-matching filter value' do
+            let(:value) { 'Another title' }
+
+            include_examples 'finds the ticket'
+          end
+
+          context 'with empty filter value' do
+            let(:value) { '' }
+
+            include_examples 'does not find the ticket'
+          end
+        end
+      end
+
+      describe "operator 'starts with'" do
+        let(:operator) { 'starts with' }
+
+        context 'with matching string' do
+          let(:value) { 'Some really' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { 'SOME really' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { 'Another' }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+      describe "operator 'ends with'" do
+        let(:operator) { 'ends with' }
+
+        context 'with matching string' do
+          let(:value) { 'nice title' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { 'NICE title' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { 'Another title' }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+    end
+  end
 end

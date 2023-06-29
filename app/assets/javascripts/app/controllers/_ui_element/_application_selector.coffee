@@ -32,7 +32,7 @@ class App.UiElement.ApplicationSelector
       '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
       '^tree_select$': [__('is'), __('is not')]
       '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
-      '^input$': [__('contains'), __('contains not')]
+      '^input$': [__('contains'), __('contains not'), __('is'), __('is not'), __('starts with'), __('ends with')]
       '^richtext$': [__('contains'), __('contains not')]
       '^textarea$': [__('contains'), __('contains not')]
       '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
@@ -49,7 +49,7 @@ class App.UiElement.ApplicationSelector
         '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
         '^tree_select$': [__('is'), __('is not'), __('has changed')]
         '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
-        '^input$': [__('contains'), __('contains not'), __('has changed')]
+        '^input$': [__('contains'), __('contains not'), __('has changed'), __('is'), __('is not'), __('starts with'), __('ends with')]
         '^richtext$': [__('contains'), __('contains not'), __('has changed')]
         '^textarea$': [__('contains'), __('contains not'), __('has changed')]
         '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
@@ -568,6 +568,7 @@ class App.UiElement.ApplicationSelector
         config.guess = false
       if config.tag is 'checkbox'
         config.tag = 'select'
+
       item = @renderConfig(config, meta)
     if meta.operator is 'before (relative)' || meta.operator is 'within next (relative)' || meta.operator is 'within last (relative)' || meta.operator is 'after (relative)' || meta.operator is 'from (relative)' || meta.operator is 'till (relative)'
       config = @buildValueConfigRelativeNameValue(config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)

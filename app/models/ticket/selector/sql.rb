@@ -13,7 +13,9 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     %r{(after|before) \(absolute\)},
     %r{(within next|within last|after|before|till|from) \(relative\)},
     'is in working time',
-    'is not in working time'
+    'is not in working time',
+    'starts with',
+    'ends with',
   ].freeze
 
   attr_accessor :final_query, :final_bind_params, :final_tables, :changed_attributes
@@ -211,6 +213,12 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
           bind_params.push block_condition[:value]
         end
       end
+    elsif block_condition[:operator] == 'starts with'
+      query << "#{attribute} #{like} (?)"
+      bind_params.push "#{block_condition[:value]}%"
+    elsif block_condition[:operator] == 'ends with'
+      query << "#{attribute} #{like} (?)"
+      bind_params.push "%#{block_condition[:value]}"
     elsif block_condition[:operator] == 'is'
       if block_condition[:pre_condition] == 'not_set'
         if attribute_name.match?(%r{^(created_by|updated_by|owner|customer|user)_id})
@@ -246,6 +254,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
             if block_condition[:value].class != Array
               block_condition[:value] = [block_condition[:value]]
             end
+
             query << if block_condition[:value].include?('')
                        "(#{attribute} IN (?) OR #{attribute} IS NULL)"
                      else
@@ -287,6 +296,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
             if block_condition[:value].class != Array
               block_condition[:value] = [block_condition[:value]]
             end
+
             query << if block_condition[:value].include?('')
                        "(#{attribute} IS NOT NULL AND #{attribute} NOT IN (?))"
                      else
@@ -299,12 +309,10 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
       end
     elsif block_condition[:operator] == 'contains'
       query << "#{attribute} #{like} (?)"
-      value = "%#{block_condition[:value]}%"
-      bind_params.push value
+      bind_params.push "%#{block_condition[:value]}%"
     elsif block_condition[:operator] == 'contains not'
       query << "#{attribute} NOT #{like} (?)"
-      value = "%#{block_condition[:value]}%"
-      bind_params.push value
+      bind_params.push "%#{block_condition[:value]}%"
     elsif block_condition[:operator] == 'contains all'
       if attribute_table == 'ticket' && attribute_name == 'tags'
         query << "? = (

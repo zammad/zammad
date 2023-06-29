@@ -14049,6 +14049,10 @@ msgstr ""
 msgid "enclosure"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "ends with"
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
 msgstr ""
@@ -14787,6 +14791,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee
 msgid "split"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "starts with"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco

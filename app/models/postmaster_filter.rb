@@ -14,11 +14,20 @@ class PostmasterFilter < ApplicationModel
   validates :note, length: { maximum: 250 }
   sanitized_html :note
 
+  VALID_OPERATORS = [
+    'contains',
+    'contains not',
+    'is',
+    'is not',
+    'starts with',
+    'ends with',
+  ].freeze
+
   def validate_condition
     raise Exceptions::UnprocessableEntity, __('At least one match rule is required, but none was provided.') if match.blank?
 
     match.each_value do |meta|
-      raise Exceptions::UnprocessableEntity, __('The provided match operator is missing or invalid.') if meta['operator'].blank? || meta['operator'] !~ %r{^(contains|contains not)$}
+      raise Exceptions::UnprocessableEntity, __('The provided match operator is missing or invalid.') if meta['operator'].blank? || VALID_OPERATORS.exclude?(meta['operator'])
       raise Exceptions::UnprocessableEntity, __('The required match value is missing.') if meta['value'].blank?
 
       begin
