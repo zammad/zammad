@@ -76,6 +76,7 @@ RSpec.describe 'System > Objects', mariadb: true, type: :system do
             fill_in 'name', with: 'new_field'
             fill_in 'display', with: 'New field'
             select data_type, from: 'data_type'
+            page.scroll_to :bottom
             click '.js-submit'
           end
 
@@ -90,6 +91,7 @@ RSpec.describe 'System > Objects', mariadb: true, type: :system do
 
           in_modal do
             fill_in 'display', with: 'New field updated'
+            page.scroll_to :bottom
             click '.js-submit'
           end
 
