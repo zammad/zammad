@@ -8,7 +8,7 @@ module Gql::Queries
     type Gql::Types::OnlineNotificationType.connection_type, null: false
 
     def resolve(...)
-      OnlineNotification.where(user: context.current_user)
+      OnlineNotification.where(user: context.current_user).reorder(created_at: :desc)
     end
   end
 end
