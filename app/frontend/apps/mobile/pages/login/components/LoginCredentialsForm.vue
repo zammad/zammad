@@ -11,6 +11,7 @@ import { useNotifications } from '#shared/components/CommonNotifications/index.t
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import type { UserTwoFactorMethods } from '#shared/graphql/types.ts'
 import { useRouter } from 'vue-router'
+import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 import type { LoginFormData } from '../types/login.ts'
 import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
 
@@ -25,6 +26,7 @@ const emit = defineEmits<{
 }>()
 
 const application = useApplicationStore()
+const { forceDesktop } = useForceDesktop()
 
 const loginSchema = defineFormSchema([
   {
@@ -75,6 +77,7 @@ const loginSchema = defineFormSchema([
               props: {
                 class: 'text-right text-white',
                 link: '/#password_reset',
+                onClick: forceDesktop,
               },
               children: __('Forgot password?'),
             },
