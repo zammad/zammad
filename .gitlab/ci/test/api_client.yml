@@ -47,6 +47,5 @@ api_client:ruby:
     - git clone https://github.com/zammad/zammad-api-client-ruby.git
     - cd zammad-api-client-ruby
     - bundle update --bundler
-    - bundle config set --local frozen 'true'
     - bundle install -j $(nproc)
     - bundle exec rspec
