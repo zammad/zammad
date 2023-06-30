@@ -46,6 +46,7 @@ if (route.query.invalidatedSession === '1') {
 const authentication = useAuthenticationStore()
 
 const application = useApplicationStore()
+const { forceDesktop } = useForceDesktop()
 
 const loginSchema = defineFormSchema([
   {
@@ -96,6 +97,7 @@ const loginSchema = defineFormSchema([
               props: {
                 class: 'text-right text-white',
                 link: '/#password_reset',
+                onClick: forceDesktop,
               },
               children: __('Forgot password?'),
             },
@@ -179,8 +181,6 @@ const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
 const showPasswordLogin = computed(
   () => application.config.user_show_password_login || !hasEnabledProviders,
 )
-
-const { forceDesktop } = useForceDesktop()
 </script>
 
 <template>

@@ -109,5 +109,17 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
 
     it_behaves_like 'automatically redirecting to mobile app', '/', %r{mobile/$}
     it_behaves_like 'automatically redirecting to mobile app', 'ticket/zoom/1', 'ticket/zoom/1'
+
+    context 'when not authenticated', authenticated_as: false do
+      it 'forgot password doesn\'t redirect back' do
+        visit '/login', skip_waiting: true
+
+        click_link 'Forgot password?'
+
+        expect_current_route('password_reset', app: :desktop)
+
+        expect(page).to have_no_link('Continue to desktop')
+      end
+    end
   end
 end
