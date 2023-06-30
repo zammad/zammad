@@ -79,5 +79,18 @@ RSpec.describe Gql::Queries::OnlineNotifications, authenticated_as: :user, type:
           .to include(include('id' => gql.id(inaccessible_notification), 'metaObject' => nil, 'createdBy' => nil))
       end
     end
+
+    context 'with some more notifications' do
+      let(:notification)              { nil }
+      let(:another_user_notification) { nil }
+      let(:notifications)             { Array.new(10) { create(:online_notification, user: user, created_at: Faker::Date.between(from: 1.year.ago, to: 50.weeks.from_now).to_datetime) } }
+
+      it 'returns notifications in correct order' do
+        notifications
+        gql.execute(query)
+
+        expect(gql.result.nodes.pluck('id')).to eq(notifications.sort_by { |n| n[:created_at] }.reverse.map { |n| gql.id(n) })
+      end
+    end
   end
 end
