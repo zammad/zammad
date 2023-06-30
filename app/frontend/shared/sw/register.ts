@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { noop } from 'lodash-es'
 import type { RegisterSWOptions } from './types.ts'
 
 // should service worker be updated automatically without a prompt
@@ -19,6 +20,10 @@ export const registerSW = (options: RegisterSWOptions) => {
     onRegisteredSW,
     onRegisterError,
   } = options
+
+  if (VITE_TEST_MODE) {
+    return noop
+  }
 
   // service worker is disabled during normal development
   if (import.meta.env.DEV) {
