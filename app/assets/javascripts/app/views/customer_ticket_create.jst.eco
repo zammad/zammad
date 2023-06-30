@@ -1,5 +1,5 @@
-<div class="horizontal flex">
-  <div class="main no-padding flex">
+<div class="tabsSidebar-holder flex">
+  <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
     <div class="newTicket">
       <div class="box box--newTicket">
         <div class="page-header">
@@ -27,6 +27,5 @@
       </div>
     </div>
   </div>
+  <div class="tabsSidebar vertical"></div>
 </div>
-
-<div class="sidebar"></div>

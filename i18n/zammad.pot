@@ -5751,7 +5751,7 @@ msgstr ""
 msgid "Here you can create new tickets, customers and organizations (depending on your configured permissions)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "Here you can create one."
 msgstr ""
 
@@ -11421,7 +11421,7 @@ msgstr ""
 msgid "The username or password is incorrect."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr ""
@@ -13219,7 +13219,7 @@ msgstr ""
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "What can you do here?"
 msgstr ""
 

@@ -1,5 +1,10 @@
 class CustomerTicketCreate extends App.ControllerAppContent
   @requiredPermission: 'ticket.customer'
+
+  elements:
+    '.tabsSidebar': 'sidebar'
+    '.tabsSidebar-sidebarSpacer': 'sidebarSpacer'
+
   events:
     'submit form':         'submit',
     'click .submit':       'submit',
@@ -7,6 +12,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
 
   constructor: (params) ->
     super
+    @sidebarState = {}
 
     # set title
     @title __('New Ticket')
@@ -14,6 +20,13 @@ class CustomerTicketCreate extends App.ControllerAppContent
 
     @navupdate '#customer_ticket_new'
     @render()
+
+  show: =>
+  
+    # initially hide sidebar on mobile
+    if window.matchMedia('(max-width: 767px)').matches
+      @sidebar.addClass('is-closed')
+      @sidebarSpacer.addClass('is-closed')
 
   render: (template = {}) ->
     if !@Config.get('customer_ticket_create')
@@ -54,16 +67,22 @@ class CustomerTicketCreate extends App.ControllerAppContent
         'fileUploadStop .richtext': => @submitEnable()
     )
 
-    new App.ControllerDrox(
-      el:   @el.find('.sidebar')
-      data:
-        header: App.i18n.translateInline('What can you do here?')
-        html:   App.i18n.translateInline('The way to communicate with us is this thing called "ticket".') + ' ' + App.i18n.translateInline('Here you can create one.')
+    @$('[name="group_id"], [name="organization_id"]').bind('change', =>
+      @sidebarWidget.render(@params())
+    )
+
+    @sidebarWidget = new App.TicketCreateSidebar(
+      el:           @sidebar
+      params:       defaults
+      sidebarState: @sidebarState
     )
 
   cancel: ->
     @navigate '#'
 
+  params: =>
+    params = @formParam(@$('.main form'))
+    
   submit: (e) ->
     e.preventDefault()
 
@@ -126,11 +145,19 @@ class CustomerTicketCreate extends App.ControllerAppContent
     # save ticket, create article
     else
 
+      # add sidebar params
+      if @sidebarWidget && @sidebarWidget.postParams
+        @sidebarWidget.postParams(ticket: ticket)
+
       # disable form
       @submitDisable(e)
       ui = @
       ticket.save(
         done: ->
+
+          # add sidebar params
+          if ui.sidebarWidget
+            ui.sidebarWidget.commit(ticket_id: @id)
 
           # redirect to zoom
           ui.navigate '#ticket/zoom/' + @id

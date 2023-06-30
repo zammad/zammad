@@ -14,6 +14,11 @@ class App.Config
       _instance ?= new _configSingleton
     _instance.set(key, value, group)
 
+  @delete: (key, group) ->
+    if _instance == undefined
+      _instance ?= new _configSingleton
+    _instance.delete(key, group)
+
   @all: ->
     if _instance == undefined
       _instance ?= new _configSingleton
@@ -37,6 +42,13 @@ class _configSingleton
       @config[group][key] = value
     else
       @config[key] = value
+
+  delete: (key, group) ->
+    if group
+      return if !@config[group]
+      delete @config[group][key]
+    else
+      delete @config[key]
 
   all: ->
     @config
