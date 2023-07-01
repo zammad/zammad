@@ -593,7 +593,7 @@ GEM
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    uri (0.12.1)
+    uri (0.12.2)
     vcr (6.1.0)
     version_gem (1.1.2)
     viewpoint (1.1.1)
