@@ -83,7 +83,9 @@ RSpec.describe Gql::Queries::OnlineNotifications, authenticated_as: :user, type:
     context 'with some more notifications' do
       let(:notification)              { nil }
       let(:another_user_notification) { nil }
-      let(:notifications)             { Array.new(10) { create(:online_notification, user: user, created_at: Faker::Date.between(from: 1.year.ago, to: 50.weeks.from_now).to_datetime) } }
+
+      # Don't use relative dates here as they disable generation of unique values.
+      let(:notifications) { Array.new(10) { create(:online_notification, user: user, created_at: Faker::Date.unique.between(from: Date.parse('2022-01-01'), to: Date.parse('2024-01-01')).to_datetime) } }
 
       it 'returns notifications in correct order' do
         notifications
