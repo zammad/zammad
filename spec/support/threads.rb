@@ -36,7 +36,10 @@ module ThreadsHelper
   # Thread control loops usually run forever. This method can test that they were started.
   def ensure_block_keeps_running(timeout: 2.seconds, &block)
     # Stop after timeout and return true if everything was ok.
-    Timeout.timeout(timeout, &block)
+    # Suppress the Rails logger as its exception may rescue our TimeoutErrors, causing failures here.
+    Rails.logger.silence do
+      Timeout.timeout(timeout, &block)
+    end
     raise 'Process ended unexpectedly.'
   rescue SystemExit
     # Convert SystemExit to a RuntimeError as otherwise rspec will shut down without an error.

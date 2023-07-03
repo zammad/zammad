@@ -582,7 +582,7 @@ GEM
     tilt (2.1.0)
     time (0.2.2)
       date
-    timeout (0.3.2)
+    timeout (0.4.0)
     tpm-key_attestation (0.12.0)
       bindata (~> 2.4)
       openssl (> 2.0)

@@ -18,9 +18,10 @@ RSpec.describe 'Channel::EmailParser#process_unprocessable_mail', aggregate_fail
 
     before do
       FileUtils.rm_r(dir) if dir.exist?
-      stub_const('Channel::EmailParser::PROZESS_TIME_MAX', -1)
+      parser = Channel::EmailParser.new
+      allow(parser).to receive(:_process).and_raise(Timeout::Error)
       begin
-        Channel::EmailParser.new.process({}, mail)
+        parser.process({}, mail)
       rescue RuntimeError
         # expected
       end
@@ -35,7 +36,6 @@ RSpec.describe 'Channel::EmailParser#process_unprocessable_mail', aggregate_fail
     end
 
     it 'allows reprocessing of the stored email' do
-      stub_const('Channel::EmailParser::PROZESS_TIME_MAX', nil)
       expect { Channel::EmailParser.process_unprocessable_mails }.to change(Ticket, :count).by(1)
       expect(dir.join('ce61e7319bcc4297c1d7dfea2fbc87dd.eml')).not_to exist
     end
