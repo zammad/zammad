@@ -9,16 +9,20 @@ module RuboCop
       #   # bad
       #   Faker::Number.number(...)
       #   Faker::Name.first_name
+      #   Faker::Date.between(from: Date.parse("2022-01-01"), to: Date.parse("2024-01-01"))
+      #   Faker::Time.between(from: Date.parse("2022-01-01"), to: Date.parse("2024-01-01"))
       #
       #   # good
       #   Faker::Number.unique.number(...)
       #   Faker::Name.unique.first_name
+      #   Faker::Date.unique.between(from: Date.parse("2022-01-01"), to: Date.parse("2024-01-01"))
+      #   Faker::Time.unique.between(from: Date.parse("2022-01-01"), to: Date.parse("2024-01-01"))
 
       class FakerUnique < Base
         extend AutoCorrector
 
         def_node_matcher :faker_call?, <<-PATTERN
-          $(send (const (const _ :Faker) {:Name :Number}) _ ...)
+          $(send (const (const _ :Faker) {:Name :Number :Date :Time}) _ ...)
         PATTERN
 
         MSG = 'Always use Faker::*::.unique to prevent race conditions in tests.'.freeze
