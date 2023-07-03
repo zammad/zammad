@@ -155,9 +155,17 @@ function backup_files () {
       chown -R zammad:zammad ${ZAMMAD_DIR}/storage/
     fi
 
-      tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_DIR#/}/storage/ ${ZAMMAD_DIR#/}/var/
+    if [ -h ${ZAMMAD_DIR}/storage ]; then
+     echo "... Found symlink, will store both Symlink and Symlink target ..."
+      REALDIR=$(realpath ${ZAMMAD_DIR}/storage/)
+      ZAMMAD_STORAGE_DIR="${ZAMMAD_DIR#/}/storage ${REALDIR#/}"
+    else
+      ZAMMAD_STORAGE_DIR="${ZAMMAD_DIR#/}/storage/"
+    fi
 
-      state=$?
+    tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_STORAGE_DIR} ${ZAMMAD_DIR#/}/var/
+
+    state=$?
   fi
 
   if [ $state == '2' ]; then
