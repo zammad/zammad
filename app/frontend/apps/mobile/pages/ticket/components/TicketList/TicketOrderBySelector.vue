@@ -154,7 +154,7 @@ const advanceFocus = (event: KeyboardEvent, idx: number) => {
             class="ltr:mr-1 rtl:ml-1"
             v-bind="option.iconProps"
           />
-          {{ option.label }}
+          {{ $t(option.label) }}
         </button>
       </div>
     </template>
