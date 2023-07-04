@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-06-14 03:05+0000\n"
+"PO-Revision-Date: 2023-06-23 08:01+0000\n"
 "Last-Translator: Solenne Lefevre <solenne.lefevre@data-bene.io>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
@@ -1150,7 +1150,7 @@ msgstr "Ajouter un certificat"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
-msgstr "Ajouter un Lien"
+msgstr "Ajouter un lien"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
@@ -1160,7 +1160,7 @@ msgstr "Ajouter une clé privée"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
 msgid "Add Tag"
-msgstr "Ajouter Tag"
+msgstr "Ajouter étiquette"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Add Telegram Bot"
@@ -1219,7 +1219,7 @@ msgstr "Ajouter Image"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add link"
-msgstr "Ajouter un Lien"
+msgstr "Ajouter un lien"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add ordered list"
@@ -1389,8 +1389,8 @@ msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
 msgstr ""
-"Après l'installation, la mise à jour ou la désinstallation de paquets il est "
-"nécéssaire d'éxécuter les commandes suivantes sur le serveur :"
+"Après l'installation, la mise à jour ou la désinstallation de paquets, il "
+"est nécessaire d’exécuter les commandes suivantes sur le serveur :"
 
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Age"
@@ -2744,8 +2744,9 @@ msgid "Checkmk token"
 msgstr "Jeton Checkmk"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Checksum"
-msgstr "Checksum"
+msgstr "Somme de contrôle"
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee
 msgid "Child"
@@ -3314,7 +3315,7 @@ msgstr "Pays"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
-msgstr "Création"
+msgstr "Créer"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "Create Admin"
@@ -3395,7 +3396,7 @@ msgstr "Créer un Ticket de Test"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Create a new template in the admin interface."
-msgstr "Créer un nouveau template dans l'interface d'administration."
+msgstr "Créer un nouveau modèle dans l'interface d'administration."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Create a shared draft"
@@ -3486,7 +3487,7 @@ msgstr "Création :"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
 msgid "Created"
-msgstr "Créé"
+msgstr "Créés"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 msgid "Created Article"
@@ -3558,7 +3559,7 @@ msgstr "Recadrer l'image"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Current Status"
-msgstr "Status Courant"
+msgstr "Statut Actuel"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Current Token"
@@ -4999,7 +5000,7 @@ msgstr "Ignorer les modifications non sauvegardées."
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Display"
-msgstr "Afficher"
+msgstr "Affichage"
 
 #: app/assets/javascripts/app/models/email_address.coffee db/seeds/settings.rb
 msgid "Display name"
@@ -5514,16 +5515,17 @@ msgstr ""
 "connecte à son compte avec une application tierce."
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid ""
 "Enables the automatic linking of an existing account on initial login via a "
 "third party application. If this is disabled, an existing user must first "
 "log into Zammad and then link his \"Third Party\" account to his Zammad "
 "account via Profile -> Linked Accounts."
 msgstr ""
-"Enables the automatic linking of an existing account on initial login via a "
-"third party application. If this is disabled, an existing user must first "
-"log into Zammad and then link his \"Third Party\" account to his Zammad "
-"account via Profile -> Linked Accounts."
+"Autorise le lien automatique d'un compte existant aux applications tiers à "
+"sa connexion initiale. Si c'est désactivé, un utilisateur existant doit "
+"d'abord se connecter à Zammad, puis lier son compte \"Partie Tiers\" à son "
+"compte Zammad via Profil -> Comptes liés"
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via %s."
@@ -5878,7 +5880,7 @@ msgstr "Exemple :"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Examples"
-msgstr "exemples"
+msgstr "Exemples"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 msgid "Excepted users"
@@ -6596,11 +6598,11 @@ msgstr "Groupe nécessaire dans la définition du canal !"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco db/seeds/settings.rb
 msgid "Group selection for Ticket creation"
-msgstr "Sélection groupée pour la création d'un ticket"
+msgstr "Sélection du groupe pour la création d'un ticket"
 
 #: db/seeds/settings.rb
 msgid "Group selection for ticket creation"
-msgstr "Sélection groupée pour la création d'un ticket"
+msgstr "Sélection du groupe pour la création d'un ticket"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -6705,8 +6707,9 @@ msgid "Header Menu"
 msgstr "Menu d'en-tête"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
+#, fuzzy
 msgid "Health Check"
-msgstr "Test de vie"
+msgstr "Bilan de santé"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Health information can be retrieved as JSON using:"
@@ -6873,7 +6876,7 @@ msgid ""
 "have too many…)"
 msgstr ""
 "Combien de billets en escalade avez-vous d'ouverts ? (M. Bubbles devient "
-"grincheux si vous en avez trop...)\t"
+"grincheux si vous en avez trop...)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee
 msgid ""
@@ -8471,11 +8474,11 @@ msgstr "Déplace en haut et en bas"
 
 #: app/models/report.rb
 msgid "Moved in"
-msgstr "Déplacé vers"
+msgstr "Déplacés vers"
 
 #: app/models/report.rb
 msgid "Moved out"
-msgstr "Déplacé de"
+msgstr "Déplacés de"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Multiple selection field"
@@ -10223,8 +10226,6 @@ msgid "Read"
 msgstr "Lire"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
-#, fuzzy
-#| msgid "Realtime"
 msgid "Real-time"
 msgstr "Temps réel"
 
@@ -10384,7 +10385,7 @@ msgstr "Renouveler le jeton d'accès"
 
 #: app/models/report.rb
 msgid "Reopened"
-msgstr "Réouvert"
+msgstr "Réouverts"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "Reopening rate"
@@ -10838,7 +10839,7 @@ msgstr "Comptes SMS"
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "SMS Notification"
-msgstr "Notfication SMS"
+msgstr "Notification SMS"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "SMS successfully sent"
@@ -11488,6 +11489,9 @@ msgid ""
 "Show password login for users on login page. Disabling only takes effect if "
 "third-party authentication is enabled."
 msgstr ""
+"Montre la page d'accès avec mot de passe sur la page de connexion. "
+"Désactiver cette option n'est possible que si l'authentification par "
+"application tiers est activée."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
@@ -11830,10 +11834,13 @@ msgid "Starting Zammad"
 msgstr "Démarrage de Zammad"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
+#, fuzzy
 msgid ""
 "Starting with Zammad 5.1, translations can be contributed exclusively via "
 "\"translations.zammad.org\" %l."
 msgstr ""
+"Depuis Zammad 5.1, les traductions ne peuvent être mises à jour que via "
+"\"translations.zammad.org\" %l."
 
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
@@ -12723,8 +12730,9 @@ msgid "The request could not be processed."
 msgstr "La requête n'a pas pu être traitée."
 
 #: lib/validations/verify_perform_rules_validator.rb
+#, fuzzy
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
-msgstr ""
+msgstr "La valeur du champ '%{attribute}' pour %{key}, %{inner} est manquante !"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
@@ -12805,69 +12813,67 @@ msgstr ""
 
 #: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
-msgstr ""
+msgstr "Le paramètre obligatoire 'group_id' est invalide."
 
 #: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'group_id' est manquant."
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'id' est manquant."
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'link_type' est manquant."
 
 #: app/models/text_module.rb
 msgid "The required parameter 'locale' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'locale' est manquant."
 
 #: app/controllers/user_access_token_controller.rb
-#, fuzzy
-#| msgid "Required parameter 'profile' is missing."
 msgid "The required parameter 'name' is missing."
-msgstr "Le paramètre obligatoire 'profile' est manquant."
+msgstr "Le paramètre obligatoire 'name' est manquant."
 
 #: lib/external_credential/twitter.rb
 msgid "The required parameter 'oauth_token' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'oauth_token' est manquant."
 
 #: lib/external_credential/twitter.rb
 msgid "The required parameter 'oauth_token_secret' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'oauth_token_secret' est manquant."
 
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'options.adapter' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'options.adapter' est manquant."
 
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'params' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'params' est manquant."
 
 #: app/models/core_workflow/result.rb
 msgid "The required parameter 'payload->class_name' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'payload->class_name' est manquant."
 
 #: app/models/core_workflow/result.rb
 msgid "The required parameter 'payload->screen' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'payload->screen' est manquant."
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "The required parameter 'permission' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'permission' est manquant."
 
 #: lib/external_credential/twitter.rb
 msgid "The required parameter 'request_token' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'request_token' est manquant."
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'signup' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'signup' est manquant."
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'ticket_number' est manquant."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -12879,11 +12885,12 @@ msgstr ""
 
 #: app/policies/ticket_policy.rb
 msgid "The required value 'group_id' is missing."
-msgstr ""
+msgstr "La valeur requise 'group_id' est manquante."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required value external_credential could not be found in the cache."
 msgstr ""
+"La valeur requise external_credential n'a pas été trouvée dans le cache."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -13040,10 +13047,8 @@ msgstr ""
 "Il y a plusieurs raisons pour que la fenêtre de Chat n'apparaisse pas :"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-#, fuzzy
-#| msgid "There are too many people in queue for the chat."
 msgid "There are too many people in the chat queue."
-msgstr "Il y a beaucoup de gens en attente pour le chat."
+msgstr "Il y a trop de monde en attente pour le chat."
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
@@ -13126,16 +13131,12 @@ msgid "This category is empty"
 msgstr "Cette catégorie est vide"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
-#, fuzzy
-#| msgid ""
-#| "This class gets added to the button on initialization and gets removed "
-#| "once the chat connection got established."
 msgid ""
 "This class gets added to the button on initialization and will be removed "
 "once the chat connection is established."
 msgstr ""
-"Cette classe est ajoutée au bouton lors d'initialisation et est enlevée une "
-"fois la connexion au Chat établie."
+"Cette classe est ajoutée au bouton lors de l'initialisation et est enlevée "
+"une fois la connexion au Chat établie."
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
@@ -14675,14 +14676,18 @@ msgstr ""
 "sera utilisé comme sujet."
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid ""
 "Use the start time of the last customer thread (which may consist of "
 "multiple articles)."
 msgstr ""
+"Utiliser la date de début des derniers échanges clients (qui peuvent être "
+"constitué de plusieurs articles)."
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Use the time of the very last customer article."
-msgstr ""
+msgstr "Utiliser l'heure du tout dernier article du client."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Use this switch to start synchronization of your ldap sources."
@@ -15116,11 +15121,9 @@ msgid "We're sorry, but this page doesn't exist."
 msgstr "Désolé, mais cette page n'existe pas."
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
-#, fuzzy
-#| msgid "We've sent password reset instructions to your email address."
 msgid "We've sent admin password login instructions to your email address."
 msgstr ""
-"Nous avons envoyé les instructions de réinitialisation du mot de passe à "
+"Nous avons envoyé les instructions de connexion au compte administrateur à "
 "votre adresse email."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
@@ -15326,11 +15329,15 @@ msgid "Where to append the chat to."
 msgstr "Où ajouter le chat."
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
+#, fuzzy
 msgid ""
 "While it will be no longer possible to directly push changed translations "
 "from Zammad, they can be contributed in a very convenient user interface "
 "based on Weblate."
 msgstr ""
+"Bien qu'il ne soit plus possible de pousser directement les traductions de "
+"Zammad modifiées, elles peuvent être ajoutée dans une interface très "
+"pratique pour les utilisateurs basée sur Weblate."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Why doesn't the chat show up?"
@@ -15371,7 +15378,7 @@ msgid ""
 "like \"%s\" (e. g. %s)."
 msgstr ""
 "Avec la somme de contrôle, le compteur sera modifié pour comprendre la somme "
-"de contrôle. Le format apparîtra comme %s (par exemple %s)."
+"de contrôle. Le format apparaîtra comme %s (par exemple %s)."
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 msgid ""
@@ -15406,20 +15413,14 @@ msgid "With your current configuration the following will happen:"
 msgstr "Avec votre configuration actuelle, il se passe ce qui suit :"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
-#, fuzzy
-#| msgid ""
-#| "With |Date| the ticket numbers will be generated by the current date, the "
-#| "SystemID and the counter. The format looks like \"Year.Month.Day.SystemID."
-#| "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgid ""
 "With |Date| the ticket numbers will be generated by the current date, the "
 "SystemID, and the counter. The format will be \"Year.Month.Day.SystemID."
 "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgstr ""
 "Avec |Date| la numérotation des tickets sera générée avec la date du jour, "
-"l'identifiant système et le compteur. Le format apparaîtra comme \"Année."
-"Mois.Jour.IDSystème.Compteur\" (par exemple 201707101010138, "
-"201707101010139)."
+"l'identifiant système et le compteur. Le format sera \"Année.Mois.Jour."
+"IDSystème.Compteur\" (par exemple 201707101010138, 201707101010139)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Woo hoo! Your email address has been verified!"
@@ -15681,25 +15682,17 @@ msgid "You have exceeded the character limit by %s"
 msgstr "Vous avez dépassé la limite de caractères de %s"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
-#, fuzzy
-#| msgid "Sorry, but you have insufficient rights to open this page."
 msgid "You have insufficient rights to view this organization."
 msgstr ""
-"Désolé, mais vous n'avez pas les droits suffisants pour ouvrir cette page."
+"Vous n'avez pas les droits suffisants pour consulter cette organisation."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-#, fuzzy
-#| msgid "Sorry, but you have insufficient rights to open this page."
 msgid "You have insufficient rights to view this ticket."
-msgstr ""
-"Désolé, mais vous n'avez pas les droits suffisants pour ouvrir cette page."
+msgstr "Vous n'avez pas les droits suffisants pour consulter ce ticket."
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
-#, fuzzy
-#| msgid "Sorry, but you have insufficient rights to open this page."
 msgid "You have insufficient rights to view this user."
-msgstr ""
-"Désolé, mais vous n'avez pas les droits suffisants pour ouvrir cette page."
+msgstr "Vous n'avez pas les droits suffisants pour consulter cet utilisateur."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
@@ -15707,7 +15700,7 @@ msgstr "Vous n'avez actuellement pas de %s configuré."
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have no tickets to display in this overview."
-msgstr "Vous n'avez pas de tickets à afficher dans cette vue d'ensemble."
+msgstr "Vous n'avez pas de ticket à afficher dans cette vue d'ensemble."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "You have no unread messages"
@@ -16676,10 +16669,8 @@ msgid "is required"
 msgstr "est requis"
 
 #: lib/validations/object_manager/attribute_validator/required.rb
-#, fuzzy
-#| msgid "is required"
 msgid "is required but missing"
-msgstr "est requis"
+msgstr "est requis mais manquant"
 
 #, fuzzy
 #| msgid "is required"
@@ -16873,7 +16864,7 @@ msgstr "non"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "no issues"
-msgstr "Pas de tickets"
+msgstr "Pas de ticket"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -17029,10 +17020,8 @@ msgid "reply all"
 msgstr "Répondre"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "is required"
 msgid "required"
-msgstr "est requis"
+msgstr "obligatoire"
 
 #: db/seeds/settings.rb
 msgid "right"
@@ -17163,7 +17152,7 @@ msgstr "séparer"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
-msgstr "support@example.com"
+msgstr "support@exemple.com"
 
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
@@ -17307,7 +17296,7 @@ msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
-"|Incrémente| augmente le numéro du ticket. L'IDSystème et le compteur sont "
+"|Incrémenter| augmente le numéro du ticket. L'IDSystème et le compteur sont "
 "utilisés au format \"IDSystème.Counter\" (par ex : 1010138, 1010139)."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
@@ -17330,11 +17319,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Right| means |Some Subject [Ticket#12345]|"
-msgstr "|Droit| signifie |Sujet du ticket [Ticket#12345]|"
+msgstr "|Droite| signifie |Sujet du ticket [Ticket#12345]|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#, fuzzy
-#| msgid "...add object link URL"
 msgid "…add object link URL"
 msgstr "...ajouter un lien hypertexte"
 
