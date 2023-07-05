@@ -2707,10 +2707,6 @@ msgstr ""
 msgid "Contributing Translations"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Controls if by updating the primary organization of a user, the 100 most recent existing tickets for this user are updated as well."
-msgstr ""
-
 #: lib/sessions/event/chat_transfer.rb
 msgid "Conversation is transferred into another chat. Please stay tuned."
 msgstr ""
@@ -3486,6 +3482,10 @@ msgid "Defines if the application is in developer mode (all users have the same 
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Defines if the change of the primary organization of a user will update the 100 most recent tickets for this user as well."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines if the core workflow communication should run over ajax instead of websockets."
 msgstr ""
 
@@ -4175,6 +4175,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Do not sign email"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Do not update any tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
@@ -7806,10 +7810,6 @@ msgstr ""
 msgid "No template created yet."
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "No tickets are updated."
-msgstr ""
-
 #: app/controllers/users_controller.rb
 msgid "No token!"
 msgstr ""
@@ -11031,10 +11031,6 @@ msgstr ""
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "The most recent tickets are updated."
-msgstr ""
-
 #: app/models/ticket/number.rb
 msgid "The new ticket number could not be generated."
 msgstr ""
@@ -12608,6 +12604,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/models/setting.coffee
 msgid "Update successful."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Update the most recent tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/models/application.coffee

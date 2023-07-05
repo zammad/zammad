@@ -9,7 +9,7 @@ class TicketOrganizationReassignment < ActiveRecord::Migration[6.1]
       title:       'Ticket Organization Reassignment',
       name:        'ticket_organization_reassignment',
       area:        'Ticket::Base',
-      description: 'Controls if by updating the primary organization of a user, the 100 most recent existing tickets for this user are updated as well.',
+      description: 'Defines if the change of the primary organization of a user will update the 100 most recent tickets for this user as well.',
       options:     {
         form: [
           {
@@ -18,8 +18,8 @@ class TicketOrganizationReassignment < ActiveRecord::Migration[6.1]
             name:      'ticket_organization_reassignment',
             tag:       'boolean',
             options:   {
-              true  => 'The most recent tickets are updated.',
-              false => 'No tickets are updated.',
+              true  => 'Update the most recent tickets.',
+              false => 'Do not update any tickets.',
             },
             translate: true,
           },
