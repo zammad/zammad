@@ -753,4 +753,34 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
       end
     end
   end
+
+  describe 'popover closes when item is opened', authenticated_as: :authenticate do
+    let(:agent) { create(:agent, groups: Group.all) }
+
+    def authenticate
+      ticket_1 && ticket_2
+      agent
+    end
+
+    before do
+      fill_in id: 'global-search', with: 'Testing'
+    end
+
+    it 'closes popover when item is clicked' do
+      elem = first('a.nav-tab.ticket-popover')
+      popover_on_hover(elem)
+      expect(page).to have_css('.popover')
+      elem.click
+      expect(page).to have_no_css('.popover')
+    end
+
+    it 'closes popover when item is opened via keyboard' do
+      first('a.nav-tab.ticket-popover') # ensure search results are visible
+      send_keys(:down) # go to detailed search
+      send_keys(:down) # go to first ticket
+      expect(page).to have_css('.popover')
+      send_keys(:enter) # open
+      expect(page).to have_no_css('.popover')
+    end
+  end
 end
