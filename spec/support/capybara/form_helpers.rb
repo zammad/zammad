@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-require_relative './test_flags'
+require_relative 'test_flags'
 
 # Form helpers below are loaded for the new stack app only and provide functions for returning the form field elements.
 module FormHelpers

@@ -928,3 +928,28 @@ Style/OptionalBooleanParameter:
 Lint/MissingSuper:
   Exclude:
     - 'lib/sequencer/unit/exchange/connection.rb'
+
+Style/ReturnNilInPredicateMethodDefinition:
+  Exclude:
+    - app/models/application_model/can_lookup_search_index_attributes.rb
+    - app/models/channel/filter/import_archive.rb
+    - app/models/core_workflow/attributes.rb
+    - app/models/core_workflow/condition.rb
+    - app/models/ticket/article/adds_metadata_email.rb
+    - app/models/ticket/article/adds_metadata_general.rb
+    - app/models/ticket/article/adds_metadata_origin_by_id.rb
+    - app/models/ticket/selector/base.rb
+    - app/models/trigger.rb
+    - app/models/user/avatar.rb
+    - app/policies/ticket/shared_draft_start_policy.rb
+    - app/services/service/ticket/create.rb
+    - lib/auth/backend/ldap.rb
+    - lib/enrichment/clearbit/organization.rb
+    - lib/enrichment/clearbit/user.rb
+    - lib/html_sanitizer/scrubber/link.rb
+    - lib/html_sanitizer/scrubber/remove_last_empty_node.rb
+    - lib/html_sanitizer/scrubber/wipe.rb
+    - lib/import/otrs/diff.rb
+    - lib/search_index_backend.rb
+    - lib/sequencer/unit/import/kayako/sub_sequence/generic.rb
+    - lib/sessions/event/base.rb

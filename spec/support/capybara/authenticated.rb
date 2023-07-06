@@ -6,7 +6,7 @@
 # we need to make sure that Capybara is configured/started before
 # this hook. Otherwise a login try is performed while the app/puma
 # hasn't started yet.
-require_relative './driven_by'
+require_relative 'driven_by'
 
 RSpec.configure do |config|
 

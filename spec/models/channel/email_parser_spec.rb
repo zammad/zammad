@@ -8,7 +8,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     shared_examples 'parses email correctly' do |stored_email|
       context "for #{stored_email}" do
         let(:yml_file)                 { stored_email.ext('yml') }
-        let(:content)                  { YAML.load(File.read(yml_file), permitted_classes: [ActiveSupport::HashWithIndifferentAccess]) }
+        let(:content)                  { YAML.load_file(yml_file, permitted_classes: [ActiveSupport::HashWithIndifferentAccess]) }
         let(:parsed)                   { described_class.new.parse(File.read(stored_email)) }
         let(:expected_msg)             { content.except(:attachments) }
         let(:parsed_msg)               { parsed.slice(*expected_msg.keys) }

@@ -51,7 +51,6 @@ RSpec.configure do |config|
       clear_jobs
 
       example.run
-
     ensure
       ActiveJob::Base.queue_adapter = default_queue_adapter
     end

@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-require_relative './set_up'
+require_relative 'set_up'
 
 RSpec.configure do |config|
   capybara_examples_performed = 0

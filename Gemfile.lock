@@ -269,6 +269,7 @@ GEM
       faraday-multipart
       json (>= 1.8)
       rexml
+    language_server-protocol (3.17.0.3)
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -485,8 +486,9 @@ GEM
       rspec-core (> 3.3)
     rspec-support (3.12.1)
     rszr (1.3.0)
-    rubocop (1.52.1)
+    rubocop (1.54.1)
       json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
       parser (>= 3.2.2.3)
       rainbow (>= 2.2.2, < 4.0)
