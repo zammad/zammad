@@ -10,7 +10,7 @@ class CoreWorkflow extends App.ControllerSubContent
       el: @el
       id: @id
       genericObject: 'CoreWorkflow'
-      defaultSortBy: 'name'
+      defaultSortBy: 'priority, name'
       pageData:
         home: 'core_workflow'
         object: __('Workflow')
