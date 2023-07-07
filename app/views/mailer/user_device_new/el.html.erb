@@ -1,0 +1,19 @@
+#{config.product_name} Σύνδεση από μια νέα συσκευή
+
+<div>Hi #{user.firstname},</div>
+<br>
+<div>Φαίνεται ότι συνδεθήκατε στον λογαριασμό σας <b>χρησιμοποιώντας μια νέα συσκευή</b>, στις "#{user_device.created_at}":</div>
+<br>
+<div>
+Η συσκευή σας: #{user_device.name}<br>
+Η τοποθεσία σας (σχετική θέση): #{user_device.location}<br>
+Η IP σας: #{user_device.ip}<br>
+</div>
+<br>
+<div>Η συσκευή σας προστέθηκε στη λίστα των συσκευών, την οποία μπορείτε να δείτε εδώ:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Εάν η σύνδεση δεν έγινε από εσάς, παρακαλούμε όπως αφαιρέσετε τη συσκευή, αλλάξετε τον κωδικό του λογαριασμού σας και επικοινωνήσετε με τον διαχειριστή σας. Ίσως κάποιος έχει αποκτήσει μη εξουσιοδοτημένη πρόσβαση στον λογαριασμό σας.</div>
+<br>
+<div>Από την Ομάδα #{config.product_name}</div>
