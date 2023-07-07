@@ -189,7 +189,7 @@ $(function() {
       },
       'pl': {
         'Attachments': 'Załączniki',
-        'Email': 'E-Mail',
+        'Email': 'E-mail',
         'Message': 'Wiadomość',
         'Name': 'Nazwa',
         'Your Email': 'Adres e-mail',
