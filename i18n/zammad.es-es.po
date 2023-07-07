@@ -494,6 +494,10 @@ msgstr "%s minutos atrás"
 msgid "%s months ago"
 msgstr "%s meses atrás"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+msgid "%s new replies"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
 msgstr "Se han creado %s objeto(s)."
@@ -740,6 +744,12 @@ msgstr "1 minuto atrás"
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
 msgstr "1 mes atrás"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+#, fuzzy
+#| msgid "reply"
+msgid "1 new reply"
+msgstr "responder"
 
 #: db/seeds/settings.rb
 msgid "1 week"
@@ -1230,7 +1240,7 @@ msgid "Add ordered list"
 msgstr "Añadir una lista ordenada"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Add reply"
 msgstr "Añadir respuesta"
 
@@ -1639,11 +1649,11 @@ msgstr "Aplicaciones"
 msgid "Apply"
 msgstr "Aplicar"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Apply Draft"
 msgstr "Aplicar borrador"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
 msgstr "Aplicar borrador compartido"
 
@@ -1718,9 +1728,9 @@ msgstr "¿Seguro que desea eliminar \"%s\"?"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
 msgstr "¿Estás seguro?"
 
@@ -1913,6 +1923,13 @@ msgstr "Adjuntos"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
 msgstr "Asistentes"
+
+#: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
+msgid ""
+"Attention! Changing the organization will update the user's most recent "
+"tickets to the new organization."
+msgstr ""
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -2534,12 +2551,40 @@ msgstr "Diseño de la página de Categorías"
 msgid "Caution!"
 msgstr "¡Precaución!"
 
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Certificate for verification could not be found."
+msgid "Certificate for %s found, but expired."
+msgstr "El certificado para la verificación no se ha encontrado."
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Certificate for verification could not be found."
+msgid "Certificate for %s found."
+msgstr "El certificado para la verificación no se ha encontrado."
+
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
 msgstr "El certificado para la verificación no se ha encontrado."
 
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Locale not found"
+msgid "Certificate not found."
+msgstr "Traducción no encontrada"
+
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
+msgstr "Certificados & Claves Privadas"
+
+#: app/models/form_updater/concerns/has_security_options.rb
+msgid "Certificates found for %s, but expired."
+msgstr ""
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Certificates & Private Keys"
+msgid "Certificates found for %s."
 msgstr "Certificados & Claves Privadas"
 
 #: app/assets/javascripts/app/models/group.coffee
@@ -2598,8 +2643,8 @@ msgstr "Modificaciones"
 msgid "Changes could not be loaded."
 msgstr "Las modificaciones no ha podido ser cargadas."
 
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-#: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 msgid "Changes could not be saved."
 msgstr "Los cambios no se han guardado."
 
@@ -3101,7 +3146,7 @@ msgstr "Confirmar/enviar diálogo"
 msgid "Confirmation"
 msgstr "Confirmación"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Confirmation failed."
 msgstr "La confirmación ha fallado."
 
@@ -3345,7 +3390,7 @@ msgstr "Crear Administrador"
 msgid "Create Channel"
 msgstr "Crear Canal"
 
-#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
 msgstr "Crear Base de Datos de Conocimiento"
 
@@ -3893,10 +3938,6 @@ msgstr "Define las notificaciones de agente por defecto para usuarios nuevos."
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr "Define el número máximo de tickets mostrados en las vistas generales."
 
-#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-msgid "Define the unit to be shown next to the time accounting input field."
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr "Define el nombre del índice para ElasticSearch."
@@ -4173,6 +4214,12 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
+"Defines if the change of the primary organization of a user will update the "
+"100 most recent tickets for this user as well."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
 "Defines if the core workflow communication should run over ajax instead of "
 "websockets."
 msgstr ""
@@ -4403,10 +4450,6 @@ msgid "Defines processing timeout for the html sanitizer."
 msgstr "Define el tiempo de espera máximo para el limpiador HTML."
 
 #: db/seeds/settings.rb
-msgid "Defines searchable models."
-msgstr "Define modelos buscables."
-
-#: db/seeds/settings.rb
 msgid "Defines sync transaction backend."
 msgstr "Define el back-end de sincronización de transacciones."
 
@@ -4595,10 +4638,6 @@ msgid "Defines the random application secret."
 msgstr "Define la clave secreta de la aplicación (aleatoria)."
 
 #: db/seeds/settings.rb
-msgid "Defines the searchable models."
-msgstr "Define modelos buscables."
-
-#: db/seeds/settings.rb
 msgid "Defines the sender email address of Icinga emails."
 msgstr ""
 "Define la dirección de correo electrónico de origen remitente de mensajes de "
@@ -4719,6 +4758,7 @@ msgstr ""
 "Define el back-end de transacciones que obtendrá información adicional de "
 "clientes y organizaciones de Clearbit (http://www.clearbit.com)."
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: db/seeds/settings.rb
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr ""
@@ -4808,7 +4848,7 @@ msgstr "Eliminar cliente"
 msgid "Delete File"
 msgstr "Borrar archivo"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Delete Knowledge Base"
 msgstr "Borrar Base de Conocimiento"
 
@@ -5072,6 +5112,12 @@ msgstr "No cifrar mensajes de correo electrónico"
 msgid "Do not sign email"
 msgstr "No firmar mensajes de correo electrónico"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "You currently don't have any tickets."
+msgid "Do not update any tickets."
+msgstr "No tiene tickets en la actualidad."
+
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Do not use the proxy for the following hosts."
 msgstr "No utilizar proxy para los siguientes hosts."
@@ -5081,7 +5127,7 @@ msgstr "No utilizar proxy para los siguientes hosts."
 msgid "Do you really want to delete \"%s\"?"
 msgstr "¿Confirma que desea eliminar el objeto \"%s\"?"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Do you really want to delete this draft?"
 msgstr "¿Confirma que desea eliminar este borrador?"
 
@@ -5243,7 +5289,7 @@ msgid "Edit mask"
 msgstr "Editar máscara"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Edit reply"
 msgstr "Editar respuesta"
 
@@ -5680,11 +5726,12 @@ msgid "Encrypted"
 msgstr "Cifrado"
 
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Encryption"
 msgstr "Cifrado"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "Encryption:"
 msgstr "Cifrado:"
 
@@ -6863,7 +6910,7 @@ msgstr ""
 "Aquí se pueden crear nuevos casos, clientes y organizaciones (dependiendo de "
 "los permisos configurados)."
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "Here you can create one."
 msgstr "Aquí puede crear uno."
 
@@ -7555,6 +7602,12 @@ msgstr "¡Recibido client_id no válido!"
 #: app/models/user.rb
 msgid "Invalid email '%{email}'"
 msgstr "Correo inválido '%{email}'"
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Enter a valid email address."
+msgid "Invalid email address."
+msgstr "Introduzca una dirección de correo electrónico válida."
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
@@ -9048,6 +9101,12 @@ msgstr "No se ha encontrado ninguna cámara."
 msgid "No categories"
 msgstr "Sin categorías"
 
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "No certificate for %s found."
+msgstr "Sonido de Notificación"
+
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
 msgstr "Sin configuración."
@@ -9096,6 +9155,12 @@ msgstr "No se han encontrado carpetas para las credenciales proporcionadas."
 msgid "No linked issues"
 msgstr "No hay problemas vinculados"
 
+#: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco
+#, fuzzy
+#| msgid "No session available."
+msgid "No macros available."
+msgstr "Ninguna sesión disponible."
+
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "No existen búsquedas previas"
@@ -9103,6 +9168,12 @@ msgstr "No existen búsquedas previas"
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
 msgstr "No hay proxy para los siguientes hosts."
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "No record found!"
+msgid "No recipient found."
+msgstr "¡No se encuentran registros!"
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
@@ -9724,7 +9795,7 @@ msgstr "Visión general"
 msgid "Overviews are …"
 msgstr "Resumen…"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
 msgstr "Sobreescribir borrador"
 
@@ -9886,7 +9957,7 @@ msgstr "Las personas que crean Tickets piden ayuda."
 msgid "Perform actions"
 msgstr "Ejecutar acciones"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
 msgstr "Eliminar permanentemente la base de conocimiento"
 
@@ -10099,6 +10170,7 @@ msgstr "Puerto"
 msgid "Position"
 msgstr "Posición"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 msgid "Postmaster Filter"
 msgstr "Filtro Postmaster"
@@ -10126,7 +10198,9 @@ msgid "Pre-defined webhook for %s."
 msgstr "Webhook predefinido para %s."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-msgid "Press the button below to finish the set up."
+#, fuzzy
+#| msgid "Press the button below to finish the set up."
+msgid "Press the button below to finish the setup."
 msgstr "Pulse el botón de abajo para terminar la configuración."
 
 #: db/seeds/settings.rb
@@ -11009,7 +11083,7 @@ msgstr "Sábado"
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Save"
 msgstr "Guardar"
 
@@ -11017,7 +11091,7 @@ msgstr "Guardar"
 msgid "Save Codes"
 msgstr "Guardar códigos"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
 msgstr "Guardar borrador"
@@ -11051,6 +11125,7 @@ msgstr "Programar para"
 msgid "Scheduled for"
 msgstr "programado para"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/job.coffee db/seeds/permissions.rb
 msgid "Scheduler"
 msgstr "Programador"
@@ -11070,6 +11145,18 @@ msgstr "Pantalla"
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr "El script puede encontrarse en ||%s|| y debe ser ejecutable."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+#, fuzzy
+#| msgid "Move down"
+msgid "Scroll down"
+msgstr "Más abajo"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+#, fuzzy
+#| msgid "Scroll down to see new messages"
+msgid "Scroll down to see %s new replies"
+msgstr "Desplace hacia abajo para ver nuevos mensajes"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
@@ -11157,6 +11244,12 @@ msgstr "Código de seguridad"
 msgid "Security Error"
 msgstr "Error de seguridad"
 
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
+#, fuzzy
+#| msgid "Information"
+msgid "Security Information"
+msgstr "Información"
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Security Key"
 msgstr "Llave de seguridad"
@@ -11173,7 +11266,9 @@ msgid "Security key \"%s\" will be removed."
 msgstr "Se eliminará la llave de seguridad \"%s\"."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
-msgid "Security key set up failed."
+#, fuzzy
+#| msgid "Security key set up failed."
+msgid "Security key setup failed."
 msgstr "Configuración de llave de seguridad fallida."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
@@ -11253,6 +11348,10 @@ msgstr "Seleccione el tipo de ticket que está creando"
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr "Condiciones seleccionadas"
+
+#: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
+msgid "Selected tickets do not match any macros."
+msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Selective (default)"
@@ -11572,7 +11671,7 @@ msgstr "Mostrar"
 msgid "Show %s more"
 msgstr "Mostrar %s más"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Show Draft"
 msgstr "Mostrar borrador"
 
@@ -11672,7 +11771,6 @@ msgstr "Adjuntos del menú lateral"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Sign"
 msgstr "Firmar"
 
@@ -11712,6 +11810,8 @@ msgid "Sign up"
 msgstr "Registrarse"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "Sign:"
 msgstr "Firmar:"
 
@@ -12117,8 +12217,9 @@ msgstr "Sincronizar con equipo"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
-#: db/seeds/ticket_article_senders.rb
+#: app/assets/javascripts/app/controllers/manage.coffee
+#: app/assets/javascripts/app/views/generic/history.jst.eco
+#: db/seeds/permissions.rb db/seeds/ticket_article_senders.rb
 msgid "System"
 msgstr "Sistema"
 
@@ -12352,7 +12453,7 @@ msgstr "Gracias por unirte. Enviamos un email para \"%s\"."
 msgid "The API token could not be found."
 msgstr "No se pudo localizar el token de API."
 
-#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee
 msgid "The Knowledge Base could not be created."
 msgstr "No se pudo crear la Base de Conocimientos."
 
@@ -12691,10 +12792,6 @@ msgstr "No se pudo encontrar la página"
 msgid "The page you were looking for does not exist."
 msgstr "La página que busca no existe."
 
-#: app/controllers/users_controller.rb
-msgid "The parameter \"password\" is missing!"
-msgstr "¡Falta el parámetro \"contraseña\"!"
-
 #: app/controllers/mentions_controller.rb
 msgid "The parameter 'mentionable_type' is invalid."
 msgstr "El parámetro 'mentionable_type' no es válido."
@@ -12767,7 +12864,7 @@ msgstr "El token proporcionado no es válido."
 msgid "The report could not be generated"
 msgstr "No se pudo generar el informe"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr "No se pudo procesar la solicitud."
 
@@ -12896,6 +12993,12 @@ msgstr "Falta el parámetro requerido 'options.adapter'."
 
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'params' is missing."
+msgstr "Falta el parámetro requerido 'params'."
+
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "The required parameter 'params' is missing."
+msgid "The required parameter 'password' is missing."
 msgstr "Falta el parámetro requerido 'params'."
 
 #: app/models/core_workflow/result.rb
@@ -13063,7 +13166,7 @@ msgstr ""
 msgid "The username or password is incorrect."
 msgstr "El nombre de usuario o contraseña es incorrecto."
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr ""
@@ -13109,11 +13212,11 @@ msgstr "Hay varias razones posibles por las que no se muestre el chat:"
 msgid "There are too many people in the chat queue."
 msgstr "Demasiadas personas en la cola de chat."
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr "Ya existe un borrador. ¿Desea sobreescribirlo?"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr "Ya existe contenido. ¿Desea sobreescribirlo?"
 
@@ -13579,6 +13682,12 @@ msgstr "Incremento del número de ticket por fecha"
 #: db/seeds/settings.rb
 msgid "Ticket Number ignore system_id"
 msgstr "El número de ticket ignora system_id"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Ticket Organization Reassignment"
+msgstr "Tickets de la organización"
 
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
@@ -14187,6 +14296,7 @@ msgid "Triggers are …"
 msgstr "Los disparadores son …"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try Another Method"
 msgstr "Probar otro método"
 
@@ -14503,6 +14613,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/setting.coffee
 msgid "Update successful."
 msgstr "Actualización realizada."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "The object could not be updated."
+msgid "Update the most recent tickets."
+msgstr "No se pudo actualizar el objeto."
 
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -14902,7 +15018,7 @@ msgstr ""
 msgid "VIP"
 msgstr "VIP"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Validation failed"
 msgstr "Validación fallida"
 
@@ -15141,8 +15257,8 @@ msgstr "Web"
 msgid "Web (in)"
 msgstr "Web (entrante)"
 
-#: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
-#: app/assets/javascripts/app/views/knowledge_base/server_snippet.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee
 msgid "Web Server Configuration"
 msgstr "Configuración de servidor web"
 
@@ -15257,7 +15373,7 @@ msgstr "¡Bienvenido!"
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "¡Le doy la bienvenida! ¡Hágame una pregunta si desea!"
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "What can you do here?"
 msgstr "¿Qué puedes hacer aquí?"
 
@@ -15445,7 +15561,7 @@ msgstr "Amarillo"
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Yes"
 msgstr "Sí"
 
@@ -15663,6 +15779,12 @@ msgstr "No tiene derechos suficientes para ver este ticket."
 msgid "You have insufficient rights to view this user."
 msgstr "Lo sentimos, no tiene derechos suficientes para ver este usuario."
 
+#: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
+msgid ""
+"You have no change permission or you are a customer for some of the selected "
+"tickets."
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
 msgstr "No tiene configurado ningún %s en este momento."
@@ -15682,10 +15804,6 @@ msgstr "Aún no ha creado un ticket."
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "You have to allow access to your webcam."
 msgstr "Debe conceder acceso a su webcam."
-
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-msgid "You have unsaved changes."
-msgstr "Usted tiene cambios no guardados."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
 msgid "You must protect your account with two-factor authentication."
@@ -16298,6 +16416,10 @@ msgstr "adjunto"
 msgid "enclosure"
 msgstr "recinto"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "ends with"
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
 msgstr "escalado"
@@ -16507,7 +16629,6 @@ msgstr "en proceso"
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco
-#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
 msgid "inactive"
 msgstr "inactivo"
 
@@ -17042,6 +17163,12 @@ msgstr "usuario especifico"
 msgid "split"
 msgstr "dividir"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "Users with \"%s\""
+msgid "starts with"
+msgstr "Usuarios con \"%s\""
+
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "soporte@ejemplo.com"
@@ -17220,6 +17347,23 @@ msgstr "...de toda la zona de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ tiempo de espera de hoy"
+
+#, fuzzy
+#~| msgid "Ticket update"
+#~ msgid "No tickets are updated."
+#~ msgstr "Ticket actualizado"
+
+#~ msgid "The parameter \"password\" is missing!"
+#~ msgstr "¡Falta el parámetro \"contraseña\"!"
+
+#~ msgid "You have unsaved changes."
+#~ msgstr "Usted tiene cambios no guardados."
+
+#~ msgid "Defines searchable models."
+#~ msgstr "Define modelos buscables."
+
+#~ msgid "Defines the searchable models."
+#~ msgstr "Define modelos buscables."
 
 #~ msgid "Invalid payload, need data:image in logo param"
 #~ msgstr ""

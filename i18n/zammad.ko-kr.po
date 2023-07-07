@@ -374,6 +374,10 @@ msgstr "%s 분전"
 msgid "%s months ago"
 msgstr "%s 달전"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+msgid "%s new replies"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
 msgstr "%s 객체 (들)가 생성되었다."
@@ -623,6 +627,12 @@ msgstr "분"
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+#, fuzzy
+#| msgid "reply"
+msgid "1 new reply"
+msgstr "댓글"
 
 #: db/seeds/settings.rb
 msgid "1 week"
@@ -1127,7 +1137,7 @@ msgid "Add ordered list"
 msgstr "정렬 된 목록과 같은 형식"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 #, fuzzy
 #| msgid "reply"
 msgid "Add reply"
@@ -1519,13 +1529,13 @@ msgstr "응용 프로그램"
 msgid "Apply"
 msgstr "적용"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #, fuzzy
 #| msgid "Apply"
 msgid "Apply Draft"
 msgstr "적용"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
 msgstr ""
 
@@ -1602,9 +1612,9 @@ msgstr "이 개체를 삭제해야?"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
 msgstr "확실한가요?"
 
@@ -1803,6 +1813,13 @@ msgstr "첨부파일"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
+msgstr ""
+
+#: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
+msgid ""
+"Attention! Changing the organization will update the user's most recent "
+"tickets to the new organization."
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -2461,14 +2478,40 @@ msgstr ""
 msgid "Caution!"
 msgstr "지속"
 
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "When notification is being sent."
+msgid "Certificate for %s found, but expired."
+msgstr "알림이 전송 될 때."
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "When notification is being sent."
+msgid "Certificate for %s found."
+msgstr "알림이 전송 될 때."
+
 #: lib/secure_mailing/smime/incoming.rb
 #, fuzzy
 #| msgid "When notification is being sent."
 msgid "Certificate for verification could not be found."
 msgstr "알림이 전송 될 때."
 
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "Certificate not found."
+msgstr "알림 소리"
+
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
+msgstr ""
+
+#: app/models/form_updater/concerns/has_security_options.rb
+msgid "Certificates found for %s, but expired."
+msgstr ""
+
+#: app/models/form_updater/concerns/has_security_options.rb
+msgid "Certificates found for %s."
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
@@ -2537,8 +2580,8 @@ msgstr "변경"
 msgid "Changes could not be loaded."
 msgstr "%s 객체 (들)이 생성된다."
 
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-#: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Changes could not be saved."
@@ -3060,7 +3103,7 @@ msgstr "대화 상자를 제출 / 확인"
 msgid "Confirmation"
 msgstr "구성"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Confirmation failed."
 msgstr ""
 
@@ -3305,7 +3348,7 @@ msgstr "관리자 만들기"
 msgid "Create Channel"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
 msgstr ""
 
@@ -3870,10 +3913,6 @@ msgstr "새 메모의 기본 가시성."
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr ""
 
-#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-msgid "Define the unit to be shown next to the time accounting input field."
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr ""
@@ -4119,6 +4158,12 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
+"Defines if the change of the primary organization of a user will update the "
+"100 most recent tickets for this user as well."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
 "Defines if the core workflow communication should run over ajax instead of "
 "websockets."
 msgstr ""
@@ -4292,10 +4337,6 @@ msgstr "꽤 날짜 형식을 정의합니다."
 
 #: db/seeds/settings.rb
 msgid "Defines processing timeout for the html sanitizer."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines searchable models."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4494,10 +4535,6 @@ msgid "Defines the random application secret."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the searchable models."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines the sender email address of Icinga emails."
 msgstr ""
 
@@ -4601,6 +4638,7 @@ msgid ""
 "information from Clearbit (http://www.clearbit.com)."
 msgstr ""
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: db/seeds/settings.rb
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr ""
@@ -4685,7 +4723,7 @@ msgstr "고객 삭제"
 msgid "Delete File"
 msgstr "파일 삭제"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Delete Knowledge Base"
 msgstr "지식 삭제"
 
@@ -4968,6 +5006,12 @@ msgstr ""
 msgid "Do not sign email"
 msgstr ""
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "You have not created a ticket yet."
+msgid "Do not update any tickets."
+msgstr "아직 Ticket을 만들지 않았습니다."
+
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
 #| msgid "No proxy for the following hosts."
@@ -4981,7 +5025,7 @@ msgstr "다음 호스트에 대한 프록시 없습니다."
 msgid "Do you really want to delete \"%s\"?"
 msgstr "이 개체를 삭제해야?"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid "Do you really want to delete this draft?"
@@ -5143,7 +5187,7 @@ msgid "Edit mask"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 #, fuzzy
 #| msgid "reply"
 msgid "Edit reply"
@@ -5566,11 +5610,12 @@ msgid "Encrypted"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Encryption"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 #, fuzzy
 #| msgid "Encrypt"
 msgid "Encryption:"
@@ -6790,7 +6835,7 @@ msgid ""
 "your configured permissions)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "Here you can create one."
 msgstr "여기에 하나를 만들 수 있습니다."
 
@@ -7473,6 +7518,12 @@ msgstr ""
 #: app/models/user.rb
 msgid "Invalid email '%{email}'"
 msgstr ""
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Invalid email address."
+msgstr "사용자 이름 또는 이메일 주소를 입력"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
@@ -9000,6 +9051,12 @@ msgstr ""
 msgid "No categories"
 msgstr "카테고리 없음"
 
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "No certificate for %s found."
+msgstr "알림 소리"
+
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
 #| msgid "Save configuration"
@@ -9058,6 +9115,10 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco
+msgid "No macros available."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #, fuzzy
 #| msgid "Previous tab"
@@ -9067,6 +9128,12 @@ msgstr "이전 탭"
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
 msgstr "다음 호스트에 대한 프록시 없습니다."
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "matches"
+msgid "No recipient found."
+msgstr "성냥"
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
@@ -9716,7 +9783,7 @@ msgstr "Overviews"
 msgid "Overviews are …"
 msgstr "Overview"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
 msgstr ""
 
@@ -9890,7 +9957,7 @@ msgstr "Ticket을 만드는 사람들은 도움을 요청."
 msgid "Perform actions"
 msgstr "Ticket 에스컬레이션"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
 msgstr ""
 
@@ -10100,6 +10167,7 @@ msgstr "포트"
 msgid "Position"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 msgid "Postmaster Filter"
 msgstr ""
@@ -10129,7 +10197,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 #, fuzzy
 #| msgid "Please click the button below to create your first one."
-msgid "Press the button below to finish the set up."
+msgid "Press the button below to finish the setup."
 msgstr "첫 번째 하나를 만들려면 아래 버튼을 클릭하십시오."
 
 #: db/seeds/settings.rb
@@ -11034,7 +11102,7 @@ msgstr "토요일"
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Save"
 msgstr "저장"
 
@@ -11044,7 +11112,7 @@ msgstr "저장"
 msgid "Save Codes"
 msgstr "보안"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #, fuzzy
 #| msgid "Draft"
@@ -11082,6 +11150,7 @@ msgstr ""
 msgid "Scheduled for"
 msgstr "예정"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/job.coffee db/seeds/permissions.rb
 msgid "Scheduler"
 msgstr "스케줄러"
@@ -11103,6 +11172,18 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+#, fuzzy
+#| msgid "Move up and down"
+msgid "Scroll down"
+msgstr "위로 이동 및 아래로"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+#, fuzzy
+#| msgid "Scroll down to see new messages"
+msgid "Scroll down to see %s new replies"
+msgstr "새 메시지를 볼 수 아래로 스크롤"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
@@ -11200,6 +11281,12 @@ msgstr "보안"
 msgid "Security Error"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Security Information"
+msgstr "블록 알림"
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #, fuzzy
 #| msgid "Security"
@@ -11220,8 +11307,10 @@ msgid "Security key \"%s\" will be removed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
-msgid "Security key set up failed."
-msgstr ""
+#, fuzzy
+#| msgid "Resend verification email"
+msgid "Security key setup failed."
+msgstr "확인 이메일을 다시 보내"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
@@ -11303,6 +11392,10 @@ msgstr "Ticket의 고객을 선택하거나 만듭니다."
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
+msgid "Selected tickets do not match any macros."
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
@@ -11654,7 +11747,7 @@ msgstr "보여 주다"
 msgid "Show %s more"
 msgstr "더보기"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 #, fuzzy
 #| msgid "Draft"
 msgid "Show Draft"
@@ -11767,7 +11860,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Sign"
 msgstr ""
 
@@ -11807,6 +11899,8 @@ msgid "Sign up"
 msgstr "가입"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 #, fuzzy
 #| msgid "Sign in"
 msgid "Sign:"
@@ -12239,8 +12333,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
-#: db/seeds/ticket_article_senders.rb
+#: app/assets/javascripts/app/controllers/manage.coffee
+#: app/assets/javascripts/app/views/generic/history.jst.eco
+#: db/seeds/permissions.rb db/seeds/ticket_article_senders.rb
 msgid "System"
 msgstr "체계"
 
@@ -12468,7 +12563,7 @@ msgstr "등록해주셔서 감사합니다. 이메일을 \"%s\"로 보넸습니�
 msgid "The API token could not be found."
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The Knowledge Base could not be created."
@@ -12835,10 +12930,6 @@ msgstr ""
 msgid "The page you were looking for does not exist."
 msgstr ""
 
-#: app/controllers/users_controller.rb
-msgid "The parameter \"password\" is missing!"
-msgstr ""
-
 #: app/controllers/mentions_controller.rb
 msgid "The parameter 'mentionable_type' is invalid."
 msgstr ""
@@ -12911,7 +13002,7 @@ msgstr ""
 msgid "The report could not be generated"
 msgstr "%s 객체 (들)이 생성된다."
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr ""
 
@@ -13038,6 +13129,10 @@ msgstr ""
 
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'params' is missing."
+msgstr ""
+
+#: app/controllers/users_controller.rb
+msgid "The required parameter 'password' is missing."
 msgstr ""
 
 #: app/models/core_workflow/result.rb
@@ -13207,7 +13302,7 @@ msgstr ""
 msgid "The username or password is incorrect."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "우리와 의사 소통을하는 방법은 \"Ticket\"이라는 것입니다."
@@ -13256,11 +13351,11 @@ msgstr "표시하지 않도록 채팅 여러 가지 이유가있을 수 있습�
 msgid "There are too many people in the chat queue."
 msgstr "채팅을위한 큐에 너무 많은 사람들이있다."
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr ""
 
@@ -13736,6 +13831,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Ticket Number ignore system_id"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Ticket Organization Reassignment"
+msgstr "조직의 Ticket"
 
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
@@ -14324,6 +14425,7 @@ msgid "Triggers are …"
 msgstr "트리거"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try Another Method"
 msgstr ""
 
@@ -14658,6 +14760,12 @@ msgstr "가져 오기 데이터에 지정된 특성을 가진 기존 레코드�
 #: app/assets/javascripts/app/models/setting.coffee
 msgid "Update successful."
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Update the most recent tickets."
+msgstr "%s 객체 (들) 업데이트됩니다."
 
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -15016,7 +15124,7 @@ msgstr ""
 msgid "VIP"
 msgstr "요일"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 #, fuzzy
 #| msgid "Bulk action executed!"
 msgid "Validation failed"
@@ -15276,8 +15384,8 @@ msgstr "편물"
 msgid "Web (in)"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
-#: app/assets/javascripts/app/views/knowledge_base/server_snippet.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee
 msgid "Web Server Configuration"
 msgstr ""
 
@@ -15389,7 +15497,7 @@ msgstr "환영합니다.!"
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "What can you do here?"
 msgstr "당신은 여기서 무엇을 할 수 있는가?"
 
@@ -15575,7 +15683,7 @@ msgstr "노랑"
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Yes"
 msgstr "예"
 
@@ -15777,6 +15885,12 @@ msgstr ""
 msgid "You have insufficient rights to view this user."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
+msgid ""
+"You have no change permission or you are a customer for some of the selected "
+"tickets."
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
 msgstr "당신은 더 지금 %s 권리를 구성 없었다."
@@ -15796,12 +15910,6 @@ msgstr "아직 Ticket을 만들지 않았습니다."
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "You have to allow access to your webcam."
 msgstr ""
-
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-#, fuzzy
-#| msgid "Discard your unsaved changes."
-msgid "You have unsaved changes."
-msgstr "저장되지 않은 변경 사항을 무시."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
 msgid "You must protect your account with two-factor authentication."
@@ -16429,6 +16537,10 @@ msgstr "닫기 완료"
 msgid "enclosure"
 msgstr "닫기"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "ends with"
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
 msgstr "에스컬레이션"
@@ -16661,7 +16773,6 @@ msgstr "진행 중"
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco
-#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
 msgid "inactive"
 msgstr "비활성"
 
@@ -17228,6 +17339,12 @@ msgstr "특정 사용자"
 msgid "split"
 msgstr "스플릿"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "Start new"
+msgid "starts with"
+msgstr "새로운 시작"
+
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -17421,6 +17538,16 @@ msgstr "... 전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#, fuzzy
+#~| msgid "Ticket update"
+#~ msgid "No tickets are updated."
+#~ msgstr "Ticket 업데이트"
+
+#, fuzzy
+#~| msgid "Discard your unsaved changes."
+#~ msgid "You have unsaved changes."
+#~ msgstr "저장되지 않은 변경 사항을 무시."
 
 #, fuzzy
 #~| msgid "%s Object(s) are created."

@@ -504,6 +504,10 @@ msgstr "%s นาทีก่อน"
 msgid "%s months ago"
 msgstr "%s หลายเดือนก่อน"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+msgid "%s new replies"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
 msgstr "%s อ็อบเจ็กต์ถูกสร้างขึ้นแล้ว."
@@ -773,6 +777,12 @@ msgstr "หนึ่งนาทีก่อน"
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
 msgstr "1 เดือนที่แล้ว"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+#, fuzzy
+#| msgid "reply"
+msgid "1 new reply"
+msgstr "ตอบกลับ"
 
 #: db/seeds/settings.rb
 msgid "1 week"
@@ -1272,7 +1282,7 @@ msgid "Add ordered list"
 msgstr "เพิ่มรายการสั่งซื้อ"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Add reply"
 msgstr "เพิ่ม ตอบกลับ"
 
@@ -1676,11 +1686,11 @@ msgstr "โปรแกรม"
 msgid "Apply"
 msgstr "ทำงาน"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Apply Draft"
 msgstr "นำแบบร่างไปใช้"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
 msgstr "ยืนยัน แบบร่างที่ใช้ร่วมกัน"
 
@@ -1759,9 +1769,9 @@ msgstr "คุณต้องการลบ \"%s\" หรือไม่?"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
 msgstr "แน่ใจหรือ?"
 
@@ -1965,6 +1975,13 @@ msgstr "แฟ้มแนบ"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
 msgstr "ผู้เข้าประชุม"
+
+#: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
+msgid ""
+"Attention! Changing the organization will update the user's most recent "
+"tickets to the new organization."
+msgstr ""
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -2589,12 +2606,40 @@ msgstr "เค้าโครงหน้าหมวดหมู่"
 msgid "Caution!"
 msgstr "ระมัดระวัง!"
 
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Certificate for verification could not be found."
+msgid "Certificate for %s found, but expired."
+msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Certificate for verification could not be found."
+msgid "Certificate for %s found."
+msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
+
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
 msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
 
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Locale not found"
+msgid "Certificate not found."
+msgstr "ไม่พบสถานที่"
+
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
+msgstr "ใบรับรอง & กุญแจส่วนตัว"
+
+#: app/models/form_updater/concerns/has_security_options.rb
+msgid "Certificates found for %s, but expired."
+msgstr ""
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Certificates & Private Keys"
+msgid "Certificates found for %s."
 msgstr "ใบรับรอง & กุญแจส่วนตัว"
 
 #: app/assets/javascripts/app/models/group.coffee
@@ -2657,8 +2702,8 @@ msgstr "การเปลี่ยนแปลง"
 msgid "Changes could not be loaded."
 msgstr "ไม่สามารถโหลดเนื้อหาได้"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-#: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 msgid "Changes could not be saved."
 msgstr "ไม่สามารถบันทึกการเปลี่ยนแปลงได้"
 
@@ -3156,7 +3201,7 @@ msgstr "ยืนยัน/ส่งกล่องโต้ตอบ"
 msgid "Confirmation"
 msgstr "การยืนยัน"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Confirmation failed."
 msgstr "การยืนยันล้มเหลว"
 
@@ -3407,7 +3452,7 @@ msgstr "สร้างแอดมิน"
 msgid "Create Channel"
 msgstr "สร้างช่องทางสื่อสาร"
 
-#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
 msgstr "สร้างศูนย์การเรียนรู้"
 
@@ -3966,10 +4011,6 @@ msgstr "กำหนดการมองเห็นเริ่มต้นส
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr ""
 
-#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-msgid "Define the unit to be shown next to the time accounting input field."
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr "กำหนดชื่อดัชนี Elasticsearch"
@@ -4214,6 +4255,12 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
+"Defines if the change of the primary organization of a user will update the "
+"100 most recent tickets for this user as well."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
 "Defines if the core workflow communication should run over ajax instead of "
 "websockets."
 msgstr "กำหนดว่าการสื่อสารเวิร์กโฟลว์หลักควรรันบน ajax แทน websockets หรือไม่"
@@ -4402,10 +4449,6 @@ msgid "Defines processing timeout for the html sanitizer."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines searchable models."
-msgstr "กำหนดแบบจำลองที่สามารถค้นหาได้"
-
-#: db/seeds/settings.rb
 msgid "Defines sync transaction backend."
 msgstr ""
 
@@ -4578,10 +4621,6 @@ msgid "Defines the random application secret."
 msgstr "กำหนดความลับของแอปพลิเคชันแบบสุ่ม"
 
 #: db/seeds/settings.rb
-msgid "Defines the searchable models."
-msgstr "กำหนดแบบจำลองที่สามารถค้นหาได้"
-
-#: db/seeds/settings.rb
 msgid "Defines the sender email address of Icinga emails."
 msgstr "กำหนดที่อยู่อีเมลของผู้ส่งของอีเมล Icinga"
 
@@ -4682,6 +4721,7 @@ msgstr ""
 "กำหนดแบ็กเอนด์ของธุรกรรมซึ่งจะช่วยเพิ่มข้อมูลลูกค้าและองค์กรจาก Clearbit (http://www."
 "clearbit.com)"
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: db/seeds/settings.rb
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr ""
@@ -4766,7 +4806,7 @@ msgstr "ลบ ลูกค้า"
 msgid "Delete File"
 msgstr "ลบ ไฟล์"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Delete Knowledge Base"
 msgstr "ลบ ศูนย์การเรียนรู้"
 
@@ -5033,6 +5073,12 @@ msgstr "อย่าเข้ารหัสอีเมล"
 msgid "Do not sign email"
 msgstr "อย่าเซ็นอีเมล"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "You currently don't have any tickets."
+msgid "Do not update any tickets."
+msgstr "ขณะนี้ไม่มี Ticket ใด ๆ"
+
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Do not use the proxy for the following hosts."
 msgstr "อย่าใช้พร็อกซีสำหรับโฮสต์ต่อไปนี้"
@@ -5042,7 +5088,7 @@ msgstr "อย่าใช้พร็อกซีสำหรับโฮสต
 msgid "Do you really want to delete \"%s\"?"
 msgstr "คุณต้องการลบ \"%s\" หรือไม่?"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Do you really want to delete this draft?"
 msgstr "คุณต้องการลบฉบับร่างนี้จริงหรือ?"
 
@@ -5199,7 +5245,7 @@ msgid "Edit mask"
 msgstr "แก้ไขหน้ากาก"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 #, fuzzy
 #| msgid "Add reply"
 msgid "Edit reply"
@@ -5607,11 +5653,12 @@ msgid "Encrypted"
 msgstr "เข้ารหัสลับ"
 
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Encryption"
 msgstr "การเข้ารหัสลับ"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "Encryption:"
 msgstr "การเข้ารหัสลับ:"
 
@@ -6788,7 +6835,7 @@ msgid ""
 "your configured permissions)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "Here you can create one."
 msgstr "ที่นี่ คุณสามารถสร้างได้"
 
@@ -7438,6 +7485,12 @@ msgstr ""
 #: app/models/user.rb
 msgid "Invalid email '%{email}'"
 msgstr ""
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Please enter a valid email address."
+msgid "Invalid email address."
+msgstr "กรุณาใส่อีเมลที่ใช้งานได้"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
@@ -8917,6 +8970,12 @@ msgstr "ไม่พบกล้อง"
 msgid "No categories"
 msgstr "ไม่มีหมวดหมู่"
 
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "No certificate for %s found."
+msgstr "เสียงแจ้งเตือน"
+
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
 msgstr "ไม่ได้ตั้งค่าคอนฟิก."
@@ -8965,6 +9024,12 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco
+#, fuzzy
+#| msgid "Not Available"
+msgid "No macros available."
+msgstr "ไม่มีข้อมูล"
+
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "ไม่มีการค้นหาก่อนหน้า"
@@ -8972,6 +9037,12 @@ msgstr "ไม่มีการค้นหาก่อนหน้า"
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
 msgstr ""
+
+#: app/models/form_updater/concerns/has_security_options.rb
+#, fuzzy
+#| msgid "No record found!"
+msgid "No recipient found."
+msgstr "‎ไม่พบเรกคอร์ด !"
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
@@ -9597,7 +9668,7 @@ msgstr "ภาพรวม"
 msgid "Overviews are …"
 msgstr "ภาพรวมทั้งหมด …"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
 msgstr "เขียนทับ Draft"
 
@@ -9761,7 +9832,7 @@ msgstr ""
 msgid "Perform actions"
 msgstr "ข้อมูลข่าวสาร"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
 msgstr "ลบศูนย์การเรียนรู้อย่างถาวร"
 
@@ -9974,6 +10045,7 @@ msgstr "พอร์ท"
 msgid "Position"
 msgstr "ตำแหน่ง"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 msgid "Postmaster Filter"
 msgstr ""
@@ -10001,7 +10073,7 @@ msgid "Pre-defined webhook for %s."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-msgid "Press the button below to finish the set up."
+msgid "Press the button below to finish the setup."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -10861,7 +10933,7 @@ msgstr "วันเสาร์"
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Save"
 msgstr "บันทึก"
 
@@ -10871,7 +10943,7 @@ msgstr "บันทึก"
 msgid "Save Codes"
 msgstr "บันทึกเป็น"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
 msgstr "บันทึกฉบับร่าง"
@@ -10905,6 +10977,7 @@ msgstr ""
 msgid "Scheduled for"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/job.coffee db/seeds/permissions.rb
 msgid "Scheduler"
 msgstr ""
@@ -10923,6 +10996,16 @@ msgstr "หน้าจอ"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Script can be located under: ||%s|| and needs to be executable."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+#, fuzzy
+#| msgid "Move up and down"
+msgid "Scroll down"
+msgstr "เลื่อนขึ้นและลง"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
+msgid "Scroll down to see %s new replies"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
@@ -11015,6 +11098,12 @@ msgstr "ระบบความปลอดภัย"
 msgid "Security Error"
 msgstr "ข้อผิดพลาดด้านความปลอดภัย"
 
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
+#, fuzzy
+#| msgid "Information"
+msgid "Security Information"
+msgstr "ข้อมูลข่าวสาร"
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #, fuzzy
 #| msgid "Security"
@@ -11037,7 +11126,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #, fuzzy
 #| msgid "SMS test failed."
-msgid "Security key set up failed."
+msgid "Security key setup failed."
 msgstr "SMS test failed."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
@@ -11116,6 +11205,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
+msgid "Selected tickets do not match any macros."
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
@@ -11436,7 +11529,7 @@ msgstr "แสดง"
 msgid "Show %s more"
 msgstr "แสดง %s เพิ่ม"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Show Draft"
 msgstr "แสดงฉบับร่าง"
 
@@ -11539,7 +11632,6 @@ msgstr "ไฟล์แนบแถบด้านข้าง"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Sign"
 msgstr "เซ็นกำกับ"
 
@@ -11577,6 +11669,8 @@ msgid "Sign up"
 msgstr "ลงชื่อ"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "Sign:"
 msgstr "เซ็นกำกับ:"
 
@@ -11991,8 +12085,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
-#: db/seeds/ticket_article_senders.rb
+#: app/assets/javascripts/app/controllers/manage.coffee
+#: app/assets/javascripts/app/views/generic/history.jst.eco
+#: db/seeds/permissions.rb db/seeds/ticket_article_senders.rb
 msgid "System"
 msgstr "ระบบ"
 
@@ -12214,7 +12309,7 @@ msgstr "ขอบคุณที่เข้าร่วม ส่งอีเ�
 msgid "The API token could not be found."
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee
 msgid "The Knowledge Base could not be created."
 msgstr "ศูนย์รวมข้อมูล ไม่สามารถสร้างได้"
 
@@ -12554,12 +12649,6 @@ msgstr ""
 msgid "The page you were looking for does not exist."
 msgstr ""
 
-#: app/controllers/users_controller.rb
-#, fuzzy
-#| msgid "The required parameter 'payload->class_name' is missing."
-msgid "The parameter \"password\" is missing!"
-msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
-
 #: app/controllers/mentions_controller.rb
 msgid "The parameter 'mentionable_type' is invalid."
 msgstr ""
@@ -12630,7 +12719,7 @@ msgstr "โทเค็นที่ระบุไม่ถูกต้อง"
 msgid "The report could not be generated"
 msgstr "ไม่สามารถสร้างรายงานได้"
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr ""
 
@@ -12772,6 +12861,12 @@ msgstr ""
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'params' is missing."
 msgstr ""
+
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required parameter 'password' is missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
 #: app/models/core_workflow/result.rb
 msgid "The required parameter 'payload->class_name' is missing."
@@ -12939,7 +13034,7 @@ msgstr "ไม่สามารถแยก 'preferred_username' ของผ�
 msgid "The username or password is incorrect."
 msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "ช่องทางการติดต่อสื่อสารกับเราคือสิ่งนี้ที่เรียกว่า \"ticket\"."
@@ -12980,11 +13075,11 @@ msgstr ""
 msgid "There are too many people in the chat queue."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr "มีฉบับร่างอยู่แล้ว คุณต้องการที่จะเขียนทับมัน?"
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr ""
 
@@ -13449,6 +13544,12 @@ msgstr "Ticket วันที่เพิ่มจำนวน"
 #: db/seeds/settings.rb
 msgid "Ticket Number ignore system_id"
 msgstr "Ticket หมายเลขละเว้น system_id"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Ticket Organization Reassignment"
+msgstr "Tickets ขององค์กร"
 
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
@@ -14013,6 +14114,7 @@ msgid "Triggers are …"
 msgstr "ทริกเกอร์คือ …"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try Another Method"
 msgstr ""
 
@@ -14353,6 +14455,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/setting.coffee
 msgid "Update successful."
 msgstr "อัปเดตสำเร็จแล้ว"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "Update the most recent tickets."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -14707,7 +14815,7 @@ msgstr ""
 msgid "VIP"
 msgstr "VIP"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 #, fuzzy
 #| msgid "Bulk action failed"
 msgid "Validation failed"
@@ -14947,8 +15055,8 @@ msgstr "เว็บ"
 msgid "Web (in)"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
-#: app/assets/javascripts/app/views/knowledge_base/server_snippet.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee
 msgid "Web Server Configuration"
 msgstr ""
 
@@ -15061,7 +15169,7 @@ msgstr "ยินดีต้อนรับ!"
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "ยินดีต้อนรับ! อย่าลังเลที่จะถามคำถาม!"
 
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "What can you do here?"
 msgstr "คุณสามารถทำอะไรที่นี่?"
 
@@ -15234,7 +15342,7 @@ msgstr "เหลือง"
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Yes"
 msgstr "ใช่"
 
@@ -15455,6 +15563,12 @@ msgstr "ขออภัย แต่คุณมีสิทธิ์ไม่�
 msgid "You have insufficient rights to view this user."
 msgstr "ขออภัย แต่คุณมีสิทธิ์ไม่เพียงพอที่จะเปิดหน้านี้"
 
+#: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
+msgid ""
+"You have no change permission or you are a customer for some of the selected "
+"tickets."
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
 msgstr "ยังไม่ได้กำหนดค่า %s ในขณะนี้"
@@ -15474,12 +15588,6 @@ msgstr "คุณยังไม่ได้สร้าง ticket"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "You have to allow access to your webcam."
 msgstr "คุณต้องอนุญาตการเข้าถึงเว็บแคมของคุณ"
-
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-#, fuzzy
-#| msgid "Discard your unsaved changes."
-msgid "You have unsaved changes."
-msgstr "ทิ้งการเปลี่ยนแปลงที่ยังไม่ได้บันทึก"
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
 msgid "You must protect your account with two-factor authentication."
@@ -16068,6 +16176,10 @@ msgstr "ล้อมรอบ"
 msgid "enclosure"
 msgstr "กรอบ กรงขัง"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "ends with"
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
 msgstr "เพิ่มขึ้น"
@@ -16281,7 +16393,6 @@ msgstr "อยู่ในระหว่างการดำเนินงา
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco
-#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
 msgid "inactive"
 msgstr "ไม่ได้ใช้งาน"
 
@@ -16846,6 +16957,10 @@ msgstr "ผู้ใช้เฉพาะ"
 msgid "split"
 msgstr "แยก"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "starts with"
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -17029,6 +17144,27 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#, fuzzy
+#~| msgid "Ticket update"
+#~ msgid "No tickets are updated."
+#~ msgstr "Ticket อัปเดต"
+
+#, fuzzy
+#~| msgid "The required parameter 'payload->class_name' is missing."
+#~ msgid "The parameter \"password\" is missing!"
+#~ msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
+
+#, fuzzy
+#~| msgid "Discard your unsaved changes."
+#~ msgid "You have unsaved changes."
+#~ msgstr "ทิ้งการเปลี่ยนแปลงที่ยังไม่ได้บันทึก"
+
+#~ msgid "Defines searchable models."
+#~ msgstr "กำหนดแบบจำลองที่สามารถค้นหาได้"
+
+#~ msgid "Defines the searchable models."
+#~ msgstr "กำหนดแบบจำลองที่สามารถค้นหาได้"
 
 #~ msgid "The raw logo could not be read."
 #~ msgstr "ไม่สามารถอ่าน โลโก้ RAW ไฟล์"
