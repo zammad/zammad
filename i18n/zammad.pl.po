@@ -5091,7 +5091,7 @@ msgstr "Trzeba skonfigurować Elasticsearch!"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
-msgstr "E-Mail"
+msgstr "E-mail"
 
 #: app/models/report.rb
 msgid "Email (in)"
@@ -16471,12 +16471,10 @@ msgstr "∅ dzisiejszy czas oczekiwania"
 #~ msgstr "Zrób wewnętrzny"
 
 #, fuzzy
-#~| msgid "Edit Customer"
 #~ msgid "Edit customer"
 #~ msgstr "Edytuj klienta"
 
 #, fuzzy
-#~| msgid "Edit Organization"
 #~ msgid "Edit organization"
 #~ msgstr "Edytuj organizacje"
 
@@ -16679,12 +16677,10 @@ msgstr "∅ dzisiejszy czas oczekiwania"
 #~ msgstr "zeszły tydzień"
 
 #, fuzzy
-#~| msgid "Loading…"
 #~ msgid "Loading..."
 #~ msgstr "Ładowanie…"
 
 #, fuzzy
-#~| msgid "Notification"
 #~ msgid "Read notification"
 #~ msgstr "Powiadomienie"
 
@@ -16692,12 +16688,10 @@ msgstr "∅ dzisiejszy czas oczekiwania"
 #~ msgstr "W tej chwili nie masz skonfigurowanego konta."
 
 #, fuzzy
-#~| msgid "Overviews"
 #~ msgid "Overview Sortings"
 #~ msgstr "Przegląd"
 
 #, fuzzy
-#~| msgid "Order"
 #~ msgid " Order"
 #~ msgstr "Porządek"
 
@@ -16705,7 +16699,6 @@ msgstr "∅ dzisiejszy czas oczekiwania"
 #~ msgstr "Porządek"
 
 #, fuzzy
-#~| msgid "Sorting by"
 #~ msgid "Sorting"
 #~ msgstr "Sortuj wedlug"
 
@@ -16734,7 +16727,6 @@ msgstr "∅ dzisiejszy czas oczekiwania"
 #~ msgstr "Tag"
 
 #, fuzzy
-#~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "Czas wykonywania zadania (w minutach)"
 
@@ -16815,12 +16807,10 @@ msgstr "∅ dzisiejszy czas oczekiwania"
 #~ msgstr "Pierwszy Czas Odpowiedzi"
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to load changes"
 #~ msgstr "Nie można zapisać zmian."
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to save changes"
 #~ msgstr "Nie można zapisać zmian."
 
@@ -16860,10 +16850,6 @@ msgstr "∅ dzisiejszy czas oczekiwania"
 #~ msgstr "Oczekujące"
 
 #, fuzzy
-#~| msgid ""
-#~| "Sets the last customer contact based on the last contact of a customer "
-#~| "or on the last contact of a customer to whom an agent has not yet "
-#~| "responded."
 #~ msgid ""
 #~ "Sets the last customer contact based on either the last contact of the "
 #~ "customer in general or on the last contact of the customer that has not "
@@ -16880,7 +16866,6 @@ msgstr "∅ dzisiejszy czas oczekiwania"
 #~ msgstr "Maksymalny rozmiar w MB wiadomości e-mail."
 
 #, fuzzy
-#~| msgid "Unable to load data..."
 #~ msgid "Unable to load data…"
 #~ msgstr "Nie można załadować danych ..."
 
@@ -16906,12 +16891,10 @@ msgstr "∅ dzisiejszy czas oczekiwania"
 #~ msgstr "Najpierw wybierz grupę, zanim podasz użytkownika!"
 
 #, fuzzy
-#~| msgid "%s Object(s) are deleted."
 #~ msgid "%s object(s) are deleted."
 #~ msgstr "%s Obiekt(y) usunięto."
 
 #, fuzzy
-#~| msgid "Attention: When creating a ticket an e-mail is sent."
 #~ msgid "Attention: When creating a ticket an email is sent."
 #~ msgstr "Uwaga: podczas tworzenia zgłoszenia wysyłany jest e-mail"
 
