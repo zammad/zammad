@@ -37,7 +37,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
     wait_for_form_to_settle('ticket-create')
   end
 
-  shared_examples 'creating a ticket' do |article_type:, direction: nil|
+  shared_examples 'creating a ticket' do |article_type:, direction: nil, redirect: nil|
     it 'can complete all steps' do
       expect(find_button('Create', disabled: true).disabled?).to be(true)
 
@@ -76,7 +76,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
       find('[role=alert]', text: 'Ticket has been created successfully.')
 
-      expect(page).to have_current_path("/mobile/tickets/#{Ticket.last.id}")
+      expect(page).to have_current_path(redirect || "/mobile/tickets/#{Ticket.last.id}")
       expect(Ticket.last.create_article_type_id).to eq(Ticket::Article::Type.find_by(name: article_type).id)
     end
   end
@@ -85,6 +85,16 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
     it_behaves_like 'creating a ticket', article_type: 'phone'
     it_behaves_like 'creating a ticket', article_type: 'phone', direction: 'out'
     it_behaves_like 'creating a ticket', article_type: 'email'
+
+    context 'when dont have a "read" permission, but have "create" permission' do
+      it_behaves_like 'creating a ticket', article_type: 'email', redirect: '/mobile/' do
+        before do
+          user.group_names_access_map = {
+            group.name => ['create']
+          }
+        end
+      end
+    end
 
     context 'when a customer', authenticated_as: :customer do
       it_behaves_like 'creating a ticket', article_type: 'web'

@@ -61,7 +61,7 @@ module Ticket::Article::AddsMetadataGeneral
 
   def metadata_general_process_from
     type        = Ticket::Article::Type.lookup(id: type_id)
-    is_customer = !TicketPolicy.new(author, ticket).agent_read_access?
+    is_customer = !author.permissions?('ticket.agent')
 
     self.from = if %w[web phone].include?(type.name) && is_customer
                   Channel::EmailBuild.recipient_line "#{author.firstname} #{author.lastname}", author.email

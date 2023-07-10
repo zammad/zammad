@@ -55,17 +55,29 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
       end
 
       context 'when user is customer' do
-        let(:user) { ticket.customer }
+        let(:user)   { ticket.customer }
+        let(:ticket) { create(:ticket, customer: create(:customer)) }
 
         it 'ensures sender is set to customer' do
           expect(article.sender.name).to eq 'Customer'
+        end
+      end
+
+      # Agent-Customer is incorrectly detected as Agent in a group he has no access to
+      # https://github.com/zammad/zammad/issues/4649
+      context 'when user is agent-customer' do
+        let(:user) { ticket.customer }
+
+        it 'ensures sender is set to customer' do
+          expect(article.sender.name).to eq 'Agent'
         end
       end
     end
 
     describe 'processing for customer' do
       context 'when user is customer' do
-        let(:user) { ticket.customer }
+        let(:user)   { ticket.customer }
+        let(:ticket) { create(:ticket, customer: create(:customer)) }
 
         it 'ensures internal is false' do
           payload[:internal] = true
@@ -77,6 +89,24 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
           payload[:type] = 'phone'
 
           expect(article.type.name).to eq('note')
+        end
+      end
+
+      # Agent-Customer is incorrectly detected as Agent in a group he has no access to
+      # https://github.com/zammad/zammad/issues/4649
+      context 'when user is agent-customer' do
+        let(:user) { ticket.customer }
+
+        it 'ensures internal is false' do
+          payload[:internal] = false
+
+          expect(article.internal).to be_falsey
+        end
+
+        it 'changes type from web to note' do
+          payload[:type] = 'phone'
+
+          expect(article.type.name).to eq('phone')
         end
       end
 

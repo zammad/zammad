@@ -28,7 +28,7 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { ErrorStatusCodes } from '#shared/types/error.ts'
+import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
 import type UserError from '#shared/errors/UserError.ts'
 import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
 import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
@@ -46,6 +46,7 @@ import type { TicketFormData } from '#shared/entities/ticket/types.ts'
 import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
 import { useDialog } from '#shared/composables/useDialog.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
+import type { ApolloError } from '@apollo/client'
 import { useTicketCreateMutation } from '../graphql/mutations/create.api.ts'
 
 const router = useRouter()
@@ -291,7 +292,7 @@ const formSchema = defineFormSchema(
 )
 
 const ticketCreateMutation = new MutationHandler(useTicketCreateMutation({}), {
-  errorNotificationMessage: __('Ticket could not be created.'),
+  errorShowNotification: false,
 })
 
 const redirectAfterCreate = (internalId?: number) => {
@@ -306,9 +307,38 @@ const smimeIntegration = computed(
   () => (application.config.smime_integration as boolean) || {},
 )
 
-const createTicket = async (formData: FormSubmitData<TicketFormData>) => {
-  const { notify } = useNotifications()
+const { notify } = useNotifications()
 
+const notifySuccess = () => {
+  notify({
+    type: NotificationTypes.Success,
+    message: __('Ticket has been created successfully.'),
+  })
+}
+
+const handleTicketCreateError = (error: UserError | ApolloError) => {
+  if ('graphQLErrors' in error) {
+    const graphQLErrors = error.graphQLErrors?.[0]
+    // treat this as successful
+    if (graphQLErrors?.extensions?.type === GraphQLErrorTypes.Forbidden) {
+      notifySuccess()
+
+      return () => redirectAfterCreate()
+    }
+
+    notify({
+      message: __('Ticket could not be created.'),
+      type: NotificationTypes.Error,
+    })
+  } else {
+    notify({
+      message: error.generalErrors[0],
+      type: NotificationTypes.Error,
+    })
+  }
+}
+
+const createTicket = async (formData: FormSubmitData<TicketFormData>) => {
   const { attributesLookup: ticketObjectAttributesLookup } =
     useObjectAttributes(EnumObjectManagerObjects.Ticket)
 
@@ -343,10 +373,7 @@ const createTicket = async (formData: FormSubmitData<TicketFormData>) => {
     .send({ input })
     .then((result) => {
       if (result?.ticketCreate?.ticket) {
-        notify({
-          type: NotificationTypes.Success,
-          message: __('Ticket has been created successfully.'),
-        })
+        notifySuccess()
 
         return () => {
           const ticket = result.ticketCreate?.ticket
@@ -358,12 +385,7 @@ const createTicket = async (formData: FormSubmitData<TicketFormData>) => {
       }
       return null
     })
-    .catch((errors: UserError) => {
-      notify({
-        message: errors.generalErrors[0],
-        type: NotificationTypes.Error,
-      })
-    })
+    .catch(handleTicketCreateError)
 }
 
 const additionalCreateNotes = computed(
