@@ -2,8 +2,9 @@ class App.KnowledgeBaseForm extends App.Controller
   events:
     'submit form': 'submit'
     'hidden.bs.tab': 'didHide'
-
   additionalButtons: []
+  className: 'page-content'
+  split: false
 
   didHide: ->
     @formControllers?.forEach (elem) -> elem.hideAlert()
@@ -11,10 +12,6 @@ class App.KnowledgeBaseForm extends App.Controller
   constructor: ->
     super
     @render()
-
-  className: 'page-content'
-
-  split: false
 
   buildFormController: (screen) ->
     isVertical = @split && _.values(App.Model.attributesGet(screen, App.KnowledgeBase.configure_attributes))[0].horizontal
