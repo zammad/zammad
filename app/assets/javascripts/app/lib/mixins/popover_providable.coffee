@@ -67,9 +67,11 @@ InstanceMethods =
     @initializedPopovers = undefined
 
   # IE11 does not support IntersectionObserver
-  # remove this once IE11 support is gone
-  delayedRemoveAnyPopover: ->
-    return if typeof IntersectionObserver is 'function'
+  # This is mainly used as a fallback for IE11
+  # However, it's used elsewhere as well
+  # This can be cleaned up after IE11 support is gone, but it wil be still needed
+  delayedRemoveAnyPopover: (force = false) ->
+    return if !force && typeof IntersectionObserver is 'function'
 
     @delay(@constructor.anyPopoversDestroy, 100, 'removePopovers')
 
