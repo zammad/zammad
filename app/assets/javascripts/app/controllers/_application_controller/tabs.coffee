@@ -42,7 +42,7 @@ class App.ControllerTabs extends App.Controller
         params.target = tab.target
         params.el = @$("##{tab.target}")
         @controllerList ||= []
-        @controllerList.push new tab.controller(_.extend(@originParams, params))
+        @controllerList.push new tab.controller(_.extend({}, @originParams, params))
 
     # check if tabs need to be show / cant' use .tab(), because tabs are note shown (only one tab exists)
     if @tabs.length <= 1
