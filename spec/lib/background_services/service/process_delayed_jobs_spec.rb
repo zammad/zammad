@@ -33,8 +33,8 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_e
       it 'runs loop multiple times', :aggregate_failures do
         allow(instance).to receive(:process_results)
         # Delayed::Worker uses `rescue Exception` heavily which would swallow our timeout errors,
-        #   causing the tests to fail.
-        allow_any_instance_of(Delayed::Worker).to receive(:work_off).and_return(1)
+        #   causing the tests to fail. Avoid calling it.
+        allow(Benchmark).to receive(:realtime).and_return(1)
 
         ensure_block_keeps_running { instance.run }
 
