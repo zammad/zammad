@@ -2,23 +2,27 @@
 
 require_relative 'set_up'
 
+CAPYBARA_PORT = ENV['CAPYBARA_PORT'] || 3001
+
 RSpec.configure do |config|
-  capybara_examples_performed = 0
 
   Capybara.register_server :puma_wrapper do |app, port, host, **_options|
-    # Remember the dynamically assigned port.
-    $capybara_port = port # rubocop:disable Style/GlobalVars
     # Start a silenced Puma as application server.
     Capybara.servers[:puma].call(app, port, host, Silent: true, Host: 'ssl://0.0.0.0', Threads: '0:16')
   end
-  Capybara.server   = :puma_wrapper
-  # See https://docs.gitlab.com/runner/executors/docker.html#create-a-network-for-each-job
-  Capybara.app_host = ENV['CI'].present? ? 'https://build' : 'https://localhost'
+
+  Capybara.configure do |capybara_config|
+    capybara_config.server = :puma_wrapper
+    capybara_config.server_port = CAPYBARA_PORT
+
+    # See https://docs.gitlab.com/runner/executors/docker.html#create-a-network-for-each-job
+    capybara_config.app_host = ENV['CI'].present? ? 'https://build' : 'https://localhost'
+  end
 
   config.before(:each, type: :system) do |example|
 
     Setting.set('http_type', 'https')
-    Setting.set('fqdn', ENV['CI'].present? ? "build:#{$capybara_port}" : "localhost:#{$capybara_port}") # rubocop:disable Style/GlobalVars
+    Setting.set('fqdn', ENV['CI'].present? ? "build:#{CAPYBARA_PORT}" : "localhost:#{CAPYBARA_PORT}")
 
     browser_name = ENV.fetch('BROWSER', 'firefox')
 
@@ -59,6 +63,8 @@ RSpec.configure do |config|
 
     page.driver.browser.manage.window.resize_to(browser_width, browser_height)
   end
+
+  capybara_examples_performed = 0
 
   config.after(:each, type: :system) do |example|
     capybara_examples_performed += 1
