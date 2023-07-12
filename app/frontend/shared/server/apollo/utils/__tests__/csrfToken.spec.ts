@@ -1,14 +1,16 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-const metaElement = document.createElement('meta')
-metaElement.setAttribute('name', 'csrf-token')
-metaElement.setAttribute('content', '1234567890ABC')
+import { getCSRFToken, setCSRFToken } from '../csrfToken.ts'
 
-vi.spyOn(document, 'querySelector').mockImplementation((): Element => {
-  return metaElement
+vi.hoisted(() => {
+  const metaElement = document.createElement('meta')
+  metaElement.setAttribute('name', 'csrf-token')
+  metaElement.setAttribute('content', '1234567890ABC')
+
+  vi.spyOn(document, 'querySelector').mockImplementation((): Element => {
+    return metaElement
+  })
 })
-
-const { getCSRFToken, setCSRFToken } = await import('../csrfToken.ts')
 
 describe('csrfToken handling', () => {
   it('get initial token', () => {
