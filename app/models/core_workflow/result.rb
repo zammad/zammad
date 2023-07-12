@@ -29,6 +29,8 @@ class CoreWorkflow::Result
   def set_default
     @rerun = false
 
+    set_payload_customer_id_default
+
     @result[:restrict_values] = {}
     %i[request_id visibility mandatory readonly select fill_in eval matched_workflows rerun_count].each do |group|
       @result[group] = attributes.send(:"#{group}_default")
@@ -47,6 +49,15 @@ class CoreWorkflow::Result
     end
 
     set_default_only_shown_if_selectable
+  end
+
+  def set_payload_customer_id_default
+    return if !@payload['params']['customer_id'].nil?
+    return if !@user
+    return if !@user.permissions?('ticket.customer')
+    return if @user.permissions?('ticket.agent')
+
+    @payload['params']['customer_id'] = @user.id.to_s
   end
 
   def set_form_updater_default
