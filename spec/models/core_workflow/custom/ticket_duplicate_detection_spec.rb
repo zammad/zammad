@@ -202,4 +202,59 @@ RSpec.describe CoreWorkflow::Custom::TicketDuplicateDetection, type: :model do
       end
     end
   end
+
+  context 'when customer and duplication attributes contain title and customer #4643' do
+    let(:customer) { create(:customer) }
+    let(:ticket1) { create(:ticket, title: '123', group: ticket_group, customer: customer) }
+
+    before do
+      Setting.set('ticket_duplicate_detection', true)
+      Setting.set('ticket_duplicate_detection_attributes', %w[title customer_id])
+      Setting.set('ticket_duplicate_detection_role_ids', [Role.find_by(name: 'Agent').id, Role.find_by(name: 'Customer').id])
+    end
+
+    context 'when agent 1' do
+      let(:action_user) { agent1 }
+
+      let(:payload) do
+        {
+          'event'                  => 'core_workflow',
+          'request_id'             => 'default',
+          'class_name'             => 'Ticket',
+          'screen'                 => 'create_middle',
+          'params'                 => { 'title' => '123', 'customer_id' => customer.id.to_s },
+          'last_changed_attribute' => 'title',
+        }
+      end
+
+      it 'does return count of 1' do
+        expect(result[:fill_in]['ticket_duplicate_detection'])
+          .to be_a(Hash)
+          .and include(items: [[ticket1.id, ticket1.number, ticket1.title]])
+          .and include(count: 1)
+      end
+    end
+
+    context 'when customer' do
+      let(:action_user) { customer }
+
+      let(:payload) do
+        {
+          'event'                  => 'core_workflow',
+          'request_id'             => 'default',
+          'class_name'             => 'Ticket',
+          'screen'                 => 'create_middle',
+          'params'                 => { 'title' => '123' }, # no customer_id because customer don't have this field
+          'last_changed_attribute' => 'title',
+        }
+      end
+
+      it 'does return count of 1' do
+        expect(result[:fill_in]['ticket_duplicate_detection'])
+          .to be_a(Hash)
+          .and include(items: [[ticket1.id, ticket1.number, ticket1.title]])
+          .and include(count: 1)
+      end
+    end
+  end
 end
