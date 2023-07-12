@@ -149,10 +149,8 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
       .destroy
   end
 
-  def agent_on_ticket?(ticket)
-    TicketPolicy
-      .new(current_user, ticket)
-      .agent_read_access?
+  def agent_on_ticket?(_ticket)
+    current_user.permissions?('ticket.agent')
   end
 
   def display_name(user)
