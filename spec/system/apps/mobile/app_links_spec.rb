@@ -4,6 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
 
+  def disable_auto_redirect
+    # Force desktop view in order to circumvent the automatic redirection to mobile.
+    page.evaluate_script "window.localStorage.setItem('forceDesktopApp', true)"
+  end
+
   context 'with "Continue to desktop" link' do
 
     shared_examples 'redirecting to desktop app' do |source, target|
@@ -43,16 +48,15 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
       end
     end
 
-    shared_examples 'redirecting to mobile app' do |source, target, authenticated: false|
+    shared_examples 'redirecting to mobile app' do |source, target|
       it 'redirects to mobile app' do
         visit source, app: :desktop
 
-        if authenticated
-          find('a[href="#current_user"]').click
-        end
+        find('a[href="#current_user"]').click
 
         click 'a', text: 'Continue to mobile'
 
+        expect(page).to have_no_text('Loading failed')
         expect_current_route(target, app: :mobile)
       end
     end
@@ -63,36 +67,47 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
       end
 
       context 'when user is authenticated' do
-        it_behaves_like 'hiding the mobile app link', 'dashboard', authenticated: true
+        it_behaves_like 'hiding the mobile app link', 'dashboard'
       end
     end
 
     context 'with mobile user agent', mobile_user_agent: true do
-      before do
-        visit '/'
-
-        # Force desktop view in order to circumvent the automatic redirection to mobile.
-        page.evaluate_script "window.localStorage.setItem('forceDesktopApp', true)"
-      end
 
       context 'when user is unauthenticated', authenticated_as: false do
-        it_behaves_like 'redirecting to mobile app', 'login', 'login'
+        it 'redirects to mobile' do
+          visit '/'
+          disable_auto_redirect
+
+          click_link('Continue to desktop')
+
+          expect_current_route('login', app: :desktop)
+
+          click_link('Continue to mobile')
+
+          expect(page).to have_no_text('Loading failed')
+          expect_current_route('login', app: :mobile)
+        end
       end
 
       context 'when user is authenticated' do
-        it_behaves_like 'redirecting to mobile app', 'profile', 'profile', authenticated: true
-        it_behaves_like 'redirecting to mobile app', 'profile/avatar', 'profile/avatar', authenticated: true
-        it_behaves_like 'redirecting to mobile app', 'organization/profile/1', 'organization/profile/1', authenticated: true
-        it_behaves_like 'redirecting to mobile app', 'search/string', 'search/ticket?search=string', authenticated: true
-        it_behaves_like 'redirecting to mobile app', 'ticket/create', 'ticket/create', authenticated: true
-        it_behaves_like 'redirecting to mobile app', 'ticket/zoom/1', 'ticket/zoom/1', authenticated: true
-        it_behaves_like 'redirecting to mobile app', 'user/profile/1', 'user/profile/1', authenticated: true
-        it_behaves_like 'redirecting to mobile app', 'dashboard', %r{mobile/$}, authenticated: true
+        before do
+          visit '/'
+          disable_auto_redirect
+        end
+
+        it_behaves_like 'redirecting to mobile app', 'profile', 'profile'
+        it_behaves_like 'redirecting to mobile app', 'profile/avatar', 'profile/avatar'
+        it_behaves_like 'redirecting to mobile app', 'organization/profile/1', 'organization/profile/1'
+        it_behaves_like 'redirecting to mobile app', 'search/string', 'search/ticket?search=string'
+        it_behaves_like 'redirecting to mobile app', 'ticket/create', 'ticket/create'
+        it_behaves_like 'redirecting to mobile app', 'ticket/zoom/1', 'ticket/zoom/1'
+        it_behaves_like 'redirecting to mobile app', 'user/profile/1', 'user/profile/1'
+        it_behaves_like 'redirecting to mobile app', 'dashboard', %r{mobile/$}
 
         context 'with customer user', authenticated_as: :customer do
           let(:customer) { create(:customer) }
 
-          it_behaves_like 'redirecting to mobile app', 'ticket/view/my_tickets', 'ticket/view/my_tickets', authenticated: true
+          it_behaves_like 'redirecting to mobile app', 'ticket/view/my_tickets', 'ticket/view/my_tickets'
         end
       end
     end
