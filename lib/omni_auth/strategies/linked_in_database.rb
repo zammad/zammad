@@ -12,4 +12,11 @@ class OmniAuth::Strategies::LinkedInDatabase < OmniAuth::Strategies::LinkedIn
     super
   end
 
+  # Workaround from current omniauth-linkedin gem issue:
+  # https://github.com/decioferreira/omniauth-linkedin-oauth2/issues/68
+  def token_params
+    super.tap do |params|
+      params.client_secret = options.client_secret
+    end
+  end
 end
