@@ -1,12 +1,3 @@
-RSpec/BeforeAfterAll:
-  Exclude:
-    - 'spec/spec_helper.rb'
-    - 'spec/rails_helper.rb'
-    - 'spec/support/**/*.rb'
-    - 'spec/lib/sequencer/unit/import/zendesk/ticket/comment/attachment/request_spec.rb'
-    - 'spec/lib/sequencer/unit/import/zendesk/ticket/comment/source_based_spec.rb'
-    - 'spec/models/translation_spec.rb'
-
 RSpec/ContextWording:
   Exclude:
     - 'spec/db/migrate/active_job_lock_cleanup_job_scheduler_spec.rb'
@@ -220,18 +211,6 @@ RSpec/ExampleLength:
     - 'spec/system/ticket/update/simultaneously_with_two_user_spec.rb'
     - 'spec/system/ticket/zoom_spec.rb'
 
-RSpec/ExpectActual:
-  Exclude:
-    - 'spec/routing/**/*'
-    - 'spec/requests/integration/object_manager_attributes_spec.rb'
-    - 'spec/requests/integration/twilio_sms_spec.rb'
-    - 'spec/requests/integration/message_bird_sms_spec.rb'
-    - 'spec/requests/integration/user_device_spec.rb'
-    - 'spec/requests/organization_spec.rb'
-    - 'spec/requests/ticket/article_attachments_spec.rb'
-    - 'spec/requests/user/organization_spec.rb'
-    - 'spec/requests/user_spec.rb'
-
 RSpec/ExpectInHook:
   Exclude:
     - 'spec/models/calendar_spec.rb'
@@ -250,14 +229,6 @@ RSpec/FilePath:
 RSpec/InstanceVariable:
   Exclude:
     - 'spec/lib/notification_factory/renderer_spec.rb'
-    - 'spec/models/import_job_spec.rb'
-    - 'spec/requests/api_auth_from_spec.rb'
-    - 'spec/requests/integration/sipgate_spec.rb'
-    - 'spec/requests/organization_spec.rb'
-    - 'spec/requests/report_spec.rb'
-    - 'spec/requests/text_module_spec.rb'
-    - 'spec/requests/ticket/article_attachments_spec.rb'
-    - 'spec/requests/user_spec.rb'
 
 RSpec/LetSetup:
   Exclude:
@@ -468,52 +439,17 @@ RSpec/MultipleExpectations:
     - 'spec/requests/user_spec.rb'
     - 'spec/system/**/*'
 
-RSpec/NamedSubject:
-  Exclude:
-    - 'spec/db/migrate/issue_2019_fix_double_domain_links_in_trigger_emails_spec.rb'
-    - 'spec/db/migrate/issue_2541_fix_notification_email_without_body_spec.rb'
-    - 'spec/lib/core_ext/string_spec.rb'
-    - 'spec/lib/import/exchange/folder_spec.rb'
-    - 'spec/lib/ldap/user_spec.rb'
-    - 'spec/lib/sequencer/unit/import/ldap/user/attributes/role_ids/unassigned_spec.rb'
-    - 'spec/lib/sessions/backend/activity_stream_spec.rb'
-    - 'spec/lib/upload_cache_spec.rb'
-    - 'spec/models/channel/filter/match/email_regex_spec.rb'
-    - 'spec/models/http_log_spec.rb'
-    - 'spec/models/object_manager/attribute_spec.rb'
-
 RSpec/NestedGroups:
   Exclude:
-    - 'app/models/user/avatar.rb'
     - 'spec/lib/secure_mailing/smime_spec.rb'
     - 'spec/models/channel/driver/twitter_spec.rb'
     - 'spec/models/channel/email_parser_spec.rb'
     - 'spec/models/job_spec.rb'
-    - 'spec/models/store/file_spec.rb'
-    - 'spec/models/store/provider/file_spec.rb'
     - 'spec/models/store_spec.rb'
     - 'spec/models/token_spec.rb'
     - 'spec/models/trigger_spec.rb'
     - 'spec/models/user_spec.rb'
-    - 'spec/requests/links_spec.rb'
     - 'spec/system/ticket/create_spec.rb'
-
-RSpec/RepeatedDescription:
-  Exclude:
-    - 'spec/models/translation_spec.rb'
-    - 'spec/requests/form_spec.rb'
-    - 'spec/requests/ticket_spec.rb'
-
-RSpec/ScatteredLet:
-  Exclude:
-    - 'spec/models/job_spec.rb'
-    - 'spec/models/ticket_spec.rb'
-
-RSpec/ScatteredSetup:
-  Exclude:
-    - 'spec/models/ticket_spec.rb'
-    - 'spec/models/user_spec.rb'
-    - 'spec/requests/upload_cache_spec.rb'
 
 RSpec/VerifiedDoubles:
   Exclude:

@@ -45,6 +45,14 @@ RSpec.describe Ticket, type: :model do
       # https://github.com/zammad/zammad/issues/1769
       context 'when matching multiple tickets, each with multiple articles' do
         let(:tickets) { create_list(:ticket, 2) }
+        let(:condition) do
+          {
+            'article.from' => {
+              operator: 'contains',
+              value:    'blubselector.de',
+            },
+          }
+        end
 
         before do
           create(:ticket_article, ticket: tickets.first, from: 'asdf1@blubselector.de')
@@ -53,15 +61,6 @@ RSpec.describe Ticket, type: :model do
           create(:ticket_article, ticket: tickets.last, from: 'asdf4@blubselector.de')
           create(:ticket_article, ticket: tickets.last, from: 'asdf5@blubselector.de')
           create(:ticket_article, ticket: tickets.last, from: 'asdf6@blubselector.de')
-        end
-
-        let(:condition) do
-          {
-            'article.from' => {
-              operator: 'contains',
-              value:    'blubselector.de',
-            },
-          }
         end
 
         it 'returns a list of unique tickets (i.e., no duplicates)' do
@@ -691,6 +690,17 @@ RSpec.describe Ticket, type: :model do
         # Notification triggers should log notification as private or public
         # according to given configuration
         let(:user) { create(:admin, mobile: '+37061010000') }
+        let(:perform) do
+          {
+            notification_key => {
+              body:      'Old programmers never die. They just branch to a new address.',
+              recipient: 'ticket_agents',
+              subject:   'Old programmers never die. They just branch to a new address.'
+            }
+          }.deep_merge(additional_options).deep_stringify_keys
+        end
+        let(:notification_key)  { "notification.#{notification_type}" }
+        let!(:ticket_article)   { create(:ticket_article, ticket: ticket) }
         let(:item) do
           {
             object:     'Ticket',
@@ -702,19 +712,6 @@ RSpec.describe Ticket, type: :model do
         end
 
         before { ticket.group.users << user }
-
-        let(:perform) do
-          {
-            notification_key => {
-              body:      'Old programmers never die. They just branch to a new address.',
-              recipient: 'ticket_agents',
-              subject:   'Old programmers never die. They just branch to a new address.'
-            }
-          }.deep_merge(additional_options).deep_stringify_keys
-        end
-
-        let(:notification_key)  { "notification.#{notification_type}" }
-        let!(:ticket_article)   { create(:ticket_article, ticket: ticket) }
 
         shared_examples 'verify log visibility status' do
           shared_examples 'notification trigger' do

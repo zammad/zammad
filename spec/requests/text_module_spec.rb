@@ -34,7 +34,7 @@ RSpec.describe 'Text Module', type: :request do
       authenticated_as(admin)
       get '/api/v1/text_modules/import_example', as: :json
       expect(response).to have_http_status(:ok)
-      rows = CSV.parse(@response.body)
+      rows = CSV.parse(response.body)
       header = rows.shift
 
       expect(header[0]).to eq('id')

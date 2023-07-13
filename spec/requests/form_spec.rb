@@ -13,7 +13,7 @@ RSpec.describe 'Form', type: :request do
       expect(json_response['error']).to eq('Not authorized')
     end
 
-    it 'does get config call' do
+    it 'does get config call with form_ticket_create' do
       Setting.set('form_ticket_create', true)
       post '/api/v1/form_config', params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
@@ -87,7 +87,7 @@ RSpec.describe 'Form', type: :request do
 
     end
 
-    it 'does get config call & do submit' do
+    it 'does get config call & do submit - second test' do
       Setting.set('form_ticket_create', true)
       fingerprint = SecureRandom.hex(40)
       post '/api/v1/form_config', params: { fingerprint: fingerprint }, as: :json

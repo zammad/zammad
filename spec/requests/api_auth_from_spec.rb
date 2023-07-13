@@ -140,7 +140,7 @@ RSpec.describe 'Api Auth From', type: :request do
       authenticated_as(admin, from: 99_449_494_949)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
+      expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq("No such user '99449494949'")
     end
@@ -159,7 +159,7 @@ RSpec.describe 'Api Auth From', type: :request do
       authenticated_as(customer, from: admin.email)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
+      expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq("Current user has no permission to use 'From'/'X-On-Behalf-Of'!")
     end
@@ -178,7 +178,7 @@ RSpec.describe 'Api Auth From', type: :request do
       authenticated_as(admin, from: customer.email)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
+      expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('No lookup value found for \'group\': "secret1234"')
     end

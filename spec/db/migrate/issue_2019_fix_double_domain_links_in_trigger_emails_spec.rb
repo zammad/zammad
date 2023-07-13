@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Issue2019FixDoubleDomainLinksInTriggerEmails, type: :db_migration do
-  subject { create(:trigger, perform: { 'notification.email' => { 'body' => faulty_link, 'recipient' => 'customer', 'subject' => 'some subject' } }) }
+  subject(:trigger) { create(:trigger, perform: { 'notification.email' => { 'body' => faulty_link, 'recipient' => 'customer', 'subject' => 'some subject' } }) }
 
   # rubocop:disable Lint/InterpolationCheck
   let(:faulty_link) do
@@ -20,7 +20,7 @@ RSpec.describe Issue2019FixDoubleDomainLinksInTriggerEmails, type: :db_migration
   # rubocop:enable Lint/InterpolationCheck
 
   it "removes duplicate domains from Trigger records' notification.email bodies" do
-    expect { migrate }.to change { subject.reload.perform['notification.email']['body'] }
+    expect { migrate }.to change { trigger.reload.perform['notification.email']['body'] }
       .from(faulty_link).to(fixed_link)
   end
 end

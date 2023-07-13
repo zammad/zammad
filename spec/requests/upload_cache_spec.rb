@@ -9,9 +9,10 @@ RSpec.describe 'UploadCache', type: :request do
   let(:upload_cache) { UploadCache.new(form_id) }
 
   # required for adding items to the Store
-  before { UserInfo.current_user_id = 1 }
-
-  before { authenticated_as(user) }
+  before do
+    UserInfo.current_user_id = 1
+    authenticated_as(user)
+  end
 
   describe '/upload_caches/:id' do
 

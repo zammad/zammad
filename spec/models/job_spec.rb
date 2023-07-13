@@ -387,18 +387,6 @@ RSpec.describe Job, type: :model do
         subject(:job) { build(:job, :never_on) }
 
         let(:base_time) { Time.current.beginning_of_week }
-
-        # Tuesday & Thursday @ 12:00a, 12:30a, 6:00p, and 6:30p
-        before do
-          job.assign_attributes(
-            timeplan: {
-              days:    job.timeplan[:days].merge(Tue: true, Thu: true),
-              hours:   job.timeplan[:hours].merge(0 => true, 18 => true),
-              minutes: job.timeplan[:minutes].merge(0 => true, 30 => true),
-            }
-          )
-        end
-
         let(:valid_timeslots) do
           [
             base_time + 1.day,                          # Tue 12:00a
@@ -410,6 +398,17 @@ RSpec.describe Job, type: :model do
             base_time + 3.days + 18.hours,              # Thu  6:00p
             base_time + 3.days + 18.hours + 30.minutes, # Thu  6:30p
           ]
+        end
+
+        # Tuesday & Thursday @ 12:00a, 12:30a, 6:00p, and 6:30p
+        before do
+          job.assign_attributes(
+            timeplan: {
+              days:    job.timeplan[:days].merge(Tue: true, Thu: true),
+              hours:   job.timeplan[:hours].merge(0 => true, 18 => true),
+              minutes: job.timeplan[:minutes].merge(0 => true, 30 => true),
+            }
+          )
         end
 
         context 'for a Job that has never been run before' do

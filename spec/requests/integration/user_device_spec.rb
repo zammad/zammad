@@ -26,7 +26,7 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
       get '/api/v1/signshow'
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
-      expect('no valid session').to eq(json_response['error'])
+      expect(json_response['error']).to eq('no valid session')
       expect(json_response['config']).to be_truthy
       expect(controller.session[:user_device_fingerprint]).to be_falsey
 
@@ -117,7 +117,7 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response['session']).to be_truthy
-      expect('user-device-admin').to eq(json_response['session']['login'])
+      expect(json_response['session']['login']).to eq('user-device-admin')
       expect(json_response['config']).to be_truthy
 
       check_notification do
@@ -250,7 +250,7 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response['session']).to be_truthy
-      expect('user-device-admin').to eq(json_response['session']['login'])
+      expect(json_response['session']['login']).to eq('user-device-admin')
       expect(json_response['config']).to be_truthy
 
       check_notification do

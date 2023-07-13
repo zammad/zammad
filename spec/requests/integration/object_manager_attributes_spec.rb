@@ -510,7 +510,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         post '/api/v1/overviews', params: params, as: :json
         expect(response).to have_http_status(:created)
         expect(Hash).to eq(json_response.class)
-        expect('test_overview').to eq(json_response['name'])
+        expect(json_response['name']).to eq('test_overview')
       end
 
       # 3. attempt to delete the ticket attribute
@@ -596,7 +596,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         post '/api/v1/triggers', params: params, as: :json
         expect(response).to have_http_status(:created)
         expect(Hash).to eq(json_response.class)
-        expect('test_trigger').to eq(json_response['name'])
+        expect(json_response['name']).to eq('test_trigger')
       end
 
       # 3. attempt to delete the ticket attribute
@@ -729,7 +729,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         post '/api/v1/jobs', params: params, as: :json
         expect(response).to have_http_status(:created)
         expect(Hash).to eq(json_response.class)
-        expect('test_scheduler').to eq(json_response['name'])
+        expect(json_response['name']).to eq('test_scheduler')
       end
 
       # 3. attempt to delete the ticket attribute
@@ -862,7 +862,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         post '/api/v1/overviews', params: params, as: :json
         expect(response).to have_http_status(:created)
         expect(Hash).to eq(json_response.class)
-        expect('test_overview').to eq(json_response['name'])
+        expect(json_response['name']).to eq('test_overview')
       end
 
       # 3. attempt to delete the ticket attribute

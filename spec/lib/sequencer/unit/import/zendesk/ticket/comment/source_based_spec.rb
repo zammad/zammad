@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Sequencer::Unit::Import::Zendesk::Ticket::Comment::SourceBased, sequencer: :unit do
 
-  before(:all) do
+  before(:all) do # rubocop:disable RSpec/BeforeAfterAll
 
     described_class.class_eval do
 

@@ -272,7 +272,6 @@ Metrics/AbcSize:
     - 'lib/external_credential/twitter.rb'
     - 'lib/facebook.rb'
     - 'lib/fill_db.rb'
-    - 'lib/html_sanitizer.rb'
     - 'lib/idoit.rb'
     - 'lib/import/exchange/item_attributes.rb'
     - 'lib/import/otrs.rb'
@@ -402,7 +401,6 @@ Metrics/BlockLength:
     - 'lib/email_helper.rb'
     - 'lib/facebook.rb'
     - 'lib/fill_db.rb'
-    - 'lib/html_sanitizer.rb'
     - 'lib/notification_factory/renderer.rb'
     - 'lib/report/ticket_first_solution.rb'
     - 'lib/report/ticket_generic_time.rb'
@@ -423,18 +421,10 @@ Metrics/BlockLength:
 Metrics/BlockNesting:
   Exclude:
     - 'app/controllers/import_otrs_controller.rb'
-    - 'app/controllers/time_accountings_controller.rb'
-    - 'app/models/avatar.rb'
-    - 'app/models/channel/filter/identify_sender.rb'
     - 'app/models/chat.rb'
     - 'app/models/concerns/has_history.rb'
     - 'app/models/object_manager/attribute.rb'
-    - 'app/models/ticket.rb'
-    - 'app/models/transaction/notification.rb'
-    - 'app/models/transaction/slack.rb'
-    - 'lib/html_sanitizer.rb'
     - 'lib/notification_factory/mailer.rb'
-    - 'lib/search_index_backend.rb'
     - 'lib/twitter_sync.rb'
     - 'test/browser_test_helper.rb'
 
@@ -604,7 +594,6 @@ Metrics/CyclomaticComplexity:
     - 'lib/external_credential/twitter.rb'
     - 'lib/facebook.rb'
     - 'lib/fill_db.rb'
-    - 'lib/html_sanitizer.rb'
     - 'lib/import/otrs/requester.rb'
     - 'lib/import/otrs/user.rb'
     - 'lib/ldap/group.rb'
@@ -827,7 +816,6 @@ Metrics/PerceivedComplexity:
     - 'lib/external_credential/twitter.rb'
     - 'lib/facebook.rb'
     - 'lib/fill_db.rb'
-    - 'lib/html_sanitizer.rb'
     - 'lib/import/exchange/item_attributes.rb'
     - 'lib/import/otrs/user.rb'
     - 'lib/ldap/user.rb'
@@ -924,10 +912,6 @@ Style/OptionalBooleanParameter:
     - 'lib/sessions/node.rb'
     - 'spec/support/system_init_done.rb'
     - 'test/browser_test_helper.rb'
-
-Lint/MissingSuper:
-  Exclude:
-    - 'lib/sequencer/unit/exchange/connection.rb'
 
 Style/ReturnNilInPredicateMethodDefinition:
   Exclude:

@@ -367,7 +367,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(article.from).to eq('some firstname some lastname')
     end
 
-    it 'does ticket create with agent - minimal article with customer hash with article.origin_by (01.11)' do
+    it 'does ticket create with agent - minimal article with customer hash with article.origin_by (01.11) - second test' do
       params = {
         title:    'a new ticket #11.2',
         group:    ticket_group.name,
@@ -401,7 +401,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(article.from).to eq('some firstname some lastname')
     end
 
-    it 'does ticket create with agent - minimal article with customer hash with article.origin_by (01.11)' do
+    it 'does ticket create with agent - minimal article with customer hash with article.origin_by (01.11) - third test' do
       params = {
         title:    'a new ticket #11.3',
         group:    ticket_group.name,
@@ -436,7 +436,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(article.from).to eq('some firstname some lastname')
     end
 
-    it 'does ticket create with agent - minimal article with customer hash with article.origin_by (01.11)' do
+    it 'does ticket create with agent - minimal article with customer hash with article.origin_by (01.11) - fourth test' do
       params = {
         title:    'a new ticket #11.4',
         group:    ticket_group.name,
@@ -1400,7 +1400,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(article.from).to eq('Tickets Customer1')
     end
 
-    it 'does ticket create with agent - minimal article with customer hash with article.origin_by (03.6)' do
+    it 'does ticket create with agent - minimal article with customer hash with article.origin_by (03.6) - second test' do
       authenticated_as(customer)
       params = {
         title:    'a new ticket #3.6.1',

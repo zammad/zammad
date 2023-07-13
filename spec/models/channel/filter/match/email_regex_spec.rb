@@ -99,7 +99,7 @@ RSpec.describe Channel::Filter::Match::EmailRegex do
         context 'and invalid regex (misused ? repeat operator)' do
           let(:sender) { 'regex:??' }
 
-          it { expect { subject }.to raise_error(<<~ERR.chomp) }
+          it { expect { match }.to raise_error(<<~ERR.chomp) }
             Can't use regex '??' on 'foobar@foo.bar': target of repeat operator is not specified: /??/i
           ERR
         end
@@ -107,7 +107,7 @@ RSpec.describe Channel::Filter::Match::EmailRegex do
         context 'and invalid regex (unassociated wild card operator)' do
           let(:sender) { 'regex:*' }
 
-          it { expect { subject }.to raise_error(<<~ERR.chomp) }
+          it { expect { match }.to raise_error(<<~ERR.chomp) }
             Can't use regex '*' on 'foobar@foo.bar': target of repeat operator is not specified: /*/i
           ERR
         end
@@ -115,7 +115,7 @@ RSpec.describe Channel::Filter::Match::EmailRegex do
         context 'and invalid regex (empty char class)' do
           let(:sender) { 'regex:[]' }
 
-          it { expect { subject }.to raise_error(<<~ERR.chomp) }
+          it { expect { match }.to raise_error(<<~ERR.chomp) }
             Can't use regex '[]' on 'foobar@foo.bar': empty char-class: /[]/i
           ERR
         end

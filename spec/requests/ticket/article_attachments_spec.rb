@@ -35,7 +35,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
         it 'does test different attachment urls' do
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:ok)
-          expect('some content').to eq(response.body)
+          expect(response.body).to eq('some content')
 
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)
@@ -54,7 +54,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
         it 'does test attachment url after ticket merge' do
           get "/api/v1/ticket_attachment/#{ticket2.id}/#{article1.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:ok)
-          expect('some content').to eq(response.body)
+          expect(response.body).to eq('some content')
 
           get "/api/v1/ticket_attachment/#{ticket2.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)
@@ -63,7 +63,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
           # allow access via merged ticket id also
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:ok)
-          expect('some content').to eq(response.body)
+          expect(response.body).to eq('some content')
 
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)

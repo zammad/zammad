@@ -38,7 +38,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
 
       post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect('Can\'t use Channel::Driver::Sms::Twilio: #<Exceptions::UnprocessableEntity: Group needed in channel definition!>').to eq(json_response['error'])
+      expect(json_response['error']).to eq('Can\'t use Channel::Driver::Sms::Twilio: #<Exceptions::UnprocessableEntity: Group needed in channel definition!>')
 
       channel.group_id = Group.first.id
       channel.save!
@@ -46,7 +46,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
-      expect(1).to eq(xml_response.elements.count)
+      expect(xml_response.elements.count).to eq(1)
 
       ticket = Ticket.last
       article = Ticket::Article.last
@@ -69,7 +69,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms2'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
-      expect(1).to eq(xml_response.elements.count)
+      expect(xml_response.elements.count).to eq(1)
 
       ticket.reload
       expect(ticket.articles.count).to eq(2)
@@ -89,7 +89,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms2'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
-      expect(1).to eq(xml_response.elements.count)
+      expect(xml_response.elements.count).to eq(1)
 
       ticket.reload
       expect(ticket.articles.count).to eq(2)
@@ -103,7 +103,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms3'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
-      expect(1).to eq(xml_response.elements.count)
+      expect(xml_response.elements.count).to eq(1)
 
       ticket.reload
       expect(ticket.articles.count).to eq(2)
@@ -195,7 +195,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
-      expect(1).to eq(xml_response.elements.count)
+      expect(xml_response.elements.count).to eq(1)
 
       expect(customer.id).to eq(User.last.id)
     end

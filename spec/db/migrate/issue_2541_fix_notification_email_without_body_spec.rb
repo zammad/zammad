@@ -6,7 +6,7 @@ RSpec.describe Issue2541FixNotificationEmailWithoutBody, type: :db_migration do
   describe '"body" attribute management' do
     # We use #update_columns to bypass callbacks
     # that would prevent the record from being saved with an empty body
-    before { subject.update_columns(perform: perform) }
+    before { subject.update_columns(perform: perform) } # rubocop:disable RSpec/NamedSubject
 
     let(:perform) do
       {

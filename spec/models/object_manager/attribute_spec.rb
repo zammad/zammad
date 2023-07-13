@@ -45,8 +45,8 @@ RSpec.describe ObjectManager::Attribute, type: :model do
           it 'does not overwrite false values' do
             attr.data_option[:nulloption] = false
 
-            expect { subject.validate }
-              .not_to change { subject.data_option[:nulloption] }
+            expect { attr.validate }
+              .not_to change { attr.data_option[:nulloption] }
           end
         end
       end

@@ -84,14 +84,14 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
       expect(json_response).to be_a(Hash)
       expect(json_response['member_ids']).to be_a(Array)
       expect(json_response['members']).to be_falsey
-      expect('Rest Org #1').to eq(json_response['name'])
+      expect(json_response['name']).to eq('Rest Org #1')
 
       get "/api/v1/organizations/#{organization2.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response['member_ids']).to be_a(Array)
       expect(json_response['members']).to be_falsey
-      expect('Rest Org #2').to eq(json_response['name'])
+      expect(json_response['name']).to eq('Rest Org #2')
 
       # search as agent
       perform_enqueued_jobs
@@ -160,7 +160,7 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
       get "/api/v1/organizations/#{organization.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
-      expect('Rest Org #1').to eq(json_response['name'])
+      expect(json_response['name']).to eq('Rest Org #1')
 
       get "/api/v1/organizations/#{organization2.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
@@ -475,7 +475,7 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
       get '/api/v1/organizations/import_example', params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
-      rows = CSV.parse(@response.body)
+      rows = CSV.parse(response.body)
       header = rows.shift
 
       expect(header[0]).to eq('id')

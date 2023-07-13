@@ -83,7 +83,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
       # create user with disabled feature
       Setting.set('user_create_account', false)
-      token = @response.headers['CSRF-TOKEN']
+      token = response.headers['CSRF-TOKEN']
 
       # token based on form
       params = { email: 'some_new_customer@example.com', signup: true, authenticity_token: token }
@@ -410,7 +410,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       params = { firstname: "Admin#{firstname}", lastname: 'Admin Last', email: 'new_admin_by_agent@example.com', role_ids: [ role.id ] }
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:created)
-      json_response1 = JSON.parse(@response.body)
+      json_response1 = response.parsed_body
       expect(json_response1).to be_truthy
       user = User.find(json_response1['id'])
       expect(user).not_to be_role('Admin')
@@ -424,7 +424,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       params = { firstname: "Agent#{firstname}", lastname: 'Agent Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:created)
-      json_response1 = JSON.parse(@response.body)
+      json_response1 = response.parsed_body
       expect(json_response1).to be_truthy
       user = User.find(json_response1['id'])
       expect(user).not_to be_role('Admin')
@@ -438,7 +438,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       params = { firstname: "Customer#{firstname}", lastname: 'Customer Last', email: 'new_customer_by_agent@example.com', role_ids: [ role.id ] }
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:created)
-      json_response1 = JSON.parse(@response.body)
+      json_response1 = response.parsed_body
       expect(json_response1).to be_truthy
       user = User.find(json_response1['id'])
       expect(user).not_to be_role('Admin')
@@ -893,7 +893,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       get '/api/v1/users/import_example', params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
-      rows = CSV.parse(@response.body)
+      rows = CSV.parse(response.body)
       header = rows.shift
 
       expect(header[0]).to eq('id')

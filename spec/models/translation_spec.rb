@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Translation do
 
-  before(:all) do
+  before(:all) do # rubocop:disable RSpec/BeforeAfterAll
     described_class.where(locale: 'de-de').destroy_all
     described_class.sync_locale_from_po('de-de')
   end
