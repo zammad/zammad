@@ -26,7 +26,7 @@ class HtmlSanitizer
       private
 
       def scrub_children(node)
-        return  if !node.children.one?
+        return if !node.children.one?
 
         if matching_element_with_attributes?(node)
           replace_parent_with_attributes(node)
