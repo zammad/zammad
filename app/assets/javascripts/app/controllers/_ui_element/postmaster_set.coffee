@@ -25,6 +25,8 @@ class App.UiElement.postmaster_set extends App.UiElement.ApplicationAction
               config = _.clone(row)
 
               switch config.tag
+                when 'date'
+                  config.operator = ['static', 'relative']
                 when 'datetime'
                   config.operator = ['static', 'relative']
                 when 'tag'

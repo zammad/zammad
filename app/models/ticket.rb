@@ -642,20 +642,9 @@ perform changes on ticket
       end
 
       # Apply pending_time changes
-      if key == 'ticket.pending_time'
-        new_value = case value['operator']
-                    when 'static'
-                      value['value']
-                    when 'relative'
-                      TimeRangeHelper.relative(range: value['range'], value: value['value'])
-                    end
-
-        if new_value
-          self[attribute] = new_value
-          history_change_source_attribute(performable, attribute)
-          changed = true
-          next
-        end
+      if perform_changes_date(object_name: object_name, attribute: attribute, value: value, performable: performable)
+        changed = true
+        next
       end
 
       # update tags
@@ -752,6 +741,31 @@ perform changes on ticket
     end
 
     performable.try(:performed_on, self, activator_type:)
+
+    true
+  end
+
+  def perform_changes_date(object_name:, attribute:, value:, performable:)
+    return if object_name != 'ticket'
+
+    object_attribute = ObjectManager::Attribute.for_object('Ticket').find_by(name: attribute, data_type: %w[datetime date])
+    return if object_attribute.blank?
+
+    new_value = if value['operator'] == 'relative'
+                  TimeRangeHelper.relative(range: value['range'], value: value['value'])
+                else
+                  value['value']
+                end
+
+    if new_value
+      self[attribute] = if object_attribute[:data_type] == 'datetime'
+                          new_value.to_datetime
+                        else
+                          new_value.to_date
+                        end
+
+      history_change_source_attribute(performable, attribute)
+    end
 
     true
   end

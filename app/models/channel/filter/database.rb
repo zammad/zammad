@@ -90,13 +90,34 @@ module Channel::Filter::Database
         next
       end
 
-      if meta['value'].present? && meta['operator'] == 'relative'
-        mail[ key.downcase.to_sym ] = TimeRangeHelper.relative(range: meta['range'], value: meta['value'])
-        next
-      end
+      next if perform_filter_changes_date(mail: mail, filter: filter, key: key, meta: meta)
 
       mail[ key.downcase.to_sym ] = meta['value']
       mail[:"#{key.downcase}-source"] = filter
     end
+  end
+
+  def self.perform_filter_changes_date(mail:, filter:, key:, meta:)
+    return if key !~ %r{x-zammad-ticket-(.*)}
+
+    object_attribute = ObjectManager::Attribute.for_object('Ticket').find_by(name: $1, data_type: %w[datetime date])
+    return if object_attribute.blank?
+
+    new_value = if meta['operator'] == 'relative'
+                  TimeRangeHelper.relative(range: meta['range'], value: meta['value'])
+                else
+                  meta['value']
+                end
+
+    if new_value
+      mail[ key.downcase.to_sym ] = if object_attribute[:data_type] == 'datetime'
+                                      new_value.to_datetime
+                                    else
+                                      new_value.to_date
+                                    end
+      mail[:"#{key.downcase}-source"] = filter
+    end
+
+    true
   end
 end

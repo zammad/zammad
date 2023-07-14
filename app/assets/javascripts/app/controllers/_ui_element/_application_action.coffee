@@ -97,6 +97,8 @@ class App.UiElement.ApplicationAction
                   config.upload = false
 
               switch config.tag
+                when 'date'
+                  config.operator = ['static', 'relative']
                 when 'datetime'
                   config.operator = ['static', 'relative']
                 when 'tag'

@@ -184,11 +184,79 @@ RSpec.describe Channel::Filter::Database, type: :channel_filter do
     end
 
     it 'does set values for 4206_datetime' do
-      expect(mail_hash['x-zammad-ticket-4206_datetime']).to eq('2022-08-18T06:00:00.000Z')
+      expect(mail_hash['x-zammad-ticket-4206_datetime']).to eq(Time.zone.parse('2022-08-18T06:00:00.000Z'))
     end
 
     it 'does set values for 4206_date' do
-      expect(mail_hash['x-zammad-ticket-4206_date']).to eq('2022-08-19')
+      expect(mail_hash['x-zammad-ticket-4206_date']).to eq(Time.zone.parse('2022-08-19'))
+    end
+  end
+
+  describe 'Trigger fails to set custom timestamp on report #4677', db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+
+    let(:perform) { {} }
+    let(:postmaster_filter) { create(:postmaster_filter, perform: perform) }
+
+    let(:perform_static) do
+      { "x-zammad-ticket-#{field_name}" => { 'operator' => 'static', 'value' => '2023-07-18T06:00:00.000Z' } }
+    end
+    let(:perform_relative) do
+      { "x-zammad-ticket-#{field_name}"=>{ 'operator' => 'relative', 'value' => '1', 'range' => 'day' } }
+    end
+
+    before do
+      travel_to DateTime.new 2023, 0o7, 13, 10, 0o0
+    end
+
+    context 'when datetime' do
+      before do
+        create(:object_manager_attribute_datetime, object_name: 'Ticket', name: field_name, display: field_name)
+        ObjectManager::Attribute.migration_execute
+        postmaster_filter
+        filter(mail_hash)
+      end
+
+      context 'when static' do
+        let(:perform) { perform_static }
+
+        it 'does set the value' do
+          expect(mail_hash["x-zammad-ticket-#{field_name}"]).to eq(Time.zone.parse('2023-07-18T06:00:00.000Z'))
+        end
+      end
+
+      context 'when relative' do
+        let(:perform) { perform_relative }
+
+        it 'does set the value' do
+          expect(mail_hash["x-zammad-ticket-#{field_name}"]).to eq(1.day.from_now)
+        end
+      end
+    end
+
+    context 'when date' do
+      before do
+        create(:object_manager_attribute_date, object_name: 'Ticket', name: field_name, display: field_name)
+        ObjectManager::Attribute.migration_execute
+        postmaster_filter
+        filter(mail_hash)
+      end
+
+      context 'when static' do
+        let(:perform) { perform_static }
+
+        it 'does set the value' do
+          expect(mail_hash["x-zammad-ticket-#{field_name}"]).to eq(Time.zone.parse('2023-07-18'))
+        end
+      end
+
+      context 'when relative' do
+        let(:perform) { perform_relative }
+
+        it 'does set the value' do
+          expect(mail_hash["x-zammad-ticket-#{field_name}"]).to eq(1.day.from_now.to_date)
+        end
+      end
     end
   end
 end

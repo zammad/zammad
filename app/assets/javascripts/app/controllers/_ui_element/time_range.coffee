@@ -9,10 +9,18 @@ class App.UiElement.time_range
       month: __('Month(s)')
       year: __('Year(s)')
 
+    if attribute.tag is 'date'
+      delete ranges.minute
+      delete ranges.hour
+
     for key, value of ranges
       ranges[key] = App.i18n.translateInline(value)
 
-    range = 'minute'
+    range = if attribute.tag is 'date'
+              'day'
+            else
+              'minute'
+
     if attribute.value && attribute.value.range
       range = attribute.value.range
     values =

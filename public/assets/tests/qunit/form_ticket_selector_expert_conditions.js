@@ -457,13 +457,13 @@ QUnit.test('renders additional attributes correctly', (assert) => {
           name: 'ticket.test_date',
           operator: 'before (relative)',
           value: '3',
-          range: 'minute',
+          range: 'week',
         },
         {
           name: 'ticket.test_date',
           operator: 'after (relative)',
           value: '5',
-          range: 'hour',
+          range: 'day',
         },
         {
           name: 'ticket.test_date',
@@ -747,11 +747,11 @@ QUnit.test('renders additional attributes correctly', (assert) => {
   assert.equal(el.find('.js-filterElement:nth-child(34) .js-attributeSelector select option:selected').text(), 'test_date', 'test_date attribute selected')
   assert.equal(el.find('.js-filterElement:nth-child(34) .js-operator select option:selected').text(), 'before (relative)', 'before (relative) operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(34) select.js-value option:selected').text(), '3', '3 value selected')
-  assert.equal(el.find('.js-filterElement:nth-child(34) select.js-range option:selected').text(), 'Minute(s)', 'Minute(s) value selected')
+  assert.equal(el.find('.js-filterElement:nth-child(34) select.js-range option:selected').text(), 'Week(s)', 'Week(s) value selected')
   assert.equal(el.find('.js-filterElement:nth-child(35) .js-attributeSelector select option:selected').text(), 'test_date', 'test_date attribute selected')
   assert.equal(el.find('.js-filterElement:nth-child(35) .js-operator select option:selected').text(), 'after (relative)', 'after (relative) operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(35) select.js-value option:selected').text(), '5', '5 value selected')
-  assert.equal(el.find('.js-filterElement:nth-child(35) select.js-range option:selected').text(), 'Hour(s)', 'Hour(s) value selected')
+  assert.equal(el.find('.js-filterElement:nth-child(35) select.js-range option:selected').text(), 'Day(s)', 'Day(s) value selected')
   assert.equal(el.find('.js-filterElement:nth-child(36) .js-attributeSelector select option:selected').text(), 'test_date', 'test_date attribute selected')
   assert.equal(el.find('.js-filterElement:nth-child(36) .js-operator select option:selected').text(), 'within next (relative)', 'within next (relative) operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(36) select.js-value option:selected').text(), '7', '7 value selected')
