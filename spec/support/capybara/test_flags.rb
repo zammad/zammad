@@ -2,7 +2,11 @@
 
 module TestFlags
   def wait_for_test_flag(flag, skip_clearing: false)
-    wait.until { page.evaluate_script("window.testFlags && window.testFlags.get('#{flag.gsub("'", "\\'")}', #{skip_clearing})") }
+    begin
+      wait.until { page.evaluate_script("window.testFlags && window.testFlags.get('#{flag.gsub("'", "\\'")}', #{skip_clearing})") }
+    rescue Selenium::WebDriver::Error::TimeoutError
+      raise "Test flag #{flag} not set"
+    end
   end
 
   def wait_for_gql(filename, number: 1, skip_clearing: false)

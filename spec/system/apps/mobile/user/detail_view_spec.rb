@@ -10,7 +10,8 @@ RSpec.describe 'Mobile > User > Preview detailed information about user', app: :
 
   def open_user
     visit "/users/#{user.id}"
-    wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql')
+    wait_for_query('user')
+    wait_for_subscription_start('userUpdates')
   end
 
   context 'when visiting as agent', authenticated_as: :agent do
@@ -22,8 +23,6 @@ RSpec.describe 'Mobile > User > Preview detailed information about user', app: :
       expect(find('section', text: %r{Address})).to have_text(user.address)
 
       user.update!(firstname: 'Rose', lastname: 'Nylund', address: 'Hamburg')
-
-      wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
 
       expect(page).to have_text('Rose Nylund')
 
@@ -43,7 +42,7 @@ RSpec.describe 'Mobile > User > Preview detailed information about user', app: :
 
       click('button', text: 'Show 2 more')
 
-      wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql', number: 2)
+      wait_for_query('user', number: 2)
 
       expect(page).to have_text(organizations[3].name)
       expect(page).to have_text(organizations[4].name)
