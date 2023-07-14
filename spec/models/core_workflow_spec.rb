@@ -803,37 +803,66 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
     end
   end
 
-  describe '.perform - Condition - Contains' do
-    let(:payload) do
-      base_payload.merge(
-        'params' => { 'title' => 'workflow ticket' },
-      )
-    end
+  describe '.perform - Condition - Contains', db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+
     let!(:workflow) do
       create(:core_workflow,
              object:             'Ticket',
              condition_selected: {
-               'ticket.title': {
+               "ticket.#{field_name}": {
                  operator: 'contains',
-                 value:    [ 'workflow ticket', 'workflaw ticket' ],
+                 value:    %w[key_1 key_2],
                },
              })
     end
 
-    it 'does match' do
-      expect(result[:matched_workflows]).to include(workflow.id)
+    before do
+      create(:object_manager_attribute_multiselect, name: field_name, display: field_name)
+      ObjectManager::Attribute.migration_execute
     end
 
-    describe 'for invalid value' do
-      let!(:workflow) do
-        create(:core_workflow,
-               object:             'Ticket',
-               condition_selected: {
-                 'ticket.title': {
-                   operator: 'contains',
-                   value:    [ 'workfluw ticket', 'workflaw ticket' ],
-                 },
-               })
+    context 'when empty' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => [] },
+        )
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when same value' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => %w[key_1 key_2] },
+        )
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when 50% value' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => ['key_1'] },
+        )
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when value differs' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => ['key_3'] },
+        )
       end
 
       it 'does not match' do
@@ -842,76 +871,134 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
     end
   end
 
-  describe '.perform - Condition - Contains not' do
-    let(:payload) do
-      base_payload.merge(
-        'params' => { 'title' => 'workflow ticket' },
-      )
-    end
+  describe '.perform - Condition - Contains not', db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+
     let!(:workflow) do
       create(:core_workflow,
              object:             'Ticket',
              condition_selected: {
-               'ticket.title': {
+               "ticket.#{field_name}": {
                  operator: 'contains not',
-                 value:    [ 'workfluw ticket', 'workflaw ticket' ],
+                 value:    %w[key_1 key_2],
                },
              })
     end
 
-    it 'does match' do
-      expect(result[:matched_workflows]).to include(workflow.id)
+    before do
+      create(:object_manager_attribute_multiselect, name: field_name, display: field_name)
+      ObjectManager::Attribute.migration_execute
     end
 
-    describe 'for invalid value' do
-      let!(:workflow) do
-        create(:core_workflow,
-               object:             'Ticket',
-               condition_selected: {
-                 'ticket.title': {
-                   operator: 'contains not',
-                   value:    [ 'workflow ticket', 'workflow ticket' ],
-                 },
-               })
+    context 'when empty' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => [] },
+        )
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when same value' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => %w[key_1 key_2] },
+        )
       end
 
       it 'does not match' do
         expect(result[:matched_workflows]).not_to include(workflow.id)
       end
     end
+
+    context 'when 50% value' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => ['key_1'] },
+        )
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when value differs' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => ['key_3'] },
+        )
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
   end
 
-  describe '.perform - Condition - Contains all' do
-    let(:payload) do
-      base_payload.merge(
-        'params' => { 'title' => 'workflow ticket' },
-      )
-    end
+  describe '.perform - Condition - Contains all', db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+
     let!(:workflow) do
       create(:core_workflow,
              object:             'Ticket',
              condition_selected: {
-               'ticket.title': {
+               "ticket.#{field_name}": {
                  operator: 'contains all',
-                 value:    [ 'workflow ticket', 'workflow ticket' ],
+                 value:    %w[key_1 key_2],
                },
              })
     end
 
-    it 'does match' do
-      expect(result[:matched_workflows]).to include(workflow.id)
+    before do
+      create(:object_manager_attribute_multiselect, name: field_name, display: field_name)
+      ObjectManager::Attribute.migration_execute
     end
 
-    describe 'for invalid value' do
-      let!(:workflow) do
-        create(:core_workflow,
-               object:             'Ticket',
-               condition_selected: {
-                 'ticket.title': {
-                   operator: 'contains all',
-                   value:    [ 'workflow ticket', 'workflaw ticket' ],
-                 },
-               })
+    context 'when empty' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => [] },
+        )
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when same value' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => %w[key_1 key_2] },
+        )
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when 50% value' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => ['key_1'] },
+        )
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when value differs' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => ['key_3'] },
+        )
       end
 
       it 'does not match' do
@@ -920,41 +1007,70 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
     end
   end
 
-  describe '.perform - Condition - Contains all not' do
-    let(:payload) do
-      base_payload.merge(
-        'params' => { 'title' => 'workflow ticket' },
-      )
-    end
+  describe '.perform - Condition - Contains all not', db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+
     let!(:workflow) do
       create(:core_workflow,
              object:             'Ticket',
              condition_selected: {
-               'ticket.title': {
+               "ticket.#{field_name}": {
                  operator: 'contains all not',
-                 value:    [ 'workfluw ticket', 'workflaw ticket' ],
+                 value:    %w[key_1 key_2],
                },
              })
     end
 
-    it 'does match' do
-      expect(result[:matched_workflows]).to include(workflow.id)
+    before do
+      create(:object_manager_attribute_multiselect, name: field_name, display: field_name)
+      ObjectManager::Attribute.migration_execute
     end
 
-    describe 'for invalid value' do
-      let!(:workflow) do
-        create(:core_workflow,
-               object:             'Ticket',
-               condition_selected: {
-                 'ticket.title': {
-                   operator: 'contains all not',
-                   value:    [ 'workflow ticket', 'workflaw ticket' ],
-                 },
-               })
+    context 'when empty' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => [] },
+        )
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when same value' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => %w[key_1 key_2] },
+        )
       end
 
       it 'does not match' do
         expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when 50% value' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => ['key_1'] },
+        )
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when value differs' do
+      let(:payload) do
+        base_payload.merge(
+          'params' => { field_name => ['key_3'] },
+        )
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
       end
     end
   end
