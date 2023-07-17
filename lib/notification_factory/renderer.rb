@@ -211,6 +211,16 @@ examples how to use
     true
   end
 
+  def select_value(attribute, key)
+    key     = Array(key)
+    options = attribute.data_option['options']
+    if options.is_a?(Array)
+      key.map { |k| options.detect { |o| o['value'] == k }&.dig('name') || k }
+    else
+      key.map { |k| options[k] || k }
+    end
+  end
+
   def display_value(object, method_name, previous_method_names, key)
     return key if method_name != 'value' ||
                   (!key.instance_of?(String) && !key.instance_of?(Array))
@@ -220,10 +230,8 @@ examples how to use
                  .where(name: previous_method_names.split('.').last)
 
     case attributes.first.data_type
-    when 'select'
-      attributes.first.data_option['options'][key] || key
-    when 'multiselect'
-      key.map { |k| attributes.first.data_option['options'][k] || k }
+    when %r{^(multi)?select$}
+      select_value(attributes.first, key)
     else
       key
     end
