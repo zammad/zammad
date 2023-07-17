@@ -129,7 +129,7 @@
     "linkifyjs": "^4.1.1",
     "lodash-es": "^4.17.21",
     "loglevel": "^1.8.1",
-    "mitt": "^3.0.0",
+    "mitt": "^3.0.1",
     "pinia": "^2.1.4",
     "tippy.js": "^6.3.7",
     "tiptap-text-direction": "^0.3.0",
