@@ -393,6 +393,48 @@ RSpec.describe NotificationFactory::Renderer do
           it_behaves_like 'correctly rendering the attributes'
         end
 
+        context 'with select (custom sorted) attribute on chained group object' do
+          let(:create_object_manager_attribute) do
+            create(:object_manager_attribute_select,
+                   object_lookup_id:    ObjectLookup.by_name('Group'),
+                   name:                'select',
+                   data_option_options: [{ name: 'value_1', value: 'key_1' }, { name: 'value_2', value: 'key_2' }, { name: 'value_3', value: 'key_3' }])
+          end
+          let(:template)        { '#{ticket.group.select} _SEPERATOR_ #{ticket.group.select.value}' }
+          let(:expected_render) { 'key_3 _SEPERATOR_ value_3' }
+
+          let(:ticket) { create(:ticket, customer: @user) }
+
+          before do
+            group = ticket.group
+            group.select = 'key_3'
+            group.save
+          end
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
+
+        context 'with multiple multiselect (custom sorted) attribute on chained group object' do
+          let(:create_object_manager_attribute) do
+            create(:object_manager_attribute_multiselect,
+                   object_lookup_id:    ObjectLookup.by_name('Group'),
+                   name:                'multiselect',
+                   data_option_options: [{ name: 'value_1', value: 'key_1' }, { name: 'value_2', value: 'key_2' }, { name: 'value_3', value: 'key_3' }])
+          end
+          let(:template)        { '#{ticket.group.multiselect} _SEPERATOR_ #{ticket.group.multiselect.value}' }
+          let(:expected_render) { 'key_3, key_1 _SEPERATOR_ value_3, value_1' }
+
+          let(:ticket) { create(:ticket, customer: @user) }
+
+          before do
+            group = ticket.group
+            group.multiselect = %w[key_3 key_1]
+            group.save
+          end
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
+
         context 'with multiple multiselect attribute on chained organization object' do
           let(:create_object_manager_attribute) do
             create(:object_manager_attribute_multiselect,
