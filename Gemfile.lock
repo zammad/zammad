@@ -408,7 +408,7 @@ GEM
     public_suffix (5.0.1)
     puma (6.3.0)
       nio4r (~> 2.0)
-    pundit (2.3.0)
+    pundit (2.3.1)
       activesupport (>= 3.0.0)
     pundit-matchers (3.1.2)
       rspec-core (~> 3.12)
