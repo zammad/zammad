@@ -786,8 +786,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        wait.until { page.find("select[name='#{field_name}']").value == ['key_3'] }
-        expect(page.find("select[name='#{field_name}']").value).to eq(['key_3'])
+        expect(page).to have_select(field_name, selected: ['value_3'])
       end
     end
 
@@ -813,8 +812,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        wait.until { page.find("select[name='#{field_name}']").value == ['key_3'] }
-        expect(page.find("select[name='#{field_name}']").value).to eq(['key_3'])
+        expect(page).to have_select(field_name, selected: ['value_3'])
       end
     end
   end

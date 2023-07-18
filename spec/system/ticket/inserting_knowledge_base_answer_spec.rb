@@ -50,6 +50,8 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
             script = 'return arguments[0].naturalWidth;'
             height = Capybara.current_session.driver.browser.execute_script(script, elem.native)
 
+            next false if height <= 0
+
             expect(height).to be_positive
           end
         end

@@ -51,7 +51,9 @@ RSpec.describe 'First Steps', type: :system do
       click('button')
     end
 
-    wait.until { expect(User.last).to have_attributes(firstname: 'Client', lastname: 'Smith') }
+    wait.until { User.last.firstname == 'Client' }
+
+    expect(User.last).to have_attributes(firstname: 'Client', lastname: 'Smith')
     expect(page).to have_no_text 'Sending'
   end
 
