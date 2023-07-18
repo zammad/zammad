@@ -28,7 +28,13 @@ blocks:
       jobs:
         - name: CI testing
           commands:
-            - .github/workflows/ci/pre.sh
+            - bundle config set --local frozen 'true'
+            - bundle config set --local path 'vendor/bundle'
+            - bundle install -j "$(nproc)"
+            - yarn install
+            - yarn cypress:install
+            - bundle exec ruby .gitlab/configure_environment.rb
+            - bundle exec rake zammad:db:init
             - .github/workflows/ci/lint.sh
             - .github/workflows/ci/test.sh
             - cache store
