@@ -17,7 +17,7 @@ global_job_config:
     - name: Z_LOCALES
       value: "en-us:de-de"
     - name: REDIS_URL
-      name: "redis://redis:6379"
+      value: "redis://redis:6379"
     - name: CI_SKIP_ASSETS_PRECOMPILE
       value: "true"
     - name: CI_SKIP_DB_RESET
