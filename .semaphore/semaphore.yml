@@ -19,14 +19,7 @@ global_job_config:
       - bundle install --path vendor/bundle
       - yarn install
       - yarn cypress:install
-
-blocks:
-  - name: Building the cache
-    task:
-      jobs:
-        - name: Cache
-          commands:
-            - cache store
+      - cache store
   - name: CI
     task:
       jobs:
