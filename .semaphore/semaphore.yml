@@ -28,6 +28,8 @@ blocks:
       jobs:
         - name: CI testing
           commands:
+            - sudo apt-get update
+            - sudo apt-get install libimlib2-dev
             - bundle config set --local frozen 'true'
             - bundle config set --local path 'vendor'
             - bundle install -j "$(nproc)"
