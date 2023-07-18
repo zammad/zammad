@@ -29,7 +29,7 @@ blocks:
         - name: CI testing
           commands:
             - sudo apt-get update
-            - sudo apt-get install libimlib2-dev
+            - sudo apt-get install libimlib2-dev -y
             - bundle config set --local frozen 'true'
             - bundle config set --local path 'vendor'
             - bundle install -j "$(nproc)"
