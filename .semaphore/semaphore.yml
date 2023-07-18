@@ -10,7 +10,7 @@ global_job_config:
       - checkout
       - cache restore
       - sem-service start postgres 10 --username=zammad --password=zammad
-      # sem-service start redis 6.2
+      - sem-service start redis 6.2
       - sem-version ruby 3.1.3
       - sudo apt-get update
       - sudo apt-get install -y -f optipng jhead imagemagick libimlib2 openssl direnv shellcheck libimlib2-dev
@@ -27,12 +27,13 @@ blocks:
         - name: Cache
           commands:
             - cache store
-  - name: Run tests
+  - name: CI
     task:
       jobs:
-        - name: Lint
+        - name: CI
           commands:
             - bundle exec ruby .gitlab/configure_environment.rb
+            - bundle exec rake zammad:db:init
             - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c "$FILE"; done
             - bundle exec rails generate zammad:translation_catalog --check
             - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
@@ -40,17 +41,12 @@ blocks:
             - .gitlab/check_graphql_api_consistency.sh
             - bundle exec .rubocop/validate_todos.rb
             - bundle exec rubocop --parallel
+            - coffeelint --rules ./.coffeelint/rules/* app/
             - yarn lint:css
             - yarn lint
-        - name: Yarn
-          commands:
             - bundle exec rake assets:precompile
             - yarn test
             - yarn test:ci:ct
-        - name: Tests
-          commands:
-            - bundle exec rake assets:precompile
-            - bundle exec rake zammad:db:init
             - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration -t ~required_envs
             - bundle exec rake zammad:db:reset
             - bundle exec rake test:units
