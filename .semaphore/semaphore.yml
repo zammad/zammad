@@ -29,7 +29,7 @@ blocks:
         - name: CI testing
           commands:
             - bundle config set --local frozen 'true'
-            - bundle config set --local path 'vendor/bundle'
+            - bundle config set --local path 'vendor'
             - bundle install -j "$(nproc)"
             - yarn install
             - yarn cypress:install
