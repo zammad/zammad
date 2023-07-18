@@ -52,6 +52,7 @@ module ApplicationModel::ChecksAttributeValuesAndLength
 
       # strip 4 bytes utf8 chars if needed (mysql/mariadb will complain it)
       next if self[name].blank?
+      next if column.type == :binary
 
       self[name] = self[name].utf8_to_3bytesutf8
     end
