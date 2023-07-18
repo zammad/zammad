@@ -35,7 +35,6 @@ blocks:
             - .gitlab/check_graphql_api_consistency.sh
             - bundle exec .rubocop/validate_todos.rb
             - bundle exec rubocop --parallel
-            - coffeelint --rules ./.coffeelint/rules/* app/
             - yarn lint:css
             - yarn lint
             - bundle exec rake assets:precompile
