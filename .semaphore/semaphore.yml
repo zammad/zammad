@@ -20,6 +20,7 @@ global_job_config:
       - yarn install
       - yarn cypress:install
       - cache store
+blocks:
   - name: CI
     task:
       jobs:
