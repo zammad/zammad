@@ -10,7 +10,7 @@ global_job_config:
       - checkout
       - cache restore
       - sem-service start postgres 10 --username=zammad --password=zammad
-      - sem-service start redis 6.2
+      # sem-service start redis 6.2
       - sem-version ruby 3.1.3
       - sudo apt-get update
       - sudo apt-get install -y -f optipng jhead imagemagick libimlib2 openssl direnv shellcheck libimlib2-dev
