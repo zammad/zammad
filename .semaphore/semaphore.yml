@@ -26,7 +26,7 @@ blocks:
   - name: CI test
     task:
       jobs:
-        - name: CI test
+        - name: CI testing
           commands:
             - .github/workflows/ci/pre.sh
             - .github/workflows/ci/lint.sh
