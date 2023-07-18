@@ -1,0 +1,36 @@
+version: v1.0
+name: Zammad CI
+agent:
+  machine:
+    type: f1-standard-2
+    os_image: ubuntu2004
+global_job_config:
+  prologue:
+    commands:
+      - checkout
+      - cache restore
+      - sem-service start postgres 10
+      - sem-service start redis 5
+  env_vars:
+    - name: RAILS_ENV
+      value: "test"
+    - name: Z_LOCALES
+      value: "en-us:de-de"
+    - name: REDIS_URL
+      name: "redis://redis:6379"
+    - name: CI_SKIP_ASSETS_PRECOMPILE
+      value: "true"
+    - name: CI_SKIP_DB_RESET
+      value: "true"
+blocks:
+  - name: CI test
+    task:
+      jobs:
+        - name: CI test
+          commands:
+            - .github/workflows/ci/pre.sh
+            - .github/workflows/ci/lint.sh
+            - .github/workflows/ci/test.sh
+            - cache store
+            
+    
