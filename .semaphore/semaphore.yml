@@ -18,7 +18,7 @@ global_job_config:
       - rbenv rehash
       - bundle install --path vendor/bundle
       - yarn install
-      - 'yarn cypress: install'
+      - yarn cypress:install
       - cache store
   env_vars:
     - name: RAILS_ENV
