@@ -28,7 +28,7 @@ blocks:
           commands:
             - bundle exec ruby .gitlab/configure_environment.rb
             - bundle exec rake zammad:db:init
-            - bundle exec rake db:migrate
+            - bundle exec rake zammad:db:migrate
             - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c "$FILE"; done
             - bundle exec rails generate zammad:translation_catalog --check
             - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
