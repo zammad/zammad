@@ -90,14 +90,18 @@ class String
   def utf8_to_3bytesutf8
     return self if Rails.application.config.db_4bytes_utf8
 
-    each_char.select do |c|
+    removed = ''
+    each_char.with_object('') do |c, result|
       if c.bytes.count > 3
-        Rails.logger.warn "strip out 4 bytes utf8 chars '#{c}' of '#{self}'"
+        removed << c
         next
       end
-      c
+      result << c
+    end.tap do
+      if removed.present?
+        Rails.logger.warn "strip out 4 bytes utf8 chars '#{removed[0..255]}' of '#{self[0..255]}'"
+      end
     end
-             .join
   end
 
 =begin
