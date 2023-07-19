@@ -10,7 +10,7 @@ global_job_config:
       - checkout
       - cache restore
       - sem-service start postgres 10 --username=zammad --password=zammad
-      - sem-service start redis 6.2
+      - sem-service start redis 5
       - sem-version ruby 3.1.3
       - sudo apt-get update
       - sudo apt-get install -y -f optipng jhead imagemagick libimlib2 openssl direnv shellcheck libimlib2-dev
@@ -20,6 +20,17 @@ global_job_config:
       - yarn install
       - yarn cypress:install
       - cache store
+  env_vars:
+    - name: RAILS_ENV
+      value: "test"
+    - name: Z_LOCALES
+      value: "en-us:de-de"
+    - name: REDIS_URL
+      value: redis://redis:6379
+    - name: CI_SKIP_ASSETS_PRECOMPILE
+      value: 'true'
+    - name: CI_SKIP_DB_RESET
+      value: 'true'
 blocks:
   - name: CI
     task:
@@ -28,7 +39,6 @@ blocks:
           commands:
             - bundle exec ruby .gitlab/configure_environment.rb
             - bundle exec rake zammad:db:init
-            - bundle exec rake zammad:db:migrate
             - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c "$FILE"; done
             - bundle exec rails generate zammad:translation_catalog --check
             - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
