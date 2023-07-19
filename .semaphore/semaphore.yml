@@ -18,15 +18,13 @@ global_job_config:
       - rbenv rehash
       - bundle install --path vendor/bundle
       - yarn install
-      - yarn cypress:install
+      - yarn cypress: install
       - cache store
   env_vars:
     - name: RAILS_ENV
       value: "test"
     - name: Z_LOCALES
       value: "en-us:de-de"
-    - name: REDIS_URL
-      value: redis://redis:6379
     - name: CI_SKIP_ASSETS_PRECOMPILE
       value: 'true'
     - name: CI_SKIP_DB_RESET
