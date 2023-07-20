@@ -44,12 +44,16 @@ module KnowledgeBaseBreadcrumbHelper
 
   def breadcrumb_path_for(object, locale = params.fetch(:locale))
     case object
-    when KnowledgeBase
+    in KnowledgeBase
       help_root_path(locale:)
-    when KnowledgeBase::Category
+    in KnowledgeBase::Category
       help_category_path(object.translation, locale:)
-    when KnowledgeBase::Answer
+    in KnowledgeBase::Answer
       help_answer_path(object.category.translation, object.translation, locale:)
+    in [:tag, tag_name]
+      help_tag_path(locale, tag_name)
+    else
+      nil
     end
   end
 
