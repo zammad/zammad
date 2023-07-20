@@ -2660,7 +2660,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:article) { create(:ticket_article, ticket: ticket, body: body, content_type: 'text/html') }
 
     before do
-      visit "#ticket/zoom/#{ticket.id}"
+      visit "#ticket/zoom/#{article.ticket.id}"
     end
 
     it 'does open the image preview for a common image' do
