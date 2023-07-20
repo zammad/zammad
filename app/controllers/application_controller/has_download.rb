@@ -9,10 +9,6 @@ module ApplicationController::HasDownload
       subscriber = proc do
         policy = ActionDispatch::ContentSecurityPolicy.new
         policy.default_src :none
-
-        # The 'plugin_types' rule is deprecated and should be changed in the future.
-        policy.plugin_types 'application/pdf'
-
         request.content_security_policy = policy
       end
 
