@@ -40,13 +40,11 @@ const renderForm = () => {
   }
 
   const useMutationOrganizationUpdate = () => {
-    return useMutation(
-      gql`
-        mutation {
-          organizationUpdate
-        }
-      `,
-    )
+    return useMutation(gql`
+      mutation {
+        organizationUpdate
+      }
+    `)
   }
   const sendMock = vi.fn().mockResolvedValue(organization)
   MutationHandler.prototype.send = sendMock

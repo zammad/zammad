@@ -90,10 +90,13 @@ const orderColumnsOptions = computed(() => {
 
 const orderColumnLabels = computed(() => {
   return (
-    selectedOverview.value?.orderColumns.reduce((map, entry) => {
-      map[entry.key] = entry.value || entry.key
-      return map
-    }, {} as Record<string, string>) || {}
+    selectedOverview.value?.orderColumns.reduce(
+      (map, entry) => {
+        map[entry.key] = entry.value || entry.key
+        return map
+      },
+      {} as Record<string, string>,
+    ) || {}
   )
 })
 

@@ -22,5 +22,5 @@ export const link = createSection(
           },
         },
       ],
-    } as unknown as FormKitSchemaNode),
+    }) as unknown as FormKitSchemaNode,
 )

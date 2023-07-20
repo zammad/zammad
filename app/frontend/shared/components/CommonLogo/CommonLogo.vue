@@ -15,6 +15,6 @@ const logoUrl = computed(() => {
   <img
     class="max-h-32 max-w-[14rem]"
     :src="logoUrl"
-    :alt="($c.product_name as string)"
+    :alt="$c.product_name as string"
   />
 </template>

@@ -22,5 +22,5 @@ export const arrow = createSection(
           },
         },
       ],
-    } as FormKitSchemaNode),
+    }) as FormKitSchemaNode,
 )

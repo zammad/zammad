@@ -331,7 +331,7 @@ onBeforeUnmount(() => {
       ref="pickerNode"
       :name="props.context.node.name"
       :class="props.context.classes.input"
-      :disabled="(props.context.disabled as boolean)"
+      :disabled="props.context.disabled as boolean"
       @blur="context.handlers.blur"
       @focus="showPicker = true"
     />

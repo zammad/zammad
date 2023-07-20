@@ -136,8 +136,8 @@ const getRecipientArticle = (
     !recipientIsSystem &&
     sender === 'Agent' &&
     senderEmail &&
-    article.from?.parsed?.some((address) =>
-      address.emailAddress?.toLowerCase().includes(senderEmail),
+    article.from?.parsed?.some(
+      (address) => address.emailAddress?.toLowerCase().includes(senderEmail),
     )
 
   if (senderIsSystem) {

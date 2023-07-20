@@ -100,7 +100,11 @@ setupMissingOrDisabledOptionHandling()
             <CommonTicketStateIndicator
               v-for="selectedValue in valueContainer"
               :key="selectedValue"
-              :color-code="getSelectedOptionStatus(selectedValue) as EnumTicketStateColorCode"
+              :color-code="
+                getSelectedOptionStatus(
+                  selectedValue,
+                ) as EnumTicketStateColorCode
+              "
               :label="
                 getSelectedOptionLabel(selectedValue) ||
                 i18n.t('%s (unknown)', selectedValue)

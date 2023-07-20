@@ -1754,7 +1754,8 @@ td .prefix-icon > .icon {
 
     &:focus:not(.is-active) ~ .icon-checked,
     &:focus:not(.is-active) ~ .icon-unchecked {
-      box-shadow: 0 0 0 2px var(--border-highlight),
+      box-shadow:
+        0 0 0 2px var(--border-highlight),
         0 0 0 3px var(--shadow-highlight);
     }
   }
@@ -2919,7 +2920,8 @@ input.has-error {
   .modal-content {
     border: none;
     width: 300px;
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.1),
+    box-shadow:
+      0 8px 17px 0 rgba(0, 0, 0, 0.1),
       0 6px 20px 0 rgba(0, 0, 0, 0.05);
 
     @include phone {
@@ -4198,7 +4200,9 @@ footer {
   min-width: $minWidth - $sidebarWidth - $navigationWidth;
   background: var(--background-secondary);
   z-index: 1;
-  box-shadow: 0 -1px rgba(0, 0, 0, 0.05), 0 -2px rgba(0, 0, 0, 0.03),
+  box-shadow:
+    0 -1px rgba(0, 0, 0, 0.05),
+    0 -2px rgba(0, 0, 0, 0.03),
     0 -3px rgba(0, 0, 0, 0.01);
 
   @include small-desktop {
@@ -7862,8 +7866,10 @@ a.list-group-item.active > .badge,
 }
 
 .sidebar.bottom-form-shadow {
-  box-shadow: 0 -1px rgba(0, 0, 0, 0.005) inset,
-    0 -2px rgba(0, 0, 0, 0.005) inset, 0 -3px rgba(0, 0, 0, 0.005) inset,
+  box-shadow:
+    0 -1px rgba(0, 0, 0, 0.005) inset,
+    0 -2px rgba(0, 0, 0, 0.005) inset,
+    0 -3px rgba(0, 0, 0, 0.005) inset,
     0 -4px rgba(0, 0, 0, 0.005) inset;
 }
 
@@ -10888,7 +10894,9 @@ output {
     border-radius: inherit;
     left: 1px;
     top: 1px;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.05),
+      0 1px 3px rgba(0, 0, 0, 0.2);
     background: var(--background-secondary);
 
     @include rtl(transform, translateX(70%));
@@ -11016,7 +11024,9 @@ output {
 
   &.is-invalid {
     border-radius: 3px;
-    box-shadow: 0 0 0 2px var(--background-primary), 0 0 0 4px hsl(0, 90%, 70%);
+    box-shadow:
+      0 0 0 2px var(--background-primary),
+      0 0 0 4px hsl(0, 90%, 70%);
   }
 
   &.settings-list--fixed {
@@ -11349,7 +11359,9 @@ output {
     justify-content: center;
     min-height: 34px;
     background-clip: content-box;
-    box-shadow: 1px 0 var(--border-alt) inset, 0 1px var(--border-alt) inset;
+    box-shadow:
+      1px 0 var(--border-alt) inset,
+      0 1px var(--border-alt) inset;
 
     @extend %clickable;
 
@@ -12266,7 +12278,9 @@ output {
     overflow: hidden;
 
     &.is-picking {
-      cursor: image_url('/assets/images/eyedropper.gif') 0 15, auto;
+      cursor:
+        image_url('/assets/images/eyedropper.gif') 0 15,
+        auto;
     }
 
     &-background {
@@ -12360,7 +12374,9 @@ output {
 
       .zammad-chat-header {
         border-radius: 0 !important;
-        box-shadow: 0 -1px rgba(0, 0, 0, 0.1), 0 -1px rgba(0, 0, 0, 0.1) inset,
+        box-shadow:
+          0 -1px rgba(0, 0, 0, 0.1),
+          0 -1px rgba(0, 0, 0, 0.1) inset,
           0 1px 1px rgba(0, 0, 0, 0.13);
       }
 
@@ -13218,7 +13234,9 @@ output {
     background: linear-gradient(to right, $rainbow);
     position: relative;
     overflow: hidden;
-    cursor: image_url('/assets/images/colorcircle.gif') 8 8, auto;
+    cursor:
+      image_url('/assets/images/colorcircle.gif') 8 8,
+      auto;
     user-select: none;
   }
 

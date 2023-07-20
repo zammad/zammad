@@ -37,11 +37,12 @@ const createMockClient = (handlers: ClientRequestHandler[]) => {
     provideApolloClient(mockClient)
   }
 
-  handlers.forEach((clientRequestHandler) =>
-    mockClient?.setRequestHandler(
-      clientRequestHandler.operationDocument,
-      clientRequestHandler.handler,
-    ),
+  handlers.forEach(
+    (clientRequestHandler) =>
+      mockClient?.setRequestHandler(
+        clientRequestHandler.operationDocument,
+        clientRequestHandler.handler,
+      ),
   )
 
   return mockClient

@@ -39,10 +39,11 @@ const useSelectOptions = <
     ...appendedOptions.value,
   ])
 
-  const hasStatusProperty = computed(() =>
-    availableOptions.value?.some(
-      (option) => (option as SelectOption | FlatSelectOption).status,
-    ),
+  const hasStatusProperty = computed(
+    () =>
+      availableOptions.value?.some(
+        (option) => (option as SelectOption | FlatSelectOption).status,
+      ),
   )
 
   const translatedOptions = computed(() => {
@@ -71,19 +72,6 @@ const useSelectOptions = <
   const optionValueLookup = computed(() =>
     keyBy(translatedOptions.value, 'value'),
   )
-
-  const disabledOptionValueLookup = computed(() => {
-    return Object.values(optionValueLookup.value).reduce(
-      (disabledValues: SelectValue[], option) => {
-        if (option.disabled) {
-          disabledValues.push(option.value)
-        }
-
-        return disabledValues
-      },
-      [],
-    )
-  })
 
   const sortedOptions = computed(() => {
     const { sorting } = context.value

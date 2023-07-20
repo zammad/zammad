@@ -377,10 +377,13 @@ const editorSchema = defineFormSchema([
     name: 'editor',
     label: 'Editor',
     required: true,
-    props: Object.keys(editorProps).reduce((acc, key) => {
-      acc[key] = computed(() => editorProps[key as keyof typeof editorProps])
-      return acc
-    }, {} as Record<string, unknown>),
+    props: Object.keys(editorProps).reduce(
+      (acc, key) => {
+        acc[key] = computed(() => editorProps[key as keyof typeof editorProps])
+        return acc
+      },
+      {} as Record<string, unknown>,
+    ),
   },
 ])
 const logSubmit = console.log

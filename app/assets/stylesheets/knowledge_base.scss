@@ -970,7 +970,9 @@ b {
     border-style: hidden;
     border-collapse: collapse;
     font-variant-numeric: lining-nums tabular-nums;
-    box-shadow: 0 0 0 1px hsl(210, 5%, 92%), 0 2px hsl(210, 5%, 92%);
+    box-shadow:
+      0 0 0 1px hsl(210, 5%, 92%),
+      0 2px hsl(210, 5%, 92%);
     border-radius: 2px;
   }
 
@@ -1265,8 +1267,10 @@ b {
     list-style: none;
     font-size: 14px;
     border-radius: 3px;
-    box-shadow: 0 50px 100px hsla(200, 30%, 30%, 0.1),
-      0 15px 35px hsla(200, 30%, 30%, 0.15), 0 5px 15px hsla(0, 0%, 0%, 0.1);
+    box-shadow:
+      0 50px 100px hsla(200, 30%, 30%, 0.1),
+      0 15px 35px hsla(200, 30%, 30%, 0.15),
+      0 5px 15px hsla(0, 0%, 0%, 0.1);
     background: white;
     padding: 10px;
 

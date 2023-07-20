@@ -12,7 +12,7 @@ defineProps<{
 
 <template>
   <CommonDialog
-    :label="($c.ticket_duplicate_detection_title as string)"
+    :label="$c.ticket_duplicate_detection_title as string"
     class="w-full"
     :name="name"
     no-autofocus

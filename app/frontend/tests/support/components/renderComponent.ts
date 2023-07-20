@@ -304,10 +304,13 @@ const setupVModel = <Props>(wrapperOptions: ExtendedMountingOptions<Props>) => {
     if (!vModelProps.length) return
 
     watchEffect(() => {
-      const propsValues = vModelProps.reduce((acc, [prop, reactiveValue]) => {
-        acc[prop] = reactiveValue.value
-        return acc
-      }, {} as Record<string, unknown>)
+      const propsValues = vModelProps.reduce(
+        (acc, [prop, reactiveValue]) => {
+          acc[prop] = reactiveValue.value
+          return acc
+        },
+        {} as Record<string, unknown>,
+      )
 
       view.rerender(propsValues)
     })
