@@ -4537,10 +4537,10 @@ crypto-random-string@^2.0.0:
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-2.0.0.tgz#ef2a7a966ec11083388369baa02ebead229b30d5"
   integrity sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==
 
-css-functions-list@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/css-functions-list/-/css-functions-list-3.1.0.tgz#cf5b09f835ad91a00e5959bcfc627cd498e1321b"
-  integrity sha512-/9lCvYZaUbBGvYUgYGFJ4dcYiyqdhSjG7IPVluoV8A1ILjkF7ilmhp1OGUz8n+nmBcu0RNrQAzgD8B6FJbrt2w==
+css-functions-list@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/css-functions-list/-/css-functions-list-3.2.0.tgz#8290b7d064bf483f48d6559c10e98dc4d1ad19ee"
+  integrity sha512-d/jBMPyYybkkLVypgtGv12R+pIFw4/f/IHtCTxWpZc8ofTYOPigIgmA6vu5rMHartZC+WuXhBUHfnyNUIQSYrg==
 
 css-select@^5.1.0:
   version "5.1.0"
@@ -8359,7 +8359,7 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.2.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@^5.2.17, postcss@^8.1.10, postcss@^8.4.0, postcss@^8.4.21, postcss@^8.4.23, postcss@^8.4.24, postcss@^8.4.25, postcss@^8.4.26:
+postcss@^5.2.17, postcss@^8.1.10, postcss@^8.4.0, postcss@^8.4.21, postcss@^8.4.23, postcss@^8.4.25, postcss@^8.4.26:
   version "8.4.26"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.26.tgz#1bc62ab19f8e1e5463d98cf74af39702a00a9e94"
   integrity sha512-jrXHFF8iTloAenySjM/ob3gSj7pCu0Ji49hnjqzsgSRa50hkWCKD0HQ+gMNJkW38jBI68MpAAg7ZWwHwX8NMMw==
@@ -9603,10 +9603,10 @@ stylelint-config-recommended-scss@^11.0.0:
     stylelint-config-recommended "^12.0.0"
     stylelint-scss "^4.6.0"
 
-stylelint-config-recommended-vue@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/stylelint-config-recommended-vue/-/stylelint-config-recommended-vue-1.4.0.tgz#0a182da17dc9e846e4bec65a7676ccf882b35964"
-  integrity sha512-DVJqyX2KvMCn9U0+keL12r7xlsH26K4Vg8NrIZuq5MoF7g82DpMp326Om4E0Q+Il1o+bTHuUyejf2XAI0iD04Q==
+stylelint-config-recommended-vue@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-recommended-vue/-/stylelint-config-recommended-vue-1.5.0.tgz#c38775859c58a928cd34d95aa79db09b69964160"
+  integrity sha512-65TAK/clUqkNtkZLcuytoxU0URQYlml+30Nhop7sRkCZ/mtWdXt7T+spPSB3KMKlb+82aEVJ4OrcstyDBdbosg==
   dependencies:
     semver "^7.3.5"
     stylelint-config-html ">=1.0.0"
@@ -9659,10 +9659,10 @@ stylelint-scss@^5.0.1:
     postcss-selector-parser "^6.0.13"
     postcss-value-parser "^4.2.0"
 
-stylelint@^15.10.1:
-  version "15.10.1"
-  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-15.10.1.tgz#93f189958687e330c106b010cbec0c41dcae506d"
-  integrity sha512-CYkzYrCFfA/gnOR+u9kJ1PpzwG10WLVnoxHDuBA/JiwGqdM9+yx9+ou6SE/y9YHtfv1mcLo06fdadHTOx4gBZQ==
+stylelint@^15.10.2:
+  version "15.10.2"
+  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-15.10.2.tgz#0ee5a8371d3a2e1ff27fefd48309d3ddef7c3405"
+  integrity sha512-UxqSb3hB74g4DTO45QhUHkJMjKKU//lNUAOWyvPBVPZbCknJ5HjOWWZo+UDuhHa9FLeVdHBZXxu43eXkjyIPWg==
   dependencies:
     "@csstools/css-parser-algorithms" "^2.3.0"
     "@csstools/css-tokenizer" "^2.1.1"
@@ -9671,7 +9671,7 @@ stylelint@^15.10.1:
     balanced-match "^2.0.0"
     colord "^2.9.3"
     cosmiconfig "^8.2.0"
-    css-functions-list "^3.1.0"
+    css-functions-list "^3.2.0"
     css-tree "^2.3.1"
     debug "^4.3.4"
     fast-glob "^3.3.0"
@@ -9691,7 +9691,7 @@ stylelint@^15.10.1:
     micromatch "^4.0.5"
     normalize-path "^3.0.0"
     picocolors "^1.0.0"
-    postcss "^8.4.24"
+    postcss "^8.4.25"
     postcss-resolve-nested-selector "^0.1.1"
     postcss-safe-parser "^6.0.0"
     postcss-selector-parser "^6.0.13"
