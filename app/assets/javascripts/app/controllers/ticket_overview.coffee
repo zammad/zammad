@@ -441,7 +441,7 @@ class Table extends App.Controller
       orderDirection:     @overview.order.direction
     )
 
-    @renderPopovers()
+    @renderPopovers(doNotBind: true)
 
   render: (data) =>
     return if !data
@@ -686,7 +686,7 @@ class Table extends App.Controller
 
       @table = new App.ControllerTable(tableArguments)
 
-    @renderPopovers()
+    @renderPopovers(doNotBind: true)
 
     @bulkForm.releaseController() if @bulkForm
     @bulkForm = new App.TicketBulkForm(
