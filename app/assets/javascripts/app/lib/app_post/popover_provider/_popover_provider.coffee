@@ -27,7 +27,7 @@ class App.PopoverProvider
   build: (buildParams) ->
     return if !@checkPermissions()
     @clear(@popovers)
-    @bind()
+    @bind() if !buildParams.doNotBind
     @popovers = @buildPopovers()
 
   checkPermissions: ->
