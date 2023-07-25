@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-23 03:05+0000\n"
+"PO-Revision-Date: 2023-07-25 01:05+0000\n"
 "Last-Translator: \"Decio E. Silva\" <decio@verinatec.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -59,7 +59,7 @@ msgstr ""
 "\"Database\" armazena todos os anexos no banco de dados (não recomendado "
 "para armazenar grandes quantidades de dados). \"Filesystem\" armazena os "
 "dados no sistema de arquivos. Você pode alternar entre os módulos mesmo em "
-"um sistema que já está em produção sem perda de dados."
+"um sistema que já está em produção sem nenhuma perda de dados."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -5311,7 +5311,7 @@ msgid ""
 "auth/sso on user interaction."
 msgstr ""
 "Habilita o botão para autenticação do usuário via %s. O botão redirecionará "
-"para /auth/sso quando o usuário interagir."
+"para /auth/sso quando houver interação do usuário."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Enables console logging."
@@ -6493,7 +6493,7 @@ msgstr "Cabeçalho"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Header Color"
-msgstr "Cor do cabeçalho"
+msgstr "Cor do Cabeçalho"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Header Link Color"
@@ -6501,7 +6501,7 @@ msgstr "Cor do link do cabeçalho"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 msgid "Header Menu"
-msgstr "Cor do cabeçalho"
+msgstr "Menu do Cabeçalho"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Health Check"
@@ -9639,11 +9639,11 @@ msgstr ""
 "conexão com seu servidor Exchange."
 
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
-#, fuzzy
-#| msgid "Authentication failed due to incorrect credentials."
 msgid ""
 "Please start the reauthentication again and enter the correct credentials."
-msgstr "A autenticação falhou devido a credenciais incorretas."
+msgstr ""
+"Por favor, inicie a reautenticação novamente e insira as credenciais "
+"corretas."
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -9953,7 +9953,7 @@ msgstr "Acionadores de tíquetes recursivos"
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers Loop Max."
-msgstr "Máximo de Recursões de Ativação de Gatilhos de Chamados."
+msgstr "Limite Máximo de Loop de Acionadores de Ticket Recursivos."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -10907,7 +10907,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
-msgstr "Defina notas para os tipos de criação de chamados selecionando o tipo."
+msgstr "Defina notas para os tipos de criação de ticket selecionando o tipo."
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types."
@@ -11966,6 +11966,8 @@ msgid ""
 "The entered user for reauthentication differs from the user that was used "
 "for setting up your Microsoft365 channel initially."
 msgstr ""
+"O usuário inserido para reautenticação é diferente do usuário que foi usado "
+"para configurar inicialmente o seu canal do Microsoft365."
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -13351,6 +13353,8 @@ msgid ""
 "To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
 "process was aborted."
 msgstr ""
+"Para evitar buscar uma caixa de correio do Microsoft365 incorreta, o "
+"processo de reautenticação foi abortado."
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
@@ -14026,10 +14030,8 @@ msgid "User Filter"
 msgstr "Filtro de usuário"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
-#, fuzzy
-#| msgid "regex mismatch"
 msgid "User Mismatch"
-msgstr "incompatibilidade de regex"
+msgstr "Incompatibilidade de Usuário"
 
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"

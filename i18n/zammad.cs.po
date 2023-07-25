@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-16 12:30+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
-"Language-Team: Czech <https://translations.zammad.org/projects/zammad/zammad-"
-"stable/cs/>\n"
+"PO-Revision-Date: 2023-07-21 01:05+0000\n"
+"Last-Translator: Tomáš Kovařík <tomas.kovarik@cdv.cz>\n"
+"Language-Team: Czech <https://translations.zammad.org/projects/zammad/"
+"zammad-stable/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -640,7 +640,7 @@ msgstr "%s% bylo opětovně otevřeno"
 
 #: app/models/concerns/has_group_relation_definition.rb
 msgid "%{model} can have full or granular access to group"
-msgstr ""
+msgstr "%{model} může mít plný nebo detailní přístup ke skupině"
 
 #: app/models/object_manager/attribute.rb
 #, fuzzy
@@ -650,7 +650,7 @@ msgstr "Fronta již existuje!"
 
 #: app/models/object_manager/attribute.rb
 msgid "%{name} is a reserved word"
-msgstr ""
+msgstr "%{name} je rezervované slovo"
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
 #, fuzzy
@@ -888,6 +888,7 @@ msgid ""
 "A webhook can be fired by triggers and schedulers, don't forget to define "
 "them!"
 msgstr ""
+"Webhook může být spuštěn spouštěčem nebo plánovačem, nezapomeňte je nastavit!"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -1217,7 +1218,7 @@ msgstr "Přidat nadpis druhé úrovně"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Add selected values"
-msgstr ""
+msgstr "Přidat vybrané položky"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -1391,7 +1392,7 @@ msgstr "Jméno řešitele + Oddělovač Od + Zobrazovaný název adresy systému
 
 #: app/assets/javascripts/app/controllers/organization.coffee
 msgid "Agent and customer users can be grouped into organizations."
-msgstr ""
+msgstr "Agenti a zákazníci mohou být zařazeni do organizací."
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -1486,7 +1487,7 @@ msgstr "Pro import dat můžete dodatečně použít Zammad API."
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
-msgstr ""
+msgstr "Vždy"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1640,7 +1641,7 @@ msgstr "Použít sdílený koncept"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Apply current defaults to all agents"
-msgstr ""
+msgstr "Nastavit aktuální počáteční hodnoty ke všem agentům"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1717,6 +1718,8 @@ msgid ""
 "Are you sure? The agent default notifications settings will be reset to the "
 "system default."
 msgstr ""
+"Jste si jistí? Počáteční nastavení notifikací pro agenta bude resetováno na "
+"počáteční nastavení systému."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
@@ -1775,7 +1778,7 @@ msgstr "Článek se nepodařilo smazat."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Article uses different security mechanism."
-msgstr ""
+msgstr "Článek používá jiné bezpečnostní mechanismy."
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -2018,7 +2021,7 @@ msgstr "Automatické párování účtu při prvotním přihlášení"
 
 #: db/seeds/settings.rb
 msgid "Automatic account linking notification"
-msgstr ""
+msgstr "Notifikace automatického spárování účtů"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2465,7 +2468,7 @@ msgstr "Nelze pokračovat v uzavřeném požadavku. Prosím, vytvořte nový tic
 
 #: app/models/sla.rb
 msgid "Cannot have both response time and update time."
-msgstr ""
+msgstr "Nelze mít zároveň čas odpovědi a čas aktualizace."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
@@ -2728,7 +2731,7 @@ msgstr "Zvolte skupinu, do které budou přidány zprávy."
 
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
 msgid "Choose the group to which page posts will get added."
-msgstr ""
+msgstr "Zvolte skupinu, do které budou přidány příspěvky na stránce."
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 msgid "Choose your language."
@@ -2780,7 +2783,7 @@ msgstr "Vyčistit vypršená sezení."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up mobile taskbars."
-msgstr ""
+msgstr "Vyčistit mobilní lištu."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Clear"
