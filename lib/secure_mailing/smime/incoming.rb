@@ -1,53 +1,13 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
-  attr_accessor :mail, :content_type
-
+class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
   EXPRESSION_MIME      = %r{application/(x-pkcs7|pkcs7)-mime}i
   EXPRESSION_SIGNATURE = %r{(application/(x-pkcs7|pkcs7)-signature|signed-data)}i
 
   OPENSSL_PKCS7_VERIFY_FLAGS = OpenSSL::PKCS7::NOVERIFY | OpenSSL::PKCS7::NOINTERN
 
-  def initialize(mail)
-    super()
-
-    @mail = mail
-    @content_type = mail[:mail_instance].content_type
-  end
-
-  def process
-    return if !process?
-
-    initialize_article_preferences
-    decrypt
-    verify_signature
-    log
-  end
-
-  def initialize_article_preferences
-    article_preferences[:security] = {
-      type:       'S/MIME',
-      sign:       {
-        success: false,
-        comment: nil,
-      },
-      encryption: {
-        success: false,
-        comment: nil,
-      }
-    }
-  end
-
-  def article_preferences
-    @article_preferences ||= begin
-      key = :'x-zammad-article-preferences'
-      mail[ key ] ||= {}
-      mail[ key ]
-    end
-  end
-
-  def process?
-    signed? || smime?
+  def type
+    'S/MIME'
   end
 
   def signed?(check_content_type = content_type)
@@ -65,12 +25,12 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
     end
   end
 
-  def smime?(check_content_type = content_type)
+  def encrypted?(check_content_type = content_type)
     EXPRESSION_MIME.match?(check_content_type)
   end
 
   def decrypt
-    return if !smime?
+    return if !encrypted?
 
     success = false
     comment = __('Private key for decryption could not be found.')
@@ -83,7 +43,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
         next
       end
 
-      parse_new_mail(decrypted_data)
+      parse_decrypted_mail(decrypted_data)
 
       success = true
       comment = cert.subject
@@ -91,15 +51,14 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
         comment += " (Certificate #{cert.fingerprint} with start date #{cert.not_before_at} and end date #{cert.not_after_at} expired!)"
       end
 
-      # overwrite content_type for signature checking
-      @content_type = mail[:mail_instance].content_type
       break
     end
 
-    article_preferences[:security][:encryption] = {
-      success: success,
-      comment: comment,
-    }
+    set_article_preferences(
+      operation: :encryption,
+      comment:   comment,
+      success:   success,
+    )
   end
 
   def verify_signature
@@ -114,7 +73,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
       comment = result
 
       if signed_type == 'wrapped'
-        parse_new_mail(verify_sign_p7enc.data)
+        parse_decrypted_mail(verify_sign_p7enc.data)
       end
 
       mail[:attachments].delete_if do |attachment|
@@ -127,10 +86,11 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
       end
     end
 
-    article_preferences[:security][:sign] = {
-      success: success,
-      comment: comment,
-    }
+    set_article_preferences(
+      operation: :sign,
+      comment:   comment,
+      success:   success,
+    )
   end
 
   def verify_certificate_chain(certificates)
@@ -181,51 +141,6 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
 
   def decrypt_p7enc
     @decrypt_p7enc ||= OpenSSL::PKCS7.read_smime(mail[:raw])
-  end
-
-  def log
-    %i[sign encryption].each do |action|
-      result = article_preferences[:security][action]
-      next if result.blank?
-
-      if result[:success]
-        status = 'success'
-      elsif result[:comment].blank?
-        # means not performed
-        next
-      else
-        status = 'failed'
-      end
-
-      HttpLog.create(
-        direction:     'in',
-        facility:      'S/MIME',
-        url:           "#{mail[:from]} -> #{mail[:to]}",
-        status:        status,
-        ip:            nil,
-        request:       {
-          message_id: mail[:message_id],
-        },
-        response:      article_preferences[:security],
-        method:        action,
-        created_by_id: 1,
-        updated_by_id: 1,
-      )
-    end
-  end
-
-  def parse_new_mail(new_mail)
-    mail[:mail_instance].header['Content-Type'] = nil
-    mail[:mail_instance].header['Content-Disposition'] = nil
-    mail[:mail_instance].header['Content-Transfer-Encoding'] = nil
-    mail[:mail_instance].header['Content-Description'] = nil
-
-    new_raw_mail = "#{mail[:mail_instance].header}#{new_mail}"
-
-    mail_new = Channel::EmailParser.new.parse(new_raw_mail)
-    mail_new.each do |local_key, local_value|
-      mail[local_key] = local_value
-    end
   end
 
   def sender_is_signer?

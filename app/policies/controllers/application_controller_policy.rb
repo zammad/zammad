@@ -32,7 +32,7 @@ class Controllers::ApplicationControllerPolicy < ApplicationPolicy
     not_authorized(e)
   end
 
-  def respond_to_missing?(missing_method)
+  def respond_to_missing?(missing_method, *)
     action_permissions_map[missing_method] || super
   end
 

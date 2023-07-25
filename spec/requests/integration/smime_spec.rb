@@ -173,9 +173,12 @@ RSpec.describe 'Integration SMIME', type: :request do
 
           expect(response).to have_http_status(:ok)
           expect(json_response['encryption']['success']).to be(false)
+          expect(json_response['encryption']['comment']).to eq("Can't find S/MIME encryption certificates for: #{email_address}")
+          expect(json_response['encryption']['commentPlaceholders']).to eq([])
           expect(json_response['encryption']['comment']).to include(email_address)
           expect(json_response['sign']['success']).to be(false)
-          expect(json_response['sign']['comment']).to include(email_address)
+          expect(json_response['sign']['comment']).to eq('The certificate for %s was not found.')
+          expect(json_response['sign']['commentPlaceholders']).to eq([email_address])
         end
       end
 
@@ -190,9 +193,11 @@ RSpec.describe 'Integration SMIME', type: :request do
 
           expect(response).to have_http_status(:ok)
           expect(json_response['encryption']['success']).to be(true)
-          expect(json_response['encryption']['comment']).to include(email_address)
+          expect(json_response['encryption']['comment']).to eq('The certificates for %s were found.')
+          expect(json_response['encryption']['commentPlaceholders']).to eq([email_address])
           expect(json_response['sign']['success']).to be(true)
-          expect(json_response['sign']['comment']).to include(email_address)
+          expect(json_response['sign']['comment']).to eq('The certificate for %s was found.')
+          expect(json_response['sign']['commentPlaceholders']).to eq([email_address])
         end
 
         context 'but expired' do
@@ -203,9 +208,11 @@ RSpec.describe 'Integration SMIME', type: :request do
 
             expect(response).to have_http_status(:ok)
             expect(json_response['encryption']['success']).to be(false)
-            expect(json_response['encryption']['comment']).to include(email_address).and include('expired')
+            expect(json_response['encryption']['comment']).to eq('There were certificates found for %s, but at least one of them has expired.')
+            expect(json_response['encryption']['commentPlaceholders']).to eq([email_address])
             expect(json_response['sign']['success']).to be(false)
-            expect(json_response['sign']['comment']).to include(email_address).and include('expired')
+            expect(json_response['sign']['comment']).to eq('The certificate for %s was found, but has expired.')
+            expect(json_response['sign']['commentPlaceholders']).to eq([email_address])
           end
         end
       end

@@ -534,6 +534,209 @@ RSpec.describe Trigger, type: :model do
         end
       end
 
+      context 'active PGP integration' do
+        before do
+          Setting.set('pgp_integration', true)
+
+          create(:pgp_key, :with_private, fixture: system_email_address)
+          create(:pgp_key, fixture: customer_email_address)
+        end
+
+        let(:system_email_address)   { 'pgp1@example.com' }
+        let(:customer_email_address) { 'pgp2@example.com' }
+
+        let(:email_address) { create(:email_address, email: system_email_address) }
+
+        let(:group)    { create(:group, email_address: email_address) }
+        let(:customer) { create(:customer, email: customer_email_address) }
+
+        let(:security_preferences) { Ticket::Article.last.preferences[:security] }
+
+        let(:perform) do
+          {
+            'notification.email' => {
+              'recipient' => 'ticket_customer',
+              'subject'   => 'Subject dummy.',
+              'body'      => 'Body dummy.',
+            }.merge(security_configuration)
+          }
+        end
+
+        let!(:ticket) { create(:ticket, group: group, customer: customer) }
+
+        context 'sending articles' do
+
+          before do
+            TransactionDispatcher.commit
+          end
+
+          context 'expired pgp key' do
+
+            let(:system_email_address) { 'expiredpgp1@example.com' }
+
+            let(:security_configuration) do
+              {
+                'sign'       => 'always',
+                'encryption' => 'always',
+              }
+            end
+
+            it 'creates unsigned article' do
+              expect(security_preferences[:sign][:success]).to be false
+              expect(security_preferences[:encryption][:success]).to be true
+            end
+          end
+
+          context 'sign and encryption not set' do
+
+            let(:security_configuration) { {} }
+
+            it 'does not sign or encrypt' do
+              expect(security_preferences[:sign][:success]).to be false
+              expect(security_preferences[:encryption][:success]).to be false
+            end
+          end
+
+          context 'sign and encryption disabled' do
+            let(:security_configuration) do
+              {
+                'sign'       => 'no',
+                'encryption' => 'no',
+              }
+            end
+
+            it 'does not sign or encrypt' do
+              expect(security_preferences[:sign][:success]).to be false
+              expect(security_preferences[:encryption][:success]).to be false
+            end
+          end
+
+          context 'sign is enabled' do
+            let(:security_configuration) do
+              {
+                'sign'       => 'always',
+                'encryption' => 'no',
+              }
+            end
+
+            it 'signs' do
+              expect(security_preferences[:sign][:success]).to be true
+              expect(security_preferences[:encryption][:success]).to be false
+            end
+          end
+
+          context 'encryption enabled' do
+
+            let(:security_configuration) do
+              {
+                'sign'       => 'no',
+                'encryption' => 'always',
+              }
+            end
+
+            it 'encrypts' do
+              expect(security_preferences[:sign][:success]).to be false
+              expect(security_preferences[:encryption][:success]).to be true
+            end
+          end
+
+          context 'sign and encryption enabled' do
+
+            let(:security_configuration) do
+              {
+                'sign'       => 'always',
+                'encryption' => 'always',
+              }
+            end
+
+            it 'signs and encrypts' do
+              expect(security_preferences[:sign][:success]).to be true
+              expect(security_preferences[:encryption][:success]).to be true
+            end
+          end
+        end
+
+        context 'discard' do
+
+          context 'sign' do
+
+            let(:security_configuration) do
+              {
+                'sign' => 'discard',
+              }
+            end
+
+            context 'group without pgp key' do
+              let(:group) { create(:group) }
+
+              it 'does not fire' do
+                expect { TransactionDispatcher.commit }
+                  .not_to change(Ticket::Article, :count)
+              end
+            end
+          end
+
+          context 'encryption' do
+
+            let(:security_configuration) do
+              {
+                'encryption' => 'discard',
+              }
+            end
+
+            context 'customer without pgp key' do
+              let(:customer) { create(:customer) }
+
+              it 'does not fire' do
+                expect { TransactionDispatcher.commit }
+                  .not_to change(Ticket::Article, :count)
+              end
+            end
+          end
+
+          context 'mixed' do
+
+            context 'sign' do
+
+              let(:security_configuration) do
+                {
+                  'encryption' => 'always',
+                  'sign'       => 'discard',
+                }
+              end
+
+              context 'group without pgp key' do
+                let(:group) { create(:group) }
+
+                it 'does not fire' do
+                  expect { TransactionDispatcher.commit }
+                    .not_to change(Ticket::Article, :count)
+                end
+              end
+            end
+
+            context 'encryption' do
+
+              let(:security_configuration) do
+                {
+                  'encryption' => 'discard',
+                  'sign'       => 'always',
+                }
+              end
+
+              context 'customer without pgp key' do
+                let(:customer) { create(:customer) }
+
+                it 'does not fire' do
+                  expect { TransactionDispatcher.commit }
+                    .not_to change(Ticket::Article, :count)
+                end
+              end
+            end
+          end
+        end
+      end
+
       include_examples 'include ticket attachment'
     end
 

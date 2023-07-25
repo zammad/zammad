@@ -41,6 +41,7 @@ module Zammad
         'github_database' => 'GithubDatabase',
         'otrs'            => 'OTRS',
         'db'              => 'DB',
+        'pgp'             => 'PGP',
       )
     end
 

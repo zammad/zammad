@@ -48,25 +48,25 @@ class SMIMECertificate < ApplicationModel
   # Search for certificates of the given recipients email addresses
   #
   # @example
-  #  certificates = SMIMECertificates.for_recipipent_email_addresses!(['some1@example.com', 'some2@example.com'])
+  #  certificates = SMIMECertificates.for_recipient_email_addresses!(['some1@example.com', 'some2@example.com'])
   #  # => [#<SMIMECertificate:0x00007fdd4e27eec0...
   #
   # @raise [ActiveRecord::RecordNotFound] if there are recipients for which no certificate could be found
   #
   # @return [Array<SMIMECertificate>] The found certificate records
-  def self.for_recipipent_email_addresses!(addresses)
+  def self.for_recipient_email_addresses!(addresses)
     certificates        = []
     remaining_addresses = addresses.map(&:downcase)
     all.as_batches do |certificate|
 
       # intersection of both lists
-      cerfiticate_for = certificate.email_addresses & remaining_addresses
-      next if cerfiticate_for.blank?
+      certificate_for = certificate.email_addresses & remaining_addresses
+      next if certificate_for.blank?
 
       certificates.push(certificate)
 
       # subtract found recipient(s)
-      remaining_addresses -= cerfiticate_for
+      remaining_addresses -= certificate_for
 
       # end loop if no addresses are remaining
       break if remaining_addresses.blank?

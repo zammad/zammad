@@ -11,15 +11,19 @@ import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButton
 import { useUserCreate } from '#mobile/entities/user/composables/useUserCreate.ts'
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import { computed, reactive, ref } from 'vue'
+import { EnumSecurityStateType } from '#shared/components/Form/fields/FieldSecurity/types.ts'
 
 const linkSchemaRaw = [
   {
     type: 'security',
     name: 'security',
-    label: 'Security',
+    label: 'Security Long Name Very long Not Truncated Oh no Please Its Too Long',
     required: true,
     props: {
-      allowed: ['sign', 'encryption'],
+      securityAllowed: {
+        [EnumSecurityStateType.Smime]: ['sign', 'encryption'],
+        [EnumSecurityStateType.Pgp]: ['encryption'],
+      },
     },
   },
   {

@@ -484,7 +484,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/object_manager/attribute.rb",
-      "line": 901,
+      "line": 895,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object_lookup_id).constantize",
       "render_path": null,
@@ -522,6 +522,29 @@
         77
       ],
       "note": "Mysql arguments are internal / from config."
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "c47bddc058fcf0381c1a91f2d107606a76bb1a5c40130c555ff1dfec713f2775",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/secure_mailing/pgp/tool/exec/agent.rb",
+      "line": 32,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "Open3.capture3(\"GNUPGHOME\" => (@gnupg_home), *([\"#{File.dirname(binary_path)}/gpgconf\"] + cmdline), :binmode => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SecureMailing::PGP::Tool::Exec::Agent",
+        "method": "gpgconf"
+      },
+      "user_input": "File.dirname(binary_path)",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": "gpg command line tool stuff."
     },
     {
       "warning_type": "Dynamic Render Path",
@@ -780,7 +803,7 @@
       "check_name": "RegexDoS",
       "message": "Model attribute used in regular expression",
       "file": "app/models/ticket.rb",
-      "line": 1187,
+      "line": 1206,
       "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
       "code": "/#{Setting.get(\"send_no_auto_response_reg_exp\")}/i",
       "render_path": null,
@@ -798,6 +821,6 @@
       "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2023-05-25 10:34:24 +0200",
-  "brakeman_version": "6.0.0"
+  "updated": "2023-07-24 08:55:53 +0200",
+  "brakeman_version": "6.0.1"
 }

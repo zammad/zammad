@@ -1,0 +1,78 @@
+<table class="settings-list settings-list--stretch">
+  <thead>
+  <% if _.isEmpty(@keys): %>
+    <tr>
+      <th class="centered">
+        <%- @T('No Entries') %>
+      </th>
+    </tr>
+  <% else: %>
+    <tr>
+      <th><%- @T('Name') %>
+      <th><%- @T('Key ID') %>
+    <% if @C('pgp_recipient_alias_configuration'): %>
+      <th><%- @T('Domain Alias') %>
+    <% end %>
+      <th><%- @T('Fingerprint') %>
+      <th><%- @T('Created at') %>
+      <th><%- @T('Expires at') %>
+      <th><%- @T('Actions') %>
+  <tbody>
+    <% for key in @keys: %>
+      <tr data-id="<%= key.id %>">
+        <td>
+          <%= key.uids %>
+          <% if key.secret: %>
+            <br><i><%- @T('Including private key.') %></i>
+          <% end %>
+        <td>
+          0x<%= key.fingerprint.substr(-16) %>
+      <% if @C('pgp_recipient_alias_configuration'): %>
+        <td><%= key.domain_alias.substr(2) %>
+      <% end %>
+        <td title="<%= key.fingerprint %>">
+          <%- key.keygrip %>
+        <td><%- @humanTime(key.created_at) %>
+        <td>
+          <% if key.expires_at: %>
+           <%- @humanTime(key.expires_at, false, key.expires_at_css_class) %>
+          <% else: %>
+            -
+         <% end %>
+        <td>
+          <div class="dropdown dropdown--actions">
+            <div class="btn btn--table btn--text btn--secondary js-action" data-toggle="dropdown">
+              <%- @Icon('overflow-button') %>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-right js-table-action-menu" role="menu">
+            <% if key.secret: %>
+              <li role="presentation" data-table-action="download-private">
+                <a href="<%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/integration/pgp/key_download/<%= key.id %>?secret=true" role="menuitem" tabindex="-1" download>
+                  <span class="dropdown-iconSpacer">
+                    <%- @Icon('download') %>
+                  </span>
+                  <%- @T('Download Private Key') %>
+                </a>
+              </li>
+            <% end %>
+              <li role="presentation" data-table-action="download-public">
+                <a href="<%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/integration/pgp/key_download/<%= key.id %>" role="menuitem" tabindex="-1" download>
+                  <span class="dropdown-iconSpacer">
+                    <%- @Icon('download') %>
+                  </span>
+                  <%- @T('Download Public Key') %>
+                </a>
+              </li>
+              <li role="presentation" class="danger js-remove" data-table-action="remove">
+                <span class="dropdown-iconSpacer">
+                  <%- @Icon('trash') %>
+                </span>
+                <%- @T('Delete') %>
+              </li>
+            </ul>
+          </div>
+        </td>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>

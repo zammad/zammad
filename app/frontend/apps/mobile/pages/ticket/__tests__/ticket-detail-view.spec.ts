@@ -5,7 +5,10 @@ vi.hoisted(() => {
   vi.setSystemTime(now)
 })
 
-import type { TicketArticleRetrySecurityProcessMutation } from '#shared/graphql/types.ts'
+import {
+  EnumSecurityStateType,
+  type TicketArticleRetrySecurityProcessMutation,
+} from '#shared/graphql/types.ts'
 import { getNode } from '@formkit/core'
 import { ApolloError } from '@apollo/client/errors'
 import { TicketArticleRetrySecurityProcessDocument } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api.ts'
@@ -285,7 +288,7 @@ describe('calling API to retry encryption', () => {
       signingMessage:
         '/emailAddress=smime1@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com',
       signingSuccess: true,
-      type: 'S/MIME',
+      type: EnumSecurityStateType.Smime,
     } as const
 
     const mutation = mockGraphQLApi(
@@ -344,7 +347,7 @@ describe('calling API to retry encryption', () => {
       signingMessage:
         '/emailAddress=smime1@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com',
       signingSuccess: true,
-      type: 'S/MIME',
+      type: EnumSecurityStateType.Smime,
     } as const
 
     const mutation = mockGraphQLApi(

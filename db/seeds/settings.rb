@@ -4022,7 +4022,7 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
-  name:        '0016_postmaster_filter_smime',
+  name:        '0016_postmaster_filter_secure_mailing',
   area:        'Postmaster::PreFilter',
   description: __('Defines postmaster filter to handle secure mailing.'),
   options:     {},
@@ -5368,6 +5368,59 @@ Setting.create_if_not_exists(
     permission: ['admin.integration'],
   },
   frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('PGP integration'),
+  name:        'pgp_integration',
+  area:        'Integration::Switch',
+  description: __('Defines if PGP encryption is enabled or not.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'pgp_integration',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:           1,
+    authentication: true,
+    permission:     ['admin.integration'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('PGP config'),
+  name:        'pgp_config',
+  area:        'Integration::PGP',
+  description: __('Defines the PGP config.'),
+  options:     {},
+  state:       {},
+  preferences: {
+    prio:       2,
+    permission: ['admin.integration'],
+  },
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('PGP Recipient Alias Configuration'),
+  name:        'pgp_recipient_alias_configuration',
+  area:        'Core::Integration::PGP',
+  description: __('Defines if the PGP recipient alias configuration is enabled or not.'),
+  options:     {},
+  state:       false,
+  preferences: { online_service_disable: true },
+  frontend:    true
 )
 
 Setting.create_if_not_exists(

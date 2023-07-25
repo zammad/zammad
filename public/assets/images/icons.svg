@@ -119,6 +119,8 @@
 </symbol><symbol id="icon-email" viewBox="0 0 17 17">
     <title>email</title>
     <path d="M17 3.34 8.489 8.797 0 3.34V3h17v.34Zm0 1.443V14H0V4.784l8.497 5.598L17 4.783Z" fill-rule="evenodd"/>
+</symbol><symbol id="icon-encryption-error" viewBox="0 0 16 17">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7h-1V5.6v.1-.1c0-.5 0-1.1-.3-1.7C10.2 2.7 9.1 2 7.5 2s-2.7.7-3.2 1.9C4 4.4 4 5 4 5.6v.1-.1V7H3c-.6 0-1 .5-1 1v6c0 .6.4 1 1 1h9c.5 0 1-.5 1-1V8c0-.6-.4-1-1-1zM9.6 5.5V7H5.4V5.5c0-.3 0-.7.2-1 .3-.6.8-1 1.9-1 1.1 0 1.7.4 1.9 1 .2.3.2.7.2 1zM5.4 8.4c-.2-.2-.4-.2-.6 0s-.2.4 0 .6l2.1 2.1-2.1 2.1c-.2.2-.2.4 0 .6.2.2.5.2.6 0l2.1-2.1 2.1 2.1c.2.2.4.2.6 0 .2-.2.2-.4 0-.6l-2.1-2.1L10.2 9c.2-.2.2-.4 0-.6s-.4-.2-.6 0l-2.1 2.1-2.1-2.1z"/>
 </symbol><symbol id="icon-external" viewBox="0 0 16 16">
     <title>external</title>
     <g fill-rule="evenodd">

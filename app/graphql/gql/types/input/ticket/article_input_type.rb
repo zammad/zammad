@@ -18,7 +18,7 @@ module Gql::Types::Input::Ticket
     argument :time_unit, Float, required: false, description: 'The article accounted time.'
     argument :preferences, GraphQL::Types::JSON, required: false, description: 'The article preferences.'
     argument :attachments, Gql::Types::Input::AttachmentInputType, required: false, description: 'The article attachments.'
-    argument :security, [Gql::Types::Enum::SecurityOptionType], required: false, description: 'The article security options.'
+    argument :security, Gql::Types::Input::Ticket::SecurityInputType, required: false, description: 'The article security options.'
 
     transform :transform_security
     transform :transform_subtype
@@ -39,20 +39,30 @@ module Gql::Types::Input::Ticket
       payload = payload.to_h
       security = payload.delete(:security) if payload[:security]
 
-      return payload if !Setting.get('smime_integration')
+      return payload if !security_enabled?
 
       payload[:preferences] ||= {}
-      payload[:preferences]['security'] = {
-        'type'       => 'S/MIME',
-        'encryption' => {
-          'success' => security&.include?('encryption'),
-        },
-        'sign'       => {
-          'success' => security&.include?('sign'),
-        },
-      }
+      payload[:preferences]['security'] = security_preference(security)
 
       payload
+    end
+
+    private
+
+    def security_enabled?
+      Setting.get('smime_integration') || Setting.get('pgp_integration')
+    end
+
+    def security_preference(security)
+      {
+        'type'       => security[:method],
+        'encryption' => {
+          'success' => security[:options]&.include?('encryption'),
+        },
+        'sign'       => {
+          'success' => security[:options]&.include?('sign'),
+        },
+      }
     end
   end
 end

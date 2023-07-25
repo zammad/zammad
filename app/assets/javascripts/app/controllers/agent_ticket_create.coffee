@@ -2,14 +2,15 @@ class App.TicketCreate extends App.Controller
   @include App.SecurityOptions
 
   elements:
-    '.tabsSidebar': 'sidebar'
+    '.tabsSidebar':               'sidebar'
     '.tabsSidebar-sidebarSpacer': 'sidebarSpacer'
 
   events:
-    'click .type-tabs .tab':   'changeFormType'
-    'submit form':             'submit'
-    'click .form-controls .js-cancel':        'cancel'
-    'click .js-active-toggle': 'toggleButton'
+    'click .type-tabs .tab':           'changeFormType'
+    'submit form':                     'submit'
+    'click .form-controls .js-cancel': 'cancel'
+    'click .js-active-toggle':         'toggleButton'
+    'click .js-active-toggle-type':    'toggleTypeButton'
 
   types: {
     'phone-in': {
@@ -71,6 +72,14 @@ class App.TicketCreate extends App.Controller
       return if data.taskKey isnt @taskKey
       return if !@sidebarWidget
       @sidebarWidget.render(@params())
+    )
+
+    # Listen to security setting changes.
+    @controllerBind('config_update', (data) =>
+      return if not /^(pgp|smime)_integration$/.test(data.name)
+
+      @updateSecurityType()
+      @updateSecurityOptions()
     )
 
   currentChannel: =>
@@ -140,6 +149,8 @@ class App.TicketCreate extends App.Controller
     @$('[name="group_id"]').bind('change', =>
       @sidebarWidget.render(@params())
     )
+
+    @updateSecurityType(type)
     @updateSecurityOptions()
 
     # show cc
@@ -207,12 +218,18 @@ class App.TicketCreate extends App.Controller
     return false if !diff || _.isEmpty(diff)
     return true
 
-  updateSecurityOptions: =>
+  updateSecurityOptions: (resetSecurityOptions = false) =>
     params = @params()
     if params.customer_id_completion
       params.to = params.customer_id_completion
 
-    @updateSecurityOptionsRemote(@taskKey, params, params, @paramsSecurity())
+    @securityOptionsReset() if resetSecurityOptions
+    @updateSecurityOptionsRemote(@taskKey, params, params)
+
+  updateSecurityType: (type = @currentChannel()) =>
+    return if type isnt 'email-out'
+
+    @updateSecurityTypeToolbar()
 
   dirtyMonitorStart: =>
     @dirty = {}
@@ -545,6 +562,15 @@ class App.TicketCreate extends App.Controller
 
   toggleButton: (event) ->
     @$(event.currentTarget).toggleClass('btn--active')
+
+  toggleTypeButton: (event) =>
+    target = @$(event.currentTarget)
+
+    return if target.hasClass('btn--active')
+
+    target.siblings().removeClass('btn--active')
+    @toggleButton(event)
+    @updateSecurityOptions(true)
 
   tokanice: ->
     App.Utils.tokanice('.content.active input[name=cc]', 'email')

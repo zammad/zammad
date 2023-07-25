@@ -752,7 +752,7 @@ class App.ControllerForm extends App.Controller
       lookupForm.find('button, input, select, textarea, .form-control').prop('readonly', true)
 
       # disable radio and checkbox buttons
-      lookupForm.find('input[type=checkbox], input[type=radio]').prop('disabled', true)
+      lookupForm.find('input[type=checkbox], input[type=radio], input[type=file]').prop('disabled', true)
 
       # disable additionals submits
       lookupForm.find('button').prop('disabled', true)
@@ -777,7 +777,7 @@ class App.ControllerForm extends App.Controller
       lookupForm.find('button, input, select, textarea, .form-control').prop('readonly', false)
 
       # enable radio and checkbox buttons
-      lookupForm.find('input[type=checkbox], input[type=radio]').prop('disabled', false)
+      lookupForm.find('input[type=checkbox], input[type=radio], input[type=file]').prop('disabled', false)
 
       # enable submits again
       lookupForm.find('button').prop('disabled', false)

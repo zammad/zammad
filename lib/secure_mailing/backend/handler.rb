@@ -2,7 +2,11 @@
 
 class SecureMailing::Backend::Handler
 
-  def self.process(*args)
-    new(*args).process
+  def self.process(...)
+    new(...).process
+  end
+
+  def type
+    raise NotImplementedError
   end
 end

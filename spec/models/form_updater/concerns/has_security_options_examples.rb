@@ -39,7 +39,21 @@ RSpec.shared_examples 'HasSecurityOptions' do |type:|
       end
     end
 
-    it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
+    it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>[] }, value: { 'method' => 'SMIME', 'options' => [] } }
+
+    context 'when PGP is activated as well' do
+      before do
+        Setting.set('pgp_integration', true)
+      end
+
+      security_messages =
+        {
+          'PGP'   => { 'encryption' => { message: 'There was no recipient found.', messagePlaceholder: [] }, 'sign' => { message: 'There was no PGP key found.', messagePlaceholder: [] } },
+          'SMIME' => { 'encryption' => { message: 'There was no recipient found.', messagePlaceholder: [] }, 'sign' => { message: 'There was no certificate found.', messagePlaceholder: [] } }
+        }
+
+      it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME' => [], 'PGP' => [] }, value: { 'method' => 'SMIME', 'options' => [] }, securityMessages: security_messages }
+    end
 
     context 'when secure mailing is not configured' do
       before do
@@ -100,12 +114,9 @@ RSpec.shared_examples 'HasSecurityOptions' do |type:|
       end
 
       it_behaves_like 'resolving security field', expected_result: {
-        allowed:          [],
-        value:            [],
-        securityMessages: {
-          'encryption' => { message: "Can't find S/MIME encryption certificates for: smime2@example.com", messagePlaceholder: [] },
-          'sign'       => { message: 'Certificate not found.', messagePlaceholder: [] }
-        }
+        securityAllowed:  { 'SMIME'=>[] },
+        value:            { 'method' => 'SMIME', 'options' => [] },
+        securityMessages: { 'SMIME'=>{ 'encryption' => { message: "Can't find S/MIME encryption certificates for: smime2@example.com", messagePlaceholder: [] }, 'sign' => { message: 'There was no certificate found.', messagePlaceholder: [] } } }
       }
 
       context 'with recipient certificate present' do
@@ -114,12 +125,9 @@ RSpec.shared_examples 'HasSecurityOptions' do |type:|
         end
 
         it_behaves_like 'resolving security field', expected_result: {
-          allowed:          ['encryption'],
-          value:            ['encryption'],
-          securityMessages: {
-            'encryption' => { message: 'Certificates found for %s.', messagePlaceholder: ['smime2@example.com'] },
-            'sign'       => { message: 'Certificate not found.', messagePlaceholder: [] }
-          }
+          securityAllowed:  { 'SMIME'=>['encryption'] },
+          value:            { 'method' => 'SMIME', 'options' => ['encryption'] },
+          securityMessages: { 'SMIME'=>{ 'encryption' => { message: 'The certificates for %s were found.', messagePlaceholder: ['smime2@example.com'] }, 'sign' => { message: 'There was no certificate found.', messagePlaceholder: [] } } }
         }
       end
     end
@@ -137,20 +145,20 @@ RSpec.shared_examples 'HasSecurityOptions' do |type:|
         end
       end
 
-      it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
+      it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>[] }, value: { 'method' => 'SMIME', 'options' => [] } }
 
       context 'with recipient certificate present' do
         before do
           create(:smime_certificate, fixture: recipient_email_address)
         end
 
-        it_behaves_like 'resolving security field', expected_result: { allowed: ['encryption'], value: ['encryption'] }
+        it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>['encryption'] }, value: { 'method' => 'SMIME', 'options' => ['encryption'] } }
       end
 
       context 'when email address is invalid' do
         let(:recipient_email_address) { 'invalid-email-address' }
 
-        it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
+        it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>[] }, value: { 'method' => 'SMIME', 'options' => [] } }
       end
     end
 
@@ -171,14 +179,14 @@ RSpec.shared_examples 'HasSecurityOptions' do |type:|
         end
       end
 
-      it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
+      it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>[] }, value: { 'method' => 'SMIME', 'options' => [] } }
 
       context 'with only one recipient certificate present' do
         before do
           create(:smime_certificate, fixture: recipient_email_address1)
         end
 
-        it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
+        it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>[] }, value: { 'method' => 'SMIME', 'options' => [] } }
       end
 
       context 'with both recipient certificates present' do
@@ -187,28 +195,28 @@ RSpec.shared_examples 'HasSecurityOptions' do |type:|
           create(:smime_certificate, fixture: recipient_email_address2)
         end
 
-        it_behaves_like 'resolving security field', expected_result: { allowed: ['encryption'], value: ['encryption'] }
+        it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>['encryption'] }, value: { 'method' => 'SMIME', 'options' => ['encryption'] } }
       end
     end
 
     context 'with group present' do
       let(:data) { base_data.tap { |data| data['group_id'] = group.id } }
 
-      it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
+      it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>[] }, value: { 'method' => 'SMIME', 'options' => [] } }
 
       context 'when the group has a configured sender address' do
         let(:system_email_address) { 'smime1@example.com' }
         let(:email_address)        { create(:email_address, email: system_email_address) }
         let(:group)                { create(:group, email_address: email_address) }
 
-        it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
+        it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>[] }, value: { 'method' => 'SMIME', 'options' => [] } }
 
         context 'with sender certificate present' do
           before do
             create(:smime_certificate, :with_private, fixture: system_email_address)
           end
 
-          it_behaves_like 'resolving security field', expected_result: { allowed: ['sign'], value: ['sign'] }
+          it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>['sign'] }, value: { 'method' => 'SMIME', 'options' => ['sign'] } }
         end
       end
     end
@@ -232,7 +240,7 @@ RSpec.shared_examples 'HasSecurityOptions' do |type:|
         end
       end
 
-      it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
+      it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>[] }, value: { 'method' => 'SMIME', 'options' => [] } }
 
       context 'with recipient and sender certificates present' do
         before do
@@ -240,7 +248,7 @@ RSpec.shared_examples 'HasSecurityOptions' do |type:|
           create(:smime_certificate, :with_private, fixture: system_email_address)
         end
 
-        it_behaves_like 'resolving security field', expected_result: { allowed: %w[encryption sign], value: %w[encryption sign] }
+        it_behaves_like 'resolving security field', expected_result: { securityAllowed: { 'SMIME'=>%w[sign encryption] }, value: { 'method' => 'SMIME', 'options' => %w[sign encryption] } }
 
         context 'with default group configuration' do
           let(:smime_config) do
@@ -261,31 +269,31 @@ RSpec.shared_examples 'HasSecurityOptions' do |type:|
           let(:default_encryption) { true }
           let(:default_sign)       { true }
 
-          it_behaves_like 'resolving security field', expected_result: { value: %w[encryption sign] }
+          it_behaves_like 'resolving security field', expected_result: { value: { 'method' => 'SMIME', 'options' => %w[sign encryption] } }
 
           context 'when it has no value' do
             let(:group_defaults) { {} }
 
-            it_behaves_like 'resolving security field', expected_result: { value: %w[encryption sign] }
+            it_behaves_like 'resolving security field', expected_result: { value: { 'method' => 'SMIME', 'options' => %w[sign encryption] } }
           end
 
           context 'when encryption is disabled' do
             let(:default_encryption) { false }
 
-            it_behaves_like 'resolving security field', expected_result: { value: ['sign'] }
+            it_behaves_like 'resolving security field', expected_result: { value: { 'method' => 'SMIME', 'options' => ['sign'] } }
           end
 
           context 'when signing is disabled' do
             let(:default_sign) { false }
 
-            it_behaves_like 'resolving security field', expected_result: { value: ['encryption'] }
+            it_behaves_like 'resolving security field', expected_result: { value: { 'method' => 'SMIME', 'options' => ['encryption'] } }
           end
 
           context 'when both encryption and signing are disabled' do
             let(:default_encryption) { false }
             let(:default_sign)       { false }
 
-            it_behaves_like 'resolving security field', expected_result: { value: [] }
+            it_behaves_like 'resolving security field', expected_result: { value: { 'method' => 'SMIME', 'options' => [] } }
           end
         end
       end

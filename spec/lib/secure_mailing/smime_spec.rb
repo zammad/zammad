@@ -698,7 +698,7 @@ RSpec.describe SecureMailing::SMIME do
           expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(sender_certificate_subject)
         end
 
-        it 'check that body was endcrypted and verified' do
+        it 'check that body was encrypted and verified' do
           expect(mail[:body]).to include(raw_body)
         end
       end

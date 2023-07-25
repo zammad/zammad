@@ -232,7 +232,7 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
       component: 'FormGroup',
       children: [
         {
-          if: '$smimeIntegration === true && $values.articleSenderType === "email-out"',
+          if: '$securityIntegration === true && $values.articleSenderType === "email-out"',
           name: 'security',
           label: __('Security'),
           type: 'security',
@@ -303,8 +303,10 @@ const redirectAfterCreate = (internalId?: number) => {
   }
 }
 
-const smimeIntegration = computed(
-  () => (application.config.smime_integration as boolean) || {},
+const securityIntegration = computed<boolean>(
+  () =>
+    ((application.config.smime_integration ||
+      application.config.pgp_integration) as boolean) ?? false,
 )
 
 const { notify } = useNotifications()
@@ -397,7 +399,7 @@ const schemaData = reactive({
   activeStep,
   visitedSteps,
   allSteps,
-  smimeIntegration,
+  securityIntegration,
   existingAdditionalCreateNotes: () => {
     return Object.keys(additionalCreateNotes).length > 0
   },

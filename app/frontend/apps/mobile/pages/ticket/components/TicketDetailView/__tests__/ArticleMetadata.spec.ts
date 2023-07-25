@@ -5,7 +5,10 @@ import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { getAllByRole } from '@testing-library/vue'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
-import type { TicketArticleSecurityState } from '#shared/graphql/types.ts'
+import {
+  EnumSecurityStateType,
+  type TicketArticleSecurityState,
+} from '#shared/graphql/types.ts'
 import ArticleMetadata from '../ArticleMetadataDialog.vue'
 
 // parsed is tested in unit test
@@ -110,6 +113,50 @@ describe('rendering security field', () => {
     },
   })
 
+  describe('renders type', () => {
+    it('renders S/MIME type when provided', () => {
+      const view = renderComponent(ArticleMetadata, {
+        props: {
+          name: 'article',
+          article: mockArticle({
+            encryptionMessage: '',
+            encryptionSuccess: true,
+            signingMessage: '',
+            signingSuccess: true,
+            type: EnumSecurityStateType.Smime,
+          }),
+          ticketInternalId: 2,
+        },
+        router: true,
+        store: true,
+      })
+
+      const security = view.getByRole('region', { name: 'Security' })
+      expect(security).toHaveTextContent('S/MIME')
+    })
+
+    it('renders PGP type when provided', () => {
+      const view = renderComponent(ArticleMetadata, {
+        props: {
+          name: 'article',
+          article: mockArticle({
+            encryptionMessage: '',
+            encryptionSuccess: true,
+            signingMessage: '',
+            signingSuccess: true,
+            type: EnumSecurityStateType.Pgp,
+          }),
+          ticketInternalId: 2,
+        },
+        router: true,
+        store: true,
+      })
+
+      const security = view.getByRole('region', { name: 'Security' })
+      expect(security).toHaveTextContent('PGP')
+    })
+  })
+
   describe('renders encryption', () => {
     const mockEncryption = (success: boolean, comment: string) =>
       mockArticle({ encryptionSuccess: success, encryptionMessage: comment })
@@ -129,24 +176,20 @@ describe('rendering security field', () => {
       const view = renderEncryption(true, '')
 
       const security = view.getByRole('region', { name: 'Security' })
-      expect(security).not.toHaveTextContent('Signed')
-      expect(security).toHaveTextContent(/Encrypted$/)
+      expect(security).toHaveTextContent('Encrypted')
       expect(getByIconName(security, 'mobile-lock')).toBeInTheDocument()
     })
 
-    it("doesn't render unsuccessful encryption, if provided", () => {
-      const view = renderEncryption(false, '')
-
-      const security = view.queryByRole('region', { name: 'Security' })
-      expect(security).not.toBeInTheDocument()
-    })
-
-    it('renders encryption comment, if provided', () => {
-      const view = renderEncryption(true, 'Some comment')
+    it('renders unsuccessful encryption, if provided', () => {
+      const view = renderEncryption(false, 'Private key could not be found.')
 
       const security = view.getByRole('region', { name: 'Security' })
-      expect(security).not.toHaveTextContent('Signed')
-      expect(security).toHaveTextContent(/Encrypted \(Some comment\)$/)
+      expect(security).toHaveTextContent(
+        'Encryption error Private key could not be found.',
+      )
+      expect(
+        getByIconName(security, 'mobile-encryption-error'),
+      ).toBeInTheDocument()
     })
   })
 
@@ -169,27 +212,18 @@ describe('rendering security field', () => {
       const view = renderSign(true, '')
 
       const security = view.getByRole('region', { name: 'Security' })
-      expect(security).toHaveTextContent(/Signed$/)
-      expect(security).not.toHaveTextContent('Encrypted')
+      expect(security).toHaveTextContent('Signed')
       expect(getByIconName(security, 'mobile-signed')).toBeInTheDocument()
     })
 
     it('renders unsuccessful signature, if provided', () => {
-      const view = renderSign(false, '')
+      const view = renderSign(false, 'Public key could not be found.')
 
       const security = view.getByRole('region', { name: 'Security' })
-      expect(security).toBeInTheDocument()
-      expect(security).toHaveTextContent(/Unsigned$/)
-      expect(security).not.toHaveTextContent('Encrypted')
+      expect(security).toHaveTextContent(
+        'Sign error Public key could not be found.',
+      )
       expect(getByIconName(security, 'mobile-not-signed')).toBeInTheDocument()
-    })
-
-    it('renders sign comment, if provided', () => {
-      const view = renderSign(false, 'Some comment')
-
-      const security = view.getByRole('region', { name: 'Security' })
-      expect(security).not.toHaveTextContent('Encrypted')
-      expect(security).toHaveTextContent(/Unsigned \(Some comment\)$/)
     })
   })
 
@@ -212,30 +246,8 @@ describe('rendering security field', () => {
     })
 
     const security = view.getByRole('region', { name: 'Security' })
-    expect(security).toHaveTextContent(/Signed$/)
-    expect(security).toHaveTextContent('Encrypted')
-  })
-
-  it('renders only sign, if both provided, but encryption failed', () => {
-    const article = mockArticle({
-      encryptionMessage: '',
-      signingMessage: '',
-      signingSuccess: true,
-      encryptionSuccess: false,
-    })
-
-    const view = renderComponent(ArticleMetadata, {
-      props: {
-        name: 'article',
-        article,
-        ticketInternalId: 2,
-      },
-      router: true,
-      store: true,
-    })
-
-    const security = view.getByRole('region', { name: 'Security' })
-    expect(security).toHaveTextContent(/Signed$/)
-    expect(security).not.toHaveTextContent('Encrypted')
+    expect(security).toHaveTextContent('Encrypted Signed')
+    expect(getByIconName(security, 'mobile-lock')).toBeInTheDocument()
+    expect(getByIconName(security, 'mobile-signed')).toBeInTheDocument()
   })
 })

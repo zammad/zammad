@@ -6937,7 +6937,8 @@ a.list-group-item.active > .badge,
 
   @include rtl(margin, 2px 0 0 3px);
 
-  &.icon-lock {
+  &.icon-lock,
+  &.icon-encryption-error {
     margin: 0;
   }
 }
@@ -14484,5 +14485,12 @@ span.is-disabled {
 
   span {
     text-decoration: underline;
+  }
+}
+
+.btn--split--last.js-securitySign {
+  .icon {
+    @include ltr(margin, -2px 5px 0 -2px !important);
+    @include rtl(margin, -2px -2px 0 5px !important);
   }
 }

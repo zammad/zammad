@@ -68,13 +68,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     recipient: addBlockFloatingLabel(classes.recipient),
     button: addButtonVariants(classes.button),
     submit: addButtonVariants(classes.submit),
-    security: extendClasses(classes.security, {
-      outer:
-        'relative px-2 formkit-invalid:bg-red-dark formkit-errors:bg-red-dark',
-      wrapper: 'inline-flex w-full h-14 px-2',
-      label:
-        'formkit-required:required flex text-white items-center w-full h-full text-base',
-    }),
+    security: addBlockFloatingLabel(classes.security),
   }
 }
 

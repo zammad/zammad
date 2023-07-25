@@ -6,8 +6,11 @@ useDefault = true
 [allowlist]
 description = "global allow list"
 paths = [
+  '''^doc/developer_manual/cookbook/how-to-setup-pgp-integration.md''',
   '''^doc/developer_manual/cookbook/how-to-setup-smime-integration.md''',
   '''^log/''',
+  '''^spec/factories/pgp_key\.rb''',
+  '''^spec/fixtures/files/pgp/.*\.asc''',
   '''^spec/fixtures/files/smime/.*\.key''',
   '''^test/data/saml/zammad-client.json''',
   '''^test/data/telegram/private/sticker.json''',

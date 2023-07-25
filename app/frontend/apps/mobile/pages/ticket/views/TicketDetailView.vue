@@ -248,13 +248,15 @@ const submitForm = () => {
 
 const application = useApplicationStore()
 
-const smimeIntegration = computed(
-  () => (application.config.smime_integration as boolean) ?? false,
+const securityIntegration = computed<boolean>(
+  () =>
+    ((application.config.smime_integration ||
+      application.config.pgp_integration) as boolean) ?? false,
 )
 
 const ticketEditSchemaData = reactive({
   formLocation,
-  smimeIntegration,
+  securityIntegration,
   newTicketArticleRequested,
   newTicketArticlePresent,
   currentArticleType,

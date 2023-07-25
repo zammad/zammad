@@ -53,14 +53,14 @@ RSpec.describe SMIMECertificate, type: :model do
     end
   end
 
-  describe 'for_recipipent_email_addresses!' do
+  describe 'for_recipient_email_addresses!' do
 
     context 'no certificate present' do
 
       let(:lookup_addresses) { ['smime1@example.com', 'smime2@example.com'] }
 
       it 'raises ActiveRecord::RecordNotFound' do
-        expect { described_class.for_recipipent_email_addresses!(lookup_addresses) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { described_class.for_recipient_email_addresses!(lookup_addresses) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
@@ -75,13 +75,13 @@ RSpec.describe SMIMECertificate, type: :model do
       end
 
       it 'raises ActiveRecord::RecordNotFound' do
-        expect { described_class.for_recipipent_email_addresses!(lookup_addresses) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { described_class.for_recipient_email_addresses!(lookup_addresses) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       context 'exception message' do
 
         let(:message) do
-          described_class.for_recipipent_email_addresses!(lookup_addresses)
+          described_class.for_recipient_email_addresses!(lookup_addresses)
         rescue => e
           e.message
         end
@@ -107,7 +107,7 @@ RSpec.describe SMIMECertificate, type: :model do
       end
 
       it 'returns certificates' do
-        expect(described_class.for_recipipent_email_addresses!(lookup_addresses)).to include(*certificates)
+        expect(described_class.for_recipient_email_addresses!(lookup_addresses)).to include(*certificates)
       end
     end
 
@@ -121,7 +121,7 @@ RSpec.describe SMIMECertificate, type: :model do
       end
 
       it 'returns certificates' do
-        expect(described_class.for_recipipent_email_addresses!(lookup_addresses)).to eq(certificates)
+        expect(described_class.for_recipient_email_addresses!(lookup_addresses)).to eq(certificates)
       end
     end
 
@@ -211,9 +211,9 @@ RSpec.describe SMIMECertificate, type: :model do
       end
     end
 
-    describe '.for_recipipent_email_addresses!' do
+    describe '.for_recipient_email_addresses!' do
       it 'does return the latest certificate when there is also an old expired certificate' do
-        expect(described_class.for_recipipent_email_addresses!(['smime1@example.com']).first.fingerprint).to eq('B')
+        expect(described_class.for_recipient_email_addresses!(['smime1@example.com']).first.fingerprint).to eq('B')
       end
     end
   end

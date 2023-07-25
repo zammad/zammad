@@ -171,7 +171,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         triggerFormUpdater: false,
       },
       {
-        if: '$smimeIntegration === true && $fns.includes($currentArticleType.attributes, "security")',
+        if: '$securityIntegration === true && $fns.includes($currentArticleType.attributes, "security")',
         name: 'security',
         label: __('Security'),
         type: 'security',

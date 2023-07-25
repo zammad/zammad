@@ -1288,50 +1288,48 @@ returns a hex color code
     if Setting.get('smime_integration')
       sign       = value['sign'].present? && value['sign'] != 'no'
       encryption = value['encryption'].present? && value['encryption'] != 'no'
-      security   = {
-        type:       'S/MIME',
-        sign:       {
-          success: false,
-        },
-        encryption: {
-          success: false,
-        },
-      }
 
-      if sign
-        sign_found = false
-        begin
-          list = Mail::AddressList.new(email_address.email)
-          from = list.addresses.first.to_s
-          cert = SMIMECertificate.for_sender_email_address(from)
-          if cert && !cert.expired?
-            sign_found                = true
-            security[:sign][:success] = true
-            security[:sign][:comment] = "certificate for #{email_address.email} found"
-          end
-        rescue # rubocop:disable Lint/SuppressedException
-        end
+      security = SecureMailing::SMIME::NotificationOptions.process(
+        from:       email_address,
+        recipients: recipients_checked,
+        perform:    {
+          sign:    sign,
+          encrypt: encryption,
+        },
+      )
 
-        if value['sign'] == 'discard' && !sign_found
-          logger.info "Unable to send trigger based notification to #{recipient_string} because of missing group #{group.name} email #{email_address.email} certificate for signing (discarding notification)."
-          return
-        end
+      if sign && value['sign'] == 'discard' && !security[:sign][:success]
+        logger.info "Unable to send trigger based notification to #{recipient_string} because of missing group #{group.name} email #{email_address.email} certificate for signing (discarding notification)."
+        return
       end
 
-      if encryption
-        certs_found = false
-        begin
-          SMIMECertificate.for_recipipent_email_addresses!(recipients_checked)
-          certs_found                     = true
-          security[:encryption][:success] = true
-          security[:encryption][:comment] = "certificates found for #{recipient_string}"
-        rescue # rubocop:disable Lint/SuppressedException
-        end
+      if encryption && value['encryption'] == 'discard' && !security[:encryption][:success]
+        logger.info "Unable to send trigger based notification to #{recipient_string} because public certificate is not available for encryption (discarding notification)."
+        return
+      end
+    end
 
-        if value['encryption'] == 'discard' && !certs_found
-          logger.info "Unable to send trigger based notification to #{recipient_string} because public certificate is not available for encryption (discarding notification)."
-          return
-        end
+    if Setting.get('pgp_integration') && (security.nil? || (!security[:encryption][:success] && !security[:sign][:success]))
+      sign       = value['sign'].present? && value['sign'] != 'no'
+      encryption = value['encryption'].present? && value['encryption'] != 'no'
+
+      security = SecureMailing::PGP::NotificationOptions.process(
+        from:       email_address,
+        recipients: recipients_checked,
+        perform:    {
+          sign:    sign,
+          encrypt: encryption,
+        },
+      )
+
+      if sign && value['sign'] == 'discard' && !security[:sign][:success]
+        logger.info "Unable to send trigger based notification to #{recipient_string} because of missing group #{group.name} email #{email_address.email} PGP key for signing (discarding notification)."
+        return
+      end
+
+      if encryption && value['encryption'] == 'discard' && !security[:encryption][:success]
+        logger.info "Unable to send trigger based notification to #{recipient_string} because public PGP keys are not available for encryption (discarding notification)."
+        return
       end
     end
 

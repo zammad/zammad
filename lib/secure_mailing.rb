@@ -23,6 +23,14 @@ class SecureMailing
     end
   end
 
+  def self.security_options(ticket:, article:)
+    result = []
+    active_backends.each do |backend|
+      result << "#{backend}::SecurityOptions".constantize.process(ticket:, article:)
+    end
+    result
+  end
+
   def self.active_backends
     backends.select(&:active?)
   end

@@ -50,7 +50,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::RetrySecurityProcess, :aggregate
 
       let(:expected_security_state) do
         {
-          'type'              => 'S/MIME',
+          'type'              => 'SMIME',
           'signingSuccess'    => true,
           'signingMessage'    => '/emailAddress=smime1@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com',
           'encryptionSuccess' => false,

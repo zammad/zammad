@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'system/apps/mobile/examples/create_article_examples'
+require 'system/apps/mobile/examples/article_security_examples'
 
 RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated_as: :agent, type: :system do
   let(:group)     { Group.find_by(name: 'Users') }
@@ -373,5 +374,27 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
       )
     end
 
+  end
+
+  context 'when creating secured article', authenticated_as: :authenticate do
+    def prepare_phone_article
+      open_article_dialog
+      find_select('Article Type', visible: :all).select_option('Phone')
+    end
+
+    def prepare_email_article(with_body: false)
+      open_article_dialog
+      find_select('Article Type', visible: :all).select_option('Email')
+      find_autocomplete('To').search_for_option(customer.email, label: customer.fullname)
+
+      find_editor('Text').type(Faker::Hacker.say_something_smart) if with_body
+    end
+
+    def submit_form
+      save_article
+    end
+
+    it_behaves_like 'mobile app: article security', integration: :smime
+    it_behaves_like 'mobile app: article security', integration: :pgp
   end
 end

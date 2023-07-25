@@ -38,7 +38,7 @@ then
   cp pass.secret $CERT_DIR/ChainCA.secret
 fi
 
-for EMAIL_ADDRESS in smime1@example.com smime2@example.com smime3@example.com smimedouble@example.com CaseInsenstive@eXample.COM
+for EMAIL_ADDRESS in smime1@example.com smime2@example.com smime3@example.com smimedouble@example.com CaseInsenstive@eXample.COM pgp+smime-sender@example.com pgp+smime-recipient@example.com
 do
   if [[ ! -e "$CERT_DIR/$EMAIL_ADDRESS.crt" ]]
   then

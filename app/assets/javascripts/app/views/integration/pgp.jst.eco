@@ -1,0 +1,13 @@
+<form>
+  <h2><%- @T('Public & Private Keys') %></h2>
+  <div class="settings-entry settings-entry--stretched js-keysList"></div>
+
+  <div class="btn btn--primary js-addKey"><%- @T('Add Key') %></div>
+
+  <hr>
+
+  <h2><%- @T('Default Behavior') %></h2>
+  <p><%- @T('Choose the default behavior of the PGP integration on per group basis. If signing or encrypting is not possible, the setting has no effect. Agents can always manually alter the behavior for each article.') %></p>
+  <div class="settings-entry settings-entry--stretched js-groupList"></div>
+  <div class="btn btn--primary js-updateGroup"><%- @T('Update') %></div>
+</form>

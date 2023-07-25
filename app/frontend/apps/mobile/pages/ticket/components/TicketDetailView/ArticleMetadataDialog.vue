@@ -8,6 +8,7 @@ import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSe
 import { computed } from 'vue'
 import { i18n } from '#shared/i18n.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
 import ArticleMetadataAddress from './ArticleMetadataAddress.vue'
 
 interface Props {
@@ -54,23 +55,23 @@ const links = computed(() => {
   return links
 })
 
-const sign = computed(() => {
-  const security = props.article.securityState
-  if (!security || security.signingSuccess == null) return null
-  return {
-    message: security.signingMessage,
-    success: security.signingSuccess,
-  }
-})
+const isEncrypted = computed(
+  () =>
+    props.article.securityState?.encryptionSuccess ||
+    (props.article.securityState?.encryptionSuccess === false &&
+      props.article.securityState?.encryptionMessage),
+)
 
-const encryptionMessage = computed(() => {
-  const security = props.article.securityState
-  if (!security?.encryptionSuccess) return null
-  let message = i18n.t('Encrypted')
-  if (security.encryptionMessage)
-    message += ` (${i18n.t(security.encryptionMessage)})`
-  return message
-})
+const isSigned = computed(
+  () =>
+    props.article.securityState?.signingSuccess ||
+    (props.article.securityState?.signingSuccess === false &&
+      props.article.securityState?.signingMessage),
+)
+
+const hasSecurityAttribute = computed(
+  () => props.article.securityState && (isEncrypted.value || isSigned.value),
+)
 </script>
 
 <template>
@@ -112,24 +113,57 @@ const encryptionMessage = computed(() => {
       <CommonSectionMenuItem :label="__('Sent')">
         <CommonDateTime :date-time="article.createdAt" type="absolute" />
       </CommonSectionMenuItem>
-      <!-- app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34 -->
       <CommonSectionMenuItem
-        v-if="sign || encryptionMessage"
+        v-if="hasSecurityAttribute"
         :label="__('Security')"
       >
         <div class="flex flex-col gap-1">
-          <span v-if="encryptionMessage" class="break-all">
-            <CommonIcon class="inline" name="mobile-lock" size="tiny" />
-            {{ encryptionMessage }}
+          <span v-if="article.securityState?.type">
+            {{ translateArticleSecurity(article.securityState.type) }}
           </span>
-          <span v-if="sign" :class="{ 'text-orange': !sign.success }">
+          <span v-if="isEncrypted">
             <CommonIcon
-              class="inline"
-              :name="sign.success ? 'mobile-signed' : 'mobile-not-signed'"
+              class="mb-1 inline"
               size="tiny"
+              :name="
+                article.securityState?.encryptionSuccess
+                  ? 'mobile-lock'
+                  : 'mobile-encryption-error'
+              "
             />
-            {{ sign.success ? $t('Signed') : $t('Unsigned') }}
-            {{ sign.message ? ` (${sign.message})` : '' }}
+            {{
+              article.securityState?.encryptionSuccess
+                ? $t('Encrypted')
+                : $t('Encryption error')
+            }}
+            <div
+              v-if="article.securityState?.encryptionMessage"
+              class="ms-5 break-all"
+            >
+              {{ $t(article.securityState.encryptionMessage) }}
+            </div>
+          </span>
+          <span v-if="isSigned">
+            <CommonIcon
+              class="mb-1 inline"
+              size="tiny"
+              :name="
+                article.securityState?.signingSuccess
+                  ? 'mobile-signed'
+                  : 'mobile-not-signed'
+              "
+            />
+            {{
+              article.securityState?.signingSuccess
+                ? $t('Signed')
+                : $t('Sign error')
+            }}
+            <div
+              v-if="article.securityState?.signingMessage"
+              class="ms-5 break-all"
+            >
+              {{ $t(article.securityState.signingMessage) }}
+            </div>
           </span>
         </div>
       </CommonSectionMenuItem>

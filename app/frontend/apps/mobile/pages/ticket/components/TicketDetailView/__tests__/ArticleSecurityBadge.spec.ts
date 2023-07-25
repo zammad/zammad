@@ -3,6 +3,7 @@
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { getByRole, getByText } from '@testing-library/vue'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { EnumSecurityStateType } from '#shared/graphql/types.ts'
 import ArticleSecurityBadge, { type Props } from '../ArticleSecurityBadge.vue'
 
 const renderBadge = (propsData: Props) => {
@@ -21,7 +22,11 @@ describe('rendering security badge', () => {
     const renderEncryption = (success: boolean, comment: string) => {
       return renderBadge({
         articleId: convertToGraphQLId('Ticket::Article', 1),
-        security: { encryptionMessage: comment, encryptionSuccess: success },
+        security: {
+          type: EnumSecurityStateType.Smime,
+          encryptionMessage: comment,
+          encryptionSuccess: success,
+        },
       })
     }
 

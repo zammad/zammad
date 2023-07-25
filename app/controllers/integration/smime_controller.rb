@@ -85,89 +85,24 @@ class Integration::SMIMEController < ApplicationController
   end
 
   def search
-    result = {
-      type: 'S/MIME',
-    }
+    security_options = SecureMailing::SMIME::SecurityOptions.new(ticket: params[:ticket], article: params[:article]).process
 
-    result[:encryption] = article_encryption(params[:article])
-    result[:sign]       = article_sign(params[:ticket])
+    result = {
+      type:       'S/MIME',
+      encryption: map_result(security_options.encryption),
+      sign:       map_result(security_options.signing),
+    }
 
     render json: result
   end
 
-  def article_encryption(article)
-    result = {
-      success: false,
-      comment: 'no recipient found',
+  private
+
+  def map_result(method_result)
+    {
+      success:             method_result.possible?,
+      comment:             method_result.message,
+      commentPlaceholders: method_result.message_placeholders,
     }
-
-    return result if article.blank?
-    return result if article[:to].blank? && article[:cc].blank?
-
-    recipient  = [ article[:to], article[:cc] ].compact.join(',').to_s
-    recipients = []
-    begin
-      list = Mail::AddressList.new(recipient)
-      list.addresses.each do |address|
-        recipients.push address.address
-      end
-    rescue # rubocop:disable Lint/SuppressedException
-    end
-
-    return result if recipients.blank?
-
-    begin
-      certs = SMIMECertificate.for_recipipent_email_addresses!(recipients)
-
-      if certs
-        if certs.any?(&:expired?)
-          result[:success] = false
-          result[:comment] = "certificates found for #{recipients.join(',')} but expired"
-        else
-          result[:success] = true
-          result[:comment] = "certificates found for #{recipients.join(',')}"
-        end
-      end
-    rescue => e
-      result[:comment] = e.message
-    end
-
-    result
   end
-
-  def article_sign(ticket)
-    result = {
-      success: false,
-      comment: 'certificate not found',
-    }
-
-    return result if ticket.blank? || !ticket[:group_id]
-
-    group = Group.find_by(id: ticket[:group_id])
-    return result if !group
-
-    email_address = group.email_address
-    begin
-      list = Mail::AddressList.new(email_address.email)
-      from = list.addresses.first.to_s
-      cert = SMIMECertificate.for_sender_email_address(from)
-      if cert
-        if cert.expired?
-          result[:success] = false
-          result[:comment] = "certificate for #{email_address.email} found but expired"
-        else
-          result[:success] = true
-          result[:comment] = "certificate for #{email_address.email} found"
-        end
-      else
-        result[:success] = false
-        result[:comment] = "no certificate for #{email_address.email} found"
-      end
-    rescue => e
-      result[:comment] = e.message
-    end
-
-    result
-  end
-
 end

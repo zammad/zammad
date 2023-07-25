@@ -1,0 +1,81 @@
+Date: Tue, 25 Jul 2023 12:09:18 +0100
+From: pgp1@example.com
+To: pgp2@example.com
+Cc: pgp3@example.com
+Message-ID: <64b695e3db47b_12810224c4161e@MBP-FL.fritz.box.mail>
+Mime-Version: 1.0
+Content-Type: multipart/encrypted;
+ boundary="--==_mimepart_64b695e3dd159_12810224c4188a";
+ protocol="application/pgp-encrypted"
+Content-Transfer-Encoding: 7bit
+
+This is an OpenPGP/MIME encrypted message (RFC 3156)
+----==_mimepart_64b695e3dd159_12810224c4188a
+Content-Type: application/pgp-encrypted
+Content-Transfer-Encoding: 7bit
+Content-Description: PGP/MIME Versions Identification
+
+Version: 1
+
+----==_mimepart_64b695e3dd159_12810224c4188a
+Content-Type: application/octet-stream;
+ name=encrypted.asc
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename=encrypted.asc
+Content-Description: OpenPGP encrypted message
+Content-ID: <64b695e4d0a3d_12810224c4198a@MBP-FL.fritz.box.mail>
+
+-----BEGIN PGP MESSAGE-----
+
+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
+=xxP4
+-----END PGP MESSAGE-----
+
+----==_mimepart_64b695e3dd159_12810224c4188a--

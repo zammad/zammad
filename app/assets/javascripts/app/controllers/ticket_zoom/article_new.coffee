@@ -28,6 +28,7 @@ class App.TicketZoomArticleNew extends App.Controller
     'focus .js-textarea':            'openTextarea'
     'input .js-textarea':            'updateLetterCount'
     'click .js-active-toggle':       'toggleButton'
+    'click .js-active-toggle-type':  'toggleTypeButton'
 
   constructor: ->
     super
@@ -114,6 +115,16 @@ class App.TicketZoomArticleNew extends App.Controller
     # update security options
     @controllerBind('ui::ticket::updateSecurityOptions', (data) =>
       return if data.taskKey isnt @taskKey
+
+      @updateSecurityType()
+      @updateSecurityOptions()
+    )
+
+    # Listen to security setting changes.
+    @controllerBind('config_update', (data) =>
+      return if not /^(pgp|smime)_integration$/.test(data.name)
+
+      @updateSecurityType()
       @updateSecurityOptions()
     )
 
@@ -442,6 +453,8 @@ class App.TicketZoomArticleNew extends App.Controller
               @$('.js-to, .js-cc').on('change', =>
                 @updateSecurityOptions()
               )
+
+              @updateSecurityType()
               @updateSecurityOptions()
 
     # convert remote src images to data uri
@@ -460,8 +473,14 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @scrollToBottom() if wasScrolledToBottom
 
-  updateSecurityOptions: =>
-    @updateSecurityOptionsRemote(@ticket.id, @ui.ticketParams(), @params(), @paramsSecurity())
+  updateSecurityOptions: (resetSecurityOptions = false) =>
+    @securityOptionsReset() if resetSecurityOptions
+    @updateSecurityOptionsRemote(@taskKey, @ui.ticketParams(), @params())
+
+  updateSecurityType: (type = @type) =>
+    return if type isnt 'email'
+
+    @updateSecurityTypeToolbar()
 
   setArticleTypePost: (type, signaturePosition = 'bottom') =>
     for localConfig in @actions()
@@ -706,3 +725,13 @@ class App.TicketZoomArticleNew extends App.Controller
 
   toggleButton: (event) ->
     @$(event.currentTarget).toggleClass('btn--active')
+
+  toggleTypeButton: (event) ->
+    target = @$(event.currentTarget)
+
+    return if target.hasClass('btn--active')
+
+    target.siblings().removeClass('btn--active')
+
+    @toggleButton(event)
+    @updateSecurityOptions(true)

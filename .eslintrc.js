@@ -37,6 +37,23 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'consistent-return': 'off', // allow implicit return
 
+    'prefer-destructuring': [
+      'error',
+      {
+        VariableDeclarator: {
+          array: false,
+          object: true,
+        },
+        AssignmentExpression: {
+          array: false,
+          object: true,
+        },
+      },
+      {
+        enforceForRenamedProperties: false,
+      },
+    ],
+
     // Loosen AirBnB's strict rules a bit to allow 'for .. of'
     'no-restricted-syntax': [
       'error',

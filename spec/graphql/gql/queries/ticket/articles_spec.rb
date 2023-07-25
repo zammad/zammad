@@ -227,7 +227,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
           end
           let(:expected_security_state) do
             {
-              'type'              => 'S/MIME',
+              'type'              => 'SMIME',
               'signingSuccess'    => false,
               'signingMessage'    => 'Message is not signed by sender.',
               'encryptionSuccess' => false,

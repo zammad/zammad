@@ -11,7 +11,10 @@ const reactiveNow = useReactiveNow()
 export class I18N {
   private translator = new Translator()
 
-  t(source: string | undefined, ...args: Array<string | number>): string {
+  t(
+    source: string | undefined,
+    ...args: Array<string | number | undefined | null>
+  ): string {
     if (typeof source === 'undefined') return ''
 
     return this.translator.translate(source, ...args)

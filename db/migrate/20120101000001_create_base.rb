@@ -849,5 +849,23 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :user_two_factor_preferences, :users, column: :user_id
     add_foreign_key :user_two_factor_preferences, :users, column: :created_by_id
     add_foreign_key :user_two_factor_preferences, :users, column: :updated_by_id
+
+    create_table :pgp_keys do |t|
+      t.string   :fingerprint, limit: 40, null: false
+      t.text     :key,         limit: 500.kilobytes + 1, null: false
+      t.datetime :expires_at, null: true, limit: 3
+      t.string   :uids, limit: 3000, null: false
+      t.boolean  :secret,                   null: false, default: false
+      t.string   :passphrase,  limit: 500,  null: true
+      t.string   :domain_alias,       limit: 255,  null: true, default: ''
+      t.integer  :updated_by_id,            null: false
+      t.integer  :created_by_id,            null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :pgp_keys, [:fingerprint], unique: true
+    add_index :pgp_keys, [:uids], length: 255
+    add_index :pgp_keys, [:domain_alias]
+    add_foreign_key :pgp_keys, :users, column: :created_by_id
+    add_foreign_key :pgp_keys, :users, column: :updated_by_id
   end
 end
