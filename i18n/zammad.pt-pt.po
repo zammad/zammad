@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-16 12:30+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2023-07-18 01:05+0000\n"
+"Last-Translator: Jorge Peixinho <jorge.peixinho@storesace.cv>\n"
 "Language-Team: Portuguese (Portugal) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/pt_PT/>\n"
 "Language: pt-pt\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -27,7 +27,7 @@ msgstr ""
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATE"
-msgstr "yyyy-mm-dd"
+msgstr "dd/mm/yyyy"
 
 #. Default date/time format to use for the current locale.
 #. These placeholders are supported:
@@ -43,7 +43,7 @@ msgstr "yyyy-mm-dd"
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATETIME"
-msgstr "yyyy-mm-dd HH:MM"
+msgstr "dd/mm/yyyy HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
@@ -104,8 +104,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Escalado em #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Escalado para #{ticket.escalation_at}_\n"
 "O ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" está escalado "
 "desde \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -116,19 +116,6 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_info/en.md.erb
-#, fuzzy
-#| msgid ""
-#| "# #{ticket.title}\n"
-#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-#| "Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
-#| "updated_at}_\n"
-#| "* Group: #{ticket.group.name}\n"
-#| "* Owner: #{ticket.owner.fullname}\n"
-#| "* State: #{t(ticket.state.name)}\n"
-#| "\n"
-#| "<% if @objects[:article] %>\n"
-#| "#{article.body_as_text}\n"
-#| "<% end %>\n"
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -142,9 +129,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Criado por #{current_user.longname} em #{ticket."
-"updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Criado por #{current_user.longname} em #{ticket"
+".updated_at}_\n"
 "* Grupo: #{ticket.group.name}\n"
 "* Proprietário: #{ticket.owner.fullname}\n"
 "* Estado: #{t(ticket.state.name)}\n"
@@ -679,17 +666,6 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid ""
-#| "** Data Privacy **, helps you to delete and verify the removal of "
-#| "existing data of the system.\n"
-#| "\n"
-#| "It can be used to delete tickets, organizations and users. The owner "
-#| "assignment will be unset in case the deleted user is an agent.\n"
-#| "\n"
-#| "Data Privacy tasks will be executed every 10 minutes. The execution might "
-#| "take some additional time depending of the number of objects that should "
-#| "get deleted."
 msgid ""
 "**Data Privacy** helps you to delete and verify the removal of existing data "
 "from the system.\n"
@@ -701,12 +677,12 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"** Privacidade de Dados **, ajuda você a deletar e verificar a remoção de "
+"** Privacidade de Dados **, ajuda você a apagar e verificar a remoção de "
 "dados existentes no sistema. Ele pode ser usado para excluir tickets, "
-"organizações e usuários. A atribuição do proprietário não será definida caso "
-"o usuário excluído seja um agente. As tarefas de privacidade de dados serão "
-"executadas a cada 10 minutos. A execução pode levar algum tempo adicional, "
-"dependendo do número de objetos que devem ser excluídos."
+"organizações e utilizadores. A atribuição do proprietário não será definida "
+"caso o utilizador excluído seja um agente. As tarefas de privacidade de "
+"dados serão executadas a cada 10 minutos. A execução pode levar algum tempo "
+"adicional, dependendo do número de objetos que devem ser excluídos."
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
@@ -2901,16 +2877,12 @@ msgid "Choose if retweets should also be converted to tickets."
 msgstr "Escolha se os retuítes também devem ser convertidos em tickets."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
-#, fuzzy
-#| msgid "Choose the group in which direct messages will get added to."
 msgid "Choose the group to which direct messages will get added."
-msgstr "Escolha o grupo no qual mensagens diretas serão adicionadas. "
+msgstr "Escolha o grupo no qual mensagens diretas serão adicionadas."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
-#, fuzzy
-#| msgid "Choose the group in which mentions will get added to."
 msgid "Choose the group to which mentions will get added."
-msgstr "Escolha o grupo no qual as menções serão adicionadas "
+msgstr "Escolha o grupo no qual as menções serão adicionadas"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -3220,10 +3192,8 @@ msgid "Confirm Password"
 msgstr "Ativar Senha"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#, fuzzy
-#| msgid "Confirm/submit dialog"
 msgid "Confirm dialog"
-msgstr "Confirmar/Enviar "
+msgstr "Confirmar/Enviar"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy
@@ -3292,7 +3262,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
-msgstr "Confirmar/Enviar "
+msgstr "Confirmar/Enviar"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
@@ -5286,7 +5256,7 @@ msgstr "Certo de excluir esse objeto?"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
-msgstr "Domínio "
+msgstr "Domínio"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
@@ -5353,7 +5323,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 msgid "Drag to reorder"
-msgstr "Arraste para reordenar "
+msgstr "Arrastar para reordenar"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
@@ -5390,7 +5360,7 @@ msgstr "Duração"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Easter holiday"
-msgstr "Feriado de Páscoa "
+msgstr "Feriado de Páscoa"
 
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
@@ -6841,7 +6811,7 @@ msgstr "Segredo do Cliente"
 
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
-msgstr "Credenciais Google App "
+msgstr "Credenciais Google App"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 #, fuzzy
@@ -7233,10 +7203,8 @@ msgid "Hours"
 msgstr "Horas"
 
 #: app/views/layouts/knowledge_base.html.erb
-#, fuzzy
-#| msgid "How can we help you? Search for an answer or a topic..."
 msgid "How can we help you? Search for an answer or a topic…"
-msgstr "Como posso ajudar ? Procure por uma resposta ou tópico "
+msgstr "Como posso ajudar ? Procure por uma resposta ou tópico"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 #, fuzzy
@@ -7315,7 +7283,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
 msgid "Icon"
-msgstr "Ícone "
+msgstr "Ícone"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Icon & Link Color"
@@ -7326,10 +7294,8 @@ msgid "Icon Set"
 msgstr "Setar ícone"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid "Icon"
 msgid "Icon URL"
-msgstr "Ícone "
+msgstr "Ícone do URL"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #, fuzzy
@@ -8282,7 +8248,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco
 msgid "Link Related Answer"
-msgstr "Linkar resposta relacionada "
+msgstr "Resposta relacionada com a hiperligação"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -8680,7 +8646,7 @@ msgstr "Menções"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Mentions Group"
-msgstr "Grupo de Menções "
+msgstr "Grupo de Menções"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
@@ -8729,7 +8695,7 @@ msgstr "Criar Canais"
 #, fuzzy
 #| msgid "Icon"
 msgid "Messaging Icon URL"
-msgstr "Ícone "
+msgstr "URL do Ícone de Mensagens"
 
 #: app/models/webhook/pre_defined/mattermost.rb
 #, fuzzy
@@ -8905,10 +8871,8 @@ msgid "Most recent activity"
 msgstr "Most recent activity"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-#, fuzzy
-#| msgid "Move all from \"%s\" to \"%s\""
 msgid "Move all from \"%s\" to \"%s\":"
-msgstr "mover todos de  \"%s\" para \"%s\" "
+msgstr "mover todos de \"%s\" para \"%s\":"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
@@ -9809,7 +9773,7 @@ msgstr "Online"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Online Forms"
-msgstr "Formulário Online "
+msgstr "Formulário Online"
 
 #: db/seeds/settings.rb
 msgid "Online Service"
@@ -14150,7 +14114,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "This service allows you to connect %s with %s."
-msgstr "Este serviço possibilita que você se conecte %s em %s. "
+msgstr "Este serviço possibilita que você ligue %s a %s."
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "This service enables Zammad to connect with your Exchange server."
@@ -14674,7 +14638,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Timing"
-msgstr "Cronometragem "
+msgstr "Cronograma"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
@@ -16293,8 +16257,8 @@ msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
 msgstr ""
-"You can generate a personal access token for each application you use that "
-"needs access to the Zammad API. "
+"Pode gerar um token de acesso pessoal para cada aplicação utilizada que "
+"necessite de acesso à API Zammad."
 
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "You can no longer see the data privacy task."
@@ -16639,16 +16603,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
-#, fuzzy
-#| msgid ""
-#| "Zammad is currently in maintenance mode. Only administrators can login. "
-#| "Please wait until the maintenance window is over."
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
 msgstr ""
-"Zammad is currently in maintenance mode. Only administrators can login. "
-"Please wait until the maintenance window is over. "
+"O Zammad está atualmente em modo de manutenção. Apenas os administradores "
+"podem iniciar sessão. Aguarde até que a janela de manutenção seja encerrada."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "Zammad is restarting…"
@@ -18018,7 +17978,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Left| means |[Ticket#12345] Some Subject|"
-msgstr "|Left| referente  |[Ticket#12345] Algum assunto| "
+msgstr "|Esquerda| significa |[Ticket#12345] qualquer assunto|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 #, fuzzy
@@ -18037,7 +17997,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Right| means |Some Subject [Ticket#12345]|"
-msgstr "|Right| Referente  |Algum assunto [Ticket#12345]| "
+msgstr "|Direita| significa |qualquer assunto [Ticket#12345]|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy

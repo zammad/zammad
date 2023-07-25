@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-30 03:05+0000\n"
+"PO-Revision-Date: 2023-07-25 01:05+0000\n"
 "Last-Translator: \"Decio E. Silva\" <decio@verinatec.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/pt_BR/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -59,7 +59,7 @@ msgstr ""
 "\"Database\" armazena todos os anexos no banco de dados (não recomendado "
 "para armazenar grandes quantidades de dados). \"Filesystem\" armazena os "
 "dados no sistema de arquivos. Você pode alternar entre os módulos mesmo em "
-"um sistema que já está em produção sem perda de dados."
+"um sistema que já está em produção sem nenhuma perda de dados."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -497,7 +497,7 @@ msgstr "%s meses atrás"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "%s new replies"
-msgstr ""
+msgstr "%s novas respostas"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -658,6 +658,14 @@ msgid ""
 "activity type will be rendered for an entry in the **Activity** table under "
 "the **Accounted Time** tab."
 msgstr ""
+"**Tipos de Atividade** podem ser usados para agrupar as diferentes entradas "
+"de contabilização de tempo de ticket. Por exemplo, entradas que são "
+"relevantes para um tipo \"Faturamento\".\n"
+"\n"
+"Quando você habilita o registro do tipo de atividade, os usuários poderão "
+"selecionar um tipo dessa lista. Além disso, uma coluna com um tipo de "
+"atividade associado será exibida para uma entrada na tabela **Atividade** "
+"sob a aba **Tempo Contabilizado**."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -747,10 +755,8 @@ msgid "1 month ago"
 msgstr "1 mês atrás"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-#, fuzzy
-#| msgid "reply"
 msgid "1 new reply"
-msgstr "responder"
+msgstr "1 nova resposta"
 
 #: db/seeds/settings.rb
 msgid "1 week"
@@ -1104,17 +1110,13 @@ msgstr "Fluxo de Atividades"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#, fuzzy
-#| msgid "Activity"
 msgid "Activity Type"
-msgstr "Atividade"
+msgstr "Tipo de Atividade"
 
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "Activity Types"
-msgstr "Atividade"
+msgstr "Tipos de Atividade"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
@@ -1700,16 +1702,12 @@ msgstr ""
 "Tem certeza que deseja recarregar? Suas alterações não salvas serão perdidas"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-#, fuzzy
-#| msgid "Are you sure you want to delete \"%s\"?"
 msgid "Are you sure you want to set \"%s\" as default?"
-msgstr "Tem certeza de que deseja excluir \"%s\"?"
+msgstr "Tem certeza de que deseja definir \"%s\" como padrão?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-#, fuzzy
-#| msgid "Are you sure you want to delete \"%s\"?"
 msgid "Are you sure you want to unset \"%s\" as default?"
-msgstr "Tem certeza de que deseja excluir \"%s\"?"
+msgstr "Tem certeza de que deseja remover \"%s\" como padrão?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -1927,6 +1925,8 @@ msgid ""
 "Attention! Changing the organization will update the user's most recent "
 "tickets to the new organization."
 msgstr ""
+"Atenção! Alterar a organização atualizará os tickets mais recentes do "
+"usuário para a nova organização."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -2545,26 +2545,20 @@ msgid "Caution!"
 msgstr "Cuidado!"
 
 #: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Certificate for verification could not be found."
 msgid "Certificate for %s found, but expired."
-msgstr "Certificado para verificação não foi encontrado."
+msgstr "Certificado para %s encontrado, mas expirou."
 
 #: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Certificate for verification could not be found."
 msgid "Certificate for %s found."
-msgstr "Certificado para verificação não foi encontrado."
+msgstr "Certificado para %s encontrado."
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
 msgstr "Certificado para verificação não foi encontrado."
 
 #: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Locale not found"
 msgid "Certificate not found."
-msgstr "Localidade não encontrada"
+msgstr "Certificado não encontrado."
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
@@ -2572,13 +2566,11 @@ msgstr "Certificados e Chaves Privadas"
 
 #: app/models/form_updater/concerns/has_security_options.rb
 msgid "Certificates found for %s, but expired."
-msgstr ""
+msgstr "Certificados encontrados para %s, mas expirados."
 
 #: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Certificates & Private Keys"
 msgid "Certificates found for %s."
-msgstr "Certificados e Chaves Privadas"
+msgstr "Certificados encontrados para %s."
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
@@ -3009,7 +3001,7 @@ msgstr "Company Inc."
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 #: db/seeds/settings.rb
 msgid "Complete the sign-in with your security key."
-msgstr ""
+msgstr "Complete o login com sua chave de segurança."
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Complete translations"
@@ -3076,10 +3068,8 @@ msgid "Confirm"
 msgstr "Confirmar"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
-#, fuzzy
-#| msgid "Bind Password"
 msgid "Confirm Password"
-msgstr "Vincular Senha"
+msgstr "Confirme a Senha"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
@@ -3336,10 +3326,9 @@ msgid "Could not remove two-factor authentication method"
 msgstr "Não foi possível remover o método de autenticação em duas etapas"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
-#, fuzzy
-#| msgid "Could not remove two-factor authentication method"
 msgid "Could not set two-factor authentication method as default"
-msgstr "Não foi possível remover o método de autenticação em duas etapas"
+msgstr ""
+"Não foi possível definir o método de autenticação de dois fatores como padrão"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
@@ -4154,12 +4143,12 @@ msgid "Defines if generic CTI integration is enabled or not."
 msgstr "Define se a integração CTI genérica está habilitada ou não."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Click here to set up a two-factor authentication method."
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
-msgstr "Clique aqui para configurar um método de autenticação em duas etapas."
+msgstr ""
+"Define se os códigos de recuperação podem ser usados pelos usuários no caso "
+"de eles perderem o acesso a outros métodos de autenticação de dois fatores."
 
 #: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
@@ -4201,6 +4190,8 @@ msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
 msgstr ""
+"Define se a alteração da organização primária de um usuário também "
+"atualizará os 100 tickets mais recentes deste usuário."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4234,10 +4225,8 @@ msgstr ""
 "complexas."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the default screen."
 msgid "Defines if the time accounting types are enabled."
-msgstr "Define a tela padrão."
+msgstr "Define se os tipos de contabilização de tempo estão habilitados."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4248,15 +4237,11 @@ msgstr ""
 "está habilitado ou não."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines if the two-factor authentication method authenticator app is "
-#| "enabled or not."
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
 msgstr ""
-"Define se o método de autenticação em duas etapas do aplicativo autenticador "
+"Define se o método de autenticação de dois fatores com chaves de segurança "
 "está habilitado ou não."
 
 #: db/seeds/settings.rb
@@ -4513,6 +4498,8 @@ msgstr "Define o backend para imagens de usuarios e organizações."
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr ""
+"Define a unidade personalizada a ser mostrada ao lado do campo de entrada de "
+"contabilização de tempo."
 
 #: db/seeds/settings.rb
 msgid "Defines the default calendar tickets subscription settings."
@@ -4531,10 +4518,8 @@ msgid "Defines the default system timezone."
 msgstr "Define o fuso horário padrão do sistema."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the default system timezone."
 msgid "Defines the default time accounting type."
-msgstr "Define o fuso horário padrão do sistema."
+msgstr "Define o tipo padrão de contabilização de tempo."
 
 #: db/seeds/settings.rb
 msgid "Defines the default visibility for new notes."
@@ -4729,6 +4714,8 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr ""
+"Define a unidade a ser mostrada ao lado do campo de entrada de "
+"contabilização de tempo."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5080,10 +5067,8 @@ msgid "Do not sign email"
 msgstr "Não assinar e-mail"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "You currently don't have any tickets."
 msgid "Do not update any tickets."
-msgstr "No momento, você não tem nenhum ticket."
+msgstr "Não atualize nenhum ticket."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Do not use the proxy for the following hosts."
@@ -5160,10 +5145,8 @@ msgid "Download Private Key"
 msgstr "Baixar chave privada"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
-#, fuzzy
-#| msgid "Download %s record(s)"
 msgid "Download all records"
-msgstr "Baixar %s registros"
+msgstr "Baixar todos os registros"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download and install the %s Migration Plugin on your %s instance."
@@ -5456,7 +5439,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enable Recovery Codes"
-msgstr ""
+msgstr "Habilitar Códigos de Recuperação"
 
 #: db/seeds/settings.rb
 msgid "Enable Ticket creation"
@@ -5467,6 +5450,8 @@ msgid ""
 "Enable activity type selection. This would allow agents to select one of the "
 "types below when adding accounted time."
 msgstr ""
+"Habilite a seleção de tipo de atividade. Isso permitiria que os agentes "
+"selecionassem um dos tipos abaixo ao adicionar tempo contabilizado."
 
 #: db/seeds/settings.rb
 msgid "Enable auto assignment for following matching tickets."
@@ -5573,7 +5558,7 @@ msgid ""
 "auth/sso on user interaction."
 msgstr ""
 "Habilita o botão para autenticação do usuário via %s. O botão redirecionará "
-"para /auth/sso quando o usuário interagir."
+"para /auth/sso quando houver interação do usuário."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Enables console logging."
@@ -5758,7 +5743,7 @@ msgstr "Insira o URL do link"
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 msgid "Enter one of your unused recovery codes."
-msgstr ""
+msgstr "Digite um dos seus códigos de recuperação não utilizados."
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Enter search and select a type to search for"
@@ -5791,10 +5776,8 @@ msgid "Enter the security code generated by the authenticator app:"
 msgstr "Digite o código de segurança gerado pelo aplicativo de autenticação:"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
-#, fuzzy
-#| msgid "Please enter the time you want to record."
 msgid "Enter the time you want to record"
-msgstr "Por favor, digite o tempo que você deseja contabilizar."
+msgstr "Insira o tempo que você deseja registrar"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 msgid "Enter time zone"
@@ -6160,7 +6143,7 @@ msgstr "Formulário de Feedback"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "File '%s' is uploading"
-msgstr ""
+msgstr "O arquivo '%s' está sendo carregado"
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
@@ -6468,10 +6451,8 @@ msgstr "Gerar token"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
-#, fuzzy
-#| msgid "Delete records"
 msgid "Generate recovery codes"
-msgstr "Deletar Registros"
+msgstr "Gerar códigos de recuperação"
 
 #: db/seeds/schedulers.rb
 msgid "Generate user-based stats."
@@ -6516,7 +6497,7 @@ msgstr "Obter um Token de Acesso"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
 msgid "Getting key information from the browser..."
-msgstr ""
+msgstr "Obtendo informações da chave do navegador..."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -6817,7 +6798,7 @@ msgstr "Cabeçalho"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Header Color"
-msgstr "Cor do cabeçalho"
+msgstr "Cor do Cabeçalho"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Header Link Color"
@@ -7162,6 +7143,8 @@ msgid ""
 "If you lose your recovery codes it's possible to generate new ones. This "
 "action is going to invalidate previous recovery codes."
 msgstr ""
+"Se você perder seus códigos de recuperação, é possível gerar novos. Esta "
+"ação vai invalidar os códigos de recuperação anteriores."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
@@ -7552,10 +7535,8 @@ msgid "Invalid email '%{email}'"
 msgstr "E-mail inválido '%{email}'"
 
 #: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Enter a valid email address."
 msgid "Invalid email address."
-msgstr "Digite um endereço de e-mail válido."
+msgstr "Endereço de e-mail inválido."
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
@@ -8707,7 +8688,7 @@ msgstr "Formato do identificador de nome"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Name for this security key"
-msgstr ""
+msgstr "Nome para esta chave de segurança"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Name of form submit button"
@@ -8778,10 +8759,8 @@ msgid "New Access Token is"
 msgstr "O novo token de acesso é"
 
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "New Activity Type"
-msgstr "Atividade"
+msgstr "Novo Tipo de Atividade"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "New Application"
@@ -9043,10 +9022,8 @@ msgid "No categories"
 msgstr "Nenhuma categoria"
 
 #: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Notification Sound"
 msgid "No certificate for %s found."
-msgstr "Notificaçoes"
+msgstr "Nenhum certificado para %s encontrado."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
@@ -9098,10 +9075,8 @@ msgid "No linked issues"
 msgstr "Sem problemas vinculados"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco
-#, fuzzy
-#| msgid "No session available."
 msgid "No macros available."
-msgstr "Nenhuma sessão disponível."
+msgstr "Nenhuma macro disponível."
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
@@ -9112,10 +9087,8 @@ msgid "No proxy for the following hosts."
 msgstr "Nenhum proxy para os seguintes hosts."
 
 #: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "No record found!"
 msgid "No recipient found."
-msgstr "Nenhuma gravação encontrada!"
+msgstr "Nenhum destinatário encontrado."
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
@@ -9379,10 +9352,8 @@ msgid "OK, I've copied my token"
 msgstr "Ok, eu já copiei meu token"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
-#, fuzzy
-#| msgid "OK, I've copied my token"
 msgid "OK, I've saved my recovery codes"
-msgstr "Ok, eu já copiei meu token"
+msgstr "OK, eu salvei meus códigos de recuperação"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 msgid "OTRS"
@@ -9488,6 +9459,8 @@ msgid ""
 "Only the 20 most recent records are displayed. Download to view the full "
 "list."
 msgstr ""
+"Apenas os 20 registros mais recentes são exibidos. Faça o download para ver "
+"a lista completa."
 
 #: db/seeds/settings.rb
 msgid "Only used internally to propagate current web app version to clients."
@@ -9570,11 +9543,11 @@ msgstr "Ou entre usando"
 
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactorMethods.vue
 msgid "Or use one of your recovery codes."
-msgstr ""
+msgstr "Ou use um dos seus códigos de recuperação."
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "Or, use one of your"
-msgstr ""
+msgstr "Ou, use um dos seus"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: db/seeds/permissions.rb
@@ -10051,6 +10024,9 @@ msgid ""
 "Please save your recovery codes listed below somewhere safe. You can use "
 "them to sign in if you lose access to another two-factor method:"
 msgstr ""
+"Por favor, salve seus códigos de recuperação listados abaixo em algum lugar "
+"seguro. Você pode usá-los para entrar se perder o acesso a outro método de "
+"autenticação de dois fatores:"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Please select a ticket to merge into."
@@ -10137,8 +10113,6 @@ msgid "Pre-defined webhook for %s."
 msgstr "Webhook pré-definido para %s."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-#, fuzzy
-#| msgid "Press the button below to finish the set up."
 msgid "Press the button below to finish the setup."
 msgstr "Pressione o botão abaixo para concluir a configuração."
 
@@ -10187,7 +10161,7 @@ msgstr "Tickets de propriedade anterior (%s no total):"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -10395,22 +10369,20 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/recovery_codes.coffee
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#, fuzzy
-#| msgid "Security Code"
 msgid "Recovery Code"
-msgstr "Código de Segurança"
+msgstr "Código de Recuperação"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
-#, fuzzy
-#| msgid "Security Code"
 msgid "Recovery Codes"
-msgstr "Código de Segurança"
+msgstr "Códigos de Recuperação"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid ""
 "Recovery codes can be used to access your account in the event you lose "
 "access to other two-factor authentication methods."
 msgstr ""
+"Os códigos de recuperação podem ser usados para acessar sua conta no caso de "
+"você perder o acesso a outros métodos de autenticação de dois fatores."
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
@@ -10418,7 +10390,7 @@ msgstr "Acionadores de tíquetes recursivos"
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers Loop Max."
-msgstr "Máximo de Recursões de Ativação de Gatilhos de Chamados."
+msgstr "Limite Máximo de Loop de Acionadores de Ticket Recursivos."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -10428,10 +10400,8 @@ msgstr ""
 "ou Referências."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
-#, fuzzy
-#| msgid "Delete records"
 msgid "Regenerate recovery codes"
-msgstr "Deletar Registros"
+msgstr "Gerar novos códigos de recuperação"
 
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Register"
@@ -10521,10 +10491,8 @@ msgid "Remove selected values"
 msgstr "Remover valores selecionados"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
-#, fuzzy
-#| msgid "Set up two-factor authentication"
 msgid "Remove two-factor authentication"
-msgstr "Configurar autenticação em duas etapas"
+msgstr "Remover autenticação de dois fatores"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
@@ -10642,7 +10610,7 @@ msgstr "Requisitos"
 msgid ""
 "Requires the set up of the two-factor authentication for certain user roles."
 msgstr ""
-"Requer a configuração da autenticação em duas etapas para determinadas "
+"Requer a configuração da autenticação de dois fatores para determinadas "
 "funções de usuário."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
@@ -10814,7 +10782,7 @@ msgstr "Resultado:"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 msgid "Retry"
-msgstr ""
+msgstr "Tentar novamente"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
@@ -11035,10 +11003,8 @@ msgid "Save"
 msgstr "Salvar"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
-#, fuzzy
-#| msgid "Save as"
 msgid "Save Codes"
-msgstr "Salvar como"
+msgstr "Salvar Códigos"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -11096,16 +11062,12 @@ msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr "O script pode ser localizado em: ||%s|| e precisa ser executável."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-#, fuzzy
-#| msgid "Move down"
 msgid "Scroll down"
-msgstr "Mover para baixo"
+msgstr "Role para baixo"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-#, fuzzy
-#| msgid "Scroll down to see new messages"
 msgid "Scroll down to see %s new replies"
-msgstr "Rolar para baixo para ver novas mensagems"
+msgstr "Role para baixo para ver %s novas respostas"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
@@ -11194,52 +11156,40 @@ msgid "Security Error"
 msgstr "Erro de segurança"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
-#, fuzzy
-#| msgid "Information"
 msgid "Security Information"
-msgstr "Informação"
+msgstr "Informações de Segurança"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
-#, fuzzy
-#| msgid "Security Code"
 msgid "Security Key"
-msgstr "Código de Segurança"
+msgstr "Chave de Segurança"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Security Code"
 msgid "Security Keys"
-msgstr "Código de Segurança"
+msgstr "Chaves de Segurança"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
-#, fuzzy
-#| msgid "Two-factor authentication method \"%s\" will be removed."
 msgid "Security key \"%s\" will be removed."
-msgstr "O método de autenticação de dois fatores \"%s\" será removido."
+msgstr "A chave de segurança \"%s\" será removida."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
-#, fuzzy
-#| msgid "SMS test failed."
 msgid "Security key setup failed."
-msgstr "Falha no teste de SMS."
+msgstr "A configuração da chave de segurança falhou."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
-#, fuzzy
-#| msgid "Signature verification failed!"
 msgid "Security key verification failed."
-msgstr "Falha na verificação da assinatura!"
+msgstr "A verificação da chave de segurança falhou."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
-#, fuzzy
-#| msgid "Click here to set up a two-factor authentication method."
 msgid ""
 "Security keys are hardware or software credentials that can be used as your "
 "two-factor authentication method."
-msgstr "Clique aqui para configurar um método de autenticação em duas etapas."
+msgstr ""
+"As chaves de segurança são credenciais de hardware ou software que podem ser "
+"usadas como seu método de autenticação de dois fatores."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -11308,7 +11258,7 @@ msgstr "Condições selecionadas"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
 msgid "Selected tickets do not match any macros."
-msgstr ""
+msgstr "Os tickets selecionados não correspondem a nenhuma macro."
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Selective (default)"
@@ -11502,7 +11452,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
-msgstr "Defina notas para os tipos de criação de chamados selecionando o tipo."
+msgstr "Defina notas para os tipos de criação de ticket selecionando o tipo."
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types."
@@ -12442,7 +12392,7 @@ msgstr "A solicitação de consentimento foi enviada ao seu administrador."
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 msgid "The application is not running in a secure context."
-msgstr ""
+msgstr "O aplicativo não está sendo executado em um contexto seguro."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
 msgid "The article could not be deleted."
@@ -12531,6 +12481,8 @@ msgid ""
 "The chosen unit will be used for display only and will not affect stored "
 "values."
 msgstr ""
+"A unidade escolhida será usada apenas para exibição e não afetará os valores "
+"armazenados."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "The configuration of Zammad has changed, please reload your browser."
@@ -12589,8 +12541,8 @@ msgid ""
 "The entered user for reauthentication differs from the user that was used "
 "for setting up your Microsoft365 channel initially."
 msgstr ""
-"O usuário inserido para reautenticação difere do usuário que foi usado para "
-"configurar inicialmente o seu canal Microsoft 365."
+"O usuário inserido para reautenticação é diferente do usuário que foi usado "
+"para configurar inicialmente o seu canal do Microsoft365."
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -12941,10 +12893,8 @@ msgid "The required parameter 'params' is missing."
 msgstr "O parâmetro necessário 'params' está ausente."
 
 #: app/controllers/users_controller.rb
-#, fuzzy
-#| msgid "The required parameter 'params' is missing."
 msgid "The required parameter 'password' is missing."
-msgstr "O parâmetro necessário 'params' está ausente."
+msgstr "O parâmetro obrigatório 'senha' está faltando."
 
 #: app/models/core_workflow/result.rb
 msgid "The required parameter 'payload->class_name' is missing."
@@ -13089,12 +13039,12 @@ msgid "The uploaded image could not be processed."
 msgstr "O upload da imagem não pôde ser processado."
 
 #: app/controllers/settings_controller.rb
-#, fuzzy
-#| msgid "The uploaded image could not be processed."
 msgid ""
 "The uploaded image could not be processed. Need data:image in logo or "
 "logo_resize param."
-msgstr "O upload da imagem não pôde ser processado."
+msgstr ""
+"A imagem enviada não pôde ser processada. É necessário o parâmetro \"data:"
+"image\" no logotipo ou no parâmetro \"logo_resize\"."
 
 #: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -13102,10 +13052,8 @@ msgstr "O 'preferred_username' do usuário não pôde ser extraído de 'id_token
 
 #: app/controllers/sessions_controller.rb
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
-#, fuzzy
-#| msgid "The parameter \"password\" is missing!"
 msgid "The username or password is incorrect."
-msgstr "O parâmetro \"senha\" está faltando!"
+msgstr "O nome de usuário ou a senha está incorreta."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -13201,11 +13149,11 @@ msgid "There is no route to this host."
 msgstr "Não há rota para este host."
 
 #: app/controllers/user/two_factors_controller.rb
-#, fuzzy
-#| msgid "Remove a configured two-factor authentication method"
 msgid ""
 "There is no stored configuration for this two-factor authentication method."
-msgstr "Remover um método de autenticação em duas etapas configurado"
+msgstr ""
+"Não há configuração armazenada para este método de autenticação de dois "
+"fatores."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "There was no Knowledge Base created."
@@ -13621,10 +13569,8 @@ msgid "Ticket Number ignore system_id"
 msgstr "Número do ticket ignora system_id"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Tickets of Organization"
 msgid "Ticket Organization Reassignment"
-msgstr "Chamados de uma Organização"
+msgstr "Reatribuição de Organização de Ticket"
 
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
@@ -13929,32 +13875,24 @@ msgid "Time Accounting"
 msgstr "Contagem de Tempo"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Custom Unit"
-msgstr "Contagem de Tempo"
+msgstr "Unidade Personalizada de Contabilização de Tempo"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Time Accounting Selector"
 msgid "Time Accounting Default Type"
-msgstr "Seletor de Contabilidade de Tempo"
+msgstr "Tipo Padrão de Contabilização de Tempo"
 
 #: db/seeds/settings.rb
 msgid "Time Accounting Selector"
 msgstr "Seletor de Contabilidade de Tempo"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Types"
-msgstr "Contagem de Tempo"
+msgstr "Tipos de Contabilização de Tempo"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Unit"
-msgstr "Contagem de Tempo"
+msgstr "Unidade de Contabilização de Tempo"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
@@ -13970,10 +13908,8 @@ msgid "Time Units Total"
 msgstr "Total de Unidade de Tempo"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time accounting unit"
-msgstr "Contagem de Tempo"
+msgstr "Unidade de contabilização de tempo"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Time event"
@@ -14058,8 +13994,8 @@ msgid ""
 "To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication "
 "process was aborted."
 msgstr ""
-"Para evitar recuperar uma caixa de correio do Microsoft 365 incorreta, o "
-"processo de reautenticação foi interrompido."
+"Para evitar buscar uma caixa de correio do Microsoft365 incorreta, o "
+"processo de reautenticação foi abortado."
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid ""
@@ -14100,6 +14036,8 @@ msgstr ""
 msgid ""
 "To register a new security key with your account, press the button below."
 msgstr ""
+"Para registrar uma nova chave de segurança em sua conta, pressione o botão "
+"abaixo."
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
@@ -14237,10 +14175,8 @@ msgstr "Gatilhos (triggers) são…"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#, fuzzy
-#| msgid "Try another method"
 msgid "Try Another Method"
-msgstr "Tente outro método"
+msgstr "Tentar Outro Método"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Try again"
@@ -14254,7 +14190,7 @@ msgstr "Tente outro método"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 msgid "Try using your security key again."
-msgstr ""
+msgstr "Tente usar sua chave de segurança novamente."
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
@@ -14364,20 +14300,16 @@ msgid "Two-factor authentication is not supported with HTTP BasicAuth."
 msgstr "A autenticação de dois fatores não é suportada com HTTP BasicAuth."
 
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
-#, fuzzy
-#| msgid "The two-factor authentication method is not enabled."
 msgid "Two-factor authentication method could not be initiated."
-msgstr "O método de autenticação em duas etapas não está habilitado."
+msgstr "O método de autenticação de dois fatores não pôde ser iniciado."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Two-factor authentication method was removed."
 msgstr "O método de autenticação de dois fatores foi removido."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
-#, fuzzy
-#| msgid "Two-factor authentication method was set up successfully."
 msgid "Two-factor authentication method was set as default."
-msgstr "O método de autenticação de dois fatores foi configurado com sucesso."
+msgstr "O método de autenticação de dois fatores foi definido como padrão."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
 msgid "Two-factor authentication method was set up successfully."
@@ -14440,7 +14372,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 msgid "Unit"
-msgstr ""
+msgstr "Unidade"
 
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
@@ -14467,10 +14399,8 @@ msgid "Unread notifications"
 msgstr "Notificações não lidas"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-#, fuzzy
-#| msgid "Reset to default"
 msgid "Unset default"
-msgstr "Redefinir para o padrão"
+msgstr "Remover padrão"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Unsigned"
@@ -14556,10 +14486,8 @@ msgid "Update successful."
 msgstr "Atualizado com Sucesso."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "Update the most recent tickets."
-msgstr "O objeto não pôde ser atualizado."
+msgstr "Atualizar os tickets mais recentes."
 
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -14737,7 +14665,7 @@ msgstr "Use uma linha por URI"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
 msgid "Use one of your safely stored recovery codes."
-msgstr ""
+msgstr "Use um dos seus códigos de recuperação armazenados com segurança."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -14998,10 +14926,8 @@ msgid "Verify sending and receiving"
 msgstr "Verificando enviar e receber"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-#, fuzzy
-#| msgid "Ticket information"
 msgid "Verifying key information..."
-msgstr "Informações do Ticket"
+msgstr "Verificando informações da chave..."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
@@ -15719,6 +15645,8 @@ msgid ""
 "You have no change permission or you are a customer for some of the selected "
 "tickets."
 msgstr ""
+"Você não tem permissão para fazer alterações ou é um cliente para alguns dos "
+"tickets selecionados."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
@@ -16207,10 +16135,8 @@ msgid "current user organization"
 msgstr "usuário atual da organização"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
-#, fuzzy
-#| msgid "customer"
 msgid "custom unit"
-msgstr "Cliente"
+msgstr "unidade personalizada"
 
 #: lib/calendar_subscriptions/tickets.rb
 msgid "customer"
@@ -16350,7 +16276,7 @@ msgstr "recinto"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "ends with"
-msgstr ""
+msgstr "termina com"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
@@ -16461,10 +16387,8 @@ msgstr "hora"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
-#, fuzzy
-#| msgid "Hour(s)"
 msgid "hour(s)"
-msgstr "Hora(s)"
+msgstr "hora(s)"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -16732,10 +16656,8 @@ msgstr "minuto"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
-#, fuzzy
-#| msgid "Minute(s)"
 msgid "minute(s)"
-msgstr "Minuto(s)"
+msgstr "minuto(s)"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "minutes"
@@ -16826,7 +16748,7 @@ msgstr "nenhum problema"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "no unit"
-msgstr ""
+msgstr "sem unidade"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -16926,7 +16848,7 @@ msgstr "Publicados"
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
 msgid "quarter-hour(s)"
-msgstr ""
+msgstr "quarto de hora(s)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
@@ -16934,7 +16856,7 @@ msgstr "encontrado"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
-msgstr ""
+msgstr "códigos de recuperação"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "regex match"
@@ -17097,10 +17019,8 @@ msgid "split"
 msgstr "dividir"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#, fuzzy
-#| msgid "Users with \"%s\""
 msgid "starts with"
-msgstr "Usuários com \"%s\""
+msgstr "começa com"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"

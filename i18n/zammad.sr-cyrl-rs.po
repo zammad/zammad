@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-07-04 01:05+0000\n"
+"PO-Revision-Date: 2023-07-25 01:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -4153,10 +4153,6 @@ msgstr ""
 "лозинку и поништавање лозинке ће радити без имејл испоруке)."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Controls if by updating the primary organization of a user, the 100 most "
-#| "recent existing tickets for this user are updated as well."
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -5022,10 +5018,8 @@ msgid "Do not sign email"
 msgstr "Без потписивања имејл поруке"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "You currently don't have any tickets."
 msgid "Do not update any tickets."
-msgstr "Тренутно немате ниједан тикет."
+msgstr "Без освежавања тикета."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Do not use the proxy for the following hosts."
@@ -14355,10 +14349,8 @@ msgid "Update successful."
 msgstr "Успешно освежавање."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "The most recent tickets are updated."
 msgid "Update the most recent tickets."
-msgstr "Недавни тикети су освежени."
+msgstr "Освежи недавне тикете."
 
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
