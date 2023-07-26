@@ -332,6 +332,24 @@ RSpec.describe SecureMailing::SMIME do
           end
         end
 
+        context 'sender is signer, with upcased sender address' do
+          let(:sender_email_address) { system_email_address }
+          let(:mail) do
+            smime_mail = Rails.root.join('spec/fixtures/files/smime/sender_is_signer.eml').read.sub('smime1@example.com', 'SMIME1@example.com')
+            mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'verifies' do
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(sender_certificate_subject)
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+          end
+        end
+
         context 'sender is not signer' do
           before do
             create(:smime_certificate, :with_private, fixture: system_email_address)
