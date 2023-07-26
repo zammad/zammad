@@ -20,8 +20,34 @@ RSpec.describe SMIMECertificate, type: :model do
 
         let!(:certificate) { create(:smime_certificate, :with_private, fixture: lookup_address) }
 
-        it 'returns certificate' do
-          expect(described_class.for_sender_email_address(lookup_address)).to eq(certificate)
+        context 'with correct keyUsage flag' do
+          it 'returns the certificate' do
+            expect(described_class.for_sender_email_address(lookup_address)).to eq(certificate)
+          end
+        end
+
+        context 'with wrong keyUsage flag' do
+          before do
+            allow_any_instance_of(OpenSSL::X509::Certificate).to receive(:extensions).and_wrap_original do |original_method, *args, &block|
+              original_method.call(*args, &block).reject { |ext| ext.oid == 'keyUsage' }.append(OpenSSL::X509::Extension.new('keyUsage', 'cRLSign,keyCertSign'))
+            end
+          end
+
+          it 'returns nil' do
+            expect(described_class.for_sender_email_address(lookup_address)).to be_nil
+          end
+        end
+
+        context 'without keyUsage extension present' do
+          before do
+            allow_any_instance_of(OpenSSL::X509::Certificate).to receive(:extensions).and_wrap_original do |original_method, *args, &block|
+              original_method.call(*args, &block).reject { |ext| ext.oid == 'keyUsage' }
+            end
+          end
+
+          it 'returns the certificate' do
+            expect(described_class.for_sender_email_address(lookup_address)).to eq(certificate)
+          end
         end
       end
 
@@ -106,8 +132,34 @@ RSpec.describe SMIMECertificate, type: :model do
         end
       end
 
-      it 'returns certificates' do
-        expect(described_class.for_recipient_email_addresses!(lookup_addresses)).to include(*certificates)
+      context 'with correct keyUsage flag' do
+        it 'returns certificates' do
+          expect(described_class.for_recipient_email_addresses!(lookup_addresses)).to include(*certificates)
+        end
+      end
+
+      context 'with wrong keyUsage flag' do
+        before do
+          allow_any_instance_of(OpenSSL::X509::Certificate).to receive(:extensions).and_wrap_original do |original_method, *args, &block|
+            original_method.call(*args, &block).reject { |ext| ext.oid == 'keyUsage' }.append(OpenSSL::X509::Extension.new('keyUsage', 'cRLSign,keyCertSign'))
+          end
+        end
+
+        it 'returns nil' do
+          expect { described_class.for_recipient_email_addresses!(lookup_addresses) }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+
+      context 'without keyUsage flag' do
+        before do
+          allow_any_instance_of(OpenSSL::X509::Certificate).to receive(:extensions).and_wrap_original do |original_method, *args, &block|
+            original_method.call(*args, &block).reject { |ext| ext.oid == 'keyUsage' }
+          end
+        end
+
+        it 'returns certificates' do
+          expect(described_class.for_recipient_email_addresses!(lookup_addresses)).to include(*certificates)
+        end
       end
     end
 

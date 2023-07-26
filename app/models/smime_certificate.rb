@@ -41,6 +41,8 @@ class SMIMECertificate < ApplicationModel
   def self.for_sender_email_address(address)
     downcased_address = address.downcase
     where.not(private_key: nil).all.as_batches do |certificate|
+      next if certificate.key_usage_prohibits?('Digital Signature') # rubocop:disable Zammad/DetectTranslatableString
+
       return certificate if certificate.email_addresses.include?(downcased_address)
     end
   end
@@ -62,6 +64,7 @@ class SMIMECertificate < ApplicationModel
       # intersection of both lists
       certificate_for = certificate.email_addresses & remaining_addresses
       next if certificate_for.blank?
+      next if certificate.key_usage_prohibits?('Key Encipherment') # rubocop:disable Zammad/DetectTranslatableString
 
       certificates.push(certificate)
 
@@ -75,6 +78,12 @@ class SMIMECertificate < ApplicationModel
     return certificates if remaining_addresses.blank?
 
     raise ActiveRecord::RecordNotFound, "Can't find S/MIME encryption certificates for: #{remaining_addresses.join(', ')}"
+  end
+
+  def key_usage_prohibits?(usage_type)
+    # Respect restriction of keyUsage extension, if present.
+    # See https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.3 and https://www.gradenegger.eu/?p=9563
+    parsed.extensions.find { |ext| ext.oid == 'keyUsage' }&.value&.exclude?(usage_type)
   end
 
   def public_key=(string)
