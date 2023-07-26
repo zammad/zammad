@@ -142,7 +142,7 @@ class ArticleViewItem extends App.ControllerObserver
       for attachment in article.attachments
 
         dispositionParams = ''
-        if attachment?.preferences['Content-Type'] isnt 'application/pdf' && attachment?.preferences['Content-Type'] isnt 'text/html'
+        if attachment?.preferences['Content-Type'] isnt 'text/html'
           dispositionParams = '?disposition=attachment'
 
         attachment.url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}#{dispositionParams}"
