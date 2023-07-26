@@ -99,7 +99,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
         end
 
         context 'with allowed inline file content type' do
-          let(:store_file_content_type) { 'application/pdf' }
+          let(:store_file_content_type) { 'image/jpeg' }
 
           it 'disposition is inline' do
             get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store_file.id}?disposition=inline", params: {}
@@ -107,11 +107,20 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
           end
         end
 
+        context 'with PDF content type (#4479)' do
+          let(:store_file_content_type) { 'application/pdf' }
+
+          it 'disposition is attachment' do
+            get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store_file.id}?disposition=inline", params: {}
+            expect(response.headers['Content-Disposition']).to include('attachment')
+          end
+        end
+
         context 'with calendar preview' do
           let(:store_file_content) do
             Rails.root.join('spec/fixtures/files/calendar/basic.ics').read
           end
-          let(:store_file_name) { 'basic.ics' }
+          let(:store_file_name)         { 'basic.ics' }
           let(:store_file_content_type) { 'text/calendar' }
 
           let(:expected_event) do
