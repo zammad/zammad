@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-16 12:30+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2023-07-27 09:52+0000\n"
+"Last-Translator: Zhilin Ruslan <x-th-unicorn@hotmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.16.4\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -79,9 +79,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
-"updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Создана пользователем #{current_user.longname} "
+"в #{ticket.updated_at}_\n"
 "* Группа: #{ticket.group.name}\n"
 "* Владелец: #{ticket.owner.fullname}\n"
 "* Состояние: #{t(ticket.state.name)}\n"
@@ -117,19 +117,6 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_info/en.md.erb
-#, fuzzy
-#| msgid ""
-#| "# #{ticket.title}\n"
-#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-#| "Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
-#| "updated_at}_\n"
-#| "* Group: #{ticket.group.name}\n"
-#| "* Owner: #{ticket.owner.fullname}\n"
-#| "* State: #{t(ticket.state.name)}\n"
-#| "\n"
-#| "<% if @objects[:article] %>\n"
-#| "#{article.body_as_text}\n"
-#| "<% end %>\n"
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -143,9 +130,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
-"updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Последнее обновление в #{ticket.updated_at}_\n"
 "* Группа: #{ticket.group.name}\n"
 "* Владелец: #{ticket.owner.fullname}\n"
 "* Состояние: #{t(ticket.state.name)}\n"
@@ -197,9 +183,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Обновлено пользователем #{current_user.longname} в "
-"#{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Обновлена пользователем #{current_user."
+"longname} в #{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -655,10 +641,8 @@ msgid "%{name} is a reserved word"
 msgstr ""
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
-#, fuzzy
-#| msgid "Total: %s"
 msgid "(state: %s)"
-msgstr "Всего: %s"
+msgstr "(состояние: %s)"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -885,10 +869,8 @@ msgstr ""
 "Тестовая заявка создана, вы можете найти её в своем представлении \"%s\" %l."
 
 #: app/models/ticket.rb
-#, fuzzy
-#| msgid "this ticket was merged into ticket %s"
 msgid "A ticket cannot be merged into itself."
-msgstr "Эта заявка не может быть объединена сама с собой."
+msgstr "Заявка не может быть объединена сама с собой."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
@@ -1039,10 +1021,8 @@ msgid "Activate the recursive processing of ticket triggers."
 msgstr "Активирует рекурсивную обработку триггеров заявки."
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "Activated by"
-msgstr "Деятельность"
+msgstr "Активировано"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -1172,8 +1152,6 @@ msgid "Add a Personal Access Token"
 msgstr "Добавить личный ключ доступа"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Add image"
 msgid "Add a message"
 msgstr "Добавить сообщение"
 
@@ -1186,10 +1164,8 @@ msgid "Add alarm to pending reminder and escalated tickets."
 msgstr "Добавить оповещение для отложенных и эскалированных заявок."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Add bullet list"
 msgid "Add all values"
-msgstr "Добавить маркированный список"
+msgstr "Добавить все значения"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
@@ -1201,8 +1177,6 @@ msgstr "Добавить маркированный список"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "Add condition"
 msgstr "Добавить условие"
 
@@ -1241,7 +1215,6 @@ msgstr "Добавить инициалы отправителя в конец �
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
-#, fuzzy
 msgid "Add subclause"
 msgstr "Добавить подпункт"
 
@@ -1294,27 +1267,6 @@ msgstr "Пароль для авторизации администратора"
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Administration login to #{config.product_name}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>We received a request for an administration login for your #{config."
-#| "product_name} account <b>#{user.login}</b>.</div>\n"
-#| "<br>\n"
-#| "<div>Please, click on the link below (or copy and paste the URL into your "
-#| "browser) to proceed:</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-#| "name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</"
-#| "a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can log in.</div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to log in, please ignore this message.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Administration login to #{config.product_name}\n"
 "\n"
@@ -1347,8 +1299,8 @@ msgstr ""
 "в адресную строку браузера), чтобы продолжить:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
-"a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"token}</a></div>\n"
 "<br>\n"
 "<div>Эта ссылка ведет на страницу, где вы можете войти в систему.</div>\n"
 "<br>\n"
@@ -1448,8 +1400,6 @@ msgstr ""
 "Здесь отображаются все компьютеры и браузеры, имеющие доступ к вашему Zammad."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "All Tickets"
 msgid "All tickets"
 msgstr "Все заявки"
 
@@ -1696,10 +1646,8 @@ msgid "Are you sure to remove this article?"
 msgstr "Вы уверены, что хотите удалить эту статью?"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Do you really want to delete \"%s\"?"
 msgid "Are you sure you want to delete \"%s\"?"
-msgstr "Вы действительно хотите удалить \"%s\"?"
+msgstr "Вы уверены, что хотите удалить \"%s\"?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
@@ -1730,12 +1678,12 @@ msgid "Are you sure?"
 msgstr "Вы уверены?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
-#, fuzzy
-#| msgid "Are you sure? You have changes that will get lost."
 msgid ""
 "Are you sure? Default notifications settings will be applied to all active "
 "agents. This operation may take some time."
-msgstr "Вы уверены? У вас есть изменения, которые будут потеряны."
+msgstr ""
+"Вы уверены? Ко всем активным агентам будут применены настройки уведомлений "
+"по умолчанию. Эта операция может занять некоторое время."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -1761,10 +1709,10 @@ msgstr ""
 "Вы уверены? У вас есть несохраненные изменения, которые будут потеряны."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
-#, fuzzy
-#| msgid "Are you sure? You have changes that will get lost."
 msgid "Are you sure? Your notifications settings will be reset to default."
-msgstr "Вы уверены? У вас есть изменения, которые будут потеряны."
+msgstr ""
+"Вы уверены? Ваши настройки уведомлений будут сброшены на значения по "
+"умолчанию."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
