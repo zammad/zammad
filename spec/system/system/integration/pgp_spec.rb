@@ -67,21 +67,27 @@ RSpec.describe 'Manage > Integration > PGP', type: :system do
         true
       end
 
-      it 'adds a private key by pasting and enter domain alias' do
-        click '.js-addKey'
+      shared_examples 'adding a private key by pasting and entering a domain alias' do |domain_alias, expected|
+        it "adds a private key by pasting and entering a domain alias: #{domain_alias.inspect}" do
+          click '.js-addKey'
 
-        in_modal do
-          fill_in 'Paste key', with: key_private
-          fill_in 'Passphrase', with: passphrase
-          fill_in 'Domain Alias', with: 'simple-example.com'
+          in_modal do
+            fill_in 'Paste key', with: key_private
+            fill_in 'Passphrase', with: passphrase
+            fill_in 'Domain Alias', with: domain_alias
 
-          click '.js-submit'
+            click '.js-submit'
+          end
+
+          expect(page).to have_text(keygrip)
+            .and have_text('Including private key')
+            .and have_text(expected)
         end
-
-        expect(page).to have_text(keygrip)
-          .and have_text('Including private key')
-          .and have_text('simple-example.com')
       end
+
+      it_behaves_like 'adding a private key by pasting and entering a domain alias', 'simple-example.com', 'simple-example.com'
+
+      it_behaves_like 'adding a private key by pasting and entering a domain alias', '', '-'
     end
   end
 

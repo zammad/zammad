@@ -49,36 +49,39 @@ RSpec.describe PGPKey, type: :model do
     end
 
     context 'with active domain alias feature' do
-      let(:extended_params) do
-        params.merge(domain_alias: 'zammad.org')
-      end
-
-      it 'saves the record with prepared domain alias' do
-        expect(described_class.create!(extended_params)).to have_attributes(
-          fingerprint:  fingerprint,
-          created_at:   created_at,
-          expires_at:   expires_at,
-          uids:         fixture,
-          secret:       true,
-          domain_alias: '%@zammad.org'
-        )
-      end
-
-      context 'without given domain alias' do
-        let(:extended_params) do
-          params.merge(domain_alias: nil)
-        end
-
-        it 'saves the record without domain alias' do
+      shared_examples 'saving the record with expected domain alias' do |expected|
+        it "saves the record with expected domain alias: #{expected.inspect}" do
           expect(described_class.create!(extended_params)).to have_attributes(
             fingerprint:  fingerprint,
             created_at:   created_at,
             expires_at:   expires_at,
             uids:         fixture,
             secret:       true,
-            domain_alias: nil
+            domain_alias: expected
           )
         end
+      end
+
+      let(:extended_params) do
+        params.merge(domain_alias: 'zammad.org')
+      end
+
+      it_behaves_like 'saving the record with expected domain alias', '%@zammad.org'
+
+      context 'without given domain alias' do
+        let(:extended_params) do
+          params.merge(domain_alias: nil)
+        end
+
+        it_behaves_like 'saving the record with expected domain alias', nil
+      end
+
+      context 'with an empty domain alias' do
+        let(:extended_params) do
+          params.merge(domain_alias: '')
+        end
+
+        it_behaves_like 'saving the record with expected domain alias', nil
       end
     end
 

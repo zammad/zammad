@@ -154,7 +154,10 @@ class PGPKey < ApplicationModel
   private
 
   def prepare_domain_alias
-    return if !domain_alias
+    if domain_alias.blank?
+      self.domain_alias = nil
+      return
+    end
 
     self.domain_alias = "%@#{domain_alias}"
   end

@@ -28,7 +28,12 @@
         <td>
           0x<%= key.fingerprint.substr(-16) %>
       <% if @C('pgp_recipient_alias_configuration'): %>
-        <td><%= key.domain_alias.substr(2) %>
+        <td>
+          <% if key.domain_alias: %>
+           <%= key.domain_alias.substr(2) %>
+          <% else: %>
+            -
+         <% end %>
       <% end %>
         <td title="<%= key.fingerprint %>">
           <%- key.keygrip %>
