@@ -312,7 +312,7 @@ GEM
       time
     net-http (0.3.2)
       uri
-    net-imap (0.3.6)
+    net-imap (0.3.7)
       date
       net-protocol
     net-ldap (0.18.0)
