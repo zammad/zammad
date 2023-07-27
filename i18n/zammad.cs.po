@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-07-21 01:05+0000\n"
+"PO-Revision-Date: 2023-07-27 08:55+0000\n"
 "Last-Translator: Tomáš Kovařík <tomas.kovarik@cdv.cz>\n"
 "Language-Team: Czech <https://translations.zammad.org/projects/zammad/"
 "zammad-development/cs/>\n"
@@ -116,19 +116,6 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_info/en.md.erb
-#, fuzzy
-#| msgid ""
-#| "# #{ticket.title}\n"
-#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-#| "Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
-#| "updated_at}_\n"
-#| "* Group: #{ticket.group.name}\n"
-#| "* Owner: #{ticket.owner.fullname}\n"
-#| "* State: #{t(ticket.state.name)}\n"
-#| "\n"
-#| "<% if @objects[:article] %>\n"
-#| "#{article.body_as_text}\n"
-#| "<% end %>\n"
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -142,9 +129,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Vytvořil #{current_user.longname} #{ticket."
-"updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Naposledy aktualizováno v #{ticket.updated_at}"
+"_\n"
 "* Skupina: #{ticket.group.name}\n"
 "* Vlastník: #{ticket.owner.fullname}\n"
 "* Stav: #{t(ticket.state.name)}\n"
@@ -254,15 +241,14 @@ msgstr ""
 "\n"
 "<div>Dobrý den, #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Zdá se, že jste svůj účet propojili <b>s aplikací třetí strany</b> "
-"\"#{t(provider)}\".</div>\n"
+"<div>Zdá se, že jste svůj účet propojili <b>s aplikací třetí strany</b> \""
+"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>Pokud jste to nebyli Vy, odeberte propojený účet z Vašeho profilu a "
 "změňte své heslo v aplikaci třetí strany. Někdo zřejmě mohl získat k Vašemu "
 "účtu v aplikaci třetí strany neoprávněný přístup.</div>\n"
 "<br>\n"
-"<div>S pozdravem,<br>\n"
-"Tým aplikace #{config.product_name}</div>\n"
+"<div>Tým aplikace #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -309,15 +295,14 @@ msgstr ""
 "<div>Tento stát bude přidán do seznamu známých zařízení, jenž můžete "
 "shlédnout v níže zmíněném odkazu:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Pokud jste to nebyli Vy, odstraňte toto zařízení ze seznamu, změňte své "
 "heslo, případně smažte osobní přístupové tokeny a kontaktujte správce. Někdo "
 "mohl získat neoprávněný přístup k Vašemu účtu.\n"
 "<br>\n"
-"<div>S pozdravem,<br>\n"
-"Team webu #{config.product_name}</div>\n"
+"<div>Team webu #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -364,19 +349,26 @@ msgstr ""
 "<div>Vaše zařízení bylo přidáno do vašeho seznamu známých zařízení, jenž si "
 "můžete prohlédnout na níže zmíněném odkazu:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Pokud jste to nebyli Vy, odstraňte toto zařízení ze seznamu, změňte své "
 "heslo, případně smažte osobní přístupové tokeny a co nejdříve kontaktujte "
 "správce. Někdo mohl získat neoprávněný přístup k Vašemu účtu.</div>\n"
 "<br>\n"
-"<div>S pozdravem,<br>\n"
-"Team webu #{config.product_name}</div>\n"
+"<div>Team webu #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "%s (confirm)"
 msgstr "%s (potvrdit)"
+
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
+msgid "%s (method)"
+msgstr "%s (metoda)"
+
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
+msgid "%s (option)"
+msgstr "%s (možnost)"
 
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
@@ -647,20 +639,16 @@ msgid "%{model} can have full or granular access to group"
 msgstr "%{model} může mít plný nebo detailní přístup ke skupině"
 
 #: app/models/object_manager/attribute.rb
-#, fuzzy
-#| msgid "Queue already exists!"
 msgid "%{name} already exists"
-msgstr "Fronta již existuje!"
+msgstr "%{name} již existuje"
 
 #: app/models/object_manager/attribute.rb
 msgid "%{name} is a reserved word"
 msgstr "%{name} je rezervované slovo"
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
-#, fuzzy
-#| msgid "Total: %s"
 msgid "(state: %s)"
-msgstr "Celkem: %s"
+msgstr "(stav: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -1038,13 +1026,12 @@ msgid "Action"
 msgstr "Akce"
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Action execution"
-msgstr "Hromadná akce provedena!"
+msgstr "Hromadná akce"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Actions"
 msgstr "Akce"
@@ -1054,10 +1041,8 @@ msgid "Activate the recursive processing of ticket triggers."
 msgstr "Aktivujte rekurzivní zpracování spouštěčů ticketů."
 
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "Activated by"
-msgstr "Aktivita"
+msgstr "Aktivováno uživatelem"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -1130,6 +1115,7 @@ msgstr "Aktivita"
 msgid "Adapter"
 msgstr "Adaptér"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -1175,6 +1161,10 @@ msgstr "Přidat Bota"
 msgid "Add Certificate"
 msgstr "Přidat certifikát"
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
+msgid "Add Key"
+msgstr "Přidat klíč"
+
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
 msgstr "Propojit"
@@ -1183,6 +1173,10 @@ msgstr "Propojit"
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Private Key"
 msgstr "Přidat soukromý klíč"
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+msgid "Add Public or Private Key"
+msgstr "Přidat veřejný nebo soukromý klíč"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -1218,10 +1212,8 @@ msgid "Add alarm to pending reminder and escalated tickets."
 msgstr "Přidat upozornění na tickety v čekací době a na eskalované tickety."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Add bullet list"
 msgid "Add all values"
-msgstr "Přidat odrážkový seznam"
+msgstr "Přidat všechny hodnoty"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
@@ -1322,27 +1314,6 @@ msgstr "Přihlášení správce heslem"
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Administration login to #{config.product_name}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>We received a request for an administration login for your #{config."
-#| "product_name} account <b>#{user.login}</b>.</div>\n"
-#| "<br>\n"
-#| "<div>Please, click on the link below (or copy and paste the URL into your "
-#| "browser) to proceed:</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-#| "name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</"
-#| "a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can log in.</div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to log in, please ignore this message.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Administration login to #{config.product_name}\n"
 "\n"
@@ -1378,14 +1349,13 @@ msgstr ""
 "#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
 "#{token.token}</a></div>\n"
 "<br>\n"
-"<div>Tento odkaz Vás přesměruje na stránku, kde můžete nastavit nové heslo.</"
-"div>\n"
+"<div>Tento odkaz Vás přesměruje na stránku, kde můžete nastavit nové "
+"heslo.</div>\n"
 "<br>\n"
 "<div>Pokud heslo nechcete změnit, tuto zprávu ignorujte (nevyužívejte výše "
 "zmíněného odkazu) a Vaše heslo bude zachováno.</div>\n"
 "<br>\n"
-"<div>S pozdravem,<br>\n"
-"Tým aplikace #{config.product_name}</div>\n"
+"<div>Tým aplikace #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
@@ -1475,8 +1445,6 @@ msgstr ""
 "Zammad účtem."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "All Tickets"
 msgid "All tickets"
 msgstr "Všechny tickety"
 
@@ -1727,10 +1695,8 @@ msgid "Are you sure to remove this article?"
 msgstr "Jste si jisti, že chcete smazat tento článek?"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Do you really want to delete \"%s\"?"
 msgid "Are you sure you want to delete \"%s\"?"
-msgstr "Opravdu si přejete smazat \"%s\"?"
+msgstr "Jste si jistí, že chcete smazat \"%s\"?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
@@ -1763,6 +1729,7 @@ msgstr "Opravdu si přejete smazat \"%s\"?"
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1774,12 +1741,12 @@ msgid "Are you sure?"
 msgstr "Jste si jisti?"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
-#, fuzzy
-#| msgid "Are you sure? You have changes that will get lost."
 msgid ""
 "Are you sure? Default notifications settings will be applied to all active "
 "agents. This operation may take some time."
-msgstr "Jste si jisti? Provedli jste změny, které budou zahozeny."
+msgstr ""
+"Jste si jisti? Základní nastavení bude použito pro všechny agenty. Tato "
+"operace může zabrat nějaký čas."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid ""
@@ -1814,10 +1781,9 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Jste si jisti? Máte neuložené změny, které budou zahozeny."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
-#, fuzzy
-#| msgid "Are you sure? You have changes that will get lost."
 msgid "Are you sure? Your notifications settings will be reset to default."
-msgstr "Jste si jisti? Provedli jste změny, které budou zahozeny."
+msgstr ""
+"Jste si jisti? Vaše nastavení notifikací bude uvedeno do výchozího nastavení."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -2006,6 +1972,8 @@ msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
 msgstr ""
+"Atribut, který unikátně identifikuje uživatele. Pokud není nastaveno, je "
+"použito jméno vrácené IDP."
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -2014,10 +1982,8 @@ msgstr "Atributy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Attributes"
 msgid "Attributes to compare"
-msgstr "Atributy"
+msgstr "Atributy k porovnání"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2091,16 +2057,12 @@ msgid "Auto Assignment"
 msgstr "Automatické přiřazení"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Auto Assignment"
 msgid "Auto Assignment Ignored Users"
-msgstr "Automatické přiřazení"
+msgstr "Automatické přiřazení ignorovaných uživatelů"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Auto Assignment"
 msgid "Auto Assignment Selector"
-msgstr "Automatické přiřazení"
+msgstr "Automatické přiřazení výběru"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
 msgid "Auto Wizard"
@@ -2201,10 +2163,8 @@ msgid "Back to overview"
 msgstr "Zpět do přehledu"
 
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
-#, fuzzy
-#| msgid "Back to my view"
 msgid "Back to previous page"
-msgstr "Zpět do mého pohledu"
+msgstr "Zpět na předchozí stránku"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
@@ -2246,10 +2206,8 @@ msgid "Base Objects"
 msgstr "Základní Objekty"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
-#, fuzzy
-#| msgid "Authentication"
 msgid "Basic Authentication"
-msgstr "Autentizace"
+msgstr "Basic Authentication"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
@@ -2598,45 +2556,15 @@ msgid "Category page layout"
 msgstr "Rozložení stránky kategorie"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
-#, fuzzy
-#| msgid "Duration"
 msgid "Caution!"
-msgstr "Trvání"
-
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Certificate for verification could not be found."
-msgid "Certificate for %s found, but expired."
-msgstr "Nebyl nalezen certifikát pro ověření."
-
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Certificate for verification could not be found."
-msgid "Certificate for %s found."
-msgstr "Nebyl nalezen certifikát pro ověření."
+msgstr "Pozor!"
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
 msgstr "Nebyl nalezen certifikát pro ověření."
 
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Locale not found"
-msgid "Certificate not found."
-msgstr "Národní prostředí nenalezeno"
-
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
-msgstr "Certifikáty a soukromé klíče"
-
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "Certificates found for %s, but expired."
-msgstr "Certifikáty nalezeny pro %s, ale vypršely."
-
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Certificates & Private Keys"
-msgid "Certificates found for %s."
 msgstr "Certifikáty a soukromé klíče"
 
 #: app/assets/javascripts/app/models/group.coffee
@@ -2666,16 +2594,12 @@ msgstr "Změňte své heslo"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Change Customer"
 msgid "Change customer"
-msgstr "Změnit Zákazníka"
+msgstr "Změnit zákazníka"
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Change order"
 msgid "Change date"
-msgstr "Změnit řazení"
+msgstr "Změnit datum"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
@@ -2845,14 +2769,26 @@ msgid "Child"
 msgstr "Podřízený"
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Close tab"
 msgid "Choose date"
-msgstr "Zavřít záložku"
+msgstr "Vyberte datum"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
 msgstr "Zvolte, zda retweety mají být také založeny jako tickety."
+
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
+msgid ""
+"Choose the default behavior of the PGP integration on per group basis. If "
+"signing or encrypting is not possible, the setting has no effect. Agents can "
+"always manually alter the behavior for each article."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/smime.jst.eco
+msgid ""
+"Choose the default behavior of the S/MIME integration on per group basis. If "
+"signing or encrypting is not possible, the setting has no effect. Agents can "
+"always manually alter the behavior for each article."
+msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose the group to which direct messages will get added."
@@ -2898,7 +2834,7 @@ msgstr "Vyčistit 'Cti::Log'."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'DataPrivacyTask'."
-msgstr ""
+msgstr "Vyčistit 'DataPrivacyTask'."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'HttpLog'."
@@ -3094,8 +3030,6 @@ msgid "Conditions for affected objects"
 msgstr "Podmínky pro dotčené objekty"
 
 #: app/assets/javascripts/app/models/overview.coffee
-#, fuzzy
-#| msgid "Conditions for shown Tickets"
 msgid "Conditions for shown tickets"
 msgstr "Podmínky pro zobrazení tiketů"
 
@@ -3137,10 +3071,8 @@ msgid "Configure Basic Settings"
 msgstr "Konfigurovat základní nastavení"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
-#, fuzzy
-#| msgid "Config"
 msgid "Confirm"
-msgstr "Konfigurace"
+msgstr "Potvrdit"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #, fuzzy
@@ -3149,35 +3081,16 @@ msgid "Confirm Password"
 msgstr "Bind Password"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#, fuzzy
-#| msgid "Confirm/submit dialog"
 msgid "Confirm dialog"
-msgstr "Dialog Potvrzení/Odeslání"
+msgstr "Potvrzovací dialog"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Configure"
 msgid "Confirm merge"
-msgstr "Konfiguruj"
+msgstr "Potvrdit sloučení"
 
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Confirm your #{config.product_name} account, #{user.firstname} #{user."
-#| "lastname}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>Confirm your email address to complete your #{config.product_name} "
-#| "account. It's easy, just click the link below.</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-#| "name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
-#| "a></div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Confirm your #{config.product_name} account, #{user.firstname} #{user."
 "lastname}\n"
@@ -3202,11 +3115,10 @@ msgstr ""
 "product_name} klikněte na odkaz níže.</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
-"a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
+"token}</a></div>\n"
 "<br>\n"
-"<div>S pozdravem,<br>\n"
-"Tým aplikace #{config.product_name}</div>\n"
+"<div>Tým aplikace #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
@@ -3242,10 +3154,8 @@ msgstr "Napojit kanály"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
-#, fuzzy
-#| msgid "Connect Facebook App"
 msgid "Connect Exchange App"
-msgstr "Připojit Facebook Aplikaci"
+msgstr "Připojit Exchange aplikaci"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
@@ -3343,17 +3253,13 @@ msgstr "Pokračovat v sezení"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#, fuzzy
-#| msgid "Continue to desktop app"
 msgid "Continue to desktop"
 msgstr "Pokračovat do desktopové aplikace"
 
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee
 #: app/assets/javascripts/app/views/login.jst.eco
-#, fuzzy
-#| msgid "Continue to desktop app"
 msgid "Continue to mobile"
-msgstr "Pokračovat do desktopové aplikace"
+msgstr "Pokračovat do mobilní aplikace"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
@@ -3543,10 +3449,8 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create Ticket"
-msgstr "Vytvořit Testovací Ticket"
+msgstr "Vytvořit ticket"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
@@ -3585,10 +3489,8 @@ msgid "Create new records"
 msgstr "Vytvořit nové záznamy"
 
 #: app/frontend/apps/mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create new ticket"
-msgstr "Vytvořit Testovací Ticket"
+msgstr "Vytvořit nový ticket"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
 msgid "Create new ticket for this organization"
@@ -3612,10 +3514,8 @@ msgid "Create tag"
 msgstr "Vytvořit štítek"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create ticket"
-msgstr "Vytvořit Testovací Ticket"
+msgstr "Vytvořit ticket"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -3650,40 +3550,35 @@ msgid "Created"
 msgstr "Vytvořeno"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Created Article"
-msgstr "Vytvořit Testovací Ticket"
+msgstr "Vytvořit záznam v ticketu"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
-msgstr "Vytvořeno"
+msgstr "Vytvořeno v"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Created External Article"
-msgstr "Vytvořit Testovací Ticket"
+msgstr "Vytvořit externí záznam v ticketu"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Created Internal Article"
-msgstr "Vytvořit Testovací Ticket"
+msgstr "Vytvořit interní záznam v ticketu"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created at"
-msgstr "Vytvořeno"
+msgstr "Vytvořeno v"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "Created at:"
@@ -3709,10 +3604,8 @@ msgid "Created by"
 msgstr "Vytvořeno kým"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Tickets of Organization"
 msgid "Creating new tickets via web is disabled."
-msgstr "Tickety Organizace"
+msgstr "Vytváření nových ticketů přes webové rozhraní je vypnuté."
 
 #: app/models/report.rb
 msgid "Creation Channels"
@@ -3774,10 +3667,8 @@ msgid "Custom"
 msgstr "Vlastní"
 
 #: app/assets/javascripts/app/models/webhook.coffee
-#, fuzzy
-#| msgid "Example Payload"
 msgid "Custom Payload"
-msgstr "Ukázkový obsah"
+msgstr "Uživatelský obsah"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -3926,10 +3817,8 @@ msgid "Decryption failed!"
 msgstr "Dešifrování se nezdařilo!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
-#, fuzzy
-#| msgid "Delivery failed"
 msgid "Decryption failed! %s"
-msgstr "Doručení selhalo"
+msgstr "Dekódování selhalo! %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -3949,25 +3838,22 @@ msgstr "Dešifrování bylo úspěšné."
 msgid "Default"
 msgstr "Výchozí"
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Default Behavior"
 msgstr "Výchozí chování"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
-#, fuzzy
-#| msgid "Disable Notifications"
 msgid "Default Notifications"
-msgstr "Zakázat Oznámení"
+msgstr "Základní oznámení"
 
 #: db/seeds/settings.rb
 msgid "Default Screen"
 msgstr "Výchozí obrazovka"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Default Ticket Agent Notifications"
-msgstr "Blokovat oznámení"
+msgstr "Základní oznámení tiketu agentovi"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
@@ -4044,10 +3930,8 @@ msgstr ""
 "oznámení."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the default visibility for new notes."
 msgid "Define the default agent notifications for new users."
-msgstr "Definuje výchozí viditelnost pro nové poznámky."
+msgstr "Definuje výchozí notifikace agenta pro nové uživatele."
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
@@ -4241,6 +4125,12 @@ msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Definuje, zda je Nagios (http://www.nagios.org) povolen nebo nikoli."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines if S/MIME encryption is enabled or not."
+msgid "Defines if PGP encryption is enabled or not."
+msgstr "Definuje, zda je S/MIME šifrování povoleno nebo nikoli."
+
+#: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr ""
 "Definuje, zda je Placetel (http://www.placetel.de) povolen nebo nikoli."
@@ -4307,6 +4197,12 @@ msgstr ""
 "nikoli."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines if generic CTI integration is enabled or not."
+msgid "Defines if the PGP recipient alias configuration is enabled or not."
+msgstr "Definuje, zda je obecná CTI integrace povolena nebo nikoli."
+
+#: db/seeds/settings.rb
 msgid ""
 "Defines if the agent has to accept a confirmation dialog when changing the "
 "article visibility to \"public\"."
@@ -4356,6 +4252,7 @@ msgstr ""
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
+"Definuje, zda editor podmínek ticketu podporuje komplexní logické výrazy."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -4582,10 +4479,8 @@ msgid "Defines the Clearbit config."
 msgstr "Definuje konfiguraci Clearbit."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines pretty date format."
 msgid "Defines the Exchange OAuth config."
-msgstr "Definuje formát zobrazení datumu."
+msgstr "Definuje nastavení Exchange OAuth."
 
 #: db/seeds/settings.rb
 msgid "Defines the Exchange config."
@@ -4594,6 +4489,12 @@ msgstr "Definuje konfiguraci Exchange."
 #: db/seeds/settings.rb
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Definuje HTTP protokol vaší instance."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the CTI config."
+msgid "Defines the PGP config."
+msgstr "Definuje konfiguraci CTI."
 
 #: db/seeds/settings.rb
 msgid "Defines the Placetel config."
@@ -4866,11 +4767,13 @@ msgstr ""
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
+"Definuje varovnou zprávu, která se zobrazí, když je nalezen shodný ticket."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
+"Definuje varovný titulek, který je zobrazen, když je nalezen shodný ticket."
 
 #: db/seeds/settings.rb
 msgid "Defines transaction backend."
@@ -4880,16 +4783,19 @@ msgstr "Definuje transakční rozhraní."
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
-msgstr ""
+msgstr "Definuje, kdy jsou shodné tickety zobrazeny."
 
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
+"Definuje, které atributy ticketu jsou zkontrolovány před vytvořením ticketu."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
+"Definuje, které role uživatelů obdrží varování, v případě nalezení shodných "
+"ticketů."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4907,6 +4813,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -5150,6 +5057,8 @@ msgid ""
 "Disabling the notifications from all groups will turn off the limit. "
 "Instead, to disable the notifications use the settings above."
 msgstr ""
+"Vypnutí oznámení pro všechny skupiny vypne limit. Místo toho, pro vypnutí "
+"oznámení použijte nastavení nahoře."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -5179,10 +5088,8 @@ msgstr "Zahodit změny"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#, fuzzy
-#| msgid "Discard your unsaved changes."
 msgid "Discard your unsaved changes"
-msgstr "Zrušit neuložené změny?"
+msgstr "Zrušit neuložené změny"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -5245,6 +5152,11 @@ msgstr "Opravdu si přejete nastavit viditelnost tohoto článku na \"veřejný\
 msgid "Domain"
 msgstr "Doména"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+msgid "Domain Alias"
+msgstr "Doménový alias"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
 msgstr "Přiřazování dle domény"
@@ -5286,9 +5198,14 @@ msgstr "Stáhnout %s záznamů"
 msgid "Download Certificate"
 msgstr "Stáhnout certifikát"
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Download Private Key"
 msgstr "Stáhnout soukromý klíč"
+
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+msgid "Download Public Key"
+msgstr "Stáhnout veřejný klíč"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 #, fuzzy
@@ -5522,7 +5439,7 @@ msgstr "Odchozí Email"
 
 #: app/models/user.rb
 msgid "Email address '%{email}' is already used for another user."
-msgstr ""
+msgstr "E-mailovou adresu '%{email}' již používá jiný uživatel."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Email could not be verified. Please contact your administrator."
@@ -5697,6 +5614,8 @@ msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
+"Zapne varovaní uživateli v průběhu tvorby ticketu, pokud existuje ticket se "
+"stejnými parametry."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5723,6 +5642,8 @@ msgid ""
 "Enables sending of an email notification to a user when they link their "
 "account with a third-party application."
 msgstr ""
+"Zapne zasílání e-mailových notifikací uživatelům, v případě, že dojde k "
+"propojení jejich účtu s aplikací třetí strany."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5810,9 +5731,15 @@ msgstr "Šifrovat e-mail (pokud to není možné, přesto zaslat oznámení)"
 msgid "Encrypted"
 msgstr "Šifrovaný"
 
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 msgid "Encryption"
 msgstr "Šifrování"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "Encryption error"
+msgstr "Chyba šifrování"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -5870,6 +5797,12 @@ msgstr "Vložte pověření soukromého klíče"
 msgid "Enter Title…"
 msgstr "Vložte nadpis…"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+msgid ""
+"Enter a domain name that will be associated with this key, e.g. example.com."
+msgstr ""
+"Vložte doménové jméno, které bude spojené s tímto klíčem, např. example.com."
+
 #: app/assets/javascripts/app/views/generic/input.jst.eco
 msgid "Enter a valid email address."
 msgstr "Zadejte platnou e-mailovou adresu."
@@ -5891,7 +5824,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Enter search and select a type to search for"
-msgstr ""
+msgstr "Vložte termín a zvolte typ pro hledání"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -6186,6 +6119,10 @@ msgstr "Experti"
 msgid "Expires"
 msgstr "Propadává"
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+msgid "Expires at"
+msgstr "Vyprší v"
+
 #: app/assets/javascripts/app/controllers/search.coffee
 msgid "Extended Search"
 msgstr "Rozšířené hledání"
@@ -6322,6 +6259,7 @@ msgstr "přiřadit tikety"
 msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr "Najděte, co hledáte, např. \"hledaná fráze\""
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Fingerprint"
 msgstr "Otisk prstu"
@@ -6745,7 +6683,11 @@ msgstr "Jít zpět"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 msgid "Go home"
-msgstr ""
+msgstr "Přejít domů"
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "Good signature"
+msgstr "Správný podpis"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -6803,6 +6745,7 @@ msgstr "Pozdrav"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/permission.jst.eco
 #: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -7009,6 +6952,8 @@ msgid ""
 "Here you can create new tickets, customers and organizations (depending on "
 "your configured permissions)."
 msgstr ""
+"Zde můžete vytvářet nové tickety, uživatele a organizace (v závislosti na "
+"vašich nastavených právech)."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "Here you can create one."
@@ -7072,10 +7017,11 @@ msgstr "Znovupřihlášení"
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
+"Zvýraznění, když je poznámka, kterou uživatel píše veřejná nebo soukromá"
 
 #: db/seeds/settings.rb
 msgid "Hint for adding an article to an existing ticket."
-msgstr ""
+msgstr "Nápověda pro přidání položky k existujícímu ticketu."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
@@ -7184,7 +7130,7 @@ msgstr "Cílová URL IDP SSO"
 
 #: db/seeds/settings.rb
 msgid "IDP Single Logout target URL"
-msgstr ""
+msgstr "IDP jednotná odhlašovací URL"
 
 #: db/seeds/settings.rb
 msgid "IDP certificate"
@@ -7520,6 +7466,7 @@ msgstr "Zahrnout přílohy článku?"
 msgid "Included ticket overviews"
 msgstr "Zahrnuté přehledy ticketů"
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
 msgstr "Včetně soukromého klíče."
@@ -7693,13 +7640,7 @@ msgstr "Obdrženo neplatné ID klienta!"
 
 #: app/models/user.rb
 msgid "Invalid email '%{email}'"
-msgstr ""
-
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Enter a valid email address."
-msgid "Invalid email address."
-msgstr "Zadejte platnou e-mailovou adresu."
+msgstr "E-mail '%{email}' není správný"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
@@ -7739,9 +7680,17 @@ msgstr "Neplatné heslo, musí obsahovat nejméně 2 malá a 2 velká písmena!"
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Neplatná oprávnění, zabraňte vlastnímu uzamčení."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "Invalid recipient."
+msgstr "Chybný příjemce."
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "Invalid signer."
+msgstr "Neplatný podepisovatel."
 
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
@@ -7768,24 +7717,6 @@ msgstr "Pozvánka poslána!"
 #. This is the template file app/views/mailer/user_invite/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_invite/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Invitation to #{config.product_name} at #{config.fqdn}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to "
-#| "#{config.product_name} - our customer support platform.</div>\n"
-#| "<br>\n"
-#| "<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.name}\">here</a> and set your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>Enjoy,</div>\n"
-#| "<br>\n"
-#| "<div>#{current_user.firstname} #{current_user.lastname}</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Invitation to #{config.product_name} at #{config.fqdn}\n"
 "\n"
@@ -7809,12 +7740,12 @@ msgstr ""
 "<div>Dobrý den, #{user.firstname},</div>\n"
 "<br>\n"
 "<div>já, #{current_user.firstname} #{current_user.lastname}, Vás zvu k "
-"registraci do našeho systému zákaznické podpory #{config.product_name}.</"
-"div>\n"
+"registraci do našeho systému zákaznické podpory #{config.product_name}.</div>"
+"\n"
 "<br>\n"
-"<div>Kliknutím na <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.token}\">TENTO</a> odkaz nastavíte své heslo."
-"</div>\n"
+"<div>Kliknutím na <a href=\"#{config.http_type}://#{config.fqdn}/#"
+"password_reset_verify/#{token.token}\">TENTO</a> odkaz nastavíte své "
+"heslo.</div>\n"
 "<br>\n"
 "<div>S pozdravem,</div>\n"
 "<br>\n"
@@ -7854,7 +7785,7 @@ msgstr "Ionicons"
 
 #: app/models/ticket.rb
 msgid "It is not possible to merge into an already merged ticket."
-msgstr ""
+msgstr "Není možné slučovat již sloučené tickety."
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid "Items per page"
@@ -7929,6 +7860,18 @@ msgstr "Zachovat zprávy na serveru"
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 msgid "Key"
 msgstr "Klíč"
+
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+msgid "Key ID"
+msgstr "Klíč ID"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "Key expired."
+msgstr "Klíč vypršel."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "Key revoked."
+msgstr "Klíč anulován."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee
@@ -8035,11 +7978,11 @@ msgstr "Poslední kontakt zákazníka v"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 msgid "Last External Article"
-msgstr ""
+msgstr "Poslední externí položka"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 msgid "Last Internal Article"
-msgstr ""
+msgstr "Poslední interní položka"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
@@ -8185,7 +8128,7 @@ msgstr "Přihlašovací údaje LinkedIn"
 
 #: db/seeds/settings.rb
 msgid "LinkedIn Developer Site"
-msgstr ""
+msgstr "Vývojářská stránka LinkedIn"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Links"
@@ -8205,15 +8148,14 @@ msgstr "Načíst další"
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
 #: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
-#, fuzzy
-#| msgid "Loading failed."
 msgid "Loading content"
-msgstr "Nahrávání se nezdařilo."
+msgstr "Nahrávání obsahu"
 
 #: app/views/mobile/index.html.erb
 msgid "Loading failed, please try again later."
-msgstr ""
+msgstr "Načítání selhalo, prosím zkuste načtení znovu později."
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -8429,7 +8371,7 @@ msgstr "Označit vše jako přečtené"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Match all (AND)"
-msgstr ""
+msgstr "Spojka a zároveň (AND)"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
@@ -8437,11 +8379,11 @@ msgstr "Shoda všech následujících"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Match any (OR)"
-msgstr ""
+msgstr "Spojka nebo (OR)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Match none (NOT)"
-msgstr ""
+msgstr "Negace (NOT)"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
@@ -8541,10 +8483,8 @@ msgid "Merge"
 msgstr "Sloučit"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Merge to Ticket#"
 msgid "Merge tickets"
-msgstr "Sloučit s Ticket# "
+msgstr "Sloučit s ticketem"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
@@ -8566,7 +8506,7 @@ msgstr "Zpráva pro přihlašovací stránku."
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Message is not signed by sender."
-msgstr ""
+msgstr "Zpráva není podepsána odesílatelem."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
@@ -8873,6 +8813,7 @@ msgstr "Integrace Nagiosu"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -9178,6 +9119,8 @@ msgstr "Chybí konfigurace %s."
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -9190,10 +9133,8 @@ msgid "No Entries"
 msgstr "žádnézáznamy"
 
 #: lib/external_credential/exchange.rb
-#, fuzzy
-#| msgid "Not configured"
 msgid "No Exchange app configured!"
-msgstr "Nekonfigurováno"
+msgstr "Aplikace Exchange nebyla nakonfigurována!"
 
 #: lib/external_credential/facebook.rb
 msgid "No Facebook app configured!"
@@ -9227,12 +9168,6 @@ msgstr "Nenalezena žádná kamera."
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "No categories"
 msgstr "Žádné kategorie"
-
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Notification Sound"
-msgid "No certificate for %s found."
-msgstr "Zvuk oznámení"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
@@ -9288,6 +9223,10 @@ msgstr "Žádné připojené problémy"
 msgid "No macros available."
 msgstr "Není k dispozici žádné sezení."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "No passphrase given."
+msgstr "Nebylo vloženo heslo."
+
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "Žádná předchozí hledání"
@@ -9296,11 +9235,9 @@ msgstr "Žádná předchozí hledání"
 msgid "No proxy for the following hosts."
 msgstr "Žádná proxy pro následující hostitele."
 
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "No record found!"
-msgid "No recipient found."
-msgstr "Nenalezen žádný záznam!"
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "No public key found."
+msgstr "Nenalezen žádný veřejný klíč."
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
@@ -9316,6 +9253,10 @@ msgstr "Nenalezeny žádné výsledky"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "No results were found."
 msgstr "Nebyly nalezeny žádné výsledky."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "No secret key found."
+msgstr "Nenalezen žádný tajný klíč!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
@@ -9357,6 +9298,22 @@ msgstr "Žádné aktivní spouštěče"
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
 msgid "No unread notifications for you. :)"
 msgstr "Nemáte žádná nepřečtená oznámení. :)"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No record found!"
+msgid "No valid OpenPGP data found."
+msgstr "Nenalezen žádný záznam!"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No record found!"
+msgid "No valid recipient."
+msgstr "Nenalezen žádný záznam!"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "No valid signer."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
 msgid ""
@@ -9544,7 +9501,7 @@ msgstr "Číslo"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "OAuth"
-msgstr ""
+msgstr "OAuth"
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -9626,6 +9583,7 @@ msgstr "Po dokončení…"
 #: app/models/application_model/can_creates_and_updates.rb
 msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
+"Jeden z požadovaných parametrů musí být vložen, ale žádný nebyl nalezen."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: public/assets/chat/chat.coffee
@@ -9649,11 +9607,9 @@ msgstr ""
 "dokončete překlad."
 
 #: app/assets/javascripts/app/models/overview.coffee
-#, fuzzy
-#| msgid "Only available for Users with shared Organization"
 msgid ""
 "Only available for users which are absence replacements for other users."
-msgstr "Dostupné jen pro uživatele ve sdílené organizaci"
+msgstr "Dostupné pouze pro uživatele, kteří nejsou zástupci za jiné uživatele."
 
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
@@ -9825,6 +9781,8 @@ msgid ""
 "Organization with specified ID was not found. Try checking the URL for "
 "errors."
 msgstr ""
+"Organizace s definovaným ID nebyla nalezena. Zkontrolujte prosím URL adresu, "
+"zda neobsahuje chyby."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
@@ -9954,6 +9912,29 @@ msgstr ""
 "Tickety vlastněné tímto uživatelem nebudou smazány. Vlastník bude nastaven "
 "na systémového uživatele (ID 1)."
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
+msgid "PGP"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "PGP Recipient Alias Configuration"
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "CTI config"
+msgid "PGP config"
+msgstr "Konfigurace CTI"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "LDAP integration"
+msgid "PGP integration"
+msgstr "Integrace LDAP"
+
 #: lib/email_helper.rb
 msgid "POP3"
 msgstr "POP3"
@@ -9984,6 +9965,12 @@ msgstr "Je vyžadován parametr 'data' nebo 'file'."
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
 msgid "Parent"
 msgstr "Nadřazený"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "is invalid"
+msgid "Passphrase invalid."
+msgstr "je neplatné"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -10069,6 +10056,12 @@ msgstr "Vložit ze schránky (čistý text)"
 msgid "Paste in CSV data"
 msgstr "Vložit jako CSV data"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#, fuzzy
+#| msgid "Paste"
+msgid "Paste key"
+msgstr "Vložit"
+
 #: db/seeds/overviews.rb
 msgid "Pending Reached Tickets"
 msgstr "Mé nevyřízené tickety"
@@ -10100,7 +10093,7 @@ msgstr "Trvale smazat Znalostní bázi"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
 msgid "Permission level for looking up tickets"
-msgstr ""
+msgstr "Úroveň práv pro prohlížení ticketů"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -10217,7 +10210,7 @@ msgstr "Zadejte prosím platnou e-mailovou adresu."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Please enter the endpoint for accessing Exchange Web Services."
-msgstr ""
+msgstr "Prosím vložte endpoint pro přístup k webovým službám Exchange."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #, fuzzy
@@ -10251,7 +10244,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Please select a ticket to merge into."
-msgstr ""
+msgstr "Prosím zvolte ticket, do kterého chcete sloučit stávající ticket."
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
@@ -10266,6 +10259,8 @@ msgid ""
 "Please select the authentication method that should be used to establish the "
 "connection to your Exchange server."
 msgstr ""
+"Prosím zvolte autentizační metodu, která má být použita pro vytvoření "
+"spojení na váš Exchange server."
 
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 #, fuzzy
@@ -10309,6 +10304,10 @@ msgstr "Pozice"
 msgid "Postmaster Filter"
 msgstr "Filtr správce pošty"
 
+#: lib/secure_mailing/pgp/tool/error/handler.rb
+msgid "Potential unknown encryption algorithm."
+msgstr ""
+
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -10331,7 +10330,7 @@ msgstr "Nový webhook"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "Pre-defined webhook for %s."
-msgstr ""
+msgstr "Předdefinované webhooky pro %s."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 #, fuzzy
@@ -10342,6 +10341,21 @@ msgstr "Prosím, klikněte na tlačítko níže pro vytvoření prvního záznam
 #: db/seeds/settings.rb
 msgid "Pretty Date"
 msgstr "Formát Datumu"
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#, fuzzy
+#| msgid "S/MIME enables you to send digitally signed and encrypted messages."
+msgid ""
+"Pretty Good Privacy (PGP) enables you to send digitally signed and encrypted "
+"messages."
+msgstr "S/MIME umožňuje zasílat digitálně podepsané a šifrované zprávy."
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+msgid ""
+"Pretty Good Privacy (PGP) is an encryption program that can be used for "
+"signing, encrypting and decrypting messages and to increase the security of "
+"e-mail communication."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -10405,6 +10419,12 @@ msgstr "Priorita"
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
 msgstr "Ikonky priority v přehledech"
+
+#: lib/secure_mailing/pgp/incoming.rb
+#, fuzzy
+#| msgid "Avatar could not be found."
+msgid "Private key could not be found."
+msgstr "Avatar se nepodařilo najít."
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Private key for decryption could not be found."
@@ -10476,6 +10496,12 @@ msgstr "Adresa proxy"
 msgid "Public"
 msgstr "Veřejný"
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
+#, fuzzy
+#| msgid "Certificates & Private Keys"
+msgid "Public & Private Keys"
+msgstr "Certifikáty a soukromé klíče"
+
 #: app/assets/javascripts/app/controllers/public_link.coffee
 msgid "Public Link"
 msgstr "Veřejný odkaz"
@@ -10493,6 +10519,12 @@ msgstr "Veřejné odkazy jsou …"
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
 msgid "Public Menu"
 msgstr "Veřejné menu"
+
+#: lib/secure_mailing/pgp/incoming.rb
+#, fuzzy
+#| msgid "Locale could not be found."
+msgid "Public key could not be found."
+msgstr "Národní prostředí se nepodařilo najít."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Publish"
@@ -10533,6 +10565,18 @@ msgstr "Fronta"
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Queue already exists!"
 msgstr "Fronta již existuje!"
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "RFC 3156 first part not a valid version part for PGP mails."
+msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "RFC 3156 incorrect mime type for encrypted part."
+msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "RFC 3156 mandates exactly two body parts for PGP mails."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -10721,7 +10765,7 @@ msgstr "Odstranit %s"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
-msgstr ""
+msgstr "Odstranit zvolené hodnoty"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #, fuzzy
@@ -10882,10 +10926,8 @@ msgid "Reset overview order"
 msgstr "Resetovat pořadí přehledů"
 
 #: app/assets/javascripts/app/models/setting.coffee
-#, fuzzy
-#| msgid "Sent successfully!"
 msgid "Reset successful."
-msgstr "Úspěšně odesláno!"
+msgstr "Úspěšně restováno."
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 #, fuzzy
@@ -10902,29 +10944,6 @@ msgstr "Obnovit do základů"
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_reset/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Reset your #{config.product_name} password\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>We received a request to reset the password for your #{config."
-#| "product_name} account <b>#{user.login}</b>.</div>\n"
-#| "<br>\n"
-#| "<div>If you want to reset your password, click on the link below (or copy "
-#| "and paste the URL into your browser):</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.name}\">#{config.http_type}://#{config."
-#| "fqdn}/#password_reset_verify/#{token.name}</a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can change your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to reset your password, please ignore this "
-#| "message. Your password will not be reset.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Reset your #{config.product_name} password\n"
 "\n"
@@ -10962,41 +10981,17 @@ msgstr ""
 "#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
 "#{token.token}</a></div>\n"
 "<br>\n"
-"<div>Tento odkaz Vás přesměruje na stránku, kde si nastavíte své nové heslo."
-"</div>\n"
+"<div>Tento odkaz Vás přesměruje na stránku, kde si nastavíte své nové "
+"heslo.</div>\n"
 "<br>\n"
 "<div>Pokud heslo měnit nechcete, tuto zprávu ignorujte (nevyužívejte výše "
 "zmíněného odkazu) a Vaše heslo nebude změněno.</div>\n"
 "<br>\n"
-"<div>S pozdravem,<br>\n"
-"Tým aplikace #{config.product_name}</div>\n"
+"<div>Tým aplikace #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/signup_taken_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup_taken_reset/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Reset your #{config.product_name} password\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>You or someone else tried to sign up with this email address. "
-#| "However, this email is already being used.</div>\n"
-#| "<br>\n"
-#| "<div>If you want to reset your password, click on the link below (or copy "
-#| "and paste the URL into your browser):</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.name}\">#{config.http_type}://#{config."
-#| "fqdn}/#password_reset_verify/#{token.name}</a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can change your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to reset your password, please ignore this "
-#| "message. Your password will not be reset.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Reset your #{config.product_name} password\n"
 "\n"
@@ -11034,14 +11029,13 @@ msgstr ""
 "#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
 "#{token.token}</a></div>\n"
 "<br>\n"
-"<div>Tento odkaz vede na stránku, kde si budete moci nastavit nové heslo.</"
-"div>\n"
+"<div>Tento odkaz vede na stránku, kde si budete moci nastavit nové "
+"heslo.</div>\n"
 "<br>\n"
 "<div>Pokud si heslo změnit nepřejete, ignorujte prosím tuto zprávu. Vaše "
 "heslo nebude obnoveno.</div>\n"
 "<br>\n"
-"<div>S pozdravem,<br>\n"
-"Tým aplikace #{config.product_name}</div>\n"
+"<div>Tým aplikace #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "Resetting changes…"
@@ -11149,6 +11143,9 @@ msgid "Running…"
 msgstr "Probíhá…"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
+#: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
 msgid "S/MIME"
 msgstr "S/MIME"
 
@@ -11403,10 +11400,8 @@ msgid "Search or enter email address…"
 msgstr "Hledejte nebo zadejte e-mailovou adresu…"
 
 #: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
-#, fuzzy
-#| msgid "Enter your username or email address"
 msgid "Search or enter phone number…"
-msgstr "Zadejte Vaše uživatelské jméno nebo emailovou adresu"
+msgstr "Vyhledejte nebo vložte telefonní číslo…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
@@ -11563,10 +11558,8 @@ msgid "Select the customer of the ticket or create one."
 msgstr "Vyberte zákazníka pro tento ticket nebo vytvořte nového."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Select the customer of the ticket or create one."
 msgid "Select the type of ticket your are creating"
-msgstr "Vyberte tiket zákazníka nebo vytvořte nový."
+msgstr "Vyberte typ ticketu, který vytváříte"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -11695,6 +11688,7 @@ msgstr "Úroveň logování sekvenceru"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 msgid "Server operation failed."
 msgstr "Operace serveru se nezdařila."
@@ -11941,11 +11935,11 @@ msgstr "Zobrazit méně"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 msgid "Show matching ticket(s) in the warning"
-msgstr ""
+msgstr "Zobrazit shodný(é) ticket(y) ve varování"
 
 #: db/seeds/settings.rb
 msgid "Show matching tickets in the warning"
-msgstr ""
+msgstr "Zobrazit shodné tickety ve varování"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Show meta data"
@@ -12007,6 +12001,7 @@ msgid "Sidebar Attachments"
 msgstr "Přílohy bočního panelu"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Sign"
@@ -12019,6 +12014,13 @@ msgstr "Podepsat e-mail (pokud to není možné, zahodit oznámení)"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr "Podepsat e-mail (pokud to není možné, přesto zaslat oznámení)"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Sign out"
+msgid "Sign error"
+msgstr "Odhlásit"
 
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
@@ -12056,6 +12058,30 @@ msgstr "Podepsat:"
 #: db/seeds/object_manager_attributes.rb
 msgid "Signature"
 msgstr "Podpis"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "Signature expired."
+msgstr "Podpis"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "Signature invalid."
+msgstr "Podpis"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "Signature key expired."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "Signature key revoked."
+msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "Signature part is missing or has wrong content type."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Signature verification failed!"
@@ -12095,22 +12121,26 @@ msgstr "Simple Line Icons"
 
 #: db/seeds/settings.rb
 msgid "Sina Weibo"
-msgstr ""
+msgstr "Sina Weibo"
 
 #: db/seeds/settings.rb
 msgid "Sina Weibo Open Portal"
-msgstr ""
+msgstr "Sina Weibo Open Portal"
 
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation was closed."
 msgstr ""
+"Jelikož jste nereagovali v posledních %s minutách, vaše konverzace byla "
+"uzavřena."
 
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
 "<strong>%s</strong> was closed."
 msgstr ""
+"Jelikož jste nereagovali v posledních %s minutách, vaše konverzace s "
+"<strong>%s</strong> byla uzavřena."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Single selection field"
@@ -12255,6 +12285,8 @@ msgstr "Zahájit novou konverzaci"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Start typing to find the ticket to merge into."
 msgstr ""
+"Začněte psát pro nalezení ticketu, do kterého chcete sloučit stávající "
+"ticket."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Start typing to search for users…"
@@ -12690,6 +12722,12 @@ msgstr ""
 msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "Děkujeme, že jste se připojili. E-mail byl odeslán na \"%s\"."
 
+#: lib/secure_mailing/pgp/tool/exec/agent.rb
+#, fuzzy
+#| msgid "The entry could not be created."
+msgid "The 'gpg-agent' process could not be ended."
+msgstr "Položku se nepodařilo vytvořit."
+
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
 msgstr "API token se nepodařilo najít."
@@ -12701,6 +12739,36 @@ msgstr "Znalostní bázi se nepodařilo vytvořit."
 #: app/services/service/avatar/image_validate.rb
 msgid "The MIME type of the image is invalid."
 msgstr "MIME typ obrázku je neplatný."
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "Certificate for verification could not be found."
+msgid "The PGP key for %s was found, but has expired."
+msgstr "Nebyl nalezen certifikát pro ověření."
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "The API token could not be found."
+msgid "The PGP key for %s was found."
+msgstr "API token se nepodařilo najít."
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "The page was not found"
+msgid "The PGP key for %s was not found."
+msgstr "Stránka nebyla nalezena"
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "The API token could not be found."
+msgid "The PGP keys for %s were found."
+msgstr "API token se nepodařilo najít."
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "The API token could not be found."
+msgid "The PGP keys for %s were not found."
+msgstr "API token se nepodařilo najít."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
@@ -12784,6 +12852,24 @@ msgstr ""
 "Tento prohlížeč je zastaralý. Nepodporuje technologii (WebSocket) kterou "
 "používáme pro službu Chat."
 
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Certificate for verification could not be found."
+msgid "The certificate for %s was found, but has expired."
+msgstr "Nebyl nalezen certifikát pro ověření."
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificate for %s was found."
+msgstr "Zvuk oznámení"
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificate for %s was not found."
+msgstr "Zvuk oznámení"
+
 #: app/models/smime_certificate.rb
 msgid "The certificate for this private key could not be found."
 msgstr "Certifikát pro tento soukromý klíč se nepodařilo najít."
@@ -12797,6 +12883,18 @@ msgstr ""
 "Certifikát domény |%s| se nepodařilo ověřit. To může hackerům umožnit "
 "odcizení vašich pověření. Pokud jste si jisti, že se jedná o self-signed "
 "certifikát, můžete pokračovat. V opačném případě akci zrušte."
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificates for %s were found."
+msgstr "Zvuk oznámení"
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificates for %s were not found."
+msgstr "Zvuk oznámení"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -12886,6 +12984,8 @@ msgid ""
 "The entered user for reauthentication differs from the user that was used "
 "for setting up your Microsoft365 channel initially."
 msgstr ""
+"Vložený uživatel pro opakovanou autentizaci je odlišný od uživatele, který "
+"byl původně použit pro nastavení vašeho Microsoft365 kanálu."
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -12944,6 +13044,7 @@ msgstr ""
 msgid "The image is invalid."
 msgstr "Obrázek je neplatný."
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/widget/import.coffee
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
@@ -13088,7 +13189,7 @@ msgstr "Poskytnutý operátor shody chybí nebo je neplatný."
 
 #: app/models/webhook.rb
 msgid "The provided payload is invalid. Please check your syntax."
-msgstr ""
+msgstr "Poskytnutá příloha není správná. Prosím, zkontrolujte vaši syntaxi."
 
 #: app/controllers/application_controller/authenticates.rb
 #: app/controllers/integration/check_mk_controller.rb
@@ -13105,10 +13206,8 @@ msgid "The request could not be processed."
 msgstr "Požadavek se nepodařilo zpracovat."
 
 #: lib/validations/verify_perform_rules_validator.rb
-#, fuzzy
-#| msgid "The required match value is missing."
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
-msgstr "Požadovaná hodnota shody chybí."
+msgstr "Požadovaná hodnota '%{attribute}' pro %{key}, %{inner} chybí!"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
@@ -13459,6 +13558,10 @@ msgstr "Pokud se chat nezobrazuje, může to být z několika důvodů:"
 msgid "There are too many people in the chat queue."
 msgstr "Ve frontě chatu je příliš mnoho návštěvníků."
 
+#: app/models/pgp_key.rb
+msgid "There is already a PGP key with the same fingerprint."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr "Koncept již existuje. Přejete si jej přepsat?"
@@ -13521,6 +13624,35 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "There was no Knowledge Base created."
 msgstr "Žádná Znalostní báze nebyla vytvořena."
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "The page was not found"
+msgid "There was no PGP key found."
+msgstr "Stránka nebyla nalezena"
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "The page was not found"
+msgid "There was no certificate found."
+msgstr "Stránka nebyla nalezena"
+
+#: lib/secure_mailing/backend/handler_security_options.rb
+#, fuzzy
+#| msgid "No record found!"
+msgid "There was no recipient found."
+msgstr "Nenalezen žádný záznam!"
+
+#: lib/secure_mailing/pgp/security_options.rb
+msgid "There were PGP keys found for %s, but at least one of them has expired."
+msgstr ""
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Certificates found for %s, but expired."
+msgid ""
+"There were certificates found for %s, but at least one of them has expired."
+msgstr "Certifikáty nalezeny pro %s, ale vypršely."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -13736,6 +13868,12 @@ msgid ""
 "This is an example payload for your installation, including any custom "
 "objects. It is possible to further customize payload of each webhook."
 msgstr ""
+"Toto je příklad přílohy pro vaši instalaci, která zahrnuje nějaké vlastní "
+"objekty. Je možné dále upravovat přílohy každého webhooku."
+
+#: app/controllers/integration/pgp_controller.rb
+msgid "This is not a private PGP key."
+msgstr ""
 
 #: app/models/channel/email_parser.rb
 msgid ""
@@ -13819,14 +13957,8 @@ msgstr ""
 "reálném čase."
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid ""
-#| "This signature is inactive, it won't be included in the reply. Change "
-#| "state <a href=\"#channels/email\">here</a>"
 msgid "This signature is inactive, it won't be included in the reply."
-msgstr ""
-"Tento podpis není aktivní, nebude v příloze obsažen. <a href=\"#channels/"
-"email\">Zde</a> můžete změnit stav"
+msgstr "Tento podpis není aktivní, nebude v příloze obsažen."
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -13909,7 +14041,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Ticket Conditions Expert Mode"
-msgstr ""
+msgstr "Expertní mód podmínek ticketu"
 
 #: app/models/report.rb
 msgid "Ticket Count"
@@ -13964,10 +14096,8 @@ msgid "Ticket Overview"
 msgstr "Přehled ticketů"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Overviews"
 msgid "Ticket Overview settings are saved."
-msgstr "Přehledy"
+msgstr "Nastavení přehledu ticketů bylo uloženo."
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Ticket Overviews"
@@ -14098,6 +14228,8 @@ msgid ""
 "Ticket selector contains expert conditions. If you turn off the expert mode, "
 "it can lead to data loss in your condition attributes."
 msgstr ""
+"Ticket obsahuje expertní podmínky. Pokud vypnete expertní mód, může to vést "
+"ke ztrátě dat ve vašich atributech."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
 #, fuzzy
@@ -14793,6 +14925,12 @@ msgstr ""
 msgid "Unknown error"
 msgstr "Neznámá chyba"
 
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Unknown error"
+msgid "Unknown error."
+msgstr "Neznámá chyba"
+
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid ""
 "Unless you already have it, install one of the following authenticator apps "
@@ -14817,12 +14955,6 @@ msgstr "Nepřečtená oznámení"
 msgid "Unset default"
 msgstr "Obnovit do základů"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Assigned"
-msgid "Unsigned"
-msgstr "přiřazené"
-
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Unsubscribe"
@@ -14839,6 +14971,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -15058,6 +15191,12 @@ msgstr "Nahrání se nezdařilo"
 msgid "Upload Private Key"
 msgstr "Nahrát soukromý klíč"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#, fuzzy
+#| msgid "Upload"
+msgid "Upload key"
+msgstr "Nahrát"
+
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -15068,6 +15207,13 @@ msgstr "Nahrávám"
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Usage"
 msgstr "Použití"
+
+#: lib/secure_mailing/pgp/tool/exec.rb
+#: lib/secure_mailing/pgp/tool/exec/agent.rb
+msgid ""
+"Use 'with_private_keyring' to create a private keyring or set @gnupg_home "
+"before calling gpg."
+msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -15302,10 +15448,8 @@ msgid "VIP"
 msgstr "VIP"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Validation failed"
-msgstr "Hromadná akce provedena!"
+msgstr "Validace selhala"
 
 msgid "Validation failed: %{errors}"
 msgstr "Ověření se nezdařilo: %{errors}"
@@ -15992,10 +16136,8 @@ msgstr ""
 
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
-#, fuzzy
-#| msgid "You have closed a ticket"
 msgid "You can no longer see the ticket."
-msgstr "Uzavřel jste tiket"
+msgstr "Již nemůžete zobrazit tento ticket."
 
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "You can no longer see the user."
@@ -16187,10 +16329,8 @@ msgid "Your Logo"
 msgstr "Vaše logo"
 
 #: public/assets/form/form.js
-#, fuzzy
-#| msgid "Message"
 msgid "Your Message…"
-msgstr "Zpráva"
+msgstr "Vaše zpráva…"
 
 #: public/assets/form/form.js
 msgid "Your Name"
@@ -16443,10 +16583,8 @@ msgid "attachment"
 msgstr "příloha"
 
 #: app/models/object_manager/attribute.rb
-#, fuzzy
-#| msgid "Attribute not editable!"
 msgid "attribute is not editable"
-msgstr "Atribut není upravitelný!"
+msgstr "atribut není upravitelný"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
@@ -16789,6 +16927,10 @@ msgstr "od"
 msgid "from (relative)"
 msgstr "od (relativní)"
 
+#: app/controllers/integration/pgp_controller.rb
+msgid "gpg (GnuPG) 2.2.0 or newer is required"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "h"
 msgstr "h"
@@ -16807,10 +16949,8 @@ msgid "has changed"
 msgstr "byl změněn"
 
 #: lib/validations/mention_validator.rb
-#, fuzzy
-#| msgid "Not allowed to access this task."
 msgid "has no agent access to this ticket"
-msgstr "K této úloze není oprávnění přístupu."
+msgstr "nemá agenta pro přístup k tomuto ticketu"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #, fuzzy
@@ -16958,10 +17098,8 @@ msgid "is"
 msgstr "je"
 
 #: app/models/knowledge_base/has_unique_title.rb
-#, fuzzy
-#| msgid "This bot already exists."
 msgid "is already used"
-msgstr "Tento bot již existuje."
+msgstr "je již použit"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
@@ -16975,10 +17113,8 @@ msgid "is larger than the allowed maximum value of %{max_value}"
 msgstr ""
 
 #: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "At least one user needs to have admin permissions."
 msgid "is last account with admin permissions"
-msgstr "Nejméně jeden uživatel musí mít oprávnění správce."
+msgstr "je poslední účet s právy administrátora"
 
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
@@ -17275,6 +17411,7 @@ msgstr "otevřený"
 msgid "optional"
 msgstr "volitelné"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "or"
@@ -17468,10 +17605,8 @@ msgid "sms"
 msgstr "SMS"
 
 #: app/models/object_manager/attribute.rb
-#, fuzzy
-#| msgid "Feature not enabled!"
 msgid "spaces are not allowed"
-msgstr "Funkce není povolena!"
+msgstr "Mezery nejsou povoleny"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -17673,6 +17808,31 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#, fuzzy
+#~| msgid "Certificate for verification could not be found."
+#~ msgid "Certificate for %s found."
+#~ msgstr "Nebyl nalezen certifikát pro ověření."
+
+#, fuzzy
+#~| msgid "Locale not found"
+#~ msgid "Certificate not found."
+#~ msgstr "Národní prostředí nenalezeno"
+
+#, fuzzy
+#~| msgid "Certificates & Private Keys"
+#~ msgid "Certificates found for %s."
+#~ msgstr "Certifikáty a soukromé klíče"
+
+#, fuzzy
+#~| msgid "Enter a valid email address."
+#~ msgid "Invalid email address."
+#~ msgstr "Zadejte platnou e-mailovou adresu."
+
+#, fuzzy
+#~| msgid "Assigned"
+#~ msgid "Unsigned"
+#~ msgstr "přiřazené"
 
 #, fuzzy
 #~| msgid "Ticket update"

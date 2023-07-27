@@ -365,6 +365,16 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr "%s (megerősítés)"
 
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
+msgid "%s (method)"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
+#, fuzzy
+#| msgid "set optional"
+msgid "%s (option)"
+msgstr "beállítás választhatónak"
+
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -1033,6 +1043,7 @@ msgstr "Művelet végrehajtás"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Actions"
 msgstr "Műveletek"
@@ -1112,6 +1123,7 @@ msgstr "Tevékenységtípusok"
 msgid "Adapter"
 msgstr "Adapter"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -1157,6 +1169,12 @@ msgstr "Bot hozzáadása"
 msgid "Add Certificate"
 msgstr "Tanúsítvány hozzáadása"
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
+#, fuzzy
+#| msgid "Add reply"
+msgid "Add Key"
+msgstr "Válasz hozzáadása"
+
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
 msgstr "Hivatkozás hozzáadása"
@@ -1164,6 +1182,12 @@ msgstr "Hivatkozás hozzáadása"
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Private Key"
+msgstr "Privát kulcs hozzáadása"
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#, fuzzy
+#| msgid "Add Private Key"
+msgid "Add Public or Private Key"
 msgstr "Privát kulcs hozzáadása"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
@@ -1720,6 +1744,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -2548,33 +2573,13 @@ msgstr "Kategória oldal elrendezése"
 msgid "Caution!"
 msgstr "Vigyázat!"
 
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "Certificate for %s found, but expired."
-msgstr "A tanúsítvány %s számára megtalálható, de lejárt."
-
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "Certificate for %s found."
-msgstr "A tanúsítvány %s számára megtalálható."
-
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
 msgstr "Az ellenőrzéshez szükséges tanúsítvány nem található."
 
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "Certificate not found."
-msgstr "Tanúsítvány nem található."
-
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
 msgstr "Tanúsítványok és privát kulcsok"
-
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "Certificates found for %s, but expired."
-msgstr ""
-
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "Certificates found for %s."
-msgstr "Tanúsítványok találhatók %s számára."
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
@@ -2786,6 +2791,20 @@ msgstr "Dátum kiválasztása"
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
 msgstr "Válassza ki, hogy a retweetek is jegyekké legyenek-e átalakítva."
+
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
+msgid ""
+"Choose the default behavior of the PGP integration on per group basis. If "
+"signing or encrypting is not possible, the setting has no effect. Agents can "
+"always manually alter the behavior for each article."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/smime.jst.eco
+msgid ""
+"Choose the default behavior of the S/MIME integration on per group basis. If "
+"signing or encrypting is not possible, the setting has no effect. Agents can "
+"always manually alter the behavior for each article."
+msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose the group to which direct messages will get added."
@@ -3562,6 +3581,7 @@ msgstr "Létrehozott belső cikk"
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
@@ -3829,6 +3849,7 @@ msgstr "A dekódolás sikeres volt."
 msgid "Default"
 msgstr "Alapértelmezett"
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Default Behavior"
 msgstr "Alapértelmezett viselkedés"
@@ -4138,6 +4159,12 @@ msgstr ""
 "sem."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines if S/MIME encryption is enabled or not."
+msgid "Defines if PGP encryption is enabled or not."
+msgstr "Meghatározza, hogy az S/MIME titkosítás engedélyezve van-e vagy sem."
+
+#: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr ""
 "Meghatározza, hogy a Placetel (http://www.placetel.de) engedélyezve van-e "
@@ -4209,6 +4236,13 @@ msgid ""
 msgstr ""
 "Meghatározza, hogy a GitLab (http://www.gitlab.com) integráció engedélyezve "
 "van-e vagy sem."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines if generic CTI integration is enabled or not."
+msgid "Defines if the PGP recipient alias configuration is enabled or not."
+msgstr ""
+"Meghatározza, hogy az általános CTI integráció engedélyezve van-e vagy sem."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4495,6 +4529,12 @@ msgstr "Meghatározza az Exchange konfigurációt."
 #: db/seeds/settings.rb
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Meghatározza az Ön példányának HTTP protokollját."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the CTI config."
+msgid "Defines the PGP config."
+msgstr "Meghatározza a CTI konfigurációt."
 
 #: db/seeds/settings.rb
 msgid "Defines the Placetel config."
@@ -4826,6 +4866,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -5156,6 +5197,13 @@ msgstr ""
 msgid "Domain"
 msgstr "Tartomány"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+#, fuzzy
+#| msgid "Domain"
+msgid "Domain Alias"
+msgstr "Tartomány"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
 msgstr "Tartományalapú hozzárendelés"
@@ -5197,8 +5245,15 @@ msgstr "%s bejegyzés letöltése"
 msgid "Download Certificate"
 msgstr "Tanúsítvány letöltése"
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Download Private Key"
+msgstr "Privát kulcs letöltése"
+
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+#, fuzzy
+#| msgid "Download Private Key"
+msgid "Download Public Key"
 msgstr "Privát kulcs letöltése"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
@@ -5732,8 +5787,16 @@ msgstr "E-mail titkosítása (ha nem lehetséges, akkor is küldjön értesíté
 msgid "Encrypted"
 msgstr "Titkosított"
 
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 msgid "Encryption"
+msgstr "Titkosítás"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encryption error"
 msgstr "Titkosítás"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -5789,6 +5852,11 @@ msgstr "Adja meg a privát kulcs titkát"
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 msgid "Enter Title…"
 msgstr "Cím megadása…"
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+msgid ""
+"Enter a domain name that will be associated with this key, e.g. example.com."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/input.jst.eco
 msgid "Enter a valid email address."
@@ -6102,6 +6170,12 @@ msgstr "Szakértők"
 msgid "Expires"
 msgstr "Lejár"
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+#, fuzzy
+#| msgid "Expires"
+msgid "Expires at"
+msgstr "Lejár"
+
 #: app/assets/javascripts/app/controllers/search.coffee
 msgid "Extended Search"
 msgstr "Kibővített keresés"
@@ -6238,6 +6312,7 @@ msgstr "Jegy keresése"
 msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr "Találja meg, amit keres, pl. \"kifejezés keresése\""
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Fingerprint"
 msgstr "Ujjlenyomat"
@@ -6655,6 +6730,12 @@ msgstr "Menjen vissza"
 msgid "Go home"
 msgstr ""
 
+#: lib/secure_mailing/pgp/incoming.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "Good signature"
+msgstr "Aláírás"
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Goodbye message"
@@ -6707,6 +6788,7 @@ msgstr "Üdvözlés"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/permission.jst.eco
 #: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -7431,6 +7513,7 @@ msgstr "Tartalmazza a cikk csatolmányait?"
 msgid "Included ticket overviews"
 msgstr "Tartalmazott jegyek áttekintése"
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
 msgstr "Beleértve a privát kulcsot."
@@ -7604,10 +7687,6 @@ msgstr "Érvénytelen client_id érkezett!"
 msgid "Invalid email '%{email}'"
 msgstr "Érvénytelen e-mail cím '%{email}'"
 
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "Invalid email address."
-msgstr "Érvénytelen e-mail cím."
-
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
 msgstr "Érvénytelen hivatkozási struktúra"
@@ -7648,9 +7727,21 @@ msgstr ""
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Érvénytelen jogosultságok, ne zárja ki magát."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Any recipient"
+msgid "Invalid recipient."
+msgstr "Bármelyik címzett"
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr "Érvénytelen biztonsági kód! Kérjük, próbálja meg újra egy új kóddal."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Invalid video URL"
+msgid "Invalid signer."
+msgstr "Érvénytelen videó URL"
 
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
@@ -7819,6 +7910,18 @@ msgstr "Üzenetek megtartása a kiszolgálón"
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 msgid "Key"
 msgstr "Kulcs"
+
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+msgid "Key ID"
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "Key expired."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "Key revoked."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee
@@ -8100,6 +8203,7 @@ msgstr "Tartalom betöltése"
 msgid "Loading failed, please try again later."
 msgstr "A betöltés nem sikerült, kérjük, próbálja meg később újra."
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -8739,6 +8843,7 @@ msgstr "Nagios integráció"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -9044,6 +9149,8 @@ msgstr "Nincs %s konfigurálva."
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -9091,10 +9198,6 @@ msgstr "Nem található kamera."
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "No categories"
 msgstr "Nincsenek kategóriák"
-
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "No certificate for %s found."
-msgstr "Nem található tanúsítvány %s számára."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
@@ -9148,6 +9251,10 @@ msgstr "Nincsenek kapcsolódó problémák"
 msgid "No macros available."
 msgstr "Nincsenek elérhető makrók."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "No passphrase given."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "Nincsenek korábbi keresések"
@@ -9156,9 +9263,11 @@ msgstr "Nincsenek korábbi keresések"
 msgid "No proxy for the following hosts."
 msgstr "Nincs proxy a következő gazdagépek számára."
 
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "No recipient found."
-msgstr "Nem található címzett."
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No camera found."
+msgid "No public key found."
+msgstr "Nem található kamera."
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
@@ -9174,6 +9283,12 @@ msgstr "Nincs eredmény"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "No results were found."
 msgstr "Nem található eredmény."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No recipient found."
+msgid "No secret key found."
+msgstr "Nem található címzett."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "No security information available."
@@ -9214,6 +9329,22 @@ msgstr "Nincsenek aktív eseményindítók"
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
 msgid "No unread notifications for you. :)"
 msgstr "Önnek nincsenek olvasatlan értesítései. :)"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No recipient found."
+msgid "No valid OpenPGP data found."
+msgstr "Nem található címzett."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No recipient found."
+msgid "No valid recipient."
+msgstr "Nem található címzett."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "No valid signer."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
 msgid ""
@@ -9810,6 +9941,29 @@ msgstr ""
 "A felhasználó tulajdonosi jegyei nem kerülnek törlésre. A tulajdonos a "
 "rendszer felhasználójához (ID 1) lesz hozzárendelve."
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
+msgid "PGP"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "PGP Recipient Alias Configuration"
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "CTI config"
+msgid "PGP config"
+msgstr "CTI konfiguráció"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "LDAP integration"
+msgid "PGP integration"
+msgstr "LDAP integráció"
+
 #: lib/email_helper.rb
 msgid "POP3"
 msgstr "POP3"
@@ -9840,6 +9994,12 @@ msgstr "A 'data' vagy 'file' paraméter megadása szükséges."
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
 msgid "Parent"
 msgstr "Szülő"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "is invalid"
+msgid "Passphrase invalid."
+msgstr "érvénytelen"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -9922,6 +10082,12 @@ msgstr "Beillesztés a vágólapról (egyszerű szöveg)"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Paste in CSV data"
 msgstr "CSV adatok beillesztése"
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#, fuzzy
+#| msgid "Paste"
+msgid "Paste key"
+msgstr "Beillesztés"
 
 #: db/seeds/overviews.rb
 msgid "Pending Reached Tickets"
@@ -10161,6 +10327,10 @@ msgstr "Pozíció"
 msgid "Postmaster Filter"
 msgstr "Postmaster szűrő"
 
+#: lib/secure_mailing/pgp/tool/error/handler.rb
+msgid "Potential unknown encryption algorithm."
+msgstr ""
+
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -10190,6 +10360,23 @@ msgstr "Kattintson az alábbi gombra a beállítás befejezéséhez."
 #: db/seeds/settings.rb
 msgid "Pretty Date"
 msgstr "Szép dátum"
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#, fuzzy
+#| msgid "S/MIME enables you to send digitally signed and encrypted messages."
+msgid ""
+"Pretty Good Privacy (PGP) enables you to send digitally signed and encrypted "
+"messages."
+msgstr ""
+"Az S/MIME lehetővé teszi a digitálisan aláírt és titkosított üzenetek "
+"küldését."
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+msgid ""
+"Pretty Good Privacy (PGP) is an encryption program that can be used for "
+"signing, encrypting and decrypting messages and to increase the security of "
+"e-mail communication."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -10253,6 +10440,12 @@ msgstr "Prioritás"
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
 msgstr "Prioritás ikonok az áttekintésekben"
+
+#: lib/secure_mailing/pgp/incoming.rb
+#, fuzzy
+#| msgid "Avatar could not be found."
+msgid "Private key could not be found."
+msgstr "Az avatár nem található."
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Private key for decryption could not be found."
@@ -10324,6 +10517,12 @@ msgstr "Proxy cím"
 msgid "Public"
 msgstr "Nyilvános"
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
+#, fuzzy
+#| msgid "Certificates & Private Keys"
+msgid "Public & Private Keys"
+msgstr "Tanúsítványok és privát kulcsok"
+
 #: app/assets/javascripts/app/controllers/public_link.coffee
 msgid "Public Link"
 msgstr "Nyilvános hivatkozás"
@@ -10341,6 +10540,12 @@ msgstr "A nyilvános hivatkozások …"
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
 msgid "Public Menu"
 msgstr "Nyilvános menü"
+
+#: lib/secure_mailing/pgp/incoming.rb
+#, fuzzy
+#| msgid "Locale could not be found."
+msgid "Public key could not be found."
+msgstr "A nyelvterület nem található."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Publish"
@@ -10383,6 +10588,18 @@ msgstr "Sor"
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Queue already exists!"
 msgstr "A sor már létezik!"
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "RFC 3156 first part not a valid version part for PGP mails."
+msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "RFC 3156 incorrect mime type for encrypted part."
+msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "RFC 3156 mandates exactly two body parts for PGP mails."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -10931,6 +11148,9 @@ msgid "Running…"
 msgstr "Futás…"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
+#: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
 msgid "S/MIME"
 msgstr "S/MIME"
 
@@ -11453,6 +11673,7 @@ msgstr "Sequencer napló szint"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 msgid "Server operation failed."
 msgstr "A kiszolgáló művelet nem sikerült."
@@ -11752,6 +11973,7 @@ msgid "Sidebar Attachments"
 msgstr "Oldalsáv csatolmányok"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Sign"
@@ -11765,6 +11987,13 @@ msgstr "E-mail aláírása (amennyiben nem lehetséges, elveti az értesítést)
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 "E-mail aláírása (amennyiben nem lehetséges, akkor is küldjön értesítést)"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Sign out"
+msgid "Sign error"
+msgstr "Kijelentkezés"
 
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
@@ -11802,6 +12031,30 @@ msgstr "Aláírás:"
 #: db/seeds/object_manager_attributes.rb
 msgid "Signature"
 msgstr "Aláírás"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "Signature expired."
+msgstr "Aláírás"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "Signature invalid."
+msgstr "Aláírás"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "Signature key expired."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "Signature key revoked."
+msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "Signature part is missing or has wrong content type."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Signature verification failed!"
@@ -12428,6 +12681,12 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr ""
 "Köszönjük, hogy csatlakozott. Az e-mail elküldésre került a \"%s\" címre."
 
+#: lib/secure_mailing/pgp/tool/exec/agent.rb
+#, fuzzy
+#| msgid "The entry could not be created."
+msgid "The 'gpg-agent' process could not be ended."
+msgstr "A bejegyzést nem sikerült létrehozni."
+
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
 msgstr "Az API-token nem található."
@@ -12439,6 +12698,36 @@ msgstr "A Tudásbázist nem lehetett létrehozni."
 #: app/services/service/avatar/image_validate.rb
 msgid "The MIME type of the image is invalid."
 msgstr "A kép MIME típusa érvénytelen."
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "Certificate for %s found, but expired."
+msgid "The PGP key for %s was found, but has expired."
+msgstr "A tanúsítvány %s számára megtalálható, de lejárt."
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "The API token could not be found."
+msgid "The PGP key for %s was found."
+msgstr "Az API-token nem található."
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "The page was not found"
+msgid "The PGP key for %s was not found."
+msgstr "Az oldal nem található"
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "The API token could not be found."
+msgid "The PGP keys for %s were found."
+msgstr "Az API-token nem található."
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "The API token could not be found."
+msgid "The PGP keys for %s were not found."
+msgstr "Az API-token nem található."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
@@ -12518,6 +12807,24 @@ msgstr ""
 "A böngésző elavult. Nem támogatja a WebSocket technológiát, amelyet a "
 "csevegéshez használunk."
 
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Certificate for %s found, but expired."
+msgid "The certificate for %s was found, but has expired."
+msgstr "A tanúsítvány %s számára megtalálható, de lejárt."
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "No certificate for %s found."
+msgid "The certificate for %s was found."
+msgstr "Nem található tanúsítvány %s számára."
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "No certificate for %s found."
+msgid "The certificate for %s was not found."
+msgstr "Nem található tanúsítvány %s számára."
+
 #: app/models/smime_certificate.rb
 msgid "The certificate for this private key could not be found."
 msgstr "A magánkulcshoz tartozó tanúsítvány nem található."
@@ -12532,6 +12839,18 @@ msgstr ""
 "a hackerek számára, hogy ellopják a hitelesítő adatokat. Amennyiben biztos "
 "benne, hogy saját aláírt tanúsítványt használ, akkor megnyomhatja a "
 "\"Folytatás\" gombot. Ellenkező esetben kérjük, válassza a \"Mégsem\" gombot."
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "No certificate for %s found."
+msgid "The certificates for %s were found."
+msgstr "Nem található tanúsítvány %s számára."
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "No certificate for %s found."
+msgid "The certificates for %s were not found."
+msgstr "Nem található tanúsítvány %s számára."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -12685,6 +13004,7 @@ msgstr ""
 msgid "The image is invalid."
 msgstr "A kép érvénytelen."
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/widget/import.coffee
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
@@ -13187,6 +13507,10 @@ msgstr "Több oka is lehet annak, hogy a csevegés nem jelenik meg:"
 msgid "There are too many people in the chat queue."
 msgstr "Túl sokan vannak a csevegési sorban."
 
+#: app/models/pgp_key.rb
+msgid "There is already a PGP key with the same fingerprint."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr "Van egy meglévő piszkozat. Szeretné felülírni?"
@@ -13243,6 +13567,33 @@ msgstr "Ehhez a kétfaktoros hitelesítési módszerhez nincs tárolt konfigurá
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "There was no Knowledge Base created."
 msgstr "Nem készült Tudásbázis."
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "The page was not found"
+msgid "There was no PGP key found."
+msgstr "Az oldal nem található"
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "The page was not found"
+msgid "There was no certificate found."
+msgstr "Az oldal nem található"
+
+#: lib/secure_mailing/backend/handler_security_options.rb
+#, fuzzy
+#| msgid "No recipient found."
+msgid "There was no recipient found."
+msgstr "Nem található címzett."
+
+#: lib/secure_mailing/pgp/security_options.rb
+msgid "There were PGP keys found for %s, but at least one of them has expired."
+msgstr ""
+
+#: lib/secure_mailing/smime/security_options.rb
+msgid ""
+"There were certificates found for %s, but at least one of them has expired."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -13440,6 +13791,10 @@ msgstr ""
 msgid ""
 "This is an example payload for your installation, including any custom "
 "objects. It is possible to further customize payload of each webhook."
+msgstr ""
+
+#: app/controllers/integration/pgp_controller.rb
+msgid "This is not a private PGP key."
 msgstr ""
 
 #: app/models/channel/email_parser.rb
@@ -14441,6 +14796,12 @@ msgstr "Egység"
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
 
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Unknown error"
+msgid "Unknown error."
+msgstr "Ismeretlen hiba"
+
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid ""
 "Unless you already have it, install one of the following authenticator apps "
@@ -14465,10 +14826,6 @@ msgstr "Olvasatlan értesítések"
 msgid "Unset default"
 msgstr "Alapértelmezett beállítás megszüntetése"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-msgid "Unsigned"
-msgstr "Aláírás nélküli"
-
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Unsubscribe"
@@ -14485,6 +14842,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -14704,6 +15062,12 @@ msgstr "A feltöltés nem sikerült"
 msgid "Upload Private Key"
 msgstr "Privát kulcs feltöltése"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#, fuzzy
+#| msgid "Upload"
+msgid "Upload key"
+msgstr "Feltöltés"
+
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -14714,6 +15078,13 @@ msgstr "Feltöltés"
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Usage"
 msgstr "Használat"
+
+#: lib/secure_mailing/pgp/tool/exec.rb
+#: lib/secure_mailing/pgp/tool/exec/agent.rb
+msgid ""
+"Use 'with_private_keyring' to create a private keyring or set @gnupg_home "
+"before calling gpg."
+msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -16407,6 +16778,10 @@ msgstr "feladó"
 msgid "from (relative)"
 msgstr "ettől (relatív)"
 
+#: app/controllers/integration/pgp_controller.rb
+msgid "gpg (GnuPG) 2.2.0 or newer is required"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "h"
 msgstr "ó"
@@ -16870,6 +17245,7 @@ msgstr "nyitott"
 msgid "optional"
 msgstr "választható"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "or"
@@ -17264,6 +17640,21 @@ msgstr "...a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#~ msgid "Certificate for %s found."
+#~ msgstr "A tanúsítvány %s számára megtalálható."
+
+#~ msgid "Certificate not found."
+#~ msgstr "Tanúsítvány nem található."
+
+#~ msgid "Certificates found for %s."
+#~ msgstr "Tanúsítványok találhatók %s számára."
+
+#~ msgid "Invalid email address."
+#~ msgstr "Érvénytelen e-mail cím."
+
+#~ msgid "Unsigned"
+#~ msgstr "Aláírás nélküli"
 
 #~ msgid "No tickets are updated."
 #~ msgstr "Nincsenek frissített jegyek."
