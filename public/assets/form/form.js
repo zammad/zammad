@@ -112,7 +112,7 @@ $(function() {
         'Message': 'Zpráva',
         'Name': 'Jméno',
         'Your Email': 'Váš e-mail',
-        'Your Message…': '',
+        'Your Message…': 'Vaše zpráva…',
         'Your Name': 'Vaše jméno',
       },
       'de': {
