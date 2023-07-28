@@ -22,7 +22,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::NoData < StandardError
     def initialize(info)
-      msg = __('No valid OpenPGP data found.')
+      msg = __('There was no valid OpenPGP data found.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -31,7 +31,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::NoSecretKey < StandardError
     def initialize(info)
-      msg = __('No secret key found.')
+      msg = __('There was no secret PGP key found.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -40,7 +40,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::NoPublicKey < StandardError
     def initialize(info)
-      msg = __('No public key found.')
+      msg = __('There was no public PGP key found.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -49,7 +49,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::ExpiredKey < StandardError
     def initialize(info)
-      msg = __('Key expired.')
+      msg = __('The PGP key has expired.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -58,7 +58,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::RevokedKey < StandardError
     def initialize(info)
-      msg = __('Key revoked.')
+      msg = __('The PGP key has been revoked.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -67,7 +67,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::ExpiredSignature < StandardError
     def initialize(info)
-      msg = __('Signature expired.')
+      msg = __('The PGP signature has expired.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -76,7 +76,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::BadSignature < StandardError
     def initialize(info)
-      msg = __('Signature invalid.')
+      msg = __('The PGP signature is invalid.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -94,7 +94,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::RevokedKeySignature < StandardError
     def initialize(info)
-      msg = __('Signature key revoked.')
+      msg = __('The PGP signature key has been revoked.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -103,7 +103,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::InvalidRecipient < StandardError
     def initialize(info)
-      msg = __('Invalid recipient.')
+      msg = __('The PGP email recipient is invalid.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -112,7 +112,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::InvalidSigner < StandardError
     def initialize(info)
-      msg = __('Invalid signer.')
+      msg = __('The PGP email signer is invalid.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -121,7 +121,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::NoRecipient < StandardError
     def initialize(info)
-      msg = __('No valid recipient.')
+      msg = __('There is no valid PGP email recipient.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -130,7 +130,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::NoSigner < StandardError
     def initialize(info)
-      msg = __('No valid signer.')
+      msg = __('There is no valid PGP email signer.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -139,7 +139,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::BadPassphrase < StandardError
     def initialize(info)
-      msg = __('Passphrase invalid.')
+      msg = __('The PGP passphrase is invalid.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -148,7 +148,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::NoPassphrase < StandardError
     def initialize(info)
-      msg = __('No passphrase given.')
+      msg = __('The required PGP passphrase is missing.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
@@ -157,7 +157,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::UnknownError < StandardError
     def initialize(info)
-      msg = __('Unknown error.')
+      msg = __('There was an unknown PGP error.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)

@@ -467,7 +467,7 @@ RSpec.describe 'Ticket zoom > Secure mailing', authenticated_as: :authenticate, 
     let(:secure_mailing_factory_name) { :smime_certificate }
     let(:secure_mailing_config_name)               { :smime_config }
     let(:secure_mailing_type_name)                 { 'S/MIME' }
-    let(:secure_mailing_decryption_failed_message) { 'Decryption failed! Private key for decryption could not be found.' }
+    let(:secure_mailing_decryption_failed_message) { 'Decryption failed! The private key for decryption could not be found.' }
 
     let(:sender_email_address) { 'smime2@example.com' }
     let(:customer) { create(:customer, email: sender_email_address) }
@@ -494,7 +494,7 @@ RSpec.describe 'Ticket zoom > Secure mailing', authenticated_as: :authenticate, 
     let(:secure_mailing_factory_name) { :pgp_key }
     let(:secure_mailing_config_name)               { :pgp_config }
     let(:secure_mailing_type_name)                 { 'PGP' }
-    let(:secure_mailing_decryption_failed_message) { 'Decryption failed! Private key could not be found.' }
+    let(:secure_mailing_decryption_failed_message) { 'Decryption failed! The private PGP key could not be found.' }
 
     let(:sender_email_address) { 'pgp2@example.com' }
     let(:customer) { create(:customer, email: sender_email_address) }

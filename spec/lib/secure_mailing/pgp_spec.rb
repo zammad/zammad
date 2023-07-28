@@ -397,7 +397,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
               expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
               expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to be_nil
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
-              expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq 'Unknown error. Potential unknown encryption algorithm.'
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq 'There was an unknown PGP error. This PGP email was encrypted with a potentially unknown encryption algorithm.'
             end
           end
         end
@@ -424,7 +424,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
           expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
           expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to be_nil
           expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
-          expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq('Private key could not be found.')
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq('The private PGP key could not be found.')
         end
 
         it_behaves_like 'HttpLog writer', 'failed'
@@ -506,7 +506,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
           it 'decrypts, but verifies signature fails' do
             expect(mail[:body]).to include(raw_body)
             expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Public key could not be found.')
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The public PGP key could not be found.')
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be true
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq ''
           end
@@ -580,7 +580,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
           it 'decrypts, but verifies signature fails' do
             expect(mail[:body]).to include(raw_body)
             expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Public key could not be found.')
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The public PGP key could not be found.')
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be true
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq ''
           end
@@ -630,7 +630,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
           it 'decrypts, but verifies signature fails' do
             expect(mail[:body]).to include(raw_body)
             expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Public key could not be found.')
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The public PGP key could not be found.')
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be true
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq ''
           end

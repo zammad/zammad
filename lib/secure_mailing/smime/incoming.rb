@@ -33,7 +33,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
     return if !encrypted?
 
     success = false
-    comment = __('Private key for decryption could not be found.')
+    comment = __('The private key for decryption could not be found.')
     ::SMIMECertificate.where.not(private_key: [nil, '']).find_each do |cert|
       key = OpenSSL::PKey::RSA.new(cert.private_key, cert.private_key_secret)
 
@@ -65,7 +65,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
     return if !signed?
 
     success = false
-    comment = __('Certificate for verification could not be found.')
+    comment = __('The certificate for verification could not be found.')
 
     result = verify_certificate_chain(verify_sign_p7enc.certificates)
     if result.present?
@@ -82,7 +82,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
 
       if !sender_is_signer?
         success = false
-        comment = __('Message is not signed by sender.')
+        comment = __('This message was not signed by its sender.')
       end
     end
 

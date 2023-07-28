@@ -50,7 +50,7 @@ module SecureMailing::PGP::Tool::Error::Handler
     end
 
     def error_algorithm!(stderr)
-      raise SecureMailing::PGP::Tool::Error::UnknownError, __('Potential unknown encryption algorithm.'), [stderr] if stderr.downcase.exclude?('encrypted data')
+      raise SecureMailing::PGP::Tool::Error::UnknownError, __('This PGP email was encrypted with a potentially unknown encryption algorithm.'), [stderr] if stderr.downcase.exclude?('encrypted data')
     end
 
     def result!(cmd, env, stdin, result)

@@ -365,7 +365,7 @@ RSpec.describe SecureMailing::SMIME do
 
           it 'verifies with comment' do
             expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to match('Message is not signed by sender.')
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('This message was not signed by its sender.')
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
           end
@@ -413,7 +413,7 @@ RSpec.describe SecureMailing::SMIME do
         it 'fails' do
           expect(mail[:body]).to include(raw_body)
           expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-          expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Certificate for verification could not be found.')
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')
           expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
           expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
         end
@@ -428,7 +428,7 @@ RSpec.describe SecureMailing::SMIME do
             it 'fails' do
               expect(mail[:body]).to include(raw_body)
               expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Certificate for verification could not be found.')
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
             end
@@ -442,7 +442,7 @@ RSpec.describe SecureMailing::SMIME do
               it 'fails' do
                 expect(mail[:body]).to include(raw_body)
                 expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-                expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Certificate for verification could not be found.')
+                expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')
                 expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
                 expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
               end
@@ -461,7 +461,7 @@ RSpec.describe SecureMailing::SMIME do
             it "won't perform verification" do
               expect(mail[:body]).to include(raw_body)
               expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Certificate for verification could not be found.')
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
             end
@@ -492,7 +492,7 @@ RSpec.describe SecureMailing::SMIME do
             it 'fails' do
               expect(mail[:body]).to include(raw_body)
               expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Certificate for verification could not be found.')
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
             end
@@ -507,7 +507,7 @@ RSpec.describe SecureMailing::SMIME do
               it 'fails' do
                 expect(mail[:body]).to include(raw_body)
                 expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-                expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Certificate for verification could not be found.')
+                expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')
                 expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
                 expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
               end
@@ -532,7 +532,7 @@ RSpec.describe SecureMailing::SMIME do
             it 'fails' do
               expect(mail[:body]).to include(raw_body)
               expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
-              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Certificate for verification could not be found.')
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
             end
@@ -661,7 +661,7 @@ RSpec.describe SecureMailing::SMIME do
           expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
           expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to be_nil
           expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
-          expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq('Private key for decryption could not be found.')
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq('The private key for decryption could not be found.')
         end
 
         it_behaves_like 'HttpLog writer', 'failed'

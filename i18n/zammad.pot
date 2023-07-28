@@ -2043,10 +2043,6 @@ msgstr ""
 msgid "Caution!"
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Certificate for verification could not be found."
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
 msgstr ""
@@ -6414,16 +6410,8 @@ msgstr ""
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Invalid recipient."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Invalid signer."
 msgstr ""
 
 #: app/models/concerns/checks_condition_validation.rb
@@ -6562,14 +6550,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 msgid "Key ID"
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Key expired."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Key revoked."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -7171,10 +7151,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Message for login page."
-msgstr ""
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Message is not signed by sender."
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -7827,20 +7803,12 @@ msgstr ""
 msgid "No macros available."
 msgstr ""
 
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No passphrase given."
-msgstr ""
-
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No public key found."
 msgstr ""
 
 #: app/controllers/users_controller.rb
@@ -7856,10 +7824,6 @@ msgstr ""
 
 #: app/views/layouts/knowledge_base.html.erb
 msgid "No results were found."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No secret key found."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -7901,18 +7865,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
 msgid "No unread notifications for you. :)"
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No valid OpenPGP data found."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No valid recipient."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No valid signer."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
@@ -8526,10 +8478,6 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Passphrase invalid."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -8839,10 +8787,6 @@ msgstr ""
 msgid "Postmaster Filter"
 msgstr ""
 
-#: lib/secure_mailing/pgp/tool/error/handler.rb
-msgid "Potential unknown encryption algorithm."
-msgstr ""
-
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -8945,14 +8889,6 @@ msgstr ""
 msgid "Priority Icons in Overviews"
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "Private key could not be found."
-msgstr ""
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Private key for decryption could not be found."
-msgstr ""
-
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
 msgstr ""
@@ -9041,10 +8977,6 @@ msgstr ""
 msgid "Public Menu"
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "Public key could not be found."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Publish"
 msgstr ""
@@ -9080,18 +9012,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Queue already exists!"
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 first part not a valid version part for PGP mails."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 incorrect mime type for encrypted part."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 mandates exactly two body parts for PGP mails."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
@@ -10384,23 +10304,7 @@ msgid "Signature"
 msgstr ""
 
 #: lib/secure_mailing/pgp/tool/error.rb
-msgid "Signature expired."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Signature invalid."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
 msgid "Signature key expired."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Signature key revoked."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "Signature part is missing or has wrong content type."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
@@ -10981,7 +10885,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr ""
 
 #: lib/secure_mailing/pgp/tool/exec/agent.rb
-msgid "The 'gpg-agent' process could not be ended."
+msgid "The 'gpg-agent' process could not be stopped."
 msgstr ""
 
 #: app/controllers/user_access_token_controller.rb
@@ -10996,6 +10900,14 @@ msgstr ""
 msgid "The MIME type of the image is invalid."
 msgstr ""
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP email recipient is invalid."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP email signer is invalid."
+msgstr ""
+
 #: lib/secure_mailing/pgp/security_options.rb
 msgid "The PGP key for %s was found, but has expired."
 msgstr ""
@@ -11008,12 +10920,36 @@ msgstr ""
 msgid "The PGP key for %s was not found."
 msgstr ""
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP key has been revoked."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP key has expired."
+msgstr ""
+
 #: lib/secure_mailing/pgp/security_options.rb
 msgid "The PGP keys for %s were found."
 msgstr ""
 
 #: lib/secure_mailing/pgp/security_options.rb
 msgid "The PGP keys for %s were not found."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP passphrase is invalid."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature has expired."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature is invalid."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature key has been revoked."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
@@ -11099,6 +11035,10 @@ msgstr ""
 msgid "The certificate for this private key could not be found."
 msgstr ""
 
+#: lib/secure_mailing/smime/incoming.rb
+msgid "The certificate for verification could not be found."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid "The certificate of the domain |%s| could not be verified. This may allow hackers to steal your credentials. If you are sure that you are using a self-signed certificate, you can press \"Proceed\". Otherwise, please \"Cancel\"."
 msgstr ""
@@ -11171,6 +11111,10 @@ msgstr ""
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "The encrypted part of this PGP email has an incorrect MIME type according to RFC 3156."
+msgstr ""
+
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 msgid "The entered user for reauthentication differs from the user that was used for setting up your Microsoft365 channel initially."
 msgstr ""
@@ -11193,6 +11137,10 @@ msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The file does not belong to the specified article."
+msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "The first part of this PGP email is not a valid version part as mandated by RFC 3156."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
@@ -11319,6 +11267,14 @@ msgstr ""
 msgid "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "The private PGP key could not be found."
+msgstr ""
+
+#: lib/secure_mailing/smime/incoming.rb
+msgid "The private key for decryption could not be found."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "The product version could not be fetched."
 msgstr ""
@@ -11366,6 +11322,10 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "The public PGP key could not be found."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "The report could not be generated"
 msgstr ""
@@ -11380,6 +11340,10 @@ msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The required PGP passphrase is missing."
 msgstr ""
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
@@ -11579,6 +11543,10 @@ msgstr ""
 msgid "The sign-in failed. Please contact the Support team."
 msgstr ""
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "The signature part of this PGP email is missing or has a wrong content type according to RFC 3156."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
@@ -11725,6 +11693,18 @@ msgstr ""
 msgid "There is no stored configuration for this two-factor authentication method."
 msgstr ""
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There is no valid PGP email recipient."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There is no valid PGP email signer."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was an unknown PGP error."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "There was no Knowledge Base created."
 msgstr ""
@@ -11737,8 +11717,20 @@ msgstr ""
 msgid "There was no certificate found."
 msgstr ""
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was no public PGP key found."
+msgstr ""
+
 #: lib/secure_mailing/backend/handler_security_options.rb
 msgid "There was no recipient found."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was no secret PGP key found."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was no valid OpenPGP data found."
 msgstr ""
 
 #: lib/secure_mailing/pgp/security_options.rb
@@ -11751,6 +11743,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
+msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "This PGP email does not have exactly two body parts for PGP mails as mandated by RFC 3156."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error/handler.rb
+msgid "This PGP email was encrypted with a potentially unknown encryption algorithm."
 msgstr ""
 
 #: lib/telegram_helper.rb
@@ -11948,6 +11948,10 @@ msgstr ""
 
 #: lib/html_sanitizer.rb
 msgid "This message cannot be displayed due to HTML processing issues. Download the raw message below and open it via an Email client if you still wish to view it."
+msgstr ""
+
+#: lib/secure_mailing/smime/incoming.rb
+msgid "This message was not signed by its sender."
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -12763,10 +12767,6 @@ msgstr ""
 
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Unknown error."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco

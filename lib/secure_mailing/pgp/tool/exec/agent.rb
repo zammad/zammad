@@ -11,7 +11,7 @@ module SecureMailing::PGP::Tool::Exec::Agent
       # Wait for the gpg-agent to shut down and remove its socket file.
       time_slept = 0
       while File.exist?(socket)
-        raise __("The 'gpg-agent' process could not be ended.") if (time_slept += 0.1) > 10
+        raise __("The 'gpg-agent' process could not be stopped.") if (time_slept += 0.1) > 10
 
         sleep 0.1
       end

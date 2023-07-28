@@ -59,7 +59,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::RetrySecurityProcess, :aggregate
       end
 
       it 'updates security status' do
-        expect(article.preferences['security']['sign']).to eq('success' => false, 'comment' => 'Certificate for verification could not be found.')
+        expect(article.preferences['security']['sign']).to eq('success' => false, 'comment' => 'The certificate for verification could not be found.')
         # Import missing certificate.
         create(:smime_certificate, :with_private, fixture: 'smime1@example.com')
         gql.execute(query, variables: variables)

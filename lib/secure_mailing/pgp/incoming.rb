@@ -77,7 +77,7 @@ class SecureMailing::PGP::Incoming < SecureMailing::Backend::HandlerIncoming
 
     set_article_preferences(
       operation: operation,
-      comment:   __('RFC 3156 mandates exactly two body parts for PGP mails.'),
+      comment:   __('This PGP email does not have exactly two body parts for PGP mails as mandated by RFC 3156.'),
     )
 
     false
@@ -90,7 +90,7 @@ class SecureMailing::PGP::Incoming < SecureMailing::Backend::HandlerIncoming
 
     set_article_preferences(
       operation: :sign,
-      comment:   __('Signature part is missing or has wrong content type.'),
+      comment:   __('The signature part of this PGP email is missing or has a wrong content type according to RFC 3156.'),
     )
 
     nil
@@ -102,7 +102,7 @@ class SecureMailing::PGP::Incoming < SecureMailing::Backend::HandlerIncoming
 
     set_article_preferences(
       operation: :encryption,
-      comment:   __('RFC 3156 first part not a valid version part for PGP mails.'),
+      comment:   __('The first part of this PGP email is not a valid version part as mandated by RFC 3156.'),
     )
 
     false
@@ -115,7 +115,7 @@ class SecureMailing::PGP::Incoming < SecureMailing::Backend::HandlerIncoming
 
     set_article_preferences(
       operation: :encryption,
-      comment:   __('RFC 3156 incorrect mime type for encrypted part.'),
+      comment:   __('The encrypted part of this PGP email has an incorrect MIME type according to RFC 3156.'),
     )
 
     nil
@@ -304,7 +304,7 @@ class SecureMailing::PGP::Incoming < SecureMailing::Backend::HandlerIncoming
     if records.empty?
       set_article_preferences(
         operation: operation,
-        comment:   secret ? __('Private key could not be found.') : __('Public key could not be found.'),
+        comment:   secret ? __('The private PGP key could not be found.') : __('The public PGP key could not be found.'),
       )
       return []
     end

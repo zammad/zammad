@@ -266,7 +266,7 @@ describe('calling API to retry encryption', () => {
       __typename: 'TicketArticleSecurityState',
       encryptionMessage: '',
       encryptionSuccess: false,
-      signingMessage: 'Certificate for verification could not be found.',
+      signingMessage: 'The certificate for verification could not be found.',
       signingSuccess: false,
     }
 
@@ -325,7 +325,7 @@ describe('calling API to retry encryption', () => {
       __typename: 'TicketArticleSecurityState',
       encryptionMessage: '',
       encryptionSuccess: false,
-      signingMessage: 'Certificate for verification could not be found.',
+      signingMessage: 'The certificate for verification could not be found.',
       signingSuccess: false,
     }
 
