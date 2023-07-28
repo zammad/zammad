@@ -160,3 +160,6 @@ if [ "$1" = 'zammad-websocket' ]; then
 
   exec bundle exec script/websocket-server.rb -b 0.0.0.0 -p "${ZAMMAD_WEBSOCKET_PORT}" start
 fi
+
+# Pass all other container commands to shell
+exec "$@"
