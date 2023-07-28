@@ -4,12 +4,13 @@ class PGPKey < ApplicationModel
   default_scope { order(created_at: :desc, id: :desc) }
 
   before_validation :ensure_ascii_key, :prepare_key_info, on: :create
-  before_create :prepare_domain_alias
+  before_create :prepare_email_addresses, :prepare_domain_alias
 
   validates :fingerprint, uniqueness: { message: __('There is already a PGP key with the same fingerprint.') }
 
-  KEY_BEGIN_REGEXP = %r{-----BEGIN PGP (PRIVATE|PUBLIC) KEY BLOCK-----}
-  KEY_END_REGEXP = %r{-----END PGP (PRIVATE|PUBLIC) KEY BLOCK-----}
+  KEY_UID_DELIMITER = ', '.freeze
+  KEY_BEGIN_REGEXP  = %r{-----BEGIN PGP (PRIVATE|PUBLIC) KEY BLOCK-----}
+  KEY_END_REGEXP    = %r{-----END PGP (PRIVATE|PUBLIC) KEY BLOCK-----}
 
   def self.find_by_uid(uid, only_valid: true, secret: false)
     find_all_by_uid(uid, only_valid:, secret:).first.tap do |result|
@@ -20,11 +21,15 @@ class PGPKey < ApplicationModel
   def self.find_all_by_uid(uid, only_valid: true, secret: false)
     uid = uid.downcase
 
-    keys_selector = PGPKey.where('uids LIKE ?', "%#{uid}%")
+    email_addresses_query = SqlHelper.new(object: PGPKey).array_contains_one(:email_addresses, uid)
 
-    if domain_alias_configuration_active?
-      keys_selector = PGPKey.where(['(uids LIKE ?) OR (? LIKE domain_alias)', "%#{uid}%", uid])
-    end
+    query = if domain_alias_configuration_active?
+              ["#{email_addresses_query} OR (? LIKE domain_alias)", uid]
+            else
+              email_addresses_query
+            end
+
+    keys_selector = PGPKey.where(query)
 
     keys_selector = keys_selector.where(secret: true) if secret
 
@@ -33,30 +38,22 @@ class PGPKey < ApplicationModel
 
   def self.for_recipient_email_addresses!(addresses)
     keys = []
-    remaining_addresses = addresses.map(&:downcase)
+    not_found = []
 
-    all.as_batches do |key|
-      # intersection of both lists
-      key_for = key.email_addresses & remaining_addresses
-      next if key_for.blank?
+    addresses.each do |address|
+      found_keys = find_by_uid(address)
 
-      keys.push(key)
+      if found_keys.nil?
+        not_found.push(address)
+        next
+      end
 
-      # subtract found recipient(s)
-      remaining_addresses -= key_for
-
-      # end loop if no addresses are remaining
-      break if remaining_addresses.blank?
+      keys.push(*found_keys)
     end
 
-    return keys if remaining_addresses.blank?
+    return keys if not_found.blank?
 
-    # When needed (still present remaining addresses) check also for alias keys, when feature is active.
-    check_for_recipient_email_addresses_with_domain(keys, remaining_addresses)
-
-    return keys if remaining_addresses.blank?
-
-    raise ActiveRecord::RecordNotFound, "The PGP keys for #{remaining_addresses.join(', ')} could not be found."
+    raise ActiveRecord::RecordNotFound, "The PGP keys for #{not_found.join(KEY_UID_DELIMITER)} could not be found."
   end
 
   def self.ascii_key?(given_key)
@@ -92,19 +89,6 @@ class PGPKey < ApplicationModel
     Setting.get('pgp_recipient_alias_configuration')
   end
 
-  def self.check_for_recipient_email_addresses_with_domain(keys, remaining_addresses)
-    return if !domain_alias_configuration_active?
-
-    remaining_addresses.each do |address|
-      key = find_by_uid(address, only_valid: false)
-      next if key.nil?
-
-      keys.push(key)
-      remaining_addresses.delete(address)
-    end
-  end
-  private_class_method :check_for_recipient_email_addresses_with_domain
-
   def key_id
     fingerprint[-16..]
   end
@@ -116,7 +100,7 @@ class PGPKey < ApplicationModel
   end
 
   def expired!
-    raise "The PGP keys for #{uids} with fingerprint #{fingerprint} have expired at #{expires_at}" if expired?
+    raise "The PGP keys for #{email_addresses.join(KEY_UID_DELIMITER)} with fingerprint #{fingerprint} have expired at #{expires_at}" if expired?
   end
 
   def ensure_ascii_key
@@ -147,8 +131,8 @@ class PGPKey < ApplicationModel
     errors.add(:key, e.message)
   end
 
-  def email_addresses
-    @email_addresses ||= email_addresses_from_uids(uids)
+  def prepare_email_addresses
+    self.email_addresses = email_addresses_from_name(name)
   end
 
   private
@@ -164,14 +148,14 @@ class PGPKey < ApplicationModel
 
   def apply_key_attrs(info)
     self.fingerprint = info.fingerprint
-    self.uids        = info.uids.join(',').downcase
+    self.name        = info.uids.join(KEY_UID_DELIMITER)
     self.created_at  = info.created_at
     self.expires_at  = info.expires_at
     self.secret      = info.secret
   end
 
-  def email_addresses_from_uids(uids)
-    entries = uids.split(',')
+  def email_addresses_from_name(name)
+    entries = name.split(KEY_UID_DELIMITER)
 
     entries.each_with_object([]) do |entry, result|
       email_address = entry.split.last.gsub(%r{[<>]}, '').downcase

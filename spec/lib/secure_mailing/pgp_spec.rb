@@ -147,7 +147,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
         let(:customer_email_address) { expired_email_address }
 
         it 'raises exception' do
-          expect { build_mail }.to raise_error RuntimeError
+          expect { build_mail }.to raise_error ActiveRecord::RecordNotFound
         end
       end
 

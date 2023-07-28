@@ -25,11 +25,12 @@ RSpec.describe PGPKey, type: :model do
     shared_examples 'saving the record' do
       it 'saves the record' do
         expect(described_class.create!(params)).to have_attributes(
-          fingerprint: fingerprint,
-          created_at:  created_at,
-          expires_at:  expires_at,
-          uids:        fixture,
-          secret:      true,
+          name:            fixture,
+          fingerprint:     fingerprint,
+          created_at:      created_at,
+          expires_at:      expires_at,
+          email_addresses: [fixture],
+          secret:          true,
         )
       end
 
@@ -52,12 +53,13 @@ RSpec.describe PGPKey, type: :model do
       shared_examples 'saving the record with expected domain alias' do |expected|
         it "saves the record with expected domain alias: #{expected.inspect}" do
           expect(described_class.create!(extended_params)).to have_attributes(
-            fingerprint:  fingerprint,
-            created_at:   created_at,
-            expires_at:   expires_at,
-            uids:         fixture,
-            secret:       true,
-            domain_alias: expected
+            name:            fixture,
+            fingerprint:     fingerprint,
+            created_at:      created_at,
+            expires_at:      expires_at,
+            email_addresses: [fixture],
+            secret:          true,
+            domain_alias:    expected
           )
         end
       end
@@ -104,6 +106,35 @@ RSpec.describe PGPKey, type: :model do
     end
   end
 
+  describe '#prepare_email_addresses' do
+    let(:pgp_key) { create(:pgp_key) }
+
+    before do
+      pgp_key.update(name: name)
+      pgp_key.prepare_email_addresses
+    end
+
+    shared_examples 'saving only email addresses' do |expected|
+      it 'saves only email addresses' do
+        expect(pgp_key.email_addresses).to eq(expected)
+      end
+    end
+
+    context 'with single UID' do
+      context 'with real name and email address' do
+        let(:name) { 'Zammad Helpdesk <zammad@localhost>' }
+
+        it_behaves_like 'saving only email addresses', ['zammad@localhost']
+      end
+    end
+
+    context 'with multiple UIDs' do
+      let(:name) { 'Multi PGP1 <multipgp1@example.com>, Multi PGP2 <multipgp2@example.com>' }
+
+      it_behaves_like 'saving only email addresses', ['multipgp1@example.com', 'multipgp2@example.com']
+    end
+  end
+
   describe '#email_addresses' do
     let(:pgp_key) { create(:'pgp_key/zammad@localhost') }
 
@@ -120,7 +151,7 @@ RSpec.describe PGPKey, type: :model do
     end
   end
 
-  describe '.for_recipient_email_addresses!' do
+  describe '.for_recipient_email_addresses!', mariadb: true do
     let!(:pgp_key1) { create(:'pgp_key/pgp1@example.com') }
     let!(:pgp_key2) { create(:'pgp_key/pgp2@example.com') }
     let!(:pgp_key3) { create(:'pgp_key/pgp3@example.com') }
@@ -173,18 +204,28 @@ RSpec.describe PGPKey, type: :model do
     end
   end
 
-  describe '.find_by_uid' do
+  describe '.find_by_uid', mariadb: true do
     let!(:pgp_key1) { create(:'pgp_key/pgp1@example.com') }
 
     context 'when an existing uid is used' do
       it 'returns the correct key' do
-        expect(described_class.find_by_uid('pgp1@example.com')).to eq(pgp_key1) # rubocop:disable RSpec/DynamicFindBy
+        expect(described_class.find_by_uid('pgp1@example.com')).to eq(pgp_key1) # rubocop:disable Rails/DynamicFindBy
       end
     end
 
     context 'when a non-existing uid is used' do
       it 'raises an error' do
-        expect { described_class.find_by_uid('pgp123@example.com') }.to raise_error(ActiveRecord::RecordNotFound) # rubocop:disable RSpec/DynamicFindBy
+        expect { described_class.find_by_uid('pgp123@example.com') }.to raise_error(ActiveRecord::RecordNotFound) # rubocop:disable Rails/DynamicFindBy
+      end
+    end
+
+    context 'when a key with a similar uid is present' do
+      before do
+        create(:'pgp_key/noexpirepgp1@example.com')
+      end
+
+      it 'returns the correct key' do
+        expect(described_class.find_by_uid('pgp1@example.com')).to eq(pgp_key1) # rubocop:disable Rails/DynamicFindBy
       end
     end
 
@@ -195,7 +236,7 @@ RSpec.describe PGPKey, type: :model do
 
       context 'when there is no match for the domain' do
         it 'raises an error' do
-          expect { described_class.find_by_uid('nicole.braun@zammad.org') }.to raise_error(ActiveRecord::RecordNotFound) # rubocop:disable RSpec/DynamicFindBy
+          expect { described_class.find_by_uid('nicole.braun@zammad.org') }.to raise_error(ActiveRecord::RecordNotFound) # rubocop:disable Rails/DynamicFindBy
         end
       end
 
@@ -203,13 +244,13 @@ RSpec.describe PGPKey, type: :model do
         let!(:pgp_key1) { create(:'pgp_key/pgp1@example.com', domain_alias: 'zammad.org') }
 
         it 'returns the correct key' do
-          expect(described_class.find_by_uid('nicole.braun@zammad.org')).to eq(pgp_key1) # rubocop:disable RSpec/DynamicFindBy
+          expect(described_class.find_by_uid('nicole.braun@zammad.org')).to eq(pgp_key1) # rubocop:disable Rails/DynamicFindBy
         end
       end
     end
   end
 
-  describe '.find_all_by_uid' do
+  describe '.find_all_by_uid', mariadb: true do
     let!(:pgp_key1) { create(:'pgp_key/pgp1@example.com', domain_alias: 'zammad.org') }
     let!(:pgp_key2) { create(:'pgp_key/pgp2@example.com', domain_alias: 'zammad.org') }
     let!(:pgp_key3) { create(:'pgp_key/pgp3@example.com', domain_alias: 'zammad.org') }

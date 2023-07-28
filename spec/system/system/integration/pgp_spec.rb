@@ -8,18 +8,18 @@ RSpec.describe 'Manage > Integration > PGP', type: :system do
   end
 
   describe 'adding a new key' do
-    let(:key_base)    { 'spec/fixtures/files/pgp/zammad@localhost' }
-    let(:key_private) { Rails.root.join("#{key_base}.asc").read }
-    let(:key_public)  { Rails.root.join("#{key_base}.pub.asc").read }
-    let(:passphrase)  { Rails.root.join("#{key_base}.passphrase").read }
-    let(:fingerprint) { Rails.root.join("#{key_base}.fingerprint").read }
+    let(:fixture)     { 'spec/fixtures/files/pgp/zammad@localhost' }
+    let(:key_private) { Rails.root.join("#{fixture}.asc").read }
+    let(:key_public)  { Rails.root.join("#{fixture}.pub.asc").read }
+    let(:passphrase)  { Rails.root.join("#{fixture}.passphrase").read }
+    let(:fingerprint) { Rails.root.join("#{fixture}.fingerprint").read }
     let(:keygrip)     { format('%s %s %s %s %s  %s %s %s %s %s', *fingerprint.scan(%r{.{1,4}})) } # rubocop:disable Style/FormatStringToken
 
     it 'adds a public key by uploading' do
       click '.js-addKey'
 
       in_modal do
-        find('[type=file]').attach_file "#{key_base}.pub.asc"
+        find('[type=file]').attach_file "#{fixture}.pub.asc"
 
         click '.js-submit'
       end
@@ -163,8 +163,22 @@ RSpec.describe 'Manage > Integration > PGP', type: :system do
       true
     end
 
-    it 'shows dash instead of a date' do
+    it 'shows a dash instead of a date' do
       expect(page).to have_css("tr[data-id='#{pgp_key.id}'] td:nth-child(5)", text: '-')
+    end
+  end
+
+  context 'when a key with multiple UIDs is present', authenticated_as: :authenticate do
+    let(:pgp_key) { create(:'pgp_key/multipgp2@example.com') }
+
+    def authenticate
+      pgp_key
+
+      true
+    end
+
+    it 'shows key name as the first column' do
+      expect(page).to have_css("tr[data-id='#{pgp_key.id}'] td:nth-child(1)", text: pgp_key.name)
     end
   end
 

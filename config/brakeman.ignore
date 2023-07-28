@@ -1,6 +1,29 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "063f14fd2a08a1f4e84872182bc50405b7c3fb292c8ec7d244bbdcda646862ba",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/pgp_key.rb",
+      "line": 32,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "PGPKey.where(([\"#{SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)} OR (? LIKE domain_alias)\", uid.downcase] or SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "PGPKey",
+        "method": "PGPKey.find_all_by_uid"
+      },
+      "user_input": "SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Helper functions already quote all DB values in returned SQL queries."
+    },
+    {
       "warning_type": "Redirect",
       "warning_code": 18,
       "fingerprint": "0af1d7942bf73ecd1eb5141ea3a80c32297d9e9f24e411eb2b346af686eef938",
@@ -821,6 +844,6 @@
       "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2023-07-24 08:55:53 +0200",
+  "updated": "2023-07-28 10:16:18 +0100",
   "brakeman_version": "6.0.1"
 }

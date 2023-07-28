@@ -36,6 +36,7 @@ RSpec.describe Tasks::Zammad::DB::Pgloader do
         let(:command_file_after) do
           <<~PGLOADER
             AFTER LOAD DO
+              $$ alter table pgp_keys alter column email_addresses type text[] using translate(email_addresses::text, '[]', '{}')::text[] $$,
               $$ alter table public_links alter column screen type text[] using translate(screen::text, '[]', '{}')::text[] $$
           PGLOADER
         end
@@ -47,6 +48,7 @@ RSpec.describe Tasks::Zammad::DB::Pgloader do
         let(:command_file_after) do
           <<~PGLOADER
             AFTER LOAD DO
+              $$ alter table pgp_keys alter column email_addresses type text[] using translate(email_addresses::text, '[]', '{}')::text[] $$,
               $$ alter table public_links alter column screen type text[] using translate(screen::text, '[]', '{}')::text[] $$,
               $$ alter table #{object.table_name} alter column multi_select type text[] using translate(multi_select::text, '[]', '{}')::text[] $$,
               $$ alter table #{object.table_name} alter column multi_tree_select type text[] using translate(multi_tree_select::text, '[]', '{}')::text[] $$

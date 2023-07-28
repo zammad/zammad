@@ -28,7 +28,7 @@ module Tasks
             ALTER SCHEMA '#{config['database']}' RENAME TO 'public'
 
             AFTER LOAD DO
-            #{public_links.concat(object_manager_attributes).join(",\n")}
+            #{pgp_keys.concat(public_links).concat(object_manager_attributes).join(",\n")}
 
             WITH BATCH CONCURRENCY = 1
             SET timezone = 'UTC'
@@ -107,11 +107,15 @@ module Tasks
           end
         end
 
+        def self.pgp_keys
+          [alter_table_command(PGPKey.table_name, 'email_addresses')]
+        end
+
         def self.public_links
           [alter_table_command(PublicLink.table_name, 'screen')]
         end
 
-        private_class_method :config, :url_credentials, :url_hostname, :url_path, :alter_table_command, :object_manager_attributes, :public_links
+        private_class_method :config, :url_credentials, :url_hostname, :url_path, :alter_table_command, :object_manager_attributes, :public_links, :pgp_keys
       end
     end
   end

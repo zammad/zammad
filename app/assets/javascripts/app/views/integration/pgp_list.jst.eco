@@ -21,7 +21,7 @@
     <% for key in @keys: %>
       <tr data-id="<%= key.id %>">
         <td>
-          <%= key.uids %>
+          <%= key.name %>
           <% if key.secret: %>
             <br><i><%- @T('Including private key.') %></i>
           <% end %>

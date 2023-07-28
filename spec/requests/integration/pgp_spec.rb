@@ -32,7 +32,13 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
       context 'with admin user' do
         it 'fetches key info' do
           expect(response).to have_http_status(:ok)
-          expect(json_response).to include('fingerprint' => pgp_key.fingerprint, 'uids' => pgp_key.uids, 'expires_at' => pgp_key.expires_at, 'secret' => false)
+          expect(json_response).to include(
+            'fingerprint'     => pgp_key.fingerprint,
+            'name'            => pgp_key.name,
+            'email_addresses' => pgp_key.email_addresses,
+            'expires_at'      => pgp_key.expires_at,
+            'secret'          => false
+          )
         end
       end
 
@@ -96,7 +102,13 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
       context 'with admin user' do
         it 'fetches key infos' do
           expect(response).to have_http_status(:ok)
-          expect(json_response.last).to include('fingerprint' => fingerprint, 'uids' => pgp_key.uids, 'expires_at' => pgp_key.expires_at, 'secret' => false)
+          expect(json_response.last).to include(
+            'fingerprint'     => fingerprint,
+            'name'            => pgp_key.name,
+            'email_addresses' => pgp_key.email_addresses,
+            'expires_at'      => pgp_key.expires_at,
+            'secret'          => false
+          )
         end
       end
 
@@ -117,8 +129,20 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
 
           it 'creates a new public key' do
             expect(response).to have_http_status(:created)
-            expect(json_response).to include('fingerprint' => fingerprint, 'uids' => 'zammad@localhost', 'expires_at' => '2033-07-02T13:02:07.000Z', 'secret' => false)
-            expect(PGPKey.last).to have_attributes(fingerprint: fingerprint, uids: 'zammad@localhost', expires_at: DateTime.parse('2033-07-02T13:02:07.000Z'), secret: false)
+            expect(json_response).to include(
+              'fingerprint'     => fingerprint,
+              'name'            => 'zammad@localhost',
+              'email_addresses' => ['zammad@localhost'],
+              'expires_at'      => '2033-07-02T13:02:07.000Z',
+              'secret'          => false
+            )
+            expect(PGPKey.last).to have_attributes(
+              fingerprint:     fingerprint,
+              name:            'zammad@localhost',
+              email_addresses: ['zammad@localhost'],
+              expires_at:      DateTime.parse('2033-07-02T13:02:07.000Z'),
+              secret:          false
+            )
             expect(PGPKey.count).to eq 1
           end
 
@@ -160,8 +184,20 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
 
           it 'creates only one key' do
             expect(response).to have_http_status(:created)
-            expect(json_response).to include('fingerprint' => fingerprint, 'uids' => 'zammad@localhost', 'expires_at' => '2033-07-02T13:02:07.000Z', 'secret' => true)
-            expect(PGPKey.last).to have_attributes(fingerprint: fingerprint, uids: 'zammad@localhost', expires_at: DateTime.parse('2033-07-02T13:02:07.000Z'), secret: true)
+            expect(json_response).to include(
+              'fingerprint'     => fingerprint,
+              'name'            => 'zammad@localhost',
+              'email_addresses' => ['zammad@localhost'],
+              'expires_at'      => '2033-07-02T13:02:07.000Z',
+              'secret'          => true
+            )
+            expect(PGPKey.last).to have_attributes(
+              fingerprint:     fingerprint,
+              name:            'zammad@localhost',
+              email_addresses: ['zammad@localhost'],
+              expires_at:      DateTime.parse('2033-07-02T13:02:07.000Z'),
+              secret:          true
+            )
             expect(PGPKey.count).to eq 1
           end
         end
@@ -186,8 +222,16 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
           expect(response).to have_http_status(:ok)
           expect(json_response).to eq(
             {
-              'encryption' => { 'comment' => 'The PGP key for %s was not found.', 'commentPlaceholders' => ['zammad@localhost'], 'success' => false },
-              'sign'       => { 'comment' => 'The PGP key for %s was not found.', 'commentPlaceholders' => ['zammad@localhost'], 'success' => false },
+              'encryption' => {
+                'comment'             => 'The PGP key for %s was not found.',
+                'commentPlaceholders' => ['zammad@localhost'],
+                'success'             => false,
+              },
+              'sign'       => {
+                'comment'             => 'The PGP key for %s was not found.',
+                'commentPlaceholders' => ['zammad@localhost'],
+                'success'             => false,
+              },
               'type'       => 'PGP',
             }
           )
@@ -201,8 +245,16 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
           expect(response).to have_http_status(:ok)
           expect(json_response).to eq(
             {
-              'encryption' => { 'comment' => 'The PGP keys for %s were found.', 'commentPlaceholders' => ['zammad@localhost'], 'success' => true },
-              'sign'       => { 'comment' => 'The PGP key for %s was found.', 'commentPlaceholders' => ['zammad@localhost'], 'success' => true },
+              'encryption' => {
+                'comment'             => 'The PGP keys for %s were found.',
+                'commentPlaceholders' => ['zammad@localhost'],
+                'success'             => true,
+              },
+              'sign'       => {
+                'comment'             => 'The PGP key for %s was found.',
+                'commentPlaceholders' => ['zammad@localhost'],
+                'success'             => true,
+              },
               'type'       => 'PGP',
             }
           )
