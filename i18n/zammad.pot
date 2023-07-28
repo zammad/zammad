@@ -10303,10 +10303,6 @@ msgstr ""
 msgid "Signature"
 msgstr ""
 
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Signature key expired."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Signature verification failed!"
 msgstr ""
@@ -11541,6 +11537,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The signature PGP key has expired."
 msgstr ""
 
 #: lib/secure_mailing/pgp/incoming.rb

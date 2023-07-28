@@ -85,7 +85,7 @@ module SecureMailing::PGP::Tool::Error
 
   class SecureMailing::PGP::Tool::Error::ExpiredKeySignature < StandardError
     def initialize(info)
-      msg = __('Signature key expired.')
+      msg = __('The signature PGP key has expired.')
       msg = "#{msg} #{info}" if info.present?
 
       super(msg)
