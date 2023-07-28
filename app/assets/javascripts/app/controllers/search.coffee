@@ -17,6 +17,8 @@ class App.Search extends App.Controller
   constructor: ->
     super
 
+    @savedOrderBy = {}
+
     current = App.TaskManager.get(@taskKey).state
     if current && current.query
       @query = current.query
@@ -68,7 +70,6 @@ class App.Search extends App.Controller
       @search(500, true)
 
   hide: ->
-    @saveOrderBy()
     if @table
       @table.hide()
 
@@ -127,7 +128,7 @@ class App.Search extends App.Controller
 
     # on other keys, show result
     @navigate "#search/#{encodeURIComponent(@searchInput.val())}"
-    @savedOrderBy = null
+    @savedOrderBy = {}
     @search(0)
 
   empty: =>
@@ -170,7 +171,6 @@ class App.Search extends App.Controller
       @$(".js-tab#{tab.model} .js-counter").text(count)
 
   showTab: (e) =>
-    @saveOrderBy()
     tabs = $(e.currentTarget).closest('.tabs')
     tabModel = $(e.currentTarget).data('tab-content')
     tabs.find('.js-tab').removeClass('active')
@@ -236,6 +236,7 @@ class App.Search extends App.Controller
       for item in localList
         ticket_ids.push item.id
       localeEl = @$('.js-content')
+      @table.releaseController() if @table
       @table = new App.TicketList(
         tableId:    "find_#{model}"
         el:         localeEl
@@ -243,8 +244,8 @@ class App.Search extends App.Controller
         ticket_ids: ticket_ids
         radio:      false
         checkbox:   checkbox
-        orderBy:        @getSavedOrderBy('Ticket')?.order
-        orderDirection: @getSavedOrderBy('Ticket')?.direction
+        orderBy:        @getSavedOrderBy()?.orderBy
+        orderDirection: @getSavedOrderBy()?.orderDirection
         bindRow:
           events:
             'click': openTicket
@@ -252,6 +253,7 @@ class App.Search extends App.Controller
           events:
             'click': callbackCheckbox
           select_all: callbackCheckbox
+        sortClickCallback: @saveOrderBy
       )
 
       updateSearch = =>
@@ -302,9 +304,11 @@ class App.Search extends App.Controller
       openObject = (id,e) =>
         object = App[@model].fullLocal(id)
         @navigate object.uiUrl()
+
+      @table.releaseController() if @table
       @table = new App.ControllerTable(
-        orderBy: @getSavedOrderBy(model)?.order
-        orderDirection: @getSavedOrderBy(model)?.direction
+        orderBy: @getSavedOrderBy()?.orderBy
+        orderDirection: @getSavedOrderBy()?.orderDirection
         tableId: "find_#{model}"
         el:      @$('.js-content')
         model:   App[model]
@@ -312,6 +316,7 @@ class App.Search extends App.Controller
         bindRow:
           events:
             'click': openObject
+        sortClickCallback: @saveOrderBy
       )
 
   updateTask: =>
@@ -336,18 +341,13 @@ class App.Search extends App.Controller
     allowed_group_ids = _.map(allowed_group_ids, (id_string) -> parseInt(id_string, 10) )
     _.every(ticket_group_ids, (id) -> id in allowed_group_ids)
 
-  getSavedOrderBy: (model) =>
-    return if !@savedOrderBy
+  getSavedOrderBy: =>
+    @savedOrderBy[@model]
 
-    @savedOrderBy[model]
+  saveOrderBy: (table) =>
+    return if !table
 
-  saveOrderBy: =>
-    return if !@table
-    table = @table.table || @table
-    model = table.model.name
-
-    @savedOrderBy ||= {}
-    @savedOrderBy[model] = { order: table.lastOrderBy, direction: table.lastOrderDirection }
+    @savedOrderBy[@model] = { orderBy: table.orderBy, orderDirection: table.orderDirection }
 
 class Router extends App.ControllerPermanent
   @requiredPermission: ['*']

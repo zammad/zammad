@@ -596,8 +596,6 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
 
       click_on 'Nico'
 
-      wait_for_rerender
-
       within('.table-column-head', text: 'TITLE') do
         expect(page).to have_css('.table-sort-arrow')
       end
@@ -621,8 +619,6 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
         find('.js-search').fill_in with: 'Nicole'
       end
 
-      wait_for_rerender
-
       within('.table-column-head', text: 'TITLE') do
         expect(page).to have_no_css('.table-sort-arrow')
       end
@@ -637,29 +633,8 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
         find('.js-search').fill_in with: 'Nicole'
       end
 
-      wait_for_rerender
-
       within('.table-column-head', text: 'TITLE') do
         expect(page).to have_no_css('.table-sort-arrow')
-      end
-    end
-
-    def wait_for_rerender
-      elem = find('.detail-search table')
-
-      wait.until do
-        elem.base.obscured?
-      rescue *page.driver.invalid_element_errors
-        true
-      rescue Selenium::WebDriver::Error::UnknownError => e
-        # Newer Chrome versions may return the following error for a missing element:
-        #
-        #   unknown error: unhandled inspector error: {"code":-32000,"message":"No node with given id found"}
-        #   (Session info: chrome=113.0.5672.126)"
-        #
-        #   This error is currently unrecognized by `Selenium::WebDriver.invalid_element_errors`,
-        #   so we make an explicit exception.
-        e.to_s.include? '"code":-32000'
       end
     end
   end

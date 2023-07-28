@@ -1140,6 +1140,8 @@ class App.ControllerTable extends App.Controller
     # update store
     @preferencesStore('order', 'customOrderBy', @orderBy)
     @preferencesStore('order', 'customOrderDirection', @orderDirection)
+    if @sortClickCallback
+      @sortClickCallback(@)
 
     if @sortRenderCallback
       App.QueueManager.add('tableRender', @sortRenderCallback)
