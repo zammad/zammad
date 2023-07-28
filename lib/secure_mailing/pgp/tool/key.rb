@@ -22,15 +22,17 @@ module SecureMailing::PGP::Tool::Key
       return result if result.stdout.present?
 
       error_export!(result.stderr, secret)
+
+      result
     end
 
     def passphrase(fingerprint, passphrase)
       options = %w[--dry-run]
 
       result = gpg('passwd', options: options, arguments: [fingerprint], passphrase: passphrase)
-      return result if result.stderr.blank?
-
       error_passphrase!(result.stderr)
+
+      result
     end
   end
 end
