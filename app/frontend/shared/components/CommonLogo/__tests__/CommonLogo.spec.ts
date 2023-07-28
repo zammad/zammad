@@ -10,7 +10,7 @@ describe('CommonLogo.vue', () => {
     const wrapper = renderComponent(CommonLogo, { store: true })
     const application = useApplicationStore()
 
-    application.config.product_logo = 1234
+    application.config.product_logo = '1234'
     application.config.product_name = 'Zammad Custom Logo'
 
     await nextTick()
@@ -29,13 +29,13 @@ describe('CommonLogo.vue', () => {
     const application = useApplicationStore()
 
     application.config.product_logo = 'logo.svg'
-    delete application.config.product_name
+    application.config.product_name = ''
 
     await nextTick()
 
     const img = wrapper.container.querySelector('img')
 
-    expect(img).not.toHaveAttribute('alt')
+    expect(img).toHaveAttribute('alt', '')
     expect(img).toHaveAttribute(
       'src',
       '/api/v1/system_assets/product_logo/logo.svg',

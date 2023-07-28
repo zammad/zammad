@@ -20,6 +20,9 @@ export const initializeStore = () => {
   })
   storeInitialized = true
   const app = useApplicationStore()
+  app.config.product_logo = 'logo.svg'
+  app.config.ui_ticket_overview_ticket_limit = 5
+  app.config.product_name = 'Zammad'
   app.config.api_path = '/api'
   return pinia
 }

@@ -43,6 +43,8 @@
     - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
     - echo "Checking .pot catalog consistency..."
     - bundle exec rails generate zammad:translation_catalog --check
+    - echo "Checking consistency of Settings types file..."
+    - bundle exec rails generate zammad:setting_types --check
     - echo "Brakeman security check..."
     - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
     - echo "Rails zeitwerk:check autoloader check..."

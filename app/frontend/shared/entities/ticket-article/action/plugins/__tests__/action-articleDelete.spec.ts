@@ -68,7 +68,9 @@ describe('article delete action', () => {
   })
 
   it('returns article delete for old article if delete timeframe is disabled', () => {
-    mockApplicationConfig({ ui_ticket_zoom_article_delete_timeframe: null })
+    mockApplicationConfig({
+      ui_ticket_zoom_article_delete_timeframe: undefined,
+    })
     setupView('agent')
     const { ticket } = defaultTicket({ update: true })
     const article = createDeletableArticle(

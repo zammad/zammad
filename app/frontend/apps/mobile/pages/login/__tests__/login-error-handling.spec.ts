@@ -7,12 +7,14 @@ import {
 import { LoginDocument } from '#shared/graphql/mutations/login.api.ts'
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 
 describe('testing login error handling', () => {
   beforeEach(() => {
     mockPublicLinks([])
     mockPublicLinksSubscription()
+    mockApplicationConfig({ product_name: 'Zammad' })
   })
 
   it('check required login fields', async () => {

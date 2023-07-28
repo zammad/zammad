@@ -17,7 +17,8 @@ const linkSchemaRaw = [
   {
     type: 'security',
     name: 'security',
-    label: 'Security Long Name Very long Not Truncated Oh no Please Its Too Long',
+    label:
+      'Security Long Name Very long Not Truncated Oh no Please Its Too Long',
     required: true,
     props: {
       securityAllowed: {

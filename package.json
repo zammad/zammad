@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "generate-graphql-api": "RAILS_ENV=development bundle exec rails generate zammad:graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml && rm tmp/graphql_introspection.json",
+    "generate-setting-types": "RAILS_ENV=development bundle exec rails generate zammad:setting_types",
     "dev": "RAILS_ENV=development forego start -f Procfile.dev",
     "dev:https": "VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -f Procfile.dev-https",
     "i18n": "rails generate zammad:translation_catalog",

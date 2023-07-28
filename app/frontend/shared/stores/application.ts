@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
 import type { ConfigList } from '#shared/types/store.ts'
@@ -77,7 +77,7 @@ export const useApplicationStore = defineStore(
       testFlags.set('applicationLoaded.loaded')
     }
 
-    const config = ref<ConfigList>({})
+    const config = ref<Record<string, unknown>>({})
 
     const initializeConfigUpdateSubscription = (): void => {
       const configUpdatesSubscription = new SubscriptionHandler(
@@ -130,7 +130,7 @@ export const useApplicationStore = defineStore(
       loaded,
       loading,
       setLoaded,
-      config,
+      config: config as unknown as Ref<ConfigList>,
       initializeConfigUpdateSubscription,
       getConfig,
       resetAndGetConfig,

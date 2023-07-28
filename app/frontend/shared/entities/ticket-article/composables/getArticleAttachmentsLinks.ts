@@ -16,7 +16,7 @@ export const getArticleAttachmentsLinks = (
 ) => {
   const buildBaseUrl = () => {
     const { ticketInternalId, articleInternalId, internalId } = attachment
-    const apiUrl = config.api_path as string
+    const apiUrl = config.api_path
     return `${apiUrl}/ticket_attachment/${ticketInternalId}/${articleInternalId}/${internalId}`
   }
   const buildPreviewUrl = (baseUrl: string) => `${baseUrl}?view=preview`

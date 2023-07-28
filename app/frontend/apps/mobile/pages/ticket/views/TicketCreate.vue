@@ -305,8 +305,9 @@ const redirectAfterCreate = (internalId?: number) => {
 
 const securityIntegration = computed<boolean>(
   () =>
-    ((application.config.smime_integration ||
-      application.config.pgp_integration) as boolean) ?? false,
+    (application.config.smime_integration ||
+      application.config.pgp_integration) ??
+    false,
 )
 
 const { notify } = useNotifications()

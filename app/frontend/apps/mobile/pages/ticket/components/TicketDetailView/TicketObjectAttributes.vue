@@ -25,7 +25,7 @@ const timeAccountingDisplayUnit = computed(() => {
     case 'minute':
       return __('minute(s)')
     case 'custom':
-      return application.config.time_accounting_unit_custom as string
+      return application.config.time_accounting_unit_custom
     default:
       return ''
   }
