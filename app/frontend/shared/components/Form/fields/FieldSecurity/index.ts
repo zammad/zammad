@@ -5,6 +5,7 @@ import FieldSecurity from './FieldSecurity.vue'
 
 const fieldDefinition = createInput(FieldSecurity, [
   'securityAllowed',
+  'securityDefaultOptions',
   'securityMessages',
 ])
 

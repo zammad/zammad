@@ -9,10 +9,11 @@ import { i18n } from '#shared/i18n.ts'
 import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
 import useValue from '../../composables/useValue.ts'
 import type {
+  SecurityAllowed,
+  SecurityDefaultOptions,
+  SecurityMessages,
   SecurityOption,
   SecurityValue,
-  SecurityMessages,
-  SecurityAllowed,
 } from './types.ts'
 import { EnumSecurityStateType } from './types.ts'
 import type { FormFieldContext } from '../../types/field.ts'
@@ -21,6 +22,7 @@ interface FieldSecurityProps {
   context: FormFieldContext<{
     disabled?: boolean
     securityAllowed?: SecurityAllowed
+    securityDefaultOptions?: SecurityDefaultOptions
     securityMessages?: SecurityMessages
   }>
 }
@@ -125,9 +127,12 @@ const tooltipMessages = computed(() => {
   return messages
 })
 
+const defaultOptions = (method: EnumSecurityStateType) =>
+  props.context.securityDefaultOptions?.[method] || []
+
 const changeSecurityState = (method: EnumSecurityStateType) => {
-  // remove unsupported options
-  const newOptions = filterOptions(method, localValue.value?.options || [])
+  // Reset the default behavior of the chosen method and remove unsupported options.
+  const newOptions = filterOptions(method, defaultOptions(method))
   localValue.value = {
     method,
     options: newOptions,

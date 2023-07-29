@@ -28,12 +28,17 @@ module FormUpdater::Concerns::HasSecurityOptions
 
   def map_result(target, type, result_method, mapped_type)
     push_to_sub_array(target, [:securityAllowed, type], mapped_type, result_method.possible?)
-    target[:value] ||= {}
-    if !target[:value]['method'] || target[:value]['method'] == type
-      target[:value]['method'] ||= type
-      push_to_sub_array(target, [:value, 'options'], mapped_type, result_method.active_by_default?)
-    end
+    push_to_sub_array(target, [:securityDefaultOptions, type], mapped_type, result_method.active_by_default?)
+    initialize_value(target, type, result_method, mapped_type)
     set_sub_hash(target, [:securityMessages, type, mapped_type], map_message(result_method), result_method.message.present?)
+  end
+
+  def initialize_value(target, type, result_method, mapped_type)
+    target[:value] ||= {}
+    return if target[:value]['method'] && target[:value]['method'] != type
+
+    target[:value]['method'] ||= type
+    push_to_sub_array(target, [:value, 'options'], mapped_type, result_method.active_by_default?)
   end
 
   def map_message(result_method)

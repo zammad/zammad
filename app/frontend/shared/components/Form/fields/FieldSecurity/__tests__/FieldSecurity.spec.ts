@@ -27,6 +27,10 @@ describe('FieldSecurity', () => {
         [EnumSecurityStateType.Pgp]: ['encryption', 'sign'],
         [EnumSecurityStateType.Smime]: ['encryption', 'sign'],
       },
+      securityDefaultOptions: {
+        [EnumSecurityStateType.Pgp]: ['encryption', 'sign'],
+        [EnumSecurityStateType.Smime]: ['encryption', 'sign'],
+      },
     })
 
     const node = getNode('security')!
@@ -64,7 +68,7 @@ describe('FieldSecurity', () => {
 
     expect(node.context?._value).toEqual({
       method: EnumSecurityStateType.Pgp,
-      options: ['encryption'],
+      options: ['encryption', 'sign'],
     })
   })
 
@@ -114,6 +118,10 @@ describe('FieldSecurity', () => {
     const view = renderSecurityField({
       securityAllowed: {
         [EnumSecurityStateType.Smime]: ['encryption', 'sign'],
+        [EnumSecurityStateType.Pgp]: ['sign'],
+      },
+      securityDefaultOptions: {
+        [EnumSecurityStateType.Smime]: ['sign'],
         [EnumSecurityStateType.Pgp]: ['sign'],
       },
     })

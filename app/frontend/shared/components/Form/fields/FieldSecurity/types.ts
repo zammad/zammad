@@ -6,6 +6,7 @@ export { EnumSecurityStateType } from '#shared/graphql/types.ts'
 
 export type SecurityOption = 'encryption' | 'sign'
 export type SecurityAllowed = Record<EnumSecurityStateType, SecurityOption[]>
+export type SecurityDefaultOptions = SecurityAllowed
 export type SecurityValue =
   | { method: EnumSecurityStateType; options: SecurityOption[] }
   | null
