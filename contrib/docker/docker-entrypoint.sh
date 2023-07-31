@@ -110,11 +110,9 @@ if [ "$1" = 'zammad-init' ]; then
 
   # chown var
   chown -R zammad:zammad "${ZAMMAD_DIR}/var"
-fi
-
 
 # zammad nginx
-if [ "$1" = 'zammad-nginx' ]; then
+elif [ "$1" = 'zammad-nginx' ]; then
   check_zammad_ready
 
   # configure nginx
@@ -128,35 +126,33 @@ if [ "$1" = 'zammad-nginx' ]; then
   echo "starting nginx..."
 
   exec /usr/sbin/nginx -g 'daemon off;'
-fi
-
 
 # zammad-railsserver
-if [ "$1" = 'zammad-railsserver' ]; then
+elif [ "$1" = 'zammad-railsserver' ]; then
   check_zammad_ready
 
   echo "starting railsserver... with WEB_CONCURRENCY=${ZAMMAD_WEB_CONCURRENCY}"
 
   #shellcheck disable=SC2101
   exec bundle exec puma -b tcp://[::]:"${ZAMMAD_RAILSSERVER_PORT}" -w "${ZAMMAD_WEB_CONCURRENCY}" -e "${RAILS_ENV}"
-fi
-
 
 # zammad-scheduler
-if [ "$1" = 'zammad-scheduler' ]; then
+elif [ "$1" = 'zammad-scheduler' ]; then
   check_zammad_ready
 
   echo "starting background services..."
 
   exec bundle exec script/background-worker.rb start
-fi
-
 
 # zammad-websocket
-if [ "$1" = 'zammad-websocket' ]; then
+elif [ "$1" = 'zammad-websocket' ]; then
   check_zammad_ready
 
   echo "starting websocket server..."
 
   exec bundle exec script/websocket-server.rb -b 0.0.0.0 -p "${ZAMMAD_WEBSOCKET_PORT}" start
+
+# Pass all other container commands to shell
+else
+  exec "$@"
 fi
