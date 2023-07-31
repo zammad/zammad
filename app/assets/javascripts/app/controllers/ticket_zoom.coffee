@@ -453,6 +453,9 @@ class App.TicketZoom extends App.Controller
 
     @delay @pendingTimeReminderReached, delay, 'pendingTimeReminderDelay'
 
+  articleParams: =>
+    return @articleNew?.params()
+
   render: (local) =>
     @setPendingTimeReminderDelay()
 
@@ -557,6 +560,7 @@ class App.TicketZoom extends App.Controller
         tags:         @tags
         mentions:     @mentions
         links:        @links
+        parent:       @
       )
 
     # render init content
@@ -842,7 +846,7 @@ class App.TicketZoom extends App.Controller
       return
 
     ticketParams = @ticketParams()
-    articleParams = @articleNew.params()
+    articleParams = @articleParams()
 
     # validate ticket
     # we need to use the full ticket because
@@ -895,9 +899,11 @@ class App.TicketZoom extends App.Controller
         @autosaveStart()
         return
 
+    editContollerForm = @sidebarWidget?.get('100-TicketEdit')?.edit?.controllerFormSidebarTicket
+
     # validate ticket by model
     errors = ticket.validate(
-      controllerForm: @sidebarWidget?.get('100-TicketEdit')?.edit?.controllerFormSidebarTicket
+      controllerForm: editContollerForm
       target: e.target
     )
     if errors
@@ -937,27 +943,7 @@ class App.TicketZoom extends App.Controller
       return
 
     # verify if time accounting is enabled
-    if @Config.get('time_accounting') isnt true
-      @submitPost(e, ticket, macro)
-      return
-
-    # verify if time accounting is active for ticket
-    selector                 = ticket.clone()
-    selector.tags            = @tags
-    # always have a empy value to make sure that the condition gets checked
-    selector.mentions        = ['']
-    for id in @mentions
-      mention = App.Mention.find(id)
-      continue if !mention
-      selector.mentions.push(mention.user_id)
-
-    time_accounting_selector = @Config.get('time_accounting_selector')
-    if !App.Ticket.selector(selector, time_accounting_selector['condition'])
-      @submitPost(e, ticket, macro)
-      return
-
-    # time tracking
-    if ticket.currentView() is 'customer'
+    if !editContollerForm.getFlag('time_accounting')
       @submitPost(e, ticket, macro)
       return
 

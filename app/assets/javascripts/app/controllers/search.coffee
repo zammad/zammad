@@ -235,6 +235,7 @@ class App.Search extends App.Controller
       ticket_ids = []
       for item in localList
         ticket_ids.push item.id
+
       localeEl = @$('.js-content')
       @table.releaseController() if @table
       @table = new App.TicketList(

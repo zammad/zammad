@@ -27,6 +27,24 @@ class App.TicketCreate extends App.Controller
     }
   }
 
+  articleSenderTypeMap: {
+    'phone-in':
+      sender:  'Customer'
+      article: 'phone'
+      title:   __('Inbound Call')
+      screen:  'create_phone_in'
+    'phone-out':
+      sender:  'Agent'
+      article: 'phone'
+      title:   __('Outbound Call')
+      screen:  'create_phone_out'
+    'email-out':
+      sender:  'Agent'
+      article: 'email'
+      title:   __('Email')
+      screen:  'create_email_out'
+  }
+
   constructor: (params) ->
     super
     @sidebarState = {}
@@ -41,9 +59,9 @@ class App.TicketCreate extends App.Controller
     if !_.contains(@availableTypes, @defaultType)
       @defaultType = @availableTypes[0]
 
-    @formId = App.ControllerForm.formId()
-
-    @queueKey = "TicketCreate#{@taskKey}"
+    @formId            = App.ControllerForm.formId()
+    @queueKey          = "TicketCreate#{@taskKey}"
+    @articleAttributes = @articleSenderTypeMap[@currentChannel()]
 
     # remember split info if exists
     @split = ''
@@ -112,23 +130,7 @@ class App.TicketCreate extends App.Controller
     selectedTab.addClass('active')
 
     # set form type attributes
-    articleSenderTypeMap =
-      'phone-in':
-        sender:  'Customer'
-        article: 'phone'
-        title:   __('Inbound Call')
-        screen:  'create_phone_in'
-      'phone-out':
-        sender:  'Agent'
-        article: 'phone'
-        title:   __('Outbound Call')
-        screen:  'create_phone_out'
-      'email-out':
-        sender:  'Agent'
-        article: 'email'
-        title:   __('Email')
-        screen:  'create_email_out'
-    @articleAttributes = articleSenderTypeMap[type]
+    @articleAttributes = @articleSenderTypeMap[type]
 
     # update form
     @$('[name="formSenderType"]').val(type)
@@ -520,6 +522,7 @@ class App.TicketCreate extends App.Controller
         'change [data-attribute-name=organization_id] .js-input': @localUserInfo
       richTextUploadRenderCallback: @updateTaskManagerAttachments
       richTextUploadDeleteCallback: @updateTaskManagerAttachments
+      articleParamsCallback: @articleParams
     )
 
     # convert remote images into data urls
@@ -622,6 +625,55 @@ class App.TicketCreate extends App.Controller
   hasAttachments: =>
     @$('.richtext .attachments .attachment').length > 0
 
+  articleParams: =>
+    params = @params()
+
+    # find sender_id
+    sender = App.TicketArticleSender.findByAttribute('name', @articleAttributes['sender'])
+    type   = App.TicketArticleType.findByAttribute('name', @articleAttributes['article'])
+
+    group = undefined
+    if params.group_id
+      group  = App.Group.find(params.group_id)
+
+    # create article
+    article = {}
+    if sender.name is 'Customer'
+      article = {
+        to:           (group && group.name) || ''
+        from:         params.customer_id_completion
+        cc:           params.cc
+        subject:      params.subject
+        body:         params.body
+        type_id:      type.id
+        sender_id:    sender.id
+        form_id:      @formId
+        content_type: 'text/html'
+      }
+    else
+      article = {
+        from:         (group && group.name) || ''
+        to:           params.customer_id_completion
+        cc:           params.cc
+        subject:      params.subject
+        body:         params.body
+        type_id:      type.id
+        sender_id:    sender.id
+        form_id:      @formId
+        content_type: 'text/html'
+      }
+
+    # add security params
+    if @securityOptionsShown()
+      article.preferences ||= {}
+      article.preferences.security = @paramsSecurity()
+
+    # allow cc only on email tickets
+    if @currentChannel() isnt 'email-out'
+      delete article.cc
+
+    article
+
   submit: (e) =>
     e.preventDefault()
 
@@ -635,53 +687,14 @@ class App.TicketCreate extends App.Controller
     # create ticket
     ticket = new App.Ticket
 
-    # find sender_id
-    sender = App.TicketArticleSender.findByAttribute('name', @articleAttributes['sender'])
-    type   = App.TicketArticleType.findByAttribute('name', @articleAttributes['article'])
-
-    if params.group_id
-      group  = App.Group.find(params.group_id)
-
     # add linked objects if ticket got splited
     if @ticket_id
       params['links'] =
         Ticket:
           child: [@ticket_id]
 
-    # allow cc only on email tickets
-    if @currentChannel() isnt 'email-out'
-      delete params.cc
-
     # create article
-    if sender.name is 'Customer'
-      params.article = {
-        to:           (group && group.name) || ''
-        from:         params.customer_id_completion
-        cc:           params.cc
-        subject:      params.subject
-        body:         params.body
-        type_id:      type.id
-        sender_id:    sender.id
-        form_id:      @formId
-        content_type: 'text/html'
-      }
-    else
-      params.article = {
-        from:         (group && group.name) || ''
-        to:           params.customer_id_completion
-        cc:           params.cc
-        subject:      params.subject
-        body:         params.body
-        type_id:      type.id
-        sender_id:    sender.id
-        form_id:      @formId
-        content_type: 'text/html'
-      }
-
-      # add security params
-      if @securityOptionsShown()
-        params.article.preferences ||= {}
-        params.article.preferences.security = @paramsSecurity()
+    params.article = @articleParams()
 
     ticket.load(params)
 

@@ -23,6 +23,24 @@ class CoreWorkflow::Condition::Backend
     Array(@condition['value']).map(&:to_s)
   end
 
+  def time_modifier
+    if ['before (relative)', 'within last (relative)', 'from (relative)'].include?(@condition['operator'])
+      -1
+    else
+      1
+    end
+  end
+
+  def condition_times
+    return condition_value.map { |v| TimeRangeHelper.relative(range: @condition['range'], value: time_modifier * v.to_i) } if @condition['range']
+
+    condition_value.map { |v| Time.zone.parse(v) }
+  end
+
+  def value_times
+    value.map { |v| Time.zone.parse(v) }
+  end
+
   def match
     false
   end

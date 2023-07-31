@@ -1005,6 +1005,10 @@ returns a hex color code
     '#000000'
   end
 
+  def mention_user_ids
+    mentions.pluck(:user_id)
+  end
+
   private
 
   def check_generate

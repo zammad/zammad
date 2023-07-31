@@ -2,11 +2,11 @@
 
 class CoreWorkflow::Custom::TicketDuplicateDetection < CoreWorkflow::Custom::Backend
   def saved_attribute_match?
-    ticket_create? && enabled? && run_once? && any_attribute_match?
+    @saved_attribute_match ||= ticket_create? && enabled? && run_once? && any_attribute_match?
   end
 
   def selected_attribute_match?
-    ticket_create? && enabled? && run_once? && any_attribute_match?
+    saved_attribute_match?
   end
 
   def ticket_create?
@@ -72,10 +72,6 @@ class CoreWorkflow::Custom::TicketDuplicateDetection < CoreWorkflow::Custom::Bac
 
   def ticket_limit
     10
-  end
-
-  def current_user
-    @result_object.user
   end
 
   def search_tickets

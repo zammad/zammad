@@ -9,6 +9,8 @@ class App.ControllerForm extends App.Controller
     for key, value of params
       @[key] = value
 
+    @flags = {}
+
     if !@handlers
       @handlers = [ App.FormHandlerCoreWorkflow.run ]
     else
@@ -52,6 +54,10 @@ class App.ControllerForm extends App.Controller
 
     @finishForm = true
     @form
+
+  runCoreWorkflow: (attribute) ->
+    params = App.ControllerForm.params(@form)
+    App.FormHandlerCoreWorkflow.run(params, attribute, @attributes, @idPrefix, @form, @)
 
   dispatchHandlers: =>
     params = App.ControllerForm.params(@form)
@@ -364,6 +370,12 @@ class App.ControllerForm extends App.Controller
         @.hide(attribute.name, fullItem)
 
       return fullItem
+
+  getFlag: (key) ->
+    @flags[key]
+
+  setFlag: (key, value) ->
+    @flags[key] = value
 
   @findFieldByName: (key, el) ->
     return el.find('[name="' + key + '"]')

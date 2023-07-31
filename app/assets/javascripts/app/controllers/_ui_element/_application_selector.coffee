@@ -472,7 +472,10 @@ class App.UiElement.ApplicationSelector
     currentPreCondition = elementRow.find('.js-preCondition option:selected').attr('value')
 
     if !meta.pre_condition
-      meta.pre_condition = currentPreCondition
+      if currentPreCondition
+        meta.pre_condition = currentPreCondition
+      else if !_.isEmpty(meta.value)
+        meta.pre_condition = 'specific'
 
     toggleValue = =>
       preCondition = elementRow.find('.js-preCondition option:selected').attr('value')
@@ -512,12 +515,14 @@ class App.UiElement.ApplicationSelector
       if attributeConfig.noCurrentUser isnt true
         options['current_user.id'] = App.i18n.translateInline('current user')
       options['specific'] = App.i18n.translateInline('specific user')
-      options['not_set'] = App.i18n.translateInline('not set (not defined)')
+      if attributeConfig.noNotSet isnt true
+        options['not_set'] = App.i18n.translateInline('not set (not defined)')
     else if preCondition is 'org'
       if attributeConfig.noCurrentUser isnt true
         options['current_user.organization_id'] = App.i18n.translateInline('current user organization')
       options['specific'] = App.i18n.translateInline('specific organization')
-      options['not_set'] = App.i18n.translateInline('not set (not defined)')
+      if attributeConfig.noNotSet isnt true
+        options['not_set'] = App.i18n.translateInline('not set (not defined)')
 
     for key, value of options
       selected = ''
@@ -581,7 +586,8 @@ class App.UiElement.ApplicationSelector
     #   - has changed
     #   - has reached
     #   - has reached warning
-    if /^has\s(changed|reached(\swarning)?)$/.test(meta.operator)
+    #   - changed to
+    if _.contains(['has reached', 'has reached warning', 'has changed', 'not set', 'is set'], meta.operator)
       elementRow.find('.js-value').addClass('hide')
       elementRow.find('.js-preCondition').closest('.controls').addClass('hide')
     else

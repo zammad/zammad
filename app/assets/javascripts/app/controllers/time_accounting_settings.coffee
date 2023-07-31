@@ -23,7 +23,7 @@ class App.TimeAccountingSettings extends App.Controller
     )
 
     configure_attributes = [
-      { name: 'condition',  display: __('Conditions for affected objects'), tag: 'ticket_selector_simple', null: false, preview: false, action: false, hasChanged: false },
+      { name: 'condition',  display: __('Conditions for affected objects'), tag: 'time_accouting_condition', workflow_object: 'Ticket', disable_operators: ['has changed', 'changed to'], null: false, preview: false },
     ]
 
     filter_params = App.Setting.get('time_accounting_selector')

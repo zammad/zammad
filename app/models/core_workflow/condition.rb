@@ -20,6 +20,9 @@ class CoreWorkflow::Condition
 
   def condition_key_value_object(key_split)
     case key_split[0]
+    when 'article'
+      key_split.shift
+      obj = @attribute_object.article
     when 'session'
       key_split.shift
       obj = user
@@ -32,35 +35,87 @@ class CoreWorkflow::Condition
     obj
   end
 
+  def condition_key_value_tags(attribute, obj)
+    return if !obj.instance_of?(Ticket)
+    return if attribute != 'tags'
+
+    params_tags = payload.dig('params', 'tags')
+    tags        = obj.try(:tag_list)
+
+    if @check == 'selected'
+      tags += if params_tags.is_a?(Array)
+                params_tags
+              else
+                params_tags.to_s.split(', ')
+              end
+    end
+    tags
+  end
+
+  def condition_key_value_group_permissions(attribute, obj)
+    return if !obj.instance_of?(User)
+    return if attribute !~ %r{^group_ids_(full|create|change|read|overview)$}
+
+    obj.group_ids_access($1)
+  end
+
+  def condition_key_value_obj(attribute, obj)
+    obj.try(attribute.to_sym)
+  end
+
   def condition_key_value(key)
     return Array(key) if key == 'custom.module'
 
     key_split = key.split('.')
     obj       = condition_key_value_object(key_split)
     key_split.each do |attribute|
-      if obj.instance_of?(User) && attribute =~ %r{^group_ids_(full|create|change|read|overview)$}
-        obj = obj.group_ids_access($1)
-        break
-      end
-
-      obj = obj.try(attribute.to_sym)
-      break if obj.blank?
+      obj = condition_key_value_tags(attribute, obj) || condition_key_value_group_permissions(attribute, obj) || condition_key_value_obj(attribute, obj)
     end
 
     condition_value_result(obj)
   end
 
   def condition_value_result(obj)
-    Array(obj).map(&:to_s).map(&:html2text)
+    Array.wrap(obj).map(&:to_s).map(&:html2text)
   end
 
   def condition_value_match?(key, condition, value)
-    "CoreWorkflow::Condition::#{condition['operator'].tr(' ', '_').camelize}".constantize&.new(condition_object: self, result_object: result_object, key: key, condition: condition, value: value)&.match
+    "CoreWorkflow::Condition::#{condition['operator'].tr(' ()', '_').camelize}".constantize&.new(condition_object: self, result_object: result_object, key: key, condition: condition, value: value)&.match
+  end
+
+  def pre_condition(condition)
+    pre_condition_current_user(condition)
+    pre_condition_not_set(condition)
+  end
+
+  def pre_condition_current_user(condition)
+    return if condition['pre_condition'] != 'current_user.id'
+
+    condition['value'] = [user.id.to_s]
+  end
+
+  def pre_condition_not_set(condition)
+    return if condition['pre_condition'] != 'not_set'
+
+    condition['operator'] = 'not_set'
   end
 
   def condition_match?(key, condition)
+    pre_condition(condition)
     value_key = condition_key_value(key)
     condition_value_match?(key, condition, value_key)
+  end
+
+  def condition_selector_match?(selector)
+    result = true
+    selector.each do |key, value|
+      next if condition_match?(key, value)
+
+      result = false
+
+      break
+    end
+    result
   end
 
   def condition_attributes_match?(check)
@@ -69,16 +124,7 @@ class CoreWorkflow::Condition
     condition = @workflow.send(:"condition_#{@check}")
     return true if condition.blank?
 
-    result = true
-    condition.each do |key, value|
-      next if condition_match?(key, value)
-
-      result = false
-
-      break
-    end
-
-    result
+    condition_selector_match?(condition)
   end
 
   def object_match?

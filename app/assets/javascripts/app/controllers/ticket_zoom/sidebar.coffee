@@ -39,6 +39,7 @@ class App.TicketZoomSidebar extends App.ControllerObserver
           tags:     @tags
           mentions: @mentions
           links:    @links
+          parent:   @parent
         )
       else
         @sidebarBackends[key].reload(
@@ -49,6 +50,7 @@ class App.TicketZoomSidebar extends App.ControllerObserver
           tags:     @tags
           mentions: @mentions
           links:    @links
+          parent:   @parent
         )
       @sidebarItems.push @sidebarBackends[key]
 

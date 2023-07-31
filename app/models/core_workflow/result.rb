@@ -133,6 +133,11 @@ class CoreWorkflow::Result
     run_backend(field, perform_config, skip_rerun: skip_rerun)
   end
 
+  def change_flags(flags)
+    @result[:flags] ||= {}
+    @result[:flags] = @result[:flags].merge(flags)
+  end
+
   def match_workflow(workflow)
     @result[:matched_workflows] |= Array(workflow.id)
   end

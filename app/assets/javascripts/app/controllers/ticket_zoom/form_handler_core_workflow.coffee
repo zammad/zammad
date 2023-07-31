@@ -233,6 +233,13 @@ class App.FormHandlerCoreWorkflow
       else
         ui.changeable(field, form)
 
+  # changes flags
+  @changeFlags: (form, ui, data) ->
+    return if _.isEmpty(data)
+
+    for key, value of data
+      ui.setFlag(key, value)
+
   # executes individual js commands of the Core Workflow engine
   @executeEval: (form, ui, data) ->
     return if _.isEmpty(data)
@@ -254,6 +261,7 @@ class App.FormHandlerCoreWorkflow
     App.FormHandlerCoreWorkflow.changeVisibility(form, ui, data.visibility)
     App.FormHandlerCoreWorkflow.changeMandatory(form, ui, data.mandatory, data.visibility)
     App.FormHandlerCoreWorkflow.changeReadonly(form, ui, data.readonly)
+    App.FormHandlerCoreWorkflow.changeFlags(form, ui, data.flags)
     App.FormHandlerCoreWorkflow.executeEval(form, ui, data.eval)
     App.FormHandlerCoreWorkflow.runCallbacks(ui)
 
@@ -296,7 +304,7 @@ class App.FormHandlerCoreWorkflow
   @cleanParams: (params_ref) ->
     params = $.extend(true, {}, params_ref)
     delete params.customer_id_completion
-    delete params.tags
+    delete params.body
     delete params.formSenderType
     return params
 
@@ -344,6 +352,10 @@ class App.FormHandlerCoreWorkflow
 
     # get params and add id from ui if needed
     params = App.FormHandlerCoreWorkflow.cleanParams(params_ref)
+    if ui.articleParamsCallback
+      params.article = ui.articleParamsCallback()
+      if params.article?.body
+        params.article.body = App.Utils.html2text(params.article.body)
 
     # add object id for edit screens
     if ui?.params?.id && ui.screen.match(/edit/)

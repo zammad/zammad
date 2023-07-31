@@ -27,6 +27,7 @@ class App.TicketZoomArticleNew extends App.Controller
     'click .list-entry-type div':    'changeType'
     'focus .js-textarea':            'openTextarea'
     'input .js-textarea':            'updateLetterCount'
+    'blur .js-textarea':             'blurTextarea'
     'click .js-active-toggle':       'toggleButton'
     'click .js-active-toggle-type':  'toggleTypeButton'
 
@@ -362,6 +363,7 @@ class App.TicketZoomArticleNew extends App.Controller
         @setArticleInternal(false)
 
     @textarea.trigger('change.local')
+    App.Event.trigger('ui::ticket::articleNew::change', { ticket_id: @ticket.id })
 
   showSelectableArticleType: (event) =>
     event.stopPropagation()
@@ -374,6 +376,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @setArticleTypePre(articleTypeToSet)
     @hideSelectableArticleType()
     @setArticleTypePost(articleTypeToSet)
+    App.Event.trigger('ui::ticket::articleNew::change', { ticket_id: @ticket.id })
 
     $(window).off('click.ticket-zoom-select-type')
     @tokanice(articleTypeToSet)
@@ -512,6 +515,9 @@ class App.TicketZoomArticleNew extends App.Controller
       .text textLength
       .removeClass 'label-danger label-warning'
       .addClass className
+
+  blurTextarea: =>
+    App.Event.trigger('ui::ticket::articleNew::change', { ticket_id: @ticket.id })
 
   updateInitials: (value) =>
     if value is undefined

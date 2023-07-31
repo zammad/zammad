@@ -1,12 +1,20 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSelector
   @defaults: (attribute = {}, params = {}) ->
+    attribute.noNotSet = true
+
     defaults = []
+    if !@hasEmptySelectorAtStart()
+      defaults = ['ticket.state_id']
 
     groups =
       ticket:
         name: __('Ticket')
         model: 'Ticket'
+        model_show: ['Ticket']
+      article:
+        name: __('Article')
+        model: 'TicketArticle'
         model_show: ['Ticket']
       group:
         name: __('Group')
@@ -48,19 +56,34 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
         continue if _.contains(data.model_show, currentObject)
         delete groups[key]
 
+    if attribute.disable_objects
+      for key in attribute.disable_objects
+        delete groups[key]
+
     operatorsType =
+      '^datetime$': [__('today'), __('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)')]
+      '^timestamp$': [__('today'), __('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)')]
+      '^date$': [__('today'), 'before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
       'active$': [__('is')]
       'boolean$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       'integer$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      'radio$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^select$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^multiselect$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^tree_select$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^multi_tree_select$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^(input|textarea|richtext)$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to'), __('regex match'), __('regex mismatch')]
+      '^(input|textarea|richtext)$': [__('is'), __('is not'), __('starts with'), __('ends with'), __('regex match'), __('regex mismatch'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
 
     operatorsName =
       '_id$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '_ids$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+
+    if attribute.disable_operators
+      for key, value of operatorsType
+        operatorsType[key] = _.filter(value, (v) -> !_.contains(attribute.disable_operators, v))
+      for key, value of operatorsName
+        operatorsName[key] = _.filter(value, (v) -> !_.contains(attribute.disable_operators, v))
 
     # merge config
     elements = {}
@@ -151,15 +174,12 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       attributesByObject = App.ObjectManagerAttribute.selectorAttributesByObject()
       configureAttributes = attributesByObject[groupMeta.model] || []
       for config in configureAttributes
-        continue if !_.contains(['input', 'textarea', 'richtext', 'multiselect', 'select', 'integer', 'boolean', 'active', 'multi_tree_select', 'tree_select', 'autocompletion_ajax'], config.tag)
-        continue if groupKey is 'ticket' && _.contains(['number', 'title'], config.name)
-
         # ignore passwords and relations
         if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
           config.default  = undefined
           if config.type is 'email' || config.type is 'tel' || config.type is 'url'
             config.type = 'text'
-          if config.tag.match(/^(tree_)?select$/)
+          if config.tag && config.tag.match(/^(tree_)?select$/)
             config.multiple = true
           for operatorRegEx, operator of operatorsType
             myRegExp = new RegExp(operatorRegEx, 'i')
@@ -172,20 +192,16 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
               config.operator = operator
             elements["#{groupKey}.#{config.name}"] = config
 
+    elements['ticket.mention_user_ids'] =
+      name: 'mention_user_ids'
+      display: __('Subscribe')
+      tag: 'autocompletion_ajax'
+      relation: 'User'
+      null: false
+      translate: true
+      operator: [__('is'), __('is not')]
+
     [defaults, groups, elements]
-
-  @buildValue: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
-    currentOperator = elementRow.find('.js-operator option:selected').attr('value')
-    name            = @buildValueName(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
-
-    if _.contains(['is set', 'not set', 'has changed'], currentOperator)
-      elementRow.find('.js-value').addClass('hide').html('<input type="hidden" name="' + name + '" value="true" />')
-      return
-
-    super(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
-
-  @HasPreCondition: ->
-    return false
 
   @hasEmptySelectorAtStart: ->
     return true
