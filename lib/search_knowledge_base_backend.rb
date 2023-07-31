@@ -182,11 +182,21 @@ class SearchKnowledgeBaseBackend
     }
   end
 
+  def options_apply_query_fields(hash)
+    return if flavor == :agent
+
+    hash[:query_fields_by_indexes] = {
+      'KnowledgeBase::Answer::Translation':   %w[title content.body attachment.content tags],
+      'KnowledgeBase::Category::Translation': %w[title],
+      'KnowledgeBase::Translation':           %w[title]
+    }
+  end
+
   def options_apply_highlight(hash)
     return if !@params.fetch(:highlight_enabled, true)
 
     hash[:highlight_fields_by_indexes] = {
-      'KnowledgeBase::Answer::Translation':   %w[title content.body attachment.content tags],
+      'KnowledgeBase::Answer::Translation':   %w[title content.body tags],
       'KnowledgeBase::Category::Translation': %w[title],
       'KnowledgeBase::Translation':           %w[title]
     }
@@ -222,6 +232,7 @@ class SearchKnowledgeBaseBackend
   def options(pagination: nil)
     output = base_options
 
+    options_apply_query_fields(output)
     options_apply_highlight(output)
     options_apply_scope(output)
     options_apply_pagination(output, pagination)

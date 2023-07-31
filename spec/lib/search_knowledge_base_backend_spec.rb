@@ -45,6 +45,21 @@ RSpec.describe SearchKnowledgeBaseBackend do
         it 'lists item with an attachment' do
           expect(instance.search('Hello World', user: user)).to be_present
         end
+
+        context 'with big attachment' do
+          before do
+            url = "#{Setting.get('es_url')}/_all/_settings?preserve_existing=true"
+            SearchIndexBackend.make_request_and_validate(url, data: { index: { 'highlight.max_analyzed_offset': 1000 } }, method: :put)
+          end
+
+          let :published_answer do
+            create(:knowledge_base_answer, :published, :with_attachment, attachment: File.open('spec/fixtures/files/upload/lipsum.pdf'), category: category)
+          end
+
+          it 'lists item with an attachment' do
+            expect(instance.search('Suspendisse', user: user)).to be_present
+          end
+        end
       end
     end
   end

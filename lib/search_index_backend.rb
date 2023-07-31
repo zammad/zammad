@@ -332,7 +332,7 @@ remove whole data from index
       }
     }
 
-    if (fields = options.dig(:highlight_fields_by_indexes, index.to_sym))
+    if (fields = options.dig(:query_fields_by_indexes, index.to_sym))
       condition['query_string']['fields'] = fields
     end
 
