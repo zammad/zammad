@@ -7,7 +7,8 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
     Setting.set('pgp_integration', true)
   end
 
-  let(:raw_body) { 'Testing some Content' }
+  let(:raw_body)    { 'Testing some Content' }
+  let(:attachments) { [] }
 
   let(:system_email_address)      { 'pgp1@example.com' }
   let(:customer_email_address)    { 'pgp2@example.com' }
@@ -24,6 +25,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
       body:         raw_body,
       content_type: content_type,
       security:     security_preferences,
+      attachments:  attachments
     )
   end
 
@@ -195,6 +197,52 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
 
         expect(mail['Content-Type'].value).to include('multipart/encrypted')
         expect(mail.body).not_to include(raw_body)
+      end
+
+      context 'with inline image' do
+        let(:article) do
+          create(:ticket_article,
+                 ticket: create(:ticket),
+                 body:   '<div>some message article helper test1</div><div><img src="cid:15.274327094.140939@zammad.example.com"><br></div>')
+        end
+
+        let(:attachments) do
+          [create(
+            :store,
+            object:      'Ticket::Article',
+            o_id:        article.id,
+            data:        'fake',
+            filename:    'inline_image.jpg',
+            preferences: {
+              'Content-Type'        => 'image/jpeg',
+              'Mime-Type'           => 'image/jpeg',
+              'Content-ID'          => '<15.274327094.140939>',
+              'Content-Disposition' => 'inline',
+            }
+          )]
+        end
+
+        let(:raw_body) do
+          <<~MSG_HTML.chomp
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+              </head>
+              <body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">
+                <div>some message article helper test1</div>
+                <div><img src="cid:15.274327094.140939@zammad.example.com"><br></div>
+              </body>
+            </html>
+          MSG_HTML
+        end
+        let(:content_type) { 'text/html' }
+
+        it 'builds mail' do
+          mail = build_mail
+
+          expect(mail['Content-Type'].value).to include('multipart/encrypted')
+        end
       end
     end
   end

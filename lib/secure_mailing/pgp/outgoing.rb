@@ -43,11 +43,11 @@ class SecureMailing::PGP::Outgoing < SecureMailing::Backend::HandlerOutgoing
         content_type data.content_type
 
         if data.content_disposition.present?
-          content_disposition data.disposition
+          content_disposition data.content_disposition
         end
 
         if data.header['Content-ID'].present?
-          content_id id data.header['Content-ID']
+          content_id data.header['Content-ID']
         end
 
         # brute force approach to avoid messed up line endings that break signatures with mail 2.7
