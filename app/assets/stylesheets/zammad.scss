@@ -12246,6 +12246,7 @@ output {
   }
 }
 
+/* stylelint-disable media-query-no-invalid */
 @media screen and (min-width: #{1280 + $sidebarWidth + $navigationWidth}) {
   // hide 1:1 button when it gets inrelevant
   [data-size='1:1'] {
@@ -12256,6 +12257,7 @@ output {
     width: 500px;
   }
 }
+/* stylelint-enable media-query-no-invalid */
 
 .browser-body {
   flex: 1;
