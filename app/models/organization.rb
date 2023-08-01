@@ -21,8 +21,8 @@ class Organization < ApplicationModel
 
   default_scope { order(:id) }
 
-  has_many :members, class_name: 'User'
-  has_and_belongs_to_many :secondary_members, class_name: 'User'
+  has_many :members, class_name: 'User', after_add: :member_update, after_remove: :member_update
+  has_and_belongs_to_many :secondary_members, class_name: 'User', after_add: :member_update, after_remove: :member_update
   has_many :tickets, class_name: 'Ticket'
 
   before_create :domain_cleanup
@@ -75,6 +75,14 @@ class Organization < ApplicationModel
   def delete_associations
     User.where(organization_id: id).find_each(&:destroy)
     Ticket.where(organization_id: id).find_each(&:destroy)
+  end
+
+  def member_update(user)
+    if persisted?
+      touch # rubocop:disable Rails/SkipsModelValidations
+    end
+
+    user&.touch # rubocop:disable Rails/SkipsModelValidations
   end
 
   def unset_associations
