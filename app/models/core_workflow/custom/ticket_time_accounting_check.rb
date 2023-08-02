@@ -18,7 +18,7 @@ class CoreWorkflow::Custom::TicketTimeAccountingCheck < CoreWorkflow::Custom::Ba
   end
 
   def available_for_user?
-    TicketPolicy.new(current_user, @result_object.attributes.selected).update?
+    TicketPolicy.new(current_user, @result_object.attributes.selected).agent_update_access?
   end
 
   def selector
