@@ -12,6 +12,7 @@ export const OrganizationAttributesFragmentDoc = gql`
   domainAssignment
   active
   note
+  vip
   ticketsCount {
     open
     closed

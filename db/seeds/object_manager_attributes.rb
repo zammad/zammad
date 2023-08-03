@@ -1594,6 +1594,48 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force:       true,
   object:      'Organization',
+  name:        'vip',
+  display:     __('VIP'),
+  data_type:   'boolean',
+  data_option: {
+    null:       true,
+    default:    false,
+    item_class: 'formGroup--halfSize',
+    options:    {
+      false: 'no',
+      true:  'yes',
+    },
+    translate:  true,
+    permission: ['admin.organization'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit:   {
+      '-all-' => {
+        null: true,
+      },
+    },
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:   {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1450,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Organization',
   name:        'note',
   display:     __('Note'),
   data_type:   'richtext',

@@ -1,5 +1,5 @@
-/* 
-  
+/*
+
   Makes the popover stay when hovered over it
 
   from here http://jsfiddle.net/WojtekKruszewski/Zf3m7/22/
@@ -37,16 +37,16 @@ $.fn.popover.Constructor.prototype.leave = function(obj){
 
 $.fn.popover.Constructor.DEFAULTS.viewport.padding = 10;
 
-/* 
+/*
 
   Extend zammad popover template
 
-  adds a popover-body around popover-title and popover-content 
+  adds a popover-body around popover-title and popover-content
   to make the popover scrollable without hiding the arrow
 
 */
 
-$.fn.popover.Constructor.DEFAULTS.template = '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-body"><h2 class="popover-title"></h2><div class="popover-content"></div></div></div>';
+$.fn.popover.Constructor.DEFAULTS.template = '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-body"><div class="popover-title"></div><div class="popover-content"></div></div></div>';
 
 /*
 

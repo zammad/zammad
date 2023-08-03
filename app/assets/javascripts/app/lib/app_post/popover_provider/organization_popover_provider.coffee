@@ -13,12 +13,12 @@ class Organization extends App.SingleObjectPopoverProvider
     params.object.members(0, 10, (users) ->
       members = []
       for user in users
-        el = $('<div class="person"></div>')
+        el = $('<li class="person"></li>')
         if user.active is false
           el.addClass('is-inactive')
         el.append(user.displayName())
         members.push el
-      html.find('.js-userList').html(members)
+      html.find('.js-organizationUserList').html(members)
     )
 
     html

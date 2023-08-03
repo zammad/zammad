@@ -547,6 +547,11 @@ class App.TicketZoom extends App.Controller
         el:        elLocal.find('.ticketZoom-header')
       )
 
+      new App.TicketOrganizationAvatar(
+        object_id: @ticket_id
+        el:        elLocal.find('.ticketZoom-header')
+      )
+
       @sidebarWidget = new App.TicketZoomSidebar(
         el:           elLocal
         sidebarState: @sidebarState

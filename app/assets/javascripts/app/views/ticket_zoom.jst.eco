@@ -20,7 +20,10 @@
       </div>
       <div class="ticketZoom-header">
         <div class="flex vertical center">
-          <div class="js-avatar"></div>
+          <div class="flex horizontal center">
+            <div class="zIndex-1 js-avatar"></div>
+            <div class="overlap-x-6 js-avatar-organization"></div>
+          </div>
           <div class="js-ticketTitleContainer ticket-title"></div>
           <div class="js-ticketMetaContainer"></div>
         </div>

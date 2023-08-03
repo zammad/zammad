@@ -42,6 +42,8 @@ fragment ticketAttributes on Ticket {
     id
     internalId
     name
+    vip
+    active
   }
   state {
     id

@@ -67,6 +67,7 @@ query search(
       }
       active
       name
+      vip
       updatedAt
       updatedBy {
         id

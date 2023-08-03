@@ -16,6 +16,7 @@ module Gql::Types
       field :name, String
       field :active, Boolean
       field :shared, Boolean
+      field :vip, Boolean
       field :domain, String
       field :domain_assignment, Boolean
       field :members, Gql::Types::UserType.connection_type

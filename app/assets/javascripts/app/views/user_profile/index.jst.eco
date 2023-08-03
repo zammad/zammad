@@ -3,9 +3,7 @@
     <div class="profile-section vertical centered">
       <div class="align-right profile-action js-action"></div>
       <div class="profile-name js-profileName text-center"></div>
-      <% if @user.organization: %>
-        <div class="profile-organization js-organization"></div>
-      <% end %>
+      <div class="profile-organization js-organization"></div>
     </div>
     <div class="profile-section js-object-container"></div>
     <div class="profile-section js-ticket-stats"></div>

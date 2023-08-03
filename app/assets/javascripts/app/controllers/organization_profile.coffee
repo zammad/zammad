@@ -59,6 +59,11 @@ class App.OrganizationProfile extends App.Controller
       object_id: organization.id
     )
 
+    new App.OrganizationProfileOrganizationAvatar(
+      el:        elLocal.find('.js-organization-avatar')
+      object_id: organization.id
+    )
+
     new App.TicketStats(
       el:           elLocal.find('.js-ticket-stats')
       organization: organization

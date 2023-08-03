@@ -1,6 +1,6 @@
 class App.WidgetUser extends App.Controller
   @extend App.PopoverProvidable
-  @registerPopovers 'UserTicket'
+  @registerPopovers 'UserTicket', 'Organization'
 
   organizationLimit: 3
 
@@ -104,15 +104,14 @@ class App.WidgetUser extends App.Controller
       maxlength: 250
     )
 
-    @renderPopovers(
-      selector: '.user-tickets',
-      user_id:  user.id
-    )
+    @refreshPopovers()
 
   showMoreOrganizations: (e) ->
     @preventDefaultAndStopPropagation(e)
     @organizationLimit = (parseInt(@organizationLimit / 100) + 1) * 100
     @renderOrganizations()
+
+    @refreshPopovers()
 
   renderOrganizations: ->
     elLocal = @el
@@ -134,6 +133,12 @@ class App.WidgetUser extends App.Controller
       @el.find('.js-showMoreOrganizations').addClass('hidden')
     else
       @el.find('.js-showMoreOrganizations').removeClass('hidden')
+
+  refreshPopovers: ->
+    @renderPopovers(
+      selector: '.user-tickets',
+      user_id:  @user.id
+    )
 
   update: (e) =>
     name  = $(e.target).attr('data-name')

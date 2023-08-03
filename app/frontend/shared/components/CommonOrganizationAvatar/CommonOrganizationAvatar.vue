@@ -22,9 +22,10 @@ const icon = computed(() => {
 
 <template>
   <CommonAvatar
-    class="bg-gray"
+    class="bg-gray-200"
     :size="size"
     :icon="icon"
-    :aria-label="entity.name"
+    :aria-label="`Avatar (${entity.name})`"
+    :vip-icon="entity.vip ? 'mobile-crown-silver' : undefined"
   />
 </template>

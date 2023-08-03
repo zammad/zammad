@@ -54,6 +54,14 @@ describe('static organization', () => {
 
     expect(view.getByText(organization.name || 'unknown')).toBeInTheDocument()
 
+    expect(
+      view.getByLabelText(`Avatar (${organization.name})`),
+    ).toBeAvatarElement({
+      vip: !!organization.vip,
+      active: !!organization.active,
+      type: 'organization',
+    })
+
     expect(view.getByRole('region', { name: 'Note' })).toHaveTextContent(
       'Save something as this note',
     )
@@ -93,6 +101,7 @@ describe('static organization', () => {
 
   it('shows organization members', async () => {
     const organization = defaultOrganization()
+    organization.vip = true
     const { view, mockApi } = await visitTicketOrganization({
       ...organization,
       members: {
@@ -100,6 +109,14 @@ describe('static organization', () => {
         edges: organization.members?.edges || [],
         totalCount: 2,
       },
+    })
+
+    expect(
+      view.getByLabelText(`Avatar (${organization.name})`),
+      'renders vip status correctly',
+    ).toBeAvatarElement({
+      vip: true,
+      type: 'organization',
     })
 
     expect(view.container).toHaveTextContent('Members')

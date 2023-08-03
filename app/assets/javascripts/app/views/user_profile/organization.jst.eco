@@ -1,1 +1,1 @@
-<a href="<%- @organization.uiUrl() %>"><%= @organization.displayName() %></a>
+<a href="<%- @organization.uiUrl() %>" class="organization-popover" data-id="<%= @organization.id %>" data-popover-show-avatar="true"><%= @organization.displayName() %></a>

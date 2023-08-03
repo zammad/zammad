@@ -18,6 +18,7 @@ export interface OrganizationItemData {
   active: boolean
   name: string
   updatedAt?: string
+  vip?: boolean
   updatedBy?: {
     id: string
     fullname?: Maybe<string>

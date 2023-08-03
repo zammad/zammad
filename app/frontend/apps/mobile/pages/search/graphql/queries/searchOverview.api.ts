@@ -71,6 +71,7 @@ export const SearchDocument = gql`
       }
       active
       name
+      vip
       updatedAt
       updatedBy {
         id

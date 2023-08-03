@@ -47,6 +47,8 @@ export const TicketAttributesFragmentDoc = gql`
     id
     internalId
     name
+    vip
+    active
   }
   state {
     id

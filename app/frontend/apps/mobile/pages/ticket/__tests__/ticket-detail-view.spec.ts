@@ -128,6 +128,64 @@ describe('user avatars', () => {
     })
   })
 
+  it('renders organization avatar when organization is present', async () => {
+    const ticket = defaultTicket()
+    const { organization } = ticket.ticket
+    organization!.vip = false
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      ticket,
+    })
+
+    const view = await visitView('/tickets/1')
+    await waitUntilTicketLoaded()
+
+    const titleBlock = view.getByTestId('ticket-title')
+    const avatar = getByRole(titleBlock, 'img', {
+      name: `Avatar (${organization!.name})`,
+    })
+
+    expect(avatar).toBeAvatarElement({
+      active: true,
+      vip: false,
+      type: 'organization',
+    })
+  })
+
+  it('renders organization avatar when organization is VIP', async () => {
+    const ticket = defaultTicket()
+    const image = Buffer.from('max.png').toString('base64')
+    const { customer, organization } = ticket.ticket
+    organization!.vip = true
+    customer.image = image
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      ticket,
+    })
+
+    const view = await visitView('/tickets/1')
+    await waitUntilTicketLoaded()
+
+    const titleBlock = view.getByTestId('ticket-title')
+    const orgAvatar = getByRole(titleBlock, 'img', {
+      name: `Avatar (${organization!.name})`,
+    })
+    const userAvatar = getByRole(titleBlock, 'img', {
+      name: `Avatar (${customer.fullname})`,
+    })
+
+    expect(orgAvatar).toBeAvatarElement({
+      active: true,
+      vip: true,
+      type: 'organization',
+    })
+
+    expect(userAvatar).toBeAvatarElement({
+      active: true,
+      vip: false,
+      image,
+      type: 'user',
+    })
+  })
+
   it('renders article user image when he is inactive', async () => {
     const articles = defaultArticles()
     const { author } = articles.description.edges[0].node

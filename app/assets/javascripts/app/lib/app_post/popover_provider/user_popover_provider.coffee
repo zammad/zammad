@@ -3,6 +3,7 @@ class User extends App.SingleObjectPopoverProvider
   @selectorCssClassPrefix = 'user'
   @templateName = 'user'
   @ignoredAttributes = ['firstname', 'lastname', 'organization']
+  @additionalHeadlineTemplateName: 'user_organization_headline'
 
   displayTitleUsing: (object) ->
     output = object.displayName()

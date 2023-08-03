@@ -86,4 +86,31 @@ describe('ticket item display', () => {
 
     expect(view.queryByTestId('stringUpdated')).not.toBeInTheDocument()
   })
+
+  it('renders VIP status', () => {
+    const organization: OrganizationItemData = {
+      id: '54321',
+      internalId: 2,
+      ticketsCount: {
+        open: 1,
+        closed: 0,
+      },
+      name: 'lorem ipsum',
+      active: true,
+      vip: true,
+    }
+
+    const view = renderComponent(OrganizationItem, {
+      props: {
+        entity: organization,
+      },
+      store: true,
+    })
+
+    expect(view.getByLabelText('Avatar (lorem ipsum)')).toBeAvatarElement({
+      vip: true,
+      active: true,
+      type: 'organization',
+    })
+  })
 })

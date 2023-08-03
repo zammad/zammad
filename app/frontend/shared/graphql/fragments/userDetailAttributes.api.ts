@@ -27,6 +27,7 @@ export const UserDetailAttributesFragmentDoc = gql`
     internalId
     name
     active
+    vip
     ticketsCount {
       open
       closed

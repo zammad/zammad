@@ -1,0 +1,8 @@
+<span class="avatar avatar--organization <%- @cssClass %>" <%- @data %>>
+  <%- @Icon('crown-silver') if @vip %>
+  <% if @active: %>
+    <%- @Icon('organization') %>
+  <% else: %>
+    <%- @Icon('inactive-organization') %>
+  <% end %>
+</span>

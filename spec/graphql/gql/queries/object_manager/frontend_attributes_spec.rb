@@ -182,6 +182,19 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
             },
 
             {
+              'name'       => 'vip',
+              'display'    => 'VIP',
+              'dataType'   => 'boolean',
+              'dataOption' => { 'null'       => true,
+                                'default'    => false,
+                                'options'    => { 'false' => 'no', 'true' => 'yes' },
+                                'translate'  => true,
+                                'permission' => ['admin.organization'],
+                                'item_class' => 'formGroup--halfSize' },
+              'isInternal' => true,
+            },
+
+            {
               'name'       => 'note',
               'display'    => 'Note',
               'dataType'   => 'richtext',
@@ -206,11 +219,11 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
           'screens'    => [
             {
               'name'       => 'edit',
-              'attributes' => %w[name shared domain_assignment domain note active],
+              'attributes' => %w[name shared domain_assignment domain vip note active],
             },
             {
               'name'       => 'create',
-              'attributes' => %w[name shared domain_assignment domain note active],
+              'attributes' => %w[name shared domain_assignment domain vip note active],
             },
             {
               'name'       => 'view',

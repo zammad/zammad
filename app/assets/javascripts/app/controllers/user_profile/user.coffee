@@ -12,6 +12,8 @@ class App.UserProfileUser extends App.ControllerObserver
         object_id: user.organization_id
         el: @el.siblings('.js-organization')
       )
+    else
+      @el.siblings('.js-organization').html('')
 
     @html App.view('user_profile/name')(
       user: user

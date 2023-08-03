@@ -168,6 +168,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :domain,                 limit: 250, null: true,  default: ''
       t.boolean :domain_assignment,                 null: false, default: false
       t.boolean :active,                            null: false, default: true
+      t.boolean :vip,                               null: false, default: false
       t.string :note,                   limit: 5000, null: true,  default: ''
       t.integer :updated_by_id,                     null: false
       t.integer :created_by_id,                     null: false

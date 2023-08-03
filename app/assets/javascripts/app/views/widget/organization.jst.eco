@@ -1,12 +1,8 @@
 <div class="sidebar-block">
   <% if @customer isnt true: %>
-    <div class="avatar organizationInfo-avatar size-50">
+    <div class="organizationInfo-avatar">
       <a href="<%- @organization.uiUrl() %>">
-        <% if @organization.active is true: %>
-          <%- @Icon('organization') %>
-        <% else: %>
-          <%- @Icon('inactive-organization') %>
-        <% end %>
+        <%- @organization.avatar("50") %>
       </a>
     </div>
   <% end %>

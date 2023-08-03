@@ -1,4 +1,7 @@
 class App.OrganizationProfileMember extends App.ControllerObserver
+  @extend App.PopoverProvidable
+  @registerPopovers 'User'
+
   model: 'User'
   observe:
     firstname: true
@@ -13,3 +16,5 @@ class App.OrganizationProfileMember extends App.ControllerObserver
     @html App.view('organization_profile/member')(
       user: user
     )
+
+    @renderPopovers()

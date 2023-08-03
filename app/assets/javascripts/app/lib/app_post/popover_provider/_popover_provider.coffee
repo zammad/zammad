@@ -1,6 +1,7 @@
 class App.PopoverProvider
   @selectorCssClassPrefix = null # needs to be overrided
   @templateName = null # needs to be overrided
+  @titleTemplateName = null # needs to be overrided
   @permission = 'ticket.agent'
 
   @providersConfigKey = 'PopoverProviders'
@@ -47,6 +48,7 @@ class App.PopoverProvider
       trigger:    'hover'
       container:  'body'
       html:       true
+      sanitize:   false
       animation:  false
       delay:      100
       placement:  "auto #{@params.position}"
@@ -69,6 +71,9 @@ class App.PopoverProvider
 
   buildContentFor: (elem) ->
     'content'
+
+  buildHtmlTitle: (params) ->
+    App.view("popover/#{@constructor.titleTemplateName}")(params)
 
   buildHtmlContent: (params) ->
     html = $(App.view("popover/#{@constructor.templateName}")(params))

@@ -93,7 +93,7 @@ describe('CommonAvatar.vue', () => {
   it('renders vip icon', async () => {
     const view = renderComponent(CommonAvatar)
     expect(view.queryByIconName('mobile-crown')).not.toBeInTheDocument()
-    await view.rerender({ vip: true })
+    await view.rerender({ vipIcon: 'mobile-crown' })
     expect(view.getByIconName('mobile-crown')).toBeInTheDocument()
   })
 })

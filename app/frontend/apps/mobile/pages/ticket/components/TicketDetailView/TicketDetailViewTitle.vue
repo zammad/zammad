@@ -4,6 +4,7 @@
 import { computed } from 'vue'
 import CommonTicketPriorityIndicator from '#shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonTicketEscalationIndicator from '#shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
 import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
@@ -36,10 +37,18 @@ const customer = computed(() => {
       data-test-id="title-content"
       :link="`/tickets/${ticket.internalId}/information`"
     >
-      <div class="ltr:mr-3 rtl:ml-3">
-        <CommonUserAvatar :entity="ticket.customer" />
+      <div class="flex ltr:mr-3 rtl:ml-3">
+        <CommonUserAvatar class="z-10" :entity="ticket.customer" />
+        <CommonOrganizationAvatar
+          v-if="ticket.organization"
+          class="z-0 ltr:-translate-x-1 rtl:translate-x-1"
+          :entity="ticket.organization"
+        />
       </div>
-      <div class="overflow-hidden ltr:mr-1 rtl:ml-1">
+      <div
+        class="overflow-hidden ltr:mr-1 rtl:ml-1"
+        :class="{ 'rtl:-mr-1 ltr:-ml-1': ticket.organization }"
+      >
         <div class="flex text-sm leading-4 text-gray-100">
           <div
             class="truncate"
