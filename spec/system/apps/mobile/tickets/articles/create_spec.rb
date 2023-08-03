@@ -397,4 +397,50 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
     it_behaves_like 'mobile app: article security', integration: :smime
     it_behaves_like 'mobile app: article security', integration: :pgp
   end
+
+  context 'when inlining an image', authenticated_as: :agent do
+    def paste_image(filepath)
+      page.execute_script <<~JS
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.id = 'drop-file-input';
+        document.body.appendChild(fileInput);
+      JS
+      attach_file('drop-file-input', filepath)
+      page.execute_script <<~JS
+        const fileInput = document.getElementById('drop-file-input');
+        class FakeDataTransfer extends DataTransfer {
+          get files() {
+            return fileInput.files;
+          }
+        }
+        const clipboardData = new FakeDataTransfer();
+        const event = new ClipboardEvent('paste', {
+          clipboardData,
+        })
+        Object.defineProperty(event, 'clipboardData', {
+          get() {
+            return clipboardData
+          }
+        })
+        globalThis.editors.body.view.pasteText('text', event)
+      JS
+    end
+
+    it 'correctly compresses image' do
+      open_article_dialog
+
+      paste_image(Rails.root.join('spec/fixtures/files/image/large.png'))
+      click_button('Add image') # inserts an invisible input
+      find('[data-test-id="editor-image-input"]', visible: :all).attach_file(Rails.root.join('spec/fixtures/files/image/large2.png'))
+      save_article
+
+      images = Store.last(2)
+
+      # The fize will always be less than it actually is even without resizing
+      # Chrome has the best compression, so we check that actual value is lower than Firefox's compresssion
+      expect(images.first.size.to_i).to be <= 24_817
+      expect(images.last.size.to_i).to be <= 25_686
+    end
+  end
 end

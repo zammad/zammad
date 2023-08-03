@@ -20,7 +20,11 @@ const imageLoaded = ref(false)
 const isDraggable = computed(() => props.node.attrs.isDraggable)
 const src = computed(() => props.node.attrs.src)
 if (needBase64Convert(src.value)) {
-  loadImageIntoBase64(src.value, props.node.attrs.alt).then((base64) => {
+  loadImageIntoBase64(
+    src.value,
+    props.node.attrs.type,
+    props.node.attrs.alt,
+  ).then((base64) => {
     if (base64) {
       props.updateAttributes({ src: base64 })
     } else {

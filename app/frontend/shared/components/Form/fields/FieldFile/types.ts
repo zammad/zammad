@@ -14,3 +14,7 @@ export type FileUploaded = Pick<StoredFile, 'name' | 'size' | 'type'> & {
   content?: string
   preview?: string
 }
+
+export interface FieldFileContext {
+  uploadFiles(files: FileList | File[]): Promise<void>
+}

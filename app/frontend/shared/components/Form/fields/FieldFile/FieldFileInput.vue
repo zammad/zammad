@@ -50,16 +50,15 @@ const canInteract = computed(
 
 const fileInput = ref<HTMLInputElement>()
 
-const reset = (input: HTMLInputElement) => {
+const reset = () => {
   loadingFiles.value = []
+  const input = fileInput.value
+  if (!input) return
   input.value = ''
   input.files = null
 }
 
-const onFileChanged = async ($event: Event) => {
-  const input = $event.target as HTMLInputElement
-  const { files } = input
-
+const loadFiles = async (files: FileList | File[]) => {
   loadingFiles.value = Array.from(files || []).map((file) => ({
     name: file.name,
     size: file.size,
@@ -76,7 +75,7 @@ const onFileChanged = async ($event: Event) => {
   const uploadedFiles = data?.formUploadCacheAdd?.uploadedFiles
 
   if (!uploadedFiles) {
-    reset(input)
+    reset()
     return
   }
 
@@ -86,7 +85,17 @@ const onFileChanged = async ($event: Event) => {
   }))
 
   uploadFiles.value = [...uploadFiles.value, ...previewableFile]
-  reset(input)
+  reset()
+}
+
+Object.assign(props.context, {
+  uploadFiles: loadFiles,
+})
+
+const onFileChanged = async ($event: Event) => {
+  const input = $event.target as HTMLInputElement
+  const { files } = input
+  if (files) await loadFiles(files)
 }
 
 const { waitForConfirmation } = useConfirmationDialog()

@@ -48,6 +48,35 @@ Object.defineProperty(Element.prototype, 'scroll', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollBy', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollIntoView', { value: vi.fn() })
 
+const descriptor = Object.getOwnPropertyDescriptor(
+  HTMLImageElement.prototype,
+  'src',
+)!
+
+Object.defineProperty(HTMLImageElement.prototype, 'src', {
+  set(value) {
+    descriptor.set?.call(this, value)
+    this.dispatchEvent(new Event('load'))
+  },
+  get: descriptor.get,
+})
+
+Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+  value: function getContext() {
+    return {
+      drawImage: (img: HTMLImageElement) => {
+        this.__image_src = img.src
+      },
+    }
+  },
+})
+
+Object.defineProperty(HTMLCanvasElement.prototype, 'toDataURL', {
+  value: function toDataURL() {
+    return this.__image_src
+  },
+})
+
 // Mock IntersectionObserver feature by injecting it into the global namespace.
 //   More info here: https://vitest.dev/guide/mocking.html#globals
 const IntersectionObserverMock = vi.fn(() => ({
