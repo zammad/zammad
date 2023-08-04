@@ -178,6 +178,7 @@ useHeader({
 
 const loadAvatar = async (input?: HTMLInputElement) => {
   const files = input?.files
+  if (!files) return
   const [avatar] = await convertFileList(files)
   avatarImage.value = avatar
 }

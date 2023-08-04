@@ -48,9 +48,7 @@ const canInteract = computed(
 
 const fileInput = ref<HTMLInputElement>()
 
-const onFileChanged = async ($event: Event) => {
-  const input = $event.target as HTMLInputElement
-  const { files } = input
+const loadFiles = async (files: FileList | File[]) => {
   const uploads = await convertFileList(files)
 
   const data = await addFileMutation.send({
@@ -68,8 +66,20 @@ const onFileChanged = async ($event: Event) => {
   }))
 
   uploadFiles.value = [...uploadFiles.value, ...previewableFile]
+  const input = fileInput.value
+  if (!input) return
   input.value = ''
   input.files = null
+}
+
+Object.assign(props.context, {
+  uploadFiles: loadFiles,
+})
+
+const onFileChanged = async ($event: Event) => {
+  const input = $event.target as HTMLInputElement
+  const { files } = input
+  if (files) await loadFiles(files)
 }
 
 const { waitForConfirmation } = useConfirmation()
