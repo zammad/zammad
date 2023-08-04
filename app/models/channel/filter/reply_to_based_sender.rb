@@ -9,6 +9,9 @@ module Channel::Filter::ReplyToBasedSender
     reply_to = mail[:'reply-to'].gsub('<>', '').strip
     return if reply_to.blank?
 
+    # Check if the reply-to address can be parsed and otherwise skip the filter.
+    return if !valid_address?(reply_to)
+
     setting = Setting.get('postmaster_sender_based_on_reply_to')
     return if setting.blank?
 
@@ -49,4 +52,13 @@ module Channel::Filter::ReplyToBasedSender
     Rails.logger.error "Invalid setting value for 'postmaster_sender_based_on_reply_to' -> #{setting.inspect}"
   end
 
+  def self.valid_address?(address)
+    begin
+      Mail::AddressList.new(address)&.addresses&.first&.address
+
+      true
+    rescue
+      false
+    end
+  end
 end
