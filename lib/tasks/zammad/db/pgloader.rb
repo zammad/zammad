@@ -28,7 +28,7 @@ module Tasks
             ALTER SCHEMA '#{config['database']}' RENAME TO 'public'
 
             AFTER LOAD DO
-            #{pgp_keys.concat(public_links).concat(object_manager_attributes).join(",\n")}
+            #{smime_certificates.concat(pgp_keys).concat(public_links).concat(object_manager_attributes).join(",\n")}
 
             WITH BATCH CONCURRENCY = 1
             SET timezone = 'UTC'
@@ -115,7 +115,11 @@ module Tasks
           [alter_table_command(PublicLink.table_name, 'screen')]
         end
 
-        private_class_method :config, :url_credentials, :url_hostname, :url_path, :alter_table_command, :object_manager_attributes, :public_links, :pgp_keys
+        def self.smime_certificates
+          [alter_table_command(SMIMECertificate.table_name, 'email_addresses')]
+        end
+
+        private_class_method :config, :url_credentials, :url_hostname, :url_path, :alter_table_command, :object_manager_attributes, :public_links, :pgp_keys, :smime_certificates
       end
     end
   end

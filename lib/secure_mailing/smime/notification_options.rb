@@ -7,14 +7,14 @@ class SecureMailing::SMIME::NotificationOptions < SecureMailing::Backend::Handle
 
   def check_sign
     return if from_certificate.nil?
-    return if from_certificate.expired?
+    return if !from_certificate.parsed.usable?
 
     security_options[:sign] = { success: true }
   end
 
   def check_encrypt
     begin
-      SMIMECertificate.for_recipient_email_addresses!(recipients)
+      SMIMECertificate.find_for_multiple_email_addresses!(recipients, filter: { key: 'public', ignore_usable: true, usage: :encryption }, blame: true)
       security_options[:encryption] = { success: true }
     rescue ActiveRecord::RecordNotFound
       # no-op
@@ -26,7 +26,7 @@ class SecureMailing::SMIME::NotificationOptions < SecureMailing::Backend::Handle
   def from_certificate
     @from_certificate ||= begin
       list = Mail::AddressList.new(from.email)
-      SMIMECertificate.for_sender_email_address(list.addresses.first.to_s)
+      SMIMECertificate.find_by_email_address(list.addresses.first.to_s, filter: { key: 'private', usage: :signature, ignore_usable: false }).first
     end
   end
 end

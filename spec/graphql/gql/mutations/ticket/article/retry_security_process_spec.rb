@@ -52,7 +52,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::RetrySecurityProcess, :aggregate
         {
           'type'              => 'SMIME',
           'signingSuccess'    => true,
-          'signingMessage'    => '/emailAddress=smime1@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com',
+          'signingMessage'    => '/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com/emailAddress=smime1@example.com',
           'encryptionSuccess' => false,
           'encryptionMessage' => nil,
         }

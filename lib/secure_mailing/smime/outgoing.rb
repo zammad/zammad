@@ -7,9 +7,9 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::HandlerOutgoing
 
   def signed
     from       = mail.from.first
-    cert_model = SMIMECertificate.for_sender_email_address(from)
+    cert_model = SMIMECertificate.find_by_email_address(from, filter: { key: 'private', usage: :signature, ignore_usable: true }).first
     raise "Unable to find ssl private key for '#{from}'" if !cert_model
-    raise "Expired certificate for #{from} (fingerprint #{cert_model.fingerprint}) with #{cert_model.not_before_at} to #{cert_model.not_after_at}" if !security[:sign][:allow_expired] && cert_model.expired?
+    raise "Expired certificate for #{from} (fingerprint #{cert_model.fingerprint}) with #{cert_model.parsed.not_before} to #{cert_model.parsed.not_after}" if !security[:sign][:allow_expired] && !cert_model.parsed.usable?
 
     private_key = OpenSSL::PKey::RSA.new(cert_model.private_key, cert_model.private_key_secret)
 
@@ -20,27 +20,27 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::HandlerOutgoing
   end
 
   def chain(cert)
-    lookup_issuer = cert.parsed.issuer.to_s
+    lookup_issuer_hash = cert.parsed.issuer_hash
 
     result = []
     loop do
-      found_cert = SMIMECertificate.find_by(subject: lookup_issuer)
+      found_cert = SMIMECertificate.find_by(subject_hash: lookup_issuer_hash)
       break if found_cert.blank?
 
-      subject       = found_cert.parsed.subject.to_s
-      lookup_issuer = found_cert.parsed.issuer.to_s
+      subject_hash       = found_cert.parsed.subject_hash
+      lookup_issuer_hash = found_cert.parsed.issuer_hash
 
       result.push(found_cert.parsed)
 
       # we've reached the root CA
-      break if subject == lookup_issuer
+      break if subject_hash == lookup_issuer_hash
     end
     result
   end
 
   def encrypt(data)
-    expired_cert = certificates.detect(&:expired?)
-    raise "Expired certificates for cert with #{expired_cert.not_before_at} to #{expired_cert.not_after_at}" if !security[:encryption][:allow_expired] && expired_cert.present?
+    unusable_cert = certificates.detect { |cert| !cert.parsed.usable? }
+    raise "Unusable certificates for cert with #{unusable_cert.parsed.not_before} to #{unusable_cert.parsed.not_after}" if !security[:encryption][:allow_expired] && unusable_cert.present?
 
     Mail.new(OpenSSL::PKCS7.write_smime(OpenSSL::PKCS7.encrypt(certificates.map(&:parsed), data, cipher)))
   rescue => e
@@ -60,7 +60,7 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::HandlerOutgoing
       addresses = mail.send(recipient)
       next if !addresses
 
-      certificates += SMIMECertificate.for_recipient_email_addresses!(addresses)
+      certificates += SMIMECertificate.find_for_multiple_email_addresses!(addresses, filter: { key: 'public', ignore_usable: true, usage: :encryption }, blame: true)
     end
     certificates
   end

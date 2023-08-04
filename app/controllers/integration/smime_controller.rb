@@ -8,7 +8,7 @@ class Integration::SMIMEController < ApplicationController
 
     send_data(
       cert.raw,
-      filename:    "#{cert.doc_hash}.crt",
+      filename:    "#{cert.subject_hash}.crt",
       type:        'text/plain',
       disposition: 'attachment'
     )
@@ -19,17 +19,16 @@ class Integration::SMIMEController < ApplicationController
 
     send_data(
       cert.private_key,
-      filename:    "#{cert.doc_hash}.key",
+      filename:    "#{cert.subject_hash}.key",
       type:        'text/plain',
       disposition: 'attachment'
     )
   end
 
   def certificate_list
-    all = SMIMECertificate.all.map do |cert|
-      cert.attributes.merge({ 'subject_alternative_name' => cert.email_addresses })
-    end
-    render json: all
+    list = SMIMECertificate.all.map { |cert| cert_obj_to_json(cert) }
+
+    render json: list
   end
 
   def certificate_delete
@@ -45,11 +44,14 @@ class Integration::SMIMEController < ApplicationController
       string = params[:file].read.force_encoding('utf-8')
     end
 
+    cert = SecureMailing::SMIME::Certificate.parse(string)
+    cert.valid_smime_certificate!
+
     items = SMIMECertificate.create_certificates(string)
 
     render json: {
       result:   'ok',
-      response: items,
+      response: items.map { |c| cert_obj_to_json(c) },
     }
   rescue => e
     unprocessable_entity(e)
@@ -73,6 +75,9 @@ class Integration::SMIMEController < ApplicationController
     end
 
     raise __("Parameter 'data' or 'file' required.") if string.blank?
+
+    private_key = SecureMailing::SMIME::PrivateKey.read(string, params[:secret])
+    private_key.valid_smime_private_key!
 
     SMIMECertificate.create_certificates(string)
     SMIMECertificate.create_private_keys(string, params[:secret])
@@ -103,6 +108,26 @@ class Integration::SMIMEController < ApplicationController
       success:             method_result.possible?,
       comment:             method_result.message,
       commentPlaceholders: method_result.message_placeholders,
+    }
+  end
+
+  def cert_obj_to_json(cert)
+    info = cert.parsed
+
+    {
+      id:                       cert.id,
+      subject:                  info.subject.to_s,
+      doc_hash:                 cert.subject_hash,
+      fingerprint:              cert.fingerprint,
+      modulus:                  cert.uid,
+      not_before_at:            info.not_before,
+      not_after_at:             info.not_after,
+      raw:                      cert.pem,
+      private_key:              cert.private_key,
+      private_key_secret:       cert.private_key_secret,
+      created_at:               cert.created_at,
+      updated_at:               cert.updated_at,
+      subject_alternative_name: cert.email_addresses.join(', ')
     }
   end
 end

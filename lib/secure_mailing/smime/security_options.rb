@@ -18,8 +18,7 @@ class SecureMailing::SMIME::SecurityOptions < SecureMailing::Backend::HandlerSec
 
   def group_has_valid_secure_objects?(signing_result, group_email)
     begin
-      cert = SMIMECertificate.for_sender_email_address(from(group_email))
-
+      cert = SMIMECertificate.find_by_email_address(from(group_email), filter: { key: 'private', usage: :signature, ignore_usable: true }).first
       return certificate_valid?(signing_result, cert, group_email)
     rescue => e
       signing_result.message = e.message
@@ -32,12 +31,12 @@ class SecureMailing::SMIME::SecurityOptions < SecureMailing::Backend::HandlerSec
     result = false
 
     if cert
-      result = !cert.expired?
+      result = cert.parsed.usable?
 
-      signing_result.message = if cert.expired?
-                                 __('The certificate for %s was found, but has expired.')
-                               else
+      signing_result.message = if cert.parsed.usable?
                                  __('The certificate for %s was found.')
+                               else
+                                 __('The certificate for %s was found, but it is not valid yet or has expired.')
                                end
     else
       signing_result.message = __('The certificate for %s was not found.')
@@ -49,7 +48,7 @@ class SecureMailing::SMIME::SecurityOptions < SecureMailing::Backend::HandlerSec
   end
 
   def recipients_have_valid_secure_objects?(encryption_result, recipients)
-    certs = SMIMECertificate.for_recipient_email_addresses!(recipients)
+    certs = SMIMECertificate.find_for_multiple_email_addresses!(recipients, filter: { key: 'public', usage: :encryption, ignore_usable: true }, blame: true)
 
     certificates_valid?(encryption_result, certs, recipients)
   rescue => e
@@ -57,14 +56,14 @@ class SecureMailing::SMIME::SecurityOptions < SecureMailing::Backend::HandlerSec
     false
   end
 
-  def certificates_valid?(encryption_result, certs, recipients)
+  def certificates_valid?(encryption_result, certs, recipients) # rubocop:disable Metrics/AbcSize
     result = false
 
     if certs
-      result = certs.none?(&:expired?)
+      result = certs.none? { |cert| !cert.parsed.usable? }
 
-      encryption_result.message = if certs.any?(&:expired?)
-                                    __('There were certificates found for %s, but at least one of them has expired.')
+      encryption_result.message = if certs.any? { |cert| !cert.parsed.usable? }
+                                    __('There were certificates found for %s, but at least one of them is not valid yet or has expired.')
                                   else
                                     __('The certificates for %s were found.')
                                   end

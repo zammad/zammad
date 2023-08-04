@@ -1,153 +1,124 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class SMIMECertificate < ApplicationModel
-  default_scope { order(not_after_at: :desc, not_before_at: :desc, id: :desc) }
+  default_scope { order(created_at: :desc, id: :desc) }
 
   validates :fingerprint, uniqueness: { case_sensitive: true }
 
-  def self.parts(raw)
-    raw.scan(%r{-----BEGIN[^-]+-----.+?-----END[^-]+-----}m)
-  end
+  # public class methods
 
-  def self.create_private_keys(raw, secret)
-    parts(raw).select { |part| part.include?('PRIVATE KEY') }.each do |part|
-      private_key = OpenSSL::PKey.read(part, secret)
-      modulus     = private_key.public_key.n.to_s(16)
-      certificate = find_by(modulus: modulus)
+  def self.find_for_multiple_email_addresses!(addresses, filter: nil, blame: false)
+    certificates      = []
+    missing_addresses = []
 
-      raise Exceptions::UnprocessableEntity, __('The certificate for this private key could not be found.') if !certificate
+    addresses.each do |address|
+      certs = find_by_email_address(address, filter: filter)
 
-      certificate.update!(private_key: part, private_key_secret: secret)
+      if certs.blank? && blame
+        missing_addresses << address
+        next
+      end
+
+      certificates.push(*certs)
     end
+
+    raise ActiveRecord::RecordNotFound, "Can't find S/MIME encryption certificates for: #{missing_addresses.join(', ')}" if missing_addresses.present? && blame
+
+    certificates
   end
 
-  def self.create_certificates(raw)
-    parts(raw).select { |part| part.include?('CERTIFICATE') }.each_with_object([]) do |part, result|
+  def self.find_by_email_address(address, filter: nil)
+    cert_selector = SMIMECertificate.where(SqlHelper.new(object: SMIMECertificate).array_contains_one('email_addresses', address.downcase))
+
+    return cert_selector.all if filter.nil?
+
+    filter.each do |filter_key, filter_value|
+      cert_selector = send("filter_#{filter_key}", cert_selector, filter_value)
+      return [] if cert_selector.blank?
+    end
+
+    cert_selector
+  end
+
+  def self.create_certificates(pem)
+    parts(pem).select { |part| part.include?('CERTIFICATE') }.each_with_object([]) do |part, result|
       result << create!(public_key: part)
     end
   end
 
-  def self.parse(raw)
-    OpenSSL::X509::Certificate.new(raw.gsub(%r{(?:TRUSTED\s)?(CERTIFICATE---)}, '\1'))
-  end
+  def self.create_private_keys(pem, secret)
+    parts(pem).select { |part| part.include?('PRIVATE KEY') }.each do |part|
+      private_key = SecureMailing::SMIME::PrivateKey.new(part, secret)
+      private_key.valid_smime_private_key!
 
-  # Search for the certificate of the given sender email address
-  #
-  # @example
-  #  certificate = SMIMECertificates.for_sender_email_address('some1@example.com')
-  #  # => #<SMIMECertificate:0x00007fdd4e27eec0...
-  #
-  # @return [SMIMECertificate, nil] The found certificate record or nil
-  def self.for_sender_email_address(address)
-    downcased_address = address.downcase
-    where.not(private_key: nil).all.as_batches do |certificate|
-      next if certificate.key_usage_prohibits?('Digital Signature') # rubocop:disable Zammad/DetectTranslatableString
+      certificate = find_by(uid: private_key.uid)
+      raise Exceptions::UnprocessableEntity, __('The certificate for this private key could not be found.') if !certificate
 
-      return certificate if certificate.email_addresses.include?(downcased_address)
+      certificate.update!(private_key: private_key.pem, private_key_secret: secret)
     end
   end
 
-  # Search for certificates of the given recipients email addresses
-  #
-  # @example
-  #  certificates = SMIMECertificates.for_recipient_email_addresses!(['some1@example.com', 'some2@example.com'])
-  #  # => [#<SMIMECertificate:0x00007fdd4e27eec0...
-  #
-  # @raise [ActiveRecord::RecordNotFound] if there are recipients for which no certificate could be found
-  #
-  # @return [Array<SMIMECertificate>] The found certificate records
-  def self.for_recipient_email_addresses!(addresses)
-    certificates        = []
-    remaining_addresses = addresses.map(&:downcase)
-    all.as_batches do |certificate|
+  # private class methods
 
-      # intersection of both lists
-      certificate_for = certificate.email_addresses & remaining_addresses
-      next if certificate_for.blank?
-      next if certificate.key_usage_prohibits?('Key Encipherment') # rubocop:disable Zammad/DetectTranslatableString
+  def self.filter_ignore_usable(cert_selector, filter_value)
+    return cert_selector if cert_selector.blank?
+    return cert_selector if filter_value
 
-      certificates.push(certificate)
-
-      # subtract found recipient(s)
-      remaining_addresses -= certificate_for
-
-      # end loop if no addresses are remaining
-      break if remaining_addresses.blank?
-    end
-
-    return certificates if remaining_addresses.blank?
-
-    raise ActiveRecord::RecordNotFound, "Can't find S/MIME encryption certificates for: #{remaining_addresses.join(', ')}"
+    cert_selector.select { |cert| cert.parsed.usable? }
   end
 
-  def key_usage_prohibits?(usage_type)
-    # Respect restriction of keyUsage extension, if present.
-    # See https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.3 and https://www.gradenegger.eu/?p=9563
-    parsed.extensions.find { |ext| ext.oid == 'keyUsage' }&.value&.exclude?(usage_type)
+  def self.filter_key(cert_selector, filter_value)
+    raise ArgumentError, 'filter_value must be either "public" or "private"' if %w[public private].exclude?(filter_value.to_s)
+    return cert_selector if cert_selector.blank?
+    return cert_selector if filter_value.eql?('public')
+
+    cert_selector.where.not(private_key: nil)
+  end
+
+  def self.filter_usage(cert_selector, filter_value)
+    raise ArgumentError, 'filter_value must be either "signature" or "encryption"' if %w[signature encryption].exclude?(filter_value.to_s)
+    return cert_selector if cert_selector.blank?
+
+    cert_selector.select { |cert| cert.parsed.send("#{filter_value}?") }
+  end
+
+  def self.parts(pem)
+    pem.scan(%r{-----BEGIN[^-]+-----.+?-----END[^-]+-----}m)
+  end
+
+  private_class_method %i[
+    filter_ignore_usable
+    filter_key
+    filter_usage
+    parts
+  ]
+
+  # public instance methods
+
+  def parsed
+    @parsed ||= SecureMailing::SMIME::Certificate.new(pem)
   end
 
   def public_key=(string)
-    cert = self.class.parse(string)
+    cert = SecureMailing::SMIME::Certificate.new(string)
 
-    self.subject       = cert.subject
-    self.doc_hash      = cert.subject.hash.to_s(16)
-    self.fingerprint   = OpenSSL::Digest.new('SHA1', cert.to_der).to_s
-    self.modulus       = cert.public_key.n.to_s(16)
-    self.not_before_at = cert.not_before
-    self.not_after_at  = cert.not_after
-    self.raw           = cert.to_s
-  end
+    self.email_addresses = cert.email_addresses
+    self.pem             = cert.to_pem
 
-  def parsed
-    @parsed ||= self.class.parse(raw)
-  end
+    # The fingerprint is a hash of the certificate in DER format.
+    self.fingerprint = cert.fingerprint
 
-  def email_addresses
-    @email_addresses ||= begin
-      subject_alt_name = parsed.extensions.detect { |extension| extension.oid == 'subjectAltName' }
-      if subject_alt_name.blank?
-        Rails.logger.warn <<~TEXT.squish
-          SMIMECertificate with ID #{id} has no subjectAltName
-          extension and therefore no email addresses assigned.
-          This makes it useless in terms of S/MIME. Please check.
-        TEXT
+    # The following both attributes are hashes of the certificate issuer and
+    # subject strings.
+    # They are used for certificate chain checks.
+    #
+    # Because of legacy certificates the usage of the x509 extension
+    # "subjectKeyIdentifier" and "authorityKeyIdentifier" is not possible.
+    self.issuer_hash  = cert.issuer_hash
+    self.subject_hash = cert.subject_hash
 
-        []
-      else
-        email_addresses_from_subject_alt_name(subject_alt_name)
-      end
-    end
-  end
-
-  def expired?
-    !Time.zone.now.between?(not_before_at, not_after_at)
-  end
-
-  private
-
-  def email_addresses_from_subject_alt_name(subject_alt_name)
-    # ["IP Address:192.168.7.23", "IP Address:192.168.7.42", "email:jd@example.com", "email:John.Doe@example.com", "dirName:dir_sect"]
-    entries = subject_alt_name.value.split(%r{,\s?})
-
-    entries.each_with_object([]) do |entry, result|
-      # ["email:jd@example.com", "email:John.Doe@example.com"]
-      identifier, email_address = entry.split(':').map(&:downcase)
-
-      # See: https://stackoverflow.com/a/20671427
-      # ["email:jd@example.com", "emailAddress:jd@example.com", "rfc822:jd@example.com", "rfc822Name:jd@example.com"]
-      next if identifier.exclude?('email') && identifier.exclude?('rfc822')
-
-      if !EmailAddressValidation.new(email_address).valid?
-        Rails.logger.warn <<~TEXT.squish
-          SMIMECertificate with ID #{id} has the malformed email address "#{email_address}"
-          stored as "#{identifier}" in the subjectAltName extension.
-          This makes it useless in terms of S/MIME. Please check.
-        TEXT
-
-        next
-      end
-
-      result.push(email_address)
-    end
+    # This is a unique information of the public key.
+    # It is used to find the corresponding private key.
+    self.uid = cert.uid
   end
 end

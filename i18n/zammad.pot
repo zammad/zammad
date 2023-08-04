@@ -11022,7 +11022,7 @@ msgid "The browser is outdated. It does not support WebSocket - the technology w
 msgstr ""
 
 #: lib/secure_mailing/smime/security_options.rb
-msgid "The certificate for %s was found, but has expired."
+msgid "The certificate for %s was found, but it is not valid yet or has expired."
 msgstr ""
 
 #: lib/secure_mailing/smime/security_options.rb
@@ -11039,6 +11039,14 @@ msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "The certificate for verification could not be found."
+msgstr ""
+
+#: lib/secure_mailing/smime/certificate.rb
+msgid "The certificate is not valid for S/MIME usage. Please check the certificate format."
+msgstr ""
+
+#: lib/secure_mailing/smime/certificate.rb
+msgid "The certificate is not valid for S/MIME usage. Please check the key usage, subject alternative name and public key cryptographic algorithm."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
@@ -11275,6 +11283,14 @@ msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "The private key for decryption could not be found."
+msgstr ""
+
+#: lib/secure_mailing/smime/private_key.rb
+msgid "The private key is not valid for S/MIME usage. Please check the key cryptographic algorithm."
+msgstr ""
+
+#: lib/secure_mailing/smime/private_key.rb
+msgid "The private key is not valid for S/MIME usage. Please check the key format and the secret."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -11744,7 +11760,7 @@ msgid "There were PGP keys found for %s, but at least one of them has expired."
 msgstr ""
 
 #: lib/secure_mailing/smime/security_options.rb
-msgid "There were certificates found for %s, but at least one of them has expired."
+msgid "There were certificates found for %s, but at least one of them is not valid yet or has expired."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee

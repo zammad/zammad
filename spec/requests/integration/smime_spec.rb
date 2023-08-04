@@ -24,7 +24,7 @@ RSpec.describe 'Integration SMIME', type: :request do
 
     context 'POST requests' do
 
-      let(:parsed_certificate) { SMIMECertificate.parse(certificate_string) }
+      let(:parsed_certificate) { SecureMailing::SMIME::Certificate.new(certificate_string) }
 
       it 'adds certificate by string' do
         expect do
@@ -32,6 +32,7 @@ RSpec.describe 'Integration SMIME', type: :request do
         end.to change(SMIMECertificate, :count).by(1)
 
         expect(response).to have_http_status(:ok)
+
         expect(DateTime.parse(json_response['response'][0]['not_after_at'])).to eq(parsed_certificate.not_after)
       end
 
@@ -41,6 +42,7 @@ RSpec.describe 'Integration SMIME', type: :request do
         end.to change(SMIMECertificate, :count).by(1)
 
         expect(response).to have_http_status(:ok)
+
         expect(DateTime.parse(json_response['response'][0]['not_after_at'])).to eq(parsed_certificate.not_after)
       end
     end
@@ -208,10 +210,10 @@ RSpec.describe 'Integration SMIME', type: :request do
 
             expect(response).to have_http_status(:ok)
             expect(json_response['encryption']['success']).to be(false)
-            expect(json_response['encryption']['comment']).to eq('There were certificates found for %s, but at least one of them has expired.')
+            expect(json_response['encryption']['comment']).to eq('There were certificates found for %s, but at least one of them is not valid yet or has expired.')
             expect(json_response['encryption']['commentPlaceholders']).to eq([email_address])
             expect(json_response['sign']['success']).to be(false)
-            expect(json_response['sign']['comment']).to eq('The certificate for %s was found, but has expired.')
+            expect(json_response['sign']['comment']).to eq('The certificate for %s was found, but it is not valid yet or has expired.')
             expect(json_response['sign']['commentPlaceholders']).to eq([email_address])
           end
         end

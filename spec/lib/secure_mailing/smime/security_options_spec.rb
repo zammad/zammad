@@ -56,8 +56,8 @@ RSpec.describe SecureMailing::SMIME::SecurityOptions, :aggregate_failures do
       let(:article)       { { 'to' => 'expiredsmime1@example.com', 'from' => 'expiredsmime1@example.com' } }
 
       it 'allows signing and encryption' do
-        expect(instance.process.signing).to have_attributes(possible?: false, active_by_default?: false, message: 'The certificate for %s was found, but has expired.', message_placeholders: ['expiredsmime1@example.com'])
-        expect(instance.process.encryption).to have_attributes(possible?: false, active_by_default?: false, message: 'There were certificates found for %s, but at least one of them has expired.', message_placeholders: ['expiredsmime1@example.com'])
+        expect(instance.process.signing).to have_attributes(possible?: false, active_by_default?: false, message: 'The certificate for %s was found, but it is not valid yet or has expired.', message_placeholders: ['expiredsmime1@example.com'])
+        expect(instance.process.encryption).to have_attributes(possible?: false, active_by_default?: false, message: 'There were certificates found for %s, but at least one of them is not valid yet or has expired.', message_placeholders: ['expiredsmime1@example.com'])
       end
     end
 

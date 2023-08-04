@@ -40,15 +40,14 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
       # check result
       expect(Setting.get('smime_integration')).to be true
       expect(SMIMECertificate.last.fingerprint).to be_present
-      expect(SMIMECertificate.last.raw).to be_present
+      expect(SMIMECertificate.last.pem).to be_present
       expect(SMIMECertificate.last.private_key).to be_present
     end
 
     it 'adding of multiple certificates at once' do
       multiple_certificates = [
         Rails.root.join('spec/fixtures/files/smime/ChainCA.crt').read,
-        Rails.root.join('spec/fixtures/files/smime/IntermediateCA.crt').read,
-        Rails.root.join('spec/fixtures/files/smime/RootCA.crt').read,
+        Rails.root.join('spec/fixtures/files/smime/SenderCA.crt').read,
       ].join
 
       # add cert
@@ -57,9 +56,9 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
       click '.js-submit'
 
       # wait for ajax
-      expect(page).to have_text('ChainCA')
       expect(page).to have_text('IntermediateCA')
       expect(page).to have_text('RootCA')
+      expect(page).to have_text('SenderCA')
     end
   end
 
@@ -87,8 +86,8 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
       # check result
       expect(Setting.get('smime_integration')).to be true
       expect(SMIMECertificate.last.fingerprint).to eq(certificate_fingerprint)
-      expect(SMIMECertificate.last.raw).to include('CERTIFICATE')
-      expect(SMIMECertificate.last.raw).not_to include('PRIVATE')
+      expect(SMIMECertificate.last.pem).to include('CERTIFICATE')
+      expect(SMIMECertificate.last.pem).not_to include('PRIVATE')
       expect(SMIMECertificate.last.private_key).to include('PRIVATE')
       expect(SMIMECertificate.last.private_key).not_to include('CERTIFICATE')
     end

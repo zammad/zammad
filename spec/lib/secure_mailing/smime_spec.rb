@@ -13,13 +13,15 @@ RSpec.describe SecureMailing::SMIME do
   let(:customer_email_address)    { 'smime2@example.com' }
   let(:cc_customer_email_address) { 'smime3@example.com' }
 
-  let(:sender_certificate_subject)       { "/emailAddress=#{sender_email_address}/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com" }
-  let(:recipient_certificate_subject)    { "/emailAddress=#{recipient_email_address}/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com" }
-  let(:cc_recipient_certificate_subject) { "/emailAddress=#{cc_recipient_email_address}/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com" }
+  let(:sender_certificate_subject)       { "/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com/emailAddress=#{sender_email_address}" }
+  let(:recipient_certificate_subject)    { "/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com/emailAddress=#{recipient_email_address}" }
+  let(:cc_recipient_certificate_subject) { "/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com/emailAddress=#{cc_recipient_email_address}" }
 
   let(:expired_email_address) { 'expiredsmime1@example.com' }
 
   let(:ca_certificate_subject) { '/emailAddress=RootCA@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com' }
+
+  let(:intermediate_ca_certificate_subject) { '/C=DE/ST=Berlin/O=Example Security/OU=IT Department/CN=example.com/emailAddress=IntermediateCA@example.com' }
 
   let(:content_type) { 'text/plain' }
 
@@ -91,7 +93,6 @@ RSpec.describe SecureMailing::SMIME do
         it_behaves_like 'HttpLog writer', 'success'
 
         context 'expired certificate' do
-
           let(:system_email_address) { expired_email_address }
 
           it 'raises exception' do
@@ -131,13 +132,11 @@ RSpec.describe SecureMailing::SMIME do
         end
 
         context 'when certificate chain is present' do
-
           let(:system_email_address) { 'chain@example.com' }
 
           let!(:chain) do
             [
               sender_certificate,
-              create(:smime_certificate, fixture: 'ChainCA'),
               create(:smime_certificate, fixture: 'IntermediateCA'),
               create(:smime_certificate, fixture: 'RootCA'),
             ]
@@ -149,7 +148,7 @@ RSpec.describe SecureMailing::SMIME do
           end
 
           it 'is included in the generated mail' do
-            expect(p7enc.certificates).to eq(chain.map(&:parsed))
+            expect(p7enc.certificates.map(&:subject).sort).to eq(chain.map(&:parsed).map(&:subject).sort)
           end
         end
       end
@@ -388,7 +387,7 @@ RSpec.describe SecureMailing::SMIME do
             expect(mail[:from]).to include('Zammad Helpdesk <smime-sender-ca@example.com>')
             expect(mail[:body]).to include(raw_body)
             expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
-            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com')
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('/emailAddress=SenderCA@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com')
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
           end
@@ -468,18 +467,18 @@ RSpec.describe SecureMailing::SMIME do
           end
         end
 
-        context 'root CA present' do
+        context 'intermediate CA present' do
 
           before do
             create(:smime_certificate, fixture: ca_fixture)
           end
 
-          let(:ca_fixture) { 'RootCA' }
+          let(:ca_fixture) { 'IntermediateCA' }
 
           it 'verifies' do
             expect(mail[:body]).to include(raw_body)
             expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
-            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(ca_certificate_subject)
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(intermediate_ca_certificate_subject)
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
           end
@@ -487,7 +486,7 @@ RSpec.describe SecureMailing::SMIME do
           it_behaves_like 'HttpLog writer', 'success'
 
           context 'expired' do
-            let(:ca_fixture) { 'ExpiredCA' }
+            let(:ca_fixture) { 'ExpiredIntermediateCA' }
 
             it 'fails' do
               expect(mail[:body]).to include(raw_body)
@@ -518,15 +517,13 @@ RSpec.describe SecureMailing::SMIME do
         end
 
         context 'certificate chain' do
-
           let(:sender_email_address) { 'chain@example.com' }
-          let(:ca_subject_chain) { ca_chain.reverse.map(&:subject).join(', ') }
+          let(:ca_subject_chain) { ca_chain.reverse.map { |cert| cert.parsed.subject }.join(', ') }
 
           context 'incomplete certificate chain present' do
 
             before do
               create(:smime_certificate, fixture: 'RootCA')
-              create(:smime_certificate, fixture: 'IntermediateCA')
             end
 
             it 'fails' do
@@ -542,10 +539,7 @@ RSpec.describe SecureMailing::SMIME do
             let(:ca_certificate_subject) { subject_chain }
 
             let!(:ca_chain) do
-              [
-                create(:smime_certificate, fixture: 'IntermediateCA'),
-                create(:smime_certificate, fixture: 'ChainCA'),
-              ]
+              create_list(:smime_certificate, 1, fixture: 'IntermediateCA')
             end
 
             it 'verifies' do
@@ -558,13 +552,8 @@ RSpec.describe SecureMailing::SMIME do
           end
 
           context 'complete certificate chain present' do
-
             let!(:ca_chain) do
-              [
-                create(:smime_certificate, fixture: 'RootCA'),
-                create(:smime_certificate, fixture: 'IntermediateCA'),
-                create(:smime_certificate, fixture: 'ChainCA'),
-              ]
+              create_list(:smime_certificate, 1, fixture: 'ChainCA')
             end
 
             it 'verifies' do

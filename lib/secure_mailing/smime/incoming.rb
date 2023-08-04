@@ -34,7 +34,8 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
 
     success = false
     comment = __('The private key for decryption could not be found.')
-    ::SMIMECertificate.where.not(private_key: [nil, '']).find_each do |cert|
+
+    decryption_certificates.each do |cert|
       key = OpenSSL::PKey::RSA.new(cert.private_key, cert.private_key_secret)
 
       begin
@@ -46,9 +47,9 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
       parse_decrypted_mail(decrypted_data)
 
       success = true
-      comment = cert.subject
-      if cert.expired?
-        comment += " (Certificate #{cert.fingerprint} with start date #{cert.not_before_at} and end date #{cert.not_after_at} expired!)"
+      comment = cert.parsed.subject.to_s
+      if !cert.parsed.usable?
+        comment += " (Certificate #{cert.fingerprint} with start date #{cert.parsed.not_before} and end date #{cert.parsed.not_after} expired!)"
       end
 
       break
@@ -96,17 +97,19 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
   def verify_certificate_chain(certificates)
     return if certificates.blank?
 
-    subjects = certificates.map(&:subject).map(&:to_s)
-    return if subjects.blank?
+    subjects       = certificates.map(&:subject)
+    subject_hashes = subjects.map { |subject| subject.hash.to_s(16) }
+    return if subject_hashes.blank?
 
-    existing_certs = ::SMIMECertificate.where(subject: subjects).sort_by do |certificate|
+    existing_certs = ::SMIMECertificate.where(subject_hash: subject_hashes).sort_by do |certificate|
       # ensure that we have the same order as the certificates in the mail
-      subjects.index(certificate.subject)
+      subject_hashes.index(certificate.parsed.subject.hash.to_s(16))
     end
     return if existing_certs.blank?
 
-    if subjects.size > existing_certs.size
-      Rails.logger.debug { "S/MIME mail signed with chain '#{subjects.join(', ')}' but only found '#{existing_certs.map(&:subject).join(', ')}' in database." }
+    if subject_hashes.size > existing_certs.size
+      existing_certs_subjects = existing_certs.map { |cert| cert.parsed.subject.to_s }.join(', ')
+      Rails.logger.debug { "S/MIME mail signed with chain '#{subjects.join(', ')}' but only found '#{existing_certs_subjects}' in database." }
     end
 
     begin
@@ -120,9 +123,9 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
       return if !success
 
       existing_certs.map do |existing_cert|
-        result = existing_cert.subject
-        if existing_cert.expired?
-          result += " (Certificate #{existing_cert.fingerprint} with start date #{existing_cert.not_before_at} and end date #{existing_cert.not_after_at} expired!)"
+        result = existing_cert.parsed.subject.to_s
+        if !existing_cert.parsed.usable?
+          result += " (Certificate #{existing_cert.fingerprint} with start date #{existing_cert.parsed.not_before} and end date #{existing_cert.parsed.not_after} expired!)"
         end
         result
       end.join(', ')
@@ -171,5 +174,17 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
     end
 
     result
+  end
+
+  def decryption_certificates
+    certs = []
+
+    mail[:mail_instance].to.each { |to| certs += ::SMIMECertificate.find_by_email_address(to, filter: { key: 'private', usage: :encryption }) }
+
+    if mail[:mail_instance].cc.present?
+      mail[:mail_instance].cc.each { |cc| certs += ::SMIMECertificate.find_by_email_address(cc, filter: { key: 'private', usage: :encryption }) }
+    end
+
+    certs
   end
 end
