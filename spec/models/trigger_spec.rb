@@ -1763,4 +1763,47 @@ RSpec.describe Trigger, type: :model do
       end
     end
   end
+
+  describe 'Trigger with new regular expression operators' do
+    let(:execution_condition_mode) { 'always' }
+
+    before do
+      ticket_match && ticket_no_match && trigger
+      TransactionDispatcher.commit
+    end
+
+    context 'when the title is used in the conditions' do
+      let(:perform) do
+        { 'ticket.title'=> { 'value'=> 'Changed by trigger' } }
+      end
+
+      context 'when the operator is "matches regex"' do
+        let(:ticket_match)    { create(:ticket, title: 'Welcome to Zammad') }
+        let(:ticket_no_match) { create(:ticket, title: 'Spam') }
+
+        let(:condition) do
+          { 'ticket.title' => { operator: 'matches regex', value: '^welcome' } }
+        end
+
+        it 'does execute the trigger and perform changes', :aggregate_failures do
+          expect(ticket_match.reload.title).to eq('Changed by trigger')
+          expect(ticket_no_match.reload.title).to eq('Spam')
+        end
+      end
+
+      context 'when the operator is "does not match regex"' do
+        let(:ticket_no_match) { create(:ticket, title: 'Welcome to Zammad') }
+        let(:ticket_match)    { create(:ticket, title: 'Spam') }
+
+        let(:condition) do
+          { 'ticket.title' => { operator: 'does not match regex', value: '^welcome' } }
+        end
+
+        it 'does not execute the trigger and perform no changes', :aggregate_failures do
+          expect(ticket_no_match.reload.title).to eq('Welcome to Zammad')
+          expect(ticket_match.reload.title).to eq('Changed by trigger')
+        end
+      end
+    end
+  end
 end

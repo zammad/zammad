@@ -776,7 +776,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
                object:             'Ticket',
                condition_selected: {
                  'article.body': {
-                   operator: 'regex match',
+                   operator: 'matches regex',
                    value:    'hello',
                  },
                })
@@ -793,7 +793,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
                object:             'Ticket',
                condition_selected: {
                  'article.body': {
-                   operator: 'regex match',
+                   operator: 'matches regex',
                    value:    'NOPE',
                  },
                })
@@ -1008,7 +1008,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
     end
   end
 
-  describe '.perform - Condition - Regex match' do
+  describe '.perform - Condition - Matches regex' do
     let(:payload) do
       base_payload.merge(
         'params' => { 'title' => 'workflow ticket' },
@@ -1019,7 +1019,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
              object:             'Ticket',
              condition_selected: {
                'ticket.title': {
-                 operator: 'regex match',
+                 operator: 'matches regex',
                  value:    [ '^workflow' ],
                },
              })
@@ -1035,7 +1035,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
                object:             'Ticket',
                condition_selected: {
                  'ticket.title': {
-                   operator: 'regex match',
+                   operator: 'matches regex',
                    value:    [ '^workfluw' ],
                  },
                })
@@ -1047,7 +1047,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
     end
   end
 
-  describe '.perform - Condition - Regex mismatch' do
+  describe '.perform - Condition - Does not match regex' do
     let(:payload) do
       base_payload.merge(
         'params' => { 'title' => 'workflow ticket' },
@@ -1058,7 +1058,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
              object:             'Ticket',
              condition_selected: {
                'ticket.title': {
-                 operator: 'regex mismatch',
+                 operator: 'does not match regex',
                  value:    [ '^workfluw' ],
                },
              })
@@ -1074,7 +1074,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
                object:             'Ticket',
                condition_selected: {
                  'ticket.title': {
-                   operator: 'regex mismatch',
+                   operator: 'does not match regex',
                    value:    [ '^workflow' ],
                  },
                })

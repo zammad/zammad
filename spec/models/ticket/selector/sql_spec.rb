@@ -464,6 +464,110 @@ RSpec.describe Ticket::Selector::Sql do
         end
       end
 
+      describe "operator 'matches regex'", mariadb: true do
+        let(:operator) { 'matches regex' }
+
+        context 'with matching string' do
+          let(:value) { '^[a-s]' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { '^[A-S]' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { '^[t-z]' }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+      describe "operator 'does not match regex'", mariadb: true do
+        let(:operator) { 'does not match regex' }
+
+        context 'with matching string' do
+          let(:value) { '^[a-s]' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { '^[A-S]' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { '^[t-z]' }
+
+          include_examples 'finds the ticket'
+        end
+      end
+
     end
+  end
+
+  describe '.valid?' do
+    let(:instance) { described_class.new(selector: { operator: 'AND', conditions: [ condition ] }, options: {}) }
+
+    context 'with valid conditions' do
+      let(:condition) do
+        {
+          name:          'ticket.organization_id',
+          operator:      'is',
+          pre_condition: 'not_set',
+        }
+      end
+
+      it 'validates' do
+        expect(instance.valid?).to be true
+      end
+    end
+
+    context 'with wrong ticket attribute' do
+      let(:condition) do
+        {
+          name:          'ticket.unknown_field',
+          operator:      'is',
+          pre_condition: 'not_set',
+        }
+      end
+
+      it 'does not validate' do
+        expect(instance.valid?).to be false
+      end
+    end
+
+    context 'with unknown operator' do
+      let(:condition) do
+        {
+          name:     'ticket.title',
+          operator: 'looks nice',
+        }
+      end
+
+      it 'does not validate' do
+        expect(instance.valid?).to be false
+      end
+    end
+
+    context 'with invalid regular expression', mariadb: true do
+      let(:condition) do
+        {
+          name:     'ticket.title',
+          operator: 'matches regex',
+          value:    '(',
+        }
+      end
+
+      it 'does not validate' do
+        expect(instance.valid?).to be false
+      end
+    end
+
   end
 end

@@ -3516,6 +3516,10 @@ msgid "Defines if the ticket conditions editor supports complex logical expressi
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Defines if the ticket conditions editor supports regular expression operators for triggers and ticket auto assignment."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines if the time accounting types are enabled."
 msgstr ""
 
@@ -12061,6 +12065,10 @@ msgstr ""
 msgid "Ticket Conditions Expert Mode"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Ticket Conditions Regular Expression Operators"
+msgstr ""
+
 #: app/models/report.rb
 msgid "Ticket Count"
 msgstr ""
@@ -14262,6 +14270,11 @@ msgstr ""
 msgid "does not exist"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "does not match regex"
+msgstr ""
+
 msgid "doesn't match %{attribute}"
 msgstr ""
 
@@ -14686,6 +14699,11 @@ msgstr ""
 msgid "matches found"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "matches regex"
+msgstr ""
+
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
@@ -14910,14 +14928,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-msgid "regex match"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-msgid "regex mismatch"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee

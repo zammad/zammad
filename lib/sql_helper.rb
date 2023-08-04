@@ -205,4 +205,19 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
     negated ? "NOT(#{result})" : "(#{result})"
   end
 
+  def regex_match(attribute, negated: false)
+    operator = if mysql?
+                 negated ? 'NOT REGEXP' : 'REGEXP'
+               else
+                 negated ? '!~*' : '~*'
+               end
+
+    "#{attribute} #{operator} (?)"
+  end
+
+  private
+
+  def mysql?
+    ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
+  end
 end

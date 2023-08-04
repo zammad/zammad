@@ -16,6 +16,8 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     'is not in working time',
     'starts with',
     'ends with',
+    'matches regex',
+    'does not match regex',
   ].freeze
 
   attr_accessor :final_query, :final_bind_params, :final_tables, :changed_attributes
@@ -313,6 +315,12 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     elsif block_condition[:operator] == 'contains not'
       query << "#{attribute} NOT #{like} (?)"
       bind_params.push "%#{block_condition[:value]}%"
+    elsif block_condition[:operator] == 'matches regex'
+      query << sql_helper.regex_match(attribute, negated: false)
+      bind_params.push block_condition[:value]
+    elsif block_condition[:operator] == 'does not match regex'
+      query << sql_helper.regex_match(attribute, negated: true)
+      bind_params.push block_condition[:value]
     elsif block_condition[:operator] == 'contains all'
       if attribute_table == 'ticket' && attribute_name == 'tags'
         query << "? = (
@@ -444,7 +452,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
 
     return true if self.class.valid_operator? condition[:operator]
 
-    raise "Invalid condition, operator #{condition[:operator]} is invalid #{condition.inspect}"
+    raise "Invalid condition, operator '#{condition[:operator]}' is invalid #{condition.inspect}"
   end
 
   def time_based_trigger?(condition, warning:)
@@ -488,5 +496,12 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
 
   def self.valid_operator?(operator)
     VALID_OPERATORS.any? { |elem| operator.match? elem }
+  end
+
+  def valid?
+    ticket_count, _tickets = Ticket.selectors(selector, **options.merge(limit: 1, execution_time: true, ticket_id: 1, access: 'ignore'))
+    !ticket_count.nil?
+  rescue
+    false
   end
 end

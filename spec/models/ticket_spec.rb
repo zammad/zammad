@@ -2456,33 +2456,4 @@ RSpec.describe Ticket, type: :model do
       end
     end
   end
-
-  describe 'Automatic assignment assigns tickets in each group, not just the marked ones #4308' do
-    let(:ticket) { create(:ticket, group: Group.first, state: Ticket::State.find_by(name: 'closed')) }
-    let(:agent) { create(:agent, groups: [Group.first]) }
-
-    context 'when the condition does match' do
-      before do
-        Setting.set('ticket_auto_assignment', true)
-        Setting.set('ticket_auto_assignment_selector', { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.all.pluck(:id) } } })
-      end
-
-      it 'does auto assign' do
-        ticket.auto_assign(agent)
-        expect(ticket.reload.owner_id).to eq(agent.id)
-      end
-    end
-
-    context 'when the condition does not match' do
-      before do
-        Setting.set('ticket_auto_assignment', true)
-        Setting.set('ticket_auto_assignment_selector', { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } })
-      end
-
-      it 'does not auto assign' do
-        ticket.auto_assign(agent)
-        expect(ticket.reload.owner_id).to eq(1)
-      end
-    end
-  end
 end

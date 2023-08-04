@@ -54,6 +54,9 @@ class App.UiElement.ApplicationSelector
         '^textarea$': [__('contains'), __('contains not'), __('has changed')]
         '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
 
+    if attribute.hasRegexOperators && App.Config.get('ticket_conditions_allow_regular_expression_operators')
+      operators_type['^input$'].push(__('matches regex'), __('does not match regex'))
+
     operators_name =
       '_id$': [__('is'), __('is not')]
       '_ids$': [__('is'), __('is not')]

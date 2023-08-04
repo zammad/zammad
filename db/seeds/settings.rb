@@ -2211,6 +2211,32 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
+  title:       __('Ticket Conditions Regular Expression Operators'),
+  name:        'ticket_conditions_allow_regular_expression_operators',
+  area:        'Ticket::Core',
+  description: __('Defines if the ticket conditions editor supports regular expression operators for triggers and ticket auto assignment.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'ticket_conditions_allow_regular_expression_operators',
+        tag:     'boolean',
+        options: {
+          true  => __('yes'),
+          false => __('no'),
+        },
+      },
+    ],
+  },
+  state:       true,
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin.ticket'],
+  },
+  frontend:    true
+)
+Setting.create_if_not_exists(
   title:       __('Ticket Number Format'),
   name:        'ticket_number',
   area:        'Ticket::Number',
