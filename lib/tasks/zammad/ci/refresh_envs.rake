@@ -17,6 +17,7 @@ namespace :zammad do
         created_at:    30.days.ago,
         client_id:     ENV['MICROSOFT365_CLIENT_ID'],
         client_secret: ENV['MICROSOFT365_CLIENT_SECRET'],
+        client_tenant: ENV['MICROSOFT365_CLIENT_TENANT'],
         refresh_token: ENV['MICROSOFT365_REFRESH_TOKEN'],
       )
 
