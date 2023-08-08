@@ -64,7 +64,7 @@ RSpec.describe 'Channel::EmailParser process with simple filter', aggregate_fail
     end
   end
 
-  context 'when from match value: regex:.*' do
+  context 'when from matches regex value: .*' do
     let(:data) do
       <<~MAIL
         From: Some Body <somebody@example.com>
@@ -79,8 +79,8 @@ RSpec.describe 'Channel::EmailParser process with simple filter', aggregate_fail
     let(:matcher) do
       {
         from: {
-          operator: 'contains',
-          value:    'regex:.*',
+          operator: 'matches regex',
+          value:    '.*',
         }
       }
     end

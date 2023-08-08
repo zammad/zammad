@@ -64,11 +64,11 @@ RSpec.describe PostmasterFilter, type: :model do
       end
 
       context 'when invalid match regex' do
-        %w[regex:[] regex:?? regex:*].each do |regex|
+        %w[[] ?? *].each do |regex|
           describe regex do
             include_examples('raises error', matcher: {
                                from: {
-                                 operator: 'contains',
+                                 operator: 'matches regex',
                                  value:    regex,
                                },
                              })

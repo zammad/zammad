@@ -254,7 +254,7 @@ class App.UiElement.postmaster_match
   @buildOperator: (elementFull, elementRow, key, groups, current_operator, attribute) ->
     selection = $("<select class=\"form-control\" name=\"#{attribute.name}::#{key}::operator\"></select>")
 
-    for operator in ['contains', 'contains not', 'is', 'is not', 'starts with', 'ends with']
+    for operator in ['contains', 'contains not', 'is', 'is not', 'starts with', 'ends with', 'matches regex', 'does not match regex']
       operatorName = App.i18n.translateInline(operator)
       selected = ''
       if current_operator is operator

@@ -70,6 +70,38 @@ RSpec.describe Channel::Filter::Database, type: :channel_filter do
       end
     end
 
+    context "with operator 'matches regex'" do
+      let(:operator) { 'matches regex' }
+
+      context 'with matching string' do
+        let(:value) { 'daffy.duck@.*' }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with non-matching string' do
+        let(:value) { 'daffy.duck.+@' }
+
+        include_examples 'the filter does not match'
+      end
+    end
+
+    context "with operator 'does not match regex'" do
+      let(:operator) { 'does not match regex' }
+
+      context 'with matching string' do
+        let(:value) { 'daffy.duck@.*' }
+
+        include_examples 'the filter does not match'
+      end
+
+      context 'with non-matching string' do
+        let(:value) { 'daffy.duck.+@' }
+
+        include_examples 'the filter matches'
+      end
+    end
+
     context "with operator 'is'" do
       let(:operator) { 'is' }
 
@@ -195,7 +227,7 @@ RSpec.describe Channel::Filter::Database, type: :channel_filter do
   describe 'Trigger fails to set custom timestamp on report #4677', db_strategy: :reset do
     let(:field_name) { SecureRandom.uuid }
 
-    let(:perform) { {} }
+    let(:perform)           { {} }
     let(:postmaster_filter) { create(:postmaster_filter, perform: perform) }
 
     let(:perform_static) do

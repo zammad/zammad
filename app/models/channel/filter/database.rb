@@ -40,9 +40,9 @@ module Channel::Filter::Database
   def self.rule_matches?(operator, match_rule, value)
     case operator
     when 'contains not'
-      value.blank? || !Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
+      value.blank? || !Channel::Filter::Match::Contains.match(value: value, match_rule: match_rule)
     when 'contains'
-      value.present? && Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
+      value.present? && Channel::Filter::Match::Contains.match(value: value, match_rule: match_rule)
     when 'is'
       value == match_rule
     when 'is not'
@@ -51,6 +51,10 @@ module Channel::Filter::Database
       value.downcase.start_with? match_rule.downcase
     when 'ends with'
       value.downcase.end_with? match_rule.downcase
+    when 'matches regex'
+      value.present? && Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
+    when 'does not match regex'
+      value.blank? || !Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
     else
       Rails.logger.info { "  Invalid operator in match #{meta.inspect}" }
       false

@@ -244,7 +244,7 @@ WARNING - load average: 3.44, 0.99, 0.35
     assert(ticket_p.preferences)
     assert_not(ticket_p.preferences['nagios'])
 
-    Setting.set('nagios_sender', 'regex:icinga2@monitoring.example.com')
+    Setting.set('nagios_sender', 'icinga2@monitoring.example.com')
 
     # not matching sender
     email_raw_string = "To: support@example.com
@@ -339,7 +339,7 @@ WARNING - load average: 3.44, 0.99, 0.35
     assert_equal('CPU Load', ticket_1.preferences['nagios']['service'])
     assert_equal('WARNING', ticket_1.preferences['nagios']['state'])
 
-    Setting.set('icinga_sender', 'regex:icinga2@monitoring.example.com')
+    Setting.set('icinga_sender', 'icinga2@monitoring.example.com')
 
     # matching sender I
     email_raw_string = "To: support@example.com
@@ -374,7 +374,7 @@ WARNING - load average: 3.44, 0.99, 0.35
     assert_equal('WARNING', ticket_1.preferences['nagios']['state'])
 
     # matching sender I
-    Setting.set('icinga_sender', 'regex:(icinga2|abc123)@monitoring.example.com')
+    Setting.set('icinga_sender', '(icinga2|abc123)@monitoring.example.com')
 
     email_raw_string = "To: support@example.com
 Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **

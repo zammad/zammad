@@ -13767,10 +13767,6 @@ msgstr ""
 msgid "You can switch between the backends for new attachments even on a system that is already in production without any loss of data."
 msgstr ""
 
-#: app/assets/javascripts/app/models/postmaster_filter.coffee
-msgid "You can use regular expression by using \"regex:your_reg_exp\"."
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "You can use the following script to post the data to %s."
 msgstr ""
