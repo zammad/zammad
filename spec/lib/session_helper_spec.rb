@@ -42,4 +42,15 @@ RSpec.describe SessionHelper do
       expect(collections[Taskbar.to_app_model]).to eq([taskbar_1])
     end
   end
+
+  describe 'New collections by installed packages are crashing zammad#4748' do
+    it 'does add a collection as a file' do
+      allow(Rails).to receive(:env).and_return('production')
+      Rails.root.join('lib/session_helper/collection_xxx.rb').write('module SessionHelper::CollectionXXX; end;')
+
+      expect { described_class.default_collections(User.find(1)) }.not_to raise_error(NameError, 'uninitialized constant SessionHelper::CollectionXxx')
+    ensure
+      Rails.root.join('lib/session_helper/collection_xxx.rb').delete
+    end
+  end
 end
