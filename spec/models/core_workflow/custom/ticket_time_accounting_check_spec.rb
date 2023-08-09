@@ -21,4 +21,18 @@ RSpec.describe CoreWorkflow::Custom::TicketTimeAccountingCheck, type: :model do
       expect(result.dig(:flags, :time_accounting)).not_to be(true)
     end
   end
+
+  describe 'Cannot change organisation of ticket #4744' do
+    let(:payload) do
+      base_payload.merge('params' => { 'customer_id' => '', 'organization_id' => '' }, 'screen' => 'edit')
+    end
+
+    before do
+      action_user.update(groups: [create(:group), create(:group), create(:group)])
+    end
+
+    it 'does not show for customers' do
+      expect { result }.not_to raise_error(NoMethodError)
+    end
+  end
 end
