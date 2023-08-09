@@ -4,7 +4,7 @@ class Auth
   class RequestCache < ActiveSupport::CurrentAttributes
     attribute :permission_cache
 
-    def self.permissions?(authorizable, auth_query)
+    def self.permissions?(authorizable, auth_query) # rubocop:disable Metrics/AbcSize
       self.permission_cache ||= {}
 
       begin
@@ -13,6 +13,9 @@ class Auth
         return instance.permissions?(authorizable, auth_query)
       end
       auth_query_key = Array(auth_query).join('|')
+
+      # make dedicated check because ||= will not cache false values properly
+      return self.permission_cache[authorizable_key][auth_query_key] if !self.permission_cache.dig(authorizable_key, auth_query_key).nil?
 
       self.permission_cache[authorizable_key] ||= {}
       self.permission_cache[authorizable_key][auth_query_key] ||= instance.permissions?(authorizable, auth_query)
