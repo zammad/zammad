@@ -44,6 +44,8 @@ module CommonActions
 
       wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded', skip_clearing: true) if !skip_waiting
     else
+      expect(page).to have_button('Sign in')
+
       within('#login') do
         fill_in 'username', with: username
         fill_in 'password', with: password

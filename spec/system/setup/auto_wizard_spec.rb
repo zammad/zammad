@@ -59,8 +59,6 @@ RSpec.describe 'Auto wizard', set_up: false, type: :system do
 
       expect(page).to have_current_route('login')
 
-      expect(page).to have_button('Sign in')
-
       login(
         username: 'hans.atila@zammad.org',
         password: 'Z4mm4dr0ckZ!'
