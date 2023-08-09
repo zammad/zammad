@@ -535,6 +535,10 @@ class App.ControllerForm extends App.Controller
         delete param[item.name]
         continue
 
+      # Support data value attributes that override field value.
+      if field.get(0).hasAttribute('data-value')
+        item.value = field.get(0).getAttribute('data-value')
+
       # collect all params, push it to an array item.value already exists
       value = item.value
       if item.value

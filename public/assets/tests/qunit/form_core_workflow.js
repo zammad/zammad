@@ -25,6 +25,42 @@ QUnit.test("core_workflow_condition", assert => {
   assert.equal(_.isEmpty(App.ControllerForm.params(el).condition_selected), true, 'empty element results are empty')
 });
 
+QUnit.test("conditions support renamed operators, but only for input attributes #4709", assert => {
+  var done = assert.async(1)
+  var form = $('#forms')
+
+  var el = $('<div></div>').attr('id', 'form1')
+  el.appendTo(form)
+
+  form = new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'condition_selected',  display: 'Selected conditions', tag: 'core_workflow_condition', null: true, preview: false },
+      ]
+    },
+    autofocus: true
+  });
+
+  el.find('.js-add').trigger('click')
+  el.find('.js-attributeSelector:last select').val('ticket.title').trigger('change')
+  el.find('.js-operator:last select').val('is any of').trigger('change')
+
+  var initDelay = 750
+
+  setTimeout(() => {
+    assert.ok(el.find('input[name="{json}condition_selected::ticket.title::value"]').length == 1, 'shows a tokenfield control for the new operator')
+
+    el.find('.js-add:last').trigger('click')
+    el.find('.js-attributeSelector:last select').val('article.body').trigger('change')
+    el.find('.js-operator:last select').val('is').trigger('change')
+
+    assert.ok(el.find('input[name="condition_selected::article.body::value"]').length == 1, 'shows a regular input control for the old operator')
+
+    done()
+  }, initDelay)
+});
+
 QUnit.test("core_workflow_perform", assert => {
   var form = $('#forms')
 

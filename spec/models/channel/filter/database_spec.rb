@@ -102,89 +102,89 @@ RSpec.describe Channel::Filter::Database, type: :channel_filter do
       end
     end
 
-    context "with operator 'is'" do
-      let(:operator) { 'is' }
+    context "with operator 'is any of'" do
+      let(:operator) { 'is any of' }
 
       context 'with matching string' do
-        let(:value) { 'daffy.duck@acme.corp' }
+        let(:value) { ['daffy.duck@acme.corp', 'elmer.fudd@acme.corp'] }
 
         include_examples 'the filter matches'
       end
 
       context 'with matching upcased string' do
-        let(:value) { 'Daffy.Duck@acme.corp' }
+        let(:value) { ['Daffy.Duck@acme.corp', 'Elmer.Fudd@acme.corp'] }
 
         include_examples 'the filter does not match'
       end
 
       context 'with non-matching string' do
-        let(:value) { 'other.address@example.com' }
-
-        include_examples 'the filter does not match'
-      end
-    end
-
-    context "with operator 'is not'" do
-      let(:operator) { 'is not' }
-
-      context 'with matching string' do
-        let(:value) { 'daffy.duck@acme.corp' }
-
-        include_examples 'the filter does not match'
-      end
-
-      context 'with matching upcased string' do
-        let(:value) { 'Daffy.Duck@acme.corp' }
-
-        include_examples 'the filter matches'
-      end
-
-      context 'with non-matching string' do
-        let(:value) { 'other.address@example.com' }
-
-        include_examples 'the filter matches'
-      end
-    end
-
-    context "with operator 'starts with'" do
-      let(:operator) { 'starts with' }
-
-      context 'with matching string' do
-        let(:value) { 'daffy.duck' }
-
-        include_examples 'the filter matches'
-      end
-
-      context 'with matching upcased string' do
-        let(:value) { 'Daffy.Duck' }
-
-        include_examples 'the filter matches'
-      end
-
-      context 'with non-matching string' do
-        let(:value) { 'other.address' }
+        let(:value) { ['other.address@example.com', 'mail@example.com'] }
 
         include_examples 'the filter does not match'
       end
     end
 
-    context "with operator 'ends with'" do
-      let(:operator) { 'ends with' }
+    context "with operator 'is none of'" do
+      let(:operator) { 'is none of' }
 
       context 'with matching string' do
-        let(:value) { 'acme.corp' }
+        let(:value) { ['daffy.duck@acme.corp', 'elmer.fudd@acme.corp'] }
 
-        include_examples 'the filter matches'
+        include_examples 'the filter does not match'
       end
 
       context 'with matching upcased string' do
-        let(:value) { 'ACME.corp' }
+        let(:value) { ['Daffy.Duck@acme.corp', 'Elmer.Fudd@acme.corp'] }
 
         include_examples 'the filter matches'
       end
 
       context 'with non-matching string' do
-        let(:value) { 'example.com' }
+        let(:value) { ['other.address@example.com', 'mail@example.com'] }
+
+        include_examples 'the filter matches'
+      end
+    end
+
+    context "with operator 'starts with one of'" do
+      let(:operator) { 'starts with one of' }
+
+      context 'with matching string' do
+        let(:value) { ['daffy.duck', 'elmer.fudd'] }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with matching upcased string' do
+        let(:value) { ['Daffy.Duck', 'Elmer.Fudd'] }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with non-matching string' do
+        let(:value) { ['other.address', 'zammad.org'] }
+
+        include_examples 'the filter does not match'
+      end
+    end
+
+    context "with operator 'ends with one of'" do
+      let(:operator) { 'ends with one of' }
+
+      context 'with matching string' do
+        let(:value) { ['acme.corp', 'example.com'] }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with matching upcased string' do
+        let(:value) { ['ACME.corp', 'EXAMPLE.com'] }
+
+        include_examples 'the filter matches'
+      end
+
+      context 'with non-matching string' do
+        let(:value) { ['example.com', 'zammad.org'] }
 
         include_examples 'the filter does not match'
       end

@@ -72,7 +72,8 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       '^multiselect$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^tree_select$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^multi_tree_select$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^(input|textarea|richtext)$': [__('is'), __('is not'), __('starts with'), __('ends with'), __('matches regex'), __('does not match regex'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      '^input$': [__('is any of'), __('is none of'), __('starts with one of'), __('ends with one of'), __('matches regex'), __('does not match regex'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      '^(textarea|richtext)$': [__('is'), __('is not'), __('starts with'), __('ends with'), __('matches regex'), __('does not match regex'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
 
     operatorsName =

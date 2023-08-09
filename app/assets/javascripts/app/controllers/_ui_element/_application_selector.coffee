@@ -32,7 +32,7 @@ class App.UiElement.ApplicationSelector
       '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
       '^tree_select$': [__('is'), __('is not')]
       '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
-      '^input$': [__('contains'), __('contains not'), __('is'), __('is not'), __('starts with'), __('ends with')]
+      '^input$': [__('contains'), __('contains not'), __('is any of'), __('is none of'), __('starts with one of'), __('ends with one of')]
       '^richtext$': [__('contains'), __('contains not')]
       '^textarea$': [__('contains'), __('contains not')]
       '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
@@ -49,7 +49,7 @@ class App.UiElement.ApplicationSelector
         '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
         '^tree_select$': [__('is'), __('is not'), __('has changed')]
         '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
-        '^input$': [__('contains'), __('contains not'), __('has changed'), __('is'), __('is not'), __('starts with'), __('ends with')]
+        '^input$': [__('contains'), __('contains not'), __('has changed'), __('is any of'), __('is none of'), __('starts with one of'), __('ends with one of')]
         '^richtext$': [__('contains'), __('contains not'), __('has changed')]
         '^textarea$': [__('contains'), __('contains not'), __('has changed')]
         '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
@@ -438,6 +438,10 @@ class App.UiElement.ApplicationSelector
     selection = $("<select class=\"form-control\" name=\"#{name}\"></select>")
 
     attributeConfig = elements[groupAndAttribute]
+
+    # Compatibility layer for renamed operators (#4709).
+    meta.operator = @migrateOperator(attributeConfig, meta.operator)
+
     if attributeConfig.operator
 
       # check if operator exists
@@ -545,8 +549,9 @@ class App.UiElement.ApplicationSelector
   @buildValueConfigValue: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     return _.clone(attribute.value[groupAndAttribute]['value'])
 
-  @buildValueName: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
-    return "#{attribute.name}::#{groupAndAttribute}::value"
+  @buildValueName: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType) ->
+    prefix = if valueType then "{#{valueType}}" else ''
+    return "#{prefix}#{attribute.name}::#{groupAndAttribute}::value"
 
   @buildValue: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     # build new item
@@ -558,10 +563,14 @@ class App.UiElement.ApplicationSelector
     if config.relation is 'Organization'
       config.tag = 'autocompletion_ajax'
 
+    if config.tag and @tokenfieldTagRegex() and config.tag.match(@tokenfieldTagRegex()) and _.contains(['is any of', 'is none of', 'starts with one of', 'ends with one of'], meta.operator)
+      config.tag = 'tokenfield'
+
     # render ui element
     item = ''
     if config && App.UiElement[config.tag] && meta.operator isnt 'today'
-      config = @buildValueConfigNameValue(config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+      { valueType } = App.UiElement[config.tag]
+      config = @buildValueConfigNameValue(config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType)
 
       if 'multiple' of config
         config = @buildValueConfigMultiple(config, meta)
@@ -596,8 +605,8 @@ class App.UiElement.ApplicationSelector
     else
       elementRow.find('.js-value').removeClass('hide')
 
-  @buildValueConfigNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
-    config['name'] = @buildValueName(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+  @buildValueConfigNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType) ->
+    config['name'] = @buildValueName(elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType)
     if attribute.value && attribute.value[groupAndAttribute]
       config['value'] = @buildValueConfigValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
@@ -677,3 +686,16 @@ class App.UiElement.ApplicationSelector
       enabled = true
       break
     return enabled
+
+  @tokenfieldTagRegex: ->
+    new RegExp('^input$', 'i')
+
+  @migrateOperator: (attributeConfig, operator) ->
+    if attributeConfig.tag and @tokenfieldTagRegex() and attributeConfig.tag.match(@tokenfieldTagRegex())
+      switch operator
+        when 'is' then return 'is any of'
+        when 'is not' then return 'is none of'
+        when 'starts with' then return 'starts with one of'
+        when 'ends with' then return 'ends with one of'
+
+    operator

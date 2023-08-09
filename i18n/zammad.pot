@@ -14347,9 +14347,13 @@ msgstr ""
 msgid "enclosure"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "ends with"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "ends with one of"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -14582,6 +14586,11 @@ msgid "is already used"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "is any of"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
 msgstr ""
 
@@ -14598,6 +14607,11 @@ msgstr ""
 
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "is none of"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -15095,9 +15109,13 @@ msgstr ""
 msgid "split"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "starts with"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "starts with one of"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco

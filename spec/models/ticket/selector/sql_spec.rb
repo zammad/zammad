@@ -381,6 +381,45 @@ RSpec.describe Ticket::Selector::Sql do
         end
       end
 
+      describe "operator 'is any of'" do
+        let(:operator) { 'is any of' }
+
+        context 'with matching string' do
+          let(:value) { ['Some really nice title', 'another example'] }
+
+          include_examples 'finds the ticket'
+        end
+
+        # Skip for MySQL as it handles IN case insensitive.
+        context 'with matching upcased string', db_adapter: :postgresql do
+          let(:value) { ['SOME really nice title', 'another example'] }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { ['Another title', 'Example'] }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with empty value' do
+          let(:ticket) { create(:ticket, title: '', owner: agent, group: Group.first) }
+
+          context 'with non-matching filter value' do
+            let(:value) { ['Another title', 'Example'] }
+
+            include_examples 'does not find the ticket'
+          end
+
+          context 'with empty filter value' do
+            let(:value) { [] }
+
+            include_examples 'finds the ticket'
+          end
+        end
+      end
+
       describe "operator 'is not'" do
         let(:operator) { 'is not' }
 
@@ -420,6 +459,45 @@ RSpec.describe Ticket::Selector::Sql do
         end
       end
 
+      describe "operator 'is none of'" do
+        let(:operator) { 'is none of' }
+
+        context 'with matching string' do
+          let(:value) { ['Some really nice title', 'another example'] }
+
+          include_examples 'does not find the ticket'
+        end
+
+        # Skip for MySQL as it handles IN case insensitive.
+        context 'with matching upcased string', db_adapter: :postgresql do
+          let(:value) { %w[SO SOME] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { %w[A B] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with empty value' do
+          let(:ticket) { create(:ticket, title: '', owner: agent, group: Group.first) }
+
+          context 'with non-matching filter value' do
+            let(:value) { %w[A B] }
+
+            include_examples 'finds the ticket'
+          end
+
+          context 'with empty filter value' do
+            let(:value) { [] }
+
+            include_examples 'does not find the ticket'
+          end
+        end
+      end
+
       describe "operator 'starts with'" do
         let(:operator) { 'starts with' }
 
@@ -442,6 +520,28 @@ RSpec.describe Ticket::Selector::Sql do
         end
       end
 
+      describe "operator 'starts with one of'" do
+        let(:operator) { 'starts with one of' }
+
+        context 'with matching string' do
+          let(:value) { ['Some really', 'Some'] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { ['SOME', 'Some really',] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { %w[Another Example] }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
       describe "operator 'ends with'" do
         let(:operator) { 'ends with' }
 
@@ -459,6 +559,28 @@ RSpec.describe Ticket::Selector::Sql do
 
         context 'with non-matching string' do
           let(:value) { 'Another title' }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+      describe "operator 'ends with one of'" do
+        let(:operator) { 'ends with one of' }
+
+        context 'with matching string' do
+          let(:value) { ['title', 'nice title'] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { ['TITLE', 'NICE title'] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { ['Another title', 'Example'] }
 
           include_examples 'does not find the ticket'
         end

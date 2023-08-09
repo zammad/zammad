@@ -1466,6 +1466,76 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
     end
   end
 
+  describe '.perform - Condition - starts with one of' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+
+    context 'when match' do
+      before do
+        travel_to DateTime.new 2023, 7, 21, 7, 0
+      end
+
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.title': {
+                   operator: 'starts with one of',
+                   value:    [ticket_title[0..5]]
+                 },
+               })
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when mismatch' do
+      before do
+        travel_to DateTime.new 2023, 8, 21, 7, 0
+      end
+
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.title': {
+                   operator: 'starts with one of',
+                   value:    ['xxx'],
+                 },
+               })
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when empty' do
+      before do
+        travel_to DateTime.new 2023, 8, 21, 7, 0
+        ticket.customer.update(note: nil)
+      end
+
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'customer.note': {
+                   operator: 'starts with one of',
+                   value:    ['xxx'],
+                 },
+               })
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+  end
+
   describe '.perform - Condition - ends with' do
     let(:payload) do
       base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
@@ -1532,6 +1602,195 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
 
       it 'does not match' do
         expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+  end
+
+  describe '.perform - Condition - ends with one of' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+
+    context 'when match' do
+      before do
+        travel_to DateTime.new 2023, 7, 21, 7, 0
+      end
+
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.title': {
+                   operator: 'ends with one of',
+                   value:    [ticket_title[-5..]]
+                 },
+               })
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when mismatch' do
+      before do
+        travel_to DateTime.new 2023, 8, 21, 7, 0
+      end
+
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.title': {
+                   operator: 'ends with one of',
+                   value:    ['xxx'],
+                 },
+               })
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when empty' do
+      before do
+        travel_to DateTime.new 2023, 8, 21, 7, 0
+        ticket.customer.update(note: nil)
+      end
+
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'customer.note': {
+                   operator: 'ends with one of',
+                   value:    ['xxx'],
+                 },
+               })
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+  end
+
+  describe '.perform - Condition - is any of' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+
+    context 'when match' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.title': {
+                   operator: 'is any of',
+                   value:    ['a', 'b', ticket_title],
+                 },
+               })
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when mismatch' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.title': {
+                   operator: 'is any of',
+                   value:    ['xxx'],
+                 },
+               })
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when empty' do
+      before do
+        ticket.update!(title: '')
+      end
+
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.title': {
+                   operator: 'is any of',
+                   value:    ['xxx'],
+                 },
+               })
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+  end
+
+  describe '.perform - Condition - is none of' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+
+    context 'when match' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.title': {
+                   operator: 'is none of',
+                   value:    %w[a b c],
+                 },
+               })
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when mismatch' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.title': {
+                   operator: 'is none of',
+                   value:    [ticket.title],
+                 },
+               })
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when empty' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.title': {
+                   operator: 'is none of',
+                   value:    [ticket.title],
+                 },
+               })
+      end
+
+      it 'does match' do
+        ticket.update!(title: '')
+        expect(result[:matched_workflows]).to include(workflow.id)
       end
     end
   end

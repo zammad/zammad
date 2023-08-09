@@ -164,17 +164,20 @@ class App.UiElement.postmaster_match
     item.find('.js-attributeSelector select').on('change', (e) =>
       key = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
+      operator = elementRow.find('.js-operator select option:selected').attr('value')
+      value = elementRow.find('.js-value input').val()
       @rebuildAttributeSelectors(item, elementRow, key, attribute)
-      @rebuildOperater(item, elementRow, key, groups, undefined, attribute)
-      @buildValue(item, elementRow, key, groups, undefined, undefined, attribute)
+      @rebuildOperater(item, elementRow, key, groups, operator, attribute)
+      @buildValue(item, elementRow, key, groups, value, operator, attribute)
     )
 
     # change operator
-    item.find('.js-operator select').on('change', (e) =>
-      key = $(e.target).find('.js-attributeSelector option:selected').attr('value')
-      operator = $(e.target).find('option:selected').attr('value')
+    item.on('change', '.js-operator select', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
-      @buildValue(item, elementRow, key, groups, undefined, operator, attribute)
+      key = elementRow.find('.js-attributeSelector option:selected').attr('value')
+      operator = $(e.target).find('option:selected').attr('value')
+      value = elementRow.find('.js-value input').val()
+      @buildValue(item, elementRow, key, groups, value, operator, attribute)
     )
 
     # build initial params
@@ -207,15 +210,18 @@ class App.UiElement.postmaster_match
     item
 
   @buildValue: (elementFull, elementRow, key, groups, value, operator, attribute) ->
-
-    # do nothing if item already exists
     name = "#{attribute.name}::#{key}::value"
-    return if elementRow.find("[name=\"#{name}\"]").get(0)
+
     config =
       name: name
       tag: 'input'
       type: 'text'
       value: value
+
+    if _.contains(['is any of', 'is none of', 'starts with one of', 'ends with one of'], operator)
+      config.name = "{json}#{config.name}"
+      config.tag = 'tokenfield'
+
     item = App.UiElement[config.tag].render(config, {})
     elementRow.find('.js-value').html(item)
 
@@ -254,7 +260,7 @@ class App.UiElement.postmaster_match
   @buildOperator: (elementFull, elementRow, key, groups, current_operator, attribute) ->
     selection = $("<select class=\"form-control\" name=\"#{attribute.name}::#{key}::operator\"></select>")
 
-    for operator in ['contains', 'contains not', 'is', 'is not', 'starts with', 'ends with', 'matches regex', 'does not match regex']
+    for operator in ['contains', 'contains not', 'is any of', 'is none of', 'starts with one of', 'ends with one of', 'matches regex', 'does not match regex']
       operatorName = App.i18n.translateInline(operator)
       selected = ''
       if current_operator is operator

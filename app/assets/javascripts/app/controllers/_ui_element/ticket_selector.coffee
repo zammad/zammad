@@ -549,6 +549,10 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
     selection = $('<select class="form-control"></select>')
 
     attributeConfig = elements[groupAndAttribute]
+
+    # Compatibility layer for renamed operators (#4709).
+    meta.operator = @migrateOperator(attributeConfig, meta.operator)
+
     if attributeConfig.operator
 
       # check if operator exists
@@ -649,7 +653,7 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
     @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
     toggleValue()
 
-  @buildValueConfigNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+  @buildValueConfigNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType) ->
     if !@hasExpertConditions() or !@isExpertMode
       return super
 
@@ -747,6 +751,15 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
       value.value = element.find('.js-value .js-objectId').val()
     else if element.find('.js-value .js-shadow')?.val()
       value.value = element.find('.js-value .js-shadow').val()
+    else if element.find('[data-value]').length
+      valueField = element.find('[data-value]')
+      if valueField.data('valueType') is 'json'
+        try
+          value.value = JSON.parse(valueField.data('value'))
+        catch
+          App.Log.error 'App.UiElement.ticket_selector', 'Invalid JSON value for a subfield', valueField
+      else
+        value.value = valueField.data('value')
     else if element.find('.js-value input.form-control')?.val()
       value.value = element.find('.js-value input.form-control').val()
     else if element.find('.js-value .form-control')?.val()

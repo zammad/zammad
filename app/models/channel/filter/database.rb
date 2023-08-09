@@ -1,7 +1,14 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 # process all database filter
-module Channel::Filter::Database
+module Channel::Filter::Database # rubocop:disable Metrics/ModuleLength
+
+  OPERATORS_WITH_MULTIPLE_VALUES = [
+    'is any of',
+    'is none of',
+    'starts with one of',
+    'ends with one of',
+  ].freeze
 
   def self.run(_channel, mail, _transaction_params)
     PostmasterFilter.where(active: true, channel: 'email').reorder(:name, :created_at).each do |filter|
@@ -21,15 +28,23 @@ module Channel::Filter::Database
       value = mail[ key.downcase.to_sym ]
       match_rule = meta['value']
       min_one_rule_exists = true
+      operator = meta[:operator]
 
-      if !rule_matches?(meta[:operator], match_rule, value)
-        Rails.logger.debug { "  not matching content '#{key.downcase}' contains not #{match_rule}" }
+      human_match_rule = match_rule
+
+      if OPERATORS_WITH_MULTIPLE_VALUES.include?(operator) && !match_rule.instance_of?(Array)
+        match_rule = [match_rule]
+        human_match_rule = match_rule.join(', ')
+      end
+
+      if !rule_matches?(operator, match_rule, value)
+        Rails.logger.debug { "  not matching content '#{key.downcase}' contains not #{human_match_rule}" }
         return false
       end
 
-      Rails.logger.info { "  matching: content '#{key.downcase}' contains not #{match_rule}" }
+      Rails.logger.info { "  matching: content '#{key.downcase}' contains not #{human_match_rule}" }
     rescue => e
-      Rails.logger.error "can't use match rule #{match_rule} on #{value}"
+      Rails.logger.error "can't use match rule #{human_match_rule} on #{value}"
       Rails.logger.error e.inspect
       return false
     end
@@ -43,14 +58,14 @@ module Channel::Filter::Database
       value.blank? || !Channel::Filter::Match::Contains.match(value: value, match_rule: match_rule)
     when 'contains'
       value.present? && Channel::Filter::Match::Contains.match(value: value, match_rule: match_rule)
-    when 'is'
-      value == match_rule
-    when 'is not'
-      value != match_rule
-    when 'starts with'
-      value.downcase.start_with? match_rule.downcase
-    when 'ends with'
-      value.downcase.end_with? match_rule.downcase
+    when 'is any of'
+      match_rule.any?(value)
+    when 'is none of'
+      match_rule.none?(value)
+    when 'starts with one of'
+      match_rule.any? { |rule_value| value.downcase.start_with? rule_value.downcase }
+    when 'ends with one of'
+      match_rule.any? { |rule_value| value.downcase.end_with? rule_value.downcase }
     when 'matches regex'
       value.present? && Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
     when 'does not match regex'

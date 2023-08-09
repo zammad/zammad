@@ -14,10 +14,16 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     %r{(within next|within last|after|before|till|from) \(relative\)},
     'is in working time',
     'is not in working time',
-    'starts with',
-    'ends with',
+    'starts with',        # keep for compatibility with old conditions
+    'ends with',          # keep for compatibility with old conditions
     'matches regex',
     'does not match regex',
+
+    # Operators with multiple values
+    'starts with one of',
+    'ends with one of',
+    'is any of',
+    'is none of',
   ].freeze
 
   attr_accessor :final_query, :final_bind_params, :final_tables, :changed_attributes
@@ -218,9 +224,51 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     elsif block_condition[:operator] == 'starts with'
       query << "#{attribute} #{like} (?)"
       bind_params.push "#{block_condition[:value]}%"
+    elsif block_condition[:operator] == 'starts with one of'
+      block_condition[:value] = Array.wrap(block_condition[:value])
+
+      sub_query = []
+      block_condition[:value].each do |value|
+        sub_query << "#{attribute} #{like} (?)"
+        bind_params.push "#{value}%"
+      end
+      query << "(#{sub_query.join(' OR ')})" if sub_query.present?
     elsif block_condition[:operator] == 'ends with'
       query << "#{attribute} #{like} (?)"
       bind_params.push "%#{block_condition[:value]}"
+    elsif block_condition[:operator] == 'ends with one of'
+      block_condition[:value] = Array.wrap(block_condition[:value])
+
+      sub_query = []
+      block_condition[:value].each do |value|
+        sub_query << "#{attribute} #{like} (?)"
+        bind_params.push "%#{value}"
+      end
+      query << "(#{sub_query.join(' OR ')})" if sub_query.present?
+    elsif block_condition[:operator] == 'is any of'
+      block_condition[:value] = Array.wrap(block_condition[:value])
+
+      block_condition[:value] = block_condition[:value].empty? ? [''] : block_condition[:value]
+
+      sub_query = []
+      block_condition[:value].each do |value|
+        sub_query << "#{attribute} IN (?)"
+        bind_params.push value
+      end
+
+      query << "(#{sub_query.join(' OR ')})" if sub_query.present?
+    elsif block_condition[:operator] == 'is none of'
+      block_condition[:value] = Array.wrap(block_condition[:value])
+
+      block_condition[:value] = block_condition[:value].empty? ? [''] : block_condition[:value]
+
+      sub_query = []
+      block_condition[:value].each do |value|
+        sub_query << "#{attribute} NOT IN (?)"
+        bind_params.push value
+      end
+
+      query << "(#{sub_query.join(' AND ')})" if sub_query.present?
     elsif block_condition[:operator] == 'is'
       if block_condition[:pre_condition] == 'not_set'
         if attribute_name.match?(%r{^(created_by|updated_by|owner|customer|user)_id})
@@ -253,9 +301,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
             query << "#{attribute} IN (?)"
             bind_params.push User.find(block_condition[:value]).out_of_office_agent_of.pluck(:id)
           else
-            if block_condition[:value].class != Array
-              block_condition[:value] = [block_condition[:value]]
-            end
+            block_condition[:value] = Array.wrap(block_condition[:value])
 
             query << if block_condition[:value].include?('')
                        "(#{attribute} IN (?) OR #{attribute} IS NULL)"
@@ -295,9 +341,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
             bind_params.push User.find(block_condition[:value]).out_of_office_agent_of.pluck(:id)
             query << "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
           else
-            if block_condition[:value].class != Array
-              block_condition[:value] = [block_condition[:value]]
-            end
+            block_condition[:value] = Array.wrap(block_condition[:value])
 
             query << if block_condition[:value].include?('')
                        "(#{attribute} IS NOT NULL AND #{attribute} NOT IN (?))"
@@ -479,7 +523,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
 
   # validate value / allow blank but only if pre_condition exists and is not specific
   def validate_pre_condition_blank!(condition)
-    return if ['has changed', 'has reached', 'has reached warning'].include? condition[:operator]
+    return if ['has changed', 'has reached', 'has reached warning', 'is any of', 'is none of'].include? condition[:operator]
 
     if (condition[:operator] != 'today' && !condition.key?(:value)) ||
        (condition[:value].instance_of?(Array) && condition[:value].respond_to?(:blank?) && condition[:value].blank?) ||

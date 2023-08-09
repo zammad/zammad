@@ -32,7 +32,7 @@ class RegexOperatorRenaming < ActiveRecord::Migration[6.1]
   end
 
   def update_core_workflows
-    CoreWorkflow.all.in_batches.each_record do |workflow|
+    CoreWorkflow.in_batches.each_record do |workflow|
       next if workflow.condition_saved.blank? && workflow.condition_selected.blank?
 
       update_condition(workflow, :condition_saved)
@@ -45,12 +45,10 @@ class RegexOperatorRenaming < ActiveRecord::Migration[6.1]
     return if !regex_operators_used?(workflow, condition_type)
 
     workflow[condition_type.to_sym].each_value do |condition|
-      condition.each do |key, value|
-        next if !key.eql?('operator')
-        next if !OPERATOR_MAPPING.key?(value)
+      next if condition[:operator].blank?
+      next if OPERATOR_MAPPING.keys.exclude?(condition[:operator])
 
-        condition[key][value] = OPERATOR_MAPPING[value]
-      end
+      condition[:operator] = OPERATOR_MAPPING[condition[:operator]]
     end
   end
 

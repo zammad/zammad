@@ -17,10 +17,10 @@ class PostmasterFilter < ApplicationModel
   VALID_OPERATORS = [
     'contains',
     'contains not',
-    'is',
-    'is not',
-    'starts with',
-    'ends with',
+    'is any of',
+    'is none of',
+    'starts with one of',
+    'ends with one of',
     'matches regex',
     'does not match regex',
   ].freeze
@@ -46,5 +46,4 @@ class PostmasterFilter < ApplicationModel
   rescue => e
     raise Exceptions::UnprocessableEntity, e.message
   end
-
 end
