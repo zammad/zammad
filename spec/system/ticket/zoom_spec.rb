@@ -52,6 +52,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), customer: create(:customer, :with_org)) }
 
     before do
+      Setting.set("#{service_name}_integration", true) if defined? service_name
       visit "#ticket/zoom/#{ticket.id}"
     end
 
@@ -67,6 +68,30 @@ RSpec.describe 'Ticket zoom', type: :system do
       click '#userAction'
       click_link 'Edit Organization'
       modal_ready
+    end
+
+    %w[idoit gitlab github].each do |service_name|
+      it "#{service_name} tab is hidden" do
+        expect(page).to have_no_css(".tabsSidebar-tab[data-tab=#{service_name}]")
+      end
+
+      context "when #{service_name} is enabled" do
+        let(:service_name) { service_name }
+
+        context 'when agent' do
+          it "#{service_name} tab is visible" do
+            expect(page).to have_css(".tabsSidebar-tab[data-tab=#{service_name}]")
+          end
+        end
+
+        context 'when customer', authenticated_as: :customer do
+          let(:customer) { create(:customer) }
+
+          it "#{service_name} tab is hidden" do
+            expect(page).to have_no_css(".tabsSidebar-tab[data-tab=#{service_name}]")
+          end
+        end
+      end
     end
   end
 
