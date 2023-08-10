@@ -10,6 +10,12 @@ class App.SidebarGitIssue extends App.Controller
 
   sidebarItem: =>
     return if !@Config.get("#{@providerIdentifier}_integration")
+
+    isAgentTicketZoom   = (@ticket and @ticket.currentView() is 'agent')
+    isAgentTicketCreate = (!@ticket and @taskKey and @taskKey.match('TicketCreateScreen-'))
+
+    return if !isAgentTicketZoom and !isAgentTicketCreate
+
     @item = {
       name: @providerIdentifier
       badgeCallback: @badgeRender
