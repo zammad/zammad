@@ -53,7 +53,8 @@ class KnowledgeBase::Category < ApplicationModel
 
   def self_parent?(candidate)
     return true if candidate == parent
-    return true if parent&.self_parent?(candidate)
+
+    true if parent&.self_parent?(candidate)
   end
 
   def self_with_children

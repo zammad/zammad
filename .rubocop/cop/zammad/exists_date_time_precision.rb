@@ -50,7 +50,8 @@ and check if there are :datetime or :timestamps column which do not have the lim
 
         def on_send(node)
           return add_offense(node) if invalid_column?(node)
-          return add_offense(node) if invalid_table?(node)
+
+          add_offense(node) if invalid_table?(node)
         end
 
         def invalid_table?(node)
