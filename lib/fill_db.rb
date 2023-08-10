@@ -93,7 +93,7 @@ or if you only want to create 100 tickets
               name = "#{attribute_type}_#{counter}"
 
               object_attribute_creation = public_send("create_object_attribute_type_#{attribute_type}",
-                                                      object:     object,
+                                                      object:     object.capitalize,
                                                       name:       name,
                                                       display:    name,
                                                       editable:   true,
@@ -101,8 +101,9 @@ or if you only want to create 100 tickets
                                                       screens:    {
                                                         create_middle: {
                                                           '-all-' => {
-                                                            shown:    true,
-                                                            required: false,
+                                                            shown:      true,
+                                                            required:   false,
+                                                            item_class: 'column',
                                                           },
                                                         },
                                                         create:        {
