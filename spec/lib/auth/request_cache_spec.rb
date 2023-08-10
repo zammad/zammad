@@ -3,35 +3,27 @@
 require 'rails_helper'
 
 RSpec.describe Auth::RequestCache do
-  let(:user) { create(:agent) }
+  describe '.fetch' do
+    it 'does cache true values' do
+      described_class.fetch_value('a') { true }
+      value_a = described_class.fetch_value('a') { 'bb' }
 
-  context 'when user has permission' do
-    let(:permission) { 'ticket.agent' }
+      expect(value_a).to be(true)
+    end
 
-    it 'does cache permissions' do
-      instance_spy = instance_spy(described_class, permission_cache: {}, permissions?: true)
+    it 'does cache false values' do
+      described_class.fetch_value('a') { false }
+      value_a = described_class.fetch_value('a') { 'bb' }
 
-      allow(described_class).to receive(:instance).and_return(instance_spy)
-
-      described_class.permissions?(user, permission)
-      described_class.permissions?(user, permission)
-
-      expect(instance_spy).to have_received(:permissions?).with(user, permission).once
+      expect(value_a).to be(false)
     end
   end
 
-  context 'when user has no permission' do
-    let(:permission) { 'ticket.customer' }
-
-    it 'does cache permissions' do
-      instance_spy = instance_spy(described_class, permission_cache: {}, permissions?: false)
-
-      allow(described_class).to receive(:instance).and_return(instance_spy)
-
-      described_class.permissions?(user, permission)
-      described_class.permissions?(user, permission)
-
-      expect(instance_spy).to have_received(:permissions?).with(user, permission).once
+  describe '.clear' do
+    it 'does clear after update of an object' do
+      described_class.fetch_value('a') { true }
+      Ticket.first.touch
+      expect(described_class.request_cache).to be_blank
     end
   end
 end

@@ -21,6 +21,7 @@ class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::CanTouchReferences
   include ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
   include ApplicationModel::HasExistsCheckByObjectAndId
+  include ApplicationModel::HasRequestCache
 
   self.abstract_class = true
 end
