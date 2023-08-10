@@ -31,11 +31,11 @@ RSpec.describe Service::GeoIp, integration: true do
           let(:expected_result) do
             {
               'country_name'   => 'Switzerland',
-              'city_name'      => 'Zurich',
+              'city_name'      => 'Sempach',
               'country_code'   => 'CH',
               'continent_code' => 'EU',
-              'latitude'       => 47.3661,
-              'longitude'      => 8.5243,
+              'latitude'       => 47.1343,
+              'longitude'      => 8.1859,
             }
           end
 
