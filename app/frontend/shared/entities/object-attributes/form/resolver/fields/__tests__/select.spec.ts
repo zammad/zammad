@@ -83,6 +83,7 @@ describe('FieldResolverSelect', () => {
         clearable: false,
         options: [],
         belongsToObjectField: 'group',
+        sorting: 'label',
       },
       relation: {
         type: 'Group',
