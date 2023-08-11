@@ -1,4 +1,5 @@
 class App.FormHandlerCoreWorkflow
+  @DEBUG: false
 
   # contains the current form params state to prevent mass requests
   coreWorkflowParams = {}
@@ -259,6 +260,7 @@ class App.FormHandlerCoreWorkflow
 
   # runs a complete workflow based on a request result and the form params of the form handler
   @runWorkflow: (data, classname, form, ui, attributes, params) ->
+    console.time("runWorkflow/#{classname}/#{ui.model.className}/#{ui.screen}") if @DEBUG
     App.Collection.loadAssets(data.assets)
     App.FormHandlerCoreWorkflow.restrictValues(classname, form, ui, attributes, params, data)
     App.FormHandlerCoreWorkflow.fillIn(classname, form, ui, attributes, params, data.fill_in)
@@ -268,6 +270,7 @@ class App.FormHandlerCoreWorkflow
     App.FormHandlerCoreWorkflow.changeFlags(form, ui, data.flags)
     App.FormHandlerCoreWorkflow.executeEval(form, ui, data.eval)
     App.FormHandlerCoreWorkflow.runCallbacks(ui)
+    console.timeEnd("runWorkflow/#{classname}/#{ui.model.className}/#{ui.screen}") if @DEBUG
 
   # loads the request data and prepares the run of the workflow data
   @runRequest: (data) ->
