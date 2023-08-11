@@ -11,7 +11,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
   let(:ticket)    { create(:ticket, customer: customer, group: group, owner: agent) }
 
   def wait_for_ticket_edit(number: 1)
-    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql', number: number)
+    wait_for_mutation('ticketUpdate', number: number)
   end
 
   def save_article(number: 1)
@@ -166,6 +166,8 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
 
     context 'when an article was just deleted', current_user_id: -> { agent.id } do
       def delete_article(article_body, number: 1)
+        wait_for_subscription_start('ticketArticleUpdates')
+
         within '[role="comment"]', text: article_body do
           find('[data-name="article-context"]').click
         end
@@ -173,15 +175,17 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
         click_on 'Delete Article'
         click_on 'OK'
 
-        wait_for_gql('apps/mobile/pages/ticket/graphql/subscriptions/ticketArticlesUpdates.graphql', number: number)
+        wait_for_subscription_update('ticketArticleUpdates', number: number)
       end
 
       def create_article(article_body, number: 1)
         find_button('Add reply').click
 
-        text = find_editor('Text')
-        expect(text).to have_text_value('', exact: true)
-        text.type(article_body)
+        within_form(form_updater_gql_number: number) do
+          text = find_editor('Text')
+          expect(text).to have_text_value('', exact: true)
+          text.type(article_body)
+        end
 
         save_article(number: number)
       end
