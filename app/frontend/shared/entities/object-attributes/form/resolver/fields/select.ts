@@ -36,6 +36,8 @@ export class FieldResolverSelect extends FieldResolver {
       props.belongsToObjectField = camelize(
         (this.attributeConfig.belongs_to as string) || '',
       )
+
+      props.sorting = 'label'
     } else if (this.attributeConfig.options) {
       props.options = this.mappedOptions()
     }
