@@ -67,27 +67,31 @@ module HasGroups
   # @return [Boolean]
   def group_access?(group_id, access)
     Auth::RequestCache.fetch_value("group_access/#{cache_key_with_version}/#{group_id}/#{access}") do
-      return false if !active?
-      return false if !groups_access_permission?
-
-      group_id = self.class.ensure_group_id_parameter(group_id)
-      access   = Array(access).map(&:to_sym) | [:full]
-
-      # check direct access
-      return true if group_through.klass.eager_load(:group).exists?(
-        group_through.foreign_key => id,
-        group_id: group_id,
-        access: access,
-        groups: {
-          active: true
-        }
-      )
-
-      # check indirect access through Roles if possible
-      return false if !respond_to?(:role_access?)
-
-      role_access?(group_id, access)
+      group_access_uncached?(group_id, access)
     end
+  end
+
+  def group_access_uncached?(group_id, access)
+    return false if !active?
+    return false if !groups_access_permission?
+
+    group_id = self.class.ensure_group_id_parameter(group_id)
+    access   = Array(access).map(&:to_sym) | [:full]
+
+    # check direct access
+    return true if group_through.klass.eager_load(:group).exists?(
+      group_through.foreign_key => id,
+      group_id: group_id,
+      access: access,
+      groups: {
+        active: true
+      }
+    )
+
+    # check indirect access through Roles if possible
+    return false if !respond_to?(:role_access?)
+
+    role_access?(group_id, access)
   end
 
   # Lists the Group IDs the instance has the given access(es) plus 'full' to.
