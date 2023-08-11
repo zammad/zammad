@@ -9,6 +9,10 @@ class App.FormHandlerCoreWorkflow
   # contains the restriction values for each attribute of each form
   coreWorkflowRestrictions = {}
 
+  # core workflow will run for every attribute
+  # we cache the article params per dispatch because they are expensive to get
+  articleParamsCache = {}
+
   # defines the objects and screen for which Core Workflow is active
   coreWorkflowScreens = {
     Ticket: ['create_middle', 'edit', 'overview_bulk']
@@ -342,7 +346,16 @@ class App.FormHandlerCoreWorkflow
           return
       )
 
-  @run: (params_ref, attribute, attributes, classname, form, ui) ->
+  @article: (ui, dispatchID) ->
+    return articleParamsCache[dispatchID] if articleParamsCache[dispatchID]
+
+    article = ui.articleParamsCallback()
+    if article?.body
+      article.body = App.Utils.html2text(article.body)
+
+    articleParamsCache[dispatchID] = article
+
+  @run: (params_ref, attribute, attributes, classname, form, ui, dispatchID = 'default') ->
 
     # skip on blacklisted tags
     return if _.contains(['ticket_selector', 'core_workflow_condition', 'core_workflow_perform'], attribute.tag)
@@ -353,9 +366,7 @@ class App.FormHandlerCoreWorkflow
     # get params and add id from ui if needed
     params = App.FormHandlerCoreWorkflow.cleanParams(params_ref)
     if ui.articleParamsCallback
-      params.article = ui.articleParamsCallback()
-      if params.article?.body
-        params.article.body = App.Utils.html2text(params.article.body)
+      params.article = App.FormHandlerCoreWorkflow.article(ui, dispatchID)
 
     # add object id for edit screens
     if ui?.params?.id && ui.screen.match(/edit/)

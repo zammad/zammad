@@ -57,13 +57,15 @@ class App.ControllerForm extends App.Controller
 
   runCoreWorkflow: (attribute) ->
     params = App.ControllerForm.params(@form)
-    App.FormHandlerCoreWorkflow.run(params, attribute, @attributes, @idPrefix, @form, @)
+    dispatchID = Math.floor( Math.random() * 999999 ).toString()
+    App.FormHandlerCoreWorkflow.run(params, attribute, @attributes, @idPrefix, @form, @, dispatchID)
 
   dispatchHandlers: =>
     params = App.ControllerForm.params(@form)
+    dispatchID = Math.floor( Math.random() * 999999 ).toString()
     for attribute in @attributes
       for handler in @handlers
-        handler(params, attribute, @attributes, @idPrefix, @form, @)
+        handler(params, attribute, @attributes, @idPrefix, @form, @, dispatchID)
 
   showAlert: (message) =>
     if Array.isArray(message)
@@ -337,8 +339,9 @@ class App.ControllerForm extends App.Controller
       item_bind.on(item_event, (e) =>
         @lastChangedAttribute = attribute.name
         params = App.ControllerForm.params(@form)
+        dispatchID = Math.floor( Math.random() * 999999 ).toString()
         for handler in @handlers
-          handler(params, attribute, @attributes, idPrefix, form, @)
+          handler(params, attribute, @attributes, idPrefix, form, @, dispatchID)
       )
 
     if !attribute.display || attribute.transparent
