@@ -51,7 +51,12 @@ class Organization < ApplicationModel
     else
       unset_associations
     end
+
+    secondary_members_to_touch = secondary_members.records
+
     super()
+
+    secondary_members_to_touch.each(&:touch)
   end
 
   def attributes_with_association_ids
