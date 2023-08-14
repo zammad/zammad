@@ -143,13 +143,13 @@ class App.TicketZoom extends App.Controller
     if @view && ( !_.isEqual(@formMeta.configure_attributes, formMeta.configure_attributes) || !_.isEqual(@formMeta.dependencies, formMeta.dependencies) || !_.isEqual(@formMeta.filter, formMeta.filter) || @view isnt view || @readable isnt readable || @changeable isnt changeable || @fullable isnt fullable )
       @renderDone = false
 
-    return if @renderDone && @ticketUpdatedAtLastCall && new Date(newTicketRaw.updated_at).getTime() <= new Date(@ticketUpdatedAtLastCall).getTime()
+    ticketIsNewest = @ticketUpdatedAtLastCall && new Date(newTicketRaw.updated_at).getTime() <= new Date(@ticketUpdatedAtLastCall).getTime()
+    return if @renderDone && ticketIsNewest
     @ticketUpdatedAtLastCall = newTicketRaw.updated_at
 
     # notify if ticket changed not by my self
-    if @initFetched && newTicketRaw.updated_by_id isnt @Session.get('id')
+    if @initFetched && !ticketIsNewest && newTicketRaw.updated_by_id isnt @Session.get('id')
       App.TaskManager.notify(@taskKey)
-
     @initFetched = true
 
     if !@doNotLog
