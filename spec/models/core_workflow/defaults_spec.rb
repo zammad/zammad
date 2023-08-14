@@ -298,35 +298,4 @@ RSpec.describe 'CoreWorkflow > Defaults', mariadb: true, type: :model do
       expect(result[:mandatory][field_name]).to be(false)
     end
   end
-
-  describe '.perform - Default - Restrict values for multiselect fields', db_strategy: :reset do
-    let(:field_name) { SecureRandom.uuid }
-
-    before do
-      create(:object_manager_attribute_multiselect, name: field_name, display: field_name)
-      ObjectManager::Attribute.migration_execute
-    end
-
-    context 'without saved values' do
-      it 'does return the correct list of selectable values' do
-        expect(result[:restrict_values][field_name]).to eq(['', 'key_1', 'key_2', 'key_3'])
-      end
-    end
-
-    context 'with saved values' do
-      let(:payload) do
-        base_payload.merge('params' => {
-                             'id' => ticket.id,
-                           })
-      end
-
-      before do
-        ticket.reload.update(field_name.to_sym => %w[key_2 key_3])
-      end
-
-      it 'does return the correct list of selectable values' do
-        expect(result[:restrict_values][field_name]).to eq(['', 'key_1', 'key_2', 'key_3'])
-      end
-    end
-  end
 end

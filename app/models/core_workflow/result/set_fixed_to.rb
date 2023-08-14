@@ -8,6 +8,7 @@ class CoreWorkflow::Result::SetFixedTo < CoreWorkflow::Result::BaseOption
                                                        config_value
                                                      end
     remove_excluded_param_values
+    mark_restricted
     true
   end
 

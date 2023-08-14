@@ -3,19 +3,20 @@
 class CoreWorkflow::Result
   include ::Mixin::HasBackends
 
-  attr_accessor :payload, :user, :assets, :assets_in_result, :result, :rerun, :form_updater
+  attr_accessor :payload, :user, :assets, :assets_in_result, :result, :rerun, :form_updater, :restricted_fields
 
   def initialize(payload:, user:, assets: {}, assets_in_result: true, result: {}, form_updater: false)
     raise ArgumentError, __("The required parameter 'payload->class_name' is missing.") if !payload['class_name']
     raise ArgumentError, __("The required parameter 'payload->screen' is missing.") if !payload['screen']
 
-    @payload          = payload
-    @user             = user
-    @assets           = assets
-    @assets_in_result = assets_in_result
-    @result           = result
-    @form_updater     = form_updater
-    @rerun            = false
+    @restricted_fields = {}
+    @payload           = payload
+    @user              = user
+    @assets            = assets
+    @assets_in_result  = assets_in_result
+    @result            = result
+    @form_updater      = form_updater
+    @rerun             = false
   end
 
   def attributes
@@ -45,7 +46,7 @@ class CoreWorkflow::Result
       # priority e.g. would trigger a rerun because its not set yet
       # but we skip rerun here because the initial values have no logic which
       # are dependent on form changes
-      run_backend_value('set_fixed_to', field, values, skip_rerun: true)
+      run_backend_value('set_fixed_to', field, values, skip_rerun: true, skip_mark_restricted: true)
     end
 
     set_default_only_shown_if_selectable
@@ -116,21 +117,21 @@ class CoreWorkflow::Result
     end
   end
 
-  def run_backend(field, perform_config, skip_rerun: false)
+  def run_backend(field, perform_config, skip_rerun: false, skip_mark_restricted: false)
     result = []
     Array(perform_config['operator']).each do |backend|
-      result << "CoreWorkflow::Result::#{backend.classify}".constantize.new(result_object: self, field: field, perform_config: perform_config, skip_rerun: skip_rerun).run
+      result << "CoreWorkflow::Result::#{backend.classify}".constantize.new(result_object: self, field: field, perform_config: perform_config, skip_rerun: skip_rerun, skip_mark_restricted: skip_mark_restricted).run
     end
     result
   end
 
-  def run_backend_value(backend, field, value, skip_rerun: false)
+  def run_backend_value(backend, field, value, skip_rerun: false, skip_mark_restricted: false)
     perform_config = {
       'operator' => backend,
       backend    => value,
     }
 
-    run_backend(field, perform_config, skip_rerun: skip_rerun)
+    run_backend(field, perform_config, skip_rerun: skip_rerun, skip_mark_restricted: skip_mark_restricted)
   end
 
   def change_flags(flags)
@@ -151,11 +152,38 @@ class CoreWorkflow::Result
     true
   end
 
+  def workflow_restricted_fields
+    @workflow_restricted_fields ||= begin
+      result = []
+      workflows.each do |workflow|
+        fields = workflow.perform.each_with_object([]) do |(key, value), result_inner|
+          next if %w[select remove_option set_fixed_to add_option].exclude?(value['operator'])
+
+          result_inner << key.split('.')[-1]
+        end
+
+        result |= fields
+      end
+      result
+    end
+  end
+
+  def filter_restrict_values
+    @result[:restrict_values].select! do |field, _values|
+      attribute = attributes.object_elements_hash[field]
+      next if attribute && workflow_restricted_fields.exclude?(field) && !@restricted_fields[field] && !attributes.attribute_options_relation?(attribute) && !attributes.attribute_filter?(attribute)
+
+      true
+    end
+  end
+
   def consider_rerun
     if @rerun && @result[:rerun_count] < 25
       @result[:rerun_count] += 1
       return run
     end
+
+    filter_restrict_values if !@form_updater
 
     assets_in_result?
 
