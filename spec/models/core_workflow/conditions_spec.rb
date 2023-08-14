@@ -1794,4 +1794,37 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
       end
     end
   end
+
+  describe 'New ticket organization condition in core workflow not working for is specific usage #4750' do
+    let(:ticket_customer) { create(:customer, :with_org) }
+
+    let!(:workflow) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               'ticket.organization_id': {
+                 operator: 'is',
+                 value:    [ticket.customer.organization_id.to_s],
+               },
+             })
+    end
+
+    context 'when agent' do
+      let(:payload) do
+        base_payload.merge('params' => { 'customer_id' => ticket.customer_id })
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when customer' do
+      let!(:action_user) { ticket.customer } # rubocop:disable RSpec/LetSetup
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+  end
 end
