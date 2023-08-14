@@ -53,7 +53,7 @@ class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseC
       raise ActiveRecord::RecordNotFound
     end
 
-    @object_locales = @alternative.translations.map(&:kb_locale).map(&:system_locale)
+    @object_locales = @alternative.translations.map { |x| x.kb_locale.system_locale }
 
     render 'knowledge_base/public/show_alternatives', locals: { name: 'Category' }
   end

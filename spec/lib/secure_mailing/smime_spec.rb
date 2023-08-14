@@ -148,7 +148,7 @@ RSpec.describe SecureMailing::SMIME do
           end
 
           it 'is included in the generated mail' do
-            expect(p7enc.certificates.map(&:subject).sort).to eq(chain.map(&:parsed).map(&:subject).sort)
+            expect(p7enc.certificates.map(&:subject).sort).to eq(chain.map { |x| x.parsed.subject }.sort)
           end
         end
       end

@@ -3153,7 +3153,7 @@ wait untill text in selector disabppears
         )
       end
       sleep 1
-      search_result = instance.find_elements(css: search_css).map(&:text).map(&:strip)
+      search_result = instance.find_elements(css: search_css).map { |x| x.text.strip }
       break if search_result.include? search_target
       raise 'user creation failed' if i >= 19
 

@@ -1725,7 +1725,7 @@ RSpec.describe User, type: :model do
               expect do
                 user.update(mobile: '2345678901')
                 perform_enqueued_jobs commit_transaction: true
-              end.not_to change { logs.map(&:reload).map(&:attributes) }
+              end.not_to change { logs.map { |x| x.reload.attributes } }
             end
           end
         end

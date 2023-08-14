@@ -19,7 +19,7 @@ class KnowledgeBase::Public::AnswersController < KnowledgeBase::Public::BaseCont
 
     raise ActiveRecord::RecordNotFound if !@alternative&.translations&.any?
 
-    @object_locales = @alternative.translations.map(&:kb_locale).map(&:system_locale)
+    @object_locales = @alternative.translations.map { |x| x.kb_locale.system_locale }
 
     render 'knowledge_base/public/show_alternatives', locals: { name: 'Answer' }
   end

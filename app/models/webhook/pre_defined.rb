@@ -8,7 +8,7 @@ class Webhook::PreDefined
   end
 
   def self.pre_defined_webhook_definitions
-    pre_defined_webhooks.map(&:new).map(&:definition)
+    pre_defined_webhooks.map { |x| x.new.definition }
   end
 
   def definition

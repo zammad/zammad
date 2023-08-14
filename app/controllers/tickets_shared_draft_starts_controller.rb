@@ -77,7 +77,7 @@ class TicketsSharedDraftStartsController < ApplicationController
 
     safe_params[:content].delete :group_id
 
-    allowed_groups = current_user.groups_access('create').map(&:id).map(&:to_s)
+    allowed_groups = current_user.groups_access('create').map { |x| x.id.to_s }
     group_id       = safe_params[:group_id]&.to_s
 
     if allowed_groups.exclude? group_id
