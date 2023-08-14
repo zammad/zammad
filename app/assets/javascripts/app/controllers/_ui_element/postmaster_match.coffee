@@ -165,7 +165,7 @@ class App.UiElement.postmaster_match
       key = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
       operator = elementRow.find('.js-operator select option:selected').attr('value')
-      value = elementRow.find('.js-value input').val()
+      value = params[attribute.name]?[key]?.value
       @rebuildAttributeSelectors(item, elementRow, key, attribute)
       @rebuildOperater(item, elementRow, key, groups, operator, attribute)
       @buildValue(item, elementRow, key, groups, value, operator, attribute)
@@ -176,7 +176,7 @@ class App.UiElement.postmaster_match
       elementRow = $(e.target).closest('.js-filterElement')
       key = elementRow.find('.js-attributeSelector option:selected').attr('value')
       operator = $(e.target).find('option:selected').attr('value')
-      value = elementRow.find('.js-value input').val()
+      value = params[attribute.name]?[key]?.value
       @buildValue(item, elementRow, key, groups, value, operator, attribute)
     )
 

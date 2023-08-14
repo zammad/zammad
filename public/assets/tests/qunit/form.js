@@ -821,6 +821,10 @@ QUnit.test("form postmaster filter", assert => {
         operator: 'contains',
         value: 'some subject',
       },
+      cc: {
+        operator: 'starts with one of',
+        value: ['a', 'b', 'c'],
+      },
     },
     set: {
       'x-zammad-ticket-customer_id': {
@@ -867,7 +871,11 @@ QUnit.test("form postmaster filter", assert => {
       subject: {
         operator: 'contains',
         value: 'some subject'
-      }
+      },
+      cc: {
+        operator: 'starts with one of',
+        value: ['a', 'b', 'c'],
+      },
     },
     set: {
       'x-zammad-ticket-customer_id': {
@@ -907,7 +915,11 @@ QUnit.test("form postmaster filter", assert => {
       subject: {
         operator: 'contains',
         value: 'some subject'
-      }
+      },
+      cc: {
+        operator: 'starts with one of',
+        value: ['a', 'b', 'c'],
+      },
     },
     set: {
       'x-zammad-ticket-owner_id': {
@@ -939,7 +951,11 @@ QUnit.test("form postmaster filter", assert => {
       subject: {
         operator: 'contains',
         value: 'some subject'
-      }
+      },
+      cc: {
+        operator: 'starts with one of',
+        value: ['a', 'b', 'c'],
+      },
     },
     set: {
       'x-zammad-ticket-owner_id': {
@@ -975,7 +991,11 @@ QUnit.test("form postmaster filter", assert => {
           subject: {
             operator: 'contains',
             value: 'some subject'
-          }
+          },
+          cc: {
+            operator: 'starts with one of',
+            value: ['a', 'b', 'c'],
+          },
         },
         set: {
           'x-zammad-ticket-owner_id': {
