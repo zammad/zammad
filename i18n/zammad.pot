@@ -4858,6 +4858,10 @@ msgstr ""
 msgid "Enter your %s App Keys"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Enter your current password, insert a new one and confirm it."
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "Enter your email address and password from your %s account which should be used for the import."
 msgstr ""
@@ -8642,7 +8646,6 @@ msgstr ""
 msgid "Phone Extension to Agent Mapping"
 msgstr ""
 
-#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
