@@ -23,13 +23,16 @@ class User extends App.ControllerSubContent
     @table.hide()
 
   render: ->
+    roles = App.Role.findAllByAttribute('active', true)
+    roles = _.sortBy(roles, (role) -> role.name.toLowerCase())
+
     @html App.view('user')(
       head: __('Users')
       buttons: [
         { name: __('Import'), 'data-type': 'import', class: 'btn' }
         { name: __('New User'), 'data-type': 'new', class: 'btn--success' }
       ]
-      roles: App.Role.findAllByAttribute('active', true)
+      roles: roles
     )
 
     @$('.tab').on(
