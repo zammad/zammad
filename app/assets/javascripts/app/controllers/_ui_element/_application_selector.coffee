@@ -98,6 +98,15 @@ class App.UiElement.ApplicationSelector
             options:
               create: 'created'
             operator: [__('is'), __('is not')]
+          elements['article.time_accounting'] =
+            name: 'time_accounting'
+            display: __('Time Accounting')
+            tag: 'select'
+            null: false
+            translate: true
+            options:
+              create: 'created'
+            operator: [__('is set'), __('not set')]
 
       if groupKey is 'execution_time'
         if attribute.executionTime

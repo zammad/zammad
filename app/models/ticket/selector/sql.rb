@@ -2,28 +2,38 @@
 
 class Ticket::Selector::Sql < Ticket::Selector::Base
   VALID_OPERATORS = [
-    'has changed',
-    'has reached',
-    'has reached warning',
-    'is',
-    'is not',
+    'after (absolute)',
+    'after (relative)',
+    'before (absolute)',
+    'before (relative)',
+    'contains all not',
+    'contains all',
+    'contains not',
+    'contains one not',
+    'contains one',
     'contains',
-    %r{contains (not|all|one|all not|one not)},
-    'today',
-    %r{(after|before) \(absolute\)},
-    %r{(within next|within last|after|before|till|from) \(relative\)},
-    'is in working time',
-    'is not in working time',
-    'starts with',        # keep for compatibility with old conditions
-    'ends with',          # keep for compatibility with old conditions
-    'matches regex',
     'does not match regex',
-
-    # Operators with multiple values
-    'starts with one of',
     'ends with one of',
+    'ends with', # keep for compatibility with old conditions
+    'from (relative)',
+    'has changed',
+    'has reached warning',
+    'has reached',
     'is any of',
+    'is in working time',
     'is none of',
+    'is not in working time',
+    'is not',
+    'is set',
+    'is',
+    'matches regex',
+    'not set',
+    'starts with one of',
+    'starts with', # keep for compatibility with old conditions
+    'till (relative)',
+    'today',
+    'within last (relative)',
+    'within next (relative)',
   ].freeze
 
   attr_accessor :final_query, :final_bind_params, :final_tables, :changed_attributes
@@ -199,6 +209,14 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
                  "1 = #{check}"
                else
                  "0 = #{check}" # is not
+               end
+
+    elsif attribute_table == 'article' && attribute_name == 'time_accounting'
+      tables |= ["LEFT JOIN ticket_time_accountings ON ticket_time_accountings.ticket_article_id = #{options[:article_id].to_i}"]
+      query << if block_condition[:operator] == 'is set'
+                 'ticket_time_accountings.id IS NOT NULL'
+               else
+                 'ticket_time_accountings.id IS NULL' # not set
                end
 
     # because of no grouping support we select not_set by sub select for mentions
@@ -523,7 +541,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
 
   # validate value / allow blank but only if pre_condition exists and is not specific
   def validate_pre_condition_blank!(condition)
-    return if ['has changed', 'has reached', 'has reached warning', 'is any of', 'is none of'].include? condition[:operator]
+    return if ['has changed', 'has reached', 'has reached warning', 'is any of', 'is none of', 'is set', 'not set'].include? condition[:operator]
 
     if (condition[:operator] != 'today' && !condition.key?(:value)) ||
        (condition[:value].instance_of?(Array) && condition[:value].respond_to?(:blank?) && condition[:value].blank?) ||
@@ -539,7 +557,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
   end
 
   def self.valid_operator?(operator)
-    VALID_OPERATORS.any? { |elem| operator.match? elem }
+    VALID_OPERATORS.include?(operator)
   end
 
   def valid?

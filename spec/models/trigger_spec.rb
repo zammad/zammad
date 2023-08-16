@@ -1806,4 +1806,60 @@ RSpec.describe Trigger, type: :model do
       end
     end
   end
+
+  describe 'Extend trigger conditions with an article accounted time entry flag #4760' do
+    let!(:ticket) { create(:ticket) }
+
+    before do
+      ticket && article && trigger
+    end
+
+    context 'when time accounting is present' do
+      let!(:article) { create(:ticket_time_accounting, :for_article, ticket: ticket) }
+
+      context 'with is set' do
+        let(:condition) do
+          { 'article.time_accounting'=> { 'operator' => 'is set' } }
+        end
+
+        it 'does trigger' do
+          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
+        end
+      end
+
+      context 'with not set' do
+        let(:condition) do
+          { 'article.time_accounting'=> { 'operator' => 'not set' } }
+        end
+
+        it 'does not trigger' do
+          expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
+        end
+      end
+    end
+
+    context 'when time accounting is blank' do
+      let!(:article) { create(:ticket_article, ticket: ticket) }
+
+      context 'with is set' do
+        let(:condition) do
+          { 'article.time_accounting'=> { 'operator' => 'is set' } }
+        end
+
+        it 'does trigger' do
+          expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
+        end
+      end
+
+      context 'with not set' do
+        let(:condition) do
+          { 'article.time_accounting'=> { 'operator' => 'not set' } }
+        end
+
+        it 'does not trigger' do
+          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
+        end
+      end
+    end
+  end
 end
