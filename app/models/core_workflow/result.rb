@@ -3,13 +3,14 @@
 class CoreWorkflow::Result
   include ::Mixin::HasBackends
 
-  attr_accessor :payload, :user, :assets, :assets_in_result, :result, :rerun, :form_updater
+  attr_accessor :payload, :payload_backup, :user, :assets, :assets_in_result, :result, :rerun, :form_updater
 
   def initialize(payload:, user:, assets: {}, assets_in_result: true, result: {}, form_updater: false)
     raise ArgumentError, __("The required parameter 'payload->class_name' is missing.") if !payload['class_name']
     raise ArgumentError, __("The required parameter 'payload->screen' is missing.") if !payload['screen']
 
     @payload          = payload
+    @payload_backup   = Marshal.load(Marshal.dump(payload))
     @user             = user
     @assets           = assets
     @assets_in_result = assets_in_result
