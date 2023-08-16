@@ -1827,4 +1827,96 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
       end
     end
   end
+
+  describe 'Core Workflow: Readded options are not usable in conditions #4763' do
+    before do
+      workflow_1 && workflow_2
+    end
+
+    context 'when single value' do
+      let(:workflow_1) do
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: {
+                 'ticket.priority_id': {
+                   operator:      'remove_option',
+                   remove_option: Ticket::Priority.pluck(:id).map(&:to_s),
+                 },
+               })
+      end
+      let(:workflow_2) do
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: {
+                 'ticket.priority_id': {
+                   operator:   'add_option',
+                   add_option: Ticket::Priority.pluck(:id).map(&:to_s),
+                 },
+               })
+      end
+      let!(:workflow_3) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.priority_id': {
+                   operator: 'is',
+                   value:    Ticket::Priority.where(name: '3 high').pluck(:id).map(&:to_s),
+                 },
+               })
+      end
+      let(:payload) do
+        base_payload.merge('params' => { 'priority_id' => Ticket::Priority.find_by(name: '3 high').id.to_s })
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow_3.id)
+      end
+    end
+
+    context 'when multiple value', db_strategy: :reset do
+      let(:workflow_1) do
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: {
+                 "ticket.#{field_name}": {
+                   operator:      'remove_option',
+                   remove_option: ['key_1'],
+                 },
+               })
+      end
+      let(:workflow_2) do
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: {
+                 "ticket.#{field_name}": {
+                   operator:   'add_option',
+                   add_option: ['key_1'],
+                 },
+               })
+      end
+      let!(:workflow_3) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 "ticket.#{field_name}": {
+                   operator: 'is',
+                   value:    ['key_1'],
+                 },
+               })
+      end
+      let(:payload) do
+        base_payload.merge('params' => { field_name => ['key_1'] })
+      end
+      let(:field_name) { SecureRandom.uuid }
+
+      before do
+        create(:object_manager_attribute_multiselect, name: field_name, display: field_name)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow_3.id)
+      end
+    end
+  end
 end

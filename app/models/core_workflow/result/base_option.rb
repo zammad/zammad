@@ -42,4 +42,35 @@ class CoreWorkflow::Result::BaseOption < CoreWorkflow::Result::Backend
   def excluded_by_restrict_values?(value)
     @result_object.result[:restrict_values][field].exclude?(value.to_s)
   end
+
+  def readd_excluded_param_values
+    if multiple?
+      restore_array
+    else
+      restore_string
+    end
+  end
+
+  def new_value_rerun(field, new_value)
+    return if new_value == @result_object.payload['params'][field]
+
+    set_rerun
+  end
+
+  def restore_array
+    new_value = @result_object.payload_backup['params'][field] & @result_object.result[:restrict_values][field]
+
+    new_value_rerun(field, new_value)
+
+    @result_object.payload['params'][field] = new_value
+  end
+
+  def restore_string
+    new_value = @result_object.payload_backup['params'][field]
+    return if @result_object.result[:restrict_values][field].exclude?(new_value)
+
+    new_value_rerun(field, new_value)
+
+    @result_object.payload['params'][field] = new_value
+  end
 end
