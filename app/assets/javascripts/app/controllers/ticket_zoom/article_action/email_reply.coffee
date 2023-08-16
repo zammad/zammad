@@ -326,8 +326,6 @@ class EmailReply extends App.Controller
       return
 
   @setArticleTypePost: (type, ticket, ui, signaturePosition) ->
-    return if type isnt 'email'
-
     # detect current signature (use current group_id, if not set, use ticket.group_id)
     ticketCurrent = App.Ticket.fullLocal(ticket.id)
     group_id = ticketCurrent.group_id
@@ -338,6 +336,12 @@ class EmailReply extends App.Controller
     signature = undefined
     if group && group.signature_id
       signature = App.Signature.find(group.signature_id)
+
+    # remove signature if it was added but type is no longer email
+    # https://github.com/zammad/zammad/issues/4453
+    if type isnt 'email'
+      ui.$('[data-name=body] [data-signature="true"]').remove()
+      return
 
     # add/replace signature
     if signature && signature.active && signature.body

@@ -197,6 +197,49 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
 
+    context 'Group with signature', authenticated_as: :user do
+      let(:signature_body) { 'Sample signature here' }
+      let(:signature)      { create(:signature, body: signature_body) }
+      let(:group)          { create(:group, signature: signature) }
+
+      let(:ticket) { create(:ticket, group: group) }
+      let(:user) { create(:agent, groups: [group]) }
+
+      before do
+        visit "ticket/zoom/#{ticket.id}"
+        click '.attachmentPlaceholder'
+      end
+
+      it 'removes signature when switching from email reply to phone' do
+        click '.js-selectableTypes'
+        click '.js-articleTypeItem[data-value=email]'
+
+        within :richtext do
+          expect(page).to have_text(signature_body)
+        end
+
+        click '.js-selectableTypes'
+        click '.js-articleTypeItem[data-value=phone]'
+
+        within :richtext do
+          expect(page).to have_no_text(signature_body)
+        end
+      end
+
+      it 'adds signature when switching from phone to email reply' do
+        within :richtext do
+          expect(page).to have_no_text(signature_body)
+        end
+
+        click '.js-selectableTypes'
+        click '.js-articleTypeItem[data-value=email]'
+
+        within :richtext do
+          expect(page).to have_text(signature_body)
+        end
+      end
+    end
+
     context 'to inbound phone call', authenticated_as: -> { agent }, current_user_id: -> { agent.id } do
       let(:agent)    { create(:agent, groups: [Group.first]) }
       let(:customer) { create(:customer) }
