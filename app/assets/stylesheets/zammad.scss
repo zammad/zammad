@@ -3460,10 +3460,13 @@ ol.tabs li {
 
 .tabs {
   display: flex;
+  flex-flow: wrap;
   padding: 0;
   margin-bottom: 20px;
   color: var(--interactive-muted);
   border: 1px solid var(--border);
+  border-right: 0;
+  border-bottom: 0;
   border-radius: 3px;
   background: var(--background-secondary);
 
@@ -3489,7 +3492,6 @@ ol.tabs li {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-right: 1px solid var(--border);
   min-width: 0;
   flex-grow: 1;
 
@@ -3560,24 +3562,9 @@ ol.tabs li {
   }
 }
 
-.tab:first-child {
-  border-radius: 3px 0 0 3px;
-
-  @include rtl(border-radius, 0 3px 3px 0);
-  @include bidi-style(border-right-width, 1px, border-right-width, 0);
-}
-
-.tab:last-child:not(:only-child) {
-  border-radius: 0 3px 3px 0;
-
-  @include bidi-style(border-right-width, 0, border-right-width, 1px);
-  @include rtl(border-radius, 3px 0 0 3px);
-}
-
-.tab:only-child {
-  border-radius: 3px;
-
-  @include bidi-style(border-right-width, 0, border-right-width, 1px);
+.tab:nth-child(n) {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .tabs.tabs--inline {
