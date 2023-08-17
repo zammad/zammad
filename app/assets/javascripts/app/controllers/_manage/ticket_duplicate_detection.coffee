@@ -24,7 +24,7 @@ class App.SettingTicketDuplicateDetection extends App.ControllerSubContent
     options = {}
 
     for attribute in App.Ticket.configure_attributes
-      if _.contains(['input', 'select', 'user_autocompletion', 'boolean', 'date', 'datetime', 'integer'], attribute.tag)
+      if _.contains(['input', 'select', 'tree_select', 'user_autocompletion', 'boolean', 'date', 'datetime', 'integer'], attribute.tag)
         if attribute.readonly isnt 1
           options[attribute.name] = App.i18n.translateInline(attribute.display)
 
