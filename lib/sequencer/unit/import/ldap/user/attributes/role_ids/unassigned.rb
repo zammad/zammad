@@ -5,7 +5,7 @@ class Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassigned < Seq
 
   skip_any_action
 
-  uses :dn_roles, :ldap_config, :mapped, :instance
+  uses :dn_roles, :ldap_config, :mapped, :instance, :dry_run
   provides :action
 
   def process
@@ -22,7 +22,9 @@ class Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassigned < Seq
 
     if instance&.active
       # deactivate instance if role assignment is lost
-      instance.update!(active: false)
+      if !dry_run
+        instance.update!(active: false)
+      end
       state.provide(:action, :deactivated)
     else
       # skip instance creation if no existing instance was found yet
