@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { OrganizationItemData } from '../types.ts'
+
 const now = new Date(2022, 1, 1, 20, 0, 0, 0)
 vi.setSystemTime(now)
-
-import type { OrganizationItemData } from '../types.ts'
 
 const { default: OrganizationItem } = await import('../OrganizationItem.vue')
 const { renderComponent } = await import('#tests/support/components/index.ts')

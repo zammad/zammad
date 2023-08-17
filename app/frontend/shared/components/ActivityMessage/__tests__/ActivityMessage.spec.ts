@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { Props } from '../ActivityMessage.vue'
+
 const now = new Date('2022-01-03 00:00:00')
 vi.setSystemTime(now)
-
-import type { Props } from '../ActivityMessage.vue'
 
 const { default: ActivityMessage } = await import('../ActivityMessage.vue')
 const { renderComponent } = await import('#tests/support/components/index.ts')

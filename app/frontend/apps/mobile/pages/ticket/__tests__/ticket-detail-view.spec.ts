@@ -1,10 +1,5 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-vi.hoisted(() => {
-  const now = new Date(2022, 1, 1, 0, 0, 0, 0)
-  vi.setSystemTime(now)
-})
-
 import {
   EnumSecurityStateType,
   type TicketArticleRetrySecurityProcessMutation,
@@ -38,6 +33,11 @@ import {
 } from './mocks/detail-view.ts'
 import { mockArticleQuery } from './mocks/articles.ts'
 import { clearTicketArticlesLoadedState } from '../composable/useTicketArticlesVariables.ts'
+
+vi.hoisted(() => {
+  const now = new Date(2022, 1, 1, 0, 0, 0, 0)
+  vi.setSystemTime(now)
+})
 
 beforeEach(() => {
   mockPermissions(['ticket.agent'])

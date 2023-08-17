@@ -161,7 +161,6 @@ module.exports = {
         'zammad/zammad-detect-translatable-string': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
-        'import/first': 'off',
       },
     },
     // rules that require type information

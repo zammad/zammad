@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-vi.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
-
 import { type Props } from '../CommonDateTime.vue'
+
+vi.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
 
 const { nextTick } = await import('vue')
 const { renderComponent } = await import('#tests/support/components/index.ts')

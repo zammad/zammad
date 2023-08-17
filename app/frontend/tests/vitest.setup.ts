@@ -10,9 +10,11 @@ import 'vitest-axe/extend-expect'
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
 import * as assertions from './support/assertions/index.ts'
 
-global.__ = (source) => {
-  return source
-}
+vi.hoisted(() => {
+  globalThis.__ = (source) => {
+    return source
+  }
+})
 
 window.sw = new ServiceWorkerHelper()
 

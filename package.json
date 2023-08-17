@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "generate-graphql-api": "RAILS_ENV=development bundle exec rails generate zammad:graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml && rm tmp/graphql_introspection.json",
+    "generate-graphql-api": "RAILS_ENV=development bundle exec rails generate zammad:graphql_introspection > app/graphql/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml",
     "generate-setting-types": "RAILS_ENV=development bundle exec rails generate zammad:setting_types",
     "dev": "RAILS_ENV=development forego start -f Procfile.dev",
     "dev:https": "VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -f Procfile.dev-https",
@@ -24,6 +24,7 @@
   },
   "packageManager": "yarn@1.22.19",
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/introspection": "^4.0.0",
     "@graphql-codegen/near-operation-file-preset": "^2.5.0",

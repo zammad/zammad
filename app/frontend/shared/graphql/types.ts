@@ -1387,7 +1387,7 @@ export type Queries = {
   textModuleSuggestions: Array<TextModule>;
   /** Fetch a ticket by ID */
   ticket: Ticket;
-  /** Fetch a ticket by ID */
+  /** Fetch ticket articles by ticket ID */
   ticketArticles: TicketArticleConnection;
   /** Ticket overviews available in the system */
   ticketOverviews: OverviewConnection;

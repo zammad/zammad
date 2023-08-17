@@ -3,7 +3,7 @@
 module Gql::Queries
   class Ticket::Articles < BaseQuery
 
-    description 'Fetch a ticket by ID'
+    description 'Fetch ticket articles by ticket ID'
 
     argument :ticket, Gql::Types::Input::Locator::TicketInputType, description: 'Ticket locator'
 

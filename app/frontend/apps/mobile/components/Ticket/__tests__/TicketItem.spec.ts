@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { TicketItemData } from '../types.ts'
+
 const now = new Date(2022, 1, 1, 20, 0, 0, 0)
 vi.setSystemTime(now)
-
-import type { TicketItemData } from '../types.ts'
 
 const { TicketState } = await import('#shared/entities/ticket/types.ts')
 const { EnumTicketStateColorCode } = await import('#shared/graphql/types.ts')
