@@ -59,5 +59,12 @@ RSpec.describe HtmlSanitizer::Scrubber::Link do
 
       it { is_expected.to eq target }
     end
+
+    context 'when external URL with tel protocol' do
+      let(:input)  { '<a href="tel:+4930555716000">my telephone number</a>' }
+      let(:target) { '<a href="tel:+4930555716000">my telephone number</a>' }
+
+      it { is_expected.to eq target }
+    end
   end
 end
