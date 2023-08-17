@@ -1,9 +1,31 @@
 <div>
   <label><%- @T('Accounted Time') %></label>
   <div class="accounted-time-value">
-    <%= @ticket.time_unit %>
-    <% if @timeAccountingDisplayUnit: %>
-      <span class="text-muted"><%- @T(@timeAccountingDisplayUnit) %></span>
-    <% end %>
+    <table class="table-condensed time-accounting-types-table">
+      <tbody>
+        <tr>
+          <td><%- @T('Total') %></td>
+          <td><%= @ticket.time_unit %></td>
+          <td><% if @displayUnit: %><span class="text-muted"><%- @T(@displayUnit) %></span><% end %></td>
+        </tr>
+        <% for entry in @list: %>
+          <tr>
+            <td>
+              <span title="<%= @T(entry[0]) %>">
+                <%= @T(entry[0]).substr(0, 14) %>
+                <% if @T(entry[0]).length > 14: %>...<% end %>
+              </span>
+            </td>
+            <td><%= parseFloat(entry[1]).toFixed(1) %></td>
+            <td><% if @displayUnit: %><span class="text-muted"><%- @T(@displayUnit) %></span><% end %></td>
+          </tr>
+        <% end %>
+        <% if @showMore: %>
+          <tr>
+            <td colspan="3"><a href="#" class="js-showMoreEntries"><%- @T('show more') %></a></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::TimeAccounting < ApplicationModel
+  include ::Ticket::TimeAccounting::Assets
+
   validates :time_unit, presence: true
 
   belongs_to :type, class_name: 'Ticket::TimeAccounting::Type', optional: true

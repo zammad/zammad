@@ -37,6 +37,8 @@ returns
     organization&.assets(data)
     assets_user(data)
 
+    ticket_time_accounting.each { |time_accounting| time_accounting.assets(data) }
+
     data
   end
 

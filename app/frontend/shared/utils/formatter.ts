@@ -39,6 +39,10 @@ export const camelize = (str: string) => {
   return str.replace(/[_.-](\w|$)/g, (_, x) => x.toUpperCase())
 }
 
+export const capitalize = (str: string) => {
+  return str[0].toUpperCase() + str.slice(1)
+}
+
 export const toClassName = (str: string) => {
   return str.replace(
     /([a-z])([A-Z])/g,

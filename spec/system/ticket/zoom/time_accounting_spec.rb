@@ -11,6 +11,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
   let(:time_accounting_types)       { false }
   let(:active_type)                 { create(:ticket_time_accounting_type) }
   let(:inactive_type)               { create(:ticket_time_accounting_type, active: false) }
+  let(:create_new_article)          { true }
 
   def authenticate
     Setting.set('time_accounting', true)
@@ -26,8 +27,10 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
   before do
     visit "#ticket/zoom/#{ticket.id}"
 
-    find(:richtext).send_keys article_body
-    click_button 'Update'
+    if create_new_article
+      find(:richtext).send_keys article_body
+      click_button 'Update'
+    end
   end
 
   describe 'time units' do
@@ -45,7 +48,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
           click_button 'Account Time'
         end
 
-        expect(find('.accounted-time-value')).to have_text(time_unit, exact: true)
+        expect(find('.accounted-time-value')).to have_text("Total #{time_unit}", exact: true)
       end
 
       it "accounts time in #{display_unit}", if: display_unit do
@@ -58,7 +61,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
           click_button 'Account Time'
         end
 
-        expect(find('.accounted-time-value')).to have_text("#{time_unit} #{display_unit}", exact: true)
+        expect(find('.accounted-time-value')).to have_text("Total #{time_unit} #{display_unit}", exact: true)
       end
     end
 
@@ -91,7 +94,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         click_button 'Account Time'
       end
 
-      expect(find('.accounted-time-value')).to have_text('123.0', exact: true)
+      expect(find('.accounted-time-value')).to have_text('Total 123.0', exact: true)
     end
 
     it 'allows to input time with a comma and saves with a dot instead' do
@@ -101,7 +104,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         click_button 'Account Time'
       end
 
-      expect(find('.accounted-time-value')).to have_text('4.6', exact: true)
+      expect(find('.accounted-time-value')).to have_text('Total 4.6', exact: true)
     end
 
     it 'allows to input time with a trailing space' do
@@ -111,7 +114,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         click_button 'Account Time'
       end
 
-      expect(find('.accounted-time-value')).to have_text('4.0', exact: true)
+      expect(find('.accounted-time-value')).to have_text('Total 4.0', exact: true)
     end
 
     it 'does not allow to input time with letters' do
@@ -140,6 +143,40 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
       it 'shows types dropdown' do
         in_modal do
           expect(page).to have_select 'Activity Type', options: ['-', active_type.name]
+        end
+      end
+
+      context 'when more than three types are used', authenticated_as: :authenticate do
+        let(:create_new_article)          { false }
+        let(:types)                       { create_list(:ticket_time_accounting_type, 4) }
+
+        def authenticate
+          Setting.set('time_accounting', true)
+          Setting.set('time_accounting_types', time_accounting_types)
+          Setting.set('time_accounting_unit', time_accounting_unit) if time_accounting_unit.present?
+          Setting.set('time_accounting_unit_custom', time_accounting_unit_custom) if time_accounting_unit == 'custom'
+
+          3.times do
+            create(:ticket_time_accounting, ticket: ticket, time_unit: 25, type: types[0])
+            create(:ticket_time_accounting, ticket: ticket, time_unit: 50, type: types[1])
+            create(:ticket_time_accounting, ticket: ticket, time_unit: 75, type: types[2])
+          end
+
+          create(:ticket_time_accounting, ticket: ticket, time_unit: 50, type: types[3])
+
+          true
+        end
+
+        it 'shows a table for the top three that is sorted correctly by default and can show all entries', :aggregate_failures do
+          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(1)', text: 'Total 500.0')
+          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(2)', text: "#{types[2].name} 225.0")
+          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(3)', text: "#{types[1].name} 150.0")
+          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(4)', text: "#{types[0].name} 75.0")
+
+          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(5) .js-showMoreEntries')
+
+          click('.time-accounting-types-table tbody tr:nth-child(5) .js-showMoreEntries')
+          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(5)', text: "#{types[3].name} 50.0")
         end
       end
     end

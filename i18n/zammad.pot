@@ -633,7 +633,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
 #: app/graphql/gql/types/overview_type.rb
 msgid "Accounted Time"
 msgstr ""
@@ -7886,6 +7885,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
+#: app/graphql/gql/types/ticket_type.rb
 msgid "None"
 msgstr ""
 
@@ -12556,6 +12556,14 @@ msgstr ""
 msgid "Topics"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
+msgid "Total"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+msgid "Total Accounted Time"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Total display of the number of objects in a grouping."
 msgstr ""
@@ -14853,6 +14861,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/chat_list.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/user_list.jst.eco
@@ -15059,6 +15068,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/user_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco

@@ -80,6 +80,10 @@ export const TicketAttributesFragmentDoc = gql`
   }
   tags
   timeUnit
+  timeUnitsPerType {
+    name
+    timeUnit
+  }
   subscribed
   preferences
   stateColorCode

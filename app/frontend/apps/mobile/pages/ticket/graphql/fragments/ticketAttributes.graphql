@@ -75,6 +75,10 @@ fragment ticketAttributes on Ticket {
   }
   tags
   timeUnit
+  timeUnitsPerType {
+    name
+    timeUnit
+  }
   subscribed
   preferences
   stateColorCode
