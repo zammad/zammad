@@ -1687,3 +1687,86 @@ QUnit.test('supports migration of renamed operators: ends with one of (#4709)', 
   }
   assert.deepEqual(params, test_params, 'params structure')
 })
+
+QUnit.test('Missing display of the conditions in overview when expert mode is in use #4688', (assert) => {
+  var condition = {
+    'ticket.title': {
+      operator: 'is',
+      value: 'test',
+    },
+    'ticket.priority_id': {
+      operator: 'is',
+      value: [1,2,3],
+    },
+  }
+
+  humanText = App.UiElement.ticket_selector.humanText(condition)
+  assert.deepEqual(humanText, [
+    "Where <b>Ticket -> Title</b> is <b>test</b>.",
+    "Where <b>Ticket -> Priority</b> is <b>1 low, 2 normal, 3 high</b>."
+  ], 'can show human text for simple condition');
+
+  var condition = {
+    operator: 'AND',
+    conditions: [
+      {
+        name: 'ticket.title',
+        operator: 'is',
+        value: 'test',
+      },
+      {
+        name: 'ticket.priority_id',
+        operator: 'is',
+        value: [1, 2, 3],
+      },
+    ],
+  }
+
+  humanText = App.UiElement.ticket_selector.humanText(condition)
+  assert.deepEqual(humanText, [
+    "<span style=\"margin-left: 0px\">Match all (AND)</span>",
+    "<span style=\"margin-left: 5px\">⤷ Where <b>Ticket -> Title</b> is <b>test</b>.</span>",
+    "<span style=\"margin-left: 5px\">⤷ Where <b>Ticket -> Priority</b> is <b>1 low, 2 normal, 3 high</b>.</span>"
+  ], 'can show human text for expert condition');
+
+  var condition = {
+    operator: 'AND',
+    conditions: [
+      {
+        name: 'ticket.title',
+        operator: 'is',
+        value: 'test',
+      },
+      {
+        name: 'ticket.priority_id',
+        operator: 'is',
+        value: [1, 2, 3],
+      },
+      {
+        operator: 'OR',
+        conditions: [
+          {
+            name: 'ticket.title',
+            operator: 'is',
+            value: 'test',
+          },
+          {
+            name: 'ticket.priority_id',
+            operator: 'is',
+            value: [1, 2, 3],
+          },
+        ],
+      },
+    ],
+  }
+
+  humanText = App.UiElement.ticket_selector.humanText(condition)
+  assert.deepEqual(humanText, [
+    "<span style=\"margin-left: 0px\">Match all (AND)</span>",
+    "<span style=\"margin-left: 5px\">⤷ Where <b>Ticket -> Title</b> is <b>test</b>.</span>",
+    "<span style=\"margin-left: 5px\">⤷ Where <b>Ticket -> Priority</b> is <b>1 low, 2 normal, 3 high</b>.</span>",
+    "<span style=\"margin-left: 5px\">⤷ Match any (OR)</span>",
+    "<span style=\"margin-left: 20px\">⤷ Where <b>Ticket -> Title</b> is <b>test</b>.</span>",
+    "<span style=\"margin-left: 20px\">⤷ Where <b>Ticket -> Priority</b> is <b>1 low, 2 normal, 3 high</b>.</span>"
+  ], 'can show human text for deep expert condition');
+})
