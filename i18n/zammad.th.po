@@ -1023,7 +1023,6 @@ msgstr "บัญชีไม่ได้รับการยืนยัน"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
 #: app/graphql/gql/types/overview_type.rb
 msgid "Accounted Time"
 msgstr "เวลาบัญชี"
@@ -1860,6 +1859,7 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Article"
 msgstr "บทความ"
 
@@ -2630,10 +2630,6 @@ msgstr "เค้าโครงหน้าหมวดหมู่"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Caution!"
 msgstr "ระมัดระวัง!"
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Certificate for verification could not be found."
-msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
@@ -4308,6 +4304,12 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines if the ticket conditions editor supports regular expression "
+"operators for triggers and ticket auto assignment."
+msgstr ""
+
+#: db/seeds/settings.rb
 #, fuzzy
 #| msgid "Defines the default screen."
 msgid "Defines if the time accounting types are enabled."
@@ -5843,6 +5845,10 @@ msgstr "ป้อนโทเค็น %s API ที่ได้รับจา�
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Enter your %s App Keys"
 msgstr "ป้อน %s App Keys ของคุณ"
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Enter your current password, insert a new one and confirm it."
+msgstr ""
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -7598,21 +7604,9 @@ msgstr "รหัสผ่านไม่ถูกต้อง ต้องม�
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Any recipient"
-msgid "Invalid recipient."
-msgstr "ผู้รับ ทั้งหมด"
-
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr "รหัสความปลอดภัยไม่ถูกต้อง! โปรดลองอีกครั้งด้วยรหัสใหม่"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Invalid video URL"
-msgid "Invalid signer."
-msgstr "URL วิดีโอไม่ถูกต้อง"
 
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
@@ -7783,14 +7777,6 @@ msgstr "Key"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 msgid "Key ID"
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Key expired."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Key revoked."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -8418,10 +8404,6 @@ msgstr "ข้อความหลังจากส่งแบบฟอร์
 #: db/seeds/settings.rb
 msgid "Message for login page."
 msgstr "ข้อความสำหรับหน้าล็อกอิน"
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Message is not signed by sender."
-msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
@@ -9103,6 +9085,7 @@ msgid "No file formats allowed."
 msgstr "ไม่อนุญาตให้ใช้รูปแบบไฟล์"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "No filter was configured."
 msgstr "No filter was configured."
 
@@ -9120,10 +9103,6 @@ msgstr ""
 msgid "No macros available."
 msgstr "ไม่มีข้อมูล"
 
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No passphrase given."
-msgstr ""
-
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "ไม่มีการค้นหาก่อนหน้า"
@@ -9131,12 +9110,6 @@ msgstr "ไม่มีการค้นหาก่อนหน้า"
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
 msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "No camera found."
-msgid "No public key found."
-msgstr "ไม่พบกล้อง"
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
@@ -9152,12 +9125,6 @@ msgstr "ไม่พบรายการ"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "No results were found."
 msgstr "ไม่พบผลลัพธ์"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "No record found!"
-msgid "No secret key found."
-msgstr "‎ไม่พบเรกคอร์ด !"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
@@ -9200,22 +9167,6 @@ msgstr "ไม่มีทริกเกอร์ที่ทำงานอย
 msgid "No unread notifications for you. :)"
 msgstr "ไม่มีการแจ้งเตือนที่ยังไม่ได้อ่านสำหรับคุณ :)"
 
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "No record found!"
-msgid "No valid OpenPGP data found."
-msgstr "‎ไม่พบเรกคอร์ด !"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "No record found!"
-msgid "No valid recipient."
-msgstr "‎ไม่พบเรกคอร์ด !"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No valid signer."
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
 msgid ""
 "No webhook available, please create a new one or activate an existing one at "
@@ -9227,6 +9178,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
+#: app/graphql/gql/types/ticket_type.rb
 msgid "None"
 msgstr "ไม่มี"
 
@@ -9863,12 +9815,6 @@ msgstr ""
 msgid "Parent"
 msgstr "หลัก"
 
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "is invalid"
-msgid "Passphrase invalid."
-msgstr "ไม่ถูกต้อง"
-
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -10032,7 +9978,6 @@ msgstr "โทรศัพท์ (out)"
 msgid "Phone Extension to Agent Mapping"
 msgstr ""
 
-#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "เลือกชื่อสำหรับแอปพลิเคชัน แล้วเราจะมอบโทเค็นพิเศษให้คุณ"
@@ -10201,10 +10146,6 @@ msgstr "ตำแหน่ง"
 msgid "Postmaster Filter"
 msgstr ""
 
-#: lib/secure_mailing/pgp/tool/error/handler.rb
-msgid "Potential unknown encryption algorithm."
-msgstr ""
-
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -10313,16 +10254,6 @@ msgstr "ความสำคัญ"
 msgid "Priority Icons in Overviews"
 msgstr "ไอคอนลำดับความสำคัญในภาพรวม"
 
-#: lib/secure_mailing/pgp/incoming.rb
-#, fuzzy
-#| msgid "Avatar could not be found."
-msgid "Private key could not be found."
-msgstr "ไม่พบอวตาร."
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Private key for decryption could not be found."
-msgstr ""
-
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
 msgstr "ปัญหา"
@@ -10413,12 +10344,6 @@ msgstr "ลิงค์สาธารณะคือ …"
 msgid "Public Menu"
 msgstr "เมนูสาธารณะ"
 
-#: lib/secure_mailing/pgp/incoming.rb
-#, fuzzy
-#| msgid "Locale could not be found."
-msgid "Public key could not be found."
-msgstr "ไม่พบตําแหน่งที่ตั้ง"
-
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Publish"
 msgstr "เผยแพร่"
@@ -10456,18 +10381,6 @@ msgstr "คิว"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Queue already exists!"
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 first part not a valid version part for PGP mails."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 incorrect mime type for encrypted part."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 mandates exactly two body parts for PGP mails."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
@@ -11890,30 +11803,6 @@ msgstr "เซ็นกำกับ:"
 msgid "Signature"
 msgstr "ลายเซ็น"
 
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Signature"
-msgid "Signature expired."
-msgstr "ลายเซ็น"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Signature"
-msgid "Signature invalid."
-msgstr "ลายเซ็น"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Signature key expired."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Signature key revoked."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "Signature part is missing or has wrong content type."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Signature verification failed!"
 msgstr "การตรวจสอบลายเซ็นล้มเหลว!"
@@ -12261,6 +12150,7 @@ msgid "Submit"
 msgstr "ส่ง"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Subscribe"
@@ -12542,7 +12432,7 @@ msgstr "ขอบคุณที่เข้าร่วม ส่งอีเ�
 #: lib/secure_mailing/pgp/tool/exec/agent.rb
 #, fuzzy
 #| msgid "The tickets could not be merged."
-msgid "The 'gpg-agent' process could not be ended."
+msgid "The 'gpg-agent' process could not be stopped."
 msgstr "ไม่สามารถรวม tickets ได้"
 
 #: app/controllers/user_access_token_controller.rb
@@ -12559,6 +12449,18 @@ msgstr "ศูนย์รวมข้อมูล ไม่สามารถ�
 msgid "The MIME type of the image is invalid."
 msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
 
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The PGP email recipient is invalid."
+msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The PGP email signer is invalid."
+msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
+
 #: lib/secure_mailing/pgp/security_options.rb
 #, fuzzy
 #| msgid "Certificate for verification could not be found."
@@ -12573,6 +12475,18 @@ msgstr ""
 msgid "The PGP key for %s was not found."
 msgstr ""
 
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No results were found."
+msgid "The PGP key has been revoked."
+msgstr "ไม่พบผลลัพธ์"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No results were found."
+msgid "The PGP key has expired."
+msgstr "ไม่พบผลลัพธ์"
+
 #: lib/secure_mailing/pgp/security_options.rb
 #, fuzzy
 #| msgid "No results were found."
@@ -12581,6 +12495,28 @@ msgstr "ไม่พบผลลัพธ์"
 
 #: lib/secure_mailing/pgp/security_options.rb
 msgid "The PGP keys for %s were not found."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "is invalid"
+msgid "The PGP passphrase is invalid."
+msgstr "ไม่ถูกต้อง"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "The PGP signature has expired."
+msgstr "ลายเซ็น"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The PGP signature is invalid."
+msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature key has been revoked."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
@@ -12671,7 +12607,8 @@ msgstr ""
 #: lib/secure_mailing/smime/security_options.rb
 #, fuzzy
 #| msgid "Certificate for verification could not be found."
-msgid "The certificate for %s was found, but has expired."
+msgid ""
+"The certificate for %s was found, but it is not valid yet or has expired."
 msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
 
 #: lib/secure_mailing/smime/security_options.rb
@@ -12688,6 +12625,24 @@ msgstr "เสียงแจ้งเตือน"
 
 #: app/models/smime_certificate.rb
 msgid "The certificate for this private key could not be found."
+msgstr ""
+
+#: lib/secure_mailing/smime/incoming.rb
+#, fuzzy
+#| msgid "Certificate for verification could not be found."
+msgid "The certificate for verification could not be found."
+msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
+
+#: lib/secure_mailing/smime/certificate.rb
+msgid ""
+"The certificate is not valid for S/MIME usage. Please check the certificate "
+"format."
+msgstr ""
+
+#: lib/secure_mailing/smime/certificate.rb
+msgid ""
+"The certificate is not valid for S/MIME usage. Please check the key usage, "
+"subject alternative name and public key cryptographic algorithm."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
@@ -12786,6 +12741,12 @@ msgstr ""
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The encrypted part of this PGP email has an incorrect MIME type according to "
+"RFC 3156."
+msgstr ""
+
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 msgid ""
 "The entered user for reauthentication differs from the user that was used "
@@ -12810,6 +12771,12 @@ msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The file does not belong to the specified article."
+msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The first part of this PGP email is not a valid version part as mandated by "
+"RFC 3156."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
@@ -12958,6 +12925,30 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
+#: lib/secure_mailing/pgp/incoming.rb
+#, fuzzy
+#| msgid "Avatar could not be found."
+msgid "The private PGP key could not be found."
+msgstr "ไม่พบอวตาร."
+
+#: lib/secure_mailing/smime/incoming.rb
+#, fuzzy
+#| msgid "Certificate for verification could not be found."
+msgid "The private key for decryption could not be found."
+msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
+
+#: lib/secure_mailing/smime/private_key.rb
+msgid ""
+"The private key is not valid for S/MIME usage. Please check the key "
+"cryptographic algorithm."
+msgstr ""
+
+#: lib/secure_mailing/smime/private_key.rb
+msgid ""
+"The private key is not valid for S/MIME usage. Please check the key format "
+"and the secret."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #, fuzzy
 #| msgid "The file could not be uploaded."
@@ -13010,6 +13001,12 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr "โทเค็นที่ระบุไม่ถูกต้อง"
 
+#: lib/secure_mailing/pgp/incoming.rb
+#, fuzzy
+#| msgid "Locale could not be found."
+msgid "The public PGP key could not be found."
+msgstr "ไม่พบตําแหน่งที่ตั้ง"
+
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "The report could not be generated"
 msgstr "ไม่สามารถสร้างรายงานได้"
@@ -13027,6 +13024,12 @@ msgstr "ไม่มีค่าการจับคู่ที่จำเป
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "The required match value is missing."
+msgid "The required PGP passphrase is missing."
+msgstr "ไม่มีค่าการจับคู่ที่จำเป็น"
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
 #, fuzzy
@@ -13250,6 +13253,18 @@ msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 msgid "The sign-in failed. Please contact the Support team."
 msgstr ""
 
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No results were found."
+msgid "The signature PGP key has expired."
+msgstr "ไม่พบผลลัพธ์"
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The signature part of this PGP email is missing or has a wrong content type "
+"according to RFC 3156."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
@@ -13430,6 +13445,24 @@ msgid ""
 "There is no stored configuration for this two-factor authentication method."
 msgstr "คลิกที่นี่เพื่อตั้งค่าวิธีการตรวจสอบสิทธิ์สองปัจจัย"
 
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No record found!"
+msgid "There is no valid PGP email recipient."
+msgstr "‎ไม่พบเรกคอร์ด !"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There is no valid PGP email signer."
+msgstr "ไม่มีเจ้าหน้าที่ออนไลน์"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There was an unknown PGP error."
+msgstr "ไม่มีเจ้าหน้าที่ออนไลน์"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "There was no Knowledge Base created."
 msgstr "ไม่มีการสร้างศูนย์การเรียนรู้"
@@ -13446,10 +13479,28 @@ msgstr "ไม่มีเจ้าหน้าที่ออนไลน์"
 msgid "There was no certificate found."
 msgstr "เสียงแจ้งเตือน"
 
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There was no public PGP key found."
+msgstr "ไม่มีเจ้าหน้าที่ออนไลน์"
+
 #: lib/secure_mailing/backend/handler_security_options.rb
 #, fuzzy
 #| msgid "No record found!"
 msgid "There was no recipient found."
+msgstr "‎ไม่พบเรกคอร์ด !"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There was no secret PGP key found."
+msgstr "ไม่มีเจ้าหน้าที่ออนไลน์"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No record found!"
+msgid "There was no valid OpenPGP data found."
 msgstr "‎ไม่พบเรกคอร์ด !"
 
 #: lib/secure_mailing/pgp/security_options.rb
@@ -13457,13 +13508,27 @@ msgid "There were PGP keys found for %s, but at least one of them has expired."
 msgstr ""
 
 #: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Certificate for verification could not be found."
 msgid ""
-"There were certificates found for %s, but at least one of them has expired."
-msgstr ""
+"There were certificates found for %s, but at least one of them is not valid "
+"yet or has expired."
+msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
 msgstr "แอปพลิเคชันบุคคลที่สาม"
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"This PGP email does not have exactly two body parts for PGP mails as "
+"mandated by RFC 3156."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error/handler.rb
+msgid ""
+"This PGP email was encrypted with a potentially unknown encryption algorithm."
+msgstr ""
 
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
@@ -13700,6 +13765,10 @@ msgstr ""
 "ไม่สามารถแสดงข้อความนี้เนื่องจากปัญหาการประมวลผล HTML "
 "ดาวน์โหลดข้อความดิบด้านล่างและเปิดผ่านไคลเอนต์อีเมล หากคุณยังคงต้องการดู"
 
+#: lib/secure_mailing/smime/incoming.rb
+msgid "This message was not signed by its sender."
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "This might take some time during which the system can't be used."
 msgstr "การดำเนินการนี้อาจใช้เวลาสักครู่ก่อนที่ระบบจะไม่สามารถใช้งานได้"
@@ -13833,6 +13902,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Ticket Conditions Expert Mode"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Conditions Regular Expression Operators"
 msgstr ""
 
 #: app/models/report.rb
@@ -14156,6 +14229,7 @@ msgstr "จนถึง"
 msgid "Time"
 msgstr "เวลา"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: db/seeds/permissions.rb db/seeds/settings.rb
@@ -14398,6 +14472,18 @@ msgstr "หมวด"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Topics"
 msgstr "หมวด"
+
+#: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
+#, fuzzy
+#| msgid "Total: %s"
+msgid "Total"
+msgstr "รวม: %s"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+#, fuzzy
+#| msgid "Accounted Time"
+msgid "Total Accounted Time"
+msgstr "เวลาบัญชี"
 
 #: db/seeds/settings.rb
 msgid "Total display of the number of objects in a grouping."
@@ -14675,12 +14761,6 @@ msgstr ""
 
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
-msgstr "เกิดข้อผิดพลาดไม่ทราบสาเหตุ"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Unknown error"
-msgid "Unknown error."
 msgstr "เกิดข้อผิดพลาดไม่ทราบสาเหตุ"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
@@ -15858,10 +15938,6 @@ msgstr ""
 "สามารถสลับระหว่างแบ็กเอนด์สำหรับไฟล์แนบใหม่ได้ "
 "แม้กระทั่งบนระบบที่ใช้งานจริงอยู่แล้วโดยไม่สูญเสียข้อมูล"
 
-#: app/assets/javascripts/app/models/postmaster_filter.coffee
-msgid "You can use regular expression by using \"regex:your_reg_exp\"."
-msgstr "สามารถใช้นิพจน์ทั่วไปได้โดยใช้ \"regex:your_reg_exp\""
-
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "You can use the following script to post the data to %s."
 msgstr "สามารถใช้สคริปต์ต่อไปนี้เพื่อโพสต์ข้อมูลไปยัง %s"
@@ -16192,11 +16268,13 @@ msgid "admin"
 msgstr "แอดมิน"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "after (absolute)"
 msgstr "หลัง (absolute)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "after (relative)"
 msgstr "หลัง (relative)"
 
@@ -16252,11 +16330,13 @@ msgid "auto select"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "before (absolute)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "before (relative)"
 msgstr ""
 
@@ -16341,10 +16421,12 @@ msgid "contains not"
 msgstr "ประกอบด้วย หรือไม่"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "contains one"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "contains one not"
 msgstr ""
 
@@ -16458,6 +16540,13 @@ msgstr ""
 msgid "does not exist"
 msgstr "ไม่มีอยู่"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#, fuzzy
+#| msgid "does not exist"
+msgid "does not match regex"
+msgstr "ไม่มีอยู่"
+
 msgid "doesn't match %{attribute}"
 msgstr ""
 
@@ -16520,8 +16609,13 @@ msgstr "ล้อมรอบ"
 msgid "enclosure"
 msgstr "กรอบ กรงขัง"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "ends with"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "ends with one of"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -16589,6 +16683,7 @@ msgstr "จาก"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "from (relative)"
 msgstr "จาก (relative)"
 
@@ -16767,6 +16862,11 @@ msgid "is already used"
 msgstr "รายการนี้อยู่แล้ว!."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "is any of"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
 msgstr "อยู่ในเวลาทำงาน"
 
@@ -16786,6 +16886,13 @@ msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#, fuzzy
+#| msgid "is not"
+msgid "is none of"
+msgstr "ไม่เท่ากับ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -16832,6 +16939,7 @@ msgstr "%s จำเป็น"
 msgid "is reserved"
 msgstr "%s จำเป็น"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
 msgstr "ถูกตั้งค่า"
@@ -16908,6 +17016,13 @@ msgstr "จับคู่หนึ่งโมดูล"
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 msgid "matches found"
+msgstr "ที่ตรงกันที่พบ"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#, fuzzy
+#| msgid "matches found"
+msgid "matches regex"
 msgstr "ที่ตรงกันที่พบ"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
@@ -17031,6 +17146,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/chat_list.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/user_list.jst.eco
@@ -17047,6 +17163,7 @@ msgstr "ไม่มี"
 msgid "not reached"
 msgstr "ไม่ถึง"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "not set"
 msgstr "ยังไม่ได้ตั้งค่า"
@@ -17137,14 +17254,6 @@ msgstr "ถึง"
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-msgid "regex match"
-msgstr "regex match"
-
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-msgid "regex mismatch"
-msgstr "regex mismatch"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "relative"
@@ -17245,6 +17354,7 @@ msgstr "แสดง"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/user_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
@@ -17306,8 +17416,13 @@ msgstr "ผู้ใช้เฉพาะ"
 msgid "split"
 msgstr "แยก"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "starts with"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "starts with one of"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -17346,6 +17461,7 @@ msgstr "ticket.customer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "till (relative)"
 msgstr "till (relative)"
 
@@ -17359,6 +17475,7 @@ msgstr "เพื่อไปที่หน้าแรก"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "today"
@@ -17428,11 +17545,13 @@ msgstr "จะถูกลบ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "within last (relative)"
 msgstr "ภายในสุดท้าย (เกี่ยวข้อง)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "within next (relative)"
 msgstr "within next (relative)"
 
@@ -17493,6 +17612,45 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#~ msgid "You can use regular expression by using \"regex:your_reg_exp\"."
+#~ msgstr "สามารถใช้นิพจน์ทั่วไปได้โดยใช้ \"regex:your_reg_exp\""
+
+#~ msgid "regex match"
+#~ msgstr "regex match"
+
+#~ msgid "regex mismatch"
+#~ msgstr "regex mismatch"
+
+#, fuzzy
+#~| msgid "Any recipient"
+#~ msgid "Invalid recipient."
+#~ msgstr "ผู้รับ ทั้งหมด"
+
+#, fuzzy
+#~| msgid "Invalid video URL"
+#~ msgid "Invalid signer."
+#~ msgstr "URL วิดีโอไม่ถูกต้อง"
+
+#, fuzzy
+#~| msgid "No camera found."
+#~ msgid "No public key found."
+#~ msgstr "ไม่พบกล้อง"
+
+#, fuzzy
+#~| msgid "No record found!"
+#~ msgid "No secret key found."
+#~ msgstr "‎ไม่พบเรกคอร์ด !"
+
+#, fuzzy
+#~| msgid "Signature"
+#~ msgid "Signature invalid."
+#~ msgstr "ลายเซ็น"
+
+#, fuzzy
+#~| msgid "Unknown error"
+#~ msgid "Unknown error."
+#~ msgstr "เกิดข้อผิดพลาดไม่ทราบสาเหตุ"
 
 #, fuzzy
 #~| msgid "Certificate for verification could not be found."

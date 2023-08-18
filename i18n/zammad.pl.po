@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-07-07 01:05+0000\n"
+"PO-Revision-Date: 2023-08-14 01:05+0000\n"
 "Last-Translator: SamolJacek <samol.jacek@gmail.com>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/pl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18.1\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -365,13 +365,11 @@ msgstr "%s (potwierdź)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (metoda)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
-#, fuzzy
-#| msgid "set optional"
 msgid "%s (option)"
-msgstr "zestaw opcjonalny"
+msgstr "%s (opcja)"
 
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
@@ -999,7 +997,6 @@ msgstr "Konto niezweryfikowane"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
 #: app/graphql/gql/types/overview_type.rb
 msgid "Accounted Time"
 msgstr "Czas wykonywania zadania"
@@ -1181,10 +1178,8 @@ msgid "Add Certificate"
 msgstr "Dodaj certyfikat"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco
-#, fuzzy
-#| msgid "Add reply"
 msgid "Add Key"
-msgstr "Dodaj odpowiedź"
+msgstr "Dodaj klucz"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
@@ -1196,10 +1191,8 @@ msgid "Add Private Key"
 msgstr "Dodaj klucz prywatny"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-#, fuzzy
-#| msgid "Add Private Key"
 msgid "Add Public or Private Key"
-msgstr "Dodaj klucz prywatny"
+msgstr "Dodaj klucz publiczny lub prywatny"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -1802,6 +1795,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Article"
 msgstr "Artykuł"
 
@@ -2573,10 +2567,6 @@ msgstr "Układ kategorii"
 msgid "Caution!"
 msgstr "Uwaga!"
 
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Certificate for verification could not be found."
-msgstr "Nie znaleziono certyfikatu do weryfikacji."
-
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
 msgstr "Certyfikaty i klucze prywatne"
@@ -2796,6 +2786,9 @@ msgid ""
 "signing or encrypting is not possible, the setting has no effect. Agents can "
 "always manually alter the behavior for each article."
 msgstr ""
+"Wybierz domyślne zachowanie integracji PGP dla każdej grupy. Jeśli "
+"podpisywanie lub szyfrowanie nie jest możliwe, ustawienie nie ma żadnego "
+"wpływu. Agenci zawsze mogą ręcznie zmienić zachowanie dla każdego artykułu."
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid ""
@@ -2803,6 +2796,9 @@ msgid ""
 "signing or encrypting is not possible, the setting has no effect. Agents can "
 "always manually alter the behavior for each article."
 msgstr ""
+"Wybierz domyślne zachowanie integracji S/MIME dla każdej grupy. Jeśli "
+"podpisywanie lub szyfrowanie nie jest możliwe, ustawienie nie ma żadnego "
+"wpływu. Agenci zawsze mogą ręcznie zmienić zachowanie dla każdego artykułu."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose the group to which direct messages will get added."
@@ -4143,10 +4139,8 @@ msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Określa, czy Nagios (http://www.nagios.org) jest włączony, czy nie."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines if S/MIME encryption is enabled or not."
 msgid "Defines if PGP encryption is enabled or not."
-msgstr "Określa, czy szyfrowanie S/MIME jest włączone, czy nie."
+msgstr "Określa, czy szyfrowanie PGP jest włączone, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
@@ -4213,10 +4207,8 @@ msgstr ""
 "nie."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines if generic CTI integration is enabled or not."
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
-msgstr "Określa, czy ogólna integracja CTI jest włączona, czy nie."
+msgstr "Określa, czy konfiguracja aliasu odbiorcy PGP jest włączona, czy nie."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4272,6 +4264,14 @@ msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
 "Określa, czy edytor warunków zgłoszenia obsługuje złożone wyrażenia logiczne."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the ticket conditions editor supports regular expression "
+"operators for triggers and ticket auto assignment."
+msgstr ""
+"Określa, czy edytor warunków zgłoszeń obsługuje operatory wyrażeń "
+"regularnych dla aktywatorów i automatycznego przypisywania zgłoszeń."
 
 #: db/seeds/settings.rb
 msgid "Defines if the time accounting types are enabled."
@@ -4503,10 +4503,8 @@ msgid "Defines the HTTP protocol of your instance."
 msgstr "Definiuje protokół HTTP Twojej instancji."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the CTI config."
 msgid "Defines the PGP config."
-msgstr "Definiuje konfiguracje CTI."
+msgstr "Określa konfiguracje PGP."
 
 #: db/seeds/settings.rb
 msgid "Defines the Placetel config."
@@ -5162,10 +5160,8 @@ msgstr "Domena"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
-#, fuzzy
-#| msgid "Domain"
 msgid "Domain Alias"
-msgstr "Domena"
+msgstr "Domena aliasu"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
@@ -5215,10 +5211,8 @@ msgid "Download Private Key"
 msgstr "Pobierz klucz prywatny"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
-#, fuzzy
-#| msgid "Download Private Key"
 msgid "Download Public Key"
-msgstr "Pobierz klucz prywatny"
+msgstr "Pobierz klucz publiczny"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 msgid "Download all records"
@@ -5748,10 +5742,8 @@ msgstr "Szyfrowanie"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Encryption"
 msgid "Encryption error"
-msgstr "Szyfrowanie"
+msgstr "Błąd szyfrowania"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -5811,6 +5803,7 @@ msgstr "Wprowadź tytuł…"
 msgid ""
 "Enter a domain name that will be associated with this key, e.g. example.com."
 msgstr ""
+"Wprowadź nazwę domeny, która będzie powiązana z tym kluczem, np. example.com."
 
 #: app/assets/javascripts/app/views/generic/input.jst.eco
 msgid "Enter a valid email address."
@@ -5883,6 +5876,10 @@ msgstr "Wprowadź swój token API %s uzyskany z ustawień profilu konta."
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Enter your %s App Keys"
 msgstr "Wprowadź klucze aplikacji %s"
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Enter your current password, insert a new one and confirm it."
+msgstr ""
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -6127,10 +6124,8 @@ msgid "Expires"
 msgstr "Wygasa"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
-#, fuzzy
-#| msgid "Expires"
 msgid "Expires at"
-msgstr "Wygasa"
+msgstr "Wygasa w"
 
 #: app/assets/javascripts/app/controllers/search.coffee
 msgid "Extended Search"
@@ -6684,10 +6679,8 @@ msgid "Go home"
 msgstr "Idź do domu"
 
 #: lib/secure_mailing/pgp/incoming.rb
-#, fuzzy
-#| msgid "Signature"
 msgid "Good signature"
-msgstr "Podpis"
+msgstr "Prawidłowy podpis"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -7666,21 +7659,9 @@ msgstr ""
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Nieprawidłowe uprawnienia, nie blokuj się."
 
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Any recipient"
-msgid "Invalid recipient."
-msgstr "Dowolny odbiorca"
-
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr "Nieprawidłowy kod bezpieczeństwa! Spróbuj ponownie z nowym kodem."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Invalid video URL"
-msgid "Invalid signer."
-msgstr "Nieprawidłowy URL filmu"
 
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
@@ -7854,15 +7835,7 @@ msgstr "Klucz"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 msgid "Key ID"
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Key expired."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Key revoked."
-msgstr ""
+msgstr "ID klucza"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee
@@ -8481,10 +8454,6 @@ msgstr "Wiadomość wyświetlana po zatwierdzeniu formularza"
 #: db/seeds/settings.rb
 msgid "Message for login page."
 msgstr "Wiadomość dla strony logowania."
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Message is not signed by sender."
-msgstr "Wiadomość nie jest podpisana przez nadawcę."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
@@ -9176,6 +9145,7 @@ msgid "No file formats allowed."
 msgstr "Niedozwolone formaty plików."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "No filter was configured."
 msgstr "Nie skonfigurowano żadnego filtra."
 
@@ -9191,10 +9161,6 @@ msgstr "Brak powiązanych problemów"
 msgid "No macros available."
 msgstr "Żadne makra nie są dostępne."
 
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No passphrase given."
-msgstr ""
-
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "Brak wcześniejszych wyszukiwań"
@@ -9202,12 +9168,6 @@ msgstr "Brak wcześniejszych wyszukiwań"
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
 msgstr "Brak pełnomocnictwa dla następujących hostów."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "No camera found."
-msgid "No public key found."
-msgstr "Nie znaleziono kamery."
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
@@ -9223,12 +9183,6 @@ msgstr "Nie znaleziono wyników"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "No results were found."
 msgstr "Nie znaleziono wyników."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "No recipient found."
-msgid "No secret key found."
-msgstr "Nie znaleziona odbiorcy."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "No security information available."
@@ -9269,22 +9223,6 @@ msgstr "Brak aktywnych wyzwalaczy"
 msgid "No unread notifications for you. :)"
 msgstr "Nie ma dla Ciebie nieprzeczytanych powiadomień :)"
 
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "No recipient found."
-msgid "No valid OpenPGP data found."
-msgstr "Nie znaleziona odbiorcy."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "No recipient found."
-msgid "No valid recipient."
-msgstr "Nie znaleziona odbiorcy."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No valid signer."
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
 msgid ""
 "No webhook available, please create a new one or activate an existing one at "
@@ -9299,6 +9237,7 @@ msgstr ""
 "Brak identyfikatora użytkownika x-zammad-session, brak ustawionego nadawcy!"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
+#: app/graphql/gql/types/ticket_type.rb
 msgid "None"
 msgstr "żaden"
 
@@ -9883,23 +9822,19 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: db/seeds/settings.rb
 msgid "PGP Recipient Alias Configuration"
-msgstr ""
+msgstr "PGP konfiguracja aliasu odbiorcy"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "CTI config"
 msgid "PGP config"
-msgstr "CTI konfiguracja"
+msgstr "Konfiguracja PGP"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "LDAP integration"
 msgid "PGP integration"
-msgstr "Integracja z LDAP"
+msgstr "Integracja z PGP"
 
 #: lib/email_helper.rb
 msgid "POP3"
@@ -9931,12 +9866,6 @@ msgstr "Wymagany parametr „dane” lub „plik”."
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
 msgid "Parent"
 msgstr "Rodzic"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "is invalid"
-msgid "Passphrase invalid."
-msgstr "jest nieprawidłowa"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -10021,10 +9950,8 @@ msgid "Paste in CSV data"
 msgstr "Wklej zawartość pliku CSV"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-#, fuzzy
-#| msgid "Paste"
 msgid "Paste key"
-msgstr "Wklej"
+msgstr "Wklej klucz"
 
 #: db/seeds/overviews.rb
 msgid "Pending Reached Tickets"
@@ -10097,7 +10024,6 @@ msgstr "Telefon (wychodzący)"
 msgid "Phone Extension to Agent Mapping"
 msgstr "Mapowanie rozszerzenia telefonu na agenta"
 
-#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Wybierz nazwę dla aplikacji, my przygotujemy Ci unikalny token."
@@ -10264,10 +10190,6 @@ msgstr "Pozycja"
 msgid "Postmaster Filter"
 msgstr "Filtr postmastera"
 
-#: lib/secure_mailing/pgp/tool/error/handler.rb
-msgid "Potential unknown encryption algorithm."
-msgstr ""
-
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -10299,13 +10221,12 @@ msgid "Pretty Date"
 msgstr "Ładna data"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-#, fuzzy
-#| msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgid ""
 "Pretty Good Privacy (PGP) enables you to send digitally signed and encrypted "
 "messages."
 msgstr ""
-"S/MIME umożliwia wysyłanie podpisanych cyfrowo i zaszyfrowanych wiadomości."
+"Pretty Good Privacy (PGP) umożliwia wysyłanie podpisanych cyfrowo i "
+"zaszyfrowanych wiadomości."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 msgid ""
@@ -10313,6 +10234,9 @@ msgid ""
 "signing, encrypting and decrypting messages and to increase the security of "
 "e-mail communication."
 msgstr ""
+"Pretty Good Privacy (PGP) to program szyfrujący, który może być używany do "
+"podpisywania, szyfrowania i odszyfrowywania wiadomości oraz do zwiększania "
+"bezpieczeństwa komunikacji e-mail."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -10376,16 +10300,6 @@ msgstr "Priorytet"
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
 msgstr "Ikony priorytetów w widokach"
-
-#: lib/secure_mailing/pgp/incoming.rb
-#, fuzzy
-#| msgid "Avatar could not be found."
-msgid "Private key could not be found."
-msgstr "Nie można znaleźć awatara."
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Private key for decryption could not be found."
-msgstr "Nie znaleziono klucza prywatnego do odszyfrowania."
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
@@ -10454,10 +10368,8 @@ msgid "Public"
 msgstr "Publiczny"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco
-#, fuzzy
-#| msgid "Certificates & Private Keys"
 msgid "Public & Private Keys"
-msgstr "Certyfikaty i klucze prywatne"
+msgstr "Klucze Publiczne i Prywatne"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee
 msgid "Public Link"
@@ -10476,12 +10388,6 @@ msgstr "Publiczne Linki to…"
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
 msgid "Public Menu"
 msgstr "Menu publiczne"
-
-#: lib/secure_mailing/pgp/incoming.rb
-#, fuzzy
-#| msgid "Locale could not be found."
-msgid "Public key could not be found."
-msgstr "Nie można znaleźć ustawień regionalnych."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Publish"
@@ -10522,18 +10428,6 @@ msgstr "Kolejka"
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Queue already exists!"
 msgstr "Kolejka już istnieje!"
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 first part not a valid version part for PGP mails."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 incorrect mime type for encrypted part."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 mandates exactly two body parts for PGP mails."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -11922,10 +11816,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Sign out"
 msgid "Sign error"
-msgstr "Wyloguj"
+msgstr "Błąd Podpisu"
 
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
@@ -11963,30 +11855,6 @@ msgstr "Logowanie:"
 #: db/seeds/object_manager_attributes.rb
 msgid "Signature"
 msgstr "Podpis"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Signature"
-msgid "Signature expired."
-msgstr "Podpis"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Signature"
-msgid "Signature invalid."
-msgstr "Podpis"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Signature key expired."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Signature key revoked."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "Signature part is missing or has wrong content type."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Signature verification failed!"
@@ -12328,6 +12196,7 @@ msgid "Submit"
 msgstr "Akceptuj"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Subscribe"
@@ -12614,10 +12483,8 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "Dziękujemy za dołączenie, e-mail wysłany do \"%s\"."
 
 #: lib/secure_mailing/pgp/tool/exec/agent.rb
-#, fuzzy
-#| msgid "The entry could not be created."
-msgid "The 'gpg-agent' process could not be ended."
-msgstr "Nie udało się utworzyć wpisu."
+msgid "The 'gpg-agent' process could not be stopped."
+msgstr "Nie można było zatrzymać procesu \"gpg-agent\"."
 
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
@@ -12631,35 +12498,57 @@ msgstr "Baza wiedzy nie mogła zostać utworzona."
 msgid "The MIME type of the image is invalid."
 msgstr "Typ MIME obrazu jest nieprawidłowy."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP email recipient is invalid."
+msgstr "Odbiorca wiadomości e-mail PGP jest nieprawidłowy."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP email signer is invalid."
+msgstr "Podpisujący wiadomości e-mail PGP jest nieprawidłowy."
+
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "Certificate for %s found, but expired."
 msgid "The PGP key for %s was found, but has expired."
-msgstr "Znaleziony certyfikat dla %s wygasł."
+msgstr "Klucz PGP został znaleziony, ale wygasł."
 
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "The API token could not be found."
 msgid "The PGP key for %s was found."
-msgstr "Nie można znaleźć tokena API."
+msgstr "Klucz PGP dla %s został znaleziony."
 
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "The page was not found"
 msgid "The PGP key for %s was not found."
-msgstr "Strona nie została znaleziona"
+msgstr "Klucz PGP dla %s nie został znaleziony."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP key has been revoked."
+msgstr "Klucz PGP został unieważniony."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP key has expired."
+msgstr "Klucz PGP wygasł."
 
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "The API token could not be found."
 msgid "The PGP keys for %s were found."
-msgstr "Nie można znaleźć tokena API."
+msgstr "Klucze PGP dla %s zostały znalezione."
 
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "The API token could not be found."
 msgid "The PGP keys for %s were not found."
-msgstr "Nie można znaleźć tokena API."
+msgstr "Klucze PGP dla %s nie zostały znalezione."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP passphrase is invalid."
+msgstr "Hasło PGP jest nieprawidłowe."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature has expired."
+msgstr "Podpis PGP wygasł."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature is invalid."
+msgstr "Podpis PGP jest nieprawidłowy."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature key has been revoked."
+msgstr "Podpis klucza PGP został unieważniony."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
@@ -12739,26 +12628,41 @@ msgstr ""
 "Przeglądarka jest stara i nie wspiera WebSocket - techniki użytej w czacie."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "Certificate for %s found, but expired."
-msgid "The certificate for %s was found, but has expired."
-msgstr "Znaleziony certyfikat dla %s wygasł."
+msgid ""
+"The certificate for %s was found, but it is not valid yet or has expired."
+msgstr ""
+"Znaleziono certyfikat dla %s, ale nie jest on jeszcze ważny lub wygasł."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "No certificate for %s found."
 msgid "The certificate for %s was found."
-msgstr "Nie znaleziono certyfikatu dla %s."
+msgstr "Certyfikat dla %s został znaleziony."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "No certificate for %s found."
 msgid "The certificate for %s was not found."
-msgstr "Nie znaleziono certyfikatu dla %s."
+msgstr "Certyfikat dla %s nie został znaleziony."
 
 #: app/models/smime_certificate.rb
 msgid "The certificate for this private key could not be found."
 msgstr "Nie można znaleźć certyfikatu dla tego klucza prywatnego."
+
+#: lib/secure_mailing/smime/incoming.rb
+msgid "The certificate for verification could not be found."
+msgstr "Certyfikat do weryfikacji nie mógł być znaleziony."
+
+#: lib/secure_mailing/smime/certificate.rb
+msgid ""
+"The certificate is not valid for S/MIME usage. Please check the certificate "
+"format."
+msgstr ""
+"Certyfikat nie jest właściwy dla użycia S/MIME. Sprawdź format certyfikatu."
+
+#: lib/secure_mailing/smime/certificate.rb
+msgid ""
+"The certificate is not valid for S/MIME usage. Please check the key usage, "
+"subject alternative name and public key cryptographic algorithm."
+msgstr ""
+"Certyfikat nie jest właściwy dla użycia S/MIME. Sprawdź użycie klucza, "
+"alternatywną nazwę podmiotu i algorytm kryptograficzny klucza publicznego."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid ""
@@ -12772,16 +12676,12 @@ msgstr ""
 "razie proszę \"Anuluj\"."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "No certificate for %s found."
 msgid "The certificates for %s were found."
-msgstr "Nie znaleziono certyfikatu dla %s."
+msgstr "Certyfikaty dla %s zostały znalezione."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "No certificate for %s found."
 msgid "The certificates for %s were not found."
-msgstr "Nie znaleziono certyfikatu dla %s."
+msgstr "Certyfikaty dla %s nie zostały znalezione."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -12868,6 +12768,14 @@ msgstr "Domyślna czcionka to 12px."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Dzielnik między TicketHook a numerem zgłoszenia. Np. ':'."
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The encrypted part of this PGP email has an incorrect MIME type according to "
+"RFC 3156."
+msgstr ""
+"Zaszyfrowana część tej wiadomości e-mail PGP ma nieprawidłowy typ MIME "
+"zgodnie z RFC 3156."
+
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 msgid ""
 "The entered user for reauthentication differs from the user that was used "
@@ -12896,6 +12804,14 @@ msgstr "Plik nie mógł zostać załadowany."
 #: app/controllers/ticket_articles_controller.rb
 msgid "The file does not belong to the specified article."
 msgstr "Plik nie należy do określonego artykułu."
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The first part of this PGP email is not a valid version part as mandated by "
+"RFC 3156."
+msgstr ""
+"Pierwsza część tej wiadomości PGP nie jest prawidłową wersją zgodnie z RFC "
+"3156."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "The following changes have been made:"
@@ -13009,7 +12925,7 @@ msgstr "Nie można zaktualizować obiektu."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "The online notifcation could not be marked as seen."
-msgstr "Nie można oznaczyć powiadomienia online jako widoczne."
+msgstr "Powiadomienie online nie może zostać oznaczone jako zobaczone."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
@@ -13037,6 +12953,30 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 "Nie można wygenerować podglądu. Format jest uszkodzony lub nieobsługiwany."
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "The private PGP key could not be found."
+msgstr "Prywatny klucz PGP nie mógł być znaleziony."
+
+#: lib/secure_mailing/smime/incoming.rb
+msgid "The private key for decryption could not be found."
+msgstr "Klucz prywatny do odszyfrowania nie mógł być znaleziony."
+
+#: lib/secure_mailing/smime/private_key.rb
+msgid ""
+"The private key is not valid for S/MIME usage. Please check the key "
+"cryptographic algorithm."
+msgstr ""
+"Klucz prywatny nie jest prawidłowy dla użycia S/MIME. Sprawdź algorytm "
+"kryptograficzny klucza."
+
+#: lib/secure_mailing/smime/private_key.rb
+msgid ""
+"The private key is not valid for S/MIME usage. Please check the key format "
+"and the secret."
+msgstr ""
+"Klucz prywatny nie jest prawidłowy dla użycia S/MIME. Sprawdź format klucza "
+"i sekret."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "The product version could not be fetched."
@@ -13088,6 +13028,10 @@ msgstr "Podany ładunek jest nieprawidłowy. Sprawdź swoją składnię."
 msgid "The provided token is invalid."
 msgstr "Podany token jest nieprawidłowy."
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "The public PGP key could not be found."
+msgstr "Klucz publiczny PGP nie może być znaleziony."
+
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "The report could not be generated"
 msgstr "Nie udało się wygenerować raportu"
@@ -13103,6 +13047,10 @@ msgstr "Brakuje wymaganej wartości '%{attribute}' dla %{key}, %{inner}!"
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr "Nie można znaleźć wymaganego „twittera” „ExternalCredential”."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The required PGP passphrase is missing."
+msgstr "Brakuje wymaganego hasła PGP."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
 msgid "The required event field 'execution' is missing."
@@ -13311,6 +13259,18 @@ msgstr "Nie można zaktualizować ustawienia."
 msgid "The sign-in failed. Please contact the Support team."
 msgstr "Logowanie nie powiodło się. Skontaktuj się z zespołem pomocy."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The signature PGP key has expired."
+msgstr "Klucz podpisu PGP wygasł."
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The signature part of this PGP email is missing or has a wrong content type "
+"according to RFC 3156."
+msgstr ""
+"Brakuje podpisu tej wiadomości e-mail PGP lub ma ona nieprawidłowy typ "
+"zawartości zgodnie z RFC 3156."
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
@@ -13433,7 +13393,7 @@ msgstr "W kolejce czatu jest zbyt wiele osób."
 
 #: app/models/pgp_key.rb
 msgid "There is already a PGP key with the same fingerprint."
-msgstr ""
+msgstr "Istnieje już klucz PGP z tym samym odciskiem palca."
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
@@ -13490,42 +13450,76 @@ msgstr ""
 "Nie ma zapisanej konfiguracji dla tej metody uwierzytelniania "
 "dwuskładnikowego."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There is no valid PGP email recipient."
+msgstr "Nie ma prawidłowego odbiorcy wiadomości e-mail PGP."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There is no valid PGP email signer."
+msgstr "Nie ma prawidłowego podpisującego wiadomości e-mail PGP."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was an unknown PGP error."
+msgstr "Wystąpił nieznany błąd PGP."
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "There was no Knowledge Base created."
 msgstr "Nie utworzono bazy wiedzy."
 
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "The page was not found"
 msgid "There was no PGP key found."
-msgstr "Strona nie została znaleziona"
+msgstr "Nie znaleziono klucza PGP."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "The page was not found"
 msgid "There was no certificate found."
-msgstr "Strona nie została znaleziona"
+msgstr "Nie znaleziono certyfikatu."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was no public PGP key found."
+msgstr "Nie znaleziono publicznego klucza PGP."
 
 #: lib/secure_mailing/backend/handler_security_options.rb
-#, fuzzy
-#| msgid "No recipient found."
 msgid "There was no recipient found."
 msgstr "Nie znaleziona odbiorcy."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was no secret PGP key found."
+msgstr "Nie znaleziono tajnego klucza PGP."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was no valid OpenPGP data found."
+msgstr "Nie znaleziono prawidłowych danych OpenPGP."
+
 #: lib/secure_mailing/pgp/security_options.rb
 msgid "There were PGP keys found for %s, but at least one of them has expired."
-msgstr ""
+msgstr "Znaleziono klucze PGP dla %s, ale przynajmniej jeden z nich wygasł."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "Certificates found for %s, but expired."
 msgid ""
-"There were certificates found for %s, but at least one of them has expired."
-msgstr "Znalezione certyfikaty dla %s wygasły."
+"There were certificates found for %s, but at least one of them is not valid "
+"yet or has expired."
+msgstr ""
+"Znaleziono certyfikaty dla %s, ale przynajmniej jeden z nich nie jest "
+"jeszcze ważny lub wygasł."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
 msgstr "Aplikacje firm trzecich"
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"This PGP email does not have exactly two body parts for PGP mails as "
+"mandated by RFC 3156."
+msgstr ""
+"Ta wiadomość PGP nie ma dokładnie dwóch częśc dla wiadomości PGP, zgodnie z "
+"RFC 3156."
+
+#: lib/secure_mailing/pgp/tool/error/handler.rb
+msgid ""
+"This PGP email was encrypted with a potentially unknown encryption algorithm."
+msgstr ""
+"Ta wiadomość e-mail PGP została zaszyfrowana potencjalnie nieznanym "
+"algorytmem szyfrowania."
 
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
@@ -13723,7 +13717,7 @@ msgstr ""
 
 #: app/controllers/integration/pgp_controller.rb
 msgid "This is not a private PGP key."
-msgstr ""
+msgstr "To nie jest prywatny klucz PGP."
 
 #: app/models/channel/email_parser.rb
 msgid ""
@@ -13744,6 +13738,10 @@ msgstr ""
 "Nie można wyświetlić tego komunikatu z powodu problemów z przetwarzaniem "
 "HTML. Pobierz surową wiadomość poniżej i otwórz ją za pomocą klienta poczty "
 "e-mail, jeśli nadal chcesz ją wyświetlić."
+
+#: lib/secure_mailing/smime/incoming.rb
+msgid "This message was not signed by its sender."
+msgstr "Ta wiadomość nie jest podpisana przez nadawcę."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "This might take some time during which the system can't be used."
@@ -13895,6 +13893,10 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Ticket Conditions Expert Mode"
 msgstr "Tryb eksperta warunków zgłoszenia"
+
+#: db/seeds/settings.rb
+msgid "Ticket Conditions Regular Expression Operators"
+msgstr "Warunki Wyrażeń Regularnych i Operatorów Zgłoszenia"
 
 #: app/models/report.rb
 msgid "Ticket Count"
@@ -14233,6 +14235,7 @@ msgstr "Do"
 msgid "Time"
 msgstr "Czas"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: db/seeds/permissions.rb db/seeds/settings.rb
@@ -14483,6 +14486,18 @@ msgstr "Temat"
 msgid "Topics"
 msgstr "Tematy"
 
+#: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
+#, fuzzy
+#| msgid "Total: %s"
+msgid "Total"
+msgstr "W sumie: %s"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+#, fuzzy
+#| msgid "Accounted Time"
+msgid "Total Accounted Time"
+msgstr "Czas wykonywania zadania"
+
 #: db/seeds/settings.rb
 msgid "Total display of the number of objects in a grouping."
 msgstr "Całkowite wyświetlanie liczby obiektów w grupie."
@@ -14714,7 +14729,7 @@ msgstr "Nazwa atrybutu UID"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "URL"
-msgstr "Adres URL"
+msgstr "URL"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "URL (AJAX endpoint)"
@@ -14736,12 +14751,6 @@ msgstr "Jednostka"
 
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
-msgstr "Nieznany błąd"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Unknown error"
-msgid "Unknown error."
 msgstr "Nieznany błąd"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
@@ -14791,7 +14800,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Update"
-msgstr "Zapisz"
+msgstr "Aktualizacja"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Update Database"
@@ -15002,10 +15011,8 @@ msgid "Upload Private Key"
 msgstr "Prześlij klucz prywatny"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-#, fuzzy
-#| msgid "Upload"
 msgid "Upload key"
-msgstr "Wysyłanie"
+msgstr "Załaduj klucz"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
@@ -15024,6 +15031,8 @@ msgid ""
 "Use 'with_private_keyring' to create a private keyring or set @gnupg_home "
 "before calling gpg."
 msgstr ""
+"Użyj 'with_private_keyring', aby utworzyć prywatny klucz lub ustaw "
+"@gnupg_home przed wywołaniem gpg."
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -15965,10 +15974,6 @@ msgstr ""
 "Możesz przełączać się między kolejnymi zapleczami dla nowych załączników "
 "nawet w systemie, który jest już produkcyjny, bez utraty danych."
 
-#: app/assets/javascripts/app/models/postmaster_filter.coffee
-msgid "You can use regular expression by using \"regex:your_reg_exp\"."
-msgstr "Możesz użyć wyrażenia regularnego, używając „regex: your_reg_exp”."
-
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "You can use the following script to post the data to %s."
 msgstr "Możesz użyć poniższego skryptu, aby wysłać dane do %s."
@@ -16326,11 +16331,13 @@ msgid "admin"
 msgstr "Administrator"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "after (absolute)"
 msgstr "po (bezwzględnie)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "after (relative)"
 msgstr "po (względnie)"
 
@@ -16382,11 +16389,13 @@ msgid "auto select"
 msgstr "auto wybór"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "before (absolute)"
 msgstr "przed (bezwzględnie)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "before (relative)"
 msgstr "przed (względnie)"
 
@@ -16473,10 +16482,12 @@ msgid "contains not"
 msgstr "nie zawiera"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "contains one"
 msgstr "zawiera jeden"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "contains one not"
 msgstr "nie zawiera jednej z"
 
@@ -16586,6 +16597,11 @@ msgstr "nie pozwala na przeszłe daty"
 msgid "does not exist"
 msgstr "nie istnieje"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "does not match regex"
+msgstr "nie pasuje do wyrażenia regularnego"
+
 msgid "doesn't match %{attribute}"
 msgstr "nie pasuje do %{attribute}"
 
@@ -16646,9 +16662,14 @@ msgstr "dołączony"
 msgid "enclosure"
 msgstr "załącznik"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "ends with"
 msgstr "kończy się na"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "ends with one of"
+msgstr "kończy się na jeden z"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
@@ -16713,12 +16734,13 @@ msgstr "od"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "from (relative)"
 msgstr "od (względny)"
 
 #: app/controllers/integration/pgp_controller.rb
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
-msgstr ""
+msgstr "gpg (GnuPG) 2.2.0 lub nowszy jest wymagany"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "h"
@@ -16883,6 +16905,11 @@ msgid "is already used"
 msgstr "jest już używany"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "is any of"
+msgstr "jest dowolnym z"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
 msgstr "jest w godzinach pracy"
 
@@ -16900,6 +16927,11 @@ msgstr "to ostatnie konto z uprawnieniami administratora"
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr "jest dłuższy niż dozwolona długość %{maxlength}"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "is none of"
+msgstr "nie jest żadnym z"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -16936,6 +16968,7 @@ msgstr "jest wymagane, ale brakuje"
 msgid "is reserved"
 msgstr "jest zarezerwowany"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
 msgstr "jest ustawiony"
@@ -17011,6 +17044,11 @@ msgstr "dopasuj jeden moduł"
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 msgid "matches found"
 msgstr "znalezione trafienia"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "matches regex"
+msgstr "pasuje do wyrażenia regularnego"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
@@ -17127,6 +17165,7 @@ msgstr "brak jednostki"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/chat_list.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/user_list.jst.eco
@@ -17143,6 +17182,7 @@ msgstr "brak danych"
 msgid "not reached"
 msgstr "nie osiągnięte"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "not set"
 msgstr "nie ustawiony"
@@ -17233,14 +17273,6 @@ msgstr "osiągnięto"
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
 msgstr "kody przywracania"
-
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-msgid "regex match"
-msgstr "dopasowanie wyrażenia regularnego"
-
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-msgid "regex mismatch"
-msgstr "niezgodność wyrażeń regularnych"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "relative"
@@ -17337,6 +17369,7 @@ msgstr "pokazać"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/user_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
@@ -17394,9 +17427,14 @@ msgstr "konkretny użytkownik"
 msgid "split"
 msgstr "rozdziel"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "starts with"
 msgstr "zaczyna się od"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "starts with one of"
+msgstr "zaczyna się jednym z"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
@@ -17434,6 +17472,7 @@ msgstr "ticket.customer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "till (relative)"
 msgstr "do (względne)"
 
@@ -17447,6 +17486,7 @@ msgstr "aby przejść do strony głównej."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "today"
@@ -17519,11 +17559,13 @@ msgstr "zostanie usunięty"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "within last (relative)"
 msgstr "w ciągu ostatnich (względne)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "within next (relative)"
 msgstr "w następnym (względnym)"
 
@@ -17578,6 +17620,45 @@ msgstr "...całego pola tekstowego"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ dzisiejszy czas oczekiwania"
+
+#~ msgid "You can use regular expression by using \"regex:your_reg_exp\"."
+#~ msgstr "Możesz użyć wyrażenia regularnego, używając „regex: your_reg_exp”."
+
+#~ msgid "regex match"
+#~ msgstr "dopasowanie wyrażenia regularnego"
+
+#~ msgid "regex mismatch"
+#~ msgstr "niezgodność wyrażeń regularnych"
+
+#, fuzzy
+#~| msgid "Any recipient"
+#~ msgid "Invalid recipient."
+#~ msgstr "Dowolny odbiorca"
+
+#, fuzzy
+#~| msgid "Invalid video URL"
+#~ msgid "Invalid signer."
+#~ msgstr "Nieprawidłowy URL filmu"
+
+#, fuzzy
+#~| msgid "No camera found."
+#~ msgid "No public key found."
+#~ msgstr "Nie znaleziono kamery."
+
+#, fuzzy
+#~| msgid "No recipient found."
+#~ msgid "No secret key found."
+#~ msgstr "Nie znaleziona odbiorcy."
+
+#, fuzzy
+#~| msgid "Signature"
+#~ msgid "Signature invalid."
+#~ msgstr "Podpis"
+
+#, fuzzy
+#~| msgid "Unknown error"
+#~ msgid "Unknown error."
+#~ msgstr "Nieznany błąd"
 
 #~ msgid "Certificate for %s found."
 #~ msgstr "Znaleziono certyfikat dla %s."

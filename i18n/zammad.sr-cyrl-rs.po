@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-07-27 09:51+0000\n"
+"PO-Revision-Date: 2023-08-11 01:07+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
@@ -987,7 +987,6 @@ msgstr "Налог није потврђен"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
 #: app/graphql/gql/types/overview_type.rb
 msgid "Accounted Time"
 msgstr "Обрачунато време"
@@ -1095,7 +1094,7 @@ msgstr "Активно"
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco
 msgid "Active Agents"
-msgstr "Активних оператера"
+msgstr "Активни оператери"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 msgid "Activity"
@@ -1179,11 +1178,11 @@ msgstr "Додај везу"
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Private Key"
-msgstr "Додај приватни кључ"
+msgstr "Додај тајни кључ"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 msgid "Add Public or Private Key"
-msgstr "Додај јавни или приватни кључ"
+msgstr "Додај јавни или тајни кључ"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -1783,6 +1782,7 @@ msgstr "Да ли сте сигурни? Ваша подешавања обав�
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Article"
 msgstr "Чланак"
 
@@ -2548,13 +2548,9 @@ msgstr "Распоред странице категорије"
 msgid "Caution!"
 msgstr "Опрез!"
 
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Certificate for verification could not be found."
-msgstr "Није било могуће наћи сертификат за проверу."
-
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
-msgstr "Сертификати и приватни кључеви"
+msgstr "Сертификати и тајни кључеви"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
@@ -3247,12 +3243,12 @@ msgstr "Настави сесију"
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Continue to desktop"
-msgstr "Настави на десктоп"
+msgstr "Настави на основни приказ"
 
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Continue to mobile"
-msgstr "Настави на мобилно"
+msgstr "Настави на мобилни приказ"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
@@ -3357,7 +3353,7 @@ msgstr "Земља"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
-msgstr "Додавање"
+msgstr "Додај"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "Create Admin"
@@ -4220,6 +4216,14 @@ msgstr ""
 "Одређује да ли уредник услова тикета подржава комплексне логичке изразе."
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines if the ticket conditions editor supports regular expression "
+"operators for triggers and ticket auto assignment."
+msgstr ""
+"Одређује да ли уредник услова тикета за окидаче и аутоматску доделу подржава "
+"комплексне логичке изразе."
+
+#: db/seeds/settings.rb
 msgid "Defines if the time accounting types are enabled."
 msgstr "Одређује да ли су врсте активности обрачунатог времена укључене."
 
@@ -4904,7 +4908,7 @@ msgstr "Дизајнер"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 msgid "Desktop"
-msgstr "Рачунар"
+msgstr "Основни"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -5136,7 +5140,7 @@ msgstr "Преузми сертификат"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Download Private Key"
-msgstr "Преузми приватан кључ"
+msgstr "Преузми тајни кључ"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 msgid "Download Public Key"
@@ -5240,7 +5244,7 @@ msgstr "Мења"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 msgid "Editing on Desktop"
-msgstr "Мења на рачунару"
+msgstr "Мења у основном приказу"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
@@ -5717,7 +5721,7 @@ msgstr "Унеси особу или организацију/фирму"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Enter Private Key Secret"
-msgstr "Унеси шифру приватног кључа"
+msgstr "Унеси шифру тајног кључа"
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 msgid "Enter Title…"
@@ -5799,6 +5803,10 @@ msgstr "Унеси свој %s API кључ из профила налога."
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Enter your %s App Keys"
 msgstr "Унеси кључеве своје %s апликације"
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Enter your current password, insert a new one and confirm it."
+msgstr ""
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -7358,7 +7366,7 @@ msgstr "Укључени прегледи тикета"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
-msgstr "Укључује и приватни кључ."
+msgstr "Укључује и тајни кључ."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -7567,17 +7575,9 @@ msgstr "Неисправна лозинка, мора садржати најм�
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Неисправне дозволе, будите пажљиви да се не закључате."
 
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Invalid recipient."
-msgstr "Неисправан прималац."
-
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr "Неважећи сигурни код! Молимо покушајте поново са новим кодом."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Invalid signer."
-msgstr "Неисправан потписник."
 
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
@@ -7749,14 +7749,6 @@ msgstr "Кључ"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 msgid "Key ID"
 msgstr "ID кључа"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Key expired."
-msgstr "Истекао кључ."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Key revoked."
-msgstr "Опозван кључ."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee
@@ -8376,10 +8368,6 @@ msgstr "Порука након слања форме"
 #: db/seeds/settings.rb
 msgid "Message for login page."
 msgstr "Порука за страну пријављивања."
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Message is not signed by sender."
-msgstr "Порука није потписана од стране пошиљаоца."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
@@ -9069,6 +9057,7 @@ msgid "No file formats allowed."
 msgstr "Нема дозвољених формата датотека."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "No filter was configured."
 msgstr "Није подешен филтер."
 
@@ -9084,10 +9073,6 @@ msgstr "Нема повезаних проблема"
 msgid "No macros available."
 msgstr "Нема доступних макроа."
 
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No passphrase given."
-msgstr "Није приложена лозинка."
-
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "Нема претходних претрага"
@@ -9095,10 +9080,6 @@ msgstr "Нема претходних претрага"
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
 msgstr "Без проксија за следеће сервере."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No public key found."
-msgstr "Није пронађен јавни кључ."
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
@@ -9114,10 +9095,6 @@ msgstr "Нема резултата"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "No results were found."
 msgstr "Нису пронађени резултати."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No secret key found."
-msgstr "Није пронађен тајни кључ."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "No security information available."
@@ -9158,18 +9135,6 @@ msgstr "Нема активних окидача"
 msgid "No unread notifications for you. :)"
 msgstr "Немате непрочитаних обавештења. :)"
 
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No valid OpenPGP data found."
-msgstr "Нису пронађени важећи OpenPGP подаци."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No valid recipient."
-msgstr "Неисправан прималац."
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "No valid signer."
-msgstr "Неисправан потписник."
-
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
 msgid ""
 "No webhook available, please create a new one or activate an existing one at "
@@ -9183,6 +9148,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Без x-zammad-session-user-id, пошиљалац није подешен!"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
+#: app/graphql/gql/types/ticket_type.rb
 msgid "None"
 msgstr "Празно"
 
@@ -9764,19 +9730,15 @@ msgstr "PGP"
 
 #: db/seeds/settings.rb
 msgid "PGP Recipient Alias Configuration"
-msgstr ""
+msgstr "PGP конфигурација алиаса примаоца"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "CTI config"
 msgid "PGP config"
-msgstr "CTI конфигурација"
+msgstr "PGP конфигурација"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "LDAP integration"
 msgid "PGP integration"
-msgstr "LDAP интеграција"
+msgstr "PGP интеграција"
 
 #: lib/email_helper.rb
 msgid "POP3"
@@ -9808,12 +9770,6 @@ msgstr "Неопходан ’data’ или ’file’ параметар."
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
 msgid "Parent"
 msgstr "Надређени"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "is invalid"
-msgid "Passphrase invalid."
-msgstr "је неисправно"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -9883,7 +9839,7 @@ msgstr "Налепи сертификат"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Paste Private Key"
-msgstr "Налепи приватан кључ"
+msgstr "Налепи тајни кључ"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Paste from clipboard"
@@ -9898,10 +9854,8 @@ msgid "Paste in CSV data"
 msgstr "Налепи CSV податке"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-#, fuzzy
-#| msgid "Paste"
 msgid "Paste key"
-msgstr "Налепи"
+msgstr "Налепи кључ"
 
 #: db/seeds/overviews.rb
 msgid "Pending Reached Tickets"
@@ -9974,7 +9928,6 @@ msgstr "Позив (одлазни)"
 msgid "Phone Extension to Agent Mapping"
 msgstr "Мапирање локала на оператере"
 
-#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Изаберите назив апликације, и добићете јединствени кључ."
@@ -10138,10 +10091,6 @@ msgstr "Положај"
 msgid "Postmaster Filter"
 msgstr "Postmaster филтер"
 
-#: lib/secure_mailing/pgp/tool/error/handler.rb
-msgid "Potential unknown encryption algorithm."
-msgstr ""
-
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -10173,12 +10122,12 @@ msgid "Pretty Date"
 msgstr "Лепши формат датума"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-#, fuzzy
-#| msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgid ""
 "Pretty Good Privacy (PGP) enables you to send digitally signed and encrypted "
 "messages."
-msgstr "S/MIME вам омогућава да шаљете дигитално потписане и шифроване поруке."
+msgstr ""
+"Pretty Good Privacy (PGP) вам омогућава да шаљете дигитално потписане и "
+"шифроване поруке."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 msgid ""
@@ -10186,6 +10135,9 @@ msgid ""
 "signing, encrypting and decrypting messages and to increase the security of "
 "e-mail communication."
 msgstr ""
+"Pretty Good Privacy (PGP) је сигурносни програм који се може користити за "
+"потписивање, шифровање и дешифровање порука и за повећање безбедности имејл "
+"комуникације."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -10249,16 +10201,6 @@ msgstr "Приоритет"
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
 msgstr "Иконице приоритета у прегледима"
-
-#: lib/secure_mailing/pgp/incoming.rb
-#, fuzzy
-#| msgid "Avatar could not be found."
-msgid "Private key could not be found."
-msgstr "Није било могуће пронаћи аватар."
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Private key for decryption could not be found."
-msgstr "Није било могуће пронаћи приватни кључ за дешифровање."
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
@@ -10327,10 +10269,8 @@ msgid "Public"
 msgstr "Јавно"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco
-#, fuzzy
-#| msgid "Certificates & Private Keys"
 msgid "Public & Private Keys"
-msgstr "Сертификати и приватни кључеви"
+msgstr "Јавни & тајни кључеви"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee
 msgid "Public Link"
@@ -10349,12 +10289,6 @@ msgstr "Јавни линкови су …"
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
 msgid "Public Menu"
 msgstr "Јавни мени"
-
-#: lib/secure_mailing/pgp/incoming.rb
-#, fuzzy
-#| msgid "Locale could not be found."
-msgid "Public key could not be found."
-msgstr "Локал није пронађен."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Publish"
@@ -10395,18 +10329,6 @@ msgstr "Ред"
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Queue already exists!"
 msgstr "Ред већ постоји!"
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 first part not a valid version part for PGP mails."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 incorrect mime type for encrypted part."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "RFC 3156 mandates exactly two body parts for PGP mails."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -10611,7 +10533,7 @@ msgstr "Поново отворени"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "Reopening rate"
-msgstr "Проценат поново отворених"
+msgstr "Стопа поново отворених"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -11784,10 +11706,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Sign out"
 msgid "Sign error"
-msgstr "Одјави се"
+msgstr "Грешка потписа"
 
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
@@ -11825,30 +11745,6 @@ msgstr "Потпис:"
 #: db/seeds/object_manager_attributes.rb
 msgid "Signature"
 msgstr "Потпис"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Signature"
-msgid "Signature expired."
-msgstr "Потпис"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Signature"
-msgid "Signature invalid."
-msgstr "Потпис"
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Signature key expired."
-msgstr ""
-
-#: lib/secure_mailing/pgp/tool/error.rb
-msgid "Signature key revoked."
-msgstr ""
-
-#: lib/secure_mailing/pgp/incoming.rb
-msgid "Signature part is missing or has wrong content type."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Signature verification failed!"
@@ -12189,6 +12085,7 @@ msgid "Submit"
 msgstr "Пошаљи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Subscribe"
@@ -12473,10 +12370,8 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "Хвала на регистрацији. Послата је имејл порука на „%s”."
 
 #: lib/secure_mailing/pgp/tool/exec/agent.rb
-#, fuzzy
-#| msgid "The entry could not be created."
-msgid "The 'gpg-agent' process could not be ended."
-msgstr "Није било могуће додати унос."
+msgid "The 'gpg-agent' process could not be stopped."
+msgstr "Није било могуће зауставити ’gpg-agent’ процес."
 
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
@@ -12490,35 +12385,57 @@ msgstr "Није било могуће додати чланак базе зна
 msgid "The MIME type of the image is invalid."
 msgstr "Неисправан MIME тип слике."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP email recipient is invalid."
+msgstr "PGP имејл прималац је неисправан."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP email signer is invalid."
+msgstr "PGP имејл потписник је неисправан."
+
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "Certificate for %s found, but expired."
 msgid "The PGP key for %s was found, but has expired."
-msgstr "Пронађен сертификат за %s, али је истекао."
+msgstr "Пронађен PGP кључ за %s, али је истекао."
 
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "The API token could not be found."
 msgid "The PGP key for %s was found."
-msgstr "Није било могуће пронаћи API кључ."
+msgstr "Пронађен PGP кључ за %s."
 
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "The page was not found"
 msgid "The PGP key for %s was not found."
-msgstr "Страна није пронађена"
+msgstr "Није пронађен PGP кључ за %s."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP key has been revoked."
+msgstr "PGP кључ је опозван."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP key has expired."
+msgstr "PGP кључ је истекао."
 
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "The API token could not be found."
 msgid "The PGP keys for %s were found."
-msgstr "Није било могуће пронаћи API кључ."
+msgstr "Пронађени PGP кључеви за %s."
 
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "The API token could not be found."
 msgid "The PGP keys for %s were not found."
-msgstr "Није било могуће пронаћи API кључ."
+msgstr "Нису пронађени PGP кључеви за %s."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP passphrase is invalid."
+msgstr "Лозинка PGP кључа је неисправна."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature has expired."
+msgstr "PGP потпис је истекао."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature is invalid."
+msgstr "PGP потпис је неисправан."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature key has been revoked."
+msgstr "PGP кључ потписа је опозван."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
@@ -12598,26 +12515,41 @@ msgstr ""
 "за ћаскање."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "Certificate for %s found, but expired."
-msgid "The certificate for %s was found, but has expired."
-msgstr "Пронађен сертификат за %s, али је истекао."
+msgid ""
+"The certificate for %s was found, but it is not valid yet or has expired."
+msgstr "Пронађен сертификат за %s, али није још важећи или је истекао."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "No certificate for %s found."
 msgid "The certificate for %s was found."
-msgstr "Није пронађен сертификаз за %s."
+msgstr "Пронађен сертификат за %s."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "No certificate for %s found."
 msgid "The certificate for %s was not found."
-msgstr "Није пронађен сертификаз за %s."
+msgstr "Није пронађен сертификат за %s."
 
 #: app/models/smime_certificate.rb
 msgid "The certificate for this private key could not be found."
-msgstr "Није пронађен сертификат за овај приватни кључ."
+msgstr "Није пронађен сертификат за овај тајни кључ."
+
+#: lib/secure_mailing/smime/incoming.rb
+msgid "The certificate for verification could not be found."
+msgstr "Није било могуће наћи сертификат за проверу."
+
+#: lib/secure_mailing/smime/certificate.rb
+msgid ""
+"The certificate is not valid for S/MIME usage. Please check the certificate "
+"format."
+msgstr ""
+"Сертификат није важећи за употребу са S/MIME. Молимо проверите формат "
+"сертификата."
+
+#: lib/secure_mailing/smime/certificate.rb
+msgid ""
+"The certificate is not valid for S/MIME usage. Please check the key usage, "
+"subject alternative name and public key cryptographic algorithm."
+msgstr ""
+"Сертификат није важећи за употребу са S/MIME. Молимо проверите тип тајног "
+"кључа, алтернативни назив субјекта и криптографски алгоритам јавног кључа."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid ""
@@ -12631,16 +12563,12 @@ msgstr ""
 "изаберите „Откажи”."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "No certificate for %s found."
 msgid "The certificates for %s were found."
-msgstr "Није пронађен сертификаз за %s."
+msgstr "Пронађени сертификати за %s."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "No certificate for %s found."
 msgid "The certificates for %s were not found."
-msgstr "Није пронађен сертификаз за %s."
+msgstr "Нису пронађени сертификати за %s."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -12723,6 +12651,13 @@ msgstr "Стандардна величина фонта је 12px."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Сепаратор између TicketHook и броја тикета. Нпр. ’: ’."
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The encrypted part of this PGP email has an incorrect MIME type according to "
+"RFC 3156."
+msgstr ""
+"Шифрован део ове PGP имејл поруке има неисправан MIME тип према RFC 3156."
+
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 msgid ""
 "The entered user for reauthentication differs from the user that was used "
@@ -12750,6 +12685,14 @@ msgstr "Није било могуће отпремити датотеку."
 #: app/controllers/ticket_articles_controller.rb
 msgid "The file does not belong to the specified article."
 msgstr "Датотека не припада наведеном чланку."
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The first part of this PGP email is not a valid version part as mandated by "
+"RFC 3156."
+msgstr ""
+"Први део ове PGP имејл поруке није исправан део верзије како је предвиђено "
+"према RFC 3156."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "The following changes have been made:"
@@ -12893,6 +12836,30 @@ msgid ""
 msgstr ""
 "Није било могуће генерисати приказ. Формат је оштећен или није подржан."
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "The private PGP key could not be found."
+msgstr "Тајни PGP кључ није пронађен."
+
+#: lib/secure_mailing/smime/incoming.rb
+msgid "The private key for decryption could not be found."
+msgstr "Тајни кључ за дешифровање није пронађен."
+
+#: lib/secure_mailing/smime/private_key.rb
+msgid ""
+"The private key is not valid for S/MIME usage. Please check the key "
+"cryptographic algorithm."
+msgstr ""
+"Тајни кључ није важећи за употребу са S/MIME. Молимо проверите криптографски "
+"алгоритам кључа."
+
+#: lib/secure_mailing/smime/private_key.rb
+msgid ""
+"The private key is not valid for S/MIME usage. Please check the key format "
+"and the secret."
+msgstr ""
+"Тајни кључ није важећи за употребу са S/MIME. Молимо проверите формат и "
+"шифру кључа."
+
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "The product version could not be fetched."
 msgstr "Није било могуће преузети верзију производа."
@@ -12941,6 +12908,10 @@ msgstr "Достављени подаци су неисправни. Молим�
 msgid "The provided token is invalid."
 msgstr "Наведени кључ је неисправан."
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid "The public PGP key could not be found."
+msgstr "Јавни PGP кључ није пронађен."
+
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "The report could not be generated"
 msgstr "Није било могуће генерисати извештај"
@@ -12956,6 +12927,10 @@ msgstr "Недостаје обавезна вредност ’%{attribute}’ 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr "Није пронађен обавезни ’ExternalCredential’ ’twitter’."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The required PGP passphrase is missing."
+msgstr "Недостаје обавезна лозинка PGP кључа."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
 msgid "The required event field 'execution' is missing."
@@ -13162,6 +13137,18 @@ msgstr "Није било могуће освежити подешавање."
 msgid "The sign-in failed. Please contact the Support team."
 msgstr "Пријављивање није успело. Молимо контактирајте тим подршке."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The signature PGP key has expired."
+msgstr "PGP кључеви потписа су истекли."
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The signature part of this PGP email is missing or has a wrong content type "
+"according to RFC 3156."
+msgstr ""
+"Део потписа ове PGP имејл поруке недостаје или има погрешан тип садржаја "
+"према RFC 3156."
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
@@ -13281,7 +13268,7 @@ msgstr "Превише је људи у реду за ћаскање."
 
 #: app/models/pgp_key.rb
 msgid "There is already a PGP key with the same fingerprint."
-msgstr ""
+msgstr "PGP кључ са истим отиском већ постоји."
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
@@ -13337,42 +13324,74 @@ msgid ""
 msgstr ""
 "Нема снимљене конфигурације за овај метод двофакторске аутентификације."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There is no valid PGP email recipient."
+msgstr "Без важећег примаоца PGP имејл поруке."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There is no valid PGP email signer."
+msgstr "Без важећег потписника PGP имејл поруке."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was an unknown PGP error."
+msgstr "Догодила се неочекивана PGP грешка."
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "There was no Knowledge Base created."
 msgstr "Чланак базе знања није додат."
 
 #: lib/secure_mailing/pgp/security_options.rb
-#, fuzzy
-#| msgid "The page was not found"
 msgid "There was no PGP key found."
-msgstr "Страна није пронађена"
+msgstr "Није пронађен PGP кључ."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "The page was not found"
 msgid "There was no certificate found."
-msgstr "Страна није пронађена"
+msgstr "Није пронађен сертификат."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was no public PGP key found."
+msgstr "Није пронађен јавни PGP кључ."
 
 #: lib/secure_mailing/backend/handler_security_options.rb
-#, fuzzy
-#| msgid "No recipient found."
 msgid "There was no recipient found."
 msgstr "Није пронађен прималац."
 
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was no secret PGP key found."
+msgstr "Није пронађен тајни PGP кључ."
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "There was no valid OpenPGP data found."
+msgstr "Нису пронађени важећи OpenPGP подаци."
+
 #: lib/secure_mailing/pgp/security_options.rb
 msgid "There were PGP keys found for %s, but at least one of them has expired."
-msgstr ""
+msgstr "Пронађени PGP кључеви за %s, али најмање један од њих је истекао."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "Certificates found for %s, but expired."
 msgid ""
-"There were certificates found for %s, but at least one of them has expired."
-msgstr "Пронађени сертификати за %s, али су истекли."
+"There were certificates found for %s, but at least one of them is not valid "
+"yet or has expired."
+msgstr ""
+"Пронађени сертификати за %s, али најмање један од њих није још важећи или је "
+"истекао."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
 msgstr "Апликације трећег лица"
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"This PGP email does not have exactly two body parts for PGP mails as "
+"mandated by RFC 3156."
+msgstr ""
+"Ова PGP имејл порука нема два обавезна дела како је предвиђено према RFC "
+"3156."
+
+#: lib/secure_mailing/pgp/tool/error/handler.rb
+msgid ""
+"This PGP email was encrypted with a potentially unknown encryption algorithm."
+msgstr "Ова PGP имејл порука је потенцијално шифрована непознатим алгоритмом."
 
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
@@ -13569,7 +13588,7 @@ msgstr ""
 
 #: app/controllers/integration/pgp_controller.rb
 msgid "This is not a private PGP key."
-msgstr ""
+msgstr "Ово није тајни PGP кључ."
 
 #: app/models/channel/email_parser.rb
 msgid ""
@@ -13590,6 +13609,10 @@ msgstr ""
 "Није могуће приказати ову поруку услед проблема са HTML обрадом. Преузмите "
 "изворну поруку испод и отворите је у имејл клијенту ако и даље желите да је "
 "прегледате."
+
+#: lib/secure_mailing/smime/incoming.rb
+msgid "This message was not signed by its sender."
+msgstr "Ова порука није потписана од стране пошиљаоца."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "This might take some time during which the system can't be used."
@@ -13737,6 +13760,10 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Ticket Conditions Expert Mode"
 msgstr "Стручни режим услова тикета"
+
+#: db/seeds/settings.rb
+msgid "Ticket Conditions Regular Expression Operators"
+msgstr "Оператори регуларних израза услова тикета"
 
 #: app/models/report.rb
 msgid "Ticket Count"
@@ -14071,6 +14098,7 @@ msgstr "До"
 msgid "Time"
 msgstr "Време"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: db/seeds/permissions.rb db/seeds/settings.rb
@@ -14319,6 +14347,18 @@ msgstr "Тема"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Topics"
 msgstr "Теме"
+
+#: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
+#, fuzzy
+#| msgid "Total: %s"
+msgid "Total"
+msgstr "Укупно: %s"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+#, fuzzy
+#| msgid "Accounted Time"
+msgid "Total Accounted Time"
+msgstr "Обрачунато време"
 
 #: db/seeds/settings.rb
 msgid "Total display of the number of objects in a grouping."
@@ -14570,12 +14610,6 @@ msgstr "Јединица"
 msgid "Unknown error"
 msgstr "Непозната грешка"
 
-#: lib/secure_mailing/pgp/tool/error.rb
-#, fuzzy
-#| msgid "Unknown error"
-msgid "Unknown error."
-msgstr "Непозната грешка"
-
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid ""
 "Unless you already have it, install one of the following authenticator apps "
@@ -14623,7 +14657,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Update"
-msgstr "Измена"
+msgstr "Освежи"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Update Database"
@@ -14830,13 +14864,11 @@ msgstr "Неуспешно отпремање"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Upload Private Key"
-msgstr "Отпреми приватан кључ"
+msgstr "Отпреми тајни кључ"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-#, fuzzy
-#| msgid "Upload"
 msgid "Upload key"
-msgstr "Отпреми"
+msgstr "Отпреми кључ"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
@@ -14855,6 +14887,8 @@ msgid ""
 "Use 'with_private_keyring' to create a private keyring or set @gnupg_home "
 "before calling gpg."
 msgstr ""
+"Користи 'with_private_keyring' за креирање тајног скупа кључева или подеси "
+"@gnupg_home пре позивања gpg."
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -15793,10 +15827,6 @@ msgstr ""
 "Можете променити позадински модул нових прилога чак и на систему који је већ "
 "у продукцији без било каквог губитка података."
 
-#: app/assets/javascripts/app/models/postmaster_filter.coffee
-msgid "You can use regular expression by using \"regex:your_reg_exp\"."
-msgstr "Можете користити регуларне изразе са „regex:your_reg_exp”."
-
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "You can use the following script to post the data to %s."
 msgstr "Можете користити следећу скрипту за слање података %s."
@@ -16152,11 +16182,13 @@ msgid "admin"
 msgstr "администратор"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "after (absolute)"
 msgstr "након (апсолутно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "after (relative)"
 msgstr "након (релативно)"
 
@@ -16208,11 +16240,13 @@ msgid "auto select"
 msgstr "аутоматски избор"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "before (absolute)"
 msgstr "пре (апсолутно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "before (relative)"
 msgstr "пре (релативно)"
 
@@ -16299,10 +16333,12 @@ msgid "contains not"
 msgstr "не садржи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "contains one"
 msgstr "садржи једно"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "contains one not"
 msgstr "не садржи једно"
 
@@ -16410,6 +16446,11 @@ msgstr "не дозвољава датуме у прошлости"
 msgid "does not exist"
 msgstr "не постоји"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "does not match regex"
+msgstr "не подудара се са регуларним изразом"
+
 msgid "doesn't match %{attribute}"
 msgstr "не подудара се са %{attribute}"
 
@@ -16470,9 +16511,14 @@ msgstr "приложено"
 msgid "enclosure"
 msgstr "прилог"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "ends with"
 msgstr "завршава са"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "ends with one of"
+msgstr "завршава се са једним од"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
@@ -16537,12 +16583,13 @@ msgstr "од"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "from (relative)"
 msgstr "од (релативно)"
 
 #: app/controllers/integration/pgp_controller.rb
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
-msgstr ""
+msgstr "Обавезан је gpg (GnuPG) 2.2.0 или новије верзије"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "h"
@@ -16707,6 +16754,11 @@ msgid "is already used"
 msgstr "већ се користи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "is any of"
+msgstr "је један од"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
 msgstr "је у току радног времена"
 
@@ -16724,6 +16776,11 @@ msgstr "је последњи налог са администраторским
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr "је дуже од дозвољене дужине %{maxlength}"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "is none of"
+msgstr "није ниједан од"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -16760,6 +16817,7 @@ msgstr "је обавезно али недостаје"
 msgid "is reserved"
 msgstr "је резервисано"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
 msgstr "је постављено"
@@ -16835,6 +16893,11 @@ msgstr "да се један модул подудара"
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 msgid "matches found"
 msgstr "пронађени резултати"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "matches regex"
+msgstr "подудара се са регуларним изразом"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
@@ -16951,6 +17014,7 @@ msgstr "без јединице"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/chat_list.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/user_list.jst.eco
@@ -16967,6 +17031,7 @@ msgstr "празно"
 msgid "not reached"
 msgstr "није достигнуто"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "not set"
 msgstr "није постављено"
@@ -17057,14 +17122,6 @@ msgstr "достигнуто"
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
 msgstr "шифри за опоравак"
-
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-msgid "regex match"
-msgstr "регуларни израз се подудара"
-
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-msgid "regex mismatch"
-msgstr "регуларни израз се не подудара"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "relative"
@@ -17161,6 +17218,7 @@ msgstr "прикажи"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/user_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
@@ -17216,11 +17274,16 @@ msgstr "конкретан корисник"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee
 msgid "split"
-msgstr "подели"
+msgstr "раздели"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "starts with"
 msgstr "почиње са"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "starts with one of"
+msgstr "почиње са једним од"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
@@ -17258,6 +17321,7 @@ msgstr "ticket.customer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "till (relative)"
 msgstr "до (релативно)"
 
@@ -17271,6 +17335,7 @@ msgstr "за повратак на почетну страну."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "today"
@@ -17340,11 +17405,13 @@ msgstr "биће обрисано"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "within last (relative)"
 msgstr "у последњих (релативно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "within next (relative)"
 msgstr "у следећих (релативно)"
 
@@ -17399,6 +17466,54 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "You can use regular expression by using \"regex:your_reg_exp\"."
+#~ msgstr "Можете користити регуларне изразе са „regex:your_reg_exp”."
+
+#~ msgid "regex match"
+#~ msgstr "регуларни израз се подудара"
+
+#~ msgid "regex mismatch"
+#~ msgstr "регуларни израз се не подудара"
+
+#~ msgid "Signature key expired."
+#~ msgstr "Истекао кључ потписа."
+
+#~ msgid "Invalid recipient."
+#~ msgstr "Неисправан прималац."
+
+#~ msgid "Invalid signer."
+#~ msgstr "Неисправан потписник."
+
+#~ msgid "Key expired."
+#~ msgstr "Истекао кључ."
+
+#~ msgid "Key revoked."
+#~ msgstr "Опозван кључ."
+
+#~ msgid "No passphrase given."
+#~ msgstr "Није приложена лозинка."
+
+#~ msgid "No public key found."
+#~ msgstr "Није пронађен јавни кључ."
+
+#~ msgid "No secret key found."
+#~ msgstr "Није пронађен тајни кључ."
+
+#~ msgid "No valid signer."
+#~ msgstr "Неисправан потписник."
+
+#~ msgid "RFC 3156 first part not a valid version part for PGP mails."
+#~ msgstr "Први део RFC 3156 није важећа верзија за PGP имејл поруке."
+
+#~ msgid "RFC 3156 incorrect mime type for encrypted part."
+#~ msgstr "RFC 3156 неисправан MIME тип шифрованог дела."
+
+#~ msgid "Signature invalid."
+#~ msgstr "Неисправан потпис."
+
+#~ msgid "Unknown error."
+#~ msgstr "Непозната грешка."
 
 #~ msgid "Certificate for %s found."
 #~ msgstr "Пронађен серфикат за %s."
