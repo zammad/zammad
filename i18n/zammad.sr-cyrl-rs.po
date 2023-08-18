@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-07-04 01:05+0000\n"
+"PO-Revision-Date: 2023-08-10 01:07+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/sr_Cyrl/>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1053,7 +1053,7 @@ msgstr "Активно"
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco
 msgid "Active Agents"
-msgstr "Активних оператера"
+msgstr "Активни оператери"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Activity"
@@ -1119,7 +1119,7 @@ msgstr "Додај везу"
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Private Key"
-msgstr "Додај приватни кључ"
+msgstr "Додај тајни кључ"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -2440,7 +2440,7 @@ msgstr "Није било могуће наћи сертификат за про
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
-msgstr "Сертификати и приватни кључеви"
+msgstr "Сертификати и тајни кључеви"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
@@ -3088,12 +3088,12 @@ msgstr "Настави сесију"
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Continue to desktop"
-msgstr "Настави на десктоп"
+msgstr "Настави на основни приказ"
 
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Continue to mobile"
-msgstr "Настави на мобилно"
+msgstr "Настави на мобилни приказ"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
@@ -3170,7 +3170,7 @@ msgstr "Земља"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
-msgstr "Додавање"
+msgstr "Додај"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "Create Admin"
@@ -4654,7 +4654,7 @@ msgstr "Дизајнер"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 msgid "Desktop"
-msgstr "Рачунар"
+msgstr "Основни"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -4876,7 +4876,7 @@ msgstr "Преузми сертификат"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Download Private Key"
-msgstr "Преузми приватан кључ"
+msgstr "Преузми тајни кључ"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download and install the %s Migration Plugin on your %s instance."
@@ -4971,7 +4971,7 @@ msgstr "Мења"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 msgid "Editing on Desktop"
-msgstr "Мења на рачунару"
+msgstr "Мења у основном приказу"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
@@ -5421,7 +5421,7 @@ msgstr "Унеси особу или организацију/фирму"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Enter Private Key Secret"
-msgstr "Унеси шифру приватног кључа"
+msgstr "Унеси шифру тајног кључа"
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 msgid "Enter Title…"
@@ -6976,7 +6976,7 @@ msgstr "Укључени прегледи тикета"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
-msgstr "Укључује и приватни кључ."
+msgstr "Укључује и тајни кључ."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -8634,6 +8634,7 @@ msgid "No file formats allowed."
 msgstr "Нема дозвољених формата датотека."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "No filter was configured."
 msgstr "Није подешен филтер."
 
@@ -9358,7 +9359,7 @@ msgstr "Налепи сертификат"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Paste Private Key"
-msgstr "Налепи приватан кључ"
+msgstr "Налепи тајни кључ"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Paste from clipboard"
@@ -9687,7 +9688,7 @@ msgstr "Иконице приоритета у прегледима"
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Private key for decryption could not be found."
-msgstr "Није било могуће пронаћи приватни кључ за дешифровање."
+msgstr "Није било могуће пронаћи тајни кључ за дешифровање."
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
@@ -9976,7 +9977,7 @@ msgstr "Поново отворени"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "Reopening rate"
-msgstr "Проценат поново отворених"
+msgstr "Стопа поново отворених"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -11785,7 +11786,7 @@ msgstr ""
 
 #: app/models/smime_certificate.rb
 msgid "The certificate for this private key could not be found."
-msgstr "Није пронађен сертификат за овај приватни кључ."
+msgstr "Није пронађен сертификат за овај тајни кључ."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid ""
@@ -13590,7 +13591,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Update"
-msgstr "Измена"
+msgstr "Освежи"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Update Database"
@@ -13793,7 +13794,7 @@ msgstr "Неуспешно отпремање"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Upload Private Key"
-msgstr "Отпреми приватан кључ"
+msgstr "Отпреми тајни кључ"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
@@ -16117,7 +16118,7 @@ msgstr "конкретан корисник"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee
 msgid "split"
-msgstr "подели"
+msgstr "раздели"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"

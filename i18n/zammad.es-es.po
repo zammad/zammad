@@ -8764,6 +8764,7 @@ msgid "No file formats allowed."
 msgstr "No se permite ningún formato de archivo."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "No filter was configured."
 msgstr "No hay filtros configurados."
 

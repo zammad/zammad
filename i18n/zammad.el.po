@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-07-07 01:05+0000\n"
+"PO-Revision-Date: 2023-08-03 05:57+0000\n"
 "Last-Translator: Elias Grinias <elgrinias@gmail.com>\n"
-"Language-Team: Greek <https://translations.zammad.org/projects/zammad/"
-"zammad-stable/el/>\n"
+"Language-Team: Greek <https://translations.zammad.org/projects/zammad/zammad-"
+"stable/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.1\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -56,6 +56,11 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"H \"Βάση Δεδομένων\" αποθηκεύει  στη βάση δεδομένων (δεν συνιστάται για την "
+"αποθήκευση μεγάλου όγκου δεδομένων). Το \"Σύστημα Αρχείων\" αποθηκεύει  τα "
+"δεδομένα στο σύστημα αρχείων του δίσκου σας. Μπορείτε να εναλλάσετε αυτές "
+"τις δύο δομικές ενότητες, ακόμα και σε ένα σύστημα που βρίσκεται ήδη σε "
+"παραγωγική λειτουργεία, χωρίς απώλεια δεδομένων."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -73,6 +78,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Δημιουργήθηκε από την/τον #{current_user.longname} "
+"στις #{ticket.updated_at}_\n"
+"* Ομάδα: #{ticket.group.name}\n"
+"* Ιδιοκτήτης: #{ticket.owner.fullname}\n"
+"* Κατάσταση: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -88,6 +104,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Αναπροσαρμόστηκε στις #{ticket.escalation_at}_\n"
+"Το αίτημα (#{ticket.title}) της/του \"#{ticket.customer.longname}\" έχει "
+"αναπροσαρμοστεί από τις \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -104,6 +129,16 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Τελευταία ενημέρωση στις #{ticket.updated_at}_\n"
+"* Ομάδα: #{ticket.group.name}\n"
+"* Ιδιοκτήτης: #{ticket.owner.fullname}\n"
+"* Κατάσταση: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -247,8 +282,8 @@ msgstr ""
 "<div>Η συσκευή σας προστέθηκε στη λίστα των συσκευών, την οποία μπορείτε να "
 "δείτε εδώ:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Εάν η σύνδεση δεν έγινε από εσάς, παρακαλούμε όπως αφαιρέσετε τη "
 "συσκευή, αλλάξετε τον κωδικό του λογαριασμού σας και επικοινωνήσετε με τον "
@@ -258,22 +293,18 @@ msgstr ""
 "<div>Από την Ομάδα #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
-#, fuzzy
-#| msgid "Confirm"
 msgid "%s (confirm)"
-msgstr "Επιβεβαίωση"
+msgstr "%s (επιβεβαίωση)"
 
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
-msgstr ""
+msgstr "%s (άγνωστο)"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#, fuzzy
-#| msgid "%s Api Token"
 msgid "%s API Token"
 msgstr "%s Api Token"
 
@@ -324,15 +355,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
-#, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created article for |%s|"
 msgstr "%s δημιουργήθηκε άρθρο για |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
-#, fuzzy
-#| msgid "%s created data privacy task to delete user id |%s|"
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 "%s δημιουργήθηκε εργασία απορρήτου δεδομένων για να διαγραφεί το "
@@ -340,38 +367,28 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
-msgstr "%s δημιουργία ομάδας |%s|"
+msgstr "%s δημιούργησε την ομάδα |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/organization.ts
-#, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
-msgstr "%s δημιουργία οργάνωσης |%s|"
+msgstr "Ο/Η %s δημιούργησε τον οργανισμό |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created role |%s|"
-msgstr "%s δημιουργία ομάδας |%s|"
+msgstr "Ο/Η %s δημιούργησε την ομάδα |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
-#, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created ticket |%s|"
-msgstr "%s δημιουργία αιτήματος |%s|"
+msgstr "Η/Ο %s δημιούργησε το αίτημα |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
-#, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
-msgstr "%s δημιουργία χρήστη |%s|"
+msgstr "Η/Ο %s δημιούργησε τον χρήστη |%s|"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -386,7 +403,7 @@ msgstr "%s ημέρες πριν"
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
-msgstr "%s τέλος μετάβασης σε |%s|!"
+msgstr "%s τελείωσε την μετάβαση σε |%s|!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -419,11 +436,11 @@ msgstr "%s μήνες πριν"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
-msgstr "%s Αντικείμενο(α) έχει/ουν δημιουργηθεί."
+msgstr "%s Αντικείμενο(α) έχει(ουν) δημιουργηθεί."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been updated."
-msgstr "%s Αντικείμενο(α) έχει/ουν ενημερωθεί."
+msgstr "%s Αντικείμενο(α) έχει(ουν) ενημερωθεί."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) were deleted."
@@ -442,10 +459,8 @@ msgid "%s object(s) will be updated."
 msgstr "%s Αντικείμενο(α) ενημερώνεται(ονται)."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "%s of your tickets are currently in process."
 msgid "%s of my tickets are currently in process."
-msgstr "%s of your tickets are currently in process."
+msgstr "%s των αιτημάτων  μου  βρίσκονται τώρα υπό επεξεργασία."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
@@ -8932,6 +8947,7 @@ msgid "No file formats allowed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #, fuzzy
 #| msgid "Not configured"
 msgid "No filter was configured."

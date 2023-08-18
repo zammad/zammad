@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-07-27 09:52+0000\n"
-"Last-Translator: Zhilin Ruslan <x-th-unicorn@hotmail.com>\n"
+"PO-Revision-Date: 2023-08-03 05:57+0000\n"
+"Last-Translator: Falkonio <falkovds@gmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
@@ -79,9 +79,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Создана пользователем #{current_user.longname} "
-"в #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Создана пользователем #{current_user.longname} в "
+"#{ticket.updated_at}_\n"
 "* Группа: #{ticket.group.name}\n"
 "* Владелец: #{ticket.owner.fullname}\n"
 "* Состояние: #{t(ticket.state.name)}\n"
@@ -130,8 +130,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Последнее обновление в #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Последнее обновление в #{ticket.updated_at}_\n"
 "* Группа: #{ticket.group.name}\n"
 "* Владелец: #{ticket.owner.fullname}\n"
 "* Состояние: #{t(ticket.state.name)}\n"
@@ -183,9 +183,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Обновлена пользователем #{current_user."
-"longname} в #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Обновлена пользователем #{current_user.longname} в "
+"#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -630,7 +630,7 @@ msgstr "%s% были повторно открыты"
 
 #: app/models/concerns/has_group_relation_definition.rb
 msgid "%{model} can have full or granular access to group"
-msgstr ""
+msgstr "%{model} может иметь полный или ограниченный доступ к группе"
 
 #: app/models/object_manager/attribute.rb
 msgid "%{name} already exists"
@@ -638,7 +638,7 @@ msgstr "%{name} уже существует!"
 
 #: app/models/object_manager/attribute.rb
 msgid "%{name} is a reserved word"
-msgstr ""
+msgstr "%{name} — зарезервированное слово"
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
 msgid "(state: %s)"
@@ -881,6 +881,8 @@ msgid ""
 "A webhook can be fired by triggers and schedulers, don't forget to define "
 "them!"
 msgstr ""
+"Веб-перехватчик (webhook) может быть запущен триггерами и планировщиками, не "
+"забудьте их определить!"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -1207,7 +1209,7 @@ msgstr "Добавить заголовок второго уровня"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Add selected values"
-msgstr ""
+msgstr "Добавить выбранные значения"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -1299,8 +1301,8 @@ msgstr ""
 "в адресную строку браузера), чтобы продолжить:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}</a></div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Эта ссылка ведет на страницу, где вы можете войти в систему.</div>\n"
 "<br>\n"
@@ -1363,7 +1365,7 @@ msgstr "Имя агента + Разделитель «От» + Отобража
 
 #: app/assets/javascripts/app/controllers/organization.coffee
 msgid "Agent and customer users can be grouped into organizations."
-msgstr ""
+msgstr "Агенты и клиенты могут быть объединены в организации."
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -1461,7 +1463,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
-msgstr ""
+msgstr "Всегда"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1615,7 +1617,7 @@ msgstr "Применить общий черновик"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Apply current defaults to all agents"
-msgstr ""
+msgstr "Применить текущие настройки по умолчанию ко всем агентам"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1690,6 +1692,8 @@ msgid ""
 "Are you sure? The agent default notifications settings will be reset to the "
 "system default."
 msgstr ""
+"Вы уверены? Настройки уведомлений агента по умолчанию будут сброшены на "
+"системные значения по умолчанию."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
@@ -1900,10 +1904,8 @@ msgstr "Атрибуты"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Attributes"
 msgid "Attributes to compare"
-msgstr "Атрибуты"
+msgstr "Атрибуты для сравнения"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1959,16 +1961,12 @@ msgid "Auto Assignment"
 msgstr "Автоматическое назначение"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Auto Assignment"
 msgid "Auto Assignment Ignored Users"
-msgstr "Автоматическое назначение"
+msgstr "Пользователи игнорируемые автоматическим назначением"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Auto Assignment"
 msgid "Auto Assignment Selector"
-msgstr "Автоматическое назначение"
+msgstr "Отборщик автоматического назначения"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
 msgid "Auto Wizard"
@@ -2443,7 +2441,7 @@ msgstr ""
 
 #: app/models/sla.rb
 msgid "Cannot have both response time and update time."
-msgstr ""
+msgstr "Не может иметь одновременно время отклика и время обновления."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
@@ -2463,10 +2461,8 @@ msgid "Category page layout"
 msgstr "Компоновка страницы категории"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
-#, fuzzy
-#| msgid "Duration"
 msgid "Caution!"
-msgstr "Внимание!"
+msgstr "Осторожно!"
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
@@ -2507,10 +2503,8 @@ msgid "Change customer"
 msgstr "Изменить клиента"
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Change order"
 msgid "Change date"
-msgstr "Изменить заказ"
+msgstr "Изменить дату"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
@@ -2680,10 +2674,8 @@ msgid "Child"
 msgstr "Потомок"
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Close tab"
 msgid "Choose date"
-msgstr "Закрыть вкладку"
+msgstr "Выберите дату"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
@@ -2914,8 +2906,6 @@ msgid "Conditions for affected objects"
 msgstr "Условия отбора объектов"
 
 #: app/assets/javascripts/app/models/overview.coffee
-#, fuzzy
-#| msgid "Conditions for shown Tickets"
 msgid "Conditions for shown tickets"
 msgstr "Условия для отображения заявок"
 
@@ -2957,10 +2947,8 @@ msgid "Configure Basic Settings"
 msgstr "Настройка основных параметров"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
-#, fuzzy
-#| msgid "Config"
 msgid "Confirm"
-msgstr "Настройки"
+msgstr "Подтвердить"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
@@ -2973,21 +2961,6 @@ msgstr "Подтвердить слияние"
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Confirm your #{config.product_name} account, #{user.firstname} #{user."
-#| "lastname}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>Confirm your email address to complete your #{config.product_name} "
-#| "account. It's easy, just click the link below.</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-#| "name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
-#| "a></div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Confirm your #{config.product_name} account, #{user.firstname} #{user."
 "lastname}\n"
@@ -3145,17 +3118,13 @@ msgstr "Продолжение сессии"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#, fuzzy
-#| msgid "Continue to desktop app"
 msgid "Continue to desktop"
-msgstr "Перейти к настольному приложению"
+msgstr "Продолжить на ПК"
 
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee
 #: app/assets/javascripts/app/views/login.jst.eco
-#, fuzzy
-#| msgid "Continue to desktop app"
 msgid "Continue to mobile"
-msgstr "Перейти к настольному приложению"
+msgstr "Продолжить на мобильном устройстве"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
@@ -3522,10 +3491,8 @@ msgid "Custom"
 msgstr "Пользовательский"
 
 #: app/assets/javascripts/app/models/webhook.coffee
-#, fuzzy
-#| msgid "Example Payload"
 msgid "Custom Payload"
-msgstr "Пример полезной нагрузки (Payload)"
+msgstr "Настраиваемая полезная нагрузка (Payload)"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -3697,20 +3664,16 @@ msgid "Default Behavior"
 msgstr "Поведение по умолчанию"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
-#, fuzzy
-#| msgid "Disable Notifications"
 msgid "Default Notifications"
-msgstr "Отключить уведомления"
+msgstr "Уведомления по умолчанию"
 
 #: db/seeds/settings.rb
 msgid "Default Screen"
 msgstr "Экран по умолчанию"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Default Ticket Agent Notifications"
-msgstr "Блокировка уведомлений"
+msgstr "Уведомления по умолчанию для агента"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
@@ -3790,10 +3753,8 @@ msgstr ""
 "уведомления."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the default visibility for new notes."
 msgid "Define the default agent notifications for new users."
-msgstr "Определяет видимость по умолчанию для новых заметок."
+msgstr "Определяет уведомления агента по умолчанию, для новых пользователей."
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
@@ -4439,10 +4400,8 @@ msgstr ""
 "заголовка веб-браузера."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the karma levels."
 msgid "Defines the permission level used for lookups."
-msgstr "Определяет уровни кармы."
+msgstr "Определяет уровень разрешений, используемый для поиска."
 
 #: db/seeds/settings.rb
 msgid "Defines the port of the websocket server."
@@ -4513,12 +4472,8 @@ msgid "Defines the tab behaviour after a ticket action."
 msgstr "Определяет поведение вкладки после действия с заявкой."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the ticket states used for lookups."
-msgstr ""
-"Определяет серверную часть для запросов изображений пользователей и "
-"организаций."
+msgstr "Определяет состояния заявок, используемые для поиска."
 
 #: db/seeds/settings.rb
 msgid "Defines the timeframe during which a self-created note can be deleted."
@@ -4555,10 +4510,10 @@ msgstr ""
 "CTI."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the transaction backend to execute triggers."
 msgid "Defines the transaction backend which executes time based triggers."
-msgstr "Определяет серверную операцию для выполнения триггеров."
+msgstr ""
+"Определяет серверную операцию (Backend), которая выполняет триггеры, "
+"основанные на времени."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4580,11 +4535,15 @@ msgstr ""
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
+"Определяет предупреждающее сообщение, которое отображается при наличии "
+"соответствующей заявки."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
+"Определяет заголовок предупреждения, который отображается при наличии "
+"соответствующей заявки."
 
 #: db/seeds/settings.rb
 msgid "Defines transaction backend."
@@ -4595,15 +4554,19 @@ msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
 msgstr ""
+"Определяет, будет ли отображаться список заявок, если есть похожие заявки."
 
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
+"Определяет, будет ли отображаться список заявок, если есть похожие заявки."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
+"Определяет, какие роли пользователей получат предупреждение в случае "
+"совпадения заявок."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4793,10 +4756,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enable Ticket creation"
 msgid "Detect Duplicate Ticket Creation"
-msgstr "Включить создание заявок"
+msgstr "Обнаружение создания дубликатов заявок"
 
 #: db/seeds/settings.rb
 msgid "Developer System"
@@ -4862,6 +4823,9 @@ msgid ""
 "Disabling the notifications from all groups will turn off the limit. "
 "Instead, to disable the notifications use the settings above."
 msgstr ""
+"Отключение уведомлений от всех групп приведет к отключению ограничений. "
+"Вместо этого, чтобы отключить уведомления, воспользуйтесь приведенными выше "
+"настройками."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -4873,10 +4837,8 @@ msgid "Discard Changes"
 msgstr "Отменить изменения"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "Discard article"
-msgstr "Отменить изменения"
+msgstr "Удалить статью"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
@@ -4884,8 +4846,6 @@ msgstr "Отменить изменения"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "Discard changes"
 msgstr "Отменить изменения"
 
@@ -5031,10 +4991,8 @@ msgstr ""
 "следующих 30 секунд."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
-#, fuzzy
-#| msgid "Application"
 msgid "Duplicate Detection"
-msgstr "Приложение"
+msgstr "Обнаружение дубликатов"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
@@ -5215,6 +5173,7 @@ msgstr "Исходящая электронная почта"
 #: app/models/user.rb
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
+"Адрес электронной почты '%{email}' уже используется другим пользователем."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Email could not be verified. Please contact your administrator."
@@ -5386,6 +5345,8 @@ msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
+"Включает предупреждение пользователям при создании заявки, если есть похожие "
+"заявки с такими же атрибутами."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -6376,7 +6337,7 @@ msgstr "Назад"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 msgid "Go home"
-msgstr ""
+msgstr "Перейти на главную"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -6530,16 +6491,12 @@ msgid "HTML Sanitizer Processing Timeout"
 msgstr "Истекло время обработки очистки HTML"
 
 #: app/assets/javascripts/app/models/webhook.coffee
-#, fuzzy
-#| msgid "Authentication"
 msgid "HTTP Basic Authentication Password"
-msgstr "Аутентификация"
+msgstr "Пароль для базовой HTTP-аутентификации"
 
 #: app/assets/javascripts/app/models/webhook.coffee
-#, fuzzy
-#| msgid "Authentication"
 msgid "HTTP Basic Authentication Username"
-msgstr "Аутентификация"
+msgstr "Имя пользователя для базовой HTTP-аутентификации"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
@@ -6558,10 +6515,8 @@ msgid "Has processed"
 msgstr "Обработано"
 
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
-#, fuzzy
-#| msgid "%s subdomain"
 msgid "Has submenu"
-msgstr "%s поддомен"
+msgstr "Содержит подменю"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Has ticket open in tabs, but is not actively looking at the ticket."
@@ -6627,6 +6582,8 @@ msgid ""
 "Here you can create new tickets, customers and organizations (depending on "
 "your configured permissions)."
 msgstr ""
+"Здесь вы можете создавать новые заявки, клиентов и организации (в "
+"зависимости от настроенных вами разрешений)."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid "Here you can create one."
@@ -6795,12 +6752,8 @@ msgstr ""
 "информации (IDP SSO)"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "IDP SSO target URL"
 msgid "IDP Single Logout target URL"
-msgstr ""
-"Целевой URL системы единого входа для поставщика идентификационной "
-"информации (IDP SSO)"
+msgstr "Целевой URL-адрес единого выхода из IDP"
 
 #: db/seeds/settings.rb
 msgid "IDP certificate"
@@ -7253,10 +7206,8 @@ msgid "Internal"
 msgstr "Внутренний"
 
 #: app/frontend/shared/errors/useErrorHandler.ts
-#, fuzzy
-#| msgid "Internal"
 msgid "Internal Error"
-msgstr "Внутренний"
+msgstr "Внутренняя ошибка"
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
 msgid "Internal Knowledge Base feed:"
@@ -7314,7 +7265,7 @@ msgstr "Получен неверный идентификатор клиент�
 
 #: app/models/user.rb
 msgid "Invalid email '%{email}'"
-msgstr ""
+msgstr "Неверно указан email '%{email}'"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
@@ -7426,7 +7377,7 @@ msgstr ""
 "\n"
 "<div>Здравствуйте #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Я (#{current_user.firstname} #{current_user.lastname}) приглашаю вас в "
+"<div>Я (#{current_user.firstname} #{current_user.lastname}) приглашаю Вас в "
 "#{config.product_name} - нашу платформу поддержки клиентов.</div>\n"
 "<br>\n"
 "<div>Нажмите <a href=\"#{config.http_type}://#{config.fqdn}/"
@@ -8845,6 +8796,7 @@ msgid "No file formats allowed."
 msgstr "Недопустимые форматы файлов."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "No filter was configured."
 msgstr "Фильтр не настроен."
 

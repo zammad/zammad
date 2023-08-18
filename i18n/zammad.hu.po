@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-06-19 08:52+0000\n"
+"PO-Revision-Date: 2023-08-17 01:07+0000\n"
 "Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -8784,6 +8784,7 @@ msgid "No file formats allowed."
 msgstr "Nem engedélyezett fájlformátum."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "No filter was configured."
 msgstr "Nincs szűrő konfigurálva."
 
@@ -12262,7 +12263,7 @@ msgstr "A megadott végpont érvénytelen."
 
 #: app/models/postmaster_filter.rb
 msgid "The provided match operator is missing or invalid."
-msgstr ""
+msgstr "A megadott egyeztető operátor hiányzik vagy érvénytelen."
 
 #: app/models/webhook.rb
 msgid "The provided payload is invalid. Please check your syntax."

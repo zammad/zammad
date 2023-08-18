@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-07-25 01:05+0000\n"
+"PO-Revision-Date: 2023-08-03 05:57+0000\n"
 "Last-Translator: \"Decio E. Silva\" <decio@verinatec.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
@@ -536,8 +536,8 @@ msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
-"%s é recomendado fazer uso do OAuth. %s anunciou que vai encerrar o suporte "
-"de autenticação básica no em breve."
+"%s recomenda o uso do OAuth. %s anunciou que vai remover o suporte à "
+"Autenticação Básica no futuro."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
@@ -8699,6 +8699,7 @@ msgid "No file formats allowed."
 msgstr "Nenhum formato de arquivo permitido."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "No filter was configured."
 msgstr "Nenhum filtro foi configurado."
 

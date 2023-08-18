@@ -8986,6 +8986,7 @@ msgid "No file formats allowed."
 msgstr "Aucun format de fichiers autorisé."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "No filter was configured."
 msgstr "Aucun filtre n'a été configuré."
 
@@ -12732,7 +12733,8 @@ msgstr "La requête n'a pas pu être traitée."
 #: lib/validations/verify_perform_rules_validator.rb
 #, fuzzy
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
-msgstr "La valeur du champ '%{attribute}' pour %{key}, %{inner} est manquante !"
+msgstr ""
+"La valeur du champ '%{attribute}' pour %{key}, %{inner} est manquante !"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."

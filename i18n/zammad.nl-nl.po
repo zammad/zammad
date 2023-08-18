@@ -8690,6 +8690,7 @@ msgid "No file formats allowed."
 msgstr "Geen bestandsformaten toegestaan."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "No filter was configured."
 msgstr "Er is geen filter ingesteld."
 
