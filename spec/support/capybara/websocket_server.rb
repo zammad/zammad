@@ -34,6 +34,10 @@ RSpec.configure do |config|
 
     # give thread time to terminate
     sleep 0.01 while websocket_server.status
+  rescue => e
+    # Handle any errors occuring within this hook, for example Net::ReadTimeout errors of the WS server.
+    #   Otherwise, they would not cause the retry to kick in, but abort the process.
+    example.example.set_exception(e)
   end
 
   def ensure_port_available!(port)
