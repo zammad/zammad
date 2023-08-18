@@ -113,5 +113,5 @@ class App.KnowledgeBaseSearchFieldWidget extends App.Controller
 
   startSearch: (query) ->
     @searchField
-      .val(query)
+      .val(decodeURIComponent(query))
       .trigger('input')
