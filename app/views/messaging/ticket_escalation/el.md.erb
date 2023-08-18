@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Αναπροσαρμόστηκε στις #{ticket.escalation_at}_
+Το αίτημα (#{ticket.title}) της/του "#{ticket.customer.longname}" έχει αναπροσαρμοστεί από τις "#{ticket.escalation_at}"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

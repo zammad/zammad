@@ -213,7 +213,7 @@ do(window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Jelikož jste nereagovali v posledních %s minutách, vaše konverzace s <strong>%s</strong> byla uzavřena.'
         'Start new conversation': 'Zahájit novou konverzaci'
         'Today': 'Dnes'
-        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': ''
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Omlouváme se, že musíte čekat déle, než je vhodné pro získání slotu. Prosím, zkuste to později, případně nám napište e-mail. Děkujeme!'
         'You are on waiting list position <strong>%s</strong>.': 'Jste <strong>%s</strong>. v pořadí na čekací listině.'
       'da':
         '<strong>Chat</strong> with us!': '<strong>Chat</strong> med os!'
@@ -467,6 +467,24 @@ do(window) ->
         'Today': 'Idag'
         'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Det tar tyvärr längre tid än förväntat att få en ledig plats. Försök igen senare eller skicka ett mejl till oss. Tack!'
         'You are on waiting list position <strong>%s</strong>.': 'Du är på väntelistan som position <strong>%s</strong>.'
+      'zh-cn':
+        '<strong>Chat</strong> with us!': '发起<strong>即时对话</strong>!'
+        'All colleagues are busy.': '所有同事都很忙。'
+        'Chat closed by %s': '对话被 %s 终止'
+        'Compose your message…': '编辑您的信息…'
+        'Connecting': '连接中'
+        'Connection lost': '连接丢失'
+        'Connection re-established': '正在重新建立连接'
+        'Offline': '离线'
+        'Online': '在线'
+        'Scroll down to see new messages': '向下滚动以查看新消息'
+        'Send': '发送'
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': ''
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': ''
+        'Start new conversation': '开始新的会话'
+        'Today': '今天'
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': ''
+        'You are on waiting list position <strong>%s</strong>.': '您目前的等候位置是第 <strong>%s</strong> 位.'
     # ZAMMAD_TRANSLATIONS_END
     sessionId: undefined
     scrolledToBottom: true
