@@ -241,7 +241,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
         else
           if attribute_name == 'out_of_office_replacement_id'
             query << "#{attribute} IN (?)"
-            bind_params.push User.find(block_condition[:value]).out_of_office_agent_of.pluck(:id)
+            bind_params.push User.where(id: Array.wrap(block_condition[:value])).map(&:out_of_office_agent_of).flatten.map(&:id)
           else
             if block_condition[:value].class != Array
               block_condition[:value] = [block_condition[:value]]
