@@ -8,6 +8,10 @@
 
   <p><%- @T('See your tickets from within your favorite calendar by adding the following URL to your calendar app.') %></p>
 
+<% if !@api_access: %>
+  <div class="alert alert--warning" role="alert"><%- @T('REST API access using the username/email address and password is currently disabled. Please contact your administrator.') %></div>
+<% end %>
+
   <label for="calendar-subscription-url"><%- @T('URL') %></label>
   <form class="form--flexibleWidth">
     <div class="form-group">

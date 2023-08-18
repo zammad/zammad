@@ -9021,6 +9021,10 @@ msgstr ""
 msgid "Queue already exists!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
+msgid "REST API access using the username/email address and password is currently disabled. Please contact your administrator."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
