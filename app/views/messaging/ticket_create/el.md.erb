@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Δημιουργήθηκε από την/τον #{current_user.longname} στις #{ticket.updated_at}_
+* Ομάδα: #{ticket.group.name}
+* Ιδιοκτήτης: #{ticket.owner.fullname}
+* Κατάσταση: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
