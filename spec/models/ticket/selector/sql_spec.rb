@@ -692,4 +692,32 @@ RSpec.describe Ticket::Selector::Sql do
     end
 
   end
+
+  describe 'Error 500 if overview with "out of office replacement" filter is set to "specific user" #4599' do
+    let(:agent)                 { create(:agent) }
+    let(:agent_ooo)             { create(:agent, :ooo, ooo_agent: agent_ooo_replacement) }
+    let(:agent_ooo_replacement) { create(:agent) }
+    let(:condition) do
+      {
+        'ticket.out_of_office_replacement_id': {
+          operator:         'is',
+          pre_condition:    'specific',
+          value:            [
+            agent_ooo_replacement.id.to_s,
+          ],
+          value_completion: ''
+        }
+      }
+    end
+
+    before do
+      agent_ooo
+    end
+
+    it 'calculates the out of office user ids for the out of office replacement agent' do
+      _, bind_params = Ticket.selector2sql(condition)
+
+      expect(bind_params.flatten).to include(agent_ooo.id)
+    end
+  end
 end
