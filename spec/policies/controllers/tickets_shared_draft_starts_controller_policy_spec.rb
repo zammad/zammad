@@ -36,6 +36,20 @@ describe Controllers::TicketsSharedDraftStartsControllerPolicy do
     let(:action_name) { :index }
 
     include_examples 'basic checks'
+
+    context 'when has access through roles' do
+      let(:role) do
+        role = create(:role, :agent)
+        role.group_names_access_map = {
+          Group.first.name => %w[full],
+        }
+        role
+      end
+
+      let(:user) { create(:agent, role_ids: [role.id]) }
+
+      it { is_expected.to permit_action(action_name) }
+    end
   end
 
   describe '#show?' do

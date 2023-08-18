@@ -28,6 +28,6 @@ class Controllers::TicketsSharedDraftStartsControllerPolicy < Controllers::Appli
   private
 
   def access?(_method)
-    user.permissions?('ticket.agent') && user.groups.access(:create).any?
+    user.permissions?('ticket.agent') && user.group_ids_access('create').present?
   end
 end
