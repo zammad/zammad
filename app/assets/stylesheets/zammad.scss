@@ -11880,7 +11880,8 @@ output {
   }
 
   .page-header {
-    margin: 15px 6px 5px;
+    margin: 15px 0 5px;
+    padding: 0 6px;
 
     @include phone {
       flex-wrap: wrap;
