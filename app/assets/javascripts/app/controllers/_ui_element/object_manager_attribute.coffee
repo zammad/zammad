@@ -648,6 +648,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
         return
       lastSelected = value
     )
+    @addOptionTranslate(item, params)
 
   @autocompletion: (item, localParams, params) ->
     configureAttributes = [
