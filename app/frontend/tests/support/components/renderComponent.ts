@@ -4,7 +4,7 @@ import type { Plugin, Ref } from 'vue'
 import { isRef, nextTick, ref, watchEffect, unref } from 'vue'
 import type { Router, RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
-import type { MountingOptions } from '@vue/test-utils'
+import type { ComponentMountingOptions } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import type { Matcher, RenderResult } from '@testing-library/vue'
 import { render } from '@testing-library/vue'
@@ -33,7 +33,8 @@ import { cleanupStores, initializeStore } from './initializeStore.ts'
 
 // TODO: some things can be handled differently: https://test-utils.vuejs.org/api/#config-global
 
-export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
+export interface ExtendedMountingOptions<Props>
+  extends ComponentMountingOptions<Props> {
   router?: boolean
   routerRoutes?: RouteRecordRaw[]
   store?: boolean

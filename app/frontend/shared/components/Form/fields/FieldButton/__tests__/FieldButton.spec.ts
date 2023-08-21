@@ -9,7 +9,7 @@ const wrapperParameters = {
   formField: true,
 }
 
-const renderButton = (options: ExtendedMountingOptions<any> = {}) => {
+const renderButton = (options: ExtendedMountingOptions<unknown> = {}) => {
   return renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
