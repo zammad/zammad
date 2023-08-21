@@ -252,9 +252,9 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     item.find("select[name='data_option::type']").on('change', (e) ->
       value = $(e.target).val()
       if value is 'url'
-        item.find('.js-inputLinkTemplate').hide()
+        inputLinkTemplate.hide('data_option::linktemplate', undefined, true)
       else
-        item.find('.js-inputLinkTemplate').show()
+        inputLinkTemplate.show('data_option::linktemplate')
     )
     item.find("select[name='data_option::type']").trigger('change')
 
@@ -702,4 +702,3 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
   @ensureOneOption: (item) ->
     return if $(item).find('tbody tr').length > 1
     @buildRow(item, {})
-
