@@ -7,6 +7,7 @@ import { computed, reactive, ref } from 'vue'
 import DraggableResizable from 'vue3-draggable-resizable'
 import log from '#shared/utils/log.ts'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
+import testFlags from '#shared/utils/testFlags.ts'
 
 const props = defineProps(nodeViewProps)
 
@@ -48,7 +49,13 @@ const dimensions = reactive({
 })
 
 const onLoadImage = (e: Event) => {
-  if (imageLoaded.value || needBase64Convert(src.value)) return
+  if (
+    imageLoaded.value ||
+    needBase64Convert(src.value) ||
+    props.editor.isDestroyed ||
+    !props.editor.isEditable
+  )
+    return
 
   const img = e.target as HTMLImageElement
   const { naturalWidth, naturalHeight } = img
@@ -57,6 +64,8 @@ const onLoadImage = (e: Event) => {
   dimensions.maxHeight = naturalHeight
   dimensions.maxWidth = naturalWidth
   imageLoaded.value = true
+
+  testFlags.set('editor.imageResized')
 }
 
 const stopResizing = ({ w, h }: { w: number; h: number }) => {

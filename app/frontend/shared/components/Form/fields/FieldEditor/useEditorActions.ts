@@ -3,9 +3,10 @@
 import { i18n } from '#shared/i18n.ts'
 import type { ChainedCommands } from '@tiptap/core'
 import type { Editor } from '@tiptap/vue-3'
-import { computed, onUnmounted } from 'vue'
+import { computed, nextTick, onUnmounted } from 'vue'
 import type { ShallowRef } from 'vue'
 
+import testFlags from '#shared/utils/testFlags.ts'
 import { PLUGIN_NAME as KnowledgeBaseMentionName } from './suggestions/KnowledgeBaseSuggestion.ts'
 import { PLUGIN_NAME as TextModuleMentionName } from './suggestions/TextModuleSuggestion.ts'
 import { PLUGIN_NAME as UserMentionName } from './suggestions/UserMention.ts'
@@ -111,6 +112,7 @@ export default function useEditorActions(
             )
             c.setImages(files).run()
             input.value = ''
+            nextTick(() => testFlags.set('editor.inlineImagesAdded'))
           }
           if (!VITE_TEST_MODE) input.click()
         }),

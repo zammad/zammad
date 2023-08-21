@@ -5,7 +5,15 @@ import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { Editor } from '@tiptap/vue-3'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
-import { computed, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
+import {
+  computed,
+  onMounted,
+  onUnmounted,
+  ref,
+  toRef,
+  watch,
+  nextTick,
+} from 'vue'
 import testFlags from '#shared/utils/testFlags.ts'
 import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
 import useValue from '../../composables/useValue.ts'
@@ -99,6 +107,7 @@ const loadFiles = (
     convertInlineImages(inlineImages, editor.view.dom).then((urls) => {
       if (editor?.isDestroyed) return
       editor?.commands.setImages(urls)
+      nextTick(() => testFlags.set('editor.inlineImagesLoaded'))
     })
   }
 
