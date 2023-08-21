@@ -12,6 +12,9 @@ class CustomerTicketCreate extends App.ControllerAppContent
 
   constructor: (params) ->
     super
+
+    @authenticateCheckRedirect()
+
     @sidebarState = {}
 
     # set title
@@ -22,7 +25,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
     @render()
 
   show: =>
-  
+
     # initially hide sidebar on mobile
     if window.matchMedia('(max-width: 767px)').matches
       @sidebar.addClass('is-closed')
@@ -82,7 +85,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
 
   params: =>
     params = @formParam(@$('.main form'))
-    
+
   submit: (e) ->
     e.preventDefault()
 
