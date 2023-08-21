@@ -97,7 +97,7 @@ class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
 
   def self.definition
     {
-      name:         'twilio',
+      name:         'Twilio',
       adapter:      'sms/twilio',
       account:      [
         { name: 'options::webhook_token', display: __('Webhook Token'), tag: 'input', type: 'text', limit: 200, null: false, default: Digest::MD5.hexdigest(SecureRandom.uuid), disabled: true, readonly: true },
