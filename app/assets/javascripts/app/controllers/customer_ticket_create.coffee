@@ -8,6 +8,8 @@ class CustomerTicketCreate extends App.ControllerAppContent
   constructor: (params) ->
     super
 
+    @authenticateCheckRedirect()
+
     # set title
     @title __('New Ticket')
     @form_id = App.ControllerForm.formId()
