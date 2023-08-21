@@ -1746,3 +1746,94 @@ QUnit.test("Fixes #4027 - undefined method `to_hash` on editing select fields in
   assert.equal(el.find('select[name="4027_multiselect_array"] option[selected]').text(), 'CD', '4027_multiselect_array has historic text')
   assert.equal(el.find('div[data-attribute-name="4027_tree_select_array"] .js-input').val(), 'C', '4027_tree_select_array has historic text')
 });
+
+QUnit.test("object manager form 4", assert => {
+  $('#qunit').append('<hr><h1>object manager 1</h1><form id="form21"></form>')
+  var el = $('#form21')
+
+  var defaults = {
+    data_type: 'select'
+  }
+  new App.ControllerForm({
+    el: el,
+    model: {
+      configure_attributes: [
+        { name: 'data_type', display: 'Format', tag: 'object_manager_attribute', null: false },
+      ],
+    },
+    params: $.extend(defaults, { object: 'Ticket' }),
+    autofocus: true
+  });
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    "data_option": {
+      "customsort": undefined,
+      "default": undefined,
+      "linktemplate": "",
+      "translate": false
+    },
+    "data_type": "select",
+    "screens": {
+      "create_middle": {
+        "ticket.agent": {
+          "required": false,
+          "shown": true
+        },
+        "ticket.customer": {
+          "required": false,
+          "shown": true
+        }
+      },
+      "edit": {
+        "ticket.agent": {
+          "required": false,
+          "shown": true
+        },
+        "ticket.customer": {
+          "required": false,
+          "shown": true
+        }
+      }
+    }
+  }
+
+  assert.deepEqual(params, test_params, 'form param check 21')
+
+  $("#form21 select[name='data_option::translate']").val('true')
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    "data_option": {
+      "customsort": undefined,
+      "default": undefined,
+      "linktemplate": "",
+      "translate": true
+    },
+    "data_type": "select",
+    "screens": {
+      "create_middle": {
+        "ticket.agent": {
+          "required": false,
+          "shown": true
+        },
+        "ticket.customer": {
+          "required": false,
+          "shown": true
+        }
+      },
+      "edit": {
+        "ticket.agent": {
+          "required": false,
+          "shown": true
+        },
+        "ticket.customer": {
+          "required": false,
+          "shown": true
+        }
+      }
+    }
+  }
+
+  assert.deepEqual(params, test_params, 'form param check 21')
+})

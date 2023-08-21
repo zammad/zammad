@@ -12581,6 +12581,10 @@ msgstr ""
 msgid "Transfer conversation to another chat:"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Translate field contents"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/translation/index.jst.eco

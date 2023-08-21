@@ -1,31 +1,34 @@
 <div>
-  <table class="settings-list js-Table" style="width: 100%;">
-    <thead>
-      <tr>
-        <th style="width: 36px" class="table-draggable"></th>
-        <th><%- @T('Key') %>
-        <th style="width: 180px"><%- @T('Action') %>
-      </tr>
-    </thead>
-    <tbody class="js-treeTable table-sortable"></tbody>
-  </table>
-  <table class="hidden">
-    <tbody>
-      <tr class="js-template input-data-row">
-        <td class="table-draggable"><%- @Icon('draggable') %></td>
-        <td class="settings-list-control-cell">
-          <input class="form-control form-control--small js-key" type="text" value="" data-level="" required/>
-        <td class="settings-list-row-control">
-          <div class="btn btn--text js-remove" style="margin-left: -10px;">
-            <%- @Icon('trash') %>
-          </div>
-          <div class="btn btn--text btn--create js-addChild" style="margin-left: -10px;">
-            <%- @Icon('plus-small') %> <%- @T('children') %>
-          </div>
-          <div class="btn btn--text btn--create js-addRow" style="margin-left: -10px;">
-            <%- @Icon('plus-small') %> <%- @T('row') %>
-          </div>
-      </tr>
-    </tbody>
-  </table>
+  <div class="form-group">
+    <table class="settings-list js-Table" style="width: 100%;">
+      <thead>
+        <tr>
+          <th style="width: 36px" class="table-draggable"></th>
+          <th><%- @T('Key') %>
+          <th style="width: 180px"><%- @T('Action') %>
+        </tr>
+      </thead>
+      <tbody class="js-treeTable table-sortable"></tbody>
+    </table>
+    <table class="hidden">
+      <tbody>
+        <tr class="js-template input-data-row">
+          <td class="table-draggable"><%- @Icon('draggable') %></td>
+          <td class="settings-list-control-cell">
+            <input class="form-control form-control--small js-key" type="text" value="" data-level="" required/>
+          <td class="settings-list-row-control">
+            <div class="btn btn--text js-remove" style="margin-left: -10px;">
+              <%- @Icon('trash') %>
+            </div>
+            <div class="btn btn--text btn--create js-addChild" style="margin-left: -10px;">
+              <%- @Icon('plus-small') %> <%- @T('children') %>
+            </div>
+            <div class="btn btn--text btn--create js-addRow" style="margin-left: -10px;">
+              <%- @Icon('plus-small') %> <%- @T('row') %>
+            </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="js-inputTranslate"></div>
 </div>

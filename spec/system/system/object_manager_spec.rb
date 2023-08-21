@@ -437,7 +437,8 @@ RSpec.describe 'System > Objects', mariadb: true, type: :system do
                                 'null'       => true,
                                 'relation'   => '',
                                 'nulloption' => true,
-                                'maxlength'  => 255 }
+                                'maxlength'  => 255,
+                                'translate'  => false }
 
       expect(ObjectManager::Attribute.last.data_option).to eq(expected_data_options)
     end
