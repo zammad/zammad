@@ -581,7 +581,7 @@ class App.UiElement.ApplicationAction
 
     elementRow.find('.js-setNotification').html(notificationElement).removeClass('hide')
 
-    if App.Config.get('smime_integration') == true
+    if App.Config.get('smime_integration') == true || App.Config.get('pgp_integration') == true
       selection = App.UiElement.select.render(
         name: "#{name}::sign"
         multiple: false
