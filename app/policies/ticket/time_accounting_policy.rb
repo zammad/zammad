@@ -20,14 +20,6 @@ class Ticket::TimeAccountingPolicy < ApplicationPolicy
   end
 
   def matches_selector?
-    CoreWorkflow
-      .perform(payload: {
-                 'event'      => 'core_workflow',
-                 'request_id' => 'ChecksCoreWorkflow.validate_workflows',
-                 'class_name' => 'Ticket',
-                 'screen'     => 'edit',
-                 'params'     => record.ticket.attributes,
-               }, user: user, assets: false)
-      .dig(:flags, :time_accounting)
+    CoreWorkflow.matches_selector?(id: record.id, user: user, selector: Setting.get('time_accounting_selector')[:condition] || {})
   end
 end

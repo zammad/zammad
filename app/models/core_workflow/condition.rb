@@ -5,7 +5,7 @@ class CoreWorkflow::Condition
 
   attr_accessor :user, :payload, :workflow, :attribute_object, :result_object, :check
 
-  def initialize(result_object:, workflow:)
+  def initialize(result_object:, workflow: nil)
     @user             = result_object.user
     @payload          = result_object.payload
     @workflow         = workflow

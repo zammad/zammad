@@ -105,6 +105,12 @@ class CoreWorkflow::Result
     consider_rerun
   end
 
+  def matches_selector?(selector:, check:)
+    condition_object = CoreWorkflow::Condition.new(result_object: self)
+    condition_object.check = check
+    condition_object.condition_selector_match?(selector)
+  end
+
   def run_workflow(workflow)
     Array(workflow.perform).each do |field, config|
       run_backend(field, config)

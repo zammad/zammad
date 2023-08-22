@@ -14,6 +14,30 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
     end
   end
 
+  describe '.matches_selector?' do
+    let(:result) { described_class.matches_selector?(id: ticket.id, user: action_user, selector: condition) }
+
+    context 'when matching open tickets' do
+      let(:condition) do
+        { 'ticket.state_id'=>{ 'operator' => 'is', 'value' => Ticket::State.by_category(:open).map { |x| x.id.to_s } } }
+      end
+
+      it 'does match' do
+        expect(result).to be(true)
+      end
+    end
+
+    context 'when matching closed tickets' do
+      let(:condition) do
+        { 'ticket.state_id'=>{ 'operator' => 'is', 'value' => Ticket::State.by_category(:closed).map { |x| x.id.to_s } } }
+      end
+
+      it 'does not match' do
+        expect(result).to be(false)
+      end
+    end
+  end
+
   describe 'Core Workflow "is not" operator is working unexpected #3752' do
     let(:approval_role) { create(:role) }
     let!(:workflow) do
