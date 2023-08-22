@@ -144,7 +144,7 @@ const changeSecurityState = (method: EnumSecurityStateType) => {
   <div
     :id="`${context.node.name}-${context.formId}`"
     :class="context.classes.input"
-    class="flex h-auto flex-col gap-2"
+    class="flex h-auto flex-row gap-2"
   >
     <div
       v-if="securityMethods.length > 1"
