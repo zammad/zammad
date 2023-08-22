@@ -437,11 +437,11 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
             mail
           end
 
-          context 'with GPG version >= 2.2.40', if: SecureMailing::PGP::Tool.version >= '2.2.40' do
+          context 'with GPG version >= 2.2.27', if: SecureMailing::PGP::Tool.version >= '2.2.27' do
             it_behaves_like 'decrypting message content'
           end
 
-          context 'with GPG version < 2.2.40', if: ENV['CI'] && SecureMailing::PGP::Tool.version < '2.2.40' do
+          context 'with GPG version < 2.2.27', if: ENV['CI'] && SecureMailing::PGP::Tool.version < '2.2.27' do
             it 'provides an error message as an article comment' do
               expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
               expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to be_nil
