@@ -127,11 +127,19 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
   def time_accounting(article, time_unit)
     return if time_unit.blank?
 
-    Ticket::TimeAccounting.create!(
+    time_accounting = Ticket::TimeAccounting.new(
       ticket_id:         article.ticket_id,
       ticket_article_id: article.id,
       time_unit:         time_unit,
     )
+
+    policy = Ticket::TimeAccountingPolicy.new(current_user, time_accounting)
+
+    if !policy.create?
+      raise policy.custom_exception || __('Not authorized')
+    end
+
+    time_accounting.save!
   end
 
   def form_id_cleanup(attachments_raw)

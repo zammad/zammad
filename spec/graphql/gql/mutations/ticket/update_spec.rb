@@ -173,6 +173,63 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
           expect(gql.result.error_message).to eq('Access forbidden by Gql::Types::GroupType')
         end
       end
+
+      context 'with an article payload with time unit' do
+        let(:time_accounting_enabled)  { true }
+        let(:time_accounting_selector) { {} }
+        let(:article_payload) do
+          {
+            body:     'dummy',
+            type:     'web',
+            timeUnit: 123,
+          }
+        end
+
+        before do
+          Setting.set('time_accounting', time_accounting_enabled)
+          Setting.set('time_accounting_selector', time_accounting_selector)
+        end
+
+        it 'adds a new article with time unit' do
+          expect { gql.execute(query, variables: variables) }
+            .to change(Ticket::Article, :count).by(1)
+
+          expect(Ticket.last.articles.last.ticket_time_accounting.time_unit).to eq(123)
+        end
+
+        context 'when time accounting disabled' do
+          let(:time_accounting_enabled) { false }
+
+          it 'does not create ticket article' do
+            expect { gql.execute(query, variables: variables) }
+              .not_to change(Ticket::Article, :count)
+
+            expect(gql.result.error_message)
+              .to match('Time Accounting is not enabled')
+          end
+        end
+
+        context 'when time accounting selector does not match' do
+          let(:time_accounting_selector) do
+            {
+              'condition' => {
+                'ticket.title' => {
+                  operator: 'contains',
+                  value:    'nonexistant title'
+                }
+              }
+            }
+          end
+
+          it 'does not create ticket article' do
+            expect { gql.execute(query, variables: variables) }
+              .not_to change(Ticket::Article, :count)
+
+            expect(gql.result.error_message)
+              .to match('Ticket does not match Time Accounting Selector')
+          end
+        end
+      end
     end
 
     context 'with a customer', authenticated_as: :customer do

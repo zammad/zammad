@@ -5530,6 +5530,10 @@ msgstr ""
 msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr ""
 
+#: app/models/ticket/time_accounting.rb
+msgid "Given Ticket Article is not part of the Ticket"
+msgstr ""
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -7921,6 +7925,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/controllers/application_controller/handles_errors.rb
+#: app/services/service/ticket/article/create.rb
 msgid "Not authorized"
 msgstr ""
 
@@ -12180,6 +12185,10 @@ msgstr ""
 msgid "Ticket customer updated successfully."
 msgstr ""
 
+#: app/policies/ticket/time_accounting_policy.rb
+msgid "Ticket does not match Time Accounting Selector"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 msgid "Ticket escalation"
@@ -12363,6 +12372,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Time Accounting Unit"
+msgstr ""
+
+#: app/policies/ticket/time_accounting_policy.rb
+msgid "Time Accounting is not enabled"
 msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco

@@ -39,10 +39,15 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, type: :request
   end
 
   describe 'POST /api/v1/tickets/:ticket_id/time_accountings' do
-    let(:article) { create(:ticket_article, ticket: ticket) }
-    let(:params) { { time_unit: 11, ticket_articke_id: article.id } }
+    let(:article)                  { create(:ticket_article, ticket: ticket) }
+    let(:params)                   { { time_unit: 11, ticket_articke_id: article.id } }
+    let(:time_accounting_enabled)  { true }
+    let(:time_accounting_selector) { {} }
 
     before do
+      Setting.set('time_accounting', time_accounting_enabled)
+      Setting.set('time_accounting_selector', time_accounting_selector)
+
       article
 
       authenticated_as(user)
@@ -62,6 +67,31 @@ RSpec.describe 'Ticket::TimeAccounting API', :aggregate_failures, type: :request
       it 'returns the created accounted time entry' do
         expect(response).to have_http_status(:created)
         expect(json_response['time_unit']).to eq('11.0')
+      end
+    end
+
+    context 'when time accounting disabled' do
+      let(:time_accounting_enabled) { false }
+
+      it 'does not create ticket article' do
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context 'when selector is present and not matching' do
+      let(:time_accounting_selector) do
+        {
+          'condition' => {
+            'ticket.title' => {
+              operator: 'contains',
+              value:    'nonexistant title'
+            }
+          }
+        }
+      end
+
+      it 'does not create ticket article' do
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end
