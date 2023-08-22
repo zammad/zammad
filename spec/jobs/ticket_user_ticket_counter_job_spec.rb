@@ -15,13 +15,8 @@ RSpec.describe TicketUserTicketCounterJob, type: :job do
 
   let!(:tickets) do
     {
-      open:   [
-        create(:ticket, state_id: ticket_states[:open].id, customer_id: customer.id),
-        create(:ticket, state_id: ticket_states[:open].id, customer_id: customer.id),
-      ],
-      closed: [
-        create(:ticket, state_id: ticket_states[:closed].id, customer_id: customer.id),
-      ],
+      open:   create_list(:ticket, 2, state_id: ticket_states[:open].id, customer_id: customer.id),
+      closed: create_list(:ticket, 1, state_id: ticket_states[:closed].id, customer_id: customer.id),
     }
   end
 

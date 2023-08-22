@@ -28,7 +28,7 @@ RSpec.describe CoreWorkflow::Custom::TicketTimeAccountingCheck, type: :model do
     end
 
     before do
-      action_user.update(groups: [create(:group), create(:group), create(:group)])
+      action_user.update(groups: create_list(:group, 3))
     end
 
     it 'does not show for customers' do

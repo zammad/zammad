@@ -1186,7 +1186,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'if original owner has lost agent status' do
-          before { original_owner.roles = [create(:role)] }
+          before { original_owner.roles = create_list(:role, 1) }
 
           it 'resets to default user (id: 1)' do
             Rails.cache.clear
@@ -1227,7 +1227,7 @@ RSpec.describe Ticket, type: :model do
           end
 
           context 'if original owner has lost agent status' do
-            before { original_owner.roles = [create(:role)] }
+            before { original_owner.roles = create_list(:role, 1) }
 
             it 'does not change' do
               expect { create(:ticket_article, ticket: ticket) }

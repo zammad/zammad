@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :'chat/message' do
-    chat_session { create(:'chat/session') }
+    chat_session factory: :'chat/session'
     content { 'test 1234' }
     created_by_id { 1 }
   end

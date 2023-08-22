@@ -7,7 +7,7 @@ FactoryBot.define do
       priority_name { '2 normal' }
     end
 
-    association :group, strategy: :create # or else build(:ticket).save fails
+    group factory: :group, strategy: :create # or else build(:ticket).save fails
 
     customer
     title         { 'Test Ticket' }
@@ -19,7 +19,7 @@ FactoryBot.define do
     trait :with_channel do
       transient do
         channel_name { nil }
-        channel { create(channel_name) }
+        channel { association(channel_name) }
       end
 
       preferences do

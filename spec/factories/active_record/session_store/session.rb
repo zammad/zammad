@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :'active_record/session_store/session', aliases: %i[active_session] do
     transient do
-      user { create(:user) }
+      user { association :user }
     end
 
     session_id { SecureRandom.hex(16) }

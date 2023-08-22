@@ -132,12 +132,7 @@ RSpec.describe Ticket::TimeAccounting, type: :model do
       end
 
       it 'allows multiple article-less items per ticket' do
-        expect(
-          [
-            create(:ticket_time_accounting, ticket: ticket),
-            create(:ticket_time_accounting, ticket: ticket),
-          ]
-        ).to all(be_persisted)
+        expect(create_list(:ticket_time_accounting, 2, ticket: ticket)).to all(be_persisted)
       end
 
       it 'does not allow multiple articles for same ticket' do

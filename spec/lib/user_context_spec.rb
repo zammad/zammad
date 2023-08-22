@@ -7,7 +7,7 @@ RSpec.describe UserContext do
 
   describe '#permissions?' do
     context 'when user with ticket.agent permission' do
-      let(:user)  { create(:user, roles: [create(:role, :agent)]) }
+      let(:user)  { create(:user, roles: create_list(:role, 1, :agent)) }
       let(:token) { nil }
 
       it { is_expected.to be_permissions('ticket.agent') }
@@ -16,8 +16,8 @@ RSpec.describe UserContext do
 
     # https://github.com/zammad/zammad/issues/3186
     context 'when user with ticket.agent permission and token created by user who doesn\'t' do
-      let(:user)        { create(:user, roles: [create(:role, :agent)]) }
-      let(:token_owner) { create(:user, roles: [create(:role, :admin)]) }
+      let(:user)        { create(:user, roles: create_list(:role, 1, :agent)) }
+      let(:token_owner) { create(:user, roles: create_list(:role, 1, :admin)) }
       let(:token)       { create(:token, user: token_owner, preferences: { permission: %w[ticket.agent] }) }
 
       it { is_expected.to be_permissions('ticket.agent') }

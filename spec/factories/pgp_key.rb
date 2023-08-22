@@ -8,7 +8,7 @@ FactoryBot.define do
 
     transient do
       fixture { 'zammad@localhost' }
-      user    { create(:admin) }
+      user    { association :admin }
     end
 
     key { Rails.root.join("spec/fixtures/files/pgp/#{fixture}.pub.asc").read }

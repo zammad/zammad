@@ -51,7 +51,7 @@ RSpec.describe 'HasSearchIndexBackend', searchindex: true, type: :model do
   end
 
   describe 'Search doesnt show tickets belonging to secondary organization #4425' do
-    let(:user) { create(:user, organization: create(:organization), organizations: [create(:organization, name: SecureRandom.uuid)]) }
+    let(:user) { create(:user, organization: create(:organization), organizations: create_list(:organization, 1, name: SecureRandom.uuid)) }
 
     before do
       user

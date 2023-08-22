@@ -7,7 +7,7 @@ FactoryBot.define do
     answer           { nil }
     kb_locale        { nil }
     sequence(:title) { |n| "#{Faker::Appliance.equipment} ##{n}" }
-    content          { build(:knowledge_base_answer_translation_content) }
+    content factory: %i[knowledge_base_answer_translation_content], strategy: :build
 
     before(:create) do |translation, _context|
       if translation.answer.nil?
@@ -30,11 +30,11 @@ FactoryBot.define do
     end
 
     trait :with_video do
-      content { build(:knowledge_base_answer_translation_content, :with_video) }
+      content factory: %i[knowledge_base_answer_translation_content with_video], strategy: :build
     end
 
     trait :with_image do
-      content { build(:knowledge_base_answer_translation_content, :with_image) }
+      content factory: %i[knowledge_base_answer_translation_content with_image], strategy: :build
     end
   end
 end

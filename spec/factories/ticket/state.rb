@@ -10,7 +10,7 @@ FactoryBot.define do
       Faker::Verb.unique.past_participle
     end
 
-    association :state_type, factory: :'ticket/state_type'
+    state_type factory: %i[ticket/state_type]
     updated_by_id { 1 }
     created_by_id { 1 }
   end

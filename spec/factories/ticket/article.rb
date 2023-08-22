@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :'ticket/article', aliases: %i[ticket_article] do
     inbound_email
 
-    association :ticket, strategy: :create # or else build(:ticket_article).save fails
+    ticket factory: :ticket, strategy: :create # or else build(:ticket_article).save fails
     from          { 'factory-customer-1@example.com' }
     to            { 'factory-customer-1@example.com' }
     subject       { 'factory article' }
@@ -90,7 +90,7 @@ FactoryBot.define do
         sender_name { 'Agent' }
       end
 
-      association :ticket, factory: :twitter_ticket
+      ticket factory: %i[twitter_ticket]
       subject      { nil }
       body         { Faker::Lorem.sentence }
       content_type { 'text/plain' }
@@ -188,12 +188,12 @@ FactoryBot.define do
         type_name { 'twitter direct-message' }
       end
 
-      association :ticket, factory: :twitter_ticket
+      ticket factory: %i[twitter_ticket]
       body { Faker::Lorem.sentence }
 
       trait :pending_delivery do
         transient do
-          recipient { create(:twitter_authorization) }
+          recipient { association :twitter_authorization }
           sender_id { Faker::Number.unique.number(digits: 10) }
         end
 
@@ -235,7 +235,7 @@ FactoryBot.define do
         type_name { 'sms' }
       end
 
-      association :ticket, factory: :sms_ticket
+      ticket factory: %i[sms_ticket]
       from { Faker::PhoneNumber.cell_phone_in_e164 }
       to   { Faker::PhoneNumber.cell_phone_in_e164 }
       subject { nil }
@@ -299,7 +299,7 @@ FactoryBot.define do
         username { Faker::Internet.username }
       end
 
-      association :ticket, factory: :telegram_ticket
+      ticket factory: %i[telegram_ticket]
       to { "@#{channel[:options][:bot][:username]}" }
       subject { nil }
       body { Faker::Lorem.sentence }
@@ -381,7 +381,7 @@ FactoryBot.define do
         permalink_url { "https://www.facebook.com/#{channel[:options][:pages][0][:id]}/posts/#{post_id}/?comment_id=#{post_id}" }
       end
 
-      association :ticket, factory: :facebook_ticket
+      ticket factory: %i[facebook_ticket]
       subject { nil }
       body { Faker::Lorem.sentence }
       message_id { "#{Faker::Number.unique.number(digits: 16)}_#{Faker::Number.unique.number(digits: 15)}" }

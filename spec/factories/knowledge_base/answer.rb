@@ -9,7 +9,7 @@ FactoryBot.define do
       knowledge_base         { nil }
     end
 
-    category { create(:knowledge_base_category, { knowledge_base: knowledge_base }.compact) }
+    category { association :knowledge_base_category, **{ knowledge_base: knowledge_base }.compact }
 
     before(:create) do |answer, context|
       next if answer.translations.present?

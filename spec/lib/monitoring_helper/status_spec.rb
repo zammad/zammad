@@ -7,11 +7,7 @@ RSpec.describe MonitoringHelper::Status do
 
   describe '#fetch_status' do
     before do
-      allow(instance).to receive(:counts).and_return(:count)
-      allow(instance).to receive(:last_created_at).and_return(:created)
-      allow(instance).to receive(:last_login).and_return(:login)
-      allow(instance).to receive(:agents_count).and_return(:agents)
-      allow(instance).to receive(:storage).and_return(:storage_size)
+      allow(instance).to receive_messages(counts: :count, last_created_at: :created, last_login: :login, agents_count: :agents, storage: :storage_size)
     end
 
     it 'returns output of computation methods' do

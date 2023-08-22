@@ -1776,7 +1776,7 @@ RSpec.describe User, type: :model do
 
     context 'when creating users' do
       it 'does not allow creation without primary organization but secondary organizations' do
-        expect { create(:agent, organization: nil, organizations: [create(:organization)]) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations are only allowed when the primary organization is given.')
+        expect { create(:agent, organization: nil, organizations: create_list(:organization, 1)) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations are only allowed when the primary organization is given.')
       end
 
       it 'does not allow creation with more than 250 organizations' do

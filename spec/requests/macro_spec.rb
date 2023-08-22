@@ -139,7 +139,7 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
   end
 
   describe '#show' do
-    let(:macro) { create(:macro, groups: [create(:group)]) }
+    let(:macro) { create(:macro, groups: create_list(:group, 1)) }
 
     before do
       get "/api/v1/macros/#{macro.id}", as: :json

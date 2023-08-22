@@ -114,8 +114,7 @@ RSpec.describe Escalation do
     end
 
     it 'no calendar resets' do
-      allow(instance).to receive(:calendar).and_return(nil)
-      allow(instance).to receive(:forced?).and_return(true)
+      allow(instance).to receive_messages(calendar: nil, forced?: true)
       allow(instance).to receive(:calculate_no_calendar)
       instance.calculate
       expect(instance).to have_received(:calculate_no_calendar)

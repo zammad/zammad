@@ -207,8 +207,9 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
         end
 
         let(:attachments) do
-          [create(
+          create_list(
             :store,
+            1,
             object:      'Ticket::Article',
             o_id:        article.id,
             data:        'fake',
@@ -219,7 +220,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
               'Content-ID'          => '<15.274327094.140939>',
               'Content-Disposition' => 'inline',
             }
-          )]
+          )
         end
 
         let(:raw_body) do

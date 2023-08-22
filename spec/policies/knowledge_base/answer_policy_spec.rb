@@ -11,8 +11,7 @@ describe KnowledgeBase::AnswerPolicy do
 
   shared_context 'with answer visibility' do |visible:, visible_internally:|
     before do
-      allow(record).to receive(:visible?).and_return(visible)
-      allow(record).to receive(:visible_internally?).and_return(visible_internally)
+      allow(record).to receive_messages(visible?: visible, visible_internally?: visible_internally)
     end
   end
 

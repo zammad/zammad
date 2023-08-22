@@ -7,7 +7,7 @@ FactoryBot.define do
   factory :'user/two_factor_preference', aliases: %i[user_two_factor_preference] do
 
     transient do
-      user { create(:user, preferences: { two_factor_authentication: { default: method } }) }
+      user { association(:user, preferences: { two_factor_authentication: { default: method } }) }
     end
 
     user_id       { user.id }
@@ -137,7 +137,7 @@ FactoryBot.define do
       add_attribute(:method) { 'recovery_codes' }
 
       transient do
-        user          { create(:user) }
+        user          { association :user }
         recovery_code { 'example' }
       end
 
