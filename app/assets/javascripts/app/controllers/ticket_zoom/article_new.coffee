@@ -244,7 +244,8 @@ class App.TicketZoomArticleNew extends App.Controller
 
     # show text module UI
     if ticket.currentView() is 'agent'
-      textModule = new App.WidgetTextModule(
+      @textModule?.releaseController()
+      @textModule = new App.WidgetTextModule(
         el: @$('.js-textarea').parent()
         data:
           ticket: ticket
@@ -252,12 +253,12 @@ class App.TicketZoomArticleNew extends App.Controller
           config: App.Config.all()
         taskKey: @taskKey
       )
-      callback = (ticket) ->
-        textModule.reload(
-          ticket: ticket
-          user: App.Session.get()
-        )
       if !@subscribeIdTextModule
+        callback = (ticket) =>
+          @textModule.reload(
+            ticket: ticket
+            user: App.Session.get()
+          )
         @subscribeIdTextModule = ticket.subscribe(callback)
 
     if _.isArray(@attachments)
