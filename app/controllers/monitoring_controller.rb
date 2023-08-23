@@ -45,7 +45,13 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       result[:token] = Setting.get('monitoring_token')
     end
 
-    render json: result
+    status = :ok
+    if !health_status.healthy?
+      status = :service_unavailable
+    end
+
+    render json: result, status: status
+
   end
 
 =begin
