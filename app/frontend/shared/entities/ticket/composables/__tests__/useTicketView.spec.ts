@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketById } from '#shared/entities/ticket/types.ts'
-import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { ref } from 'vue'
+import { generateObjectData } from '#tests/graphql/index.ts'
+import type { Ticket } from '#shared/graphql/types.ts'
 import { useTicketView } from '../useTicketView.ts'
 
-const ticketDefault = defaultTicket().ticket
-const ticket = ref<TicketById | undefined>(ticketDefault)
+const ticketDefault = generateObjectData<Ticket>('Ticket')
+const ticket = ref<Ticket | undefined>(ticketDefault)
 
 describe('useTicketView', () => {
   it('check agent permission', () => {
@@ -43,6 +43,7 @@ describe('useTicketView', () => {
     ticket.value = {
       ...ticketDefault,
       policy: {
+        ...ticketDefault.policy,
         __typename: 'PolicyTicket',
         update: false,
         agentReadAccess: true,

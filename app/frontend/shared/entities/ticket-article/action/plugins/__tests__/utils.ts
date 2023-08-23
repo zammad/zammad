@@ -1,22 +1,19 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  defaultArticles,
-  defaultTicket,
-} from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
 import type {
   TicketArticle,
   TicketById,
 } from '#shared/entities/ticket/types.ts'
-import type { PolicyTicket } from '#shared/graphql/types.ts'
+import type { PolicyTicket, Ticket } from '#shared/graphql/types.ts'
 import type { AppName } from '#shared/types/app.ts'
+import type { DeepPartial } from '#shared/types/utils.ts'
+import { generateObjectData } from '#tests/graphql/index.ts'
 import { initializeStore } from '#tests/support/components/initializeStore.ts'
 import { createArticleActions, createArticleTypes } from '../index.ts'
 import type { TicketActionAddOptions } from '../types.ts'
 
-export const createTicketArticle = () => {
-  const { description } = defaultArticles()
-  return description.edges[0].node
+export const createTicketArticle = (defaults?: DeepPartial<TicketArticle>) => {
+  return generateObjectData<TicketArticle>('TicketArticle', defaults)
 }
 
 const defaultOptions: Pick<
@@ -27,21 +24,21 @@ const defaultOptions: Pick<
   onDispose: vi.fn(),
 }
 
+export const createTicket = (defaults?: DeepPartial<Ticket>) =>
+  generateObjectData<Ticket>('Ticket', defaults)
+
 export const createEligibleTicketArticleReplyData = (
   type: string,
   policies: Partial<PolicyTicket> = {},
 ) => {
-  const article = createTicketArticle()
-  article.sender = {
-    name: 'Customer',
-    __typename: 'TicketArticleSender',
-  }
-  article.type = {
-    name: type,
-    communication: false,
-    __typename: 'TicketArticleType',
-  }
-  const { ticket } = defaultTicket({ update: true, ...policies })
+  const article = createTicketArticle({
+    sender: { name: 'Customer' },
+    type: {
+      name: type,
+      communication: false,
+    },
+  })
+  const ticket = createTicket({ policy: { update: true, ...policies } })
   return {
     article,
     ticket,

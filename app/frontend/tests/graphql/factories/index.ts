@@ -11,7 +11,7 @@ import {
 
 import { Kind, type DocumentNode, OperationTypeNode } from 'graphql'
 import { createRequire } from 'node:module'
-import type { DeepRequired } from '#shared/types/utils.ts'
+import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
 import { generateGraphqlMockId, hasNodeParent, setNodeParent } from './utils.ts'
 
 const _require = createRequire(import.meta.url)
@@ -19,7 +19,8 @@ const introspection = _require('../../../../graphql/graphql_introspection.json')
 
 export interface ResolversMeta {
   variables: Record<string, unknown>
-  document: DocumentNode
+  document: DocumentNode | undefined
+  cached: boolean
 }
 
 export interface Resolvers {
@@ -201,6 +202,7 @@ const getFieldInformation = (definitionType: SchemaType) => {
 }
 
 const getFromCache = (value: any, meta: ResolversMeta) => {
+  if (!meta.cached) return undefined
   const potentialId =
     value.id ||
     (value.internalId
@@ -297,6 +299,8 @@ const generateObject = (
     for (const key in resolved) {
       if (!(key in value)) {
         value[key] = resolved[key]
+      } else if (value[key] && typeof value[key] === 'object') {
+        value[key] = deepMerge(resolved[key], value[key])
       }
     }
   }
@@ -337,7 +341,7 @@ const generateObject = (
     } else {
       value[name] = generateGqlValue(value, name, fieldType, value[name], meta)
     }
-    if (name === 'id') {
+    if (meta.cached && name === 'id') {
       storedObjects.set(value.id, value)
     }
   })
@@ -347,7 +351,7 @@ const generateObject = (
   if (value.id && value.internalId) {
     value.internalId = getIdFromGraphQLId(value.id)
   }
-  if (value.id) {
+  if (meta.cached && value.id) {
     storedObjects.set(value.id, value)
   }
   return value
@@ -401,6 +405,17 @@ const generateGqlValue = (
   throw new Error(`wrong definition for ${typeDefinition.name}`)
 }
 
+export const generateObjectData = <T>(
+  typename: string,
+  defaults?: DeepPartial<T>,
+): T => {
+  return generateObject(undefined, getObjectDefinition(typename), defaults, {
+    document: undefined,
+    variables: {},
+    cached: false,
+  }) as T
+}
+
 const results = new WeakMap<DocumentNode, unknown>()
 
 export const getGqlOperationResult = <T>(document: DocumentNode): T => {
@@ -444,7 +459,7 @@ export const mockOperation = (
       query,
       queryValueDefinition,
       defaults?.[rootName],
-      { document, variables },
+      { document, variables, cached: true },
     )
   } else {
     query[rootName] = {}
@@ -462,7 +477,7 @@ export const mockOperation = (
         query[rootName],
         operationDefinition,
         defaults?.[rootName][fieldName],
-        { document, variables },
+        { document, variables, cached: true },
       )
     })
   }

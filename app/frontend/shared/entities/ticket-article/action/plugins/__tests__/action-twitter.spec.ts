@@ -47,6 +47,8 @@ const getArticleTypeActionData = (
     id: convertToGraphQLId('TicketArticle', '1'),
     name,
     __typename: 'TicketArticleType',
+    createdAt: '2021-01-01T00:00:00Z',
+    updatedAt: '2021-01-01T00:00:00Z',
   }
   transformer?.(ticket)
   const actions = createArticleTypes(ticket, 'mobile')
@@ -111,6 +113,9 @@ describe('twitter article action', () => {
       const { action, ticket, article, options } = getArticleActionData(
         'twitter status',
         (_, article) => {
+          article.to = null
+          article.cc = null
+          article.replyTo = null
           article.from = { raw: 'from' }
         },
       )

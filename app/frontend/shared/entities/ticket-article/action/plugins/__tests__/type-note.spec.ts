@@ -1,9 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
-import { createTestArticleTypes } from './utils.ts'
+import { createTestArticleTypes, createTicket } from './utils.ts'
 
 describe('note type', () => {
   it.each([
@@ -13,7 +12,7 @@ describe('note type', () => {
     'check article internal for "%s" when config is %s',
     (permission, config, internal) => {
       mockPermissions([permission])
-      const { ticket } = defaultTicket()
+      const ticket = createTicket()
       mockApplicationConfig({
         ui_ticket_zoom_article_note_new_internal: config,
       })
@@ -28,7 +27,7 @@ describe('note type', () => {
 
   it('customer does not get note type', () => {
     mockPermissions(['ticket.customer'])
-    const { ticket } = defaultTicket()
+    const ticket = createTicket()
 
     const types = createTestArticleTypes(ticket)
 

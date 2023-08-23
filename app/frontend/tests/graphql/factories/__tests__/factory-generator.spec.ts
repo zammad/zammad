@@ -4,7 +4,8 @@ import { OrganizationDocument } from '#mobile/entities/organization/graphql/quer
 import { UserDocument } from '#mobile/entities/user/graphql/queries/user.api.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { faker } from '@faker-js/faker'
-import { mockOperation } from '../index.ts'
+import type { Ticket } from '#shared/graphql/types.ts'
+import { generateObjectData, mockOperation } from '../index.ts'
 
 describe('correctly mocks operations', () => {
   describe('mocking organization', () => {
@@ -100,6 +101,17 @@ describe('correctly mocks operations', () => {
         name: objectAttribute.attribute.name,
         dataType: expect.any(String),
       }),
+    })
+  })
+
+  it('generater correctly merges nested factory and nested defaults', () => {
+    const ticket = generateObjectData<Ticket>('Ticket', {
+      policy: { update: true, destroy: true },
+    })
+    expect(ticket.policy).toMatchObject({
+      __typename: 'PolicyTicket',
+      update: true,
+      agentReadAccess: false,
     })
   })
 })

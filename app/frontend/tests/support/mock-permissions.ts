@@ -16,4 +16,14 @@ export const mockPermissions = (permissions: string[]) => {
   }
 
   session.user!.permissions = { names: permissions }
+
+  if (Symbol.for('tests.permissions') in globalThis) return
+
+  Object.defineProperty(globalThis, Symbol.for('tests.permissions'), {
+    get() {
+      const session = useSessionStore()
+      return session.user?.permissions || { names: [] }
+    },
+    configurable: true,
+  })
 }

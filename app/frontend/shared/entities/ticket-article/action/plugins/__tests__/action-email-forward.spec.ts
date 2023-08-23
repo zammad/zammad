@@ -1,11 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultArticles } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import type { TicketArticle } from '#shared/graphql/types.ts'
+import { generateObjectData } from '#tests/graphql/index.ts'
 import { buildEmailForwardHeader } from '../email/forward.ts'
 
 describe('building header, when "forward" action is called', () => {
   it('renders all fields', () => {
-    const article = defaultArticles().description.edges[0].node
+    const article = generateObjectData<TicketArticle>('TicketArticle')
     article.subject = 'Article Subject'
     article.createdAt = new Date(2020, 1, 1).toISOString()
 
@@ -22,7 +23,7 @@ describe('building header, when "forward" action is called', () => {
   })
 
   it('removes empty fields', () => {
-    const article = defaultArticles().description.edges[0].node
+    const article = generateObjectData<TicketArticle>('TicketArticle')
     article.subject = null
     article.createdAt = new Date(2020, 1, 1).toISOString()
 

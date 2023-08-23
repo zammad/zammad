@@ -11,6 +11,10 @@ export default (
   _value: unknown,
   meta: ResolversMeta,
 ): DeepPartial<Ticket> => {
+  const permissions = Reflect.get(
+    globalThis,
+    Symbol.for('tests.permissions'),
+  ) as { names: string[] } | undefined
   const ticket: DeepPartial<Ticket> = {
     objectAttributeValues: [],
     customer: {
@@ -24,6 +28,13 @@ export default (
     policy: {
       destroy: true,
       update: true,
+      agentReadAccess: permissions?.names.includes('ticket.agent') ?? false,
+    },
+    createArticleType: {
+      __typename: 'TicketArticleType',
+      id: convertToGraphQLId('TicketArticleType', 1),
+      name: 'email',
+      communication: false,
     },
   }
   if (meta.variables.ticketNumber) {
