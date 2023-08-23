@@ -75,6 +75,17 @@ module.exports = {
     'import/extensions': ['error', 'ignorePackages'],
 
     'import/prefer-default-export': 'off',
+    'import/no-restricted-paths': [
+      'error',
+      {
+        zones: [
+          {
+            target: './app/frontend/shared',
+            from: './app/frontend/apps',
+          },
+        ],
+      },
+    ],
 
     // TODO: Add import rule to not allow that "app/**/modules/**" can import from each other and also add a rule that apps/** can not import from other apps.
 
