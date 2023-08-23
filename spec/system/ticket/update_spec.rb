@@ -309,6 +309,45 @@ RSpec.describe 'Ticket Update', type: :system do
 
   context 'when using text modules' do
     include_examples 'text modules', path: "#ticket/zoom/#{Ticket.first.id}"
+
+    context 'when owner is used in a text module and was updated in the ticket', authenticated_as: :authenticate do
+      let(:user)         { User.find_by(email: 'agent1@example.com') }
+      let(:another_user) { create(:agent, groups: [Group.find_by(name: 'Users')]) }
+      let(:ticket)       { create(:ticket, group: group, owner: user) }
+      let(:text_module)  { create(:text_module, name: 'firstlast', keywords: 'firstlast', content: '#{ticket.owner.firstname} #{ticket.owner.lastname}') } # rubocop:disable Lint/InterpolationCheck
+
+      def authenticate
+        ticket && text_module && another_user
+
+        true
+      end
+
+      def select_text_module
+        find(:richtext).send_keys(':')
+        find(:richtext).send_keys(':')
+        find(:richtext).send_keys('firstlast')
+        expect(page).to have_selector(:text_module, text_module.id)
+        find(:richtext).send_keys(:enter)
+      end
+
+      it 'updates used data' do
+        visit "#ticket/zoom/#{ticket.id}"
+
+        expect(page).to have_field('owner_id', with: user.id)
+
+        within(:active_content) do
+          select_text_module
+          expect(find(:richtext).text).to include("#{user.firstname} #{user.lastname}")
+
+          select another_user.fullname, from: 'Owner'
+          find('.js-submit').click
+          expect(ticket.reload.owner_id).to eq(another_user.id)
+
+          select_text_module
+          expect(find(:richtext).text).to include("#{another_user.firstname} #{another_user.lastname}")
+        end
+      end
+    end
   end
 
   context 'when using macros' do
