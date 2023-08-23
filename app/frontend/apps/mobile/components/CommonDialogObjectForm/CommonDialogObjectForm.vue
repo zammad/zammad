@@ -22,7 +22,7 @@ import { useObjectAttributes } from '#shared/entities/object-attributes/composab
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import { useConfirmationDialog } from '../CommonConfirmation/useConfirmationDialog.ts'
+import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 
 export interface Props {
   name: string
@@ -70,8 +70,6 @@ const initialFlatObject = {
 const { attributesLookup: objectAttributesLookup } = useObjectAttributes(
   props.type,
 )
-const { waitForConfirmation } = useConfirmationDialog()
-
 const cancelDialog = async () => {
   if (isDirty.value) {
     const confirmed = await waitForConfirmation(

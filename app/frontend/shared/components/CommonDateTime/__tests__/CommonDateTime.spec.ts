@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { type Props } from '../CommonDateTime.vue'
+import { nextTick } from 'vue'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import CommonDateTime, { type Props } from '../CommonDateTime.vue'
 
-vi.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
-
-const { nextTick } = await import('vue')
-const { renderComponent } = await import('#tests/support/components/index.ts')
-const { useApplicationStore } = await import('#shared/stores/application.ts')
-const { default: CommonDateTime } = await import('../CommonDateTime.vue')
+vi.hoisted(() => {
+  vi.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
+})
 
 const dateTime = '2020-10-10T10:10:10Z'
 const renderDateTime = (props: Props) => {

@@ -3,16 +3,11 @@
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useTicketArticleDeleteMutation } from '#shared/entities/ticket-article/graphql/mutations/delete.api.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
-import type {
-  TicketArticle,
-  TicketById,
-} from '#shared/entities/ticket/types.ts'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
+import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 import type { TicketArticleActionPlugin, TicketArticleAction } from './types.ts'
 
-const deleteAction = async (ticket: TicketById, article: TicketArticle) => {
-  const { waitForConfirmation } = useConfirmationDialog()
-
+const deleteAction = async (article: TicketArticle) => {
   const confirmed = await waitForConfirmation(
     __('Are you sure to remove this article?'),
   )
@@ -86,7 +81,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       label: __('Delete Article'),
       name: 'articleDelete',
       icon: { mobile: 'trash' },
-      perform: () => deleteAction(ticket, article),
+      perform: () => deleteAction(article),
       view: {
         agent: ['change'],
       },

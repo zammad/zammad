@@ -23,11 +23,11 @@ import {
 import type { AccountAvatarActiveQuery } from '#shared/graphql/types.ts'
 import { useRouter } from 'vue-router'
 import { useHeader } from '#mobile/composables/useHeader.ts'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/types.ts'
+import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 import { useAccountAvatarActiveQuery } from '../avatar/graphql/queries/active.api.ts'
 import { useAccountAvatarAddMutation } from '../avatar/graphql/mutations/add.api.ts'
 import { useAccountAvatarDeleteMutation } from '../avatar/graphql/mutations/delete.api.ts'
@@ -145,17 +145,17 @@ const removeAvatar = () => {
   })
 }
 
-const { showConfirmation } = useConfirmationDialog()
-
 const confirmRemoveAvatar = async () => {
   if (!canRemoveAvatar()) return
 
-  showConfirmation({
-    heading: __('Do you really want to delete your current avatar?'),
-    buttonTitle: __('Delete avatar'),
-    buttonVariant: 'danger',
-    confirmCallback: removeAvatar,
-  })
+  const confirmed = await waitForConfirmation(
+    __('Do you really want to delete your current avatar?'),
+    {
+      buttonTitle: __('Delete avatar'),
+      buttonVariant: 'danger',
+    },
+  )
+  if (confirmed) removeAvatar()
 }
 
 const saveButtonActive = computed(() => {

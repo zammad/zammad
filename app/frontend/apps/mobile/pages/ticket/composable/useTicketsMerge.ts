@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormKitNode } from '@formkit/core'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import {
   useNotifications,
   NotificationTypes,
@@ -16,6 +15,7 @@ import { useTicketMergeMutation } from '#shared/entities/ticket/graphql/mutation
 import type { AutocompleteSearchMergeTicketEntry } from '#shared/graphql/types.ts'
 import { keyBy } from 'lodash-es'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 import { AutocompleteSearchMergeTicketDocument } from '../graphql/queries/autocompleteSearchMergeTicket.api.ts'
 import TicketMergeStatus from '../components/TicketDetailView/TicketMergeStatus.vue'
 
@@ -37,8 +37,6 @@ export const useTicketsMerge = (
 
   const { notify } = useNotifications()
   const router = useRouter()
-
-  const { waitForConfirmation } = useConfirmationDialog()
 
   let localOptions: Record<string, AutocompleteSearchMergeTicketEntry> = {}
 

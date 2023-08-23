@@ -36,7 +36,6 @@ import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
 import { errorOptions } from '#shared/router/error.ts'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import {
   useTicketDuplicateDetectionHandler,
   type TicketDuplicateDetectionPayload,
@@ -47,6 +46,7 @@ import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
 import { useDialog } from '#shared/composables/useDialog.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import type { ApolloError } from '@apollo/client'
+import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 import { useTicketCreateMutation } from '../graphql/mutations/create.api.ts'
 
 const router = useRouter()
@@ -450,8 +450,6 @@ watch(
 
 useEventListener('scroll', setIsScrolledToBottom)
 useEventListener('resize', setIsScrolledToBottom)
-
-const { waitForConfirmation } = useConfirmationDialog()
 
 onBeforeRouteLeave(async () => {
   if (!isDirty.value) return true

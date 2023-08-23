@@ -15,7 +15,7 @@ import CommonShowMoreButton from '#mobile/components/CommonShowMoreButton/Common
 import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
+import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 import TicketObjectAttributes from '../../components/TicketDetailView/TicketObjectAttributes.vue'
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
@@ -37,8 +37,6 @@ const {
 const ticketFormGroupNode = computed(() => {
   return form.value?.formNode?.at('ticket')
 })
-
-const { waitForConfirmation } = useConfirmationDialog()
 
 const discardTicketEditDialog = async () => {
   if (!ticketFormGroupNode.value) return

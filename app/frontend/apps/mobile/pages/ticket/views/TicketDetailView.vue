@@ -29,11 +29,11 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { TicketInformation } from '#mobile/entities/ticket/types.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import { getOpenedDialogs } from '#shared/composables/useDialog.ts'
 import { useCommonSelect } from '#mobile/components/CommonSelect/useCommonSelect.ts'
+import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 import { useTicketEdit } from '../composable/useTicketEdit.ts'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation.ts'
 import { useTicketQuery } from '../graphql/queries/ticket.api.ts'
@@ -209,8 +209,6 @@ provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
 })
 
 useOnlineNotificationSeen(ticket)
-
-const { waitForConfirmation } = useConfirmationDialog()
 
 onBeforeRouteLeave(async () => {
   if (!isDirty.value) return true

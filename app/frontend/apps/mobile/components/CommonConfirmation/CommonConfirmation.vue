@@ -3,33 +3,29 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
-import { useConfirmationDialog } from './useConfirmationDialog.ts'
-
-// TODO: Add a story for this component.
-
-const { confirmationDialog } = useConfirmationDialog()
+import { confirmationOptions } from '#shared/utils/confirmation.ts'
 
 const localState = computed({
-  get: () => !!confirmationDialog.value,
+  get: () => !!confirmationOptions.value,
   set: (value) => {
-    if (!value) confirmationDialog.value = undefined
+    if (!value) confirmationOptions.value = undefined
   },
 })
 
 const item = computed(() => {
   return {
     type: 'button' as const,
-    label: confirmationDialog.value?.buttonTitle || __('OK'),
-    buttonVariant: confirmationDialog.value?.buttonVariant,
-    onAction: confirmationDialog.value?.confirmCallback,
+    label: confirmationOptions.value?.buttonTitle || __('OK'),
+    buttonVariant: confirmationOptions.value?.buttonVariant,
+    onAction: confirmationOptions.value?.confirmCallback,
   }
 })
 
 const callCancelCallback = (isCancel: boolean) => {
   if (!isCancel) return
 
-  if (confirmationDialog.value?.cancelCallback) {
-    confirmationDialog.value.cancelCallback()
+  if (confirmationOptions.value?.cancelCallback) {
+    confirmationOptions.value.cancelCallback()
   }
 }
 </script>
@@ -47,8 +43,8 @@ const callCancelCallback = (isCancel: boolean) => {
       >
         {{
           $t(
-            confirmationDialog?.heading,
-            ...(confirmationDialog?.headingPlaceholder || []),
+            confirmationOptions?.heading,
+            ...(confirmationOptions?.headingPlaceholder || []),
           )
         }}
       </div>
