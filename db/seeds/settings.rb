@@ -3015,7 +3015,7 @@ Setting.create_if_not_exists(
   preferences: {
     permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
-  frontend:    false
+  frontend:    true
 )
 
 Setting.create_if_not_exists(
@@ -3037,7 +3037,7 @@ Setting.create_if_not_exists(
   preferences: {
     permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
-  frontend:    false
+  frontend:    true
 )
 
 Setting.create_if_not_exists(

@@ -63,6 +63,8 @@ export interface ConfigList {
   ticket_auto_assignment_selector: unknown
   ticket_auto_assignment_user_ids_ignore: unknown
   ticket_conditions_allow_regular_expression_operators?: boolean | null
+  ticket_define_email_from?: 'SystemAddressName' | 'AgentNameSystemAddressName' | 'AgentName' | null
+  ticket_define_email_from_separator: string
   ticket_duplicate_detection?: boolean | null
   ticket_duplicate_detection_attributes: unknown
   ticket_duplicate_detection_body: string

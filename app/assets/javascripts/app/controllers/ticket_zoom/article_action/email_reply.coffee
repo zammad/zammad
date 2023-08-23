@@ -408,7 +408,7 @@ class EmailReply extends App.Controller
       return ''
 
     date = @date_format(article.created_at)
-    name = (article.origin_by || article.created_by).displayName()
+    name = article.recipientName()
 
     App.i18n.translateInline('On %s, %s wrote:', date, name) + '<br><br>'
 
