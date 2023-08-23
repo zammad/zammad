@@ -2,12 +2,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { CommonStepperStep as Step } from './types.ts'
+import type { FormStep } from '#shared/components/Form/types.ts'
 import CommonStepperStep from './CommonStepperStep.vue'
 
 interface Props {
   modelValue: string
-  steps: Record<string, Step>
+  steps: Record<string, FormStep>
 }
 
 const props = defineProps<Props>()

@@ -4,7 +4,7 @@ import { createMessage, getNode } from '@formkit/core'
 import type { FormKitNode } from '@formkit/core'
 import { computed, toRef, ref, reactive, watch } from 'vue'
 import type { ComputedRef, Ref } from 'vue'
-import type { CommonStepperStep } from '#mobile/components/CommonStepper/index.ts'
+import type { FormStep } from './types.ts'
 
 interface InternalMultiFormSteps {
   label: string
@@ -95,8 +95,8 @@ export const useMultiStepForm = (
     return false
   }
 
-  const allSteps = computed<Record<string, CommonStepperStep>>(() => {
-    const mappedSteps: Record<string, CommonStepperStep> = {}
+  const allSteps = computed<Record<string, FormStep>>(() => {
+    const mappedSteps: Record<string, FormStep> = {}
 
     stepNames.value.forEach((stepName) => {
       const alreadyVisisted = visitedSteps.value.includes(stepName)

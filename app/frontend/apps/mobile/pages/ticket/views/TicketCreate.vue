@@ -35,7 +35,7 @@ import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEdit
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
-import { errorOptions } from '#mobile/router/error.ts'
+import { errorOptions } from '#shared/router/error.ts'
 import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
 import {
   useTicketDuplicateDetectionHandler,

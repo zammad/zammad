@@ -234,3 +234,12 @@ export interface FormRef {
     groupNode?: FormKitNode,
   ): void
 }
+
+export interface FormStep {
+  label: string
+  order: number
+  errorCount: number
+  valid: boolean
+  disabled: boolean
+  completed: boolean
+}

@@ -1,14 +1,14 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import type { FormStep } from '#shared/components/Form/types.ts'
 import { ref } from 'vue'
 import CommonStepper from '../CommonStepper.vue'
-import type { CommonStepperStep } from '../types.ts'
 
 describe('stepper component', () => {
   test('renders valid steps', async () => {
     const modelValue = ref('step1')
-    const steps: Record<string, CommonStepperStep> = {
+    const steps: Record<string, FormStep> = {
       step1: {
         label: '1',
         order: 1,

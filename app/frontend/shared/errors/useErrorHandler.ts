@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { redirectToError } from '#mobile/router/error.ts'
+import { redirectToError } from '#shared/router/error.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
 import { useRouter } from 'vue-router'
