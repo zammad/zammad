@@ -819,6 +819,8 @@ class App.ControllerForm extends App.Controller
     # show new errors
     for key, msg of data.errors
 
+      msg = App.i18n.translatePlain(msg)
+
       # generic validation
       itemGeneric = lookupForm.find('[name="' + key + '"]').closest('.form-group')
       itemGeneric.addClass('has-error')
