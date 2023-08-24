@@ -2,21 +2,27 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system do
+RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, type: :system do
   let(:group_1)               { create(:group) }
   let(:group_2)               { create(:group) }
   let(:macro_without_group)   { create(:macro) }
-  let(:macro_note)            { create(:macro, name: 'Macro note', perform: { 'article.note'=>{ 'body' => 'macro body', 'internal' => 'true', 'subject' => 'macro note' } }) }
   let(:macro_group1)          { create(:macro, groups: [group_1]) }
   let(:macro_group2)          { create(:macro, groups: [group_2]) }
   let!(:ticket_1)             { create(:ticket, title: 'Testing Ticket 1', group: group_1) }
   let!(:ticket_2)             { create(:ticket, title: 'Testing Ticket 2', group: group_2) }
   let(:note)                  { 'Test note' }
+  let(:authenticate_user)     { true }
+  let(:before_authenticate)   { nil }
+
+  def authenticate
+    ticket_1 && ticket_2
+    macro_without_group && macro_group1 && macro_group2
+    before_authenticate
+    searchindex_model_reload([Ticket, Organization, User])
+    authenticate_user
+  end
 
   before do
-    ticket_1 && ticket_2
-    searchindex_model_reload([Ticket, Organization, User])
-
     visit '/'
   end
 
@@ -30,13 +36,9 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
     end
   end
 
-  context 'with ticket search result', authenticated_as: :authenticate do
+  context 'with ticket search result' do
     let(:agent) { create(:agent, groups: Group.all) }
-
-    def authenticate
-      ticket_1 && ticket_2
-      agent
-    end
+    let(:authenticate_user) { agent }
 
     before do
       fill_in id: 'global-search', with: 'Testing'
@@ -152,7 +154,7 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
     end
   end
 
-  context 'with ticket search result for macros bulk action', authenticated_as: :authenticate do
+  context 'with ticket search result for macros bulk action' do
     let(:group_3)      { create(:group) }
     let(:search_query) { 'Testing' }
     let!(:ticket_3)    { create(:ticket, title: 'Testing Ticket 3', group: group_3) }
@@ -168,11 +170,8 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
     end
 
     describe 'group-dependent macros' do
-      def authenticate
-        ticket_1 && ticket_2 && ticket_3
-        macro_without_group && macro_group1 && macro_group2
-        agent
-      end
+      let(:authenticate_user) { agent }
+      let(:before_authenticate) { ticket_3 }
 
       it 'shows only non-group macro when ticket does not match any group macros' do
         within(:active_content) do
@@ -196,16 +195,8 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
     end
 
     describe 'when agent cannot change some of the tickets' do
-      def authenticate
-        ticket_1
-        macro_without_group
-        agent
-
-        # add ticket after agent is created to not add default access for agent
-        agent.user_groups.create! group: ticket_3.group, access: 'read'
-
-        agent
-      end
+      let(:authenticate_user)   { agent }
+      let(:before_authenticate) { agent.user_groups.create! group: ticket_3.group, access: 'read' }
 
       it 'show macros if agent cannot change selected tickets' do
         display_macro_batches ticket_1
@@ -229,13 +220,9 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
 
     describe 'when user is agent-customer' do
       let(:agent_customer) { create(:agent_and_customer) }
-
-      def authenticate
+      let(:authenticate_user) { agent_customer }
+      let(:before_authenticate) do
         ticket_1.update!(customer: agent_customer)
-        ticket_2
-
-        macro_without_group && macro_group1 && macro_group2
-
         agent_customer
           .tap { |user| user.groups << group_2 }
       end
@@ -266,12 +253,8 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
 
     describe 'when user is customer' do
       let(:customer) { create(:customer) }
-
-      def authenticate
-        ticket_1.update!(customer: customer)
-
-        customer
-      end
+      let(:authenticate_user)   { customer }
+      let(:before_authenticate) { ticket_1.update!(customer: customer) }
 
       it 'shows no overlay' do
         display_macro_batches ticket_1
@@ -323,11 +306,8 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
         end
       end
 
-      def authenticate
-        ticket_1 && ticket_2
-        Macro.destroy_all && create_list(:macro, all)
-        agent
-      end
+      let(:authenticate_user)   { agent }
+      let(:before_authenticate) { Macro.destroy_all && create_list(:macro, all) }
 
       context 'with few macros' do
         let(:all) { 15 }
@@ -359,14 +339,11 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
     end
   end
 
-  context 'Organization members', authenticated_as: :authenticate do
+  context 'Organization members' do
     let(:organization) { create(:organization) }
     let(:members)      { organization.members.reorder(id: :asc) }
 
-    def authenticate
-      create_list(:customer, 50, organization: organization)
-      true
-    end
+    let(:before_authenticate) { create_list(:customer, 50, organization: organization) }
 
     before do
       fill_in id: 'global-search', with: organization.name.to_s
@@ -413,13 +390,9 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
     end
   end
 
-  describe 'Search is not triggered/updated if url of search is updated new search item or new search is triggered via global search #3873', authenticated_as: :authenticate do
-    let(:agent) { create(:agent, groups: Group.all) }
-
-    def authenticate
-      ticket_1 && ticket_2
-      agent
-    end
+  describe 'Search is not triggered/updated if url of search is updated new search item or new search is triggered via global search #3873' do
+    let(:agent)             { create(:agent, groups: Group.all) }
+    let(:authenticate_user) { agent }
 
     context 'when search changed via input box' do
       before do
@@ -479,15 +452,13 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
     end
   end
 
-  context 'Assign user to multiple organizations #1573', authenticated_as: :authenticate do
+  context 'Assign user to multiple organizations #1573' do
     let(:organizations) { create_list(:organization, 20) }
     let(:customer)      { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
 
     context 'when agent' do
-      def authenticate
-        customer
-        true
-      end
+      let(:authenticate_user) { true }
+      let(:before_authenticate) { customer }
 
       before do
         fill_in id: 'global-search', with: customer.firstname.to_s
@@ -503,7 +474,9 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
       end
     end
 
-    context 'when customer', authenticated_as: :customer do
+    context 'when customer' do
+      let(:authenticate_user) { customer }
+
       before do
         fill_in id: 'global-search', with: organizations[0].name.to_s
       end
@@ -516,20 +489,17 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
     end
   end
 
-  describe 'Searches display all groups and owners on bulk selections #4054', authenticated_as: :authenticate do
-    let(:group_1) { create(:group) }
-    let(:group_2)      { create(:group) }
-    let(:agent_1)      { create(:agent, groups: [group_1]) }
-    let(:agent_2)      { create(:agent, groups: [group_2]) }
-    let(:agent_all)    { create(:agent, groups: [group_1, group_2]) }
-    let!(:ticket_1)    { create(:ticket, group: group_1, title: '4054 group 1') }
-    let!(:ticket_2)    { create(:ticket, group: group_2, title: '4054 group 2') }
+  describe 'Searches display all groups and owners on bulk selections #4054' do
+    let(:group_1)   { create(:group) }
+    let(:group_2)   { create(:group) }
+    let(:agent_1)   { create(:agent, groups: [group_1]) }
+    let(:agent_2)   { create(:agent, groups: [group_2]) }
+    let(:agent_all) { create(:agent, groups: [group_1, group_2]) }
+    let!(:ticket_1) { create(:ticket, group: group_1, title: '4054 group 1') }
+    let!(:ticket_2) { create(:ticket, group: group_2, title: '4054 group 2') }
 
-    def authenticate
-      agent_1 && agent_2 && agent_all
-      ticket_1 && ticket_2
-      agent_all
-    end
+    let(:before_authenticate) { agent_1 && agent_2 && agent_all }
+    let(:authenticate_user) { agent_all }
 
     def check_owner_empty
       expect(page).to have_select('owner_id', text: '-', visible: :all)
@@ -650,12 +620,9 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
       visit '#dashboard'
     end
 
-    context 'when customer', authenticated_as: :authenticate do
-      def authenticate
-        organization && customer && ticket
-        searchindex_model_reload([Ticket, Organization, User])
-        customer
-      end
+    context 'when customer' do
+      let(:before_authenticate) { organization && customer && ticket }
+      let(:authenticate_user) { customer }
 
       it 'does find the ticket' do
         fill_in id: 'global-search', with: ticket.title
@@ -676,12 +643,9 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
       end
     end
 
-    context 'when agent', authenticated_as: :authenticate do
-      def authenticate
-        organization && customer && ticket
-        searchindex_model_reload([Ticket, Organization, User])
-        agent
-      end
+    context 'when agent' do
+      let(:before_authenticate) { organization && customer && ticket }
+      let(:authenticate_user) { agent }
 
       it 'does find the ticket' do
         fill_in id: 'global-search', with: ticket.title
@@ -702,12 +666,9 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
       end
     end
 
-    context 'when admin only', authenticated_as: :authenticate do
-      def authenticate
-        organization && customer && ticket
-        searchindex_model_reload([Ticket, Organization, User])
-        admin
-      end
+    context 'when admin only' do
+      let(:authenticate_user) { admin }
+      let(:before_authenticate) { organization && customer && ticket }
 
       it 'does not find the ticket' do
         fill_in id: 'global-search', with: ticket.title
@@ -729,13 +690,9 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
     end
   end
 
-  describe 'popover closes when item is opened', authenticated_as: :authenticate do
+  describe 'popover closes when item is opened' do
     let(:agent) { create(:agent, groups: Group.all) }
-
-    def authenticate
-      ticket_1 && ticket_2
-      agent
-    end
+    let(:authenticate_user) { agent }
 
     before do
       fill_in id: 'global-search', with: 'Testing'
