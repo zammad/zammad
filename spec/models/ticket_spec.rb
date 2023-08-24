@@ -2155,10 +2155,11 @@ RSpec.describe Ticket, type: :model do
 
     context 'selectors' do
       let(:mention_group) { create(:group) }
-      let(:ticket_mentions)  { create(:ticket, group: mention_group) }
-      let(:ticket_normal)    { create(:ticket, group: mention_group) }
-      let(:user_mentions)    { create(:agent, groups: [mention_group]) }
-      let(:user_no_mentions) { create(:agent, groups: [mention_group]) }
+      let(:ticket_mentions)    { create(:ticket, group: mention_group) }
+      let(:ticket_normal)      { create(:ticket, group: mention_group) }
+      let(:user_mentions)      { create(:agent, groups: [mention_group]) }
+      let(:user_mentions_2)    { create(:agent, groups: [mention_group]) }
+      let(:user_no_mentions)   { create(:agent, groups: [mention_group]) }
 
       before do
         described_class.destroy_all
@@ -2176,7 +2177,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to contain_exactly(1, [ticket_normal].to_a)
+          .to contain_exactly(1, [ticket_normal])
       end
 
       it 'pre condition is not not_set' do
@@ -2188,7 +2189,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to contain_exactly(1, [ticket_mentions].to_a)
+          .to contain_exactly(1, [ticket_mentions])
       end
 
       it 'pre condition is current_user.id' do
@@ -2200,10 +2201,10 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: user_mentions))
-          .to contain_exactly(1, [ticket_mentions].to_a)
+          .to contain_exactly(1, [ticket_mentions])
       end
 
-      it 'pre condition is not current_user.id' do
+      it 'pre condition is not current_user.id (one mention on one ticket)' do
         condition = {
           'ticket.mention_user_ids' => {
             pre_condition: 'current_user.id',
@@ -2212,7 +2213,21 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: user_mentions))
-          .to contain_exactly(0, [])
+          .to contain_exactly(1, [ticket_normal])
+      end
+
+      it 'pre condition is not current_user.id (multiple mentions on one ticket)' do
+        create(:mention, mentionable: ticket_mentions, user: user_mentions_2)
+
+        condition = {
+          'ticket.mention_user_ids' => {
+            pre_condition: 'current_user.id',
+            operator:      'is not',
+          },
+        }
+
+        expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: user_mentions))
+          .to contain_exactly(1, [ticket_normal])
       end
 
       it 'pre condition is specific' do
@@ -2238,7 +2253,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to contain_exactly(0, [])
+          .to contain_exactly(1, [ticket_normal])
       end
     end
   end
