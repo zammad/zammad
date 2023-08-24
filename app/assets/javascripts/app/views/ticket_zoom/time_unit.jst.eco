@@ -12,8 +12,8 @@
           <tr>
             <td>
               <span title="<%= @T(entry[0]) %>">
-                <%= @T(entry[0]).substr(0, 14) %>
-                <% if @T(entry[0]).length > 14: %>...<% end %>
+                <%= @T(entry[0]).substr(0, 10) %>
+                <% if @T(entry[0]).length > 10: %>...<% end %>
               </span>
             </td>
             <td><%= parseFloat(entry[1]).toFixed(1) %></td>
