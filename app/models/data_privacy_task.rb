@@ -17,6 +17,8 @@ class DataPrivacyTask < ApplicationModel
 
   validates_with Validations::DataPrivacyTaskValidator
 
+  MAX_PREVIEW_TICKETS = 1000
+
   def perform
     perform_deletable
     update!(state: 'completed')
@@ -79,9 +81,12 @@ class DataPrivacyTask < ApplicationModel
     prepare_deletion_preview_anonymize
   end
 
-  def prepare_deletion_preview_tickets
-    preferences[:owner_tickets]    = deletable.owner_tickets.reorder(id: 'DESC').map(&:number)
-    preferences[:customer_tickets] = deletable.customer_tickets.reorder(id: 'DESC').map(&:number)
+  def prepare_deletion_preview_tickets # rubocop:disable Metrics/AbcSize
+    preferences[:owner_tickets]       = owner_tickets.limit(MAX_PREVIEW_TICKETS).map(&:number)
+    preferences[:owner_tickets_count] = owner_tickets.count
+
+    preferences[:customer_tickets]       = customer_tickets.limit(MAX_PREVIEW_TICKETS).map(&:number)
+    preferences[:customer_tickets_count] = customer_tickets.count
   end
 
   def prepare_deletion_preview_user
@@ -105,5 +110,15 @@ class DataPrivacyTask < ApplicationModel
   def self.cleanup(diff = 12.months)
     where('created_at < ?', diff.ago).destroy_all
     true
+  end
+
+  private
+
+  def owner_tickets
+    @owner_tickets ||= deletable.owner_tickets.reorder(id: 'DESC')
+  end
+
+  def customer_tickets
+    @customer_tickets ||= deletable.customer_tickets.reorder(id: 'DESC')
   end
 end
