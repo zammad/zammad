@@ -51,7 +51,7 @@ curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password}
 =end
 
   def index
-    online_notifications = OnlineNotification.list(current_user, 200)
+    online_notifications = OnlineNotification.list(current_user)
 
     if response_expand?
       list = []
@@ -178,12 +178,14 @@ curl http://localhost/api/v1/online_notifications/mark_all_as_read -v -u #{login
 =end
 
   def mark_all_as_read
-    notifications = OnlineNotification.list(current_user, 200)
-    notifications.each do |notification|
-      next if notification['seen']
+    OnlineNotification
+      .list(current_user, limit: nil, access: 'ignore')
+      .where(seen: false)
+      .in_batches
+      .each_record do |notification|
+        notification.update!(seen: true)
+      end
 
-      OnlineNotification.find(notification['id']).update!(seen: true)
-    end
     render json: {}, status: :ok
   end
 end

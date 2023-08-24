@@ -106,16 +106,34 @@ remove whole online notifications of an object by type
 
 =begin
 
-return all online notifications of an user
+return online notifications of an user.
 
-  notifications = OnlineNotification.list(user, limit)
+@param user [User] to get notifications of
+@param limit [Integer] of notifications to get
+@param ensure_access [Boolean] to check if user still has access to referenced ticket
+@param access [String] can be 'full', 'read', 'create' or 'ignore' (ignore means a selector over all tickets)
+
+@example
+
+  notifications = OnlineNotification.list(user, limit: 123, access: 'full')
 
 =end
 
-  def self.list(user, limit)
-    OnlineNotification.where(user_id: user.id)
-                      .reorder(created_at: :desc)
-                      .limit(limit)
+  def self.list(user, limit: 200, access: 'read')
+    relation = OnlineNotification
+      .where(user_id: user.id)
+      .reorder(created_at: :desc)
+      .limit(limit)
+
+    return relation if access == 'ignore'
+
+    object_id = ObjectLookup.by_name 'Ticket'
+
+    relation
+      .joins("LEFT JOIN tickets ON online_notifications.object_lookup_id = #{ActiveRecord::Base.connection.quote(object_id)} AND tickets.id = online_notifications.o_id")
+      .where('online_notifications.object_lookup_id != :object_id OR (online_notifications.object_lookup_id = :object_id AND tickets.group_id IN (:group_ids))',
+             object_id: object_id,
+             group_ids: user.group_ids_access(access))
   end
 
 =begin
@@ -128,65 +146,14 @@ return all online notifications of an object
 
   def self.list_by_object(object_name, o_id)
     object_id = ObjectLookup.by_name(object_name)
-    OnlineNotification.where(
-      object_lookup_id: object_id,
-      o_id:             o_id,
-    )
-                                      .reorder(created_at: :desc)
-                                      .limit(10_000)
 
-  end
-
-=begin
-
-mark online notification as seen by object
-
-  OnlineNotification.seen_by_object('Ticket', 123, user_id)
-
-=end
-
-  def self.seen_by_object(object_name, o_id)
-    object_id     = ObjectLookup.by_name(object_name)
-    notifications = OnlineNotification.where(
-      object_lookup_id: object_id,
-      o_id:             o_id,
-      seen:             false,
-    )
-    notifications.each do |notification|
-      notification.seen = true
-      notification.save
-    end
-    true
-  end
-
-  def notify_clients_after_change
-    Sessions.send_to(
-      user_id,
-      {
-        event: 'OnlineNotification::changed',
-        data:  {}
-      }
-    )
-  end
-
-=begin
-
-check if all notifications are seen for dedicated object
-
-  OnlineNotification.all_seen?('Ticket', 123)
-
-returns:
-
-  true # false
-
-=end
-
-  def self.all_seen?(object_name, o_id)
-    notifications = OnlineNotification.list_by_object(object_name, o_id)
-    notifications.each do |onine_notification|
-      return false if !onine_notification['seen']
-    end
-    true
+    OnlineNotification
+      .where(
+        object_lookup_id: object_id,
+        o_id:             o_id,
+      )
+      .reorder(created_at: :desc)
+      .limit(10_000)
   end
 
 =begin
@@ -231,5 +198,17 @@ with dedicated times
     end
 
     true
+  end
+
+  private
+
+  def notify_clients_after_change
+    Sessions.send_to(
+      user_id,
+      {
+        event: 'OnlineNotification::changed',
+        data:  {}
+      }
+    )
   end
 end

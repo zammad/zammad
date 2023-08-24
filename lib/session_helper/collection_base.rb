@@ -16,7 +16,7 @@ module SessionHelper::CollectionBase
     end
 
     collections[ OnlineNotification.to_app_model ] = []
-    OnlineNotification.list(user, 200).each do |item|
+    OnlineNotification.list(user).each do |item|
       assets = item.assets(assets)
     end
 

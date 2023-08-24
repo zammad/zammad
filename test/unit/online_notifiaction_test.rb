@@ -123,7 +123,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already closed
-    assert(OnlineNotification.all_seen?('Ticket', ticket1.id))
+    assert(all_notifications_seen?('Ticket', ticket1.id))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket1.id, 'create', @agent_user1, false))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket1.id, 'create', @agent_user1, true))
     assert_not(notification_exists?(@agent_user2, 'Ticket', ticket1.id, 'create', @agent_user1, false))
@@ -139,7 +139,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already open
-    assert_not(OnlineNotification.all_seen?('Ticket', ticket1.id))
+    assert_not(all_notifications_seen?('Ticket', ticket1.id))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket1.id, 'update', @customer_user, true))
     assert(notification_exists?(@agent_user1, 'Ticket', ticket1.id, 'update', @customer_user, false))
     assert_not(notification_exists?(@agent_user2, 'Ticket', ticket1.id, 'update', @customer_user, true))
@@ -174,7 +174,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already closed
-    assert_not(OnlineNotification.all_seen?('Ticket', ticket2.id))
+    assert_not(all_notifications_seen?('Ticket', ticket2.id))
     assert(notification_exists?(@agent_user1, 'Ticket', ticket2.id, 'create', @customer_user, false))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket2.id, 'create', @customer_user, true))
     assert_not(notification_exists?(@agent_user2, 'Ticket', ticket2.id, 'create', @customer_user, false))
@@ -190,7 +190,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already open
-    assert_not(OnlineNotification.all_seen?('Ticket', ticket2.id))
+    assert_not(all_notifications_seen?('Ticket', ticket2.id))
     assert(notification_exists?(@agent_user1, 'Ticket', ticket2.id, 'update', @customer_user, false))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket2.id, 'update', @customer_user, true))
     assert_not(notification_exists?(@agent_user2, 'Ticket', ticket2.id, 'update', @customer_user, true))
@@ -224,7 +224,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already new
-    assert_not(OnlineNotification.all_seen?('Ticket', ticket3.id))
+    assert_not(all_notifications_seen?('Ticket', ticket3.id))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket3.id, 'create', @agent_user1, false))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket3.id, 'create', @agent_user1, true))
     assert(notification_exists?(@agent_user2, 'Ticket', ticket3.id, 'create', @agent_user1, false))
@@ -240,7 +240,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already closed
-    assert(OnlineNotification.all_seen?('Ticket', ticket3.id))
+    assert(all_notifications_seen?('Ticket', ticket3.id))
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, @agent_user1, 'update'))
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, @agent_user2, 'update'))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, false))
@@ -262,7 +262,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already closed but an follow-up arrived later
-    assert_not(OnlineNotification.all_seen?('Ticket', ticket3.id))
+    assert_not(all_notifications_seen?('Ticket', ticket3.id))
     assert(notification_exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, false))
     assert(notification_exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, true))
     assert(notification_exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, false))
@@ -298,7 +298,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already new
-    assert_not(OnlineNotification.all_seen?('Ticket', ticket4.id))
+    assert_not(all_notifications_seen?('Ticket', ticket4.id))
     assert(notification_exists?(@agent_user1, 'Ticket', ticket4.id, 'create', @customer_user, false))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket4.id, 'create', @customer_user, true))
     assert_not(notification_exists?(@agent_user2, 'Ticket', ticket4.id, 'create', @customer_user, false))
@@ -314,7 +314,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already open
-    assert_not(OnlineNotification.all_seen?('Ticket', ticket4.id))
+    assert_not(all_notifications_seen?('Ticket', ticket4.id))
     assert(notification_exists?(@agent_user1, 'Ticket', ticket4.id, 'update', @customer_user, false))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket4.id, 'update', @customer_user, true))
     assert_not(notification_exists?(@agent_user2, 'Ticket', ticket4.id, 'update', @customer_user, false))
@@ -348,7 +348,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already new
-    assert_not(OnlineNotification.all_seen?('Ticket', ticket5.id))
+    assert_not(all_notifications_seen?('Ticket', ticket5.id))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket5.id, 'create', @agent_user1, true))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket5.id, 'create', @agent_user1, false))
     assert(notification_exists?(@agent_user2, 'Ticket', ticket5.id, 'create', @agent_user1, false))
@@ -364,7 +364,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     perform_enqueued_jobs commit_transaction: true
 
     # because it's already open
-    assert_not(OnlineNotification.all_seen?('Ticket', ticket5.id))
+    assert_not(all_notifications_seen?('Ticket', ticket5.id))
     assert(notification_exists?(@agent_user1, 'Ticket', ticket5.id, 'update', @customer_user, false))
     assert_not(notification_exists?(@agent_user1, 'Ticket', ticket5.id, 'update', @customer_user, true))
     assert(notification_exists?(@agent_user2, 'Ticket', ticket5.id, 'update', @customer_user, false))
@@ -379,11 +379,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     notifications = OnlineNotification.list_by_object('Ticket', tickets[0].id)
     assert(notifications.present?, 'should have notifications')
-    assert(OnlineNotification.all_seen?('Ticket', tickets[0].id), 'still not seen notifications for merged ticket available')
+    assert(all_notifications_seen?('Ticket', tickets[0].id), 'still not seen notifications for merged ticket available')
 
     notifications = OnlineNotification.list_by_object('Ticket', tickets[1].id)
     assert(notifications.present?, 'should have notifications')
-    assert_not(OnlineNotification.all_seen?('Ticket', tickets[1].id), 'no notifications for master ticket available')
+    assert_not(all_notifications_seen?('Ticket', tickets[1].id), 'no notifications for master ticket available')
 
     # delete tickets
     tickets.each do |ticket|
@@ -669,7 +669,7 @@ returns:
     type_id       = TypeLookup.by_name(type_name)
 
     OnlineNotification
-      .list(user, 10)
+      .list(user, limit: 10)
       .any? do |notification|
         next if notification.o_id != o_id
         next if notification.object_lookup_id != object_id
@@ -679,5 +679,11 @@ returns:
 
         next true
       end
+  end
+
+  def all_notifications_seen?(object_name, o_id)
+    !OnlineNotification
+      .list_by_object(object_name, o_id)
+      .exists?(seen: false)
   end
 end
