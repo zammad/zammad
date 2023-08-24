@@ -455,4 +455,10 @@ RSpec.describe Calendar, type: :model do
       end
     end
   end
+
+  describe '.timezones' do
+    it 'includes known zones' do
+      expect(described_class.timezones.keys).to include('GMT', 'Europe/Berlin', 'Atlantic/Reykjavik')
+    end
+  end
 end
