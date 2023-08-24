@@ -1,6 +1,6 @@
 <div style="display:flex">
   <div style="margin-right: 5em">
-    <label>Author</label>
+    <label><%- @T('Author') %></label>
     <div style="display: flex; align-items: center;">
       <span class="js-avatar" style="margin-right: 0.5em"></span>
       <%= @name %>
@@ -8,7 +8,7 @@
   </div>
 
   <div>
-    <label>Last changed</label>
+    <label><%- @T('Last changed') %></label>
     <div>
       <%- @humanTime(@timestamp) %>
     </div>
@@ -17,7 +17,7 @@
 
 <hr>
 
-<label>Text</label>
-<div class='richtext-content'>
+<label><%- @T('Text') %></label>
+<div class="richtext-content" dir="auto">
   <%- @body %>
 </div>

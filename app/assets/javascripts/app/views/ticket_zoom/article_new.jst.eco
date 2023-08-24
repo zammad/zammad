@@ -84,7 +84,7 @@
 
       <div class="textBubble js-writeArea">
         <div class="bubble-arrow"></div>
-        <div class="js-textarea richtext-content articleNewEdit-body" contenteditable="true" data-name="body"><%- @article.body %></div>
+        <div class="js-textarea richtext-content articleNewEdit-body" dir="auto" contenteditable="true" data-name="body"><%- @article.body %></div>
         <!-- .textBubble grows with textarea (and expanding clone) -->
         <div class="textBubble-footer js-textSizeLimit">
           <div class="textBubble-signatur"><span class="js-signature"></span></div>
