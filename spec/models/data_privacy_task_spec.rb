@@ -68,19 +68,49 @@ RSpec.describe DataPrivacyTask, type: :model do
 
     context 'when User is owner of Tickets' do
 
-      let!(:owner_tickets) { create_list(:ticket, 3, owner: user) }
+      let(:owner_tickets) { create_list(:ticket, 3, owner: user) }
+
+      before { owner_tickets }
 
       it 'stores the numbers' do
         expect(task[:preferences][:owner_tickets]).to eq(owner_tickets.reverse.map(&:number))
+      end
+
+      context 'when a lot of tickets exists' do
+        before do
+          stub_const('DataPrivacyTask::MAX_PREVIEW_TICKETS', 5)
+        end
+
+        let(:owner_tickets) { create_list(:ticket, 6, owner: user) }
+
+        it 'stores maximum amount', :aggregate_failures do
+          expect(task[:preferences][:owner_tickets].size).to be(5)
+          expect(task[:preferences][:owner_tickets_count]).to be(6)
+        end
       end
     end
 
     context 'when User is customer of Tickets' do
 
-      let!(:customer_tickets) { create_list(:ticket, 3, customer: user) }
+      let(:customer_tickets) { create_list(:ticket, 3, customer: user) }
+
+      before { customer_tickets }
 
       it 'stores the numbers' do
         expect(task[:preferences][:customer_tickets]).to eq(customer_tickets.reverse.map(&:number))
+      end
+
+      context 'when a lot of tickets exists' do
+        before do
+          stub_const('DataPrivacyTask::MAX_PREVIEW_TICKETS', 5)
+        end
+
+        let(:customer_tickets) { create_list(:ticket, 6, customer: user) }
+
+        it 'stores maximum amount', :aggregate_failures do
+          expect(task[:preferences][:customer_tickets].size).to be(5)
+          expect(task[:preferences][:customer_tickets_count]).to be(6)
+        end
       end
     end
   end
