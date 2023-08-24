@@ -7,7 +7,7 @@ data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
         <%= @object.translation.title %>
       </h1>
 
-      <div class="article-content">
+      <div class="article-content" dir="auto">
         <%= prepare_rich_text(@object.translation.content.body_with_urls).html_safe %>
       </div>
 
