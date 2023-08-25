@@ -90,14 +90,14 @@ class ChannelForm extends App.ControllerSubContent
       @$('.js-formBtn').removeClass('hide')
       @$('.js-formBtn').ZammadForm(params)
       @$('.js-formBtn').text('Feedback')
-      @$('.js-formInline').toggleClass('no-css', params.noCSS)
+      @$('.js-formInline').toggleClass('no-css', !!params.noCSS)
     else
       @$('.js-modal').addClass('hide')
       @$('.js-inlineForm').removeClass('hide')
       @$('.js-formBtn').addClass('hide')
       @$('.js-formInline').removeClass('hide')
       @$('.js-formInline').ZammadForm(params)
-      @$('.js-formInline').toggleClass('no-css', params.noCSS)
+      @$('.js-formInline').toggleClass('no-css', !!params.noCSS)
 
   toggleFormSetting: =>
     value = @formSetting.prop('checked')
