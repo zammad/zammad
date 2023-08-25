@@ -542,6 +542,7 @@ class App.TicketCreate extends App.Controller
       data:
         config: App.Config.all()
         user: App.Session.get()
+        ticket: @formDefault
       taskKey: @taskKey
     )
 
@@ -603,14 +604,16 @@ class App.TicketCreate extends App.Controller
     callbackUser()
 
   localUserInfoCallback: (params) =>
-    customer = App.User.find(params.customer_id) || {}
+
+    # update params with new customer selection
+    # to replace in text modules properly
+    params.customer = App.User.find(params.customer_id) || {}
 
     @sidebarWidget.render(params)
     @textModule.reload(
       config: App.Config.all()
       user: App.Session.get()
-      ticket:
-        customer: customer
+      ticket: params
     )
 
   cancel: (e) ->

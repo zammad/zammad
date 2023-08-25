@@ -308,7 +308,7 @@ RSpec.describe 'Ticket Update', type: :system do
   end
 
   context 'when using text modules' do
-    include_examples 'text modules', path: "#ticket/zoom/#{Ticket.first.id}"
+    include_examples 'text modules', path: "#ticket/zoom/#{Ticket.first.id}", ticket: Ticket.first
 
     context 'when owner is used in a text module and was updated in the ticket', authenticated_as: :authenticate do
       let(:user)         { User.find_by(email: 'agent1@example.com') }

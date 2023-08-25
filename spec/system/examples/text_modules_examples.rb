@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'text modules' do |path:|
+RSpec.shared_examples 'text modules' do |path:, ticket: nil|
   let!(:agent_fixed_name)           { create(:agent, firstname: 'FFFF1', lastname: 'GGGG1', groups: [Group.find_by(name: 'Users')]) }
   let!(:group1)                     { create(:group) }
   let!(:group2)                     { create(:group) }
@@ -183,6 +183,25 @@ RSpec.shared_examples 'text modules' do |path:|
 
       shown_text_modules_text = shown_text_modules.map(&:text)
       expect(shown_text_modules_text).to eq(expected_order)
+    end
+  end
+
+  context 'when Group restriction for text modules not working on ticket creation (specific scenario only) #4358', authenticated_as: :authenticate do
+    let(:agent) { create(:agent, groups: [group1]) }
+
+    def authenticate
+      agent
+    end
+
+    it 'does show group related text modules when the group is hidden' do
+      ticket&.update(group: group1)
+      visit path
+      within(:active_content) do
+        expect(page).to have_css('[data-attribute-name=group_id].is-hidden', visible: :all)
+        find(:richtext).send_keys(':')
+        find(:richtext).send_keys(':')
+        expect(page).to have_selector(:text_module, text_module_group1.id)
+      end
     end
   end
 end
