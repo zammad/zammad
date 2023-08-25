@@ -17,7 +17,7 @@
     }
 
     try {
-      if(window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('theme') != 'light' ){
+      if(window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('theme') != 'light' && !window.location.href.includes('/tests_') ){
         document.documentElement.dataset.theme = 'dark';
       }
     } catch (e) { };
