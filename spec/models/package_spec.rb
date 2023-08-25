@@ -279,4 +279,11 @@ RSpec.describe Package, type: :model do
       expect_uninstall_package
     end
   end
+
+  describe 'Vendor url in installed package is the zammad instance url #4753' do
+    it 'does have a url for the package' do
+      described_class.install(string: package_zpm_json)
+      expect(described_class.last.url).to eq('https://zammad.org/')
+    end
+  end
 end

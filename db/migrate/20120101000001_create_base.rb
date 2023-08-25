@@ -296,6 +296,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :version,              limit: 50,  null: false
       t.string :vendor,               limit: 150, null: false
       t.string :state,                limit: 50,  null: false
+      t.string :url,                  limit: 512,  null: true
       t.integer :updated_by_id,                   null: false
       t.integer :created_by_id,                   null: false
       t.timestamps limit: 3, null: false
