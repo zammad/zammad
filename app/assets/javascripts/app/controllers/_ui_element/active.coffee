@@ -1,5 +1,10 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.active extends App.UiElement.ApplicationUiElement
+  @OPTIONS: [
+    { name: __('active'), value: true }
+    { name: __('inactive'), value: false }
+  ]
+
   @render: (attributeConfig, params) ->
     attribute = $.extend(true, {}, attributeConfig)
 
@@ -8,10 +13,7 @@ class App.UiElement.active extends App.UiElement.ApplicationUiElement
     attribute.translate = true
 
     # build options list
-    attribute.options = [
-      { name: __('active'), value: true }
-      { name: __('inactive'), value: false }
-    ]
+    attribute.options = @OPTIONS
 
     # build options list based on config
     @getConfigOptionList(attribute, params)
