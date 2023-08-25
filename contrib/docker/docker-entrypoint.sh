@@ -23,7 +23,6 @@ set -e
 : "${RAILS_ENV:=production}"
 : "${RAILS_LOG_TO_STDOUT:=true}"
 : "${RAILS_TRUSTED_PROXIES:=127.0.0.1,::1}"
-: "${RSYNC_ADDITIONAL_PARAMS:=--no-perms --no-owner}"
 : "${ZAMMAD_DIR:=/opt/zammad}"
 : "${ZAMMAD_RAILSSERVER_HOST:=zammad-railsserver}"
 : "${ZAMMAD_RAILSSERVER_PORT:=3000}"
