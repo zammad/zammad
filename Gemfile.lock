@@ -264,7 +264,7 @@ GEM
     interception (0.5)
     json (2.6.3)
     jwt (2.3.0)
-    koala (3.4.0)
+    koala (3.5.0)
       addressable
       faraday
       faraday-multipart
