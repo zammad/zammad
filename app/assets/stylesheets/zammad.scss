@@ -1528,6 +1528,10 @@ th.align-right {
   }
 }
 
+td.align-right {
+  @include bidi-style(text-align, right, text-align, left);
+}
+
 .table-striped > tbody > tr:nth-child(2n + 1) {
   background-color: var(--background-secondary);
 }

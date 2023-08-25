@@ -674,6 +674,7 @@ class Table extends App.Controller
         #      'mouseover': popOver
         callbackHeader: callbackHeader
         callbackAttributes: callbackAttributes
+        autoAlignLastColumn: true
         bindCheckbox:
           events:
             'click': callbackCheckbox

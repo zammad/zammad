@@ -629,6 +629,20 @@ class App.ControllerTable extends App.Controller
       for callback in @callbackHeader
         @headers = callback(@headers)
 
+    # update headers to align to trailing edge
+    if @autoAlignLastColumn
+      lastColumnConfig = _.last(@headers)
+
+      for attr in @headers
+        if attr.autoAligned
+          delete attr.autoAligned
+          delete attr.align
+
+      if ['datetime', 'date'].includes(lastColumnConfig?.tag)
+        if _.isEmpty(lastColumnConfig.align)
+          lastColumnConfig.align = 'right'
+          lastColumnConfig.autoAligned = true # set a flag to track which column was automatically aligned
+
     throw 'no headers found' if _.isEmpty(@headers)
 
     if @clone

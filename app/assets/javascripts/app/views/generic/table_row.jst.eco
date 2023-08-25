@@ -31,7 +31,7 @@
   <%     end %>
   <%   end %>
   <% end %>
-  <td<% if header.parentClass: %> class="<%= header.parentClass %>"<% end %><% if header.title: %> title="<%= header.title %>"<% end %><% if header.align: %> style="text-align:<%= header.align %>"<% end %>>
+  <td class="<% if header.parentClass: %><%= header.parentClass %><% end %> <% if header.align: %> align-<%= header.align %><% end %>" <% if header.title: %> title="<%= header.title %>"<% end %>>
     <% if header.name is 'icon': %>
       <%- @Icon('task-state', header.class) %>
     <% else if header.icon: %>

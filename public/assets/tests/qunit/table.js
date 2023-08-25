@@ -903,6 +903,42 @@ QUnit.test('Table - numeric sort', assert => {
   assert.ok(_.isEqual(list_items(el, 3), ['50', '25', '10']), 'Sorting by time unit DESC is fine')
 });
 
+QUnit.test('Last column is right-aligned if auto align flag is set', assert => {
+  $('#qunit').append('<hr><h1>Last column is right-aligned if auto align flag is set</h1><div id="table-data11"></div>')
+  var el = $('#table-data11')
+
+  data = [
+    { name: 'some name 1', date_at: new Date() },
+    { name: 'some "name" 2', date_at: new Date() },
+    { name: 'some name 3', date_at: new Date() },
+  ]
+  new App.ControllerTable({
+    el:       el,
+    overview: ['name', 'date_at'],
+    attribute_list: [
+      { name: 'name', display: 'Name', type: 'text', tag: 'input', translate: true },
+      { name: 'date_at', display: 'Date', type: 'text', tag: 'datetime' },
+    ],
+    autoAlignLastColumn: true,
+    objects: data
+  });
+
+  assert.equal(el.find('tbody > tr > td:last-child.align-right').length, 3, 'last date column aligned to the right')
+
+  new App.ControllerTable({
+    el:       el,
+    overview: ['date_at', 'name'],
+    attribute_list: [
+      { name: 'date_at', display: 'Date', type: 'text', tag: 'datetime' },
+      { name: 'name', display: 'Name', type: 'text', tag: 'input', translate: true },
+    ],
+    autoAlignLastColumn: true,
+    objects: data
+  });
+
+  assert.equal(el.find('tbody > tr > td.align-right').length, 0, 'last non-date column not aligned to the right')
+});
+
 function click_sort(table, column_number) {
   table
     .find(`table > thead > tr > th:nth-child(${column_number}) > .js-sort`)
