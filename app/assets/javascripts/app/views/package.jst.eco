@@ -38,8 +38,8 @@
   <p>
     <form action="<%= App.Config.get('api_path') %>/packages" method="post" enctype="multipart/form-data" class="horizontal center">
       <input type="hidden" name="authenticity_token" value="<%= App.Ajax.token() %>"/>
-      <input type="file" name="file_upload"/>
-      <button class="align-right btn btn--primary" type="submit"><%- @T('Install Package') %></button>
+      <input type="file" name="file_upload" class="js-fileUpload" />
+      <button class="align-right btn btn--primary js-submit" type="submit" disabled="disabled"><%- @T('Install Package') %></button>
     </form>
   </p>
 
