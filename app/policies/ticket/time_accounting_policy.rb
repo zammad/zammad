@@ -20,6 +20,6 @@ class Ticket::TimeAccountingPolicy < ApplicationPolicy
   end
 
   def matches_selector?
-    CoreWorkflow.matches_selector?(id: record.id, user: user, selector: Setting.get('time_accounting_selector')[:condition] || {})
+    CoreWorkflow.matches_selector?(id: record.ticket_id, user: user, selector: Setting.get('time_accounting_selector')[:condition] || {})
   end
 end
