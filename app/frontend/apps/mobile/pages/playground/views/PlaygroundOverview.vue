@@ -473,5 +473,16 @@ const logSubmit = console.log
         { label: 'Send Email', value: 3, icon: 'mobile-mail-out' },
       ]"
     />
+
+    <FormKit
+      wrapper-class="mt-6 flex grow justify-center items-center"
+      input-class="py-2 px-4 w-full h-14 text-xl rounded-xl select-none"
+      variant="submit"
+      type="submit"
+      prefix-icon="mobile-arrow-right"
+      suffix-icon="mobile-arrow-left"
+    >
+      {{ $t('Sign in') }}
+    </FormKit>
   </div>
 </template>

@@ -13,6 +13,10 @@ const classes: FormThemeClasses = {
     help: 'mt-0.5 text-xs',
     messages: 'list-none',
     message: 'text-red-bright pb-1 text-xs',
+    prefixIcon:
+      'absolute top-1/2 transform -translate-y-1/2 rtl:right-3 ltr:left-3',
+    suffixIcon:
+      'absolute top-1/2 transform -translate-y-1/2 rtl:left-3 ltr:right-3',
   },
   text: defaultTextInput,
   email: defaultTextInput,
@@ -42,6 +46,12 @@ const classes: FormThemeClasses = {
     decorator:
       'relative invisible formkit-is-checked:visible rtl:-right-4 ltr:-left-4',
     decoratorIcon: 'absolute',
+  },
+  button: {
+    input: 'flex justify-center items-center',
+  },
+  submit: {
+    input: 'flex justify-center items-center',
   },
 }
 
