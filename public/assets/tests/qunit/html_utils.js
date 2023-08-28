@@ -84,7 +84,7 @@ QUnit.test("text2html", assert => {
   assert.equal(result, should, source)
 
   source = "Some   Value 123"
-  should = "<div>Some &nbsp; Value 123</div>"
+  should = "<span>Some &nbsp; Value 123</span>"
   result = App.Utils.text2html(source)
   assert.equal(result, should, source)
 
@@ -3547,7 +3547,7 @@ QUnit.test('App.Utils.clipboardHtmlInsertPreperation()', assert => {
   assert.equal(App.Utils.clipboardHtmlInsertPreperation("<div><!-- some comment --> \n </div>", {}), " \n ")
   assert.equal(App.Utils.clipboardHtmlInsertPreperation('test', {}), 'test')
   assert.equal(App.Utils.clipboardHtmlInsertPreperation('<div>test</div>', {}), 'test')
-  assert.equal(App.Utils.clipboardHtmlInsertPreperation('<meta http-equiv="content-type" content="text/html; charset=utf-8">sometext', {}), '<div>sometext</div>')
+  assert.equal(App.Utils.clipboardHtmlInsertPreperation('<meta http-equiv="content-type" content="text/html; charset=utf-8">sometext', {}), '<span>sometext</span>')
   assert.equal(App.Utils.clipboardHtmlInsertPreperation('<div><b>test</b> 123</div>', { mode: 'textonly' }), 'test 123')
   assert.equal(App.Utils.clipboardHtmlInsertPreperation('<div><b>test</b><br> 123</div>', { mode: 'textonly' }), 'test 123')
   assert.equal(App.Utils.clipboardHtmlInsertPreperation('<div><b>test</b><br> 123</div>', { mode: 'textonly', multiline: true }), 'test<br> 123')

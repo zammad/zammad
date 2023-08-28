@@ -187,14 +187,14 @@ class App.Utils
       .replace(/\n{3,20}/g, "\n\n")   # remove multiple empty lines
 
   # htmlEscapedAndLinkified = App.Utils.text2html(rawText)
-  @text2html: (ascii, useBlockElement = true) ->
+  @text2html: (ascii) ->
     ascii = @textCleanup(ascii)
     #ascii = @htmlEscape(ascii)
     ascii = @linkify(ascii)
     ascii = ascii.replace(/(\n\r|\r\n|\r)/g, "\n")
     ascii = ascii.replace(/  /g, ' &nbsp;')
 
-    if useBlockElement
+    if ascii.match(/\n/)
       ascii = '<div>' + ascii.replace(/\n/g, '</div><div>') + '</div>'
       ascii = ascii.replace(/<div><\/div>/g, '<div><br></div>')
     else

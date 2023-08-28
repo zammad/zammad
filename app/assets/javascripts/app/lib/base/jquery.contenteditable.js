@@ -405,7 +405,7 @@
     if (!text) {
       return false
     }
-    htmlString = App.Utils.text2html(text, false)
+    htmlString = App.Utils.text2html(text)
 
     // check length limit
     if (!this.maxLengthOk(htmlString.length)) {
