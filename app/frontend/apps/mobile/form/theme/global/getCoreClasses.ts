@@ -9,6 +9,7 @@ import { addFloatingTextareaLabel } from './addFloatingTextareaLabel.ts'
 import { addBlockFloatingLabel } from './addBlockFloatingLabel.ts'
 import type { Classes } from './utils.ts'
 import { extendClasses } from './utils.ts'
+import { addStaticFloatingLabel } from './addStaticFloatingLabel.ts'
 
 export const addDateLabel = (classes: Classes = {}): Classes => {
   const newClasses = addAbsoluteFloatingLabel(classes)
@@ -68,13 +69,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     recipient: addBlockFloatingLabel(classes.recipient),
     button: addButtonVariants(classes.button),
     submit: addButtonVariants(classes.submit),
-    security: extendClasses(classes.security, {
-      outer:
-        'relative px-2 formkit-invalid:bg-red-dark formkit-errors:bg-red-dark',
-      wrapper: 'inline-flex w-full h-14 px-2 items-center',
-      label:
-        'formkit-required:required text-white w-full h-14 leading-[3.5rem] truncate text-base',
-    }),
+    security: addStaticFloatingLabel(classes.security),
   }
 }
 

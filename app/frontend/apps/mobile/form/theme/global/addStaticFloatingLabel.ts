@@ -8,7 +8,7 @@ import { clean } from './utils.ts'
  * several rows of information on the screen - so content can depend on the actual label size and not
  * overlap.
  */
-export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
+export const addStaticFloatingLabel = (classes: Classes = {}): Classes => {
   const {
     input = '',
     label = '',
@@ -20,7 +20,7 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
   return {
     outer: clean(`
       ${outer}
-      floating-input relative flex flex-col px-2
+      relative flex flex-col px-2
       formkit-invalid:bg-red-dark
       formkit-errors:bg-red-dark
       focus-within:bg-blue-highlight
@@ -45,12 +45,14 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
       ${label}
       absolute top-0 ltr:left-0 rtl:right-0
       py-4 px-2 h-14
-      text-base
       transition-all duration-100 ease-in-out origin-left
       pointer-events-none
-      formkit-populated:-translate-y-[0.4rem] formkit-populated:scale-80 formkit-populated:opacity-75 formkit-populated:text-xs
+      -translate-y-[0.4rem]
+      scale-80
+      text-xs
       formkit-required:required
       formkit-invalid:text-red-bright
+
     `),
     help: 'px-2 pb-2',
     arrow: `${arrow} formkit-arrow flex items-center formkit-disabled:opacity-30`,
