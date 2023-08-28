@@ -48,7 +48,7 @@ if [ "$1" = 'zammad-init' ]; then
   test -f "${ZAMMAD_READY_FILE}" && rm "${ZAMMAD_READY_FILE}"
 
   until (echo > /dev/tcp/"${POSTGRESQL_HOST}"/"${POSTGRESQL_PORT}") &> /dev/null; do
-    echo "zammad railsserver waiting for postgresql server to be ready..."
+    echo "waiting for postgresql server to be ready..."
     sleep 5
   done
 
