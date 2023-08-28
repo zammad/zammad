@@ -6,10 +6,6 @@ class Ticket::TimeAccountingPolicy < ApplicationPolicy
       return not_authorized __('Time Accounting is not enabled')
     end
 
-    if !matches_selector?
-      return not_authorized __('Ticket does not match Time Accounting Selector')
-    end
-
     ticket_update_access?
   end
 
@@ -17,9 +13,5 @@ class Ticket::TimeAccountingPolicy < ApplicationPolicy
 
   def ticket_update_access?
     TicketPolicy.new(user, record.ticket).update?
-  end
-
-  def matches_selector?
-    CoreWorkflow.matches_selector?(id: record.ticket_id, user: user, selector: Setting.get('time_accounting_selector')[:condition] || {})
   end
 end

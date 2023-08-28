@@ -22,12 +22,10 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
     end
 
     describe 'time accounting' do
-      let(:time_accounting_enabled)  { true }
-      let(:time_accounting_selector) { {} }
+      let(:time_accounting_enabled) { true }
 
       before do
         Setting.set('time_accounting', time_accounting_enabled)
-        Setting.set('time_accounting_selector', time_accounting_selector)
 
         payload[:time_unit] = 60
       end
@@ -42,24 +40,6 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         it 'does not save article and raises error' do
           expect { article }
             .to raise_error(%r{Time Accounting is not enabled})
-        end
-      end
-
-      context 'when time accounting selector does not match' do
-        let(:time_accounting_selector) do
-          {
-            'condition' => {
-              'ticket.title' => {
-                operator: 'contains',
-                value:    'nonexistant title'
-              }
-            }
-          }
-        end
-
-        it 'does not save article and raises error' do
-          expect { article }
-            .to raise_error(%r{Ticket does not match Time Accounting Selector})
         end
       end
     end

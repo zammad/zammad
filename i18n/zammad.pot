@@ -4602,14 +4602,6 @@ msgstr ""
 msgid "Enable ticket auto assignment."
 msgstr ""
 
-#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-msgid "Enable time accounting for following matching tickets."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Enable time accounting for these tickets."
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Enable time accounting."
 msgstr ""
@@ -10249,6 +10241,11 @@ msgstr ""
 msgid "Show ticket viewers"
 msgstr ""
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: db/seeds/settings.rb
+msgid "Show time accounting dialog when updating matching tickets."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
 msgstr ""
@@ -12194,10 +12191,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Ticket customer updated successfully."
-msgstr ""
-
-#: app/policies/ticket/time_accounting_policy.rb
-msgid "Ticket does not match Time Accounting Selector"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee

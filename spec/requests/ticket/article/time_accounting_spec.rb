@@ -52,11 +52,9 @@ RSpec.describe 'Ticket::Article API > Time Accounting', :aggregate_failures, typ
     let(:time_unit)                { 42 }
     let(:accounted_time_type_id)   { nil }
     let(:time_accounting_enabled)  { true }
-    let(:time_accounting_selector) { {} }
 
     before do
       Setting.set('time_accounting', time_accounting_enabled)
-      Setting.set('time_accounting_selector', time_accounting_selector)
 
       ticket
 
@@ -66,23 +64,6 @@ RSpec.describe 'Ticket::Article API > Time Accounting', :aggregate_failures, typ
 
     context 'when time accounting disabled' do
       let(:time_accounting_enabled) { false }
-
-      it 'does not create ticket article' do
-        expect(response).to have_http_status(:forbidden)
-      end
-    end
-
-    context 'when time accounting selector does not match' do
-      let(:time_accounting_selector) do
-        {
-          'condition' => {
-            'ticket.title' => {
-              operator: 'contains',
-              value:    'nonexistant title'
-            }
-          }
-        }
-      end
 
       it 'does not create ticket article' do
         expect(response).to have_http_status(:forbidden)

@@ -22,31 +22,13 @@ describe Ticket::TimeAccountingPolicy do
     it { is_expected.to forbid_actions(:create) }
   end
 
-  context 'when time accounting selector is present and not matching' do
-    before do
-      Setting.set('time_accounting_selector', {
-                    'condition' => {
-                      'ticket.title' => {
-                        operator: 'contains',
-                        value:    'nonexistant title'
-                      }
-                    }
-                  })
-    end
-
-    it { is_expected.to forbid_actions(:create) }
+  context 'when time accounting is enabled' do
+    it { is_expected.to permit_actions(:create) }
   end
 
-  context 'when time accounting selector is present and matching' do
-    before do
-      Setting.set('time_accounting_selector', {
-                    'ticket.title' => {
-                      operator: 'contains',
-                      value:    ticket.title
-                    }
-                  })
-    end
+  context 'when user does not have access to the ticket' do
+    let(:user) { create(:agent) }
 
-    it { is_expected.to permit_actions(:create) }
+    it { is_expected.to forbid_actions(:create) }
   end
 end

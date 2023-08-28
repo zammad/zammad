@@ -3817,7 +3817,7 @@ Setting.create_if_not_exists(
   title:       __('Time Accounting Selector'),
   name:        'time_accounting_selector',
   area:        'Web::Base',
-  description: __('Enable time accounting for these tickets.'),
+  description: __('Show time accounting dialog when updating matching tickets.'),
   options:     {
     form: [
       {},
