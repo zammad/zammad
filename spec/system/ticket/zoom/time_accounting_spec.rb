@@ -48,7 +48,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
           click_button 'Account Time'
         end
 
-        expect(find('.accounted-time-value')).to have_text("Total #{time_unit}", exact: true)
+        expect(find('.accounted-time-value-row:nth-of-type(1)')).to have_text("Total\n#{time_unit}", exact: true)
       end
 
       it "accounts time in #{display_unit}", if: display_unit do
@@ -61,7 +61,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
           click_button 'Account Time'
         end
 
-        expect(find('.accounted-time-value')).to have_text("Total #{time_unit} #{display_unit}", exact: true)
+        expect(find('.accounted-time-value-row:nth-of-type(1)')).to have_text("Total\n#{time_unit}\n#{display_unit}", exact: true)
       end
     end
 
@@ -94,7 +94,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         click_button 'Account Time'
       end
 
-      expect(find('.accounted-time-value')).to have_text('Total 123.0', exact: true)
+      expect(find('.accounted-time-value-row:nth-of-type(1)')).to have_text("Total\n123.0", exact: true)
     end
 
     it 'allows to input time with a comma and saves with a dot instead' do
@@ -104,7 +104,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         click_button 'Account Time'
       end
 
-      expect(find('.accounted-time-value')).to have_text('Total 4.6', exact: true)
+      expect(find('.accounted-time-value-row:nth-of-type(1)')).to have_text("Total\n4.6", exact: true)
     end
 
     it 'allows to input time with a trailing space' do
@@ -114,7 +114,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         click_button 'Account Time'
       end
 
-      expect(find('.accounted-time-value')).to have_text('Total 4.0', exact: true)
+      expect(find('.accounted-time-value-row:nth-of-type(1)')).to have_text("Total\n4.0", exact: true)
     end
 
     it 'does not allow to input time with letters' do
@@ -168,15 +168,15 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
         end
 
         it 'shows a table for the top three that is sorted correctly by default and can show all entries', :aggregate_failures do
-          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(1)', text: 'Total 500.0')
-          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(2)', text: "#{types[2].name} 225.0")
-          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(3)', text: "#{types[1].name} 150.0")
-          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(4)', text: "#{types[0].name} 75.0")
+          expect(page).to have_css('.accounted-time-value-row:nth-of-type(1)', text: "Total\n500.0")
+          expect(page).to have_css('.accounted-time-value-row:nth-of-type(2)', text: "#{types[2].name}\n225.0")
+          expect(page).to have_css('.accounted-time-value-row:nth-of-type(3)', text: "#{types[1].name}\n150.0")
+          expect(page).to have_css('.accounted-time-value-row:nth-of-type(4)', text: "#{types[0].name}\n75.0")
 
-          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(5) .js-showMoreEntries')
+          expect(page).to have_css('.accounted-time-value-container .js-showMoreEntries')
 
-          click('.time-accounting-types-table tbody tr:nth-child(5) .js-showMoreEntries')
-          expect(page).to have_css('.time-accounting-types-table tbody tr:nth-child(5)', text: "#{types[3].name} 50.0")
+          click('.accounted-time-value-container .js-showMoreEntries')
+          expect(page).to have_css('.accounted-time-value-row:nth-of-type(5)', text: "#{types[3].name}\n50.0")
         end
       end
     end

@@ -52,7 +52,7 @@ class App.TicketZoomTimeUnit extends App.ControllerObserver
     mapped  = _.map(grouped, (list, type_id) ->
       iteratee = (sum, time_accounting) -> sum + parseFloat(time_accounting.time_unit)
 
-      [types[type_id]?.name || __('none'), _.reduce(list, iteratee, 0)]
+      [types[type_id]?.name || __('None'), _.reduce(list, iteratee, 0)]
     )
 
     _.sortBy(mapped, (group) -> group[1]).reverse()

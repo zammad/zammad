@@ -62,12 +62,12 @@ const shownUnits = computed(() => {
       v-if="allUnits.length"
       data-test-id="timeUnitsEntries"
     >
-      <div class="grid grid-cols-[max-content_1fr] py-2" role="list">
+      <div class="grid grid-cols-[1fr_auto_auto] py-2" role="list">
         <template
           v-for="({ name, timeUnit }, index) of shownUnits"
           :key="index"
         >
-          <div class="text-white/80 max-w-[10rem] truncate rtl:ml-2 ltr:mr-2">
+          <div class="text-white/80 truncate rtl:ml-2 ltr:mr-2 col-[1]">
             {{ capitalize($t(name)) }}
           </div>
           <div>{{ timeUnit }} {{ $t(timeAccountingDisplayUnit) }}</div>

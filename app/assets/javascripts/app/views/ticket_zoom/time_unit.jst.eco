@@ -1,31 +1,30 @@
 <div>
   <label><%- @T('Accounted Time') %></label>
-  <div class="accounted-time-value">
-    <table class="table-condensed time-accounting-types-table">
-      <tbody>
-        <tr>
-          <td><%- @T('Total') %></td>
-          <td><%= @ticket.time_unit %></td>
-          <td><% if @displayUnit: %><span class="text-muted"><%- @T(@displayUnit) %></span><% end %></td>
-        </tr>
-        <% for entry in @list: %>
-          <tr>
-            <td>
-              <span title="<%= @T(entry[0]) %>">
-                <%= @T(entry[0]).substr(0, 10) %>
-                <% if @T(entry[0]).length > 10: %>...<% end %>
-              </span>
-            </td>
-            <td><%= parseFloat(entry[1]).toFixed(1) %></td>
-            <td><% if @displayUnit: %><span class="text-muted"><%- @T(@displayUnit) %></span><% end %></td>
-          </tr>
-        <% end %>
-        <% if @showMore: %>
-          <tr>
-            <td colspan="3"><a href="#" class="js-showMoreEntries"><%- @T('show more') %></a></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="accounted-time-value-container">
+    <div class="accounted-time-value-row">
+      <div class="accounted-time-value-item"><%- @T('Total') %></div>
+      <div class="accounted-time-value-item"><%= @ticket.time_unit %></div>
+      <% if @displayUnit: %>
+      <div class="accounted-time-value-item">
+        <span class="text-muted"><%- @T(@displayUnit) %></span>
+      </div>
+      <% end %>
+    </div>
+    <% for entry in @list: %>
+    <div class="accounted-time-value-row">
+      <div class="accounted-time-value-item" title="<%= @T(entry[0]) %>"><%= @T(entry[0]) %></div>
+      <div class="accounted-time-value-item"><%= parseFloat(entry[1]).toFixed(1) %></div>
+      <% if @displayUnit: %>
+      <div class="accounted-time-value-item">
+        <span class="text-muted"><%- @T(@displayUnit) %></span>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+    <% if @showMore: %>
+    <div>
+      <a href="#" class="js-showMoreEntries"><%- @T('show more') %></a>
+    </div>
+    <% end %>
   </div>
 </div>

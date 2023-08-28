@@ -7895,6 +7895,7 @@ msgstr ""
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/graphql/gql/types/ticket_type.rb
 msgid "None"

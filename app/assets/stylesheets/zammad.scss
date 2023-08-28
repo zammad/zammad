@@ -14499,11 +14499,28 @@ span.is-disabled {
   @include rtl(margin-right, -6px);
 }
 
-div.accounted-time-value .table-condensed > thead > tr > th,
-div.accounted-time-value .table-condensed > tbody > tr > th,
-div.accounted-time-value .table-condensed > tfoot > tr > th,
-div.accounted-time-value .table-condensed > thead > tr > td,
-div.accounted-time-value .table-condensed > tbody > tr > td,
-div.accounted-time-value .table-condensed > tfoot > tr > td {
-  padding: 2px;
+div.accounted-time-value {
+  &-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &-item {
+    padding: 1px;
+    flex: 0 0 auto;
+  }
+
+  &-item:first-child {
+    flex: 1 1 auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    @include bidi-style(margin-right, 6px, margin-left, 0);
+  }
 }
