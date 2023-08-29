@@ -168,6 +168,9 @@ class App.TicketZoom extends App.Controller
     # remember mentions
     @mentions = data.mentions
 
+    # remember time_accountings
+    @time_accountings = data.time_accountings
+
     if draft = App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket_id
       draft.remove(clear: true)
 
@@ -524,19 +527,20 @@ class App.TicketZoom extends App.Controller
       )
 
       @sidebarWidget = new App.TicketZoomSidebar(
-        el:           elLocal
-        sidebarState: @sidebarState
-        object_id:    @ticket_id
-        model:        'Ticket'
-        query:        @query
-        taskGet:      @taskGet
-        taskKey:      @taskKey
-        formMeta:     @formMeta
-        markForm:     @markForm
-        tags:         @tags
-        mentions:     @mentions
-        links:        @links
-        parent:       @
+        el:               elLocal
+        sidebarState:     @sidebarState
+        object_id:        @ticket_id
+        model:            'Ticket'
+        query:            @query
+        taskGet:          @taskGet
+        taskKey:          @taskKey
+        formMeta:         @formMeta
+        markForm:         @markForm
+        tags:             @tags
+        mentions:         @mentions
+        time_accountings: @time_accountings
+        links:            @links
+        parent:           @
       )
 
     # render init content
@@ -551,9 +555,10 @@ class App.TicketZoom extends App.Controller
 
     if @sidebarWidget
       @sidebarWidget.reload(
-        tags:     @tags
-        mentions: @mentions
-        links:    @links
+        tags:             @tags
+        mentions:         @mentions
+        time_accountings: @time_accountings
+        links:            @links
       )
 
     if !@initDone
