@@ -1,0 +1,19 @@
+#{config.product_name} yeni bir ülkeden giriş
+
+<div>Merhaba #{user.firstname},</div>
+<br>
+<div>Hesabınızı <b>bilinen bir cihazla ancak yeni bir ülkeden</b> "#{user_device.created_at}" tarihinde kullanmışsınız gibi görünüyor:</div>
+<br>
+<div>
+Cihazınız: #{user_device.name}<br>
+Konumunuz (göreceli): #{user_device.location}<br>
+IP adresiniz: #{user_device.ip}<br>
+</div>
+<br>
+<div>Ülke, buradan görüntüleyebileceğiniz bilinen cihazlar listenize eklenmiştir:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Bu siz değilseniz, lütfen cihazı kaldırın, hesap şifrenizi değiştirin ve yöneticinize başvurun. Birisi hesabınıza yetkisiz erişim sağlamış olabilir.</div>
+<br>
+<div>#{config.product_name} Ekibiniz</div>

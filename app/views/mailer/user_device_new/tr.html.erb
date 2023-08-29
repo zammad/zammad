@@ -1,0 +1,19 @@
+#{config.product_name} yeni bir cihazdan oturum açma
+
+<div>Merhaba #{user.firstname},</div>
+<br>
+<div>Görünüşe göre hesabınıza <b>yeni bir cihaz</b> kullanarak "#{user_device.created_at}" tarihinde giriş yapmışsınız:</div>
+<br>
+<div>
+Cihazınız: #{user_device.name}<br>
+Konumunuz (göreceli): #{user_device.location}<br>
+IP adresiniz: #{user_device.ip}<br>
+</div>
+<br>
+<div>Cihazınız, buradan görüntüleyebileceğiniz bilinen cihazlar listenize eklendi:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Bu siz değilseniz, lütfen cihazı kaldırın, hesap şifrenizi değiştirin ve yöneticinize başvurun. Birisi hesabınıza yetkisiz erişim sağlamış olabilir.</div>
+<br>
+<div>#{config.product_name} Ekibiniz</div>
