@@ -2183,14 +2183,14 @@
           "interfaces": null,
           "enumValues": [
             {
-              "name": "security_keys",
-              "description": "Security Keys",
+              "name": "authenticator_app",
+              "description": "Authenticator App",
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "authenticator_app",
-              "description": "Authenticator App",
+              "name": "security_keys",
+              "description": "Security Keys",
               "isDeprecated": false,
               "deprecationReason": null
             }
