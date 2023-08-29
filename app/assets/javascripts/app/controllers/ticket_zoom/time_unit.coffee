@@ -1,9 +1,6 @@
-class App.TicketZoomTimeUnit extends App.ControllerObserver
+class App.TicketZoomTimeUnit extends App.Controller
   @include App.TimeAccountingUnitMixin
 
-  model: 'Ticket'
-  observe:
-    time_unit: true
   events:
     'click .js-showMoreEntries': 'showMoreEntries'
 
@@ -17,11 +14,15 @@ class App.TicketZoomTimeUnit extends App.ControllerObserver
 
     @showAllEntries = false
 
-  render: (ticket) =>
+  reload: (time_accountings) =>
+    @time_accountings = time_accountings
+    @render()
+
+  render: =>
+    ticket = App.Ticket.find(@object_id)
+
     return if ticket.currentView() isnt 'agent'
     return if !ticket.time_unit
-
-    @ticket = ticket
 
     entries = @fetchEntries()
 
@@ -41,10 +42,7 @@ class App.TicketZoomTimeUnit extends App.ControllerObserver
     )
 
   fetchEntries: ->
-    filtered = App.TicketTimeAccounting.search(
-      filter:
-        ticket_id: @ticket.id
-    )
+    filtered = @time_accountings
     return [] if !filtered || filtered.length is 0
 
     types   = _.indexBy(App.TicketTimeAccountingType.all(), 'id')
@@ -60,4 +58,4 @@ class App.TicketZoomTimeUnit extends App.ControllerObserver
   showMoreEntries: (e) ->
     @preventDefaultAndStopPropagation(e)
     @showAllEntries = true
-    @render(@ticket)
+    @render()

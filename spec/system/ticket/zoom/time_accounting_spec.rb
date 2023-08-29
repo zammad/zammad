@@ -30,6 +30,8 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
     if create_new_article
       find(:richtext).send_keys article_body
       click_button 'Update'
+
+      accounted_time_modal_hook if defined?(accounted_time_modal_hook)
     end
   end
 
@@ -177,6 +179,44 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
 
           click('.accounted-time-value-container .js-showMoreEntries')
           expect(page).to have_css('.accounted-time-value-row:nth-of-type(5)', text: "#{types[3].name}\n50.0")
+        end
+      end
+
+      context 'when new time is accounted or article got deleted', authenticated_as: :authenticate do
+        let(:types) { create_list(:ticket_time_accounting_type, 4) }
+
+        let(:accounted_time_modal_hook) do
+          in_modal do
+            fill_in 'time_unit', with: '123'
+            select types[0].name, from: 'Activity Type'
+
+            click_button 'Account Time'
+          end
+        end
+
+        def authenticate
+          Setting.set('time_accounting', true)
+          Setting.set('time_accounting_types', time_accounting_types)
+
+          types
+
+          true
+        end
+
+        it 'updates the table correctly' do
+          expect(page).to have_css('.accounted-time-value-row:nth-of-type(1)', text: "Total\n123.0")
+          expect(page).to have_css('.accounted-time-value-row:nth-of-type(2)', text: "#{types[0].name}\n123.0")
+
+          within :active_ticket_article, ticket.reload.articles.last do
+            click '.js-ArticleAction[data-type=delete]'
+          end
+
+          in_modal do
+            click '.js-submit'
+          end
+
+          expect(page).to have_css('.accounted-time-value-row:nth-of-type(1)', text: "Total\n0.0")
+          expect(page).to have_no_css('.accounted-time-value-row:nth-of-type(2)', text: "#{types[0].name}\n123.0")
         end
       end
     end

@@ -713,6 +713,9 @@ class TicketsController < ApplicationController
     # get tags
     tags = ticket.tag_list
 
+    # get time units
+    time_accountings = ticket.ticket_time_accounting.map { |row| row.slice(:id, :ticket_id, :ticket_article_id, :time_unit, :type_id) }
+
     # get mentions
     mentions = Mention.where(mentionable: ticket).reorder(created_at: :desc)
     mentions.each do |mention|
@@ -731,6 +734,7 @@ class TicketsController < ApplicationController
       links:              links,
       tags:               tags,
       mentions:           mentions.pluck(:id),
+      time_accountings:   time_accountings,
       form_meta:          attributes_to_change[:form_meta],
     }
   end

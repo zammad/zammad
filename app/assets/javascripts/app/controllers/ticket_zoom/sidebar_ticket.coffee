@@ -148,6 +148,9 @@ class SidebarTicket extends App.Controller
     if @linkKbAnswerWidget && args.links
       @linkKbAnswerWidget.reload(args.links)
 
+    if @timeUnitWidget && args.time_accountings
+      @timeUnitWidget.reload(args.time_accountings)
+
   editTicket: (el) =>
     @el = el
     localEl = $(App.view('ticket_zoom/sidebar_ticket')())
@@ -196,6 +199,7 @@ class SidebarTicket extends App.Controller
       @timeUnitWidget = new App.TicketZoomTimeUnit(
         el:        localEl.filter('.js-timeUnit')
         object_id: @ticket.id
+        time_accountings: @time_accountings
       )
     @html localEl
 
