@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-17 01:05+0000\n"
-"Last-Translator: ralf401 <ralf.s@posteo.de>\n"
+"PO-Revision-Date: 2023-08-29 13:32+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
-"zammad-development/de/>\n"
+"zammad-stable/de/>\n"
 "Language: de-de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4287,16 +4287,12 @@ msgstr ""
 "anbietet."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines if the ticket conditions editor supports complex logical "
-#| "expressions."
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
 msgstr ""
-"Definiert, ob der Editor für Ticket-Bedingungen komplexe logische Ausdrücke "
-"anbietet."
+"Definiert, ob der Editor für Ticket-Bedingungen reguläre Ausdrücke für "
+"Trigger und die automatische Ticket-Zuweisung anbietet."
 
 #: db/seeds/settings.rb
 msgid "Defines if the time accounting types are enabled."
@@ -5926,6 +5922,8 @@ msgstr "Geben Sie Ihre %s App-Keys ein"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Enter your current password, insert a new one and confirm it."
 msgstr ""
+"Geben Sie ihr aktuelles Passwort an, fügen Sie ein neues hinzu und "
+"bestätigen Sie dieses."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -12706,11 +12704,11 @@ msgstr ""
 "Chat erforderlich ist."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "The certificate for %s was found, but has expired."
 msgid ""
 "The certificate for %s was found, but it is not valid yet or has expired."
-msgstr "Das Zertifikat für %s wurde gefunden, ist aber abgelaufen."
+msgstr ""
+"Das Zertifikat für %s wurde gefunden, ist aber noch nicht gültig oder "
+"bereits abgelaufen."
 
 #: lib/secure_mailing/smime/security_options.rb
 msgid "The certificate for %s was found."
@@ -12734,12 +12732,17 @@ msgid ""
 "The certificate is not valid for S/MIME usage. Please check the certificate "
 "format."
 msgstr ""
+"Das Zertifikat ist nicht für S/MIME-Verwendung zugelassen. Bitte prüfen Sie "
+"das Zertifikatsformat."
 
 #: lib/secure_mailing/smime/certificate.rb
 msgid ""
 "The certificate is not valid for S/MIME usage. Please check the key usage, "
 "subject alternative name and public key cryptographic algorithm."
 msgstr ""
+"Das Zertifikat ist nicht für S/MIME-Verwendung zugelassen. Bitte prüfen sie "
+"die Schlüsselverwendung, den alternativen Betreff-Namen und den "
+"kryptografischen Algorithmus."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid ""
@@ -13052,12 +13055,16 @@ msgid ""
 "The private key is not valid for S/MIME usage. Please check the key "
 "cryptographic algorithm."
 msgstr ""
+"Der private Schlüssel ist nicht für S/MIME-Verwendung zugelassen. Bitte "
+"prüfen Sie den kryptografischen Algorithmus."
 
 #: lib/secure_mailing/smime/private_key.rb
 msgid ""
 "The private key is not valid for S/MIME usage. Please check the key format "
 "and the secret."
 msgstr ""
+"Der private Schlüssel ist nicht für S/MIME-Verwendung zugelassen. Bitte "
+"prüfen Sie das Format und das Secret."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "The product version could not be fetched."
@@ -13584,16 +13591,12 @@ msgstr ""
 "abgelaufen."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid ""
-#| "There were certificates found for %s, but at least one of them has "
-#| "expired."
 msgid ""
 "There were certificates found for %s, but at least one of them is not valid "
 "yet or has expired."
 msgstr ""
-"Es wurden Zertifikate für %s gefunden, aber mindestens eines davon ist "
-"abgelaufen."
+"Es wurden Zertifikate für %s gefunden, aber mindestens eines davon ist noch "
+"nicht gültig oder bereits abgelaufen."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -13992,10 +13995,8 @@ msgid "Ticket Conditions Expert Mode"
 msgstr "Expertenmodus für Ticket-Bedingungen"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Ticket Conditions Expert Mode"
 msgid "Ticket Conditions Regular Expression Operators"
-msgstr "Expertenmodus für Ticket-Bedingungen"
+msgstr "Operatoren für reguläre Ausdrücke in Ticket-Bedingungen"
 
 #: app/models/report.rb
 msgid "Ticket Count"
@@ -14593,16 +14594,12 @@ msgid "Topics"
 msgstr "Themen"
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
-#, fuzzy
-#| msgid "Total: %s"
 msgid "Total"
-msgstr "Gesamt: %s"
+msgstr "Gesamt"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Total Accounted Time"
-msgstr "Berechnete Zeit"
+msgstr "Insgesamt berechnete Zeit"
 
 #: db/seeds/settings.rb
 msgid "Total display of the number of objects in a grouping."
@@ -16725,10 +16722,8 @@ msgstr "existiert nicht"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#, fuzzy
-#| msgid "doesn't match %{attribute}"
 msgid "does not match regex"
-msgstr "entspricht nicht %{attribute}"
+msgstr "passt nicht auf regex"
 
 msgid "doesn't match %{attribute}"
 msgstr "entspricht nicht %{attribute}"
@@ -16796,10 +16791,8 @@ msgstr "endet auf"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#, fuzzy
-#| msgid "ends with"
 msgid "ends with one of"
-msgstr "endet auf"
+msgstr "endet auf eins von"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
@@ -17177,10 +17170,8 @@ msgstr "Treffer gefunden"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#, fuzzy
-#| msgid "matches found"
 msgid "matches regex"
-msgstr "Treffer gefunden"
+msgstr "passt auf Regex"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
@@ -17565,10 +17556,8 @@ msgstr "beginnt mit"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#, fuzzy
-#| msgid "starts with"
 msgid "starts with one of"
-msgstr "beginnt mit"
+msgstr "beginnt mit eins von"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
