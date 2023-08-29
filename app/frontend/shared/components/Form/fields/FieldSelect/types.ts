@@ -1,20 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
-import type { Props as IconProps } from '#shared/components/CommonIcon/CommonIcon.vue'
-import type { FormFieldContext } from '../../types/field.ts'
-
-export type SelectValue = string | number | boolean
-
-export interface SelectOption {
-  value: SelectValue
-  label?: string
-  labelPlaceholder?: string[]
-  disabled?: boolean
-  status?: EnumTicketStateColorCode
-  icon?: string
-  iconProps?: Omit<IconProps, 'name'>
-}
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 
 export type SelectOptionSorting = 'label' | 'value'
 

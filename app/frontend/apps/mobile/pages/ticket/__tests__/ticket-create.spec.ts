@@ -18,10 +18,10 @@ import { flushPromises } from '@vue/test-utils'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { getNode } from '@formkit/core'
-import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 import { waitFor } from '@testing-library/vue'
 import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
+import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import { TicketCreateDocument } from '../graphql/mutations/create.api.ts'
 
 const visitTicketCreate = async (path = '/tickets/create') => {

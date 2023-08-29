@@ -2520,6 +2520,22 @@ export type UserUpdatesPayload = {
   user?: Maybe<User>;
 };
 
+export type FormUploadCacheAddMutationVariables = Exact<{
+  formId: Scalars['FormId']['input'];
+  files: Array<UploadFileInput> | UploadFileInput;
+}>;
+
+
+export type FormUploadCacheAddMutation = { __typename?: 'Mutations', formUploadCacheAdd?: { __typename?: 'FormUploadCacheAddPayload', uploadedFiles: Array<{ __typename?: 'StoredFile', id: string, name: string, size?: number | null, type?: string | null }> } | null };
+
+export type FormUploadCacheRemoveMutationVariables = Exact<{
+  formId: Scalars['FormId']['input'];
+  fileIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+}>;
+
+
+export type FormUploadCacheRemoveMutation = { __typename?: 'Mutations', formUploadCacheRemove?: { __typename?: 'FormUploadCacheRemovePayload', success: boolean } | null };
+
 export type OrganizationAttributesFragment = { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, vip?: boolean | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null };
 
 export type OrganizationMembersFragment = { __typename?: 'Organization', members?: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', id: string, internalId: number, image?: string | null, firstname?: string | null, lastname?: string | null, fullname?: string | null, outOfOffice?: boolean | null, active?: boolean | null, vip?: boolean | null } }> } | null };
@@ -2766,22 +2782,6 @@ export type TextModuleSuggestionsQueryVariables = Exact<{
 
 
 export type TextModuleSuggestionsQuery = { __typename?: 'Queries', textModuleSuggestions: Array<{ __typename?: 'TextModule', id: string, name: string, keywords?: string | null, renderedContent?: string | null }> };
-
-export type FormUploadCacheAddMutationVariables = Exact<{
-  formId: Scalars['FormId']['input'];
-  files: Array<UploadFileInput> | UploadFileInput;
-}>;
-
-
-export type FormUploadCacheAddMutation = { __typename?: 'Mutations', formUploadCacheAdd?: { __typename?: 'FormUploadCacheAddPayload', uploadedFiles: Array<{ __typename?: 'StoredFile', id: string, name: string, size?: number | null, type?: string | null }> } | null };
-
-export type FormUploadCacheRemoveMutationVariables = Exact<{
-  formId: Scalars['FormId']['input'];
-  fileIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
-}>;
-
-
-export type FormUploadCacheRemoveMutation = { __typename?: 'Mutations', formUploadCacheRemove?: { __typename?: 'FormUploadCacheRemovePayload', success: boolean } | null };
 
 export type AutocompleteSearchOrganizationQueryVariables = Exact<{
   input: AutocompleteSearchOrganizationInput;

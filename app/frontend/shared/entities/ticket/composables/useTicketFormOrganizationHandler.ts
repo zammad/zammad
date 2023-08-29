@@ -3,7 +3,6 @@
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { Organization, Scalars } from '#shared/graphql/types.ts'
-import type { AutoCompleteCustomerOption } from '#shared/components/Form/fields/FieldCustomer/index.ts'
 import type { UserData } from '#shared/types/store.ts' // TODO: remove this import
 import type {
   FormSchemaField,
@@ -57,7 +56,7 @@ export const useTicketFormOganizationHandler = (): FormHandler => {
         if (changedField?.newValue) {
           return (
             formNode?.find('customer_id', 'name')?.context
-              ?.optionValueLookup as Record<number, AutoCompleteCustomerOption>
+              ?.optionValueLookup as Record<number, { user: UserData }>
           )[changedField.newValue as number].user as UserData
         }
 

@@ -24,7 +24,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
   const currentArticleType = shallowRef<AppSpecificTicketArticleType>()
 
   const recipientContact = computed(
-    () => currentArticleType.value?.recipientContact,
+    () => currentArticleType.value?.options?.recipientContact,
   )
 
   const editorType = computed(() => currentArticleType.value?.contentType)

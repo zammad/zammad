@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { SelectOption } from '#shared/components/Form/fields/FieldSelect/index.ts'
 import type {
   FormFieldAdditionalProps,
   FormSchemaField,
@@ -11,6 +10,14 @@ import type {
   ObjectAttributeSelectOptions,
 } from '#shared/entities/object-attributes/types/resolver.ts'
 import FieldResolver from '../FieldResolver.ts'
+
+export type ObjectSelectValue = string | number | boolean
+
+export interface ObjectSelectOption {
+  label?: string
+  disabled?: boolean
+  value: ObjectSelectValue
+}
 
 export class FieldResolverSelect extends FieldResolver {
   fieldType = 'select'
@@ -50,7 +57,7 @@ export class FieldResolverSelect extends FieldResolver {
     }
   }
 
-  private mappedOptions(): SelectOption[] {
+  private mappedOptions(): ObjectSelectOption[] {
     const options = this.attributeConfig.options as ObjectAttributeSelectOptions
 
     if (Array.isArray(options)) {

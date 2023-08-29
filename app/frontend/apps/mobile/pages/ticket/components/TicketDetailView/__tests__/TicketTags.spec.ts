@@ -7,7 +7,7 @@ import { waitUntil } from '#tests/support/utils.ts'
 import TicketTags from '../TicketTags.vue'
 
 beforeAll(async () => {
-  await import('#shared/components/Form/fields/FieldTags/FieldTagsDialog.vue')
+  await import('#mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue')
 })
 
 describe('TicketTags', () => {

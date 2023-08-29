@@ -51,10 +51,12 @@ const actionPlugin: TicketArticleActionPlugin = {
       },
       attributes: ['to'],
       internal: false,
-      recipientContact: 'phone',
       contentType: 'text/plain',
       validation: {
         body: 'length:1,160',
+      },
+      options: {
+        recipientContact: 'phone',
       },
       editorMeta: {
         footer: {

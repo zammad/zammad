@@ -16,6 +16,7 @@ import {
 } from 'vue'
 import testFlags from '#shared/utils/testFlags.ts'
 import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
+import log from '#shared/utils/log.ts'
 import useValue from '../../composables/useValue.ts'
 import {
   getCustomExtensions,
@@ -33,7 +34,6 @@ import FieldEditorActionBar from './FieldEditorActionBar.vue'
 import FieldEditorFooter from './FieldEditorFooter.vue'
 import { PLUGIN_NAME as userMentionPluginName } from './suggestions/UserMention.ts'
 import { getNodeByName } from '../../utils.ts'
-import type { FieldFileContext } from '../FieldFile/types.ts'
 import { convertInlineImages } from './utils.ts'
 
 interface Props {
@@ -81,6 +81,28 @@ interface LoadImagesOptions {
   attachNonInlineFiles: boolean
 }
 
+const inlineImagesInEditor = (editor: Editor, files: File[]) => {
+  convertInlineImages(files, editor.view.dom).then((urls) => {
+    if (editor?.isDestroyed) return
+    editor?.commands.setImages(urls)
+    nextTick(() => testFlags.set('editor.inlineImagesLoaded'))
+  })
+}
+
+const addFilesToAttachments = (files: File[]) => {
+  const attachmentsContext = getNodeByName(props.context.formId, 'attachments')
+    ?.context as unknown as
+    | { uploadFiles?: (files: File[]) => void }
+    | undefined
+  if (attachmentsContext && !attachmentsContext.uploadFiles) {
+    log.error(
+      '[FieldEditorInput] Attachments field was found, but it doesn\'t provide "uploadFiles" method.',
+    )
+  } else {
+    attachmentsContext?.uploadFiles?.(files)
+  }
+}
+
 // there is also a gif, but desktop only inlines these two for now
 const imagesMimeType = ['image/png', 'image/jpeg']
 const loadFiles = (
@@ -104,19 +126,11 @@ const loadFiles = (
   }
 
   if (inlineImages.length && editor) {
-    convertInlineImages(inlineImages, editor.view.dom).then((urls) => {
-      if (editor?.isDestroyed) return
-      editor?.commands.setImages(urls)
-      nextTick(() => testFlags.set('editor.inlineImagesLoaded'))
-    })
+    inlineImagesInEditor(editor, inlineImages)
   }
 
   if (options.attachNonInlineFiles && otherFiles.length) {
-    const attachmentsContext = getNodeByName(
-      props.context.formId,
-      'attachments',
-    )?.context as unknown as FieldFileContext | undefined
-    attachmentsContext?.uploadFiles(otherFiles)
+    addFilesToAttachments(otherFiles)
   }
 
   return Boolean(

@@ -26,6 +26,8 @@ import {
   setupCommonVisualConfig,
   type SharedVisualConfig,
 } from '#shared/composables/useSharedVisualConfig.ts'
+import { mobileFormFieldModules } from '#mobile/form/index.ts'
+import type { AppName } from '#shared/types/app.ts'
 import buildIconsQueries from './iconQueries.ts'
 import buildLinksQueries from './linkQueries.ts'
 import { setTestState, waitForNextTick } from '../utils.ts'
@@ -43,6 +45,10 @@ export interface ExtendedMountingOptions<Props>
   formField?: boolean
   unmount?: boolean
   dialog?: boolean
+  /**
+   * @default 'mobile'
+   */
+  app?: AppName
   vModel?: {
     [prop: string]: unknown
   }
@@ -199,11 +205,16 @@ export const initializePiniaStore = () => {
 
 let formInitialized = false
 
-const initializeForm = () => {
+const initializeForm = (appName: AppName) => {
   if (formInitialized) return
 
-  // TODO: needs to be extended, when we have app specific plugins/fields
-  plugins.push([formPlugin, buildFormKitPluginConfig()])
+  plugins.push([
+    formPlugin,
+    buildFormKitPluginConfig(
+      undefined,
+      appName === 'mobile' ? mobileFormFieldModules : undefined,
+    ),
+  ])
   defaultWrapperOptions.shallow = false
 
   formInitialized = true
@@ -334,7 +345,7 @@ const renderComponent = <Props>(
     initializePiniaStore()
   }
   if (wrapperOptions?.form) {
-    initializeForm()
+    initializeForm(wrapperOptions?.app || 'mobile')
   }
   if (wrapperOptions?.dialog) {
     mountDialog()
