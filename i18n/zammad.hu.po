@@ -1949,6 +1949,12 @@ msgstr "Hitelesítés szükséges"
 msgid "Authentication via %s"
 msgstr "Hitelesítés ezzel: %s"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "OAuth"
+msgid "Author"
+msgstr "OAuth"
+
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
 msgstr "Az engedélyezés nem sikerült"
@@ -7616,6 +7622,12 @@ msgstr "Utolsó belső cikk"
 msgid "Last change %s %s by %s"
 msgstr "Utolsó változtatás %s %s által %s"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "has changed"
+msgid "Last changed"
+msgstr "megváltozott"
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Last contact"
@@ -11811,6 +11823,7 @@ msgstr "Tesztelés"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Text"
 msgstr "Szöveg"

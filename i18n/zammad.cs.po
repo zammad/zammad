@@ -1923,6 +1923,12 @@ msgstr "Vyžaduje se autentizace"
 msgid "Authentication via %s"
 msgstr "Autentizace pomocí %s"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "OAuth"
+msgid "Author"
+msgstr "OAuth"
+
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
 msgstr "Autentizace se nezdařila"
@@ -7483,6 +7489,12 @@ msgstr "Poslední interní položka"
 msgid "Last change %s %s by %s"
 msgstr "Poslední změna %s %s uživatelem %s"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "has changed"
+msgid "Last changed"
+msgstr "byl změněn"
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Last contact"
@@ -11660,6 +11672,7 @@ msgstr "Testování"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Text"
 msgstr "Text"

@@ -1979,6 +1979,10 @@ msgstr "Autentifikacija obavezna"
 msgid "Authentication via %s"
 msgstr "Autentifikacija putem %s"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+msgid "Author"
+msgstr ""
+
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
 msgstr "Autorizacija nije uspjela"
@@ -7656,6 +7660,12 @@ msgstr "Posljednji odgovor u"
 msgid "Last change %s %s by %s"
 msgstr "Posljednja promjena %s %s od strane %s"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "has changed"
+msgid "Last changed"
+msgstr "je promijenjeno"
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Last contact"
@@ -11954,6 +11964,7 @@ msgstr "Testiranje"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Text"
 msgstr "Tekst"

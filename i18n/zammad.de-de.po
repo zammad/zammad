@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-07-27 09:52+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2023-08-25 01:05+0000\n"
+"Last-Translator: ralf401 <ralf.s@posteo.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -1956,6 +1956,12 @@ msgstr "Authentifizierung erforderlich"
 #: db/seeds/settings.rb
 msgid "Authentication via %s"
 msgstr "Anmeldung über %s"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "OAuth"
+msgid "Author"
+msgstr "OAuth"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -7602,6 +7608,12 @@ msgstr "Letzter interner Artikel"
 msgid "Last change %s %s by %s"
 msgstr "Letzte Änderung %s %s durch %s"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "has changed"
+msgid "Last changed"
+msgstr "wurde verändert"
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Last contact"
@@ -11810,6 +11822,7 @@ msgstr "Überprüfen"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Text"
 msgstr "Text"
