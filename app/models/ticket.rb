@@ -442,50 +442,6 @@ returns
 
 =begin
 
-check if online notification should be shown in general as already seen with current state
-
-  ticket = Ticket.find(1)
-  seen = ticket.online_notification_seen_state(user_id_check)
-
-returns
-
-  result = true # or false
-
-=end
-
-  def online_notification_seen_state(user_id_check = nil)
-    state      = Ticket::State.lookup(id: state_id)
-    state_type = Ticket::StateType.lookup(id: state.state_type_id)
-
-    # always to set unseen for ticket owner and users which did not the update
-    return false if state_type.name != 'merged' && user_id_check && user_id_check == owner_id && user_id_check != updated_by_id
-
-    # set all to seen if pending action state is a closed or merged state
-    if state_type.name == 'pending action' && state.next_state_id
-      state      = Ticket::State.lookup(id: state.next_state_id)
-      state_type = Ticket::StateType.lookup(id: state.state_type_id)
-    end
-
-    # set all to seen if new state is pending reminder state
-    if state_type.name == 'pending reminder'
-      if user_id_check
-        return false if owner_id == 1
-        return false if updated_by_id != owner_id && user_id_check == owner_id
-
-        return true
-      end
-      return true
-    end
-
-    # set all to seen if new state is a closed or merged state
-    return true if state_type.name == 'closed'
-    return true if state_type.name == 'merged'
-
-    false
-  end
-
-=begin
-
 get count of tickets and tickets which match on selector
 
 @param  [Hash] selectors hash with conditions

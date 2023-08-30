@@ -173,32 +173,96 @@ with dedicated times
 =end
 
   def self.cleanup(max_age = 9.months.ago, max_own_seen = 10.minutes.ago, max_auto_seen = 8.hours.ago)
-    OnlineNotification.where('created_at < ?', max_age).delete_all
-    OnlineNotification.where('seen = ? AND updated_at < ?', true, max_own_seen).each do |notification|
+    affected_user_ids = []
 
-      # delete own "seen" notifications after 1 hour
-      next if notification.user_id == notification.updated_by_id && notification.updated_at > max_own_seen
+    OnlineNotification
+      .where('created_at < ?', max_age)
+      .tap { |relation| affected_user_ids |= relation.distinct.pluck(:user_id) }
+      .delete_all
 
-      # delete notifications which are set to "seen" by somebody else after 8 hours
-      next if notification.user_id != notification.updated_by_id && notification.updated_at > max_auto_seen
+    OnlineNotification
+      .where(seen: true)
+      .where('(user_id = updated_by_id AND updated_at < :max_own_seen) OR (user_id != updated_by_id AND updated_at < :max_auto_seen)',
+             max_own_seen:, max_auto_seen:)
+      .tap { |relation| affected_user_ids |= relation.distinct.pluck(:user_id) }
+      .delete_all
 
-      notification.delete
-    end
-
-    # notify all agents
-    User.with_permissions('ticket.agent').each do |user|
-      Sessions.send_to(
-        user.id,
-        {
-          event: 'OnlineNotification::changed',
-          data:  {}
-        }
-      )
-      sleep 2 # slow down client requests
-    end
+    cleanup_notify_agents(affected_user_ids)
 
     true
   end
+
+  def self.cleanup_notify_agents(user_ids)
+    return if user_ids.blank?
+
+    User
+      .with_permissions('ticket.agent')
+      .where(id: user_ids)
+      .each do |user|
+        Sessions.send_to(
+          user.id,
+          {
+            event: 'OnlineNotification::changed',
+            data:  {}
+          }
+        )
+      end
+  end
+
+=begin
+
+check if online notification should be shown in general as already seen with current state
+
+  ticket = Ticket.find(1)
+  seen = OnlineNotification.seen_state?(ticket, user_id_check)
+
+returns
+
+  result = true # or false
+
+=end
+
+  def self.seen_state?(ticket, user_id_check = nil)
+    state      = Ticket::State.lookup(id: ticket.state_id)
+    state_type = Ticket::StateType.lookup(id: state.state_type_id)
+
+    # always to set unseen for ticket owner and users which did not the update
+    return false if seen_state_not_merged_owner?(state_type, ticket, user_id_check)
+
+    # set all to seen if pending action state is a closed or merged state
+    if state_type.name == 'pending action' && state.next_state_id
+      state      = Ticket::State.lookup(id: state.next_state_id)
+      state_type = Ticket::StateType.lookup(id: state.state_type_id)
+    end
+
+    # set all to seen if new state is pending reminder state
+    if state_type.name == 'pending reminder'
+      return seen_state_pending_reminder?(ticket, user_id_check)
+    end
+
+    # set all to seen if new state is a closed or merged state
+    return true if %w[closed merged].include? state_type.name
+
+    false
+  end
+
+  def self.seen_state_pending_reminder?(ticket, user_id_check)
+    return true if !user_id_check
+
+    return false if ticket.owner_id == 1
+    return false if ticket.updated_by_id != ticket.owner_id && user_id_check == ticket.owner_id
+
+    true
+  end
+  private_class_method :seen_state_pending_reminder?
+
+  def self.seen_state_not_merged_owner?(state_type, ticket, user_id_check)
+    return false if state_type.name == 'merged'
+    return false if !user_id_check
+
+    user_id_check == ticket.owner_id && user_id_check != ticket.updated_by_id
+  end
+  private_class_method :seen_state_not_merged_owner?
 
   private
 
