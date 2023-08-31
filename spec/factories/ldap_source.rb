@@ -10,7 +10,7 @@ FactoryBot.define do
     trait :with_config do
       preferences do
         {
-          'host_url'         => ENV['IMPORT_LDAP_ENDPOINT'],
+          'host_url'         => "ldap://#{ENV['IMPORT_LDAP_ENDPOINT']}",
           'options'          => { 'dc=foo,dc=example,dc=com'=>'dc=foo,dc=example,dc=com' },
           'option'           => 'dc=foo,dc=example,dc=com',
           'base_dn'          => 'dc=foo,dc=example,dc=com',
