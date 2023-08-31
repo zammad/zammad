@@ -246,10 +246,6 @@ msgstr ""
 msgid "%s months ago"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "%s new replies"
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
 msgstr ""
@@ -434,10 +430,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
-msgstr ""
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "1 new reply"
 msgstr ""
 
 #: db/seeds/settings.rb

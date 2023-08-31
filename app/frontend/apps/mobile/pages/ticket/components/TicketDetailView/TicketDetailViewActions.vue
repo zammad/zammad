@@ -1,10 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { i18n } from '#shared/i18n.ts'
-import { computed } from 'vue'
-
-const props = defineProps<{
+defineProps<{
   formInvalid: boolean
   newRepliesCount: number
   newArticlePresent: boolean
@@ -20,12 +17,6 @@ const emit = defineEmits<{
 }>()
 
 const bannerTransitionDuration = VITE_TEST_MODE ? 0 : { enter: 300, leave: 200 }
-
-const repliesMessage = computed(() => {
-  return props.newRepliesCount === 1
-    ? i18n.t('1 new reply')
-    : i18n.t('%s new replies', props.newRepliesCount)
-})
 
 const scrollDown = () => {
   window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
@@ -46,8 +37,8 @@ const scrollDown = () => {
       v-if="!hidden"
       class="fixed bottom-0 z-10 bg-gray-600/90 px-2 text-white backdrop-blur-lg transition pb-safe-1 ltr:left-0 ltr:right-0 rtl:left-0 rtl:right-0"
     >
-      <div class="relative flex flex-1 items-center justify-between p-2">
-        <div>
+      <div class="relative flex flex-1 items-center p-2 gap-2">
+        <div class="flex-1">
           <Transition
             :duration="bannerTransitionDuration"
             enter-from-class="rtl:translate-x-20 ltr:-translate-x-20"
@@ -57,7 +48,7 @@ const scrollDown = () => {
           >
             <button
               v-if="canScrollDown"
-              class="flex h-8 cursor-pointer items-center overflow-hidden rounded-2xl bg-blue px-2 transition"
+              class="flex h-8 relative cursor-pointer items-center rounded-2xl bg-blue px-2 transition"
               :aria-label="
                 newRepliesCount
                   ? $t('Scroll down to see %s new replies', newRepliesCount)
@@ -66,15 +57,14 @@ const scrollDown = () => {
               @click="scrollDown"
             >
               <CommonIcon name="mobile-arrow-down" size="small" decorative />
-              <span
-                class="overflow-hidden whitespace-nowrap"
-                :style="{
-                  maxWidth: newRepliesCount ? '300px' : '0px',
-                  transition: 'max-width 0.5s',
-                }"
+              <div
+                v-if="newRepliesCount"
+                aria-hidden="true"
+                data-test-id="new-replies-count"
+                class="absolute h-4 z-10 min-w-[1rem] top-0 rounded-full bg-yellow px-1 text-center text-xs text-black ltr:ml-4 rtl:mr-4"
               >
-                {{ `&nbsp;${repliesMessage}&nbsp;` }}
-              </span>
+                {{ newRepliesCount }}
+              </div>
             </button>
           </Transition>
         </div>
@@ -87,8 +77,12 @@ const scrollDown = () => {
             type="button"
             @click.prevent="emit('reply')"
           >
-            <CommonIcon name="mobile-chat" size="small" decorative />
-            {{ newArticlePresent ? $t('Edit reply') : $t('Add reply') }}
+            <div>
+              <CommonIcon name="mobile-chat" size="small" decorative />
+            </div>
+            <span class="line-clamp-1 break-all">
+              {{ newArticlePresent ? $t('Edit reply') : $t('Add reply') }}
+            </span>
           </FormKit>
           <FormKit
             v-if="canSave"
