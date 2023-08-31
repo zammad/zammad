@@ -115,43 +115,6 @@ RSpec.describe Ldap do
       )
     end
 
-    describe 'host_url' do
-      it 'parses protocol and host' do
-        config = {
-          host_url: 'ldaps://localhost'
-        }
-
-        params = {
-          host:       'localhost',
-          port:       636,
-          encryption: Hash
-        }
-
-        mock_initialization(
-          given:    config,
-          expected: params,
-        )
-      end
-
-      it 'prefers parsing over explicit parameters' do
-        config = {
-          host:     'anotherhost',
-          port:     7777,
-          host_url: 'ldap://localhost:389'
-        }
-
-        params = {
-          host: 'localhost',
-          port: 389,
-        }
-
-        mock_initialization(
-          given:    config,
-          expected: params,
-        )
-      end
-    end
-
     it 'falls back to default ldap port' do
       config = {
         host: 'localhost',
@@ -169,17 +132,62 @@ RSpec.describe Ldap do
     end
 
     it 'uses explicit ssl' do
-
       config = {
         host: 'localhost',
         port: 1337,
-        ssl:  true,
+        ssl:  'ssl',
       }
 
       expected = {
         host:       'localhost',
         port:       1337,
         encryption: Hash,
+      }
+
+      mock_initialization(
+        given:    config,
+        expected: expected,
+      )
+    end
+
+    it 'uses ssl with default port' do
+      config = {
+        host: 'localhost',
+        ssl:  'ssl',
+      }
+
+      expected = {
+        host:       'localhost',
+        port:       636,
+        encryption: {
+          method:      :simple_tls,
+          tls_options: {
+            verify_mode: 0
+          }
+        }
+      }
+
+      mock_initialization(
+        given:    config,
+        expected: expected,
+      )
+    end
+
+    it 'uses starttls with default port' do
+      config = {
+        host: 'localhost',
+        ssl:  'starttls',
+      }
+
+      expected = {
+        host:       'localhost',
+        port:       389,
+        encryption: {
+          method:      :start_tls,
+          tls_options: {
+            verify_mode: 0
+          }
+        }
       }
 
       mock_initialization(

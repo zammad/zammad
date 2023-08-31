@@ -8,16 +8,16 @@
 # @!attribute [r] base_dn
 #   @return [String] the base dn used while initializing the connection
 class Ldap
+  DEFAULT_PORT = 389
 
-  attr_reader :base_dn, :host, :port, :ssl
+  attr_reader :base_dn, :host, :port
 
   # Initializes a LDAP connection.
   #
   # @param [Hash] config the configuration for establishing a LDAP connection.
-  # @option config [String] :host_url The LDAP host URL in the format '*protocol*://*host*:*port*'.
-  # @option config [String] :host The LDAP explicit host. May contain the port. Gets overwritten by host_url if given.
-  # @option config [Number] :port The LDAP port. Default is 389 LDAP or 636 for LDAPS. Gets overwritten by host_url if given.
-  # @option config [Boolean] :ssl The LDAP SSL setting. Is set automatically for 'ldaps' protocol. Sets Port to 636 if non other is given.
+  # @option config [String] :host The LDAP explicit host. May contain the port.
+  # @option config [Number] :port The LDAP port. Default is 389 LDAP or 636 for LDAPS. Gets overwritten when it's given inside the host.
+  # @option config [Boolean] :ssl The LDAP SSL setting. Sets Port to 636 if non other is given.
   # @option config [String] :base_dn The base DN searches etc. are applied to.
   # @option config [String] :bind_user The username which should be used for bind.
   # @option config [String] :bind_pw The password which should be used for bind.
@@ -158,9 +158,7 @@ class Ldap
     # might change below
     @host = @config[:host]
     @port = @config[:port]
-    @ssl  = @config.fetch(:ssl, false)
 
-    parse_host_url
     parse_host
     handle_ssl_config
     handle_bind_crendentials
@@ -169,17 +167,7 @@ class Ldap
 
     # fallback to default
     # port if none given
-    @port ||= 389 # rubocop:disable Naming/MemoizedInstanceVariableName
-  end
-
-  def parse_host_url
-    @host_url = @config[:host_url]
-    return if @host_url.blank?
-    raise "Invalid host url '#{@host_url}'" if @host_url !~ %r{\A([^:]+)://(.+?)/?\z}
-
-    @protocol = $1.to_sym
-    @host     = $2
-    @ssl      = @protocol == :ldaps
+    @port ||= DEFAULT_PORT # rubocop:disable Naming/MemoizedInstanceVariableName
   end
 
   def parse_host
@@ -190,12 +178,22 @@ class Ldap
   end
 
   def handle_ssl_config
-    return if !@ssl
+    return if @config.fetch(:ssl, 'off').eql?('off')
 
-    @port       ||= @config.fetch(:port, 636)
-    @encryption   = {
-      method: :simple_tls,
-    }
+    ssl_default_port = DEFAULT_PORT
+    if @config[:ssl].eql?('ssl')
+      ssl_default_port = 636
+
+      @encryption = {
+        method: :simple_tls,
+      }
+    else
+      @encryption = {
+        method: :start_tls,
+      }
+    end
+
+    @port ||= @config.fetch(:port, ssl_default_port)
 
     return if @config[:ssl_verify]
 

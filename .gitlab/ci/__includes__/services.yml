@@ -34,13 +34,13 @@
 
 .variables_idoit:
   variables:
-    IDOIT_API_CATEGORY: "Building"
-    IDOIT_API_ENDPOINT: "http://ci-service-idoit:80"
-    IDOIT_API_TOKEN: "admin"
+    IDOIT_API_CATEGORY: 'Building'
+    IDOIT_API_ENDPOINT: 'http://ci-service-idoit:80'
+    IDOIT_API_TOKEN: 'admin'
 
 .variables_ftp:
   variables:
-    FTP_URL: "ftp://ci-service-ftp"
+    FTP_URL: 'ftp://ci-service-ftp'
 
 .variables_auth:
   variables:
@@ -105,3 +105,7 @@
   ftp:
     name: $CI_REGISTRY/docker/zammad-ftp:stable
     alias: ci-service-ftp
+
+  ldap:
+    name: $CI_REGISTRY/docker/zammad-ldap:stable
+    alias: ci-service-ldap

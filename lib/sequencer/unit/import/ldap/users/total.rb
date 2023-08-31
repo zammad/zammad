@@ -30,6 +30,6 @@ class Sequencer::Unit::Import::Ldap::Users::Total < Sequencer::Unit::Base
   end
 
   def cache_key
-    @cache_key ||= "#{ldap_connection.host}::#{ldap_connection.port}::#{ldap_connection.ssl}::#{ldap_connection.base_dn}::#{ldap_config[:user_filter]}"
+    @cache_key ||= "#{ldap_connection.host}::#{ldap_connection.port}::#{ldap_config[:ssl]}::#{ldap_connection.base_dn}::#{ldap_config[:user_filter]}"
   end
 end

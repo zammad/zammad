@@ -24,7 +24,12 @@
             <tr>
               <td class="settings-list-row-control">
                 <%- @T('Host') %> <span>*</span>
-              <td class="settings-list-control-cell"><input type="text" name="host_url" class="form-control form-control--small js-hostUrl" value="" placeholder="ldaps://ldap.example.com" autocomplete="off" required>
+              <td class="settings-list-control-cell"><%- @hostHtml %>
+            <tr>
+              <td class="settings-list-row-control">
+                <%- @T('SSL/STARTTLS') %>
+                <td class="settings-list-control-cell">
+                  <%- @sslHtml %>
             <tr>
               <td class="settings-list-row-control"><%- @T('Active') %>
               <td class="settings-list-control-cell">

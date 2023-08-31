@@ -44,15 +44,7 @@ RSpec.describe 'Ldap import', integration: true, required_envs: %w[IMPORT_LDAP_E
                                 'total'       => 0 } } }
   end
 
-  context 'when importing' do
-    before do
-      Setting.set('ldap_integration', true)
-      TCR.turned_off do
-        ldap_source
-        ImportJob.start_registered
-      end
-    end
-
+  shared_examples 'ldap import' do
     it 'does import users and roles' do
       expect(ImportJob.last.result).to eq(expected_result)
 
@@ -69,6 +61,30 @@ RSpec.describe 'Ldap import', integration: true, required_envs: %w[IMPORT_LDAP_E
       expect(user_lb.email).to eq('lb@example.com')
       expect(user_lb.roles.first.name).to eq('Agent')
       expect(user_lb.roles.count).to eq(1)
+    end
+  end
+
+  context 'when importing' do
+    before do
+      Setting.set('ldap_integration', true)
+      TCR.turned_off do
+        ldap_source
+        ImportJob.start_registered
+      end
+    end
+
+    include_examples 'ldap import'
+
+    context 'with ssl' do
+      let(:ldap_source) { create(:ldap_source, :with_ssl) }
+
+      include_examples 'ldap import'
+    end
+
+    context 'with starttls' do
+      let(:ldap_source) { create(:ldap_source, :with_starttls) }
+
+      include_examples 'ldap import'
     end
   end
 end
