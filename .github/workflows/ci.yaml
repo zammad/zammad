@@ -44,11 +44,6 @@ jobs:
           key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
       - name: Install dependencies
         run: sudo apt install postgresql libimlib2 libimlib2-dev openssl direnv shellcheck
-      - name: Set RVM
-        run: |
-          curl -sSL https://get.rvm.io | bash -s stable --rails
-          rvm install ruby-3.1.3
-          rvm --default use 3.1.3
       - name: Pre
         run: .github/workflows/ci/pre.sh
       - name: Lint
