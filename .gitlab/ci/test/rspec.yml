@@ -32,6 +32,7 @@ rspec:integration:
     - !reference [.services, proxy]
     - !reference [.services, ftp]
     - !reference [.services, mattermost]
+    - !reference [.services, ldap]
   script:
     - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t integration -t ~integration_standalone --profile 10

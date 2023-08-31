@@ -105,3 +105,7 @@
   ftp:
     name: $CI_REGISTRY/docker/zammad-ftp:stable
     alias: ci-service-ftp
+
+  ldap:
+    name: $CI_REGISTRY/docker/zammad-ldap:stable
+    alias: ci-service-ldap
