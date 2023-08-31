@@ -1,12 +1,13 @@
 name: docker-release
-
 on:
-  push:
-    branches:
-      - stable
-      - develop
-    tags:
-      - '*'
+  pull_request:
+#on:
+ # push:
+  #  branches:
+   #   - stable
+    #  - develop
+   # tags:
+    #  - '*'
 
 jobs:
   docker-build-push:
