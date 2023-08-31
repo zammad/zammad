@@ -186,7 +186,7 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
     end
   end
 
-  it 'doesn\'t render "new replies" button if there is not scrollbar' do
+  it 'doesn\'t render "new replies" button if there is no scrollbar' do
     create_articles(2)
     visit_ticket
 
@@ -198,8 +198,8 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
 
     expect(page).to have_text('new')
 
-    expect(page).to have_no_text('0 new replies')
-    expect(page).to have_no_text('1 new reply')
+    expect(page).to have_no_css('[data-test-id="new-replies-count"]', text: '0')
+    expect(page).to have_no_css('[data-test-id="new-replies-count"]', text: '1')
 
     expect(page).to have_no_button('Scroll down to see 0 new replies')
     expect(page).to have_no_button('Scroll down to see 1 new replies')
@@ -220,14 +220,14 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
     wait_for_ticket_articles(number: 2)
 
     expect(page).to have_text('new')
-    expect(page).to have_text('2 new replies')
+    expect(page).to have_css('[data-test-id="new-replies-count"]', text: '2')
 
     find_button('Scroll down to see 2 new replies').click
 
     # we stop rendering "new" only if we already saw articles and we received a new one
     # or if user navigated between pages back and forth
     expect(page).to have_text('new')
-    expect(page).to have_no_text('2 new replies')
+    expect(page).to have_no_css('[data-test-id="new-replies-count"]', text: '2')
   end
 
   it 'scroll down is persistent' do
