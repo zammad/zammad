@@ -285,6 +285,38 @@ RSpec.describe Channel::EmailParser, type: :model do
           end
         end
 
+        context 'when reply-to is taken as sender/from of email' do
+          let(:reply_to) { 'jane.doe@example.corp' }
+          let(:raw_mail) { <<~RAW.chomp }
+            From: foo@bar.com
+            To: baz@qux.net
+            Reply-To: #{reply_to}
+            Subject: Foo
+
+            Lorem ipsum dolor
+          RAW
+
+          before do
+            Setting.set('postmaster_sender_based_on_reply_to', 'as_sender_of_email')
+          end
+
+          it 'sets reply-to as from value' do
+            described_class.new.process({}, raw_mail)
+
+            expect(Ticket.last.articles.first.from).to eq('jane.doe@example.corp')
+          end
+
+          context 'with broken reply-to value' do
+            let(:reply_to) { '<Jane Doe>' }
+
+            it 'ignores reply-to and keeps from' do
+              described_class.new.process({}, raw_mail)
+
+              expect(Ticket.last.articles.first.from).to eq('foo@bar.com')
+            end
+          end
+        end
+
         context 'when from address matches an existing customer' do
           let!(:customer) { create(:customer, email: 'foo@bar.com') }
 
@@ -348,7 +380,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
 
       context 'Mentions:' do
-        let(:agent) { create(:agent) }
+        let(:agent)    { create(:agent) }
         let(:raw_mail) { <<~RAW.chomp }
           From: foo@bar.com
           To: baz@qux.net

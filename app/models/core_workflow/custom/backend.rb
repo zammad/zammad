@@ -40,11 +40,19 @@ class CoreWorkflow::Custom::Backend
     @condition_object.attribute_object.saved_only
   end
 
+  def current_user
+    @result_object.user
+  end
+
   def params
     @condition_object.payload['params']
   end
 
   def result(backend, field, value = nil, skip_rerun: false)
     @result_object.run_backend_value(backend, field, value, skip_rerun: skip_rerun)
+  end
+
+  def change_flags(flags)
+    @result_object.change_flags(flags)
   end
 end

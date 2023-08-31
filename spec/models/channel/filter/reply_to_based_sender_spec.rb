@@ -35,6 +35,15 @@ RSpec.describe Channel::Filter::ReplyToBasedSender, type: :channel_filter do
       end
     end
 
+    context 'when invalid reply-to content' do
+      let(:reply_to) { 'Jane Doe' }
+
+      it 'keeps from' do
+        expect { filter(mail_hash) }
+          .not_to change { mail_hash[:from] }
+      end
+    end
+
     context 'when valid reply-to address' do
       let(:reply_to) { '<bugs.bunny@acme.corp>' }
 

@@ -21,7 +21,7 @@ const { notify } = useNotifications()
 
 beforeAll(async () => {
   await import(
-    '#shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
+    '#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
   )
 })
 

@@ -235,10 +235,20 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr "kwemeza"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
+msgid "%s (method)"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
+#, fuzzy
+#| msgid "Confirm"
+msgid "%s (option)"
+msgstr "kwemeza"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
 msgstr ""
 
@@ -892,7 +902,6 @@ msgstr "konti ntiyagenzuwe"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
 #: app/graphql/gql/types/overview_type.rb
 msgid "Accounted Time"
 msgstr "Igihe kibazwe"
@@ -949,6 +958,7 @@ msgstr "igikorwa cy'uruvunge cyakozwe"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Actions"
 msgstr "ibikorwa"
@@ -1034,6 +1044,7 @@ msgstr "ari gukorwaho"
 msgid "Adapter"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -1079,6 +1090,12 @@ msgstr "ongeraho uburyo bwa murandasi bwo guhanahana amakuru"
 msgid "Add Certificate"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
+#, fuzzy
+#| msgid "reply"
+msgid "Add Key"
+msgstr "subiza"
+
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
 msgstr "ongeraho urubuga"
@@ -1086,6 +1103,10 @@ msgstr "ongeraho urubuga"
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Private Key"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+msgid "Add Public or Private Key"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
@@ -1604,7 +1625,7 @@ msgstr ""
 msgid "Are you sure to remove this article?"
 msgstr "wizeye ko ushaka gusiba ibi bintu"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid "Are you sure you want to delete \"%s\"?"
@@ -1639,6 +1660,7 @@ msgstr "wizeye ko ushaka gusiba ibi bintu"
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1689,6 +1711,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Article"
 msgstr "Ingingo"
 
@@ -1800,13 +1823,13 @@ msgstr ""
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #, fuzzy
 #| msgid "Attached Files"
 msgid "Attach another file"
 msgstr "inyandiko zometseho"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #, fuzzy
 #| msgid "Attached Files"
 msgid "Attach files"
@@ -1962,6 +1985,10 @@ msgstr "kwemeza"
 msgid "Authenticator app secret"
 msgstr "Kwemeza biturutse kuri %s"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+msgid "Author"
+msgstr ""
+
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
 msgstr ""
@@ -2093,7 +2120,7 @@ msgstr "kugaruka mu mboni yanjye"
 msgid "Back to overview"
 msgstr "kugaruka mu mboni yanjye"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #, fuzzy
 #| msgid "Back to my view"
 msgid "Back to previous page"
@@ -2437,11 +2464,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "Guhagarika"
 
@@ -2512,40 +2539,8 @@ msgstr ""
 msgid "Caution!"
 msgstr "igihe bimara"
 
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "When notification is being sent."
-msgid "Certificate for %s found, but expired."
-msgstr "Iyo imenyesha ririmo koherezwa"
-
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "When notification is being sent."
-msgid "Certificate for %s found."
-msgstr "Iyo imenyesha ririmo koherezwa"
-
-#: lib/secure_mailing/smime/incoming.rb
-#, fuzzy
-#| msgid "When notification is being sent."
-msgid "Certificate for verification could not be found."
-msgstr "Iyo imenyesha ririmo koherezwa"
-
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Notification Sound"
-msgid "Certificate not found."
-msgstr "Ijwi rimenyesha"
-
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
-msgstr ""
-
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "Certificates found for %s, but expired."
-msgstr ""
-
-#: app/models/form_updater/concerns/has_security_options.rb
-msgid "Certificates found for %s."
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
@@ -2779,6 +2774,20 @@ msgstr "funga ibyo ubona"
 msgid "Choose if retweets should also be converted to tickets."
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
+msgid ""
+"Choose the default behavior of the PGP integration on per group basis. If "
+"signing or encrypting is not possible, the setting has no effect. Agents can "
+"always manually alter the behavior for each article."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/smime.jst.eco
+msgid ""
+"Choose the default behavior of the S/MIME integration on per group basis. If "
+"signing or encrypting is not possible, the setting has no effect. Agents can "
+"always manually alter the behavior for each article."
+msgstr ""
+
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #, fuzzy
 #| msgid "Choose the group in which direct messages will get added to."
@@ -2878,9 +2887,9 @@ msgstr "siba"
 msgid "Clear Search"
 msgstr "shakisha"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
 #| msgid "Selector"
 msgid "Clear Selection"
@@ -3501,7 +3510,7 @@ msgid ""
 "Create rules that single out the tickets for the Service Level Agreement."
 msgstr "gushyiraho amategeko atandukanya amatike y'amasezerano ya serivisi"
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #, fuzzy
 #| msgid "Created at"
 msgid "Create tag"
@@ -3576,6 +3585,7 @@ msgstr "guhimba itike y'igeragezwa"
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
@@ -3857,6 +3867,7 @@ msgstr "Kwiyandikisha byakozwe neza!"
 msgid "Default"
 msgstr "Ibizana na sisiteme"
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Default Behavior"
 msgstr ""
@@ -4137,6 +4148,12 @@ msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Authentication"
+msgid "Defines if PGP encryption is enabled or not."
+msgstr "kwemeza"
+
+#: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr ""
 
@@ -4193,6 +4210,12 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Authentication"
+msgid "Defines if the PGP recipient alias configuration is enabled or not."
+msgstr "kwemeza"
+
+#: db/seeds/settings.rb
 msgid ""
 "Defines if the agent has to accept a confirmation dialog when changing the "
 "article visibility to \"public\"."
@@ -4231,6 +4254,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the ticket conditions editor supports regular expression "
+"operators for triggers and ticket auto assignment."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4422,6 +4451,12 @@ msgstr ""
 #| msgid "Define the http protocol of your instance."
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Isobanura porotokoro ya HTTP ku mwanya wawe"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines pretty date format."
+msgid "Defines the PGP config."
+msgstr "Isobanura imiterere myiza y'itariki"
 
 #: db/seeds/settings.rb
 msgid "Defines the Placetel config."
@@ -4744,6 +4779,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -4756,8 +4792,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Delete"
 msgstr "siba"
 
@@ -5108,6 +5144,13 @@ msgstr "wizeye ko ushaka gusiba ibi bintu"
 msgid "Domain"
 msgstr "indangarubuga"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+#, fuzzy
+#| msgid "Domain"
+msgid "Domain Alias"
+msgstr "indangarubuga"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
 msgstr "umukoro/inshingano zishingiye ku ndangarubuga"
@@ -5124,9 +5167,9 @@ msgid "Don't synchronize"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr ""
 
@@ -5150,8 +5193,13 @@ msgstr ""
 msgid "Download Certificate"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Download Private Key"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+msgid "Download Public Key"
 msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
@@ -5514,14 +5562,6 @@ msgstr ""
 msgid "Enable ticket auto assignment."
 msgstr ""
 
-#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-msgid "Enable time accounting for following matching tickets."
-msgstr "gushoboza igihe cy'ibaruramari ku gihe gikurikira"
-
-#: db/seeds/settings.rb
-msgid "Enable time accounting for these tickets."
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Enable time accounting."
 msgstr ""
@@ -5673,9 +5713,17 @@ msgstr ""
 msgid "Encrypted"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 msgid "Encryption"
 msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Description"
+msgid "Encryption error"
+msgstr "ibisobanuro"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -5738,6 +5786,11 @@ msgstr ""
 #| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "injiza umutwe"
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+msgid ""
+"Enter a domain name that will be associated with this key, e.g. example.com."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/input.jst.eco
 #, fuzzy
@@ -5815,6 +5868,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Enter your %s App Keys"
 msgstr "injiza imfunguzo %s za application"
+
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Enter your current password, insert a new one and confirm it."
+msgstr ""
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -6042,6 +6099,12 @@ msgstr "Inararibonye"
 msgid "Expires"
 msgstr "Kurangira"
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+#, fuzzy
+#| msgid "Expires"
+msgid "Expires at"
+msgstr "Kurangira"
+
 #: app/assets/javascripts/app/controllers/search.coffee
 msgid "Extended Search"
 msgstr "ishakisha ryagutse"
@@ -6187,6 +6250,7 @@ msgstr "Tanga amatike"
 msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr "Shaka icyo ushakisha. Urugero \" shaka interuro\""
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Fingerprint"
 msgstr ""
@@ -6603,6 +6667,10 @@ msgstr ""
 msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr ""
 
+#: app/models/ticket/time_accounting.rb
+msgid "Given Ticket Article is not part of the Ticket"
+msgstr ""
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -6635,6 +6703,12 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 msgid "Go home"
 msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "Good signature"
+msgstr "umukono"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -6694,6 +6768,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/permission.jst.eco
 #: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -6705,7 +6780,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/messaging/ticket_create/pt-br.md.erb
-#: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
 #: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
@@ -6831,7 +6905,7 @@ msgstr ""
 msgid "Has processed"
 msgstr "ya bikoze/yabikozeho"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Has submenu"
 msgstr ""
 
@@ -7428,6 +7502,7 @@ msgstr ""
 msgid "Included ticket overviews"
 msgstr "incamake"
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
 msgstr ""
@@ -7614,12 +7689,6 @@ msgstr ""
 #: app/models/user.rb
 msgid "Invalid email '%{email}'"
 msgstr ""
-
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Enter your username or email address"
-msgid "Invalid email address."
-msgstr "andika izina ukoresha cyangwa umwirondoro wa interineti yawe"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
@@ -7824,6 +7893,10 @@ msgstr ""
 msgid "Key"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
+msgid "Key ID"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee
 msgid "Keyboard Shortcuts"
@@ -7945,6 +8018,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
 msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "has changed"
+msgid "Last changed"
+msgstr "Cya/yahinduwe"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -8125,6 +8204,7 @@ msgstr "nta na kimwe ifite"
 msgid "Loading failed, please try again later."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -8479,10 +8559,6 @@ msgstr "Ubutumwa nyuma yo kohereza ifishi"
 msgid "Message for login page."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Message is not signed by sender."
-msgstr ""
-
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
 msgstr "Ubutumwa"
@@ -8814,6 +8890,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -9101,6 +9178,8 @@ msgstr "Nomero %s yabonejwe"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -9155,12 +9234,6 @@ msgstr ""
 msgid "No categories"
 msgstr "nta byiciro bihari"
 
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "Notification Sound"
-msgid "No certificate for %s found."
-msgstr "Ijwi rimenyesha"
-
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
 #| msgid "Save configuration"
@@ -9206,6 +9279,7 @@ msgid "No file formats allowed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #, fuzzy
 #| msgid "Not configured"
 msgid "No filter was configured."
@@ -9235,20 +9309,14 @@ msgstr "ibibanziriza ahagaragara"
 msgid "No proxy for the following hosts."
 msgstr "nta tsinda rya hafi ku bakira bakurikira"
 
-#: app/models/form_updater/concerns/has_security_options.rb
-#, fuzzy
-#| msgid "matches"
-msgid "No recipient found."
-msgstr "bihuye/ bisa"
-
 #: app/controllers/users_controller.rb
 msgid "No record found!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr ""
 
@@ -9307,7 +9375,9 @@ msgstr ""
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
+#: app/graphql/gql/types/ticket_type.rb
 msgid "None"
 msgstr ""
 
@@ -9328,7 +9398,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr ""
@@ -9345,6 +9415,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/controllers/application_controller/handles_errors.rb
+#: app/services/service/ticket/article/create.rb
 msgid "Not authorized"
 msgstr ""
 
@@ -9905,7 +9976,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/messaging/ticket_create/pt-br.md.erb
-#: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
 #: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
@@ -9917,6 +9987,29 @@ msgid ""
 "Owner tickets of the user will not get deleted. The owner will be mapped to "
 "the system user (ID 1)."
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
+msgid "PGP"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "PGP Recipient Alias Configuration"
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Config"
+msgid "PGP config"
+msgstr "iboneza"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Integrations"
+msgid "PGP integration"
+msgstr "ibihujwe n'ibindi"
 
 #: lib/email_helper.rb
 msgid "POP3"
@@ -10039,6 +10132,10 @@ msgstr ""
 msgid "Paste in CSV data"
 msgstr "Omeka mu mbonwa za CSV"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+msgid "Paste key"
+msgstr ""
+
 #: db/seeds/overviews.rb
 #, fuzzy
 #| msgid "My pending reached Tickets"
@@ -10116,7 +10213,6 @@ msgstr ""
 msgid "Phone Extension to Agent Mapping"
 msgstr ""
 
-#: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
@@ -10315,6 +10411,19 @@ msgstr "kanda kuri buto iri munsi aha kugira ngo uhange iyawe "
 msgid "Pretty Date"
 msgstr "Itariki nziza"
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+msgid ""
+"Pretty Good Privacy (PGP) enables you to send digitally signed and encrypted "
+"messages."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+msgid ""
+"Pretty Good Privacy (PGP) is an encryption program that can be used for "
+"signing, encrypting and decrypting messages and to increase the security of "
+"e-mail communication."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
@@ -10378,10 +10487,6 @@ msgstr "uburemere"
 
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
-msgstr ""
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Private key for decryption could not be found."
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -10456,6 +10561,10 @@ msgstr "aderesi y'ihuriro"
 msgid "Public"
 msgstr "rusange"
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
+msgid "Public & Private Keys"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/public_link.coffee
 #, fuzzy
 #| msgid "Public Menu"
@@ -10521,6 +10630,18 @@ msgstr "umurongo"
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Queue already exists!"
 msgstr ""
+
+#: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Enable REST API access using the username/email address and password for "
+#| "the authentication user."
+msgid ""
+"REST API access using the username/email address and password is currently "
+"disabled. Please contact your administrator."
+msgstr ""
+"emeza kugeraho ukoresheje REST API hakoreshejwe izina ukoresha/imeri "
+"n'ijambo ry'ibanga kugira ngo wemererwe nk'umukoresha"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -11073,6 +11194,9 @@ msgid "Running…"
 msgstr "Birakora…"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
+#: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
 msgid "S/MIME"
 msgstr ""
 
@@ -11329,13 +11453,13 @@ msgstr "shaka abakoresha ikintu"
 msgid "Search for…"
 msgstr "shakisha"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Search or enter email address…"
 msgstr "andika izina ukoresha cyangwa umwirondoro wa interineti yawe"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Search or enter phone number…"
@@ -11522,9 +11646,9 @@ msgid "Selects the ticket number generator module."
 msgstr "hitamo uburyo bwo gukora numero ya tike"
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #, fuzzy
 #| msgid "Select Template"
 msgid "Select…"
@@ -11632,6 +11756,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #, fuzzy
 #| msgid "Resend verification email"
@@ -11944,6 +12069,13 @@ msgstr "incamake"
 msgid "Show ticket viewers"
 msgstr "incamake"
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enable time accounting for following matching tickets."
+msgid "Show time accounting dialog when updating matching tickets."
+msgstr "gushoboza igihe cy'ibaruramari ku gihe gikurikira"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
 msgstr "gararaza umutwe mu ifishi"
@@ -11969,6 +12101,7 @@ msgid "Sidebar Attachments"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Sign"
@@ -11982,6 +12115,13 @@ msgstr ""
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Sign out"
+msgid "Sign error"
+msgstr "Sohoka"
+
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -11990,6 +12130,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
+#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue
 msgid "Sign in"
 msgstr "injira"
 
@@ -12245,7 +12386,7 @@ msgstr "shaka abakoresha ikintu"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "shaka abakoresha ikintu"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #, fuzzy
 #| msgid "Search for users"
 msgid "Start typing to search…"
@@ -12276,7 +12417,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/messaging/ticket_create/pt-br.md.erb
-#: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
 #: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
@@ -12386,6 +12526,7 @@ msgid "Submit"
 msgstr "ohereza"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Subscribe"
@@ -12480,7 +12621,7 @@ msgstr ""
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Ibyo ureba byahindutse, urashaka koko kubifunga?"
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #, fuzzy
 #| msgid "%s Object(s) are deleted."
 msgid "Tag \"%s\" already exists."
@@ -12493,9 +12634,9 @@ msgstr " ikintu%s cyasibwe(ibintu %s byasibwe)"
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 #: lib/excel_sheet/ticket.rb
@@ -12600,6 +12741,7 @@ msgstr "isuzuma"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Text"
 msgstr "umwandiko"
@@ -12670,6 +12812,12 @@ msgstr "Urakoze ku bibazo byawe (#%s)! Tuzaguhamagara vuba bishoboka"
 msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "urakoze kwisunga. Imeri yoherejwe kuri \"%s\""
 
+#: lib/secure_mailing/pgp/tool/exec/agent.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The 'gpg-agent' process could not be stopped."
+msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
+
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
 msgstr ""
@@ -12682,6 +12830,70 @@ msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 
 #: app/services/service/avatar/image_validate.rb
 msgid "The MIME type of the image is invalid."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP email recipient is invalid."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP email signer is invalid."
+msgstr ""
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "When notification is being sent."
+msgid "The PGP key for %s was found, but has expired."
+msgstr "Iyo imenyesha ririmo koherezwa"
+
+#: lib/secure_mailing/pgp/security_options.rb
+msgid "The PGP key for %s was found."
+msgstr ""
+
+#: lib/secure_mailing/pgp/security_options.rb
+msgid "The PGP key for %s was not found."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No results were found."
+msgid "The PGP key has been revoked."
+msgstr "nta gisubizo cyabonetse"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No results were found."
+msgid "The PGP key has expired."
+msgstr "nta gisubizo cyabonetse"
+
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "No results were found."
+msgid "The PGP keys for %s were found."
+msgstr "nta gisubizo cyabonetse"
+
+#: lib/secure_mailing/pgp/security_options.rb
+msgid "The PGP keys for %s were not found."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP passphrase is invalid."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "The PGP signature has expired."
+msgstr "umukono"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "The PGP signature is invalid."
+msgstr "umukono"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The PGP signature key has been revoked."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
@@ -12775,8 +12987,45 @@ msgstr ""
 "Mucukumbuzi irashaje. Ntabwo yashobora gukoresha uburyo bugezweho  dukoresha "
 "mu kuganira"
 
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "When notification is being sent."
+msgid ""
+"The certificate for %s was found, but it is not valid yet or has expired."
+msgstr "Iyo imenyesha ririmo koherezwa"
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificate for %s was found."
+msgstr "Ijwi rimenyesha"
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificate for %s was not found."
+msgstr "Ijwi rimenyesha"
+
 #: app/models/smime_certificate.rb
 msgid "The certificate for this private key could not be found."
+msgstr ""
+
+#: lib/secure_mailing/smime/incoming.rb
+#, fuzzy
+#| msgid "When notification is being sent."
+msgid "The certificate for verification could not be found."
+msgstr "Iyo imenyesha ririmo koherezwa"
+
+#: lib/secure_mailing/smime/certificate.rb
+msgid ""
+"The certificate is not valid for S/MIME usage. Please check the certificate "
+"format."
+msgstr ""
+
+#: lib/secure_mailing/smime/certificate.rb
+msgid ""
+"The certificate is not valid for S/MIME usage. Please check the key usage, "
+"subject alternative name and public key cryptographic algorithm."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
@@ -12788,6 +13037,18 @@ msgstr ""
 "Icyemezo ndangarubuga |%s| ntabwo cyasuzumwe. Ibyo byatuma abajura biba "
 "amakuru y’irangamimerere. Niba wizeye gukoresha icyemezo wisinyiye, ushobora "
 "gukanda kuri « Komeza ». Niba atari ibyo «  Hanagura »"
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificates for %s were found."
+msgstr "Ijwi rimenyesha"
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificates for %s were not found."
+msgstr "Ijwi rimenyesha"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -12866,6 +13127,12 @@ msgstr "Ingano mburabuzi y'imyandikire ni 12px"
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The encrypted part of this PGP email has an incorrect MIME type according to "
+"RFC 3156."
+msgstr ""
+
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 msgid ""
 "The entered user for reauthentication differs from the user that was used "
@@ -12892,6 +13159,12 @@ msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The file does not belong to the specified article."
+msgstr ""
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The first part of this PGP email is not a valid version part as mandated by "
+"RFC 3156."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
@@ -12936,6 +13209,7 @@ msgstr ""
 msgid "The image is invalid."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/widget/import.coffee
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
@@ -13052,6 +13326,30 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
+#: lib/secure_mailing/pgp/incoming.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The private PGP key could not be found."
+msgstr " ikintu %s cyashyizwe ku gihe  (ibintu %s byashyizwe ku gihe)"
+
+#: lib/secure_mailing/smime/incoming.rb
+#, fuzzy
+#| msgid "When notification is being sent."
+msgid "The private key for decryption could not be found."
+msgstr "Iyo imenyesha ririmo koherezwa"
+
+#: lib/secure_mailing/smime/private_key.rb
+msgid ""
+"The private key is not valid for S/MIME usage. Please check the key "
+"cryptographic algorithm."
+msgstr ""
+
+#: lib/secure_mailing/smime/private_key.rb
+msgid ""
+"The private key is not valid for S/MIME usage. Please check the key format "
+"and the secret."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -13102,6 +13400,12 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
+#: lib/secure_mailing/pgp/incoming.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The public PGP key could not be found."
+msgstr " ikintu %s cyashyizwe ku gihe  (ibintu %s byashyizwe ku gihe)"
+
 #: app/assets/javascripts/app/controllers/report.coffee
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -13118,6 +13422,10 @@ msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error.rb
+msgid "The required PGP passphrase is missing."
 msgstr ""
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
@@ -13324,6 +13632,18 @@ msgstr " ikintu %s cyashyizwe ku gihe  (ibintu %s byashyizwe ku gihe)"
 msgid "The sign-in failed. Please contact the Support team."
 msgstr ""
 
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "No results were found."
+msgid "The signature PGP key has expired."
+msgstr "nta gisubizo cyabonetse"
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"The signature part of this PGP email is missing or has a wrong content type "
+"according to RFC 3156."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
@@ -13459,6 +13779,10 @@ msgstr "Hashobora kubaho impamvu nyinshi zituma ikiganiro kitagaragara"
 msgid "There are too many people in the chat queue."
 msgstr "hari abantu benshi bategereje ku murongo wo kuganira"
 
+#: app/models/pgp_key.rb
+msgid "There is already a PGP key with the same fingerprint."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr ""
@@ -13513,15 +13837,92 @@ msgid ""
 "There is no stored configuration for this two-factor authentication method."
 msgstr ""
 
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "matches"
+msgid "There is no valid PGP email recipient."
+msgstr "bihuye/ bisa"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There is no valid PGP email signer."
+msgstr "nta mukozi uri ku murongo"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There was an unknown PGP error."
+msgstr "nta mukozi uri ku murongo"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "There was no Knowledge Base created."
 msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 
+#: lib/secure_mailing/pgp/security_options.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There was no PGP key found."
+msgstr "nta mukozi uri ku murongo"
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "There was no certificate found."
+msgstr "Ijwi rimenyesha"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There was no public PGP key found."
+msgstr "nta mukozi uri ku murongo"
+
+#: lib/secure_mailing/backend/handler_security_options.rb
+#, fuzzy
+#| msgid "matches"
+msgid "There was no recipient found."
+msgstr "bihuye/ bisa"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There was no secret PGP key found."
+msgstr "nta mukozi uri ku murongo"
+
+#: lib/secure_mailing/pgp/tool/error.rb
+#, fuzzy
+#| msgid "matches"
+msgid "There was no valid OpenPGP data found."
+msgstr "bihuye/ bisa"
+
+#: lib/secure_mailing/pgp/security_options.rb
+msgid "There were PGP keys found for %s, but at least one of them has expired."
+msgstr ""
+
+#: lib/secure_mailing/smime/security_options.rb
+#, fuzzy
+#| msgid "When notification is being sent."
+msgid ""
+"There were certificates found for %s, but at least one of them is not valid "
+"yet or has expired."
+msgstr "Iyo imenyesha ririmo koherezwa"
+
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
 msgstr "ubusabe bw'agace ka gatatu"
+
+#: lib/secure_mailing/pgp/incoming.rb
+msgid ""
+"This PGP email does not have exactly two body parts for PGP mails as "
+"mandated by RFC 3156."
+msgstr ""
+
+#: lib/secure_mailing/pgp/tool/error/handler.rb
+msgid ""
+"This PGP email was encrypted with a potentially unknown encryption algorithm."
+msgstr ""
 
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
@@ -13748,6 +14149,10 @@ msgid ""
 "objects. It is possible to further customize payload of each webhook."
 msgstr ""
 
+#: app/controllers/integration/pgp_controller.rb
+msgid "This is not a private PGP key."
+msgstr ""
+
 #: app/models/channel/email_parser.rb
 msgid ""
 "This message cannot be displayed because it contains over 5,000 links. "
@@ -13760,6 +14165,10 @@ msgid ""
 "This message cannot be displayed due to HTML processing issues. Download the "
 "raw message below and open it via an Email client if you still wish to view "
 "it."
+msgstr ""
+
+#: lib/secure_mailing/smime/incoming.rb
+msgid "This message was not signed by its sender."
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -13905,6 +14314,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Ticket Conditions Expert Mode"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Conditions Regular Expression Operators"
 msgstr ""
 
 #: app/models/report.rb
@@ -14236,6 +14649,7 @@ msgstr "kugeza"
 msgid "Time"
 msgstr "igihe"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: db/seeds/permissions.rb db/seeds/settings.rb
@@ -14268,6 +14682,12 @@ msgstr "Igihe cy'ibaruramari"
 #, fuzzy
 #| msgid "Time Accounting"
 msgid "Time Accounting Unit"
+msgstr "Igihe cy'ibaruramari"
+
+#: app/policies/ticket/time_accounting_policy.rb
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "Time Accounting is not enabled"
 msgstr "Igihe cy'ibaruramari"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
@@ -14494,6 +14914,18 @@ msgstr "umutwe w'ikiganiro"
 msgid "Topics"
 msgstr "ingingo"
 
+#: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
+#, fuzzy
+#| msgid "Total: %s"
+msgid "Total"
+msgstr " igiteranyo :%s"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
+#, fuzzy
+#| msgid "Accounted Time"
+msgid "Total Accounted Time"
+msgstr "Igihe kibazwe"
+
 #: db/seeds/settings.rb
 msgid "Total display of the number of objects in a grouping."
 msgstr ""
@@ -14509,6 +14941,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "Transfer conversation to another chat:"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate field contents"
+msgstr "ibyasemuwe"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -14797,12 +15235,6 @@ msgstr "Kumenyesha"
 msgid "Unset default"
 msgstr "kugarura imiterere fatizo"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Assigned"
-msgid "Unsigned"
-msgstr "bishinzwe"
-
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Unsubscribe"
@@ -14817,6 +15249,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -15003,6 +15436,12 @@ msgstr ""
 msgid "Upload Private Key"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#, fuzzy
+#| msgid "Upload"
+msgid "Upload key"
+msgstr "shyira kuri interineti"
+
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -15013,6 +15452,13 @@ msgstr "Kohereza"
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Usage"
 msgstr "imikoreshereze"
+
+#: lib/secure_mailing/pgp/tool/exec.rb
+#: lib/secure_mailing/pgp/tool/exec/agent.rb
+msgid ""
+"Use 'with_private_keyring' to create a private keyring or set @gnupg_home "
+"before calling gpg."
+msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -15476,7 +15922,7 @@ msgstr ""
 msgid "We're sorry, but something went wrong. Received message: %s"
 msgstr ""
 
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 
@@ -15988,10 +16434,6 @@ msgstr ""
 "ushobora kujya mu ibanga ry'urubuga kubera inyomeko ndstse no kuri "
 "muhuzaisanzwe ikora nta gutakaza amakuru"
 
-#: app/assets/javascripts/app/models/postmaster_filter.coffee
-msgid "You can use regular expression by using \"regex:your_reg_exp\"."
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "You can use the following script to post the data to %s."
 msgstr "Mushobora gukoresha imyandikire ikurikira mu gushyira imbonwa kuri %s"
@@ -16349,11 +16791,13 @@ msgid "admin"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "after (absolute)"
 msgstr "nyuma (bidasubirwaho)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "after (relative)"
 msgstr "nyuma ( ugeranyije)"
 
@@ -16411,11 +16855,13 @@ msgid "auto select"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "before (absolute)"
 msgstr "mbere(bidasubirwaho)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "before (relative)"
 msgstr "mbere(ugereranyije)"
 
@@ -16502,10 +16948,12 @@ msgid "contains not"
 msgstr "bidakubiyemo"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "contains one"
 msgstr "ifite kimwe"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "contains one not"
 msgstr "nta na kimwe ifite"
 
@@ -16623,6 +17071,13 @@ msgstr ""
 msgid "does not exist"
 msgstr "ntibibaho"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#, fuzzy
+#| msgid "not exist"
+msgid "does not match regex"
+msgstr "ntibibaho"
+
 msgid "doesn't match %{attribute}"
 msgstr ""
 
@@ -16687,8 +17142,13 @@ msgstr "cyafunzwe"
 msgid "enclosure"
 msgstr "funga"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "ends with"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "ends with one of"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -16757,7 +17217,12 @@ msgstr "kuva"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "from (relative)"
+msgstr ""
+
+#: app/controllers/integration/pgp_controller.rb
+msgid "gpg (GnuPG) 2.2.0 or newer is required"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -16944,6 +17409,11 @@ msgid "is already used"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+msgid "is any of"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
 msgstr "ni mu gihe cyo gukora"
 
@@ -16961,6 +17431,13 @@ msgstr ""
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#, fuzzy
+#| msgid "is not"
+msgid "is none of"
+msgstr "ntabwo/si"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -17005,6 +17482,7 @@ msgstr ""
 msgid "is reserved"
 msgstr "%s irasabwa!"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
 msgstr ""
@@ -17083,6 +17561,13 @@ msgstr ""
 #, fuzzy
 #| msgid "matches"
 msgid "matches found"
+msgstr "bihuye/ bisa"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#, fuzzy
+#| msgid "matches"
+msgid "matches regex"
 msgstr "bihuye/ bisa"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
@@ -17206,6 +17691,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/chat_list.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/user_list.jst.eco
@@ -17222,6 +17708,7 @@ msgstr "nta na kimwe"
 msgid "not reached"
 msgstr "ntibyagezweho"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "not set"
 msgstr ""
@@ -17265,6 +17752,7 @@ msgstr "fungura"
 msgid "optional"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "or"
@@ -17316,14 +17804,6 @@ msgstr "byageze"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-msgid "regex match"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-msgid "regex mismatch"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -17429,6 +17909,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/user_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
@@ -17486,10 +17967,17 @@ msgstr "umukoresha wihariye"
 msgid "split"
 msgstr "tandukanya"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 #| msgid "Start new"
 msgid "starts with"
+msgstr "Tangira inshya"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#, fuzzy
+#| msgid "Start new"
+msgid "starts with one of"
 msgstr "Tangira inshya"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -17528,6 +18016,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "till (relative)"
 msgstr ""
 
@@ -17541,6 +18030,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "today"
@@ -17610,11 +18100,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "within last (relative)"
 msgstr "muby'inyuma (ugereranyije)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "within next (relative)"
 msgstr "muby'imbere(ugereranyije)"
 
@@ -17686,6 +18178,41 @@ msgstr "umwandiko wose"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "igihe cyo gutegereza uyu munsi"
+
+#, fuzzy
+#~| msgid "Recipient"
+#~ msgid "Invalid recipient."
+#~ msgstr "Uwakira"
+
+#, fuzzy
+#~| msgid "matches"
+#~ msgid "No public key found."
+#~ msgstr "bihuye/ bisa"
+
+#, fuzzy
+#~| msgid "matches"
+#~ msgid "No secret key found."
+#~ msgstr "bihuye/ bisa"
+
+#, fuzzy
+#~| msgid "When notification is being sent."
+#~ msgid "Certificate for %s found."
+#~ msgstr "Iyo imenyesha ririmo koherezwa"
+
+#, fuzzy
+#~| msgid "Notification Sound"
+#~ msgid "Certificate not found."
+#~ msgstr "Ijwi rimenyesha"
+
+#, fuzzy
+#~| msgid "Enter your username or email address"
+#~ msgid "Invalid email address."
+#~ msgstr "andika izina ukoresha cyangwa umwirondoro wa interineti yawe"
+
+#, fuzzy
+#~| msgid "Assigned"
+#~ msgid "Unsigned"
+#~ msgstr "bishinzwe"
 
 #, fuzzy
 #~| msgid "Ticket update"

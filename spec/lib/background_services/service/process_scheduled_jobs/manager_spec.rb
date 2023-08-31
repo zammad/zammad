@@ -10,8 +10,7 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs::Manager do
 
   describe '#run' do
     before do
-      allow(instance).to receive(:skip?).and_return(skipping)
-      allow(instance).to receive(:start).and_return(:thread)
+      allow(instance).to receive_messages(skip?: skipping, start: :thread)
     end
 
     context 'when #skip? returns false' do
@@ -44,9 +43,7 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs::Manager do
     let(:skipping_job_timeplan)    { false }
 
     before do
-      allow(instance).to receive(:skip_already_running?).and_return(skipping_already_running)
-      allow(instance).to receive(:skip_job_last_run?).and_return(skipping_job_last_run)
-      allow(instance).to receive(:skip_job_timeplan?).and_return(skipping_job_timeplan)
+      allow(instance).to receive_messages(skip_already_running?: skipping_already_running, skip_job_last_run?: skipping_job_last_run, skip_job_timeplan?: skipping_job_timeplan)
     end
 
     it 'does not skip' do

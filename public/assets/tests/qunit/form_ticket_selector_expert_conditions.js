@@ -1008,6 +1008,79 @@ QUnit.test('supports migration of the outdated param structure', (assert) => {
   assert.deepEqual(params, test_params, 'params structure')
 })
 
+QUnit.test('supports migration of renamed operators (#4709)', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'ticket_allow_expert_conditions', value: true }])
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    condition: {
+      operator: 'OR',
+      conditions: [
+        {
+          name: 'ticket.title',
+          operator: 'is',
+          value: 'foo',
+        },
+        {
+          name: 'article.subject',
+          operator: 'is not',
+          value: 'bar',
+        },
+        {
+          name: 'article.from',
+          operator: 'starts with',
+          value: 'baz',
+        },
+        {
+          name: 'article.to',
+          operator: 'ends with',
+          value: 'qux',
+        },
+      ],
+    },
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', preview: false, always_expert_mode: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      operator: 'OR',
+      conditions: [
+        {
+          name: 'ticket.title',
+          operator: 'is any of',
+          value: ['foo'],
+        },
+        {
+          name: 'article.subject',
+          operator: 'is none of',
+          value: ['bar'],
+        },
+        {
+          name: 'article.from',
+          operator: 'starts with one of',
+          value: ['baz'],
+        },
+        {
+          name: 'article.to',
+          operator: 'ends with one of',
+          value: ['qux'],
+        },
+      ],
+    },
+  }
+  assert.deepEqual(params, test_params, 'params structure')
+})
+
 QUnit.test('supports maximum nested level', (assert) => {
   var { testCount, testName } = testSetup([{ name: 'ticket_allow_expert_conditions', value: true }])
   var testFormId = `form${testCount}`
@@ -1473,4 +1546,227 @@ QUnit.test('shows an alert when downgrade of the param structure leads to possib
   // Check alert visibility and text.
   assert.notOk(el.find('[role="alert"]').hasClass('hidden'), 'alert visible')
   assert.equal(el.find('[role="alert"]').text(), 'Caution! You disabled the expert mode. This will downgrade all expert conditions and can lead to data loss in your condition attributes. Please check your conditions before saving.', 'alert text')
+})
+
+QUnit.test('supports migration of renamed operators: is any of (#4709)', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'ticket_allow_expert_conditions', value: false }])
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    condition: {
+      'ticket.title': {
+        operator: 'is',
+        value: 'foo',
+      },
+    },
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', preview: false, always_expert_mode: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      'ticket.title': {
+        operator: 'is any of',
+        value: ['foo'],
+      },
+    },
+  }
+  assert.deepEqual(params, test_params, 'params structure')
+})
+
+QUnit.test('supports migration of renamed operators: is none of (#4709)', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'ticket_allow_expert_conditions', value: false }])
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    condition: {
+      'article.subject': {
+        operator: 'is not',
+        value: 'bar',
+      },
+    },
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', preview: false, always_expert_mode: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      'article.subject': {
+        operator: 'is none of',
+        value: ['bar'],
+      },
+    },
+  }
+  assert.deepEqual(params, test_params, 'params structure')
+})
+
+QUnit.test('supports migration of renamed operators: starts with one of (#4709)', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'ticket_allow_expert_conditions', value: false }])
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    condition: {
+      'article.from': {
+        operator: 'starts with',
+        value: 'baz',
+      },
+    },
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', preview: false, always_expert_mode: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      'article.from': {
+        operator: 'starts with one of',
+        value: ['baz'],
+      },
+    },
+  }
+  assert.deepEqual(params, test_params, 'params structure')
+})
+
+QUnit.test('supports migration of renamed operators: ends with one of (#4709)', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'ticket_allow_expert_conditions', value: false }])
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    condition: {
+      'article.to': {
+        operator: 'ends with',
+        value: 'qux',
+      },
+    },
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', preview: false, always_expert_mode: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      'article.to': {
+        operator: 'ends with one of',
+        value: ['qux'],
+      },
+    },
+  }
+  assert.deepEqual(params, test_params, 'params structure')
+})
+
+QUnit.test('Missing display of the conditions in overview when expert mode is in use #4688', (assert) => {
+  var condition = {
+    'ticket.title': {
+      operator: 'is',
+      value: 'test',
+    },
+    'ticket.priority_id': {
+      operator: 'is',
+      value: [1,2,3],
+    },
+  }
+
+  humanText = App.UiElement.ticket_selector.humanText(condition)
+  assert.deepEqual(humanText, [
+    "Where <b>Ticket -> Title</b> is <b>test</b>.",
+    "Where <b>Ticket -> Priority</b> is <b>1 low, 2 normal, 3 high</b>."
+  ], 'can show human text for simple condition');
+
+  var condition = {
+    operator: 'AND',
+    conditions: [
+      {
+        name: 'ticket.title',
+        operator: 'is',
+        value: 'test',
+      },
+      {
+        name: 'ticket.priority_id',
+        operator: 'is',
+        value: [1, 2, 3],
+      },
+    ],
+  }
+
+  humanText = App.UiElement.ticket_selector.humanText(condition)
+  assert.deepEqual(humanText, [
+    "<span style=\"margin-left: 0px\">Match all (AND)</span>",
+    "<span style=\"margin-left: 5px\">⤷ Where <b>Ticket -> Title</b> is <b>test</b>.</span>",
+    "<span style=\"margin-left: 5px\">⤷ Where <b>Ticket -> Priority</b> is <b>1 low, 2 normal, 3 high</b>.</span>"
+  ], 'can show human text for expert condition');
+
+  var condition = {
+    operator: 'AND',
+    conditions: [
+      {
+        name: 'ticket.title',
+        operator: 'is',
+        value: 'test',
+      },
+      {
+        name: 'ticket.priority_id',
+        operator: 'is',
+        value: [1, 2, 3],
+      },
+      {
+        operator: 'OR',
+        conditions: [
+          {
+            name: 'ticket.title',
+            operator: 'is',
+            value: 'test',
+          },
+          {
+            name: 'ticket.priority_id',
+            operator: 'is',
+            value: [1, 2, 3],
+          },
+        ],
+      },
+    ],
+  }
+
+  humanText = App.UiElement.ticket_selector.humanText(condition)
+  assert.deepEqual(humanText, [
+    "<span style=\"margin-left: 0px\">Match all (AND)</span>",
+    "<span style=\"margin-left: 5px\">⤷ Where <b>Ticket -> Title</b> is <b>test</b>.</span>",
+    "<span style=\"margin-left: 5px\">⤷ Where <b>Ticket -> Priority</b> is <b>1 low, 2 normal, 3 high</b>.</span>",
+    "<span style=\"margin-left: 5px\">⤷ Match any (OR)</span>",
+    "<span style=\"margin-left: 20px\">⤷ Where <b>Ticket -> Title</b> is <b>test</b>.</span>",
+    "<span style=\"margin-left: 20px\">⤷ Where <b>Ticket -> Priority</b> is <b>1 low, 2 normal, 3 high</b>.</span>"
+  ], 'can show human text for deep expert condition');
 })

@@ -119,9 +119,11 @@ export default defineConfig(({ mode, command }) => {
       css: false,
       testTimeout: process.env.CI ? 30_000 : 5_000,
       unstubGlobals: true,
-      deps: {
-        // TODO remove after https://github.com/ueberdosis/tiptap/pull/3521 is merged
-        inline: ['@tiptap/extension-mention'],
+      server: {
+        deps: {
+          // TODO remove after https://github.com/ueberdosis/tiptap/pull/3521 is merged
+          inline: ['@tiptap/extension-mention'],
+        },
       },
       onConsoleLog(log) {
         if (log.includes('Not implemented: navigation')) return false

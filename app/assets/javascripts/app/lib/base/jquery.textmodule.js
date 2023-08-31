@@ -614,6 +614,10 @@
   KbAnswer.renderResults = function(textmodule, term) {
     textmodule.emptyResultsContainer()
 
+    // skip in admin interface (ticket is needed)
+    if (!textmodule.searchCondition) {
+      return
+    }
     if(!term) {
       var element = $('<li>').text(App.i18n.translateInline('Start typing to search in Knowledge Base…'))
       textmodule.appendResults(element)
@@ -714,6 +718,10 @@
   Mention.renderResults = function(textmodule, term) {
     textmodule.emptyResultsContainer()
 
+    // skip in admin interface (ticket is needed)
+    if (!textmodule.searchCondition) {
+      return
+    }
     if(!term) {
       var element = $('<li>').text(App.i18n.translateInline('Start typing to search for users…'))
       textmodule.appendResults(element)

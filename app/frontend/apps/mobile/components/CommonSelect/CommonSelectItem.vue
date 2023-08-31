@@ -1,10 +1,10 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { SelectOption } from '#shared/components/Form/fields/FieldSelect/types.ts'
 import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import { computed } from 'vue'
 import { i18n } from '#shared/i18n.ts'
+import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 
 const props = defineProps<{
   option: SelectOption

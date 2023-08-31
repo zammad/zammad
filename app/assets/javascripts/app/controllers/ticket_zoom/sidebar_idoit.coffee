@@ -1,6 +1,12 @@
 class SidebarIdoit extends App.Controller
   sidebarItem: =>
     return if !@Config.get('idoit_integration')
+
+    isAgentTicketZoom   = (@ticket and @ticket.currentView() is 'agent')
+    isAgentTicketCreate = (!@ticket and @taskKey and @taskKey.match('TicketCreateScreen-'))
+
+    return if !isAgentTicketZoom and !isAgentTicketCreate
+
     @item = {
       name: 'idoit'
       badgeIcon: 'printer'

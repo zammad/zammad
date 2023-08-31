@@ -1,14 +1,14 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type {
+  ObjectSelectOption,
+  ObjectSelectValue,
+} from '#shared/entities/object-attributes/form/resolver/fields/select.ts'
 import type { FormKitFrameworkContext, FormKitNode } from '@formkit/core'
 import type { Dictionary } from 'ts-essentials'
-import type {
-  SelectOption,
-  SelectValue,
-} from '#shared/components/Form/fields/FieldSelect/index.ts'
 
-type OptionValueLookup = Dictionary<SelectOption>
-type SelectValueWithoutBoolean = Exclude<SelectValue, boolean>
+type OptionValueLookup = Dictionary<ObjectSelectOption>
+type SelectValueWithoutBoolean = Exclude<ObjectSelectValue, boolean>
 
 const removeValuesForNonExistingOrDisabledOptions = (node: FormKitNode) => {
   const handleNewInputValue = (
@@ -24,7 +24,7 @@ const removeValuesForNonExistingOrDisabledOptions = (node: FormKitNode) => {
           (typeof optionValueLookup[selectValue] !== 'undefined' &&
             !optionValueLookup[selectValue].disabled) ||
           selectValue === '',
-      ) as SelectValue[]
+      )
 
       return availableValues
     }
@@ -34,7 +34,8 @@ const removeValuesForNonExistingOrDisabledOptions = (node: FormKitNode) => {
       optionValueLookup[payload].disabled
     ) {
       if (typeof optionValueLookup[node.props._init] === 'undefined') {
-        const getPreselectValue = context.getPreselectValue as () => SelectValue
+        const getPreselectValue =
+          context.getPreselectValue as () => ObjectSelectValue
 
         return context.clearable || getPreselectValue === undefined
           ? undefined

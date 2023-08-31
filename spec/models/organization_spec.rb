@@ -123,4 +123,123 @@ RSpec.describe Organization, type: :model do
       expect(organization.errors[:domain]).to be_empty
     end
   end
+
+  describe 'Updating organization members' do
+    context 'when member gets removed' do
+      let(:customer) { create(:customer, organization: organization) }
+
+      before do
+        customer.attributes_with_association_ids
+        organization.attributes_with_association_ids
+      end
+
+      it 'does clear cache of customer after user unassignment' do
+        organization.update(member_ids: [])
+        expect(customer.reload.attributes_with_association_ids['organization_id']).to be_nil
+      end
+
+      it 'does touch customer after user unassignment' do
+        expect { organization.update(member_ids: []) }.to change { customer.reload.updated_at }
+      end
+
+      it 'does clear cache of organization after user unassignment' do
+        organization.update(member_ids: [])
+        expect(organization.reload.attributes_with_association_ids['member_ids']).not_to include(customer.id)
+      end
+
+      it 'does touch organization after user unassignment' do
+        expect { organization.update(member_ids: []) }.to change { organization.reload.updated_at }
+      end
+    end
+
+    context 'when member gets added' do
+      let(:customer) { create(:customer) }
+
+      before do
+        customer.attributes_with_association_ids
+        organization.attributes_with_association_ids
+      end
+
+      it 'does clear cache of customer after user assignment' do
+        organization.update(member_ids: [customer.id])
+        expect(customer.reload.attributes_with_association_ids['organization_id']).not_to be_nil
+      end
+
+      it 'does touch customer after user assignment' do
+        expect { organization.update(member_ids: [customer.id]) }.to change { customer.reload.updated_at }
+      end
+
+      it 'does clear cache of organization after user assignment' do
+        organization.update(member_ids: [customer.id])
+        expect(organization.reload.attributes_with_association_ids['member_ids']).to include(customer.id)
+      end
+
+      it 'does touch organization after user assignment' do
+        expect { organization.update(member_ids: [customer.id]) }.to change { organization.reload.updated_at }
+      end
+    end
+  end
+
+  describe 'Updating secondary organization members' do
+    context 'when member gets removed' do
+      let(:customer)               { create(:customer, organization: organization) }
+      let(:secondary_organization) { create(:organization) }
+
+      before do
+        secondary_organization.update(member_ids: [customer.id])
+
+        customer.attributes_with_association_ids
+        organization.attributes_with_association_ids
+        secondary_organization.attributes_with_association_ids
+      end
+
+      it 'does clear cache of customer after user unassignment' do
+        secondary_organization.update(member_ids: [])
+        expect(customer.reload.attributes_with_association_ids['organization_id']).to be_nil
+      end
+
+      it 'does touch customer after user unassignment' do
+        expect { secondary_organization.update(member_ids: []) }.to change { customer.reload.updated_at }
+      end
+
+      it 'does clear cache of organization after user unassignment' do
+        secondary_organization.update(member_ids: [])
+        expect(secondary_organization.reload.attributes_with_association_ids['member_ids']).not_to include(customer.id)
+      end
+
+      it 'does touch organization after user unassignment' do
+        expect { secondary_organization.update(member_ids: []) }.to change { secondary_organization.reload.updated_at }
+      end
+    end
+
+    context 'when member gets added' do
+      let(:customer) { create(:customer, organization: organization) }
+      let(:secondary_organization) { create(:organization) }
+
+      before do
+        customer.attributes_with_association_ids
+        organization.attributes_with_association_ids
+        secondary_organization.attributes_with_association_ids
+      end
+
+      it 'does clear cache of customer after user assignment' do
+        secondary_organization.update(secondary_member_ids: [customer.id])
+        expect(customer.reload.attributes_with_association_ids['organization_id']).not_to be_nil
+      end
+
+      it 'does touch customer after user assignment' do
+        expect { secondary_organization.update(secondary_member_ids: [customer.id]) }.to change { customer.reload.updated_at }
+      end
+
+      it 'does clear cache of organization after user assignment' do
+        secondary_organization.update(member_ids: [customer.id])
+        expect(secondary_organization.reload.attributes_with_association_ids['member_ids']).to include(customer.id)
+      end
+
+      it 'does touch organization after user assignment' do
+        expect { secondary_organization.update(member_ids: [customer.id]) }.to change { secondary_organization.reload.updated_at }
+      end
+    end
+
+  end
 end

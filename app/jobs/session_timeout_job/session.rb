@@ -14,7 +14,8 @@ class SessionTimeoutJob::Session
 
   def active?
     return true if timeout < 1
-    return true if session.data['ping'] > timeout.seconds.ago
+
+    true if session.data['ping'] > timeout.seconds.ago
   end
 
   def frontend_timeout

@@ -21,10 +21,27 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
       expect(article).to be_persisted.and(have_attributes(ticket_id: ticket.id))
     end
 
-    it 'adds time accounting if present' do
-      payload[:time_unit] = 60
+    describe 'time accounting' do
+      let(:time_accounting_enabled) { true }
 
-      expect(article.ticket_time_accounting).to be_present
+      before do
+        Setting.set('time_accounting', time_accounting_enabled)
+
+        payload[:time_unit] = 60
+      end
+
+      it 'adds time accounting if present' do
+        expect(article.ticket_time_accounting).to be_present
+      end
+
+      context 'when time accounting is not enabled' do
+        let(:time_accounting_enabled) { false }
+
+        it 'does not save article and raises error' do
+          expect { article }
+            .to raise_error(%r{Time Accounting is not enabled})
+        end
+      end
     end
 
     describe 'to and cc fields processing' do

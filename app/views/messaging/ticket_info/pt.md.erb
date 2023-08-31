@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Criado por #{current_user.longname} em #{ticket.updated_at}_
+* Grupo: #{ticket.group.name}
+* Proprietário: #{ticket.owner.fullname}
+* Estado: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

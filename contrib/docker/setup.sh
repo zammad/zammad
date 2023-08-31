@@ -4,7 +4,7 @@ set -e
 if [ "$1" = 'builder' ]; then
   PACKAGES="build-essential curl git libimlib2-dev libpq-dev shared-mime-info"
 elif [ "$1" = 'runner' ]; then
-  PACKAGES="curl libimlib2 libpq5 nginx"
+  PACKAGES="curl libimlib2 libpq5 nginx gnupg"
 fi
 
 apt-get update

@@ -16,6 +16,15 @@ class CoreWorkflow::Attributes
     @payload['class_name'].constantize
   end
 
+  def article
+    @article ||= begin
+      if @payload.dig('params', 'article').present?
+        clean_params = Ticket::Article.param_cleanup(@payload.dig('params', 'article'), true, false, false)
+        Ticket::Article.new(clean_params)
+      end
+    end
+  end
+
   def selected_only
 
     # params loading and preparing is very expensive so cache it

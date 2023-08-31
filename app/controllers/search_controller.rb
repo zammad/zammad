@@ -17,7 +17,7 @@ class SearchController < ApplicationController
     # convert objects string into array of class names
     # e.g. user-ticket-another_object = %w( User Ticket AnotherObject )
     objects = if params[:objects]
-                params[:objects].split('-').map(&:camelize).map(&:constantize)
+                params[:objects].split('-').map { |x| x.camelize.constantize }
               else
                 Models.searchable
               end

@@ -54,8 +54,7 @@ RSpec.describe MonitoringHelper::HealthChecker do
     it 'returns joined issues if any' do
       response = build_response(%w[issue1 issue2])
 
-      allow(instance).to receive(:healthy?).and_return(false)
-      allow(instance).to receive(:response).and_return(response)
+      allow(instance).to receive_messages(healthy?: false, response: response)
       expect(instance.message).to eq 'issue1;issue2'
     end
   end

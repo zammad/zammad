@@ -23,6 +23,7 @@ export const defaultOrganization = (): ConfidentTake<
     domain: 'some-domain@domain.me',
     domainAssignment: true,
     active: true,
+    vip: false,
     note: 'Save something as this note',
     objectAttributeValues: [],
     policy: {
@@ -156,6 +157,23 @@ export const organizationObjectAttributes =
       },
       {
         __typename: 'ObjectManagerFrontendAttribute',
+        name: 'vip',
+        display: 'VIP',
+        dataType: 'boolean',
+        dataOption: {
+          options: {
+            true: 'yes',
+            false: 'no',
+          },
+          null: true,
+          default: false,
+          permission: ['admin.organization'],
+        },
+        screens: {},
+        isInternal: true,
+      },
+      {
+        __typename: 'ObjectManagerFrontendAttribute',
         name: 'test',
         display: 'Test Field',
         dataType: 'input',
@@ -198,6 +216,7 @@ export const organizationObjectAttributes =
           'domain',
           'note',
           'active',
+          'vip',
           'test',
           'textarea',
         ],
@@ -211,6 +230,7 @@ export const organizationObjectAttributes =
           'domain',
           'note',
           'active',
+          'vip',
           'test',
           'textarea',
         ],

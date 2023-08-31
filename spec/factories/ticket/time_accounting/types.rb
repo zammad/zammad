@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :ticket_time_accounting_type, class: 'Ticket::TimeAccounting::Type' do
-    name { Faker::Name.unique.name }
+    sequence(:name) { |n| "Type #{n}" }
 
     created_by_id { 1 }
     updated_by_id { 1 }

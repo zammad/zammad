@@ -52,6 +52,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), customer: create(:customer, :with_org)) }
 
     before do
+      Setting.set("#{service_name}_integration", true) if defined? service_name
       visit "#ticket/zoom/#{ticket.id}"
     end
 
@@ -67,6 +68,30 @@ RSpec.describe 'Ticket zoom', type: :system do
       click '#userAction'
       click_link 'Edit Organization'
       modal_ready
+    end
+
+    %w[idoit gitlab github].each do |service_name|
+      it "#{service_name} tab is hidden" do
+        expect(page).to have_no_css(".tabsSidebar-tab[data-tab=#{service_name}]")
+      end
+
+      context "when #{service_name} is enabled" do
+        let(:service_name) { service_name }
+
+        context 'when agent' do
+          it "#{service_name} tab is visible" do
+            expect(page).to have_css(".tabsSidebar-tab[data-tab=#{service_name}]")
+          end
+        end
+
+        context 'when customer', authenticated_as: :customer do
+          let(:customer) { create(:customer) }
+
+          it "#{service_name} tab is hidden" do
+            expect(page).to have_no_css(".tabsSidebar-tab[data-tab=#{service_name}]")
+          end
+        end
+      end
     end
   end
 
@@ -168,6 +193,49 @@ RSpec.describe 'Ticket zoom', type: :system do
           click '.js-submit'
 
           expect(page).to have_css('.ticket-article-item', count: articles_expected)
+        end
+      end
+    end
+
+    context 'Group with signature', authenticated_as: :user do
+      let(:signature_body) { 'Sample signature here' }
+      let(:signature)      { create(:signature, body: signature_body) }
+      let(:group)          { create(:group, signature: signature) }
+
+      let(:ticket) { create(:ticket, group: group) }
+      let(:user) { create(:agent, groups: [group]) }
+
+      before do
+        visit "ticket/zoom/#{ticket.id}"
+        click '.attachmentPlaceholder'
+      end
+
+      it 'removes signature when switching from email reply to phone' do
+        click '.js-selectableTypes'
+        click '.js-articleTypeItem[data-value=email]'
+
+        within :richtext do
+          expect(page).to have_text(signature_body)
+        end
+
+        click '.js-selectableTypes'
+        click '.js-articleTypeItem[data-value=phone]'
+
+        within :richtext do
+          expect(page).to have_no_text(signature_body)
+        end
+      end
+
+      it 'adds signature when switching from phone to email reply' do
+        within :richtext do
+          expect(page).to have_no_text(signature_body)
+        end
+
+        click '.js-selectableTypes'
+        click '.js-articleTypeItem[data-value=email]'
+
+        within :richtext do
+          expect(page).to have_text(signature_body)
         end
       end
     end
@@ -469,362 +537,6 @@ RSpec.describe 'Ticket zoom', type: :system do
         within :active_ticket_article, article do
           find '.js-ArticleAction[data-type=delete]' # make sure delete button did show up
           expect(page).to have_no_css('.js-ArticleAction[data-type=delete]')
-        end
-      end
-    end
-  end
-
-  context 'S/MIME active', authenticated_as: :authenticate do
-    let(:system_email_address) { 'smime1@example.com' }
-    let(:email_address) { create(:email_address, email: system_email_address) }
-    let(:group)         { create(:group, email_address: email_address) }
-    let(:agent_groups)  { [group] }
-    let(:agent)         { create(:agent, groups: agent_groups) }
-
-    let(:sender_email_address) { 'smime2@example.com' }
-    let(:customer) { create(:customer, email: sender_email_address) }
-
-    let!(:ticket) { create(:ticket, group: group, owner: agent, customer: customer) }
-
-    def authenticate
-      Setting.set('smime_integration', true)
-      agent
-    end
-
-    context 'received mail' do
-
-      context 'article meta information' do
-
-        context 'success' do
-          it 'shows encryption/sign information' do
-            create(:ticket_article, preferences: {
-                     security: {
-                       type:       'S/MIME',
-                       encryption: {
-                         success: true,
-                         comment: 'COMMENT_ENCRYPT_SUCCESS',
-                       },
-                       sign:       {
-                         success: true,
-                         comment: 'COMMENT_SIGN_SUCCESS',
-                       },
-                     }
-                   }, ticket: ticket)
-
-            visit "#ticket/zoom/#{ticket.id}"
-
-            expect(page).to have_css('svg.icon-lock')
-            expect(page).to have_css('svg.icon-signed')
-
-            open_article_meta
-
-            expect(page).to have_css('span', text: 'Encrypted')
-            expect(page).to have_css('span', text: 'Signed')
-            expect(page).to have_css('span[title=COMMENT_ENCRYPT_SUCCESS]')
-            expect(page).to have_css('span[title=COMMENT_SIGN_SUCCESS]')
-          end
-        end
-
-        context 'error' do
-
-          it 'shows create information about encryption/sign failed' do
-            create(:ticket_article, preferences: {
-                     security: {
-                       type:       'S/MIME',
-                       encryption: {
-                         success: false,
-                         comment: 'Encryption failed because XXX',
-                       },
-                       sign:       {
-                         success: false,
-                         comment: 'Sign failed because XXX',
-                       },
-                     }
-                   }, ticket: ticket)
-            visit "#ticket/zoom/#{ticket.id}"
-
-            expect(page).to have_css('svg.icon-not-signed')
-
-            open_article_meta
-
-            expect(page).to have_css('div.alert.alert--warning', text: 'Encryption failed because XXX')
-            expect(page).to have_css('div.alert.alert--warning', text: 'Sign failed because XXX')
-          end
-        end
-      end
-
-      context 'certificate not present at time of arrival' do
-        let(:mail) do
-          smime1 = create(:smime_certificate, :with_private, fixture: system_email_address)
-          smime2 = create(:smime_certificate, :with_private, fixture: sender_email_address)
-
-          mail = Channel::EmailBuild.build(
-            from:         sender_email_address,
-            to:           system_email_address,
-            body:         'somebody with some text',
-            content_type: 'text/plain',
-            security:     {
-              type:       'S/MIME',
-              sign:       {
-                success: true,
-              },
-              encryption: {
-                success: true,
-              },
-            },
-          )
-
-          smime1.destroy
-          smime2.destroy
-
-          mail
-        end
-
-        it 'does retry successfully' do
-          parsed_mail = Channel::EmailParser.new.parse(mail.to_s)
-          ticket, article, _user, _mail = Channel::EmailParser.new.process({ group_id: group.id }, parsed_mail['raw'])
-          expect(Ticket::Article.find(article.id).body).to eq('no visible content')
-
-          create(:smime_certificate, fixture: sender_email_address)
-          create(:smime_certificate, :with_private, fixture: system_email_address)
-
-          visit "#ticket/zoom/#{ticket.id}"
-          expect(page).to have_no_css('.article-content', text: 'somebody with some text')
-          click '.js-securityRetryProcess'
-          expect(page).to have_css('.article-content', text: 'somebody with some text')
-        end
-
-        it 'does fail on retry (S/MIME function buttons no longer working in tickets #3957)' do
-          parsed_mail = Channel::EmailParser.new.parse(mail.to_s)
-          ticket, article, _user, _mail = Channel::EmailParser.new.process({ group_id: group.id }, parsed_mail['raw'])
-          expect(Ticket::Article.find(article.id).body).to eq('no visible content')
-
-          visit "#ticket/zoom/#{ticket.id}"
-          expect(page).to have_no_css('.article-content', text: 'somebody with some text')
-          click '.js-securityRetryProcess'
-          expect(page).to have_css('#notify', text: 'Decryption failed! Private key for decryption could not be found.')
-        end
-      end
-    end
-
-    context 'replying', authenticated_as: :setup_and_authenticate do
-
-      def setup_and_authenticate
-        create(:ticket_article, ticket: ticket, from: customer.email)
-
-        create(:smime_certificate, :with_private, fixture: system_email_address)
-        create(:smime_certificate, fixture: sender_email_address)
-
-        authenticate
-      end
-
-      it 'plain' do
-        visit "#ticket/zoom/#{ticket.id}"
-
-        all('a[data-type=emailReply]').last.click
-        find('.articleNewEdit-body').send_keys('Test')
-
-        expect(page).to have_css('.js-securityEncrypt.btn--active')
-        expect(page).to have_css('.js-securitySign.btn--active')
-
-        click '.js-securityEncrypt'
-        click '.js-securitySign'
-
-        click '.js-submit'
-        expect(page).to have_css('.ticket-article-item', count: 2)
-
-        expect(Ticket::Article.last.preferences['security']['encryption']['success']).to be_nil
-        expect(Ticket::Article.last.preferences['security']['sign']['success']).to be_nil
-      end
-
-      it 'signed' do
-        visit "#ticket/zoom/#{ticket.id}"
-
-        all('a[data-type=emailReply]').last.click
-        find('.articleNewEdit-body').send_keys('Test')
-
-        expect(page).to have_css('.js-securityEncrypt.btn--active')
-        expect(page).to have_css('.js-securitySign.btn--active')
-
-        click '.js-securityEncrypt'
-
-        click '.js-submit'
-        expect(page).to have_css('.ticket-article-item', count: 2)
-
-        expect(Ticket::Article.last.preferences['security']['encryption']['success']).to be_nil
-        expect(Ticket::Article.last.preferences['security']['sign']['success']).to be true
-      end
-
-      it 'encrypted' do
-        visit "#ticket/zoom/#{ticket.id}"
-
-        all('a[data-type=emailReply]').last.click
-        find('.articleNewEdit-body').send_keys('Test')
-
-        expect(page).to have_css('.js-securityEncrypt.btn--active')
-        expect(page).to have_css('.js-securitySign.btn--active')
-
-        click '.js-securitySign'
-
-        click '.js-submit'
-        expect(page).to have_css('.ticket-article-item', count: 2)
-
-        expect(Ticket::Article.last.preferences['security']['encryption']['success']).to be true
-        expect(Ticket::Article.last.preferences['security']['sign']['success']).to be_nil
-      end
-
-      it 'signed and encrypted' do
-        visit "#ticket/zoom/#{ticket.id}"
-
-        all('a[data-type=emailReply]').last.click
-        find('.articleNewEdit-body').send_keys('Test')
-
-        expect(page).to have_css('.js-securityEncrypt.btn--active')
-        expect(page).to have_css('.js-securitySign.btn--active')
-
-        click '.js-submit'
-        expect(page).to have_css('.ticket-article-item', count: 2)
-
-        expect(Ticket::Article.last.preferences['security']['encryption']['success']).to be true
-        expect(Ticket::Article.last.preferences['security']['sign']['success']).to be true
-      end
-    end
-
-    context 'Group default behavior' do
-
-      let(:smime_config) { {} }
-
-      def authenticate
-        Setting.set('smime_integration', true)
-
-        Setting.set('smime_config', smime_config)
-
-        create(:ticket_article, ticket: ticket, from: customer.email)
-
-        create(:smime_certificate, :with_private, fixture: system_email_address)
-        create(:smime_certificate, fixture: sender_email_address)
-
-        agent
-      end
-
-      shared_examples 'security defaults example' do |sign:, encrypt:|
-
-        it "security defaults sign: #{sign}, encrypt: #{encrypt}" do
-          within(:active_content) do
-            if sign
-              expect(page).to have_css('.js-securitySign.btn--active')
-            else
-              expect(page).to have_no_css('.js-securitySign.btn--active')
-            end
-            if encrypt
-              expect(page).to have_css('.js-securityEncrypt.btn--active')
-            else
-              expect(page).to have_no_css('.js-securityEncrypt.btn--active')
-            end
-          end
-        end
-      end
-
-      shared_examples 'security defaults' do |sign:, encrypt:|
-
-        before do
-          visit "#ticket/zoom/#{ticket.id}"
-
-          within(:active_content) do
-            all('a[data-type=emailReply]').last.click
-            find('.articleNewEdit-body').send_keys('Test')
-          end
-        end
-
-        include_examples 'security defaults example', sign: sign, encrypt: encrypt
-      end
-
-      shared_examples 'security defaults group change' do |sign:, encrypt:|
-
-        before do
-          visit "#ticket/zoom/#{ticket.id}"
-
-          within(:active_content) do
-            all('a[data-type=emailReply]').last.click
-            find('.articleNewEdit-body').send_keys('Test')
-
-            select new_group.name, from: 'group_id'
-          end
-        end
-
-        include_examples 'security defaults example', sign: sign, encrypt: encrypt
-      end
-
-      context 'not configured' do
-        it_behaves_like 'security defaults', sign: true, encrypt: true
-      end
-
-      context 'configuration present' do
-
-        let(:smime_config) do
-          {
-            'group_id' => group_defaults
-          }
-        end
-
-        let(:group_defaults) do
-          {
-            'default_encryption' => {
-              group.id.to_s => default_encryption,
-            },
-            'default_sign'       => {
-              group.id.to_s => default_sign,
-            }
-          }
-        end
-
-        let(:default_sign) { true }
-        let(:default_encryption) { true }
-
-        shared_examples 'sign and encrypt variations' do |check_examples_name|
-
-          it_behaves_like check_examples_name, sign: true, encrypt: true
-
-          context 'no value' do
-            let(:group_defaults) { {} }
-
-            it_behaves_like check_examples_name, sign: true, encrypt: true
-          end
-
-          context 'signing disabled' do
-            let(:default_sign) { false }
-
-            it_behaves_like check_examples_name, sign: false, encrypt: true
-          end
-
-          context 'encryption disabled' do
-            let(:default_encryption) { false }
-
-            it_behaves_like check_examples_name, sign: true, encrypt: false
-          end
-        end
-
-        context 'same Group' do
-          it_behaves_like 'sign and encrypt variations', 'security defaults'
-        end
-
-        context 'Group change' do
-          let(:new_group) { create(:group, email_address: email_address) }
-
-          let(:agent_groups) { [group, new_group] }
-
-          let(:group_defaults) do
-            {
-              'default_encryption' => {
-                new_group.id.to_s => default_encryption,
-              },
-              'default_sign'       => {
-                new_group.id.to_s => default_sign,
-              }
-            }
-          end
-
-          it_behaves_like 'sign and encrypt variations', 'security defaults group change'
         end
       end
     end
@@ -2660,7 +2372,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:article) { create(:ticket_article, ticket: ticket, body: body, content_type: 'text/html') }
 
     before do
-      visit "#ticket/zoom/#{ticket.id}"
+      visit "#ticket/zoom/#{article.ticket.id}"
     end
 
     it 'does open the image preview for a common image' do

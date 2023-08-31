@@ -67,3 +67,16 @@ class App.TicketArticle extends App.Model
       attrs.shared_draft_id = @shared_draft_id
 
     attrs
+
+  recipientName: ->
+    format        = App.Config.get('ticket_define_email_from')
+    user          = App.User.find((@origin_by_id || @created_by_id))
+    ticket        = App.Ticket.find(@ticket_id)
+    group         = App.Group.find(ticket.group_id)
+    email_address = App.EmailAddress.find(group.email_address_id)
+    return if !email_address
+
+    separator = App.Config.get('ticket_define_email_from_separator')
+    return email_address.name if (user.id is 1 || format is 'SystemAddressName') && user.permission('ticket.agent')
+    return "#{user.firstname} #{user.lastname} #{separator} #{email_address.name}" if format is 'AgentNameSystemAddressName' && user.permission('ticket.agent')
+    return "#{user.firstname} #{user.lastname}" # AgentName or customer

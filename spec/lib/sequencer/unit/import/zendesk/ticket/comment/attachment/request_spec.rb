@@ -32,8 +32,7 @@ RSpec.describe Sequencer::Unit::Import::Zendesk::Ticket::Comment::Attachment::Re
     end
 
     it 'skip action after defined retries' do
-      allow(response).to receive(:success?).and_return(false)
-      allow(response).to receive(:error).and_return('#<Net::HTTPServiceUnavailable 503 Service Unavailable readbody=true>')
+      allow(response).to receive_messages(success?: false, error: '#<Net::HTTPServiceUnavailable 503 Service Unavailable readbody=true>')
       allow(UserAgent).to receive(:get).with(any_args, { open_timeout: 20, read_timeout: 240, verify_ssl: true }).and_return(response)
 
       result = process(mock_parameters)

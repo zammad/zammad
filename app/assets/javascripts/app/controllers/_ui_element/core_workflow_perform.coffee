@@ -119,9 +119,10 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
     return _.clone(attribute.value[groupAndAttribute][currentOperator])
 
-  @buildValueName: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+  @buildValueName: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType) ->
+    prefix = if valueType then "{#{valueType}}" else ''
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
-    return "#{attribute.name}::#{groupAndAttribute}::#{currentOperator}"
+    return "#{prefix}#{attribute.name}::#{groupAndAttribute}::#{currentOperator}"
 
   @buildValue: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
@@ -178,3 +179,6 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
 
   @hasDuplicateSelector: ->
     return true
+
+  @tokenfieldTagRegex: ->
+    false

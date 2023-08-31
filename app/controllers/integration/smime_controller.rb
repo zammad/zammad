@@ -8,7 +8,7 @@ class Integration::SMIMEController < ApplicationController
 
     send_data(
       cert.raw,
-      filename:    "#{cert.doc_hash}.crt",
+      filename:    "#{cert.subject_hash}.crt",
       type:        'text/plain',
       disposition: 'attachment'
     )
@@ -19,17 +19,16 @@ class Integration::SMIMEController < ApplicationController
 
     send_data(
       cert.private_key,
-      filename:    "#{cert.doc_hash}.key",
+      filename:    "#{cert.subject_hash}.key",
       type:        'text/plain',
       disposition: 'attachment'
     )
   end
 
   def certificate_list
-    all = SMIMECertificate.all.map do |cert|
-      cert.attributes.merge({ 'subject_alternative_name' => cert.email_addresses })
-    end
-    render json: all
+    list = SMIMECertificate.all.map { |cert| cert_obj_to_json(cert) }
+
+    render json: list
   end
 
   def certificate_delete
@@ -45,11 +44,14 @@ class Integration::SMIMEController < ApplicationController
       string = params[:file].read.force_encoding('utf-8')
     end
 
+    cert = SecureMailing::SMIME::Certificate.parse(string)
+    cert.valid_smime_certificate!
+
     items = SMIMECertificate.create_certificates(string)
 
     render json: {
       result:   'ok',
-      response: items,
+      response: items.map { |c| cert_obj_to_json(c) },
     }
   rescue => e
     unprocessable_entity(e)
@@ -74,6 +76,9 @@ class Integration::SMIMEController < ApplicationController
 
     raise __("Parameter 'data' or 'file' required.") if string.blank?
 
+    private_key = SecureMailing::SMIME::PrivateKey.read(string, params[:secret])
+    private_key.valid_smime_private_key!
+
     SMIMECertificate.create_certificates(string)
     SMIMECertificate.create_private_keys(string, params[:secret])
 
@@ -85,89 +90,44 @@ class Integration::SMIMEController < ApplicationController
   end
 
   def search
-    result = {
-      type: 'S/MIME',
-    }
+    security_options = SecureMailing::SMIME::SecurityOptions.new(ticket: params[:ticket], article: params[:article]).process
 
-    result[:encryption] = article_encryption(params[:article])
-    result[:sign]       = article_sign(params[:ticket])
+    result = {
+      type:       'S/MIME',
+      encryption: map_result(security_options.encryption),
+      sign:       map_result(security_options.signing),
+    }
 
     render json: result
   end
 
-  def article_encryption(article)
-    result = {
-      success: false,
-      comment: 'no recipient found',
+  private
+
+  def map_result(method_result)
+    {
+      success:             method_result.possible?,
+      comment:             method_result.message,
+      commentPlaceholders: method_result.message_placeholders,
     }
-
-    return result if article.blank?
-    return result if article[:to].blank? && article[:cc].blank?
-
-    recipient  = [ article[:to], article[:cc] ].compact.join(',').to_s
-    recipients = []
-    begin
-      list = Mail::AddressList.new(recipient)
-      list.addresses.each do |address|
-        recipients.push address.address
-      end
-    rescue # rubocop:disable Lint/SuppressedException
-    end
-
-    return result if recipients.blank?
-
-    begin
-      certs = SMIMECertificate.for_recipipent_email_addresses!(recipients)
-
-      if certs
-        if certs.any?(&:expired?)
-          result[:success] = false
-          result[:comment] = "certificates found for #{recipients.join(',')} but expired"
-        else
-          result[:success] = true
-          result[:comment] = "certificates found for #{recipients.join(',')}"
-        end
-      end
-    rescue => e
-      result[:comment] = e.message
-    end
-
-    result
   end
 
-  def article_sign(ticket)
-    result = {
-      success: false,
-      comment: 'certificate not found',
+  def cert_obj_to_json(cert)
+    info = cert.parsed
+
+    {
+      id:                       cert.id,
+      subject:                  info.subject.to_s,
+      doc_hash:                 cert.subject_hash,
+      fingerprint:              cert.fingerprint,
+      modulus:                  cert.uid,
+      not_before_at:            info.not_before,
+      not_after_at:             info.not_after,
+      raw:                      cert.pem,
+      private_key:              cert.private_key,
+      private_key_secret:       cert.private_key_secret,
+      created_at:               cert.created_at,
+      updated_at:               cert.updated_at,
+      subject_alternative_name: cert.email_addresses.join(', ')
     }
-
-    return result if ticket.blank? || !ticket[:group_id]
-
-    group = Group.find_by(id: ticket[:group_id])
-    return result if !group
-
-    email_address = group.email_address
-    begin
-      list = Mail::AddressList.new(email_address.email)
-      from = list.addresses.first.to_s
-      cert = SMIMECertificate.for_sender_email_address(from)
-      if cert
-        if cert.expired?
-          result[:success] = false
-          result[:comment] = "certificate for #{email_address.email} found but expired"
-        else
-          result[:success] = true
-          result[:comment] = "certificate for #{email_address.email} found"
-        end
-      else
-        result[:success] = false
-        result[:comment] = "no certificate for #{email_address.email} found"
-      end
-    rescue => e
-      result[:comment] = e.message
-    end
-
-    result
   end
-
 end

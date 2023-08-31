@@ -32,6 +32,7 @@ class ProfileCalendarSubscriptions extends App.ControllerSubContent
       baseurl: window.location.origin
       preferences: @preferences
       translationTable: @translationTable
+      api_access: App.Config.get('api_password_access')
 
   showLink: (e) ->
     $(e.currentTarget).next().removeClass('is-hidden')

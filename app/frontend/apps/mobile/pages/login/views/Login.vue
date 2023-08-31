@@ -124,7 +124,7 @@ const twoFactorPlugin = computed(() => {
 })
 
 const loginPageTitle = computed(() => {
-  const productName = String(application.config.product_name)
+  const productName = application.config.product_name
   if (loginFlow.state === 'credentials') return productName
   if (loginFlow.state === 'recovery-code') return __('Recovery Code')
   if (loginFlow.state === '2fa') {

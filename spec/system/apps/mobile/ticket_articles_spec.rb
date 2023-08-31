@@ -171,7 +171,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
       find_button('Security Error').click
       find_button('Try again').click
 
-      expect(page).to have_text('Certificate for verification could not be found.')
+      expect(page).to have_text('The certificate for verification could not be found.')
       expect(page).to have_text('Security Error')
       expect(page).to have_no_css('[aria-label="Signed"]')
     end

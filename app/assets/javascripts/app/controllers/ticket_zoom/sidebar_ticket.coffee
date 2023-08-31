@@ -46,6 +46,7 @@ class Edit extends App.Controller
       core_workflow: {
         callbacks: [@markForm]
       }
+      articleParamsCallback: @parent.articleParams
       #bookmarkable:  true
     )
 
@@ -55,6 +56,13 @@ class Edit extends App.Controller
 
     return if @resetBind
     @resetBind = true
+
+    @controllerBind('ui::ticket::articleNew::change', (data) =>
+      return if data.ticket_id.toString() isnt @ticket.id.toString()
+
+      @controllerFormSidebarTicket.lastChangedAttribute = 'article'
+      @controllerFormSidebarTicket.runCoreWorkflow('article')
+    )
     @controllerBind('ui::ticket::taskReset', (data) =>
       return if data.ticket_id.toString() isnt @ticket.id.toString()
       @render()
@@ -140,6 +148,9 @@ class SidebarTicket extends App.Controller
     if @linkKbAnswerWidget && args.links
       @linkKbAnswerWidget.reload(args.links)
 
+    if @timeUnitWidget && args.time_accountings
+      @timeUnitWidget.reload(args.time_accountings)
+
   editTicket: (el) =>
     @el = el
     localEl = $(App.view('ticket_zoom/sidebar_ticket')())
@@ -152,6 +163,7 @@ class SidebarTicket extends App.Controller
       formMeta:  @formMeta
       markForm:  @markForm
       taskKey:   @taskKey
+      parent:    @parent
     )
 
     if @ticket.currentView() is 'agent'
@@ -187,6 +199,7 @@ class SidebarTicket extends App.Controller
       @timeUnitWidget = new App.TicketZoomTimeUnit(
         el:        localEl.filter('.js-timeUnit')
         object_id: @ticket.id
+        time_accountings: @time_accountings
       )
     @html localEl
 

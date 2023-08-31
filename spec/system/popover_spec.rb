@@ -63,8 +63,9 @@ RSpec.describe 'Popover', type: :system do
       visit "#ticket/zoom/#{Ticket.first.id}"
     end
 
+    allow_any_instance_of(Taskbar).to receive(:update_preferences_infos)
+
     taskbar = Taskbar.where(key: 'Ticket-1', user_id: current_user.id).first
-    allow(taskbar).to receive(:update_preferences_infos)
 
     within :active_content do
       taskbar.update! preferences: { 'tasks' => [{

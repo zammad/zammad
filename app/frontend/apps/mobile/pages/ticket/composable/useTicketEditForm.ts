@@ -24,7 +24,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
   const currentArticleType = shallowRef<AppSpecificTicketArticleType>()
 
   const recipientContact = computed(
-    () => currentArticleType.value?.recipientContact,
+    () => currentArticleType.value?.options?.recipientContact,
   )
 
   const editorType = computed(() => currentArticleType.value?.contentType)
@@ -171,7 +171,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         triggerFormUpdater: false,
       },
       {
-        if: '$smimeIntegration === true && $fns.includes($currentArticleType.attributes, "security")',
+        if: '$securityIntegration === true && $fns.includes($currentArticleType.attributes, "security")',
         name: 'security',
         label: __('Security'),
         type: 'security',

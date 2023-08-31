@@ -25,7 +25,7 @@ import type {
   TicketById,
   TicketCustomerUpdateFormData,
 } from '#shared/entities/ticket/types.ts'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
+import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 
 export interface Props {
   name: string
@@ -35,8 +35,6 @@ export interface Props {
 const props = defineProps<Props>()
 
 const { form, isDirty, canSubmit } = useForm()
-
-const { waitForConfirmation } = useConfirmationDialog()
 
 const cancelDialog = async () => {
   if (isDirty.value) {

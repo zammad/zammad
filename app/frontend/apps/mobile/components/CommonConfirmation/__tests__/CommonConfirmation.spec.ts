@@ -1,33 +1,30 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { confirmationOptions } from '#shared/utils/confirmation.ts'
 import {
   renderComponent,
   type ExtendedRenderResult,
 } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-import { useConfirmationDialog } from '../useConfirmationDialog.ts'
 import CommonConfirmation from '../CommonConfirmation.vue'
 
 let wrapper: ExtendedRenderResult
 
 beforeEach(() => {
-  const { confirmationDialog } = useConfirmationDialog()
-  confirmationDialog.value = undefined
+  confirmationOptions.value = undefined
 
   wrapper = renderComponent(CommonConfirmation, { shallow: false })
 })
 
 describe('popup confirm behaviour', () => {
   it('renders confirmation dialog with default values', async () => {
-    const { showConfirmation } = useConfirmationDialog()
-
     const confirmCallbackSpy = vi.fn()
 
-    showConfirmation({
+    confirmationOptions.value = {
       heading: 'Test heading',
       confirmCallback: confirmCallbackSpy,
-    })
+    }
 
     await waitForNextTick()
 
@@ -39,16 +36,14 @@ describe('popup confirm behaviour', () => {
   })
 
   it('renders confirmation dialog with custom values', async () => {
-    const { showConfirmation } = useConfirmationDialog()
-
     const confirmCallbackSpy = vi.fn()
 
-    showConfirmation({
+    confirmationOptions.value = {
       heading: 'Test heading',
       buttonTitle: 'Custom button title',
       buttonVariant: 'danger',
       confirmCallback: confirmCallbackSpy,
-    })
+    }
 
     await waitForNextTick()
 
@@ -59,16 +54,14 @@ describe('popup confirm behaviour', () => {
   })
 
   it('closes the confirmation dialog by using cancel', async () => {
-    const { showConfirmation } = useConfirmationDialog()
-
     const confirmCallbackSpy = vi.fn()
     const cancelCallbackSpy = vi.fn()
 
-    showConfirmation({
+    confirmationOptions.value = {
       heading: 'Test heading',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: cancelCallbackSpy,
-    })
+    }
 
     await waitForNextTick()
 

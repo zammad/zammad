@@ -36,10 +36,8 @@ class App.TicketZoom extends App.Controller
 
     # check if ticket has been updated every 30 min
     update = =>
-      if !@initFetched
-        @fetch()
-        return
-      @fetch(true)
+      @fetch()
+
     @interval(update, 1800000, 'pull_check')
 
     # fetch new data if triggered
@@ -56,7 +54,7 @@ class App.TicketZoom extends App.Controller
     # after a new websocket connection, check if ticket has changed
     @controllerBind('ws:login', =>
       if @initiallyFetched
-        @fetch(true)
+        @fetch()
         return
       @initiallyFetched = true
     )
@@ -69,20 +67,13 @@ class App.TicketZoom extends App.Controller
     )
 
   fetchMayBe: (data) =>
-    if @ticketUpdatedAtLastCall
-      if new Date(data.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
-        #console.log('debug no fetch, current ticket already there or requested')
-        return
-      if new Date(data.updated_at).getTime() < new Date(@ticketUpdatedAtLastCall).getTime()
-        #console.log('debug no fetch, current ticket already newer or requested')
-        return
-    @ticketUpdatedAtLastCall = data.updated_at
+    return if @ticketUpdatedAtLastCall && new Date(data.updated_at).getTime() <= new Date(@ticketUpdatedAtLastCall).getTime()
 
     fetchDelayed = =>
       @fetch()
     @delay(fetchDelayed, 1000, "ticket-zoom-#{@ticket_id}")
 
-  fetch: (ignoreSame = false) =>
+  fetch: =>
     return if !@Session.get()
     queue = false
     if !@initFetched
@@ -96,7 +87,7 @@ class App.TicketZoom extends App.Controller
       processData: true
       queue: queue
       success: (data, status, xhr) =>
-        @load(data, ignoreSame)
+        @load(data)
         App.SessionStorage.set(@key, data)
 
       error: (xhr) =>
@@ -136,88 +127,71 @@ class App.TicketZoom extends App.Controller
           )
     )
 
-  load: (data, ignoreSame = false, local = false) =>
+  load: (data, local = false) =>
     newTicketRaw = data.assets.Ticket[@ticket_id]
 
-    loadAssets = true
-    if @ticketUpdatedAtLastCall
-
-      # ignore if record is already shown
-      if ignoreSame && new Date(newTicketRaw.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
-        #console.log('debug no fetched, current ticket already there or requested')
-        loadAssets = false
-
-      # do not render if newer ticket is already requested
-      if new Date(newTicketRaw.updated_at).getTime() < new Date(@ticketUpdatedAtLastCall).getTime()
-        #console.log('fetched no fetch, current ticket already newer')
-        loadAssets = false
-
-      # remember current record if newer as requested record
-      if new Date(newTicketRaw.updated_at).getTime() > new Date(@ticketUpdatedAtLastCall).getTime()
-        @ticketUpdatedAtLastCall = newTicketRaw.updated_at
-    else
-      @ticketUpdatedAtLastCall = newTicketRaw.updated_at
-
-    # make sure to load assets for mentions if cache is not up to date
-    if !_.isEqual(data.mentions, @mentions)
-      loadAssets = true
-
-    # load assets
-    if loadAssets
-
-      # notify if ticket changed not by my self
-      if @initFetched
-        if newTicketRaw.updated_by_id isnt @Session.get('id')
-          App.TaskManager.notify(@taskKey)
-      @initFetched = true
-
-      if !@doNotLog
-        @doNotLog = 1
-        @recentView('Ticket', @ticket_id)
-
-      # remember article ids
-      @ticket_article_ids = data.ticket_article_ids
-
-      # remember link
-      @links = data.links
-
-      # remember tags
-      @tags = data.tags
-
-      # remember mentions
-      @mentions = data.mentions
-
-      if draft = App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket_id
-        draft.remove(clear: true)
-
-      App.Collection.loadAssets(data.assets, targetModel: 'Ticket')
-
-    # get ticket
-    @ticket         = App.Ticket.fullLocal(@ticket_id)
-    @ticket.article = undefined
-
-    view       = @ticket.currentView()
-    readable   = @ticket.userGroupAccess('read')
-    changeable = @ticket.userGroupAccess('change')
-    fullable   = @ticket.userGroupAccess('full')
+    view       = @ticket?.currentView()
+    readable   = @ticket?.userGroupAccess('read')
+    changeable = @ticket?.userGroupAccess('change')
+    fullable   = @ticket?.userGroupAccess('full')
     formMeta   = data.form_meta
 
     # on the following states we want to rerender the ticket:
-    # - if the object attribute configuration has changed (attribute values, dependecies, filters)
+    # - if the object attribute configuration has changed (attribute values, dependencies, filters)
     # - if the user view has changed (agent/customer)
     # - if the ticket permission has changed (read/write/full)
     if @view && ( !_.isEqual(@formMeta.configure_attributes, formMeta.configure_attributes) || !_.isEqual(@formMeta.dependencies, formMeta.dependencies) || !_.isEqual(@formMeta.filter, formMeta.filter) || @view isnt view || @readable isnt readable || @changeable isnt changeable || @fullable isnt fullable )
       @renderDone = false
 
-    @view       = view
-    @readable   = readable
-    @changeable = changeable
-    @fullable   = fullable
-    @formMeta   = formMeta
+    ticketIsNewest = @ticketUpdatedAtLastCall && new Date(newTicketRaw.updated_at).getTime() <= new Date(@ticketUpdatedAtLastCall).getTime()
+    return if @renderDone && ticketIsNewest
+    @ticketUpdatedAtLastCall = newTicketRaw.updated_at
+
+    # notify if ticket changed not by my self
+    if @initFetched && !ticketIsNewest && newTicketRaw.updated_by_id isnt @Session.get('id')
+      App.TaskManager.notify(@taskKey)
+    @initFetched = true
+
+    if !@doNotLog
+      @doNotLog = 1
+      @recentView('Ticket', @ticket_id)
+
+    # remember article ids
+    @ticket_article_ids = data.ticket_article_ids
+
+    # remember link
+    @links = data.links
+
+    # remember tags
+    @tags = data.tags
+
+    # remember mentions
+    @mentions = data.mentions
+
+    # remember time_accountings
+    @time_accountings = data.time_accountings
+
+    if draft = App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket_id
+      draft.remove(clear: true)
+
+    App.Collection.loadAssets(data.assets, targetModel: 'Ticket')
+
+    # get ticket
+    @ticket         = App.Ticket.fullLocal(@ticket_id)
+    @ticket.article = undefined
+    @view           = @ticket.currentView()
+    @readable       = @ticket.userGroupAccess('read')
+    @changeable     = @ticket.userGroupAccess('change')
+    @fullable       = @ticket.userGroupAccess('full')
+    @formMeta       = data.form_meta
 
     # render page
+    # Due to modification of @renderDone in @render, we need to save the value
+    beforeRenderDone = @renderDone
     @render(local)
-    App.Event.trigger('ui::ticket::load', data)
+
+    if beforeRenderDone
+      App.Event.trigger('ui::ticket::load', data)
 
   meta: =>
 
@@ -453,6 +427,9 @@ class App.TicketZoom extends App.Controller
 
     @delay @pendingTimeReminderReached, delay, 'pendingTimeReminderDelay'
 
+  articleParams: =>
+    return @articleNew?.params()
+
   render: (local) =>
     @setPendingTimeReminderDelay()
 
@@ -544,19 +521,26 @@ class App.TicketZoom extends App.Controller
         el:        elLocal.find('.ticketZoom-header')
       )
 
+      new App.TicketOrganizationAvatar(
+        object_id: @ticket_id
+        el:        elLocal.find('.ticketZoom-header')
+      )
+
       @sidebarWidget = new App.TicketZoomSidebar(
-        el:           elLocal
-        sidebarState: @sidebarState
-        object_id:    @ticket_id
-        model:        'Ticket'
-        query:        @query
-        taskGet:      @taskGet
-        taskKey:      @taskKey
-        formMeta:     @formMeta
-        markForm:     @markForm
-        tags:         @tags
-        mentions:     @mentions
-        links:        @links
+        el:               elLocal
+        sidebarState:     @sidebarState
+        object_id:        @ticket_id
+        model:            'Ticket'
+        query:            @query
+        taskGet:          @taskGet
+        taskKey:          @taskKey
+        formMeta:         @formMeta
+        markForm:         @markForm
+        tags:             @tags
+        mentions:         @mentions
+        time_accountings: @time_accountings
+        links:            @links
+        parent:           @
       )
 
     # render init content
@@ -571,9 +555,10 @@ class App.TicketZoom extends App.Controller
 
     if @sidebarWidget
       @sidebarWidget.reload(
-        tags:     @tags
-        mentions: @mentions
-        links:    @links
+        tags:             @tags
+        mentions:         @mentions
+        time_accountings: @time_accountings
+        links:            @links
       )
 
     if !@initDone
@@ -842,7 +827,7 @@ class App.TicketZoom extends App.Controller
       return
 
     ticketParams = @ticketParams()
-    articleParams = @articleNew.params()
+    articleParams = @articleParams()
 
     # validate ticket
     # we need to use the full ticket because
@@ -895,9 +880,11 @@ class App.TicketZoom extends App.Controller
         @autosaveStart()
         return
 
+    editContollerForm = @sidebarWidget?.get('100-TicketEdit')?.edit?.controllerFormSidebarTicket
+
     # validate ticket by model
     errors = ticket.validate(
-      controllerForm: @sidebarWidget?.get('100-TicketEdit')?.edit?.controllerFormSidebarTicket
+      controllerForm: editContollerForm
       target: e.target
     )
     if errors
@@ -937,27 +924,7 @@ class App.TicketZoom extends App.Controller
       return
 
     # verify if time accounting is enabled
-    if @Config.get('time_accounting') isnt true
-      @submitPost(e, ticket, macro)
-      return
-
-    # verify if time accounting is active for ticket
-    selector                 = ticket.clone()
-    selector.tags            = @tags
-    # always have a empy value to make sure that the condition gets checked
-    selector.mentions        = ['']
-    for id in @mentions
-      mention = App.Mention.find(id)
-      continue if !mention
-      selector.mentions.push(mention.user_id)
-
-    time_accounting_selector = @Config.get('time_accounting_selector')
-    if !App.Ticket.selector(selector, time_accounting_selector['condition'])
-      @submitPost(e, ticket, macro)
-      return
-
-    # time tracking
-    if ticket.currentView() is 'customer'
+    if !editContollerForm.getFlag('time_accounting')
       @submitPost(e, ticket, macro)
       return
 

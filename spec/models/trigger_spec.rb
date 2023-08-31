@@ -534,6 +534,209 @@ RSpec.describe Trigger, type: :model do
         end
       end
 
+      context 'active PGP integration' do
+        before do
+          Setting.set('pgp_integration', true)
+
+          create(:pgp_key, :with_private, fixture: system_email_address)
+          create(:pgp_key, fixture: customer_email_address)
+        end
+
+        let(:system_email_address)   { 'pgp1@example.com' }
+        let(:customer_email_address) { 'pgp2@example.com' }
+
+        let(:email_address) { create(:email_address, email: system_email_address) }
+
+        let(:group)    { create(:group, email_address: email_address) }
+        let(:customer) { create(:customer, email: customer_email_address) }
+
+        let(:security_preferences) { Ticket::Article.last.preferences[:security] }
+
+        let(:perform) do
+          {
+            'notification.email' => {
+              'recipient' => 'ticket_customer',
+              'subject'   => 'Subject dummy.',
+              'body'      => 'Body dummy.',
+            }.merge(security_configuration)
+          }
+        end
+
+        let!(:ticket) { create(:ticket, group: group, customer: customer) }
+
+        context 'sending articles' do
+
+          before do
+            TransactionDispatcher.commit
+          end
+
+          context 'expired pgp key' do
+
+            let(:system_email_address) { 'expiredpgp1@example.com' }
+
+            let(:security_configuration) do
+              {
+                'sign'       => 'always',
+                'encryption' => 'always',
+              }
+            end
+
+            it 'creates unsigned article' do
+              expect(security_preferences[:sign][:success]).to be false
+              expect(security_preferences[:encryption][:success]).to be true
+            end
+          end
+
+          context 'sign and encryption not set' do
+
+            let(:security_configuration) { {} }
+
+            it 'does not sign or encrypt' do
+              expect(security_preferences[:sign][:success]).to be false
+              expect(security_preferences[:encryption][:success]).to be false
+            end
+          end
+
+          context 'sign and encryption disabled' do
+            let(:security_configuration) do
+              {
+                'sign'       => 'no',
+                'encryption' => 'no',
+              }
+            end
+
+            it 'does not sign or encrypt' do
+              expect(security_preferences[:sign][:success]).to be false
+              expect(security_preferences[:encryption][:success]).to be false
+            end
+          end
+
+          context 'sign is enabled' do
+            let(:security_configuration) do
+              {
+                'sign'       => 'always',
+                'encryption' => 'no',
+              }
+            end
+
+            it 'signs' do
+              expect(security_preferences[:sign][:success]).to be true
+              expect(security_preferences[:encryption][:success]).to be false
+            end
+          end
+
+          context 'encryption enabled' do
+
+            let(:security_configuration) do
+              {
+                'sign'       => 'no',
+                'encryption' => 'always',
+              }
+            end
+
+            it 'encrypts' do
+              expect(security_preferences[:sign][:success]).to be false
+              expect(security_preferences[:encryption][:success]).to be true
+            end
+          end
+
+          context 'sign and encryption enabled' do
+
+            let(:security_configuration) do
+              {
+                'sign'       => 'always',
+                'encryption' => 'always',
+              }
+            end
+
+            it 'signs and encrypts' do
+              expect(security_preferences[:sign][:success]).to be true
+              expect(security_preferences[:encryption][:success]).to be true
+            end
+          end
+        end
+
+        context 'discard' do
+
+          context 'sign' do
+
+            let(:security_configuration) do
+              {
+                'sign' => 'discard',
+              }
+            end
+
+            context 'group without pgp key' do
+              let(:group) { create(:group) }
+
+              it 'does not fire' do
+                expect { TransactionDispatcher.commit }
+                  .not_to change(Ticket::Article, :count)
+              end
+            end
+          end
+
+          context 'encryption' do
+
+            let(:security_configuration) do
+              {
+                'encryption' => 'discard',
+              }
+            end
+
+            context 'customer without pgp key' do
+              let(:customer) { create(:customer) }
+
+              it 'does not fire' do
+                expect { TransactionDispatcher.commit }
+                  .not_to change(Ticket::Article, :count)
+              end
+            end
+          end
+
+          context 'mixed' do
+
+            context 'sign' do
+
+              let(:security_configuration) do
+                {
+                  'encryption' => 'always',
+                  'sign'       => 'discard',
+                }
+              end
+
+              context 'group without pgp key' do
+                let(:group) { create(:group) }
+
+                it 'does not fire' do
+                  expect { TransactionDispatcher.commit }
+                    .not_to change(Ticket::Article, :count)
+                end
+              end
+            end
+
+            context 'encryption' do
+
+              let(:security_configuration) do
+                {
+                  'encryption' => 'discard',
+                  'sign'       => 'always',
+                }
+              end
+
+              context 'customer without pgp key' do
+                let(:customer) { create(:customer) }
+
+                it 'does not fire' do
+                  expect { TransactionDispatcher.commit }
+                    .not_to change(Ticket::Article, :count)
+                end
+              end
+            end
+          end
+        end
+      end
+
       include_examples 'include ticket attachment'
     end
 
@@ -1556,6 +1759,105 @@ RSpec.describe Trigger, type: :model do
           ticket && trigger
           TransactionDispatcher.commit
           expect(ticket.reload[field_name]).to eq(1.day.from_now.to_date)
+        end
+      end
+    end
+  end
+
+  describe 'Trigger with new regular expression operators' do
+    let(:execution_condition_mode) { 'always' }
+
+    before do
+      ticket_match && ticket_no_match && trigger
+      TransactionDispatcher.commit
+    end
+
+    context 'when the title is used in the conditions' do
+      let(:perform) do
+        { 'ticket.title'=> { 'value'=> 'Changed by trigger' } }
+      end
+
+      context 'when the operator is "matches regex"' do
+        let(:ticket_match)    { create(:ticket, title: 'Welcome to Zammad') }
+        let(:ticket_no_match) { create(:ticket, title: 'Spam') }
+
+        let(:condition) do
+          { 'ticket.title' => { operator: 'matches regex', value: '^welcome' } }
+        end
+
+        it 'does execute the trigger and perform changes', :aggregate_failures do
+          expect(ticket_match.reload.title).to eq('Changed by trigger')
+          expect(ticket_no_match.reload.title).to eq('Spam')
+        end
+      end
+
+      context 'when the operator is "does not match regex"' do
+        let(:ticket_no_match) { create(:ticket, title: 'Welcome to Zammad') }
+        let(:ticket_match)    { create(:ticket, title: 'Spam') }
+
+        let(:condition) do
+          { 'ticket.title' => { operator: 'does not match regex', value: '^welcome' } }
+        end
+
+        it 'does not execute the trigger and perform no changes', :aggregate_failures do
+          expect(ticket_no_match.reload.title).to eq('Welcome to Zammad')
+          expect(ticket_match.reload.title).to eq('Changed by trigger')
+        end
+      end
+    end
+  end
+
+  describe 'Extend trigger conditions with an article accounted time entry flag #4760' do
+    let!(:ticket) { create(:ticket) }
+
+    before do
+      ticket && article && trigger
+    end
+
+    context 'when time accounting is present' do
+      let!(:article) { create(:ticket_time_accounting, :for_article, ticket: ticket) }
+
+      context 'with is set' do
+        let(:condition) do
+          { 'article.time_accounting'=> { 'operator' => 'is set' } }
+        end
+
+        it 'does trigger' do
+          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
+        end
+      end
+
+      context 'with not set' do
+        let(:condition) do
+          { 'article.time_accounting'=> { 'operator' => 'not set' } }
+        end
+
+        it 'does not trigger' do
+          expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
+        end
+      end
+    end
+
+    context 'when time accounting is blank' do
+      let!(:article) { create(:ticket_article, ticket: ticket) }
+
+      context 'with is set' do
+        let(:condition) do
+          { 'article.time_accounting'=> { 'operator' => 'is set' } }
+        end
+
+        it 'does trigger' do
+          expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
+        end
+      end
+
+      context 'with not set' do
+        let(:condition) do
+          { 'article.time_accounting'=> { 'operator' => 'not set' } }
+        end
+
+        it 'does not trigger' do
+          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
         end
       end
     end

@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-module CreatesTicketArticles
+module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
   extend ActiveSupport::Concern
 
   private
@@ -123,11 +123,15 @@ module CreatesTicketArticles
       clean_accounted_time_params = Ticket::TimeAccounting.association_name_to_id_convert(accounted_time_params)
       clean_accounted_time_params = Ticket::TimeAccounting.param_cleanup(clean_accounted_time_params, true)
 
-      Ticket::TimeAccounting.create!(
+      time_accounting = Ticket::TimeAccounting.new(
         ticket_id:         article.ticket_id,
         ticket_article_id: article.id,
         **clean_accounted_time_params,
       )
+
+      authorize! time_accounting, :create?
+
+      time_accounting.save!
     end
 
     return article if form_id.blank?

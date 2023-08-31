@@ -1,0 +1,15 @@
+<% if @showAvatar: %>
+  <div class="popover-avatar">
+    <%- @object.avatar("40") %>
+  </div>
+<% end %>
+<div class="popover-headline">
+<% if @object.active is false: %>
+  <h2><span class="is-inactive"><%= @displayTitle %></span></h2>
+<% else: %>
+  <h2><%= @displayTitle %></h2>
+<% end %>
+  <% if @additionalHeadlineTemplateName: %>
+    <%- @V(@additionalHeadlineTemplateName, object: @object, attributes: @attributes) %>
+  <% end %>
+</div>

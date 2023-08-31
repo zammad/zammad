@@ -129,6 +129,7 @@ class App.TicketList extends App.Controller
       callbackAttributes: callbackAttributes
       bindCheckbox: @bindCheckbox
       radio: @radio
+      sortClickCallback: @sortClickCallback
     )
 
     @renderPopovers()

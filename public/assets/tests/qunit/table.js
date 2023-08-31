@@ -92,11 +92,11 @@ QUnit.test('table test', assert => {
   assert.equal(el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '1 niedrig', 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 1')
-  assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'true', 'check row 1')
+  assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'aktiv', 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '2 normal', 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 2')
-  assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'false', 'check row 2')
+  assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'nicht aktiv', 'check row 2')
 
   $('#qunit').append('<hr><h1>table simple II</h1><div id="table2"></div>')
   el = $('#table2')
@@ -115,11 +115,11 @@ QUnit.test('table test', assert => {
   assert.equal(el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '2 normal', 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 1')
-  assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'false', 'check row 1')
+  assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'nicht aktiv', 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '1 niedrig', 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 2')
-  assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'true', 'check row 2')
+  assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'aktiv', 'check row 2')
 
   $('#qunit').append('<hr><h1>table simple III</h1><div id="table3"></div>')
   el = $('#table3')
@@ -901,6 +901,42 @@ QUnit.test('Table - numeric sort', assert => {
 
   click_sort(el, 3)
   assert.ok(_.isEqual(list_items(el, 3), ['50', '25', '10']), 'Sorting by time unit DESC is fine')
+});
+
+QUnit.test('Last column is right-aligned if auto align flag is set', assert => {
+  $('#qunit').append('<hr><h1>Last column is right-aligned if auto align flag is set</h1><div id="table-data11"></div>')
+  var el = $('#table-data11')
+
+  data = [
+    { name: 'some name 1', date_at: new Date() },
+    { name: 'some "name" 2', date_at: new Date() },
+    { name: 'some name 3', date_at: new Date() },
+  ]
+  new App.ControllerTable({
+    el:       el,
+    overview: ['name', 'date_at'],
+    attribute_list: [
+      { name: 'name', display: 'Name', type: 'text', tag: 'input', translate: true },
+      { name: 'date_at', display: 'Date', type: 'text', tag: 'datetime' },
+    ],
+    autoAlignLastColumn: true,
+    objects: data
+  });
+
+  assert.equal(el.find('tbody > tr > td:last-child.align-right').length, 3, 'last date column aligned to the right')
+
+  new App.ControllerTable({
+    el:       el,
+    overview: ['date_at', 'name'],
+    attribute_list: [
+      { name: 'date_at', display: 'Date', type: 'text', tag: 'datetime' },
+      { name: 'name', display: 'Name', type: 'text', tag: 'input', translate: true },
+    ],
+    autoAlignLastColumn: true,
+    objects: data
+  });
+
+  assert.equal(el.find('tbody > tr > td.align-right').length, 0, 'last non-date column not aligned to the right')
 });
 
 function click_sort(table, column_number) {

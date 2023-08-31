@@ -15,9 +15,7 @@
           <li role="presentation"><a role="menuitem" tabindex="-1">Benutzer löschen</a>
         </ul>
       </div>
-      <div class="profile-organizationIcon">
-        <%- @Icon('organization') %>
-      </div>
+      <%- @Icon('organization') %>
       <h1>Steuerbüro C. Kaik</h1>
     </div>
     <div class="profile-section">

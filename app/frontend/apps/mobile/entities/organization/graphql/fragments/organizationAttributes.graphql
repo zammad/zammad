@@ -7,6 +7,7 @@ fragment organizationAttributes on Organization {
   domainAssignment
   active
   note
+  vip
   ticketsCount {
     open
     closed

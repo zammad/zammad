@@ -49,14 +49,25 @@ RSpec.describe 'Ticket::Article API > Time Accounting', :aggregate_failures, typ
       }
     end
 
-    let(:time_unit)              { 42 }
-    let(:accounted_time_type_id) { nil }
+    let(:time_unit)                { 42 }
+    let(:accounted_time_type_id)   { nil }
+    let(:time_accounting_enabled)  { true }
 
     before do
+      Setting.set('time_accounting', time_accounting_enabled)
+
       ticket
 
       authenticated_as(agent)
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
+    end
+
+    context 'when time accounting disabled' do
+      let(:time_accounting_enabled) { false }
+
+      it 'does not create ticket article' do
+        expect(response).to have_http_status(:forbidden)
+      end
     end
 
     context 'without accounted time type' do
@@ -67,7 +78,7 @@ RSpec.describe 'Ticket::Article API > Time Accounting', :aggregate_failures, typ
     end
 
     context 'with accounted time type' do
-      let(:accounted_time_type) { create(:ticket_time_accounting_type) }
+      let(:accounted_time_type)    { create(:ticket_time_accounting_type) }
       let(:accounted_time_type_id) { accounted_time_type.id }
 
       it 'created accounted time entry for article' do

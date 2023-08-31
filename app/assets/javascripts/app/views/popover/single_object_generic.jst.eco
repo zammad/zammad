@@ -3,7 +3,8 @@
 <% end %>
 
 <% for row in @attributes: %>
-  <% if !_.isEmpty(@object[row.name]): %>
+  <% value = @object[row.name] %>
+  <% if (typeof value in ['boolean', 'number'] && !_.isUndefined(value) && !_.isNull(value)) ||  !_.isEmpty(value): %>
     <div class="popover-block">
       <label><%- @T( row.display ) %></label>
       <%- @P( @object, row.name ) %>

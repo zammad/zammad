@@ -59,6 +59,10 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
               agentUpdateAccess
               createMentions
             }
+            timeUnitsPerType {
+              name
+              timeUnit
+            }
             stateColorCode
           }
         }
@@ -73,6 +77,7 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
     end
 
     before do
+      setup if defined?(setup)
       gql.execute(query, variables: variables)
     end
 
@@ -132,6 +137,37 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
 
           it 'raises an exception' do
             expect(gql.result.error_type).to eq(GraphQL::Schema::Validator::ValidationFailedError)
+          end
+        end
+
+        context 'with having time accounting enabled' do
+          let(:ticket_time_accounting_types)      { create_list(:ticket_time_accounting_type, 2) }
+          let(:ticket_time_accounting)            { create(:ticket_time_accounting, ticket: ticket, time_unit: 50) }
+          let(:ticket_time_accounting_with_type)  { create(:ticket_time_accounting, ticket: ticket, time_unit: 25, type: ticket_time_accounting_types[0]) }
+          let(:ticket_time_accounting_with_type2) { create(:ticket_time_accounting, ticket: ticket, time_unit: 250, type: ticket_time_accounting_types[1]) }
+
+          let(:setup) do
+            Setting.set('time_accounting', true)
+            Setting.set('time_accounting_types', true)
+
+            ticket_time_accounting_with_type2 && ticket_time_accounting_with_type && ticket_time_accounting
+          end
+
+          it 'contains time unit entries grouped by type with a sum' do
+            expect(gql.result.data['timeUnitsPerType']).to eq([
+                                                                {
+                                                                  'name'     => ticket_time_accounting_types[1].name,
+                                                                  'timeUnit' => 250.0,
+                                                                },
+                                                                {
+                                                                  'name'     => 'None',
+                                                                  'timeUnit' => 50.0,
+                                                                },
+                                                                {
+                                                                  'name'     => ticket_time_accounting_types[0].name,
+                                                                  'timeUnit' => 25.0,
+                                                                },
+                                                              ])
           end
         end
 

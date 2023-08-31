@@ -549,6 +549,10 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
     selection = $('<select class="form-control"></select>')
 
     attributeConfig = elements[groupAndAttribute]
+
+    # Compatibility layer for renamed operators (#4709).
+    meta.operator = @migrateOperator(attributeConfig, meta.operator)
+
     if attributeConfig.operator
 
       # check if operator exists
@@ -649,7 +653,7 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
     @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
     toggleValue()
 
-  @buildValueConfigNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+  @buildValueConfigNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType) ->
     if !@hasExpertConditions() or !@isExpertMode
       return super
 
@@ -747,12 +751,58 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
       value.value = element.find('.js-value .js-objectId').val()
     else if element.find('.js-value .js-shadow')?.val()
       value.value = element.find('.js-value .js-shadow').val()
+    else if element.find('[data-value]').length
+      valueField = element.find('[data-value]')
+      if valueField.data('valueType') is 'json'
+        try
+          value.value = JSON.parse(valueField.data('value'))
+        catch
+          App.Log.error 'App.UiElement.ticket_selector', 'Invalid JSON value for a subfield', valueField
+      else
+        value.value = valueField.data('value')
     else if element.find('.js-value input.form-control')?.val()
       value.value = element.find('.js-value input.form-control').val()
     else if element.find('.js-value .form-control')?.val()
       value.value = element.find('.js-value .form-control').val()
 
     value
+
+  @humanTextLevel: (text, level) ->
+    arrows = ''
+    if level > 0
+      arrows = '⤷ '
+
+    spaces = 0
+    if level == 1
+      spaces = 5
+    else if level > 1
+      spaces = ((level - 1) * 15) + 5
+
+    return '<span style="margin-left: ' + spaces + 'px">' + arrows + text + '</span>'
+
+  @humanText: (selector, level = 0) ->
+    return App.UiElement.ApplicationSelector.humanText(selector) if !selector.conditions
+
+    [defaults, groups, elements] = @defaults()
+
+    operators =
+      'AND': App.i18n.translateInline('Match all (AND)')
+      'OR': App.i18n.translateInline('Match any (OR)')
+      'NOT': App.i18n.translateInline('Match none (NOT)')
+
+    rules = [@humanTextLevel(operators[selector.operator], level)]
+    for condition in selector.conditions
+      if _.isEmpty(condition.conditions)
+        downgrade_condition                 = {}
+        downgrade_condition[condition.name] = condition
+        rules.push @humanTextLevel(App.UiElement.ApplicationSelector.humanText(downgrade_condition), level + 1)
+      else
+        rules = rules.concat(@humanText(condition, level + 1))
+
+    none = App.i18n.translateContent('No filter was configured.')
+    return [none] if rules.length < 2
+
+    rules
 
   @maxNestedLevels: ->
     return 2

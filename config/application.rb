@@ -41,6 +41,7 @@ module Zammad
         'github_database' => 'GithubDatabase',
         'otrs'            => 'OTRS',
         'db'              => 'DB',
+        'pgp'             => 'PGP',
       )
     end
 
@@ -61,6 +62,9 @@ module Zammad
     config.active_job.queue_adapter = :delayed_job
 
     config.active_record.use_yaml_unsafe_load = true
+
+    # Remove PDF from the allowed inline content types so they have to be downloaded first (#4479).
+    config.active_storage.content_types_allowed_inline.delete('application/pdf')
 
     # Use custom logger to log Thread id next to Process pid
     config.log_formatter = ::Logger::Formatter.new

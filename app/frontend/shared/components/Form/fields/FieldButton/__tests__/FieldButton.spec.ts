@@ -9,7 +9,7 @@ const wrapperParameters = {
   formField: true,
 }
 
-const renderButton = (options: ExtendedMountingOptions<any> = {}) => {
+const renderButton = (options: ExtendedMountingOptions<unknown> = {}) => {
   return renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
@@ -99,7 +99,7 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
         type: 'button',
         id: 'button',
         label: 'Sign In',
-        icon: 'mobile-arrow-right',
+        prefixIcon: 'mobile-arrow-right',
       },
     })
 
@@ -117,8 +117,8 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
         type: 'button',
         id: 'button',
         label: 'Sign In',
-        icon: 'mobile-arrow-right',
-        onIconClick: iconClickSpy,
+        prefixIcon: 'mobile-arrow-right',
+        onPrefixIconClick: iconClickSpy,
       },
     })
 

@@ -47,6 +47,8 @@ export const TicketAttributesFragmentDoc = gql`
     id
     internalId
     name
+    vip
+    active
   }
   state {
     id
@@ -78,6 +80,10 @@ export const TicketAttributesFragmentDoc = gql`
   }
   tags
   timeUnit
+  timeUnitsPerType {
+    name
+    timeUnit
+  }
   subscribed
   preferences
   stateColorCode

@@ -68,6 +68,8 @@ class Form extends App.Controller
     @lastResult()
     @activeDryRun()
 
+    @controllerBind('exchange::load_exchange_data', @loadExchangeData)
+
   currentConfig: ->
     App.Setting.get('exchange_config') || {}
 
@@ -147,8 +149,14 @@ class Form extends App.Controller
     method = @el.find('.js-authentication-method').val()
     if method is 'basic'
       @el.find('.js-oAuthContent').addClass('hide')
+      @wizardButton.prop('disabled', false)
     else
       @el.find('.js-oAuthContent').removeClass('hide')
+
+      if !App.ExternalCredential.findByAttribute('name', 'exchange')
+        @wizardButton.prop('disabled', true)
+      else
+        @wizardButton.prop('disabled', false)
 
     @currentAuthenticationMethod = method
 
@@ -218,9 +226,9 @@ class Form extends App.Controller
             @lastResultShowJob = job
             @lastResultShow(job)
             if job.finished_at
-              @wizardButton.attr('disabled', false)
+              @wizardButton.prop('disabled', false)
             else
-              @wizardButton.attr('disabled', true)
+              @wizardButton.prop('disabled', true)
         @delay(@lastResult, 5000)
     )
 
@@ -253,10 +261,10 @@ class Form extends App.Controller
           config: job.payload.params
           start: 'tryLoop'
           callback: (config) =>
-            @wizardButton.attr('disabled', false)
+            @wizardButton.prop('disabled', false)
             @setConfig(config)
         )
-        @wizardButton.attr('disabled', true)
+        @wizardButton.prop('disabled', true)
     )
 
 class State
@@ -707,6 +715,7 @@ class AppConfig extends App.ControllerModal
             fail: =>
               @el.find('.alert').removeClass('hidden').text(__('The entry could not be created.'))
           )
+          App.Event.trigger('exchange::load_exchange_data')
           return
         @formEnable(e)
         @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))

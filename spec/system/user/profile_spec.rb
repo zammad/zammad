@@ -122,4 +122,48 @@ RSpec.describe 'User Profile', type: :system do
       expect(tokens.count).to eq(19)
     end
   end
+
+  context 'with vip attribute' do
+    it 'shows no crown icon if user is not vip' do
+      user = create(:user)
+
+      visit "#user/profile/#{user.id}"
+
+      within '.profile-window' do
+        expect(page).to have_no_css('.icon-crown')
+      end
+    end
+
+    it 'shows the crown icon if user is vip' do
+      user = create(:user, vip: true)
+
+      visit "#user/profile/#{user.id}"
+
+      within '.profile-window' do
+        expect(page).to have_css('.icon-crown')
+      end
+    end
+  end
+
+  context 'with organization popover' do
+    let(:organizations) do
+      organization = create(:organization, vip: true)
+
+      [organization]
+    end
+
+    it 'shows the organization popover' do
+      visit "#user/profile/#{customer.id}"
+
+      page.find('.profile-organization .organization-popover').hover
+
+      within '.popover' do
+        expect(page).to have_text(organizations[0].name, wait: 30)
+
+        within '.avatar--organization' do
+          expect(page).to have_css('.icon-crown-silver')
+        end
+      end
+    end
+  end
 end

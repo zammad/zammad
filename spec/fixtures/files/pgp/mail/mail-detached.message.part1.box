@@ -1,0 +1,8 @@
+Content-Type: multipart/signed;
+ boundary="--==_mimepart_649194c00_140d32260708d4";
+ micalg=pgp-sha1;
+ protocol="application/pgp-signature"
+Content-Transfer-Encoding: 7bit
+
+This is an OpenPGP/MIME signed message (RFC 3156)
+----==_mimepart_649194c00_140d32260708d4

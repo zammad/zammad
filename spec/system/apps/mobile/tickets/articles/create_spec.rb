@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'system/apps/mobile/examples/create_article_examples'
+require 'system/apps/mobile/examples/article_security_examples'
 
 RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated_as: :agent, type: :system do
   let(:group)     { Group.find_by(name: 'Users') }
@@ -10,7 +11,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
   let(:ticket)    { create(:ticket, customer: customer, group: group, owner: agent) }
 
   def wait_for_ticket_edit(number: 1)
-    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql', number: number)
+    wait_for_mutation('ticketUpdate', number: number)
   end
 
   def save_article(number: 1)
@@ -165,6 +166,8 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
 
     context 'when an article was just deleted', current_user_id: -> { agent.id } do
       def delete_article(article_body, number: 1)
+        wait_for_subscription_start('ticketArticleUpdates')
+
         within '[role="comment"]', text: article_body do
           find('[data-name="article-context"]').click
         end
@@ -172,15 +175,17 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
         click_on 'Delete Article'
         click_on 'OK'
 
-        wait_for_gql('apps/mobile/pages/ticket/graphql/subscriptions/ticketArticlesUpdates.graphql', number: number)
+        wait_for_subscription_update('ticketArticleUpdates', number: number)
       end
 
       def create_article(article_body, number: 1)
         find_button('Add reply').click
 
-        text = find_editor('Text')
-        expect(text).to have_text_value('', exact: true)
-        text.type(article_body)
+        within_form(form_updater_gql_number: number) do
+          text = find_editor('Text')
+          expect(text).to have_text_value('', exact: true)
+          text.type(article_body)
+        end
 
         save_article(number: number)
       end
@@ -373,5 +378,44 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
       )
     end
 
+  end
+
+  context 'when creating secured article', authenticated_as: :authenticate do
+    def prepare_phone_article
+      open_article_dialog
+      find_select('Article Type', visible: :all).select_option('Phone')
+    end
+
+    def prepare_email_article(with_body: false)
+      open_article_dialog
+      find_select('Article Type', visible: :all).select_option('Email')
+      find_autocomplete('To').search_for_option(customer.email, label: customer.fullname)
+
+      find_editor('Text').type(Faker::Hacker.say_something_smart) if with_body
+    end
+
+    def submit_form
+      save_article
+    end
+
+    it_behaves_like 'mobile app: article security', integration: :smime
+    it_behaves_like 'mobile app: article security', integration: :pgp
+  end
+
+  context 'when inlining an image', authenticated_as: :agent do
+    it 'correctly compresses image' do
+      open_article_dialog
+
+      find_editor('Text').type(Faker::Hacker.say_something_smart)
+      click_button('Add image') # inserts an invisible input
+      find('[data-test-id="editor-image-input"]', visible: :all).attach_file(Rails.root.join('spec/fixtures/files/image/large2.png'))
+      wait_for_test_flag('editor.imageResized')
+
+      save_article
+
+      # The fize will always be less than it actually is even without resizing
+      # Chrome has the best compression, so we check that actual value is lower than Firefox's compresssion
+      expect(Store.last.size.to_i).to be <= 25_686
+    end
   end
 end

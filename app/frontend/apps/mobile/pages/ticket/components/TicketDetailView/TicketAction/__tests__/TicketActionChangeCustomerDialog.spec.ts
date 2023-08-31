@@ -6,15 +6,15 @@ import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import { mockTicketObjectAttributesGql } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
 import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
 import type { AutocompleteSearchUserQuery } from '#shared/graphql/types.ts'
+import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import TicketActionChangeCustomerDialog from '../TicketActionChangeCustomerDialog.vue'
 
 beforeAll(async () => {
   await import(
-    '#shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
+    '#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
   )
 })
 

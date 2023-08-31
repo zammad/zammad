@@ -35,8 +35,7 @@ import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEdit
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
-import { errorOptions } from '#mobile/router/error.ts'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
+import { errorOptions } from '#shared/router/error.ts'
 import {
   useTicketDuplicateDetectionHandler,
   type TicketDuplicateDetectionPayload,
@@ -47,6 +46,7 @@ import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
 import { useDialog } from '#shared/composables/useDialog.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import type { ApolloError } from '@apollo/client'
+import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 import { useTicketCreateMutation } from '../graphql/mutations/create.api.ts'
 
 const router = useRouter()
@@ -232,7 +232,7 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
       component: 'FormGroup',
       children: [
         {
-          if: '$smimeIntegration === true && $values.articleSenderType === "email-out"',
+          if: '$securityIntegration === true && $values.articleSenderType === "email-out"',
           name: 'security',
           label: __('Security'),
           type: 'security',
@@ -303,8 +303,11 @@ const redirectAfterCreate = (internalId?: number) => {
   }
 }
 
-const smimeIntegration = computed(
-  () => (application.config.smime_integration as boolean) || {},
+const securityIntegration = computed<boolean>(
+  () =>
+    (application.config.smime_integration ||
+      application.config.pgp_integration) ??
+    false,
 )
 
 const { notify } = useNotifications()
@@ -397,7 +400,7 @@ const schemaData = reactive({
   activeStep,
   visitedSteps,
   allSteps,
-  smimeIntegration,
+  securityIntegration,
   existingAdditionalCreateNotes: () => {
     return Object.keys(additionalCreateNotes).length > 0
   },
@@ -447,8 +450,6 @@ watch(
 
 useEventListener('scroll', setIsScrolledToBottom)
 useEventListener('resize', setIsScrolledToBottom)
-
-const { waitForConfirmation } = useConfirmationDialog()
 
 onBeforeRouteLeave(async () => {
   if (!isDirty.value) return true

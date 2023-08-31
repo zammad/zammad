@@ -21,6 +21,8 @@ InstanceMethods =
     @intersection_observer = new IntersectionObserver (entries) =>
       @intersectionChanged(entries)
 
+    return if not @el[0]
+
     @intersection_observer.observe(@el[0])
 
   intersectionChanged: (entries) ->

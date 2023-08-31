@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :'user/overview_sorting' do
-    overview        { create(:overview) }
+    overview
     created_by_id   { 1 }
     updated_by_id   { 1 }
   end

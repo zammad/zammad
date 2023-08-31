@@ -1,5 +1,5 @@
 class App.Organization extends App.Model
-  @configure 'Organization', 'name', 'shared', 'note', 'active', 'updated_at'
+  @configure 'Organization', 'name', 'shared', 'vip', 'note', 'active', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/organizations'
   @configure_attributes = [
@@ -88,3 +88,17 @@ Using **organizations** you can **group** customers. This has two main benefits:
     return true if requester.permission('admin')
     return true if requester.permission('ticket.agent')
     return false
+
+  avatar: (size = 40, cssClass = '', popover = false) ->
+    size = parseInt(size, 10)
+
+    cssClass += ' ' if cssClass
+    cssClass += "size-#{ size }"
+    cssClass += ' organization-popover' if popover
+    data      = " data-id=\"#{@id}\""
+
+    return App.view('avatar_organization')
+      active: @active
+      cssClass: cssClass
+      data: data
+      vip: @vip

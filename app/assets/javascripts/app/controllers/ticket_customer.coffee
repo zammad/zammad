@@ -13,6 +13,7 @@ class App.TicketCustomer extends App.ControllerModal
       model:           App.Ticket
       mixedAttributes: configure_attributes
       screen:          'edit'
+      params:          { id: @ticket_id }
       autofocus:       true,
       handlersConfig:  [App.TicketZoomFormHandlerMultiOrganization],
     )

@@ -2,14 +2,15 @@ class App.TicketCreate extends App.Controller
   @include App.SecurityOptions
 
   elements:
-    '.tabsSidebar': 'sidebar'
+    '.tabsSidebar':               'sidebar'
     '.tabsSidebar-sidebarSpacer': 'sidebarSpacer'
 
   events:
-    'click .type-tabs .tab':   'changeFormType'
-    'submit form':             'submit'
-    'click .form-controls .js-cancel':        'cancel'
-    'click .js-active-toggle': 'toggleButton'
+    'click .type-tabs .tab':           'changeFormType'
+    'submit form':                     'submit'
+    'click .form-controls .js-cancel': 'cancel'
+    'click .js-active-toggle':         'toggleButton'
+    'click .js-active-toggle-type':    'toggleTypeButton'
 
   types: {
     'phone-in': {
@@ -26,6 +27,24 @@ class App.TicketCreate extends App.Controller
     }
   }
 
+  articleSenderTypeMap: {
+    'phone-in':
+      sender:  'Customer'
+      article: 'phone'
+      title:   __('Inbound Call')
+      screen:  'create_phone_in'
+    'phone-out':
+      sender:  'Agent'
+      article: 'phone'
+      title:   __('Outbound Call')
+      screen:  'create_phone_out'
+    'email-out':
+      sender:  'Agent'
+      article: 'email'
+      title:   __('Email')
+      screen:  'create_email_out'
+  }
+
   constructor: (params) ->
     super
     @sidebarState = {}
@@ -40,9 +59,9 @@ class App.TicketCreate extends App.Controller
     if !_.contains(@availableTypes, @defaultType)
       @defaultType = @availableTypes[0]
 
-    @formId = App.ControllerForm.formId()
-
-    @queueKey = "TicketCreate#{@taskKey}"
+    @formId            = App.ControllerForm.formId()
+    @queueKey          = "TicketCreate#{@taskKey}"
+    @articleAttributes = @articleSenderTypeMap[@currentChannel()]
 
     # remember split info if exists
     @split = ''
@@ -71,6 +90,14 @@ class App.TicketCreate extends App.Controller
       return if data.taskKey isnt @taskKey
       return if !@sidebarWidget
       @sidebarWidget.render(@params())
+    )
+
+    # Listen to security setting changes.
+    @controllerBind('config_update', (data) =>
+      return if not /^(pgp|smime)_integration$/.test(data.name)
+
+      @updateSecurityType()
+      @updateSecurityOptions()
     )
 
   currentChannel: =>
@@ -103,23 +130,7 @@ class App.TicketCreate extends App.Controller
     selectedTab.addClass('active')
 
     # set form type attributes
-    articleSenderTypeMap =
-      'phone-in':
-        sender:  'Customer'
-        article: 'phone'
-        title:   __('Inbound Call')
-        screen:  'create_phone_in'
-      'phone-out':
-        sender:  'Agent'
-        article: 'phone'
-        title:   __('Outbound Call')
-        screen:  'create_phone_out'
-      'email-out':
-        sender:  'Agent'
-        article: 'email'
-        title:   __('Email')
-        screen:  'create_email_out'
-    @articleAttributes = articleSenderTypeMap[type]
+    @articleAttributes = @articleSenderTypeMap[type]
 
     # update form
     @$('[name="formSenderType"]').val(type)
@@ -140,6 +151,8 @@ class App.TicketCreate extends App.Controller
     @$('[name="group_id"]').bind('change', =>
       @sidebarWidget.render(@params())
     )
+
+    @updateSecurityType(type)
     @updateSecurityOptions()
 
     # show cc
@@ -207,12 +220,18 @@ class App.TicketCreate extends App.Controller
     return false if !diff || _.isEmpty(diff)
     return true
 
-  updateSecurityOptions: =>
+  updateSecurityOptions: (resetSecurityOptions = false) =>
     params = @params()
     if params.customer_id_completion
       params.to = params.customer_id_completion
 
-    @updateSecurityOptionsRemote(@taskKey, params, params, @paramsSecurity())
+    @securityOptionsReset() if resetSecurityOptions
+    @updateSecurityOptionsRemote(@taskKey, params, params)
+
+  updateSecurityType: (type = @currentChannel()) =>
+    return if type isnt 'email-out'
+
+    @updateSecurityTypeToolbar()
 
   dirtyMonitorStart: =>
     @dirty = {}
@@ -503,6 +522,7 @@ class App.TicketCreate extends App.Controller
         'change [data-attribute-name=organization_id] .js-input': @localUserInfo
       richTextUploadRenderCallback: @updateTaskManagerAttachments
       richTextUploadDeleteCallback: @updateTaskManagerAttachments
+      articleParamsCallback: @articleParams
     )
 
     # convert remote images into data urls
@@ -522,6 +542,7 @@ class App.TicketCreate extends App.Controller
       data:
         config: App.Config.all()
         user: App.Session.get()
+        ticket: @formDefault
       taskKey: @taskKey
     )
 
@@ -545,6 +566,15 @@ class App.TicketCreate extends App.Controller
 
   toggleButton: (event) ->
     @$(event.currentTarget).toggleClass('btn--active')
+
+  toggleTypeButton: (event) =>
+    target = @$(event.currentTarget)
+
+    return if target.hasClass('btn--active')
+
+    target.siblings().removeClass('btn--active')
+    @toggleButton(event)
+    @updateSecurityOptions(true)
 
   tokanice: ->
     App.Utils.tokanice('.content.active input[name=cc]', 'email')
@@ -574,14 +604,16 @@ class App.TicketCreate extends App.Controller
     callbackUser()
 
   localUserInfoCallback: (params) =>
-    customer = App.User.find(params.customer_id) || {}
+
+    # update params with new customer selection
+    # to replace in text modules properly
+    params.customer = App.User.find(params.customer_id) || {}
 
     @sidebarWidget.render(params)
     @textModule.reload(
       config: App.Config.all()
       user: App.Session.get()
-      ticket:
-        customer: customer
+      ticket: params
     )
 
   cancel: (e) ->
@@ -596,6 +628,55 @@ class App.TicketCreate extends App.Controller
   hasAttachments: =>
     @$('.richtext .attachments .attachment').length > 0
 
+  articleParams: =>
+    params = @params()
+
+    # find sender_id
+    sender = App.TicketArticleSender.findByAttribute('name', @articleAttributes['sender'])
+    type   = App.TicketArticleType.findByAttribute('name', @articleAttributes['article'])
+
+    group = undefined
+    if params.group_id
+      group  = App.Group.find(params.group_id)
+
+    # create article
+    article = {}
+    if sender.name is 'Customer'
+      article = {
+        to:           (group && group.name) || ''
+        from:         params.customer_id_completion
+        cc:           params.cc
+        subject:      params.subject
+        body:         params.body
+        type_id:      type.id
+        sender_id:    sender.id
+        form_id:      @formId
+        content_type: 'text/html'
+      }
+    else
+      article = {
+        from:         (group && group.name) || ''
+        to:           params.customer_id_completion
+        cc:           params.cc
+        subject:      params.subject
+        body:         params.body
+        type_id:      type.id
+        sender_id:    sender.id
+        form_id:      @formId
+        content_type: 'text/html'
+      }
+
+    # add security params
+    if @securityOptionsShown()
+      article.preferences ||= {}
+      article.preferences.security = @paramsSecurity()
+
+    # allow cc only on email tickets
+    if @currentChannel() isnt 'email-out'
+      delete article.cc
+
+    article
+
   submit: (e) =>
     e.preventDefault()
 
@@ -609,53 +690,14 @@ class App.TicketCreate extends App.Controller
     # create ticket
     ticket = new App.Ticket
 
-    # find sender_id
-    sender = App.TicketArticleSender.findByAttribute('name', @articleAttributes['sender'])
-    type   = App.TicketArticleType.findByAttribute('name', @articleAttributes['article'])
-
-    if params.group_id
-      group  = App.Group.find(params.group_id)
-
     # add linked objects if ticket got splited
     if @ticket_id
       params['links'] =
         Ticket:
           child: [@ticket_id]
 
-    # allow cc only on email tickets
-    if @currentChannel() isnt 'email-out'
-      delete params.cc
-
     # create article
-    if sender.name is 'Customer'
-      params.article = {
-        to:           (group && group.name) || ''
-        from:         params.customer_id_completion
-        cc:           params.cc
-        subject:      params.subject
-        body:         params.body
-        type_id:      type.id
-        sender_id:    sender.id
-        form_id:      @formId
-        content_type: 'text/html'
-      }
-    else
-      params.article = {
-        from:         (group && group.name) || ''
-        to:           params.customer_id_completion
-        cc:           params.cc
-        subject:      params.subject
-        body:         params.body
-        type_id:      type.id
-        sender_id:    sender.id
-        form_id:      @formId
-        content_type: 'text/html'
-      }
-
-      # add security params
-      if @securityOptionsShown()
-        params.article.preferences ||= {}
-        params.article.preferences.security = @paramsSecurity()
+    params.article = @articleParams()
 
     ticket.load(params)
 

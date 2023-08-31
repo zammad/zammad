@@ -21,7 +21,7 @@ module Ticket::SetsOnlineNotificationSeen
     return false if saved_changes['state_id'].blank?
 
     # check if existing online notifications for this ticket should be set to seen
-    return true if !online_notification_seen_state
+    return true if !OnlineNotification.seen_state?(self)
 
     # set all online notifications to seen
     # send background job

@@ -36,7 +36,7 @@ describe('testing input for searching', () => {
       setup() {
         const searchInput = ref<null | CommonInputSearchExpose>()
         onMounted(() => {
-          focus = searchInput.value!.focus
+          ;({ focus } = searchInput.value!)
         })
         return { searchInput }
       },

@@ -7,11 +7,11 @@ FactoryBot.define do
     created_by_id { 1 }
 
     trait :for_article do
-      ticket_article { create(:'ticket/article', ticket: ticket) }
+      ticket_article { association :'ticket/article', ticket: ticket }
     end
 
     trait :for_type do
-      type { create(:ticket_time_accounting_type) }
+      type factory: :ticket_time_accounting_type
     end
   end
 end

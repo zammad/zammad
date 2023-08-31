@@ -2211,6 +2211,32 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
+  title:       __('Ticket Conditions Regular Expression Operators'),
+  name:        'ticket_conditions_allow_regular_expression_operators',
+  area:        'Ticket::Core',
+  description: __('Defines if the ticket conditions editor supports regular expression operators for triggers and ticket auto assignment.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'ticket_conditions_allow_regular_expression_operators',
+        tag:     'boolean',
+        options: {
+          true  => __('yes'),
+          false => __('no'),
+        },
+      },
+    ],
+  },
+  state:       true,
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin.ticket'],
+  },
+  frontend:    true
+)
+Setting.create_if_not_exists(
   title:       __('Ticket Number Format'),
   name:        'ticket_number',
   area:        'Ticket::Number',
@@ -2989,7 +3015,7 @@ Setting.create_if_not_exists(
   preferences: {
     permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
-  frontend:    false
+  frontend:    true
 )
 
 Setting.create_if_not_exists(
@@ -3011,7 +3037,7 @@ Setting.create_if_not_exists(
   preferences: {
     permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
-  frontend:    false
+  frontend:    true
 )
 
 Setting.create_if_not_exists(
@@ -3278,7 +3304,7 @@ Setting.create_if_not_exists(
   preferences: {
     permission: ['admin.api'],
   },
-  frontend:    false
+  frontend:    true
 )
 
 Setting.create_if_not_exists(
@@ -3791,7 +3817,7 @@ Setting.create_if_not_exists(
   title:       __('Time Accounting Selector'),
   name:        'time_accounting_selector',
   area:        'Web::Base',
-  description: __('Enable time accounting for these tickets.'),
+  description: __('Show time accounting dialog when updating matching tickets.'),
   options:     {
     form: [
       {},
@@ -4022,7 +4048,7 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
-  name:        '0016_postmaster_filter_smime',
+  name:        '0016_postmaster_filter_secure_mailing',
   area:        'Postmaster::PreFilter',
   description: __('Defines postmaster filter to handle secure mailing.'),
   options:     {},
@@ -5368,6 +5394,59 @@ Setting.create_if_not_exists(
     permission: ['admin.integration'],
   },
   frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('PGP integration'),
+  name:        'pgp_integration',
+  area:        'Integration::Switch',
+  description: __('Defines if PGP encryption is enabled or not.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'pgp_integration',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:           1,
+    authentication: true,
+    permission:     ['admin.integration'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('PGP config'),
+  name:        'pgp_config',
+  area:        'Integration::PGP',
+  description: __('Defines the PGP config.'),
+  options:     {},
+  state:       {},
+  preferences: {
+    prio:       2,
+    permission: ['admin.integration'],
+  },
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('PGP Recipient Alias Configuration'),
+  name:        'pgp_recipient_alias_configuration',
+  area:        'Core::Integration::PGP',
+  description: __('Defines if the PGP recipient alias configuration is enabled or not.'),
+  options:     {},
+  state:       false,
+  preferences: { online_service_disable: true },
+  frontend:    true
 )
 
 Setting.create_if_not_exists(

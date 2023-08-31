@@ -50,6 +50,14 @@ describe('static organization', () => {
     expect(view.getByText(organization.name || 'not found')).toBeInTheDocument()
 
     expect(
+      view.getByLabelText(`Avatar (${organization.name})`),
+    ).toBeAvatarElement({
+      vip: !!organization.vip,
+      active: !!organization.active,
+      type: 'organization',
+    })
+
+    expect(
       view.getByRole('region', { name: 'Shared organization' }),
     ).toHaveTextContent('no')
     expect(
@@ -89,6 +97,7 @@ describe('static organization', () => {
     mockPermissions(['admin.organization'])
 
     const organization = defaultOrganization()
+    organization.vip = true
     const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
       organization: {
         ...organization,
@@ -104,6 +113,14 @@ describe('static organization', () => {
     const view = await visitView(`/organizations/${organization.internalId}`)
 
     await waitUntil(() => mockApi.calls.resolve)
+
+    expect(
+      view.getByLabelText(`Avatar (${organization.name})`),
+      'renders vip status correctly',
+    ).toBeAvatarElement({
+      vip: true,
+      type: 'organization',
+    })
 
     expect(view.container).toHaveTextContent('Members')
 

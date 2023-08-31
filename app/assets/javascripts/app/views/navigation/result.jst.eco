@@ -3,7 +3,7 @@
   <% done = true %>
   <% for item in items: %>
     <li>
-      <a href="<%- item.url %>" class="nav-tab nav-tab--search <%= item.class %>" data-id="<%= item.id %>">
+      <a href="<%- item.url %>" class="nav-tab nav-tab--search <%= item.class %>" data-id="<%= item.id %>" data-popover-show-avatar="true">
         <div class="nav-tab-icon">
           <%- @Icon(item.icon, item.iconClass) %>
         </div>

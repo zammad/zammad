@@ -106,15 +106,6 @@ class Ticket::Selector::Base
     end
   end
 
-  def valid?
-    ticket_count, _tickets = self.class.new(selector: selector, options: options.merge(limit: 1, execution_time: true, ticket_id: 1)).get
-    return if ticket_count.nil?
-
-    true
-  rescue
-    nil
-  end
-
   def attribute_exists?(attribute, check_condition = @selector[:conditions])
     result = false
     check_condition.each do |condition|

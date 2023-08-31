@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :authorization do
     uid      { Faker::Number.unique.number(digits: 10) }
-    user     { create(:customer) }
+    user     factory: :customer
     provider { 'foo' }
 
     factory :twitter_authorization do

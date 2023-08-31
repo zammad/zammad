@@ -12,7 +12,47 @@ RSpec.describe 'Organization Profile', type: :system do
     modal_ready
   end
 
-  context 'members section' do
+  context 'with active attribute' do
+    it 'shows regular building icon if organization is active' do
+      organization = create(:organization, active: true)
+
+      visit "#organization/profile/#{organization.id}"
+
+      within '.avatar--organization' do
+        expect(page).to have_css('.icon-organization')
+      end
+    end
+
+    it 'shows crossed out building icon if organization is inactive' do
+      visit "#organization/profile/#{organization.id}"
+
+      within '.avatar--organization' do
+        expect(page).to have_no_css('.icon-inactive')
+      end
+    end
+  end
+
+  context 'with vip attribute' do
+    it 'shows vip crown if organization is vip' do
+      organization = create(:organization, vip: true)
+
+      visit "#organization/profile/#{organization.id}"
+
+      within '.avatar--organization' do
+        expect(page).to have_css('.icon-crown-silver')
+      end
+    end
+
+    it 'does not show vip crown if organization is not vip' do
+      visit "#organization/profile/#{organization.id}"
+
+      within '.avatar--organization' do
+        expect(page).to have_no_css('.icon-crown-silver')
+      end
+    end
+  end
+
+  context 'with members section' do
     let(:members) { organization.members.reorder(id: :asc) }
 
     before do

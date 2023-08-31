@@ -220,6 +220,17 @@ Rails/ReversibleMigration:
   Description: This cop checks whether the change method of the migration file is reversible.
   Enabled: false
 
+Rails/EnvironmentVariableAccess:
+  Description: 'This cop looks for direct access to environment variables through the ENV variable within the application code.'
+  Enabled: true
+  AllowReads: true
+
+Rails/Output:
+  Exclude:
+    - "lib/tasks/**/*"
+  Include:
+    - "**/*_spec.rb"
+
 Style/ClassAndModuleChildren:
   Description: 'Checks style of children classes and modules.'
   Enabled: true
@@ -287,17 +298,6 @@ Style/RedundantBegin:
 Style/FetchEnvVar:
   Description: 'This cop suggests `ENV.fetch` for the replacement of `ENV[]`.'
   Enabled: false
-
-Rails/EnvironmentVariableAccess:
-  Description: 'This cop looks for direct access to environment variables through the ENV variable within the application code.'
-  Enabled: true
-  AllowReads: true
-
-Rails/Output:
-  Exclude:
-    - "lib/tasks/**/*"
-  Include:
-    - "**/*_spec.rb"
 
 GraphQL/OrderedArguments:
   Enabled: false

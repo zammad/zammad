@@ -491,13 +491,13 @@
 
     $tip.removeClass('in')
 
+    this.hoverState = null
+
     $.support.transition && $tip.hasClass('fade') ?
       $tip
         .one('bsTransitionEnd', complete)
         .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
       complete()
-
-    this.hoverState = null
 
     return this
   }

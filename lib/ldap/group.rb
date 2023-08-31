@@ -132,7 +132,8 @@ class Ldap
     def group_user_dns(entry)
       return entry[:member] if entry[:member].present?
       return group_user_dns_memberuid(entry) if entry[:memberuid].present?
-      return entry[:uniquemember] if entry[:uniquemember].present?
+
+      entry[:uniquemember].presence
     end
 
     def group_user_dns_memberuid(entry)

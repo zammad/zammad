@@ -12,7 +12,11 @@ const transparentImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAI
       <CommonAvatar :image="transparentImage" initials="JD" />
     </Variant>
     <Variant title="VIP">
-      <CommonAvatar :image="transparentImage" vip initials="JD" />
+      <CommonAvatar
+        :image="transparentImage"
+        vip-icon="mobile-crown"
+        initials="JD"
+      />
     </Variant>
     <Variant title="Without Image">
       <CommonAvatar initials="JD" class="bg-yellow" />
@@ -21,7 +25,12 @@ const transparentImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAI
       <CommonAvatar icon="mobile-facebook" class="bg-blue" />
     </Variant>
     <Variant title="Large">
-      <CommonAvatar initials="JD" vip class="bg-red" size="large" />
+      <CommonAvatar
+        initials="JD"
+        vip-icon="mobile-crown"
+        class="bg-red"
+        size="large"
+      />
     </Variant>
   </Story>
 </template>

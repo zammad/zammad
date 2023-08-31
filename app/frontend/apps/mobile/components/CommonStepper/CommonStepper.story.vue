@@ -2,11 +2,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { FormStep } from '#shared/components/Form/types.ts'
 import CommonStepper from './CommonStepper.vue'
-import type { CommonStepperStep } from './types.ts'
 
 const modelValue = ref('step1')
-const steps: Record<string, CommonStepperStep> = {
+const steps: Record<string, FormStep> = {
   step1: {
     label: '1',
     order: 1,

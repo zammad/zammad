@@ -33,7 +33,10 @@ module SessionHelper
     files = Dir.glob("#{dir}/lib/session_helper/collection_*.rb")
     files.each do |file|
       file =~ %r{/(session_helper/collection_.*)\.rb\z}
-      (default_collection, assets) = $1.camelize.constantize.session(default_collection, assets, user)
+      class_name = $1.camelize
+      next if !Object.const_defined?(class_name) && Rails.env.production?
+
+      (default_collection, assets) = class_name.constantize.session(default_collection, assets, user)
     end
 
     [default_collection, assets]

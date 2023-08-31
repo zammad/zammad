@@ -1,11 +1,12 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class CoreWorkflow::Result::Backend
-  def initialize(result_object:, field:, perform_config:, skip_rerun: false)
-    @result_object  = result_object
-    @field          = field
-    @perform_config = perform_config
-    @skip_rerun     = skip_rerun
+  def initialize(result_object:, field:, perform_config:, skip_rerun: false, skip_mark_restricted: false)
+    @result_object        = result_object
+    @field                = field
+    @perform_config       = perform_config
+    @skip_rerun           = skip_rerun
+    @skip_mark_restricted = skip_mark_restricted
   end
 
   def field
@@ -20,6 +21,12 @@ class CoreWorkflow::Result::Backend
     return if @skip_rerun
 
     @result_object.rerun = true
+  end
+
+  def mark_restricted
+    return if @skip_mark_restricted
+
+    @result_object.restricted_fields[field] = true
   end
 
   def result(backend, field, value = nil)

@@ -17,10 +17,12 @@ class PostmasterFilter < ApplicationModel
   VALID_OPERATORS = [
     'contains',
     'contains not',
-    'is',
-    'is not',
-    'starts with',
-    'ends with',
+    'is any of',
+    'is none of',
+    'starts with one of',
+    'ends with one of',
+    'matches regex',
+    'does not match regex',
   ].freeze
 
   def validate_condition
@@ -30,13 +32,18 @@ class PostmasterFilter < ApplicationModel
       raise Exceptions::UnprocessableEntity, __('The provided match operator is missing or invalid.') if meta['operator'].blank? || VALID_OPERATORS.exclude?(meta['operator'])
       raise Exceptions::UnprocessableEntity, __('The required match value is missing.') if meta['value'].blank?
 
-      begin
-        Channel::Filter::Match::EmailRegex.match(value: 'test content', match_rule: meta['value'], check_mode: true)
-      rescue => e
-        raise Exceptions::UnprocessableEntity, e.message
-      end
+      validate_regex_match_rule!(meta['value'], meta['operator'])
     end
     true
   end
 
+  private
+
+  def validate_regex_match_rule!(match_rule, operator)
+    return if !operator.eql?('matches regex') && !operator.eql?('does not match regex')
+
+    Channel::Filter::Match::EmailRegex.match(value: 'test content', match_rule: match_rule, check_mode: true)
+  rescue => e
+    raise Exceptions::UnprocessableEntity, e.message
+  end
 end

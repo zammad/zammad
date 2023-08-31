@@ -15,7 +15,7 @@ const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
   './plugins/global/*.ts',
   { eager: true },
 )
-const fieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
+export const mobileFormFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
   import.meta.glob('../components/Form/fields/**/index.ts', { eager: true })
 const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> =
   import.meta.glob('./theme/global/extensions/*.ts', { eager: true })
@@ -27,7 +27,7 @@ const initializeForm: InitializeAppForm = (app: App) => {
     extensions: themeExtensionModules,
   }
 
-  mainInitializeForm(app, undefined, fieldModules, plugins, theme)
+  mainInitializeForm(app, undefined, mobileFormFieldModules, plugins, theme)
 }
 
 export default initializeForm

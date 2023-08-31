@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { PolicyTicket } from '#shared/graphql/types.ts'
-import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 import {
   createEligibleTicketArticleReplyData,
   createTestArticleActions,
   createTestArticleTypes,
+  createTicket,
 } from './utils.ts'
 
 // we have some generic replies that can be used only on article with the same type
@@ -72,34 +72,45 @@ describe.each([
   describe(`selecting telegram ${name} type`, () => {
     it('customer cannot choose reply type', () => {
       setupView('customer')
-      const { ticket } = defaultTicket()
-      ticket.createArticleType!.name = createArticleType || name
+      const ticket = createTicket({
+        createArticleType: {
+          name: createArticleType || name,
+        },
+      })
       const actions = createTestArticleTypes(ticket)
       expect(actions.find((a) => a.value === name)).toBeUndefined()
     })
 
     it(`cannot choose ${name}, if ticket is not telegram`, () => {
       setupView('agent')
-      const { ticket } = defaultTicket()
-      ticket.createArticleType!.name =
-        (createArticleType || name) === 'email' ? 'note' : 'email'
+      const ticket = createTicket({
+        createArticleType: {
+          name: (createArticleType || name) === 'email' ? 'note' : 'email',
+        },
+      })
       const actions = createTestArticleTypes(ticket)
       expect(actions.find((a) => a.value === name)).toBeUndefined()
     })
 
     it(`cannot choose ${name}, if ticket is not editable`, () => {
       setupView('agent')
-      const { ticket } = defaultTicket({ update: false })
-      ticket.policy.update = false
-      ticket.createArticleType!.name = createArticleType || name
+      const ticket = createTicket({
+        policy: { update: false, agentReadAccess: false },
+        createArticleType: {
+          name: createArticleType || name,
+        },
+      })
       const actions = createTestArticleTypes(ticket)
       expect(actions.find((a) => a.value === name)).toBeUndefined()
     })
 
     it(`agent can choose ${name} type, when ticket was created as ${name}`, () => {
       setupView('agent')
-      const { ticket } = defaultTicket()
-      ticket.createArticleType!.name = createArticleType || name
+      const ticket = createTicket({
+        createArticleType: {
+          name: createArticleType || name,
+        },
+      })
       const actions = createTestArticleTypes(ticket)
       expect(actions.find((a) => a.value === name)).toBeDefined()
     })

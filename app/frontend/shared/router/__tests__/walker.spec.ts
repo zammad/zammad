@@ -8,7 +8,7 @@ const buildRouter = () =>
     afterEach: vi.fn(),
     back: vi.fn(),
     push: vi.fn(),
-  } as any as Router)
+  }) as any as Router
 
 describe('testing walker', () => {
   it('has fallback route, if no back is in history', async () => {

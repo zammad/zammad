@@ -4,7 +4,7 @@
 import CommonSelect from '#mobile/components/CommonSelect/CommonSelect.vue'
 import type { CommonSelectInstance } from '#mobile/components/CommonSelect/types.ts'
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
-import type { SelectOption } from '#shared/components/Form/fields/FieldSelect/index.ts'
+import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import { EnumOrderDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import stopEvent from '#shared/utils/events.ts'

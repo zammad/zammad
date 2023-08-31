@@ -51,6 +51,25 @@ RSpec.describe Ticket::TimeAccounting, type: :model do
           expect(ticket.reload.time_unit).to eq(time_accounting1.time_unit)
         end
 
+        it 'destroy time accounting' do
+          time_accounting1 = create(:'ticket/time_accounting', ticket: ticket, ticket_article: article1, time_unit: 5.5)
+          time_accounting2 = create(:'ticket/time_accounting', ticket: ticket, ticket_article: article2, time_unit: 10.5)
+
+          expect { time_accounting2.destroy }
+            .to change { ticket.reload.time_unit }
+            .to time_accounting1.time_unit
+        end
+
+        it 'update time accounting' do
+          new_time_unit = 99
+
+          time_accounting = create(:'ticket/time_accounting', ticket: ticket, ticket_article: article1, time_unit: 5.5)
+
+          expect { time_accounting.update! time_unit: new_time_unit }
+            .to change { ticket.reload.time_unit }
+            .to new_time_unit
+        end
+
         it 'destroy all articles' do
           create(:'ticket/time_accounting', ticket: ticket, ticket_article: article1, time_unit: 5.5)
           create(:'ticket/time_accounting', ticket: ticket, ticket_article: article2, time_unit: 10.5)
@@ -113,18 +132,29 @@ RSpec.describe Ticket::TimeAccounting, type: :model do
       end
 
       it 'allows multiple article-less items per ticket' do
-        expect(
-          [
-            create(:ticket_time_accounting, ticket: ticket),
-            create(:ticket_time_accounting, ticket: ticket),
-          ]
-        ).to all(be_persisted)
+        expect(create_list(:ticket_time_accounting, 2, ticket: ticket)).to all(be_persisted)
       end
 
       it 'does not allow multiple articles for same ticket' do
         item = build(:ticket_time_accounting, ticket: ticket, ticket_article: article)
 
         expect(item).not_to be_valid
+      end
+    end
+
+    describe 'ticket article has to be part of the same ticket' do
+      let(:ticket)                    { create(:ticket) }
+      let(:article)                   { create(:ticket_article, ticket: ticket) }
+      let(:article_in_another_ticket) { create(:ticket_article) }
+
+      it 'allows article matching ticket' do
+        time_accounting = build(:ticket_time_accounting, ticket: ticket, ticket_article: article)
+        expect(time_accounting).to be_valid
+      end
+
+      it 'does not allow article from another ticket' do
+        time_accounting = build(:ticket_time_accounting, ticket: ticket, ticket_article: article_in_another_ticket)
+        expect(time_accounting).not_to be_valid
       end
     end
   end

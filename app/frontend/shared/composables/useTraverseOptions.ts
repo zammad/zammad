@@ -7,10 +7,11 @@ import { onKeyStroke, unrefElement } from '@vueuse/core'
 import type { MaybeRefOrGetter } from '@vueuse/shared'
 
 type TraverseDirection = 'horizontal' | 'vertical' | 'mixed'
+type ReturnValue = boolean | null | void | undefined
 
 interface TraverseOptions extends FocusableOptions {
-  onNext?(key: string, element: HTMLElement): boolean | null | void
-  onPrevious?(key: string, element: HTMLElement): boolean | null | void
+  onNext?(key: string, element: HTMLElement): ReturnValue
+  onPrevious?(key: string, element: HTMLElement): ReturnValue
   /**
    * @default true
    */
@@ -20,12 +21,12 @@ interface TraverseOptions extends FocusableOptions {
    */
   direction?: TraverseDirection
   filterOption?: (element: HTMLElement, index: number) => boolean
-  onArrowLeft?(): boolean | null | void
-  onArrowRight?(): boolean | null | void
-  onArrowUp?(): boolean | null | void
-  onArrowDown?(): boolean | null | void
-  onHome?(): boolean | null | void
-  onEnd?(): boolean | null | void
+  onArrowLeft?(): ReturnValue
+  onArrowRight?(): ReturnValue
+  onArrowUp?(): ReturnValue
+  onArrowDown?(): ReturnValue
+  onHome?(): ReturnValue
+  onEnd?(): ReturnValue
 }
 
 const processKeys = new Set([
@@ -81,6 +82,11 @@ const getNextElement = (
   return null
 }
 
+/**
+ * Composable that makes it possible to select values by using keyboard arrows and home/end keys
+ * @param container Parent element that has focusable options
+ * @param options Configuration
+ */
 export const useTraverseOptions = (
   container: MaybeRefOrGetter<HTMLElement | undefined | null>,
   options: TraverseOptions = {},
@@ -95,6 +101,8 @@ export const useTraverseOptions = (
         return
       }
 
+      // If there is a rule that checks if we should continue, check it.
+      //   Otherwise we assume that we should continue.
       const shouldContinue = options[`on${key}` as 'onHome']?.() ?? true
 
       if (!shouldContinue) return

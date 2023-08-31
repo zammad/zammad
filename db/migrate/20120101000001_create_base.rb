@@ -168,6 +168,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :domain,                 limit: 250, null: true,  default: ''
       t.boolean :domain_assignment,                 null: false, default: false
       t.boolean :active,                            null: false, default: true
+      t.boolean :vip,                               null: false, default: false
       t.string :note,                   limit: 5000, null: true,  default: ''
       t.integer :updated_by_id,                     null: false
       t.integer :created_by_id,                     null: false
@@ -295,6 +296,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :version,              limit: 50,  null: false
       t.string :vendor,               limit: 150, null: false
       t.string :state,                limit: 50,  null: false
+      t.string :url,                  limit: 512,  null: true
       t.integer :updated_by_id,                   null: false
       t.integer :created_by_id,                   null: false
       t.timestamps limit: 3, null: false
@@ -747,20 +749,24 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :active_job_locks, :active_job_id, unique: true
 
     create_table :smime_certificates do |t|
-      t.string :subject,            limit: 500,  null: false
-      t.string :doc_hash,           limit: 250,  null: false
       t.string :fingerprint,        limit: 250,  null: false
-      t.string :modulus,            limit: 1024, null: false
-      t.datetime :not_before_at,                 null: true, limit: 3
-      t.datetime :not_after_at,                  null: true, limit: 3
-      t.binary :raw,                limit: 10.megabytes,  null: false
+      t.string :uid,                limit: 1024, null: false
+
+      if Rails.application.config.db_column_array
+        t.string :email_addresses, null: true, array: true
+      else
+        t.json :email_addresses, null: true
+      end
+
+      t.binary :pem,                limit: 10.megabytes,  null: false
       t.binary :private_key,        limit: 10.megabytes,  null: true
-      t.string :private_key_secret, limit: 500,  null: true
+      t.string :private_key_secret, limit: 500,           null: true
+      t.string :issuer_hash,        limit: 128,           null: true
+      t.string :subject_hash,       limit: 128,           null: true
       t.timestamps limit: 3, null: false
     end
     add_index :smime_certificates, [:fingerprint], unique: true
-    add_index :smime_certificates, [:modulus]
-    add_index :smime_certificates, [:subject]
+    add_index :smime_certificates, [:uid]
 
     create_table :data_privacy_tasks do |t|
       t.column :state,                :string, limit: 150, default: 'in process', null: true
@@ -849,5 +855,29 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :user_two_factor_preferences, :users, column: :user_id
     add_foreign_key :user_two_factor_preferences, :users, column: :created_by_id
     add_foreign_key :user_two_factor_preferences, :users, column: :updated_by_id
+
+    create_table :pgp_keys do |t|
+      t.string   :name, limit: 3000, null: false
+      t.string   :fingerprint, limit: 40, null: false
+      t.text     :key,         limit: 500.kilobytes + 1, null: false
+      t.datetime :expires_at, null: true, limit: 3
+
+      if Rails.application.config.db_column_array
+        t.string :email_addresses, null: true, array: true
+      else
+        t.json :email_addresses, null: true
+      end
+
+      t.boolean  :secret,                   null: false, default: false
+      t.string   :passphrase,  limit: 500,  null: true
+      t.string   :domain_alias,       limit: 255,  null: true, default: ''
+      t.integer  :updated_by_id,            null: false
+      t.integer  :created_by_id,            null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :pgp_keys, [:fingerprint], unique: true
+    add_index :pgp_keys, [:domain_alias]
+    add_foreign_key :pgp_keys, :users, column: :created_by_id
+    add_foreign_key :pgp_keys, :users, column: :updated_by_id
   end
 end

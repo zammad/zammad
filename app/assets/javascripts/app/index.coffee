@@ -115,8 +115,11 @@ class App extends Spine.Controller
         else if resultLocal is false
           resultLocal = 'no'
 
+      if attributeConfig.tag is 'active'
+        resultLocal = _.findWhere(App.UiElement.active.OPTIONS, { value: resultLocal })?.name
+
       # translate content
-      if attributeConfig.translate || (isObject && item.translate && item.translate())
+      if attributeConfig.tag is 'active' || attributeConfig.translate || (isObject && item.translate && item.translate())
         isHtmlEscape = true
         resultLocal  = App.i18n.translateContent(resultLocal)
 

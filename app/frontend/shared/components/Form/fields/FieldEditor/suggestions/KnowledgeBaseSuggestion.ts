@@ -11,7 +11,7 @@ import { cloneDeep } from 'lodash-es'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { debouncedQuery, htmlCleanup } from '#shared/utils/helpers.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
-import type { FileUploaded } from '../../FieldFile/types.ts'
+import type { StoredFile } from '#shared/graphql/types.ts'
 import { useKnowledgeBaseAnswerSuggestionsLazyQuery } from '../graphql/queries/knowledgeBase/answerSuggestions.api.ts'
 import buildMentionSuggestion from './suggestions.ts'
 import { useKnowledgeBaseAnswerSuggestionContentTransformMutation } from '../graphql/mutations/knowledgeBase/suggestion/content/transform.api.ts'
@@ -67,7 +67,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
           )
 
           const existingAttachments = (cloneDeep(attachmentField?.value) ||
-            []) as FileUploaded[]
+            []) as StoredFile[]
           const newAttachments =
             result?.knowledgeBaseAnswerSuggestionContentTransform
               ?.attachments || []

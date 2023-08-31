@@ -4,6 +4,6 @@ module Gql::Types::Enum
   class FormUpdaterIdType < BaseEnum
     description 'All available form updaters'
 
-    build_class_list_enum FormUpdater::Updater.updaters
+    build_class_list_enum FormUpdater::Updater.updaters.sort_by(&:name)
   end
 end

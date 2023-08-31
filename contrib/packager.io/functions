@@ -275,6 +275,11 @@ function setup_elasticsearch () {
     return 0
   fi
 
+  if [[ "$(/usr/share/elasticsearch/bin/elasticsearch --version| cut -c 10)" -gt 7 ]]; then
+    # We're skipping the plugin reinstallation process for ES 8+ as it's part of the ES core
+    return 0
+  fi
+
   if [ -n "$(/usr/share/elasticsearch/bin/elasticsearch-plugin list | grep mapper-attachments)" ]; then
     REBUILD_ES_SEARCHINDEX="yes"
 

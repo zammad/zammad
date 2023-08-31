@@ -42,7 +42,9 @@ export default function toBeAvatar(
   const errors: string[] = []
 
   if (options.vip != null) {
-    const icon = received.querySelector('use[href="#icon-mobile-crown"]')
+    const iconName =
+      options.type === 'user' ? 'mobile-crown' : 'mobile-crown-silver'
+    const icon = received.querySelector(`use[href="#icon-${iconName}"]`)
     const localPass = options.vip ? !!icon : !icon
     if (!localPass) {
       errors.push(`vip icon is ${options.vip ? 'missing' : 'present'}`)

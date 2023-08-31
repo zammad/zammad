@@ -13,6 +13,8 @@ when 'mysql2'
   # to READ COMMITTED which fixed the problem entirely #3877
   ActiveRecord::ConnectionAdapters::Mysql2Adapter.set_callback :checkout, :after do |conn|
     conn.execute('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED')
+  rescue => e
+    Rails.logger.error e
   end
 when 'postgresql'
   Rails.application.config.db_4bytes_utf8 = true

@@ -193,8 +193,15 @@ class App.Utils
     ascii = @linkify(ascii)
     ascii = ascii.replace(/(\n\r|\r\n|\r)/g, "\n")
     ascii = ascii.replace(/  /g, ' &nbsp;')
-    ascii = '<div>' + ascii.replace(/\n/g, '</div><div>') + '</div>'
-    ascii.replace(/<div><\/div>/g, '<div><br></div>')
+
+    if ascii.match(/\n/)
+      ascii = '<div>' + ascii.replace(/\n/g, '</div><div>') + '</div>'
+      ascii = ascii.replace(/<div><\/div>/g, '<div><br></div>')
+    else
+      ascii = '<span>' + ascii.replace(/\n/g, '</span><span>') + '</span>'
+      ascii = ascii.replace(/<span><\/span>/g, '<span><br></span>')
+
+    ascii
 
   # rawText = App.Utils.html2text(html, no_trim)
   @html2text: (html, no_trim) ->

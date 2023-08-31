@@ -14,7 +14,7 @@ RSpec.shared_examples 'CanCsvImport - Organization specific tests', :aggregate_f
       end
 
       it 'returns expected headers' do
-        expect(headers).to start_with('id', 'name', 'shared', 'domain', 'domain_assignment', 'active', 'note')
+        expect(headers).to start_with('id', 'name', 'shared', 'domain', 'domain_assignment', 'active', 'vip', 'note')
         expect(headers).to include('members')
       end
     end

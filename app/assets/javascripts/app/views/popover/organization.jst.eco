@@ -4,6 +4,6 @@
   <hr>
   <div class="popover-block">
     <label><%- @T('Members') %> (<%= @object.member_ids.length %>)</label>
-    <div class="userList js-userList"></div>
+    <ul class="organizationUserList js-organizationUserList"></ul>
   </div>
 <% end %>

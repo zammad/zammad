@@ -3,4 +3,5 @@
 export interface AvatarOrganization {
   name?: Maybe<string>
   active?: Maybe<boolean>
+  vip?: Maybe<boolean>
 }

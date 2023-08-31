@@ -2,6 +2,8 @@ class App.Theme extends App.Controller
   constructor: ->
     super
 
+    return if window.location.href.includes('/tests_')
+
     mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)')
     if typeof mediaQueryList.addEventListener is 'function'
       mediaQueryList.addEventListener('change', @onMediaQueryChange)

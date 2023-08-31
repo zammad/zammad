@@ -1,4 +1,5 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+/* eslint-disable @typescript-eslint/no-empty-interface */
 
 import type { ToBeAvatarOptions } from './toBeAvatarElement.ts'
 
@@ -12,12 +13,7 @@ interface CustomMatchers<R = unknown> {
   toHaveImagePreview(content: string): R
 }
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Vi {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface Assertion extends CustomMatchers {}
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface AsymmetricMatchersContaining extends CustomMatchers {}
-  }
+declare module 'vitest' {
+  interface Assertion<T = any> extends CustomMatchers<T> {}
+  interface AsymmetricMatchersContaining extends CustomMatchers {}
 }

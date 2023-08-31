@@ -9,6 +9,11 @@ import type { ConfidentTake } from '#shared/types/utils.ts'
 import { getAllByRole } from '@testing-library/vue'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { waitUntilApisResolved } from '#tests/support/utils.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
+beforeEach(() => {
+  mockApplicationConfig({ product_name: 'Zammad Gmbh' })
+})
 
 describe('testing login public links', () => {
   it('always renders a single link to desktop app', async () => {

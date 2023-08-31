@@ -3,8 +3,7 @@ class App.WidgetTextModule extends App.Controller
   constructor: ->
     super
 
-    if !@data
-      @data = {}
+    @searchCondition = @data.ticket || {}
 
     # remember instances
     @bindElements = []
@@ -30,7 +29,8 @@ class App.WidgetTextModule extends App.Controller
 
   reload: (data) =>
     return if !data
-    @data = data
+    @data            = data
+    @searchCondition = @data.ticket
     @update()
 
   currentCollection: =>
@@ -41,12 +41,8 @@ class App.WidgetTextModule extends App.Controller
     @all = []
 
     for item in allRaw
-
-      if item.active isnt true
-        continue
-
-      if !_.isEmpty(item.group_ids) && @searchCondition.group_id && !_.includes(item.group_ids, parseInt(@searchCondition.group_id))
-        continue
+      continue if item.active isnt true
+      continue if !_.isEmpty(item.group_ids) && @searchCondition.group_id && !_.includes(item.group_ids, parseInt(@searchCondition.group_id))
 
       attributes = item.attributes()
       attributes.content = App.Utils.replaceTags(attributes.content, @data)

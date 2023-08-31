@@ -49,8 +49,7 @@ export const addFloatingTextareaLabel = (classes: Classes = {}) => {
       text-base
       cursor-text
       transition-all duration-100 ease-in-out origin-left
-      formkit-populated:translate-y-0
-      formkit-populated:text-xs formkit-populated:opacity-75
+      formkit-populated:translate-y-0 formkit-populated:text-xs formkit-populated:opacity-75
       formkit-required:required
       formkit-invalid:text-red-bright
     `),

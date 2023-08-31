@@ -478,13 +478,7 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
       rows = CSV.parse(response.body)
       header = rows.shift
 
-      expect(header[0]).to eq('id')
-      expect(header[1]).to eq('name')
-      expect(header[2]).to eq('shared')
-      expect(header[3]).to eq('domain')
-      expect(header[4]).to eq('domain_assignment')
-      expect(header[5]).to eq('active')
-      expect(header[6]).to eq('note')
+      expect(header).to start_with('id', 'name', 'shared', 'domain', 'domain_assignment', 'active', 'vip', 'note')
       expect(header).to include('members')
     end
 

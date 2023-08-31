@@ -142,7 +142,7 @@ class ArticleViewItem extends App.ControllerObserver
       for attachment in article.attachments
 
         dispositionParams = ''
-        if attachment?.preferences['Content-Type'] isnt 'application/pdf' && attachment?.preferences['Content-Type'] isnt 'text/html'
+        if attachment?.preferences['Content-Type'] isnt 'text/html'
           dispositionParams = '?disposition=attachment'
 
         attachment.url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}#{dispositionParams}"
@@ -324,7 +324,7 @@ class ArticleViewItem extends App.ControllerObserver
               type: 'success'
               msg:  App.i18n.translateContent('The signature was successfully verified.')
           else if data.sign.comment
-            comment = App.i18n.translateContent('Signature verification failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '')
+            comment = App.i18n.translateContent('Signature verification failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '', data.sign.commentPlaceholders)
             @notify
               type: 'error'
               msg: comment
@@ -335,7 +335,7 @@ class ArticleViewItem extends App.ControllerObserver
               type: 'success'
               msg:  App.i18n.translateContent('Decryption was successful.')
           else if data.encryption.comment
-            comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '')
+            comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '', data.encryption.commentPlaceholders)
             @notify
               type: 'error'
               msg:  comment

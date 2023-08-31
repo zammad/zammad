@@ -86,7 +86,7 @@ class Channel::Driver::Sms::MessageBird < Channel::Driver::Sms::Base
 
   def self.definition
     {
-      name:         'message_bird',
+      name:         'MessageBird',
       adapter:      'sms/message_bird',
       account:      [
         { name: 'options::webhook_token', display: __('Webhook Token'), tag: 'input', type: 'text', limit: 200, null: false, default: Digest::MD5.hexdigest(SecureRandom.uuid), disabled: true, readonly: true },

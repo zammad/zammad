@@ -5,12 +5,16 @@ require 'rails_helper'
 RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassigned, sequencer: :unit do
   subject(:unit) { process(parameters) }
 
+  let(:dry_run) { false }
   let(:parameters) do
-    { resource:    resource,
+    {
+      resource:    resource,
       dn_roles:    dn_roles,
       ldap_config: ldap_config,
       mapped:      mapped,
-      instance:    instance }
+      instance:    instance,
+      dry_run:     dry_run
+    }
   end
 
   let(:resource) do
@@ -43,9 +47,20 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassig
     context 'and is active' do
       before { instance.update(active: true) }
 
-      it 'deactivates user (with action: :deactivated)' do
-        expect(unit).to include(action: :deactivated)
-        expect(instance.reload.active).to be(false)
+      context 'when dry run false' do
+        it 'deactivates user (with action: :deactivated)' do
+          expect(unit).to include(action: :deactivated)
+          expect(instance.reload.active).to be(false)
+        end
+      end
+
+      context 'when dry run true' do
+        let(:dry_run) { true }
+
+        it 'keeps user untouched (with action: :deactivated)' do
+          expect(unit).to include(action: :deactivated)
+          expect(instance.reload.active).to be(true)
+        end
       end
     end
 

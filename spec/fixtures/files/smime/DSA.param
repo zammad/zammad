@@ -1,0 +1,62 @@
+-----BEGIN DSA PARAMETERS-----
+MIICKAKCAQEAgxShCy2EM75JEgQnSweGHLmKuYnAQdk4Qjcm0LZIClO3bhgOf+/q
+fHurAXB2QqjiaIklVAlSWhriS0EfMRq/fDuCBlIm3e1pCfKrdc2tdx36k7c7Q4Cn
+RK26fxLeJkRhPRUSnAjo7Qk2IIYgRPx78h1VkPIp0BK9DGPQMrQ1EF5Dkwbp2PuG
+RvYtADrvufqI3Ksc7MAqXMRhdittGVhOqZe/Wz4PbWp9oVgGwoJ2vFEiOfcpytth
+vbkuysVHk02mDgDp5cXcL0woxJAh3bq7p5/VHGE7cf73dNlb3HjKd6cUOhOfg/0Y
+x/64MPRVDAr2l1nKDdcgANjafaNnhBRkhwIdAIq9Qfn20suWPPZPNsDqKQaYDQVc
+fHVZ8Fp45IcCggEAfd2cI5AqVmu6ShDa1pnrOw2LGlodsyeAXkIjCTeBbOtbqlie
+ixdeMoCkgiCTCQqCrztBI0SevVOBUWg8LypP3mn5AgbhZTMxV/XQVPQWd+I92YQ3
+m7qsie1PDfZP1VXbIYdjp9BZ2wAizHfSk2cMCRL4+0nA9NzJvEX+tRhxC6ISVtEE
+44hQ9Nw01otVwhpmrDDUhNHFVIDIJ+40s3TBX0NOwUATzjLlvFsnZ2e0Gv9NC5f/
+Rt9o69P8QKk4KRF5m6wmedzQtQXRsDlDrQxv32kj1dWmWVtUD+XZPvcAYPFQrcdn
+qcpq5B/XYyfHM4lc6/2XmPOyjdPu+NPAVGzIeg==
+-----END DSA PARAMETERS-----
+DSA-Parameters: (2048 bit)
+P:   
+    00:83:14:a1:0b:2d:84:33:be:49:12:04:27:4b:07:
+    86:1c:b9:8a:b9:89:c0:41:d9:38:42:37:26:d0:b6:
+    48:0a:53:b7:6e:18:0e:7f:ef:ea:7c:7b:ab:01:70:
+    76:42:a8:e2:68:89:25:54:09:52:5a:1a:e2:4b:41:
+    1f:31:1a:bf:7c:3b:82:06:52:26:dd:ed:69:09:f2:
+    ab:75:cd:ad:77:1d:fa:93:b7:3b:43:80:a7:44:ad:
+    ba:7f:12:de:26:44:61:3d:15:12:9c:08:e8:ed:09:
+    36:20:86:20:44:fc:7b:f2:1d:55:90:f2:29:d0:12:
+    bd:0c:63:d0:32:b4:35:10:5e:43:93:06:e9:d8:fb:
+    86:46:f6:2d:00:3a:ef:b9:fa:88:dc:ab:1c:ec:c0:
+    2a:5c:c4:61:76:2b:6d:19:58:4e:a9:97:bf:5b:3e:
+    0f:6d:6a:7d:a1:58:06:c2:82:76:bc:51:22:39:f7:
+    29:ca:db:61:bd:b9:2e:ca:c5:47:93:4d:a6:0e:00:
+    e9:e5:c5:dc:2f:4c:28:c4:90:21:dd:ba:bb:a7:9f:
+    d5:1c:61:3b:71:fe:f7:74:d9:5b:dc:78:ca:77:a7:
+    14:3a:13:9f:83:fd:18:c7:fe:b8:30:f4:55:0c:0a:
+    f6:97:59:ca:0d:d7:20:00:d8:da:7d:a3:67:84:14:
+    64:87
+Q:   
+    00:8a:bd:41:f9:f6:d2:cb:96:3c:f6:4f:36:c0:ea:
+    29:06:98:0d:05:5c:7c:75:59:f0:5a:78:e4:87
+G:   
+    7d:dd:9c:23:90:2a:56:6b:ba:4a:10:da:d6:99:eb:
+    3b:0d:8b:1a:5a:1d:b3:27:80:5e:42:23:09:37:81:
+    6c:eb:5b:aa:58:9e:8b:17:5e:32:80:a4:82:20:93:
+    09:0a:82:af:3b:41:23:44:9e:bd:53:81:51:68:3c:
+    2f:2a:4f:de:69:f9:02:06:e1:65:33:31:57:f5:d0:
+    54:f4:16:77:e2:3d:d9:84:37:9b:ba:ac:89:ed:4f:
+    0d:f6:4f:d5:55:db:21:87:63:a7:d0:59:db:00:22:
+    cc:77:d2:93:67:0c:09:12:f8:fb:49:c0:f4:dc:c9:
+    bc:45:fe:b5:18:71:0b:a2:12:56:d1:04:e3:88:50:
+    f4:dc:34:d6:8b:55:c2:1a:66:ac:30:d4:84:d1:c5:
+    54:80:c8:27:ee:34:b3:74:c1:5f:43:4e:c1:40:13:
+    ce:32:e5:bc:5b:27:67:67:b4:1a:ff:4d:0b:97:ff:
+    46:df:68:eb:d3:fc:40:a9:38:29:11:79:9b:ac:26:
+    79:dc:d0:b5:05:d1:b0:39:43:ad:0c:6f:df:69:23:
+    d5:d5:a6:59:5b:54:0f:e5:d9:3e:f7:00:60:f1:50:
+    ad:c7:67:a9:ca:6a:e4:1f:d7:63:27:c7:33:89:5c:
+    eb:fd:97:98:f3:b2:8d:d3:ee:f8:d3:c0:54:6c:c8:
+    7a
+SEED:
+    64:34:25:7b:a9:ba:09:f2:de:5f:ac:af:86:4a:9d:
+    09:f4:d6:ee:46:38:1d:dc:fb:3e:55:da:2d:6e:fc:
+    f5:bb
+gindex: 1
+pcounter: 587

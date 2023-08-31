@@ -77,8 +77,9 @@ class App.Controller extends Spine.Controller
 
     # release bindings
     if @el
-      @el.off()
-      @el.empty()
+      try
+        @el.off()
+        @el.empty()
 
     # release spine bindings (see release() of spine.coffee)
     @off()

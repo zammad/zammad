@@ -1,0 +1,46 @@
+Date: Sun, 02 Jul 2023 18:48:30 +0100
+From: expiredpgp1@example.com
+To: pgp2@example.com
+Cc: pgp3@example.com
+Message-ID: <649194c00_140d322607069c@MacBook-Pro.fritz.box.mail>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary="--==_mimepart_649194c00_140d32260708d4";
+ micalg=pgp-sha1;
+ protocol="application/pgp-signature"
+Content-Transfer-Encoding: 7bit
+
+This is an OpenPGP/MIME signed message (RFC 3156)
+----==_mimepart_649194c00_140d32260708d4
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: base64
+
+VGVzdGluZyBzb21lIENvbnRlbnQ=
+
+----==_mimepart_649194c00_140d32260708d4
+Content-Type: application/pgp-signature;
+ name=signature.asc
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename=signature.asc
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE+32Ipcu213jrRGJDg4SfRvTpgkIFAmShuG4ACgkQg4SfRvTp
+gkJufw//R85Hu7CZihkQ1BiB/Yz443HrYHqPOyfGHhBASr83FVtlscFNzkGDPBip
+uFQyX1+GWG5NmgY3/GUQ/QP5BzSUOln/joNQLUPlFn4se8pjdkxSg9oWQ5YiTrIQ
+11x++vCt9AnDFRP1ng69VZx8y1Jd1z88RkmRxbIt24t+LVI2p9QIDKROC7hjH2o2
+TAJyEteOI+QXynxm+piPwoX0kGB8yXhKaABcqzPnNNiEeU/2jD6t6VPIth5/n44I
+jPCddNJgnH7xZL7ibzJGJbjbJfKGIyZN387ds5/k7xzfIobvUwCT59RYeSX4xCBC
+ZGA63enrryU6ZJGs8v0MFsikY3rV0Iew4cpn2/dgipw+aggXd/zq2LoVNTuTX+7t
+MvPPVDZKjBAs+rQKC+RyvlljKrtryRB6NlI21akwhprzn+SdwyRa/IalVhEkHwc1
+0caJ20t3EHsliSam1MmMy/cRrkCxW0KmvwO6Ihx7djy+gfl/46rqUAEVKgMkzLp3
+wr6k8kk10vKNFCcu+m3vg2WUvFTXft0Lkqu7PLcdoZTaApJKWl0Mu+vQ8dgxpprm
+xakCB5JxgFnOuTcIQBttnBYWpwlr/ChUQ7aQ5ztgnxr0eWxTZ29vbPJ1jhBNtG+2
+JVInK+kSioII8a/FMwCIvasse2p6SJ47j46558gaq+F3Iz09sHE=
+=LFFE
+-----END PGP SIGNATURE-----
+
+----==_mimepart_649194c00_140d32260708d4--

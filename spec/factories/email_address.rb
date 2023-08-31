@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :email_address do
-    association :channel, factory: :email_channel
+    channel factory: %i[email_channel]
     sequence(:email) { |n| "zammad#{n}@localhost.com" }
     sequence(:name)  { |n| "zammad#{n}" }
     created_by_id    { 1 }

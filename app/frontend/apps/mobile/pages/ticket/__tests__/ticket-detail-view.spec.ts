@@ -1,11 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-vi.hoisted(() => {
-  const now = new Date(2022, 1, 1, 0, 0, 0, 0)
-  vi.setSystemTime(now)
-})
-
-import type { TicketArticleRetrySecurityProcessMutation } from '#shared/graphql/types.ts'
+import {
+  EnumSecurityStateType,
+  type TicketArticleRetrySecurityProcessMutation,
+} from '#shared/graphql/types.ts'
 import { getNode } from '@formkit/core'
 import { ApolloError } from '@apollo/client/errors'
 import { TicketArticleRetrySecurityProcessDocument } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api.ts'
@@ -35,6 +33,11 @@ import {
 } from './mocks/detail-view.ts'
 import { mockArticleQuery } from './mocks/articles.ts'
 import { clearTicketArticlesLoadedState } from '../composable/useTicketArticlesVariables.ts'
+
+vi.hoisted(() => {
+  const now = new Date(2022, 1, 1, 0, 0, 0, 0)
+  vi.setSystemTime(now)
+})
 
 beforeEach(() => {
   mockPermissions(['ticket.agent'])
@@ -120,6 +123,64 @@ describe('user avatars', () => {
 
     expect(avatar).toBeAvatarElement({
       active: false,
+      image,
+      type: 'user',
+    })
+  })
+
+  it('renders organization avatar when organization is present', async () => {
+    const ticket = defaultTicket()
+    const { organization } = ticket.ticket
+    organization!.vip = false
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      ticket,
+    })
+
+    const view = await visitView('/tickets/1')
+    await waitUntilTicketLoaded()
+
+    const titleBlock = view.getByTestId('ticket-title')
+    const avatar = getByRole(titleBlock, 'img', {
+      name: `Avatar (${organization!.name})`,
+    })
+
+    expect(avatar).toBeAvatarElement({
+      active: true,
+      vip: false,
+      type: 'organization',
+    })
+  })
+
+  it('renders organization avatar when organization is VIP', async () => {
+    const ticket = defaultTicket()
+    const image = Buffer.from('max.png').toString('base64')
+    const { customer, organization } = ticket.ticket
+    organization!.vip = true
+    customer.image = image
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      ticket,
+    })
+
+    const view = await visitView('/tickets/1')
+    await waitUntilTicketLoaded()
+
+    const titleBlock = view.getByTestId('ticket-title')
+    const orgAvatar = getByRole(titleBlock, 'img', {
+      name: `Avatar (${organization!.name})`,
+    })
+    const userAvatar = getByRole(titleBlock, 'img', {
+      name: `Avatar (${customer.fullname})`,
+    })
+
+    expect(orgAvatar).toBeAvatarElement({
+      active: true,
+      vip: true,
+      type: 'organization',
+    })
+
+    expect(userAvatar).toBeAvatarElement({
+      active: true,
+      vip: false,
       image,
       type: 'user',
     })
@@ -263,7 +324,7 @@ describe('calling API to retry encryption', () => {
       __typename: 'TicketArticleSecurityState',
       encryptionMessage: '',
       encryptionSuccess: false,
-      signingMessage: 'Certificate for verification could not be found.',
+      signingMessage: 'The certificate for verification could not be found.',
       signingSuccess: false,
     }
 
@@ -285,7 +346,7 @@ describe('calling API to retry encryption', () => {
       signingMessage:
         '/emailAddress=smime1@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com',
       signingSuccess: true,
-      type: 'S/MIME',
+      type: EnumSecurityStateType.Smime,
     } as const
 
     const mutation = mockGraphQLApi(
@@ -322,7 +383,7 @@ describe('calling API to retry encryption', () => {
       __typename: 'TicketArticleSecurityState',
       encryptionMessage: '',
       encryptionSuccess: false,
-      signingMessage: 'Certificate for verification could not be found.',
+      signingMessage: 'The certificate for verification could not be found.',
       signingSuccess: false,
     }
 
@@ -344,7 +405,7 @@ describe('calling API to retry encryption', () => {
       signingMessage:
         '/emailAddress=smime1@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com',
       signingSuccess: true,
-      type: 'S/MIME',
+      type: EnumSecurityStateType.Smime,
     } as const
 
     const mutation = mockGraphQLApi(

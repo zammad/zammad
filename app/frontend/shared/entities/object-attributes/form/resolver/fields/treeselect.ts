@@ -1,12 +1,17 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TreeSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import type { FormFieldAdditionalProps } from '#shared/components/Form/types.ts'
 import type {
   FieldResolverModule,
   ObjectAttributeTreeSelectOption,
 } from '#shared/entities/object-attributes/types/resolver.ts'
 import FieldResolver from '../FieldResolver.ts'
+
+export interface ObjectTreeSelectOption {
+  label?: string
+  value: string
+  children?: ObjectTreeSelectOption[]
+}
 
 export class FieldResolverTreeselect extends FieldResolver {
   fieldType = 'treeselect'
@@ -29,13 +34,16 @@ export class FieldResolverTreeselect extends FieldResolver {
     }
   }
 
-  private mappedOptions(): TreeSelectOption[] {
+  private mappedOptions(): ObjectTreeSelectOption[] {
     const mapTreeSelectOptions = (
       options: ObjectAttributeTreeSelectOption[],
     ) => {
       return options.reduce(
-        (treeSelectOptions: TreeSelectOption[], { children, name, value }) => {
-          const treeSelectOption: TreeSelectOption = {
+        (
+          treeSelectOptions: ObjectTreeSelectOption[],
+          { children, name, value },
+        ) => {
+          const treeSelectOption: ObjectTreeSelectOption = {
             label: name,
             value,
           }

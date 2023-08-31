@@ -20,7 +20,7 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
         tm.groups = if i <= 2
                       groups
                     elsif i == 3
-                      [create(:group)]
+                      create_list(:group, 1)
                     else
                       []
                     end

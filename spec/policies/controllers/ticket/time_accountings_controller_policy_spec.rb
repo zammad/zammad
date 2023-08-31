@@ -5,8 +5,9 @@ require 'rails_helper'
 describe Controllers::Ticket::TimeAccountingsControllerPolicy do
   subject { described_class.new(user, record) }
 
-  let(:group)  { ticket.group }
-  let(:ticket) { create(:ticket) }
+  let(:group)                   { ticket.group }
+  let(:ticket)                  { create(:ticket) }
+  let(:time_accounting_enabled) { true }
 
   let(:record_class) { Ticket::TimeAccountingsController }
   let(:record) do
@@ -16,15 +17,41 @@ describe Controllers::Ticket::TimeAccountingsControllerPolicy do
     rec
   end
 
-  context 'with agent who has update access to ticket' do
-    let(:user) { create(:agent) }
+  before do
+    Setting.set 'time_accounting', time_accounting_enabled
+  end
 
-    before do
-      user.groups << group
-    end
+  context 'with agent who has update access to ticket' do
+    let(:user) { create(:agent, groups: [group]) }
 
     it { is_expected.to forbid_actions(:update, :destroy) }
     it { is_expected.to permit_actions(:index, :show, :create) }
+
+    context 'when time accounting is disabled' do
+      let(:time_accounting_enabled) { false }
+
+      it { is_expected.to forbid_actions(:create) }
+      it { is_expected.to permit_actions(:index, :show) }
+    end
+
+    context 'when time accounting is not allowed' do
+      before do
+        allow_any_instance_of(Ticket::TimeAccountingPolicy)
+          .to receive(:create?).and_return(false)
+      end
+
+      it { is_expected.to forbid_actions(:create) }
+      it { is_expected.to permit_actions(:index, :show) }
+    end
+
+    context 'when time accounting selector is present and not matching' do
+      before do
+        allow_any_instance_of(Ticket::TimeAccountingPolicy)
+          .to receive(:create?).and_return(true)
+      end
+
+      it { is_expected.to permit_actions(:create, :index, :show) }
+    end
   end
 
   context 'with agent who has no access to ticket' do

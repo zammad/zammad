@@ -807,7 +807,8 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     return form_context.form_gql_number(:customer) if type_customer?
     return form_context.form_gql_number(:organization) if type_organization?
     return form_context.form_gql_number(:recipient) if type_recipient?
-    return form_context.form_gql_number(:tags) if type_tags?
+
+    form_context.form_gql_number(:tags) if type_tags?
   end
 
   def triggers_form_updater?

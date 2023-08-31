@@ -88,6 +88,8 @@ export const defaultTicket = (policies: Partial<PolicyTicket> = {}) => {
         id: convertToGraphQLId('Organization', 300),
         internalId: 300,
         name: 'Zammad Foundation',
+        active: true,
+        vip: true,
       },
       state: {
         __typename: 'TicketState',

@@ -329,6 +329,86 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
             it_creates_ticket(articles: 1)
             expect(Ticket.last.articles.last.type.name).to eq(Ticket::Article::Type.first.name)
           end
+
+          context 'with all integrations disabled' do
+            let(:article_payload) do
+              {
+                body:     'dummy',
+                to:       ['to@example.com'],
+                type:     'email',
+                security: {
+                  method:  'SMIME',
+                  options: %w[encryption sign]
+                }
+              }
+            end
+
+            before do
+              Setting.set('smime_integration', false)
+              Setting.set('pgp_integration', false)
+            end
+
+            it 'doesn\'t set security if security integrations are not enabled', :aggregate_failures do
+              it_creates_ticket(articles: 1)
+              expect(Ticket.last.articles.last.preferences[:security]).to be_nil
+            end
+          end
+
+          context 'with smime enabled' do
+            let(:article_payload) do
+              {
+                body:     'dummy',
+                to:       ['to@example.com'],
+                type:     'email',
+                security: {
+                  method:  'SMIME',
+                  options: %w[encryption sign]
+                }
+              }
+            end
+
+            before do
+              Setting.set('smime_integration', true)
+              Setting.set('pgp_integration', false)
+            end
+
+            it 'creates a new ticket with correct security preferences', :aggregate_failures do
+              it_creates_ticket(articles: 1)
+              expect(Ticket.last.articles.last.preferences[:security]).to eq(
+                'type'       => 'S/MIME',
+                'encryption' => { 'success' => true },
+                'sign'       => { 'success' => true },
+              )
+            end
+          end
+
+          context 'with pgp enabled' do
+            let(:article_payload) do
+              {
+                body:     'dummy',
+                to:       ['to@example.com'],
+                type:     'email',
+                security: {
+                  method:  'PGP',
+                  options: %w[encryption sign]
+                }
+              }
+            end
+
+            before do
+              Setting.set('smime_integration', false)
+              Setting.set('pgp_integration', true)
+            end
+
+            it 'creates a new ticket with correct security preferences', :aggregate_failures do
+              it_creates_ticket(articles: 1)
+              expect(Ticket.last.articles.last.preferences[:security]).to eq(
+                'type'       => 'PGP',
+                'encryption' => { 'success' => true },
+                'sign'       => { 'success' => true },
+              )
+            end
+          end
         end
       end
 

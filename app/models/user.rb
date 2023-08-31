@@ -836,7 +836,7 @@ try to find correct name
   attr_accessor :skip_ensure_uniq_email
 
   def shared_organizations?
-    Organization.where(id: all_organization_ids).any?(&:shared)
+    all_organizations.exists? shared: true
   end
 
   def all_organizations

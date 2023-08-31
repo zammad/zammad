@@ -96,7 +96,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
   end
 
   context 'when editing existing webhook' do
-    let(:webhook)        { create(:mattermost_webhook) }
+    let!(:webhook)       { create(:mattermost_webhook) }
     let(:custom_payload) { JSON.pretty_generate(Webhook::PreDefined::Mattermost.new.custom_payload) }
 
     before do
@@ -135,7 +135,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
     end
 
     context 'with customized payload' do
-      let(:webhook) { create(:rocketchat_webhook, customized_payload: true, custom_payload: '{}') }
+      let!(:webhook) { create(:rocketchat_webhook, customized_payload: true, custom_payload: '{}') }
 
       it 'resets custom payload' do
         in_modal do

@@ -48,8 +48,7 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
       text-base
       transition-all duration-100 ease-in-out origin-left
       pointer-events-none
-      formkit-populated:-translate-y-[0.4rem]
-      formkit-populated:scale-80 formkit-populated:opacity-75
+      formkit-populated:-translate-y-[0.4rem] formkit-populated:scale-80 formkit-populated:opacity-75 formkit-populated:text-xs
       formkit-required:required
       formkit-invalid:text-red-bright
     `),

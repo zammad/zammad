@@ -137,7 +137,7 @@ RSpec.describe 'Manage > Users', type: :system do
   end
 
   context 'updating a user' do
-    let(:user) { create(:admin) }
+    let(:user) { create(:admin, firstname: 'Dummy') }
     let(:row)  { find "table.user-list tbody tr[data-id='#{user.id}']" }
 
     before do

@@ -112,3 +112,24 @@ CoreWorkflow.create_if_not_exists(
   created_by_id:   1,
   updated_by_id:   1,
 )
+CoreWorkflow.create_if_not_exists(
+  name:            'base - ticket time accouting check',
+  object:          'Ticket',
+  condition_saved: {
+    'custom.module': {
+      operator: 'match all modules',
+      value:    [
+        'CoreWorkflow::Custom::TicketTimeAccountingCheck',
+      ],
+    },
+  },
+  perform:         {
+    'custom.module': {
+      execute: ['CoreWorkflow::Custom::TicketTimeAccountingCheck']
+    },
+  },
+  changeable:      false,
+  priority:        99_999,
+  created_by_id:   1,
+  updated_by_id:   1,
+)

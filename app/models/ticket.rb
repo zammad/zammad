@@ -30,7 +30,8 @@ class Ticket < ApplicationModel
   include ::Ticket::Search
   include ::Ticket::MergeHistory
 
-  store          :preferences
+  store :preferences
+  after_initialize :check_defaults, if: :new_record?
   before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority
   before_update  :check_defaults, :check_title, :reset_pending_time, :check_owner_active
 
@@ -437,50 +438,6 @@ returns
                       })
     end
     true
-  end
-
-=begin
-
-check if online notification should be shown in general as already seen with current state
-
-  ticket = Ticket.find(1)
-  seen = ticket.online_notification_seen_state(user_id_check)
-
-returns
-
-  result = true # or false
-
-=end
-
-  def online_notification_seen_state(user_id_check = nil)
-    state      = Ticket::State.lookup(id: state_id)
-    state_type = Ticket::StateType.lookup(id: state.state_type_id)
-
-    # always to set unseen for ticket owner and users which did not the update
-    return false if state_type.name != 'merged' && user_id_check && user_id_check == owner_id && user_id_check != updated_by_id
-
-    # set all to seen if pending action state is a closed or merged state
-    if state_type.name == 'pending action' && state.next_state_id
-      state      = Ticket::State.lookup(id: state.next_state_id)
-      state_type = Ticket::StateType.lookup(id: state.state_type_id)
-    end
-
-    # set all to seen if new state is pending reminder state
-    if state_type.name == 'pending reminder'
-      if user_id_check
-        return false if owner_id == 1
-        return false if updated_by_id != owner_id && user_id_check == owner_id
-
-        return true
-      end
-      return true
-    end
-
-    # set all to seen if new state is a closed or merged state
-    return true if state_type.name == 'closed'
-    return true if state_type.name == 'merged'
-
-    false
   end
 
 =begin
@@ -1005,6 +962,10 @@ returns a hex color code
     '#000000'
   end
 
+  def mention_user_ids
+    mentions.pluck(:user_id)
+  end
+
   private
 
   def check_generate
@@ -1022,17 +983,28 @@ returns a hex color code
   end
 
   def check_defaults
-    if !owner_id
-      self.owner_id = 1
-    end
-    return true if !customer_id
+    check_default_owner
+    check_default_organization
+    true
+  end
+
+  def check_default_owner
+    return if !has_attribute?(:owner_id)
+    return if owner_id || owner
+
+    self.owner_id = 1
+  end
+
+  def check_default_organization
+    return if !has_attribute?(:organization_id)
+    return if !customer_id
 
     customer = User.find_by(id: customer_id)
-    return true if !customer
-    return true if organization_id.present? && customer.organization_id?(organization_id)
+    return if !customer
+    return if organization_id.present? && customer.organization_id?(organization_id)
+    return if organization.present? && customer.organization_id?(organization.id)
 
     self.organization_id = customer.organization_id
-    true
   end
 
   def reset_pending_time
@@ -1288,50 +1260,48 @@ returns a hex color code
     if Setting.get('smime_integration')
       sign       = value['sign'].present? && value['sign'] != 'no'
       encryption = value['encryption'].present? && value['encryption'] != 'no'
-      security   = {
-        type:       'S/MIME',
-        sign:       {
-          success: false,
-        },
-        encryption: {
-          success: false,
-        },
-      }
 
-      if sign
-        sign_found = false
-        begin
-          list = Mail::AddressList.new(email_address.email)
-          from = list.addresses.first.to_s
-          cert = SMIMECertificate.for_sender_email_address(from)
-          if cert && !cert.expired?
-            sign_found                = true
-            security[:sign][:success] = true
-            security[:sign][:comment] = "certificate for #{email_address.email} found"
-          end
-        rescue # rubocop:disable Lint/SuppressedException
-        end
+      security = SecureMailing::SMIME::NotificationOptions.process(
+        from:       email_address,
+        recipients: recipients_checked,
+        perform:    {
+          sign:    sign,
+          encrypt: encryption,
+        },
+      )
 
-        if value['sign'] == 'discard' && !sign_found
-          logger.info "Unable to send trigger based notification to #{recipient_string} because of missing group #{group.name} email #{email_address.email} certificate for signing (discarding notification)."
-          return
-        end
+      if sign && value['sign'] == 'discard' && !security[:sign][:success]
+        logger.info "Unable to send trigger based notification to #{recipient_string} because of missing group #{group.name} email #{email_address.email} certificate for signing (discarding notification)."
+        return
       end
 
-      if encryption
-        certs_found = false
-        begin
-          SMIMECertificate.for_recipipent_email_addresses!(recipients_checked)
-          certs_found                     = true
-          security[:encryption][:success] = true
-          security[:encryption][:comment] = "certificates found for #{recipient_string}"
-        rescue # rubocop:disable Lint/SuppressedException
-        end
+      if encryption && value['encryption'] == 'discard' && !security[:encryption][:success]
+        logger.info "Unable to send trigger based notification to #{recipient_string} because public certificate is not available for encryption (discarding notification)."
+        return
+      end
+    end
 
-        if value['encryption'] == 'discard' && !certs_found
-          logger.info "Unable to send trigger based notification to #{recipient_string} because public certificate is not available for encryption (discarding notification)."
-          return
-        end
+    if Setting.get('pgp_integration') && (security.nil? || (!security[:encryption][:success] && !security[:sign][:success]))
+      sign       = value['sign'].present? && value['sign'] != 'no'
+      encryption = value['encryption'].present? && value['encryption'] != 'no'
+
+      security = SecureMailing::PGP::NotificationOptions.process(
+        from:       email_address,
+        recipients: recipients_checked,
+        perform:    {
+          sign:    sign,
+          encrypt: encryption,
+        },
+      )
+
+      if sign && value['sign'] == 'discard' && !security[:sign][:success]
+        logger.info "Unable to send trigger based notification to #{recipient_string} because of missing group #{group.name} email #{email_address.email} PGP key for signing (discarding notification)."
+        return
+      end
+
+      if encryption && value['encryption'] == 'discard' && !security[:encryption][:success]
+        logger.info "Unable to send trigger based notification to #{recipient_string} because public PGP keys are not available for encryption (discarding notification)."
+        return
       end
     end
 

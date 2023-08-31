@@ -1,0 +1,72 @@
+Date: Mon, 24 Jul 2023 16:04:56 +0100
+From: pgp1@example.com
+To: pgp2@example.com
+Cc: pgp3@example.com
+Message-ID: <64ba45096fffc_f1a522602305@Macmini81.local.mail>
+Mime-Version: 1.0
+Content-Type: multipart/encrypted;
+ boundary="--==_mimepart_64ba450973d41_f1a52260232aa";
+ protocol="application/pgp-encrypted"
+Content-Transfer-Encoding: 7bit
+
+This is an OpenPGP/MIME encrypted message (RFC 3156)
+----==_mimepart_64ba450973d41_f1a52260232aa
+Content-Type: application/pgp-encrypted
+Content-Transfer-Encoding: 7bit
+Content-Description: PGP/MIME Versions Identification
+
+Version: 1
+
+----==_mimepart_64ba450973d41_f1a52260232aa
+Content-Type: application/octet-stream;
+ name=encrypted.asc
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename=encrypted.asc
+Content-Description: OpenPGP encrypted message
+Content-ID: <64b69760cfd14_133f1224c172d4@MBP-FL.fritz.box.mail>
+
+-----BEGIN PGP MESSAGE-----
+
+hQIMAwR1KpbDCUvtAQ/+NUSOJo/VcRu27G2yXpCl8Sc0T23Gd1r0xggdU3qWVw/p
+/kyhbkg01Tr20Vs+PYbuRaWs/DKEnHcFRZF4aASoXQ6+aAX5U0w7ZrDupe6GzXQ3
+Nkd0ioj+tAqfbgG2d0XqoVn4hozVf95VMFMBPPSkl/WB2EWSGQNTVG11OeijCnKA
+amfC1YI0ezjaxp1yhU5ZB97kSI2RjzaACNfFRUtpvk6webzPwms74Ds4asS7HVjO
+8b2i6pG+ejButOqqV8giyY8k/s5sM2ZhwbF7dOwSe8n5IscwdT2ovpyGqz1SvX0f
+dS47Zrq3oiO7mbntfTOiN9J23J1AovPsQ955PZFqdPeqkpsZM11KRFZhsBcPQeWO
+oyV7/ZBuLtBVBfpKz60c4RR2AI0bloPR63J18ETXY2xOzPmTJ225WrG3DTTuKMPf
+UB1TK+UW+3tdVhFrcPLZfv3r9jETf9gcljWg5bYU/nZKfPui3/OVxt0LBQdg01jQ
+vJqtrDmy8zF0+fMYV+li1nwa6HTXFziKhw2IbhXrOX8y+WSLbH1RH6pLRHxIVXUi
+yR4LCyUG/CGeEbovzdqXXGl0LTUqpVDwGgZKaAVRHzVZUK+mtDHCrpCOlg05qACT
+pNfDUVfPmSPbIbQd8kDNGVsIMoitVLIB8W3wHeXq+OoXSwRKi3rmLEH7jChG0H6F
+AgwDdKQPirMu28YBD/9P09YgPaqV6WgyLV8gJNQ7YKmBmi3/dNhuBCgqBSw7nEiV
+Wx7qlHUaJMN43zKfrY5/v03zqIfBLunTcnaWYdM9MgTm/Zm/vsw8cym0ifeb1mK2
+ENfLQIE6+hmCz/pVJ2H5/Mmqht6zZ9Cd9I8qANlxULkOBpmgg1WuiPQyx2jaiIFe
+yP1YHBOkE5RlaiVy0xB0sKGfeNE7bTX01orpwtkz6CKEp5XCAcoNmtdvJZU/reOH
+J9A96ZrmS8mb3DadgL0q7PK6JNtoutPdN6FZ6/6JUvJtYyH4Dq4KokwXDfWF/GeA
+GE7mCsYWXfb1TDq/ErVG9A+O7vpTmeXUW6ut0oSs6fqes55WCKXwhE3CkcSt8W2K
+YqPjiT3SjNDX7/cvspx/kh2aXdogldNkCHWK3/zRXurtX2GvI+IEAHpT7hix8yT9
+NzgNCJrWuBIR/1YC0MMsr1DPvHB/cvlAEOJUpPXhDni9A0EobijANmw9qiSMlmPp
+I1smyPVA9XoyDwIwjRYlgVyhZEgGEJanRWFx4zuFZhygQ2zOTWIEfPp8RVP0Rp7T
+wYAqk9NRf0MbLs4Qo3JP7Ca7kMnyhOvjNQ7Cl3g+nH6hd11BwL7olZCVSJbJpZ8Q
+rfV0VSJXtKAotqpmKKMtkSWVZM9rOHi5qsmDvBfPlYGWxATXpqhUJG9KgRPAYtLp
+Aa5q45X7Iyk7qfaEUMC5vPyCE73bkvBwg2PhTpl1ZPmX1+dENUjoO9xlqPKe695g
+04H2IkOTD56KkApe5Nr4CLzTqmwR35iNiEJ/irBqROF0KwLiB60jPezEpkBaWmww
+58lPrTgEHeHWGD9i9LQXFPdUMGeahMqVRc43JP9lXSya3asc+G3ypScPpTfLLwoc
+8RCtUi9Rojm291ZXqkaYnZLh6mPp2x17tcRP8QvryUdrBYt/67+6Lp2IqIeqzSc7
+6OUUM4KTg1rLOgtUypqvp675eaL77razSdKfXeChesp06wues5IC1xj0ia21O5LV
+evz1y+W0tBAnQdDPLhg9ZIJquPNuKbJf2myW9NlUjX8SyvnzLgrCyqjeTHdxD5Zq
+jrj7cAS9GNpdUlj8DdXZiQ5eRId0anms1/ORFq8i6oNytcg+ctajQozbnnk41T+5
+o6CROMFmBE44Muetztlf6Bw8FYTUsV54lkXokx6RfXF5GOpwuPf9Cd3Cwd9Bj4V+
+0yKqMG20EvdSL5tQGwpgr17J2Fyw3nQLxCEEBEh3/BQ5Vl5n48caodjZYcxmgvAc
+XZYJOo93Jvd7ABXUrKFdA2hKO7sTXLldDTb7z3Y34LDQ3xCPVY8k6cRpZfOrKq8P
+Yo+ObRfiXAGwDnlbV4niNo+4Ko+8SMgUUJiOxj1uKILAMeqZA7pwEF6jxu72spg4
+Py4NlTaTukPMPd/4cgSYSRiiB/xMn+XT1FCADqdYBzgi8nXNed/ECzZnmkSjH69R
+bR2bTd1YglBPOrBNlqVzQgHoPUjCD1VS2nQdnXleHIvskgnOlDupzHqaANMg2a3O
+9eMWQTDm51CppOM8qi0Wy4mHztqw172s0+S3vQUlB0zBqPB6XiY0BQRtcoAttecU
+qaTMIoxKrIAbSt9AgCslINPP++a2QfTNisWoaXnUB/yotECQ0ZBYrkX+2bk3Emw9
+rBqyJWxs3+WSTuxtIzswHaDWjhb3mnRg4u8nBtkFcI20aWA=
+=CTi9
+-----END PGP MESSAGE-----
+
+----==_mimepart_64ba450973d41_f1a52260232aa--

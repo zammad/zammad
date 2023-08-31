@@ -28,7 +28,7 @@ class Channel::Filter::MonitoringBase
     return if !session_user_id
 
     # check if sender is monitoring
-    return if !Channel::Filter::Match::EmailRegex.match(value: mail[:from], match_rule: sender, check_mode: true)
+    return if !sender_condition_matching?(mail[:from], sender)
 
     # get mail attributes like host and state
     result = {}
@@ -125,4 +125,9 @@ class Channel::Filter::MonitoringBase
 
     true
   end
+
+  def self.sender_condition_matching?(from, sender)
+    Channel::Filter::Match::Contains.match(value: from, match_rule: sender) || Channel::Filter::Match::EmailRegex.match(value: from, match_rule: sender, check_mode: true)
+  end
+  private_class_method :sender_condition_matching?
 end

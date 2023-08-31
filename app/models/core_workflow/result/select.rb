@@ -7,6 +7,7 @@ class CoreWorkflow::Result::Select < CoreWorkflow::Result::Backend
     @result_object.result[:select][field]   = select_value
     @result_object.payload['params'][field] = @result_object.result[:select][field]
     set_rerun
+    mark_restricted
     true
   end
 

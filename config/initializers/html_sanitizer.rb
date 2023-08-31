@@ -60,6 +60,7 @@ Rails.application.config.html_sanitizer_css_properties_allowlist = {
   ],
   'span'  => %w[
     color
+    background background-color
   ],
   'div'   => %w[
     color

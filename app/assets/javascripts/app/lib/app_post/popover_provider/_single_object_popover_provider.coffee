@@ -3,31 +3,51 @@ class App.SingleObjectPopoverProvider extends App.PopoverProvider
   @ignoredAttributes = []
   @includeData = true
   @templateName = 'single_object_generic'
+  @titleTemplateName = 'title_generic'
+  @additionalHeadlineTemplateName = null
 
   fullCssSelector: ->
     "div.#{@cssClass()}, span.#{@cssClass()}"
 
   bind: ->
     @params.parentController.$(@fullCssSelector()).on('click', (e) =>
-      id = @objectIdFor(e.target)
-      return if !id
-      object = @constructor.klass.find(id)
+      object = @getObject(e.target)
+      return if !object
+
       @params.parentController.navigate object.uiUrl()
     )
+
+  getObject: (elem, full = false) ->
+    id = @objectIdFor(elem)
+    return if !id
+
+    return @constructor.klass.fullLocal(id) if full
+
+    @constructor.klass.find(id)
 
   objectIdFor: (elem) ->
     $(elem).data('id')
 
+  showAvatar: (elem, object) ->
+    $(elem).data('popover-show-avatar') && object && typeof object.avatar is 'function'
+
   buildTitleFor: (elem) ->
-    object = @constructor.klass.find(@objectIdFor(elem))
-    title = App.Utils.htmlEscape(@displayTitleUsing(object))
-    if object.active is false
-      title = '<span class="is-inactive">' + title + '</span>'
-    title
+    object = @getObject(elem)
+
+    data = {
+      object: object
+      displayTitle: @displayTitleUsing(object)
+      showAvatar: @showAvatar(elem, object)
+    }
+
+    if @constructor.additionalHeadlineTemplateName
+      data.additionalHeadlineTemplateName = "popover/#{@constructor.additionalHeadlineTemplateName}"
+
+    @buildHtmlTitle(data)
 
   buildContentFor: (elem) ->
-    id = @objectIdFor(elem)
-    object = @constructor.klass.fullLocal(id)
+    object = @getObject(elem, true)
+
     ignoredAttributes = @constructor.ignoredAttributes
 
     # get display data

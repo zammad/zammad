@@ -60,7 +60,7 @@ returns
 
     return if !token
 
-    return token.user if token.check?(data)
+    token.user if token.check?(data)
   end
 
   # Check token instance validity
@@ -141,7 +141,7 @@ cleanup old token
   def self.fetch(action_name, user_id = UserInfo.current_user_id)
     token = where(action: action_name, user_id: user_id).first
 
-    return token if token&.check?
+    token if token&.check?
   end
 
   # creates or returns existing token

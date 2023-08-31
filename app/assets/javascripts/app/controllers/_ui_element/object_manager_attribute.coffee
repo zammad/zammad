@@ -205,6 +205,22 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     item.find('.js-boolean').data('field-type', 'boolean')
     item
 
+  @addOptionTranslate: (item, params) ->
+    params.data_option ||= {}
+    if params.data_option.translate is undefined
+      params.data_option.translate = false
+
+    configureAttributes = [
+      { name: 'data_option::translate', display: __('Translate field contents'), tag: 'boolean', null: true, default: false },
+    ]
+    inputTranslate = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputTranslate').html(inputTranslate.form)
+
   @input: (item, localParams, params) ->
     configureAttributes = [
       { name: 'data_option::default', display: __('Default'), tag: 'input', type: 'text', null: true, default: '' },
@@ -252,9 +268,9 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     item.find("select[name='data_option::type']").on('change', (e) ->
       value = $(e.target).val()
       if value is 'url'
-        item.find('.js-inputLinkTemplate').hide()
+        inputLinkTemplate.hide('data_option::linktemplate', undefined, true)
       else
-        item.find('.js-inputLinkTemplate').show()
+        inputLinkTemplate.show('data_option::linktemplate')
     )
     item.find("select[name='data_option::type']").trigger('change')
 
@@ -416,6 +432,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     item.find('.js-inputLinkTemplate').html(inputLinkTemplate.form)
+    @addOptionTranslate(item, params)
 
   @multiselect: (item, localParams, params) ->
     item.find('.js-add').on('click', (e) ->
@@ -466,6 +483,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     item.find('.js-inputLinkTemplate').html(inputLinkTemplate.form)
+    @addOptionTranslate(item, params)
 
   @setRowLevel: (element, level) ->
     reorderElement = element.find('td:nth-child(1)')
@@ -577,6 +595,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
         setRowLevel(row, nextLevel)
         fixUnalignedRows(item.find('tbody.table-sortable tr'))
       )
+      @addOptionTranslate(item, params)
 
   @tree_select_callback: (event, ui) =>
 
@@ -629,6 +648,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
         return
       lastSelected = value
     )
+    @addOptionTranslate(item, params)
 
   @autocompletion: (item, localParams, params) ->
     configureAttributes = [
@@ -702,4 +722,3 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
   @ensureOneOption: (item) ->
     return if $(item).find('tbody tr').length > 1
     @buildRow(item, {})
-

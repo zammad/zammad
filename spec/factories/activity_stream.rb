@@ -6,7 +6,7 @@ FactoryBot.define do
       o { Ticket.first }
     end
 
-    association :type, factory: :type_lookup
+    type factory: %i[type_lookup]
     activity_stream_object_id { ObjectLookup.by_name(o.class.name) }
     o_id                      { o.id }
     created_by_id             { 1 }

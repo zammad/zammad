@@ -32,7 +32,7 @@ class App.UiElement.ApplicationSelector
       '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
       '^tree_select$': [__('is'), __('is not')]
       '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
-      '^input$': [__('contains'), __('contains not'), __('is'), __('is not'), __('starts with'), __('ends with')]
+      '^input$': [__('contains'), __('contains not'), __('is any of'), __('is none of'), __('starts with one of'), __('ends with one of')]
       '^richtext$': [__('contains'), __('contains not')]
       '^textarea$': [__('contains'), __('contains not')]
       '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
@@ -49,10 +49,13 @@ class App.UiElement.ApplicationSelector
         '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
         '^tree_select$': [__('is'), __('is not'), __('has changed')]
         '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
-        '^input$': [__('contains'), __('contains not'), __('has changed'), __('is'), __('is not'), __('starts with'), __('ends with')]
+        '^input$': [__('contains'), __('contains not'), __('has changed'), __('is any of'), __('is none of'), __('starts with one of'), __('ends with one of')]
         '^richtext$': [__('contains'), __('contains not'), __('has changed')]
         '^textarea$': [__('contains'), __('contains not'), __('has changed')]
         '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
+
+    if attribute.hasRegexOperators && App.Config.get('ticket_conditions_allow_regular_expression_operators')
+      operators_type['^input$'].push(__('matches regex'), __('does not match regex'))
 
     operators_name =
       '_id$': [__('is'), __('is not')]
@@ -95,6 +98,15 @@ class App.UiElement.ApplicationSelector
             options:
               create: 'created'
             operator: [__('is'), __('is not')]
+          elements['article.time_accounting'] =
+            name: 'time_accounting'
+            display: __('Time Accounting')
+            tag: 'select'
+            null: false
+            translate: true
+            options:
+              create: 'created'
+            operator: [__('is set'), __('not set')]
 
       if groupKey is 'execution_time'
         if attribute.executionTime
@@ -435,6 +447,10 @@ class App.UiElement.ApplicationSelector
     selection = $("<select class=\"form-control\" name=\"#{name}\"></select>")
 
     attributeConfig = elements[groupAndAttribute]
+
+    # Compatibility layer for renamed operators (#4709).
+    meta.operator = @migrateOperator(attributeConfig, meta.operator)
+
     if attributeConfig.operator
 
       # check if operator exists
@@ -472,7 +488,10 @@ class App.UiElement.ApplicationSelector
     currentPreCondition = elementRow.find('.js-preCondition option:selected').attr('value')
 
     if !meta.pre_condition
-      meta.pre_condition = currentPreCondition
+      if currentPreCondition
+        meta.pre_condition = currentPreCondition
+      else if !_.isEmpty(meta.value)
+        meta.pre_condition = 'specific'
 
     toggleValue = =>
       preCondition = elementRow.find('.js-preCondition option:selected').attr('value')
@@ -512,12 +531,14 @@ class App.UiElement.ApplicationSelector
       if attributeConfig.noCurrentUser isnt true
         options['current_user.id'] = App.i18n.translateInline('current user')
       options['specific'] = App.i18n.translateInline('specific user')
-      options['not_set'] = App.i18n.translateInline('not set (not defined)')
+      if attributeConfig.noNotSet isnt true
+        options['not_set'] = App.i18n.translateInline('not set (not defined)')
     else if preCondition is 'org'
       if attributeConfig.noCurrentUser isnt true
         options['current_user.organization_id'] = App.i18n.translateInline('current user organization')
       options['specific'] = App.i18n.translateInline('specific organization')
-      options['not_set'] = App.i18n.translateInline('not set (not defined)')
+      if attributeConfig.noNotSet isnt true
+        options['not_set'] = App.i18n.translateInline('not set (not defined)')
 
     for key, value of options
       selected = ''
@@ -537,8 +558,9 @@ class App.UiElement.ApplicationSelector
   @buildValueConfigValue: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     return _.clone(attribute.value[groupAndAttribute]['value'])
 
-  @buildValueName: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
-    return "#{attribute.name}::#{groupAndAttribute}::value"
+  @buildValueName: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType) ->
+    prefix = if valueType then "{#{valueType}}" else ''
+    return "#{prefix}#{attribute.name}::#{groupAndAttribute}::value"
 
   @buildValue: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     # build new item
@@ -550,10 +572,14 @@ class App.UiElement.ApplicationSelector
     if config.relation is 'Organization'
       config.tag = 'autocompletion_ajax'
 
+    if config.tag and @tokenfieldTagRegex() and config.tag.match(@tokenfieldTagRegex()) and _.contains(['is any of', 'is none of', 'starts with one of', 'ends with one of'], meta.operator)
+      config.tag = 'tokenfield'
+
     # render ui element
     item = ''
     if config && App.UiElement[config.tag] && meta.operator isnt 'today'
-      config = @buildValueConfigNameValue(config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+      { valueType } = App.UiElement[config.tag]
+      config = @buildValueConfigNameValue(config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType)
 
       if 'multiple' of config
         config = @buildValueConfigMultiple(config, meta)
@@ -581,14 +607,15 @@ class App.UiElement.ApplicationSelector
     #   - has changed
     #   - has reached
     #   - has reached warning
-    if /^has\s(changed|reached(\swarning)?)$/.test(meta.operator)
+    #   - changed to
+    if _.contains(['has reached', 'has reached warning', 'has changed', 'not set', 'is set'], meta.operator)
       elementRow.find('.js-value').addClass('hide')
       elementRow.find('.js-preCondition').closest('.controls').addClass('hide')
     else
       elementRow.find('.js-value').removeClass('hide')
 
-  @buildValueConfigNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
-    config['name'] = @buildValueName(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+  @buildValueConfigNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType) ->
+    config['name'] = @buildValueName(elementFull, elementRow, groupAndAttribute, elements, meta, attribute, valueType)
     if attribute.value && attribute.value[groupAndAttribute]
       config['value'] = @buildValueConfigValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
@@ -668,3 +695,16 @@ class App.UiElement.ApplicationSelector
       enabled = true
       break
     return enabled
+
+  @tokenfieldTagRegex: ->
+    new RegExp('^input$', 'i')
+
+  @migrateOperator: (attributeConfig, operator) ->
+    if attributeConfig.tag and @tokenfieldTagRegex() and attributeConfig.tag.match(@tokenfieldTagRegex())
+      switch operator
+        when 'is' then return 'is any of'
+        when 'is not' then return 'is none of'
+        when 'starts with' then return 'starts with one of'
+        when 'ends with' then return 'ends with one of'
+
+    operator

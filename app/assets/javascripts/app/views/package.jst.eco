@@ -38,8 +38,8 @@
   <p>
     <form action="<%= App.Config.get('api_path') %>/packages" method="post" enctype="multipart/form-data" class="horizontal center">
       <input type="hidden" name="authenticity_token" value="<%= App.Ajax.token() %>"/>
-      <input type="file" name="file_upload"/>
-      <button class="align-right btn btn--primary" type="submit"><%- @T('Install Package') %></button>
+      <input type="file" name="file_upload" class="js-fileUpload" />
+      <button class="align-right btn btn--primary js-submit" type="submit" disabled="disabled"><%- @T('Install Package') %></button>
     </form>
   </p>
 
@@ -58,7 +58,7 @@
       <tr data-id="<%= item.id %>">
         <td><%= item.name %></td>
         <td><%= item.version %></td>
-        <td><a href="<%- item.url %>" target="_blank"><%= item.vendor %></a></td>
+        <td><% if item.url: %><a href="<%= item.url %>" target="_blank"><% end %><%= item.vendor %><% if item.url: %></a><% end %></td>
         <td><%- @T(item.state) %></td>
         <td><% for action in item.action: %><a href="#" class="package-action btn btn--action<%= ' btn--danger' if action == 'uninstall' %>" data-type="<%= action %>"><%- @T(action) %></a><br/><% end %></td>
       </tr>

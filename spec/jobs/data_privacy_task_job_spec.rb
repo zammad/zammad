@@ -51,6 +51,37 @@ RSpec.describe DataPrivacyTaskJob, type: :job do
       expect { organization.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
+    it 'checks if the organization is not deleted (delete_organization=true) if another user was added while task is queued' do
+      create(:data_privacy_task, deletable: user, preferences: { delete_organization: 'true' })
+
+      another_user = create(:user)
+      another_user.update! organization: organization
+
+      described_class.perform_now
+      expect(organization.reload).to be_present
+    end
+
+    it 'checks if the organization is removed from secondary organizations for users when deleted (delete_organization=true)', aggregate_failures: true do
+      create(:data_privacy_task, deletable: user, preferences: { delete_organization: 'true' })
+
+      another_user = create(:user)
+      another_user.organizations << organization
+
+      another_user.assets({}) # make sure cache exists
+
+      described_class.perform_now
+      expect { organization.reload }.to raise_error(ActiveRecord::RecordNotFound)
+
+      expect(another_user.assets({}))
+        .not_to include(
+          User: include(
+            another_user.id => include(
+              'organization_ids' => include(organization.id)
+            )
+          )
+        )
+    end
+
     it 'checks creation of activity stream log' do
       create(:data_privacy_task, deletable: user, created_by: admin)
       travel 15.minutes

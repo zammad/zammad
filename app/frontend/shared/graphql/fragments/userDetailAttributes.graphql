@@ -22,6 +22,7 @@ fragment userDetailAttributes on User {
     internalId
     name
     active
+    vip
     ticketsCount {
       open
       closed

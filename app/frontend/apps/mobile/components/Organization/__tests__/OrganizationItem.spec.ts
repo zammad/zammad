@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { OrganizationItemData } from '../types.ts'
+
 const now = new Date(2022, 1, 1, 20, 0, 0, 0)
 vi.setSystemTime(now)
-
-import type { OrganizationItemData } from '../types.ts'
 
 const { default: OrganizationItem } = await import('../OrganizationItem.vue')
 const { renderComponent } = await import('#tests/support/components/index.ts')
@@ -85,5 +85,32 @@ describe('ticket item display', () => {
     expect(view.queryByText(/·/)).not.toBeInTheDocument()
 
     expect(view.queryByTestId('stringUpdated')).not.toBeInTheDocument()
+  })
+
+  it('renders VIP status', () => {
+    const organization: OrganizationItemData = {
+      id: '54321',
+      internalId: 2,
+      ticketsCount: {
+        open: 1,
+        closed: 0,
+      },
+      name: 'lorem ipsum',
+      active: true,
+      vip: true,
+    }
+
+    const view = renderComponent(OrganizationItem, {
+      props: {
+        entity: organization,
+      },
+      store: true,
+    })
+
+    expect(view.getByLabelText('Avatar (lorem ipsum)')).toBeAvatarElement({
+      vip: true,
+      active: true,
+      type: 'organization',
+    })
   })
 })

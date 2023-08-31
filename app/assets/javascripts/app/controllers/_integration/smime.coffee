@@ -45,7 +45,7 @@ class Form extends App.Controller
     @groupList()
 
   certList: =>
-    new List(el: @$('.js-certList'))
+    @list = new List(el: @$('.js-certList'))
 
   groupList: =>
     new Group(
@@ -55,12 +55,14 @@ class Form extends App.Controller
 
   addCertificate: =>
     new Certificate(
-      callback: @certList
+      callback: =>
+        @list.load()
     )
 
   addPrivateKey: =>
     new PrivateKey(
-      callback: @certList
+      callback: =>
+        @list.load()
     )
 
   updateGroup: (e) =>

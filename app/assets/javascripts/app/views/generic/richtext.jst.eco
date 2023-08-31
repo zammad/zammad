@@ -11,5 +11,5 @@
       <% end %>
     </div>
 	<% end %>
-  <div contenteditable="<%= !@attribute.disabled %>" id="<%= @attribute.id %>" data-name="<%= @attribute.name %>" class="richtext-content <%= @attribute.class %>"><%- @attribute.value %></div>
+  <div contenteditable="<%= !@attribute.disabled %>" id="<%= @attribute.id %>" data-name="<%= @attribute.name %>" class="richtext-content <%= @attribute.class %>" dir="auto"><%- @attribute.value %></div>
 </div>

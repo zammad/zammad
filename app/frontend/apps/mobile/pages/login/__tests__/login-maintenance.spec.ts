@@ -32,6 +32,7 @@ beforeEach(() => {
   mockTicketOverviews()
   mockPublicLinks([])
   mockPublicLinksSubscription()
+  mockApplicationConfig({ product_name: 'Zammad' })
 })
 
 describe('testing login maintenance mode', () => {
@@ -132,6 +133,10 @@ describe('testing login maintenance mode', () => {
         {
           key: 'maintenance_mode',
           value: true,
+        },
+        {
+          key: 'product_name',
+          value: 'Zammad',
         },
       ],
     })

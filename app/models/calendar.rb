@@ -115,7 +115,7 @@ returns
 
   def self.timezones
     list = {}
-    TZInfo::Timezone.all_country_zone_identifiers.each do |timezone|
+    TZInfo::Timezone.all_identifiers.each do |timezone|
       t = ActiveSupport::TimeZone.find_tzinfo(timezone)
       diff = t.current_period.utc_total_offset / 60 / 60
       list[ timezone ] = diff

@@ -1,2 +1,2 @@
-<%- @user.avatar("80") %>
+<%- @user.avatar('80', '', 'avatar--not-linked') %>
 <h1><%= @user.displayName() %></h1>

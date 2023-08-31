@@ -3,7 +3,7 @@
     <div class="page-header-title">
       <h2><%- @T('Selector') %></h2>
     </div>
-    <p><%- @T('Enable time accounting for following matching tickets.') %></p>
+    <p><%- @T('Show time accounting dialog when updating matching tickets.') %></p>
     <div class="js-selector"></div>
   </div>
 

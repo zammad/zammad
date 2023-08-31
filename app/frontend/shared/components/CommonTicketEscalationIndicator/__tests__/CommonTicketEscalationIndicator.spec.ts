@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { Props } from '../CommonTicketEscalationIndicator.vue'
+
 const now = new Date('2023-02-28 12:00:00')
 vi.useFakeTimers().setSystemTime(now)
-
-import type { Props } from '../CommonTicketEscalationIndicator.vue'
 
 const { renderComponent } = await import('#tests/support/components/index.ts')
 const { default: CommonTicketEscalationIndicator } = await import(

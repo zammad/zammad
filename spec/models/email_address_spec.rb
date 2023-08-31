@@ -56,7 +56,7 @@ RSpec.describe EmailAddress, type: :model do
       context 'when a Channel is destroyed' do
         it 'removes the #channel_id from all its associated EmailAddresses' do
           expect { channel.destroy }
-            .to change { email_addresses.map(&:reload).map(&:channel_id) }
+            .to change { email_addresses.map { |x| x.reload.channel_id } }
             .to([nil, nil])
         end
 
@@ -65,7 +65,7 @@ RSpec.describe EmailAddress, type: :model do
             channel.destroy
 
             expect { create(:channel) }
-              .not_to change { email_addresses.map(&:reload).map(&:channel_id) }
+              .not_to change { email_addresses.map { |x| x.reload.channel_id } }
           end
         end
       end

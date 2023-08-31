@@ -33,6 +33,11 @@ export default Image.extend({
           return {}
         },
       },
+
+      type: {
+        default: null,
+        renderHTML: () => ({}),
+      },
     }
   },
   addNodeView() {
@@ -51,6 +56,7 @@ export default Image.extend({
                 attrs: {
                   src: image.content,
                   alt: image.name,
+                  type: image.type,
                 },
               })),
               {

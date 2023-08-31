@@ -17,7 +17,7 @@ class TicketOnlineNotificationSeenJob < ApplicationJob
       OnlineNotification.list_by_object('Ticket', ticket_id).each do |notification|
         next if notification.seen
 
-        seen = ticket.online_notification_seen_state(notification.user_id)
+        seen = OnlineNotification.seen_state?(ticket, notification.user_id)
         next if !seen
         next if seen == notification.seen
 

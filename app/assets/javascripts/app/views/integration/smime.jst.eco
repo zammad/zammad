@@ -8,7 +8,7 @@
   <hr>
 
   <h2><%- @T('Default Behavior') %></h2>
-  <p>Choose the default behavior of the S/MIME integration on per group basis. If signing or encrypting is not possible, the setting has no effect. Agents call always manually alter the behavior for each article.</p>
+  <p><%- @T('Choose the default behavior of the S/MIME integration on per group basis. If signing or encrypting is not possible, the setting has no effect. Agents can always manually alter the behavior for each article.') %></p>
   <div class="settings-entry settings-entry--stretched js-groupList"></div>
   <div class="btn btn--primary js-updateGroup"><%- @T('Update') %></div>
 </form>

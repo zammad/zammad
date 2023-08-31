@@ -1,0 +1,11 @@
+Başka bir destek talebi (#{ticket.title}) destek talebiyle birleştirildi
+
+<div>Merhaba #{recipient.firstname},</div>
+<br>
+<div>
+Başka bir destek talebi (#{ticket.title}) destek talebiyle "<b>#{current_user.longname}</b>" tarafından birleştirildi.
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Bunu #{config.product_name} içinde görüntüleyin</a>
+</div>

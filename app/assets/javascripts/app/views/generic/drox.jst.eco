@@ -1,4 +1,5 @@
 <div class="drox">
+<% if @header || @edit: %>
   <div class="drox-header">
     <h2>
       <%- @T( @header ) %>
@@ -7,6 +8,7 @@
       <% end %>
     </h2>
   </div>
+<% end %>
   <div class="drox-body">
   </div>
 </div>

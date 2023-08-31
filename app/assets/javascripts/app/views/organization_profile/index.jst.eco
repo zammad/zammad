@@ -2,13 +2,7 @@
   <div class="profile-window">
     <div class="profile-section vertical centered">
       <div class="align-right profile-action js-action"></div>
-      <div class="profile-organizationIcon">
-        <% if @organization.active is true: %>
-          <%- @Icon('organization') %>
-        <% else: %>
-          <%- @Icon('inactive-organization') %>
-        <% end %>
-      </div>
+      <div class="js-organization-avatar"></div>
       <h1 class="js-name"></h1>
     </div>
     <div class="js-object-container"></div>

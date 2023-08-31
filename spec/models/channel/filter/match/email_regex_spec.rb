@@ -11,114 +11,86 @@ RSpec.describe Channel::Filter::Match::EmailRegex do
     context 'in normal (error-suppressing) mode (default)' do
       let(:check_mode) { false }
 
-      context 'with exact match' do
-        let(:sender) { 'foobar@foo.bar' }
-
-        it { is_expected.to be(true) }
-      end
-
-      context 'with wildcard *' do
-        let(:sender) { '*' }
-
-        it { is_expected.to be(true) }
-      end
-
       context 'with empty string' do
         let(:sender) { '' }
 
         it { is_expected.to be(true) }
       end
 
-      context 'with `regex` operator' do
-        context 'and matching regex' do
-          let(:sender) { 'regex:foobar@.*' }
+      context 'and matching regex' do
+        let(:sender) { 'foobar@.*' }
 
-          it { is_expected.to be(true) }
-        end
+        it { is_expected.to be(true) }
+      end
 
-        context 'and non-matching regex' do
-          let(:sender) { 'regex:nagios@.*' }
+      context 'and non-matching regex' do
+        let(:sender) { 'nagios@.*' }
 
-          it { is_expected.to be(false) }
-        end
+        it { is_expected.to be(false) }
+      end
 
-        context 'and invalid regex (misused ? repeat operator)' do
-          let(:sender) { 'regex:??' }
+      context 'and invalid regex (misused ? repeat operator)' do
+        let(:sender) { '??' }
 
-          it { is_expected.to be(false) }
-        end
+        it { is_expected.to be(false) }
+      end
 
-        context 'and invalid regex (unassociated wild card operator)' do
-          let(:sender) { 'regex:*' }
+      context 'and invalid regex (unassociated wild card operator)' do
+        let(:sender) { '*' }
 
-          it { is_expected.to be(false) }
-        end
+        it { is_expected.to be(false) }
+      end
 
-        context 'and invalid regex (empty char class)' do
-          let(:sender) { 'regex:[]' }
+      context 'and invalid regex (empty char class)' do
+        let(:sender) { '[]' }
 
-          it { is_expected.to be(false) }
-        end
+        it { is_expected.to be(false) }
       end
     end
 
     context 'in check (error-raising) mode' do
       let(:check_mode) { true }
 
-      context 'with exact match' do
-        let(:sender) { 'foobar@foo.bar' }
-
-        it { is_expected.to be(true) }
-      end
-
-      context 'with wildcard *' do
-        let(:sender) { '*' }
-
-        it { is_expected.to be(true) }
-      end
-
       context 'with empty string' do
         let(:sender) { '' }
 
         it { is_expected.to be(true) }
       end
 
-      context 'with `regex` operator' do
-        context 'and matching regex' do
-          let(:sender) { 'regex:foobar@.*' }
+      context 'and matching regex' do
+        let(:sender) { 'foobar@.*' }
 
-          it { is_expected.to be(true) }
-        end
+        it { is_expected.to be(true) }
+      end
 
-        context 'and non-matching regex' do
-          let(:sender) { 'regex:nagios@.*' }
+      context 'and non-matching regex' do
+        let(:sender) { 'nagios@.*' }
 
-          it { is_expected.to be(false) }
-        end
+        it { is_expected.to be(false) }
+      end
 
-        context 'and invalid regex (misused ? repeat operator)' do
-          let(:sender) { 'regex:??' }
+      context 'and invalid regex (misused ? repeat operator)' do
+        let(:sender) { '??' }
 
-          it { expect { match }.to raise_error(<<~ERR.chomp) }
-            Can't use regex '??' on 'foobar@foo.bar': target of repeat operator is not specified: /??/i
-          ERR
-        end
+        it { expect { match }.to raise_error(<<~ERR.chomp) }
+          Can't use regex '??' on 'foobar@foo.bar': target of repeat operator is not specified: /??/i
+        ERR
+      end
 
-        context 'and invalid regex (unassociated wild card operator)' do
-          let(:sender) { 'regex:*' }
+      context 'and invalid regex (unassociated wild card operator)' do
+        let(:sender) { '*' }
 
-          it { expect { match }.to raise_error(<<~ERR.chomp) }
-            Can't use regex '*' on 'foobar@foo.bar': target of repeat operator is not specified: /*/i
-          ERR
-        end
+        it { expect { match }.to raise_error(<<~ERR.chomp) }
+          Can't use regex '*' on 'foobar@foo.bar': target of repeat operator is not specified: /*/i
+        ERR
+      end
 
-        context 'and invalid regex (empty char class)' do
-          let(:sender) { 'regex:[]' }
+      context 'and invalid regex (empty char class)' do
+        let(:sender) { '[]' }
 
-          it { expect { match }.to raise_error(<<~ERR.chomp) }
-            Can't use regex '[]' on 'foobar@foo.bar': empty char-class: /[]/i
-          ERR
-        end
+        it { expect { match }.to raise_error(<<~ERR.chomp) }
+          Can't use regex '[]' on 'foobar@foo.bar': empty char-class: /[]/i
+        ERR
       end
     end
   end

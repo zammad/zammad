@@ -4,7 +4,7 @@ import type { Plugin, Ref } from 'vue'
 import { isRef, nextTick, ref, watchEffect, unref } from 'vue'
 import type { Router, RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
-import type { MountingOptions } from '@vue/test-utils'
+import type { ComponentMountingOptions } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import type { Matcher, RenderResult } from '@testing-library/vue'
 import { render } from '@testing-library/vue'
@@ -26,6 +26,8 @@ import {
   setupCommonVisualConfig,
   type SharedVisualConfig,
 } from '#shared/composables/useSharedVisualConfig.ts'
+import { mobileFormFieldModules } from '#mobile/form/index.ts'
+import type { AppName } from '#shared/types/app.ts'
 import buildIconsQueries from './iconQueries.ts'
 import buildLinksQueries from './linkQueries.ts'
 import { setTestState, waitForNextTick } from '../utils.ts'
@@ -33,7 +35,8 @@ import { cleanupStores, initializeStore } from './initializeStore.ts'
 
 // TODO: some things can be handled differently: https://test-utils.vuejs.org/api/#config-global
 
-export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
+export interface ExtendedMountingOptions<Props>
+  extends ComponentMountingOptions<Props> {
   router?: boolean
   routerRoutes?: RouteRecordRaw[]
   store?: boolean
@@ -42,6 +45,10 @@ export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   formField?: boolean
   unmount?: boolean
   dialog?: boolean
+  /**
+   * @default 'mobile'
+   */
+  app?: AppName
   vModel?: {
     [prop: string]: unknown
   }
@@ -198,11 +205,16 @@ export const initializePiniaStore = () => {
 
 let formInitialized = false
 
-const initializeForm = () => {
+const initializeForm = (appName: AppName) => {
   if (formInitialized) return
 
-  // TODO: needs to be extended, when we have app specific plugins/fields
-  plugins.push([formPlugin, buildFormKitPluginConfig()])
+  plugins.push([
+    formPlugin,
+    buildFormKitPluginConfig(
+      undefined,
+      appName === 'mobile' ? mobileFormFieldModules : undefined,
+    ),
+  ])
   defaultWrapperOptions.shallow = false
 
   formInitialized = true
@@ -304,10 +316,13 @@ const setupVModel = <Props>(wrapperOptions: ExtendedMountingOptions<Props>) => {
     if (!vModelProps.length) return
 
     watchEffect(() => {
-      const propsValues = vModelProps.reduce((acc, [prop, reactiveValue]) => {
-        acc[prop] = reactiveValue.value
-        return acc
-      }, {} as Record<string, unknown>)
+      const propsValues = vModelProps.reduce(
+        (acc, [prop, reactiveValue]) => {
+          acc[prop] = reactiveValue.value
+          return acc
+        },
+        {} as Record<string, unknown>,
+      )
 
       view.rerender(propsValues)
     })
@@ -330,7 +345,7 @@ const renderComponent = <Props>(
     initializePiniaStore()
   }
   if (wrapperOptions?.form) {
-    initializeForm()
+    initializeForm(wrapperOptions?.app || 'mobile')
   }
   if (wrapperOptions?.dialog) {
     mountDialog()

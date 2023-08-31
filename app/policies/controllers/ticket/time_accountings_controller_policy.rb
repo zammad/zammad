@@ -10,7 +10,14 @@ class Controllers::Ticket::TimeAccountingsControllerPolicy < Controllers::Applic
   end
 
   def create?
-    access?
+    time_accounting        = Ticket::TimeAccounting.new(ticket: ticket)
+    time_accounting_policy = Ticket::TimeAccountingPolicy.new(user, time_accounting)
+
+    if !time_accounting_policy.create?
+      return not_authorized(time_accounting_policy.custom_exception)
+    end
+
+    true
   end
 
   def update?
@@ -27,10 +34,11 @@ class Controllers::Ticket::TimeAccountingsControllerPolicy < Controllers::Applic
     user.permissions?('admin.time_accounting')
   end
 
-  def access?
-    ticket_id = record.params[:ticket_id]
-    ticket    = Ticket.find ticket_id
+  def ticket
+    @ticket ||= Ticket.find(record.params[:ticket_id])
+  end
 
+  def access?
     TicketPolicy.new(user, ticket).update?
   end
 end

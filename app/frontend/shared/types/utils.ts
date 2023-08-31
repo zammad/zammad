@@ -52,3 +52,11 @@ export type ObjectLike = Record<string, any>
 export interface ObjectWithId {
   id: Scalars['ID']['output']
 }
+
+export declare type DeepPartial<T> = {
+  [K in keyof T]?: DeepPartial<T[K]>
+}
+
+export declare type DeepRequired<T> = {
+  [K in keyof T]-?: DeepRequired<NonNullable<T[K]>>
+}

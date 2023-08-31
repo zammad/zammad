@@ -3,22 +3,6 @@ description: Zammad is a web based open source helpdesk/customer support system
 homepage: https://zammad.org
 notifications: false
 targets:
-  centos-7:
-    dependencies:
-      - curl
-      - elasticsearch
-      - nginx
-      # Only CentOS 7 has the old PostgreSQL 9.2, so explicitly require 9.3 here.
-      - "postgresql-server >= 9.3"
-      - which
-      - epel-release
-      - imlib2
-      - shared-mime-info
-      - redis
-    build_dependencies:
-      - https://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-1.4.9-8.el7.x86_64.rpm
-      - https://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-devel-1.4.9-8.el7.x86_64.rpm
-      - shared-mime-info
   centos-8:
     dependencies:
       - curl
@@ -33,19 +17,6 @@ targets:
     build_dependencies:
       - https://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-1.4.9-8.el8.x86_64.rpm
       - https://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-devel-1.4.9-8.el8.x86_64.rpm
-      - shared-mime-info
-  debian-10:
-    dependencies:
-      - curl
-      - elasticsearch|elasticsearch-oss
-      - nginx|apache2
-      - postgresql|mariadb-server
-      - libimlib2
-      - shared-mime-info
-      - redis-server
-    build_dependencies:
-      - libimlib2
-      - libimlib2-dev
       - shared-mime-info
   debian-11:
     dependencies:
@@ -66,32 +37,6 @@ targets:
       - elasticsearch|elasticsearch-oss
       - nginx|apache2
       - postgresql|mariadb-server
-      - libimlib2
-      - shared-mime-info
-      - redis-server
-    build_dependencies:
-      - libimlib2
-      - libimlib2-dev
-      - shared-mime-info
-  ubuntu-16.04:
-    dependencies:
-      - curl
-      - elasticsearch|elasticsearch-oss
-      - nginx|apache2
-      - postgresql|mysql-server|mariadb-server
-      - libimlib2
-      - shared-mime-info
-      - redis-server
-    build_dependencies:
-      - libimlib2
-      - libimlib2-dev
-      - shared-mime-info
-  ubuntu-18.04:
-    dependencies:
-      - curl
-      - elasticsearch|elasticsearch-oss
-      - nginx|apache2
-      - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
       - redis-server
@@ -125,23 +70,6 @@ targets:
       - libimlib2
       - libimlib2-dev
       - shared-mime-info
-  sles-12:
-    dependencies:
-      - curl
-      - elasticsearch
-      - nginx
-      - postgresql-server
-      - libImlib2-1
-      - imlib2
-    build_dependencies:
-      # Add packages required for build that are not in the official SLES repo.
-      # Direct URLs must be used since we cannot add repos on packager.io
-      #   (would require a paid SLES account and credential management on packager.io).
-      - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-1.4.5-12.1.1.x86_64.rpm
-      - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-devel-1.4.5-12.1.1.x86_64.rpm
-      - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-filters-1.4.5-12.1.1.x86_64.rpm
-      - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/libImlib2-1-1.4.5-12.1.1.x86_64.rpm
-      - shared-mime-info
   sles-15:
     dependencies:
       - curl
@@ -171,7 +99,7 @@ env:
   - ZAMMAD_RAILS_PORT=3000
   - ZAMMAD_WEBSOCKET_PORT=6042
 services:
-  - postgres:13
+  - postgres:15
   - redis
 before_install: contrib/packager.io/preinstall.sh
 after_install: contrib/packager.io/postinstall.sh

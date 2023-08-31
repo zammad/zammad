@@ -11,15 +11,20 @@ import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButton
 import { useUserCreate } from '#mobile/entities/user/composables/useUserCreate.ts'
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import { computed, reactive, ref } from 'vue'
+import { EnumSecurityStateType } from '#shared/components/Form/fields/FieldSecurity/types.ts'
 
 const linkSchemaRaw = [
   {
     type: 'security',
     name: 'security',
-    label: 'Security',
+    label:
+      'Security Long Name Very long Not Truncated Oh no Please Its Too Long',
     required: true,
     props: {
-      allowed: ['sign', 'encryption'],
+      securityAllowed: {
+        [EnumSecurityStateType.Smime]: ['sign', 'encryption'],
+        [EnumSecurityStateType.Pgp]: ['encryption'],
+      },
     },
   },
   {
@@ -377,10 +382,13 @@ const editorSchema = defineFormSchema([
     name: 'editor',
     label: 'Editor',
     required: true,
-    props: Object.keys(editorProps).reduce((acc, key) => {
-      acc[key] = computed(() => editorProps[key as keyof typeof editorProps])
-      return acc
-    }, {} as Record<string, unknown>),
+    props: Object.keys(editorProps).reduce(
+      (acc, key) => {
+        acc[key] = computed(() => editorProps[key as keyof typeof editorProps])
+        return acc
+      },
+      {} as Record<string, unknown>,
+    ),
   },
 ])
 const logSubmit = console.log
@@ -465,5 +473,16 @@ const logSubmit = console.log
         { label: 'Send Email', value: 3, icon: 'mobile-mail-out' },
       ]"
     />
+
+    <FormKit
+      wrapper-class="mt-6 flex grow justify-center items-center"
+      input-class="py-2 px-4 w-full h-14 text-xl rounded-xl select-none"
+      variant="submit"
+      type="submit"
+      prefix-icon="mobile-arrow-right"
+      suffix-icon="mobile-arrow-left"
+    >
+      {{ $t('Sign in') }}
+    </FormKit>
   </div>
 </template>

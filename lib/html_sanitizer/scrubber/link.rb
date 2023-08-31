@@ -54,6 +54,7 @@ class HtmlSanitizer
         return if !external
         return if href_without_spaces.blank?
         return if href_without_spaces.downcase.start_with?('mailto:')
+        return if href_without_spaces.downcase.start_with?('tel:')
         return if href_without_spaces.downcase.start_with?('//')
         return if href_without_spaces.downcase.match? %r{^.{1,6}://.+?}
 

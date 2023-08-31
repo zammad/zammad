@@ -14,6 +14,7 @@ RSpec.describe KnowledgeBase::Permission, type: :model do
 
     it 'allows multiple permissions for the same category' do
       permission = build(:knowledge_base_permission, permissionable: kb_category_permission.permissionable)
+      permission.role.save
       permission.save
 
       expect(permission).to be_persisted

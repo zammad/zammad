@@ -12,7 +12,6 @@ import type {
 } from '#shared/types/form.ts'
 import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
 import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
-import addIcon from '#shared/form/features/addIcon.ts'
 
 // TODO: Build-In loading cycle funcitonality for the buttons or at least a disabled-state when loading is in progress?
 
@@ -45,7 +44,7 @@ const buttonInputs: FormFieldType[] = []
 
 Object.keys(buttonFieldDefinitionList).forEach((buttonType) => {
   initializeFieldDefinition(buttonFieldDefinitionList[buttonType], {
-    features: [setVariantDefault, addVariantDataAttribute, addIcon],
+    features: [setVariantDefault, addVariantDataAttribute],
   })
 
   buttonInputs.push({

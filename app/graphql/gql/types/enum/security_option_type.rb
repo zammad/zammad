@@ -2,7 +2,7 @@
 
 module Gql::Types::Enum
   class SecurityOptionType < BaseEnum
-    description 'Ticket article security options, e.g. for S/MIME'
+    description 'Ticket article security options for email security methods'
 
     value 'encryption', 'Encrypt article'
     value 'sign',       'Sign article'

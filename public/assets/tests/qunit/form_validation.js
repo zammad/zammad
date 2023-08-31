@@ -1,5 +1,7 @@
 QUnit.test('form validation check', assert => {
 
+  App.i18n.set('en-us')
+
   $('#forms').append('<hr><h1>form params check</h1><form id="form1"></form>')
 
   var el       = $('#form1')
@@ -94,6 +96,8 @@ QUnit.test('form validation check', assert => {
 
 QUnit.test('datetime validation check', assert => {
 
+  App.i18n.set('en-us')
+
   $('#forms').append('<hr><h1>datetime validation check</h1><form id="form2"></form>')
 
   var el       = $('#form2')
@@ -157,6 +161,8 @@ QUnit.test('datetime validation check', assert => {
 
   assert.equal(el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true )
 
+  App.i18n.set('de-de')
+
   params = App.ControllerForm.params(el)
   errors = form.validate(params)
   test_errors = {
@@ -166,11 +172,13 @@ QUnit.test('datetime validation check', assert => {
   App.ControllerForm.validate({ errors: errors, form: el })
 
   assert.equal(el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true, 'check datetime1 no has-error')
-  assert.equal(el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check datetime1 error message')
+  assert.equal(el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), 'ist erforderlich', 'check datetime1 error message')
 
 });
 
 QUnit.test('date validation check', assert => {
+
+  App.i18n.set('en-us')
 
   $('#forms').append('<hr><h1>date validation check</h1><form id="form3"></form>')
 
@@ -251,6 +259,8 @@ QUnit.test('date validation check', assert => {
 });
 
 QUnit.test( "datetime selector check", assert => {
+
+  App.i18n.set('en-us')
 
   $('#forms').append('<hr><h1>datetime selector check</h1><form id="form4"></form>')
 

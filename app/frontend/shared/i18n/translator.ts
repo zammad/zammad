@@ -9,7 +9,10 @@ export class Translator {
     this.translationMap = translationMap
   }
 
-  translate(source: string, ...args: Array<number | string>): string {
+  translate(
+    source: string,
+    ...args: Array<number | string | undefined | null>
+  ): string {
     let target = this.translationMap.get(source) || source
 
     args.forEach((arg) => {

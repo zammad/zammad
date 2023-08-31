@@ -90,10 +90,10 @@ returns
     return if !@sync
     return if !@sync['pages']
 
-    older_import = 0
-    older_import_max = 12
-
     @sync['pages'].each do |page_to_sync_id, page_to_sync_params|
+      older_import = 0
+      older_import_max = 12
+
       page = get_page(page_to_sync_id)
       next if !page
       next if page_to_sync_params['group_id'].blank?

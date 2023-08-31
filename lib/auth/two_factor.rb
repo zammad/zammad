@@ -5,7 +5,7 @@ class Auth::TwoFactor
   attr_reader :user, :all_authentication_methods
 
   def self.authentication_method_classes
-    @authentication_method_classes ||= Auth::TwoFactor::AuthenticationMethod.descendants
+    @authentication_method_classes ||= Auth::TwoFactor::AuthenticationMethod.descendants.sort_by(&:name)
   end
 
   def initialize(user)

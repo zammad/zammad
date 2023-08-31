@@ -1,53 +1,13 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
-  attr_accessor :mail, :content_type
-
+class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
   EXPRESSION_MIME      = %r{application/(x-pkcs7|pkcs7)-mime}i
   EXPRESSION_SIGNATURE = %r{(application/(x-pkcs7|pkcs7)-signature|signed-data)}i
 
   OPENSSL_PKCS7_VERIFY_FLAGS = OpenSSL::PKCS7::NOVERIFY | OpenSSL::PKCS7::NOINTERN
 
-  def initialize(mail)
-    super()
-
-    @mail = mail
-    @content_type = mail[:mail_instance].content_type
-  end
-
-  def process
-    return if !process?
-
-    initialize_article_preferences
-    decrypt
-    verify_signature
-    log
-  end
-
-  def initialize_article_preferences
-    article_preferences[:security] = {
-      type:       'S/MIME',
-      sign:       {
-        success: false,
-        comment: nil,
-      },
-      encryption: {
-        success: false,
-        comment: nil,
-      }
-    }
-  end
-
-  def article_preferences
-    @article_preferences ||= begin
-      key = :'x-zammad-article-preferences'
-      mail[ key ] ||= {}
-      mail[ key ]
-    end
-  end
-
-  def process?
-    signed? || smime?
+  def type
+    'S/MIME'
   end
 
   def signed?(check_content_type = content_type)
@@ -65,16 +25,17 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
     end
   end
 
-  def smime?(check_content_type = content_type)
+  def encrypted?(check_content_type = content_type)
     EXPRESSION_MIME.match?(check_content_type)
   end
 
   def decrypt
-    return if !smime?
+    return if !encrypted?
 
     success = false
-    comment = __('Private key for decryption could not be found.')
-    ::SMIMECertificate.where.not(private_key: [nil, '']).find_each do |cert|
+    comment = __('The private key for decryption could not be found.')
+
+    decryption_certificates.each do |cert|
       key = OpenSSL::PKey::RSA.new(cert.private_key, cert.private_key_secret)
 
       begin
@@ -83,30 +44,29 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
         next
       end
 
-      parse_new_mail(decrypted_data)
+      parse_decrypted_mail(decrypted_data)
 
       success = true
-      comment = cert.subject
-      if cert.expired?
-        comment += " (Certificate #{cert.fingerprint} with start date #{cert.not_before_at} and end date #{cert.not_after_at} expired!)"
+      comment = cert.parsed.subject.to_s
+      if !cert.parsed.usable?
+        comment += " (Certificate #{cert.fingerprint} with start date #{cert.parsed.not_before} and end date #{cert.parsed.not_after} expired!)"
       end
 
-      # overwrite content_type for signature checking
-      @content_type = mail[:mail_instance].content_type
       break
     end
 
-    article_preferences[:security][:encryption] = {
-      success: success,
-      comment: comment,
-    }
+    set_article_preferences(
+      operation: :encryption,
+      comment:   comment,
+      success:   success,
+    )
   end
 
   def verify_signature
     return if !signed?
 
     success = false
-    comment = __('Certificate for verification could not be found.')
+    comment = __('The certificate for verification could not be found.')
 
     result = verify_certificate_chain(verify_sign_p7enc.certificates)
     if result.present?
@@ -114,7 +74,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
       comment = result
 
       if signed_type == 'wrapped'
-        parse_new_mail(verify_sign_p7enc.data)
+        parse_decrypted_mail(verify_sign_p7enc.data)
       end
 
       mail[:attachments].delete_if do |attachment|
@@ -123,30 +83,33 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
 
       if !sender_is_signer?
         success = false
-        comment = __('Message is not signed by sender.')
+        comment = __('This message was not signed by its sender.')
       end
     end
 
-    article_preferences[:security][:sign] = {
-      success: success,
-      comment: comment,
-    }
+    set_article_preferences(
+      operation: :sign,
+      comment:   comment,
+      success:   success,
+    )
   end
 
   def verify_certificate_chain(certificates)
     return if certificates.blank?
 
-    subjects = certificates.map(&:subject).map(&:to_s)
-    return if subjects.blank?
+    subjects       = certificates.map(&:subject)
+    subject_hashes = subjects.map { |subject| subject.hash.to_s(16) }
+    return if subject_hashes.blank?
 
-    existing_certs = ::SMIMECertificate.where(subject: subjects).sort_by do |certificate|
+    existing_certs = ::SMIMECertificate.where(subject_hash: subject_hashes).sort_by do |certificate|
       # ensure that we have the same order as the certificates in the mail
-      subjects.index(certificate.subject)
+      subject_hashes.index(certificate.parsed.subject.hash.to_s(16))
     end
     return if existing_certs.blank?
 
-    if subjects.size > existing_certs.size
-      Rails.logger.debug { "S/MIME mail signed with chain '#{subjects.join(', ')}' but only found '#{existing_certs.map(&:subject).join(', ')}' in database." }
+    if subject_hashes.size > existing_certs.size
+      existing_certs_subjects = existing_certs.map { |cert| cert.parsed.subject.to_s }.join(', ')
+      Rails.logger.debug { "S/MIME mail signed with chain '#{subjects.join(', ')}' but only found '#{existing_certs_subjects}' in database." }
     end
 
     begin
@@ -160,9 +123,9 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
       return if !success
 
       existing_certs.map do |existing_cert|
-        result = existing_cert.subject
-        if existing_cert.expired?
-          result += " (Certificate #{existing_cert.fingerprint} with start date #{existing_cert.not_before_at} and end date #{existing_cert.not_after_at} expired!)"
+        result = existing_cert.parsed.subject.to_s
+        if !existing_cert.parsed.usable?
+          result += " (Certificate #{existing_cert.fingerprint} with start date #{existing_cert.parsed.not_before} and end date #{existing_cert.parsed.not_after} expired!)"
         end
         result
       end.join(', ')
@@ -183,55 +146,10 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
     @decrypt_p7enc ||= OpenSSL::PKCS7.read_smime(mail[:raw])
   end
 
-  def log
-    %i[sign encryption].each do |action|
-      result = article_preferences[:security][action]
-      next if result.blank?
-
-      if result[:success]
-        status = 'success'
-      elsif result[:comment].blank?
-        # means not performed
-        next
-      else
-        status = 'failed'
-      end
-
-      HttpLog.create(
-        direction:     'in',
-        facility:      'S/MIME',
-        url:           "#{mail[:from]} -> #{mail[:to]}",
-        status:        status,
-        ip:            nil,
-        request:       {
-          message_id: mail[:message_id],
-        },
-        response:      article_preferences[:security],
-        method:        action,
-        created_by_id: 1,
-        updated_by_id: 1,
-      )
-    end
-  end
-
-  def parse_new_mail(new_mail)
-    mail[:mail_instance].header['Content-Type'] = nil
-    mail[:mail_instance].header['Content-Disposition'] = nil
-    mail[:mail_instance].header['Content-Transfer-Encoding'] = nil
-    mail[:mail_instance].header['Content-Description'] = nil
-
-    new_raw_mail = "#{mail[:mail_instance].header}#{new_mail}"
-
-    mail_new = Channel::EmailParser.new.parse(new_raw_mail)
-    mail_new.each do |local_key, local_value|
-      mail[local_key] = local_value
-    end
-  end
-
   def sender_is_signer?
     signers = email_addresses_from_subject_alt_name
 
-    result = signers.include?(mail[:mail_instance].from.first)
+    result = signers.include?(mail[:mail_instance].from.first.downcase)
     Rails.logger.warn { "S/MIME mail #{mail[:message_id]} signed by #{signers.join(', ')} but sender is #{mail[:mail_instance].from.first}" } if !result
 
     result
@@ -256,5 +174,17 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
     end
 
     result
+  end
+
+  def decryption_certificates
+    certs = []
+
+    mail[:mail_instance].to.each { |to| certs += ::SMIMECertificate.find_by_email_address(to, filter: { key: 'private', usage: :encryption }) }
+
+    if mail[:mail_instance].cc.present?
+      mail[:mail_instance].cc.each { |cc| certs += ::SMIMECertificate.find_by_email_address(cc, filter: { key: 'private', usage: :encryption }) }
+    end
+
+    certs
   end
 end

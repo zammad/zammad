@@ -1252,6 +1252,7 @@ RSpec.describe User, type: :model do
                      'History'                            => { 'created_by_id' => 6 },
                      'Webhook'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Overview'                           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
+                     'PGPKey'                             => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'ActivityStream'                     => { 'created_by_id' => 0 },
                      'StatsStore'                         => { 'created_by_id' => 0 },
                      'TextModule'                         => { 'created_by_id' => 0, 'updated_by_id' => 0 },
@@ -1724,7 +1725,7 @@ RSpec.describe User, type: :model do
               expect do
                 user.update(mobile: '2345678901')
                 perform_enqueued_jobs commit_transaction: true
-              end.not_to change { logs.map(&:reload).map(&:attributes) }
+              end.not_to change { logs.map { |x| x.reload.attributes } }
             end
           end
         end
@@ -1775,7 +1776,7 @@ RSpec.describe User, type: :model do
 
     context 'when creating users' do
       it 'does not allow creation without primary organization but secondary organizations' do
-        expect { create(:agent, organization: nil, organizations: [create(:organization)]) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations are only allowed when the primary organization is given.')
+        expect { create(:agent, organization: nil, organizations: create_list(:organization, 1)) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations are only allowed when the primary organization is given.')
       end
 
       it 'does not allow creation with more than 250 organizations' do

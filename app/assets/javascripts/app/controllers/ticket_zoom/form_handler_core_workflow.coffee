@@ -1,4 +1,5 @@
 class App.FormHandlerCoreWorkflow
+  @DEBUG: false
 
   # contains the current form params state to prevent mass requests
   coreWorkflowParams = {}
@@ -8,6 +9,10 @@ class App.FormHandlerCoreWorkflow
 
   # contains the restriction values for each attribute of each form
   coreWorkflowRestrictions = {}
+
+  # core workflow will run for every attribute
+  # we cache the article params per dispatch because they are expensive to get
+  articleParamsCache = {}
 
   # defines the objects and screen for which Core Workflow is active
   coreWorkflowScreens = {
@@ -233,6 +238,13 @@ class App.FormHandlerCoreWorkflow
       else
         ui.changeable(field, form)
 
+  # changes flags
+  @changeFlags: (form, ui, data) ->
+    return if _.isEmpty(data)
+
+    for key, value of data
+      ui.setFlag(key, value)
+
   # executes individual js commands of the Core Workflow engine
   @executeEval: (form, ui, data) ->
     return if _.isEmpty(data)
@@ -248,14 +260,17 @@ class App.FormHandlerCoreWorkflow
 
   # runs a complete workflow based on a request result and the form params of the form handler
   @runWorkflow: (data, classname, form, ui, attributes, params) ->
+    console.time("runWorkflow/#{classname}/#{ui.model.className}/#{ui.screen}") if @DEBUG
     App.Collection.loadAssets(data.assets)
     App.FormHandlerCoreWorkflow.restrictValues(classname, form, ui, attributes, params, data)
     App.FormHandlerCoreWorkflow.fillIn(classname, form, ui, attributes, params, data.fill_in)
     App.FormHandlerCoreWorkflow.changeVisibility(form, ui, data.visibility)
     App.FormHandlerCoreWorkflow.changeMandatory(form, ui, data.mandatory, data.visibility)
     App.FormHandlerCoreWorkflow.changeReadonly(form, ui, data.readonly)
+    App.FormHandlerCoreWorkflow.changeFlags(form, ui, data.flags)
     App.FormHandlerCoreWorkflow.executeEval(form, ui, data.eval)
     App.FormHandlerCoreWorkflow.runCallbacks(ui)
+    console.timeEnd("runWorkflow/#{classname}/#{ui.model.className}/#{ui.screen}") if @DEBUG
 
   # loads the request data and prepares the run of the workflow data
   @runRequest: (data) ->
@@ -296,7 +311,7 @@ class App.FormHandlerCoreWorkflow
   @cleanParams: (params_ref) ->
     params = $.extend(true, {}, params_ref)
     delete params.customer_id_completion
-    delete params.tags
+    delete params.body
     delete params.formSenderType
     return params
 
@@ -334,7 +349,16 @@ class App.FormHandlerCoreWorkflow
           return
       )
 
-  @run: (params_ref, attribute, attributes, classname, form, ui) ->
+  @article: (ui, dispatchID) ->
+    return articleParamsCache[dispatchID] if articleParamsCache[dispatchID]
+
+    article = ui.articleParamsCallback()
+    if article?.body
+      article.body = App.Utils.html2text(article.body)
+
+    articleParamsCache[dispatchID] = article
+
+  @run: (params_ref, attribute, attributes, classname, form, ui, dispatchID = 'default') ->
 
     # skip on blacklisted tags
     return if _.contains(['ticket_selector', 'core_workflow_condition', 'core_workflow_perform'], attribute.tag)
@@ -344,6 +368,8 @@ class App.FormHandlerCoreWorkflow
 
     # get params and add id from ui if needed
     params = App.FormHandlerCoreWorkflow.cleanParams(params_ref)
+    if ui.articleParamsCallback
+      params.article = App.FormHandlerCoreWorkflow.article(ui, dispatchID)
 
     # add object id for edit screens
     if ui?.params?.id && ui.screen.match(/edit/)

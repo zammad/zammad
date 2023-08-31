@@ -4,7 +4,7 @@
   </a>
   <h3 title="<%- @Ti('Name') %>"><%= @user.displayName() %></h3>
   <% if @user.organization_id: %>
-    <a href="#organization/profile/<%- @user.organization_id %>"><%- @P(@user, 'organization_id') %></a>
+    <a href="#organization/profile/<%- @user.organization_id %>" class="organization-popover" data-id="<%= @user.organization_id %>" data-popover-show-avatar="true"><%- @P(@user, 'organization_id') %></a>
   <% end %>
 </div>
 <% for row in @userData: %>

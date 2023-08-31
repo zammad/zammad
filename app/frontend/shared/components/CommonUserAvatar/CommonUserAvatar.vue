@@ -112,7 +112,7 @@ const label = computed(() => {
     :icon="icon"
     :class="className"
     :image="image"
-    :vip="isVip"
+    :vip-icon="isVip ? 'mobile-crown' : undefined"
     :decorative="decorative"
     :aria-label="label"
   />

@@ -1,4 +1,4 @@
-FROM node:16.18.0-slim as node
+FROM node:20-slim as node
 
 
 FROM ruby:3.1.3-slim AS builder

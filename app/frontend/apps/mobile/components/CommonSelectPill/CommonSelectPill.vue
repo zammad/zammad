@@ -2,8 +2,8 @@
 
 <script setup lang="ts">
 import CommonSelect from '#mobile/components/CommonSelect/CommonSelect.vue'
-import type { SelectOption } from '#shared/components/Form/fields/FieldSelect/types.ts'
 import { computed } from 'vue'
+import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 
 const props = defineProps<{
   modelValue?: string | number | boolean | (string | number | boolean)[] | null

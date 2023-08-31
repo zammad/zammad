@@ -66,6 +66,12 @@ module HasGroups
   #
   # @return [Boolean]
   def group_access?(group_id, access)
+    Auth::RequestCache.fetch_value("group_access/#{cache_key_with_version}/#{group_id}/#{access}") do
+      group_access_uncached?(group_id, access)
+    end
+  end
+
+  def group_access_uncached?(group_id, access)
     return false if !active?
     return false if !groups_access_permission?
 

@@ -4,7 +4,8 @@ import createInput from '#shared/form/core/createInput.ts'
 import FieldSecurity from './FieldSecurity.vue'
 
 const fieldDefinition = createInput(FieldSecurity, [
-  'allowed',
+  'securityAllowed',
+  'securityDefaultOptions',
   'securityMessages',
 ])
 

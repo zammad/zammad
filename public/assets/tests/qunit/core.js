@@ -657,6 +657,16 @@ QUnit.test('difference', assert => {
 
   item = difference(undefined, {})
   assert.deepEqual(item, {})
+
+  try {
+    a = { a: { a: 1 } }
+    b = { b: { b: a } }
+    a.a.a = b
+    item = difference(a, a)
+    assert.deepEqual(item, {})
+  } catch(error) {
+    assert.deepEqual(false, true, 'recursion failed: ' + error)
+  }
 });
 
 QUnit.test('auth - not existing user', assert => {

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormFieldContext } from '../../types/field.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
 export interface FieldTagsProps {
   options: FormFieldContext['options']

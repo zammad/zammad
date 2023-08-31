@@ -381,6 +381,45 @@ RSpec.describe Ticket::Selector::Sql do
         end
       end
 
+      describe "operator 'is any of'" do
+        let(:operator) { 'is any of' }
+
+        context 'with matching string' do
+          let(:value) { ['Some really nice title', 'another example'] }
+
+          include_examples 'finds the ticket'
+        end
+
+        # Skip for MySQL as it handles IN case insensitive.
+        context 'with matching upcased string', db_adapter: :postgresql do
+          let(:value) { ['SOME really nice title', 'another example'] }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { ['Another title', 'Example'] }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with empty value' do
+          let(:ticket) { create(:ticket, title: '', owner: agent, group: Group.first) }
+
+          context 'with non-matching filter value' do
+            let(:value) { ['Another title', 'Example'] }
+
+            include_examples 'does not find the ticket'
+          end
+
+          context 'with empty filter value' do
+            let(:value) { [] }
+
+            include_examples 'finds the ticket'
+          end
+        end
+      end
+
       describe "operator 'is not'" do
         let(:operator) { 'is not' }
 
@@ -420,6 +459,45 @@ RSpec.describe Ticket::Selector::Sql do
         end
       end
 
+      describe "operator 'is none of'" do
+        let(:operator) { 'is none of' }
+
+        context 'with matching string' do
+          let(:value) { ['Some really nice title', 'another example'] }
+
+          include_examples 'does not find the ticket'
+        end
+
+        # Skip for MySQL as it handles IN case insensitive.
+        context 'with matching upcased string', db_adapter: :postgresql do
+          let(:value) { %w[SO SOME] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { %w[A B] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with empty value' do
+          let(:ticket) { create(:ticket, title: '', owner: agent, group: Group.first) }
+
+          context 'with non-matching filter value' do
+            let(:value) { %w[A B] }
+
+            include_examples 'finds the ticket'
+          end
+
+          context 'with empty filter value' do
+            let(:value) { [] }
+
+            include_examples 'does not find the ticket'
+          end
+        end
+      end
+
       describe "operator 'starts with'" do
         let(:operator) { 'starts with' }
 
@@ -437,6 +515,28 @@ RSpec.describe Ticket::Selector::Sql do
 
         context 'with non-matching string' do
           let(:value) { 'Another' }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+      describe "operator 'starts with one of'" do
+        let(:operator) { 'starts with one of' }
+
+        context 'with matching string' do
+          let(:value) { ['Some really', 'Some'] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { ['SOME', 'Some really',] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { %w[Another Example] }
 
           include_examples 'does not find the ticket'
         end
@@ -464,6 +564,160 @@ RSpec.describe Ticket::Selector::Sql do
         end
       end
 
+      describe "operator 'ends with one of'" do
+        let(:operator) { 'ends with one of' }
+
+        context 'with matching string' do
+          let(:value) { ['title', 'nice title'] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { ['TITLE', 'NICE title'] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { ['Another title', 'Example'] }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+      describe "operator 'matches regex'", mariadb: true do
+        let(:operator) { 'matches regex' }
+
+        context 'with matching string' do
+          let(:value) { '^[a-s]' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { '^[A-S]' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { '^[t-z]' }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+      describe "operator 'does not match regex'", mariadb: true do
+        let(:operator) { 'does not match regex' }
+
+        context 'with matching string' do
+          let(:value) { '^[a-s]' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { '^[A-S]' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { '^[t-z]' }
+
+          include_examples 'finds the ticket'
+        end
+      end
+
+    end
+  end
+
+  describe '.valid?' do
+    let(:instance) { described_class.new(selector: { operator: 'AND', conditions: [ condition ] }, options: {}) }
+
+    context 'with valid conditions' do
+      let(:condition) do
+        {
+          name:          'ticket.organization_id',
+          operator:      'is',
+          pre_condition: 'not_set',
+        }
+      end
+
+      it 'validates' do
+        expect(instance.valid?).to be true
+      end
+    end
+
+    context 'with wrong ticket attribute' do
+      let(:condition) do
+        {
+          name:          'ticket.unknown_field',
+          operator:      'is',
+          pre_condition: 'not_set',
+        }
+      end
+
+      it 'does not validate' do
+        expect(instance.valid?).to be false
+      end
+    end
+
+    context 'with unknown operator' do
+      let(:condition) do
+        {
+          name:     'ticket.title',
+          operator: 'looks nice',
+        }
+      end
+
+      it 'does not validate' do
+        expect(instance.valid?).to be false
+      end
+    end
+
+    context 'with invalid regular expression', mariadb: true do
+      let(:condition) do
+        {
+          name:     'ticket.title',
+          operator: 'matches regex',
+          value:    '(',
+        }
+      end
+
+      it 'does not validate' do
+        expect(instance.valid?).to be false
+      end
+    end
+
+  end
+
+  describe 'Error 500 if overview with "out of office replacement" filter is set to "specific user" #4599' do
+    let(:agent)                 { create(:agent) }
+    let(:agent_ooo)             { create(:agent, :ooo, ooo_agent: agent_ooo_replacement) }
+    let(:agent_ooo_replacement) { create(:agent) }
+    let(:condition) do
+      {
+        'ticket.out_of_office_replacement_id': {
+          operator:         'is',
+          pre_condition:    'specific',
+          value:            [
+            agent_ooo_replacement.id.to_s,
+          ],
+          value_completion: ''
+        }
+      }
+    end
+
+    before do
+      agent_ooo
+    end
+
+    it 'calculates the out of office user ids for the out of office replacement agent' do
+      _, bind_params = Ticket.selector2sql(condition)
+
+      expect(bind_params.flatten).to include(agent_ooo.id)
     end
   end
 end

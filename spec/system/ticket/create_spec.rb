@@ -18,23 +18,57 @@ RSpec.describe 'Ticket Create', type: :system do
   end
 
   context 'when using the sidebar' do
-    before do
-      visit 'ticket/create'
-      use_template(create(:template, :dummy_data, customer: create(:customer, :with_org)))
+    context 'when using a template' do
+      before do
+        visit 'ticket/create'
+        use_template(create(:template, :dummy_data, customer: create(:customer, :with_org)))
+      end
+
+      it 'does show the edit link for the customer' do
+        click '.tabsSidebar-tab[data-tab=customer]'
+        click '#userAction'
+        click_link 'Edit Customer'
+        modal_ready
+      end
+
+      it 'does show the edit link for the organization' do
+        click '.tabsSidebar-tab[data-tab=organization]'
+        click '#userAction'
+        click_link 'Edit Organization'
+        modal_ready
+      end
     end
 
-    it 'does show the edit link for the customer' do
-      click '.tabsSidebar-tab[data-tab=customer]'
-      click '#userAction'
-      click_link 'Edit Customer'
-      modal_ready
-    end
+    %w[idoit gitlab github].each do |service_name|
+      it "#{service_name} tab is hidden" do
+        visit 'ticket/create'
 
-    it 'does show the edit link for the organization' do
-      click '.tabsSidebar-tab[data-tab=organization]'
-      click '#userAction'
-      click_link 'Edit Organization'
-      modal_ready
+        expect(page).to have_no_css(".tabsSidebar-tab[data-tab=#{service_name}]")
+      end
+
+      context "when #{service_name} is enabled" do
+        before do
+          Setting.set("#{service_name}_integration", true)
+        end
+
+        context 'when agent' do
+          it "#{service_name} tab is visible" do
+            visit 'ticket/create'
+
+            expect(page).to have_css(".tabsSidebar-tab[data-tab=#{service_name}]")
+          end
+        end
+
+        context 'when customer', authenticated_as: :customer do
+          let(:customer) { create(:customer) }
+
+          it "#{service_name} tab is hidden" do
+            visit 'customer_ticket_new'
+
+            expect(page).to have_no_css(".tabsSidebar-tab[data-tab=#{service_name}]")
+          end
+        end
+      end
     end
   end
 
@@ -151,302 +185,6 @@ RSpec.describe 'Ticket Create', type: :system do
 
   context 'when using text modules' do
     include_examples 'text modules', path: 'ticket/create'
-  end
-
-  context 'S/MIME', authenticated_as: :authenticate do
-    def authenticate
-      Setting.set('smime_integration', true)
-      Setting.set('smime_config', smime_config) if defined?(smime_config)
-
-      current_user
-    end
-
-    context 'no certificate present' do
-      let!(:template)    { create(:template, :dummy_data) }
-      let(:current_user) { true }
-
-      it 'has no security selections' do
-        visit 'ticket/create'
-
-        within(:active_content) do
-          use_template(template)
-
-          expect(page).to have_no_css('div.js-securityEncrypt.btn--active')
-          expect(page).to have_no_css('div.js-securitySign.btn--active')
-          click '.js-submit'
-
-          expect(page).to have_css('.ticket-article-item', count: 1)
-
-          open_article_meta
-
-          expect(page).to have_no_css('span', text: 'Signed')
-          expect(page).to have_no_css('span', text: 'Encrypted')
-
-          security_result = Ticket::Article.last.preferences['security']
-          expect(security_result['encryption']['success']).to be_nil
-          expect(security_result['sign']['success']).to be_nil
-        end
-      end
-    end
-
-    context 'private key configured' do
-      let(:current_user) { agent }
-      let!(:template) { create(:template, :dummy_data, group: group, owner: agent, customer: customer) }
-
-      let(:system_email_address) { 'smime1@example.com' }
-      let(:email_address) { create(:email_address, email: system_email_address) }
-      let(:group)         { create(:group, email_address: email_address) }
-      let(:agent_groups)  { [group] }
-      let(:agent)         { create(:agent, groups: agent_groups) }
-
-      before do
-        create(:smime_certificate, :with_private, fixture: system_email_address)
-      end
-
-      context 'recipient certificate present' do
-
-        let(:recipient_email_address) { 'smime2@example.com' }
-        let(:customer) { create(:customer, email: recipient_email_address) }
-
-        before do
-          create(:smime_certificate, fixture: recipient_email_address)
-        end
-
-        it 'plain' do
-          visit 'ticket/create'
-
-          within(:active_content) do
-            use_template(template)
-
-            # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active')
-            expect(page).to have_css('div.js-securitySign.btn--active')
-
-            # deactivate encryption and signing
-            click '.js-securityEncrypt'
-            click '.js-securitySign'
-
-            click '.js-submit'
-
-            expect(page).to have_css('.ticket-article-item', count: 1)
-
-            open_article_meta
-
-            expect(page).to have_no_css('span', text: 'Signed')
-            expect(page).to have_no_css('span', text: 'Encrypted')
-
-            security_result = Ticket::Article.last.preferences['security']
-            expect(security_result['encryption']['success']).to be_nil
-            expect(security_result['sign']['success']).to be_nil
-          end
-        end
-
-        it 'signed' do
-          visit 'ticket/create'
-
-          within(:active_content) do
-            use_template(template)
-
-            # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active')
-            expect(page).to have_css('div.js-securitySign.btn--active')
-
-            # deactivate encryption
-            click '.js-securityEncrypt'
-
-            click '.js-submit'
-
-            expect(page).to have_css('.ticket-article-item', count: 1)
-
-            open_article_meta
-
-            expect(page).to have_css('span', text: 'Signed')
-            expect(page).to have_no_css('span', text: 'Encrypted')
-
-            security_result = Ticket::Article.last.preferences['security']
-            expect(security_result['encryption']['success']).to be_nil
-            expect(security_result['sign']['success']).to be true
-          end
-        end
-
-        it 'encrypted' do
-          visit 'ticket/create'
-
-          within(:active_content) do
-            use_template(template)
-
-            # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active')
-            expect(page).to have_css('div.js-securitySign.btn--active')
-
-            # deactivate signing
-            click '.js-securitySign'
-
-            click '.js-submit'
-
-            expect(page).to have_css('.ticket-article-item', count: 1)
-
-            open_article_meta
-
-            expect(page).to have_no_css('span', text: 'Signed')
-            expect(page).to have_css('span', text: 'Encrypted')
-
-            security_result = Ticket::Article.last.preferences['security']
-            expect(security_result['encryption']['success']).to be true
-            expect(security_result['sign']['success']).to be_nil
-          end
-        end
-
-        it 'signed and encrypted' do
-          visit 'ticket/create'
-
-          within(:active_content) do
-            use_template(template)
-
-            # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active')
-            expect(page).to have_css('div.js-securitySign.btn--active')
-
-            click '.js-submit'
-
-            expect(page).to have_css('.ticket-article-item', count: 1)
-
-            open_article_meta
-
-            expect(page).to have_css('span', text: 'Signed')
-            expect(page).to have_css('span', text: 'Encrypted')
-
-            security_result = Ticket::Article.last.preferences['security']
-            expect(security_result['encryption']['success']).to be true
-            expect(security_result['sign']['success']).to be true
-          end
-        end
-
-        context 'Group default behavior' do
-
-          let(:smime_config) { {} }
-
-          shared_examples 'security defaults example' do |sign:, encrypt:|
-
-            it "security defaults sign: #{sign}, encrypt: #{encrypt}" do
-              within(:active_content) do
-                if sign
-                  expect(page).to have_css('.js-securitySign.btn--active')
-                else
-                  expect(page).to have_no_css('.js-securitySign.btn--active')
-                end
-                if encrypt
-                  expect(page).to have_css('.js-securityEncrypt.btn--active')
-                else
-                  expect(page).to have_no_css('.js-securityEncrypt.btn--active')
-                end
-              end
-            end
-          end
-
-          shared_examples 'security defaults' do |sign:, encrypt:|
-
-            before do
-              visit 'ticket/create'
-
-              within(:active_content) do
-                use_template(template)
-              end
-            end
-
-            include_examples 'security defaults example', sign: sign, encrypt: encrypt
-          end
-
-          shared_examples 'security defaults group change' do |sign:, encrypt:|
-
-            before do
-              visit 'ticket/create'
-
-              within(:active_content) do
-                use_template(template)
-
-                select new_group.name, from: 'group_id'
-              end
-            end
-
-            include_examples 'security defaults example', sign: sign, encrypt: encrypt
-          end
-
-          context 'not configured' do
-            it_behaves_like 'security defaults', sign: true, encrypt: true
-          end
-
-          context 'configuration present' do
-
-            let(:smime_config) do
-              {
-                'group_id' => group_defaults
-              }
-            end
-
-            let(:group_defaults) do
-              {
-                'default_encryption' => {
-                  group.id.to_s => default_encryption,
-                },
-                'default_sign'       => {
-                  group.id.to_s => default_sign,
-                }
-              }
-            end
-
-            let(:default_sign)       { true }
-            let(:default_encryption) { true }
-
-            shared_examples 'sign and encrypt variations' do |check_examples_name|
-
-              it_behaves_like check_examples_name, sign: true, encrypt: true
-
-              context 'no value' do
-                let(:group_defaults) { {} }
-
-                it_behaves_like check_examples_name, sign: true, encrypt: true
-              end
-
-              context 'signing disabled' do
-                let(:default_sign) { false }
-
-                it_behaves_like check_examples_name, sign: false, encrypt: true
-              end
-
-              context 'encryption disabled' do
-                let(:default_encryption) { false }
-
-                it_behaves_like check_examples_name, sign: true, encrypt: false
-              end
-            end
-
-            context 'same Group' do
-              it_behaves_like 'sign and encrypt variations', 'security defaults'
-            end
-
-            context 'Group change' do
-              let(:new_group) { create(:group, email_address: email_address) }
-
-              let(:agent_groups) { [group, new_group] }
-
-              let(:group_defaults) do
-                {
-                  'default_encryption' => {
-                    new_group.id.to_s => default_encryption,
-                  },
-                  'default_sign'       => {
-                    new_group.id.to_s => default_sign,
-                  }
-                }
-              end
-
-              it_behaves_like 'sign and encrypt variations', 'security defaults group change'
-            end
-          end
-        end
-      end
-    end
   end
 
   describe 'object manager attributes maxlength', authenticated_as: :authenticate, db_strategy: :reset do

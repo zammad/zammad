@@ -37,6 +37,23 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'consistent-return': 'off', // allow implicit return
 
+    'prefer-destructuring': [
+      'error',
+      {
+        VariableDeclarator: {
+          array: false,
+          object: true,
+        },
+        AssignmentExpression: {
+          array: false,
+          object: true,
+        },
+      },
+      {
+        enforceForRenamedProperties: false,
+      },
+    ],
+
     // Loosen AirBnB's strict rules a bit to allow 'for .. of'
     'no-restricted-syntax': [
       'error',
@@ -58,6 +75,17 @@ module.exports = {
     'import/extensions': ['error', 'ignorePackages'],
 
     'import/prefer-default-export': 'off',
+    'import/no-restricted-paths': [
+      'error',
+      {
+        zones: [
+          {
+            target: './app/frontend/shared',
+            from: './app/frontend/apps',
+          },
+        ],
+      },
+    ],
 
     // TODO: Add import rule to not allow that "app/**/modules/**" can import from each other and also add a rule that apps/** can not import from other apps.
 
@@ -144,7 +172,6 @@ module.exports = {
         'zammad/zammad-detect-translatable-string': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
-        'import/first': 'off',
       },
     },
     // rules that require type information

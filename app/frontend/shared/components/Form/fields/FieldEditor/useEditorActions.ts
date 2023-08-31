@@ -1,16 +1,17 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { i18n } from '#shared/i18n.ts'
-import { convertFileList } from '#shared/utils/files.ts'
 import type { ChainedCommands } from '@tiptap/core'
 import type { Editor } from '@tiptap/vue-3'
-import { computed, onUnmounted } from 'vue'
+import { computed, nextTick, onUnmounted } from 'vue'
 import type { ShallowRef } from 'vue'
 
+import testFlags from '#shared/utils/testFlags.ts'
 import { PLUGIN_NAME as KnowledgeBaseMentionName } from './suggestions/KnowledgeBaseSuggestion.ts'
 import { PLUGIN_NAME as TextModuleMentionName } from './suggestions/TextModuleSuggestion.ts'
 import { PLUGIN_NAME as UserMentionName } from './suggestions/UserMention.ts'
 import type { EditorContentType } from './types.ts'
+import { convertInlineImages } from './utils.ts'
 
 export interface EditorButton {
   name: string
@@ -62,8 +63,10 @@ export default function useEditorActions(
 
   onUnmounted(() => {
     fileInput?.remove()
+    fileInput = null
   })
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   const getActionsList = (): EditorButton[] => {
     return [
       {
@@ -102,12 +105,16 @@ export default function useEditorActions(
         command: focused((c) => {
           const input = getInputForImage()
           input.onchange = async () => {
-            if (!input.files?.length) return
-            const files = await convertFileList(input.files)
+            if (!input.files?.length || !editor.value) return
+            const files = await convertInlineImages(
+              input.files,
+              editor.value.view.dom,
+            )
             c.setImages(files).run()
             input.value = ''
+            nextTick(() => testFlags.set('editor.inlineImagesAdded'))
           }
-          input.click()
+          if (!VITE_TEST_MODE) input.click()
         }),
       },
       {

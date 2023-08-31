@@ -133,6 +133,7 @@ class Ticket::Selector::SearchIndex < Ticket::Selector::Base
       day:    'd',
       year:   'y',
       month:  'M',
+      week:   'w',
       hour:   'h',
       minute: 'm',
     }

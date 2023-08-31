@@ -45,7 +45,7 @@ RSpec.describe Gql::Mutations::OnlineNotification::Seen, :aggregate_failures, ty
         end
 
         it 'does not mark other notifications for the same object as seen' do
-          expect(other_notifications.map(&:reload).map(&:seen)).to all(be(false))
+          expect(other_notifications.map { |x| x.reload.seen }).to all(be(false))
         end
       end
 

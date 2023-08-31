@@ -43,10 +43,10 @@ class Sequencer::Unit::Base
   #  instance.id
   #
   # @return [Array<Symbol>] the list of all declared uses of a Unit.
-  def self.uses(*attributes, &)
+  def self.uses(...)
     declaration_accessor(
       key:        __method__,
-      attributes: attributes(*attributes, &)
+      attributes: attributes(...)
     ) do |attribute|
       use_getter(attribute)
     end
@@ -90,10 +90,10 @@ class Sequencer::Unit::Base
   #  instance.id
   #
   # @return [Array<Symbol>] the list of all declared optionals of a Unit.
-  def self.optional(*attributes, &)
+  def self.optional(...)
     declaration_accessor(
       key:        __method__,
-      attributes: attributes(*attributes, &)
+      attributes: attributes(...)
     ) do |attribute|
       use_getter(attribute)
     end
@@ -147,10 +147,10 @@ class Sequencer::Unit::Base
   #  self.action = :created
   #
   # @return [Array<Symbol>] the list of all declared provides of a Unit.
-  def self.provides(*attributes, &)
+  def self.provides(...)
     declaration_accessor(
       key:        __method__,
-      attributes: attributes(*attributes, &)
+      attributes: attributes(...)
     ) do |attribute|
       provide_setter(attribute)
     end

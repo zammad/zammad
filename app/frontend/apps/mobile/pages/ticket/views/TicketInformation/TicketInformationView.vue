@@ -106,7 +106,7 @@ const router = useRouter()
     as="tabs"
     controls="route-ticket-information-tabpanel"
     :options="types"
-    :model-value="(route.name as string)"
+    :model-value="route.name as string"
     @update:model-value="router.replace({ name: $event as string })"
   />
   <div

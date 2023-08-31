@@ -1186,7 +1186,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'if original owner has lost agent status' do
-          before { original_owner.roles = [create(:role)] }
+          before { original_owner.roles = create_list(:role, 1) }
 
           it 'resets to default user (id: 1)' do
             Rails.cache.clear
@@ -1227,7 +1227,7 @@ RSpec.describe Ticket, type: :model do
           end
 
           context 'if original owner has lost agent status' do
-            before { original_owner.roles = [create(:role)] }
+            before { original_owner.roles = create_list(:role, 1) }
 
             it 'does not change' do
               expect { create(:ticket_article, ticket: ticket) }
@@ -2155,10 +2155,11 @@ RSpec.describe Ticket, type: :model do
 
     context 'selectors' do
       let(:mention_group) { create(:group) }
-      let(:ticket_mentions)  { create(:ticket, group: mention_group) }
-      let(:ticket_normal)    { create(:ticket, group: mention_group) }
-      let(:user_mentions)    { create(:agent, groups: [mention_group]) }
-      let(:user_no_mentions) { create(:agent, groups: [mention_group]) }
+      let(:ticket_mentions)    { create(:ticket, group: mention_group) }
+      let(:ticket_normal)      { create(:ticket, group: mention_group) }
+      let(:user_mentions)      { create(:agent, groups: [mention_group]) }
+      let(:user_mentions_2)    { create(:agent, groups: [mention_group]) }
+      let(:user_no_mentions)   { create(:agent, groups: [mention_group]) }
 
       before do
         described_class.destroy_all
@@ -2176,7 +2177,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to contain_exactly(1, [ticket_normal].to_a)
+          .to contain_exactly(1, [ticket_normal])
       end
 
       it 'pre condition is not not_set' do
@@ -2188,7 +2189,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to contain_exactly(1, [ticket_mentions].to_a)
+          .to contain_exactly(1, [ticket_mentions])
       end
 
       it 'pre condition is current_user.id' do
@@ -2200,10 +2201,10 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: user_mentions))
-          .to contain_exactly(1, [ticket_mentions].to_a)
+          .to contain_exactly(1, [ticket_mentions])
       end
 
-      it 'pre condition is not current_user.id' do
+      it 'pre condition is not current_user.id (one mention on one ticket)' do
         condition = {
           'ticket.mention_user_ids' => {
             pre_condition: 'current_user.id',
@@ -2212,7 +2213,21 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: user_mentions))
-          .to contain_exactly(0, [])
+          .to contain_exactly(1, [ticket_normal])
+      end
+
+      it 'pre condition is not current_user.id (multiple mentions on one ticket)' do
+        create(:mention, mentionable: ticket_mentions, user: user_mentions_2)
+
+        condition = {
+          'ticket.mention_user_ids' => {
+            pre_condition: 'current_user.id',
+            operator:      'is not',
+          },
+        }
+
+        expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: user_mentions))
+          .to contain_exactly(1, [ticket_normal])
       end
 
       it 'pre condition is specific' do
@@ -2238,7 +2253,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to contain_exactly(0, [])
+          .to contain_exactly(1, [ticket_normal])
       end
     end
   end
@@ -2453,35 +2468,6 @@ RSpec.describe Ticket, type: :model do
         it 'returns false' do
           expect(ticket.reopen_after_certain_time?).to be false
         end
-      end
-    end
-  end
-
-  describe 'Automatic assignment assigns tickets in each group, not just the marked ones #4308' do
-    let(:ticket) { create(:ticket, group: Group.first, state: Ticket::State.find_by(name: 'closed')) }
-    let(:agent) { create(:agent, groups: [Group.first]) }
-
-    context 'when the condition does match' do
-      before do
-        Setting.set('ticket_auto_assignment', true)
-        Setting.set('ticket_auto_assignment_selector', { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.all.pluck(:id) } } })
-      end
-
-      it 'does auto assign' do
-        ticket.auto_assign(agent)
-        expect(ticket.reload.owner_id).to eq(agent.id)
-      end
-    end
-
-    context 'when the condition does not match' do
-      before do
-        Setting.set('ticket_auto_assignment', true)
-        Setting.set('ticket_auto_assignment_selector', { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } })
-      end
-
-      it 'does not auto assign' do
-        ticket.auto_assign(agent)
-        expect(ticket.reload.owner_id).to eq(1)
       end
     end
   end

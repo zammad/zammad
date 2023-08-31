@@ -154,7 +154,7 @@ returns
                 .pluck(*pluck)
 
       if keys.size > 1
-        values = ids.transpose.map(&:compact).map(&:uniq)
+        values = ids.transpose.map { |x| x.compact.uniq }
         attributes.merge!(keys.zip(values).to_h)
       else
         attributes[ keys.first ] = ids.compact

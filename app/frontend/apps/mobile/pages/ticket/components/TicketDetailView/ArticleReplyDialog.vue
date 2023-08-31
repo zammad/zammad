@@ -10,7 +10,7 @@ import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 import { closeDialog } from '#shared/composables/useDialog.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type { FormRef } from '#shared/components/Form/types.ts'
-import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/useConfirmationDialog.ts'
+import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 
 interface Props {
   name: string
@@ -33,8 +33,6 @@ const emit = defineEmits<{
 const label = computed(() =>
   props.newTicketArticlePresent ? __('Edit reply') : __('Add reply'),
 )
-
-const { waitForConfirmation } = useConfirmationDialog()
 
 const articleFormGroupNodeContext = computed(
   () => props.articleFormGroupNode?.context,

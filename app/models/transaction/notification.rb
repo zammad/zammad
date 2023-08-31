@@ -161,7 +161,7 @@ class Transaction::Notification
         elsif @item[:type] != 'create' && (@item[:changes].blank? || @item[:changes]['state_id'].blank?)
           seen = false
         else
-          seen = ticket.online_notification_seen_state(user.id)
+          seen = OnlineNotification.seen_state?(ticket, user.id)
         end
 
         OnlineNotification.add(

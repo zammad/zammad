@@ -58,6 +58,7 @@ module Gql::Types
     # field :article_count, Integer, description: "Count of ticket articles that were not sent by 'System'."
     # field :type, String
     field :time_unit, Float
+    field :time_units_per_type, [Gql::Types::Ticket::TimeAccountingTypeSumType]
     field :preferences, GraphQL::Types::JSON
 
     field :state_color_code, Gql::Types::Enum::TicketStateColorCodeType, null: false, description: 'Ticket color indicator state.'
@@ -83,6 +84,17 @@ module Gql::Types
       'closed'
     end
 
+    def time_units_per_type
+      time_units_per_type = time_units_per_type_data
+      return [] if time_units_per_type.empty?
+
+      if time_units_per_type.length.eql?(1) && time_units_per_type[0][:name].eql?(__('None'))
+        []
+      else
+        time_units_per_type
+      end
+    end
+
     private
 
     def ticket_is_escalating?
@@ -95,6 +107,28 @@ module Gql::Types
 
     def state_type_name
       @state_type_name ||= @object.state.state_type.name
+    end
+
+    def time_units_per_type_data
+      return [] if !@object.ticket_time_accounting.exists?(['type_id IS NOT NULL'])
+
+      @object.ticket_time_accounting
+        .group_by { |r| r[:type_id] }
+        .map { |type_id, entries| time_accounting_type_sum(type_id, entries) }
+        .flatten
+        .sort_by { |r| r[:time_unit] }
+        .reverse
+    end
+
+    def time_accounting_type_sum(type_id, entries)
+      [
+        name:      time_accounting_types[type_id] || __('None'),
+        time_unit: entries.inject(0) { |sum, entry| sum + entry.time_unit },
+      ]
+    end
+
+    def time_accounting_types
+      @time_accounting_types ||= ::Ticket::TimeAccounting::Type.all.to_h { |type| [type.id, type.name] }
     end
   end
 end

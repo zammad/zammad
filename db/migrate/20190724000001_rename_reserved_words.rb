@@ -4,7 +4,7 @@ class RenameReservedWords < ActiveRecord::Migration[5.1]
   def up
     return if !Setting.exists?(name: 'system_init_done')
 
-    models = ObjectManager.list_objects.map(&:underscore).map { |object| object.tr('_', '/') }.map(&:classify).map(&:constantize)
+    models = ObjectManager.list_objects.map(&:underscore).map { |object| object.tr('_', '/') }.map { |x| x.classify.constantize }
 
     reserved_words = %w[url icon initials avatar permission validate subscribe unsubscribe translate search]
     models.each do |model|

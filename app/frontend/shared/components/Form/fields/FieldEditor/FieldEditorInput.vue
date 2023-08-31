@@ -2,13 +2,21 @@
 
 <script setup lang="ts">
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import { convertFileList } from '#shared/utils/files.ts'
 import type { Editor } from '@tiptap/vue-3'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
-import { computed, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
+import {
+  computed,
+  onMounted,
+  onUnmounted,
+  ref,
+  toRef,
+  watch,
+  nextTick,
+} from 'vue'
 import testFlags from '#shared/utils/testFlags.ts'
 import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
+import log from '#shared/utils/log.ts'
 import useValue from '../../composables/useValue.ts'
 import {
   getCustomExtensions,
@@ -25,6 +33,8 @@ import type {
 import FieldEditorActionBar from './FieldEditorActionBar.vue'
 import FieldEditorFooter from './FieldEditorFooter.vue'
 import { PLUGIN_NAME as userMentionPluginName } from './suggestions/UserMention.ts'
+import { getNodeByName } from '../../utils.ts'
+import { convertInlineImages } from './utils.ts'
 
 interface Props {
   context: FormFieldContext<FieldEditorProps>
@@ -61,8 +71,72 @@ getCustomExtensions(reactiveContext).forEach((extension) => {
   }
 })
 
+const hasImageExtension = editorExtensions.some(
+  (extension) => extension.name === 'image',
+)
 const showActionBar = ref(false)
 const editorValue = ref<string>(VITE_TEST_MODE ? props.context._value : '')
+
+interface LoadImagesOptions {
+  attachNonInlineFiles: boolean
+}
+
+const inlineImagesInEditor = (editor: Editor, files: File[]) => {
+  convertInlineImages(files, editor.view.dom).then((urls) => {
+    if (editor?.isDestroyed) return
+    editor?.commands.setImages(urls)
+    nextTick(() => testFlags.set('editor.inlineImagesLoaded'))
+  })
+}
+
+const addFilesToAttachments = (files: File[]) => {
+  const attachmentsContext = getNodeByName(props.context.formId, 'attachments')
+    ?.context as unknown as
+    | { uploadFiles?: (files: File[]) => void }
+    | undefined
+  if (attachmentsContext && !attachmentsContext.uploadFiles) {
+    log.error(
+      '[FieldEditorInput] Attachments field was found, but it doesn\'t provide "uploadFiles" method.',
+    )
+  } else {
+    attachmentsContext?.uploadFiles?.(files)
+  }
+}
+
+// there is also a gif, but desktop only inlines these two for now
+const imagesMimeType = ['image/png', 'image/jpeg']
+const loadFiles = (
+  files: FileList | null | undefined,
+  editor: Editor | undefined,
+  options: LoadImagesOptions,
+) => {
+  if (!files) {
+    return false
+  }
+
+  const inlineImages: File[] = []
+  const otherFiles: File[] = []
+
+  for (const file of files) {
+    if (imagesMimeType.includes(file.type)) {
+      inlineImages.push(file)
+    } else {
+      otherFiles.push(file)
+    }
+  }
+
+  if (inlineImages.length && editor) {
+    inlineImagesInEditor(editor, inlineImages)
+  }
+
+  if (options.attachNonInlineFiles && otherFiles.length) {
+    addFilesToAttachments(otherFiles)
+  }
+
+  return Boolean(
+    inlineImages.length || (options.attachNonInlineFiles && otherFiles.length),
+  )
+}
 
 const editor = useEditor({
   extensions: editorExtensions,
@@ -76,15 +150,14 @@ const editor = useEditor({
     },
     // add inlined files
     handlePaste(view, event) {
-      if (!editorExtensions.some((n) => n.name === 'image')) {
+      if (!hasImageExtension) {
         return
       }
-      const files = event.clipboardData?.files || null
-      convertFileList(files).then((urls) => {
-        editor.value?.commands.setImages(urls)
+      const loaded = loadFiles(event.clipboardData?.files, editor.value, {
+        attachNonInlineFiles: false,
       })
 
-      if (files && files.length) {
+      if (loaded) {
         event.preventDefault()
         return true
       }
@@ -92,15 +165,15 @@ const editor = useEditor({
       return false
     },
     handleDrop(view, event) {
-      if (!editorExtensions.some((n) => n.name === 'image')) {
+      if (!hasImageExtension) {
         return
       }
       const e = event as unknown as InputEvent
       const files = e.dataTransfer?.files || null
-      convertFileList(files).then((urls) => {
-        editor.value?.commands.setImages(urls)
+      const loaded = loadFiles(files, editor.value, {
+        attachNonInlineFiles: true,
       })
-      if (files && files.length) {
+      if (loaded) {
         event.preventDefault()
         return true
       }
@@ -274,6 +347,16 @@ onMounted(() => {
   ) => void)[]
   onLoad.forEach((fn) => fn(editorCustomContext))
   onLoad.length = 0
+
+  if (VITE_TEST_MODE) {
+    if (!('editors' in globalThis))
+      Object.defineProperty(globalThis, 'editors', { value: {} })
+    Object.defineProperty(
+      Reflect.get(globalThis, 'editors'),
+      props.context.node.name,
+      { value: editor.value, configurable: true },
+    )
+  }
 })
 </script>
 

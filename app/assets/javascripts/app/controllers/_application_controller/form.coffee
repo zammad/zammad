@@ -9,6 +9,8 @@ class App.ControllerForm extends App.Controller
     for key, value of params
       @[key] = value
 
+    @flags = {}
+
     if !@handlers
       @handlers = [ App.FormHandlerCoreWorkflow.run ]
     else
@@ -53,11 +55,17 @@ class App.ControllerForm extends App.Controller
     @finishForm = true
     @form
 
+  runCoreWorkflow: (attribute) ->
+    params = App.ControllerForm.params(@form)
+    dispatchID = Math.floor( Math.random() * 999999 ).toString()
+    App.FormHandlerCoreWorkflow.run(params, attribute, @attributes, @idPrefix, @form, @, dispatchID)
+
   dispatchHandlers: =>
     params = App.ControllerForm.params(@form)
+    dispatchID = Math.floor( Math.random() * 999999 ).toString()
     for attribute in @attributes
       for handler in @handlers
-        handler(params, attribute, @attributes, @idPrefix, @form, @)
+        handler(params, attribute, @attributes, @idPrefix, @form, @, dispatchID)
 
   showAlert: (message) =>
     if Array.isArray(message)
@@ -331,8 +339,9 @@ class App.ControllerForm extends App.Controller
       item_bind.on(item_event, (e) =>
         @lastChangedAttribute = attribute.name
         params = App.ControllerForm.params(@form)
+        dispatchID = Math.floor( Math.random() * 999999 ).toString()
         for handler in @handlers
-          handler(params, attribute, @attributes, idPrefix, form, @)
+          handler(params, attribute, @attributes, idPrefix, form, @, dispatchID)
       )
 
     if !attribute.display || attribute.transparent
@@ -364,6 +373,12 @@ class App.ControllerForm extends App.Controller
         @.hide(attribute.name, fullItem)
 
       return fullItem
+
+  getFlag: (key) ->
+    @flags[key]
+
+  setFlag: (key, value) ->
+    @flags[key] = value
 
   @findFieldByName: (key, el) ->
     return el.find('[name="' + key + '"]')
@@ -522,6 +537,10 @@ class App.ControllerForm extends App.Controller
       if @fieldIsRemoved(field)
         delete param[item.name]
         continue
+
+      # Support data value attributes that override field value.
+      if field.get(0).hasAttribute('data-value')
+        item.value = field.get(0).getAttribute('data-value')
 
       # collect all params, push it to an array item.value already exists
       value = item.value
@@ -752,7 +771,7 @@ class App.ControllerForm extends App.Controller
       lookupForm.find('button, input, select, textarea, .form-control').prop('readonly', true)
 
       # disable radio and checkbox buttons
-      lookupForm.find('input[type=checkbox], input[type=radio]').prop('disabled', true)
+      lookupForm.find('input[type=checkbox], input[type=radio], input[type=file]').prop('disabled', true)
 
       # disable additionals submits
       lookupForm.find('button').prop('disabled', true)
@@ -777,7 +796,7 @@ class App.ControllerForm extends App.Controller
       lookupForm.find('button, input, select, textarea, .form-control').prop('readonly', false)
 
       # enable radio and checkbox buttons
-      lookupForm.find('input[type=checkbox], input[type=radio]').prop('disabled', false)
+      lookupForm.find('input[type=checkbox], input[type=radio], input[type=file]').prop('disabled', false)
 
       # enable submits again
       lookupForm.find('button').prop('disabled', false)
@@ -799,6 +818,8 @@ class App.ControllerForm extends App.Controller
 
     # show new errors
     for key, msg of data.errors
+
+      msg = App.i18n.translatePlain(msg)
 
       # generic validation
       itemGeneric = lookupForm.find('[name="' + key + '"]').closest('.form-group')

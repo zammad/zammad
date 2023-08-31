@@ -60,7 +60,7 @@ const ticketData = computed(() => getTicketData(organization.value))
     <div class="flex flex-col items-center justify-center py-6">
       <div>
         <CommonOrganizationAvatar
-          :entity="(organization as AvatarOrganization)"
+          :entity="organization as AvatarOrganization"
           size="xl"
           personal
         />

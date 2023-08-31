@@ -90,10 +90,13 @@ const orderColumnsOptions = computed(() => {
 
 const orderColumnLabels = computed(() => {
   return (
-    selectedOverview.value?.orderColumns.reduce((map, entry) => {
-      map[entry.key] = entry.value || entry.key
-      return map
-    }, {} as Record<string, string>) || {}
+    selectedOverview.value?.orderColumns.reduce(
+      (map, entry) => {
+        map[entry.key] = entry.value || entry.key
+        return map
+      },
+      {} as Record<string, string>,
+    ) || {}
   )
 })
 
@@ -212,9 +215,7 @@ const showRefetch = ref(false)
           :overview-ticket-count="selectedOverview.ticketCount"
           :order-by="orderBy"
           :order-direction="orderDirection"
-          :max-count="
-            Number(application.config.ui_ticket_overview_ticket_limit)
-          "
+          :max-count="application.config.ui_ticket_overview_ticket_limit"
           :hidden-columns="hiddenColumns"
           @refetch="showRefetch = $event"
         />

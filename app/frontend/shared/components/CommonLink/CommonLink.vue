@@ -72,7 +72,7 @@ const path = computed(() => {
   }
 
   if (props.restApi) {
-    return `${String(app.config.api_path)}${props.link}`
+    return `${app.config.api_path}${props.link}`
   }
 
   return props.link as string

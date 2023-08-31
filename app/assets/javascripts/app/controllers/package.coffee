@@ -1,7 +1,13 @@
 class Package extends App.ControllerSubContent
   @requiredPermission: 'admin.package'
   header: __('Packages')
+
+  elements:
+    '.js-fileUpload': 'fileUpload'
+    '.js-submit': 'packageSubmit'
+
   events:
+    'change .js-fileUpload': 'selectFile'
     'click .package-action[data-type="uninstall"]':  'action'
 
   constructor: ->
@@ -59,5 +65,11 @@ class Package extends App.ControllerSubContent
             @load()
         )
     )
+
+  selectFile: (e) ->
+    if !_.isEmpty(@fileUpload.val())
+      @packageSubmit.prop('disabled', false)
+    else
+      @packageSubmit.prop('disabled', true)
 
 App.Config.set('Packages', { prio: 3700, name: __('Packages'), parent: '#system', target: '#system/package', controller: Package, permission: ['admin.package'] }, 'NavBarAdmin')

@@ -71,8 +71,8 @@ FactoryBot.define do
       end
 
       transient do
-        custom_options      { {} }
-        external_credential { create(:twitter_credential) }
+        custom_options { {} }
+        external_credential { association :twitter_credential }
         oauth_token         { external_credential.credentials[:oauth_token] }
         oauth_token_secret  { external_credential.credentials[:oauth_token_secret] }
         consumer_key        { external_credential.credentials[:consumer_key] }
@@ -88,7 +88,7 @@ FactoryBot.define do
 
       trait :invalid do
         transient do
-          external_credential { create(:twitter_credential, :invalid) }
+          external_credential { association :twitter_credential, :invalid }
         end
       end
     end
@@ -229,7 +229,7 @@ FactoryBot.define do
 
       transient do
         custom_options      { {} }
-        external_credential { create(:sms_message_bird_credential) }
+        external_credential { association :sms_message_bird_credential }
         webhook_token       { Faker::Crypto.md5 }
       end
     end
@@ -255,7 +255,7 @@ FactoryBot.define do
 
       transient do
         custom_options      { {} }
-        external_credential { create(:telegram_credential) }
+        external_credential { association :telegram_credential }
         bid { Faker::Number.unique.number(digits: 10) }
         callback_token { Faker::Alphanumeric.alphanumeric(number: 14) }
       end

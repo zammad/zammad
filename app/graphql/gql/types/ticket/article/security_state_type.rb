@@ -4,7 +4,7 @@ module Gql::Types::Ticket::Article
   class SecurityStateType < Gql::Types::BaseObject
     description 'Ticket article security information, e.g. for S/MIME'
 
-    field :type, String, description: 'Used security method (currently only S/MIME available)'
+    field :type, Gql::Types::Enum::SecurityStateTypeType, description: 'The used email security method'
     field :signing_success, Boolean
     field :signing_message, String
     field :encryption_success, Boolean

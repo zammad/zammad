@@ -237,6 +237,7 @@ subsequently in a separate step.
       name:          package['name'],
       version:       package['version'],
       vendor:        package['vendor'],
+      url:           package['url'],
       state:         'uninstalled',
       created_by_id: 1,
       updated_by_id: 1,
