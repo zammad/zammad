@@ -418,7 +418,7 @@ RSpec.describe OnlineNotification, type: :model do
   end
 
   describe '.cleanup' do
-    let(:old)          { 1.month }
+    let(:max_age)      { 1.week }
     let(:own_seen)     { 1.minute }
     let(:auto_seen)    { 10.minutes }
     let(:user)         { create(:agent) }
@@ -434,13 +434,13 @@ RSpec.describe OnlineNotification, type: :model do
         end
 
         it 'stays if it was just seen' do
-          described_class.cleanup(old.ago, own_seen.ago, auto_seen.ago)
+          described_class.cleanup(max_age.ago, own_seen.ago, auto_seen.ago)
           expect(described_class).to be_exist(notification.id)
         end
 
         it 'deleted after own seen time passes' do
           travel own_seen + 1.minute
-          described_class.cleanup(old.ago, own_seen.ago, auto_seen.ago)
+          described_class.cleanup(max_age.ago, own_seen.ago, auto_seen.ago)
           expect(described_class).not_to be_exist(notification.id)
         end
       end
@@ -452,19 +452,19 @@ RSpec.describe OnlineNotification, type: :model do
         end
 
         it 'stays if it was just seen' do
-          described_class.cleanup(old.ago, own_seen.ago, auto_seen.ago)
+          described_class.cleanup(max_age.ago, own_seen.ago, auto_seen.ago)
           expect(described_class).to be_exist(notification.id)
         end
 
         it 'not deleted after own seen time passes' do
           travel own_seen + 1.minute
-          described_class.cleanup(old.ago, own_seen.ago, auto_seen.ago)
+          described_class.cleanup(max_age.ago, own_seen.ago, auto_seen.ago)
           expect(described_class).to be_exist(notification.id)
         end
 
         it 'deleted after auto seen time passes' do
           travel auto_seen + 1.minute
-          described_class.cleanup(old.ago, own_seen.ago, auto_seen.ago)
+          described_class.cleanup(max_age.ago, own_seen.ago, auto_seen.ago)
           expect(described_class).not_to be_exist(notification.id)
         end
       end
@@ -472,25 +472,25 @@ RSpec.describe OnlineNotification, type: :model do
 
     context 'when not seen' do
       it 'stays if it is fresh' do
-        described_class.cleanup(old.ago, own_seen.ago, auto_seen.ago)
+        described_class.cleanup(max_age.ago, own_seen.ago, auto_seen.ago)
         expect(described_class).to be_exist(notification.id)
       end
 
       it 'stays after own seen time passes' do
         travel own_seen + 1.minute
-        described_class.cleanup(old.ago, own_seen.ago, auto_seen.ago)
+        described_class.cleanup(max_age.ago, own_seen.ago, auto_seen.ago)
         expect(described_class).to be_exist(notification.id)
       end
 
       it 'stays after auto seen time passes' do
         travel auto_seen + 1.minute
-        described_class.cleanup(old.ago, own_seen.ago, auto_seen.ago)
+        described_class.cleanup(max_age.ago, own_seen.ago, auto_seen.ago)
         expect(described_class).to be_exist(notification.id)
       end
 
       it 'deleted after max time passes' do
-        travel old + 1.minute
-        described_class.cleanup(old.ago, own_seen.ago, auto_seen.ago)
+        travel max_age + 1.day
+        described_class.cleanup(max_age.ago, own_seen.ago, auto_seen.ago)
         expect(described_class).not_to be_exist(notification.id)
       end
     end
