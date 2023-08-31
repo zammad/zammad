@@ -11,6 +11,49 @@
 #
 rm -f /opt/zammad/public/assets/.sprockets-manifest-*.json || true
 
+# Ensure database connectivity
+if [[ -f /opt/zammad/config/database.yml ]]; then
+   DB_HOST="$(grep -m 1 '^[[:space:]]*host:' < /opt/zammad/config/database.yml | sed -e 's/.*host:[[:space:]]*//g')"
+   DB_PORT="$(grep -m 1 '^[[:space:]]*port:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*port:[[:space:]]*//g')"
+   DB_SOCKET="$(grep -m 1 '^[[:space:]]*socket:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*socket:[[:space:]]*//g')"
+fi
+
+if [ "${DB_HOST}x" == "x" ]; then
+   DB_HOST="localhost"
+fi
+
+if [ -n "$(which psql 2> /dev/null)" ]; then
+   if [ "${DB_PORT}x" == "x" ]; then
+      DB_PORT="5432"
+   fi
+
+   if [ "${DB_SOCKET}x" == "x" ]; then
+      pg_isready -q -h $DB_HOST -p $DB_PORT
+      state=$?
+   else
+      pg_isready -q
+      state=$?
+   fi
+
+elif [ -n "$(which mysql 2> /dev/null)" ]; then
+   if [ "${DB_PORT}x" == "x" ]; then
+      DB_PORT="3306"
+   fi
+
+   mysqladmin status -h $DB_HOST -P $DB_PORT
+   state=$?
+fi
+
+# Check error state to ensure database is online
+if [[ $state -gt 0 ]]; then
+   echo "!!! ERROR !!!"
+   echo "Your database does not seem to be online!"
+   echo "Please check your configuration in config/database.yml and ensure the configured database server is online."
+   echo "Exiting Zammad package installation / upgrade - try again."
+
+   exit 1
+fi
+
 # remove local files of the packages
 if [ -n "$(which zammad 2> /dev/null)" ]; then
    PATH=/opt/zammad/bin:/opt/zammad/vendor/bundle/bin:/sbin:/bin:/usr/sbin:/usr/bin:
