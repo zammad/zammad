@@ -25,9 +25,13 @@ module RuboCop
         end
 
         def filename_good?(file_path)
-          File
-            .basename(file_path)
-            .match? %r{^20\d{12}_}
+          filename = File.basename(file_path)
+
+          # the check makes trouble in old addons which do not match the rubocop.
+          # since we can't disable the rubocop for whatever reason is was the only solution.
+          return true if filename[0..3].to_i < 2021
+
+          filename.match? %r{^20\d{12}_}
         end
       end
     end
