@@ -9,8 +9,6 @@ name: CI
 jobs:
   CI:
     runs-on: ubuntu-latest
-    container:
-      image: zammad/zammad-ci:latest
     services:
       postgresql:
         image: postgres:10
@@ -43,6 +41,8 @@ jobs:
         with:
           path: vendor/ruby
           key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
+      - name: Install dependencies
+        run: sudo apt install postgresql libimlib2 libimlib2-dev openssl direnv shellcheck
       - name: Pre
         run: .github/workflows/ci/pre.sh
       - name: Lint
