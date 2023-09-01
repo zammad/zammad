@@ -45,7 +45,18 @@ function delete_old_backups () {
   # Use -mmin to clean up files as -mtime (days) is too unprecise.
   #   However, add +60 minutes to allow for the backup script run time, so that
   #   backups created a few minutes more than a day ago are not already purged.
-  test -d ${BACKUP_DIR} && find ${BACKUP_DIR}/*_zammad_*.gz -type f -mmin +$(((60*24)*${HOLD_DAYS}+60)) -delete
+  FILES_TO_DELETE=$(test -d ${BACKUP_DIR} && find ${BACKUP_DIR}/*_zammad_*.gz -type f -mmin +$(((60*24)*${HOLD_DAYS}+60)))
+
+  if [[ -n ${FILES_TO_DELETE} ]]; then
+    if [ "${DEBUG}" == "yes" ]; then
+      echo "Deleting old backups according to value set in HOLD_DAYS."
+    echo "${FILES_TO_DELETE}" | xargs rm
+    fi
+  else
+    if [ "${DEBUG}" == "yes" ]; then
+      echo "No files found matching value set in HOLD_DAYS. No files deleted."
+    fi
+  fi
 }
 
 function get_db_credentials () {
@@ -196,7 +207,7 @@ EOT
 function backup_db () {
   if [ "${DB_ADAPTER}" == "mysql2" ]; then
     echo "creating mysql backup..."
-    mysqldump --opt --single-transaction -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
+    mysqldump --opt --single-transaction ${DB_HOST:+--host $DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
     ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz ${BACKUP_DIR}/latest_zammad_db.mysql.gz
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "creating postgresql backup..."
@@ -230,7 +241,7 @@ function backup_db () {
 
 function backup_chmod_dump_data () {
   echo "Ensuring dump permissions ..."
-  chmod 600 ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz
+  chmod 600 ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.*.gz ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz
 }
 
 function check_database_config_exists () {
@@ -528,7 +539,7 @@ function start_helper_message () {
 }
 
 function finished_backup_message () {
-    echo -e "\n# Zammad backuped successfully - $(date)!\n"
+    echo -e "\n# Zammad backed up successfully - $(date)!\n"
 }
 
 function finished_restore_message () {
