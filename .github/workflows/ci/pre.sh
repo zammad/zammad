@@ -4,7 +4,7 @@ set -o errexit
 set -o pipefail
 
 # shellcheck disable=SC1091
-# source /etc/profile.d/rvm.sh # ensure RVM is loaded
+source /etc/profile.d/rvm.sh # ensure RVM is loaded
 
 bundle config set --local frozen 'true'
 bundle config set --local path 'vendor'
