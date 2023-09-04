@@ -10,6 +10,8 @@ on: [push]
 jobs:
   CI:
     runs-on: ubuntu-latest
+    container:
+      image: zammad/zammad-ci:latest
     services:
       postgresql:
         image: postgres:10
