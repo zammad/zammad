@@ -37,9 +37,9 @@ module Gql::Types::Input::Ticket
 
     def transform_security(payload)
       payload = payload.to_h
-      security = payload.delete(:security) if payload[:security]
 
-      return payload if !security_enabled?
+      security = payload.delete(:security)
+      return payload if !security_enabled? || security.blank?
 
       payload[:preferences] ||= {}
       payload[:preferences]['security'] = security_preference(security)
