@@ -44,10 +44,10 @@ jobs:
         with:
           path: vendor/ruby
           key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
-      - name: Install dependencies
-        run: sudo apt install postgresql libimlib2 libimlib2-dev openssl direnv shellcheck
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+      #- name: Install dependencies
+      #  run: sudo apt install postgresql libimlib2 libimlib2-dev openssl direnv shellcheck
+      #- name: Set up Ruby
+      #  uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
       - name: Pre
         run: .github/workflows/ci/pre.sh
       - name: Lint
