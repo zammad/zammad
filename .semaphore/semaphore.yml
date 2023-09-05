@@ -23,6 +23,8 @@ global_job_config:
       - yarn install
       - yarn cypress:install
       - cache store
+      - bundle exec ruby .gitlab/configure_environment.rb
+      - bundle exec rake zammad:db:init
   env_vars:
     - name: RAILS_ENV
       value: "test"
@@ -33,13 +35,11 @@ global_job_config:
     - name: CI_SKIP_DB_RESET
       value: 'true'
 blocks:
-  - name: CI
+  - name: Lint
     task:
       jobs:
-        - name: CI
+        - name: Linting
           commands:
-            - bundle exec ruby .gitlab/configure_environment.rb
-            - bundle exec rake zammad:db:init
             - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c "$FILE"; done
             - bundle exec rails generate zammad:translation_catalog --check
             - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
@@ -49,11 +49,17 @@ blocks:
             - bundle exec rubocop --parallel
             - yarn lint:css
             - yarn lint
+
+  - name: RSpec
+    task:
+      jobs:
+        - name: Tests
+          parallelism: 4
+          commands:
+            - gem install semaphore_test_boosters
             - bundle exec rake assets:precompile
             - yarn test
             - yarn test:ci:ct
-            - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration -t ~required_envs
+            - rspec_booster --job $SEMAPHORE_JOB_INDEX/$SEMAPHORE_JOB_COUNT --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration -t ~required_envs
             - bundle exec rake zammad:db:reset
             - bundle exec rake test:units
-            
-    
