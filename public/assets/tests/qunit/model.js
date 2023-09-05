@@ -32,7 +32,8 @@ QUnit.test( "TicketPriority search tests", assert => {
       active:     true,
       created_at: '2014-06-10T10:17:54.000Z',
     },
-  ] )
+  ], { clear: true } )
+
   priorities = App.TicketPriority.search({sortBy:'created_at', order: 'ASC'})
   assert.equal('2 normal', priorities[0].name, 'check 1 entry')
   assert.equal('3 high', priorities[1].name, 'check 2 entry')
@@ -50,6 +51,43 @@ QUnit.test( "TicketPriority search tests", assert => {
   priorities = App.TicketPriority.search({filter: { name: '4 very high' }, sortBy:'name', order: 'ASC'})
   assert.equal('4 very high', priorities[0].name, 'check name filter')
   assert.equal(undefined, priorities[1], 'check name filter is undefined')
+});
+
+// Search results sorting with accents
+QUnit.test( "Search results sorting with accents", assert => {
+  App.TicketPriority.refresh( [
+    {
+      id:         2,
+      name:       'B priority',
+      note:       'some note 2',
+      active:     false,
+      created_at: '2014-06-10T10:17:33.000Z',
+    },
+    {
+      id:         1,
+      name:       'Ą priority',
+      note:       'some note 1',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+    {
+      id:         3,
+      name:       'C priority',
+      note:       'some note 3',
+      active:     true,
+      created_at: '2014-06-10T10:17:44.000Z',
+    },
+  ], { clear: true } )
+
+  priorities = App.TicketPriority.search({sortBy:'name', order: 'ASC'})
+  assert.equal('Ą priority', priorities[0].name, 'check 1 entry')
+  assert.equal('B priority', priorities[1].name, 'check 2 entry')
+  assert.equal('C priority', priorities[2].name, 'check 3 entry')
+
+  priorities = App.TicketPriority.search({sortBy:'name', order: 'DESC'})
+  assert.equal('C priority', priorities[0].name, 'check 1 entry')
+  assert.equal('B priority', priorities[1].name, 'check 2 entry')
+  assert.equal('Ą priority', priorities[2].name, 'check 3 entry')
 });
 
 // PublicLink search

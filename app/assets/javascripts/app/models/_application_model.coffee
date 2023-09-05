@@ -759,33 +759,44 @@ set new attributes of model (remove already available attributes)
 
     all_complied
 
-  @_sortBy: (collection, attribute, translate) ->
-    _.sortBy(collection, (item) ->
+  @_sortByItem: (item, attribute, translate) ->
+    # set displayName as default sort attribute
+    if !attribute
+      attribute = 'displayName'
 
-      # set displayName as default sort attribute
-      if !attribute
-        attribute = 'displayName'
-
-      # check if displayName exists
-      if attribute is 'displayName'
-        if item.displayName
-          value = item.displayName()
-          valueProcessed = if translate then App.i18n.translateInline(value) else value
-          return valueProcessed.toLowerCase()
-        else
-          attribute = 'name'
-
-      return '' if item[ attribute ] is undefined
-      return '' if item[ attribute ] is null
-
-      # return value if string
-      if item[ attribute ].toLowerCase
-        value = item[ attribute ]
+    # check if displayName exists
+    if attribute is 'displayName'
+      if item.displayName
+        value = item.displayName()
         valueProcessed = if translate then App.i18n.translateInline(value) else value
         return valueProcessed.toLowerCase()
+      else
+        attribute = 'name'
 
-      item[ attribute ]
-    )
+    return '' if item[ attribute ] is undefined
+    return '' if item[ attribute ] is null
+
+    # return value if string
+    if item[ attribute ].toLowerCase
+      value = item[ attribute ]
+      valueProcessed = if translate then App.i18n.translateInline(value) else value
+      return valueProcessed.toLowerCase()
+
+    item[ attribute ]
+
+  @_sortBy: (collection, attribute, translate) ->
+    collection.sort (a,b) =>
+      aValue = @_sortByItem(a, attribute, translate)
+      bValue = @_sortByItem(b, attribute, translate)
+
+      return aValue.localeCompare(bValue) if aValue.localeCompare
+
+      if aValue > bValue || aValue is null
+        1
+      else if aValue < bValue || bValue is null
+        -1
+      else
+        0
 
   @_order: (collection, attribute) ->
     if attribute is 'DESC'
