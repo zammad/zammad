@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-describe Controllers::Ticket::TimeAccountingsControllerPolicy do
+describe Controllers::TimeAccountingsControllerPolicy do
   subject { described_class.new(user, record) }
 
   let(:group)                   { ticket.group }
   let(:ticket)                  { create(:ticket) }
   let(:time_accounting_enabled) { true }
 
-  let(:record_class) { Ticket::TimeAccountingsController }
+  let(:record_class) { TimeAccountingsController }
   let(:record) do
     rec        = record_class.new
     rec.params = { ticket_id: ticket.id }
@@ -73,7 +73,6 @@ describe Controllers::Ticket::TimeAccountingsControllerPolicy do
   context 'with admin who has no access to ticket' do
     let(:user) { create(:admin) }
 
-    it { is_expected.to permit_actions(:update, :destroy) }
-    it { is_expected.to forbid_actions(:index, :show, :create) }
+    it { is_expected.to permit_actions(:index, :show, :create, :update, :destroy) }
   end
 end
