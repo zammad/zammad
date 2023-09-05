@@ -893,4 +893,27 @@ RSpec.describe SearchIndexBackend do
       expect(described_class.search_by_index_sort(fulltext: true)).to eq(['_score'])
     end
   end
+
+  describe 'SSL verification', searchindex: true do
+    describe '.make_request' do
+      def request(verify: false)
+        Setting.set('es_url', 'https://127.0.0.1:9200')
+        Setting.set('es_ssl_verify', verify)
+
+        SearchIndexBackend.get('Ticket', Ticket.first.id)
+      end
+
+      it 'does verify SSL' do
+        allow(UserAgent).to receive(:get_http)
+        request(verify: true)
+        expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: true)).once
+      end
+
+      it 'does not verify SSL' do
+        allow(UserAgent).to receive(:get_http)
+        request
+        expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: false)).once
+      end
+    end
+  end
 end

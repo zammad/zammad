@@ -3425,6 +3425,15 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
+  title:       __('Elasticsearch SSL verification'),
+  name:        'es_ssl_verify',
+  area:        'SearchIndex::Elasticsearch',
+  description: __('Defines Elasticsearch SSL verification.'),
+  state:       true,
+  preferences: { online_service_disable: true },
+  frontend:    false
+)
+Setting.create_if_not_exists(
   title:       __('Elasticsearch Attachment Extensions'),
   name:        'es_attachment_ignore',
   area:        'SearchIndex::Elasticsearch',

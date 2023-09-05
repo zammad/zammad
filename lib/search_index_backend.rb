@@ -714,6 +714,7 @@ helper method for making HTTP calls
       open_socket_tries: 3,
       user:              Setting.get('es_user'),
       password:          Setting.get('es_password'),
+      verify_ssl:        Setting.get('es_ssl_verify'),
     }
 
     response = UserAgent.send(method, url, data, options)

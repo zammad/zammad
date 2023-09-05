@@ -3287,6 +3287,10 @@ msgid "Define the maximum number of ticket shown in overviews."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Defines Elasticsearch SSL verification."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr ""
 
@@ -4406,6 +4410,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Elasticsearch SSL verification"
 msgstr ""
 
 #: db/seeds/settings.rb
