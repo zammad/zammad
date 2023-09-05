@@ -200,12 +200,19 @@ class Form extends App.Controller
         App.Role.find(dest).displayName()
       ).join ', '
 
+    if @config.ssl is 'off'
+      @config.ssl_humanized = __('No SSL')
+    else if @config.ssl is 'starttls'
+      @config.ssl_humanized = __('STARTTLS')
+    else
+      @config.ssl_humanized = __('SSL')
+
     @html App.view('integration/ldap')(
       item: @item
       config: @config
       group_role_map: group_role_map
     )
-    if _.isEmpty(@config.host_url)
+    if _.isEmpty(@config.host)
       @$('.js-notConfigured').removeClass('hide')
       @$('.js-summary').addClass('hide')
     else
@@ -269,7 +276,7 @@ class ConnectionWizard extends App.ControllerWizardModal
     'click .js-groupRoleForm .js-add':   'addGroupRoleMapping'
     'click .js-goToSlide':               'goToSlide'
     'click .js-saveQuit':                'saveQuit'
-    'input .js-hostUrl':                 'sslVerifyChange'
+    'change .js-Ssl':                    'sslChange'
 
   elements:
     '.modal-body': 'body'
@@ -302,19 +309,48 @@ class ConnectionWizard extends App.ControllerWizardModal
     if @slide
       @showSlide(@slide)
     else
-      @showHost()
+      @checkSslVerifyVisibility(@wizardConfig.ssl || 'ssl')
 
     if @start
       @[@start]()
 
   render: =>
-    nameHtml = App.UiElement.input.render({ name: 'name', display: __('Name'), tag: 'input', class: 'form-control--small', required: 'required', value: @config.name })[0].outerHTML
+    nameHtml = App.UiElement.input.render({ name: 'name', id: 'name', display: __('Name'), tag: 'input', type: 'text', class: 'form-control--small', required: 'required', value: @config.name })[0].outerHTML
     activeHtml = App.UiElement.boolean.render({ name: 'active', display: __('Active'), tag: 'active', value: @config.active, required: 'required', class: 'form-control--small' })[0].outerHTML
+
+    hostHtml = App.UiElement.input.render(
+      name: 'host'
+      id: 'host'
+      display: __('Host')
+      tag: 'input'
+      type: 'text'
+      class: 'form-control--small js-hostUrl'
+      required: 'required'
+      placeholder: 'ldap.example.com'
+      value: @config.host
+      autocomplete: 'autocomplete="off"'
+    )[0].outerHTML
+
+    sslHtml = App.UiElement.select.render(
+      name: 'ssl'
+      id: 'ssl'
+      multiple: false
+      null: false
+      options:
+        off: __('No SSL')
+        ssl: __('SSL')
+        starttls: __('STARTTLS')
+      value: @config.ssl || 'ssl'
+      translate: true
+      class: 'form-control--small js-Ssl'
+    )[0].outerHTML
 
     @html App.view('integration/ldap_wizard')(
       newConnection: @newConnection
-      nameHtml: nameHtml
-      activeHtml: activeHtml
+      nameHtml:      nameHtml
+      activeHtml:    activeHtml
+      hostHtml:      hostHtml
+      sslHtml:       sslHtml
     )
 
   saveQuit: (e) =>
@@ -324,7 +360,8 @@ class ConnectionWizard extends App.ControllerWizardModal
     return if element && element.reportValidity && !element.reportValidity()
 
     params                   = @formParam(e.target)
-    @wizardConfig.host_url   = params.host_url
+    @wizardConfig.host       = params.host
+    @wizardConfig.ssl        = params.ssl
     @wizardConfig.ssl_verify = params.ssl_verify
     @wizardConfig.name       = params.name
     @wizardConfig.active     = params.active
@@ -343,25 +380,21 @@ class ConnectionWizard extends App.ControllerWizardModal
       @[method](true)
     super
 
-  showHost: =>
-    @$('.js-discover input[name="host_url"]').val(@wizardConfig.host_url)
-    @checkSslVerifyVisibility(@wizardConfig.host_url)
-
-  sslVerifyChange: (e) =>
+  sslChange: (e) =>
     @checkSslVerifyVisibility($(e.currentTarget).val())
 
-  checkSslVerifyVisibility: (host_url) =>
+  checkSslVerifyVisibility: (ssl) =>
     el     = @$('.js-discover .js-sslVerify')
     exists = el.length
 
     disabled = true
-    if host_url && host_url.startsWith('ldaps')
+    if ssl is 'ssl' || ssl is 'starttls'
       disabled = false
 
     if exists && disabled
       el.parent().remove()
     else if !exists && !disabled
-      @$('.js-hostUrl').closest('tr').after(@buildRowSslVerify())
+      @$('.js-Ssl').closest('tr').after(@buildRowSslVerify())
 
   buildRowSslVerify: =>
     el = $(App.view('integration/ldap_ssl_verify_row')())
@@ -401,7 +434,8 @@ class ConnectionWizard extends App.ControllerWizardModal
           @showAlert('js-discover', data.message)
           return
 
-        @wizardConfig.host_url   = params.host_url
+        @wizardConfig.host       = params.host
+        @wizardConfig.ssl        = params.ssl
         @wizardConfig.ssl_verify = params.ssl_verify
         @wizardConfig.name       = params.name
         @wizardConfig.active     = params.active
@@ -430,7 +464,6 @@ class ConnectionWizard extends App.ControllerWizardModal
         @showAlert('js-discover', details.error || __('Server operation failed.'))
     )
 
-
   bindShow: (alreadyShown) =>
     @showSlide('js-bind') if !alreadyShown
     @$('.js-bind .js-baseDn').html(@createSelection('base_dn', @wizardConfig.options, @wizardConfig.base_dn || @wizardConfig.option, true))
@@ -441,7 +474,8 @@ class ConnectionWizard extends App.ControllerWizardModal
     e.preventDefault()
     @showSlide('js-analyze')
     params            = @formParam(e.target)
-    params.host_url   = @wizardConfig.host_url
+    params.host       = @wizardConfig.host
+    params.ssl        = @wizardConfig.ssl
     params.ssl_verify = @wizardConfig.ssl_verify
     @ajax(
       id:   'ldap_bind'

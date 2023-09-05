@@ -38,6 +38,14 @@ class KnowledgeBase < ApplicationModel
 
   validates :iconset, inclusion: { in: KnowledgeBase::ICONSETS }
 
+  validate :validate_custom_address
+
+  before_validation :patch_custom_address
+
+  after_create  :set_defaults
+  after_destroy :set_kb_active_setting
+  after_save    :set_kb_active_setting
+
   scope :active, -> { where(active: true) }
 
   alias assets_essential assets
@@ -202,9 +210,6 @@ class KnowledgeBase < ApplicationModel
     end
   end
 
-  before_validation :patch_custom_address
-  after_create :set_defaults
-
   def validate_custom_address
     return if custom_address.nil?
 
@@ -226,8 +231,6 @@ class KnowledgeBase < ApplicationModel
     end
   end
 
-  validate :validate_custom_address
-
   def patch_custom_address
     self.custom_address = nil if custom_address == ''
   end
@@ -240,7 +243,4 @@ class KnowledgeBase < ApplicationModel
     Setting.set 'kb_active', KnowledgeBase.active.exists?
     CanBePublished.update_active_publicly!
   end
-
-  after_destroy :set_kb_active_setting
-  after_save    :set_kb_active_setting
 end

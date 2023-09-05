@@ -17,29 +17,31 @@
     <tbody>
       <tr>
         <td class="settings-list-row-control"><%- @T('LDAP Host') %>
-        <td class="settings-list-row-control"><%= @config.host_url %>
-      <tbody>
-        <tr>
-          <td class="settings-list-row-control"><%- @T('Base DN') %>
-          <td class="settings-list-row-control"><%= @config.base_dn %>
-        <tr>
-          <td class="settings-list-row-control"><%- @T('Bind User') %>
-          <td class="settings-list-row-control"><%= @config.bind_user %>
-        <tr>
-          <td class="settings-list-row-control"><%- @T('Bind Password') %>
-          <td class="settings-list-row-control"><%= @M(@config.bind_pw) %>
-        <tr>
-          <td class="settings-list-row-control"><%- @T('UID') %>
-          <td class="settings-list-row-control"><%= @config.user_uid %>
-        <tr>
-          <td class="settings-list-row-control"><%- @T('User Filter') %>
-          <td class="settings-list-row-control"><%= @config.user_filter %>
-        <tr>
-          <td class="settings-list-row-control"><%- @T('GID') %>
-          <td class="settings-list-row-control"><%= @config.group_uid %>
-        <tr>
-          <td class="settings-list-row-control"><%- @T('Group Filter') %>
-          <td class="settings-list-row-control"><%= @config.group_filter %>
+        <td class="settings-list-row-control"><%= @config.host %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('SSL/STARTTLS') %>
+        <td class="settings-list-row-control"><%= @T(@config.ssl_humanized) %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('Base DN') %>
+        <td class="settings-list-row-control"><%= @config.base_dn %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('Bind User') %>
+        <td class="settings-list-row-control"><%= @config.bind_user %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('Bind Password') %>
+        <td class="settings-list-row-control"><%= @M(@config.bind_pw) %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('UID') %>
+        <td class="settings-list-row-control"><%= @config.user_uid %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('User Filter') %>
+        <td class="settings-list-row-control"><%= @config.user_filter %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('GID') %>
+        <td class="settings-list-row-control"><%= @config.group_uid %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('Group Filter') %>
+        <td class="settings-list-row-control"><%= @config.group_filter %>
     </tbody>
   </table>
 

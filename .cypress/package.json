@@ -5,7 +5,7 @@
     "@frsource/cypress-plugin-visual-regression-diff": "^2.3.12",
     "@testing-library/cypress": "^9.0.0",
     "cypress": "^12.17.4",
-    "cypress-real-events": "^1.10.0"
+    "cypress-real-events": "^1.10.1"
   },
   "imports": {
     "#tests/*": "../app/frontend/tests/*",

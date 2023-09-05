@@ -158,7 +158,7 @@ class Sequencer::State
   #
   # @example
   #  state.to_h
-  #  #=> {"ssl_verify"=>true, "host_url"=>"ldaps://192...", ...}
+  #  #=> {"ssl_verify"=>true, "host"=>"192...", ...}
   #
   # @return [Hash{Symbol => Object}]
   def to_h
