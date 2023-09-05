@@ -3,8 +3,8 @@
 class GitLab
   attr_reader :client
 
-  def initialize(endpoint, api_token)
-    @client = GitLab::HttpClient.new(endpoint, api_token)
+  def initialize(endpoint, api_token, verify_ssl: true)
+    @client = GitLab::HttpClient.new(endpoint, api_token, verify_ssl: verify_ssl)
   end
 
   def verify!

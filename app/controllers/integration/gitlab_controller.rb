@@ -4,7 +4,7 @@ class Integration::GitLabController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
   def verify
-    gitlab = ::GitLab.new(params[:endpoint], params[:api_token])
+    gitlab = ::GitLab.new(params[:endpoint], params[:api_token], verify_ssl: params[:verify_ssl])
 
     gitlab.verify!
 
@@ -23,7 +23,7 @@ class Integration::GitLabController < ApplicationController
   def query
     config = Setting.get('gitlab_config')
 
-    gitlab = ::GitLab.new(config['endpoint'], config['api_token'])
+    gitlab = ::GitLab.new(config['endpoint'], config['api_token'], verify_ssl: config['verify_ssl'])
 
     render json: {
       result:   'ok',

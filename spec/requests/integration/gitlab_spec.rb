@@ -4,10 +4,11 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/StubbedMock,RSpec/MessageSpies
 
-RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], type: :request do
-
-  let(:token)    { 't0k3N' }
-  let(:endpoint) { 'https://git.example.com/api/graphql' }
+RSpec.describe 'GitLab', type: :request do
+  let(:token)      { 't0k3N' }
+  let(:endpoint)   { 'https://git.example.com/api/graphql' }
+  let(:verify_ssl) { true }
+  let(:issue_link) { 'https://git.example.com/project/repo/-/issues/1' }
 
   let!(:admin) do
     create(:admin, groups: Group.all)
@@ -21,7 +22,7 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
     {
       id:         '1',
       title:      'Example issue',
-      url:        ENV['GITLAB_ISSUE_LINK'],
+      url:        issue_link,
       icon_state: 'open',
       milestone:  'important milestone',
       assignees:  ['zammad-robot'],
@@ -45,17 +46,12 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
     }
   end
 
-  let(:dummy_schema) do
-    {
-      a: :b
-    }
-  end
-
   describe 'request handling' do
     it 'does verify integration' do
       params = {
-        endpoint:  endpoint,
-        api_token: token,
+        endpoint:   endpoint,
+        api_token:  token,
+        verify_ssl: verify_ssl
       }
       authenticated_as(agent)
       post '/api/v1/integration/gitlab/verify', params: params, as: :json
@@ -66,7 +62,7 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
 
       authenticated_as(admin)
       instance = instance_double(GitLab)
-      expect(GitLab).to receive(:new).with(endpoint, token).and_return instance
+      expect(GitLab).to receive(:new).with(endpoint, token, verify_ssl: verify_ssl).and_return instance
       expect(instance).to receive(:verify!).and_return(true)
 
       post '/api/v1/integration/gitlab/verify', params: params, as: :json
@@ -78,7 +74,7 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
 
     it 'does query objects' do
       params = {
-        links: [ ENV['GITLAB_ISSUE_LINK'] ],
+        links: [ issue_link ],
       }
       authenticated_as(agent)
       instance = instance_double(GitLab)
@@ -99,7 +95,7 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
 
       params = {
         ticket_id:   ticket.id,
-        issue_links: [ ENV['GITLAB_ISSUE_LINK'] ],
+        issue_links: [ issue_link ],
       }
       authenticated_as(agent)
       post '/api/v1/integration/gitlab_ticket_update', params: params, as: :json
@@ -109,6 +105,73 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
       expect(json_response['result']).to eq('ok')
 
       expect(ticket.reload.preferences[:gitlab][:issue_links]).to eq(params[:issue_links])
+    end
+
+    context 'with SSL verification support' do
+      describe '.verify' do
+        def request
+          params = {
+            endpoint:   endpoint,
+            api_token:  token,
+            verify_ssl: verify_ssl,
+          }
+          authenticated_as(admin)
+          post '/api/v1/integration/gitlab/verify', params: params, as: :json
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'does verify SSL' do
+          allow(UserAgent).to receive(:get_http)
+          request
+          expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: true)).once
+        end
+
+        context 'with SSL verification turned off' do
+          let(:verify_ssl) { false }
+
+          it 'does not verify SSL' do
+            allow(UserAgent).to receive(:get_http)
+            request
+            expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: false)).once
+          end
+        end
+      end
+
+      describe '.query' do
+        before do
+          Setting.set('gitlab_integration', true)
+          Setting.set('gitlab_config', {
+                        endpoint:   endpoint,
+                        api_token:  token,
+                        verify_ssl: verify_ssl,
+                      })
+        end
+
+        def request
+          params = {
+            links: [ issue_link ],
+          }
+          authenticated_as(agent)
+          post '/api/v1/integration/gitlab', params: params, as: :json
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'does verify SSL' do
+          allow(UserAgent).to receive(:get_http)
+          request
+          expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: true)).once
+        end
+
+        context 'with SSL verification turned off' do
+          let(:verify_ssl) { false }
+
+          it 'does not verify SSL' do
+            allow(UserAgent).to receive(:get_http)
+            request
+            expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: false)).once
+          end
+        end
+      end
     end
   end
 end

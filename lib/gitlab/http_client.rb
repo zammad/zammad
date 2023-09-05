@@ -4,14 +4,15 @@ require 'uri'
 
 class GitLab
   class HttpClient
-    attr_reader :api_token, :endpoint
+    attr_reader :api_token, :endpoint, :verify_ssl
 
-    def initialize(endpoint, api_token)
+    def initialize(endpoint, api_token, verify_ssl: true)
       raise 'api_token required' if api_token.blank?
       raise 'endpoint required' if endpoint.blank? || endpoint.exclude?('/graphql') || endpoint.scan(URI::DEFAULT_PARSER.make_regexp).blank?
 
       @api_token = api_token
       @endpoint = endpoint
+      @verify_ssl = verify_ssl
     end
 
     # returns path of the subfolder of the endpoint if exists
@@ -39,7 +40,7 @@ class GitLab
           log:          {
             facility: 'GitLab',
           },
-          verify_ssl:   true,
+          verify_ssl:   verify_ssl,
         },
       )
 

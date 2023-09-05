@@ -9595,6 +9595,7 @@ msgstr ""
 msgid "SSL Verify"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
 msgid "SSL verification"
@@ -12710,6 +12711,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_footer.jst.eco
 msgid "Turn chat into ticket"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/gitlab.jst.eco
+#: app/assets/javascripts/app/views/integration/idoit.jst.eco
+msgid "Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco

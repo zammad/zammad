@@ -1,6 +1,9 @@
 <form>
   <h2><%- @T('Settings') %></h2>
   <div class="settings-entry">
+    <div class="alert alert--warning js-sslVerifyAlert hide" role="alert">
+      <%= @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+    </div>
     <table class="settings-list" style="width: 100%;">
       <thead>
         <tr>
@@ -14,6 +17,9 @@
         <tr>
           <td class="settings-list-row-control"><%- @T('API token') %> *
           <td class="settings-list-control-cell"><input type="password" class="form-control form-control--small" value="<%= @config.api_token %>" name="api_token">
+        <tr>
+          <td class="settings-list-row-control"><%- @T('SSL verification') %>
+          <td class="settings-list-control-cell js-sslVerify">
       </tbody>
     </table>
   </div>
