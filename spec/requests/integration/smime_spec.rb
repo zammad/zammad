@@ -24,7 +24,7 @@ RSpec.describe 'Integration SMIME', type: :request do
 
     context 'POST requests' do
 
-      let(:parsed_certificate) { SecureMailing::SMIME::Certificate.new(certificate_string) }
+      let(:parsed_certificate) { Certificate::X509::SMIME.new(certificate_string) }
 
       it 'adds certificate by string' do
         expect do

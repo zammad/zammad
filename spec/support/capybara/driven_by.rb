@@ -3,12 +3,16 @@
 require_relative 'set_up'
 
 CAPYBARA_PORT = ENV['CAPYBARA_PORT'] || 3001
+CAPYBARA_HOSTNAME = ENV['CI'].present? ? 'build' : 'localhost'
 
 RSpec.configure do |config|
 
+  # Provide SSL certificates with the help of the 'localhost' gem.
+  localhost_autority = Localhost::Authority.fetch(CAPYBARA_HOSTNAME)
+
   Capybara.register_server :puma_wrapper do |app, port, host, **_options|
     # Start a silenced Puma as application server.
-    Capybara.servers[:puma].call(app, port, host, Silent: true, Host: 'ssl://0.0.0.0', Threads: '0:16')
+    Capybara.servers[:puma].call(app, port, host, Silent: true, Host: "ssl://0.0.0.0?key=#{localhost_autority.key_path}&cert=#{localhost_autority.certificate_path}", Threads: '0:16')
   end
 
   Capybara.configure do |capybara_config|
@@ -16,13 +20,13 @@ RSpec.configure do |config|
     capybara_config.server_port = CAPYBARA_PORT
 
     # See https://docs.gitlab.com/runner/executors/docker.html#create-a-network-for-each-job
-    capybara_config.app_host = ENV['CI'].present? ? 'https://build' : 'https://localhost'
+    capybara_config.app_host = "https://#{CAPYBARA_HOSTNAME}"
   end
 
   config.before(:each, type: :system) do |example|
 
     Setting.set('http_type', 'https')
-    Setting.set('fqdn', ENV['CI'].present? ? "build:#{CAPYBARA_PORT}" : "localhost:#{CAPYBARA_PORT}")
+    Setting.set('fqdn', "#{CAPYBARA_HOSTNAME}:#{CAPYBARA_PORT}")
 
     browser_name = ENV.fetch('BROWSER', 'firefox')
 

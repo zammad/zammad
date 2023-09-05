@@ -112,6 +112,8 @@ example
     # on check, reduce open_timeout to have faster probing
     check_type_timeout = check_type == 'check' ? CHECK_ONLY_TIMEOUT : DEFAULT_TIMEOUT
 
+    Certificate::ApplySSLCertificates.ensure_fresh_ssl_context if ssl || starttls
+
     timeout(check_type_timeout) do
       @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, false)
       if starttls

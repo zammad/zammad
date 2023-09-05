@@ -1,0 +1,6 @@
+<form>
+  <h2><%- @T('SSL Certificates') %></h2>
+  <div class="settings-entry settings-entry--stretched js-certificatesList"></div>
+
+  <div class="btn btn--primary js-addCertificate"><%- @T('Add SSL Certificate') %></div>
+</form>

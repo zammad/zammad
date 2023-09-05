@@ -1,0 +1,33 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
+class Certificate::X509 < OpenSSL::X509::Certificate
+  attr_reader :fingerprint
+
+  def initialize(cert)
+    super(cert.gsub(%r{(?:TRUSTED\s)?(CERTIFICATE---)}, '\1'))
+
+    @fingerprint = OpenSSL::Digest.new('SHA1', to_der).to_s
+  end
+
+  def extensions_as_hash
+    extensions.each_with_object({}) do |ext, hash|
+      hash[ext.oid] = ext.value.split(',').map(&:strip)
+    end
+  end
+
+  def ca?
+    extensions_as_hash.fetch('basicConstraints', '').include?('CA:TRUE')
+  end
+
+  def effective?
+    Time.zone.now >= not_before
+  end
+
+  def expired?
+    Time.zone.now > not_after
+  end
+
+  def usable?
+    effective? && !expired?
+  end
+end

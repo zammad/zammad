@@ -96,11 +96,11 @@ class SMIMECertificate < ApplicationModel
   # public instance methods
 
   def parsed
-    @parsed ||= SecureMailing::SMIME::Certificate.new(pem)
+    @parsed ||= Certificate::X509::SMIME.new(pem)
   end
 
   def public_key=(string)
-    cert = SecureMailing::SMIME::Certificate.new(string)
+    cert = Certificate::X509::SMIME.new(string)
 
     self.email_addresses = cert.email_addresses
     self.pem             = cert.to_pem

@@ -879,5 +879,16 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :pgp_keys, [:domain_alias]
     add_foreign_key :pgp_keys, :users, column: :created_by_id
     add_foreign_key :pgp_keys, :users, column: :updated_by_id
+
+    create_table :ssl_certificates do |t|
+      t.string   :fingerprint,  limit: 250,          null: false
+      t.binary   :certificate,  limit: 10.megabytes, null: false
+      t.string   :subject,      limit: 250,          null: false
+      t.datetime :not_before,   limit: 3,            null: false
+      t.datetime :not_after,    limit: 3,            null: false
+      t.boolean  :ca,           default: false,      null: false
+
+      t.timestamps limit: 3, null: false
+    end
   end
 end

@@ -72,6 +72,7 @@ returns
     end
 
     if ssl
+      Certificate::ApplySSLCertificates.ensure_fresh_ssl_context
       @pop.enable_ssl(OpenSSL::SSL::VERIFY_NONE)
     end
     @pop.start(options[:user], options[:password])

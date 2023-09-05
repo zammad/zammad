@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SecureMailing::SMIME::Certificate do
+RSpec.describe Certificate::X509::SMIME do
   def fixture(name)
     Rails.root.join('spec/fixtures/files/smime', "#{name}.crt").read.strip
   end

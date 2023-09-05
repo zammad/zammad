@@ -195,7 +195,10 @@ class Ldap
 
     @port ||= @config.fetch(:port, ssl_default_port)
 
-    return if @config[:ssl_verify]
+    if @config[:ssl_verify]
+      Certificate::ApplySSLCertificates.ensure_fresh_ssl_context
+      return
+    end
 
     @encryption[:tls_options] = {
       verify_mode: OpenSSL::SSL::VERIFY_NONE

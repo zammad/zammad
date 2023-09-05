@@ -135,6 +135,7 @@ class Sequencer::Unit::Exchange::Connection < Sequencer::Unit::Common::Provider:
       end
 
       def ssl_config(opts)
+        Certificate::ApplySSLCertificates.ensure_fresh_ssl_context
         @httpcli.ssl_config.verify_mode = opts[:ssl_verify_mode] if opts[:ssl_verify_mode]
         @httpcli.ssl_config.ssl_version = opts[:ssl_version] if opts[:ssl_version]
       end

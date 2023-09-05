@@ -1,12 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-module SecureMailing::SMIME::Certificate::Attributes
-  def extensions_as_hash
-    extensions.each_with_object({}) do |ext, hash|
-      hash[ext.oid] = ext.value.split(',').map(&:strip)
-    end
-  end
-
+module Certificate::X509::SMIME::Attributes
   def fetch_email_addresses
     subject_alt_name = extensions_as_hash['subjectAltName']
     return [] if subject_alt_name.blank?

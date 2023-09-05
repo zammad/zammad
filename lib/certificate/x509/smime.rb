@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class SecureMailing::SMIME::Certificate < OpenSSL::X509::Certificate
-  include SecureMailing::SMIME::Certificate::Attributes
+class Certificate::X509::SMIME < Certificate::X509
+  include Certificate::X509::SMIME::Attributes
 
   attr_reader :email_addresses, :fingerprint, :issuer_hash, :uid, :subject_hash
 
@@ -14,23 +14,13 @@ class SecureMailing::SMIME::Certificate < OpenSSL::X509::Certificate
   end
 
   def initialize(pem)
-    super(pem.gsub(%r{(?:TRUSTED\s)?(CERTIFICATE---)}, '\1'))
+    super(pem)
 
     @email_addresses = fetch_email_addresses
-    @fingerprint     = OpenSSL::Digest.new('SHA1', to_der).to_s
     @subject_hash    = subject.hash.to_s(16)
     @issuer_hash     = issuer.hash.to_s(16)
 
     @uid = determine_uid
-  end
-
-  def ca?
-    return false if !extensions_as_hash.key?('basicConstraints')
-
-    basic_constraints = extensions_as_hash['basicConstraints']
-    return false if basic_constraints.exclude?('CA:TRUE')
-
-    true
   end
 
   def rsa?
@@ -41,53 +31,25 @@ class SecureMailing::SMIME::Certificate < OpenSSL::X509::Certificate
     public_key.class.name.end_with?('EC')
   end
 
-  def effective?
-    Time.zone.now >= not_before
-  end
-
-  def expired?
-    Time.zone.now > not_after
-  end
-
   def applicable?
     return false if ca?
 
-    extended_key_usage = extensions_as_hash['extendedKeyUsage']
-
     # This is necessary because some legacy certificates may not have an extended key usage.
-    return true if extended_key_usage.nil?
-
-    extended_key_usage.include?('E-mail Protection')
+    extensions_as_hash.fetch('extendedKeyUsage', ['E-mail Protection']).include?('E-mail Protection')
   end
 
   def signature?
-    return false if ca?
-
-    key_usage = extensions_as_hash['keyUsage']
+    return false if ca? || !applicable?
 
     # This is necessary because some legacy certificates may not have a key usage.
-    return true if key_usage.nil?
-
-    return false if !applicable?
-
-    key_usage.include?('Digital Signature')
+    extensions_as_hash.fetch('keyUsage', ['Digital Signature']).include?('Digital Signature')
   end
 
   def encryption?
-    return false if ca?
-
-    key_usage = extensions_as_hash['keyUsage']
+    return false if ca? || !applicable?
 
     # This is necessary because some legacy certificates may not have a key usage.
-    return true if key_usage.nil?
-
-    return false if !applicable?
-
-    key_usage.include?('Key Encipherment')
-  end
-
-  def usable?
-    effective? && !expired?
+    extensions_as_hash.fetch('keyUsage', ['Key Encipherment']).include?('Key Encipherment')
   end
 
   def valid_smime_certificate? # rubocop:disable Metrics/CyclomaticComplexity
@@ -106,8 +68,8 @@ class SecureMailing::SMIME::Certificate < OpenSSL::X509::Certificate
 
     message = __('The certificate is not valid for S/MIME usage. Please check the key usage, subject alternative name and public key cryptographic algorithm.')
 
-    Rails.logger.error { "SMIME::Certificate: #{message}" }
-    Rails.logger.error { "SMIME::Certificate:\n #{to_text}" }
+    Rails.logger.error { "Certificate::X509::SMIME: #{message}" }
+    Rails.logger.error { "Certificate::X509::SMIME:\n #{to_text}" }
 
     raise Exceptions::UnprocessableEntity, message
   end

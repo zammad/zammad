@@ -7,7 +7,7 @@ class SMIMEMetaInformationData < ActiveRecord::Migration[6.1]
 
     SMIMECertificate.in_batches.each_record do |record|
       begin
-        cert = SecureMailing::SMIME::Certificate.new(record.pem)
+        cert = Certificate::X509::SMIME.new(record.pem)
         data = {
           email_addresses: cert.email_addresses,
           issuer_hash:     cert.issuer.hash.to_s(16),

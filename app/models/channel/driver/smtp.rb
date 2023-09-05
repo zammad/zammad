@@ -89,6 +89,9 @@ class Channel::Driver::Smtp
       smtp_params[:password] = options[:password]
       smtp_params[:authentication] = options[:authentication]
     end
+
+    Certificate::ApplySSLCertificates.ensure_fresh_ssl_context if options[:ssl] || options[:enable_starttls_auto]
+
     mail.delivery_method :smtp, smtp_params
     mail.deliver
   end

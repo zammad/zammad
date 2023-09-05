@@ -1,6 +1,10 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.configure do |config|
+
+  hostname = ENV['CI'].present? ? 'build' : 'localhost'
+  localhost_autority = Localhost::Authority.fetch(hostname)
+
   config.around(:each, type: :system) do |example|
 
     server_required = example.metadata.fetch(:websocket, true)
@@ -18,8 +22,8 @@ RSpec.configure do |config|
           v:           false,
           d:           false,
           tls_options: {
-            private_key_file: "#{Dir.home}/.localhost/localhost.key",
-            cert_chain_file:  "#{Dir.home}/.localhost/localhost.crt",
+            private_key_file: localhost_autority.key_path,
+            cert_chain_file:  localhost_autority.certificate_path,
           }
         )
       end
