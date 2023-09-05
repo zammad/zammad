@@ -30,7 +30,7 @@ jobs:
       CI_SKIP_DB_RESET: 'true'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Cache node modules
         id: cache-npm
         uses: actions/cache@v3
