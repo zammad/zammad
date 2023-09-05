@@ -17,6 +17,9 @@
         <tr>
           <td class="settings-list-row-control"><%- @T('Client ID') %>
           <td class="settings-list-control-cell"><input type="text" class="form-control form-control--small" value="<%= @config.client_id %>" name="client_id">
+        <tr>
+          <td class="settings-list-row-control"><%- @T('SSL verification') %>
+          <td class="settings-list-control-cell js-sslVerify">
       </tbody>
     </table>
   </div>

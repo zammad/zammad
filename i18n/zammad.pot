@@ -9560,6 +9560,7 @@ msgstr ""
 msgid "SSL Verify"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
 msgid "SSL verification"
 msgstr ""

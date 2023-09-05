@@ -14,7 +14,7 @@ returns
 
 =end
 
-  def self.verify(api_token, endpoint, _client_id = nil)
+  def self.verify(api_token, endpoint, _client_id = nil, verify_ssl: false)
     raise 'api_token required' if api_token.blank?
     raise 'endpoint required' if endpoint.blank?
 
@@ -22,7 +22,7 @@ returns
       apikey: api_token,
     }
 
-    _query('cmdb.object_types', params, _url_cleanup(endpoint))
+    _query('cmdb.object_types', params, _url_cleanup(endpoint), verify_ssl: verify_ssl)
   end
 
 =begin
@@ -98,10 +98,10 @@ or with filter:
     if filter.present?
       params[:filter] = filter
     end
-    _query(method, params, _url_cleanup(setting[:endpoint]))
+    _query(method, params, _url_cleanup(setting[:endpoint]), verify_ssl: setting[:verify_ssl])
   end
 
-  def self._query(method, params, url)
+  def self._query(method, params, url, verify_ssl: false)
     result = UserAgent.post(
       url,
       {
@@ -114,6 +114,7 @@ or with filter:
         id:      42,
       },
       {
+        verify_ssl:   verify_ssl,
         json:         true,
         open_timeout: 6,
         read_timeout: 16,

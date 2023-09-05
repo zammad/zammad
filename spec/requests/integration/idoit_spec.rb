@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Idoit', type: :request do
-
   let!(:admin) do
     create(:admin, groups: Group.all)
   end
@@ -18,6 +17,10 @@ RSpec.describe 'Idoit', type: :request do
   end
   let!(:endpoint) do
     'https://idoit.example.com/i-doit/'
+  end
+
+  def read_message(file)
+    Rails.root.join('test', 'data', 'idoit', "#{file}.json").read
   end
 
   before do
@@ -148,9 +151,65 @@ RSpec.describe 'Idoit', type: :request do
       expect(json_response['response']['result'][0]['cmdb_status_title']).to eq('in operation')
 
     end
+  end
 
-    def read_message(file)
-      Rails.root.join('test', 'data', 'idoit', "#{file}.json").read
+  describe 'SSL verification' do
+    describe '.verify' do
+      def request(verify: false)
+        params = {
+          api_token:  token,
+          endpoint:   endpoint,
+          client_id:  '',
+          verify_ssl: verify
+        }
+        authenticated_as(admin)
+        post '/api/v1/integration/idoit/verify', params: params, as: :json
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'does verify SSL' do
+        allow(UserAgent).to receive(:get_http)
+        request(verify: true)
+        expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: true)).once
+      end
+
+      it 'does not verify SSL' do
+        allow(UserAgent).to receive(:get_http)
+        request
+        expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: false)).once
+      end
+    end
+
+    describe '.query' do
+      def request(verify: false)
+        Setting.set('idoit_config', Setting.get('idoit_config').merge(verify_ssl: verify))
+
+        stub_request(:post, "#{endpoint}src/jsonrpc.php")
+          .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\",\"id\":42}")
+          .to_return(status: 200, body: read_message('object_types_response'), headers: {})
+
+        params = {
+          method: 'cmdb.objects',
+          filter: {
+            ids: ['33']
+          },
+        }
+        authenticated_as(agent)
+        post '/api/v1/integration/idoit', params: params, as: :json
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'does verify SSL' do
+        allow(UserAgent).to receive(:get_http)
+        request(verify: true)
+        expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: true)).once
+      end
+
+      it 'does not verify SSL' do
+        allow(UserAgent).to receive(:get_http)
+        request
+        expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: false)).once
+      end
     end
   end
 end
