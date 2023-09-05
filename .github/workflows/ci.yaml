@@ -8,7 +8,7 @@ on: [push]
 #    - cron:  '0 6 * * 5'
 
 jobs:
-  CI:
+  Lint:
     runs-on: ubuntu-latest
     container:
       image: zammad/zammad-ci:latest
@@ -44,13 +44,50 @@ jobs:
         with:
           path: vendor/ruby
           key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
-      #- name: Install dependencies
-      #  run: sudo apt install postgresql libimlib2 libimlib2-dev openssl direnv shellcheck
-      #- name: Set up Ruby
-      #  uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
       - name: Pre
         run: .github/workflows/ci/pre.sh
       - name: Lint
         run: .github/workflows/ci/lint.sh
+      #- name: Test
+      #  run: .github/workflows/ci/test.sh
+  
+  Tests:     
+    runs-on: ubuntu-latest
+    container:
+      image: zammad/zammad-ci:latest
+    services:
+      postgresql:
+        image: postgres:10
+        env:
+          POSTGRES_USER: zammad
+          POSTGRES_PASSWORD: zammad
+      redis:
+        # Use Redis 5 which is shipped in Debian 10.
+        image: redis:5
+    env:
+      RAILS_ENV: test
+      Z_LOCALES: "en-us:de-de"
+      REDIS_URL: redis://redis:6379
+      # Compile assets only once.
+      CI_SKIP_ASSETS_PRECOMPILE: 'true'
+      # Avoid unnecessary DB resets.
+      CI_SKIP_DB_RESET: 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: .yarn/cache
+          key: ${{ runner.os }}-cache-npm-${{ hashFiles('yarn.lock') }}
+      - name: Cache Rubygems
+        id: cache-bundler
+        uses: actions/cache@v3
+        with:
+          path: vendor/ruby
+          key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
+      - name: Pre
+        run: .github/workflows/ci/pre.sh
       - name: Test
         run: .github/workflows/ci/test.sh
