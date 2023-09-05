@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-29 13:32+0000\n"
+"PO-Revision-Date: 2023-09-05 01:05+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -370,10 +370,10 @@ msgstr "%s (Methode)"
 msgid "%s (option)"
 msgstr "%s (Option)"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
 msgstr "%s (unbekannt)"
 
@@ -502,10 +502,6 @@ msgstr "vor %s Minuten"
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s months ago"
 msgstr "vor %s Monaten"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "%s new replies"
-msgstr "% neue Antworten"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -758,10 +754,6 @@ msgstr "vor 1 Minute"
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
 msgstr "vor 1 Monat"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "1 new reply"
-msgstr "1 neue Antwort"
 
 #: db/seeds/settings.rb
 msgid "1 week"
@@ -1710,7 +1702,7 @@ msgstr "Archiviert am"
 msgid "Are you sure to remove this article?"
 msgstr "Sind Sie sicher, dass Sie diesen Artikel löschen wollen?"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Wollen Sie \"%s\" wirklich löschen?"
 
@@ -1916,11 +1908,11 @@ msgstr "Wählen Sie mindestens ein Objekt aus."
 msgid "At least one user needs to have admin permissions."
 msgstr "Mindestens ein Benutzer muss administrative Berechtigungen besitzen."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach another file"
 msgstr "Weitere Datei anhängen"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
 msgstr "Dateien anhängen"
 
@@ -1999,7 +1991,7 @@ msgstr ""
 "konfiguriert ist, wird das vom IDP zurückgegebene Namens-Kennzeichen "
 "verwendet."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
 msgstr "Attribute"
@@ -2063,6 +2055,10 @@ msgstr "Authentifizierungs-App"
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Authenticator app secret"
 msgstr "Geheimnis der Authentifizierungs-App"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+msgid "Author"
+msgstr "Autor"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2184,7 +2180,7 @@ msgstr "Zurück zu meiner Ansicht"
 msgid "Back to overview"
 msgstr "Zurück zur Übersicht"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Back to previous page"
 msgstr "Zurück zur vorherigen Seite"
 
@@ -2509,11 +2505,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -2903,9 +2899,9 @@ msgstr "Löschen"
 msgid "Clear Search"
 msgstr "Suche löschen"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Clear Selection"
 msgstr "Auswahl löschen"
 
@@ -3529,7 +3525,7 @@ msgid ""
 "Create rules that single out the tickets for the Service Level Agreement."
 msgstr "Erstellung von Regeln welche Tickets für einen SLA auswählen."
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Create tag"
 msgstr "Tag erstellen"
 
@@ -3676,7 +3672,7 @@ msgstr ""
 msgid "Currently no overview is assigned to your roles."
 msgstr "Aktuell sind Ihren Rollen keine Übersichten zugewiesen."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/navbar.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
@@ -4867,8 +4863,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Delete"
 msgstr "Löschen"
 
@@ -5209,9 +5205,9 @@ msgid "Don't synchronize"
 msgstr "Nicht synchronisieren"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr "Erledigt"
 
@@ -5619,14 +5615,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Enable ticket auto assignment."
 msgstr "Automatische Ticket-Zuweisung aktivieren."
-
-#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-msgid "Enable time accounting for following matching tickets."
-msgstr "Schalte die Zeiterfassung für die folgenden zutreffenden Tickets an."
-
-#: db/seeds/settings.rb
-msgid "Enable time accounting for these tickets."
-msgstr "Zeiterfassung für diese Tickets aktivieren."
 
 #: db/seeds/settings.rb
 msgid "Enable time accounting."
@@ -6691,6 +6679,10 @@ msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr ""
 "GitLab-Anfrage fehlgeschlagen! Bitte prüfen Sie die Logdatei für Details"
 
+#: app/models/ticket/time_accounting.rb
+msgid "Given Ticket Article is not part of the Ticket"
+msgstr "Der angegebene Ticket-Artikel gehört nicht zum Ticket"
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -6847,12 +6839,12 @@ msgstr "Gruppenauswahl für Ticket-Erstellung"
 msgid "Group selection for ticket creation"
 msgstr "Gruppenauswahl für die Ticket-Erstellung"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping by"
 msgstr "Gruppieren nach"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping order"
 msgstr "Gruppierungs-Reihenfolge"
@@ -6907,7 +6899,7 @@ msgstr "Datenschutz-Aufgaben ausführen."
 msgid "Has processed"
 msgstr "wurde verarbeitet"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Has submenu"
 msgstr "Hat ein Untermenü"
 
@@ -7821,7 +7813,7 @@ msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 "Mit einem bereits zusammengefassten Ticket kann nicht zusammengefasst werden."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 msgid "Items per page"
 msgstr "Einträge je Seite"
 
@@ -8011,6 +8003,10 @@ msgstr "Letzter interner Artikel"
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
 msgstr "Letzte Änderung %s %s durch %s"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+msgid "Last changed"
+msgstr "Zuletzt geändert"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -9235,9 +9231,9 @@ msgid "No record found!"
 msgstr "Kein Eintrag gefunden!"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr "Keine Ergebnisse gefunden"
 
@@ -9296,6 +9292,7 @@ msgstr ""
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Keine 'x-zammad-session-user-id', kein Absender gesetzt!"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/graphql/gql/types/ticket_type.rb
 msgid "None"
@@ -9318,7 +9315,7 @@ msgstr "Nicht verfügbar"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr "Nicht gefunden"
@@ -9337,6 +9334,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/controllers/application_controller/handles_errors.rb
+#: app/services/service/ticket/article/create.rb
 msgid "Not authorized"
 msgstr "Nicht autorisiert"
 
@@ -10497,6 +10495,14 @@ msgstr "Warteschlange"
 msgid "Queue already exists!"
 msgstr "Queue existiert bereits!"
 
+#: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
+msgid ""
+"REST API access using the username/email address and password is currently "
+"disabled. Please contact your administrator."
+msgstr ""
+"REST-API-Zugriff über Benutzername/E-Mail und Passwort ist derzeit "
+"abgeschaltet. Bitte kontaktieren Sie ihren Administrator."
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
@@ -11294,11 +11300,11 @@ msgstr "Benutzer suchen"
 msgid "Search for…"
 msgstr "Suchen nach…"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 msgid "Search or enter email address…"
 msgstr "Suchen oder E-Mail-Adresse angeben…"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 msgid "Search or enter phone number…"
 msgstr "Suchen oder Telefonnummer angeben…"
 
@@ -11467,9 +11473,9 @@ msgid "Selects the ticket number generator module."
 msgstr "Wählt den Generator zum Erstellen der Ticketnummern aus."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Select…"
 msgstr "Auswählen…"
 
@@ -11851,6 +11857,12 @@ msgstr "Ticket-Aktionen anzeigen"
 msgid "Show ticket viewers"
 msgstr "Zeige Ticketzuschauer"
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: db/seeds/settings.rb
+msgid "Show time accounting dialog when updating matching tickets."
+msgstr ""
+"Zeiterfassungs-Dialog anzeigen, wenn passende Tickets aktualisiert werden."
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
 msgstr "Titel im Formular anzeigen."
@@ -11902,6 +11914,7 @@ msgstr "Signatur-Fehler"
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
+#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue
 msgid "Sign in"
 msgstr "Anmelden"
 
@@ -12069,12 +12082,12 @@ msgstr "Entschuldigung, nicht alle Felder sind korrekt ausgefüllt."
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "Entschuldigung, aktuell ist keine CTI-Schnittstelle aktiviert."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Sorting by"
 msgstr "Sortieren nach"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Sorting order"
 msgstr "Sortierungs-Reihenfolge"
@@ -12135,7 +12148,7 @@ msgstr "Beginnen Sie mit der Eingabe, um nach Benutzern zu suchen…"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Beginnen Sie mit der Eingabe, um in der Knowledge Base zu suchen…"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Start typing to search…"
 msgstr "Beginnen Sie mit der Eingabe, um zu suchen…"
 
@@ -12368,7 +12381,7 @@ msgstr ""
 "Inhalte des Tabs haben sich geändert, wollen Sie diese Änderungen wirklich "
 "verwerfen?"
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Tag \"%s\" already exists."
 msgstr "Tag \"%s\" existiert bereits."
 
@@ -12379,9 +12392,9 @@ msgstr "Tag \"%s\" existiert bereits."
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 #: lib/excel_sheet/ticket.rb
@@ -12496,6 +12509,7 @@ msgstr "Überprüfen"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Text"
 msgstr "Text"
@@ -14364,6 +14378,10 @@ msgstr "Typen für Zeiterfassung"
 msgid "Time Accounting Unit"
 msgstr "Einheit für Zeiterfassung"
 
+#: app/policies/ticket/time_accounting_policy.rb
+msgid "Time Accounting is not enabled"
+msgstr "Die Zeiterfassung ist nicht aktiviert"
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -14616,6 +14634,10 @@ msgstr "Retweets nachverfolgen"
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "Transfer conversation to another chat:"
 msgstr "Gespräch in einen anderen Chat übertragen:"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Translate field contents"
+msgstr "Feldinhalte übersetzen"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -15581,7 +15603,7 @@ msgstr "Es tut uns leid, etwas ist schiefgegangen."
 msgid "We're sorry, but something went wrong. Received message: %s"
 msgstr "Es tut uns leid, etwas ist schiefgegangen. Nachricht erhalten: %s"
 
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr "Es tut uns Leid, diese Seite existiert nicht."
 
@@ -16477,7 +16499,7 @@ msgstr "und"
 msgid "archived"
 msgstr "archiviert"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "ascending"
@@ -16682,7 +16704,7 @@ msgstr "Standard"
 msgid "delete"
 msgstr "löschen"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "descending"
@@ -17741,6 +17763,15 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "%s new replies"
+#~ msgstr "% neue Antworten"
+
+#~ msgid "1 new reply"
+#~ msgstr "1 neue Antwort"
+
+#~ msgid "Enable time accounting for these tickets."
+#~ msgstr "Zeiterfassung für diese Tickets aktivieren."
 
 #~ msgid "You can use regular expression by using \"regex:your_reg_exp\"."
 #~ msgstr "Mit \"regex:ihre_regex\" können Sie reguläre Ausdrücke verwenden."

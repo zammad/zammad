@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-11 01:07+0000\n"
+"PO-Revision-Date: 2023-09-05 01:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
-"zammad/zammad-development/sr_Cyrl/>\n"
+"zammad/zammad-stable/sr_Cyrl/>\n"
 "Language: sr-cyrl-rs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.18.2\n"
 
 #. Default date format to use for the current locale.
@@ -371,10 +371,10 @@ msgstr "%s (врста)"
 msgid "%s (option)"
 msgstr "%s (опција)"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
 msgstr "%s (непознато)"
 
@@ -504,10 +504,6 @@ msgstr "пре %s минут(а)"
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s months ago"
 msgstr "пре %s месец(и)"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "%s new replies"
-msgstr "%s нов(их) одговор(а)"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -758,10 +754,6 @@ msgstr "пре једног минута"
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
 msgstr "пре месец дана"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "1 new reply"
-msgstr "1 нов одговор"
 
 #: db/seeds/settings.rb
 msgid "1 week"
@@ -1694,7 +1686,7 @@ msgstr "Архивирано у"
 msgid "Are you sure to remove this article?"
 msgstr "Да ли сте сигурни да желите да уклоните овај чланак?"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Да ли сте сигурни да желите да обришете „%s”?"
 
@@ -1891,11 +1883,11 @@ msgstr "Неопходно је одабрати бар један објека�
 msgid "At least one user needs to have admin permissions."
 msgstr "Неопходно је да бар један корисник има администраторске дозволе."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach another file"
 msgstr "Приложи још једну датотеку"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
 msgstr "Приложи датотеке"
 
@@ -1971,7 +1963,7 @@ msgstr ""
 "Атрибут који идентификује уникатног корисника. Уколико није подешен, биће "
 "коришћен подразумевани IDP идентификатор."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
 msgstr "Атрибути"
@@ -2033,6 +2025,10 @@ msgstr "Апликација за аутентификацију"
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Authenticator app secret"
 msgstr "Шифра апликације за аутентификацију"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+msgid "Author"
+msgstr "Аутор"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2154,7 +2150,7 @@ msgstr "Иди назад на мој преглед"
 msgid "Back to overview"
 msgstr "Иди назад на преглед"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Back to previous page"
 msgstr "Иди на претходну страну"
 
@@ -2479,11 +2475,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "Откажи"
 
@@ -2862,9 +2858,9 @@ msgstr "Очисти"
 msgid "Clear Search"
 msgstr "Очисти претрагу"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Clear Selection"
 msgstr "Очисти избор"
 
@@ -3484,7 +3480,7 @@ msgid ""
 "Create rules that single out the tickets for the Service Level Agreement."
 msgstr "Додај правила која издвајају тикете за споразум о нивоу услуга."
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Create tag"
 msgstr "Додај ознаку"
 
@@ -3629,7 +3625,7 @@ msgstr "Тренутни корисник нема дозволу да кори�
 msgid "Currently no overview is assigned to your roles."
 msgstr "Тренутно нема прегледа додељених вашим улогама."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/navbar.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
@@ -4773,8 +4769,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Delete"
 msgstr "Избриши"
 
@@ -5111,9 +5107,9 @@ msgid "Don't synchronize"
 msgstr "Без синхронизације"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr "Готово"
 
@@ -5511,14 +5507,6 @@ msgstr ""
 msgid "Enable ticket auto assignment."
 msgstr "Укључи аутоматску доделу тикета."
 
-#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-msgid "Enable time accounting for following matching tickets."
-msgstr "Укључи обрачун времена тикета који се подударају."
-
-#: db/seeds/settings.rb
-msgid "Enable time accounting for these tickets."
-msgstr "Укључи обрачун времена следећих тикета."
-
 #: db/seeds/settings.rb
 msgid "Enable time accounting."
 msgstr "Укључи обрачун времена."
@@ -5806,7 +5794,7 @@ msgstr "Унеси кључеве своје %s апликације"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Enter your current password, insert a new one and confirm it."
-msgstr ""
+msgstr "Унеси своју важећу лозинку, затим нову па потврди."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -6563,6 +6551,10 @@ msgstr "GitLab интеграција"
 msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr "Неуспео GitLab захтев! Молимо проверите датотеку евиденције за детаље"
 
+#: app/models/ticket/time_accounting.rb
+msgid "Given Ticket Article is not part of the Ticket"
+msgstr "Задат чланак тикета не припада овом тикету"
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -6719,12 +6711,12 @@ msgstr "Избор групе за отварање тикета"
 msgid "Group selection for ticket creation"
 msgstr "Избор групе за отварање тикета"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping by"
 msgstr "Груписано по"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping order"
 msgstr "Редослед груписања"
@@ -6779,7 +6771,7 @@ msgstr "Извршава задатке приватности података.
 msgid "Has processed"
 msgstr "Обрађено је"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Has submenu"
 msgstr "Има подмени"
 
@@ -7672,7 +7664,7 @@ msgstr "Ionicons"
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "Није могуће спојити већ спојени тикет."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 msgid "Items per page"
 msgstr "Број ставки по страни"
 
@@ -7861,6 +7853,10 @@ msgstr "Последњи интерни чланак"
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
 msgstr "Последња промена %s %s од стране %s"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+msgid "Last changed"
+msgstr "Последњи пут измењено"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -9085,9 +9081,9 @@ msgid "No record found!"
 msgstr "Нису пронађени записи!"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr "Нема резултата"
 
@@ -9146,6 +9142,7 @@ msgstr ""
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Без x-zammad-session-user-id, пошиљалац није подешен!"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/graphql/gql/types/ticket_type.rb
 msgid "None"
@@ -9168,7 +9165,7 @@ msgstr "Недоступно"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr "Није пронађено"
@@ -9187,6 +9184,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/controllers/application_controller/handles_errors.rb
+#: app/services/service/ticket/article/create.rb
 msgid "Not authorized"
 msgstr "Без ауторизације"
 
@@ -10328,6 +10326,14 @@ msgstr "Ред"
 msgid "Queue already exists!"
 msgstr "Ред већ постоји!"
 
+#: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
+msgid ""
+"REST API access using the username/email address and password is currently "
+"disabled. Please contact your administrator."
+msgstr ""
+"REST API приступ путем корисничког имена/имејл адресе и лозинке је тренутно "
+"искључен. Молимо контактирајте администратора."
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
@@ -11117,11 +11123,11 @@ msgstr "Претражи кориснике"
 msgid "Search for…"
 msgstr "Тражи…"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 msgid "Search or enter email address…"
 msgstr "Тражи или унеси имејл адресу…"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 msgid "Search or enter phone number…"
 msgstr "Тражи или унеси број телефона…"
 
@@ -11287,9 +11293,9 @@ msgid "Selects the ticket number generator module."
 msgstr "Одређује модул генератора броја тикета."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Select…"
 msgstr "Изабери…"
 
@@ -11664,6 +11670,13 @@ msgstr "Прикажи радње тикета"
 msgid "Show ticket viewers"
 msgstr "Прикажи гледаоце тикета"
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: db/seeds/settings.rb
+msgid "Show time accounting dialog when updating matching tickets."
+msgstr ""
+"Прикажи дијалог обрачуна времена тикета приликом освежавања одговарајућих "
+"тикета."
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
 msgstr "Прикажи наслов у форми."
@@ -11715,6 +11728,7 @@ msgstr "Грешка потписа"
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
+#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue
 msgid "Sign in"
 msgstr "Пријави се"
 
@@ -11880,12 +11894,12 @@ msgstr "Жао нам је, нису сва поља исправно попуњ
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "Жао нам је, тренутно нема укључених CTI позадинских модула."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Sorting by"
 msgstr "Сортирање по"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Sorting order"
 msgstr "Редослед сортирања"
@@ -11946,7 +11960,7 @@ msgstr "Унеси текст за претрагу корисника…"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Унеси текст за претрагу базе знања…"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Start typing to search…"
 msgstr "Унеси текст за претрагу…"
 
@@ -12177,7 +12191,7 @@ msgstr "Понашање прозора након извршене радње �
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Прозор има промене, да ли заиста желите да га затворите?"
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Tag \"%s\" already exists."
 msgstr "Ознака „%s” већ постоји."
 
@@ -12188,9 +12202,9 @@ msgstr "Ознака „%s” већ постоји."
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 #: lib/excel_sheet/ticket.rb
@@ -12304,6 +12318,7 @@ msgstr "Тестирање"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Text"
 msgstr "Текст"
@@ -14122,6 +14137,10 @@ msgstr "Врсте активности обрачунатог времена"
 msgid "Time Accounting Unit"
 msgstr "Јединица обрачунатог времена"
 
+#: app/policies/ticket/time_accounting_policy.rb
+msgid "Time Accounting is not enabled"
+msgstr "Обрачун времена није укључен"
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -14346,16 +14365,12 @@ msgid "Topics"
 msgstr "Теме"
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
-#, fuzzy
-#| msgid "Total: %s"
 msgid "Total"
-msgstr "Укупно: %s"
+msgstr "Укупно"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Total Accounted Time"
-msgstr "Обрачунато време"
+msgstr "Укупно обрачунато време"
 
 #: db/seeds/settings.rb
 msgid "Total display of the number of objects in a grouping."
@@ -14372,6 +14387,10 @@ msgstr "Прати ретвитове"
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "Transfer conversation to another chat:"
 msgstr "Пренеси разговор у друго ћаскање:"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Translate field contents"
+msgstr "Преведи садржај поља"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -15322,7 +15341,7 @@ msgstr "Жао нам је, али нешто је пошло наопако."
 msgid "We're sorry, but something went wrong. Received message: %s"
 msgstr "Жао нам је, али нешто је пошло наопако. Порука грешке: %s"
 
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr "Жао нам је, али ова страна не постоји."
 
@@ -16202,7 +16221,7 @@ msgstr "и"
 msgid "archived"
 msgstr "архивирано"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "ascending"
@@ -16407,7 +16426,7 @@ msgstr "подразумевано"
 msgid "delete"
 msgstr "избриши"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "descending"
@@ -17463,6 +17482,15 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "%s new replies"
+#~ msgstr "%s нов(их) одговор(а)"
+
+#~ msgid "1 new reply"
+#~ msgstr "1 нов одговор"
+
+#~ msgid "Enable time accounting for these tickets."
+#~ msgstr "Укључи обрачун времена следећих тикета."
 
 #~ msgid "You can use regular expression by using \"regex:your_reg_exp\"."
 #~ msgstr "Можете користити регуларне изразе са „regex:your_reg_exp”."

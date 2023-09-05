@@ -384,10 +384,10 @@ msgstr ""
 msgid "%s (option)"
 msgstr "ตั้งค่าตัวเลือก"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
 msgstr "%s (ไม่ระบุ)"
 
@@ -513,10 +513,6 @@ msgstr "%s นาทีก่อน"
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s months ago"
 msgstr "%s หลายเดือนก่อน"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "%s new replies"
-msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -787,12 +783,6 @@ msgstr "หนึ่งนาทีก่อน"
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
 msgstr "1 เดือนที่แล้ว"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-#, fuzzy
-#| msgid "reply"
-msgid "1 new reply"
-msgstr "ตอบกลับ"
 
 #: db/seeds/settings.rb
 msgid "1 week"
@@ -1753,7 +1743,7 @@ msgstr "จัดเก็บที่"
 msgid "Are you sure to remove this article?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #, fuzzy
 #| msgid "Do you really want to delete \"%s\"?"
 msgid "Are you sure you want to delete \"%s\"?"
@@ -1965,11 +1955,11 @@ msgstr "ต้องเลือกวัตถุอย่างน้อยห
 msgid "At least one user needs to have admin permissions."
 msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach another file"
 msgstr "แนบไฟล์อื่น"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
 msgstr "ไฟล์แนบ"
 
@@ -2039,7 +2029,7 @@ msgid ""
 "returned by the IDP is used."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
 msgstr "แอตทริบิวต์"
@@ -2113,6 +2103,10 @@ msgstr "การยึนยันตน"
 #| msgid "Authentication via %s"
 msgid "Authenticator app secret"
 msgstr "การตรวจสอบสิทธิ์ผ่าน %s"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+msgid "Author"
+msgstr ""
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2238,7 +2232,7 @@ msgstr "กลับมาที่มุมมองของฉัน"
 msgid "Back to overview"
 msgstr "กลับมาที่มุมมองของฉัน"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #, fuzzy
 #| msgid "Back to overview"
 msgid "Back to previous page"
@@ -2558,11 +2552,11 @@ msgstr "อัปเดตรหัสผ่านไม่ได้ รหั�
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "ยกเลิก"
 
@@ -2953,9 +2947,9 @@ msgstr "ล้าง"
 msgid "Clear Search"
 msgstr "ล้างการค้นหา"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Clear Selection"
 msgstr "ล้างการเลือก"
 
@@ -3582,7 +3576,7 @@ msgid ""
 "Create rules that single out the tickets for the Service Level Agreement."
 msgstr "สร้างกฎที่แยก tickets สำหรับข้อตกลงระดับการให้บริการ"
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Create tag"
 msgstr "สร้าง tag"
 
@@ -3737,7 +3731,7 @@ msgstr "ผู้ใช้ปัจจุบันไม่ได้รับอ
 msgid "Currently no overview is assigned to your roles."
 msgstr "ขณะนี้ยังไม่มีการกําหนดภาพรวมให้กับบทบาทของคุณ"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/navbar.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
@@ -4817,8 +4811,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Delete"
 msgstr "ลบ"
 
@@ -5164,9 +5158,9 @@ msgid "Don't synchronize"
 msgstr "อย่าซิงโครไนซ์"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr "เสร็จแล้ว"
 
@@ -5556,14 +5550,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Enable ticket auto assignment."
 msgstr "เปิดใช้งานการกำหนด ticket อัตโนมัติ"
-
-#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-msgid "Enable time accounting for following matching tickets."
-msgstr "เปิดใช้งาน time accounting สำหรับ ticket ที่ตรงกันต่อไปนี้"
-
-#: db/seeds/settings.rb
-msgid "Enable time accounting for these tickets."
-msgstr "เปิดใช้งานtime accounting สำหรับ ticket เหล่านี้"
 
 #: db/seeds/settings.rb
 msgid "Enable time accounting."
@@ -6611,6 +6597,10 @@ msgstr "รวม GitLab"
 msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr ""
 
+#: app/models/ticket/time_accounting.rb
+msgid "Given Ticket Article is not part of the Ticket"
+msgstr ""
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -6775,12 +6765,12 @@ msgstr "การเลือกกลุ่มสำหรับการสร
 msgid "Group selection for ticket creation"
 msgstr "การเลือกกลุ่มสำหรับการสร้าง ticket"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping by"
 msgstr "จัดกลุ่มโดย"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping order"
 msgstr "การจัดกลุ่มคำสั่ง"
@@ -6839,7 +6829,7 @@ msgstr "จัดการงานความเป็นส่วนตัว
 msgid "Has processed"
 msgstr "Has processed"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #, fuzzy
 #| msgid "%s subdomain"
 msgid "Has submenu"
@@ -7701,7 +7691,7 @@ msgstr "Ionicons"
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 msgid "Items per page"
 msgstr ""
 
@@ -7894,6 +7884,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
 msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "has changed"
+msgid "Last changed"
+msgstr "มีการเปลี่ยนแปลง"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -9115,9 +9111,9 @@ msgid "No record found!"
 msgstr "‎ไม่พบเรกคอร์ด !"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr "ไม่พบรายการ"
 
@@ -9176,6 +9172,7 @@ msgstr ""
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/graphql/gql/types/ticket_type.rb
 msgid "None"
@@ -9198,7 +9195,7 @@ msgstr "ไม่มีข้อมูล"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr "ไม่พบ"
@@ -9215,6 +9212,7 @@ msgstr "ไม่สามารถใช้ได้กับ: การรว�
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/controllers/application_controller/handles_errors.rb
+#: app/services/service/ticket/article/create.rb
 msgid "Not authorized"
 msgstr "ไม่ได้รับอนุญาต"
 
@@ -10381,6 +10379,17 @@ msgstr "คิว"
 msgid "Queue already exists!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Enable REST API access using the username/email address and password for "
+#| "the authentication user."
+msgid ""
+"REST API access using the username/email address and password is currently "
+"disabled. Please contact your administrator."
+msgstr ""
+"เปิดใช้งานการเข้าถึง REST API โดยใช้ชื่อผู้ใช้/ที่อยู่อีเมลและรหัสผ่านสำหรับผู้ใช้การตรวจสอบสิทธิ์"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
@@ -11153,11 +11162,11 @@ msgstr ""
 msgid "Search for…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 msgid "Search or enter email address…"
 msgstr "ค้นหาหรือป้อนที่อยู่อีเมล…"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 msgid "Search or enter phone number…"
 msgstr "ค้นหาหรือป้อนหมายเลขโทรศัพท์…"
 
@@ -11338,9 +11347,9 @@ msgid "Selects the ticket number generator module."
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Select…"
 msgstr "เลือก…"
 
@@ -11718,6 +11727,13 @@ msgstr "ภาพรวม Ticket ทั้งหมด"
 msgid "Show ticket viewers"
 msgstr "ภาพรวม Ticket ทั้งหมด"
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enable time accounting for following matching tickets."
+msgid "Show time accounting dialog when updating matching tickets."
+msgstr "เปิดใช้งาน time accounting สำหรับ ticket ที่ตรงกันต่อไปนี้"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
 msgstr "แสดงชื่อเรื่องในแบบฟอร์ม"
@@ -11772,6 +11788,7 @@ msgstr "ออกจากระบบ"
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
+#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue
 msgid "Sign in"
 msgstr "ลงชื่อเข้าใช้"
 
@@ -11947,12 +11964,12 @@ msgstr ""
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Sorting by"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Sorting order"
 msgstr "เรียงลำดับ"
@@ -12013,7 +12030,7 @@ msgstr ""
 msgid "Start typing to search in Knowledge Base…"
 msgstr "พิมพ์ค้นหาใน ศูนย์การเรียนรู้…"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Start typing to search…"
 msgstr "เริ่มพิมพ์เพื่อค้นหา…"
 
@@ -12242,7 +12259,7 @@ msgstr ""
 msgid "Tab has changed, do you really want to close it?"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #, fuzzy
 #| msgid "This bot already exists."
 msgid "Tag \"%s\" already exists."
@@ -12255,9 +12272,9 @@ msgstr "รายการนี้อยู่แล้ว!."
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 #: lib/excel_sheet/ticket.rb
@@ -12364,6 +12381,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Text"
 msgstr "ข้อความ"
@@ -14261,6 +14279,12 @@ msgstr "ตัวเลือกการบัญชีเวลา"
 msgid "Time Accounting Unit"
 msgstr "ตัวเลือกการบัญชีเวลา"
 
+#: app/policies/ticket/time_accounting_policy.rb
+#, fuzzy
+#| msgid "Time Accounting Selector"
+msgid "Time Accounting is not enabled"
+msgstr "ตัวเลือกการบัญชีเวลา"
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -14497,6 +14521,12 @@ msgstr "ติดตามรีทวีต"
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "Transfer conversation to another chat:"
 msgstr "โอนการสนทนาไปยังแชทอื่น:"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate field contents"
+msgstr "การแปล"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -15446,7 +15476,7 @@ msgstr ""
 msgid "We're sorry, but something went wrong. Received message: %s"
 msgstr ""
 
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 
@@ -16288,7 +16318,7 @@ msgstr "และ"
 msgid "archived"
 msgstr "เก็บถาวร"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "ascending"
@@ -16497,7 +16527,7 @@ msgstr "ค่าปริยาย"
 msgid "delete"
 msgstr "ลบ"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "descending"
@@ -17609,6 +17639,14 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#, fuzzy
+#~| msgid "reply"
+#~ msgid "1 new reply"
+#~ msgstr "ตอบกลับ"
+
+#~ msgid "Enable time accounting for these tickets."
+#~ msgstr "เปิดใช้งานtime accounting สำหรับ ticket เหล่านี้"
 
 #~ msgid "You can use regular expression by using \"regex:your_reg_exp\"."
 #~ msgstr "สามารถใช้นิพจน์ทั่วไปได้โดยใช้ \"regex:your_reg_exp\""

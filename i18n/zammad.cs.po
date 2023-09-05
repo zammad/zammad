@@ -369,10 +369,10 @@ msgstr "%s (metoda)"
 msgid "%s (option)"
 msgstr "%s (možnost)"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
 msgstr "%s (neznámý)"
 
@@ -498,10 +498,6 @@ msgstr "před %s minutami"
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s months ago"
 msgstr "před %s měsíci"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "%s new replies"
-msgstr "%s nových odpovědí"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -743,12 +739,6 @@ msgstr "před 1 minutou"
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
 msgstr "před 1 měsícem"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-#, fuzzy
-#| msgid "reply"
-msgid "1 new reply"
-msgstr "odpověď"
 
 #: db/seeds/settings.rb
 msgid "1 week"
@@ -1692,7 +1682,7 @@ msgstr "Archivováno"
 msgid "Are you sure to remove this article?"
 msgstr "Jste si jisti, že chcete smazat tento článek?"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Jste si jistí, že chcete smazat \"%s\"?"
 
@@ -1893,11 +1883,11 @@ msgstr "Musí být zvolen nejméně jeden objekt."
 msgid "At least one user needs to have admin permissions."
 msgstr "Nejméně jeden uživatel musí mít oprávnění správce."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach another file"
 msgstr "Přiložit další soubor"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
 msgstr "Přiložit soubory"
 
@@ -1974,7 +1964,7 @@ msgstr ""
 "Atribut, který unikátně identifikuje uživatele. Pokud není nastaveno, je "
 "použito jméno vrácené IDP."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
 msgstr "Atributy"
@@ -2040,6 +2030,12 @@ msgstr "Autentizace"
 #| msgid "Authentication via %s"
 msgid "Authenticator app secret"
 msgstr "Autentizace pomocí %s"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "Authy"
+msgid "Author"
+msgstr "OAuth"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2161,7 +2157,7 @@ msgstr "Zpět do mého pohledu"
 msgid "Back to overview"
 msgstr "Zpět do přehledu"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Back to previous page"
 msgstr "Zpět na předchozí stránku"
 
@@ -2487,11 +2483,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "Storno"
 
@@ -2867,9 +2863,9 @@ msgstr "Vyčistit"
 msgid "Clear Search"
 msgstr "Obnovit hledání"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Clear Selection"
 msgstr "Zrušit výběr"
 
@@ -3505,7 +3501,7 @@ msgid ""
 "Create rules that single out the tickets for the Service Level Agreement."
 msgstr "Vytvořte pravidla, která vyčlení tickety pro SLA."
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Create tag"
 msgstr "Vytvořit štítek"
 
@@ -3650,7 +3646,7 @@ msgstr "Současný uživatel nemá oprávnění použít pole 'From'/'X-On-Behal
 msgid "Currently no overview is assigned to your roles."
 msgstr "Pro vaše role nejsou aktuálně k dispozici žádné přehledy."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/navbar.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
@@ -4826,8 +4822,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Delete"
 msgstr "Vymazat"
 
@@ -5164,9 +5160,9 @@ msgid "Don't synchronize"
 msgstr "Nesynchronizovat"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr "Hotovo"
 
@@ -5565,14 +5561,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Enable ticket auto assignment."
 msgstr "Povolit automatické přiřazení ticketu."
-
-#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-msgid "Enable time accounting for following matching tickets."
-msgstr "Povolit počítání času pro odpovídající tickety."
-
-#: db/seeds/settings.rb
-msgid "Enable time accounting for these tickets."
-msgstr "Povolit pro tyto tickety evidenci času."
 
 #: db/seeds/settings.rb
 msgid "Enable time accounting."
@@ -6627,6 +6615,10 @@ msgstr ""
 "Požadavek na GitLab se nezdařil! Pro více informací prosím zkontrolujte "
 "logovací soubor"
 
+#: app/models/ticket/time_accounting.rb
+msgid "Given Ticket Article is not part of the Ticket"
+msgstr ""
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -6785,12 +6777,12 @@ msgstr "Výběr skupin pro vytváření ticketů"
 msgid "Group selection for ticket creation"
 msgstr "Výběr skupin pro vytváření ticketů"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping by"
 msgstr "Seskupení dle"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping order"
 msgstr "Řazení seskupení"
@@ -6845,7 +6837,7 @@ msgstr "Spouštějte úlohy soukromí dat."
 msgid "Has processed"
 msgstr "Byl zpracován"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Has submenu"
 msgstr "Má submenu"
 
@@ -7741,7 +7733,7 @@ msgstr "Ionicons"
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "Není možné slučovat již sloučené tickety."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 msgid "Items per page"
 msgstr "Položek na stránku"
 
@@ -7931,6 +7923,12 @@ msgstr "Poslední interní položka"
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
 msgstr "Poslední změna %s %s uživatelem %s"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "has changed"
+msgid "Last changed"
+msgstr "byl změněn"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -9161,9 +9159,9 @@ msgid "No record found!"
 msgstr "Nenalezen žádný záznam!"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr "Nenalezeny žádné výsledky"
 
@@ -9222,6 +9220,7 @@ msgstr ""
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Žádný x-zammad-session-user-id, žádný nastavený odesílatel!"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/graphql/gql/types/ticket_type.rb
 msgid "None"
@@ -9244,7 +9243,7 @@ msgstr "Není k dispozici"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr "Nenalezeno"
@@ -9263,6 +9262,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/controllers/application_controller/handles_errors.rb
+#: app/services/service/ticket/article/create.rb
 msgid "Not authorized"
 msgstr "Neautorizováno"
 
@@ -10413,6 +10413,18 @@ msgstr "Fronta"
 msgid "Queue already exists!"
 msgstr "Fronta již existuje!"
 
+#: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Enable REST API access using the username/email address and password for "
+#| "the authentication user."
+msgid ""
+"REST API access using the username/email address and password is currently "
+"disabled. Please contact your administrator."
+msgstr ""
+"Povolit REST API pro autentizaci uživatele pomocí uživatelského jména/"
+"emailové adresy a hesla."
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
@@ -11220,11 +11232,11 @@ msgstr "Hledat uživatele"
 msgid "Search for…"
 msgstr "Vyhledat…"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 msgid "Search or enter email address…"
 msgstr "Hledejte nebo zadejte e-mailovou adresu…"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 msgid "Search or enter phone number…"
 msgstr "Vyhledejte nebo vložte telefonní číslo…"
 
@@ -11401,9 +11413,9 @@ msgid "Selects the ticket number generator module."
 msgstr "Zvolte modul generování čísla ticketu."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Select…"
 msgstr "Vyberte…"
 
@@ -11785,6 +11797,13 @@ msgstr "Zobrazit akce ticketů"
 msgid "Show ticket viewers"
 msgstr "Prohlédnout zobrazení ticketu"
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enable time accounting for following matching tickets."
+msgid "Show time accounting dialog when updating matching tickets."
+msgstr "Povolit počítání času pro odpovídající tickety."
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
 msgstr "Zobrazit ve formuláři nadpis."
@@ -11837,6 +11856,7 @@ msgstr "Odhlásit"
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
+#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue
 msgid "Sign in"
 msgstr "Přihlásit"
 
@@ -12003,12 +12023,12 @@ msgstr "Omlouváme se, některá pole nejsou vyplněna správně."
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "Omlouváme se, aktuálně není povoleno žádné CTI rozhraní."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Sorting by"
 msgstr "Řazení dle"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Sorting order"
 msgstr "Pořadí řazení"
@@ -12071,7 +12091,7 @@ msgstr "Pro vyhledání uživatelů začněte psát…"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Pro hledání ve Znalostní bázi začněte psát…"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Start typing to search…"
 msgstr "Pro vyhledání začněte psát…"
 
@@ -12302,7 +12322,7 @@ msgstr "Chování záložek po vytvoření ticketu"
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Záložka byla změněna, opravdu ji chcete uzavřít?"
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Tag \"%s\" already exists."
 msgstr "Tag %s již existuje."
 
@@ -12313,9 +12333,9 @@ msgstr "Tag %s již existuje."
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 #: lib/excel_sheet/ticket.rb
@@ -12430,6 +12450,7 @@ msgstr "Testování"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Text"
 msgstr "Text"
@@ -14326,6 +14347,12 @@ msgstr "Počítání času"
 msgid "Time Accounting Unit"
 msgstr "Počítání času"
 
+#: app/policies/ticket/time_accounting_policy.rb
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "Time Accounting is not enabled"
+msgstr "Počítání času"
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -14575,6 +14602,12 @@ msgstr "Trasovat retweety"
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "Transfer conversation to another chat:"
 msgstr "Přesunout konverzaci do jiného chatu:"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate field contents"
+msgstr "Překlady"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -15553,7 +15586,7 @@ msgstr "Omlouváme se, ale něco se pokazilo."
 msgid "We're sorry, but something went wrong. Received message: %s"
 msgstr "Omlouváme se, ale něco se pokazilo. Doručená zpráva: %s"
 
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr "Omlouváme se, ale tato stránka neexistuje."
 
@@ -16432,7 +16465,7 @@ msgstr "a"
 msgid "archived"
 msgstr "archivovaný"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "ascending"
@@ -16639,7 +16672,7 @@ msgstr "výchozí"
 msgid "delete"
 msgstr "smazat"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "descending"
@@ -17711,6 +17744,17 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#~ msgid "%s new replies"
+#~ msgstr "%s nových odpovědí"
+
+#, fuzzy
+#~| msgid "reply"
+#~ msgid "1 new reply"
+#~ msgstr "odpověď"
+
+#~ msgid "Enable time accounting for these tickets."
+#~ msgstr "Povolit pro tyto tickety evidenci času."
 
 #~ msgid "You can use regular expression by using \"regex:your_reg_exp\"."
 #~ msgstr ""

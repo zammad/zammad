@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-29 13:32+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2023-09-01 01:09+0000\n"
+"Last-Translator: Onur Alp Akin <onralpakin@gmail.com>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/tr/>\n"
 "Language: tr\n"
@@ -78,8 +78,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: #{current_user.longname} tarafından #{ticket."
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: #{current_user.longname} tarafından #{ticket."
 "updated_at} tarihinde oluşturuldu_\n"
 "* Grup: #{ticket.group.name}\n"
 "* Sahip: #{ticket.owner.fullname}\n"
@@ -104,9 +104,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: #{ticket.escalation_at} tarihinde "
-"yükseltildi_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: #{ticket.escalation_at} tarihinde yükseltildi_\n"
 "\"#{ticket.customer.longname}\" tarafından açılan destek talebi (#{ticket."
 "title}) \"#{ticket.escalation_at}\" tarihinden itibaren yükseltildi!\n"
 "\n"
@@ -130,8 +129,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: En son #{ticket.updated_at} tarihinde "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: En son #{ticket.updated_at} tarihinde "
 "güncellendi_\n"
 "* Grup: #{ticket.group.name}\n"
 "* Sahip: #{ticket.owner.fullname}\n"
@@ -156,8 +155,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Hatırlatıcı ulaştı!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Hatırlatıcı ulaştı!_\n"
 "Bir destek talebiyle ilgilenilmesi gerekiyor: müşteri \"*#{ticket.customer."
 "longname}*\" ile (#{ticket.title}) için hatırlatıcı ulaştı.\n"
 "\n"
@@ -184,8 +183,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: #{ticket.updated_at} tarihinde #{current_user."
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: #{ticket.updated_at} tarihinde #{current_user."
 "longname} tarafından güncellendi_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -212,8 +211,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: #{ticket.escalation_at} tarihinde yükselecek_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: #{ticket.escalation_at} tarihinde yükselecek_\n"
 "\"#{ticket.customer.longname}\" tarafından açılan destek talebi (#{ticket."
 "title}) \"#{ticket.escalation_at}\" tarihinde yükselecek!\n"
 "\n"
@@ -284,8 +283,9 @@ msgstr ""
 "\n"
 "<div>Merhaba #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Hesabınızı <b>bilinen bir cihazla ancak yeni bir ülkeden</b> \""
-"#{user_device.created_at}\" tarihinde kullanmışsınız gibi görünüyor:</div>\n"
+"<div>Hesabınızı <b>bilinen bir cihazla ancak yeni bir ülkeden</b> "
+"\"#{user_device.created_at}\" tarihinde kullanmışsınız gibi görünüyor:</"
+"div>\n"
 "<br>\n"
 "<div>\n"
 "Cihazınız: #{user_device.name}<br>\n"
@@ -296,8 +296,8 @@ msgstr ""
 "<div>Ülke, buradan görüntüleyebileceğiniz bilinen cihazlar listenize "
 "eklenmiştir:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Bu siz değilseniz, lütfen cihazı kaldırın, hesap şifrenizi değiştirin "
 "ve yöneticinize başvurun. Birisi hesabınıza yetkisiz erişim sağlamış "
@@ -338,8 +338,8 @@ msgstr ""
 "\n"
 "<div>Merhaba #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Görünüşe göre hesabınıza <b>yeni bir cihaz</b> kullanarak \""
-"#{user_device.created_at}\" tarihinde giriş yapmışsınız:</div>\n"
+"<div>Görünüşe göre hesabınıza <b>yeni bir cihaz</b> kullanarak "
+"\"#{user_device.created_at}\" tarihinde giriş yapmışsınız:</div>\n"
 "<br>\n"
 "<div>\n"
 "Cihazınız: #{user_device.name}<br>\n"
@@ -350,8 +350,8 @@ msgstr ""
 "<div>Cihazınız, buradan görüntüleyebileceğiniz bilinen cihazlar listenize "
 "eklendi:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Bu siz değilseniz, lütfen cihazı kaldırın, hesap şifrenizi değiştirin "
 "ve yöneticinize başvurun. Birisi hesabınıza yetkisiz erişim sağlamış "
@@ -365,18 +365,16 @@ msgstr "%s (onayla)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (metot)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
-#, fuzzy
-#| msgid "set optional"
 msgid "%s (option)"
-msgstr "opsiyonel yap"
+msgstr "%s (seçenek)"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
 msgstr "%s (bilinmiyor)"
 
@@ -505,10 +503,6 @@ msgstr "%s dakika önce"
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s months ago"
 msgstr "%s ay önce"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "%s new replies"
-msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -755,12 +749,6 @@ msgstr "1 dakika önce"
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
 msgstr "1 ay önce"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-#, fuzzy
-#| msgid "reply"
-msgid "1 new reply"
-msgstr "Yanıtla"
 
 #: db/seeds/settings.rb
 msgid "1 week"
@@ -1113,17 +1101,13 @@ msgstr "Etkinlik Akışı"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#, fuzzy
-#| msgid "Activity"
 msgid "Activity Type"
-msgstr "Etkinlik"
+msgstr "Etkinlik Türü"
 
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "Activity Types"
-msgstr "Etkinlik"
+msgstr "Etkinlik Türleri"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
@@ -1581,8 +1565,8 @@ msgstr ""
 "<div>Merhaba #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Başka bir destek talebi (#{ticket.title}) destek talebiyle \""
-"<b>#{current_user.longname}</b>\" tarafından birleştirildi.\n"
+"Başka bir destek talebi (#{ticket.title}) destek talebiyle "
+"\"<b>#{current_user.longname}</b>\" tarafından birleştirildi.\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -1710,7 +1694,7 @@ msgstr "Arşivlendiği tarih"
 msgid "Are you sure to remove this article?"
 msgstr "Bu yazıyı kaldırmak istediğinizden emin misiniz?"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "\"%s\" silmek istediğinizden emin misiniz?"
 
@@ -1910,11 +1894,11 @@ msgstr "En az bir nesne seçilmelidir."
 msgid "At least one user needs to have admin permissions."
 msgstr "En az bir kullanıcının yönetici izinlerine sahip olması gerekir."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach another file"
 msgstr "Başka bir dosya ekle"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
 msgstr "Dosyaları ekle"
 
@@ -1990,7 +1974,7 @@ msgstr ""
 "Kullanıcıyı benzersiz olarak tanımlayan öznitelik. Ayarlanmamışsa, IDP "
 "tarafından döndürülen ad tanımlayıcısı kullanılır."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
 msgstr "Öznitelikler"
@@ -2056,6 +2040,11 @@ msgstr "Authentication"
 #| msgid "Authentication via %s"
 msgid "Authenticator app secret"
 msgstr "Authentication via %s"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+msgid "Author"
+msgstr "True"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2178,7 +2167,7 @@ msgstr "Benim görüşüme geri dön"
 msgid "Back to overview"
 msgstr "Genel bakışa geri dön"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Back to previous page"
 msgstr "Önceki sayfaya geri dön"
 
@@ -2502,11 +2491,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "İptal"
 
@@ -2884,9 +2873,9 @@ msgstr "Temizle"
 msgid "Clear Search"
 msgstr "Aramayı Temizle"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Clear Selection"
 msgstr "Seçimi Temizle"
 
@@ -3426,8 +3415,8 @@ msgstr ""
 "\n"
 "Snippet örnekleri şunlardır:\n"
 "\n"
-"* Merhaba Bayan #{ticket.customer.lastname},\n"
-"* Merhaba Bay #{ticket.customer.lastname},\n"
+"* Merhaba #{ticket.customer.lastname} Hanım,\n"
+"* Merhaba #{ticket.customer.lastname} Bey,\n"
 "* Merhaba #{ticket.customer.firstname},\n"
 "* Benim adım #{user.firstname},\n"
 "\n"
@@ -3435,8 +3424,8 @@ msgstr ""
 "\n"
 "Kullanılabilir nesneler şunlardır:\n"
 "* ticket (Örn. ticket.state, ticket.group)\n"
-"* ticket.customer (Örn. ticket.customer.firstname, ticket.customer.lastname)"
-"\n"
+"* ticket.customer (Örn. ticket.customer.firstname, ticket.customer."
+"lastname)\n"
 "* ticket.owner (Örn. ticket.owner.firstname, ticket.owner.lastname)\n"
 "* ticket.organization (Örn. ticket.organization.name)\n"
 "* user (Örn. user.firstname, user.email)\n"
@@ -3507,7 +3496,7 @@ msgid ""
 msgstr ""
 "Hizmet Seviyesi Anlaşması için destek taleplerini ayıran kurallar oluşturun."
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Create tag"
 msgstr "Etiket oluştur"
 
@@ -3652,7 +3641,7 @@ msgstr "Mevcut kullanıcının 'From'/'X-On-Behalf-Of' kullanma izni yok!"
 msgid "Currently no overview is assigned to your roles."
 msgstr "Şu anda rollerinize genel bakış atanmamış."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/navbar.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
@@ -3934,7 +3923,8 @@ msgstr "Yeni kullanıcılar için varsayılan temsilci bildirimlerini tanımlay�
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
-msgstr "Genel bakışlarda gösterilen maksimum destek talebi sayısını tanımlayın."
+msgstr ""
+"Genel bakışlarda gösterilen maksimum destek talebi sayısını tanımlayın."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -4116,7 +4106,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines if Knowledge Base navbar button is enabled."
-msgstr "Bilgi Bankası gezinti çubuğu düğmesinin etkin olup olmadığını tanımlar."
+msgstr ""
+"Bilgi Bankası gezinti çubuğu düğmesinin etkin olup olmadığını tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines if LDAP is enabled or not."
@@ -4696,11 +4687,13 @@ msgstr ""
 "email address."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid ""
 "Defines the session timeout for inactivity of users. Based on the assigned "
 "permissions the highest timeout value will be used, otherwise the default."
-msgstr "True"
+msgstr ""
+"Kullanıcıların hareketsizliği için oturum zaman aşımını tanımlar. Atanan "
+"izinlere bağlı olarak en yüksek zaman aşımı değeri kullanılır, aksi takdirde "
+"varsayılan değer kullanılır."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -4853,8 +4846,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Delete"
 msgstr "Sil"
 
@@ -5240,9 +5233,9 @@ msgid "Don't synchronize"
 msgstr "True"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr "Tamamlandı"
 
@@ -5311,19 +5304,16 @@ msgid "Drop files here"
 msgstr "Drop files here"
 
 #: app/assets/javascripts/app/controllers/login.coffee
-#, fuzzy
-#| msgid "Due to inactivity you are automatically logged out."
 msgid "Due to inactivity, you have been automatically logged out."
-msgstr "Oturumunuz aktivite olmadığından otomatik olarak sonlandırıldı."
+msgstr "Aktif olmadığınız için oturumunuz otomatik olarak kapatılmıştır."
 
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee
-#, fuzzy
-#| msgid ""
-#| "Due to inactivity are automatically logged out within the next 30 seconds."
 msgid ""
 "Due to inactivity, you will be automatically logged out within the next 30 "
 "seconds."
-msgstr "Aktivite olmadığından 30 saniye içinde oturumunuz sonlandırılacak."
+msgstr ""
+"Aktif olmamanız nedeniyle, sonraki 30 saniye içinde otomatik olarak "
+"oturumunuz kapatılacaktır."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #, fuzzy
@@ -5611,6 +5601,8 @@ msgid ""
 "Enable activity type selection. This would allow agents to select one of the "
 "types below when adding accounted time."
 msgstr ""
+"Etkinlik türü seçimini etkinleştirin. Bu, müşteri temsilcilerinin hesaplanan "
+"süreyi eklerken aşağıdaki türlerden birini seçmesine olanak tanır."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -5666,15 +5658,6 @@ msgstr "True"
 #: db/seeds/settings.rb
 #, fuzzy
 msgid "Enable ticket auto assignment."
-msgstr "True"
-
-#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-msgid "Enable time accounting for following matching tickets."
-msgstr "Enable time accounting for following matching tickets."
-
-#: db/seeds/settings.rb
-#, fuzzy
-msgid "Enable time accounting for these tickets."
 msgstr "True"
 
 #: db/seeds/settings.rb
@@ -6830,6 +6813,10 @@ msgstr "True"
 msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr "True"
 
+#: app/models/ticket/time_accounting.rb
+msgid "Given Ticket Article is not part of the Ticket"
+msgstr ""
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #, fuzzy
@@ -6999,14 +6986,14 @@ msgstr "Group selection for Ticket creation"
 msgid "Group selection for ticket creation"
 msgstr "Group selection for Ticket creation"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
 #| msgid "Group by"
 msgid "Grouping by"
 msgstr "Group by"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
 #| msgid "Change order"
@@ -7069,7 +7056,7 @@ msgstr "Veri gizliliği görevlerini ele alın."
 msgid "Has processed"
 msgstr "Has processed"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #, fuzzy
 #| msgid "%s subdomain"
 msgid "Has submenu"
@@ -8059,7 +8046,7 @@ msgstr "True"
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "True"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 msgid "Items per page"
 msgstr "Items per page"
 
@@ -8264,6 +8251,12 @@ msgstr "True"
 #, fuzzy
 msgid "Last change %s %s by %s"
 msgstr "True"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
+#, fuzzy
+#| msgid "has changed"
+msgid "Last changed"
+msgstr "has changed"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -9028,7 +9021,7 @@ msgstr "Konular"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "Most recent activity"
-msgstr "Most recent activity"
+msgstr "En son etkinlik"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #, fuzzy
@@ -9275,10 +9268,8 @@ msgid "New Access Token is"
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "New Activity Type"
-msgstr "Etkinlik"
+msgstr "Yeni Etkinlik Türü"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "New Application"
@@ -9616,9 +9607,9 @@ msgid "No record found!"
 msgstr "True"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr "Sonuç bulunamadı"
 
@@ -9684,6 +9675,7 @@ msgstr ""
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "True"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/graphql/gql/types/ticket_type.rb
 msgid "None"
@@ -9707,7 +9699,7 @@ msgstr "True"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 #, fuzzy
 msgid "Not Found"
@@ -9727,6 +9719,7 @@ msgstr "True"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/controllers/application_controller/handles_errors.rb
+#: app/services/service/ticket/article/create.rb
 #, fuzzy
 msgid "Not authorized"
 msgstr "True"
@@ -11029,6 +11022,18 @@ msgstr "Queue"
 msgid "Queue already exists!"
 msgstr "True"
 
+#: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Enable REST API access using the username/email address and password for "
+#| "the authentication user."
+msgid ""
+"REST API access using the username/email address and password is currently "
+"disabled. Please contact your administrator."
+msgstr ""
+"Enable REST API access using the username/email address and password for the "
+"authentication user."
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
@@ -11887,13 +11892,13 @@ msgstr "Search for users"
 msgid "Search for…"
 msgstr "Ara"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Search or enter email address…"
 msgstr "Enter your username or email address"
 
-#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Search or enter phone number…"
@@ -12087,9 +12092,9 @@ msgid "Selects the ticket number generator module."
 msgstr "Selects the ticket number generator module."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Select…"
 msgstr "Seçiniz…"
 
@@ -12530,6 +12535,13 @@ msgstr "Konular"
 msgid "Show ticket viewers"
 msgstr "Konular"
 
+#: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enable time accounting for following matching tickets."
+msgid "Show time accounting dialog when updating matching tickets."
+msgstr "Enable time accounting for following matching tickets."
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
 msgstr "Show title in form."
@@ -12587,6 +12599,7 @@ msgstr "Çıkış yap"
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/routes.ts
+#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue
 msgid "Sign in"
 msgstr "Giriş yap"
 
@@ -12778,14 +12791,14 @@ msgstr "True"
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "True"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
 #| msgid "Reporting"
 msgid "Sorting by"
 msgstr "Reporting"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
 #| msgid "Change order"
@@ -12859,7 +12872,7 @@ msgstr "Kullanıcı aramak için yazmaya başlayın..."
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Bilgi Bankasında arama yapmak için yazmaya başlayın…"
 
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #, fuzzy
 #| msgid "Start typing to search for users..."
 msgid "Start typing to search…"
@@ -13106,7 +13119,7 @@ msgstr "True"
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Bazı değişiklikler yaptınız, kapatmak istediğinize emin misiniz?"
 
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #, fuzzy
 #| msgid "Account already exists!"
 msgid "Tag \"%s\" already exists."
@@ -13119,9 +13132,9 @@ msgstr "Hesap zaten mevcut!"
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 #: lib/excel_sheet/ticket.rb
@@ -13235,6 +13248,7 @@ msgstr "Testing"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Text"
 msgstr "Metin"
@@ -13630,8 +13644,8 @@ msgid ""
 "the directions under \"Web Server Configuration\" to complete the process."
 msgstr ""
 "Bilgi bankanız için varsayılan URL örneğin example.com veya example.com/"
-"help'tir. Bunun yerine özel bir URL'den sunmak için aşağıdaki hedefi girin ("
-"örneğin, \"/support\", \"example.com\" veya \"example.com/support\"). "
+"help'tir. Bunun yerine özel bir URL'den sunmak için aşağıdaki hedefi girin "
+"(örneğin, \"/support\", \"example.com\" veya \"example.com/support\"). "
 "Ardından, işlemi tamamlamak için \"Web Sunucusu Yapılandırması\" altındaki "
 "talimatları izleyin."
 
@@ -15318,6 +15332,12 @@ msgstr "Zaman Hesaplama"
 msgid "Time Accounting Unit"
 msgstr "Zaman Hesaplama"
 
+#: app/policies/ticket/time_accounting_policy.rb
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "Time Accounting is not enabled"
+msgstr "Zaman Hesaplama"
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -15581,6 +15601,12 @@ msgstr "True"
 #, fuzzy
 msgid "Transfer conversation to another chat:"
 msgstr "True"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Translate field contents"
+msgstr "Çeviriler"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -16597,7 +16623,7 @@ msgstr ""
 msgid "We're sorry, but something went wrong. Received message: %s"
 msgstr ""
 
-#: app/frontend/apps/mobile/router/error.ts
+#: app/frontend/shared/router/error.ts
 #, fuzzy
 msgid "We're sorry, but this page doesn't exist."
 msgstr "True"
@@ -16902,8 +16928,8 @@ msgid ""
 "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgstr ""
 "|Tarih| ile destek talebi numaraları geçerli tarih, SystemID ve sayaç "
-"tarafından oluşturulacaktır. Format \"Yıl.Ay.Gün.SystemID.Sayaç\" olacaktır ("
-"örneğin 201206231010138, 201206231010139)."
+"tarafından oluşturulacaktır. Format \"Yıl.Ay.Gün.SystemID.Sayaç\" olacaktır "
+"(örneğin 201206231010138, 201206231010139)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Woo hoo! Your email address has been verified!"
@@ -17257,7 +17283,6 @@ msgstr "True"
 #. This is the template file app/views/mailer/password_change/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_change/en.html.erb
-#, fuzzy
 msgid ""
 "Your #{config.product_name} password has been changed\n"
 "\n"
@@ -17270,7 +17295,18 @@ msgid ""
 "administrator.</p>\n"
 "<br>\n"
 "<p>Your #{config.product_name} Team</p>\n"
-msgstr "True\n"
+msgstr ""
+"#{config.product_name} parolanız değiştirildi\n"
+"\n"
+"<p>Merhaba #{user.firstname},</p>\n"
+"<br>\n"
+"<p>Kullanıcı adı <b>#{user.login}</b> olan #{config.product_name} "
+"hesabınızın parolası yakın zamanda değiştirildi.</p>\n"
+"<br>\n"
+"<p>Bu etkinlik sizin bilginiz dahilinde değil mi? Değilse, sistem "
+"yöneticinizle iletişime geçin.</p>\n"
+"<br>\n"
+"<p>#{config.product_name} Ekibiniz</p>\n"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "Your API key."
@@ -17308,20 +17344,24 @@ msgid "Your New Personal Access Token"
 msgstr "Your New Personal Access Token"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#, fuzzy
 msgid ""
 "Your Twitter account is not using the Twitter Account Activity API yet and "
 "is therefore limited to search terms only. Please add/update the account "
 "again via \"add account\"."
-msgstr "True"
+msgstr ""
+"Twitter hesabınız henüz Twitter Hesap Etkinliği API'sini kullanmıyor ve bu "
+"nedenle yalnızca arama terimleriyle sınırlı. Lütfen \"hesap ekle\" "
+"aracılığıyla hesabı tekrar ekleyin/güncelleyin."
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#, fuzzy
 msgid ""
 "Your Twitter app is not using the Twitter Account Activity API yet and is "
 "therefore limited to search terms only. Please refer to the documentation %l "
 "on how to update your account."
-msgstr "True"
+msgstr ""
+"Twitter uygulamanız henüz Twitter Hesap Etkinliği API'sini kullanmıyor ve bu "
+"nedenle yalnızca arama terimleriyle sınırlı. Hesabınızı nasıl "
+"güncelleyeceğiniz konusunda lütfen %l dokümanına bakın."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #, fuzzy
@@ -17535,7 +17575,7 @@ msgstr "ve"
 msgid "archived"
 msgstr "True"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 #, fuzzy
@@ -17759,7 +17799,7 @@ msgstr "True"
 msgid "delete"
 msgstr "delete"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 #, fuzzy
@@ -18986,6 +19026,18 @@ msgstr "...of whole textarea"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Bugünkü bekleme süresi"
+
+#~ msgid "%s new replies"
+#~ msgstr "%s yeni yanıt"
+
+#, fuzzy
+#~| msgid "reply"
+#~ msgid "1 new reply"
+#~ msgstr "Yanıtla"
+
+#, fuzzy
+#~ msgid "Enable time accounting for these tickets."
+#~ msgstr "True"
 
 #~ msgid "You can use regular expression by using \"regex:your_reg_exp\"."
 #~ msgstr ""
