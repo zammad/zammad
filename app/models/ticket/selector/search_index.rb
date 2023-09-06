@@ -155,7 +155,7 @@ class Ticket::Selector::SearchIndex < Ticket::Selector::Base
     t = {}
 
     # use .keyword in case of compare exact values
-    if data[:operator] == 'is' || data[:operator] == 'is not'
+    if ['is', 'is not', 'is any of', 'is none of', 'starts with one of', 'ends with one of'].include?(data[:operator])
 
       case data[:pre_condition]
       when 'not_set'
@@ -193,21 +193,37 @@ class Ticket::Selector::SearchIndex < Ticket::Selector::Base
     end
 
     # use .keyword and wildcard search in cases where query contains non A-z chars
-    if data[:operator] == 'contains' || data[:operator] == 'contains not'
+    value_is_string = Array.wrap(data[:value]).any? { |v| v.is_a?(String) && v.match?(%r{[A-z]}) }
+    if ['contains', 'contains not', 'starts with one of', 'ends with one of'].include?(data[:operator]) && value_is_string
+      wildcard_or_term = 'wildcard'
+      if !key_tmp.ends_with?('.keyword')
+        key_tmp += '.keyword'
+      end
 
       if data[:value].is_a?(Array)
-        data[:value].each_with_index do |value, index|
-          next if !value.is_a?(String) || value !~ %r{[A-z]}
+        or_condition = {
+          bool: {
+            should: [],
+          }
+        }
 
-          data[:value][index] = "*#{value}*"
-          key_tmp += '.keyword'
-          wildcard_or_term = 'wildcards'
-          break
+        data[:value].each do |value|
+          t = {}
+          t[wildcard_or_term] = {}
+          t[wildcard_or_term][key_tmp] = if data[:operator] == 'starts with one of'
+                                           "#{value}*"
+                                         elsif data[:operator] == 'ends with one of'
+                                           "*#{value}"
+                                         else
+                                           "*#{value}*"
+                                         end
+
+          or_condition[:bool][:should] << t
         end
-      elsif data[:value].is_a?(String) && %r{[A-z]}.match?(data[:value])
+
+        data[:value] = or_condition
+      else
         data[:value] = "*#{data[:value]}*"
-        key_tmp += '.keyword'
-        wildcard_or_term = 'wildcard'
       end
     end
 
@@ -228,14 +244,17 @@ class Ticket::Selector::SearchIndex < Ticket::Selector::Base
         query_must.push t
       end
 
+    elsif data[:value].is_a?(Hash) && data[:value][:bool].present?
+      query_must.push data[:value]
+
     # is/is not/contains/contains not
-    elsif ['is', 'is not', 'contains', 'contains not'].include?(data[:operator])
+    elsif ['is', 'is not', 'contains', 'contains not', 'is any of', 'is none of'].include?(data[:operator])
       t[wildcard_or_term] = {}
       t[wildcard_or_term][key_tmp] = data[:value]
       case data[:operator]
-      when 'is', 'contains'
+      when 'is', 'contains', 'is any of'
         query_must.push t
-      when 'is not', 'contains not'
+      when 'is not', 'contains not', 'is none of'
         query_must_not.push t
       end
     elsif ['contains all', 'contains one', 'contains all not', 'contains one not'].include?(data[:operator])
