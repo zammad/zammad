@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-23 01:05+0000\n"
-"Last-Translator: ralf401 <ralf.s@posteo.de>\n"
+"PO-Revision-Date: 2023-09-04 11:07+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -503,10 +503,6 @@ msgstr "vor %s Minuten"
 msgid "%s months ago"
 msgstr "vor %s Monaten"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "%s new replies"
-msgstr "% neue Antworten"
-
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
 msgstr "%s Objekt(e) wurden angelegt."
@@ -758,10 +754,6 @@ msgstr "vor 1 Minute"
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
 msgstr "vor 1 Monat"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-msgid "1 new reply"
-msgstr "1 neue Antwort"
 
 #: db/seeds/settings.rb
 msgid "1 week"
@@ -1051,6 +1043,7 @@ msgstr "Aktions-Ausführung"
 #: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -1131,6 +1124,7 @@ msgstr "Adapter"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
+#: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
@@ -1171,6 +1165,7 @@ msgid "Add Bot"
 msgstr "Bot hinzufügen"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
+#: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Certificate"
 msgstr "Zertifikat hinzufügen"
@@ -1191,6 +1186,12 @@ msgstr "Privaten Schlüssel hinzufügen"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 msgid "Add Public or Private Key"
 msgstr "Privaten oder öffentlichen Schlüssel hinzufügen"
+
+#: app/assets/javascripts/app/views/ssl_certificates.jst.eco
+#, fuzzy
+#| msgid "Add Certificate"
+msgid "Add SSL Certificate"
+msgstr "Zertifikat hinzufügen"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -1747,6 +1748,7 @@ msgstr "Wollen Sie \"%s\" wirklich als Standard entfernen?"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
+#: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
@@ -1999,7 +2001,7 @@ msgstr ""
 "konfiguriert ist, wird das vom IDP zurückgegebene Namens-Kennzeichen "
 "verwendet."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
 msgstr "Attribute"
@@ -2065,10 +2067,8 @@ msgid "Authenticator app secret"
 msgstr "Geheimnis der Authentifizierungs-App"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
-#, fuzzy
-#| msgid "Authy"
 msgid "Author"
-msgstr "Authy"
+msgstr "Autor"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2368,6 +2368,10 @@ msgstr ""
 "Durch die Zuordnung von Sipgate-Benutzern zu Zammad-Agenten-Konten kann "
 "Zammad Ihre Agenten unterstützen, indem entweder ein neuer Ticketdialog oder "
 "das Benutzerprofil bei der Annahme eines neuen Anrufs geöffnet wird."
+
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+msgid "CA"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -3570,6 +3574,7 @@ msgstr "Erstellen:"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
 msgid "Created"
@@ -3682,7 +3687,7 @@ msgstr ""
 msgid "Currently no overview is assigned to your roles."
 msgstr "Aktuell sind Ihren Rollen keine Übersichten zugewiesen."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/navbar.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
@@ -3966,6 +3971,12 @@ msgstr "Definiert die Standard-Agentenbenachrichtigungen für neue Benutzer."
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr "Definiert die Maximalanzahl angezeigter Tickets in Übersichten."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines Elasticsearch index name."
+msgid "Defines Elasticsearch SSL verification."
+msgstr "Definiert Elasticsearch-Indexnamen."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -4869,6 +4880,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -5238,6 +5250,7 @@ msgid "Download %s record(s)"
 msgstr "Lade %s Einträge herunter"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "Download Certificate"
 msgstr "Zertifikat herunterladen"
 
@@ -5381,6 +5394,12 @@ msgstr "Elasticsearch Endpunkt-Benutzer"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
 msgstr "Elasticsearch Pipeline-Name"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "SSL verification"
+msgid "Elasticsearch SSL verification"
+msgstr "SSL-Verizifierung"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Total Payload Size"
@@ -6162,6 +6181,7 @@ msgstr "Experten"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "Expires"
 msgstr "Läuft ab"
 
@@ -6306,6 +6326,7 @@ msgstr "Finden Sie, wonach Sie suchen. Z. B. \"such ausdruck\""
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "Fingerprint"
 msgstr "Fingerabdruck"
 
@@ -6691,7 +6712,7 @@ msgstr ""
 
 #: app/models/ticket/time_accounting.rb
 msgid "Given Ticket Article is not part of the Ticket"
-msgstr ""
+msgstr "Der angegebene Ticket-Artikel gehört nicht zum Ticket"
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -6849,12 +6870,12 @@ msgstr "Gruppenauswahl für Ticket-Erstellung"
 msgid "Group selection for ticket creation"
 msgstr "Gruppenauswahl für die Ticket-Erstellung"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping by"
 msgstr "Gruppieren nach"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping order"
 msgstr "Gruppierungs-Reihenfolge"
@@ -7078,6 +7099,7 @@ msgid "Home"
 msgstr "Home"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -7823,7 +7845,7 @@ msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 "Mit einem bereits zusammengefassten Ticket kann nicht zusammengefasst werden."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 msgid "Items per page"
 msgstr "Einträge je Seite"
 
@@ -8015,10 +8037,8 @@ msgid "Last change %s %s by %s"
 msgstr "Letzte Änderung %s %s durch %s"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
-#, fuzzy
-#| msgid "has changed"
 msgid "Last changed"
-msgstr "wurde verändert"
+msgstr "Zuletzt geändert"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -8190,6 +8210,7 @@ msgstr "Laden fehlgeschlagen, bitte versuchen Sie es später erneut."
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
+#: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
@@ -9112,6 +9133,7 @@ msgid "Next in overview"
 msgstr "Nächstes der Übersicht"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "No"
 msgstr "Nein"
 
@@ -9132,6 +9154,7 @@ msgstr "Kein %s konfiguriert."
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -9157,6 +9180,7 @@ msgid "No Proxy"
 msgstr "Kein Proxy"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 msgid "No SSL"
 msgstr "kein SSL"
@@ -10002,6 +10026,8 @@ msgid "Paste"
 msgstr "Einfügen"
 
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco
 msgid "Paste Certificate"
 msgstr "Zertifikat einfügen"
 
@@ -11148,20 +11174,32 @@ msgid "SMTP - configure your own outgoing SMTP settings"
 msgstr "SMTP - eigene ausgehende SMTP-Einstellungen konfigurieren"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 msgid "SSL"
 msgstr "SSL"
+
+#: app/assets/javascripts/app/controllers/_manage/security.coffee
+#: app/assets/javascripts/app/views/ssl_certificates.jst.eco
+#, fuzzy
+#| msgid "Add Certificate"
+msgid "SSL Certificates"
+msgstr "Zertifikat hinzufügen"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "SSL Verify"
 msgstr "SSL verifizieren"
 
+#: app/assets/javascripts/app/views/integration/gitlab.jst.eco
+#: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
 msgid "SSL verification"
 msgstr "SSL-Verizifierung"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
@@ -11172,6 +11210,7 @@ msgid "SSO"
 msgstr "SSO"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 msgid "STARTTLS"
 msgstr "STARTTLS"
@@ -11591,6 +11630,7 @@ msgstr "Sequencer Protokollierungsstufe"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
+#: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 msgid "Server operation failed."
 msgstr "Server-Vorgang fehlgeschlagen."
 
@@ -11871,10 +11911,9 @@ msgstr "Zeige Ticketzuschauer"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enable time accounting for following matching tickets."
 msgid "Show time accounting dialog when updating matching tickets."
-msgstr "Schalte die Zeiterfassung für die folgenden zutreffenden Tickets an."
+msgstr ""
+"Zeiterfassungs-Dialog anzeigen, wenn passende Tickets aktualisiert werden."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
@@ -12095,12 +12134,12 @@ msgstr "Entschuldigung, nicht alle Felder sind korrekt ausgefüllt."
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "Entschuldigung, aktuell ist keine CTI-Schnittstelle aktiviert."
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Sorting by"
 msgstr "Sortieren nach"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Sorting order"
 msgstr "Sortierungs-Reihenfolge"
@@ -12265,6 +12304,7 @@ msgstr "Straße"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -12754,7 +12794,7 @@ msgstr ""
 msgid "The certificate for verification could not be found."
 msgstr "Das Zertifikat zur Überprüfung konnte nicht gefunden werden."
 
-#: lib/secure_mailing/smime/certificate.rb
+#: lib/certificate/x509/smime.rb
 msgid ""
 "The certificate is not valid for S/MIME usage. Please check the certificate "
 "format."
@@ -12762,7 +12802,7 @@ msgstr ""
 "Das Zertifikat ist nicht für S/MIME-Verwendung zugelassen. Bitte prüfen Sie "
 "das Zertifikatsformat."
 
-#: lib/secure_mailing/smime/certificate.rb
+#: lib/certificate/x509/smime.rb
 msgid ""
 "The certificate is not valid for S/MIME usage. Please check the key usage, "
 "subject alternative name and public key cryptographic algorithm."
@@ -12770,6 +12810,18 @@ msgstr ""
 "Das Zertifikat ist nicht für S/MIME-Verwendung zugelassen. Bitte prüfen sie "
 "die Schlüsselverwendung, den alternativen Betreff-Namen und den "
 "kryptografischen Algorithmus."
+
+#: lib/certificate/x509/ssl.rb
+#, fuzzy
+#| msgid ""
+#| "The certificate is not valid for S/MIME usage. Please check the "
+#| "certificate format."
+msgid ""
+"The certificate is not valid for SSL usage. Please check e.g. the validity "
+"period or the extensions."
+msgstr ""
+"Das Zertifikat ist nicht für S/MIME-Verwendung zugelassen. Bitte prüfen Sie "
+"das Zertifikatsformat."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid ""
@@ -12964,6 +13016,7 @@ msgstr "Das Bild ist ungültig."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
+#: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/controllers/widget/import.coffee
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
 msgid "The import failed."
@@ -13845,6 +13898,17 @@ msgstr ""
 msgid "This is not a private PGP key."
 msgstr "Dies ist kein privater PGP-Schlüssel."
 
+#: app/models/ssl_certificate.rb
+#, fuzzy
+#| msgid ""
+#| "The certificate is not valid for S/MIME usage. Please check the "
+#| "certificate format."
+msgid ""
+"This is not a valid X509 certificate. Please check the certificate format."
+msgstr ""
+"Das Zertifikat ist nicht für S/MIME-Verwendung zugelassen. Bitte prüfen Sie "
+"das Zertifikatsformat."
+
 #: app/models/channel/email_parser.rb
 msgid ""
 "This message cannot be displayed because it contains over 5,000 links. "
@@ -14392,10 +14456,8 @@ msgid "Time Accounting Unit"
 msgstr "Einheit für Zeiterfassung"
 
 #: app/policies/ticket/time_accounting_policy.rb
-#, fuzzy
-#| msgid "Time Accounting Unit"
 msgid "Time Accounting is not enabled"
-msgstr "Einheit für Zeiterfassung"
+msgstr "Die Zeiterfassung ist nicht aktiviert"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
@@ -14651,10 +14713,8 @@ msgid "Transfer conversation to another chat:"
 msgstr "Gespräch in einen anderen Chat übertragen:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Translations"
 msgid "Translate field contents"
-msgstr "Übersetzungen"
+msgstr "Feldinhalte übersetzen"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -14726,6 +14786,13 @@ msgstr "Dienstag"
 #: app/assets/javascripts/app/views/customer_chat/chat_footer.jst.eco
 msgid "Turn chat into ticket"
 msgstr "Chat zu Ticket umwandeln"
+
+#: app/assets/javascripts/app/views/integration/gitlab.jst.eco
+#: app/assets/javascripts/app/views/integration/idoit.jst.eco
+msgid ""
+"Turning off SSL verification is a security risk and should be used only "
+"temporary. Use this option at your own risk!"
+msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Tweets containing search terms are automatically turned into tickets."
@@ -15144,6 +15211,8 @@ msgid "Upload"
 msgstr "Hochladen"
 
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco
 msgid "Upload Certificate"
 msgstr "Zertifikat hochladen"
 
@@ -15956,6 +16025,7 @@ msgstr "Gelb"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
+#: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "Yes"
 msgstr "Ja"
 
@@ -16516,7 +16586,7 @@ msgstr "und"
 msgid "archived"
 msgstr "archiviert"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "ascending"
@@ -16721,7 +16791,7 @@ msgstr "Standard"
 msgid "delete"
 msgstr "löschen"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "descending"
@@ -17387,6 +17457,8 @@ msgstr "optional"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco
+#: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco
 msgid "or"
 msgstr "oder"
 
@@ -17780,6 +17852,12 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "%s new replies"
+#~ msgstr "% neue Antworten"
+
+#~ msgid "1 new reply"
+#~ msgstr "1 neue Antwort"
 
 #~ msgid "Enable time accounting for these tickets."
 #~ msgstr "Zeiterfassung für diese Tickets aktivieren."
