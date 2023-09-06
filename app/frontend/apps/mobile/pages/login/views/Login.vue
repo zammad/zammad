@@ -229,6 +229,7 @@ const showPasswordLogin = computed(
                 <CommonLink
                   link="/#signup"
                   class="cursor-pointer select-none !text-yellow underline"
+                  @click="forceDesktop"
                 >
                   {{ $t('Register') }}
                 </CommonLink>
@@ -256,7 +257,11 @@ const showPasswordLogin = computed(
           )
         }}
       </p>
-      <CommonLink link="/#admin_password_auth" class="font-semibold text-gray">
+      <CommonLink
+        link="/#admin_password_auth"
+        class="font-semibold text-gray"
+        @click="forceDesktop"
+      >
         {{ $t('Request the password login here.') }}
       </CommonLink>
     </section>
