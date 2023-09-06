@@ -35,8 +35,8 @@ global_job_config:
     - name: CI_SKIP_DB_RESET
       value: 'true'
 blocks:
-  dependencies: []
   - name: Lint
+    dependencies: []
     task:
       jobs:
         - name: Linting
