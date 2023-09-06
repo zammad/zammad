@@ -60,6 +60,6 @@ blocks:
             - bundle exec rake assets:precompile
             - yarn test
             - yarn test:ci:ct
-            - rspec_booster --job $SEMAPHORE_JOB_INDEX/$SEMAPHORE_JOB_COUNT --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration -t ~required_envs
+            - TEST_BOOSTERS_RSPEC_TEST_EXCLUDE_PATTERN='--exclude-pattern "spec/system/**/*_spec.rb"' rspec_booster --job $SEMAPHORE_JOB_INDEX/$SEMAPHORE_JOB_COUNT -t ~searchindex -t ~integration -t ~required_envs
             - bundle exec rake zammad:db:reset
             - bundle exec rake test:units
