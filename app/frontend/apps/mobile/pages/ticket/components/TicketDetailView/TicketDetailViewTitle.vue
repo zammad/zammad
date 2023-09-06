@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 import CommonTicketPriorityIndicator from '#shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
@@ -9,12 +9,17 @@ import CommonTicketEscalationIndicator from '#shared/components/CommonTicketEsca
 import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 
 interface Props {
   ticket: TicketById
 }
 
 const props = defineProps<Props>()
+
+// TODO: Maybe in the future we can hide the information directly with the graphql query for
+//  the ticket details (similar to the ticket list).
+const { isTicketAgent } = useTicketView(toRef(props, 'ticket'))
 
 const locale = useLocaleStore()
 
@@ -71,7 +76,7 @@ const customer = computed(() => {
         </h1>
         <div class="mt-2 flex flex-wrap gap-2">
           <CommonTicketEscalationIndicator
-            v-if="ticket.escalationAt"
+            v-if="isTicketAgent && ticket.escalationAt"
             :escalation-at="ticket.escalationAt"
           />
           <CommonTicketStateIndicator
@@ -79,7 +84,10 @@ const customer = computed(() => {
             :label="ticket.state.name"
             pill
           />
-          <CommonTicketPriorityIndicator :priority="ticket.priority" />
+          <CommonTicketPriorityIndicator
+            v-if="isTicketAgent"
+            :priority="ticket.priority"
+          />
         </div>
       </div>
       <CommonIcon
