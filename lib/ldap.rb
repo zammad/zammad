@@ -197,6 +197,7 @@ class Ldap
 
     if @config[:ssl_verify]
       Certificate::ApplySSLCertificates.ensure_fresh_ssl_context
+      @encryption[:tls_options] = OpenSSL::SSL::SSLContext::DEFAULT_PARAMS
       return
     end
 

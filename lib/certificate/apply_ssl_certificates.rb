@@ -13,8 +13,6 @@ class Certificate::ApplySSLCertificates
 
         all_certificates = SSLCertificate.all
 
-        return if !all_certificates.exists?
-
         # Only update the default store if there are changes with the stored SSL certificates.
         cache_key = all_certificates.cache_key_with_version
         return if @cache_key == cache_key

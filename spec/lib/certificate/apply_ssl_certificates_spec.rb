@@ -9,18 +9,18 @@ RSpec.describe Certificate::ApplySSLCertificates, :aggregate_failures, type: :mo
       OpenSSL::SSL::SSLContext::DEFAULT_CERT_STORE
     end
 
-    context 'without custom certificates present' do
-      it 'does not change the context' do
-        expect { described_class.ensure_fresh_ssl_context }.not_to change { current_store }
-      end
-    end
-
     context 'with a custom certificate present' do
       it 'changes the context' do
         create(:ssl_certificate, fixture: 'RootCA')
         expect { described_class.ensure_fresh_ssl_context }.to change { current_store }
         expect { described_class.ensure_fresh_ssl_context }.not_to change { current_store }
         create(:ssl_certificate, fixture: 'ChainCA')
+        expect { described_class.ensure_fresh_ssl_context }.to change { current_store }
+      end
+    end
+
+    context 'without custom certificates present' do
+      it 'changes the context' do
         expect { described_class.ensure_fresh_ssl_context }.to change { current_store }
       end
     end

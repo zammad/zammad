@@ -10,6 +10,7 @@ paths = [
   '''^doc/developer_manual/cookbook/how-to-setup-smime-integration.md''',
   '''^log/''',
   '''^spec/factories/pgp_key\.rb''',
+  '''^spec/fixtures/files/ldap/.*\.crt''',
   '''^spec/fixtures/files/pgp/.*\.asc''',
   '''^spec/fixtures/files/smime/.*\.key''',
   '''^test/data/saml/zammad-client.json''',
