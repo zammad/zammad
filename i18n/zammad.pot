@@ -5543,10 +5543,6 @@ msgstr ""
 msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr ""
 
-#: app/models/ticket/time_accounting.rb
-msgid "Given Ticket Article is not part of the Ticket"
-msgstr ""
-
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -11833,6 +11829,10 @@ msgstr ""
 
 #: lib/secure_mailing/pgp/tool/error/handler.rb
 msgid "This PGP email was encrypted with a potentially unknown encryption algorithm."
+msgstr ""
+
+#: app/models/ticket/time_accounting.rb
+msgid "This article is not part of the ticket."
 msgstr ""
 
 #: lib/telegram_helper.rb

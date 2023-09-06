@@ -42,6 +42,6 @@ class Ticket::TimeAccounting < ApplicationModel
     return if ticket_article.blank?
     return if ticket_article.ticket_id == ticket_id
 
-    errors.add :ticket_article, __('Given Ticket Article is not part of the Ticket')
+    errors.add :ticket_article, __('This article is not part of the ticket.')
   end
 end
