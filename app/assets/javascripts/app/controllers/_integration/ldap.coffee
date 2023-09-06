@@ -277,6 +277,7 @@ class ConnectionWizard extends App.ControllerWizardModal
     'click .js-goToSlide':               'goToSlide'
     'click .js-saveQuit':                'saveQuit'
     'change .js-Ssl':                    'sslChange'
+    'input .js-hostUrl':                 'hostChange'
 
   elements:
     '.modal-body': 'body'
@@ -379,6 +380,18 @@ class ConnectionWizard extends App.ControllerWizardModal
     if method && @[method]
       @[method](true)
     super
+
+  hostChange: (e) ->
+    e.preventDefault()
+
+    [protocol, host] = $(e.currentTarget).val().split('://')
+    return if _.isEmpty(protocol) || _.isEmpty(host)
+    return if !['ldap', 'ldaps'].includes(protocol)
+
+    protocol_ssl_mapping = { ldap: 'off', ldaps: 'ssl' }
+
+    $('.js-hostUrl').val(host)
+    $('.js-Ssl').val(protocol_ssl_mapping[protocol]).trigger('change')
 
   sslChange: (e) =>
     @checkSslVerifyVisibility($(e.currentTarget).val())
