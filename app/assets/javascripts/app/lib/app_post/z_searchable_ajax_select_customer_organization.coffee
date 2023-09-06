@@ -6,6 +6,9 @@ class App.CustomerOrganizationAjaxSelect extends App.SearchableAjaxSelect
 
   ajaxAttributes: =>
     customerId = @el.closest('form').find('input[name=customer_id]').val()
+    if App.Session.get().permission('ticket.customer') && !App.Session.get().permission('ticket.agent')
+      customerId = App.Session.get().id
+
     return super if !customerId
 
     user = App.User.find(customerId)
