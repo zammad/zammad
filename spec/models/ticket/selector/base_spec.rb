@@ -446,4 +446,191 @@ RSpec.describe Ticket::Selector::Base, searchindex: true do
       end
     end
   end
+
+  describe 'Report profiles: Problem with some conditions (starts with, ends with, is any, is none) #4798' do
+    context 'when operator is any of' do
+      it 'does match', :aggregate_failures do
+        condition = {
+          operator:   'OR',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is any of',
+              value:    %w[bli bla],
+            },
+            {
+              name:     'ticket.title',
+              operator: 'is any of',
+              value:    ['blub'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(3)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(3)
+      end
+
+      it 'does not match', :aggregate_failures do
+        condition = {
+          operator:   'OR',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is any of',
+              value:    %w[blix blax],
+            },
+            {
+              name:     'ticket.title',
+              operator: 'is any of',
+              value:    ['blubx'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+
+    context 'when operator is none of' do
+      it 'does match', :aggregate_failures do
+        condition = {
+          operator:   'OR',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is none of',
+              value:    %w[blix blax],
+            },
+            {
+              name:     'ticket.title',
+              operator: 'is none of',
+              value:    ['blubx'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(3)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(3)
+      end
+
+      it 'does not match', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is none of',
+              value:    %w[bli bla],
+            },
+            {
+              name:     'ticket.title',
+              operator: 'is none of',
+              value:    ['blub'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+
+    context 'when operator starts with one of' do
+      it 'does match', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'starts with one of',
+              value:    ['bl'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(3)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(3)
+      end
+
+      it 'does not match', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'starts with one of',
+              value:    ['aaa'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+
+    context 'when operator ends with one of' do
+      it 'does match', :aggregate_failures do
+        condition = {
+          operator:   'OR',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'ends with one of',
+              value:    %w[li la],
+            },
+            {
+              name:     'ticket.title',
+              operator: 'ends with one of',
+              value:    ['ub'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(3)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(3)
+      end
+
+      it 'does not match', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'ends with one of',
+              value:    ['ubx'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+  end
 end
