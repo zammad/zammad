@@ -141,6 +141,7 @@ const sendCredentials = (formData: FormSubmitData<LoginFormData>) => {
         <CommonLink
           link="/#signup"
           class="cursor-pointer select-none !text-yellow underline"
+          @click="forceDesktop"
         >
           {{ $t('Register') }}
         </CommonLink>

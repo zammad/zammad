@@ -135,6 +135,16 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
 
         expect(page).to have_no_link('Continue to desktop')
       end
+
+      it "register doesn't redirect back" do
+        visit '/login', skip_waiting: true
+
+        click_link 'Register'
+
+        expect_current_route('signup', app: :desktop)
+
+        expect(page).to have_no_link('Continue to desktop')
+      end
     end
   end
 end
