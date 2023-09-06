@@ -35,6 +35,7 @@ global_job_config:
     - name: CI_SKIP_DB_RESET
       value: 'true'
 blocks:
+  dependencies: []
   - name: Lint
     task:
       jobs:
@@ -51,6 +52,7 @@ blocks:
             - yarn lint
 
   - name: RSpec
+    dependencies: []
     task:
       jobs:
         - name: Tests
