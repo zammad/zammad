@@ -329,7 +329,7 @@ returns
     if uri.scheme.match?(%r{https}i)
       http.use_ssl = true
 
-      if options.fetch(:verify_ssl, false)
+      if options.fetch(:verify_ssl, true)
         Certificate::ApplySSLCertificates.ensure_fresh_ssl_context
       else
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE

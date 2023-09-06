@@ -14,6 +14,13 @@ RSpec.describe 'SSL Verification', :aggregate_failures, authenticated_as: false,
       end
     end
 
+    context 'without verify_ssl' do
+      it 'UserAgent fails' do
+        expect(UserAgent.get(url)).not_to be_success
+        expect(UserAgent.get(url).error).to include('certificate verify failed (self signed certificate)')
+      end
+    end
+
     context 'with verify_ssl: false' do
       it 'UserAgent succeeds' do
         expect(UserAgent.get(url, {}, { verify_ssl: false })).to be_success
@@ -31,6 +38,12 @@ RSpec.describe 'SSL Verification', :aggregate_failures, authenticated_as: false,
     context 'with verify_ssl: true' do
       it 'UserAgent succeeds' do
         expect(UserAgent.get(url, {}, { verify_ssl: true })).to be_success
+      end
+    end
+
+    context 'without verify_ssl: true' do
+      it 'UserAgent succeeds' do
+        expect(UserAgent.get(url)).to be_success
       end
     end
 
