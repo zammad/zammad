@@ -224,7 +224,11 @@ const hasAlternativeLoginMethod = computed(() => {
           )
         }}
       </p>
-      <CommonLink link="/#admin_password_auth" class="font-semibold text-gray">
+      <CommonLink
+        link="/#admin_password_auth"
+        class="font-semibold text-gray"
+        @click="forceDesktop"
+      >
         {{ $t('Request the password login here.') }}
       </CommonLink>
     </section>
