@@ -48,10 +48,11 @@ jobs:
         run: .github/workflows/ci/pre.sh
       - name: Lint
         run: .github/workflows/ci/lint.sh
-      #- name: Test
-      #  run: .github/workflows/ci/test.sh
   
-  Tests:     
+  Tests:
+    strategy:
+      matrix:
+        JobIndex: [1,2,3,4]
     runs-on: ubuntu-latest
     container:
       image: zammad/zammad-ci:latest
@@ -72,6 +73,8 @@ jobs:
       CI_SKIP_ASSETS_PRECOMPILE: 'true'
       # Avoid unnecessary DB resets.
       CI_SKIP_DB_RESET: 'true'
+      JOB_INDEX: ${{matrix.JobIndex}}
+      JOB_COUNT: ${{strategy.job-total}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
