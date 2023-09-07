@@ -301,7 +301,7 @@ GEM
     mime-types-data (3.2023.0808)
     mini_mime (1.1.5)
     mini_portile2 (2.8.4)
-    minitest (5.19.0)
+    minitest (5.20.0)
     minitest-profile (0.0.2)
     msgpack (1.7.2)
     multi_json (1.15.0)
