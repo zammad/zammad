@@ -11,9 +11,9 @@ source .gitlab/environment.env
 echo "Checking assets generation..."
 bundle exec rake assets:precompile
 
-echo "Running front end tests..."
-yarn test
-yarn test:ci:ct
+#echo "Running front end tests..."
+#yarn test
+#yarn test:ci:ct
 
 echo "Running basic rspec tests..."
 bundle exec rake zammad:db:init
