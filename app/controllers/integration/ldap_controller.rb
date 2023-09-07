@@ -5,6 +5,11 @@ class Integration::LdapController < ApplicationController
 
   prepend_before_action :authenticate_and_authorize!
 
+  EXCEPTIONS_SPECIAL_TREATMENT = {
+    '48, Inappropriate Authentication' => {}, # workaround for issue #1114
+    '53, Unwilling to perform'         => { error: 'disallow-bind-anon' },
+  }.freeze
+
   def discover
     answer_with do
 
@@ -14,12 +19,7 @@ class Integration::LdapController < ApplicationController
         attributes: ldap.preferences
       }
     rescue => e
-      # workaround for issue #1114
-      raise if !e.message.end_with?(', 48, Inappropriate Authentication')
-
-      # return empty result
-      {}
-
+      EXCEPTIONS_SPECIAL_TREATMENT.find { |msg, _| e.message.ends_with?(msg) }&.last || raise
     end
   end
 

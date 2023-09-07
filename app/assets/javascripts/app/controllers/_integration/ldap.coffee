@@ -447,6 +447,9 @@ class ConnectionWizard extends App.ControllerWizardModal
           @showAlert('js-discover', data.message)
           return
 
+        if !_.isEmpty(data.error) && data.error is 'disallow-bind-anon'
+          @wizardConfig.disallow_bind_anon = true
+
         @wizardConfig.host       = params.host
         @wizardConfig.ssl        = params.ssl
         @wizardConfig.ssl_verify = params.ssl_verify
@@ -479,7 +482,24 @@ class ConnectionWizard extends App.ControllerWizardModal
 
   bindShow: (alreadyShown) =>
     @showSlide('js-bind') if !alreadyShown
-    @$('.js-bind .js-baseDn').html(@createSelection('base_dn', @wizardConfig.options, @wizardConfig.base_dn || @wizardConfig.option, true))
+
+    if @wizardConfig.disallow_bind_anon
+      baseDnInput = App.UiElement.input.render(
+        name: 'base_dn'
+        id: 'base_dn'
+        display: __('Base DN')
+        tag: 'input'
+        type: 'text'
+        class: 'form-control--small js-baseDn'
+        required: 'required'
+        placeholder: ''
+        value: @wizardConfig.base_dn
+        autocomplete: 'autocomplete="off"'
+      )[0].outerHTML
+      @$('.js-bind .js-baseDn').html(baseDnInput)
+    else
+      @$('.js-bind .js-baseDn').html(@createSelection('base_dn', @wizardConfig.options, @wizardConfig.base_dn || @wizardConfig.option, true))
+
     @$('.js-bind input[name="bind_user"]').val(@wizardConfig.bind_user)
     @$('.js-bind input[name="bind_pw"]').val(@wizardConfig.bind_pw)
 

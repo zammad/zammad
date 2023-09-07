@@ -1712,6 +1712,7 @@ msgstr ""
 msgid "Base"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Base DN"
