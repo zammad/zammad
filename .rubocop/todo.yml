@@ -331,6 +331,7 @@ Metrics/AbcSize:
     - 'lib/sessions/event/login.rb'
     - 'lib/sessions/node.rb'
     - 'lib/signature_detection.rb'
+    - 'lib/sql_helper.rb'
     - 'lib/stats.rb'
     - 'lib/stats/ticket_channel_distribution.rb'
     - 'lib/stats/ticket_escalation.rb'

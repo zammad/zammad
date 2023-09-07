@@ -513,6 +513,13 @@ RSpec.describe Ticket::Selector::Sql do
           include_examples 'finds the ticket'
         end
 
+        context 'with special characters' do
+          let(:ticket) { create(:ticket, title: '\\ [ ]', owner: agent, group: Group.first) }
+          let(:value)  { '\\ [ ]' }
+
+          include_examples 'finds the ticket'
+        end
+
         context 'with non-matching string' do
           let(:value) { 'Another' }
 
@@ -553,6 +560,13 @@ RSpec.describe Ticket::Selector::Sql do
 
         context 'with matching upcased string' do
           let(:value) { 'NICE title' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with special characters' do
+          let(:ticket) { create(:ticket, title: '[ ] \\', owner: agent, group: Group.first) }
+          let(:value) { '[ ] \\' }
 
           include_examples 'finds the ticket'
         end
