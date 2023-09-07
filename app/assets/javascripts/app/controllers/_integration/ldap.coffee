@@ -280,10 +280,11 @@ class ConnectionWizard extends App.ControllerWizardModal
     'input .js-hostUrl':                 'hostChange'
 
   elements:
-    '.modal-body': 'body'
+    '.modal-body':         'body'
     '.js-userMappingForm': 'userMappingForm'
-    '.js-groupRoleForm': 'groupRoleForm'
-    '.js-expertForm': 'expertForm'
+    '.js-groupRoleForm':   'groupRoleForm'
+    '.js-expertForm':      'expertForm'
+    '.js-sslVerifyAlert':  'sslVerifyAlert'
 
   constructor: ->
     super
@@ -406,8 +407,10 @@ class ConnectionWizard extends App.ControllerWizardModal
 
     if exists && disabled
       el.parent().remove()
+      @sslVerifyAlert.addClass('hide')
     else if !exists && !disabled
       @$('.js-Ssl').closest('tr').after(@buildRowSslVerify())
+      @handleSslVerifyAlert()
 
   buildRowSslVerify: =>
     el = $(App.view('integration/ldap_ssl_verify_row')())
@@ -424,6 +427,7 @@ class ConnectionWizard extends App.ControllerWizardModal
       translate: true
       class: 'form-control form-control--small'
     )
+    sslVerifyElement.on('change', @handleSslVerifyAlert)
     el.find('.js-sslVerify').html sslVerifyElement
     el
 
@@ -776,6 +780,11 @@ class ConnectionWizard extends App.ControllerWizardModal
     el = $(App.view('integration/ldap_summary')(job: job))
     @el.find('.js-summary').html(el)
 
+  handleSslVerifyAlert: =>
+    if @formParam(@el).ssl_verify
+      @sslVerifyAlert.addClass('hide')
+    else
+      @sslVerifyAlert.removeClass('hide')
 
 class LdapSourceIndex extends App.ControllerGenericIndex
   constructor: ->

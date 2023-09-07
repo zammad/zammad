@@ -25,7 +25,6 @@ QUnit.test('initial value', (assert) => {
   var initDelay = 750
 
   setTimeout(() => {
-    console.debug(el.find('.token-label').eq(0))
     assert.equal(el.find('.token-label').eq(0).text(), 'foo', 'first token label')
     assert.equal(el.find('.token-label').eq(1).text(), 'bar', 'second token label')
     done()

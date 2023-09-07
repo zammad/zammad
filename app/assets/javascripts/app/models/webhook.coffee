@@ -6,7 +6,7 @@ class App.Webhook extends App.Model
     { name: 'name',                display: __('Name'),                      tag: 'input',       type: 'text', limit: 250, null: false },
     { name: 'endpoint',            display: __('Endpoint'),                  tag: 'input',       type: 'text', limit: 300, null: false, placeholder: 'https://target.example.com/webhook' },
     { name: 'signature_token',     display: __('HMAC SHA1 Signature Token'), tag: 'input',       type: 'text', limit: 100, null: true },
-    { name: 'ssl_verify',          display: __('SSL Verify'),                tag: 'boolean',     null: true, translate: true, options: { true: 'yes', false: 'no'  }, default: true },
+    { name: 'ssl_verify',          display: __('SSL verification'),          tag: 'boolean',     null: true, translate: true, options: { true: 'yes', false: 'no' }, default: true },
     { name: 'basic_auth_username', display: __('HTTP Basic Authentication Username'), tag: 'input', type: 'text', limit: 250, null: true, item_class: 'formGroup--halfSize' },
     { name: 'basic_auth_password', display: __('HTTP Basic Authentication Password'), tag: 'input', type: 'text', limit: 250, null: true, item_class: 'formGroup--halfSize' },
     { name: 'customized_payload',  display: __('Custom Payload'),            tag: 'switch',      null: true, label_class: 'hidden' },

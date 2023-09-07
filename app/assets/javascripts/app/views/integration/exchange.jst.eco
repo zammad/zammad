@@ -23,6 +23,11 @@
 </div>
 <div class="js-summary hide">
   <h2><%- @T('Settings') %></h2>
+<% if @config.disable_ssl_verify: %>
+  <div class="alert alert--warning" role="alert">
+    <%= @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+  </div>
+<% end %>
   <table class="settings-list" style="width: 100%;">
     <thead>
       <tr>
@@ -40,6 +45,11 @@
       <tr>
         <td class="settings-list-row-control"><%- @T('Password') %>
         <td class="settings-list-row-control"><%= @M(@config.password) %>
+    <% end %>
+    <% if @config.disable_ssl_verify: %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('SSL verification') %>
+        <td class="settings-list-row-control"><%- @T('no') %>
     <% end %>
     </tbody>
   </table>

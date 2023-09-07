@@ -119,6 +119,7 @@ class Index extends App.ControllerSubContent
 
 class WebhookIndex extends App.ControllerGenericIndex
   editControllerClass: -> EditWebhook
+  newControllerClass: -> NewWebhook
 
 class ChoosePreDefinedWebhook extends App.ControllerModal
   buttonClose: true
@@ -212,8 +213,30 @@ PreDefinedWebhookMixin =
 
     { configure_attributes: attrs }
 
+WebhookSslVerifyAlertMixin =
+  events:
+    'change select[name="ssl_verify"]': 'handleSslVerifyAlert'
+
+  handleSslVerifyAlert: ->
+    @sslVerifyAlert = @injectSslVerifyAlert() if not @sslVerifyAlert
+
+    if @formParam(@el).ssl_verify
+      @sslVerifyAlert.addClass('hide')
+    else
+      @sslVerifyAlert.removeClass('hide')
+
+  injectSslVerifyAlert: ->
+    $('<div />')
+      .attr('role', 'alert')
+      .addClass('alert')
+      .addClass('alert--warning')
+      .addClass('hide')
+      .text(App.i18n.translatePlain('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!'))
+      .appendTo(@el.find('.modal-alerts-container'))
+
 class NewPreDefinedWebhook extends App.ControllerGenericNew
   @include PreDefinedWebhookMixin
+  @include WebhookSslVerifyAlertMixin
 
   # Inject the pre-defined webhook data into the form.
   contentFormParams: ->
@@ -222,17 +245,26 @@ class NewPreDefinedWebhook extends App.ControllerGenericNew
     note: App.i18n.translatePlain('Pre-defined webhook for %s.', App.i18n.translatePlain(@preDefinedWebhook.name))
 
 class EditWebhook extends App.ControllerGenericEdit
-  shown: false
-
   @include PreDefinedWebhookMixin
+  @include WebhookSslVerifyAlertMixin
+
+  shown: false
 
   constructor: ->
     super
 
     App.PreDefinedWebhook.subscribe(@render, initFetch: true)
 
+  render: ->
+    super
+
+    setTimeout (=> @handleSslVerifyAlert()), 0
+
   # Inject the pre-defined webhook data into the form.
   contentFormParams: ->
     $.extend(true, @item, { custom_payload: @preDefinedWebhook?.custom_payload if not @item.customized_payload })
+
+class NewWebhook extends App.ControllerGenericNew
+  @include WebhookSslVerifyAlertMixin
 
 App.Config.set('Webhook', { prio: 3350, name: __('Webhook'), parent: '#manage', target: '#manage/webhook', controller: Index, permission: ['admin.webhook'] }, 'NavBarAdmin')
