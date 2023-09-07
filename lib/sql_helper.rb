@@ -2,6 +2,14 @@
 
 class SqlHelper
 
+  def self.quote_string(value)
+    ActiveRecord::Base.connection.quote_string(value)
+  end
+
+  def self.quote_like(...)
+    ApplicationModel.sanitize_sql_like(...)
+  end
+
   def initialize(object:, table_name: nil)
     @object     = object
     @table_name = table_name
@@ -9,10 +17,6 @@ class SqlHelper
 
   def db_column(column)
     "#{ActiveRecord::Base.connection.quote_table_name(@table_name || @object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(column)}"
-  end
-
-  def db_value(value)
-    ActiveRecord::Base.connection.quote_string(value)
   end
 
   def get_param_key(key, params)
@@ -187,9 +191,9 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
     value = [''] if value.blank?
     value = Array(value)
     result = if Rails.application.config.db_column_array
-               "(#{db_column(attribute)} @> ARRAY[#{value.map { |v| "'#{db_value(v)}'" }.join(',')}]::varchar[])"
+               "(#{db_column(attribute)} @> ARRAY[#{value.map { |v| "'#{self.class.quote_string(v)}'" }.join(',')}]::varchar[])"
              else
-               "JSON_CONTAINS(#{db_column(attribute)}, '#{db_value(value.to_json)}', '$')"
+               "JSON_CONTAINS(#{db_column(attribute)}, '#{self.class.quote_string(value.to_json)}', '$')"
              end
     negated ? "NOT(#{result})" : "(#{result})"
   end
@@ -198,9 +202,9 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
     value = [''] if value.blank?
     value = Array(value)
     result = if Rails.application.config.db_column_array
-               "(#{db_column(attribute)} && ARRAY[#{value.map { |v| "'#{db_value(v)}'" }.join(',')}]::varchar[])"
+               "(#{db_column(attribute)} && ARRAY[#{value.map { |v| "'#{self.class.quote_string(v)}'" }.join(',')}]::varchar[])"
              else
-               value.map { |v| "JSON_CONTAINS(#{db_column(attribute)}, '#{db_value(v.to_json)}', '$')" }.join(' OR ')
+               value.map { |v| "JSON_CONTAINS(#{db_column(attribute)}, '#{self.class.quote_string(v.to_json)}', '$')" }.join(' OR ')
              end
     negated ? "NOT(#{result})" : "(#{result})"
   end

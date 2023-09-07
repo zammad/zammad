@@ -241,26 +241,26 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
       end
     elsif block_condition[:operator] == 'starts with'
       query << "#{attribute} #{like} (?)"
-      bind_params.push "#{block_condition[:value]}%"
+      bind_params.push "#{SqlHelper.quote_like(block_condition[:value])}%"
     elsif block_condition[:operator] == 'starts with one of'
       block_condition[:value] = Array.wrap(block_condition[:value])
 
       sub_query = []
       block_condition[:value].each do |value|
         sub_query << "#{attribute} #{like} (?)"
-        bind_params.push "#{value}%"
+        bind_params.push "#{SqlHelper.quote_like(value)}%"
       end
       query << "(#{sub_query.join(' OR ')})" if sub_query.present?
     elsif block_condition[:operator] == 'ends with'
       query << "#{attribute} #{like} (?)"
-      bind_params.push "%#{block_condition[:value]}"
+      bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}"
     elsif block_condition[:operator] == 'ends with one of'
       block_condition[:value] = Array.wrap(block_condition[:value])
 
       sub_query = []
       block_condition[:value].each do |value|
         sub_query << "#{attribute} #{like} (?)"
-        bind_params.push "%#{value}"
+        bind_params.push "%#{SqlHelper.quote_like(value)}"
       end
       query << "(#{sub_query.join(' OR ')})" if sub_query.present?
     elsif block_condition[:operator] == 'is any of'
@@ -373,10 +373,10 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
       end
     elsif block_condition[:operator] == 'contains'
       query << "#{attribute} #{like} (?)"
-      bind_params.push "%#{block_condition[:value]}%"
+      bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}%"
     elsif block_condition[:operator] == 'contains not'
       query << "#{attribute} NOT #{like} (?)"
-      bind_params.push "%#{block_condition[:value]}%"
+      bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}%"
     elsif block_condition[:operator] == 'matches regex'
       query << sql_helper.regex_match(attribute, negated: false)
       bind_params.push block_condition[:value]
