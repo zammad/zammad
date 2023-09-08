@@ -8,10 +8,11 @@ RSpec.describe Sequencer::Unit::Import::Freshdesk::TimeEntry::Available, sequenc
 
     let(:params) do
       {
-        dry_run:    false,
-        import_job: instance_double(ImportJob),
-        field_map:  {},
-        id_map:     {},
+        dry_run:           false,
+        import_job:        instance_double(ImportJob),
+        field_map:         {},
+        id_map:            {},
+        skip_time_entries: nil,
       }
     end
 

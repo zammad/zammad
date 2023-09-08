@@ -64,12 +64,13 @@ RSpec.describe Sequencer::Unit::Import::Freshdesk::Tickets, db_strategy: 'reset'
 
     let(:process_payload) do
       {
-        import_job:           build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
-        dry_run:              false,
-        request_params:       {},
-        field_map:            {},
-        id_map:               id_map,
-        time_entry_available: true,
+        import_job:            build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
+        dry_run:               false,
+        request_params:        {},
+        field_map:             {},
+        id_map:                id_map,
+        time_entry_available:  true,
+        tickets_updated_since: nil,
       }
     end
 

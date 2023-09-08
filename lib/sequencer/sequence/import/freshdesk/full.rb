@@ -7,6 +7,7 @@ class Sequencer::Sequence::Import::Freshdesk::Full < Sequencer::Sequence::Base
       'Import::Common::ImportMode::Check',
       'Import::Common::SystemInitDone::Check',
       'Import::Common::ImportJob::DryRun',
+      'Import::Freshdesk::Payload',
       'Import::Freshdesk::TimeEntry::Available',
       'Import::Freshdesk::IdMap',
       'Import::Freshdesk::Groups',
