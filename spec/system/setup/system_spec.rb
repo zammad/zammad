@@ -4,6 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'System setup process', authenticated_as: false, required_envs: %w[MAIL_ADDRESS MAIL_PASS], set_up: false, type: :system do
 
+  before do
+    # Import mail server CA certificate into the trust store.
+    SSLCertificate.create!(certificate: Rails.root.join('spec/fixtures/files/imap/ca.crt').read)
+  end
+
   def fqdn
     match_data = %r{://(.+?)(:.+?|/.+?|)$}.match(app_host)
     return match_data.captures.first if match_data.present?

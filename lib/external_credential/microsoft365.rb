@@ -55,10 +55,11 @@ class ExternalCredential::Microsoft365
       inbound:  {
         adapter: 'imap',
         options: {
-          auth_type: 'XOAUTH2',
-          host:      'outlook.office365.com',
-          ssl:       'ssl',
-          user:      user_data[:preferred_username],
+          auth_type:  'XOAUTH2',
+          host:       'outlook.office365.com',
+          ssl:        'ssl',
+          ssl_verify: true,
+          user:       user_data[:preferred_username],
         },
       },
       outbound: {
@@ -68,6 +69,7 @@ class ExternalCredential::Microsoft365
           port:           587,
           user:           user_data[:preferred_username],
           authentication: 'xoauth2',
+          ssl_verify:     true
         },
       },
       auth:     response.merge(

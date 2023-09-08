@@ -47,10 +47,11 @@ class ExternalCredential::Google
       inbound:  {
         adapter: 'imap',
         options: {
-          auth_type: 'XOAUTH2',
-          host:      'imap.gmail.com',
-          ssl:       'ssl',
-          user:      user_data[:email],
+          auth_type:  'XOAUTH2',
+          host:       'imap.gmail.com',
+          ssl:        'ssl',
+          ssl_verify: true,
+          user:       user_data[:email],
         },
       },
       outbound: {
@@ -59,6 +60,7 @@ class ExternalCredential::Google
           host:           'smtp.gmail.com',
           port:           465,
           ssl:            true,
+          ssl_verify:     true,
           user:           user_data[:email],
           authentication: 'xoauth2',
         },

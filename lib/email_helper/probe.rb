@@ -10,7 +10,8 @@ get result of probe
   result = EmailHelper::Probe.full(
     email: 'zammad@example.com',
     password: 'somepassword',
-    folder: 'some_folder', # optional im imap
+    folder: 'some_folder', # optional in imap
+    ssl_verify: false,    # optional
   )
 
 returns on success
@@ -27,6 +28,7 @@ returns on success
           user: 'some@example.com',
           password: 'password',
           folder: 'some_folder', # optional im imap
+          ssl_verify: false,     # optional
          },
       },
       outbound: {
@@ -37,6 +39,7 @@ returns on success
           ssl: true,
           user: 'some@example.com',
           password: 'password',
+          ssl_verify: false, # optional
         },
       },
     }
@@ -120,6 +123,11 @@ returns on fail
           config[:options][:folder] = params[:folder]
         end
 
+        # Add SSL verification flag to configuration, if needed.
+        if params.key?(:ssl_verify) && config[:options]
+          config[:options][:ssl_verify] = params[:ssl_verify]
+        end
+
         Rails.logger.debug { "INBOUND PROBE GUESS: #{config.inspect}" }
         result_inbound = EmailHelper::Probe.inbound(config)
         Rails.logger.debug { "INBOUND RESULT GUESS: #{result_inbound.inspect}" }
@@ -150,6 +158,12 @@ returns on fail
 
       success = false
       outbound_map.each do |config|
+
+        # Add SSL verification flag to configuration, if needed.
+        if params.key?(:ssl_verify) && config[:options]
+          config[:options][:ssl_verify] = params[:ssl_verify]
+        end
+
         Rails.logger.debug { "OUTBOUND PROBE GUESS: #{config.inspect}" }
         result_outbound = EmailHelper::Probe.outbound(config, params[:email])
         Rails.logger.debug { "OUTBOUND RESULT GUESS: #{result_outbound.inspect}" }

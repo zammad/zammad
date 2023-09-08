@@ -31,11 +31,12 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
       {
         adapter: adapter,
         options: {
-          host:     host,
-          port:     port,
-          ssl:      true,
-          user:     user,
-          password: password,
+          host:       host,
+          port:       port,
+          ssl:        true,
+          user:       user,
+          password:   password,
+          ssl_verify: false,
         },
       }
     end
@@ -102,11 +103,12 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
       {
         adapter: adapter,
         options: {
-          host:      host,
-          port:      port,
-          start_tls: true,
-          user:      user,
-          password:  password,
+          host:       host,
+          port:       port,
+          start_tls:  true,
+          user:       user,
+          password:   password,
+          ssl_verify: false,
         },
       }
     end
@@ -168,11 +170,12 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
         {
           adapter: adapter,
           options: {
-            host:     host,
-            port:     port,
-            user:     user,
-            ssl:      false,
-            password: password,
+            host:       host,
+            port:       port,
+            user:       user,
+            ssl:        false,
+            password:   password,
+            ssl_verify: false,
           },
         }
       end
@@ -186,8 +189,9 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
 
     let(:full_params) do
       {
-        email:    email,
-        password: password,
+        email:      email,
+        password:   password,
+        ssl_verify: (ssl_verify if defined? ssl_verify),
       }
     end
 
@@ -235,7 +239,22 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
       context 'when doing a real test' do
         let(:host) { ENV['MAIL_SERVER'] }
 
-        include_examples 'do real testing'
+        context 'with ssl verification turned on' do
+          let(:ssl_verify) { true }
+
+          before do
+            # Import CA certificate into the trust store.
+            SSLCertificate.create!(certificate: Rails.root.join('spec/fixtures/files/imap/ca.crt').read)
+          end
+
+          include_examples 'do real testing'
+        end
+
+        context 'with ssl verification turned off' do
+          let(:ssl_verify) { false }
+
+          include_examples 'do real testing'
+        end
       end
     end
   end

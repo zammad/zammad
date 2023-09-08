@@ -1,11 +1,14 @@
 class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
   events:
-    'submit .js-intro':                   'probeBasedOnIntro'
-    'submit .js-inbound':                 'probeInbound'
-    'change .js-inbound [name=adapter]':  'toggleInboundAdapter'
-    'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
-    'submit .js-outbound':                'probleOutbound'
-    'click  .js-goToSlide':               'goToSlide'
+    'submit .js-intro':                    'probeBasedOnIntro'
+    'submit .js-inbound':                  'probeInbound'
+    'change .js-inbound [name=adapter]':   'toggleInboundAdapter'
+    'change .js-outbound [name=adapter]':  'toggleOutboundAdapter'
+    'change [name="options::ssl"]':        'toggleSslVerifyVisibility'
+    'change [name="options::port"]':       'toggleSslVerifyVisibility'
+    'change [name="options::ssl_verify"]': 'toggleSslVerifyAlert'
+    'submit .js-outbound':                 'probleOutbound'
+    'click  .js-goToSlide':                'goToSlide'
 
   constructor: ->
     super
@@ -78,6 +81,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
       { name: 'options::user',            display: __('User'),     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
       { name: 'options::password',        display: __('Password'), tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', single: true },
       { name: 'options::ssl',             display: __('SSL/STARTTLS'), tag: 'select', null: true, options: { 'off': __('No SSL'), 'ssl': __('SSL'), 'starttls': __('STARTTLS')  }, default: 'ssl', translate: true, item_class: 'formGroup--halfSize' },
+      { name: 'options::ssl_verify',      display: __('SSL verification'), tag: 'boolean', default: true, null: true, translate: true, item_class: 'formGroup--halfSize' },
       { name: 'options::port',            display: __('Port'),     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
       { name: 'options::folder',          display: __('Folder'),   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
       { name: 'options::keep_on_server',  display: __('Keep messages on server'), tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
@@ -137,10 +141,11 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
       configureAttributesOutbound = [
-        { name: 'options::host',     display: __('Host'),     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
-        { name: 'options::user',     display: __('User'),     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
-        { name: 'options::password', display: __('Password'), tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'off', single: true },
-        { name: 'options::port',     display: __('Port'),     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
+        { name: 'options::host',       display: __('Host'),     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
+        { name: 'options::user',       display: __('User'),     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
+        { name: 'options::password',   display: __('Password'), tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'off', single: true },
+        { name: 'options::port',       display: __('Port'),     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
+        { name: 'options::ssl_verify', display: __('SSL verification'), tag: 'boolean', default: true, null: true, translate: true, item_class: 'formGroup--halfSize' },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
@@ -148,6 +153,15 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
           configure_attributes: configureAttributesOutbound
           className: ''
         params: @account.outbound
+      )
+
+      @form.el.find("select[name='options::ssl']").off('change').on('change', (e) =>
+        if $(e.target).val() is 'ssl'
+          @form.el.find("[name='options::port']").val('465')
+        else if $(e.target).val() is 'starttls'
+          @form.el.find("[name='options::port']").val('587')
+        else if $(e.target).val() is 'off'
+          @form.el.find("[name='options::port']").val('25')
       )
 
   probeBasedOnIntro: (e) =>
@@ -372,5 +386,44 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
         @showSlide('js-intro')
         @showAlert('js-intro', __('Email sending and receiving could not be verified. Please check your settings.'))
     )
+
+  toggleSslVerifyVisibility: (e) ->
+    elem = $(e.target)
+
+    # Skip the handler for port field in inbound dialog.
+    return if elem.attr('name') is 'options::port' and elem.closest('form').find('[name="options::ssl"]').length
+
+    isEnabled = if elem.attr('name') is 'options::port' then (elem.val() is '' or elem.val() is '465' or elem.val() is '587') else elem.val() isnt 'off'
+
+    sslVerifyField = elem.closest('form')
+      .find('[name="options::ssl_verify"]')
+
+    if isEnabled
+      sslVerifyField.removeAttr('disabled')
+    else
+      sslVerifyField.attr('disabled', 'disabled')
+
+    @toggleSslVerifyAlert(target: sslVerifyField, !isEnabled)
+
+  toggleSslVerifyAlert: (e, forceInvisible) ->
+    elem           = $(e.target)
+    isAlertVisible = if forceInvisible then false else elem.val() != 'true'
+
+    elem.closest('.wizard-slide')
+      .find('.js-sslVerifyAlert')
+      .toggleClass('hide', !isAlertVisible)
+
+  showSlide: (className) ->
+    super
+
+    container      = @$('.'+className)
+    sslVerifyField = container.find('[name="options::ssl_verify"]')
+
+    return if sslVerifyField.length != 1
+    return if sslVerifyField.val() == 'true'
+
+    container
+      .find('.js-sslVerifyAlert')
+      .removeClass('hide')
 
 App.Config.set('getting_started/channel/email', GettingStartedChannelEmail, 'Routes')

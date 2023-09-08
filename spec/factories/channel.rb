@@ -10,6 +10,48 @@ FactoryBot.define do
     updated_by_id { 1 }
     created_by_id { 1 }
 
+    factory :email_notification_channel do
+      area { 'Email::Notification' }
+
+      transient do
+        outbound { {} }
+      end
+
+      options do
+        {
+          outbound: outbound,
+        }
+      end
+
+      trait :sendmail do
+        outbound do
+          {
+            'adapter' => 'sendmail',
+          }
+        end
+      end
+
+      trait :smtp do
+        transient do
+          outbound_port { 465 }
+        end
+
+        outbound do
+          {
+            'adapter' => 'smtp',
+            'options' => {
+              'host'           => 'smtp.example.com',
+              'port'           => outbound_port,
+              'ssl'            => true,
+              'ssl_verify'     => true,
+              'user'           => 'user@example.com',
+              'authentication' => 'plain',
+            }
+          }
+        end
+      end
+    end
+
     factory :email_channel do
       area { 'Email::Account' }
       options do
@@ -29,6 +71,68 @@ FactoryBot.define do
         outbound do
           {
             adapter: 'sendmail'
+          }
+        end
+      end
+
+      trait :sendmail do
+        outbound do
+          {
+            'adapter' => 'sendmail',
+          }
+        end
+      end
+
+      trait :smtp do
+        transient do
+          outbound_port { 465 }
+        end
+
+        outbound do
+          {
+            'adapter' => 'smtp',
+            'options' => {
+              'host'           => 'smtp.example.com',
+              'port'           => outbound_port,
+              'ssl'            => true,
+              'ssl_verify'     => true,
+              'user'           => 'user@example.com',
+              'authentication' => 'plain',
+            }
+          }
+        end
+      end
+
+      trait :imap do
+        inbound do
+          {
+            'adapter' => 'imap',
+            'options' => {
+              'auth_type'      => 'plain',
+              'host'           => 'imap.example.com',
+              'ssl'            => 'ssl',
+              'ssl_verify'     => true,
+              'user'           => 'user@example.com',
+              'folder'         => '',
+              'keep_on_server' => false,
+            }
+          }
+        end
+      end
+
+      trait :pop3 do
+        inbound do
+          {
+            'adapter' => 'pop3',
+            'options' => {
+              'auth_type'      => 'plain',
+              'host'           => 'pop3.example.com',
+              'ssl'            => 'ssl',
+              'ssl_verify'     => true,
+              'user'           => 'user@example.com',
+              'folder'         => '',
+              'keep_on_server' => false,
+            }
           }
         end
       end

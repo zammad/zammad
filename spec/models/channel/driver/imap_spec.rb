@@ -8,9 +8,10 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
     it 'succeeds' do
 
       params = {
-        host:     ENV['MAIL_SERVER'],
-        user:     ENV['MAIL_ADDRESS_ASCII'],
-        password: ENV['MAIL_PASS_ASCII'],
+        host:       ENV['MAIL_SERVER'],
+        user:       ENV['MAIL_ADDRESS_ASCII'],
+        password:   ENV['MAIL_PASS_ASCII'],
+        ssl_verify: false,
       }
 
       result = described_class.new.fetch(params, nil, 'check')
@@ -82,6 +83,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
           user:           ENV['MAIL_ADDRESS'],
           password:       server_password,
           ssl:            true,
+          ssl_verify:     false,
           folder:         folder,
           keep_on_server: false,
         }
@@ -91,12 +93,13 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
       {
         adapter: 'smtp',
         options: {
-          host:      server_address,
-          port:      25,
-          start_tls: true,
-          user:      server_login,
-          password:  server_password,
-          email:     email_address.email
+          host:       server_address,
+          port:       25,
+          start_tls:  true,
+          ssl_verify: false,
+          user:       server_login,
+          password:   server_password,
+          email:      email_address.email
         },
       }
     end
@@ -158,6 +161,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
               user:           ENV['MAIL_ADDRESS'],
               password:       server_password,
               ssl:            true,
+              ssl_verify:     false,
               folder:         folder,
               keep_on_server: true,
             }
@@ -382,6 +386,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
             'host'           => server_address,
             'user'           => ENV['ICLOUD_USER'],
             'password'       => ENV['ICLOUD_PASS'],
+            'ssl_verify'     => true,
             'folder'         => folder,
             'keep_on_server' => false,
             'port'           => '993',
@@ -392,10 +397,11 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
         {
           'adapter' => 'smtp',
           'options' => {
-            'host'     => 'smtp.mail.me.com',
-            'user'     => ENV['ICLOUD_USER'],
-            'password' => ENV['ICLOUD_PASS'],
-            'port'     => '587'
+            'host'       => 'smtp.mail.me.com',
+            'user'       => ENV['ICLOUD_USER'],
+            'password'   => ENV['ICLOUD_PASS'],
+            'ssl_verify' => true,
+            'port'       => '587'
           },
           'email'   => ENV['ICLOUD_USER']
         }

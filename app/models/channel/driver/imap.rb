@@ -79,6 +79,7 @@ example
 
   def fetch(options, channel, check_type = '', verify_string = '')
     ssl            = true
+    ssl_verify     = options.fetch(:ssl_verify, true)
     starttls       = false
     port           = 993
     keep_on_server = false
@@ -115,9 +116,9 @@ example
     Certificate::ApplySSLCertificates.ensure_fresh_ssl_context if ssl || starttls
 
     timeout(check_type_timeout) do
-      @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, false)
+      @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, ssl_verify)
       if starttls
-        @imap.starttls
+        @imap.starttls(nil, ssl_verify)
       end
     end
 

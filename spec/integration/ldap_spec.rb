@@ -85,8 +85,7 @@ RSpec.describe 'Ldap import', integration: true, required_envs: %w[IMPORT_LDAP_E
     context 'with ssl' do
       context 'with ssl verification' do
         context 'with trusted certificate' do
-          let(:ldap_source)    { create(:ldap_source, :with_ssl_verified) }
-          let(:ca_certificate) { Rails.root.join('spec/fixtures/files/ldap/ca.crt').read }
+          let(:ldap_source) { create(:ldap_source, :with_ssl_verified) }
           let(:before_hook) do
             import_ca_certificate
           end
@@ -111,8 +110,7 @@ RSpec.describe 'Ldap import', integration: true, required_envs: %w[IMPORT_LDAP_E
     context 'with starttls' do
       context 'with ssl verification' do
         context 'with trusted certificate' do
-          let(:ldap_source)    { create(:ldap_source, :with_starttls_verified) }
-          let(:ca_certificate) { Rails.root.join('spec/fixtures/files/ldap/ca.crt').read }
+          let(:ldap_source) { create(:ldap_source, :with_starttls_verified) }
           let(:before_hook) do
             import_ca_certificate
           end

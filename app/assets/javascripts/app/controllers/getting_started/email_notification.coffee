@@ -1,7 +1,9 @@
 class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
   events:
-    'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
-    'submit .js-outbound':                'submit'
+    'change .js-outbound [name=adapter]':  'toggleOutboundAdapter'
+    'change [name="options::port"]':       'toggleSslVerifyVisibility'
+    'change [name="options::ssl_verify"]': 'toggleSslVerifyAlert'
+    'submit .js-outbound':                 'submit'
 
   constructor: ->
     super
@@ -64,10 +66,11 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
       configureAttributesOutbound = [
-        { name: 'options::host',     display: __('Host'),     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
-        { name: 'options::user',     display: __('User'),     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
-        { name: 'options::password', display: __('Password'), tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'off', single: true },
-        { name: 'options::port',     display: __('Port'),     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
+        { name: 'options::host',       display: __('Host'),     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
+        { name: 'options::user',       display: __('User'),     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
+        { name: 'options::password',   display: __('Password'), tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'off', single: true },
+        { name: 'options::port',       display: __('Port'),     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
+        { name: 'options::ssl_verify', display: __('SSL verification'), tag: 'boolean', default: true, null: true, translate: true, item_class: 'formGroup--halfSize' },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
@@ -111,5 +114,40 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
         @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )
+
+  toggleSslVerifyVisibility: (e) ->
+    elem      = $(e.target)
+    isEnabled = elem.val() is '' or elem.val() is '465' or elem.val() is '587'
+
+    sslVerifyField = elem.closest('form')
+      .find('[name="options::ssl_verify"]')
+
+    if isEnabled
+      sslVerifyField.removeAttr('disabled')
+    else
+      sslVerifyField.attr('disabled', 'disabled')
+
+    @toggleSslVerifyAlert(target: sslVerifyField, !isEnabled)
+
+  toggleSslVerifyAlert: (e, forceInvisible) ->
+    elem           = $(e.target)
+    isAlertVisible = if forceInvisible then false else elem.val() != 'true'
+
+    elem.closest('.wizard-slide')
+      .find('.js-sslVerifyAlert')
+      .toggleClass('hide', !isAlertVisible)
+
+  showSlide: (className) ->
+    super
+
+    container      = @$('.'+className)
+    sslVerifyField = container.find('[name="options::ssl_verify"]')
+
+    return if sslVerifyField.length != 1
+    return if sslVerifyField.val() == 'true'
+
+    container
+      .find('.js-sslVerifyAlert')
+      .removeClass('hide')
 
 App.Config.set('getting_started/email_notification', GettingStartedEmailNotification, 'Routes')
