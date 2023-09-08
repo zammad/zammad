@@ -4,6 +4,8 @@ class Sequencer::Unit::Import::Freshdesk::Tickets < Sequencer::Unit::Import::Fre
 
   EXPECTING = %i[action response resources].freeze
 
+  uses :tickets_updated_since
+
   private
 
   def request_params
@@ -24,7 +26,7 @@ class Sequencer::Unit::Import::Freshdesk::Tickets < Sequencer::Unit::Import::Fre
   end
 
   def updated_since
-    @updated_since ||= '1970-01-01'
+    @updated_since ||= tickets_updated_since || '1970-01-01'
 
     return @updated_since if !new_page_cycle?
 

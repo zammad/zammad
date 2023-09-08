@@ -3,9 +3,12 @@
 class Sequencer::Unit::Import::Freshdesk::TimeEntry::Available < Sequencer::Unit::Common::Provider::Attribute
   extend ::Sequencer::Unit::Import::Freshdesk::Requester
 
+  uses :skip_time_entries
   provides :time_entry_available
 
   def process
+    return state.provide(:time_entry_available, false) if skip_time_entries
+
     state.provide(:time_entry_available, time_entry_available)
   end
 

@@ -57,7 +57,7 @@ class Sequencer::Unit::Import::Kayako::SubSequence::Generic < Sequencer::Unit::B
   end
 
   def offset
-    iteration * 5 # TODO: only ddebug, normally 100
+    iteration * 100
   end
 
   def cursor_pagination?
