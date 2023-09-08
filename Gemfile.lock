@@ -594,7 +594,7 @@ GEM
       bindata (~> 2.4)
       openssl (> 2.0)
       openssl-signature_algorithm (~> 1.0)
-    twilio-ruby (6.5.0)
+    twilio-ruby (6.6.0)
       faraday (>= 0.9, < 3.0)
       jwt (>= 1.5, < 3.0)
       nokogiri (>= 1.6, < 2.0)
