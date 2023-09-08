@@ -113,3 +113,6 @@ yarn-error.log
 
 # Auto Generated
 schema.graphql
+
+# Packages
+*.zpm
