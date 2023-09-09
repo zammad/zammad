@@ -999,7 +999,7 @@ try to find correct name
       where += ' OR ' if where != ''
       where += 'permissions.name = ? OR permissions.name LIKE ?'
       where_bind.push permission_name
-      where_bind.push "#{permission_name}.%"
+      where_bind.push "#{SqlHelper.quote_like(permission_name)}.%"
     end
     return [] if where == ''
 

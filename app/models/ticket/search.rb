@@ -200,7 +200,7 @@ returns
 
       ticket_ids = if query
                      tickets_all.joins(:articles)
-                                .where(<<~SQL.squish, query: "%#{query.delete('*')}%")
+                                .where(<<~SQL.squish, query: "%#{SqlHelper.quote_like(query.delete('*'))}%")
                                   tickets.title              LIKE :query
                                   OR tickets.number          LIKE :query
                                   OR ticket_articles.body    LIKE :query

@@ -4,7 +4,7 @@ module Taskbar::HasAttachments
   extend ActiveSupport::Concern
 
   included do
-    scope :with_form_id, -> { where("state LIKE '%form_id%'") }
+    scope :with_form_id, -> { where("state LIKE '%#{SqlHelper.quote_like('form_id')}%'") }
 
     after_destroy :clear_attachments
   end

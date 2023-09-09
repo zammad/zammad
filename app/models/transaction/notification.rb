@@ -133,7 +133,7 @@ class Transaction::Notification
           history_type_id:   History.type_lookup('notification').id,
           history_object_id: History.object_lookup('Ticket').id,
           o_id:              ticket.id
-        ).where('created_at > ?', already_notified_cutoff).exists?(['value_to LIKE ?', "%#{identifier}(#{@item[:type]}:%"])
+        ).where('created_at > ?', already_notified_cutoff).exists?(['value_to LIKE ?', "%#{SqlHelper.quote_like(identifier)}(#{SqlHelper.quote_like(@item[:type])}:%"])
 
         next if already_notified
       end

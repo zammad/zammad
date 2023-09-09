@@ -102,6 +102,6 @@ class TagsController < ApplicationController
       return Tag::Item.left_outer_joins(:tags).group(:id).reorder('COUNT(tags.tag_item_id) DESC, name ASC').limit(limit)
     end
 
-    Tag::Item.where('name_downcase LIKE ?', "%#{term.strip.downcase}%").reorder(name: :asc).limit(limit)
+    Tag::Item.where('name_downcase LIKE ?', "%#{SqlHelper.quote_like(term.strip.downcase)}%").reorder(name: :asc).limit(limit)
   end
 end

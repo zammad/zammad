@@ -965,7 +965,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
   def password_login?
     return true if Setting.get('user_show_password_login')
-    return true if Setting.where('name LIKE ? AND frontend = true', 'auth_%')
+    return true if Setting.where('name LIKE ? AND frontend = true', "#{SqlHelper.quote_like('auth_')}%")
       .map { |provider| provider.state_current['value'] }
       .all?(false)
 

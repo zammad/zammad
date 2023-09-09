@@ -24,7 +24,7 @@ class PGPKey < ApplicationModel
     email_addresses_query = SqlHelper.new(object: PGPKey).array_contains_one(:email_addresses, uid)
 
     query = if domain_alias_configuration_active?
-              ["#{email_addresses_query} OR (? LIKE domain_alias)", uid]
+              ["#{email_addresses_query} OR (? LIKE domain_alias)", SqlHelper.quote_like(uid)]
             else
               email_addresses_query
             end

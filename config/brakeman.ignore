@@ -1,29 +1,6 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "063f14fd2a08a1f4e84872182bc50405b7c3fb292c8ec7d244bbdcda646862ba",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/pgp_key.rb",
-      "line": 32,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "PGPKey.where(([\"#{SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)} OR (? LIKE domain_alias)\", uid.downcase] or SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)))",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "PGPKey",
-        "method": "PGPKey.find_all_by_uid"
-      },
-      "user_input": "SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)",
-      "confidence": "Medium",
-      "cwe_id": [
-        89
-      ],
-      "note": "Helper functions already quote all DB values in returned SQL queries."
-    },
-    {
       "warning_type": "Redirect",
       "warning_code": 18,
       "fingerprint": "0af1d7942bf73ecd1eb5141ea3a80c32297d9e9f24e411eb2b346af686eef938",
@@ -357,7 +334,7 @@
       "check_name": "SSLVerify",
       "message": "SSL certificate verification was bypassed",
       "file": "lib/user_agent.rb",
-      "line": 333,
+      "line": 335,
       "link": "https://brakemanscanner.org/docs/warning_types/ssl_verification_bypass/",
       "code": "(Net::HTTP.Proxy($1, $2, ((options[\"proxy_username\"] or Setting.get(\"proxy_username\")) or nil), ((options[\"proxy_password\"] or Setting.get(\"proxy_password\")) or nil)).new(uri.host, uri.port) or Net::HTTP.new(uri.host, uri.port)).verify_mode = OpenSSL::SSL::VERIFY_NONE",
       "render_path": null,
@@ -372,6 +349,29 @@
         295
       ],
       "note": "SSL Verification can already be requested from callers. The default value should be switched to true at some point."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "8374304b5866de51754c98208fc3dcd434bc20e02bd4c9713f6d35f831a0ddd7",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/pgp_key.rb",
+      "line": 32,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "PGPKey.where(([\"#{SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)} OR (? LIKE domain_alias)\", SqlHelper.quote_like(uid.downcase)] or SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "PGPKey",
+        "method": "PGPKey.find_all_by_uid"
+      },
+      "user_input": "SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
     },
     {
       "warning_type": "Remote Code Execution",
@@ -395,6 +395,29 @@
         470
       ],
       "note": "Setting.where(area: 'Transaction::Backend::Async').order(:name) returns defined Transaction  backend class names"
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "9385240f75935e7ed242f9b52cc9471bcbb907d1990a33ec083f303d951df563",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/taskbar/has_attachments.rb",
+      "line": 7,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "where(\"state LIKE '%#{SqlHelper.quote_like(\"form_id\")}%'\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Taskbar::HasAttachments",
+        "method": null
+      },
+      "user_input": "SqlHelper.quote_like(\"form_id\")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
     },
     {
       "warning_type": "Denial of Service",
@@ -826,7 +849,7 @@
       "check_name": "RegexDoS",
       "message": "Model attribute used in regular expression",
       "file": "app/models/ticket.rb",
-      "line": 1206,
+      "line": 1178,
       "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
       "code": "/#{Setting.get(\"send_no_auto_response_reg_exp\")}/i",
       "render_path": null,
@@ -844,6 +867,6 @@
       "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2023-07-28 10:16:18 +0100",
+  "updated": "2023-09-08 14:45:28 +0200",
   "brakeman_version": "6.0.1"
 }

@@ -80,7 +80,7 @@ returns
         # - stip out * we already search for *query* -
         query.delete! '*'
         Chat::Session.where(
-          'name LIKE ?', "%#{query}%"
+          'name LIKE ?', "%#{SqlHelper.quote_like(query)}%"
         ).reorder('name').offset(offset).limit(limit).to_a
 
       end

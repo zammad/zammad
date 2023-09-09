@@ -174,7 +174,7 @@ returns
 
         if is_query
           statement = statement.where(
-            '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
+            '(users.firstname LIKE :query OR users.lastname LIKE :query OR users.email LIKE :query OR users.login LIKE :query)', query: "%#{SqlHelper.quote_like(query)}%"
           )
         end
 

@@ -33,7 +33,7 @@ class Auth
 
       authorizable.permissions.where(name: verbatim).then do |base_query|
         wildcards.reduce(base_query) do |query, name|
-          query.or(authorizable.permissions.where('permissions.name LIKE ?', name.sub('.*', '.%')))
+          query.or(authorizable.permissions.where('permissions.name LIKE ?', SqlHelper.quote_like(name).sub('.*', '.%')))
         end
       end.exists?
     end

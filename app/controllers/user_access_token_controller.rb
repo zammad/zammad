@@ -35,7 +35,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
     permission_names = current_user.permissions.pluck(:name)
     ancestor_names   = permission_names.flat_map { |name| Permission.with_parents(name) }.uniq -
                        permission_names
-    descendant_names = permission_names.map { |name| "#{name}.%" }
+    descendant_names = permission_names.map { |name| "#{SqlHelper.quote_like(name)}.%" }
 
     permissions = base_query.where(name: [*ancestor_names, *permission_names])
 
