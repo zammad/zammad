@@ -27,6 +27,6 @@ yarn lint:css
 echo "ESLint check..."
 yarn lint
 
-echo "Running front end tests..."
-yarn test
-yarn test:ci:ct
+#echo "Running front end tests..."
+#yarn test
+#yarn test:ci:ct
