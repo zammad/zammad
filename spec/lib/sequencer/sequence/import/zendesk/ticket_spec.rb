@@ -165,5 +165,29 @@ RSpec.describe Sequencer::Sequence::Import::Zendesk::Ticket, db_strategy: :reset
         expect(Ticket.last).to have_attributes(imported_ticket)
       end
     end
+
+    context 'with already existing ticket' do
+      let(:ticket) { Ticket.last }
+
+      before do
+        process(process_payload)
+
+        # Get last ticket after first import.
+        ticket
+      end
+
+      it 'imports updated ticket data correctly' do
+        resource.subject = 'Different title test'
+        resource.status = 'on-hold'
+        resource.priority = 'very low'
+
+        imported_ticket[:title] = 'Different title test'
+        imported_ticket[:state_id] = Ticket::State.find_by(name: 'open')&.id
+        imported_ticket[:priority_id] = Ticket::Priority.find_by(name: '2 normal')&.id
+
+        process(process_payload)
+        expect(ticket.reload).to have_attributes(imported_ticket)
+      end
+    end
   end
 end
