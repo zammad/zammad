@@ -1,11 +1,10 @@
 name: CI
 
-on: [push]
-#on:
-#  pull_request:
-#  schedule:
-    # Run every on Friday to ensure everything works as expected.
-#    - cron:  '0 6 * * 5'
+on: 
+  push:
+  schedule:
+    # Runs every 3 days.
+    - cron:  '0 0 */3 * *'
 env:
   RAILS_ENV: test
   Z_LOCALES: "en-us:de-de"
