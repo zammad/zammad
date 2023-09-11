@@ -135,7 +135,7 @@
     "pinia": "^2.1.6",
     "tippy.js": "^6.3.7",
     "tiptap-text-direction": "^0.3.0",
-    "ua-parser-js": "^1.0.35",
+    "ua-parser-js": "^1.0.36",
     "uuid": "^9.0.0",
     "vue": "^3.3.4",
     "vue-advanced-cropper": "^2.8.8",
