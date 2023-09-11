@@ -430,7 +430,7 @@ QUnit.test('form checks', assert => {
     },
     executions: {
       'ticket.state_id': {
-        value: "1",
+        value: "4",
       },
     },
   }

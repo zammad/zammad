@@ -46,7 +46,10 @@ module SessionHelper
     models = {}
     objects = ObjectManager.list_objects
     objects.each do |object|
-      attributes = ObjectManager::Object.new(object).attributes(user)
+      # User related fields are needed for register.
+      next if user.nil? && !object.eql?('User')
+
+      attributes = ObjectManager::Object.new(object).attributes(user, skip_permission: user.nil?)
       models[object] = attributes
     end
     models

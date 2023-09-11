@@ -116,6 +116,16 @@ RSpec.describe 'Sessions endpoints', type: :request do
         end
       end
     end
+
+    context 'user not logged in' do
+      subject(:user) { nil }
+
+      it 'contains only user related object manager attributes' do
+        get '/api/v1/signshow', params: {}, as: :json
+
+        expect(json_response['models'].keys).to match_array(%w[User])
+      end
+    end
   end
 
   describe 'GET /auth/sso (single sign-on)' do

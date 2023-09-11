@@ -2,7 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'QUnit', authenticated_as: false, set_up: true, time_zone: 'Europe/London', type: :system do
+RSpec.describe 'QUnit', time_zone: 'Europe/London', type: :system do
+
   matcher :pass_qunit_test do
     match do
       actual.has_css?('.total', wait: 120)
@@ -55,9 +56,15 @@ RSpec.describe 'QUnit', authenticated_as: false, set_up: true, time_zone: 'Europ
           end
 
   files.each do |elem|
-    it elem.humanize do
-      visit "/tests_#{elem}"
-      expect(page).to pass_qunit_test
+    context "when testing #{elem.humanize}", authenticated_as: :user do
+      # Some tests require an authenticated session.
+      let(:needs_user) { elem.include?('form') }
+      let(:user)       { needs_user ? create(:agent) : false }
+
+      it "#{elem.humanize} qunit tests" do
+        visit "/tests_#{elem}"
+        expect(page).to pass_qunit_test
+      end
     end
   end
 end
