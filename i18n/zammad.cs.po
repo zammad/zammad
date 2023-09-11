@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-03 01:05+0000\n"
+"PO-Revision-Date: 2023-09-09 01:05+0000\n"
 "Last-Translator: Tomáš Kovařík <tomas.kovarik@cdv.cz>\n"
 "Language-Team: Czech <https://translations.zammad.org/projects/zammad/zammad-"
 "development/cs/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1095,10 +1095,8 @@ msgstr "Aktivita"
 
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "Activity Types"
-msgstr "Aktivita"
+msgstr "Aktivity"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
@@ -1170,10 +1168,8 @@ msgid "Add Public or Private Key"
 msgstr "Přidat veřejný nebo soukromý klíč"
 
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco
-#, fuzzy
-#| msgid "Add Certificate"
 msgid "Add SSL Certificate"
-msgstr "Přidat certifikát"
+msgstr "Přidat SSL certifikát"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -1446,14 +1442,10 @@ msgid "All tickets"
 msgstr "Všechny tickety"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
-#| msgid ""
-#| "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
-#| "not."
 msgid "All two-factor authentication methods were removed for this user."
 msgstr ""
-"Definuje, zda je integrace i-doit (https://www.i-doit.org/) povolena nebo "
-"nikoli."
+"Všechny metody dvou-faktorové autentizace byly pro tohoto uživatele "
+"odstraněny."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1707,16 +1699,13 @@ msgstr ""
 "zahozeny"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-#, fuzzy
-#| msgid "Do you really want to delete \"%s\"?"
 msgid "Are you sure you want to set \"%s\" as default?"
-msgstr "Opravdu si přejete smazat \"%s\"?"
+msgstr "Jste si jisti, že chcete nastavit \"%s\" jako defaultní?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-#, fuzzy
-#| msgid "Do you really want to delete \"%s\"?"
 msgid "Are you sure you want to unset \"%s\" as default?"
-msgstr "Opravdu si přejete smazat \"%s\"?"
+msgstr ""
+"Jste si jistí, že opravdu chcete zrušit nastavení \"%s\" jako defaultní?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -2030,22 +2019,16 @@ msgstr "Autentizace pomocí %s"
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
 #: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Authentication"
 msgid "Authenticator App"
-msgstr "Autentizace"
+msgstr "Autentizacční aplikace"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-#, fuzzy
-#| msgid "Authentication via %s"
 msgid "Authenticator app secret"
-msgstr "Autentizace pomocí %s"
+msgstr "Tajný kód autentizační aplikace"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
-#, fuzzy
-#| msgid "Authy"
 msgid "Author"
-msgstr "OAuth"
+msgstr "Autor"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2201,6 +2184,7 @@ msgstr "Nevyřízené"
 msgid "Base"
 msgstr "Základní"
 
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Base DN"
@@ -2347,7 +2331,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "CA"
-msgstr ""
+msgstr "Certifikační autorita"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -2519,10 +2503,8 @@ msgid "Cancel & Go Back"
 msgstr "Zrušit a jít zpět"
 
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
-#, fuzzy
-#| msgid "Sign out"
 msgid "Cancel & Sign out"
-msgstr "Odhlásit"
+msgstr "Stornovat & Odhlásit se"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -6645,10 +6627,6 @@ msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr ""
 "Požadavek na GitLab se nezdařil! Pro více informací prosím zkontrolujte "
 "logovací soubor"
-
-#: app/models/ticket/time_accounting.rb
-msgid "Given Ticket Article is not part of the Ticket"
-msgstr ""
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -11112,12 +11090,14 @@ msgstr "SSL"
 msgid "SSL Certificates"
 msgstr "Přidat certifikát"
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
-msgid "SSL Verify"
-msgstr "Ověření SSL"
-
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
 msgid "SSL verification"
 msgstr "SSL ověření"
@@ -13657,6 +13637,12 @@ msgid ""
 "This PGP email was encrypted with a potentially unknown encryption algorithm."
 msgstr ""
 
+#: app/models/ticket/time_accounting.rb
+#, fuzzy
+#| msgid "The article does not belong to the specified ticket."
+msgid "This article is not part of the ticket."
+msgstr "Článek nepatří uvedenému ticketu."
+
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr "Tento bot již existuje."
@@ -14747,8 +14733,16 @@ msgstr "Úterý"
 msgid "Turn chat into ticket"
 msgstr "Vytvořit z chatu ticket"
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
+#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
 "temporary. Use this option at your own risk!"
@@ -17345,6 +17339,8 @@ msgstr "nové a otevřené"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
@@ -17775,6 +17771,7 @@ msgstr "během dalších (relativně)"
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
@@ -17823,6 +17820,9 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#~ msgid "SSL Verify"
+#~ msgstr "Ověření SSL"
 
 #~ msgid "%s new replies"
 #~ msgstr "%s nových odpovědí"

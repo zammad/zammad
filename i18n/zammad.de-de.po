@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-04 11:07+0000\n"
+"PO-Revision-Date: 2023-09-11 06:28+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1188,10 +1188,8 @@ msgid "Add Public or Private Key"
 msgstr "Privaten oder öffentlichen Schlüssel hinzufügen"
 
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco
-#, fuzzy
-#| msgid "Add Certificate"
 msgid "Add SSL Certificate"
-msgstr "Zertifikat hinzufügen"
+msgstr "SSL-Zertifikat hinzufügen"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -2224,6 +2222,7 @@ msgstr "Rückstand"
 msgid "Base"
 msgstr "Basis"
 
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Base DN"
@@ -2371,7 +2370,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "CA"
-msgstr ""
+msgstr "CA"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -3973,10 +3972,8 @@ msgid "Define the maximum number of ticket shown in overviews."
 msgstr "Definiert die Maximalanzahl angezeigter Tickets in Übersichten."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines Elasticsearch index name."
 msgid "Defines Elasticsearch SSL verification."
-msgstr "Definiert Elasticsearch-Indexnamen."
+msgstr "Definiert SSL-Verifizierung für Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -5396,10 +5393,8 @@ msgid "Elasticsearch Pipeline Name"
 msgstr "Elasticsearch Pipeline-Name"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "SSL verification"
 msgid "Elasticsearch SSL verification"
-msgstr "SSL-Verizifierung"
+msgstr "SSL-Verizifierung für Elasticsearch"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Total Payload Size"
@@ -5859,8 +5854,8 @@ msgstr "Titel eingeben…"
 msgid ""
 "Enter a domain name that will be associated with this key, e.g. example.com."
 msgstr ""
-"Geben Sie einen Domainnamen an, der mit diesem Schlüssel verknüpft wird, z."
-"B. beispiel.de."
+"Geben Sie einen Domainnamen an, der mit diesem Schlüssel verknüpft wird, "
+"z.B. beispiel.de."
 
 #: app/assets/javascripts/app/views/generic/input.jst.eco
 msgid "Enter a valid email address."
@@ -6709,10 +6704,6 @@ msgstr "GitLab-Integration"
 msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr ""
 "GitLab-Anfrage fehlgeschlagen! Bitte prüfen Sie die Logdatei für Details"
-
-#: app/models/ticket/time_accounting.rb
-msgid "Given Ticket Article is not part of the Ticket"
-msgstr "Der angegebene Ticket-Artikel gehört nicht zum Ticket"
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -11181,17 +11172,17 @@ msgstr "SSL"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco
-#, fuzzy
-#| msgid "Add Certificate"
 msgid "SSL Certificates"
-msgstr "Zertifikat hinzufügen"
+msgstr "SSL-Zertifikate"
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
-msgid "SSL Verify"
-msgstr "SSL verifizieren"
-
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
 msgid "SSL verification"
 msgstr "SSL-Verizifierung"
@@ -12812,16 +12803,12 @@ msgstr ""
 "kryptografischen Algorithmus."
 
 #: lib/certificate/x509/ssl.rb
-#, fuzzy
-#| msgid ""
-#| "The certificate is not valid for S/MIME usage. Please check the "
-#| "certificate format."
 msgid ""
 "The certificate is not valid for SSL usage. Please check e.g. the validity "
 "period or the extensions."
 msgstr ""
-"Das Zertifikat ist nicht für S/MIME-Verwendung zugelassen. Bitte prüfen Sie "
-"das Zertifikatsformat."
+"Das Zertifikat ist nicht für SSL-Verwendung zugelassen. Bitte prüfen Sie "
+"z.B. die Gültigkeitsdauer oder die Erweiterungen."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid ""
@@ -13650,15 +13637,15 @@ msgstr "Es konnte kein Zertifikat gefunden werden."
 
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "There was no public PGP key found."
-msgstr "Es wurde kein öffentlicher PGP-Schlüssel gefunden."
+msgstr "Es konnte kein öffentlicher PGP-Schlüssel gefunden werden."
 
 #: lib/secure_mailing/backend/handler_security_options.rb
 msgid "There was no recipient found."
-msgstr "Kein Empfänger gefunden."
+msgstr "Es konnte kein Empfänger gefunden werden."
 
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "There was no secret PGP key found."
-msgstr "Es wurde kein privater PGP-Schlüssel gefunden."
+msgstr "Es konnte kein privater PGP-Schlüssel gefunden werden."
 
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "There was no valid OpenPGP data found."
@@ -13696,6 +13683,10 @@ msgid ""
 msgstr ""
 "Diese PGP-E-Mail wurde mit einem möglicherweise unbekannten Verschlüsselungs-"
 "Algorithmus verschlüsselt."
+
+#: app/models/ticket/time_accounting.rb
+msgid "This article is not part of the ticket."
+msgstr "Dieser Artikel gehört nicht zum Ticket."
 
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
@@ -13899,15 +13890,11 @@ msgid "This is not a private PGP key."
 msgstr "Dies ist kein privater PGP-Schlüssel."
 
 #: app/models/ssl_certificate.rb
-#, fuzzy
-#| msgid ""
-#| "The certificate is not valid for S/MIME usage. Please check the "
-#| "certificate format."
 msgid ""
 "This is not a valid X509 certificate. Please check the certificate format."
 msgstr ""
-"Das Zertifikat ist nicht für S/MIME-Verwendung zugelassen. Bitte prüfen Sie "
-"das Zertifikatsformat."
+"Dies ist kein gültiges X509-Zertifikat. Bitte prüfen Sie das "
+"Zertifikatsformat."
 
 #: app/models/channel/email_parser.rb
 msgid ""
@@ -14787,12 +14774,23 @@ msgstr "Dienstag"
 msgid "Turn chat into ticket"
 msgstr "Chat zu Ticket umwandeln"
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
+#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
 "temporary. Use this option at your own risk!"
 msgstr ""
+"Die Deaktivierung der SSL-Überprüfung stellt ein Sicherheitsrisiko dar und "
+"sollte nur vorübergehend verwendet werden. Verwenden Sie diese Option auf "
+"eigene Gefahr!"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Tweets containing search terms are automatically turned into tickets."
@@ -15070,7 +15068,7 @@ msgstr "Aktualisierung erfolgreich."
 
 #: db/seeds/settings.rb
 msgid "Update the most recent tickets."
-msgstr "Die aktuellsten Tickets aktualisieren."
+msgstr "Die neuesten Tickets aktualisieren."
 
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -17379,6 +17377,8 @@ msgstr "neu & offen"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
@@ -17805,6 +17805,7 @@ msgstr "innerhalb nächster (relativ)"
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
@@ -17852,6 +17853,9 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "SSL Verify"
+#~ msgstr "SSL verifizieren"
 
 #~ msgid "%s new replies"
 #~ msgstr "% neue Antworten"

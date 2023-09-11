@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-04 11:07+0000\n"
+"PO-Revision-Date: 2023-09-08 01:07+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -1180,10 +1180,8 @@ msgid "Add Public or Private Key"
 msgstr "Додај јавни или тајни кључ"
 
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco
-#, fuzzy
-#| msgid "Add Certificate"
 msgid "Add SSL Certificate"
-msgstr "Додај сертификат"
+msgstr "Додај SSL сертификат"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -2194,6 +2192,7 @@ msgstr "Заостатак"
 msgid "Base"
 msgstr "Основа"
 
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Base DN"
@@ -2339,7 +2338,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "CA"
-msgstr ""
+msgstr "CA"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -3922,10 +3921,8 @@ msgid "Define the maximum number of ticket shown in overviews."
 msgstr "Одређује максимални број тикета у прегледима."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines Elasticsearch index name."
 msgid "Defines Elasticsearch SSL verification."
-msgstr "Одређује назив Elasticsearch индекса."
+msgstr "Одређује Elasticsearch SSL проверу."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -5294,10 +5291,8 @@ msgid "Elasticsearch Pipeline Name"
 msgstr "Назив Elasticsearch вода"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "SSL verification"
 msgid "Elasticsearch SSL verification"
-msgstr "SSL провера"
+msgstr "Elasticsearch SSL провера"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Total Payload Size"
@@ -6581,10 +6576,6 @@ msgstr "GitLab интеграција"
 #: lib/gitlab/http_client.rb
 msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr "Неуспео GitLab захтев! Молимо проверите датотеку евиденције за детаље"
-
-#: app/models/ticket/time_accounting.rb
-msgid "Given Ticket Article is not part of the Ticket"
-msgstr "Задат чланак тикета не припада овом тикету"
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -11003,17 +10994,17 @@ msgstr "SSL"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco
-#, fuzzy
-#| msgid "Add Certificate"
 msgid "SSL Certificates"
-msgstr "Додај сертификат"
+msgstr "SSL сертификати"
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
-msgid "SSL Verify"
-msgstr "Провери SSL"
-
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
 msgid "SSL verification"
 msgstr "SSL провера"
@@ -12617,16 +12608,12 @@ msgstr ""
 "кључа, алтернативни назив субјекта и криптографски алгоритам јавног кључа."
 
 #: lib/certificate/x509/ssl.rb
-#, fuzzy
-#| msgid ""
-#| "The certificate is not valid for S/MIME usage. Please check the "
-#| "certificate format."
 msgid ""
 "The certificate is not valid for SSL usage. Please check e.g. the validity "
 "period or the extensions."
 msgstr ""
-"Сертификат није важећи за употребу са S/MIME. Молимо проверите формат "
-"сертификата."
+"Сертификат није важећи за употребу са SSL. Молимо проверите нпр. време "
+"истека или екстензије."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid ""
@@ -13471,6 +13458,10 @@ msgid ""
 "This PGP email was encrypted with a potentially unknown encryption algorithm."
 msgstr "Ова PGP имејл порука је потенцијално шифрована непознатим алгоритмом."
 
+#: app/models/ticket/time_accounting.rb
+msgid "This article is not part of the ticket."
+msgstr "Задат чланак тикета не припада овом тикету."
+
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr "Овај бот већ постоји."
@@ -13669,15 +13660,9 @@ msgid "This is not a private PGP key."
 msgstr "Ово није тајни PGP кључ."
 
 #: app/models/ssl_certificate.rb
-#, fuzzy
-#| msgid ""
-#| "The certificate is not valid for S/MIME usage. Please check the "
-#| "certificate format."
 msgid ""
 "This is not a valid X509 certificate. Please check the certificate format."
-msgstr ""
-"Сертификат није важећи за употребу са S/MIME. Молимо проверите формат "
-"сертификата."
+msgstr "Ово није важећи X509 сертификат. Молимо проверите формат сертификата."
 
 #: app/models/channel/email_parser.rb
 msgid ""
@@ -14540,12 +14525,22 @@ msgstr "уторак"
 msgid "Turn chat into ticket"
 msgstr "Претвори ћаскање у тикет"
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
+#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
 "temporary. Use this option at your own risk!"
 msgstr ""
+"Искључивање SSL провере носи са собом сигурносни ризик и требало би бити "
+"само привремена мера. Користите ову опцију на сопствену одговорност!"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Tweets containing search terms are automatically turned into tickets."
@@ -17099,6 +17094,8 @@ msgstr "ново и отворено"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
@@ -17524,6 +17521,7 @@ msgstr "у следећих (релативно)"
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
@@ -17571,6 +17569,9 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "SSL Verify"
+#~ msgstr "Провери SSL"
 
 #~ msgid "%s new replies"
 #~ msgstr "%s нов(их) одговор(а)"
