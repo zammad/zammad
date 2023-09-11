@@ -1,10 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-# rubocop:disable RSpec/FilePath
 RSpec.describe GitLab, integration: true, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN GITLAB_ISSUE_LINK] do
-  # rubocop:enable RSpec/FilePath
-
   let(:instance) { described_class.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN']) }
   let(:issue_data) do
     {
