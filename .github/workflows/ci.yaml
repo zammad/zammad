@@ -46,7 +46,23 @@ jobs:
         run: .github/workflows/ci/pre.sh
       - name: Lint
         run: .github/workflows/ci/lint.sh
-  
+  Running front end tests:
+    runs-on: ubuntu-latest
+    container:
+      image: zammad/zammad-ci:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: .yarn/cache
+          key: ${{ runner.os }}-cache-npm-${{ hashFiles('yarn.lock') }}
+        run: yarn install
+        run: yarn cypress:install
+        run: yarn test
+        run: yarn test:ci:ct
   Tests:
     strategy:
       matrix:
