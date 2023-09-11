@@ -19,10 +19,10 @@
     <% for cert in @certificates: %>
       <tr data-id="<%= cert.id %>">
         <td><%= cert.subject %>
-        <td class="u-textTruncate"  title="<%= cert.fingerprint %>"><%= cert.fingerprint.substr(1, 10) %>...
-        <td><% if cert.ca: %><%- @T('Yes') %><% else: %><%- @T('No') %><% end %>
-        <td><%- @datetime(cert.not_before) %>
-        <td><%- @datetime(cert.not_after) %>
+        <td><%= cert.fingerprint %>
+        <td class="u-breakNormal"><% if cert.ca: %><%- @T('Yes') %><% else: %><%- @T('No') %><% end %>
+        <td class="u-breakWords"><%- @datetime(cert.not_before) %>
+        <td class="u-breakWords"><%- @datetime(cert.not_after) %>
         <td>
           <div class="dropdown dropdown--actions">
             <div class="btn btn--table btn--text btn--secondary js-action" data-toggle="dropdown">
