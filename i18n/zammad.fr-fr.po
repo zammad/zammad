@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-24 01:05+0000\n"
-"Last-Translator: Frank Villaro-Dixon <frank@vi-di.fr>\n"
+"PO-Revision-Date: 2023-09-12 05:24+0000\n"
+"Last-Translator: Matthieu <webmail@gaillet.be>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -50,7 +50,6 @@ msgid " to "
 msgstr " à "
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
@@ -118,19 +117,6 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_info/en.md.erb
-#, fuzzy
-#| msgid ""
-#| "# #{ticket.title}\n"
-#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-#| "Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
-#| "updated_at}_\n"
-#| "* Group: #{ticket.group.name}\n"
-#| "* Owner: #{ticket.owner.fullname}\n"
-#| "* State: #{t(ticket.state.name)}\n"
-#| "\n"
-#| "<% if @objects[:article] %>\n"
-#| "#{article.body_as_text}\n"
-#| "<% end %>\n"
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -144,9 +130,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Créé par #{current_user.longname} à #{ticket."
-"updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Mis à jour par #{current_user.longname} à "
+"#{ticket.updated_at}_\n"
 "* Group: #{ticket.group.name}\n"
 "* Owner: #{ticket.owner.fullname}\n"
 "* State: #{t(ticket.state.name)}\n"
@@ -658,10 +644,8 @@ msgid "%{model} can have full or granular access to group"
 msgstr "%{model} peut avoir l'accès complet ou partiel au groupe"
 
 #: app/models/object_manager/attribute.rb
-#, fuzzy
-#| msgid "Queue already exists!"
 msgid "%{name} already exists"
-msgstr "La file d'attente existe déjà !"
+msgstr "La file d'attente %{name} existe déjà !"
 
 #: app/models/object_manager/attribute.rb
 #, fuzzy
@@ -669,10 +653,8 @@ msgid "%{name} is a reserved word"
 msgstr "%{name} est un mot réservé"
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
-#, fuzzy
-#| msgid "Total: %s"
 msgid "(state: %s)"
-msgstr "(état: %s)"
+msgstr "(état : %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
