@@ -89,9 +89,44 @@ describe('TicketObjectAttributes', () => {
     return element.textContent?.split(')').join(')\n')
   }
 
+  it('does not render a list of time unit entries if not configured', () => {
+    mockApplicationConfig({
+      time_accounting_types: false,
+    })
+
+    const wrapper = renderComponent(TicketObjectAttributes, {
+      props: {
+        ticket: {
+          id: convertToGraphQLId('Ticket', 1),
+          timeUnit: 11e-1 + 101e-1 + 21e-1 + 300e-1 + 20e-1, // 45.3
+          timeUnitsPerType: [
+            {
+              id: convertToGraphQLId('TicketTimeUnitEntry', 2),
+              timeUnit: 101e-1 + 21e-1 + 300e-1,
+              name: 'billable',
+            },
+            {
+              id: convertToGraphQLId('TicketTimeUnitEntry', 3),
+              timeUnit: 20e-1,
+              name: 'not billable',
+            },
+            {
+              id: convertToGraphQLId('TicketTimeUnitEntry', 1),
+              timeUnit: 11e-1,
+              name: 'None',
+            },
+          ],
+        },
+      },
+    })
+
+    expect(wrapper.queryByTestId('timeUnitsEntries')).not.toBeInTheDocument()
+  })
+
   it('renders a list of time unit entries', () => {
     mockApplicationConfig({
       time_accounting_unit: 'minute',
+      time_accounting_types: true,
     })
 
     const wrapper = renderComponent(TicketObjectAttributes, {
@@ -140,6 +175,7 @@ describe('TicketObjectAttributes', () => {
   it('shows a button to show more', async () => {
     mockApplicationConfig({
       time_accounting_unit: 'minute',
+      time_accounting_types: true,
     })
 
     const view = renderComponent(TicketObjectAttributes, {

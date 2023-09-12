@@ -39,6 +39,16 @@ const showAll = ref(false)
 const MIN_SHOWN = 3
 
 const allUnits = computed(() => {
+  if (!application.config.time_accounting_types) return []
+
+  if (
+    props.ticket.timeUnitsPerType &&
+    props.ticket.timeUnitsPerType.length === 1 &&
+    props.ticket.timeUnitsPerType[0].name === 'None'
+  ) {
+    return []
+  }
+
   return props.ticket.timeUnitsPerType || []
 })
 
