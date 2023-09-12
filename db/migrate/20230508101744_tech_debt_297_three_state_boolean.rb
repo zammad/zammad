@@ -12,13 +12,15 @@ class TechDebt297ThreeStateBoolean < ActiveRecord::Migration[6.1]
 
     change_column_default :ticket_article_types, :communication, false
     change_column_default :settings, :frontend, false
+
+    Rails.cache.clear
   end
 
   private
 
   def users_vip
     User.where(vip: nil).in_batches.each_record do |user|
-      user.update(vip: false)
+      user.update_columns(vip: false) # rubocop:disable Rails/SkipsModelValidations
     end
 
     change_column_null :users, :vip, false, false
@@ -26,7 +28,7 @@ class TechDebt297ThreeStateBoolean < ActiveRecord::Migration[6.1]
 
   def roles_default_at_signup
     Role.where(default_at_signup: nil).each do |role|
-      role.update(default_at_signup: false)
+      role.update_columns(default_at_signup: false) # rubocop:disable Rails/SkipsModelValidations
     end
 
     change_column_null :roles, :default_at_signup, false, false
@@ -34,7 +36,7 @@ class TechDebt297ThreeStateBoolean < ActiveRecord::Migration[6.1]
 
   def import_jobs_dry_run
     ImportJob.where(dry_run: nil).each do |import_job|
-      import_job.update(dry_run: false)
+      import_job.update_columns(dry_run: false) # rubocop:disable Rails/SkipsModelValidations
     end
 
     change_column_null :import_jobs, :dry_run, false, false
@@ -42,7 +44,7 @@ class TechDebt297ThreeStateBoolean < ActiveRecord::Migration[6.1]
 
   def tokens_persistent
     Token.where(persistent: nil).each do |token|
-      token.update(persistent: false)
+      token.update_columns(persistent: false) # rubocop:disable Rails/SkipsModelValidations
     end
 
     change_column_default :tokens, :persistent, false
