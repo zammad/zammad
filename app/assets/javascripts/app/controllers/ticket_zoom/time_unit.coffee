@@ -42,6 +42,8 @@ class App.TicketZoomTimeUnit extends App.Controller
     )
 
   fetchEntries: ->
+    return [] if !App.Config.get('time_accounting_types')
+
     filtered = @time_accountings
     return [] if !filtered || filtered.length is 0
 
@@ -52,6 +54,7 @@ class App.TicketZoomTimeUnit extends App.Controller
 
       [types[type_id]?.name || __('None'), _.reduce(list, iteratee, 0)]
     )
+    return [] if mapped.length is 1 && mapped[0][0] is 'None'
 
     _.sortBy(mapped, (group) -> group[1]).reverse()
 

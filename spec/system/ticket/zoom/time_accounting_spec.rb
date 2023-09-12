@@ -221,4 +221,45 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
       end
     end
   end
+
+  describe "Time accounting: don't list activity types if they are not used #4806", authenticated_as: :authenticate do
+    let(:create_new_article) { false }
+
+    context 'with types' do
+      let(:type) { create(:ticket_time_accounting_type) }
+
+      def authenticate
+        Setting.set('time_accounting', true)
+        Setting.set('time_accounting_types', true)
+        type
+        create(:ticket_time_accounting, ticket: ticket, time_unit: 25)
+
+        true
+      end
+
+      it 'does not show the None category if there are no accountings on categories' do
+        within '.accounted-time-value-container' do
+          expect(page).to have_no_text('None')
+        end
+      end
+    end
+
+    context 'with types disabled' do
+      let(:type) { create(:ticket_time_accounting_type) }
+
+      def authenticate
+        Setting.set('time_accounting', true)
+        Setting.set('time_accounting_types', false)
+        create(:ticket_time_accounting, ticket: ticket, time_unit: 25, type: type)
+
+        true
+      end
+
+      it 'does not show the Type category if types are disabled' do
+        within '.accounted-time-value-container' do
+          expect(page).to have_no_text(type.name)
+        end
+      end
+    end
+  end
 end
