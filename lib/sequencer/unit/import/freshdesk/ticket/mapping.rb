@@ -19,20 +19,20 @@ class Sequencer::Unit::Import::Freshdesk::Ticket::Mapping < Sequencer::Unit::Bas
   def state_map
     @state_map ||= {
       2 => ::Ticket::State.find_by(name: 'open')&.id, # open
-      3 => ::Ticket::State.find_by(name: 'open')&.id, # pending
+      3 => ::Ticket::State.find_by(name: 'pending reminder')&.id, # pending
       4 => ::Ticket::State.find_by(name: 'closed')&.id, # resolved
       5 => ::Ticket::State.find_by(name: 'closed')&.id, # closed
     }.freeze
   end
 
-  def process # rubocop:disable Metrics/AbcSize
+  def process
     provide_mapped do
       {
         title:       resource['subject'],
         number:      resource['id'],
         group_id:    group_id,
-        priority_id: priority_map[resource['priority']],
-        state_id:    state_map[resource['status']],
+        priority_id: priority_id,
+        state_id:    state_id,
         owner_id:    owner_id,
         customer_id: customer_id,
         type:        resource['type'],
@@ -54,5 +54,21 @@ class Sequencer::Unit::Import::Freshdesk::Ticket::Mapping < Sequencer::Unit::Bas
 
   def owner_id
     id_map['User'][resource['responder_id']]
+  end
+
+  def state_id
+    state_map.fetch(resource['status'], default_state_id)
+  end
+
+  def priority_id
+    priority_map.fetch(resource['priority'], default_priority_id)
+  end
+
+  def default_state_id
+    @default_state_id ||= ::Ticket::State.find_by(name: 'open')&.id
+  end
+
+  def default_priority_id
+    @default_priority_id ||= ::Ticket::Priority.find_by(name: '2 normal')&.id
   end
 end

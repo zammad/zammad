@@ -105,8 +105,10 @@ RSpec.describe Sequencer::Unit::Import::Freshdesk::Tickets, db_strategy: 'reset'
 
           # Subject was changed during the import.
           ticket_data.merge(
-            id:      10,
-            subject: 'Different subject'
+            id:       10,
+            subject:  'Different subject',
+            status:   8,
+            priority: 6
           ),
         ]
       end
@@ -125,7 +127,7 @@ RSpec.describe Sequencer::Unit::Import::Freshdesk::Tickets, db_strategy: 'reset'
         end.to change(Ticket, :count).by(3)
       end
 
-      it 'check that ticket title was changed during import' do
+      it 'check that ticket title was changed during import (and unknown status/priority not lead to any error)' do
         process(process_payload) do |instance|
           # Set the `page_cycle` to zero, so that we trigger a new cycle (normally if more then 30.000 tickets exists)
           allow(instance).to receive(:page_cycle).and_return(0)

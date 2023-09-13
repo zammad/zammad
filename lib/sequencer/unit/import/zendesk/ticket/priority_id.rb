@@ -7,7 +7,7 @@ class Sequencer::Unit::Import::Zendesk::Ticket::PriorityId < Sequencer::Unit::Co
   private
 
   def priority_id
-    ::Ticket::Priority.select(:id).find_by(name: local).id
+    ::Ticket::Priority.select(:id).find_by(name: local)&.id
   end
 
   def local

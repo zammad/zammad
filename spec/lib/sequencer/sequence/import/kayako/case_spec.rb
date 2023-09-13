@@ -243,12 +243,26 @@ RSpec.describe Sequencer::Sequence::Import::Kayako::Case, db_strategy: :reset, s
     end
 
     context 'when ticket is imported twice' do
+      let(:ticket) { Ticket.last }
+
       before do
         process(process_payload)
+
+        # Get imported ticket after first import
+        ticket
       end
 
       it 'updates first article for already existing ticket' do
         expect { process(process_payload) }.not_to change(Ticket::Article, :count)
+      end
+
+      it 'updates ticket data' do
+        resource['subject'] = 'Different title test'
+        process(process_payload)
+
+        imported_ticket[:title] = 'Different title test'
+
+        expect(ticket.reload).to have_attributes(imported_ticket)
       end
     end
 
