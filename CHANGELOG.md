@@ -72,3 +72,4 @@
 - Typing the text attribute in the ticket changes the displayed name of the ticket in the activity stream [4329](https://github.com/zammad/zammad/issues/4329) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - Adding tree selection attribute form may get stuck with no options [4466](https://github.com/zammad/zammad/issues/4466) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[object manager attribute](https://github.com/zammad/zammad/labels/object%20manager%20attribute)]
 - New article visibility is not persisted in taskbar [4488](https://github.com/zammad/zammad/issues/4488) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
