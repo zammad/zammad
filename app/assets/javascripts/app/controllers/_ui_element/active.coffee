@@ -13,7 +13,7 @@ class App.UiElement.active extends App.UiElement.ApplicationUiElement
     attribute.translate = true
 
     # build options list
-    attribute.options = @OPTIONS
+    attribute.options =  $.extend(true, [], @OPTIONS)
 
     # build options list based on config
     @getConfigOptionList(attribute, params)
