@@ -14,8 +14,8 @@ rm -f /opt/zammad/public/assets/.sprockets-manifest-*.json || true
 # Ensure database connectivity
 if [[ -f /opt/zammad/config/database.yml ]]; then
    DB_HOST="$(grep -m 1 '^[[:space:]]*host:' < /opt/zammad/config/database.yml | sed -e 's/.*host:[[:space:]]*//g')"
-   DB_PORT="$(grep -m 1 '^[[:space:]]*port:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*port:[[:space:]]*//g')"
-   DB_SOCKET="$(grep -m 1 '^[[:space:]]*socket:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*socket:[[:space:]]*//g')"
+   DB_PORT="$(grep -m 1 '^[[:space:]]*port:' < /opt/zammad/config/database.yml | sed -e 's/.*port:[[:space:]]*//g')"
+   DB_SOCKET="$(grep -m 1 '^[[:space:]]*socket:' < /opt/zammad/config/database.yml | sed -e 's/.*socket:[[:space:]]*//g')"
 fi
 
 if [ "${DB_HOST}x" == "x" ]; then
