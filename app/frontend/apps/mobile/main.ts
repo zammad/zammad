@@ -60,6 +60,10 @@ export default async function mountApp(): Promise<void> {
     await locale.setLocale()
   }
 
+  if (VITE_TEST_MODE) {
+    await import('#shared/initializer/initializeFakeTimer.ts')
+  }
+
   app.mount('#app')
 
   if (session.afterAuth) {
