@@ -30,7 +30,7 @@ do
 
   # Support additional keys.
   PGP_UID=${PGP_UID%-*}
-  echo "  Using '$PGP_UID' as UID..."
+  echo "  Using '$PGP_UID' as UID…"
 
   KEY_EXPIRE_ARG=$KEY_EXPIRE
 
@@ -47,23 +47,23 @@ do
       DEFAULT_PREFERENCE_LIST_ARG=--default-preference-list="AES256,AES192,AES,CAST5,3DES,OCB,SHA512,SHA384,SHA256,SHA224,SHA1,ZLIB,BZIP2,ZIP,Uncompressed,MDC,AEAD"
     else
       echo "  ERROR: GnuPG too old, please update to v2.2.40 or later in order to generate OCB keys."
-      echo "  Skipping..."
+      echo "  Skipping…"
       continue
     fi
   fi
 
-  echo "  Generating key..."
+  echo "  Generating key…"
   gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE $DEFAULT_PREFERENCE_LIST_ARG --quick-generate-key "$PGP_UID" $KEY_ALGO $KEY_USAGE $KEY_EXPIRE_ARG
 
-  echo "  Exporting public key..."
+  echo "  Exporting public key…"
   gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --yes --output "$KEY_DIR/$EMAIL_ADDRESS.pub.pgp" --export "$PGP_UID"
   gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --yes --output "$KEY_DIR/$EMAIL_ADDRESS.pub.asc" --armor --export "$PGP_UID"
 
-  echo "  Exporting private key..."
+  echo "  Exporting private key…"
   gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --yes --output "$KEY_DIR/$EMAIL_ADDRESS.pgp" --export-secret-key "$PGP_UID"
   gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --yes --output "$KEY_DIR/$EMAIL_ADDRESS.asc" --armor --export-secret-key "$PGP_UID"
 
-  echo "  Exporting key information..."
+  echo "  Exporting key information…"
   echo -n $KEY_PASSPHRASE > "$KEY_DIR/$EMAIL_ADDRESS.passphrase"
 
   KEY_INFO=$(gpg --batch --quiet --with-colons --with-fingerprint --fixed-list-mode --show-key "$KEY_DIR/$EMAIL_ADDRESS.pub.asc")
@@ -80,7 +80,7 @@ do
   echo -n $KEY_FINGERPRINT > "$KEY_DIR/$EMAIL_ADDRESS.fingerprint"
 
   # Cleanup.
-  echo "  Deleting keys from keyring..."
+  echo "  Deleting keys from keyring…"
   gpg --batch --quiet --yes --delete-secret-key $KEY_FINGERPRINT
   gpg --batch --quiet --yes --delete-key $KEY_FINGERPRINT
 done
@@ -98,7 +98,7 @@ do
     continue
   fi
 
-  echo "  Adding UID ${PGP_UIDS[$i]} to the same key..."
+  echo "  Adding UID ${PGP_UIDS[$i]} to the same key…"
   gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --quick-add-uid "${PGP_UIDS[0]}" "${PGP_UIDS[$i]}"
 done
 
@@ -147,16 +147,16 @@ do
   echo "  Importing key for $EMAIL_ADDRESS"
   gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --yes --import < "$KEY_DIR/$EMAIL_ADDRESS.asc"
 
-  echo "  Computing current date header..."
+  echo "  Computing current date header…"
   echo "Date: $(date -R)" > "$MAIL_DIR/$TEST_MAIL.box"
 
   # Support expired keys.
   [[ $EMAIL_ADDRESS =~ ^expired ]] && echo "Date: $KEY_EXPIRATION_DATE" > "$MAIL_DIR/$TEST_MAIL.box"
 
-  echo "  Constructing mail body..."
+  echo "  Constructing mail body…"
   cat "$MAIL_DIR/$TEST_MAIL.part1.box" "$MAIL_DIR/$TEST_MAIL.part2.box" "$MAIL_DIR/$TEST_MAIL.part3.box" >> "$MAIL_DIR/$TEST_MAIL.box"
 
-  echo "  Appending message signature..."
+  echo "  Appending message signature…"
 
   # Support expired keys.
   if [[ $EMAIL_ADDRESS =~ ^expired ]]; then
@@ -165,7 +165,7 @@ do
     gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --armor --detach-sign --trust-model=always --default-key $KEY_FINGERPRINT --sign < "$MAIL_DIR/$TEST_MAIL.part2.box" >> "$MAIL_DIR/$TEST_MAIL.box"
   fi
 
-  echo "  Ending mail file..."
+  echo "  Ending mail file…"
   cat "$MAIL_DIR/$TEST_MAIL.part5.box" >> "$MAIL_DIR/$TEST_MAIL.box"
 done
 
@@ -211,31 +211,31 @@ do
         FORCE_OCB_ARG=--force-ocb
       else
         echo "  ERROR: GnuPG too old, please update to v2.3.0 or later in order to generate OCB keys."
-        echo "  Skipping..."
+        echo "  Skipping…"
         continue 2
       fi
     fi
 
     SANITIZED_EMAIL_ADDRESS=${RECIPIENT_EMAIL_ADDRESS%-*}
-    echo "    Using $SANITIZED_EMAIL_ADDRESS as recipient..."
+    echo "    Using $SANITIZED_EMAIL_ADDRESS as recipient…"
 
     RECIPIENTS_ARG="$RECIPIENTS_ARG --recipient $SANITIZED_EMAIL_ADDRESS"
   done
 
-  echo "  Computing current date header..."
+  echo "  Computing current date header…"
   echo "Date: $(date -R)" > "$MAIL_DIR/$TEST_MAIL.box"
 
   # Support expired keys.
   [[ ! -z $KEY_EXPIRATION_DATE ]] && echo "Date: $KEY_EXPIRATION_DATE" > "$MAIL_DIR/$TEST_MAIL.box"
 
-  echo "  Constructing mail body..."
+  echo "  Constructing mail body…"
   cat "$MAIL_DIR/$TEST_MAIL.part1.box" >> "$MAIL_DIR/$TEST_MAIL.box"
 
-  echo "  Encrypting message..."
+  echo "  Encrypting message…"
 
   gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --armor --trust-model=always $FAKED_SYSTEM_TIME_ARG $FORCE_OCB_ARG $RECIPIENTS_ARG --encrypt < "$MAIL_DIR/$TEST_MAIL.message.box" >> "$MAIL_DIR/$TEST_MAIL.box"
 
-  echo "  Ending mail file..."
+  echo "  Ending mail file…"
   cat "$MAIL_DIR/$TEST_MAIL.part3.box" >> "$MAIL_DIR/$TEST_MAIL.box"
 done
 
@@ -265,11 +265,11 @@ do
   echo "  Importing key for $SENDER_EMAIL_ADDRESS"
   gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --yes --import < "$KEY_DIR/$SENDER_EMAIL_ADDRESS.asc"
 
-  echo "  Constructing signed message..."
+  echo "  Constructing signed message…"
   SIGNED_MESSAGE_DIR=$(mktemp -d)
   cat "$MAIL_DIR/$TEST_MAIL.message.part1.box" "$MAIL_DIR/$TEST_MAIL.message.part2.box" "$MAIL_DIR/$TEST_MAIL.message.part3.box" > "$SIGNED_MESSAGE_DIR/signed-message"
 
-  echo "  Signing message..."
+  echo "  Signing message…"
 
   DETACH_SIGN_ARG=--detach-sign
 
@@ -283,16 +283,16 @@ do
     gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --armor $DETACH_SIGN_ARG --trust-model=always --default-key $KEY_FINGERPRINT --sign < "$MAIL_DIR/$TEST_MAIL.message.part2.box" >> "$SIGNED_MESSAGE_DIR/signed-message"
   fi
 
-  echo "  Ending signed message..."
+  echo "  Ending signed message…"
   cat "$MAIL_DIR/$TEST_MAIL.message.part5.box" >> "$SIGNED_MESSAGE_DIR/signed-message"
 
-  echo "  Computing current date header..."
+  echo "  Computing current date header…"
   echo "Date: $(date -R)" > "$MAIL_DIR/$TEST_MAIL.box"
 
   # Support expired keys.
   [[ $SENDER_EMAIL_ADDRESS =~ ^expired ]] && echo "Date: $KEY_EXPIRATION_DATE" > "$MAIL_DIR/$TEST_MAIL.box"
 
-  echo "  Constructing mail body..."
+  echo "  Constructing mail body…"
   cat "$MAIL_DIR/$TEST_MAIL.part1.box" >> "$MAIL_DIR/$TEST_MAIL.box"
 
   unset RECIPIENTS_ARG
@@ -303,12 +303,12 @@ do
     gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --yes --import < "$KEY_DIR/$RECIPIENT_EMAIL_ADDRESS.pub.asc"
 
     SANITIZED_EMAIL_ADDRESS=${RECIPIENT_EMAIL_ADDRESS%-*}
-    echo "    Using $SANITIZED_EMAIL_ADDRESS as recipient..."
+    echo "    Using $SANITIZED_EMAIL_ADDRESS as recipient…"
 
     RECIPIENTS_ARG="$RECIPIENTS_ARG --recipient $SANITIZED_EMAIL_ADDRESS"
   done
 
-  echo "  Encrypting message..."
+  echo "  Encrypting message…"
 
   # Support expired keys.
   if [[ $SENDER_EMAIL_ADDRESS =~ ^expired ]]; then
@@ -317,7 +317,7 @@ do
     gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --armor --trust-model=always $RECIPIENTS_ARG --encrypt < "$SIGNED_MESSAGE_DIR/signed-message" >> "$MAIL_DIR/$TEST_MAIL.box"
   fi
 
-  echo "  Ending mail file..."
+  echo "  Ending mail file…"
   cat "$MAIL_DIR/$TEST_MAIL.part3.box" >> "$MAIL_DIR/$TEST_MAIL.box"
 
   # Cleanup.
@@ -350,13 +350,13 @@ do
   echo "  Importing key for $SENDER_EMAIL_ADDRESS"
   gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --yes --import < "$KEY_DIR/$SENDER_EMAIL_ADDRESS.asc"
 
-  echo "  Computing current date header..."
+  echo "  Computing current date header…"
   echo "Date: $(date -R)" > "$MAIL_DIR/$TEST_MAIL.box"
 
   # Support expired keys.
   [[ $SENDER_EMAIL_ADDRESS =~ ^expired ]] && echo "Date: $KEY_EXPIRATION_DATE" > "$MAIL_DIR/$TEST_MAIL.box"
 
-  echo "  Constructing mail body..."
+  echo "  Constructing mail body…"
   cat "$MAIL_DIR/$TEST_MAIL.part1.box" >> "$MAIL_DIR/$TEST_MAIL.box"
 
   for RECIPIENT_EMAIL_ADDRESS in "${RECIPIENT_EMAIL_ADDRESSES[@]}"
@@ -365,12 +365,12 @@ do
     gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --yes --import < "$KEY_DIR/$RECIPIENT_EMAIL_ADDRESS.pub.asc"
 
     SANITIZED_EMAIL_ADDRESS=${RECIPIENT_EMAIL_ADDRESS%-*}
-    echo "    Using $SANITIZED_EMAIL_ADDRESS as recipient..."
+    echo "    Using $SANITIZED_EMAIL_ADDRESS as recipient…"
 
     RECIPIENTS_ARG="$RECIPIENTS_ARG --recipient $SANITIZED_EMAIL_ADDRESS"
   done
 
-  echo "  Encrypting + signing message in one command..."
+  echo "  Encrypting + signing message in one command…"
 
   # Support expired keys.
   if [[ $SENDER_EMAIL_ADDRESS =~ ^expired ]]; then
@@ -379,7 +379,7 @@ do
     gpg --batch --quiet --pinentry=loopback --passphrase=$KEY_PASSPHRASE --armor --trust-model=always --default-key $KEY_FINGERPRINT --sign $RECIPIENTS_ARG --encrypt < "$MAIL_DIR/$TEST_MAIL.part2.box" >> "$MAIL_DIR/$TEST_MAIL.box"
   fi
 
-  echo "  Ending mail file..."
+  echo "  Ending mail file…"
   cat "$MAIL_DIR/$TEST_MAIL.part3.box" >> "$MAIL_DIR/$TEST_MAIL.box"
 done
 

@@ -21,7 +21,7 @@
   <input name="two_factor_method" type="hidden" value="<%= @twoFactorMethodDetails.key %>" />
 
   <div class="double-spacer"></div>
-  <p class="text-center"><%= @T('Verifying key information...') %></p>
+  <p class="text-center"><%= @T('Verifying key information…') %></p>
   <div class="double-spacer"></div>
   <div class="centered">
     <div class="loading icon"></div>

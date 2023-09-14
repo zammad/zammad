@@ -5,10 +5,10 @@ set -eu
 # Don't require redis.
 export ZAMMAD_SAFE_MODE=1
 
-echo "Checking .pot catalog consistency..."
+echo "Checking .pot catalog consistency…"
 rails generate zammad:translation_catalog --check &
 
-echo "Checking consistency of Settings types file..."
+echo "Checking consistency of Settings types file…"
 rails generate zammad:setting_types --check &
 
 .gitlab/check_graphql_api_consistency.sh &

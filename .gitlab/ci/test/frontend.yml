@@ -7,7 +7,7 @@ frontend:vitest:
     - !reference [.scripts, yarn_install]
   script:
     - yarn test
-    - echo "Also test eslint-plugin-zammad..."
+    - echo "Also test eslint-plugin-zammad…"
     - cd .eslint-plugin-zammad
     - yarn install || yarn install || yarn install # retry on errors
     - yarn test

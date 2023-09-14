@@ -32,7 +32,7 @@ script/build/cleanup.sh
   && find . -name ".gitkeep" \
   && find . -name ".gitmodules" ) | xargs rm -rf
 
-echo "Building archives..."
+echo "Building archives…"
 tar -czf "${TEMPDIR}/zammad-latest.tar.gz" . > /dev/null
 tar -cjf "${TEMPDIR}/zammad-latest.tar.bz2" . > /dev/null
 zip -r "${TEMPDIR}/zammad-latest.zip" ./* > /dev/null

@@ -15,7 +15,7 @@ function serialize_graphql_api() {
   cat $TYPES_FILE $API_FILES > $TARGET_FILE
 }
 
-echo "Checking if auto-generated GraphQL API is up-to-date..."
+echo "Checking if auto-generated GraphQL API is up-to-date…"
 serialize_graphql_api $TMP_FILE_BEFORE
 yarn generate-graphql-api
 serialize_graphql_api $TMP_FILE_AFTER
