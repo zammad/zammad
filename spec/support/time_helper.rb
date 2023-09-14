@@ -5,6 +5,9 @@ module TimeHelperCache
     define_method method_name do |*args, **kwargs, &blk|
       super(*args, **kwargs, &blk).tap do
         Rails.cache.clear
+      rescue Errno::EISDIR
+        # suppress race condition errors
+      ensure
         Setting.class_variable_set :@@last_changed_at, 1.second.ago # rubocop:disable Style/ClassVars
       end
     end
