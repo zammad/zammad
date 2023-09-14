@@ -13,7 +13,6 @@ class Channel::EmailParser
   MESSAGE_STRUCT = Struct.new(:from_display_name, :subject, :msg_size).freeze
 
   UNPROCESSABLE_MAIL_DIRECTORY = Rails.root.join('var/spool/unprocessable_mail')
-  OVERSIZED_MAIL_DIRECTORY = Rails.root.join('var/spool/oversized_mail')
 
 =begin
 
@@ -520,14 +519,12 @@ process unprocessable_mails (var/spool/unprocessable_mail/*.eml) again
 
 =begin
 
-  process oversized emails by:
-  1. Archiving the oversized mail as tmp/oversized_mail/md5.eml
-  2. Reply with a postmaster message to inform the sender
+  process oversized emails by
+  - Reply with a postmaster message to inform the sender
 
 =end
 
   def process_oversized_mail(channel, msg)
-    archive_mail(OVERSIZED_MAIL_DIRECTORY, msg)
     postmaster_response(channel, msg)
   end
 

@@ -287,10 +287,6 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
       end
       let(:oversized_email_md5) { Digest::MD5.hexdigest(oversized_email) }
       let(:oversized_email_size) { format('%<MB>.2f', MB: oversized_email.size.to_f / 1024 / 1024) }
-      let(:oversized_eml_folder) { Rails.root.join('var/spool/oversized_mail') }
-      let(:oversized_eml_file) do
-        Dir.entries(oversized_eml_folder).grep(%r{^#{oversized_email_md5}\.eml$}).map { |path| oversized_eml_folder.join(path) }.last
-      end
 
       let(:fetch_oversized_email) do
         imap.append(folder, oversized_email, [], Time.zone.now)
@@ -320,14 +316,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
         end
 
         it 'creates email reply correctly' do
-          # 1. verify that the oversized email has been saved locally to:
-          # var/spool/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
-          expect(oversized_eml_file).to be_present
-
-          # verify that the file is byte for byte identical to the sent message
-          expect(File.read(oversized_eml_file)).to eq(oversized_email)
-
-          # 2. verify that a postmaster response email has been sent to the sender
+          # verify that a postmaster response email has been sent to the sender
           expect(oversized_email_reply).to be_present
 
           # parse the reply mail and verify the various headers
@@ -343,7 +332,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
           # verify the reply mail body content
           expect(parsed_oversized_email_reply[:body]).to match(%r{^Dear Max Mustermann.*Oversized Email Message.*#{oversized_email_size} MB.*0.1 MB.*#{Setting.get('fqdn')}}sm)
 
-          # 3. check if original mail got removed
+          # check if original mail got removed
           imap.select(folder)
           expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII')).to be_empty
         end
@@ -358,15 +347,12 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
 
         it 'does not create email reply' do
 
-          # 1. verify that email was not locally processed
-          expect(oversized_eml_file).to be_nil
-
-          # 2. verify that no postmaster response email has been sent
+          # verify that no postmaster response email has been sent
           imap.select('inbox')
           sleep 1
           expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII').count).to be_zero
 
-          # 3. check that original mail is still there
+          # check that original mail is still there
           imap.select(folder)
           expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII').count).to be(1)
         end
