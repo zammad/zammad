@@ -357,7 +357,7 @@ returns
   def self.set_params(request, params, options)
     if options[:json]
       if !request.is_a?(Net::HTTP::Get) # GET requests pass params in query, see 'parse_uri'.
-        request.add_field('Content-Type', 'application/json')
+        request.add_field('Content-Type', 'application/json; charset=utf-8')
         if params.present?
           request.body = params.to_json
         end

@@ -91,7 +91,7 @@ RSpec.describe TriggerWebhookJob, type: :job do
 
     let(:headers) do
       {
-        'Content-Type'     => 'application/json',
+        'Content-Type'     => 'application/json; charset=utf-8',
         'User-Agent'       => 'Zammad User Agent',
         'X-Zammad-Trigger' => trigger.name,
       }
