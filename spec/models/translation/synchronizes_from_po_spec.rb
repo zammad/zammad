@@ -219,7 +219,7 @@ RSpec.describe Translation, 'synchronizes_from_po' do
 
       CUSTOM_PO
 
-      described_class.all.delete_all
+      described_class.delete_all
       described_class.sync
     end
 

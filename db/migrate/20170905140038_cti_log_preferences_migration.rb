@@ -39,7 +39,7 @@ class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
 
     # correct all entries
     directions = %w[from to]
-    Cti::Log.all.pluck(:id).each do |item_id|
+    Cti::Log.pluck(:id).each do |item_id|
       item = Cti::Log.find(item_id)
       next if !item.preferences
       next if item.preferences.blank?

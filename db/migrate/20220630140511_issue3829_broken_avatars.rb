@@ -8,7 +8,7 @@ class Issue3829BrokenAvatars < ActiveRecord::Migration[6.1]
     object_name = 'User'
     object_id = ObjectLookup.by_name(object_name)
 
-    User.all.pluck(:id, :image_source).each do |user_id, image_source|
+    User.pluck(:id, :image_source).each do |user_id, image_source|
       next if image_source.blank?
       next if image_source.match?(%r{\.(?:png|jpg|jpeg)}i)
 

@@ -14,7 +14,7 @@ module Gql::Queries
     end
 
     def resolve(screen:)
-      PublicLink.all.select { |link| link[:screen].include?(screen) }
+      PublicLink.select { |link| link[:screen].include?(screen) }
     end
   end
 end

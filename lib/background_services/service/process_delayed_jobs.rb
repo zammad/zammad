@@ -21,7 +21,7 @@ class BackgroundServices
           result = nil
 
           realtime = Benchmark.realtime do
-            Rails.logger.debug { "*** worker thread, #{::Delayed::Job.all.count} in queue" }
+            Rails.logger.debug { "*** worker thread, #{::Delayed::Job.count} in queue" }
             result = ::Delayed::Worker.new.work_off
           end
 

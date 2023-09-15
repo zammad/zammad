@@ -11,7 +11,7 @@ module Tasks
         end
 
         def self.task_handler
-          ::Package.all.pluck(:name, :version).each do |name, version|
+          ::Package.pluck(:name, :version).each do |name, version|
             puts "Removing files of Package '#{name}'..."
 
             ::Package.uninstall(

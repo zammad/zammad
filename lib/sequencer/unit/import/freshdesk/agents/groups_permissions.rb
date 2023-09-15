@@ -14,7 +14,7 @@ class Sequencer::Unit::Import::Freshdesk::Agents < Sequencer::Unit::Import::Fres
 
     def group_ids_access_map
       @group_ids_access_map ||= begin
-        ::Group.all.pluck(:id).index_with do
+        ::Group.pluck(:id).index_with do
           'full'.freeze
         end
       end

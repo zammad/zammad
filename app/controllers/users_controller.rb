@@ -1121,7 +1121,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     user = User.new(clean_user_params)
     user.associations_from_param(params)
     user.role_ids  = Role.where(name: %w[Admin Agent]).pluck(:id)
-    user.group_ids = Group.all.pluck(:id)
+    user.group_ids = Group.pluck(:id)
 
     UserInfo.ensure_current_user_id do
       user.save!

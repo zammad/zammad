@@ -43,7 +43,7 @@ class KnowledgeBase
     end
 
     def all_category_ids
-      accessible_categories.all.pluck(:id)
+      accessible_categories.pluck(:id)
     end
 
     def visible_ids
@@ -68,7 +68,7 @@ class KnowledgeBase
     end
 
     def accessible_categories_calculate_scope
-      return KnowledgeBase::Category.all.find_in_batches if @categories_filter.blank?
+      return KnowledgeBase::Category.find_in_batches if @categories_filter.blank?
 
       Array(@categories_filter)
         .map(&:self_with_children)

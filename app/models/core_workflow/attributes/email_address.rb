@@ -2,6 +2,6 @@
 
 class CoreWorkflow::Attributes::EmailAddress < CoreWorkflow::Attributes::Base
   def values
-    @values ||= EmailAddress.all.pluck(:id)
+    @values ||= EmailAddress.pluck(:id)
   end
 end

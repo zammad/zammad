@@ -2223,7 +2223,7 @@ RSpec.describe 'Ticket', type: :request do
 
     it 'create ticket with mentions' do
       new_ticket_with_mentions
-      expect(Mention.all.count).to eq(3)
+      expect(Mention.count).to eq(3)
     end
 
     it 'check ticket get' do

@@ -25,7 +25,7 @@ RSpec.describe Locale, type: :model do
     describe '.sync()' do
       context 'when importing locales' do
         before do
-          described_class.all.delete_all
+          described_class.delete_all
           described_class.sync
         end
 

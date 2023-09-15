@@ -38,7 +38,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
 
   test 'user cache' do
     roles  = Role.where(name: %w[Agent Admin])
-    groups = Group.all.reorder(:id)
+    groups = Group.reorder(:id)
 
     # be sure that at least one admin is available
     User.create_or_update(

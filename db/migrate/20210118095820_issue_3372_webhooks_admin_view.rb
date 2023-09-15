@@ -33,7 +33,7 @@ class Issue3372WebhooksAdminView < ActiveRecord::Migration[5.2]
   end
 
   def record_upgrade
-    Trigger.all.find_each do |trigger|
+    Trigger.find_each do |trigger|
       next if trigger.perform.dig('notification.webhook', 'endpoint').blank?
 
       webhook = webhook_create(

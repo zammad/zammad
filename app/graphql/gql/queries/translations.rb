@@ -33,7 +33,7 @@ module Gql::Queries
       {
         is_cache_still_valid: false,
         cache_key:            new_cache_key,
-        translations:         base_query.all.pluck(:source, :target).to_h
+        translations:         base_query.pluck(:source, :target).to_h
       }
     end
 

@@ -486,7 +486,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         condition: {
           'ticket.state_id':                                 {
             operator: 'is',
-            value:    Ticket::State.all.pluck(:id),
+            value:    Ticket::State.pluck(:id),
           },
           'ticket.test_attribute_referenced_by_an_overview': {
             operator: 'contains',
@@ -838,7 +838,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         condition: {
           'ticket.state_id':                                 {
             operator: 'is',
-            value:    Ticket::State.all.pluck(:id),
+            value:    Ticket::State.pluck(:id),
           },
           'ticket.test_attribute_referenced_by_an_overview': {
             operator: 'contains',

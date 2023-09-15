@@ -14,7 +14,7 @@ module Gql::Subscriptions
     end
 
     def update(screen:)
-      { public_links: PublicLink.all.select { |link| link[:screen].include?(screen) } }
+      { public_links: PublicLink.select { |link| link[:screen].include?(screen) } }
     end
   end
 end

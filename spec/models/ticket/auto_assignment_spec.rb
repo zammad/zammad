@@ -16,7 +16,7 @@ RSpec.describe 'Ticket: #auto_assign' do # rubocop:disable RSpec/DescribeClass
       let(:agent)  { create(:agent, groups: [Group.first]) }
 
       context 'when the condition does match' do
-        let(:ticket_auto_assignment_condition) { { 'ticket.state_id' => { operator: 'is', value: Ticket::State.all.pluck(:id) } } }
+        let(:ticket_auto_assignment_condition) { { 'ticket.state_id' => { operator: 'is', value: Ticket::State.pluck(:id) } } }
 
         it 'does auto assign' do
           ticket.auto_assign(agent)

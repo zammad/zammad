@@ -5,7 +5,7 @@ class StatsStorePolymorphicAssociation < ActiveRecord::Migration[5.2]
     return if !Setting.exists?(name: 'system_init_done')
 
     # create ObjectLookup ID -> Model map
-    object_lookup_map = ObjectLookup.all.pluck(:id, :name)
+    object_lookup_map = ObjectLookup.pluck(:id, :name)
 
     # create empty, indexed polymorphic association columns
     add_reference :stats_stores, :stats_storable, polymorphic: true, index: true

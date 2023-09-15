@@ -2,6 +2,6 @@
 
 class CoreWorkflow::Attributes::Signature < CoreWorkflow::Attributes::Base
   def values
-    @values ||= Signature.all.pluck(:id)
+    @values ||= Signature.pluck(:id)
   end
 end
