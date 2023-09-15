@@ -64,12 +64,13 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
     within(:active_content) do
       find('select[name="group_id"]').select('Users')
       find(:richtext).send_keys('@@FFFF1')
+      await_empty_ajax_queue
       find(:richtext).send_keys(:enter)
       find(:richtext).send_keys(:enter)
       (agent_fixed_name.firstname.length + agent_fixed_name.lastname.length + 2).times do
         find(:richtext).send_keys(:backspace)
       end
-      expect(find(:richtext).all('a[data-mention-user-id]', visible: :all).count).to eq(0)
+      expect(find(:richtext)).to have_no_css('a[data-mention-user-id]', visible: :all)
     end
   end
 
@@ -78,6 +79,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
     within(:active_content) do
       find('select[name="group_id"]').select('Users')
       find(:richtext).send_keys('@@FFFF1')
+      await_empty_ajax_queue
       find(:richtext).send_keys(:enter)
       find(:richtext).send_keys(:enter)
       find(:richtext).send_keys('test')
@@ -93,11 +95,15 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
       find('select[name="group_id"]').select('Users')
       find(:richtext).send_keys('Testing Testy')
       find(:richtext).send_keys('@@FFFF1')
+      await_empty_ajax_queue
       find(:richtext).send_keys(:enter)
+      await_empty_ajax_queue
       find(:richtext).send_keys(:enter)
       find(:richtext).send_keys('Testing Testy ')
       find(:richtext).send_keys('@@FFFF1')
+      await_empty_ajax_queue
       find(:richtext).send_keys(:enter)
+      await_empty_ajax_queue
 
       expect(find(:richtext).text).to include('Testing TestyFFFF1 GGGG1')
       expect(find(:richtext).text).to include('Testing Testy FFFF1 GGGG1')
@@ -109,12 +115,14 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
     within(:active_content) do
       find('select[name="group_id"]').select('Users')
       find(:richtext).send_keys('@@FFFF1')
+      await_empty_ajax_queue
       find(:richtext).send_keys(:enter)
       find(:richtext).send_keys(' Testing Testy')
       find(:richtext).send_keys(:enter)
       find(:richtext).send_keys(:enter)
       find(:richtext).send_keys(:backspace)
       find(:richtext).send_keys('@@FFFF1')
+      await_empty_ajax_queue
       find(:richtext).send_keys(:enter)
       expect(find(:richtext).text).to include("FFFF1 GGGG1 Testing Testy\nFFFF1 GGGG1")
     end
