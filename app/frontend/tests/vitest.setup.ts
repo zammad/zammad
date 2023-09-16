@@ -162,9 +162,8 @@ vi.mock(
 // mock vueuse because of CommonDialog, it uses usePointerSwipe
 // that is not supported in JSDOM
 vi.mock('@vueuse/core', async () => {
-  const mod = await vi.importActual<typeof import('@vueuse/core')>(
-    '@vueuse/core',
-  )
+  const mod =
+    await vi.importActual<typeof import('@vueuse/core')>('@vueuse/core')
   return {
     ...mod,
     usePointerSwipe: vi

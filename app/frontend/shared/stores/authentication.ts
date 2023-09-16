@@ -15,7 +15,7 @@ import {
 } from '#shared/graphql/types.ts'
 import { useSessionStore } from './session.ts'
 import { useApplicationStore } from './application.ts'
-import { resetAndDisposeStores } from '.'
+import { resetAndDisposeStores } from './index.ts'
 
 interface LoginOptions {
   login: string

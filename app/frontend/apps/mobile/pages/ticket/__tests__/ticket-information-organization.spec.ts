@@ -48,9 +48,8 @@ const visitTicketOrganization = async (
 describe('static organization', () => {
   it('shows organization', async () => {
     const organization = defaultOrganization()
-    const { view, mockSubscription } = await visitTicketOrganization(
-      organization,
-    )
+    const { view, mockSubscription } =
+      await visitTicketOrganization(organization)
 
     expect(view.getByText(organization.name || 'unknown')).toBeInTheDocument()
 

@@ -35,9 +35,8 @@ describe('playing with overviews', () => {
       await view.findByTestId('includedOverviews'),
     )
 
-    const includedOverviews = await includedOverviewsUtils.findAllByTestId(
-      'overviewItem',
-    )
+    const includedOverviews =
+      await includedOverviewsUtils.findAllByTestId('overviewItem')
 
     expect(includedOverviews).toHaveLength(2)
     expect(includedOverviews[0]).toHaveTextContent('Overview 1')

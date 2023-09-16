@@ -9,7 +9,7 @@ import { mockAccount } from '#tests/support/mock-account.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 import { nextTick } from 'vue'
-import { createArticleTypes } from '..'
+import { createArticleTypes } from '../index.ts'
 import {
   createEligibleTicketArticleReplyData,
   createTestArticleActions,
