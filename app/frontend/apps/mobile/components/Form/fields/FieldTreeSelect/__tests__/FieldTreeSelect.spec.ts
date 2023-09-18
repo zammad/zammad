@@ -1412,4 +1412,30 @@ describe('Form - Field - TreeSelect - Visuals', () => {
       view.findByIconName('mobile-chevron-left'),
     ).resolves.toBeInTheDocument()
   })
+
+  it('back button arrow changes direction when locale changes', async () => {
+    const view = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        label: 'Select…',
+        type: 'treeselect',
+        options: testOptions,
+      },
+    })
+
+    await view.events.click(view.getByLabelText('Select…'))
+
+    await view.events.click(view.getAllByIconName('mobile-chevron-right')[0])
+
+    expect(view.getByIconName('mobile-chevron-left')).toBeInTheDocument()
+
+    const locale = useLocaleStore()
+    locale.localeData = {
+      dir: EnumTextDirection.Rtl,
+    } as any
+
+    await expect(
+      view.findByIconName('mobile-chevron-right'),
+    ).resolves.toBeInTheDocument()
+  })
 })

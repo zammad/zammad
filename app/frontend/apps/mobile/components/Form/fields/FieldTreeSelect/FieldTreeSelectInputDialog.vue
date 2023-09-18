@@ -200,7 +200,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
         size="base"
         class="ltr:mr-3 rtl:ml-3"
         :name="`mobile-chevron-${
-          locale.localeData?.dir === 'rtl' ? 'left' : 'right'
+          locale.localeData?.dir === 'rtl' ? 'right' : 'left'
         }`"
       />
       <span class="grow font-semibold text-white/80">
