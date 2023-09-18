@@ -50,8 +50,8 @@ function delete_old_backups () {
   if [[ -n ${FILES_TO_DELETE} ]]; then
     if [ "${DEBUG}" == "yes" ]; then
       echo "Deleting old backups according to value set in HOLD_DAYS."
-    echo "${FILES_TO_DELETE}" | xargs rm
     fi
+    echo "${FILES_TO_DELETE}" | xargs rm
   else
     if [ "${DEBUG}" == "yes" ]; then
       echo "No files found matching value set in HOLD_DAYS. No files deleted."
