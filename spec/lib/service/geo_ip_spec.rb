@@ -66,8 +66,8 @@ RSpec.describe Service::GeoIp, integration: true do
               'city_name'      => 'Halle',
               'country_code'   => 'DE',
               'continent_code' => 'EU',
-              'latitude'       => 51.4828,
-              'longitude'      => 11.9799,
+              'latitude'       => 51.5036,
+              'longitude'      => 11.9594,
             }
           end
 
