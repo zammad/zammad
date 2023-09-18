@@ -72,6 +72,8 @@ const handleButtonMode = (node: FormKitNode) => {
     if (buttons) {
       props.optionsClass = 'flex flex-col grow space-y-2'
       props.optionClass = 'formkit-disabled:opacity-30'
+      // this is needed to not show "required" label on buttons
+      props.labelClass = '$reset'
       props.wrapperClass =
         'items-center justify-center py-2 px-4 w-full h-14 text-lg font-normal text-white bg-gray-600 rounded-xl select-none formkit-is-checked:bg-white formkit-is-checked:text-black formkit-is-checked:font-semibold'
       props.inputClass = '$reset sr-only'

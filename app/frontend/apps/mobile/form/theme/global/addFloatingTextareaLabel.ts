@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { Classes } from './utils.ts'
-import { clean } from './utils.ts'
+import { clean, extendClasses } from './utils.ts'
 
 /**
  * Textarea can be scrolled, so if we use "aboslute" positioning for label,
@@ -10,36 +10,21 @@ import { clean } from './utils.ts'
  * where we use "h-2", so it overlaps with the content, until the textarea is populated.
  */
 export const addFloatingTextareaLabel = (classes: Classes = {}) => {
-  const {
-    input = '',
-    label = '',
-    inner = '',
-    outer = '',
-    wrapper = '',
-  } = classes
-
-  return {
+  return extendClasses(classes, {
     outer: clean(`
-      ${outer}
       floating-textarea relative px-2
-      formkit-invalid:bg-red-dark
-      formkit-errors:bg-red-dark
     `),
-    wrapper: `${wrapper} relative`,
-    inner,
+    wrapper: 'relative',
     // text-base ensures there is no zoom when you click on the input on iOS
     input: clean(`
-      ${input}
       w-full
       text-base
       bg-transparent
       border-none
       focus:outline-none
       placeholder:text-transparent
-      min-h-[100px]
     `),
     label: clean(`
-      ${label}
       flex
       items-end
       px-2
@@ -50,10 +35,6 @@ export const addFloatingTextareaLabel = (classes: Classes = {}) => {
       cursor-text
       transition-all duration-100 ease-in-out origin-left
       formkit-populated:translate-y-0 formkit-populated:text-xs formkit-populated:opacity-75
-      formkit-required:required
-      formkit-invalid:text-red-bright
     `),
-    help: 'px-2 pb-2',
-    messages: 'px-2',
-  }
+  })
 }

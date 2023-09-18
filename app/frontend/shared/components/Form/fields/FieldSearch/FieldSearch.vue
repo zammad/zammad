@@ -25,6 +25,7 @@ const { localValue } = useValue(toRef(props, 'context'))
     :placeholder="props.context.placeholder || props.context.attrs.placeholder"
     :wrapper-class="props.context.wrapperClass"
     no-border
+    :class="context.classes.input"
     @blur="context.handlers.blur"
   />
 </template>

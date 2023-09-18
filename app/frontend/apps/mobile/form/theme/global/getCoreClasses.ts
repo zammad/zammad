@@ -8,56 +8,69 @@ import { addAbsoluteFloatingLabel } from './addAbsoluteFloatingLabel.ts'
 import { addFloatingTextareaLabel } from './addFloatingTextareaLabel.ts'
 import { addBlockFloatingLabel } from './addBlockFloatingLabel.ts'
 import type { Classes } from './utils.ts'
-import { extendClasses } from './utils.ts'
+import { clean, extendClasses } from './utils.ts'
 import { addStaticFloatingLabel } from './addStaticFloatingLabel.ts'
 
 export const addDateLabel = (classes: Classes = {}): Classes => {
   const newClasses = addAbsoluteFloatingLabel(classes)
+  // remove padding since we implement it differently for the calendar
+  const inner = newClasses.inner.replace(' ltr:pr-2 rtl:pl-2', '')
   return {
     ...newClasses,
-    inner: 'flex flex-col items-center',
+    inner: `${inner} flex-col items-center`,
   }
 }
 
 export const addButtonVariants = (classes: Classes = {}): Classes => {
-  return {
-    wrapper: `${classes.wrapper || ''} relative`,
-    input: `${
-      classes.input || ''
-    } bg-transparent text-white formkit-variant-primary:bg-blue formkit-variant-submit:text-black formkit-variant-submit:bg-yellow formkit-variant-submit:font-semibold formkit-variant-danger:bg-red-dark formkit-variant-danger:text-red-bright`,
-  }
+  return extendClasses(classes, {
+    wrapper: 'relative',
+    input:
+      'bg-transparent text-white formkit-variant-primary:bg-blue formkit-variant-submit:text-black formkit-variant-submit:bg-yellow formkit-variant-submit:font-semibold formkit-variant-danger:bg-red-dark formkit-variant-danger:text-red-bright',
+  })
 }
 
 const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
   return {
-    global: {},
+    global: extendClasses(classes.global, {
+      outer: 'formkit-invalid:bg-red-dark formkit-errors:bg-red-dark',
+      label: 'formkit-required:required formkit-invalid:text-red-bright',
+      messages: 'px-2',
+      help: 'px-2 pb-2',
+      arrow: 'formkit-arrow flex items-center formkit-disabled:opacity-30',
+      suffixIcon: 'text-white fill-current flex justify-center items-center',
+    }),
     text: addAbsoluteFloatingLabel(classes.text),
     email: addAbsoluteFloatingLabel(classes.email),
     url: addAbsoluteFloatingLabel(classes.url),
     number: addAbsoluteFloatingLabel(classes.number),
-    search: { ...classes.search, inner: 'flex', wrapper: 'px-3' },
+    search: extendClasses(classes.search, {
+      inner: 'flex',
+      wrapper: 'px-3',
+    }),
     tel: addAbsoluteFloatingLabel(classes.tel),
     time: addAbsoluteFloatingLabel(classes.time),
     password: addAbsoluteFloatingLabel(classes.password),
     date: addDateLabel(classes.date),
     datetime: addDateLabel(classes.datetime),
-    editor: addFloatingTextareaLabel(classes.editor),
-    textarea: addFloatingTextareaLabel(classes.textarea),
+    editor: addFloatingTextareaLabel(
+      extendClasses(classes.editor, {
+        input: 'min-h-[80px]',
+      }),
+    ),
+    textarea: addFloatingTextareaLabel(
+      extendClasses(classes.textarea, {
+        input: 'min-h-[100px]',
+      }),
+    ),
     checkbox: extendClasses(classes.checkbox, {
-      outer: 'formkit-invalid:bg-red-dark formkit-errors:bg-red-dark',
       wrapper: 'ltr:pl-2 rtl:pr-2 w-full select-none',
-      label: 'formkit-required:required',
-      help: 'px-2 pb-2',
       input:
         'h-4 w-4 border-[1.5px] border-white rounded-sm bg-transparent focus:border-blue focus:bg-blue-highlight checked:focus:color-blue checked:bg-blue checked:border-blue checked:focus:bg-blue checked:hover:bg-blue',
     }),
     toggle: extendClasses(classes.toggle, {
-      outer:
-        'relative px-2 formkit-invalid:bg-red-dark formkit-errors:bg-red-dark',
+      outer: 'relative px-2',
       wrapper: 'inline-flex w-full h-14 px-2',
-      label:
-        'flex items-center w-full h-full text-base cursor-pointer formkit-required:required',
-      help: 'px-2 pb-2',
+      label: 'flex items-center w-full h-full text-base cursor-pointer',
       inner: 'flex items-center h-full',
     }),
     tags: addBlockFloatingLabel(classes.tags),
@@ -69,7 +82,15 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     recipient: addBlockFloatingLabel(classes.recipient),
     button: addButtonVariants(classes.button),
     submit: addButtonVariants(classes.submit),
-    security: addStaticFloatingLabel(classes.security),
+    security: addStaticFloatingLabel(
+      extendClasses(classes.security, {
+        label: clean(`
+          -translate-y-[0.4rem]
+          scale-80
+          text-xs
+        `),
+      }),
+    ),
   }
 }
 
