@@ -20,11 +20,11 @@ class Service::Search < Service::BaseWithCurrentUser
       # Finally, sort by object priority.
       models(objects: objects).map do |model|
         result_by_model[model]
-      end.flatten
+      end.flatten.compact
     else
       models(objects: objects).map do |model|
         model_search(model: model, term: term, options: options)
-      end.flatten
+      end.flatten.compact
     end
   end
 
@@ -53,7 +53,7 @@ class Service::Search < Service::BaseWithCurrentUser
     objects.select do |model|
       prefs = model.search_preferences(current_user)
       next false if !prefs
-      next false if direct_search_index.present? && !prefs[:direct_search_index] != direct_search_index
+      next false if !direct_search_index.nil? && prefs[:direct_search_index] != direct_search_index
 
       true
     end.sort_by do |model|
