@@ -63,12 +63,12 @@
     "histoire": "^0.17.0",
     "jsdom": "^22.1.0",
     "mock-apollo-client": "^1.2.1",
-    "postcss": "^8.4.29",
+    "postcss": "^8.4.30",
     "postcss-html": "^1.5.0",
     "prettier": "3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4",
     "regenerator-runtime": "^0.14.0",
-    "sass": "^1.66.1",
+    "sass": "^1.67.0",
     "stylelint": "^15.10.3",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-recommended-vue": "^1.5.0",
@@ -151,7 +151,7 @@
   },
   "resolutions": {
     "loader-utils": "^3.2.1",
-    "postcss": "^8.4.29",
+    "postcss": "^8.4.30",
     "stylelint-config-recommended": "^13.0.0"
   }
 }
