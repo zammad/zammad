@@ -19,6 +19,9 @@ variables:
   ES_INDEX: 'estest.ci'
   ELASTICSEARCH_TAG: '7.16'
 
+  # PostgreSQL
+  POSTGRESQL_TAG: 'stable'
+
   # Compile assets only once.
   CI_SKIP_ASSETS_PRECOMPILE: 'true'
   # Avoid unnecessary DB resets.
