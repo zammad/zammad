@@ -58,7 +58,7 @@
     alias: mysql
 
   postgresql:
-    name: $CI_REGISTRY/docker/zammad-postgresql:stable
+    name: $CI_REGISTRY/docker/zammad-postgresql:$POSTGRESQL_TAG
     alias: postgresql
 
   elasticsearch:
