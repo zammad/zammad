@@ -22,6 +22,7 @@ rspec:integration:
     - .variables_proxy
     - .variables_mattermost
     - .variables_ftp
+    - .variables_s3
   allow_failure: true
   services:
     - !reference [.services, mysql]
@@ -33,6 +34,7 @@ rspec:integration:
     - !reference [.services, ftp]
     - !reference [.services, mattermost]
     - !reference [.services, ldap]
+    - !reference [.services, s3]
   script:
     - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t integration -t ~integration_standalone --profile 10

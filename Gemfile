@@ -183,6 +183,9 @@ gem 'openssl'
 gem 'byk', require: false
 gem 'PoParser', require: false
 
+# Simple storage
+gem 'aws-sdk-s3', require: false
+
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do

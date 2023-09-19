@@ -17,7 +17,7 @@ do also verify of written data
 
 =end
 
-    def self.add(data, verify = true)
+    def self.add(data, verify = true, *args)
       sha = checksum(data)
 
       file = Store::File.find_by(sha: sha)
@@ -30,7 +30,7 @@ do also verify of written data
         end
 
         adapter = "Store::Provider::#{adapter_name}".constantize
-        adapter.add(data, sha)
+        adapter.add(data, sha, args)
         file = Store::File.create(
           provider: adapter_name,
           sha:      sha,

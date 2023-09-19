@@ -340,7 +340,7 @@ Setting.create_if_not_exists(
   title:       __('Storage Mechanism'),
   name:        'storage_provider',
   area:        'System::Storage',
-  description: __('"Database" stores all attachments in the database (not recommended for storing large amounts of data). "Filesystem" stores the data in the filesystem. You can switch between the modules even on a system that is already in production without any loss of data.'),
+  description: __('"Database" stores all attachments in the database (not recommended for storing large amounts of data). "Filesystem" stores the data in the filesystem. "Simple Storage (S3)" stores the data in a remote S3 compatible object filesystem. You can switch between the modules even on a system that is already in production without any loss of data.'),
   options:     {
     form: [
       {
@@ -348,10 +348,10 @@ Setting.create_if_not_exists(
         null:      true,
         name:      'storage_provider',
         tag:       'select',
-        tranlate:  true,
         options:   {
           'DB'   => __('Database'),
           'File' => __('Filesystem'),
+          'S3'   => __('Simple Storage (S3)'),
         },
         translate: true,
       },

@@ -165,6 +165,25 @@
       "note": "Admin configured RegExp"
     },
     {
+      "warning_type": "Remote Code Execution",
+      "warning_code": 24,
+      "fingerprint": "3c69accdb245b8493b7455698a454c70c2246c14f46f24e28e1c5329cee9ffac",
+      "check_name": "UnsafeReflection",
+      "message": "Unsafe reflection method `constantize` called on model attribute",
+      "file": "config/initializers/store_provider_check.rb",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
+      "code": "\"Store::Provider::#{Setting.get(\"storage_provider\")}\".constantize",
+      "render_path": null,
+      "location": null,
+      "user_input": "Setting.get(\"storage_provider\")",
+      "confidence": "Medium",
+      "cwe_id": [
+        470
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Denial of Service",
       "warning_code": 76,
       "fingerprint": "4ea1b96c11cdde309b0f31defd8af9dc39dd7605a7bb18b13b122469a74a5a70",
@@ -530,7 +549,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/object_manager/attribute.rb",
-      "line": 895,
+      "line": 896,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object_lookup_id).constantize",
       "render_path": null,
@@ -645,7 +664,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/channel/email_parser.rb",
-      "line": 160,
+      "line": 159,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Setting.get(setting.name).constantize",
       "render_path": null,
@@ -668,7 +687,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/channel/email_parser.rb",
-      "line": 325,
+      "line": 324,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Setting.get(setting.name).constantize",
       "render_path": null,
@@ -867,6 +886,6 @@
       "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2023-09-08 14:45:28 +0200",
+  "updated": "2023-09-25 12:10:59 +0200",
   "brakeman_version": "6.0.1"
 }

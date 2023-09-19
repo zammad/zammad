@@ -48,6 +48,13 @@
     KEYCLOAK_ADMIN: admin
     KEYCLOAK_ADMIN_PASSWORD: admin
 
+.variables_s3:
+  variables:
+    S3_URL: http://zammadadmin:zammadadmin@ci-service-s3:9000/zammad?region=de-zammad-s1&force_path_style=true
+    MINIO_ROOT_USER: zammadadmin
+    MINIO_ROOT_PASSWORD: zammadadmin
+    MINIO_DEFAULT_BUCKET: zammad
+
 .services:
   mysql:
     name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -109,3 +116,8 @@
   ldap:
     name: $CI_REGISTRY/docker/zammad-ldap:stable
     alias: ci-service-ldap
+
+  s3:
+    name: $CI_REGISTRY/docker/zammad-s3:stable
+    alias: ci-service-s3
+    command: ['server', '/data']

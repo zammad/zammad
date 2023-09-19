@@ -1,0 +1,21 @@
+# This is the Zammad storage provider config sample. Copy this file to
+# config/zammad/storage.yml and adopt your configuration.
+
+# Amazon AWS S3 compatible simple storage service.
+#
+# For further information please see the official Amazon AWS S3 guide
+# https://docs.aws.amazon.com/AmazonS3/latest/userguide
+s3:
+  access_key_id: 'key'
+  secret_access_key: 'secret'
+  region: 'eu-central-1'
+  endpoint: 'https://s3.eu-central-1.amazonaws.com'
+  force_path_style: true
+  bucket: 'zammad-storage-bucket'
+
+# The above configuration may also be provided in a URL-like format in this
+# configuration file or as an environment variable named S3_URL.
+# If the url is provided in the configuration file the environment variable is
+# ignored.
+s3:
+  url: 'https://key:secret@s3.eu-central-1.amazonaws.com/zammad-storage-bucket?region=eu-central-1&force_path_style=true'

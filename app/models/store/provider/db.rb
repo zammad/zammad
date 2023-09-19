@@ -5,7 +5,7 @@ class Store
     class DB < ApplicationModel
       self.table_name = 'store_provider_dbs'
 
-      def self.add(data, sha)
+      def self.add(data, sha, *)
         Store::Provider::DB.create(
           data: data,
           sha:  sha,

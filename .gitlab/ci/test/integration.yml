@@ -12,3 +12,4 @@ include:
     - !reference [.services, redis]
     - !reference [.services, memcached]
   stage: test
+
