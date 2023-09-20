@@ -36,6 +36,12 @@ class ConfigureEnvironment
       'username' => 'root',
       'password' => 'zammad',
       'host'     => 'mysql', # db alias from gitlab-ci.yml
+      'flags'    => [
+        # See https://github.com/brianmario/mysql2#flags-option-parsing
+        # This should hopefully reduce mysql crashes in CI.
+        '-COMPRESS',
+        '-MULTI_STATEMENTS',
+      ]
     }
   }.freeze
 
