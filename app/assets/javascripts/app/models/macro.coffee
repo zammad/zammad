@@ -3,7 +3,7 @@ class App.Macro extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/macros'
   @configure_attributes = [
-    { name: 'name',            display: __('Name'),              tag: 'input', type: 'text', limit: 100, null: false },
+    { name: 'name',            display: __('Name'),              tag: 'input', type: 'text', translate: true, limit: 100, null: false },
     { name: 'perform',         display: __('Actions'),           tag: 'ticket_perform_action',           null: true
     },
     { name: 'ux_flow_next_up', display: __('Once completed…'), tag: 'select', default: 'none', translate: true, options: {

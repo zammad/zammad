@@ -68,7 +68,7 @@
         <% if !@macroDisabled: %>
           <li class="dropdown-header" role="menuitem"><%- @T('Macros') %></li>
           <% for macro in @macros: %>
-            <li class="js-dropdownActionMacro" role="menuitem" data-id="<%= macro.id %>"><%- macro.displayName() %>
+            <li class="js-dropdownActionMacro" role="menuitem" data-id="<%= macro.id %>"><%- @T(macro.displayName()) %>
           <% end %>
         <% end %>
     </ul>
