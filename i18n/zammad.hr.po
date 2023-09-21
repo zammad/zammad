@@ -6719,7 +6719,7 @@ msgid "Getting an Access Token"
 msgstr "Kreiranje pristupnog tokena"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
-msgid "Getting key information from the browser..."
+msgid "Getting key information from the browser…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -15864,7 +15864,7 @@ msgstr "Potvrdi slanje i primanje"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #, fuzzy
 #| msgid "Ticket information"
-msgid "Verifying key information..."
+msgid "Verifying key information…"
 msgstr "Informacije ticketa"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco

@@ -6353,7 +6353,7 @@ msgid "Getting an Access Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
-msgid "Getting key information from the browser..."
+msgid "Getting key information from the browser…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -15362,7 +15362,7 @@ msgstr "راستی‌آزمایی ارسال و دریافت"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #, fuzzy
 #| msgid "Block Notifications"
-msgid "Verifying key information..."
+msgid "Verifying key information…"
 msgstr "متوقف کردن اطلاع رسانی ها"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco

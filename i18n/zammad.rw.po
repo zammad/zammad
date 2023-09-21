@@ -6622,7 +6622,7 @@ msgid "Getting an Access Token"
 msgstr "Kubona ikimenyetso cyinjira "
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
-msgid "Getting key information from the browser..."
+msgid "Getting key information from the browser…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -15811,7 +15811,7 @@ msgstr "Kugenzura kohereza no kwakira"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #, fuzzy
 #| msgid "Block Notifications"
-msgid "Verifying key information..."
+msgid "Verifying key information…"
 msgstr "guhagarika imenyesha"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco

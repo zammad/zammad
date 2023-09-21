@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-06-13 03:05+0000\n"
-"Last-Translator: Lerrand <lerrand@gmail.com>\n"
+"PO-Revision-Date: 2023-09-20 01:07+0000\n"
+"Last-Translator: Alfredo Sola <alfredo@sola.es>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/es/>\n"
 "Language: es-es\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -364,7 +364,7 @@ msgstr "%s (confirmar)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (método)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 #, fuzzy
@@ -663,6 +663,14 @@ msgid ""
 "activity type will be rendered for an entry in the **Activity** table under "
 "the **Accounted Time** tab."
 msgstr ""
+"**Tipos de actividad** se puede usar para agrupar los varios tiempos del "
+"caso. Por ejemplo, las entradas que son relevantes para un tipo \"Facturación"
+"\".\n"
+"\n"
+"Cuando se habilita guardar el tipo de actividad, los usuarios podrán elegir "
+"un tipo de esta lista. Además, aparecerá una columna con un tipo de "
+"actividad asociado a la entrada en la tabla **Actividad** bajo la pestaña **"
+"Tiempo computado**."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -1955,6 +1963,8 @@ msgid ""
 "Attention! Changing the organization will update the user's most recent "
 "tickets to the new organization."
 msgstr ""
+"¡Aviso! Cambiar la organización actualizará los casos más recientes del "
+"usuario a la nueva organización."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -6658,7 +6668,9 @@ msgid "Getting an Access Token"
 msgstr "Obteniendo Access Tolken"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
-msgid "Getting key information from the browser..."
+#, fuzzy
+#| msgid "Getting key information from the browser..."
+msgid "Getting key information from the browser…"
 msgstr "Obteniendo información de clave del navegador..."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -15625,7 +15637,9 @@ msgid "Verify sending and receiving"
 msgstr "Verificando el envío y la recepción"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-msgid "Verifying key information..."
+#, fuzzy
+#| msgid "Verifying key information..."
+msgid "Verifying key information…"
 msgstr "Verificando información de clave..."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco

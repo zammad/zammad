@@ -6950,7 +6950,7 @@ msgid "Getting an Access Token"
 msgstr "取得存取 Token"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
-msgid "Getting key information from the browser..."
+msgid "Getting key information from the browser…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -16507,7 +16507,7 @@ msgstr "驗證寄送和接收"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #, fuzzy
 #| msgid "Block Notifications"
-msgid "Verifying key information..."
+msgid "Verifying key information…"
 msgstr "阻止通知"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco

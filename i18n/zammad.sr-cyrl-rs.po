@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-08 01:07+0000\n"
+"PO-Revision-Date: 2023-09-15 01:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18.2\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.0.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -669,8 +669,8 @@ msgstr ""
 "\n"
 "Када укључите снимање врсте активности, корисници ће бити у могућности да "
 "одаберу врсту из ове листе. Додатно, колона са снимљеном врстом активности "
-"ће бити приказана поред записа у табели **Активности** у језичку "
-"**Обрачунато време**."
+"ће бити приказана поред записа у табели **Активности** у језичку **"
+"Обрачунато време**."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -6520,8 +6520,8 @@ msgid "Getting an Access Token"
 msgstr "Добијање приступног кључа"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
-msgid "Getting key information from the browser..."
-msgstr "Учитавање информација о кључу из претраживача..."
+msgid "Getting key information from the browser…"
+msgstr "Учитавање информација о кључу из претраживача…"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -15262,8 +15262,8 @@ msgid "Verify sending and receiving"
 msgstr "Потврди слање и примање"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-msgid "Verifying key information..."
-msgstr "Провера информација о кључу..."
+msgid "Verifying key information…"
+msgstr "Провера информација о кључу…"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco

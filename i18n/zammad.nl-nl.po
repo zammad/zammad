@@ -6582,7 +6582,9 @@ msgid "Getting an Access Token"
 msgstr "Toegangstoken krijgen"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
-msgid "Getting key information from the browser..."
+#, fuzzy
+#| msgid "Getting key information from the browser..."
+msgid "Getting key information from the browser…"
 msgstr "Sleutel informatie ophalen uit de browser..."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -15507,7 +15509,9 @@ msgid "Verify sending and receiving"
 msgstr "Verifieer verzenden en ontvangen"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-msgid "Verifying key information..."
+#, fuzzy
+#| msgid "Verifying key information..."
+msgid "Verifying key information…"
 msgstr "Sleutelgegevens verifiëren..."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco

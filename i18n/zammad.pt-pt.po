@@ -6781,7 +6781,7 @@ msgid "Getting an Access Token"
 msgstr "Obtendo um token de acesso"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
-msgid "Getting key information from the browser..."
+msgid "Getting key information from the browser…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -16142,7 +16142,7 @@ msgstr "Verifique o envio e recebimento"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #, fuzzy
 #| msgid "Block Notifications"
-msgid "Verifying key information..."
+msgid "Verifying key information…"
 msgstr "Bloco de Notificações"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco

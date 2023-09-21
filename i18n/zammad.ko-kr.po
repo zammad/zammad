@@ -6548,7 +6548,7 @@ msgid "Getting an Access Token"
 msgstr "액세스 토큰을 얻기"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
-msgid "Getting key information from the browser..."
+msgid "Getting key information from the browser…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -15693,7 +15693,7 @@ msgstr "전송 및 수신 확인"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #, fuzzy
 #| msgid "Block Notifications"
-msgid "Verifying key information..."
+msgid "Verifying key information…"
 msgstr "블록 알림"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco

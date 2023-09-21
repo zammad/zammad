@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-14 01:05+0000\n"
-"Last-Translator: SamolJacek <samol.jacek@gmail.com>\n"
+"PO-Revision-Date: 2023-09-21 01:05+0000\n"
+"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/pl/>\n"
 "Language: pl\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2051,10 +2051,8 @@ msgid "Authenticator app secret"
 msgstr "Sekret aplikacji Authenticator"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
-#, fuzzy
-#| msgid "Authy"
 msgid "Author"
-msgstr "Autentyczny"
+msgstr "Autor"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -5899,7 +5897,7 @@ msgstr "Wprowadź klucze aplikacji %s"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Enter your current password, insert a new one and confirm it."
-msgstr ""
+msgstr "Wpisz swoje obecne hasło, podaj nowe i potwierdź je."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -6606,7 +6604,9 @@ msgid "Getting an Access Token"
 msgstr "Uzyskiwanie dostępu do tokenu"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
-msgid "Getting key information from the browser..."
+#, fuzzy
+#| msgid "Getting key information from the browser..."
+msgid "Getting key information from the browser…"
 msgstr "Pobieranie kluczowych informacji z przeglądarki..."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -7973,10 +7973,8 @@ msgid "Last change %s %s by %s"
 msgstr "Ostatnia zmiana %s %s wykonana przez %s"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
-#, fuzzy
-#| msgid "has changed"
 msgid "Last changed"
-msgstr "zmieniony"
+msgstr "Ostatnio zmieniony"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -10465,16 +10463,12 @@ msgid "Queue already exists!"
 msgstr "Kolejka już istnieje!"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Enable REST API access using the username/email address and password for "
-#| "the authentication user."
 msgid ""
 "REST API access using the username/email address and password is currently "
 "disabled. Please contact your administrator."
 msgstr ""
-"Włącz dostęp REST API używając nazwy użytkownika/adresu e-mail i hasła dla "
-"użytkownika uwierzytelniającego."
+"Dostęp do API REST przy użyciu nazwy użytkownika/adresu e-mail i hasła jest "
+"obecnie wyłączony. Skontaktuj się ze swoim administratorem."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -11841,10 +11835,10 @@ msgstr "Pokaż widoki zgłoszeń"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enable time accounting for following matching tickets."
 msgid "Show time accounting dialog when updating matching tickets."
-msgstr "Włącz zliczanie czasu dla następujących pasujących zgłoszeń."
+msgstr ""
+"Pokaż okno dialogowe rozliczania czasu podczas aktualizacji pasujących "
+"zgłoszeń."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
@@ -14363,10 +14357,8 @@ msgid "Time Accounting Unit"
 msgstr "Jednostka Rejestrowania Czasu"
 
 #: app/policies/ticket/time_accounting_policy.rb
-#, fuzzy
-#| msgid "Time Accounting Unit"
 msgid "Time Accounting is not enabled"
-msgstr "Jednostka Rejestrowania Czasu"
+msgstr "Rozliczanie czasu nie jest włączone"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
@@ -14593,16 +14585,12 @@ msgid "Topics"
 msgstr "Tematy"
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
-#, fuzzy
-#| msgid "Total: %s"
 msgid "Total"
-msgstr "W sumie: %s"
+msgstr "Łącznie"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Total Accounted Time"
-msgstr "Czas wykonywania zadania"
+msgstr "Całkowity rozliczony czas"
 
 #: db/seeds/settings.rb
 msgid "Total display of the number of objects in a grouping."
@@ -14621,10 +14609,8 @@ msgid "Transfer conversation to another chat:"
 msgstr "Przenieś rozmowę na inny czat:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Translations"
 msgid "Translate field contents"
-msgstr "Tłumaczenie"
+msgstr "Tłumaczenie zawartości pola"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -15441,7 +15427,9 @@ msgid "Verify sending and receiving"
 msgstr "Sprawdź wysyłanie i odbieranie"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-msgid "Verifying key information..."
+#, fuzzy
+#| msgid "Verifying key information..."
+msgid "Verifying key information…"
 msgstr "Weryfikowanie informacji o kluczu..."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
