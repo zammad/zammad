@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-01 01:09+0000\n"
+"PO-Revision-Date: 2023-09-21 09:17+0000\n"
 "Last-Translator: Onur Alp Akin <onralpakin@gmail.com>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/tr/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -415,7 +415,7 @@ msgstr "%s önce"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "%s attached files"
-msgstr "%s ekteki dosyalar"
+msgstr "%s dosya ekte"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
@@ -570,11 +570,11 @@ msgstr "%s, |%s| kullanıcısına geçiş yaptı!"
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
 msgid "%s tickets"
-msgstr "%s adet destek talepleri"
+msgstr "%s destek talebi"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "%s tickets found"
-msgstr "%s adet destek talebi bulundu"
+msgstr "%s destek talebi bulundu"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
@@ -663,6 +663,14 @@ msgid ""
 "activity type will be rendered for an entry in the **Activity** table under "
 "the **Accounted Time** tab."
 msgstr ""
+"**Faaliyet Türleri** farklı destek talebi zaman hesaplama girişlerini bir "
+"arada gruplamak için kullanılabilir. Örneğin, bir \"Faturalama\" türüyle "
+"ilgili girişler.\n"
+"\n"
+"Faaliyet türünün kaydedilmesini etkinleştirdiğinizde, kullanıcılar bu "
+"listeden bir tür seçebileceklerdir. Ayrıca, **Hesaplanan Süre** sekmesi "
+"altındaki **Etkinlik** tablosundaki bir giriş için ilişkili etkinlik türüne "
+"sahip bir sütun oluşturulacaktır."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -720,7 +728,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "1 attached file"
-msgstr "1 ekli dosya"
+msgstr "1 dosya ekte"
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -934,7 +942,7 @@ msgstr "API token"
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 "Veri Gizliliği Politikası ve Kabul Edilebilir Kullanım Politikasını Kabul "
-"Edin"
+"Ediyorum"
 
 #: db/seeds/permissions.rb
 msgid "Access to %s"
@@ -1160,10 +1168,8 @@ msgid "Add Certificate"
 msgstr "Sertifika Ekle"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco
-#, fuzzy
-#| msgid "Add reply"
 msgid "Add Key"
-msgstr "Yanıt Ekle"
+msgstr "Anahtar Ekle"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
@@ -1175,10 +1181,8 @@ msgid "Add Private Key"
 msgstr "Özel Anahtar Ekle"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-#, fuzzy
-#| msgid "Add Private Key"
 msgid "Add Public or Private Key"
-msgstr "Özel Anahtar Ekle"
+msgstr "Açık veya Özel Anahtar Ekle"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -1199,7 +1203,7 @@ msgstr "Bir Not Ekle"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Add a Personal Access Token"
-msgstr "Kişisel Erişim Tokeni Ekleme"
+msgstr "Kişisel Erişim Tokeni Ekle"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Add a message"
@@ -1449,9 +1453,9 @@ msgid "All tickets"
 msgstr "Tüm destek talepleri"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
 msgid "All two-factor authentication methods were removed for this user."
-msgstr "True"
+msgstr ""
+"Bu kullanıcı için tüm iki faktörlü kimlik doğrulama yöntemleri kaldırıldı."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1485,7 +1489,7 @@ msgstr "Web sitelerine izin ver (; ile ayrılmış)"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 msgid "Also notify via email"
-msgstr "Ayrıca e-posta yoluyla da bildirimde bulunun"
+msgstr "Ayrıca e-posta yoluyla da bildir"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -1707,20 +1711,16 @@ msgstr ""
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
-"Yeniden yüklemek istediğinizden emin misiniz? Kaydedilmemiş değişiklik "
-"kaybolacaktır"
+"Yeniden yüklemek istediğinizden emin misiniz? Kaydedilmemiş "
+"değişiklikleriniz var ve bunlar kaybolacak"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-#, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Are you sure you want to set \"%s\" as default?"
-msgstr "Sure to delete this object?"
+msgstr "Varsayılan olarak \"%s\" ayarlamak istediğinizden emin misiniz?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-#, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Are you sure you want to unset \"%s\" as default?"
-msgstr "Sure to delete this object?"
+msgstr "Varsayılan olarak \"%s\" ayarını kaldırmak istediğinizden emin misiniz?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -1766,6 +1766,8 @@ msgid ""
 "Are you sure? The user will have to to reconfigure all two-factor "
 "authentication methods."
 msgstr ""
+"Emin misiniz? Kullanıcının tüm iki faktörlü kimlik doğrulama yöntemlerini "
+"yeniden yapılandırması gerekecektir."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? You have changes that will get lost."
@@ -1936,6 +1938,8 @@ msgid ""
 "Attention! Changing the organization will update the user's most recent "
 "tickets to the new organization."
 msgstr ""
+"Dikkat! Organizasyonun değiştirilmesi, kullanıcının en son destek "
+"taleplerini yeni organizasyona güncelleyecektir."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -2030,30 +2034,24 @@ msgstr "%s ile kimlik doğrulama"
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
 #: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Authentication"
 msgid "Authenticator App"
-msgstr "Authentication"
+msgstr "Kimlik Doğrulayıcı Uygulaması"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-#, fuzzy
-#| msgid "Authentication via %s"
 msgid "Authenticator app secret"
-msgstr "Authentication via %s"
+msgstr "Kimlik Doğrulayıcı uygulama sırrı"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
-#, fuzzy
 msgid "Author"
-msgstr "True"
+msgstr "Yazar"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
 msgstr "Yetkilendirme başarısız"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-#, fuzzy
 msgid "Authy"
-msgstr "True"
+msgstr "Authy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
@@ -2199,12 +2197,12 @@ msgstr "Birikmiş İşler"
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 msgid "Base"
-msgstr "Base"
+msgstr "Temel"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Base DN"
-msgstr "Base DN"
+msgstr "Temel DN"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Base Objects"
@@ -2513,10 +2511,8 @@ msgid "Cancel & Go Back"
 msgstr "İptal Et & Geri Dön"
 
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
-#, fuzzy
-#| msgid "Sign out"
 msgid "Cancel & Sign out"
-msgstr "Çıkış yap"
+msgstr "İptal Et ve Çıkış Yap"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -2701,7 +2697,7 @@ msgstr "Sohbet"
 
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 msgid "Chat ID"
-msgstr "Sohbet ID"
+msgstr "Sohbet Kimliği"
 
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 msgid "Chat Session"
@@ -2784,6 +2780,9 @@ msgid ""
 "signing or encrypting is not possible, the setting has no effect. Agents can "
 "always manually alter the behavior for each article."
 msgstr ""
+"Grup bazında PGP entegrasyonunun varsayılan davranışını seçin. İmzalama veya "
+"şifreleme mümkün değilse, ayarın hiçbir etkisi yoktur. Temsilciler her yazı "
+"için davranışı her zaman manuel olarak değiştirebilir."
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid ""
@@ -2791,6 +2790,9 @@ msgid ""
 "signing or encrypting is not possible, the setting has no effect. Agents can "
 "always manually alter the behavior for each article."
 msgstr ""
+"Grup bazında S/MIME entegrasyonunun varsayılan davranışını seçin. İmzalama "
+"veya şifreleme mümkün değilse, ayarın hiçbir etkisi yoktur. Temsilciler her "
+"yazı için davranışı her zaman manuel olarak değiştirebilir."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose the group to which direct messages will get added."
@@ -2820,6 +2822,8 @@ msgstr "Yeni şifrenizi seçin."
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
 msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr ""
+"Ayarlamak için tercih ettiğiniz iki faktörlü kimlik doğrulama yöntemini "
+"seçin."
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Christmas holiday"
@@ -2831,15 +2835,15 @@ msgstr "Şehir"
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'Cti::Log'."
-msgstr "'Cti::Log'u temizleyin."
+msgstr "'Cti::Log' temizleyin."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'DataPrivacyTask'."
-msgstr "'VeriGizliliğiGörevi' temizleyin."
+msgstr "'DataPrivacyTask' temizleyin."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'HttpLog'."
-msgstr "'HttpLog'u temizleyin."
+msgstr "'HttpLog' temizleyin."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up ActiveJob locks."
@@ -2899,6 +2903,7 @@ msgstr "Buraya tıklayın"
 #: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "Click here to set up a two-factor authentication method."
 msgstr ""
+"İki faktörlü bir kimlik doğrulama yöntemi ayarlamak için buraya tıklayın."
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -2906,7 +2911,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
-msgstr "İstemci ID"
+msgstr "İstemci Kimliği"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -3009,7 +3014,7 @@ msgstr "Şirket A.Ş."
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 #: db/seeds/settings.rb
 msgid "Complete the sign-in with your security key."
-msgstr ""
+msgstr "Güvenlik anahtarınızla oturum açma işlemini tamamlayın."
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Complete translations"
@@ -3076,10 +3081,8 @@ msgid "Confirm"
 msgstr "Onayla"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
-#, fuzzy
-#| msgid "Bind Password"
 msgid "Confirm Password"
-msgstr "Bind Password"
+msgstr "Şifreyi Onayla"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
@@ -3207,6 +3210,7 @@ msgstr "Bağlantı testi başarılı"
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Contact the administrator if you have any problems logging in."
 msgstr ""
+"Oturum açarken herhangi bir sorun yaşarsanız yöneticiyle iletişime geçin."
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -3264,7 +3268,7 @@ msgstr "Mobile devam et"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
-msgstr "Çeviriye Katkıda Bulunmak"
+msgstr "Çevirilere Katkıda Bulunma"
 
 #: lib/sessions/event/chat_transfer.rb
 msgid "Conversation is transferred into another chat. Please stay tuned."
@@ -3311,29 +3315,27 @@ msgstr ""
 "ya da doldurma zorunluluğunu değiştirmek mümkündür."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
 msgid ""
 "Could not load the two-factor authentication configuration for this user."
-msgstr "True"
+msgstr ""
+"Bu kullanıcı için iki faktörlü kimlik doğrulama yapılandırması yüklenemedi."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
 msgid "Could not remove all two-factor authentication methods for this user."
-msgstr "True"
+msgstr ""
+"Bu kullanıcı için tüm iki faktörlü kimlik doğrulama yöntemleri kaldırılamadı."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
 msgid "Could not remove the two-factor authentication method for this user."
-msgstr "True"
+msgstr "Bu kullanıcı için iki faktörlü kimlik doğrulama yöntemi kaldırılamadı."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Could not remove two-factor authentication method"
-msgstr ""
+msgstr "İki faktörlü kimlik doğrulama yöntemi kaldırılamadı"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
-#, fuzzy
 msgid "Could not set two-factor authentication method as default"
-msgstr "True"
+msgstr "İki faktörlü kimlik doğrulama yöntemi varsayılan olarak ayarlanamadı"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
@@ -4262,9 +4264,8 @@ msgid ""
 msgstr "True"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines if the time accounting types are enabled."
-msgstr "True"
+msgstr "Süre hesaplama türlerinin etkin olup olmadığını tanımlar."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -4545,6 +4546,7 @@ msgstr "Kullanıcı ve organizasyon görsel aramaları için arka ucu tanımlar.
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr ""
+"Süre hesaplama giriş alanının yanında gösterilecek özel birimi tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines the default calendar tickets subscription settings."
@@ -4568,10 +4570,8 @@ msgid "Defines the default system timezone."
 msgstr "Sistem varsayılan saat dilimini tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the system default timezone."
 msgid "Defines the default time accounting type."
-msgstr "Sistem varsayılan saat dilimini tanımlar."
+msgstr "Varsayılan süre hesaplama türünü tanımlar."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -4785,7 +4785,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: db/seeds/settings.rb
 msgid "Defines the unit to be shown next to the time accounting input field."
-msgstr ""
+msgstr "Süre hesaplama giriş alanının yanında gösterilecek birimi tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4943,10 +4943,8 @@ msgid "Deleted Organization:"
 msgstr "Organizasyon Silindi"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#, fuzzy
-#| msgid "Deleted tickets (%s in total)"
 msgid "Deleted tickets (%s in total):"
-msgstr "Silinen biletler (toplamda %s)"
+msgstr "Silinen destek talepleri (toplamda %s):"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "Deletion Task"
@@ -5661,9 +5659,8 @@ msgid "Enable ticket auto assignment."
 msgstr "True"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Enable time accounting."
-msgstr "True"
+msgstr "Süre hesaplamasını etkinleştirin."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Enable/disable inline translations"
@@ -6019,7 +6016,7 @@ msgstr "True"
 
 #: db/seeds/overviews.rb
 msgid "Escalated Tickets"
-msgstr "Yükseltilmiş Biletler"
+msgstr "Yükseltilmiş Destek Talepleri"
 
 #. This is the template file app/views/mailer/ticket_escalation/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -6960,11 +6957,12 @@ msgid "Group Filter"
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#, fuzzy
 msgid ""
 "Group information could not be retrieved, please check your bind user "
 "permissions."
-msgstr "True"
+msgstr ""
+"Grup bilgileri alınamadı, lütfen bağlantı kullanıcısı izinlerinizi kontrol "
+"edin."
 
 #: app/models/channel/driver/sms/base.rb
 #, fuzzy
@@ -7303,20 +7301,23 @@ msgstr ""
 msgid ""
 "How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you "
 "have too many…)"
-msgstr "Kaç tane yükselen biletiniz var? (Çok fazla varsa Patron kızabilir...)"
+msgstr ""
+"Açık kaç tane yükseltilmiş destek talebiniz var? (Çok fazla varsa Bay "
+"Bubbles huysuzlanır...)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee
 msgid ""
 "How many of your tickets are coming from email, phone, Twitter, or Facebook? "
 "(Shows percentages for both inbound and outbound tickets.)"
 msgstr ""
-"Biletlerinizin kaç tanesi e-posta, telefon, Twitter veya Facebook'tan "
-"geliyor? (Hem gelen hem de giden biletlerin yüzdelerini gösterir.)"
+"Destek taleplerinizin kaçı e-posta, telefon, Twitter veya Facebook'tan "
+"geliyor? (Hem gelen hem de giden destek talepleri için yüzdeleri gösterir.)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee
 msgid ""
 "How many of your tickets have been re-opened after being marked “closed”?"
-msgstr "“Kapalı” olarak işaretlendikten sonra kaç biletiniz yeniden açıldı?"
+msgstr ""
+"\"Kapalı\" olarak işaretlendikten sonra kaç destek talebiniz yeniden açıldı?"
 
 #: app/controllers/first_steps_controller.rb
 msgid "How to use it"
@@ -7617,17 +7618,14 @@ msgstr "True"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Import as regular: |Notifications are sent| and the |tickets are open| - "
-#| "you can find the tickets in the overview of open tickets."
 msgid ""
 "Import as archive: |No notifications are sent|, the |tickets are closed|, "
 "and original timestamps are used. You can still find them in Zammad using "
 "the search."
 msgstr ""
-"Normal olarak içe aktar: | Bildirimler gönderildi | ve | biletler açık | - "
-"biletleri açık biletlere genel bakışta bulabilirsiniz."
+"Arşiv olarak içe aktar: |Hiçbir bildirim gönderilmez|, |destek talepleri "
+"kapatılır| ve orijinal zaman damgaları kullanılır. Aramayı kullanarak "
+"bunları Zammad'da hala bulabilirsiniz."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -7635,8 +7633,9 @@ msgid ""
 "Import as regular: |Notifications are sent| and the |tickets are open| - you "
 "can find the tickets in the overview of open tickets."
 msgstr ""
-"Normal olarak içe aktar: | Bildirimler gönderildi | ve | biletler açık | - "
-"biletleri açık biletlere genel bakışta bulabilirsiniz."
+"Normal olarak içe aktarın: |Bildirimler gönderilir| ve |destek talepleri "
+"açıktır| - destek taleplerini, açık destek taleplerinin genel görünümünde "
+"bulabilirsiniz."
 
 #: app/assets/javascripts/app/views/import/index.jst.eco
 msgid "Import from"
@@ -7658,10 +7657,10 @@ msgid ""
 "you can find them in Zammad anytime using the search function."
 msgstr ""
 "Ayrıca, posta kutunuzda %s haftadan daha eski e-postalar bulduk. Bu tür e-"
-"postaları bir \"arşiv\" olarak içe aktarabilirsiniz; bu, bildirimlerin "
-"gönderilmediği ve biletlerin \"kapalı\" durumuna sahip olduğu anlamına "
-"gelir. Ancak, arama işlevini kullanarak bunları istediğiniz zaman Zammad'da "
-"bulabilirsiniz."
+"postaları \"arşiv\" olarak içe aktarabilirsiniz, bu da hiçbir bildirimin "
+"gönderilmeyeceği ve destek taleplerinin \"kapalı\" durumuna sahip olacağı "
+"anlamına gelir. Ancak, arama işlevini kullanarak bunları Zammad'da "
+"istediğiniz zaman bulabilirsiniz."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #, fuzzy
@@ -8217,10 +8216,8 @@ msgid "Languages"
 msgstr "Languages"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
-#, fuzzy
-#| msgid "Article"
 msgid "Last Article"
-msgstr "Makale"
+msgstr "Son Yazı"
 
 #: lib/excel_sheet/ticket.rb
 #, fuzzy
@@ -9104,7 +9101,7 @@ msgstr "Abone olduğum Ticketlar"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: db/seeds/overviews.rb
 msgid "My Tickets"
-msgstr "Biletlerim"
+msgstr "Destek Taleplerim"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "My handling time: %s minutes"
@@ -9348,7 +9345,7 @@ msgstr "Yeni Şablon"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
-msgstr "Yeni Bilet"
+msgstr "Yeni Destek Talebi"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
@@ -10046,7 +10043,7 @@ msgstr "Open Ticket# %s"
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 #: db/seeds/overviews.rb
 msgid "Open Tickets"
-msgstr "Açık Biletler"
+msgstr "Açık Destek Talepleri"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
@@ -10069,10 +10066,8 @@ msgid "Open ticket indicator"
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "Open tickets"
-msgstr "Açık Biletler"
+msgstr "Açık destek talepleri"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
@@ -10231,7 +10226,9 @@ msgstr "Ofis dışında"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
-msgstr "Tüm açık biletlerden (şirket çapında) size kaç tane atandı?"
+msgstr ""
+"Tüm açık destek taleplerinden (şirket genelinde) kaç tanesi size atanmış "
+"durumda?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "Out of office replacement"
@@ -10823,11 +10820,11 @@ msgstr "Preview Width"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "Preview customer tickets"
-msgstr "Müşteri biletlerini önizleyin"
+msgstr "Müşteri destek taleplerini gözden geçirin"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "Preview owner tickets"
-msgstr "Sahip biletlerini önizleyin"
+msgstr "Sahip destek taleplerini gözden geçirin"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
@@ -10839,10 +10836,8 @@ msgid "Previous in overview"
 msgstr "Previous in overview"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#, fuzzy
-#| msgid "Previously owned tickets (%s in total)"
 msgid "Previously owned tickets (%s in total):"
-msgstr "Önceden sahip olunan biletler (toplamda %s)"
+msgstr "Daha önce sahip olunan destek talepleri (toplamda %s):"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Print"
@@ -10980,10 +10975,8 @@ msgid "Publish"
 msgstr "Publish"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
-#, fuzzy
-#| msgid "Article"
 msgid "Publish Article"
-msgstr "Makale"
+msgstr "Yazıyı Yayınla"
 
 #: app/views/knowledge_base/public/answers/show.html.erb
 #, fuzzy
@@ -11537,10 +11530,8 @@ msgid "Retweets"
 msgstr "True"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#, fuzzy
-#| msgid "Retweets are converted to Tickets"
 msgid "Retweets are converted into tickets."
-msgstr "Retweetler Biletlere dönüştürülür"
+msgstr "Retweetler destek taleplerine dönüştürülür."
 
 #: app/models/webhook/pre_defined/rocket_chat.rb
 #, fuzzy
@@ -12537,10 +12528,10 @@ msgstr "Konular"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enable time accounting for following matching tickets."
 msgid "Show time accounting dialog when updating matching tickets."
-msgstr "Enable time accounting for following matching tickets."
+msgstr ""
+"Eşleşen destek taleplerini güncellerken süre hesaplama iletişim kutusunu "
+"gösterin."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
@@ -12665,10 +12656,8 @@ msgid "Signup Screen"
 msgstr "İmza"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "%s tickets found"
 msgid "Similar tickets found"
-msgstr "%s bilet bulundu"
+msgstr "Benzer destek talepleri bulundu"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 #, fuzzy
@@ -14330,10 +14319,8 @@ msgstr ""
 "Webhook Telegram tarafından kaydedilemedi, geçersiz bir URL gibi görünüyor."
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
-#, fuzzy
-#| msgid "Tickets"
 msgid "Their tickets"
-msgstr "BİLETLER"
+msgstr "Destek talepleri"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
@@ -14912,17 +14899,15 @@ msgstr "Perşembe"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts
 #: db/seeds/permissions.rb
 msgid "Ticket"
-msgstr "Bilet"
+msgstr "Destek Talebi"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Ticket %s created!"
 msgstr "Ticket %s created!"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
-#, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "Ticket %s merged."
-msgstr "Bilet %s birleştirildi!"
+msgstr "Destek talebi %s birleştirildi."
 
 #. This is the template file app/views/mailer/ticket_update_merged_into/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -15031,7 +15016,7 @@ msgstr "Ticket Selector"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Forward"
-msgstr "Bilet Konusu İleri"
+msgstr "Destek Talebi Konu Yönlendirme"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Reply"
@@ -15245,7 +15230,7 @@ msgstr "True"
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "Tickets"
-msgstr "BİLETLER"
+msgstr "Destek Talepleri"
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 msgid ""
@@ -15302,41 +15287,31 @@ msgstr "Zaman"
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Time Accounting"
-msgstr "Zaman Hesaplama"
+msgstr "Süre Hesaplama"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Custom Unit"
-msgstr "Zaman Hesaplama"
+msgstr "Süre Hesaplama Özel Birimi"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Time Accounting Default Type"
-msgstr "True"
+msgstr "Süre Hesaplama Varsayılan Türü"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Time Accounting Selector"
-msgstr "True"
+msgstr "Süre Hesaplama Seçici"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Types"
-msgstr "Zaman Hesaplama"
+msgstr "Süre Hesaplama Türleri"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Unit"
-msgstr "Zaman Hesaplama"
+msgstr "Süre Hesaplama Birimi"
 
 #: app/policies/ticket/time_accounting_policy.rb
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting is not enabled"
-msgstr "Zaman Hesaplama"
+msgstr "Süre Hesaplama etkin değil"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
@@ -15352,10 +15327,8 @@ msgid "Time Units Total"
 msgstr "Time Units Total"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time accounting unit"
-msgstr "Zaman Hesaplama"
+msgstr "Süre hesaplama birimi"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 #, fuzzy
@@ -15578,10 +15551,8 @@ msgid "Total"
 msgstr "Total: %s"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Total Accounted Time"
-msgstr "Hesaplanan Zaman"
+msgstr "Toplam Hesaplanan Süre"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -16293,11 +16264,12 @@ msgid "User filter"
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#, fuzzy
 msgid ""
 "User information could not be retrieved, please check your bind user "
 "permissions."
-msgstr "True"
+msgstr ""
+"Kullanıcı bilgileri alınamadı, lütfen bağlantı kullanıcısı izinlerinizi "
+"kontrol edin."
 
 #: app/assets/javascripts/app/controllers/user.coffee
 #, fuzzy
@@ -16492,10 +16464,8 @@ msgid "View this in Zammad"
 msgstr "View this in Zammad"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-#, fuzzy
-#| msgid "New Ticket"
 msgid "Viewing ticket"
-msgstr "Yeni Bilet"
+msgstr "Destek talebini inceliyor"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
@@ -16698,10 +16668,10 @@ msgstr ""
 "Webhooklar, Zammad içindeki olaylar hakkında HTTP(S) aracılığıyla üçüncü "
 "taraf sistemlere bilgi göndermeyi kolaylaştırır.\n"
 "\n"
-"Bir tetikleyici gerçekleştirildiğinde bilet, makale ve ek verileri göndermek "
-"için Zammad'daki webhookları kullanabilirsiniz. Webhookunuzu bir HTTP(S) "
-"endpointi ve ilgili güvenlik ayarları ile oluşturup yapılandırdıktan sonra "
-"bunu gerçekleştirmek için bir tetikleyici yapılandırmanız yeterlidir."
+"Bir tetikleyici gerçekleştirildiğinde destek talebi, yazı ve ek verileri "
+"göndermek için Zammad'daki webhookları kullanabilirsiniz. Webhookunuzu bir "
+"HTTP(S) endpointi ve ilgili güvenlik ayarları ile oluşturup yapılandırdıktan "
+"sonra bunu gerçekleştirmek için bir tetikleyici yapılandırmanız yeterlidir."
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 #, fuzzy
@@ -16790,8 +16760,8 @@ msgid ""
 "What percentage of your tickets have you responded to, updated, or modified "
 "in some way today?"
 msgstr ""
-"Biletlerinizin yüzde kaçını bugün bir şekilde yanıtladınız, güncellediniz "
-"veya değiştirdiniz?"
+"Bugün destek taleplerinizin yüzde kaçını yanıtladınız, güncellediniz veya "
+"bir şekilde değiştirdiniz?"
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to organization."
@@ -17387,7 +17357,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Your callback URL"
-msgstr "Geri arama URL'niz"
+msgstr "Sizin callback URL'niz"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 #, fuzzy
@@ -18822,10 +18792,8 @@ msgid "telegram personal-message"
 msgstr "telegram kişisel mesaj"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#, fuzzy
-#| msgid "Retweets are converted to Tickets"
 msgid "this ticket was merged into ticket %s"
-msgstr "Retweetler Biletlere dönüştürülür"
+msgstr "bu destek talebi %s destek talebiyle birleştirildi"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
@@ -18835,10 +18803,8 @@ msgid "ticket"
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#, fuzzy
-#| msgid "Retweets are converted to Tickets"
 msgid "ticket %s was merged into this ticket"
-msgstr "Retweetler Biletlere dönüştürülür"
+msgstr "%s destek talebi bu destek talebiyle birleştirildi"
 
 #: lib/calendar_subscriptions/tickets.rb
 #, fuzzy

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-11 06:20+0000\n"
+"PO-Revision-Date: 2023-09-19 01:08+0000\n"
 "Last-Translator: Tomáš Kovařík <tomas.kovarik@cdv.cz>\n"
 "Language-Team: Czech <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/cs/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -12701,12 +12701,17 @@ msgid ""
 "The certificate is not valid for S/MIME usage. Please check the certificate "
 "format."
 msgstr ""
+"Certifikát není platný pro použití S/MIME. Prosím zkontrolujte formát "
+"certifikátu."
 
 #: lib/secure_mailing/smime/certificate.rb
 msgid ""
 "The certificate is not valid for S/MIME usage. Please check the key usage, "
 "subject alternative name and public key cryptographic algorithm."
 msgstr ""
+"Certifikát není platný pro použití S/MIME. Prosím zkontrolujte použití "
+"klíče, alternativní název subjektu a kryptografický algoritmus veřejného "
+"klíče."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid ""
@@ -12719,16 +12724,12 @@ msgstr ""
 "certifikát, můžete pokračovat. V opačném případě akci zrušte."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "Notification Sound"
 msgid "The certificates for %s were found."
-msgstr "Zvuk oznámení"
+msgstr "Certifikáty pro %s byly nalezeny."
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "Notification Sound"
 msgid "The certificates for %s were not found."
-msgstr "Zvuk oznámení"
+msgstr "Certifikáty pro %s nebyly nalezeny."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -12760,6 +12761,8 @@ msgid ""
 "The chosen unit will be used for display only and will not affect stored "
 "values."
 msgstr ""
+"Zvolená jednotka bude použita pouze pro zobrazení a neovlivní uložené "
+"hodnoty."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "The configuration of Zammad has changed, please reload your browser."
@@ -17540,10 +17543,8 @@ msgstr "Uživatelé s \"%s\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#, fuzzy
-#| msgid "Users with \"%s\""
 msgid "starts with one of"
-msgstr "Uživatelé s \"%s\""
+msgstr "začíná jedním z"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
