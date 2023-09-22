@@ -1,8 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import domMatchers, {
-  type TestingLibraryMatchers,
-} from '@testing-library/jest-dom/matchers'
+import '@testing-library/jest-dom/vitest'
+import { toBeDisabled } from '@testing-library/jest-dom/matchers'
 import { configure } from '@testing-library/vue'
 import * as matchers from 'vitest-axe/matchers'
 import { expect } from 'vitest'
@@ -210,7 +209,7 @@ afterEach((context) => {
 // Import the matchers for accessibility testing with aXe.
 expect.extend(matchers)
 expect.extend(assertions)
-expect.extend(domMatchers)
+// expect.extend(domMatchers)
 
 expect.extend({
   // allow aria-disabled in toBeDisabled
@@ -225,7 +224,7 @@ expect.extend({
         return { pass: true, message: () => 'should not have "aria-disabled"' }
       }
     }
-    return (domMatchers.toBeDisabled as any).call(this, received, ...args)
+    return (toBeDisabled as any).call(this, received, ...args)
   },
 })
 
@@ -238,7 +237,12 @@ declare module 'vitest' {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface Assertion<T> extends TestingLibraryMatchers<null, T> {}
+  // interface Assertion<T> extends TestingLibraryMatchers<null, T> {}
+}
+
+declare module 'vitest' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-unused-vars
+  interface Assertion<T> extends matchers.AxeMatchers {}
 }
 
 declare global {

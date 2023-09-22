@@ -15,7 +15,6 @@
     "test:ci:ct": "CI=true yarn --cwd ./.cypress cypress run --component --project ../ --config-file .cypress/cypress.config.mjs --browser electron",
     "cypress:snapshots": "sh .cypress/visual-regression/snapshots.sh",
     "cypress:install": "yarn --cwd ./.cypress install",
-    "postinstall": "node script/fix-node-modules.mjs",
     "story": "histoire dev",
     "story:build": "HISTOIRE_BUILD=1 histoire build"
   },
@@ -33,7 +32,7 @@
     "@graphql-codegen/typescript-vue-apollo": "^3.3.7",
     "@histoire/plugin-vue": "^0.17.1",
     "@pinia/testing": "^0.1.3",
-    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/jest-dom": "^6.1.3",
     "@testing-library/user-event": "^14.5.1",
     "@testing-library/vue": "^7.0.0",
     "@types/lodash-es": "^4.17.9",
