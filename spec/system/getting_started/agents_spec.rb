@@ -17,4 +17,21 @@ RSpec.describe 'Getting Started > Agents', type: :system do
         .to have_text("Email address 'admin@example.com' is already used for another user.")
     end
   end
+
+  it 'adds roles correctly' do
+    visit 'getting_started/agents', skip_waiting: true
+
+    fill_in 'email', with: 'test@example.com'
+
+    click 'span', text: 'Admin'
+    click 'span', text: 'Agent' # unselect preselected role
+    click '.btn--success'
+
+    expect(User.last).to have_attributes(
+      email: 'test@example.com',
+      roles: contain_exactly(
+        Role.find_by(name: 'Admin')
+      )
+    )
+  end
 end
