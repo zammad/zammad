@@ -157,6 +157,7 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
     names =
       'show':           __('show')
       'hide':           __('hide')
+      'add':            __('add')
       'remove':         __('remove')
       'set_mandatory':  __('set mandatory')
       'set_optional':   __('set optional')
