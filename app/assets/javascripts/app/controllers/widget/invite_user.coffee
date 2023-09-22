@@ -1,4 +1,5 @@
 class App.InviteUser extends App.ControllerWizardModal
+  className: 'modal fade modal--large'
   events:
     'click  .js-close':     'hide'
     'submit .js-user':      'submit'

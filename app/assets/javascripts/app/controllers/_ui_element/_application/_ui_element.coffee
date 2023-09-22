@@ -131,8 +131,7 @@ class App.UiElement.ApplicationUiElement
               list.push record
 
       # data based filter
-      else if attribute.filter && _.isArray attribute.filter
-
+      else if attribute.filter && _.isArray(attribute.filter) && attribute.tag is 'select'
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-array', attribute.filter
 
         filter = _.clone(attribute.filter)
@@ -166,42 +165,53 @@ class App.UiElement.ApplicationUiElement
     # build options list
     @buildOptionList(list, attribute)
 
+  @buildOptionListRow: (attribute, item) ->
+
+    # check if element is selected, show it anyway - ignore active state
+    activeSupport = ('active' of item)
+    isSelected = false
+    if activeSupport && !item.active
+      isSelected = @_selectedOptionsIsSelected(attribute.value, {name: item.name || '', value: item.id})
+
+    hasActiveChildren = false
+    if @isTreeRelation(attribute)
+      hasActiveChildren = _.some(item.all_children(), (obj) -> obj.active)
+
+    # if active or if active doesn't exist
+    return if !item.active && activeSupport && !isSelected && !hasActiveChildren
+
+    nameNew = '?'
+    if @isTreeRelation(attribute)
+      nameNew = item.name_last
+    else if item.displayName
+      nameNew = item.displayName()
+    else if item.name
+      nameNew = item.name
+
+    if attribute.translate
+      nameNew = App.i18n.translatePlain(nameNew)
+
+    row =
+      value: item.id,
+      note:  item.note,
+      name:  nameNew,
+      title: if item.email then item.email else nameNew
+
+    if item.graphic
+      row.graphic = item.graphic
+
+      # only used for graphics
+      if item.aspect_ratio
+        row.aspect_ratio = item.aspect_ratio
+
+    row
+
   # build options list
   @buildOptionList: (list, attribute) ->
-
     for item in list
-
-      # check if element is selected, show it anyway - ignore active state
-      activeSupport = ('active' of item)
-      isSelected = false
-      if activeSupport && !item.active
-        isSelected = @_selectedOptionsIsSelected(attribute.value, {name: item.name || '', value: item.id})
-
-      # if active or if active doesn't exist
-      if item.active || !activeSupport || isSelected
-        nameNew = '?'
-        if item.displayName
-          nameNew = item.displayName()
-        else if item.name
-          nameNew = item.name
-
-        if attribute.translate
-          nameNew = App.i18n.translatePlain(nameNew)
-
-        row =
-          value: item.id,
-          note:  item.note,
-          name:  nameNew,
-          title: if item.email then item.email else nameNew
-
-        if item.graphic
-          row.graphic = item.graphic
-
-          # only used for graphics
-          if item.aspect_ratio
-            row.aspect_ratio = item.aspect_ratio
-
-        attribute.options.push row
+      row = @buildOptionListRow(attribute, item)
+      continue if !row
+      attribute.options.push row
 
     attribute.sortBy = null
 
@@ -213,7 +223,7 @@ class App.UiElement.ApplicationUiElement
     if typeof attribute.filter is 'function'
       App.Log.debug 'ControllerForm', '_filterOption:filter-function'
       attribute.options = attribute.filter(attribute.options, attribute)
-    else if !attribute.relation && attribute.filter && _.isArray(attribute.filter)
+    else if (@isTreeRelation(attribute) || !attribute.relation) && attribute.filter && _.isArray(attribute.filter)
       @filterOptionArray(attribute)
 
   @filterOptionArray: (attribute) ->
@@ -323,3 +333,8 @@ class App.UiElement.ApplicationUiElement
         continue if !value
         continue if attribute.options[value]
         attribute.options[value] = attribute.historical_options[value] || value
+
+  @isTreeRelation: (attribute) ->
+    return false if !attribute.relation
+    return false if !_.find(App[attribute.relation].configure_attributes, (attr) -> attr.name is 'parent_id')
+    return true

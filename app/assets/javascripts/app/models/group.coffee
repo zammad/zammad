@@ -1,10 +1,10 @@
 class App.Group extends App.Model
-  @configure 'Group', 'name', 'assignment_timeout', 'follow_up_possible', 'follow_up_assignment', 'email_address_id', 'signature_id', 'note', 'active', 'shared_drafts', 'updated_at'
+  @configure 'Group', 'name', 'name_last', 'assignment_timeout', 'follow_up_possible', 'follow_up_assignment', 'email_address_id', 'signature_id', 'note', 'active', 'shared_drafts', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/groups'
 
   @configure_attributes = [
-    { name: 'name',                 display: __('Name'),              tag: 'input',  type: 'text', limit: 100, null: false },
+    { name: 'name',                 display: __('Name'),              tag: 'input',  type: 'text', maxlength: 255, readonly: 1 },
     { name: 'assignment_timeout',   display: __('Assignment timeout'), tag: 'input', note: __('Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend.'), type: 'text', limit: 100, null: true },
     { name: 'follow_up_possible',   display: __('Follow-up possible'),tag: 'select', default: 'yes', options: { yes: __('yes'), 'new_ticket': __('do not reopen ticket but create new ticket'), 'new_ticket_after_certain_time': __('do not reopen ticket after certain time but create new ticket') }, null: false, note: __('Follow-up for closed ticket possible or not.'), translate: true },
     { name: 'reopen_time_in_days',  display: __('Reopening time in days'), tag: 'input',  type: 'integer', null: true },
@@ -20,6 +20,7 @@ class App.Group extends App.Model
   @configure_overview = [
     'name',
   ]
+  @has_parents = true
 
   uiUrl: ->
     '#group/zoom/' + @id
@@ -48,3 +49,17 @@ class App.Group extends App.Model
 
   signature_id_is_display_warning: (signature_id) ->
     !App.Signature.find(signature_id).active
+
+  all_children: ->
+    result     = []
+    check_next = [@]
+    while check_next.length > 0
+      parent_ids = _.map(check_next, (group) -> group.id)
+      children     = _.filter(App.Group.all(), (group) -> _.contains(parent_ids, group.parent_id))
+      result     = result.concat(children)
+      check_next = children
+    result
+
+  displayName: =>
+    name = @name || @name_last || '-'
+    name.replaceAll('::', ' › ')

@@ -199,7 +199,7 @@ class AccountEdit extends App.ControllerModal
     content = $( App.view('facebook/account_edit')(channel: @channel) )
 
     groupSelection = (selected_id, el, prefix) ->
-      selection = App.UiElement.select.render(
+      selection = App.UiElement.tree_select.render(
         name: "#{prefix}::group_id"
         multiple: false
         limit: 100

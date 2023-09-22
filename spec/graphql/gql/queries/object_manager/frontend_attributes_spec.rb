@@ -345,7 +345,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
             {
               'name'       => 'group_id',
               'display'    => 'Group',
-              'dataType'   => 'select',
+              'dataType'   => 'tree_select',
               'dataOption' => {
                 'default'                  => '',
                 'relation'                 => 'Group',
@@ -492,7 +492,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
             {
               'name'       => 'group_id',
               'display'    => 'Group',
-              'dataType'   => 'select',
+              'dataType'   => 'tree_select',
               'dataOption' => {
                 'default'                  => '',
                 'relation'                 => 'Group',

@@ -1,29 +1,61 @@
-<div style="padding-left: 18px; padding-top: 10px; width: 95%;" class="js-groupList">
-  <hr>
-  <table class="settings-list" style="width: 100%;">
-    <thead>
-      <th><%- @T('Group') %>
+<table class="settings-list" style="width: 100%;">
+  <thead>
+    <th><%- @T('Group') %>
+    <% for key, text of @groupAccesses: %>
+      <th><%- @T(text) %>
+    <% end %>
+    <th><%- @T('Action') %>
+  <tbody>
+  <% for group in @groupsSelected: %>
+    <%  permissions = @params.group_ids?[group.id] || [] %>
+    <tr data-id="<%= group.id %>">
+      <td class="settings-list-middle">
+        <%= @P(group, 'name') %>
       <% for key, text of @groupAccesses: %>
-        <th><%- @T(text) %>
+        <td class="settings-list-middle">
+          <label class="inline-label checkbox-replacement">
+            <input class="js-groupListItem" type="checkbox" value="<%= key %>" name="group_ids::<%= group.id %>" <% if _.contains(permissions, key): %>checked<% end %>/>
+            <%- @Icon('checkbox', 'icon-unchecked') %>
+            <%- @Icon('checkbox-checked', 'icon-checked') %>
+          </label>
       <% end %>
-    <tbody>
-  <% for group in @groups: %>
-  <%   permissions = [] %>
-  <%   if @params.group_ids && @params.group_ids[group.id]: %>
-  <%     permissions = @params.group_ids[group.id] %>
-  <%   end %>
-    <tr>
-      <td>
-        <%= group.displayName() %>
-      <% for key, text of @groupAccesses: %>
-        <td>
+      <td class="js-groupListItemAction settings-list-middle">
+        <a class="btn btn--text btn--primary js-remove">
+          <%- @Icon('trash') %>
+          <%= @T('Remove') %>
+        </a>
+    </tr>
+  <% end %>
+  <tr class="hide js-groupListShadowItemRow">
+    <td class="settings-list-middle">
+    <% for key, text of @groupAccesses: %>
+      <td class="settings-list-middle">
         <label class="inline-label checkbox-replacement">
-          <input class="js-groupListItem" type="checkbox" value="<%= key %>" name="group_ids::<%= group.id %>" <% if _.contains(permissions, key): %>checked<% end %>/>
+          <input class="js-groupListItem" type="checkbox" value="<%= key %>" name="group_ids::" />
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>
-      <% end %>
-    </tr>
-  <% end %>
-  </table>
-</div>
+    <% end %>
+    <td class="js-groupListItemAction settings-list-middle">
+      <a class="btn btn--text btn--primary js-remove">
+        <%- @Icon('trash') %>
+        <%= @T('Remove') %>
+      </a>
+  </tr>
+  <tr class="js-groupListNewItemRow">
+    <td class="js-groupListItemAddNew settings-list-middle">
+    <% for key, text of @groupAccesses: %>
+      <td class="settings-list-middle">
+        <label class="inline-label checkbox-replacement">
+          <input class="js-groupListItem" type="checkbox" value="<%= key %>" />
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+    <% end %>
+    <td class="js-groupListItemAction settings-list-middle">
+      <a class="btn btn--text btn--create js-add">
+        <%- @Icon('plus-small') %>
+        <%= @T('Add') %>
+      </a>
+  </tr>
+</table>

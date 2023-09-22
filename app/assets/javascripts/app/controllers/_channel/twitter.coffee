@@ -202,7 +202,7 @@ class AccountEdit extends App.ControllerModal
     content = $( App.view('twitter/account_edit')(channel: @channel) )
 
     createGroupSelection = (selected_id, prefix) ->
-      return App.UiElement.select.render(
+      return App.UiElement.tree_select.render(
         name: "#{prefix}::group_id"
         multiple: false
         limit: 100

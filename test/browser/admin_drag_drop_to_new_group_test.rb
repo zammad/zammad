@@ -47,7 +47,7 @@ class AdminDragDropToNewGroupTest < TestCase
 
     modal_ready
 
-    element = @browser.find_element(css: '.modal input[name=name]')
+    element = @browser.find_element(css: '.modal input[name=name_last]')
     element.clear
     element.send_keys(name)
     click(css: '.modal button.js-submit')
@@ -114,8 +114,20 @@ class AdminDragDropToNewGroupTest < TestCase
   end
 
   def assign_group(group_name, scroll: false)
+    await_text(text: 'Group Permissions')
+
     group_container = @browser.find_elements(css: '.modal .settings-list tbody tr').find do |el|
       el.find_element(css: 'td').text == group_name
+    end
+
+    if group_container.nil?
+      @browser.find_elements(css: '.modal .js-groupListNewItemRow .js-groupListItemAddNew .js-input')[0].click
+      @browser.find_elements(css: ".modal .js-groupListNewItemRow .js-optionsList .js-option[title='#{group_name}']")[0].click
+      @browser.find_elements(css: '.modal .js-groupListNewItemRow .js-add')[0].click
+
+      group_container = @browser.find_elements(css: '.modal .settings-list tbody tr').find do |el|
+        el.find_element(css: 'td').text == group_name
+      end
     end
 
     assert_not_nil(group_container)

@@ -160,7 +160,7 @@ ObjectManager::Attribute.add(
   object:      'Ticket',
   name:        'group_id',
   display:     __('Group'),
-  data_type:   'select',
+  data_type:   'tree_select',
   data_option: {
     default:                  '',
     relation:                 'Group',
@@ -1340,7 +1340,7 @@ ObjectManager::Attribute.add(
   force:       true,
   object:      'User',
   name:        'role_ids',
-  display:     __('Permissions'),
+  display:     __('Roles'),
   data_type:   'user_permission',
   data_option: {
     null:       false,
@@ -1378,6 +1378,49 @@ ObjectManager::Attribute.add(
   to_migrate:  false,
   to_delete:   false,
   position:    1600,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'User',
+  name:        'group_ids',
+  display:     __('Group permissions'),
+  data_type:   'group_permissions',
+  data_option: {
+    null:       false,
+    item_class: 'checkbox',
+    permission: ['admin.user'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {
+      '-all-' => {
+        null: false,
+      },
+    },
+    invite_customer: {},
+    edit:            {
+      '-all-' => {
+        null: true,
+      },
+    },
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1700,
 )
 
 ObjectManager::Attribute.add(
@@ -1721,7 +1764,27 @@ ObjectManager::Attribute.add(
   data_type:   'input',
   data_option: {
     type:      'text',
-    maxlength: 150,
+    maxlength: 255,
+    readonly:  1,
+  },
+  editable:    false,
+  active:      true,
+  screens:     {},
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    200,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Group',
+  name:        'name_last',
+  display:     __('Name'),
+  data_type:   'input',
+  data_option: {
+    type:      'text',
+    maxlength: 160,
     null:      false,
   },
   editable:    false,
@@ -1746,7 +1809,40 @@ ObjectManager::Attribute.add(
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
-  position:    200,
+  position:    210,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Group',
+  name:        'parent_id',
+  display:     __('Parent group'),
+  data_type:   'tree_select',
+  data_option: {
+    default:    '',
+    null:       true,
+    relation:   'Group',
+    nulloption: true,
+    do_not_log: true,
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit:   {
+      '-all-' => {
+        null: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    250,
 )
 
 ObjectManager::Attribute.add(

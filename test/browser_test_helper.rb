@@ -848,6 +848,7 @@ class TestCase < ActiveSupport::TestCase
       sleep 0.2
       element.send_keys(:enter)
       sleep 0.2
+      instance.execute_script("$('#{params[:css]}.js-shadow + .js-input').trigger('blur')")
       return
     end
 
@@ -2131,9 +2132,9 @@ wait untill text in selector disabppears
       if data[:group] == '-NONE-'
 
         # check if owner selection exists
-        count = instance.find_elements(css: '.content.active .newTicket select[name="group_id"] option').count
+        count = instance.find_elements(css: '.content.active .newTicket [data-attribute-name=group_id] .js-optionsList li').count
         if count.nonzero?
-          instance.find_elements(css: '.content.active .newTicket select[name="group_id"] option').each do |element|
+          instance.find_elements(css: '.content.active .newTicket [data-attribute-name=group_id] .js-optionsList li').each do |element|
             log('ticket_create invalid group count', text: element.text)
           end
         end
@@ -2161,7 +2162,7 @@ wait untill text in selector disabppears
         end
         select(
           browser:  instance,
-          css:      '.content.active .newTicket select[name="group_id"]',
+          css:      '.content.active .newTicket input[name="group_id"]',
           value:    data[:group],
           mute_log: true,
         )
@@ -2447,7 +2448,7 @@ wait untill text in selector disabppears
       if data[:group] == '-NONE-'
 
         # check if owner selection exists
-        count = instance.find_elements(css: '.content.active .sidebar select[name="group_id"] option').count
+        count = instance.find_elements(css: '.content.active .sidebar [data-attribute-name=group_id] .js-optionsList li').count
         assert_equal(2, count, 'group_id selection should not be shown because of only one group exists (auto select + hide)')
 
         # check count of agents, should be only 3 / - selection + master + agent on init screen
@@ -2457,7 +2458,7 @@ wait untill text in selector disabppears
       else
         select(
           browser:  instance,
-          css:      '.content.active .sidebar select[name="group_id"]',
+          css:      '.content.active .sidebar input[name="group_id"]',
           value:    data[:group],
           mute_log: true,
         )
@@ -3108,6 +3109,16 @@ wait untill text in selector disabppears
         )
         data[:permissions].each do |key, value|
           value.each do |permission|
+            if !instance.find_elements(css: ".modal tr[data-id='#{key}']")[0]
+              scroll_to(
+                position: 'top',
+                css:      '.modal .js-add',
+              )
+
+              instance.execute_script("$('.modal .js-groupListNewItemRow .js-groupListItemAddNew .js-shadow').val(#{key})")
+              instance.find_elements(css: '.modal .js-add')[0].click
+            end
+
             check(
               browser: instance,
               css:     ".modal input[name=\"group_ids::#{key}\"][value=\"#{permission}\"]",
@@ -3282,6 +3293,16 @@ wait untill text in selector disabppears
     if data[:permissions].present?
       data[:permissions].each do |key, value|
         value.each do |permission|
+          if !instance.find_elements(css: ".modal tr[data-id='#{key}']")[0]
+            scroll_to(
+              position: 'top',
+              css:      '.modal .js-add',
+            )
+
+            instance.execute_script("$('.modal .js-groupListNewItemRow .js-groupListItemAddNew .js-shadow').val(#{key})")
+            instance.find_elements(css: '.modal .js-add')[0].click
+          end
+
           check(
             browser: instance,
             css:     ".modal input[name=\"group_ids::#{key}\"][value=\"#{permission}\"]",
@@ -3656,7 +3677,7 @@ wait untill text in selector disabppears
       mute_log: true,
     )
     modal_ready(browser: instance)
-    element = instance.find_elements(css: '.modal input[name=name]')[0]
+    element = instance.find_elements(css: '.modal input[name=name_last]')[0]
     element.clear
     element.send_keys(data[:name])
     element = instance.find_elements(css: '.modal select[name="email_address_id"]')[0]
@@ -3692,8 +3713,10 @@ wait untill text in selector disabppears
         # instance.find_elements(:css => '.content.active table [data-id]')[0].click
         instance.execute_script('$(".content.active  table [data-id] td").first().trigger("click")')
         modal_ready(browser: instance)
-        # instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
-        instance.execute_script(%($(".js-groupList tr:contains(\\"#{data[:name]}\\") .js-groupListItem[value=#{member[:access]}]").prop("checked", true)))
+        instance.find_elements(css: '.modal .js-groupListNewItemRow .js-groupListItemAddNew .js-input')[0].click
+        instance.find_elements(css: ".modal .js-groupListNewItemRow .js-optionsList .js-option[title='#{data[:name]}']")[0].click
+        instance.find_elements(css: ".modal .js-groupListNewItemRow .js-groupListItem[value='#{member[:access]}']")[0].click
+        instance.find_elements(css: '.modal .js-groupListNewItemRow .js-add')[0].click
         instance.find_elements(css: '.modal button.js-submit')[0].click
         await_empty_ajax_queue(params)
         modal_disappear(browser: instance)
@@ -4591,6 +4614,8 @@ wait untill text in selector disabppears
       .move_to(checkbox)
       .click
       .perform
+
+    await_empty_ajax_queue
   end
 
   def checkbox_is_selected(scope, value)

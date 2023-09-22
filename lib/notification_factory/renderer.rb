@@ -58,7 +58,7 @@ examples how to use
                       created_article created_internal_article created_external_article]
 
     # aliases
-    map = { 'ticket.tags' => 'ticket.tag_list' }
+    map = { 'ticket.tags' => 'ticket.tag_list', 'ticket.group.name' => 'ticket.group.fullname', 'group.name' => 'group.fullname' }
     article_tags.each do |tag|
       map["#{tag}.body"] = "#{tag}.body_as_text_with_quote.text2html"
     end

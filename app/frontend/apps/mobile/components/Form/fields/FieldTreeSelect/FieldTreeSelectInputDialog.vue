@@ -305,11 +305,13 @@ const getCurrentIndex = (option: FlatSelectOption) => {
           {{ option.label || option.value }}
           <template v-if="filter">
             <span
-              v-for="parentValue in (option as FlatSelectOption).parents"
+              v-for="(parentValue, parentIndex) in (option as FlatSelectOption)
+                .parents"
               :key="String(parentValue)"
               class="text-gray"
             >
-              —
+              <template v-if="parentIndex === 0"> — </template>
+              <template v-else> › </template>
               {{
                 getSelectedOptionLabel(parentValue) ||
                 i18n.t('%s (unknown)', parentValue.toString())

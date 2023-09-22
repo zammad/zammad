@@ -13,7 +13,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
     refresh # workaround to get new created objects from db
     visit path
     within(:active_content) do
-      find('select[name="group_id"]').select(1)
+      set_tree_select_value('group_id', Group.first.name)
       find(:richtext).send_keys(':')
       find(:richtext).send_keys(':')
       expect(page).to have_selector(:text_module, text_module_without_group1.id)
@@ -40,7 +40,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
   it 'does not show when send :enter:' do
     visit path
     within(:active_content) do
-      find('select[name="group_id"]').select(1)
+      set_tree_select_value('group_id', Group.first.name)
       find(:richtext).send_keys(':')
       find(:richtext).send_keys(:enter)
       find(:richtext).send_keys(':')
@@ -52,7 +52,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
   it 'does not break search on backspace' do
     visit path
     within(:active_content) do
-      find('select[name="group_id"]').select(1)
+      set_tree_select_value('group_id', Group.first.name)
       find(:richtext).send_keys('@@agen')
       find(:richtext).send_keys(:backspace)
       expect(page).to have_no_text('No results found')
@@ -62,7 +62,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
   it 'does delete empty mentions (issue #3636 / FF only)' do
     visit path
     within(:active_content) do
-      find('select[name="group_id"]').select('Users')
+      set_tree_select_value('group_id', Group.first.name)
       find(:richtext).send_keys('@@FFFF1')
       await_empty_ajax_queue
       find(:richtext).send_keys(:enter)
@@ -77,7 +77,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
   it 'does delete empty mentions (issue #3636 / simulation)' do
     visit path
     within(:active_content) do
-      find('select[name="group_id"]').select('Users')
+      set_tree_select_value('group_id', Group.first.name)
       find(:richtext).send_keys('@@FFFF1')
       await_empty_ajax_queue
       find(:richtext).send_keys(:enter)
@@ -92,7 +92,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
   it 'does not delete parts of the text on multiple mentions (issue #3717)' do
     visit path
     within(:active_content) do
-      find('select[name="group_id"]').select('Users')
+      set_tree_select_value('group_id', Group.first.name)
       find(:richtext).send_keys('Testing Testy')
       find(:richtext).send_keys('@@FFFF1')
       await_empty_ajax_queue
@@ -113,7 +113,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
   it 'does not delete line breaks of text with mentions (issue #3717)' do
     visit path
     within(:active_content) do
-      find('select[name="group_id"]').select('Users')
+      set_tree_select_value('group_id', Group.first.name)
       find(:richtext).send_keys('@@FFFF1')
       await_empty_ajax_queue
       find(:richtext).send_keys(:enter)
@@ -145,7 +145,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
     refresh # workaround to get changed settings from db
     visit path
     within(:active_content) do
-      find('select[name="group_id"]').select(group1.name)
+      set_tree_select_value('group_id', group1.name)
       find(:richtext).send_keys('::')
 
       expect(page).to have_selector(:text_module, text_module_without_group1.id)
@@ -153,7 +153,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
       expect(page).to have_selector(:text_module, text_module_group1.id)
       expect(page).to have_no_selector(:text_module, text_module_group2.id)
 
-      find('select[name="group_id"]').select(group2.name)
+      set_tree_select_value('group_id', group2.name)
       find(:richtext).send_keys('::')
 
       expect(page).to have_selector(:text_module, text_module_without_group1.id)

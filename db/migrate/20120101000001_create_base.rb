@@ -115,7 +115,9 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :groups do |t|
       t.references :signature,                      null: true
       t.references :email_address,                  null: true
-      t.string :name,                   limit: 160, null: false
+      t.string :name,   limit: (160 * 6) + (2 * 5), null: false # max depth of 6 and 5 delimiters inbetween
+      t.string :name_last,              limit: 160, null: false
+      t.integer :parent_id,                         null: true
       t.integer :assignment_timeout,                null: true
       t.string :follow_up_possible,     limit: 100, null: false, default: 'yes'
       t.integer :reopen_time_in_days,               null: true
@@ -132,6 +134,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :groups, :email_addresses
     add_foreign_key :groups, :users, column: :created_by_id
     add_foreign_key :groups, :users, column: :updated_by_id
+    add_foreign_key :groups, :groups, column: :parent_id
 
     create_table :roles do |t|
       t.string :name,                   limit: 100, null: false

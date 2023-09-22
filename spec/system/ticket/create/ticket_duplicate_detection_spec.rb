@@ -39,7 +39,7 @@ RSpec.describe 'Assist agent/customer to prevent duplicate ticket creation #4592
   shared_examples 'showing a warning' do
     it 'shows a warning' do
       find('[name="title"]').send_keys title, :tab if defined?(title)
-      select group.name, from: 'group_id' if defined?(group)
+      set_tree_select_value('group_id', group.name) if defined?(group)
       find('[name="text_attribute"]').send_keys text_attribute, :tab if defined?(text_attribute)
 
       expect(page).to have_text 'Similar tickets found'
@@ -58,7 +58,7 @@ RSpec.describe 'Assist agent/customer to prevent duplicate ticket creation #4592
   shared_examples 'showing no warning' do
     it 'shows no warning' do
       find('[name="title"]').send_keys title, :tab
-      select group.name, from: 'group_id'
+      set_tree_select_value('group_id', group.name)
 
       expect(page).to have_no_text 'Similar tickets found'
     end

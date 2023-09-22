@@ -9871,6 +9871,11 @@ li.dropdown-header {
   &.wizard-slide--large {
     width: 460px;
   }
+
+  &.wizard-slide--very-large {
+    width: auto;
+    max-width: 990px;
+  }
 }
 
 .wizard h2 {
@@ -11298,6 +11303,10 @@ output {
   .settings-list--bottom-button {
     margin-top: 10px;
   }
+
+  .settings-list-middle {
+    vertical-align: middle;
+  }
 }
 
 .settings-list--roles-permissions {
@@ -11438,7 +11447,6 @@ output {
     &.is-inactive {
       opacity: 0.73;
       text-decoration: line-through;
-      pointer-events: none;
     }
   }
 

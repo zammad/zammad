@@ -564,7 +564,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         find('[name=title]').fill_in with: 'Title'
         find('[name=customer_id_completion]').fill_in with: 'customer@example.com'
-        find('[name=group_id]').select 'Users'
+        set_tree_select_value('group_id', Group.first.name)
         find(:richtext).execute_script "this.innerHTML = \"#{ticket_article_body}\""
         find('.js-submit').click
       end
@@ -1889,8 +1889,8 @@ RSpec.describe 'Ticket zoom', type: :system do
     it 'does show up the new group (different case because it will also trigger a full rerender because of potential permission changes)' do
       group = Group.find_by(name: 'some group1')
       ticket.update(group: group)
-      wait.until { page.find("select[name='group_id']").value == group.id.to_s }
-      expect(page.find("select[name='group_id']").value).to eq(group.id.to_s)
+      wait.until { page.find("input[name='group_id']", visible: :all).value == group.id.to_s }
+      expect(page.find("input[name='group_id']", visible: :all).value).to eq(group.id.to_s)
     end
 
     it 'does show up the new state and pending time' do
@@ -1998,7 +1998,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     it 'does clear agent1 on select of group 2' do
-      select group2.name, from: 'Group'
+      set_tree_select_value('group_id', group2.name)
       wait.until { page.find('select[name=owner_id]').value != agent1.id.to_s }
       expect(page.find('select[name=owner_id]').value).to eq('')
       expect(page.all('select[name=owner_id] option').map(&:value)).not_to include(agent1.id.to_s)

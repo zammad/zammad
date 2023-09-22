@@ -9,6 +9,45 @@ RSpec.describe 'Manage > Groups', type: :system do
     include_examples 'pagination', model: :group, klass: Group, path: 'manage/groups'
   end
 
+  describe 'with nested groups' do
+    let(:group1) { create(:group) }
+    let(:group2) { create(:group, parent: group1) }
+    let(:group3) { create(:group, parent: group2) }
+
+    before do
+      group3 # cascade create
+      visit '#manage/groups'
+    end
+
+    it 'displays complete group path using chevrons' do
+      expect(page).to have_text(group3.name.gsub!(%r{::}, ' › '))
+    end
+
+    it 'sorts group paths in correct order' do
+      expect(page).to have_text("#{group1.name}\n#{group2.name.gsub!(%r{::}, ' › ')}\n#{group3.name.gsub!(%r{::}, ' › ')}")
+    end
+
+    describe 'when creating a new group' do
+      let(:group_name_last) { Faker::Lorem.unique.word.capitalize }
+
+      before do
+        click_on 'New Group'
+      end
+
+      it 'creates a nested group' do
+        fill_in 'Name', with: group_name_last
+        set_tree_select_value('parent_id', group3.name_last)
+
+        # Needed for chrome, when element is outside viewport.
+        scroll_into_view('button.js-submit', position: :bottom)
+
+        click_button
+
+        expect(Group.last.name).to eq("#{group3.name}::#{Group.last.name_last}")
+      end
+    end
+  end
+
   # Fixes GitHub Issue#3129 - Deactivation of signature does not clear it from groups
   describe 'When active status of signature assigned to a group is changed', authenticated_as: -> { user } do
     let(:user)      { create(:admin, groups: [group]) }

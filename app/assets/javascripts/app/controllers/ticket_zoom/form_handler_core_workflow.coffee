@@ -17,11 +17,12 @@ class App.FormHandlerCoreWorkflow
   # defines the objects and screen for which Core Workflow is active
   coreWorkflowScreens = {
     Ticket: ['create_middle', 'edit', 'overview_bulk']
-    User: ['create', 'edit']
+    User: ['create', 'edit', 'invite_agent']
     Organization: ['create', 'edit']
     Sla: ['create', 'edit']
     CoreWorkflow: ['create', 'edit']
     Group: ['create', 'edit']
+    Role: ['create', 'edit']
   }
 
   # returns the objects for which Core Workflow is active
@@ -59,7 +60,7 @@ class App.FormHandlerCoreWorkflow
   # the saved submit target will be executed after the request
   @triggerSubmit: (target) ->
     if $(target).get(0).tagName == 'FORM'
-      target = $(target).find('button[type=submit]').first()
+      target = $(target).find('button[type=submit], .btn--success').first()
 
     $(target).trigger('click')
 

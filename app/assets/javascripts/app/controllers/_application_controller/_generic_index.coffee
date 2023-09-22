@@ -184,6 +184,7 @@ class App.ControllerGenericIndex extends App.Controller
       veryLarge:        @veryLarge
       handlers:         @handlers
       validateOnSubmit: @validateOnSubmit
+      screen:           @editScreen
     )
 
   newControllerClass: ->
@@ -203,6 +204,7 @@ class App.ControllerGenericIndex extends App.Controller
       veryLarge:        @veryLarge
       handlers:         @handlers
       validateOnSubmit: @validateOnSubmit
+      screen:           @createScreen
     )
 
   clone: (item) =>

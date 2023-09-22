@@ -29,7 +29,7 @@ class ChannelForm extends App.ControllerSubContent
     ))
 
     group_id = App.Setting.get('form_ticket_create_group_id')
-    selection = App.UiElement.select.render(
+    selection = App.UiElement.tree_select.render(
       name: 'group_id'
       multiple: false
       null: false

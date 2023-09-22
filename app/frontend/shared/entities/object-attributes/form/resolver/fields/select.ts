@@ -22,6 +22,8 @@ export interface ObjectSelectOption {
 export class FieldResolverSelect extends FieldResolver {
   fieldType = 'select'
 
+  protected multiFieldAttributeType = 'multiselect'
+
   public fieldTypeAttributes() {
     const attributes: Partial<FormSchemaField> = {}
     const props: FormFieldAdditionalProps = {
@@ -49,7 +51,8 @@ export class FieldResolverSelect extends FieldResolver {
       props.options = this.mappedOptions()
     }
 
-    if (this.attributeType === 'multiselect') props.multiple = true
+    if (this.attributeType === this.multiFieldAttributeType)
+      props.multiple = true
 
     return {
       ...attributes,
@@ -57,7 +60,7 @@ export class FieldResolverSelect extends FieldResolver {
     }
   }
 
-  private mappedOptions(): ObjectSelectOption[] {
+  protected mappedOptions(): ObjectSelectOption[] {
     const options = this.attributeConfig.options as ObjectAttributeSelectOptions
 
     if (Array.isArray(options)) {

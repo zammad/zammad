@@ -25,6 +25,18 @@ module FieldActions
     find("input[name='#{name}']", **find_options).fill_in with: value
   end
 
+  # Set the field value of a form tree_select field.
+  #
+  # @example
+  #  set_tree_select_value('tree_select', 'Users')
+  #
+  def set_tree_select_value(name, value)
+    page.find(%( input[name='#{name}']+.js-input )).fill_in with: value, fill_options: { clear: :backspace }
+    page.find(%( input[name='#{name}']+.js-input )).ancestor('.controls').find('.js-option.is-active').click
+
+    # page.evaluate_script(%[ $("input[name='#{name}']").siblings('.js-input:visible').get(0).focus().selectValue('#{key}', '#{value}').trigger('change'); ])
+  end
+
   # Check the field value of a form select field.
   #
   # @example
@@ -33,6 +45,15 @@ module FieldActions
   def check_select_field_value(name, value)
     select_field = find("select[name='#{name}']")
     expect(select_field.value).to eq(value)
+  end
+
+  # Check the field value of a form tree select field.
+  #
+  # @example
+  #  check_tree_select_field_value('select_field_name', '1')
+  #
+  def check_tree_select_field_value(name, value)
+    check_input_field_value(name, value, visible: :all)
   end
 
   # Check the field value of a form editor field.

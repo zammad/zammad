@@ -1,42 +1,5 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.ApplicationTreeSelect extends App.UiElement.ApplicationUiElement
-  @optionsSelect: (children, value) ->
-    return if !children
-    for child in children
-      if child.value is value
-        child.selected = true
-      if child.children
-        @optionsSelect(child.children, value)
-
-  @filterTreeOptions: (values, valueDepth, options, nullExists) ->
-    newOptions = []
-    nullFound = false
-    for option, index in options
-      enabled = _.contains(values, option.value)
-      if nullExists && !option.value && !nullFound
-        nullFound = true
-        enabled   = true
-
-      activeChildren = false
-      if option.value && option.children && option.children.length > 0
-        for value in values
-          if value && value.startsWith(option.value + '::')
-            activeChildren = true
-
-      if activeChildren
-        option.inactive = !enabled
-        option.children = @filterTreeOptions(values, valueDepth + 1, option.children, nullExists)
-      else
-        option.children = undefined
-        continue if !enabled
-
-      newOptions.push(option)
-
-    return newOptions
-
-  @filterOptionArray: (attribute) ->
-    attribute.options = @filterTreeOptions(attribute.filter, 0, attribute.options, attribute.null)
-
   @render: (attributeConfig, params) ->
     attribute = $.extend(true, {}, attributeConfig)
 
@@ -82,3 +45,66 @@ class App.UiElement.ApplicationTreeSelect extends App.UiElement.ApplicationUiEle
     @filterOption(attribute, params)
 
     new App.SearchableSelect(attribute: attribute).element()
+
+  @optionsSelect: (children, value) ->
+    return if !children
+    for child in children
+      if child.value?.toString() is value?.toString()
+        child.selected = true
+      if child.children
+        @optionsSelect(child.children, value)
+
+  @filterTreeOptions: (attribute, valueDepth, options) ->
+    newOptions = []
+    nullFound = false
+    for option, index in options
+      enabled = _.contains(attribute.filter, option.value.toString())
+      if attribute.null && !option.value && !nullFound
+        nullFound = true
+        enabled   = true
+
+      activeChildren = false
+      if option.value && option.children && option.children.length > 0
+        if @isTreeRelation(attribute)
+          all_children_ids = _.map(App[attribute.relation].find(option.value).all_children(), (group) -> group.id.toString())
+          if _.intersection(attribute.filter, all_children_ids).length > 0
+            activeChildren = true
+        else
+          for value in attribute.filter
+            if value && value.startsWith(option.value + '::')
+              activeChildren = true
+
+      if activeChildren
+        option.inactive = !enabled
+        option.children = @filterTreeOptions(attribute, valueDepth + 1, option.children)
+      else
+        option.children = undefined
+        continue if !enabled
+
+      newOptions.push(option)
+
+    return newOptions
+
+  @filterOptionArray: (attribute) ->
+    attribute.options = @filterTreeOptions(attribute, 0, attribute.options)
+
+  @buildOptionList: (list, attribute) ->
+    return super if !@isTreeRelation(attribute)
+
+    parents           = list.filter((obj) -> !obj.parent_id)
+    attribute.options = @buildOptionListTreeRelation(list, attribute, parents)
+    attribute.sortBy  = null
+
+  @buildOptionListTreeRelation: (list, attribute, entries) ->
+    result = []
+    for item in entries
+      row = @buildOptionListRow(attribute, item)
+      continue if !row
+
+      children = _.filter(list, (obj) -> obj.parent_id is item.id)
+      children = @buildOptionListTreeRelation(list, attribute, children)
+      if children.length > 0
+        row.children = children
+
+      result.push row
+    result

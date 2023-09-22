@@ -114,7 +114,7 @@ class BotAdd extends App.ControllerModal
   content: ->
     content = $(App.view('telegram/bot_add')())
     createGroupSelection = (selected_id) ->
-      return App.UiElement.select.render(
+      return App.UiElement.tree_select.render(
         name:       'group_id'
         multiple:   false
         limit:      100
@@ -163,7 +163,7 @@ class BotEdit extends App.ControllerModal
     content = $(App.view('telegram/bot_edit')(channel: @channel))
 
     createGroupSelection = (selected_id) ->
-      return App.UiElement.select.render(
+      return App.UiElement.tree_select.render(
         name:       'group_id'
         multiple:   false
         limit:      100

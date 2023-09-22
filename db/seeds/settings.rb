@@ -2761,7 +2761,7 @@ Setting.create_if_not_exists(
         display:  '',
         null:     true,
         name:     'group_ids',
-        tag:      'multiselect',
+        tag:      'tree_select',
         multiple: true,
         relation: 'Group',
       },

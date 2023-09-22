@@ -15,6 +15,7 @@ end
 
 # clear old caches to start from scratch
 Rails.cache.clear
+ApplicationModel.reset_column_information
 
 # this is the __ordered__ list of seed files
 # extend only if needed - try to add your changes

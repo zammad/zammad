@@ -54,7 +54,7 @@ RSpec.describe 'Overview', type: :system do
 
       find('[name=title]').fill_in with: 'Title'
       find(:richtext).send_keys 'content'
-      find('[name=group_id]').select Group.first.name
+      set_tree_select_value('group_id', Group.first.name)
       click '.js-submit'
 
       perform_enqueued_jobs only: TicketUserTicketCounterJob

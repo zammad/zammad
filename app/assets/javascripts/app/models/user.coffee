@@ -10,6 +10,7 @@ class App.User extends App.Model
     { name: 'lastname',         display: __('Last name'),      tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'email',            display: __('Email'),         tag: 'input',    type: 'email',    limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'organization_id',  display: __('Organization'),  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true, note: __("Attention! Changing the organization will update the user's most recent tickets to the new organization.") },
+    { name: 'group_ids',        display: __('Group permissions'), tag: 'group_permissions', item_class: 'checkbox' },
     { name: 'created_by_id',    display: __('Created by'),    relation: 'User', readonly: 1 },
     { name: 'created_at',       display: __('Created at'),    tag: 'datetime',  readonly: 1 },
     { name: 'updated_by_id',    display: __('Updated by'),    relation: 'User', readonly: 1 },

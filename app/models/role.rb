@@ -22,6 +22,7 @@ class Role < ApplicationModel
   store                   :preferences
   has_many                :knowledge_base_permissions, class_name: 'KnowledgeBase::Permission', dependent: :destroy
 
+  before_save    :cleanup_groups_if_not_agent
   before_create  :check_default_at_signup_permissions
   before_update  :last_admin_check_by_attribute, :validate_agent_limit_by_attributes, :check_default_at_signup_permissions
 
@@ -261,5 +262,13 @@ returns
       end
 
     KnowledgeBase::Category.all.each(&:touch)
+  end
+
+  def cleanup_groups_if_not_agent
+    # #with_permissions? SQL-based check does not work on to-be-saved permissions
+    # using application-side check instead
+    return if permissions.any? { |elem| elem.name == 'ticket.agent' }
+
+    groups.clear
   end
 end

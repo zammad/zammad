@@ -57,7 +57,7 @@ RSpec.describe 'Ticket Shared Draft Start', authenticated_as: :authenticate, typ
 
       it 'not visible when group with disabled draft selected' do
         within(:active_content) do
-          select another_group.name, from: 'group_id'
+          set_tree_select_value('group_id', another_group.name)
         end
 
         expect(page).to have_no_selector :draft_sidebar_button
@@ -65,7 +65,7 @@ RSpec.describe 'Ticket Shared Draft Start', authenticated_as: :authenticate, typ
 
       it 'visible when group with active draft selected' do
         within(:active_content) do
-          select group.name, from: 'group_id'
+          set_tree_select_value('group_id', group.name)
         end
 
         expect(page).to have_selector :draft_sidebar_button

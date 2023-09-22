@@ -133,3 +133,42 @@ CoreWorkflow.create_if_not_exists(
   created_by_id:   1,
   updated_by_id:   1,
 )
+CoreWorkflow.create_if_not_exists(
+  name:            'base - remove current and child groups from parent id',
+  object:          'Group',
+  condition_saved: {
+    'custom.module': {
+      operator: 'match all modules',
+      value:    [
+        'CoreWorkflow::Custom::AdminGroupParentId',
+      ],
+    },
+  },
+  perform:         {
+    'custom.module': {
+      execute: ['CoreWorkflow::Custom::AdminGroupParentId']
+    },
+  },
+  changeable:      false,
+  created_by_id:   1,
+  updated_by_id:   1,
+)
+CoreWorkflow.create_if_not_exists(
+  name:            'base - show group list for agents',
+  condition_saved: {
+    'custom.module': {
+      operator: 'match all modules',
+      value:    [
+        'CoreWorkflow::Custom::AdminShowGroupListForAgents',
+      ],
+    },
+  },
+  perform:         {
+    'custom.module': {
+      execute: ['CoreWorkflow::Custom::AdminShowGroupListForAgents']
+    },
+  },
+  changeable:      false,
+  created_by_id:   1,
+  updated_by_id:   1,
+)

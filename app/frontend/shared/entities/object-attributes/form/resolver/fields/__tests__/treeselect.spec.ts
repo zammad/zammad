@@ -58,4 +58,40 @@ describe('FieldResolverTreeselect', () => {
       internal: true,
     })
   })
+
+  it('should return the correct field attributes for relations', () => {
+    const fieldResolver = new FieldResolverTreeselect({
+      dataType: 'treeselect',
+      name: 'category',
+      display: 'Category',
+      dataOption: {
+        historical_options: {},
+        translate: true,
+        options: {},
+        relation: 'Group',
+        belongs_to: 'group',
+      },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.fieldAttributes()).toEqual({
+      label: 'Category',
+      name: 'category',
+      required: false,
+      props: {
+        historicalOptions: {},
+        noOptionsLabelTranslation: false,
+        clearable: false,
+        options: [],
+        belongsToObjectField: 'group',
+        // TODO: Check if this is also good for treeselect
+        sorting: 'label',
+      },
+      relation: {
+        type: 'Group',
+      },
+      type: 'treeselect',
+      internal: true,
+    })
+  })
 })

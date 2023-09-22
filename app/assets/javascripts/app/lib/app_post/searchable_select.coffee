@@ -104,7 +104,7 @@ class App.SearchableSelect extends Spine.Controller
     html
 
   updateAttributeValueName: ->
-    firstSelected = _.find(@attribute.options, (option) -> option.selected)
+    firstSelected = @findFirstSelection(@attribute.options)
 
     if firstSelected
       @attribute.valueName = firstSelected.name
@@ -114,6 +114,12 @@ class App.SearchableSelect extends Spine.Controller
     else if @hasSubmenu @attribute.options
       @attribute.valueName = @getName(@attribute.value, @attribute.options)
 
+  findFirstSelection: (options) ->
+    return if !options
+    for option in options
+      return option if option.selected
+      return @findFirstSelection(option.children) if option.children
+
   hasSubmenu: (options) ->
     return false if !options
     for option in options
@@ -122,7 +128,7 @@ class App.SearchableSelect extends Spine.Controller
 
   getName: (value, options) ->
     for option in options
-      if option.value is value
+      if option.value?.toString() is value?.toString()
         return option.name
       if option.children
         name = @getName(value, option.children)
@@ -160,7 +166,10 @@ class App.SearchableSelect extends Spine.Controller
         )
 
         if option.children
-          html += @renderAllOptions("#{parentName} — #{option.name}", option.children, level+1)
+          # We leave it to the browser to "invert" the chevron on RTL languages.
+          #   This happens automatically for inlined RTL text since chevron is considered punctuation.
+          delimiter = if level is 0 then '—' else '›'
+          html += @renderAllOptions("#{parentName} #{delimiter} #{option.name}", option.children, level+1)
     html
 
   onDropdownShow: (event)  =>
@@ -306,6 +315,8 @@ class App.SearchableSelect extends Spine.Controller
     return @navigateIn(event)
 
   selectItem: (event) ->
+    return if $(event.target).hasClass('is-inactive')
+
     currentText = $(event.target).text().trim()
     return if !currentText
 
@@ -378,19 +389,19 @@ class App.SearchableSelect extends Spine.Controller
     menu.prop('hidden', false)
     @dropdown.height(menu.height())
 
-  findMenuContainingValue: (value) ->
-    return @optionsList if !value
+  findParentOptionByValue: (options, value, lastParent) ->
+    return if !options
+    for option in options
+      return lastParent if option.value?.toString() is value?.toString()
+      return @findParentOptionByValue(option.children, value, option) if option.children
 
-    # in case of numbers
-    if !value.split && value.toString
-      value = value.toString()
-    path = value.split('::')
-    if path.length == 1
-      return @optionsList
-    else
-      path.pop()
-      target = path.join('::')
-      return @optionsSubmenu.filter((i, el) -> $(el).attr('data-parent-value') is target)
+  findMenuContainingValue: (value) ->
+    return @optionsList if !@attribute.options or !value
+
+    parent = @findParentOptionByValue(@attribute.options, value)
+    return @optionsList if !parent
+
+    @optionsSubmenu.filter((i, el) -> $(el).attr('data-parent-value') is parent.value.toString())
 
   getIndex: (menu) ->
     return 0 if !menu

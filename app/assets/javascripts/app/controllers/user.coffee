@@ -107,6 +107,8 @@ class User extends App.ControllerSubContent
           callback: rerender
           container: @el.closest('.content')
           handlers: [hideOrganizationHelp]
+          screen: 'edit'
+          veryLarge: true
         )
       )
 
@@ -246,8 +248,10 @@ class User extends App.ControllerSubContent
         objects:   __('Users')
         navupdate: '#users'
       genericObject: 'User'
+      screen: 'create',
       container: @el.closest('.content')
       callback: @newUserAddedCallback
+      veryLarge: true
     )
 
   # GitHub Issue #3050

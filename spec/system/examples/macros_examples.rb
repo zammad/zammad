@@ -29,7 +29,7 @@ RSpec.shared_examples 'macros' do |path:|
     within(:active_content) do
 
       # select group
-      find('select[name="group_id"]').select(group1.name)
+      set_tree_select_value('group_id', group1.name)
 
       open_macro_list
       expect(page).to have_selector(:macro, macro_without_group.id)
@@ -37,7 +37,7 @@ RSpec.shared_examples 'macros' do |path:|
       expect(page).to have_no_selector(:macro, macro_group2.id)
 
       # select group
-      find('select[name="group_id"]').select(group2.name)
+      set_tree_select_value('group_id', group2.name)
 
       open_macro_list
       expect(page).to have_selector(:macro, macro_without_group.id)

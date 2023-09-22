@@ -21,7 +21,7 @@ RSpec.describe 'First Steps', type: :system do
     end
   end
 
-  it 'invites agent (with more then one group)' do
+  it 'invites agent (with more than one group)' do
     within(:active_content) { click '.js-inviteAgent' }
 
     target_group = Group.last
@@ -31,7 +31,15 @@ RSpec.describe 'First Steps', type: :system do
       fill_in 'lastname',  with: 'Smith'
       fill_in 'email',     with: "#{agent}@example.com"
 
-      check "group_ids::#{target_group.id}", option: 'full', allow_label_click: true
+      click 'span', text: 'Agent'
+
+      within '.js-groupListNewItemRow' do
+        click '.js-input'
+        click 'li', text: target_group.name
+        click 'input[value="full"]', visible: :all
+        click '.js-add'
+      end
+
       click('button')
     end
 

@@ -4,7 +4,8 @@ class App.Role extends App.Model
   @url: @apiPath + '/roles'
   @configure_attributes = [
     { name: 'name',               display: __('Name'),              tag: 'input',   type: 'text', limit: 100, null: false },
-    { name: 'permission_ids',     display: __('Permissions'),       tag: 'permission', item_class: 'checkbox' },
+    { name: 'permission_ids',     display: __('Permissions'),       tag: 'permission', item_class: 'checkbox', null: true },
+    { name: 'group_ids',          display: __('Group permissions'), tag: 'group_permissions', item_class: 'checkbox', null: true },
     { name: 'default_at_signup',  display: __('Default at Signup'), tag: 'boolean', default: false, translate: true },
     { name: 'note',               display: __('Note'),              tag: 'textarea', note: __('Notes are visible to agents only, never to customers.'), limit: 250, null: true },
     { name: 'active',             display: __('Active'),            tag: 'active',  default: true },
@@ -43,15 +44,9 @@ class App.Role extends App.Model
     if !_.isArray(permissions)
       permissions = [permissions]
 
-    roles = []
-    for role in App.Role.all()
-      found = false
-      for permission in permissions
-        id = App.Permission.findByAttribute('name', permission)?.id
-        continue if !id
-        continue if !_.contains(role.permission_ids, id)
-        found = true
-        break
-      continue if !found
-      roles.push(role)
-    roles
+    App.Role.all().filter (role) -> _.any(permissions, (permission) -> role.hasPermission(permission))
+
+  hasPermission: (permission) ->
+    permission_id = App.Permission.findByAttribute('name', permission)?.id
+
+    _.contains(@permission_ids, permission_id)

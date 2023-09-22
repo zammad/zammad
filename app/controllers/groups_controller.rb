@@ -49,7 +49,7 @@ curl http://localhost/api/v1/groups -v -u #{login}:#{password}
 =end
 
   def index
-    model_index_render(Group, params)
+    model_index_render(Group.sorted, params)
   end
 
 =begin

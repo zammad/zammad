@@ -28,8 +28,18 @@ import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api.ts'
 import type { FormSchemaField, FormValues } from '../types.ts'
 import additionalFrontendObjectAttributes from './mocks/additionalFrontendObjectAttributes.json'
 
+beforeAll(async () => {
+  // so we don't need to wait until it loads inside test
+  await import(
+    // Could be changed, when mobile is longer the default app and we have a shared treeselect?
+    // eslint-disable-next-line import/no-restricted-paths
+    '#mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue'
+  )
+})
+
 const wrapperParameters = {
   form: true,
+  dialog: true,
   attachTo: document.body,
 }
 
@@ -170,6 +180,7 @@ const checkSelectOptions = async (
   options: string[],
 ) => {
   await wrapper.events.click(wrapper.getByLabelText(label))
+
   const selectOptions = wrapper.getAllByRole('option')
 
   expect(selectOptions).toHaveLength(options.length)
@@ -177,6 +188,12 @@ const checkSelectOptions = async (
   selectOptions.forEach((selectOption, index) => {
     expect(selectOption).toHaveTextContent(options[index])
   })
+
+  // Treeselect dialog needs to be closed again.
+  const doneButton = wrapper.queryByRole('button', { name: 'Done' })
+  if (doneButton) {
+    await wrapper.events.click(doneButton)
+  }
 }
 
 const selectValue = async (
@@ -296,8 +313,8 @@ describe('Form.vue - Form Updater - Initialization', () => {
           show: true,
           options: [
             {
-              label: 'Incident',
-              value: 'Incident',
+              label: 'Problem',
+              value: 'Problem',
             },
             {
               label: 'Request for Change',
@@ -319,6 +336,7 @@ describe('Form.vue - Form Updater - Initialization', () => {
               value: 'Service request',
             },
           ],
+          value: 'Incident',
           clearable: true,
         },
         multitreeselect: {
@@ -358,10 +376,7 @@ describe('Form.vue - Form Updater - Initialization', () => {
     checkDisplayValue(wrapper, 'Type', 'Problem')
     checkSelectClearable(wrapper, 'Type', true)
 
-    await checkSelectOptions(wrapper, 'Type', [
-      'Incident',
-      'Request for Change',
-    ])
+    await checkSelectOptions(wrapper, 'Type', ['Problem', 'Request for Change'])
 
     await checkSelectOptions(wrapper, 'Multi Select', [
       'Key 1',
@@ -370,12 +385,12 @@ describe('Form.vue - Form Updater - Initialization', () => {
       'Key 4',
     ])
 
-    // checkSelectClearable(wrapper, 'Treeselect', true)
-    // TODO not working for treeselect at the moment....
-    // await checkSelectOptions(wrapper, 'Treeselect', [
-    //   'Incident',
-    //   'Service request',
-    // ])
+    await checkSelectOptions(wrapper, 'Treeselect', [
+      'Incident',
+      'Service request',
+    ])
+    checkDisplayValue(wrapper, 'Treeselect', 'Incident')
+    checkSelectClearable(wrapper, 'Treeselect', true)
   })
 
   test('render initial form schema with input, textarea, number, date, datetime', async () => {
@@ -981,11 +996,10 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       'Key 4',
     ])
 
-    // TODO not working for treeselect at the moment....
-    // await checkSelectOptions(wrapper, 'Treeselect', [
-    //   'Incident',
-    //   'Service request',
-    // ])
+    await checkSelectOptions(wrapper, 'Multi Treeselect', [
+      'Incident',
+      'Service request',
+    ])
 
     await selectValue(wrapper, 'Type', 'Incident')
 
@@ -993,10 +1007,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
 
     await checkSelectOptions(wrapper, 'Multi Select', ['Key 1', 'Key 4'])
 
-    // TODO not working for treeselect at the moment....
-    // await checkSelectOptions(wrapper, 'Treeselect', [
-    //   'Service request',
-    // ])
+    await checkSelectOptions(wrapper, 'Multi Treeselect', ['Service request'])
   })
 })
 

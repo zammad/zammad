@@ -16,11 +16,15 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
     )
   end
 
-  let(:group)   { create(:group) }
-  let(:user)    { create(:agent, groups: [group]) }
-  let(:context) { { current_user: user } }
-  let(:meta)    { { initial: true, form_id: 12_345 } }
-  let(:data)    { {} }
+  let(:group)         { create(:group, name: 'Example 1') }
+  let(:group2)        { create(:group, name: 'Example 2') }
+  let(:level1_group)  { create(:group, name: 'Depth 1-G1', parent: group) }
+  let(:level1_group2) { create(:group, name: 'Depth 1-G2', parent: group) }
+  let(:level2_group)  { create(:group, name: 'Depth 2-G1', parent: level1_group) }
+  let(:user)          { create(:agent, groups: [group, group2, level1_group2, level2_group]) }
+  let(:context)       { { current_user: user } }
+  let(:meta)          { { initial: true, form_id: 12_345 } }
+  let(:data)          { {} }
 
   let(:relation_fields) do
     [
@@ -39,10 +43,44 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
     ]
   end
 
+  let(:expected_group_options) do
+    [
+      {
+        value:    group.id,
+        label:    group.name_last,
+        disabled: false,
+        children: [
+          {
+            value:    level1_group.id,
+            label:    level1_group.name_last,
+            disabled: true,
+            children: [
+              {
+                value:    level2_group.id,
+                label:    level2_group.name_last,
+                disabled: false
+              }
+            ]
+          },
+          {
+            value:    level1_group2.id,
+            label:    level1_group2.name_last,
+            disabled: false,
+          },
+        ]
+      },
+      {
+        value:    group2.id,
+        label:    group2.name_last,
+        disabled: false
+      }
+    ]
+  end
+
   let(:expected_result) do
     {
       'group_id'    => {
-        options: [ { value: group.id, label: group.name } ],
+        options: expected_group_options
       },
       'state_id'    => {
         options: Ticket::State.by_category(:viewable_agent_new).reorder(name: :asc).map { |state| { value: state.id, label: state.name } },
@@ -62,18 +100,60 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
       )
     end
 
-    it 'returns group_id as integer' do
-      expect(resolved_result.resolve).to include(
-        'group_id' => include(value: Group.last.id)
-      )
+    context 'with only one group for user' do
+      let(:user) { create(:agent, groups: [level2_group]) }
+
+      it 'returns group_id as integer' do
+        expect(resolved_result.resolve).to include(
+          'group_id' => include(value: level2_group.id)
+        )
+      end
+    end
+
+    context 'when no permission on all parent groups' do
+      let(:user) { create(:agent, groups: [group2, level2_group]) }
+      let(:expected_group_options) do
+        [
+          {
+            value:    group.id,
+            label:    group.name_last,
+            disabled: true,
+            children: [
+              {
+                value:    level1_group.id,
+                label:    level1_group.name_last,
+                disabled: true,
+                children: [
+                  {
+                    value:    level2_group.id,
+                    label:    level2_group.name_last,
+                    disabled: false
+                  }
+                ]
+              },
+            ]
+          },
+          {
+            value:    group2.id,
+            label:    group2.name_last,
+            disabled: false
+          }
+        ]
+      end
+
+      it 'returns current group options' do
+        expect(resolved_result.resolve).to include(
+          'group_id'    => include(expected_result['group_id']),
+        )
+      end
     end
 
     context 'when group_id is given in data' do
-      let(:data) { { 'group_id' => Group.last.id } }
+      let(:data) { { 'group_id' => group.id } }
 
       it 'returns no new value for group' do
         expect(resolved_result.resolve).to not_include(
-          'group_id' => include(value: Group.last.id)
+          'group_id' => include(value: group.id)
         )
       end
     end

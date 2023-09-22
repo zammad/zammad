@@ -59,7 +59,7 @@ module Ticket::Article::AddsMetadataEmail
     email_address = ticket.group.email_address
 
     if !email_address
-      raise "No email address found for group '#{ticket.group.name}' (#{ticket.group_id})"
+      raise "No email address found for group '#{ticket.group.fullname}' (#{ticket.group_id})"
     end
 
     # remember email address for background job

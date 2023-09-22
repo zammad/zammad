@@ -375,7 +375,7 @@ RSpec.describe 'Ticket zoom > Secure mailing', authenticated_as: :authenticate, 
             all('a[data-type=emailReply]').last.click
             find('.articleNewEdit-body').send_keys('Test')
 
-            select new_group.name, from: 'group_id'
+            set_tree_select_value('group_id', new_group.name)
           end
         end
 

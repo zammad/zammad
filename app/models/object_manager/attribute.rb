@@ -24,6 +24,7 @@ class ObjectManager::Attribute < ApplicationModel
     autocompletion_ajax_customer_organization
     boolean
     user_permission
+    group_permissions
     active
   ].freeze
 
@@ -105,7 +106,7 @@ add a new attribute entry for an object
     object: 'Ticket',
     name: 'group_id',
     display: __('Group'),
-    data_type: 'select',
+    data_type: 'tree_select',
     data_option: {
       relation: 'Group',
       relation_condition: { access: 'full' },

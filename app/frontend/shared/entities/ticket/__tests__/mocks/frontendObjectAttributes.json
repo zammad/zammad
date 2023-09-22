@@ -102,7 +102,7 @@
     {
       "name": "group_id",
       "display": "Group",
-      "dataType": "select",
+      "dataType": "tree_select",
       "isInternal": true,
       "dataOption": {
         "default": "",

@@ -154,6 +154,7 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
   }
 
   router = createRouter({
+    // TODO should use the app.
     history: createWebHistory('/mobile'),
     routes: localRoutes,
   }) as MockedRouter

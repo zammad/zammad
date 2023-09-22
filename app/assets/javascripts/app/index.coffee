@@ -74,6 +74,10 @@ class App extends Spine.Controller
         else
           item = App[attributeConfig.relation].find(item)
 
+      # check if parent structure
+      if object?.constructor?.has_parents && attributeConfig.name is 'name'
+        resultLocal = object.displayName()
+
       # if date is a object, get name of the object
       isObject = false
       if item && typeof item is 'object'

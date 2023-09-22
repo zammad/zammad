@@ -17,7 +17,7 @@ class CustomerTicketCreateTest < TestCase
     sleep 2
 
     select(
-      css:   '.newTicket select[name="group_id"]',
+      css:   '.newTicket input[name="group_id"]',
       value: 'Users',
     )
 
@@ -180,7 +180,7 @@ class CustomerTicketCreateTest < TestCase
     sleep 2
 
     select(
-      css:   '.newTicket select[name="group_id"]',
+      css:   '.newTicket input[name="group_id"]',
       value: 'Users',
     )
 

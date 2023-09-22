@@ -1,4 +1,4 @@
-<div class="modal-dialog wizard">
+<div class="modal-dialog">
 
   <form class="modal-content setup wizard js-user">
     <div class="modal-header">

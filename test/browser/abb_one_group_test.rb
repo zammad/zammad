@@ -58,7 +58,17 @@ class AgentTicketActionLevel0Test < TestCase
       css:   '.modal [name="email"]',
       value: "#{agent}@example.com",
     )
+    check(css: '.modal [data-attribute-name="role_ids"] input[value="2"]')
+    click(
+      css: '.modal .js-groupListNewItemRow .js-groupListItemAddNew .js-input'
+    )
+    click(
+      css: '.modal .js-groupListNewItemRow .js-optionsList .js-option'
+    )
     check(css: '.modal .js-groupListItem[value=full]')
+    click(
+      css: '.modal .js-groupListNewItemRow .js-add'
+    )
     click(
       css:  '.modal button.btn.btn--primary',
       fast: true,
@@ -123,7 +133,7 @@ class AgentTicketActionLevel0Test < TestCase
       css:   '.newTicket',
       value: 'New Ticket',
     )
-    exists(css: '.newTicket .form-group.hide select[name="group_id"]')
+    exists(css: '.newTicket .form-group.hide input[name="group_id"]+.js-input')
 
     set(
       css:   '.newTicket input[name="title"]',

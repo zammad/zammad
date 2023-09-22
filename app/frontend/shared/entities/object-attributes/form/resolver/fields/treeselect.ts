@@ -1,11 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormFieldAdditionalProps } from '#shared/components/Form/types.ts'
 import type {
   FieldResolverModule,
   ObjectAttributeTreeSelectOption,
 } from '#shared/entities/object-attributes/types/resolver.ts'
-import FieldResolver from '../FieldResolver.ts'
+import { FieldResolverSelect } from './select.ts'
 
 export interface ObjectTreeSelectOption {
   label?: string
@@ -13,28 +12,12 @@ export interface ObjectTreeSelectOption {
   children?: ObjectTreeSelectOption[]
 }
 
-export class FieldResolverTreeselect extends FieldResolver {
+export class FieldResolverTreeselect extends FieldResolverSelect {
   fieldType = 'treeselect'
 
-  public fieldTypeAttributes() {
-    const props: FormFieldAdditionalProps = {
-      noOptionsLabelTranslation: !this.attributeConfig.translate,
-      clearable: this.attributeConfig.nulloption || false,
-      historicalOptions: this.attributeConfig.historical_options,
-    }
+  multiFieldAttributeType = 'multi_tree_select'
 
-    if (this.attributeConfig.options) {
-      props.options = this.mappedOptions()
-    }
-
-    if (this.attributeType === 'multi_tree_select') props.multiple = true
-
-    return {
-      props,
-    }
-  }
-
-  private mappedOptions(): ObjectTreeSelectOption[] {
+  mappedOptions(): ObjectTreeSelectOption[] {
     const mapTreeSelectOptions = (
       options: ObjectAttributeTreeSelectOption[],
     ) => {

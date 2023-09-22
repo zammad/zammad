@@ -7,8 +7,11 @@ class Role extends App.ControllerSubContent
     @genericController = new App.ControllerGenericIndex(
       el: @el
       id: @id
+      veryLarge: true
       genericObject: 'Role'
       defaultSortBy: 'name'
+      createScreen: 'create'
+      editScreen: 'edit'
       pageData:
         home:      'roles'
         object:    __('Role')

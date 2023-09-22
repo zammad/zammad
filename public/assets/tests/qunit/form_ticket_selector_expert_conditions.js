@@ -44,12 +44,12 @@ var testSetup = (config) => {
 
   App.Group.refresh([
     {
-      id:   1,
-      name: 'group 1',
+      id:        1,
+      name_last: 'group 1',
     },
     {
-      id:   2,
-      name: 'group 2',
+      id:         2,
+      name_last: 'group 2',
     },
   ])
 

@@ -850,7 +850,7 @@ RSpec.describe 'Ticket Create', type: :system do
     end
 
     it 'does not show double signature on template usage' do
-      select Group.first.name, from: 'group_id'
+      set_tree_select_value('group_id', Group.first.name)
       use_template(template)
       expect(page).to have_no_text('Test Other Agent')
     end
@@ -930,7 +930,7 @@ RSpec.describe 'Ticket Create', type: :system do
       it 'can create tickets for secondary organizations' do
         fill_in 'Title', with: 'test'
         find('.richtext-content').send_keys 'test'
-        select Group.first.name, from: 'group_id'
+        set_tree_select_value('group_id', Group.first.name)
 
         find('[name=customer_id_completion]').fill_in with: user1.firstname
         wait.until { page.all("li.recipientList-entry.js-object[data-object-id='#{user1.id}']").present? }
@@ -961,7 +961,7 @@ RSpec.describe 'Ticket Create', type: :system do
       it 'can create tickets for secondary organizations', authenticated_as: :customer1 do
         fill_in 'Title', with: 'test'
         find('.richtext-content').send_keys 'test'
-        select Group.first.name, from: 'group_id'
+        set_tree_select_value('group_id', Group.first.name)
         find('div[data-attribute-name=organization_id] .js-input').fill_in with: customer1.organizations[0].name, fill_options: { clear: :backspace }
         wait.until { page.all("div[data-attribute-name=organization_id] .js-option[data-value='#{customer1.organizations[0].id}']").present? }
         page.find("div[data-attribute-name=organization_id] .js-option[data-value='#{customer1.organizations[0].id}'] span").click

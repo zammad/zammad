@@ -50,7 +50,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
           fill_in 'realname', with: 'My System'
           fill_in 'email',    with: "unknown_user.#{mailbox_user}"
           fill_in 'password', with: mailbox_password
-          select 'Users', from: 'group_id'
+          set_tree_select_value('group_id', Group.first.name)
           click '.js-submit'
           expect(page).to have_text('The server settings could not be automatically detected. Please configure them manually.')
         end
@@ -66,7 +66,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
           fill_in 'realname', with: 'My System'
           fill_in 'email',    with: mailbox_user
           fill_in 'password', with: mailbox_password
-          select 'Users', from: 'group_id'
+          set_tree_select_value('group_id', Group.first.name)
           click '.js-submit'
         end
 

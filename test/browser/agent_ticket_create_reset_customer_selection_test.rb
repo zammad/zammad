@@ -74,7 +74,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
       value: 'some body',
     )
     select(
-      css:   '.content.active .newTicket select[name="group_id"]',
+      css:   '.content.active .newTicket input[name="group_id"]',
       value: 'Users',
     )
     click(css: '.content.active .newTicket .js-submit')
@@ -158,7 +158,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
       value: 'some body',
     )
     select(
-      css:   '.content.active .newTicket select[name="group_id"]',
+      css:   '.content.active .newTicket input[name="group_id"]',
       value: 'Users',
     )
     click(css: '.content.active .newTicket .js-submit')

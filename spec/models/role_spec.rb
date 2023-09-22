@@ -200,6 +200,26 @@ RSpec.describe Role do
         end
       end
     end
+
+    describe 'Cleaning up groups when ticket.agent permission is lost' do
+      let(:group) { Group.first }
+
+      it 'creates a ticket.agent role with groups' do
+        role = build(:role, :agent)
+        role.role_groups.build group: group, access: 'full'
+        role.save!
+
+        expect(role.groups).to contain_exactly(group)
+      end
+
+      it 'saves non-ticket.agent role without groups' do
+        role = build(:role, :admin)
+        role.role_groups.build group: group, access: 'full'
+        role.save!
+
+        expect(role.groups).to be_blank
+      end
+    end
   end
 
   describe '.with_permissions' do

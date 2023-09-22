@@ -202,7 +202,7 @@ RSpec.describe 'Ticket create > Secure mailing', authenticated_as: :authenticate
         within(:active_content) do
           use_template(template)
 
-          select new_group.name, from: 'group_id'
+          set_tree_select_value('group_id', new_group.name)
         end
       end
 

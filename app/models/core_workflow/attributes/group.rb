@@ -18,13 +18,21 @@ class CoreWorkflow::Attributes::Group < CoreWorkflow::Attributes::Base
   end
 
   def groups
-    @groups ||= if @attributes.user.permissions?('ticket.agent')
+    @groups ||= if agent_view?
                   groups_agent
-                elsif @attributes.user.permissions?('ticket.customer') && @attributes.payload['screen'] == 'create_middle' && customer_ticket_create_group_ids.present?
+                elsif customer_view?
                   groups_customer
                 else
                   groups_default
                 end
+  end
+
+  def agent_view?
+    @attributes.payload_class == Ticket && @attributes.user.permissions?('ticket.agent')
+  end
+
+  def customer_view?
+    @attributes.payload_class == Ticket && @attributes.user.permissions?('ticket.customer') && @attributes.payload['screen'] == 'create_middle' && customer_ticket_create_group_ids.present?
   end
 
   def groups_agent
