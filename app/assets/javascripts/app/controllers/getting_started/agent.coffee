@@ -53,16 +53,10 @@ class GettingStartedAgent extends App.ControllerWizardFullScreen
   submit: (e) =>
     e.preventDefault()
     @formDisable(e)
-    @params          = @formParam(e.target)
-    @params.role_ids = []
 
+    @params = @formParam(e.target)
     # set invite flag
     @params.invite = true
-
-    # find agent role
-    role = App.Role.findByAttribute('name', 'Agent')
-    if role
-      @params.role_ids = role.id
 
     user = new App.User
     user.load(@params)
