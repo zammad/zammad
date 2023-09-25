@@ -98,4 +98,25 @@ RSpec.describe KnowledgeBase::InternalAssets do
       end
     end
   end
+
+  describe '#all_answer_ids' do
+    let(:user) { create(:agent) }
+
+    it 'returns available answer ids' do
+      expect(described_class.new(user).all_answer_ids).to contain_exactly(
+        internal_answer.id,
+        published_answer.id,
+      )
+    end
+  end
+
+  describe '#all_category_ids' do
+    let(:user) { create(:agent) }
+
+    it 'returns available category id' do
+      expect(described_class.new(user).all_category_ids).to contain_exactly(
+        published_answer.category.id
+      )
+    end
+  end
 end

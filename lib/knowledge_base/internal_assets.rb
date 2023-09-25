@@ -3,7 +3,7 @@
 class KnowledgeBase
   class InternalAssets
     CategoriesCache = Struct.new(:editor, :reader, :public_reader, keyword_init: true) do
-      def all
+      def visible
         editor + reader + public_reader
       end
 
@@ -24,8 +24,8 @@ class KnowledgeBase
     def collect_assets
       collect_base_assets
 
-      add_to_assets accessible_categories.all, type: :essential
-      add_to_assets KnowledgeBase::Category::Translation.where(category: accessible_categories.all)
+      add_to_assets accessible_categories.visible, type: :essential
+      add_to_assets KnowledgeBase::Category::Translation.where(category: accessible_categories.visible)
 
       collect_all_answer_assets
 
@@ -43,7 +43,7 @@ class KnowledgeBase
     end
 
     def all_category_ids
-      accessible_categories.pluck(:id)
+      accessible_categories.visible.pluck(:id)
     end
 
     def visible_ids

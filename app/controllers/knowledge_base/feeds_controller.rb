@@ -51,7 +51,7 @@ class KnowledgeBase::FeedsController < ApplicationController
       .accessible_categories
 
     if categories.public_reader.none?
-      return @knowledge_base.answers.where(category_id: categories.all)
+      return @knowledge_base.answers.where(category_id: categories.visible)
     end
 
     answer_ids = granular_public_answers_ids(categories) + granular_internal_answers_ids(categories)
