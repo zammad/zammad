@@ -230,6 +230,11 @@ RSpec/SpecFilePathFormat:
     - 'spec/models/knowledge_base/answer/translation/search_with_attachment_spec.rb'
     - 'spec/models/trigger/sms_spec.rb'
 
+# This was split up into RSpec/SpecFilePathSuffix and RSpec/SpecFilePathFormat,
+#   and should now be disabled.
+RSpec/FilePath:
+  Enabled: false
+
 RSpec/InstanceVariable:
   Exclude:
     - 'spec/lib/notification_factory/renderer_spec.rb'
