@@ -3174,10 +3174,10 @@
     "@typescript-eslint/parser" "^6.7.0"
     vue-eslint-parser "^9.3.1"
 
-"@vue/language-core@1.8.11":
-  version "1.8.11"
-  resolved "https://registry.yarnpkg.com/@vue/language-core/-/language-core-1.8.11.tgz#d10cc6f8f32e30991e0430f0d91db9416dc2e9a6"
-  integrity sha512-+MZOBGqGwfld6hpo0DB47x8eNM0dNqk15ZdfOhj19CpvuYuOWCeVdOEGZunKDyo3QLkTn3kLOSysJzg7FDOQBA==
+"@vue/language-core@1.8.13":
+  version "1.8.13"
+  resolved "https://registry.yarnpkg.com/@vue/language-core/-/language-core-1.8.13.tgz#fc05f8f9034c04013000da5ed6aa7a6afe6ccc2f"
+  integrity sha512-nata2fYBZAkl4QJrU+IcArJCMTHt1VP8ePL/Z7eUPC2AF+Cm7Qgo9ksNCPBzZRh1LYjCaSaqV7njqNogwpsMVg==
   dependencies:
     "@volar/language-core" "~1.10.0"
     "@volar/source-map" "~1.10.0"
@@ -3279,13 +3279,13 @@
     js-beautify "1.14.9"
     vue-component-type-helpers "1.8.4"
 
-"@vue/typescript@1.8.11":
-  version "1.8.11"
-  resolved "https://registry.yarnpkg.com/@vue/typescript/-/typescript-1.8.11.tgz#b2de6760a0e6d829a5328cd0123b1763ce3e66ef"
-  integrity sha512-skUmMDiPUUtu1flPmf2YybF+PX8IzBtMioQOaNn6Ck/RhdrPJGj1AX/7s3Buf9G6ln+/KHR1XQuti/FFxw5XVA==
+"@vue/typescript@1.8.13":
+  version "1.8.13"
+  resolved "https://registry.yarnpkg.com/@vue/typescript/-/typescript-1.8.13.tgz#0663f165778ba43d9691e617c5836496a6bc4f7a"
+  integrity sha512-ALJjHFqQ3dgZVCI/ogAS/dZ7JEhIi1N0Em5I7uwabY1p9RDRK3odLsycMHyxZRjm5dLI15c07eeBloHiD2Otlg==
   dependencies:
     "@volar/typescript" "~1.10.0"
-    "@vue/language-core" "1.8.11"
+    "@vue/language-core" "1.8.13"
 
 "@vueuse/core@^10.4.1":
   version "10.4.1"
@@ -10536,10 +10536,10 @@ vue-eslint-parser@^9.3.1:
     lodash "^4.17.21"
     semver "^7.3.6"
 
-vue-router@^4.2.4:
-  version "4.2.4"
-  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.2.4.tgz#382467a7e2923e6a85f015d081e1508052c191b9"
-  integrity sha512-9PISkmaCO02OzPVOMq2w82ilty6+xJmQrarYZDkjZBfl4RvYAlt4PKnEX21oW4KTtWfa9OuO/b3qk1Od3AEdCQ==
+vue-router@^4.2.5:
+  version "4.2.5"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.2.5.tgz#b9e3e08f1bd9ea363fdd173032620bc50cf0e98a"
+  integrity sha512-DIUpKcyg4+PTQKfFPX88UWhlagBEBEfJ5A8XDXRJLUnZOvcpMF8o/dnL90vpVkGaPbjvXazV/rC1qBKrZlFugw==
   dependencies:
     "@vue/devtools-api" "^6.5.0"
 
@@ -10551,13 +10551,13 @@ vue-template-compiler@^2.7.14:
     de-indent "^1.0.2"
     he "^1.2.0"
 
-vue-tsc@^1.8.11:
-  version "1.8.11"
-  resolved "https://registry.yarnpkg.com/vue-tsc/-/vue-tsc-1.8.11.tgz#4a972e58a9eaae72d73e63e0bedacb56391b7cb4"
-  integrity sha512-BzfiMdPqDHBlysx4g26NkfVHSQwGD/lTRausmxN9sFyjXz34OWfsbkh0YsVkX84Hu65In1fFlxHiG39Tr4Vojg==
+vue-tsc@^1.8.13:
+  version "1.8.13"
+  resolved "https://registry.yarnpkg.com/vue-tsc/-/vue-tsc-1.8.13.tgz#979b515016a74ff975447e364d45c54e986b6101"
+  integrity sha512-Hl8zUXPVK2KzPtbXeMCN0CSFkwvD96YOtYt9KvJPG9W8QGcNpGk9KHwPuGMxA8blWXSIli7gtsoC+clICEVdVg==
   dependencies:
-    "@vue/language-core" "1.8.11"
-    "@vue/typescript" "1.8.11"
+    "@vue/language-core" "1.8.13"
+    "@vue/typescript" "1.8.13"
     semver "^7.3.8"
 
 vue3-draggable-resizable@^1.6.5:
