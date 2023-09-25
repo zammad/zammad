@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-21 09:17+0000\n"
+"PO-Revision-Date: 2023-09-25 06:27+0000\n"
 "Last-Translator: Onur Alp Akin <onralpakin@gmail.com>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/tr/>\n"
@@ -1720,7 +1720,8 @@ msgstr "Varsayılan olarak \"%s\" ayarlamak istediğinizden emin misiniz?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 msgid "Are you sure you want to unset \"%s\" as default?"
-msgstr "Varsayılan olarak \"%s\" ayarını kaldırmak istediğinizden emin misiniz?"
+msgstr ""
+"Varsayılan olarak \"%s\" ayarını kaldırmak istediğinizden emin misiniz?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -2039,7 +2040,7 @@ msgstr "Kimlik Doğrulayıcı Uygulaması"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Authenticator app secret"
-msgstr "Kimlik Doğrulayıcı uygulama sırrı"
+msgstr "Kimlik doğrulayıcı uygulama sırrı"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 msgid "Author"
@@ -4124,9 +4125,8 @@ msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Nagios'un (http://www.nagios.org) etkin olup olmadığını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines if PGP encryption is enabled or not."
-msgstr "True"
+msgstr "PGP şifrelemesinin etkin olup olmadığını tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
@@ -4168,16 +4168,13 @@ msgid "Defines if generic CTI integration is enabled or not."
 msgstr "Genel CTI entegrasyonunun etkin olup olmadığını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Login failed. Have you double-checked your credentials and completed the "
-#| "email verification step?"
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
 msgstr ""
-"Giriş başarısız. Kimlik bilgilerinizi iki kez kontrol ettiniz ve e-posta "
-"doğrulama adımını tamamladınız mı?"
+"Kurtarma kodlarının, diğer iki faktörlü kimlik doğrulama yöntemlerine "
+"erişimi kaybetmeleri durumunda kullanıcılar tarafından kullanılıp "
+"kullanılamayacağını tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
@@ -4198,9 +4195,8 @@ msgstr ""
 "tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
-msgstr "True"
+msgstr "PGP alıcı takma ad yapılandırmasının etkin olup olmadığını tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4224,6 +4220,8 @@ msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
 msgstr ""
+"Bir kullanıcının birincil organizasyonunun değiştirilmesinin, bu kullanıcı "
+"için en son 100 destek talebini de güncelleyip güncellemeyeceğini tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4257,29 +4255,33 @@ msgstr ""
 "destekleyip desteklemediğini tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
-msgstr "True"
+msgstr ""
+"Destek talebi koşulları düzenleyicisinin tetikleyiciler ve destek talebi "
+"otomatik ataması için düzenli ifade operatörlerini destekleyip "
+"desteklemediğini tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines if the time accounting types are enabled."
 msgstr "Süre hesaplama türlerinin etkin olup olmadığını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
-msgstr "True"
+msgstr ""
+"İki faktörlü kimlik doğrulama yöntemi kimlik doğrulayıcı uygulamasının etkin "
+"olup olmadığını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
-msgstr "True"
+msgstr ""
+"İki faktörlü kimlik doğrulama yöntemi güvenlik anahtarlarının etkin olup "
+"olmadığını tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4494,9 +4496,8 @@ msgid "Defines the HTTP protocol of your instance."
 msgstr "Uygulamanız için HTTP protokolünü tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the PGP config."
-msgstr "True"
+msgstr "PGP yapılandırmasını tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines the Placetel config."
@@ -4553,31 +4554,24 @@ msgid "Defines the default calendar tickets subscription settings."
 msgstr "Varsayılan takvim destek talepleri abonelik ayarlarını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the default screen."
-msgstr "True"
+msgstr "Varsayılan ekranı tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the system default language."
 msgid "Defines the default system language."
-msgstr "Defines the system default language."
+msgstr "Varsayılan sistem dilini tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the system default timezone."
 msgid "Defines the default system timezone."
-msgstr "Sistem varsayılan saat dilimini tanımlar."
+msgstr "Varsayılan sistem saat dilimini tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines the default time accounting type."
 msgstr "Varsayılan süre hesaplama türünü tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Default visibility for new note."
 msgid "Defines the default visibility for new notes."
-msgstr "Default visibility for new note."
+msgstr "Yeni notlar için varsayılan görünürlüğü tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4593,98 +4587,86 @@ msgid ""
 "as a variable, #{setting.fqdn} which is found in all forms of messaging used "
 "by the application, to build links to the tickets within your system."
 msgstr ""
-"Defines the fully qualified domain name of the system. This setting is used "
-"as a variable, #{setting.fqdn} which is found in all forms of messaging used "
-"by the application, to build links to the tickets within your system."
+"Sistemin tam nitelikli alan adını tanımlar. Bu ayar, sisteminizdeki destek "
+"taleplerine bağlantılar oluşturmak için uygulama tarafından kullanılan tüm "
+"mesajlaşma biçimlerinde bulunan #{setting.fqdn} değişkeni olarak kullanılır."
 
 #: db/seeds/settings.rb
 msgid "Defines the group of created tickets."
-msgstr "Defines the group of created tickets."
+msgstr "Oluşturulan destek taleplerinin grubunu tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the group of created tickets."
 msgid "Defines the group of tickets created via web form."
-msgstr "Defines the group of created tickets."
+msgstr "Web formu aracılığıyla oluşturulan destek talebi grubunu tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the i-doit config."
-msgstr "True"
+msgstr "i-doit yapılandırmasını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the log levels for various logging actions of the Sequencer."
-msgstr "True"
+msgstr ""
+"Sequencer'ın çeşitli günlük eylemleri için günlük seviyelerini tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines the logo of the application, shown in the web interface."
-msgstr "Defines the logo of the application, shown in the web interface."
+msgstr "Web arayüzünde gösterilen uygulamanın logosunu tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the maximum accepted email size in MB."
-msgstr "True"
+msgstr "MB cinsinden kabul edilen maksimum e-posta boyutunu tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid ""
 "Defines the maximum number of allowed open tabs before auto cleanup removes "
 "surplus tabs when creating new tabs."
-msgstr "True"
+msgstr ""
+"Yeni sekmeler oluşturulurken fazla sekmelerin otomatik olarak "
+"temizlenmesinden önce izin verilen maksimum açık sekme sayısını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines the name of the application, shown in the web interface, tabs and "
-#| "title bar of the web browser."
 msgid ""
 "Defines the name of the application, shown in the web interface, tabs, and "
 "title bar of the web browser."
 msgstr ""
-"Defines the name of the application, shown in the web interface, tabs and "
-"title bar of the web browser."
+"Web arayüzünde, sekmelerde ve web tarayıcısının başlık çubuğunda gösterilen "
+"uygulamanın adını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the permission level used for lookups."
-msgstr "Defines the backend for user and organization image lookups."
+msgstr "Aramalar için kullanılan izin düzeyini tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the port of the websocket server."
-msgstr "True"
+msgstr "Websocket sunucusunun bağlantı noktasını tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines the random application secret."
 msgstr "Rastgele uygulama sırrını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the sender email address of Icinga emails."
-msgstr "True"
+msgstr "Icinga e-postalarının gönderen e-posta adresini tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the sender email address of Nagios emails."
-msgstr "True"
+msgstr "Nagios e-postalarının gönderen e-posta adresini tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines the sender email address of the service emails."
-msgstr "Defines the sender email address of the service emails."
+msgstr "Hizmet e-postalarının gönderen e-posta adresini tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines the sender of email notifications."
-msgstr "Defines the sender of email notifications."
+msgstr "E-posta bildirimlerinin göndericisini tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the separator between the agent's real name and the given group "
 "email address."
 msgstr ""
-"Defines the separator between the agent's real name and the given group "
-"email address."
+"Temsilcinin gerçek adı ile verilen grup e-posta adresi arasındaki ayırıcıyı "
+"tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4696,15 +4678,12 @@ msgstr ""
 "varsayılan değer kullanılır."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the sipgate.io config."
-msgstr "True"
+msgstr "sipgate.io yapılandırmasını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the state of auto closed tickets."
 msgid "Defines the state of auto-closed tickets."
-msgstr "Defines the state of auto closed tickets."
+msgstr "Otomatik kapanan destek taleplerinin durumunu tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4712,31 +4691,26 @@ msgid ""
 "ensures that only tickets which belong to your system will be processed as "
 "follow-ups (useful when communicating between two instances of Zammad)."
 msgstr ""
-"Defines the system identifier. Every ticket number contains this ID. This "
-"ensures that only tickets which belong to your system will be processed as "
-"follow-ups (useful when communicating between two instances of Zammad)."
+"Sistem tanımlayıcısını tanımlar. Her destek talep numarası bu kimliği "
+"içerir. Bu, yalnızca sisteminize ait destek taleplerinin takip olarak "
+"işlenmesini sağlar (Zammad'ın iki örneği arasında iletişim kurarken "
+"kullanışlıdır)."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the tab behaviour after a ticket action."
-msgstr "True"
+msgstr "Bir destek talebi eyleminden sonra sekme davranışını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the ticket states used for lookups."
-msgstr "Defines the backend for user and organization image lookups."
+msgstr "Aramalar için kullanılan destek talebi durumlarını tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the timeframe during which a self-created note can be deleted."
-msgstr "True"
+msgstr "Kendi oluşturduğunuz bir notun silinebileceği zaman dilimini tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines pretty date format."
 msgid "Defines the token for Placetel."
-msgstr "Defines pretty date format."
+msgstr "Placetel için token tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4746,33 +4720,31 @@ msgstr ""
 "tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the transaction backend to execute triggers."
-msgstr "True"
+msgstr "Tetikleyicileri yürütmek için işlem arka ucunu tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the transaction backend to send agent notifications."
-msgstr "True"
+msgstr "Temsilci bildirimlerini göndermek için işlem arka ucunu tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
-msgstr "True"
+msgstr ""
+"Nesnelerdeki arayan kimliklerini algılayan ve bunları CTI aramaları için "
+"saklayan işlem arka ucunu tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines the transaction backend which executes time based triggers."
-msgstr "True"
+msgstr "Zaman tabanlı tetikleyicileri yürüten işlem arka ucunu tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid ""
 "Defines the transaction backend which posts messages to Slack (http://www."
 "slack.com)."
-msgstr "True"
+msgstr ""
+"Slack'e mesaj gönderen işlem arka ucunu tanımlar (http://www.slack.com)."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4791,31 +4763,40 @@ msgstr "Süre hesaplama giriş alanının yanında gösterilecek birimi tanımla
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
+"Eşleşen bir destek talebi mevcut olduğunda gösterilen uyarı mesajını "
+"tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
+"Eşleşen bir destek talebi mevcut olduğunda gösterilen uyarı başlığını "
+"tanımlar."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines transaction backend."
-msgstr "True"
+msgstr "İşlem arka ucunu tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
 msgstr ""
+"Halihazırda mevcut destek taleplerinin olması durumunda eşleşen destek "
+"taleplerinin gösterilip gösterilmeyeceğini tanımlar."
 
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
+"Bir destek talebi oluşturmadan önce hangi destek talebi özelliklerinin "
+"kontrol edileceğini tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
+"Eşleşen destek talebi olması durumunda hangi kullanıcı rollerinin uyarı "
+"alacağını tanımlar."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4852,15 +4833,12 @@ msgid "Delete"
 msgstr "Sil"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
-#, fuzzy
-#| msgid "Delete File"
 msgid "Delete Article"
-msgstr "Delete File"
+msgstr "Yazıyı Sil"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
-#, fuzzy
 msgid "Delete Avatar?"
-msgstr "True"
+msgstr "Avatar silinsin mi?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 msgid "Delete Customer"
@@ -4868,7 +4846,7 @@ msgstr "Müşteriyi Sil"
 
 #: app/assets/javascripts/app/views/generic/attachment_item.jst.eco
 msgid "Delete File"
-msgstr "Delete File"
+msgstr "Dosya Sil"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Delete Knowledge Base"
@@ -4879,28 +4857,24 @@ msgid "Delete User"
 msgstr "Kullanıcıyı Sil"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
-#, fuzzy
 msgid "Delete all child categories and answers, then try again."
-msgstr "True"
+msgstr "Tüm alt kategorileri ve yanıtları silin, ardından tekrar deneyin."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Delete all existing records first."
-msgstr "Delete all existing records first."
+msgstr "Önce mevcut tüm kayıtları silin."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete avatar"
-msgstr "Kullanıcıyı Sil"
+msgstr "Avatarı sil"
 
 #: db/seeds/schedulers.rb
-#, fuzzy
 msgid "Delete obsolete classic IMAP backup."
-msgstr "True"
+msgstr "Eski klasik IMAP yedeklemesini silin."
 
 #: db/seeds/schedulers.rb
 msgid "Delete old 'RecentView' entries."
-msgstr "Eski 'SonGörünüm' girdilerini silin."
+msgstr "Eski 'RecentView' girdilerini silin."
 
 #: db/seeds/schedulers.rb
 msgid "Delete old activity stream entries."
@@ -4928,19 +4902,15 @@ msgstr "Organizasyon silinsin mi?"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Delete records"
-msgstr "Delete records"
+msgstr "Kayıtları sil"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete:"
-msgstr "Sil"
+msgstr "Sil:"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#, fuzzy
-#| msgid "Deleted Organization"
 msgid "Deleted Organization:"
-msgstr "Organizasyon Silindi"
+msgstr "Silinen Organizasyon:"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Deleted tickets (%s in total):"
@@ -4951,21 +4921,17 @@ msgid "Deletion Task"
 msgstr "Silme Görevi"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
-#, fuzzy
-#| msgid "Delivery failed"
 msgid "Deletion failed."
-msgstr "Delivery failed"
+msgstr "Silme işlemi başarısız oldu."
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue
-#, fuzzy
-#| msgid "Delivery failed"
 msgid "Delivery failed:"
-msgstr "Delivery failed"
+msgstr "Teslimat başarısız oldu:"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Department"
-msgstr "Department"
+msgstr "Departman"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
@@ -4985,20 +4951,18 @@ msgid "Description"
 msgstr "Açıklama"
 
 #: app/assets/javascripts/app/models/public_link.coffee
-#, fuzzy
 msgid "Description (shown as title tag for screen readers)"
-msgstr "True"
+msgstr "Açıklama (ekran okuyucular için başlık etiketi olarak gösterilir)"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Designer"
-msgstr "Designer"
+msgstr "Tasarımcı"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
-#, fuzzy
 msgid "Desktop"
-msgstr "True"
+msgstr "Masaüstü"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -5009,59 +4973,49 @@ msgstr "True"
 #: app/models/channel/driver/sms/message_bird.rb
 #: app/models/channel/driver/sms/twilio.rb
 msgid "Destination Group"
-msgstr "Destination Group"
+msgstr "Hedef Grup"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Destination caller id"
 msgid "Destination caller ID"
-msgstr "Destination caller id"
+msgstr "Hedef arayan kimliği"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
-#, fuzzy
-#| msgid "Destination caller id"
 msgid "Destination caller ID or queue"
-msgstr "Destination caller id"
+msgstr "Hedef arayan kimliği veya kuyruk"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enable Ticket creation"
 msgid "Detect Duplicate Ticket Creation"
-msgstr "Enable Ticket creation"
+msgstr "Mükerrer Destek Talebi Oluşturulmasını Algıla"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Developer System"
-msgstr "True"
+msgstr "Geliştirici Sistemi"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#, fuzzy
 msgid "Device"
-msgstr "True"
+msgstr "Cihaz"
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: db/seeds/permissions.rb
 msgid "Devices"
-msgstr "Devices"
+msgstr "Cihazlar"
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
-#, fuzzy
 msgid "Dialog window with selections"
-msgstr "True"
+msgstr "Seçimleri içeren iletişim penceresi"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-#, fuzzy
 msgid "Did you know? You can help translating %s at:"
-msgstr "True"
+msgstr "Biliyor muydunuz? %s çevirilerine yardımcı olabilirsiniz:"
 
 #: db/seeds/settings.rb
 msgid "Digit required"
-msgstr "Digit required"
+msgstr "Rakam gerekli"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Direct Messages"
@@ -5934,7 +5888,7 @@ msgstr "Enter the URL of your %s system"
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
 #: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
 msgid "Enter the code from your two-factor authenticator app."
-msgstr ""
+msgstr "İki faktörlü kimlik doğrulayıcı uygulamanızdaki kodu girin."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid ""
@@ -5947,6 +5901,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Enter the security code generated by the authenticator app:"
 msgstr ""
+"Kimlik doğrulayıcı uygulaması tarafından oluşturulan güvenlik kodunu girin:"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #, fuzzy
@@ -6731,7 +6686,7 @@ msgstr "Hesap onaylanmamış"
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
 #: db/seeds/settings.rb
 msgid "Get the security code from the authenticator app on your device."
-msgstr ""
+msgstr "Cihazınızdaki kimlik doğrulayıcı uygulamasından güvenlik kodunu alın."
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
@@ -6878,10 +6833,8 @@ msgid "Google App Credentials"
 msgstr "Google Uygulaması Kimlik Bilgileri"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-#, fuzzy
-#| msgid "Authentication"
 msgid "Google Authenticator"
-msgstr "Authentication"
+msgstr "Google Authenticator"
 
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 msgid "Google Client ID"
@@ -7206,9 +7159,8 @@ msgid "Hi! Which one of our products?"
 msgstr "Selam! Ürünlerimizden hangisi?"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-#, fuzzy
 msgid "Hide authenticator app secret"
-msgstr "True"
+msgstr "Kimlik doğrulayıcı uygulama sırrını gizle"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -8886,10 +8838,8 @@ msgid "Microsoft Application Registration Portal"
 msgstr "True"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-#, fuzzy
-#| msgid "Basic Authentication"
 msgid "Microsoft Authenticator"
-msgstr "Temel Kimlik Doğrulaması"
+msgstr "Microsoft Authenticator"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb
 #, fuzzy
@@ -9320,7 +9270,7 @@ msgstr "New SLA"
 
 #: app/assets/javascripts/app/controllers/job.coffee
 msgid "New Scheduler"
-msgstr "New Scheduler"
+msgstr "Yeni Zamanlayıcı"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
@@ -10071,7 +10021,7 @@ msgstr "Açık destek talepleri"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
-msgstr ""
+msgstr "Kimlik doğrulayıcı uygulamanızı açın ve aşağıdaki QR kodunu tarayın:"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
@@ -10619,11 +10569,12 @@ msgid "Please contact your administrator."
 msgstr "True"
 
 #: app/models/ticket/selector/sql.rb
-#, fuzzy
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
-msgstr "True"
+msgstr ""
+"Kullanmak için lütfen execution_time özelliğini etkinleştirin (şu anda "
+"yalnızca tetikleyiciler ve zamanlayıcılar için izin verilmektedir)"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #, fuzzy
@@ -11819,13 +11770,11 @@ msgstr "Zamanlayıcı"
 
 #: app/assets/javascripts/app/controllers/job.coffee
 msgid "Schedulers"
-msgstr "Schedulers"
+msgstr "Zamanlayıcılar"
 
 #: app/assets/javascripts/app/controllers/job.coffee
-#, fuzzy
-#| msgid "Scheduler"
 msgid "Schedulers are …"
-msgstr "Zamanlayıcı"
+msgstr "Zamanlayıcılar …"
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
@@ -12457,10 +12406,8 @@ msgid "Show all…"
 msgstr "Show all..."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-#, fuzzy
-#| msgid "Authentication via %s"
 msgid "Show authenticator app secret"
-msgstr "Authentication via %s"
+msgstr "Kimlik doğrulayıcı uygulama sırrını göster"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -15468,6 +15415,8 @@ msgstr "To select placeholders from a list, just enter \"::\"."
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "To set up Authenticator App for your account, follow the steps below:"
 msgstr ""
+"Hesabınız için Authenticator Uygulamasını kurmak için aşağıdaki adımları "
+"izleyin:"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid ""
@@ -15846,6 +15795,8 @@ msgid ""
 "Unless you already have it, install one of the following authenticator apps "
 "on your mobile device:"
 msgstr ""
+"Zaten sahip değilseniz, mobil cihazınıza aşağıdaki kimlik doğrulayıcı "
+"uygulamalardan birini yükleyin:"
 
 #: app/assets/javascripts/app/controllers/user.coffee
 #, fuzzy
@@ -17510,6 +17461,12 @@ msgstr "True"
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
 msgstr "active"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
+#, fuzzy
+#| msgid "Add"
+msgid "add"
+msgstr "Ekle"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "add option"

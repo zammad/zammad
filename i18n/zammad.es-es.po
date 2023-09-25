@@ -669,8 +669,8 @@ msgstr ""
 "\n"
 "Cuando se habilita guardar el tipo de actividad, los usuarios podrán elegir "
 "un tipo de esta lista. Además, aparecerá una columna con un tipo de "
-"actividad asociado a la entrada en la tabla **Actividad** bajo la pestaña **"
-"Tiempo computado**."
+"actividad asociado a la entrada en la tabla **Actividad** bajo la pestaña "
+"**Tiempo computado**."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -16565,6 +16565,12 @@ msgstr "absoluto - por ejemplo \"Lunes 09:30\" o \"Martes 23-Feb 14:20\""
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
 msgstr "active"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
+#, fuzzy
+#| msgid "Add"
+msgid "add"
+msgstr "Añadir"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "add option"
