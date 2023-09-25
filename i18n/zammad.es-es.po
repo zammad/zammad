@@ -669,8 +669,8 @@ msgstr ""
 "\n"
 "Cuando se habilita guardar el tipo de actividad, los usuarios podrán elegir "
 "un tipo de esta lista. Además, aparecerá una columna con un tipo de "
-"actividad asociado a la entrada en la tabla **Actividad** bajo la pestaña **"
-"Tiempo computado**."
+"actividad asociado a la entrada en la tabla **Actividad** bajo la pestaña "
+"**Tiempo computado**."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -1016,6 +1016,7 @@ msgstr "Accounts"
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/actions.jst.eco
+#: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -1138,6 +1139,7 @@ msgstr "Adaptador"
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
+#: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -6820,7 +6822,6 @@ msgstr "Saludo"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/generic/permission.jst.eco
 #: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
@@ -6880,6 +6881,18 @@ msgstr "¡Grupo no válido!"
 #: app/models/channel/driver/sms/base.rb
 msgid "Group needed in channel definition!"
 msgstr "¡Es necesario incluir un grupo en la definición del canal!"
+
+#: app/models/group.rb
+msgid "Group or children exceeded max depth!"
+msgstr ""
+
+#: app/assets/javascripts/app/models/role.coffee
+#: app/assets/javascripts/app/models/user.coffee
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Permissions"
+msgid "Group permissions"
+msgstr "Permisos"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco db/seeds/settings.rb
 msgid "Group selection for Ticket creation"
@@ -9235,6 +9248,10 @@ msgstr "Sin configuración."
 msgid "No content to show"
 msgstr "Sin contenido que mostrar"
 
+#: app/models/group.rb
+msgid "No double colons (::) allowed, reserved delimiter"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "No drafts"
 msgstr "Sin borradores"
@@ -9992,6 +10009,12 @@ msgstr "Se requiere el parámetro 'data' o 'file'."
 msgid "Parent"
 msgstr "Padre"
 
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Parent"
+msgid "Parent group"
+msgstr "Padre"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -10118,7 +10141,6 @@ msgstr "Nivell de permiso para buscar casos"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
-#: db/seeds/object_manager_attributes.rb
 msgid "Permissions"
 msgstr "Permisos"
 
@@ -10703,6 +10725,7 @@ msgstr "Remoto"
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
+#: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_user_attribute_row.jst.eco
@@ -11075,7 +11098,7 @@ msgstr "El rol %s colisiona con el rol %s, ¿desea continuar?"
 
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: db/seeds/permissions.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Roles"
 msgstr "Roles"
 
@@ -16659,6 +16682,12 @@ msgstr "absoluto - por ejemplo \"Lunes 09:30\" o \"Martes 23-Feb 14:20\""
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
 msgstr "active"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
+#, fuzzy
+#| msgid "Add"
+msgid "add"
+msgstr "Añadir"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "add option"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-02 01:05+0000\n"
+"PO-Revision-Date: 2023-09-25 06:23+0000\n"
 "Last-Translator: \"Chang W. Lee\" <changlee99@gmail.com>\n"
 "Language-Team: Korean <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ko/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -56,10 +56,9 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
-"\"데이터베이스\"는 모든 첨부 파일을 데이터베이스에 저장합니다(많은 양의 데이"
-"터 저장에는 권장되지 않음). \"파일 시스템\"은 파일 시스템에 데이터를 저장합니"
-"다. 이미 프로덕션인 시스템에서도 데이터 손실 없이 모듈 간에 전환할 수 있습니"
-"다."
+"'데이터베이스'는 모든 첨부파일을 데이터베이스에 저장합니다(대량의 데이터를 "
+"저장할 때는 권장하지 않음). '파일시스템'은 파일시스템에 데이터를 저장합니다. "
+"이미 운영 중인 시스템에서도 데이터 손실 없이 모듈 간에 전환할 수 있습니다."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -77,6 +76,16 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
+"번호}>: 현재_사용자.긴이름}이 #{티켓.업데이트된_날짜}_에서 생성했습니다.\n"
+"* 그룹: #{티켓.그룹.이름}\n"
+"* 소유자: #{티켓.소유자.전체이름}\n"
+"* 상태: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -92,6 +101,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
+"번호}>: 티켓 에스컬레이션 주소 #{ticket.escalation_at}_에서 에스컬레이션됨\n"
+"\"#{ticket.customer.longname}\"의 티켓(#{ticket.title})이 \"#{ticket."
+"escalation_at}\" 이후 에스컬레이션되었습니다!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -108,6 +126,16 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
+"번호}>: 마지막으로 업데이트된 시간: #{ticket.updated_at}_\n"
+"* 그룹: #{티켓.그룹.이름}\n"
+"* 소유자: #{티켓.소유자.풀네임}\n"
+"* 상태: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -123,6 +151,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
+"번호}>: 알림이 도착했습니다!\n"
+"티켓에 주의가 필요합니다: 고객 \"*#{ticket.customer.longname}*\"의 (#{ticket."
+"title})에 대한 알림이 도달했습니다.\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -142,6 +179,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
+"번호}>: 현재_사용자.긴이름}이 #{티켓.업데이트된_시간}_에서 업데이트했습니다."
+"\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |키, 값| %>\n"
+"  * <%= t 키 %>: <%= h 값[0] %> -> <%= h 값[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -157,6 +207,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
+"번호}>: 티켓 에스컬레이션 주소 #{ticket.escalation_at}_에서 에스컬레이션됨\n"
+"\"#{ticket.customer.longname}\"의 티켓(#{ticket.title})이 \"#{ticket."
+"escalation_at}\" 이후 에스컬레이션되었습니다!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -175,6 +234,18 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"타사 애플리케이션과 연결된 #{config.product_name} 계정\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>타사 애플리케이션에 계정을 <b>\"#{t(공급자)}\".</div>연동한 것 같습니다."
+"\n"
+"<br>\n"
+"<div>본인이 아닌 경우 프로필에서 연결된 계정을 삭제하고 타사 애플리케이션 "
+"비밀번호를 변경해 주세요. 누군가 타사 서비스에서 귀하의 계정에 무단으로 "
+"액세스했을 수 있습니다.</div>\n"
+"<br>\n"
+"<div>귀하의 #{config.product_name} 팀</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -205,6 +276,29 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"새로운 국가에서 #{config.product_name} 로그인하기\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>\"#{user_device.created_at}\"에서 <b>알려진 장치로 계정을 사용하셨지만 "
+"새로운 국가에서 사용하신 것 같습니다:</div>\n"
+"<br>\n"
+"<div>\n"
+"내 디바이스 #{user_device.name}<br>\n"
+"사용자 위치(상대적): #{user_device.location}<br>\n"
+"IP: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>국가명이 알려진 장치 목록에 추가되었으며, 여기에서 확인할 수 "
+"있습니다.</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#프로필/디바이스\""
+">#{config.http_type}://#{config.fqdn}/#프로필/디바이스</a></div>\n"
+"<br>\n"
+"<div>본인이 아닌 경우 장치를 삭제하고 계정 비밀번호를 변경한 후 관리자에게 "
+"문의하세요. 누군가 계정에 무단으로 액세스했을 수 있습니다.</div>\n"
+"<br>\n"
+"<div>귀하의 #{config.product_name} 팀</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -235,22 +329,41 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"새로운 국가에서 #{config.product_name} 로그인하기\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>\"#{user_device.created_at}\"에서 <b>알려진 장치로 계정을 사용하셨지만 "
+"새로운 국가에서 사용하신 것 같습니다:</div>\n"
+"<br>\n"
+"<div>\n"
+"내 디바이스 #{user_device.name}<br>\n"
+"사용자 위치(상대적): #{user_device.location}<br>\n"
+"IP: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>국가명이 알려진 장치 목록에 추가되었으며, 여기에서 확인할 수 "
+"있습니다.</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#프로필/디바이스\""
+">#{config.http_type}://#{config.fqdn}/#프로필/디바이스</a></div>\n"
+"<br>\n"
+"<div>본인이 아닌 경우 장치를 삭제하고 계정 비밀번호를 변경한 후 관리자에게 "
+"문의하세요. 누군가 계정에 무단으로 액세스했을 수 있습니다.</div>\n"
+"<br>\n"
+"<div>귀하의 #{config.product_name} 팀</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
-#, fuzzy
-#| msgid "Confirm"
 msgid "%s (confirm)"
-msgstr "확인"
+msgstr "s (확인)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (메서드)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
-#, fuzzy
-#| msgid "Confirm"
 msgid "%s (option)"
-msgstr "확인"
+msgstr "%s (옵션)"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
@@ -891,6 +1004,7 @@ msgstr "계정"
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/actions.jst.eco
+#: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -1017,6 +1131,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
+#: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -6706,7 +6821,6 @@ msgstr "환영"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/generic/permission.jst.eco
 #: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
@@ -6764,6 +6878,18 @@ msgstr ""
 #: app/models/channel/driver/sms/base.rb
 msgid "Group needed in channel definition!"
 msgstr ""
+
+#: app/models/group.rb
+msgid "Group or children exceeded max depth!"
+msgstr ""
+
+#: app/assets/javascripts/app/models/role.coffee
+#: app/assets/javascripts/app/models/user.coffee
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Permissions"
+msgid "Group permissions"
+msgstr "권한"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco db/seeds/settings.rb
 msgid "Group selection for Ticket creation"
@@ -9160,6 +9286,10 @@ msgstr "저장 구성"
 msgid "No content to show"
 msgstr ""
 
+#: app/models/group.rb
+msgid "No double colons (::) allowed, reserved delimiter"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #, fuzzy
 #| msgid "draft"
@@ -9951,6 +10081,12 @@ msgstr ""
 msgid "Parent"
 msgstr "부모의"
 
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Parent"
+msgid "Parent group"
+msgstr "부모의"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -10089,7 +10225,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
-#: db/seeds/object_manager_attributes.rb
 msgid "Permissions"
 msgstr "권한"
 
@@ -10693,6 +10828,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
+#: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_user_attribute_row.jst.eco
@@ -11058,7 +11194,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: db/seeds/permissions.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Roles"
 msgstr "역할"
 
@@ -16705,6 +16841,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
 msgstr "유효한"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
+#, fuzzy
+#| msgid "Add"
+msgid "add"
+msgstr "더하다"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "add option"

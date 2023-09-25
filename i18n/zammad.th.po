@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2023-09-20 01:07+0000\n"
 "Last-Translator: SUMONCHAI WONGPITAK <sumonchai@gmail.com>\n"
-"Language-Team: Thai <https://translations.zammad.org/projects/zammad/"
-"zammad-development/th/>\n"
+"Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
+"development/th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -666,13 +666,12 @@ msgid ""
 "activity type will be rendered for an entry in the **Activity** table under "
 "the **Accounted Time** tab."
 msgstr ""
-"**ประเภทกิจกรรม** "
-"สามารถใช้เพื่อจัดกลุ่มรายการบัญชีเวลาตั๋วที่แตกต่างกันเข้าด้วยกัน ตัวอย่างเช่"
-"น รายการที่เกี่ยวข้องกับประเภท \"การเรียกเก็บเงิน\"\n"
+"**ประเภทกิจกรรม** สามารถใช้เพื่อจัดกลุ่มรายการบัญชีเวลาตั๋วที่แตกต่างกันเข้าด้วยกัน ตัวอย่างเช่น "
+"รายการที่เกี่ยวข้องกับประเภท \"การเรียกเก็บเงิน\"\n"
 "\n"
-"เมื่อคุณเปิดใช้งานการบันทึกประเภทกิจกรรมผู้ใช้จะสามารถเลือกประเภทจากรายการนี้"
-"ได้ นอกจากนี้ คอลัมน์ที่มีชนิดกิจกรรมที่เกี่ยวข้องจะถูกแสดงสําหรั"
-"บรายการในตาราง **กิจกรรม** ภายใต้แท็บ **เวลาบัญชี**"
+"เมื่อคุณเปิดใช้งานการบันทึกประเภทกิจกรรมผู้ใช้จะสามารถเลือกประเภทจากรายการนี้ได้ นอกจากนี้ "
+"คอลัมน์ที่มีชนิดกิจกรรมที่เกี่ยวข้องจะถูกแสดงสําหรับรายการในตาราง **กิจกรรม** ภายใต้แท็บ "
+"**เวลาบัญชี**"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -686,8 +685,7 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"**ความเป็นส่วนตัวของข้อมูล ** "
-"ช่วยให้คุณลบและตรวจสอบการลบข้อมูลที่มีอยู่ออกจากระบบ.\n"
+"**ความเป็นส่วนตัวของข้อมูล ** ช่วยให้คุณลบและตรวจสอบการลบข้อมูลที่มีอยู่ออกจากระบบ.\n"
 "\n"
 "It can be used to delete tickets, organizations, and users. The owner "
 "assignment will be unset in case the deleted user is an agent.\n"
@@ -722,8 +720,8 @@ msgstr ""
 "(เวลาระหว่างการสร้างและปิด ticket )\n"
 "\n"
 "ticket ที่ส่งต่อ (เช่น ticket ที่พลาดเป้าหมายที่กำหนดไว้) "
-"จะแสดงในมุมมองที่แยกต่างหากในภาพรวมของคุณ คุณยังสามารถกำหนดค่า ** "
-"การแจ้งเตือนทางอีเมล **"
+"จะแสดงในมุมมองที่แยกต่างหากในภาพรวมของคุณ คุณยังสามารถกำหนดค่า ** การแจ้งเตือนทางอีเมล "
+"**"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "1 attached file"
@@ -1001,6 +999,7 @@ msgstr "บัญชี"
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/actions.jst.eco
+#: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -1119,6 +1118,7 @@ msgstr "อะแดปเตอร์"
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
+#: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -1552,8 +1552,8 @@ msgstr ""
 "div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"ตั๋วอีกใบถูกรวมเข้ากับตั๋ว (#{ticket.title}) โดย \"<b>#{current_user."
-"longname}</b>\"\n"
+"ตั๋วอีกใบถูกรวมเข้ากับตั๋ว (#{ticket.title}) โดย \"<b>#{current_user.longname}</b>"
+"\"\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -1739,9 +1739,7 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 msgid ""
 "Are you sure? The agent default notifications settings will be reset to the "
 "system default."
-msgstr ""
-"คุณแน่ใจหรือไม่? "
-"การตั้งค่าการแจ้งเตือนเริ่มต้นของเอเจนต์จะถูกรีเซ็ตเป็นค่าเริ่มต้นของระบบ"
+msgstr "คุณแน่ใจหรือไม่? การตั้งค่าการแจ้งเตือนเริ่มต้นของเอเจนต์จะถูกรีเซ็ตเป็นค่าเริ่มต้นของระบบ"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
@@ -5528,8 +5526,7 @@ msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction."
 msgstr ""
-"เปิดใช้งานปุ่มสำหรับการตรวจสอบผู้ใช้ผ่าน %s ปุ่มจะเปลี่ยนเส้นทางไปที่ /auth/"
-"sso เมื่อผู้ใช้โต้ตอบ"
+"เปิดใช้งานปุ่มสำหรับการตรวจสอบผู้ใช้ผ่าน %s ปุ่มจะเปลี่ยนเส้นทางไปที่ /auth/sso เมื่อผู้ใช้โต้ตอบ"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Enables console logging."
@@ -6642,7 +6639,6 @@ msgstr "การทักทาย"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/generic/permission.jst.eco
 #: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
@@ -6700,6 +6696,18 @@ msgstr "กลุ่มไม่ถูกต้อง!"
 #: app/models/channel/driver/sms/base.rb
 msgid "Group needed in channel definition!"
 msgstr "ต้องการกลุ่มในช่องนิยาม!"
+
+#: app/models/group.rb
+msgid "Group or children exceeded max depth!"
+msgstr ""
+
+#: app/assets/javascripts/app/models/role.coffee
+#: app/assets/javascripts/app/models/user.coffee
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Permissions"
+msgid "Group permissions"
+msgstr "สิทธิ"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco db/seeds/settings.rb
 msgid "Group selection for Ticket creation"
@@ -9001,6 +9009,10 @@ msgstr "ไม่ได้ตั้งค่าคอนฟิก."
 msgid "No content to show"
 msgstr "ไม่มีเนื้อหาที่จะแสดง"
 
+#: app/models/group.rb
+msgid "No double colons (::) allowed, reserved delimiter"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "No drafts"
 msgstr "ไ่ม่ต้องแบบร่าง"
@@ -9760,6 +9772,12 @@ msgstr ""
 msgid "Parent"
 msgstr "หลัก"
 
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Parent"
+msgid "Parent group"
+msgstr "หลัก"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -9890,7 +9908,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
-#: db/seeds/object_manager_attributes.rb
 msgid "Permissions"
 msgstr "สิทธิ"
 
@@ -10471,6 +10488,7 @@ msgstr "รีโมท"
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
+#: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_user_attribute_row.jst.eco
@@ -10822,7 +10840,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: db/seeds/permissions.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Roles"
 msgstr "บทบาท"
 
@@ -16287,6 +16305,12 @@ msgstr "สมบูรณ์ - ต.ย. \"วันจันทร์ 09:30\" �
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
 msgstr "กำลังใช้งาน"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
+#, fuzzy
+#| msgid "Add"
+msgid "add"
+msgstr "เพิ่ม"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "add option"
