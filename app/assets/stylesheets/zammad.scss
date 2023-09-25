@@ -7937,7 +7937,7 @@ a.list-group-item.active > .badge,
   justify-content: center;
   position: absolute;
 
-  @include bidi-style(left, -55px, right, auto);
+  @include bidi-style(left, -56px, right, auto);
 
   top: 0;
   bottom: 0;
