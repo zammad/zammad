@@ -1,5 +1,11 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+# This validator is used in special situations only. In most cases CoreWorkflow is used instead.
+# It does not run for any object which has ChecksCoreWorkflow concern.
+# Please note that all objects that may have custom attributes created via UI use CoreWorkflow.
+# This may run in Ticket::Article if custom attribute were created manually.
+# Or if there are custom modifications using this functionality
+
 class Validations::ObjectManager::AttributeValidator::Required < Validations::ObjectManager::AttributeValidator::Backend
 
   def validate
