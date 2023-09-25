@@ -1,0 +1,19 @@
+새로운 국가에서 #{config.product_name} 로그인하기
+
+<div>Hi #{user.firstname},</div>
+<br>
+<div>"#{user_device.created_at}"에서 <b>알려진 장치로 계정을 사용하셨지만 새로운 국가에서 사용하신 것 같습니다:</div>
+<br>
+<div>
+내 디바이스 #{user_device.name}<br>
+사용자 위치(상대적): #{user_device.location}<br>
+IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>국가명이 알려진 장치 목록에 추가되었으며, 여기에서 확인할 수 있습니다.</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#프로필/디바이스">#{config.http_type}://#{config.fqdn}/#프로필/디바이스</a></div>
+<br>
+<div>본인이 아닌 경우 장치를 삭제하고 계정 비밀번호를 변경한 후 관리자에게 문의하세요. 누군가 계정에 무단으로 액세스했을 수 있습니다.</div>
+<br>
+<div>귀하의 #{config.product_name} 팀</div>

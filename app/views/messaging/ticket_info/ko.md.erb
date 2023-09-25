@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}>: 마지막으로 업데이트된 시간: #{ticket.updated_at}_
+* 그룹: #{티켓.그룹.이름}
+* 소유자: #{티켓.소유자.풀네임}
+* 상태: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
