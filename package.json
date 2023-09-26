@@ -59,7 +59,7 @@
     "eslint-plugin-sonarjs": "^0.21.0",
     "eslint-plugin-vue": "^9.17.0",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
-    "histoire": "^0.17.0",
+    "histoire": "^0.17.2",
     "jsdom": "^22.1.0",
     "mock-apollo-client": "^1.2.1",
     "postcss": "^8.4.30",
