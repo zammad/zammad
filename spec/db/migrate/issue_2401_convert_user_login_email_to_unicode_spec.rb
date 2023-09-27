@@ -20,7 +20,6 @@ RSpec.describe Issue2401ConvertUserLoginEmailToUnicode, db_strategy: :reset, typ
 
       expect { migrate }.to change { user.reload.login }
         .and change { user.reload.email }
-        .and change { user.reload.updated_at }
     end
 
     it 'allows to lookup user with converted login/email' do

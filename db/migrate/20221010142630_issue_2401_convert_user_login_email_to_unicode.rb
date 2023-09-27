@@ -8,7 +8,7 @@ class Issue2401ConvertUserLoginEmailToUnicode < ActiveRecord::Migration[6.1]
     sql_regex = "%@%#{SimpleIDN::ACE_PREFIX}%"
 
     User.where('email like ? or login like ?', sql_regex, sql_regex).each do |user|
-      user.update(login: EmailHelper::Idn.to_unicode(user.login), email: EmailHelper::Idn.to_unicode(user.email))
+      user.update_columns(login: EmailHelper::Idn.to_unicode(user.login), email: EmailHelper::Idn.to_unicode(user.email)) # rubocop:disable Rails/SkipsModelValidations
     end
   end
 end
