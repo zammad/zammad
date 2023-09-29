@@ -60,8 +60,8 @@ class App.SingleObjectPopoverProvider extends App.PopoverProvider
           name = nameNew
 
         # add to show if value exists
-        # do not show ignroed attributes
-        object[name] && attr.shown && !_.include(ignoredAttributes, name)
+        # do not show ignored attributes
+        !_.isUndefined(object[name]) && attr.shown && !_.include(ignoredAttributes, name)
 
     @buildHtmlContent(
       object: object
