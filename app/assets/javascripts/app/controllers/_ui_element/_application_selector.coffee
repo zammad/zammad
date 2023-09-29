@@ -80,10 +80,10 @@ class App.UiElement.ApplicationSelector
         null: false
         translate: true
         options:
-          create:                  'created'
-          update:                  'updated'
-          'update.merged_into':    'merged into'
-          'update.received_merge': 'received merge'
+          create:                  __('created')
+          update:                  __('updated')
+          'update.merged_into':    __('merged into')
+          'update.received_merge': __('received merge')
         operator: [__('is'), __('is not')]
 
     for groupKey, groupMeta of groups
