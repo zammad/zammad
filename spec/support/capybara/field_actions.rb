@@ -31,10 +31,14 @@ module FieldActions
   #  set_tree_select_value('tree_select', 'Users')
   #
   def set_tree_select_value(name, value)
-    page.find(%( input[name='#{name}']+.js-input )).fill_in with: value, fill_options: { clear: :backspace }
-    page.find(%( input[name='#{name}']+.js-input )).ancestor('.controls').find('.js-option.is-active').click
+    input_elem = page.find(%( input[name='#{name}']+.js-input ))
 
-    # page.evaluate_script(%[ $("input[name='#{name}']").siblings('.js-input:visible').get(0).focus().selectValue('#{key}', '#{value}').trigger('change'); ])
+    input_elem.fill_in with: value, fill_options: { clear: :backspace }
+
+    input_elem
+      .ancestor('.controls', order: :reverse, match: :first)
+      .find('.js-option.is-active')
+      .click
   end
 
   # Check the field value of a form select field.

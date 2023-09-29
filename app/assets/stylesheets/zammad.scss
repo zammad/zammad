@@ -4248,6 +4248,10 @@ footer {
     flex-direction: column;
     align-items: flex-end;
   }
+
+  .form-group.tree_select {
+    overflow: visible;
+  }
 }
 
 .bulkAction-firstStep .has-error {

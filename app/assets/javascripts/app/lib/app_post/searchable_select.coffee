@@ -30,7 +30,7 @@ class App.SearchableSelect extends Spine.Controller
     '.js-autocomplete-invisible': 'invisiblePart'
     '.js-autocomplete-visible':   'visiblePart'
 
-  className: 'searchableSelect dropdown dropdown--actions'
+  className: 'searchableSelect controls dropdown dropdown--actions'
 
   element: =>
     @el
@@ -178,6 +178,9 @@ class App.SearchableSelect extends Spine.Controller
 
   onDropdownShown: =>
     @input.on('click', @stopPropagation)
+
+    @dropupSetTopOffsetIfNeeded()
+
     @highlightFirst()
     if @level > 0
       @showSubmenu(@currentMenu)
@@ -371,18 +374,28 @@ class App.SearchableSelect extends Spine.Controller
       options:
         duration: 240
 
+    adjustBy = @currentMenu.height() - target_menu.height()
+
+    if adjustBy > 0
+      target_menu.css('top', adjustBy)
+    else if adjustBy < 0
+      @currentMenu.css('top', adjustBy * -1)
+      @dropdown.css('top', "-#{target_menu.height()}px")
+
     @currentMenu.velocity
       properties:
         translateX: [direction*-100+'%', 0]
       options:
         duration: 240
         complete: =>
+          target_menu.css('top', 0)
           oldCurrentItem.removeClass('is-active')
           $.Velocity.hook(@currentMenu, 'translateX', '')
           @currentMenu.prop('hidden', true)
           @dropdown.height(target_menu.height())
           @currentMenu = target_menu
           @animating = false
+          @dropupSetTopOffsetIfNeeded()
 
   showSubmenu: (menu) ->
     @currentMenu.prop('hidden', true)
@@ -540,6 +553,9 @@ class App.SearchableSelect extends Spine.Controller
     else
       @highlightFirst(true)
 
+    if @isOpen
+      @dropupSetTopOffsetIfNeeded()
+
   addValueToShadowInput: (currentText, dataId) ->
     @input.val('')
 
@@ -570,3 +586,8 @@ class App.SearchableSelect extends Spine.Controller
     return if !@currentItem
     @currentItem.removeClass('is-active')
     @currentItem = null
+
+  dropupSetTopOffsetIfNeeded: =>
+    return if @attribute.direction != 'up'
+
+    @dropdown.css('top', "-#{@dropdown.find('ul:visible').height()}px")

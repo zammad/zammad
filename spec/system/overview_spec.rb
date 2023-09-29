@@ -148,6 +148,26 @@ RSpec.describe 'Overview', type: :system do
           expect(all('.table-overview table b').map(&:text)).to eq %w[aaa bbb ccc]
         end
       end
+
+      it 'updates table grouping when updated using bulk update' do
+        find("tr[data-id='#{ticket1.id}']").check('bulk', allow_label_click: true)
+        find("tr[data-id='#{ticket2.id}']").check('bulk', allow_label_click: true)
+        find("tr[data-id='#{ticket3.id}']").check('bulk', allow_label_click: true)
+
+        find('[data-attribute-name="group_id"]').click
+        find('li', text: 'aaa').click
+
+        click '.js-confirm'
+        find('.js-confirm-step textarea').fill_in with: 'test tickets grouping'
+        click '.js-submit'
+
+        within :active_content do
+          expect(page)
+            .to have_text('aaa')
+            .and have_no_text('bbb')
+            .and have_no_text('ccc')
+        end
+      end
     end
 
     context 'when grouping by tree_selects', authenticated_as: :authenticate, db_strategy: :reset do
