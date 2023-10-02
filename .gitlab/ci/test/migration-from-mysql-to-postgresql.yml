@@ -32,13 +32,17 @@ migration:database:mysql_to_postgresql:
     - .template_migration_from_mysql_to_postgresql
   services:
     - !reference [.services, mysql]
-    - !reference [.services, postgresql]
     - !reference [.services, redis]
+    # We need to override the default postgresql service to use the stable version of postgresql until issues with pgloader are resolved.
+    - name: $CI_REGISTRY/docker/zammad-postgresql:stable
+      alias: postgresql
 
 migration:database:mariadb_to_postgresql:
   extends:
     - .template_migration_from_mysql_to_postgresql
   services:
     - !reference [.services, mariadb]
-    - !reference [.services, postgresql]
     - !reference [.services, redis]
+    # We need to override the default postgresql service to use the stable version of postgresql until issues with pgloader are resolved.
+    - name: $CI_REGISTRY/docker/zammad-postgresql:stable
+      alias: postgresql
