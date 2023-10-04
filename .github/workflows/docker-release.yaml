@@ -19,9 +19,9 @@ jobs:
         with:
             fetch-depth: 0
 
-      # # only needed for arm64 builds
-      # - name: Set up QEMU
-      #   uses: docker/setup-qemu-action@v2
+      # only needed for arm64 builds
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -76,7 +76,7 @@ jobs:
           context: .
           labels: ${{ steps.meta.outputs.labels }}
           # arm64 build takes up to 4 hours
-          # platforms: linux/arm64
+          platforms: linux/amd64,linux/arm64
           # push: true
           push: false
           tags: ${{ steps.meta.outputs.tags }}
