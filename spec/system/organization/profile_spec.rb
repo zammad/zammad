@@ -7,6 +7,16 @@ require 'system/examples/core_workflow_examples'
 RSpec.describe 'Organization Profile', type: :system do
   let(:organization) { create(:organization) }
 
+  describe 'when calling without session' do
+    describe 'redirect to' do
+      it 'login screen', authenticated_as: false do
+        visit "#organization/profile/#{organization.id}"
+
+        expect(page).to have_selector('#login')
+      end
+    end
+  end
+
   describe 'Core Workflow' do
     include_examples 'core workflow' do
       let(:object_name) { 'Organization' }
