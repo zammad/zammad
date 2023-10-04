@@ -288,4 +288,28 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
       expect(result[:matched_workflows]).not_to include(workflow.id)
     end
   end
+
+  describe 'Core Workflow - Action "Fill text if empty" will always be executed even if text field is not empty #4825' do
+    let(:payload) do
+      base_payload.merge('params' => { 'article' => { 'body' => 'test123' } })
+    end
+    let!(:workflow) do
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: {
+               'ticket.body': {
+                 operator:      'fill_in_empty',
+                 fill_in_empty: 'test',
+               },
+             })
+    end
+
+    before do
+      workflow
+    end
+
+    it 'does not prefill if body is set already' do
+      expect(result[:fill_in]['body']).to be_blank
+    end
+  end
 end
