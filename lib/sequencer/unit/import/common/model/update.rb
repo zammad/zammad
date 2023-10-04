@@ -18,6 +18,7 @@ class Sequencer::Unit::Import::Common::Model::Update < Sequencer::Unit::Base
       # delete since we have an update and
       # the record is already created
       mapped.delete(:created_by_id)
+      mapped.delete(:created_at)
 
       # assign regular attributes
       instance.assign_attributes(mapped)

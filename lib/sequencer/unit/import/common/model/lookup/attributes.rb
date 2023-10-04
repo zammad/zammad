@@ -51,6 +51,10 @@ class Sequencer::Unit::Import::Common::Model::Lookup::Attributes < Sequencer::Un
   def lookup(attribute:, value:)
     return model_class.identify(value) if model_class.respond_to?(:identify)
 
+    lookup_find_by(attribute, value)
+  end
+
+  def lookup_find_by(attribute, value)
     model_class.find_by(attribute => value)
   end
 end

@@ -83,16 +83,6 @@ RSpec.describe Sequencer::Sequence::Import::Zendesk::Ticket::Comment, db_strateg
       }
     end
 
-    let(:imported_article) do
-      {
-        from:       'john.doe@example.com',
-        to:         'zendesk@example.com',
-        body:       "\n<div dir=\"auto\">\n<p dir=\"auto\">This is the latest comment for this ticket. You also changed the ticket status to Pending.</p>\n<span><img src=\"data:image/png;base64,MTIz\"></span><a href=\"/#ticket/zoom/1\" rel=\"ticket\">#1</a>\n</div>\n",
-        created_at: Time.zone.parse('2018-09-28T12:00:00Z'),
-        updated_at: Time.zone.parse('2018-09-28T12:00:00Z'),
-      }
-    end
-
     let(:imported_attachment) do
       {
         'filename'    => '1a3496b9-53d9-494d-bbb0-e1d2e22074f8.jpeg',
@@ -102,6 +92,16 @@ RSpec.describe Sequencer::Sequence::Import::Zendesk::Ticket::Comment, db_strateg
           'resizable'       => false,
           'content_preview' => true,
         }
+      }
+    end
+
+    def imported_article(inline_image_cid)
+      {
+        from:       'john.doe@example.com',
+        to:         'zendesk@example.com',
+        body:       "\n<div dir=\"auto\">\n<p dir=\"auto\">This is the latest comment for this ticket. You also changed the ticket status to Pending.</p>\n<span><img src=\"cid:#{inline_image_cid}\"></span><a href=\"/#ticket/zoom/1\" rel=\"ticket\">#1</a>\n</div>\n",
+        created_at: Time.zone.parse('2018-09-28T12:00:00Z'),
+        updated_at: Time.zone.parse('2018-09-28T12:00:00Z'),
       }
     end
 
@@ -116,12 +116,18 @@ RSpec.describe Sequencer::Sequence::Import::Zendesk::Ticket::Comment, db_strateg
 
       it 'imports ticket data correctly' do
         process(process_payload)
-        expect(Ticket::Article.last).to have_attributes(imported_article)
+
+        attachment_list = Store.list(
+          object: 'Ticket::Article',
+          o_id:   Ticket::Article.last.id,
+        )
+
+        expect(Ticket::Article.last).to have_attributes(imported_article(attachment_list.first[:preferences]['Content-ID']))
       end
 
       it 'adds correct number of attachments' do
         process(process_payload)
-        expect(Ticket::Article.last.attachments.size).to eq 1
+        expect(Ticket::Article.last.attachments.size).to eq 2
       end
 
       it 'adds attachment content' do

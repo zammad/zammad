@@ -5,6 +5,7 @@ class Sequencer::Sequence::Import::Freshdesk::Contact < Sequencer::Sequence::Bas
   def self.sequence
     [
       'Common::ModelClass::User',
+      'Import::Freshdesk::Contact::MaybeFetch',
       'Import::Freshdesk::Contact::Mapping',
       'Import::Freshdesk::Mapping::CustomFields',
       'Import::Common::Model::Attributes::AddByIds',

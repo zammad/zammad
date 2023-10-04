@@ -8,6 +8,7 @@ class Sequencer::Sequence::Import::Freshdesk::Ticket < Sequencer::Sequence::Base
       # Fetch additional data such as attachments which is not included
       #   in the ticket list endpoint.
       'Import::Freshdesk::Ticket::Fetch',
+      'Import::Freshdesk::Ticket::RequesterContact',
       'Import::Freshdesk::Ticket::Mapping',
       'Import::Freshdesk::Mapping::CustomFields',
       'Import::Common::Model::FindBy::Number',

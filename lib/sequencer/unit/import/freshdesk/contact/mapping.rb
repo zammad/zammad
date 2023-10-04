@@ -9,12 +9,12 @@ class Sequencer::Unit::Import::Freshdesk::Contact::Mapping < Sequencer::Unit::Ba
     provide_mapped do
       {
         firstname:       resource['name'],
+        lastname:        '', # makes sure name guessing is triggered for updating existing users.
         active:          !resource['deleted'],
         organization_id: organization_id,
         email:           resource['email'],
         mobile:          resource['mobile'],
         phone:           resource['phone'],
-        image_source:    resource['avatar'],
         group_ids:       [],
         role_ids:        ::Role.where(name: 'Customer').pluck(:id),
       }

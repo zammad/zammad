@@ -61,11 +61,12 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: 
     end
     let(:process_payload) do
       {
-        import_job: build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
-        dry_run:    false,
-        resource:   resource,
-        field_map:  {},
-        id_map:     id_map,
+        import_job:           build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
+        dry_run:              false,
+        resource:             resource,
+        field_map:            {},
+        id_map:               id_map,
+        time_entry_available: false,
       }
     end
 
@@ -83,9 +84,15 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: 
 
       it 'correct attributes for added article' do
         process(process_payload)
+
+        attachment_list = Store.list(
+          object: 'Ticket::Article',
+          o_id:   Ticket::Article.last.id,
+        )
+
         expect(Ticket::Article.last).to have_attributes(
           to:   'info@zammad.org',
-          body: "\n<div>\n<div dir=\"ltr\">Let's see if inline images work in a subsequent article:</div>\n<div dir=\"ltr\"><img src=\"data:image/png;base64,MTIz\" style=\"width: auto;\"></div>\n</div>\n",
+          body: "<div>\n<div dir=\"ltr\">Let's see if inline images work in a subsequent article:</div>\n<div dir=\"ltr\"><img src=\"cid:#{attachment_list.first[:preferences]['Content-ID']}\" style=\"width: auto;\"></div>\n</div>",
         )
       end
     end
@@ -101,7 +108,7 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: 
 
     it 'adds correct number of attachments' do
       process(process_payload)
-      expect(Ticket::Article.last.attachments.size).to eq 1
+      expect(Ticket::Article.last.attachments.size).to eq 2
     end
 
     it 'adds attachment content' do

@@ -10,6 +10,7 @@ class Sequencer::Unit::Import::Kayako::User::Mapping < Sequencer::Unit::Base
       {
         login:           login,
         firstname:       resource['full_name'],
+        lastname:        '', # makes sure name guessing is triggered for updating existing users.
         email:           identifier[:email],
         phone:           identifier[:phone],
         password:        password,
