@@ -229,9 +229,9 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
                  end
       else
         query << if block_condition[:operator] == 'is'
-                   "1 = (SELECT 1 FROM mentions mentions_sub WHERE mentions_sub.mentionable_type = 'Ticket' AND mentions_sub.mentionable_id = tickets.id AND mentions_sub.user_id IN (?))"
+                   "1 = (SELECT 1 FROM mentions mentions_sub WHERE mentions_sub.mentionable_type = 'Ticket' AND mentions_sub.mentionable_id = tickets.id AND mentions_sub.user_id IN (?) LIMIT 1)"
                  else
-                   "(SELECT 1 FROM mentions mentions_sub WHERE mentions_sub.mentionable_type = 'Ticket' AND mentions_sub.mentionable_id = tickets.id AND mentions_sub.user_id IN (?)) IS NULL"
+                   "(SELECT 1 FROM mentions mentions_sub WHERE mentions_sub.mentionable_type = 'Ticket' AND mentions_sub.mentionable_id = tickets.id AND mentions_sub.user_id IN (?) LIMIT 1) IS NULL"
                  end
         if block_condition[:pre_condition] == 'current_user.id'
           bind_params.push current_user_id
