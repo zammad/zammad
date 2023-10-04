@@ -8,19 +8,15 @@ module Store::Provider::S3
 
   class << self
 
-    def add(data, sha, content_type: 'application/octet-stream', filename: nil)
+    def add(data, sha)
       if data.bytesize > Store::Provider::S3::Config.max_chunk_size
         return upload(data, sha, content_type:, filename:)
       end
 
       client.put_object(
-        bucket:       bucket,
-        key:          sha,
-        body:         data,
-        content_type: content_type,
-        metadata:     {
-          filename: filename || sha,
-        }
+        bucket: bucket,
+        key:    sha,
+        body:   data
       )
 
       true
@@ -48,8 +44,8 @@ module Store::Provider::S3
       object.body.read
     end
 
-    def upload(data, sha, content_type: 'application/octet-stream', filename: nil)
-      id    = Store::Provider::S3::Upload.create(sha, content_type:, filename:)
+    def upload(data, sha)
+      id    = Store::Provider::S3::Upload.create(sha)
       parts = Store::Provider::S3::Upload.process(data, sha, id)
 
       Store::Provider::S3::Upload.complete(sha, parts, id)

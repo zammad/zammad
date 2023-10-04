@@ -93,11 +93,9 @@ RSpec.describe Store::Provider::S3, authenticated_as: false, integration: true d
   describe '.add' do
     let(:data)         { Rails.root.join('spec/fixtures/files/image/large.png').read }
     let(:sha256)       { Digest::SHA256.hexdigest(data) }
-    let(:content_type) { 'image/png' }
-    let(:filename)     { 'large.png' }
 
     it 'adds a file' do
-      expect(described_class.add(data, sha256, content_type:, filename:)).to be_truthy
+      expect(described_class.add(data, sha256)).to be_truthy
     end
 
     context 'when connection fails' do

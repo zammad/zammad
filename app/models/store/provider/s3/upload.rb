@@ -12,14 +12,10 @@ module Store::Provider::S3::Upload
       )
     end
 
-    def create(sha, content_type: 'application/octet-stream', filename: nil)
+    def create(sha)
       info = Store::Provider::S3.client.create_multipart_upload(
-        bucket:       bucket,
-        key:          sha,
-        content_type: content_type,
-        metadata:     {
-          filename: filename || sha,
-        }
+        bucket: bucket,
+        key:    sha
       )
 
       info['upload_id']

@@ -26,7 +26,7 @@ class Store < ApplicationModel
   end
 
   def set_store_file
-    file = Store::File.add(data, content_type: preferences['Content-Type'], filename: filename)
+    file = Store::File.add(data)
     self.size = data.to_s.bytesize
     self.store_file_id = file.id
   end

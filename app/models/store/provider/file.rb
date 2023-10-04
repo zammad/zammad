@@ -3,7 +3,7 @@
 class Store::Provider::File
 
   # write file to fs
-  def self.add(data, sha, *)
+  def self.add(data, sha)
     location = get_location(sha)
 
     # write file to file system
