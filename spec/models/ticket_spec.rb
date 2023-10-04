@@ -2231,11 +2231,13 @@ RSpec.describe Ticket, type: :model do
       end
 
       it 'pre condition is specific' do
+        create(:mention, mentionable: ticket_mentions, user: user_mentions_2)
+
         condition = {
           'ticket.mention_user_ids' => {
             pre_condition: 'specific',
             operator:      'is',
-            value:         user_mentions.id
+            value:         [user_mentions.id, user_mentions_2.id]
           },
         }
 
@@ -2248,7 +2250,7 @@ RSpec.describe Ticket, type: :model do
           'ticket.mention_user_ids' => {
             pre_condition: 'specific',
             operator:      'is not',
-            value:         user_mentions.id
+            value:         [user_mentions.id, user_mentions_2.id]
           },
         }
 
