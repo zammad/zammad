@@ -175,6 +175,8 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       attributesByObject = App.ObjectManagerAttribute.selectorAttributesByObject()
       configureAttributes = attributesByObject[groupMeta.model] || []
       for config in configureAttributes
+        continue if groupKey is 'group' && _.contains(['name'], config.name)
+
         # ignore passwords and relations
         if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
           config.default  = undefined

@@ -74,6 +74,7 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
         continue if !_.contains(['input', 'textarea', 'richtext', 'select', 'multiselect', 'integer', 'boolean', 'multi_tree_select', 'tree_select', 'date', 'datetime'], config.tag)
         continue if _.contains(['created_at', 'updated_at'], config.name)
         continue if groupKey is 'ticket' && _.contains(['number', 'organization_id', 'escalation_at', 'first_response_escalation_at', 'update_escalation_at', 'close_escalation_at', 'last_contact_at', 'last_contact_agent_at', 'last_contact_customer_at', 'first_response_at', 'close_at'], config.name)
+        continue if groupKey is 'group' && _.contains(['name'], config.name)
 
         # ignore passwords and relations
         if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
