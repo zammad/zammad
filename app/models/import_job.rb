@@ -6,6 +6,7 @@ class ImportJob < ApplicationModel
   store :payload
   store :result
 
+  default_scope { order(started_at: :desc, id: :desc) }
   scope :running, -> { where(finished_at: nil, dry_run: false).where.not(started_at: nil) }
 
   # Starts the import backend class based on the name attribute.

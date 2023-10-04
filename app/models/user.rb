@@ -910,6 +910,7 @@ try to find correct name
   end
 
   def ensure_email
+    return if Setting.get('import_mode')
     return if email.blank?
     return if id == 1
 

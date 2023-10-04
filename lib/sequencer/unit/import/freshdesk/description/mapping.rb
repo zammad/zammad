@@ -36,7 +36,7 @@ class Sequencer::Unit::Import::Freshdesk::Description::Mapping < Sequencer::Unit
         internal:      false,
         message_id:    "ticketid#{resource['id']}@freshdesk.com",
         sender_id:     ::Ticket::Article::Sender.select(:id).find_by(name: 'Customer').id,
-        type_id:       source_map[ resource['source'] ],
+        type_id:       source_map[ resource['source'] ] || default_type_id,
         updated_by_id: requester_id,
         created_by_id: requester_id,
         created_at:    resource['created_at'],
@@ -59,5 +59,9 @@ class Sequencer::Unit::Import::Freshdesk::Description::Mapping < Sequencer::Unit
 
   def ticket_id
     id_map['Ticket'][resource['id']]
+  end
+
+  def default_type_id
+    @default_type_id ||= ::Ticket::Article::Type.select(:id).find_by(name: 'note')&.id
   end
 end

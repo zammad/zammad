@@ -6,10 +6,10 @@ class Sequencer::Sequence::Import::Freshdesk::Description < Sequencer::Sequence:
     [
       'Common::ModelClass::Ticket::Article',
       'Import::Freshdesk::Description::Mapping',
+      'Import::Common::Model::FindBy::MessageId',
       # Handling of inline images and attachments is the same for first article (description)
       #   and subsequent articles (conversation).
       'Import::Freshdesk::Conversation::InlineImages',
-      'Import::Common::Model::FindBy::MessageId',
       'Import::Common::Model::Update',
       'Import::Common::Model::Create',
       'Import::Common::Model::Save',

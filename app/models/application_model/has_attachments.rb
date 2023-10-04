@@ -119,7 +119,6 @@ For use in #search_index_attribute_lookup
   end
 
   def attachments_buffer_check
-
     # do nothing if no attachment exists
     return 1 if attachments_buffer.nil?
 
@@ -143,5 +142,7 @@ For use in #search_index_attribute_lookup
 
       article_store.push Store.create!(data)
     end
+
+    self.attachments_buffer = nil
   end
 end

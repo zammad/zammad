@@ -342,7 +342,7 @@ returns
 
     raise Exceptions::UnprocessableEntity, "body of article is too large, #{current_length} chars - only #{limit} allowed" if !ApplicationHandleInfo.postmaster? && !Setting.get('import_mode')
 
-    logger.warn "WARNING: cut string because of database length #{self.class}.body(#{limit} but is #{current_length})"
+    logger.warn "WARNING: cut string because of database length #{self.class}.body(#{limit} but is #{current_length}) - ticket_id(#{ticket_id})"
     self.body = body[0, limit]
   end
 

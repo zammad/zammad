@@ -13,6 +13,7 @@ class Sequencer::Unit::Import::Freshdesk::Agent::Mapping < Sequencer::Unit::Base
       {
         login:      contact['email'],
         firstname:  contact['name'],
+        lastname:   '', # makes sure name guessing is triggered for updating existing users.
         email:      contact['email'],
         phone:      contact['phone'],
         active:     !contact['deleted'],

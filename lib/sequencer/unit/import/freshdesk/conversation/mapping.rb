@@ -45,7 +45,7 @@ class Sequencer::Unit::Import::Freshdesk::Conversation::Mapping < Sequencer::Uni
         updated_by_id: user_id,
         created_by_id: user_id,
         sender_id:     incoming_map[ resource['incoming'] ],
-        type_id:       source_map[ resource['source'] ],
+        type_id:       source_map[ resource['source'] ] || default_type_id,
         created_at:    resource['created_at'],
         updated_at:    resource['updated_at'],
       }
@@ -59,6 +59,10 @@ class Sequencer::Unit::Import::Freshdesk::Conversation::Mapping < Sequencer::Uni
   end
 
   def user_id
-    id_map['User'][resource['user_id']]
+    id_map['User'][resource['user_id']] || 1
+  end
+
+  def default_type_id
+    @default_type_id ||= ::Ticket::Article::Type.select(:id).find_by(name: 'note')&.id
   end
 end

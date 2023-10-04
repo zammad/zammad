@@ -17,7 +17,7 @@ class Sequencer::Unit::Import::Zendesk::Ticket::Comment::Attachments < Sequencer
 
   # for better readability
   def local_attachments
-    instance.attachments
+    @local_attachments ||= instance.attachments&.filter { |attachment| attachment.preferences&.dig('Content-Disposition') != 'inline' }
   end
 
   def skip?
@@ -26,15 +26,9 @@ class Sequencer::Unit::Import::Zendesk::Ticket::Comment::Attachments < Sequencer
   end
 
   def ensure_common_ground
-    return if common_ground?
+    return if attachments_equal?
 
     local_attachments.each(&:delete)
-  end
-
-  def common_ground?
-    return false if remote_attachments.blank?
-
-    attachments_equal?
   end
 
   def attachments_equal?

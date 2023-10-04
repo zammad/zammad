@@ -3,14 +3,19 @@
 class Sequencer::Unit::Import::Common::Ticket::Article::InlineImages < Sequencer::Unit::Base
   include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
 
-  uses :mapped
+  uses :mapped, :instance
 
   def process
+    check_for_existing_instance
     return if !contains_inline_image?(mapped[:body])
+
+    replaced_body = replaced_inline_images
+    (replaced_body, inline_attachments) = HtmlSanitizer.replace_inline_images(replaced_body, mapped[:ticket_id])
 
     provide_mapped do
       {
-        body: replaced_inline_images,
+        body:        replaced_body.strip,
+        attachments: inline_attachments,
       }
     end
   end
@@ -66,6 +71,16 @@ class Sequencer::Unit::Import::Common::Ticket::Article::InlineImages < Sequencer
     end
 
     body_html.to_html
+  end
+
+  def check_for_existing_instance
+    return if instance.blank? || local_inline_attachments.blank?
+
+    local_inline_attachments.each(&:delete)
+  end
+
+  def local_inline_attachments
+    @local_inline_attachments ||= instance.attachments&.filter { |attachment| attachment.preferences&.dig('Content-Disposition') == 'inline' }
   end
 
   def inline_image_url_prefix

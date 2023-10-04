@@ -144,9 +144,15 @@ RSpec.describe Sequencer::Sequence::Import::Kayako::Post, sequencer: :sequence d
 
     it 'correct attributes for added article' do
       process(process_payload)
+
+      attachment_list = Store.list(
+        object: 'Ticket::Article',
+        o_id:   Ticket::Article.last.id,
+      )
+
       expect(Ticket::Article.last).to have_attributes(
         to:   'info@zammad.org',
-        body: "\n\n<img src=\"data:image/png;base64,MTIz\" style=\"width: 127px; height: 96.3263px;\"><br><br>A Test with a inline image.<br>\n\n",
+        body: "<img src=\"cid:#{attachment_list.first[:preferences]['Content-ID']}\" style=\"width: 127px; height: 96.3263px;\"><br><br>A Test with a inline image.<br>",
       )
     end
 
@@ -159,7 +165,7 @@ RSpec.describe Sequencer::Sequence::Import::Kayako::Post, sequencer: :sequence d
 
     it 'adds correct number of attachments' do
       process(process_payload)
-      expect(Ticket::Article.last.attachments.size).to eq 1
+      expect(Ticket::Article.last.attachments.size).to eq 2
     end
 
     it 'adds attachment content' do
