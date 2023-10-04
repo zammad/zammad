@@ -159,6 +159,9 @@ class App.GenericHistory extends App.ControllerModal
           result = user.displayName()
       return result
 
+    if attribute is 'group'
+      return value.replaceAll('::', ' › ')
+
     localAttribute = @objectAttribute(object, attribute)
     if localAttribute && localAttribute.tag is 'datetime'
       return App.i18n.translateTimestamp(value)

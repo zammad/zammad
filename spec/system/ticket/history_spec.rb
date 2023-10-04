@@ -3,11 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Ticket history', time_zone: 'Europe/London', type: :system do
-  let(:group)  { create(:group) }
-  let(:ticket) { create(:ticket, group: group) }
+  let(:group)    { create(:group) }
+  let(:subgroup) { create(:group, parent: group) }
+  let(:ticket)   { create(:ticket, group: group) }
 
   context 'with German locale', authenticated_as: :authenticate do
-    let(:admin_de) { create(:admin, :groupable, preferences: { locale: 'de-de' }, group: group) }
+    let(:admin_de) { create(:admin, :groupable, preferences: { locale: 'de-de' }, group: [group, subgroup]) }
 
     def authenticate
       Time.use_zone('UTC') do
@@ -21,6 +22,7 @@ RSpec.describe 'Ticket history', time_zone: 'Europe/London', type: :system do
           state:                    Ticket::State.lookup(name: 'open'),
           last_owner_update_at:     current_time,
           priority:                 Ticket::Priority.lookup(name: '1 low'),
+          group:                    subgroup,
           last_contact_at:          current_time,
           last_contact_customer_at: current_time,
           last_contact_agent_at:    current_time,
@@ -55,6 +57,10 @@ RSpec.describe 'Ticket history', time_zone: 'Europe/London', type: :system do
       visit "#ticket/zoom/#{ticket.id}"
       find('[data-tab="ticket"] .js-actions').click
       click('[data-type="ticket-history"]')
+    end
+
+    it 'shows group name in human readable form' do
+      expect(page).to have_text("#{group.name_last} › #{subgroup.name_last}")
     end
 
     it "translates timestamp when attribute's tag is datetime" do
