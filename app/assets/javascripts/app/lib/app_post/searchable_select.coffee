@@ -374,13 +374,14 @@ class App.SearchableSelect extends Spine.Controller
       options:
         duration: 240
 
-    adjustBy = @currentMenu.height() - target_menu.height()
+    if @attribute.direction == 'up'
+      adjustBy = @currentMenu.height() - target_menu.height()
 
-    if adjustBy > 0
-      target_menu.css('top', adjustBy)
-    else if adjustBy < 0
-      @currentMenu.css('top', adjustBy * -1)
-      @dropdown.css('top', "-#{target_menu.height()}px")
+      if adjustBy > 0
+        target_menu.css('top', adjustBy)
+      else if adjustBy < 0
+        @currentMenu.css('top', adjustBy * -1)
+        @dropdown.css('top', "-#{target_menu.height()}px")
 
     @currentMenu.velocity
       properties:
@@ -388,7 +389,9 @@ class App.SearchableSelect extends Spine.Controller
       options:
         duration: 240
         complete: =>
-          target_menu.css('top', 0)
+          if @attribute.direction == 'up'
+            target_menu.css('top', 0)
+
           oldCurrentItem.removeClass('is-active')
           $.Velocity.hook(@currentMenu, 'translateX', '')
           @currentMenu.prop('hidden', true)
