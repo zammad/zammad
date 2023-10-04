@@ -183,6 +183,8 @@ class App.UiElement.ApplicationUiElement
     nameNew = '?'
     if @isTreeRelation(attribute)
       nameNew = item.name_last
+      if attribute.display_full_name
+        nameNew = item.displayName()
     else if item.displayName
       nameNew = item.displayName()
     else if item.name
