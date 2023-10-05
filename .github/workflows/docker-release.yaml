@@ -62,13 +62,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          # labels: ${{ steps.meta.outputs.labels }}
-          # arm64 build takes up to 4 hours
-          # platforms: linux/amd64,linux/arm64
-          # push: true
-          push: false
-          outputs: type=image,name=zammad/zammad-multiarch-test,push-by-digest=true,name-canonical=true,push=false
-          # tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          outputs: type=image,name=zammad/zammad-multiarch-test,push-by-digest=true,name-canonical=true,push=true
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
@@ -88,8 +84,8 @@ jobs:
           retention-days: 1
 
   docker-multiarch-manifest:
-    # runs-on: ubuntu-22.04
-    runs-on: ['self-hosted', 'arm64']
+    runs-on: ubuntu-22.04
+    # runs-on: ['self-hosted', 'arm64']
     needs:
       - docker-build-arm64
     steps:
@@ -152,34 +148,11 @@ jobs:
             type=semver,pattern={{version}}
             type=sha
 
-      - name: Debug manifest lists
-        working-directory: /tmp/digests
-        run: |
-          jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON"
-          printf 'zammad/zammad-multiarch-test@sha256:%s ' *
-          echo tags: ${{ steps.meta.outputs.tags }}
-          echo labels: ${{ steps.meta.outputs.labels }}
-
       - name: Create manifest list and push
         working-directory: /tmp/digests
         run: |
-          docker buildx imagetools create --dry-run $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf 'zammad/zammad-multiarch-test@sha256:%s ' *)
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf 'zammad/zammad-multiarch-test@sha256:%s ' *)
 
       - name: Inspect image
         run: |
           docker buildx imagetools inspect zammad/zammad-multiarch-test:${{ steps.meta.outputs.version }}
-
-      # - name: Build and push
-      #   id: docker_build
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     labels: ${{ steps.meta.outputs.labels }}
-      #     # arm64 build takes up to 4 hours
-      #     # platforms: linux/amd64,linux/arm64
-      #     # push: true
-      #     push: false
-      #     tags: ${{ steps.meta.outputs.tags }}
-
-      # - name: Image digest
-      #   run: echo ${{ steps.docker_build.outputs.digest }}
