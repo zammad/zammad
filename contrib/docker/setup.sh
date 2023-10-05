@@ -15,12 +15,12 @@ rm -rf /var/lib/apt/lists/*
 
 if [ "$1" = 'builder' ]; then
   cd "${ZAMMAD_DIR}"
-  bundle config set without 'test development mysql'
-  bundle install
-  sed -e 's#.*adapter: postgresql#  adapter: nulldb#g' -e 's#.*username:.*#  username: postgres#g' -e 's#.*password:.*#  password: \n  host: zammad-postgresql\n#g' < contrib/packager.io/database.yml.pkgr > config/database.yml
-  sed -i "/require 'rails\/all'/a require\ 'nulldb'" config/application.rb
-  touch db/schema.rb
-  ZAMMAD_SAFE_MODE=1 bundle exec rake assets:precompile # Don't require Redis.
+  # bundle config set without 'test development mysql'
+  # bundle install
+  # sed -e 's#.*adapter: postgresql#  adapter: nulldb#g' -e 's#.*username:.*#  username: postgres#g' -e 's#.*password:.*#  password: \n  host: zammad-postgresql\n#g' < contrib/packager.io/database.yml.pkgr > config/database.yml
+  # sed -i "/require 'rails\/all'/a require\ 'nulldb'" config/application.rb
+  # touch db/schema.rb
+  # ZAMMAD_SAFE_MODE=1 bundle exec rake assets:precompile # Don't require Redis.
   rm -r tmp/cache
   script/build/cleanup.sh
 fi
