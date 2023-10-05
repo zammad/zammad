@@ -10,9 +10,13 @@ on:
       - '*'
 
 jobs:
-  docker-build-arm64:
-    # runs-on: ubuntu-22.04
-    runs-on: ['self-hosted', 'arm64']
+  docker-build-image:
+    strategy:
+      matrix:
+        runs-on:
+          - ubuntu-22.04
+          - ['self-hosted', 'arm64']
+    runs-on: ${{ matrix.runs-on }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -41,9 +45,6 @@ jobs:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_ROBOT_TOKEN }}
-
-      - name: Get version tag in the old way
-        run: echo ZAMMAD_VERSION="$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')" >> $GITHUB_ENV
 
       - name: Docker metadata action
         id: meta
@@ -84,11 +85,10 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-  docker-multiarch-manifest:
+  docker-create-multiarch-manifest:
     runs-on: ubuntu-22.04
-    # runs-on: ['self-hosted', 'arm64']
     needs:
-      - docker-build-arm64
+      - docker-build-image
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -125,7 +125,7 @@ jobs:
           password: ${{ secrets.QUAY_ROBOT_TOKEN }}
 
       - name: Get version tag in the old way
-        run: echo ZAMMAD_VERSION="$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')" >> $
+        run: echo ZAMMAD_VERSION="$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')" >> $GITHUB_ENV
 
       - name: Docker metadata action
         id: meta
