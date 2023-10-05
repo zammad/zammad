@@ -50,6 +50,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
+          # TODO: revert
           # images: |
           #   ghcr.io/${{ github.repository_owner }}/zammad
           #   index.docker.io/${{ github.repository_owner }}/zammad
@@ -66,9 +67,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           push: true
           outputs: type=image,name=zammad/zammad-multiarch-test,push-by-digest=true,name-canonical=true,push=true
-
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
 
       - name: Export digest
         run: |
@@ -89,6 +87,20 @@ jobs:
     runs-on: ubuntu-22.04
     needs:
       - docker-build-image
+    strategy:
+      matrix:
+        target:
+          # - images: |
+          #     ghcr.io/${{ github.repository_owner }}/zammad
+          #     index.docker.io/${{ github.repository_owner }}/zammad
+          #     quay.io/${{ github.repository_owner }}/zammad
+          #   repository: ${{ github.repository_owner }}/zammad
+          # - images: |
+          #     index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
+          #   repository: ${{ github.repository_owner }}/zammad-docker-compose
+          - images: |
+              index.docker.io/${{ github.repository_owner }}/zammad-multiarch-test
+            repository: ${{ github.repository_owner }}/zammad-multiarch-test
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -131,13 +143,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          # images: |
-          #   ghcr.io/${{ github.repository_owner }}/zammad
-          #   index.docker.io/${{ github.repository_owner }}/zammad
-          #   index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
-          #   quay.io/${{ github.repository_owner }}/zammad
-          images: |
-            index.docker.io/${{ github.repository_owner }}/zammad-multiarch-test
+          images: ${{ matrix.images }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
             type=raw,value=${{ env.ZAMMAD_VERSION }},enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
@@ -153,8 +159,8 @@ jobs:
         working-directory: tmp/docker-digests
         run: |
           ls -lah ./*
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf 'zammad/zammad-multiarch-test@sha256:%s ' *)
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf '${{ matrix.repository }}@sha256:%s ' *)
 
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect zammad/zammad-multiarch-test:${{ steps.meta.outputs.version }}
+          docker buildx imagetools inspect ${{ matrix.repository }}:${{ steps.meta.outputs.version }}
