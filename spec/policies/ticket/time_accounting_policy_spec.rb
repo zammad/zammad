@@ -31,4 +31,28 @@ describe Ticket::TimeAccountingPolicy do
 
     it { is_expected.to forbid_actions(:create) }
   end
+
+  context 'when user has no access to the ticket by having read permission' do
+    let(:user) { create(:agent) }
+
+    before { user.user_groups.create! group: ticket.group, access: 'read' }
+
+    it { is_expected.to forbid_actions(:create) }
+  end
+
+  context 'when user has access to the ticket by having create permission' do
+    let(:user) { create(:agent) }
+
+    before { user.user_groups.create! group: ticket.group, access: 'create' }
+
+    it { is_expected.to permit_actions(:create) }
+  end
+
+  context 'when user has access to the ticket by having change permission' do
+    let(:user) { create(:agent) }
+
+    before { user.user_groups.create! group: ticket.group, access: 'change' }
+
+    it { is_expected.to permit_actions(:create) }
+  end
 end
