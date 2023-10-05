@@ -13,6 +13,8 @@
   cache: !reference [.cache, read_write_nodejs]
   before_script: []
   script:
+    # TODO: REMOVE
+    - exit 1
     - !reference [.scripts, yarn_install_all]
     - yarn cypress:install
     - yarn --cwd ./.eslint-plugin-zammad install
