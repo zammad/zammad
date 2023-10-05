@@ -80,7 +80,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: "docker-digests"
-          path: tmp/digests/*
+          path: tmp/docker-digests/*
           if-no-files-found: error
           retention-days: 1
 
@@ -94,7 +94,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: "docker-digests"
-          path: tmp/digests
+          path: tmp/docker-digests
 
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -125,7 +125,7 @@ jobs:
           password: ${{ secrets.QUAY_ROBOT_TOKEN }}
 
       - name: Get version tag in the old way
-        run: echo ZAMMAD_VERSION="$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')" >> $GITHUB_ENV
+        run: echo ZAMMAD_VERSION="$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')" >> $
 
       - name: Docker metadata action
         id: meta
@@ -150,9 +150,9 @@ jobs:
             type=sha
 
       - name: Create manifest list and push
-        working-directory: tmp/digests
+        working-directory: tmp/docker-digests
         run: |
-          ls -lah tmp/digests/*
+          ls -lah tmp/docker-digests/*
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf 'zammad/zammad-multiarch-test@sha256:%s ' *)
 
       - name: Inspect image
