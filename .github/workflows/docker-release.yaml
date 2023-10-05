@@ -71,16 +71,16 @@ jobs:
 
       - name: Export digest
         run: |
-          mkdir -p /tmp/digests
+          mkdir -p ${{ env.RUNNER_TEMP }}/digests
           digest="${{ steps.docker_build.outputs.digest }}"
-          touch "/tmp/digests/${digest#sha256:}"
-          ls -lah /tmp/digests/*
+          touch "${{ env.RUNNER_TEMP }}/digests/${digest#sha256:}"
+          ls -lah ${{ env.RUNNER_TEMP }}/digests/*
 
       - name: Upload digest
         uses: actions/upload-artifact@v3
         with:
           name: "digests-${{ env.GITHUB_SHA }}"
-          path: /tmp/digests/*
+          path: ${{ env.RUNNER_TEMP }}/digests/*
           if-no-files-found: error
           retention-days: 1
 
@@ -94,7 +94,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: "digests-${{ env.GITHUB_SHA }}"
-          path: /tmp/digests
+          path: ${{ env.RUNNER_TEMP }}/digests
 
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -150,10 +150,9 @@ jobs:
             type=sha
 
       - name: Create manifest list and push
-        working-directory: /tmp/digests
+        working-directory: ${{ env.RUNNER_TEMP }}/digests
         run: |
-          ls -lah /tmp/digests/*
-          echo docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf 'zammad/zammad-multiarch-test@sha256:%s ' *)
+          ls -lah ${{ env.RUNNER_TEMP }}/digests/*
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf 'zammad/zammad-multiarch-test@sha256:%s ' *)
 
       - name: Inspect image
