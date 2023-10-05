@@ -17,8 +17,6 @@ class Organization < ApplicationModel
   include Organization::SearchIndex
   include Organization::TriggersSubscriptions
 
-  include HasTransactionDispatcher
-
   default_scope { order(:id) }
 
   has_many :members, class_name: 'User', after_add: :member_update, after_remove: :member_update
@@ -29,7 +27,9 @@ class Organization < ApplicationModel
   before_update :domain_cleanup
 
   # workflow checks should run after before_create and before_update callbacks
+  # the transaction dispatcher must be run after the workflow checks!
   include ChecksCoreWorkflow
+  include HasTransactionDispatcher
 
   core_workflow_screens 'create', 'edit'
 
