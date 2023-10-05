@@ -4,9 +4,6 @@ class App.UserProfile extends App.Controller
   constructor: (params) ->
     super
 
-    # check authentication
-    @authenticateCheckRedirect()
-
     # fetch new data if needed
     App.User.full(@user_id, @render)
 
@@ -86,6 +83,9 @@ class Router extends App.ControllerPermanent
 
   constructor: (params) ->
     super
+
+    # check authentication
+    @authenticateCheckRedirect()
 
     # cleanup params
     clean_params =

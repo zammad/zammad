@@ -6,6 +6,24 @@ require 'system/examples/core_workflow_examples'
 require 'system/examples/text_modules_examples'
 
 RSpec.describe 'Ticket Create', type: :system do
+
+  context 'when calling without session' do
+    describe 'redirect to' do
+
+      it 'login screen after certain create was called', authenticated_as: false do
+        visit '#ticket/create/id/1234'
+
+        expect(page).to have_selector('#login')
+      end
+
+      it 'login screen after generic create was called', authenticated_as: false do
+        visit '#ticket/create'
+
+        expect(page).to have_selector('#login')
+      end
+    end
+  end
+
   context 'when logged in as non admin' do
     let(:agent) { create(:agent) }
 

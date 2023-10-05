@@ -70,6 +70,16 @@ RSpec.describe 'User Profile', type: :system do
     expect(page).to have_css('.popover label', count: 2)
   end
 
+  context 'when calling without session' do
+    describe 'redirect to' do
+      it 'login screen', authenticated_as: false do
+        visit "#user/profile/#{customer.id}"
+
+        expect(page).to have_selector('#login')
+      end
+    end
+  end
+
   context 'Assign user to multiple organizations #1573', authenticated_as: :authenticate do
     def authenticate
       customer

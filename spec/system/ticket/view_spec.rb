@@ -7,6 +7,22 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
     true
   end
 
+  context 'when calling without session' do
+    describe 'redirect to' do
+      it 'login screen after certain overview was called', authenticated_as: false do
+        visit '#ticket/view/all_open'
+
+        expect(page).to have_selector('#login')
+      end
+
+      it 'login screen after not overview was called', authenticated_as: false do
+        visit '#ticket/view'
+
+        expect(page).to have_selector('#login')
+      end
+    end
+  end
+
   context 'macros' do
     let(:group1)              { create(:group) }
     let(:group2)              { create(:group) }

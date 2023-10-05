@@ -238,6 +238,9 @@ class TicketOverviewRouter extends App.ControllerPermanent
   constructor: (params) ->
     super
 
+    # check authentication
+    @authenticateCheckRedirect()
+
     # cleanup params
     clean_params =
       view: params.view

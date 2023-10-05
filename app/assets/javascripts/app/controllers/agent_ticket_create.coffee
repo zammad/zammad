@@ -810,6 +810,9 @@ class Router extends App.ControllerPermanent
       @navigate "#ticket/create/id/#{id}#{split}"
       return
 
+    # check authentication
+    @authenticateCheckRedirect()
+
     # cleanup params
     clean_params =
       ticket_id:   params.ticket_id
