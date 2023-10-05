@@ -22,8 +22,6 @@ class User < ApplicationModel
   include User::PerformsGeoLookup
   include User::UpdatesTicketOrganization
 
-  include HasTransactionDispatcher
-
   has_and_belongs_to_many :organizations,          after_add: %i[cache_update create_organization_add_history], after_remove: %i[cache_update create_organization_remove_history], class_name: 'Organization'
   has_and_belongs_to_many :overviews,              dependent: :nullify
   has_many                :tokens,                 after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
@@ -56,7 +54,9 @@ class User < ApplicationModel
   validate :ensure_uniq_email, unless: :skip_ensure_uniq_email
 
   # workflow checks should run after before_create and before_update callbacks
+  # the transaction dispatcher must be run after the workflow checks!
   include ChecksCoreWorkflow
+  include HasTransactionDispatcher
 
   core_workflow_screens 'create', 'edit'
 
