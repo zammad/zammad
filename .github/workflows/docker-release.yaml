@@ -143,7 +143,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ matrix.images }}
+          images: ${{ matrix.target.images }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
             type=raw,value=${{ env.ZAMMAD_VERSION }},enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
@@ -159,8 +159,8 @@ jobs:
         working-directory: tmp/docker-digests
         run: |
           ls -lah ./*
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf '${{ matrix.repository }}@sha256:%s ' *)
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf '${{ matrix.target.repository }}@sha256:%s ' *)
 
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect ${{ matrix.repository }}:${{ steps.meta.outputs.version }}
+          docker buildx imagetools inspect ${{ matrix.target.repository }}:${{ steps.meta.outputs.version }}
