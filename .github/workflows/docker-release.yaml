@@ -14,9 +14,11 @@ jobs:
     strategy:
       matrix:
         runs-on:
-          - ubuntu-22.04
-          - ['self-hosted', 'arm64']
-    runs-on: ${{ matrix.runs-on }}
+          - runner: ubuntu-22.04
+            platform: 'amd64'
+          - runner: ['self-hosted', 'arm64']
+            platform: 'arm64'
+    runs-on: ${{ matrix.runs-on.runner }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -60,6 +62,8 @@ jobs:
             index.docker.io/${{ github.repository_owner }}/zammad-multiarch-test
             quay.io/${{ github.repository_owner }}/zammad-multiarch-test
             quay.io/${{ github.repository_owner }}/zammad-multiarch-test-quay
+          tags: |
+            type=sha,suffix=${{ matrix.runs-on.platform }}
 
       - name: Build and push
         id: docker_build
@@ -68,7 +72,7 @@ jobs:
           context: .
           labels: ${{ steps.meta.outputs.labels }}
           push: true
-          outputs: type=image,name=zammad/zammad,push-by-digest=true,name-canonical=true,push=true
+          tags: ${{ steps.meta.outputs.tags }}
 
       - name: Export digest
         run: |
@@ -100,13 +104,9 @@ jobs:
           # - images: |
           #     index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
           #   repository: ${{ github.repository_owner }}/zammad-docker-compose
-          - images: |
-              index.docker.io/${{ github.repository_owner }}/zammad-multiarch-test
-              quay.io/${{ github.repository_owner }}/zammad-multiarch-test
-            repository: ${{ github.repository_owner }}/zammad-multiarch-test
-          - images: |
-              quay.io/${{ github.repository_owner }}/zammad-multiarch-test-quay
-            repository: ${{ github.repository_owner }}/zammad-multiarch-test-quay
+          - image: index.docker.io/${{ github.repository_owner }}/zammad-multiarch-test
+          - image: quay.io/${{ github.repository_owner }}/zammad-multiarch-test
+          - image: quay.io/${{ github.repository_owner }}/zammad-multiarch-test-quay
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -149,7 +149,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ matrix.target.images }}
+          images: ${{ matrix.target.image }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
             type=raw,value=${{ env.ZAMMAD_VERSION }},enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
@@ -165,8 +165,8 @@ jobs:
         working-directory: tmp/docker-digests
         run: |
           ls -lah ./*
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf '${{ matrix.target.repository }}@sha256:%s ' *)
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") $(printf '${{ matrix.target.image }}@sha256:%s ' *)
 
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect ${{ matrix.target.repository }}:${{ steps.meta.outputs.version }}
+          docker buildx imagetools inspect ${{ matrix.target.image }}:${{ steps.meta.outputs.version }}
