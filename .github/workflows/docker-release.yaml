@@ -5,7 +5,6 @@ on:
     branches:
       - stable
       - develop
-      - develop-**
     tags:
       - '*'
 
@@ -50,14 +49,11 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          # TODO: revert
-          # images: |
-          #   ghcr.io/${{ github.repository_owner }}/zammad
-          #   index.docker.io/${{ github.repository_owner }}/zammad
-          #   index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
-          #   quay.io/${{ github.repository_owner }}/zammad
           images: |
-            index.docker.io/${{ github.repository_owner }}/zammad-multiarch-test
+            ghcr.io/${{ github.repository_owner }}/zammad
+            index.docker.io/${{ github.repository_owner }}/zammad
+            index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
+            quay.io/${{ github.repository_owner }}/zammad
 
       - name: Build and push
         id: docker_build
@@ -90,17 +86,14 @@ jobs:
     strategy:
       matrix:
         target:
-          # - images: |
-          #     ghcr.io/${{ github.repository_owner }}/zammad
-          #     index.docker.io/${{ github.repository_owner }}/zammad
-          #     quay.io/${{ github.repository_owner }}/zammad
-          #   repository: ${{ github.repository_owner }}/zammad
-          # - images: |
-          #     index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
-          #   repository: ${{ github.repository_owner }}/zammad-docker-compose
           - images: |
-              index.docker.io/${{ github.repository_owner }}/zammad-multiarch-test
-            repository: ${{ github.repository_owner }}/zammad-multiarch-test
+              ghcr.io/${{ github.repository_owner }}/zammad
+              index.docker.io/${{ github.repository_owner }}/zammad
+              quay.io/${{ github.repository_owner }}/zammad
+            repository: ${{ github.repository_owner }}/zammad
+          - images: |
+              index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
+            repository: ${{ github.repository_owner }}/zammad-docker-compose
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
