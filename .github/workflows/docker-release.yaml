@@ -58,6 +58,8 @@ jobs:
           #   quay.io/${{ github.repository_owner }}/zammad
           images: |
             index.docker.io/${{ github.repository_owner }}/zammad-multiarch-test
+            quay.io/${{ github.repository_owner }}/zammad-multiarch-test
+            quay.io/${{ github.repository_owner }}/zammad-multiarch-test-quay
 
       - name: Build and push
         id: docker_build
@@ -66,7 +68,7 @@ jobs:
           context: .
           labels: ${{ steps.meta.outputs.labels }}
           push: true
-          outputs: type=image,push-by-digest=true,push=true
+          outputs: type=image,name=zammad/zammad,push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
         run: |
@@ -100,7 +102,11 @@ jobs:
           #   repository: ${{ github.repository_owner }}/zammad-docker-compose
           - images: |
               index.docker.io/${{ github.repository_owner }}/zammad-multiarch-test
+              quay.io/${{ github.repository_owner }}/zammad-multiarch-test
             repository: ${{ github.repository_owner }}/zammad-multiarch-test
+          - images: |
+              quay.io/${{ github.repository_owner }}/zammad-multiarch-test-quay
+            repository: ${{ github.repository_owner }}/zammad-multiarch-test-quay
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
