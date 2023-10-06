@@ -127,9 +127,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
         tables         |= ['INNER JOIN ticket_states ON tickets.state_id = ticket_states.id']
         sql_helper      = SqlHelper.new(object: Ticket::State)
       when 'ticket'
-        if attribute_name == 'mention_user_ids'
-          tables |= ["LEFT JOIN mentions ON tickets.id = mentions.mentionable_id AND mentions.mentionable_type = 'Ticket'"]
-        end
+        # nothing
       else
         raise "invalid selector #{attribute_table}, #{attribute_name}"
       end
@@ -222,14 +220,16 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     # because of no grouping support we select not_set by sub select for mentions
     elsif attribute_table == 'ticket' && attribute_name == 'mention_user_ids'
       if block_condition[:pre_condition] == 'not_set'
+        tables |= ["LEFT JOIN mentions ON tickets.id = mentions.mentionable_id AND mentions.mentionable_type = 'Ticket'"]
         query << if block_condition[:operator] == 'is'
-                   "(SELECT 1 FROM mentions mentions_sub WHERE mentions_sub.mentionable_type = 'Ticket' AND mentions_sub.mentionable_id = tickets.id) IS NULL"
+                   'mentions.user_id IS NULL'
                  else
-                   "1 = (SELECT 1 FROM mentions mentions_sub WHERE mentions_sub.mentionable_type = 'Ticket' AND mentions_sub.mentionable_id = tickets.id)"
+                   'mentions.user_id IS NOT NULL'
                  end
       else
         query << if block_condition[:operator] == 'is'
-                   "1 = (SELECT 1 FROM mentions mentions_sub WHERE mentions_sub.mentionable_type = 'Ticket' AND mentions_sub.mentionable_id = tickets.id AND mentions_sub.user_id IN (?) LIMIT 1)"
+                   tables |= ["LEFT JOIN mentions ON tickets.id = mentions.mentionable_id AND mentions.mentionable_type = 'Ticket'"]
+                   'mentions.user_id IN (?)'
                  else
                    "(SELECT 1 FROM mentions mentions_sub WHERE mentions_sub.mentionable_type = 'Ticket' AND mentions_sub.mentionable_id = tickets.id AND mentions_sub.user_id IN (?) LIMIT 1) IS NULL"
                  end
