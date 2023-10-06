@@ -336,7 +336,7 @@ remove whole data from index
       condition['query_string']['fields'] = fields
     end
 
-    query_data = build_query(condition, options)
+    query_data = build_query(index, condition, options)
 
     if (fields = options.dig(:highlight_fields_by_indexes, index.to_sym))
       fields_for_highlight = fields.index_with { |_elem| {} }
@@ -375,22 +375,23 @@ remove whole data from index
     end
   end
 
-  def self.search_by_index_sort(sort_by: nil, order_by: nil, fulltext: false)
+  def self.search_by_index_sort(index:, sort_by: nil, order_by: nil, fulltext: false)
     result = (sort_by || [])
       .map(&:to_s)
       .each_with_object([])
-      .with_index do |(elem, memo), index|
+      .with_index do |(elem, memo), idx|
         next if elem.blank?
-        next if order_by&.at(index).blank?
+        next if order_by&.at(idx).blank?
 
         # for sorting values use .keyword values (no analyzer is used - plain values)
-        if elem.exclude?('.') && elem !~ %r{_(time|date|till|id|ids|at)$} && elem != 'id'
+        is_keyword = get_mapping_properties_object(Array.wrap(index).first.constantize).dig(:properties, elem, :fields, :keyword, :type) == 'keyword'
+        if is_keyword
           elem += '.keyword'
         end
 
         memo.push(
           elem => {
-            order: order_by[index],
+            order: order_by[idx],
           },
         )
       end
@@ -646,13 +647,13 @@ generate url for index or document access (only for internal use)
     limit: 10
   }.freeze
 
-  def self.build_query(condition, options = {})
+  def self.build_query(index, condition, options = {})
     options = DEFAULT_QUERY_OPTIONS.merge(options.deep_symbolize_keys)
 
     data = {
       from:  options[:from],
       size:  options[:limit],
-      sort:  search_by_index_sort(sort_by: options[:sort_by], order_by: options[:order_by], fulltext: options[:fulltext]),
+      sort:  search_by_index_sort(index: index, sort_by: options[:sort_by], order_by: options[:order_by], fulltext: options[:fulltext]),
       query: {
         bool: {
           must: []
@@ -770,11 +771,8 @@ helper method for making HTTP calls and raising error if response was not succes
 =end
 
   def self.get_mapping_properties_object(object)
-    name = '_doc'
     result = {
-      name => {
-        properties: {}
-      }
+      properties: {}
     }
 
     store_columns = %w[preferences data]
@@ -786,37 +784,37 @@ helper method for making HTTP calls and raising error if response was not succes
 
     object.columns_hash.each do |key, value|
       if value.type == :string && value.limit && value.limit <= 5000 && store_columns.exclude?(key)
-        result[name][:properties][key] = {
+        result[:properties][key] = {
           type:   string_type,
           fields: {
             keyword: string_raw,
           }
         }
       elsif value.type == :integer
-        result[name][:properties][key] = {
+        result[:properties][key] = {
           type: 'integer',
         }
       elsif value.type == :datetime || value.type == :date
-        result[name][:properties][key] = {
+        result[:properties][key] = {
           type: 'date',
         }
       elsif value.type == :boolean
-        result[name][:properties][key] = {
+        result[:properties][key] = {
           type:   'boolean',
           fields: {
             keyword: boolean_raw,
           }
         }
       elsif value.type == :binary
-        result[name][:properties][key] = {
+        result[:properties][key] = {
           type: 'binary',
         }
       elsif value.type == :bigint
-        result[name][:properties][key] = {
+        result[:properties][key] = {
           type: 'long',
         }
       elsif value.type == :decimal
-        result[name][:properties][key] = {
+        result[:properties][key] = {
           type: 'float',
         }
       end
@@ -824,13 +822,13 @@ helper method for making HTTP calls and raising error if response was not succes
 
     case object.name
     when 'Ticket'
-      result[name][:properties][:article] = {
+      result[:properties][:article] = {
         type:              'nested',
         include_in_parent: true,
       }
     end
 
-    result[name]
+    result
   end
 
   # get es version

@@ -11,7 +11,7 @@ RSpec.describe SearchIndexBackend do
   end
 
   describe '.build_query' do
-    subject(:query) { described_class.build_query('', query_extension: params) }
+    subject(:query) { described_class.build_query('Ticket', '', query_extension: params) }
 
     let(:params) { { 'bool' => { 'filter' => { 'term' => { 'a' => 'b' } } } } }
 
@@ -143,6 +143,24 @@ RSpec.describe SearchIndexBackend do
 
       it 'finds added records by quoted integer' do
         result = described_class.search('"1021052349"', record_type, sort_by: ['updated_at'], order_by: ['desc'])
+        expect(result).to eq([{ id: record.id.to_s, type: record_type }])
+      end
+    end
+
+    context 'can sort by datetime fields', db_strategy: :reset do
+      let(:record_type) { 'Ticket'.freeze }
+      let(:record)     { create(:ticket) }
+      let(:field_name) { SecureRandom.uuid }
+
+      before do
+        create(:object_manager_attribute_datetime, name: field_name)
+        ObjectManager::Attribute.migration_execute
+        record.search_index_update_backend
+        described_class.refresh
+      end
+
+      it 'finds added records' do
+        result = described_class.search(record.number, record_type, sort_by: [field_name], order_by: ['desc'])
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
     end
@@ -878,19 +896,19 @@ RSpec.describe SearchIndexBackend do
 
   describe '.search_by_index_sort' do
     it 'does return a sort value' do
-      expect(described_class.search_by_index_sort(sort_by: ['title'], order_by: 'desc')).to eq([{ 'title.keyword'=>{ order: 'd' } }, '_score'])
+      expect(described_class.search_by_index_sort(index: 'Ticket', sort_by: ['title'], order_by: 'desc')).to eq([{ 'title.keyword'=>{ order: 'd' } }, '_score'])
     end
 
     it 'does return a sort value for fulltext searches' do
-      expect(described_class.search_by_index_sort(sort_by: ['title'], order_by: 'desc', fulltext: true)).to eq([{ 'title.keyword'=>{ order: 'd' } }, '_score'])
+      expect(described_class.search_by_index_sort(index: 'Ticket', sort_by: ['title'], order_by: 'desc', fulltext: true)).to eq([{ 'title.keyword'=>{ order: 'd' } }, '_score'])
     end
 
     it 'does return a default sort value' do
-      expect(described_class.search_by_index_sort).to eq([{ updated_at: { order: 'desc' } }, '_score'])
+      expect(described_class.search_by_index_sort(index: 'Ticket')).to eq([{ updated_at: { order: 'desc' } }, '_score'])
     end
 
     it 'does return a default sort value for fulltext searches' do
-      expect(described_class.search_by_index_sort(fulltext: true)).to eq(['_score'])
+      expect(described_class.search_by_index_sort(index: 'Ticket', fulltext: true)).to eq(['_score'])
     end
   end
 
