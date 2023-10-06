@@ -643,7 +643,7 @@ GEM
       logging
       nokogiri
       rubyntlm
-    vite_rails (3.0.16)
+    vite_rails (3.0.17)
       railties (>= 5.1, < 8)
       vite_ruby (~> 3.0, >= 3.2.2)
     vite_ruby (3.3.4)
