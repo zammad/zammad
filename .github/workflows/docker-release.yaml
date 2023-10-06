@@ -63,7 +63,7 @@ jobs:
             quay.io/${{ github.repository_owner }}/zammad-multiarch-test
             quay.io/${{ github.repository_owner }}/zammad-multiarch-test-quay
           tags: |
-            type=sha,suffix=${{ matrix.runs-on.platform }}
+            type=sha,suffix=-${{ matrix.runs-on.platform }}
 
       - name: Build and push
         id: docker_build
