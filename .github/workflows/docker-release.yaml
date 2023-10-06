@@ -96,14 +96,10 @@ jobs:
     strategy:
       matrix:
         target:
-          # - images: |
-          #     ghcr.io/${{ github.repository_owner }}/zammad
-          #     index.docker.io/${{ github.repository_owner }}/zammad
-          #     quay.io/${{ github.repository_owner }}/zammad
-          #   repository: ${{ github.repository_owner }}/zammad
-          # - images: |
-          #     index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
-          #   repository: ${{ github.repository_owner }}/zammad-docker-compose
+          # - image: ghcr.io/${{ github.repository_owner }}/zammad
+          # - image: index.docker.io/${{ github.repository_owner }}/zammad
+          # - image: quay.io/${{ github.repository_owner }}/zammad
+          # - image: index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
           - image: index.docker.io/${{ github.repository_owner }}/zammad-multiarch-test
           - image: quay.io/${{ github.repository_owner }}/zammad-multiarch-test
           - image: quay.io/${{ github.repository_owner }}/zammad-multiarch-test-quay
