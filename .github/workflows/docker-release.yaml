@@ -167,9 +167,9 @@ jobs:
             type=sha
 
       - name: Create manifest list and push
-        working-directory: tmp/docker-digests
+        #working-directory: tmp/docker-digests
         run: |
-          ls -lah ./*
+          # ls -lah ./*
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") ${{ join(steps.meta_arch.outputs.tags, ' ') }}
 
       - name: Inspect image
