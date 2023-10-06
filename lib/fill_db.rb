@@ -246,7 +246,7 @@ or if you only want to create 100 tickets
         ActiveRecord::Base.transaction do
 
           create_params = {
-            name:   "FillGroup::#{counter}",
+            name:   "FillGroup#{counter}",
             active: true,
           }
 
