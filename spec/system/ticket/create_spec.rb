@@ -1448,4 +1448,32 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
   end
+
+  describe 'Date field value of a ticket template is not added into a new ticket #4864', authenticated_as: :authenticate, db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:field) do
+      create(:object_manager_attribute_date, :required_screen, name: field_name, display: field_name)
+      ObjectManager::Attribute.migration_execute
+    end
+    let(:template) do
+      create(:template, :dummy_data).tap do |template|
+        template.update(options: template.options.merge("ticket.#{field_name}" => { 'operator' => 'relative', 'value' => '1', 'range' => 'day' }))
+      end
+    end
+
+    def authenticate
+      field
+      true
+    end
+
+    before do
+      visit 'ticket/create'
+      use_template(template)
+    end
+
+    it 'does create a date with a relative template value' do
+      click '.js-submit'
+      expect(Ticket.last).to have_attributes(field_name => 1.day.from_now.to_date)
+    end
+  end
 end

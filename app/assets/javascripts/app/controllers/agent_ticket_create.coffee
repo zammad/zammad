@@ -413,7 +413,8 @@ class App.TicketCreate extends App.Controller
 
                 # Calculate the target time value from now, in case of relative datetime fields (#4318).
                 if templateValue['operator'] is 'relative' and templateValue['range']
-                  value = App.ViewHelpers.relative_time(templateValue['value'], templateValue['range'])
+                  isDateTime = _.find(App.Ticket.configure_attributes, (attr) -> attr.name is field)?.tag is 'datetime'
+                  value = App.ViewHelpers.relative_time(templateValue['value'], templateValue['range'], isDateTime)
 
                 # Remember complete tags configuration for further processing.
                 if field is 'tags'

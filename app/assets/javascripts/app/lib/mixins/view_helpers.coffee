@@ -55,13 +55,13 @@ App.ViewHelpers =
     "#{mins}:#{secs}"
 
   # define time_duration / hh:mm
-  time_duration_hh_mm: (time_in_minutes) ->
-    return '' if !time_in_minutes
-    return '' if isNaN(parseInt(time_in_minutes))
+  time_duration_hh_mm: (timeInMinutes) ->
+    return '' if !timeInMinutes
+    return '' if isNaN(parseInt(timeInMinutes))
 
     # Hours, minutes and seconds
-    hrs  = ~~parseInt((time_in_minutes / 60))
-    mins = ~~parseInt((time_in_minutes % 60))
+    hrs  = ~~parseInt((timeInMinutes / 60))
+    mins = ~~parseInt((timeInMinutes % 60))
 
     hrs  = "0#{hrs}" if hrs < 10
     mins = "0#{mins}" if mins < 10
@@ -71,7 +71,7 @@ App.ViewHelpers =
   # Calculate relative time from now and return it as an ISO timestamp:
   #   value - time difference as an integer
   #   range - unit used for time difference (minute/hour/day/week/month/year)
-  relative_time: (value, range) ->
+  relative_time: (value, range, includeTime = true) ->
     time = new Date
     diff = parseInt(value, 10)
 
@@ -89,7 +89,10 @@ App.ViewHelpers =
       when 'year'
         time.setFullYear(time.getFullYear() + diff)
 
-    time.toISOString()
+    if includeTime
+      time.toISOString()
+    else
+      time.toISOString().substring(0, 10)
 
   # define mask helper
   # mask an value like 'a***********yz'
