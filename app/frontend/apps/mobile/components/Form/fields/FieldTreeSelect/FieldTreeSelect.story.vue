@@ -359,7 +359,7 @@ const options = [
     label: 'Option Icon',
     name: 'treeselect_icon',
   },
-]
+] as any
 </script>
 
 <template>

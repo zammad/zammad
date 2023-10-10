@@ -13,14 +13,16 @@ export type FlatSelectOption = SelectOption & {
   parents: (string | number | boolean)[]
 }
 
-export type TreeSelectContext = FormFieldContext<{
+export interface TreeSelectProps {
   clearable?: boolean
   disabled?: boolean
-  historicalOptions: Record<string, string>
+  historicalOptions?: Record<string, string>
   multiple?: boolean
+  options: TreeSelectOption[]
   noFiltering?: boolean
   noOptionsLabelTranslation?: boolean
-  options: TreeSelectOption[]
   rejectNonExistentValues?: boolean
   sorting?: SelectOptionSorting
-}>
+}
+
+export type TreeSelectContext = FormFieldContext<TreeSelectProps>

@@ -3,6 +3,7 @@
 import {
   text as inputTextDefinition,
   select as selectDefinition,
+  casts,
 } from '@formkit/inputs'
 import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
 import { cloneDeep } from 'lodash-es'
@@ -46,6 +47,7 @@ describe('initializeFieldDefinition', () => {
       hideField,
       addBlurEvent,
       formLocaleDir,
+      casts,
     ])
   })
 
@@ -77,7 +79,7 @@ describe('initializeFieldDefinition', () => {
       { addDefaultProps: true, addDefaultFeatures: false },
     )
 
-    expect(definition.features).toEqual([])
+    expect(definition.features).toEqual([casts])
   })
 
   it('add additional props and features', () => {
@@ -102,6 +104,7 @@ describe('initializeFieldDefinition', () => {
       addBlurEvent,
       formLocaleDir,
       featureExample,
+      casts,
     ])
   })
 })

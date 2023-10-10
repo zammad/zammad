@@ -13,6 +13,7 @@ import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
 import { waitUntil } from '#tests/support/utils.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import type { FieldTagsProps } from '#shared/components/Form/fields/FieldTags/types.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
 const defaultTags = [
   { label: 'test', value: 'test' },
@@ -22,7 +23,11 @@ const defaultTags = [
 
 let mockApi: MockGraphQLInstance
 
-const renderFieldTags = (props: Partial<FieldTagsProps> = {}) => {
+const renderFieldTags = (
+  props: Partial<
+    FieldTagsProps & { options: FormFieldContext['options'] }
+  > = {},
+) => {
   mockApi = mockGraphQLApi(AutocompleteSearchTagDocument).willResolve({
     autocompleteSearchTag: defaultTags,
   })

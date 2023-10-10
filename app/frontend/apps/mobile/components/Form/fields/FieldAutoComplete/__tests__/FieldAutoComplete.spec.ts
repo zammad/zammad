@@ -779,7 +779,7 @@ describe('Form - Field - AutoComplete - Features', () => {
       wrapper.queryByText(`This field doesn't start with "#".`),
     ).not.toBeInTheDocument()
 
-    const selectOptions = wrapper.getAllByRole('option')
+    const selectOptions = await wrapper.findAllByRole('option')
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent('#foo')

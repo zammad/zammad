@@ -2423,6 +2423,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Close"
 msgstr ""
 
@@ -11871,6 +11872,10 @@ msgstr ""
 
 #: lib/secure_mailing/smime/security_options.rb
 msgid "There were certificates found for %s, but at least one of them is not valid yet or has expired."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "There were errors in your form."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee

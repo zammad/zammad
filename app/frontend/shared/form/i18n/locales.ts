@@ -93,6 +93,15 @@ const loadLocales = (): FormKitLocaleExtended => {
        * Shown when the date is invalid.
        */
       invalidDate: () => i18n.t('The selected date is invalid.'),
+      /**
+       * Shown above error summaries when someone attempts to submit a form with
+       * errors and the developer has implemented `<FormKitSummary />`.
+       */
+      summaryHeader: () => i18n.t('There were errors in your form.'),
+      /*
+       * Shown when there is something to close
+       */
+      close: () => i18n.t('Close'),
     },
 
     validation: {

@@ -136,7 +136,7 @@ describe('Form - Field - Recipient - Features', () => {
 
     await wrapper.events.type(filterElement, 'foo@bar.tld')
 
-    let selectOptions = wrapper.getAllByRole('option')
+    let selectOptions = await wrapper.findAllByRole('option')
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent('foo@bar.tld')
@@ -187,7 +187,7 @@ describe('Form - Field - Recipient - Features', () => {
       wrapper.queryByText('Please enter a valid email address.'),
     ).not.toBeInTheDocument()
 
-    const selectOptions = wrapper.getAllByRole('option')
+    const selectOptions = await wrapper.findAllByRole('option')
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent('foo@bar.tld')
@@ -226,7 +226,7 @@ describe('Form - Field - Recipient - Features', () => {
       wrapper.queryByText("This field doesn't contain an allowed value."),
     ).not.toBeInTheDocument()
 
-    const selectOptions = wrapper.getAllByRole('option')
+    const selectOptions = await wrapper.findAllByRole('option')
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent('+499876543210')

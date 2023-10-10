@@ -244,7 +244,7 @@ const options = [
     label: 'Option Icon',
     name: 'select_icon',
   },
-]
+] as any
 </script>
 
 <template>
