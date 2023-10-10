@@ -16380,6 +16380,7 @@ msgstr "شامل یکی باشد"
 msgid "contains one not"
 msgstr "شامل یکی نباشد"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17011,6 +17012,12 @@ msgstr "شاید"
 msgid "merged"
 msgstr "ادغام شد"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "merged"
+msgid "merged into"
+msgstr "ادغام شد"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr "پیام"
@@ -17230,6 +17237,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "فرارسیده"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -17506,6 +17517,7 @@ msgstr "خارج کردن از حالت فقط خواندنی"
 msgid "untouched"
 msgstr "دست نخورده"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

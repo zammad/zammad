@@ -17300,6 +17300,7 @@ msgstr "contiene uno"
 msgid "contains one not"
 msgstr "contiene uno no"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17949,6 +17950,12 @@ msgstr "quizá"
 msgid "merged"
 msgstr "mezclado"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "merged"
+msgid "merged into"
+msgstr "mezclado"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr "mensaje"
@@ -18172,6 +18179,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "alcanzado"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -18452,6 +18463,7 @@ msgstr "desarmar solo lectura"
 msgid "untouched"
 msgstr "intacto"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

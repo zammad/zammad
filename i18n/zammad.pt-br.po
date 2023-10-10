@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-19 01:08+0000\n"
+"PO-Revision-Date: 2023-10-03 01:05+0000\n"
 "Last-Translator: \"Decio E. Silva\" <decio@verinatec.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
@@ -6616,7 +6616,7 @@ msgstr ""
 
 #: app/models/ticket/time_accounting.rb
 msgid "Given Ticket Article is not part of the Ticket"
-msgstr ""
+msgstr "O Artigo do Ticket fornecido não faz parte do Ticket"
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -16343,10 +16343,8 @@ msgid "active"
 msgstr "ativo"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
-#, fuzzy
-#| msgid "Add"
 msgid "add"
-msgstr "Adicionar"
+msgstr "adicionar"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "add option"
@@ -16517,6 +16515,7 @@ msgstr "Contêm um"
 msgid "contains one not"
 msgstr "contém um não"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17084,6 +17083,10 @@ msgstr "talvez:"
 msgid "merged"
 msgstr "agrupado"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "merged into"
+msgstr "mesclado em"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr "mensagem"
@@ -17294,6 +17297,10 @@ msgstr "quarto de hora(s)"
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "encontrado"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr "recebeu mesclagem"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -17556,6 +17563,7 @@ msgstr "não definido somente leitura"
 msgid "untouched"
 msgstr "intocado"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

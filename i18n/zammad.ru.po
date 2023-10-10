@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-20 01:07+0000\n"
+"PO-Revision-Date: 2023-10-07 01:07+0000\n"
 "Last-Translator: Vladimir <sleuths.slews0s@icloud.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
@@ -3343,13 +3343,8 @@ msgid "Could not remove two-factor authentication method"
 msgstr "Не удалось удалить метод двухфакторной аутентификации"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
-#, fuzzy
-#| msgid ""
-#| "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
-#| "not."
 msgid "Could not set two-factor authentication method as default"
-msgstr ""
-"Определяет, включена интеграция с i-doit (https://www.i-doit.org/) или нет."
+msgstr "Не удалось выставить метод двухфакторной аутентификации по-умолчанию"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
@@ -4140,10 +4135,8 @@ msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Определяет, включен Nagios (http://www.nagios.org) или нет."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines if S/MIME encryption is enabled or not."
 msgid "Defines if PGP encryption is enabled or not."
-msgstr "Определяет, включено шифрование S/MIME или нет."
+msgstr "Определяет, включено шифрование PGP или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
@@ -4184,16 +4177,12 @@ msgstr ""
 "(CTI) или нет."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Login failed. Have you double-checked your credentials and completed the "
-#| "email verification step?"
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
 msgstr ""
-"Вход в систему не удался. Вы перепроверили свои учетные данные и завершили "
-"этап подтверждения электронной почты?"
+"Определяет, могут ли коды восстановления использоваться пользователями в "
+"случае потери доступа к другим методам двухфакторной аутентификации."
 
 #: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
@@ -4212,12 +4201,8 @@ msgstr ""
 "Определяет, включена интеграция с GitLab (http://www.gitlab.com) или нет."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines if generic CTI integration is enabled or not."
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
-msgstr ""
-"Определяет, включена универсальная интеграция с компьютерной телефонией "
-"(CTI) или нет."
+msgstr "Определяет, включена ли настройка псевдонима получателя PGP."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4275,22 +4260,16 @@ msgstr ""
 "выражения."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines if the ticket conditions editor supports complex logical "
-#| "expressions."
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
 msgstr ""
-"Определяет, поддерживает ли редактор условий заявки сложные логические "
-"выражения."
+"Определяет, поддерживает ли редактор условий заявки операторы регулярных "
+"выражений для триггеров и автоназначения заявок."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the default screen."
 msgid "Defines if the time accounting types are enabled."
-msgstr "Определяет экран по умолчанию."
+msgstr "Определяет, включены ли типы учета времени."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -4527,10 +4506,8 @@ msgid "Defines the HTTP protocol of your instance."
 msgstr "Определяет версию протокола HTTP для вашего экземпляра."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the LDAP config."
 msgid "Defines the PGP config."
-msgstr "Определяет настройки LDAP."
+msgstr "Определяет настройки PGP."
 
 #: db/seeds/settings.rb
 msgid "Defines the Placetel config."
@@ -4602,10 +4579,8 @@ msgid "Defines the default system timezone."
 msgstr "Определяет часовой пояс системы по умолчанию."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the default system timezone."
 msgid "Defines the default time accounting type."
-msgstr "Определяет часовой пояс системы по умолчанию."
+msgstr "Определяет тип учета времени по умолчанию."
 
 #: db/seeds/settings.rb
 msgid "Defines the default visibility for new notes."
@@ -5158,10 +5133,8 @@ msgid "Do not sign email"
 msgstr "Не подписывать электронную почту"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "You currently don't have any tickets."
 msgid "Do not update any tickets."
-msgstr "В настоящее время у вас нет заявок."
+msgstr "Не обновлять никакие заявки."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Do not use the proxy for the following hosts."
@@ -5195,10 +5168,8 @@ msgstr "Домен"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
-#, fuzzy
-#| msgid "Domain"
 msgid "Domain Alias"
-msgstr "Домен"
+msgstr "Псевдоним домена"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
@@ -5248,16 +5219,12 @@ msgid "Download Private Key"
 msgstr "Скачать закрытый ключ"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
-#, fuzzy
-#| msgid "Download Private Key"
 msgid "Download Public Key"
-msgstr "Скачать закрытый ключ"
+msgstr "Скачать открытый ключ"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
-#, fuzzy
-#| msgid "Download %s record(s)"
 msgid "Download all records"
-msgstr "Скачено %s запись(и/ей)"
+msgstr "Скачать все записи"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download and install the %s Migration Plugin on your %s instance."
@@ -5783,10 +5750,8 @@ msgstr "Шифрование"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Encryption"
 msgid "Encryption error"
-msgstr "Шифрование"
+msgstr "Ошибка шифрования"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -5817,10 +5782,8 @@ msgid "Enforce the set up of the two-factor authentication"
 msgstr "Требовать включение двухфакторной аутентификации"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "How to use it"
 msgid "Enforced for user roles"
-msgstr "Как это работает"
+msgstr "Требовать для ролей пользователя"
 
 #: db/seeds.rb
 msgid "English (United States)"
@@ -6691,7 +6654,7 @@ msgstr "Ошибка запроса GitLab! Подробности смотри�
 
 #: app/models/ticket/time_accounting.rb
 msgid "Given Ticket Article is not part of the Ticket"
-msgstr ""
+msgstr "Данная статья принадлежит к другой заявке"
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -7758,24 +7721,6 @@ msgstr "Приглашение отправлено!"
 #. This is the template file app/views/mailer/user_invite/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_invite/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Invitation to #{config.product_name} at #{config.fqdn}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to "
-#| "#{config.product_name} - our customer support platform.</div>\n"
-#| "<br>\n"
-#| "<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.name}\">here</a> and set your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>Enjoy,</div>\n"
-#| "<br>\n"
-#| "<div>#{current_user.firstname} #{current_user.lastname}</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Invitation to #{config.product_name} at #{config.fqdn}\n"
 "\n"
@@ -7801,9 +7746,9 @@ msgstr ""
 "<div>Я (#{current_user.firstname} #{current_user.lastname}) приглашаю Вас в "
 "#{config.product_name} - нашу платформу поддержки клиентов.</div>\n"
 "<br>\n"
-"<div>Нажмите <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.token}\">сюда</a> и установите свой пароль.</"
-"div>\n"
+"<div>Нажмите <a href=\"#{config.http_type}://#{config.fqdn}/#"
+"password_reset_verify/#{token.token}\">сюда</a> и установите свой "
+"пароль.</div>\n"
 "<br>\n"
 "<div>Наслаждайтесь,</div>\n"
 "<br>\n"
@@ -8207,7 +8152,6 @@ msgid "Loading content"
 msgstr "Загрузка контента"
 
 #: app/views/mobile/index.html.erb
-#, fuzzy
 msgid "Loading failed, please try again later."
 msgstr "Загрузка не удалась, повторите попытку позже."
 
@@ -9404,8 +9348,6 @@ msgid "Not configured"
 msgstr "Не настроено"
 
 #: app/frontend/shared/errors/useErrorHandler.ts
-#, fuzzy
-#| msgid "Not Found"
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -10196,13 +10138,11 @@ msgstr "Пожалуйста, введите действующий адрес �
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Please enter the endpoint for accessing Exchange Web Services."
-msgstr ""
+msgstr "Укажите конечную точку доступа к Exchange Web Services."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-#, fuzzy
-#| msgid "Please enter a text."
 msgid "Please enter your Exchange credentials."
-msgstr "Пожалуйста, введите текст."
+msgstr "Пожалуйста, введите учетные данные Exchange."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Please execute database changes only in a maintenance window."
@@ -10249,6 +10189,8 @@ msgid ""
 "Please select the authentication method that should be used to establish the "
 "connection to your Exchange server."
 msgstr ""
+"Выберите метод аутентификации, который должен использоваться для "
+"установления соединения с сервером Exchange."
 
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 msgid ""
@@ -10842,6 +10784,8 @@ msgstr "Требования"
 msgid ""
 "Requires the set up of the two-factor authentication for certain user roles."
 msgstr ""
+"Требуется настройка двухфакторной аутентификации для определенных ролей "
+"пользователей."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -10877,20 +10821,14 @@ msgid "Reset overview order"
 msgstr "Сбросить порядок представлений"
 
 #: app/assets/javascripts/app/models/setting.coffee
-#, fuzzy
-#| msgid "Sent successfully!"
 msgid "Reset successful."
-msgstr "Успешно отправлено!"
+msgstr "Сброс прошел успешно."
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Reset to default"
 msgstr "Восстановить значения по умолчанию"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Reset to default settings"
 msgstr "Восстановить значения по умолчанию"
 
@@ -11065,7 +11003,7 @@ msgstr "Результат:"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 msgid "Retry"
-msgstr ""
+msgstr "Повторить"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
@@ -11081,10 +11019,8 @@ msgid "Retweets are converted into tickets."
 msgstr "Ретвиты (Retweets) преобразуются в заявки."
 
 #: app/models/webhook/pre_defined/rocket_chat.rb
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Rocket Chat Notifications"
-msgstr "Блокировка уведомлений"
+msgstr "Уведомления в чате Rocket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/role.coffee
@@ -11293,10 +11229,8 @@ msgid "Save"
 msgstr "Сохранить"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
-#, fuzzy
-#| msgid "Save as"
 msgid "Save Codes"
-msgstr "Сохранить как"
+msgstr "Сохранить коды"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -11356,16 +11290,12 @@ msgstr ""
 "исполняемым."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-#, fuzzy
-#| msgid "Move down"
 msgid "Scroll down"
-msgstr "Переместить ниже"
+msgstr "Прокрутить вниз"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
-#, fuzzy
-#| msgid "Scroll down to see new messages"
 msgid "Scroll down to see %s new replies"
-msgstr "Прокрутите вниз, чтобы увидеть новые сообщения"
+msgstr "Прокрутите вниз, чтобы увидеть новые сообщения (%s)"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
@@ -11405,10 +11335,8 @@ msgid "Search or enter email address…"
 msgstr "Найдите или введите адрес электронной почты…"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts
-#, fuzzy
-#| msgid "Search or enter email address…"
 msgid "Search or enter phone number…"
-msgstr "Найдите или введите адрес электронной почты…"
+msgstr "Найдите или введите номер телефона…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
@@ -11447,10 +11375,8 @@ msgstr "Безопасность"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
-#, fuzzy
-#| msgid "Security"
 msgid "Security Code"
-msgstr "Безопасность"
+msgstr "Код безопасности"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -11464,23 +11390,19 @@ msgid "Security Information"
 msgstr "Информация"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
-#, fuzzy
-#| msgid "Security"
 msgid "Security Key"
-msgstr "Безопасность"
+msgstr "Ключ безопасности"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Security"
 msgid "Security Keys"
-msgstr "Безопасность"
+msgstr "Ключи безопасности"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Security key \"%s\" will be removed."
-msgstr ""
+msgstr "Ключ безопасности «%s» будет удален."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #, fuzzy
@@ -11574,7 +11496,7 @@ msgstr "Выбранные условия"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
 msgid "Selected tickets do not match any macros."
-msgstr ""
+msgstr "Выбранные заявки не соответствуют ни одному макросу."
 
 #: app/assets/javascripts/app/models/trigger.coffee
 #, fuzzy
@@ -17073,6 +16995,7 @@ msgstr "содержит один"
 msgid "contains one not"
 msgstr "contains one not"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17670,6 +17593,12 @@ msgstr "может быть:"
 msgid "merged"
 msgstr "объединенные"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "merged"
+msgid "merged into"
+msgstr "объединенные"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr "сообщение"
@@ -17889,6 +17818,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "достигнуто"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -18161,6 +18094,7 @@ msgstr "снять только для чтения"
 msgid "untouched"
 msgstr "нетронутый"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

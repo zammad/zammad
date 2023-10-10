@@ -16416,6 +16416,7 @@ msgstr ""
 msgid "contains one not"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17016,6 +17017,12 @@ msgstr ""
 msgid "merged"
 msgstr "मिलाएं गए"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "merged"
+msgid "merged into"
+msgstr "मिलाएं गए"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr ""
@@ -17235,6 +17242,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr " पहुंच गए"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -17507,6 +17518,7 @@ msgstr ""
 msgid "untouched"
 msgstr "अछूता"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

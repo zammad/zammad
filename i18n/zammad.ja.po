@@ -16807,6 +16807,7 @@ msgstr "一つは含む"
 msgid "contains one not"
 msgstr "一つは含まない"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17429,6 +17430,12 @@ msgstr "おそらく"
 msgid "merged"
 msgstr "結合済"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "merged"
+msgid "merged into"
+msgstr "結合済"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr ""
@@ -17648,6 +17655,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "到達"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -17930,6 +17941,7 @@ msgstr ""
 msgid "untouched"
 msgstr "未着手"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
