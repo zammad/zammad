@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 # core - base
 ruby '3.1.3'
-gem 'rails', '~> 6.1.0'
+gem 'rails', '~> 7.0.8'
 
 # TEMPORARY Security updates from Ruby 3.1.4. Can be removed when updating from Ruby 3.1.3 to a higher version.
 # See also: https://www.ruby-lang.org/en/news/2023/03/30/ruby-3-1-4-released/
@@ -66,6 +66,9 @@ gem 'dalli', require: false
 
 # Vite is required by the web server
 gem 'vite_rails'
+
+# asset handling - config.assets for pipeline
+gem 'sprockets-rails'
 
 # Only load gems for asset compilation if they are needed to avoid
 #   having unneeded runtime dependencies like NodeJS.

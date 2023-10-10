@@ -225,7 +225,7 @@ class Transaction::Notification
           changes:      changes,
           reason:       recipients_reason[user.id],
         },
-        message_id:  "<notification.#{DateTime.current.to_s(:number)}.#{ticket.id}.#{user.id}.#{SecureRandom.uuid}@#{Setting.get('fqdn')}>",
+        message_id:  "<notification.#{DateTime.current.to_fs(:number)}.#{ticket.id}.#{user.id}.#{SecureRandom.uuid}@#{Setting.get('fqdn')}>",
         references:  ticket.get_references,
         main_object: ticket,
         attachments: attachments,

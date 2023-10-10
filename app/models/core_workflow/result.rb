@@ -6,6 +6,10 @@ class CoreWorkflow::Result
   attr_accessor :payload, :payload_backup, :user, :assets, :assets_in_result, :result, :rerun, :form_updater, :restricted_fields
 
   def initialize(payload:, user:, assets: {}, assets_in_result: true, result: {}, form_updater: false)
+    if payload.respond_to?(:permit!)
+      payload = payload.permit!.to_h
+    end
+
     raise ArgumentError, __("The required parameter 'payload->class_name' is missing.") if !payload['class_name']
     raise ArgumentError, __("The required parameter 'payload->screen' is missing.") if !payload['screen']
 

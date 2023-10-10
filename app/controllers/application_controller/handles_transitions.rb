@@ -17,7 +17,6 @@ module ApplicationController::HandlesTransitions
 
     TransactionDispatcher.commit
     PushMessages.finish
-    ActiveSupport::Dependencies::Reference.clear!
   ensure
     ApplicationHandleInfo.current = nil
   end

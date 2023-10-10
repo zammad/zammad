@@ -16,8 +16,9 @@ RSpec.configure do |config|
   end
 
   Capybara.configure do |capybara_config|
-    capybara_config.server = :puma_wrapper
+    capybara_config.server      = :puma_wrapper
     capybara_config.server_port = CAPYBARA_PORT
+    capybara_config.save_path   = 'tmp/screenshots'
 
     # See https://docs.gitlab.com/runner/executors/docker.html#create-a-network-for-each-job
     capybara_config.app_host = "https://#{CAPYBARA_HOSTNAME}"

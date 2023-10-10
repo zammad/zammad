@@ -19,7 +19,7 @@ returns
 =end
 
     def latest_change
-      maximum(:updated_at)&.to_s(:nsec)
+      maximum(:updated_at)&.to_fs(:nsec)
     end
   end
 end

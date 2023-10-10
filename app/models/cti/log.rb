@@ -506,6 +506,10 @@ optional you can put the max oldest chat entries as argument
       super.merge(virtual_attributes)
     end
 
+    def attribute_names_for_serialization
+      super + %w[from_pretty to_pretty]
+    end
+
     def set_pretty
       %i[from to].each do |field|
         parsed = TelephoneNumber.parse(send(field)&.sub(%r{^\+?}, '+'))
