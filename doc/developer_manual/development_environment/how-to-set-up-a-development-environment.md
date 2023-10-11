@@ -149,6 +149,7 @@ For Linux and macOS:
 
 ```screen
 $ cd </path/to/zammad-develop/>
+$ sudo gem install bundler
 $ bundle install
 ```
 
