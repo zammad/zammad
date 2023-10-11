@@ -14,33 +14,17 @@ class App.FormHandlerCoreWorkflow
   # we cache the article params per dispatch because they are expensive to get
   articleParamsCache = {}
 
-  # defines the objects and screen for which Core Workflow is active
-  coreWorkflowScreens = {
-    Ticket: ['create_middle', 'edit', 'overview_bulk']
-    User: ['create', 'edit', 'invite_agent']
-    Organization: ['create', 'edit']
-    Sla: ['create', 'edit']
-    CoreWorkflow: ['create', 'edit']
-    Group: ['create', 'edit']
-    Role: ['create', 'edit']
-  }
-
   # returns the objects for which Core Workflow is active
   @getObjects: ->
-    return Object.keys(coreWorkflowScreens)
+    return Object.keys(App.Config.get('core_workflow_config').execution)
 
   # returns the screens for which Core Workflow is active
   @getScreens: ->
-    result = []
-    for object, screens of coreWorkflowScreens
-      for screen in screens
-        continue if screen in result
-        result.push(screen)
-    return result
+    return _.uniq(_.flatten(Object.values(App.Config.get('core_workflow_config').execution)))
 
   # returns if the object and screen is controlled by core workflow
   @checkScreen: (checkObject, checkScreen) ->
-    for object, screens of coreWorkflowScreens
+    for object, screens of App.Config.get('core_workflow_config').execution
       return true if checkObject is object && _.contains(screens, checkScreen)
     return false
 
@@ -76,8 +60,10 @@ class App.FormHandlerCoreWorkflow
     return false if !ui.model
     return false if !ui.model.className
     return false if !ui.screen
-    return false if coreWorkflowScreens[ui.model.className] is undefined
-    return false if !_.contains(coreWorkflowScreens[ui.model.className], ui.screen)
+
+    config_class = App.Config.get('core_workflow_config').execution[ui.model.className]
+    return false if config_class is undefined
+    return false if !_.contains(config_class, ui.screen)
     return true
 
   # checks if the ajax or websocket endpoint should be used

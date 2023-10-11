@@ -26,6 +26,11 @@ class Role < ApplicationModel
   before_create  :check_default_at_signup_permissions
   before_update  :last_admin_check_by_attribute, :validate_agent_limit_by_attributes, :check_default_at_signup_permissions
 
+  # workflow checks should run after before_create and before_update callbacks
+  include ChecksCoreWorkflow
+
+  core_workflow_screens 'create', 'edit'
+
   # ignore Users because this will lead to huge
   # results for e.g. the Customer role
   association_attributes_ignored :users

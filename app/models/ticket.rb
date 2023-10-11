@@ -48,6 +48,7 @@ class Ticket < ApplicationModel
   activity_stream_permission 'ticket.agent'
 
   core_workflow_screens 'create_middle', 'edit', 'overview_bulk'
+  core_workflow_admin_screens 'create_middle', 'edit'
 
   activity_stream_attributes_ignored :organization_id, # organization_id will change automatically on user update
                                      :create_article_type_id,

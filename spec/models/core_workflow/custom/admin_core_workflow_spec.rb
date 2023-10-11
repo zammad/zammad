@@ -57,4 +57,18 @@ RSpec.describe CoreWorkflow::Custom::AdminCoreWorkflow, mariadb: true, type: :mo
       expect(result[:restrict_values]['preferences::screen']).to include('edit')
     end
   end
+
+  describe 'Error when selecting Group in core workflow #4868' do
+    let(:payload) do
+      base_payload.merge(
+        'screen'     => 'edit',
+        'class_name' => 'CoreWorkflow',
+        'params'     => { 'object' => 'Group' },
+      )
+    end
+
+    it 'does not throw error after object selection' do
+      expect { result }.not_to raise_error
+    end
+  end
 end

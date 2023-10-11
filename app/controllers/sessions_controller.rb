@@ -316,6 +316,8 @@ class SessionsController < ApplicationController
       config['session_id'] = session.id.public_id
     end
 
+    config['core_workflow_config'] = CoreWorkflow.config
+
     config
   end
 

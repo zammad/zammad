@@ -58,7 +58,8 @@ class User < ApplicationModel
   include ChecksCoreWorkflow
   include HasTransactionDispatcher
 
-  core_workflow_screens 'create', 'edit'
+  core_workflow_screens 'create', 'edit', 'invite_agent'
+  core_workflow_admin_screens 'create', 'edit'
 
   store :preferences
 

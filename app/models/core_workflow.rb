@@ -3,6 +3,9 @@
 class CoreWorkflow < ApplicationModel
   include ChecksClientNotification
   include CoreWorkflow::Assets
+  include ChecksCoreWorkflow
+
+  core_workflow_screens 'create', 'edit'
 
   default_scope { order(:priority, :id) }
   scope :active, -> { where(active: true) }
@@ -15,6 +18,21 @@ class CoreWorkflow < ApplicationModel
   store :perform
 
   validates :name, presence: true
+
+  def self.classes
+    Models.all.keys.select { |m| m.included_modules.include?(ChecksCoreWorkflow) }
+  end
+
+  def self.config
+    classes.each_with_object({ configuration: {}, execution: {} }) do |config_class, result|
+      if config_class.try(:core_workflow_screens).present?
+        result[:execution][config_class.to_s] = config_class.try(:core_workflow_screens)
+      end
+      if config_class.try(:core_workflow_admin_screens).present?
+        result[:configuration][config_class.to_s] = config_class.try(:core_workflow_admin_screens)
+      end
+    end
+  end
 
 =begin
 

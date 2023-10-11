@@ -24,6 +24,7 @@ class Group < ApplicationModel
   include ChecksCoreWorkflow
 
   core_workflow_screens 'create', 'edit'
+  core_workflow_admin_screens 'create', 'edit'
 
   before_validation :ensure_name_last_and_parent, :check_max_depth
 

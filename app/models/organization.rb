@@ -32,6 +32,7 @@ class Organization < ApplicationModel
   include HasTransactionDispatcher
 
   core_workflow_screens 'create', 'edit'
+  core_workflow_admin_screens 'create', 'edit'
 
   validates :name,   presence: true
   validates :domain, presence: { message: 'required when Domain Based Assignment is enabled' }, if: :domain_assignment
