@@ -734,4 +734,28 @@ RSpec.describe Ticket::Selector::Sql do
       expect(bind_params.flatten).to include(agent_ooo.id)
     end
   end
+
+  describe 'Performance: Improve tags performance when only one tag is used' do
+    it 'does optimize the sql when one element is set' do
+      sql, = Ticket.selector2sql({
+                                   'ticket.tags' => {
+                                     operator: 'contains all',
+                                     value:    'blub',
+                                   },
+                                 })
+
+      expect(sql).not_to include('SELECT')
+    end
+
+    it 'does not optimize the sql when multiple elements are set' do
+      sql, = Ticket.selector2sql({
+                                   'ticket.tags' => {
+                                     operator: 'contains all',
+                                     value:    't1,t2',
+                                   },
+                                 })
+
+      expect(sql).to include('SELECT')
+    end
+  end
 end
