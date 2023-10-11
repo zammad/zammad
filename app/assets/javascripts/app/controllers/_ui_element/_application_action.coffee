@@ -69,6 +69,7 @@ class App.UiElement.ApplicationAction
           elements["#{groupKey}.webhook"] = { name: 'webhook', display: __('Webhook') }
         else if groupKey is 'article'
           elements["#{groupKey}.note"] = { name: 'note', display: __('Note') }
+          elements["#{groupKey}.telegram_message"] = { name: 'telegram_message', display: __('telegram personal-message') }
       else
 
         for row in App[groupMeta.model].configure_attributes
@@ -626,7 +627,8 @@ class App.UiElement.ApplicationAction
       value: meta.internal
       translate: true
     )
-    articleElement = $( App.view('generic/ticket_perform_action/article')(
+    template = 'generic/ticket_perform_action/article-' + articleType
+    articleElement = $( App.view(template)(
       attribute: attribute
       name: name
       articleType: articleType

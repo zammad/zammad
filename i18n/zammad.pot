@@ -1788,7 +1788,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
-#: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/article-note.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid "Body"
@@ -7197,6 +7197,7 @@ msgid "Merge to Ticket#"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/article-telegram_message.jst.eco
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: public/assets/form/form.js
 msgid "Message"
@@ -10697,7 +10698,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/article-note.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
@@ -13460,7 +13461,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/article-note.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: db/seeds/object_manager_attributes.rb
@@ -15302,6 +15303,7 @@ msgstr ""
 msgid "support@example.com"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
 msgstr ""

@@ -669,9 +669,13 @@ perform changes on ticket
     end
 
     perform_article.each do |key, value|
-      raise __("Article could not be created. An unsupported key other than 'article.note' was provided.") if key != 'article.note'
-
-      add_trigger_note(id, value, objects, perform_origin, performable)
+      if key == 'article.note'
+        add_trigger_note(id, value, objects, perform_origin, performable)
+      elsif key == 'article.telegram_message'
+        add_trigger_telegram_message(value, perform_origin, performable, article)
+      else
+        raise __("Article could not be created. An unsupported key other than 'article.note' was provided.")
+      end
     end
 
     perform_notification.each do |key, value|
@@ -756,6 +760,27 @@ perform changes on ticket
       internal:      note[:internal],
       sender:        Ticket::Article::Sender.find_by(name: 'System'),
       type:          Ticket::Article::Type.find_by(name: 'note'),
+      preferences:   {
+        perform_origin: perform_origin,
+        notification:   true,
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article.history_change_source_attribute(performable, 'created')
+    article.save!
+  end
+
+  def add_trigger_telegram_message(telegram_action, perform_origin, performable, article)
+    TelegramHelper.message(preferences[:telegram][:chat_id], telegram_action[:body])
+    article = Ticket::Article.new(
+      ticket_id:     id,
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'System'),
+      to:            article.from,
+      content_type:  'text/plain',
+      body:          telegram_action[:body],
+      type:          Ticket::Article::Type.find_by(name: 'telegram personal-message'),
       preferences:   {
         perform_origin: perform_origin,
         notification:   true,
