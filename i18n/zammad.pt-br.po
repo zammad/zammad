@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-17 01:05+0000\n"
+"PO-Revision-Date: 2023-10-03 01:05+0000\n"
 "Last-Translator: \"Decio E. Silva\" <decio@verinatec.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/pt_BR/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.0.1\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -50,11 +50,18 @@ msgid " to "
 msgstr " para "
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "\"Database\" stores all attachments in the database (not recommended for "
+#| "storing large amounts of data). \"Filesystem\" stores the data in the "
+#| "filesystem. You can switch between the modules even on a system that is "
+#| "already in production without any loss of data."
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
-"filesystem. You can switch between the modules even on a system that is "
-"already in production without any loss of data."
+"filesystem. \"Simple Storage (S3)\" stores the data in a remote S3 "
+"compatible object filesystem. You can switch between the modules even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "\"Database\" armazena todos os anexos no banco de dados (não recomendado "
 "para armazenar grandes quantidades de dados). \"Filesystem\" armazena os "
@@ -1936,6 +1943,18 @@ msgstr "Anexo - Pesquisar por resposta a atendimentos nos anexos."
 msgid "Attachments"
 msgstr "Anexos"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in a Simple Storage Service."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the database."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the filesystem."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
 msgstr "Participantes"
@@ -2948,6 +2967,7 @@ msgstr "Clonar"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Close"
 msgstr "Fechar"
 
@@ -3763,6 +3783,7 @@ msgstr "TarefaPrivacidadeDados"
 msgid "DataPrivacyTasks"
 msgstr "TarefasPrivacidadeDados"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Database"
 msgstr "Banco de Dados"
@@ -6046,6 +6067,12 @@ msgstr "Exemplo:"
 msgid "Examples"
 msgstr "Exemplos"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid "Examples"
+msgid "Examples:"
+msgstr "Exemplos"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 msgid "Excepted users"
 msgstr "Usuários com exceção"
@@ -6233,6 +6260,7 @@ msgstr "O arquivo '%s' está sendo carregado"
 msgid "File too big, max. %s MB allowed."
 msgstr "Arquivo muito grande, máx. %s MB permitidos."
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Filesystem"
 msgstr "Sistema de arquivos"
@@ -11953,6 +11981,19 @@ msgstr "Tickets semelhantes encontrados"
 msgid "Simple Line Icons"
 msgstr "Ícones de linha simples"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#: db/seeds/settings.rb
+msgid "Simple Storage (S3)"
+msgstr ""
+
+#: app/models/store/provider/s3/config.rb
+msgid "Simple Storage Service configuration not found or invalid."
+msgstr ""
+
+#: app/models/store/provider/s3.rb
+msgid "Simple Storage Service not reachable."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sina Weibo"
 msgstr "Sina Weibo"
@@ -13579,6 +13620,12 @@ msgid ""
 msgstr ""
 "Foram encontrados certificados para %s, mas pelo menos um deles ainda não é "
 "válido ou já expirou."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "There are no business hours configured."
+msgid "There were errors in your form."
+msgstr "Não há horário comercial configurado."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -16093,9 +16140,13 @@ msgid "You can request your password"
 msgstr "Você pode solicitar sua senha"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid ""
+#| "You can switch between the backends for new attachments even on a system "
+#| "that is already in production without any loss of data."
 msgid ""
-"You can switch between the backends for new attachments even on a system "
-"that is already in production without any loss of data."
+"You can switch between the following backends for new attachments even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "Você pode alternar entre os back-ends para novos anexos, mesmo em um sistema "
 "que já esteja em produção, sem perda de dados."
@@ -16450,10 +16501,8 @@ msgid "active"
 msgstr "ativo"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
-#, fuzzy
-#| msgid "Add"
 msgid "add"
-msgstr "Adicionar"
+msgstr "adicionar"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "add option"
@@ -16624,6 +16673,7 @@ msgstr "Contêm um"
 msgid "contains one not"
 msgstr "contém um não"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17191,6 +17241,10 @@ msgstr "talvez:"
 msgid "merged"
 msgstr "agrupado"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "merged into"
+msgstr "mesclado em"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr "mensagem"
@@ -17232,6 +17286,11 @@ msgstr "deve ser maior que %{count}"
 
 msgid "must be greater than or equal to %{count}"
 msgstr "deve ser maior ou igual a %{count}"
+
+#, fuzzy
+#| msgid "must be less than %{count}"
+msgid "must be in %{count}"
+msgstr "deve ser menor que %{count}"
 
 msgid "must be less than %{count}"
 msgstr "deve ser menor que %{count}"
@@ -17405,6 +17464,10 @@ msgstr "quarto de hora(s)"
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "encontrado"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr "recebeu mesclagem"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -17667,6 +17730,7 @@ msgstr "não definido somente leitura"
 msgid "untouched"
 msgstr "intocado"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

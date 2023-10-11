@@ -50,11 +50,18 @@ msgid " to "
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "\"Database\" stores all attachments in the database (not recommended for "
+#| "storing large amounts of data). \"Filesystem\" stores the data in the "
+#| "filesystem. You can switch between the modules even on a system that is "
+#| "already in production without any loss of data."
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
-"filesystem. You can switch between the modules even on a system that is "
-"already in production without any loss of data."
+"filesystem. \"Simple Storage (S3)\" stores the data in a remote S3 "
+"compatible object filesystem. You can switch between the modules even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "Az \"Adatbázis\" az összes csatolmányt az adatbázisban tárolja (nem ajánlott "
 "nagy mennyiségű adat tárolására). A \" Fájlrendszer\" az adatokat a "
@@ -1948,6 +1955,18 @@ msgstr "Csatolmány - Az utánkövetés keresése a csatolmányokban is."
 msgid "Attachments"
 msgstr "Csatolmányok"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in a Simple Storage Service."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the database."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the filesystem."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
 msgstr "Résztvevők"
@@ -2967,6 +2986,7 @@ msgstr "Klónozás"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Close"
 msgstr "Bezárás"
 
@@ -3790,6 +3810,7 @@ msgstr "AdatvédelmiFeladat"
 msgid "DataPrivacyTasks"
 msgstr "AdatvédelmiFeladatok"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Database"
 msgstr "Adatbázis"
@@ -6147,6 +6168,12 @@ msgstr "Példa:"
 msgid "Examples"
 msgstr "Példák"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid "Examples"
+msgid "Examples:"
+msgstr "Példák"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 msgid "Excepted users"
 msgstr "Kivételt képező felhasználók"
@@ -6339,6 +6366,7 @@ msgstr "A következő fájl feltöltése folyamatban van: '%s'"
 msgid "File too big, max. %s MB allowed."
 msgstr "A fájl túl nagy, max. %s MB engedélyezett."
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Filesystem"
 msgstr "Fájlrendszer"
@@ -12094,6 +12122,19 @@ msgstr "Hasonló jegyek találhatók"
 msgid "Simple Line Icons"
 msgstr "Egyszerű vonalas ikonok"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#: db/seeds/settings.rb
+msgid "Simple Storage (S3)"
+msgstr ""
+
+#: app/models/store/provider/s3/config.rb
+msgid "Simple Storage Service configuration not found or invalid."
+msgstr ""
+
+#: app/models/store/provider/s3.rb
+msgid "Simple Storage Service not reachable."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sina Weibo"
 msgstr "Sina Weibo"
@@ -13788,6 +13829,12 @@ msgid ""
 "There were certificates found for %s, but at least one of them is not valid "
 "yet or has expired."
 msgstr "A tanúsítvány %s számára megtalálható, de lejárt."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "There are no business hours configured."
+msgid "There were errors in your form."
+msgstr "Nincs beállítva nyitvatartási idő."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -16294,9 +16341,13 @@ msgid "You can request your password"
 msgstr "Jelszavát igényelheti"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid ""
+#| "You can switch between the backends for new attachments even on a system "
+#| "that is already in production without any loss of data."
 msgid ""
-"You can switch between the backends for new attachments even on a system "
-"that is already in production without any loss of data."
+"You can switch between the following backends for new attachments even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "Az új csatolmányok esetében a háttérrendszerek között adatvesztés nélkül "
 "válthat a már üzemelő rendszerben is."
@@ -16826,6 +16877,7 @@ msgstr "tartalmaz egy"
 msgid "contains one not"
 msgstr "nem tartalmaz egy"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17401,6 +17453,12 @@ msgstr "talán:"
 msgid "merged"
 msgstr "egyesített"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "merged"
+msgid "merged into"
+msgstr "egyesített"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr "üzenet"
@@ -17442,6 +17500,11 @@ msgstr "nagyobbnak kell lennie, mint %{count}"
 
 msgid "must be greater than or equal to %{count}"
 msgstr "nagyobbnak vagy egyenlőnek kell lennie, mint %{count}"
+
+#, fuzzy
+#| msgid "must be less than %{count}"
+msgid "must be in %{count}"
+msgstr "kisebbnek kell lennie, mint %{count}"
 
 msgid "must be less than %{count}"
 msgstr "kisebbnek kell lennie, mint %{count}"
@@ -17614,6 +17677,10 @@ msgstr "negyedóra"
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "elérte"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -17879,6 +17946,7 @@ msgstr "Változtathatónak való beállítás"
 msgid "untouched"
 msgstr "érintetlen"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

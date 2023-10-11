@@ -50,11 +50,18 @@ msgid " to "
 msgstr " - "
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "\"Database\" stores all attachments in the database (not recommended for "
+#| "storing large amounts of data). \"Filesystem\" stores the data in the "
+#| "filesystem. You can switch between the modules even on a system that is "
+#| "already in production without any loss of data."
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
-"filesystem. You can switch between the modules even on a system that is "
-"already in production without any loss of data."
+"filesystem. \"Simple Storage (S3)\" stores the data in a remote S3 "
+"compatible object filesystem. You can switch between the modules even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "\"Veritabanı\", tüm ekleri veritabanında saklar (büyük miktarda veri "
 "depolamak için önerilmez). \"Dosya sistemi\", verileri dosya sisteminde "
@@ -1941,6 +1948,18 @@ msgstr "Ek - Takipleri eklerde de arayın."
 msgid "Attachments"
 msgstr "Ekler"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in a Simple Storage Service."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the database."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the filesystem."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
 msgstr "Katılımcılar"
@@ -2953,6 +2972,7 @@ msgstr "Klonla"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Close"
 msgstr "Kapat"
 
@@ -3765,6 +3785,7 @@ msgstr "DataPrivacyTask"
 msgid "DataPrivacyTasks"
 msgstr "DataPrivacyTasks"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Database"
 msgstr "Veritabanı"
@@ -6110,6 +6131,11 @@ msgstr "Örnek"
 msgid "Examples"
 msgstr "True"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+msgid "Examples:"
+msgstr "True"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #, fuzzy
 #| msgid "Exception users"
@@ -6326,6 +6352,7 @@ msgstr ""
 msgid "File too big, max. %s MB allowed."
 msgstr "True"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 #, fuzzy
 msgid "Filesystem"
@@ -12683,6 +12710,19 @@ msgstr "Benzer destek talepleri bulundu"
 msgid "Simple Line Icons"
 msgstr "True"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#: db/seeds/settings.rb
+msgid "Simple Storage (S3)"
+msgstr ""
+
+#: app/models/store/provider/s3/config.rb
+msgid "Simple Storage Service configuration not found or invalid."
+msgstr ""
+
+#: app/models/store/provider/s3.rb
+msgid "Simple Storage Service not reachable."
+msgstr ""
+
 #: db/seeds/settings.rb
 #, fuzzy
 msgid "Sina Weibo"
@@ -14520,6 +14560,11 @@ msgid ""
 "There were certificates found for %s, but at least one of them is not valid "
 "yet or has expired."
 msgstr "When notification is being sent."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+msgid "There were errors in your form."
+msgstr "True"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -17183,8 +17228,8 @@ msgstr "Şifrenizi talep edebilirsiniz"
 #| "You can switch between the backend for new attachments even on a system "
 #| "that is already in production without any loss of data."
 msgid ""
-"You can switch between the backends for new attachments even on a system "
-"that is already in production without any loss of data."
+"You can switch between the following backends for new attachments even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "You can switch between the backend for new attachments even on a system that "
 "is already in production without any loss of data."
@@ -17761,6 +17806,7 @@ msgstr "contains one"
 msgid "contains one not"
 msgstr "contains one not"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -18423,6 +18469,12 @@ msgstr "maybe"
 msgid "merged"
 msgstr "birleştirildi"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "merged"
+msgid "merged into"
+msgstr "birleştirildi"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
 msgid "message"
@@ -18474,6 +18526,10 @@ msgstr "True"
 
 #, fuzzy
 msgid "must be greater than or equal to %{count}"
+msgstr "True"
+
+#, fuzzy
+msgid "must be in %{count}"
 msgstr "True"
 
 #, fuzzy
@@ -18663,6 +18719,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "reached"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -18956,6 +19016,7 @@ msgstr "True"
 msgid "untouched"
 msgstr "untouched"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

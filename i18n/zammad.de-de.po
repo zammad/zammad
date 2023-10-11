@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-25 06:26+0000\n"
+"PO-Revision-Date: 2023-09-30 01:08+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -50,11 +50,18 @@ msgid " to "
 msgstr " bis "
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "\"Database\" stores all attachments in the database (not recommended for "
+#| "storing large amounts of data). \"Filesystem\" stores the data in the "
+#| "filesystem. You can switch between the modules even on a system that is "
+#| "already in production without any loss of data."
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
-"filesystem. You can switch between the modules even on a system that is "
-"already in production without any loss of data."
+"filesystem. \"Simple Storage (S3)\" stores the data in a remote S3 "
+"compatible object filesystem. You can switch between the modules even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "\"Datenbank\" speichert alle Anhänge in der Datenbank (nicht für große "
 "Datenmengen empfohlen). \"Dateisystem\" speichert die Daten im Dateisystem. "
@@ -1950,6 +1957,18 @@ msgstr "Anhang - Suche Nachfragen auch im Anhang."
 msgid "Attachments"
 msgstr "Anhänge"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in a Simple Storage Service."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the database."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the filesystem."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
 msgstr "Teilnehmer"
@@ -2972,6 +2991,7 @@ msgstr "Klonen"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Close"
 msgstr "Schließen"
 
@@ -3792,6 +3812,7 @@ msgstr "Datenschutz-Aufgabe"
 msgid "DataPrivacyTasks"
 msgstr "Datenschutz-Aufgaben"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Database"
 msgstr "Datenbank"
@@ -5443,7 +5464,7 @@ msgstr "E-Mail - gesamtes Zitieren"
 
 #: db/seeds/settings.rb
 msgid "Email - quote header"
-msgstr "Email - Zitatüberschrift"
+msgstr "E-Mail - Zitatüberschrift"
 
 #: db/seeds/settings.rb
 msgid "Email - subject field"
@@ -6112,6 +6133,12 @@ msgstr "Beispiel:"
 msgid "Examples"
 msgstr "Beispiele"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid "Examples"
+msgid "Examples:"
+msgstr "Beispiele"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 msgid "Excepted users"
 msgstr "Ausgenommene Benutzer"
@@ -6301,6 +6328,7 @@ msgstr "Datei '%s' wird hochgeladen"
 msgid "File too big, max. %s MB allowed."
 msgstr "Die Datei ist zu groß, maximal %s MB sind zulässig."
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Filesystem"
 msgstr "Dateisystem"
@@ -9972,7 +10000,7 @@ msgstr "Eltern"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Parent group"
-msgstr "Eltern-Gruppe"
+msgstr "Übergeordnete Gruppe"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -12039,6 +12067,19 @@ msgstr "Ähnliche Tickets gefunden"
 msgid "Simple Line Icons"
 msgstr "Simple Line Icons"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#: db/seeds/settings.rb
+msgid "Simple Storage (S3)"
+msgstr ""
+
+#: app/models/store/provider/s3/config.rb
+msgid "Simple Storage Service configuration not found or invalid."
+msgstr ""
+
+#: app/models/store/provider/s3.rb
+msgid "Simple Storage Service not reachable."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sina Weibo"
 msgstr "Sina Weibo"
@@ -13684,6 +13725,12 @@ msgid ""
 msgstr ""
 "Es wurden Zertifikate für %s gefunden, aber mindestens eines davon ist noch "
 "nicht gültig oder bereits abgelaufen."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "There are no business hours configured."
+msgid "There were errors in your form."
+msgstr "Es sind keine Geschäftszeiten konfiguriert."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -16212,9 +16259,13 @@ msgid "You can request your password"
 msgstr "Beantragen eines neuen Passworts"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid ""
+#| "You can switch between the backends for new attachments even on a system "
+#| "that is already in production without any loss of data."
 msgid ""
-"You can switch between the backends for new attachments even on a system "
-"that is already in production without any loss of data."
+"You can switch between the following backends for new attachments even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "Sie können zwischen den Backends für neue Anhänge jederzeit wechseln, auch "
 "wenn es schon ein produktives System ist. Es gehen keine Daten verloren."
@@ -16745,6 +16796,7 @@ msgstr "enthält eins"
 msgid "contains one not"
 msgstr "enthält eins nicht"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17302,7 +17354,7 @@ msgstr "Treffer gefunden"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "matches regex"
-msgstr "passt auf Regex"
+msgstr "passt auf regex"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
@@ -17313,6 +17365,10 @@ msgstr "vielleicht:"
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
 msgstr "zusammengefasst"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "merged into"
+msgstr "zusammengefasst zu"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
@@ -17355,6 +17411,11 @@ msgstr "muss größer als %{count} sein"
 
 msgid "must be greater than or equal to %{count}"
 msgstr "muss %{count} oder größer sein"
+
+#, fuzzy
+#| msgid "must be less than %{count}"
+msgid "must be in %{count}"
+msgstr "muss kleiner als %{count} sein"
 
 msgid "must be less than %{count}"
 msgstr "muss kleiner als %{count} sein"
@@ -17527,6 +17588,10 @@ msgstr "Viertelstunde(n)"
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "erreicht"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr "hierauf zusammengefasst"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -17790,6 +17855,7 @@ msgstr "als änderbar festlegen"
 msgid "untouched"
 msgstr "nicht verändert"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

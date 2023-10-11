@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-15 01:05+0000\n"
+"PO-Revision-Date: 2023-10-07 01:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0.1\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -54,13 +54,15 @@ msgstr " до "
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
-"filesystem. You can switch between the modules even on a system that is "
-"already in production without any loss of data."
+"filesystem. \"Simple Storage (S3)\" stores the data in a remote S3 "
+"compatible object filesystem. You can switch between the modules even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "„База података” снима све прилоге у бази података (не препоручује се за "
 "чување велике количине података). „Систем датотека” снима све прилоге у "
-"систему датотека. Промена модула је дозвољена и на систему који је већ у "
-"продукцији без било каквог губитка података."
+"систему датотека. „Simple Storage (S3)” снима све прилоге на удаљeном "
+"сервису базираном на S3. Промена модула је дозвољена и на систему који је "
+"већ у продукцији без било каквог губитка података."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -495,7 +497,7 @@ msgstr "пре %s сат/а/и"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
-msgstr "%s је неактиван, молимо изаберите активан."
+msgstr "%s је искључен, молимо изаберите укључен."
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
@@ -1610,7 +1612,7 @@ msgstr "Шифра апликације"
 
 #: db/seeds/settings.rb
 msgid "App Tenant ID"
-msgstr "ID станара апликације"
+msgstr "ID корисника апликације"
 
 #: db/seeds/settings.rb
 msgid "App Version"
@@ -1924,6 +1926,18 @@ msgstr "Прилог - Претрага наставка и по прилози�
 #: public/assets/form/form.js
 msgid "Attachments"
 msgstr "Прилози"
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in a Simple Storage Service."
+msgstr "Прилози се снимају на Simple Storage сервису."
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the database."
+msgstr "Прилози се снимају у бази података."
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the filesystem."
+msgstr "Прилози се снимају у систему датотека."
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
@@ -2930,6 +2944,7 @@ msgstr "Клонирај"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Close"
 msgstr "Затвори"
 
@@ -3364,7 +3379,7 @@ msgstr "Земља"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
-msgstr "Додај"
+msgstr "Додавање"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "Create Admin"
@@ -3743,6 +3758,7 @@ msgstr "Задатак приватности података"
 msgid "DataPrivacyTasks"
 msgstr "Задаци приватности података"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Database"
 msgstr "База података"
@@ -5992,6 +6008,10 @@ msgstr "Пример:"
 msgid "Examples"
 msgstr "Примери"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Examples:"
+msgstr "Примери:"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 msgid "Excepted users"
 msgstr "Изузети корисници"
@@ -6178,6 +6198,7 @@ msgstr "Датотека ’%s’ се отпрема"
 msgid "File too big, max. %s MB allowed."
 msgstr "Датотека је превелика, највише дозвољено %s MB."
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Filesystem"
 msgstr "Систем датотека"
@@ -6728,15 +6749,13 @@ msgstr "Неопходна група у подешавању канала!"
 
 #: app/models/group.rb
 msgid "Group or children exceeded max depth!"
-msgstr ""
+msgstr "Група или број подређених група су прекорачили максималну дубину!"
 
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
-#, fuzzy
-#| msgid "Permissions"
 msgid "Group permissions"
-msgstr "Дозволе"
+msgstr "Групне дозволе"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco db/seeds/settings.rb
 msgid "Group selection for Ticket creation"
@@ -9066,7 +9085,7 @@ msgstr "Нема садржаја за приказ"
 
 #: app/models/group.rb
 msgid "No double colons (::) allowed, reserved delimiter"
-msgstr ""
+msgstr "Удвојене дупле тачке (::) нису дозвољене, резервисани сепаратор"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "No drafts"
@@ -9812,10 +9831,8 @@ msgid "Parent"
 msgstr "Надређени"
 
 #: db/seeds/object_manager_attributes.rb
-#, fuzzy
-#| msgid "Parent"
 msgid "Parent group"
-msgstr "Надређени"
+msgstr "Надређена група"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -11856,6 +11873,19 @@ msgstr "Пронажени слични тикети"
 msgid "Simple Line Icons"
 msgstr "Simple Line Icons"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#: db/seeds/settings.rb
+msgid "Simple Storage (S3)"
+msgstr "Simple Storage (S3)"
+
+#: app/models/store/provider/s3/config.rb
+msgid "Simple Storage Service configuration not found or invalid."
+msgstr "Подешавања Simple Storage сервиса нису пронађена или су нетачна."
+
+#: app/models/store/provider/s3.rb
+msgid "Simple Storage Service not reachable."
+msgstr "Simple Storage сервис није доступан."
+
 #: db/seeds/settings.rb
 msgid "Sina Weibo"
 msgstr "Sina Weibo"
@@ -12320,7 +12350,7 @@ msgstr "Шаблони"
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 msgid "Tenant UUID/Name"
-msgstr "UUID/назив станара апликације"
+msgstr "UUID/назив корисника апликације"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Test"
@@ -12736,7 +12766,7 @@ msgstr "Стандардна величина фонта је 12px."
 
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
-msgstr "Сепаратор између TicketHook и броја тикета. Нпр. ’: ’."
+msgstr "Сепаратор између прикључка и броја тикета. Нпр. ’: ’."
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -13464,6 +13494,12 @@ msgstr ""
 "Пронађени сертификати за %s, али најмање један од њих није још важећи или је "
 "истекао."
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "There are no business hours configured."
+msgid "There were errors in your form."
+msgstr "Нема подешеног радног времена."
+
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
 msgstr "Апликације трећег лица"
@@ -13934,7 +13970,7 @@ msgstr "Предмет одговора тикета"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Size"
-msgstr "Величина предмета тикета"
+msgstr "Дужина предмета тикета"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
@@ -15942,11 +15978,11 @@ msgstr "Можете затражити вашу лозинку"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
-"You can switch between the backends for new attachments even on a system "
-"that is already in production without any loss of data."
+"You can switch between the following backends for new attachments even on a "
+"system that is already in production without any loss of data."
 msgstr ""
-"Можете променити позадински модул нових прилога чак и на систему који је већ "
-"у продукцији без било каквог губитка података."
+"Можете се пребацити између следећих позадинских модуле нових прилога чак и "
+"на систему који је већ у продукцији без било каквог губитка података."
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "You can use the following script to post the data to %s."
@@ -16295,8 +16331,6 @@ msgid "active"
 msgstr "укључено"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
-#, fuzzy
-#| msgid "Add"
 msgid "add"
 msgstr "Додај"
 
@@ -16469,6 +16503,7 @@ msgstr "садржи једно"
 msgid "contains one not"
 msgstr "не садржи једно"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17036,6 +17071,10 @@ msgstr "можда:"
 msgid "merged"
 msgstr "спојено"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "merged into"
+msgstr "спојено са"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr "порука"
@@ -17077,6 +17116,11 @@ msgstr "мора бити већи од %{count}"
 
 msgid "must be greater than or equal to %{count}"
 msgstr "мора бити већи од или једнак %{count}"
+
+#, fuzzy
+#| msgid "must be less than %{count}"
+msgid "must be in %{count}"
+msgstr "мора бити мањи од %{count}"
 
 msgid "must be less than %{count}"
 msgstr "мора бити мањи од %{count}"
@@ -17249,6 +17293,10 @@ msgstr "четврт сат(а)"
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "достигнуто"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr "примљено спајање"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -17511,6 +17559,7 @@ msgstr "искључи само за преглед"
 msgid "untouched"
 msgstr "нетакнуто"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

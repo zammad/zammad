@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-01 01:05+0000\n"
+"PO-Revision-Date: 2023-10-03 01:05+0000\n"
 "Last-Translator: Elias Grinias <elgrinias@gmail.com>\n"
 "Language-Team: Greek <https://translations.zammad.org/projects/zammad/zammad-"
 "development/el/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -50,11 +50,18 @@ msgid " to "
 msgstr " προς "
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "\"Database\" stores all attachments in the database (not recommended for "
+#| "storing large amounts of data). \"Filesystem\" stores the data in the "
+#| "filesystem. You can switch between the modules even on a system that is "
+#| "already in production without any loss of data."
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
-"filesystem. You can switch between the modules even on a system that is "
-"already in production without any loss of data."
+"filesystem. \"Simple Storage (S3)\" stores the data in a remote S3 "
+"compatible object filesystem. You can switch between the modules even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "H \"Βάση Δεδομένων\" αποθηκεύει  στη βάση δεδομένων (δεν συνιστάται για την "
 "αποθήκευση μεγάλου όγκου δεδομένων). Το \"Σύστημα Αρχείων\" αποθηκεύει  τα "
@@ -154,6 +161,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Η υπενθύμιση έφτασε!_\n"
+"Ένα δελτίο χρειάζεται προσοχή: η υπενθύμιση έφτασε για το δελτίο (#{ticket."
+"title}) από την/τον \"*##{ticket.customer.longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -173,6 +189,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Ενημερώθηκε από την/τον #{current_user.longname} "
+"στις #{ticket.updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -188,6 +217,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Αναπροσαρμόστηκε στις #{ticket.escalation_at}_\n"
+"Το αίτημα (#{ticket.title}) της/του \"#{ticket.customer.longname}\" έχει "
+"αναπροσαρμοστεί από τις \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -206,6 +244,19 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} λογαριασμός συνδεδεμένος με εφαρμογή τρίτου μέρους\n"
+"\n"
+"<div>Γεια σας #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Μοιάζει να έχετε συνδέσει το λογαριασμό σας <b>με μια εφαρμογή τρίτου "
+"μέρους</b> \"#{t(provider)}\".</div>\n"
+"<br>\n"
+"<div>Αν δεν ήσασταν εσείς, παρακαλούμε αφαιρέστε τον συνδεδεμένο λογαριασμό "
+"από το προφίλ σας και αλλάξτε τον κωδικό πρόσβασης της εφαρμογής τρίτου "
+"μέρους. Κάποιος μπορεί να έχει αποκτήσει μη εξουσιοδοτημένη πρόσβαση στο "
+"λογαριασμό σας, εκ μέρους τρίτων.</div>\n"
+"<br>\n"
+"<div>Η ομάδα σας #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -236,6 +287,31 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} Σύνδεση από μια νέα συσκευή\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Φαίνεται ότι συνδεθήκατε στον λογαριασμό σας <b>χρησιμοποιώντας μια νέα "
+"συσκευή</b>, στις \"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"Η συσκευή σας: #{user_device.name}<br>\n"
+"Η τοποθεσία σας (σχετική θέση): #{user_device.location}<br>\n"
+"Η IP σας: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>Η συσκευή σας προστέθηκε στη λίστα των συσκευών, την οποία μπορείτε να "
+"δείτε εδώ:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>Εάν η σύνδεση δεν έγινε από εσάς, παρακαλούμε όπως αφαιρέσετε τη "
+"συσκευή, αλλάξετε τον κωδικό του λογαριασμού σας και επικοινωνήσετε με τον "
+"διαχειριστή σας. Ίσως κάποιος έχει αποκτήσει μη εξουσιοδοτημένη πρόσβαση "
+"στον λογαριασμό σας.</div>\n"
+"<br>\n"
+"<div>Από την Ομάδα  #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -298,13 +374,11 @@ msgstr "%s (επιβεβαίωση)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (μέθοδος)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
-#, fuzzy
-#| msgid "Confirm"
 msgid "%s (option)"
-msgstr "Επιβεβαίωση"
+msgstr "%s (επιλογή)"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
@@ -485,6 +559,8 @@ msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
+"Η %s συνιστά τη χρήση του OAuth. Η %s ανακοίνωσε ότι πρόκειται να "
+"εγκαταλείψει την υποστήριξη της Βασικής Αυθεντικοποίησης στο μέλλον."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
@@ -498,7 +574,7 @@ msgstr "%s started a new session"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s subdomain"
-msgstr ""
+msgstr "%s subdomain"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
@@ -507,16 +583,12 @@ msgstr "%s switched to |%s|!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
-msgstr "assign tickets"
+msgstr "%s δελτία"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
-#, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets found"
-msgstr "assign tickets"
+msgstr "Βρέθηκαν %s δελτία"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
@@ -1914,6 +1986,18 @@ msgstr ""
 msgid "Attachments"
 msgstr "Συνημένα"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in a Simple Storage Service."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the database."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the filesystem."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
 msgstr ""
@@ -3006,6 +3090,7 @@ msgstr "Αντιγραφο"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -3852,6 +3937,7 @@ msgstr ""
 msgid "DataPrivacyTasks"
 msgstr ""
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Database"
 msgstr ""
@@ -6120,6 +6206,12 @@ msgstr "Παράδειγμα"
 msgid "Examples"
 msgstr ""
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid "Example"
+msgid "Examples:"
+msgstr "Παράδειγμα"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #, fuzzy
 #| msgid "Exception users"
@@ -6326,6 +6418,7 @@ msgstr ""
 msgid "File too big, max. %s MB allowed."
 msgstr ""
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Filesystem"
 msgstr ""
@@ -12388,6 +12481,19 @@ msgstr "assign tickets"
 msgid "Simple Line Icons"
 msgstr ""
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#: db/seeds/settings.rb
+msgid "Simple Storage (S3)"
+msgstr ""
+
+#: app/models/store/provider/s3/config.rb
+msgid "Simple Storage Service configuration not found or invalid."
+msgstr ""
+
+#: app/models/store/provider/s3.rb
+msgid "Simple Storage Service not reachable."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sina Weibo"
 msgstr ""
@@ -14085,6 +14191,10 @@ msgid ""
 "There were certificates found for %s, but at least one of them is not valid "
 "yet or has expired."
 msgstr "Ηχος Ειδοποίησης"
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "There were errors in your form."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -16508,8 +16618,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
-"You can switch between the backends for new attachments even on a system "
-"that is already in production without any loss of data."
+"You can switch between the following backends for new attachments even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -16999,6 +17109,7 @@ msgstr ""
 msgid "contains one not"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17609,6 +17720,12 @@ msgstr ""
 msgid "merged"
 msgstr "Ενωμένο"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "merged"
+msgid "merged into"
+msgstr "Ενωμένο"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr ""
@@ -17651,6 +17768,9 @@ msgid "must be greater than %{count}"
 msgstr ""
 
 msgid "must be greater than or equal to %{count}"
+msgstr ""
+
+msgid "must be in %{count}"
 msgstr ""
 
 msgid "must be less than %{count}"
@@ -17831,6 +17951,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
@@ -18112,6 +18236,7 @@ msgstr ""
 msgid "untouched"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco

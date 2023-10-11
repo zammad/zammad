@@ -51,11 +51,18 @@ msgid " to "
 msgstr " do "
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "\"Database\" stores all attachments in the database (not recommended for "
+#| "storing large amounts of data). \"Filesystem\" stores the data in the "
+#| "filesystem. You can switch between the modules even on a system that is "
+#| "already in production without any loss of data."
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
-"filesystem. You can switch between the modules even on a system that is "
-"already in production without any loss of data."
+"filesystem. \"Simple Storage (S3)\" stores the data in a remote S3 "
+"compatible object filesystem. You can switch between the modules even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "\"Baza danych\" przechowuje wszystkie załączniki w bazie danych (niezalecane "
 "do przechowywania dużych ilości danych). \"System plików\" przechowuje dane "
@@ -1940,6 +1947,18 @@ msgstr "Załącznik — szukaj dalszych informacji również w załącznikach."
 msgid "Attachments"
 msgstr "Załączniki"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in a Simple Storage Service."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the database."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Attachments are stored in the filesystem."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
 msgstr "Uczestnicy"
@@ -2954,6 +2973,7 @@ msgstr "Sklonuj"
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Close"
 msgstr "Zamknij"
 
@@ -3774,6 +3794,7 @@ msgstr "Zadanie prywatności danych"
 msgid "DataPrivacyTasks"
 msgstr "Zadania prywatności danych"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Database"
 msgstr "Baza danych"
@@ -6074,6 +6095,12 @@ msgstr "Przykład:"
 msgid "Examples"
 msgstr "Przykłady"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid "Examples"
+msgid "Examples:"
+msgstr "Przykłady"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 msgid "Excepted users"
 msgstr "Wykluczeni użytkownicy"
@@ -6260,6 +6287,7 @@ msgstr "Plik '%s' jest przesyłany"
 msgid "File too big, max. %s MB allowed."
 msgstr "Plik za duży, dozwolone maks. %s MB."
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Filesystem"
 msgstr "System plików"
@@ -11976,6 +12004,19 @@ msgstr "Znaleziono podobne zgłoszenia"
 msgid "Simple Line Icons"
 msgstr "Proste ikony linii"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#: db/seeds/settings.rb
+msgid "Simple Storage (S3)"
+msgstr ""
+
+#: app/models/store/provider/s3/config.rb
+msgid "Simple Storage Service configuration not found or invalid."
+msgstr ""
+
+#: app/models/store/provider/s3.rb
+msgid "Simple Storage Service not reachable."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sina Weibo"
 msgstr "Sina Weibo"
@@ -13602,6 +13643,12 @@ msgid ""
 msgstr ""
 "Znaleziono certyfikaty dla %s, ale przynajmniej jeden z nich nie jest "
 "jeszcze ważny lub wygasł."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "There are no business hours configured."
+msgid "There were errors in your form."
+msgstr "Nie skonfigurowano godzin pracy."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -16108,9 +16155,13 @@ msgid "You can request your password"
 msgstr "Możesz poprosić o swoje hasło"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid ""
+#| "You can switch between the backends for new attachments even on a system "
+#| "that is already in production without any loss of data."
 msgid ""
-"You can switch between the backends for new attachments even on a system "
-"that is already in production without any loss of data."
+"You can switch between the following backends for new attachments even on a "
+"system that is already in production without any loss of data."
 msgstr ""
 "Możesz przełączać się między kolejnymi zapleczami dla nowych załączników "
 "nawet w systemie, który jest już produkcyjny, bez utraty danych."
@@ -16638,6 +16689,7 @@ msgstr "zawiera jeden"
 msgid "contains one not"
 msgstr "nie zawiera jednej z"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17207,6 +17259,12 @@ msgstr "może:"
 msgid "merged"
 msgstr "scalone"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "merged"
+msgid "merged into"
+msgstr "scalone"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr "wiadomość"
@@ -17248,6 +17306,11 @@ msgstr "musi być większe niż %{count}"
 
 msgid "must be greater than or equal to %{count}"
 msgstr "musi być większe lub równe %{count}"
+
+#, fuzzy
+#| msgid "must be less than %{count}"
+msgid "must be in %{count}"
+msgstr "musi być mniejsza niż %{count}"
 
 msgid "must be less than %{count}"
 msgstr "musi być mniejsza niż %{count}"
@@ -17420,6 +17483,10 @@ msgstr "kwadrans(y)"
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "osiągnięto"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "received merge"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -17685,6 +17752,7 @@ msgstr "nieustawiony tylko do odczytu"
 msgid "untouched"
 msgstr "nietknięty"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
