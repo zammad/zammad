@@ -89,7 +89,6 @@ RSpec.configure do |config|
   end
 
   retry_exceptions = [
-    ActiveRecord::StatementInvalid, # work around mysql2 test failures
     Net::OpenTimeout,
     Net::ReadTimeout,
     Selenium::WebDriver::Error::InvalidArgumentError,

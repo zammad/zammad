@@ -31,7 +31,6 @@
     - .template_browser-core
     - .variables_selenium_chrome
   services:
-    - !reference [.services, mysql]
     - !reference [.services, postgresql]
     - !reference [.services, elasticsearch]
     - !reference [.services, selenium-chrome]
@@ -44,7 +43,6 @@
     - .template_browser-core
     - .variables_selenium_firefox
   services:
-    - !reference [.services, mysql]
     - !reference [.services, postgresql]
     - !reference [.services, elasticsearch]
     - !reference [.services, selenium-firefox]
@@ -69,7 +67,6 @@
     - .variables_selenium_chrome
     - .variables_proxy
   services:
-    - !reference [.services, mysql]
     - !reference [.services, postgresql]
     - !reference [.services, elasticsearch]
     - !reference [.services, selenium-chrome]
@@ -84,7 +81,6 @@
     - .variables_selenium_firefox
     - .variables_proxy
   services:
-    - !reference [.services, mysql]
     - !reference [.services, postgresql]
     - !reference [.services, elasticsearch]
     - !reference [.services, selenium-firefox]

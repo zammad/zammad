@@ -2091,7 +2091,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  describe 'Multiselect displaying and saving', authenticated_as: :authenticate, db_strategy: :reset, mariadb: true do
+  describe 'Multiselect displaying and saving', authenticated_as: :authenticate, db_strategy: :reset do
     let(:field_name) { SecureRandom.uuid }
     let(:ticket)     { create(:ticket, group: Group.find_by(name: 'Users'), field_name => %w[value_2 value_3]) }
     let(:options_hash) do

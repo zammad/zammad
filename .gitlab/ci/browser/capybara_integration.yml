@@ -29,7 +29,7 @@ capybara:integration:firefox:
     - .variables_auth
     - .variables_idoit
   services:
-    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
     - !reference [.services, selenium-firefox]
     - !reference [.services, redis]
     - !reference [.services, auth]

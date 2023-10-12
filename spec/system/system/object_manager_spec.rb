@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'System > Objects', mariadb: true, type: :system do
+RSpec.describe 'System > Objects', type: :system do
 
   context 'when trying to create invalid attributes' do
     RSpec.shared_examples 'cannot create new object attribute' do |name, error_message|
