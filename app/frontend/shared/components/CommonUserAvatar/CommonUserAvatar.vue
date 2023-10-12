@@ -5,6 +5,11 @@ import { computed } from 'vue'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { getInitials } from '#shared/utils/formatter.ts'
 import { i18n } from '#shared/i18n.ts'
+import {
+  SYSTEM_USER_ID,
+  SYSTEM_USER_INTERNAL_ID,
+} from '#shared/utils/constants.ts'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 import type { AvatarSize } from '../CommonAvatar/index.ts'
 import type { AvatarUser } from './types.ts'
@@ -42,18 +47,15 @@ const fullName = computed(() => {
 })
 
 const colorClass = computed(() => {
-  const { email, id } = props.entity
+  const { id } = props.entity
 
-  // TODO ID is mangled by gql, maybe backend should send "isSystem"-like property?
-  if (id === '1') return 'bg-white'
+  const internalId = getIdFromGraphQLId(id)
 
-  // TODO it's better to use ID, so if someone changes name the color won't change
-  const name = [fullName.value, email].filter(Boolean).join('')
+  if (internalId === SYSTEM_USER_INTERNAL_ID) return 'bg-white'
 
-  if (!name || name === ' ' || name === '-') return colors[0]
   // get color based on mod of the fullname length
   // so it stays consistent between different interfaces and logins
-  return colors[name.length % 5]
+  return colors[internalId % (colors.length - 1)]
 })
 
 const sources = ['facebook', 'twitter']
@@ -68,7 +70,7 @@ const application = useApplicationStore()
 
 const image = computed(() => {
   if (icon.value) return null
-  if (props.entity.id === '1') return logo
+  if (props.entity.id === SYSTEM_USER_ID) return logo
   if (!props.entity.image) return null
 
   // Support the inline data URI as an image source.

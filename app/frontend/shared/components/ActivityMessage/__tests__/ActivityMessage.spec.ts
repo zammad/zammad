@@ -1,32 +1,45 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { Ticket } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { generateObjectData } from '#tests/graphql/index.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 import type { Props } from '../ActivityMessage.vue'
+import ActivityMessage from '../ActivityMessage.vue'
 
-const now = new Date('2022-01-03 00:00:00')
-vi.setSystemTime(now)
+const now = vi.hoisted(() => {
+  const now = new Date('2022-01-03 00:00:00')
+  vi.setSystemTime(now)
+  return now
+})
 
-const { default: ActivityMessage } = await import('../ActivityMessage.vue')
-const { renderComponent } = await import('#tests/support/components/index.ts')
+// this is not required, but Vitest is bugged and does not hoist "now" otherwise
+// https://github.com/vitest-dev/vitest/pull/4285/files
+vi.mock('non-existing')
+
+const userId = convertToGraphQLId('User', 100)
 
 const renderActivityMessage = (props: Partial<Props> = {}) => {
-  return renderComponent(ActivityMessage, {
-    props: {
-      objectName: 'Ticket',
-      typeName: 'update',
-      createdBy: {
-        fullname: 'John Doe',
-        firstname: 'John',
-        lastname: 'Doe',
-        active: true,
-      },
-      createdAt: new Date('2022-01-01 00:00:00').toISOString(),
-      metaObject: {
-        title: 'Ticket Title',
-        id: '1',
-        internalId: 1,
-      },
-      ...props,
+  const finishedProps: Props = {
+    objectName: 'Ticket',
+    typeName: 'update',
+    createdBy: {
+      id: userId,
+      fullname: 'John Doe',
+      firstname: 'John',
+      lastname: 'Doe',
+      active: true,
     },
+    createdAt: new Date('2022-01-01 00:00:00').toISOString(),
+    metaObject: generateObjectData<Ticket>('Ticket', {
+      title: 'Ticket Title',
+      id: convertToGraphQLId('Ticket', '1'),
+      internalId: 1,
+    }),
+    ...props,
+  }
+  return renderComponent(ActivityMessage, {
+    props: finishedProps,
     router: true,
   })
 }

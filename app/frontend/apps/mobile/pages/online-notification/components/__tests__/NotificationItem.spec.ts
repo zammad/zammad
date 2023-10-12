@@ -1,11 +1,15 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
-import type { Scalars } from '#shared/graphql/types.ts'
+import type { Scalars, Ticket } from '#shared/graphql/types.ts'
 import { OnlineNotificationDeleteDocument } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { generateObjectData } from '#tests/graphql/index.ts'
 import NotificationItem from '../NotificationItem.vue'
 import type { Props } from '../NotificationItem.vue'
+
+const userId = convertToGraphQLId('User', 100)
 
 const renderNotificationItem = (props: Partial<Props> = {}) => {
   mockGraphQLApi(OnlineNotificationDeleteDocument).willResolve({
@@ -15,26 +19,29 @@ const renderNotificationItem = (props: Partial<Props> = {}) => {
     },
   })
 
-  return renderComponent(NotificationItem, {
-    props: {
-      itemId: '111',
-      objectName: 'Ticket',
-      typeName: 'update',
-      seen: false,
-      createdBy: {
-        fullname: 'John Doe',
-        firstname: 'John',
-        lastname: 'Doe',
-        active: true,
-      },
-      createdAt: new Date('2019-12-30 00:00:00').toISOString(),
-      metaObject: {
-        title: 'Ticket Title',
-        id: '1',
-        internalId: 1,
-      },
-      ...props,
+  const finishedProps: Props = {
+    itemId: '111',
+    objectName: 'Ticket',
+    typeName: 'update',
+    seen: false,
+    createdBy: {
+      id: userId,
+      fullname: 'John Doe',
+      firstname: 'John',
+      lastname: 'Doe',
+      active: true,
     },
+    createdAt: new Date('2019-12-30 00:00:00').toISOString(),
+    metaObject: generateObjectData<Ticket>('Ticket', {
+      title: 'Ticket Title',
+      id: convertToGraphQLId('Ticket', 1),
+      internalId: 1,
+    }),
+    ...props,
+  }
+
+  return renderComponent(NotificationItem, {
+    props: finishedProps,
     router: true,
   })
 }
