@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Η υπενθύμιση έφτασε!_
+Ένα δελτίο χρειάζεται προσοχή: η υπενθύμιση έφτασε για το δελτίο (#{ticket.title}) από την/τον "*##{ticket.customer.longname}*".
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
