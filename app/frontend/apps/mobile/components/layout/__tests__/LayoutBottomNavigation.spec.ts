@@ -6,6 +6,7 @@ import type { UserData } from '#shared/types/store.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import { flushPromises } from '@vue/test-utils'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import LayoutBottomNavigation from '../LayoutBottomNavigation.vue'
 
 describe('bottom navigation in layout', () => {
@@ -18,6 +19,7 @@ describe('bottom navigation in layout', () => {
     const store = useSessionStore()
 
     store.user = {
+      id: convertToGraphQLId('User', 100),
       firstname: 'User',
       lastname: 'Test',
     } as UserData
@@ -46,6 +48,7 @@ describe('bottom navigation in layout', () => {
     const store = useSessionStore()
 
     store.user = {
+      id: convertToGraphQLId('User', 100),
       firstname: 'User',
       lastname: 'Test',
     } as UserData

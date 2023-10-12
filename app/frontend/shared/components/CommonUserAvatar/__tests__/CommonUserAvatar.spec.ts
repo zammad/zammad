@@ -1,14 +1,18 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { SYSTEM_USER_ID } from '#shared/utils/constants.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import CommonUserAvatar, { type Props } from '../CommonUserAvatar.vue'
+
+const USER_ID = convertToGraphQLId('User', '123')
 
 describe('CommonUserAvatar', () => {
   it('renders user avatar', async () => {
     const view = renderComponent(CommonUserAvatar, {
       props: <Props>{
         entity: {
-          id: '123',
+          id: USER_ID,
           firstname: 'John',
           lastname: 'Doe',
         },
@@ -22,7 +26,7 @@ describe('CommonUserAvatar', () => {
 
     await view.rerender(<Props>{
       entity: {
-        id: '123',
+        id: USER_ID,
         image: '100.png',
         firstname: 'John',
         lastname: 'Doe',
@@ -39,7 +43,7 @@ describe('CommonUserAvatar', () => {
     const view = renderComponent(CommonUserAvatar, {
       props: <Props>{
         entity: {
-          id: '1',
+          id: SYSTEM_USER_ID,
         },
       },
     })
@@ -56,7 +60,7 @@ describe('CommonUserAvatar', () => {
     const view = renderComponent(CommonUserAvatar, {
       props: <Props>{
         entity: {
-          id: '123',
+          id: USER_ID,
           source: 'twitter',
         },
       },
@@ -66,7 +70,7 @@ describe('CommonUserAvatar', () => {
 
     await view.rerender(<Props>{
       entity: {
-        id: '123',
+        id: USER_ID,
         source: 'facebook',
       },
     })
@@ -75,7 +79,7 @@ describe('CommonUserAvatar', () => {
 
     await view.rerender(<Props>{
       entity: {
-        id: '123',
+        id: USER_ID,
         source: 'some-unknown-source',
       },
     })
@@ -89,7 +93,7 @@ describe('CommonUserAvatar', () => {
     const view = renderComponent(CommonUserAvatar, {
       props: <Props>{
         entity: {
-          id: '123',
+          id: USER_ID,
           active: true,
         },
       },
@@ -102,7 +106,7 @@ describe('CommonUserAvatar', () => {
 
     await view.rerender(<Props>{
       entity: {
-        id: '123',
+        id: USER_ID,
         active: false,
         outOfOffice: true,
       },
@@ -112,7 +116,7 @@ describe('CommonUserAvatar', () => {
 
     await view.rerender(<Props>{
       entity: {
-        id: '123',
+        id: USER_ID,
         active: false,
         outOfOffice: false,
       },
@@ -125,7 +129,7 @@ describe('CommonUserAvatar', () => {
     const view = renderComponent(CommonUserAvatar, {
       props: <Props>{
         entity: {
-          id: '123',
+          id: USER_ID,
           vip: true,
         },
       },
@@ -135,7 +139,7 @@ describe('CommonUserAvatar', () => {
 
     await view.rerender(<Props>{
       entity: {
-        id: '123',
+        id: USER_ID,
         vip: true,
       },
       personal: true,
