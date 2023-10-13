@@ -633,4 +633,495 @@ RSpec.describe Ticket::Selector::Base, searchindex: true do
       end
     end
   end
+
+  describe 'Tags' do
+    let(:ta) { create(:'tag/item', name: 'a') }
+    let(:tb) { create(:'tag/item', name: 'b') }
+    let(:tc) { create(:'tag/item', name: 'c') }
+    let(:td) { create(:'tag/item', name: 'd') }
+
+    let(:ticket_a) do
+      create(:ticket, group: Group.first).tap do |ticket|
+        create(:tag, o: ticket, tag_item: ta)
+      end
+    end
+    let(:ticket_a_b) do
+      create(:ticket, group: Group.first).tap do |ticket|
+        create(:tag, o: ticket, tag_item: ta)
+        create(:tag, o: ticket, tag_item: tb)
+      end
+    end
+    let(:ticket_none) { create(:ticket, group: Group.first) }
+
+    before do
+      Ticket.destroy_all
+      ta && tb && tc && td
+      ticket_a && ticket_a_b && ticket_none
+      searchindex_model_reload([Ticket])
+    end
+
+    describe 'contains all' do
+      it 'checks tags a = 1', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all',
+              value:    'a',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(2)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(2)
+      end
+
+      it 'checks tags a, b = 1', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all',
+              value:    'a,b',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'checks tags a, c = 0', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all',
+              value:    'a,c',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+
+      it 'checks tags a, b, c = 0', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all',
+              value:    'a,b,c',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+
+      it 'checks tags c, d = 0', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all',
+              value:    'c,d',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+
+      it 'checks tags d = 0', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all',
+              value:    'd',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+
+    describe 'contains one' do
+      it 'checks tags a = 2', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one',
+              value:    'a',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(2)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(2)
+      end
+
+      it 'checks tags a, b = 2', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one',
+              value:    'a,b',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(2)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(2)
+      end
+
+      it 'checks tags a, c = 2', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one',
+              value:    'a,c',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(2)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(2)
+      end
+
+      it 'checks tags a, b, c = 2', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one',
+              value:    'a,b,c',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(2)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(2)
+      end
+
+      it 'checks tags c, d = 0', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one',
+              value:    'c,d',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+
+      it 'checks tags d = 0', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one',
+              value:    'd',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+
+    describe 'contains all not' do
+      it 'checks tags a = 1', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all not',
+              value:    'a',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'checks tags a, b = 2', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all not',
+              value:    'a,b',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(2)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(2)
+      end
+
+      it 'checks tags a, c = 3', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all not',
+              value:    'a,c',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(3)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(3)
+      end
+
+      it 'checks tags a, b, c = 3', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all not',
+              value:    'a,b,c',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(3)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(3)
+      end
+
+      it 'checks tags c, d = 3', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all not',
+              value:    'c,d',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(3)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(3)
+      end
+
+      it 'checks tags d = 3', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all not',
+              value:    'd',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(3)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(3)
+      end
+    end
+
+    describe 'contains one not' do
+      it 'checks tags a = 1', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one not',
+              value:    'a',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'checks tags a, b = 1', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one not',
+              value:    'a,b',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'checks tags a, c = 1', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one not',
+              value:    'a,c',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'checks tags a, b, c = 1', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one not',
+              value:    'a,b,c',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'checks tags c, d = 3', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one not',
+              value:    'c,d',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(3)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(3)
+      end
+
+      it 'checks tags d = 3', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains one not',
+              value:    'd',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(3)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(3)
+      end
+    end
+  end
 end

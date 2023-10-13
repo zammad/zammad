@@ -3563,8 +3563,8 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
           'value'    => Ticket::State.lookup(name: 'new').id.to_s,
         },
         'ticket.tags'     => {
-          # 'operator' => 'contains one not',
-          'operator' => 'contains all not',
+          'operator' => 'contains one not',
+          # 'operator' => 'contains all not',
           'value'    => 'sender1, sender2',
         },
       },
