@@ -762,6 +762,7 @@ DEPENDENCIES
   omniauth-weibo-oauth2!
   openssl
   overcommit
+  parallel
   pg (~> 1.2.0)
   pry-rails
   pry-remote

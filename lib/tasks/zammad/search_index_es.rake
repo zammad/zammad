@@ -34,12 +34,12 @@ namespace :zammad do
     end
 
     desc 'Reload all indexable data'
-    task reload: %i[zammad:searchindex:version_supported] do
+    task :reload, [:worker] => %i[zammad:searchindex:version_supported] do |_task, args|
       puts 'Reloading data... '
       Models.indexable.each do |model_class|
         puts "  - #{model_class}... "
         time_spent = Benchmark.realtime do
-          model_class.search_index_reload
+          model_class.search_index_reload(worker: args[:worker].to_i)
         end
         # Add whitespace at the end to overwrite text from progress indicator line.
         puts "\r    done in #{time_spent.to_i} seconds.#{' ' * 20}"
@@ -54,10 +54,10 @@ namespace :zammad do
     end
 
     desc 'Full re-creation of all search indexes and re-indexing of all data'
-    task rebuild: %i[zammad:searchindex:version_supported] do
+    task :rebuild, [:worker] => %i[zammad:searchindex:version_supported] do |_task, args|
       Rake::Task['zammad:searchindex:drop'].execute
       Rake::Task['zammad:searchindex:create'].execute
-      Rake::Task['zammad:searchindex:reload'].execute
+      Rake::Task['zammad:searchindex:reload'].execute(args)
     end
 
     task version_supported: %i[zammad:searchindex:configured] do
