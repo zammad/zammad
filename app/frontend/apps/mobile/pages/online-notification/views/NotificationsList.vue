@@ -41,7 +41,7 @@ const seenNotification = (id: Scalars['ID']['output']) => {
     }),
     {
       errorNotificationMessage: __(
-        'The online notifcation could not be marked as seen.',
+        'The online notification could not be marked as seen.',
       ),
     },
   )
