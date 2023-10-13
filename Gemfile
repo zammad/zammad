@@ -18,6 +18,7 @@ gem 'activerecord-session_store'
 gem 'bootsnap', require: false
 gem 'composite_primary_keys'
 gem 'json'
+gem 'parallel'
 
 # core - application servers
 gem 'puma', group: :puma
