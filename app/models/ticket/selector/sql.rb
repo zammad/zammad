@@ -432,14 +432,19 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
                           AND tag_objects.name = 'Ticket'
                           AND tag_items.id = tags.tag_item_id
                           AND tag_items.name IN (?)
+                        GROUP BY
+                          tags.o_id
+                        HAVING
+                          COUNT(*) = ?
                       )"
         bind_params.push block_condition[:value]
+        bind_params.push block_condition[:value].count
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_all(attribute_name, block_condition[:value], negated: true)
       end
     elsif block_condition[:operator] == 'contains one not'
       if attribute_name == 'tags' && attribute_table == 'ticket'
-        query << "tickets.id IN (
+        query << "tickets.id NOT IN (
                         SELECT
                           DISTINCT tags.o_id
                         FROM
@@ -448,7 +453,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
                           tag_objects.id = tags.tag_object_id
                           AND tag_objects.name = 'Ticket'
                           AND tag_items.id = tags.tag_item_id
-                          AND tag_items.name NOT IN (?)
+                          AND tag_items.name IN (?)
                       )"
         bind_params.push block_condition[:value]
       elsif sql_helper.containable?(attribute_name)
