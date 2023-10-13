@@ -661,7 +661,7 @@ RSpec.describe Ticket::Selector::Base, searchindex: true do
     end
 
     describe 'contains all' do
-      it 'checks tags a = 1', :aggregate_failures do
+      it 'checks tags a = 2', :aggregate_failures do
         condition = {
           operator:   'AND',
           conditions: [
