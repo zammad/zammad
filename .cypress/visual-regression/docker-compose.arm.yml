@@ -9,7 +9,7 @@ services:
       CYPRESS_CACHE_FOLDER: $PWD/.cache/Cypress
       CYPRESS_UPDATE_SNAPSHOTS: ${CYPRESS_UPDATE_SNAPSHOTS:-true}
     platform: linux/arm64
-    image: cypress/base:16.17.1
+    image: cypress/base:latest
     ipc: host
     volumes:
       - ../..:/app
