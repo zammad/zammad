@@ -38,6 +38,10 @@ PreCommit:
     exclude:
       - 'app/assets/**/*'
       - 'public/assets/chat/**/*'
+    include:
+      - '**/*.js'
+      - '**/*.ts'
+      - '**/*.vue'
 
 PostCheckout:
   ALL:
