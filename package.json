@@ -86,7 +86,7 @@
     "vite-plugin-ruby": "^3.2.2",
     "vitest": "^0.34.6",
     "vitest-axe": "^0.1.0",
-    "vue-tsc": "^1.8.18"
+    "vue-tsc": "^1.8.19"
   },
   "dependencies": {
     "@apollo/client": "^3.8.5",
@@ -133,7 +133,7 @@
     "lodash-es": "^4.17.21",
     "loglevel": "^1.8.1",
     "mitt": "^3.0.1",
-    "pinia": "^2.1.6",
+    "pinia": "^2.1.7",
     "tippy.js": "^6.3.7",
     "tiptap-text-direction": "^0.3.0",
     "ua-parser-js": "^1.0.36",
