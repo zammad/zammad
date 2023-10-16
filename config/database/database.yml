@@ -5,7 +5,6 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 50
-  timeout: 5000
   encoding: utf8
 
   ##### postgresql config #####
