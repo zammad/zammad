@@ -839,10 +839,46 @@ helper method for making HTTP calls and raising error if response was not succes
     Setting.get('es_url').present?
   end
 
-  def self.settings
+  def self.model_indexable?(model_name)
+    Models.indexable.any? { |m| m.name == model_name }
+  end
+
+  def self.default_model_settings
     {
-      'index.mapping.total_fields.limit': 2000,
+      'index.mapping.total_fields.limit' => 2000,
     }
+  end
+
+  def self.model_settings(model)
+    settings = Setting.get('es_model_settings')[model.name] || {}
+    default_model_settings.merge(settings)
+  end
+
+  def self.all_settings
+    Models.indexable.each_with_object({}).to_h { |m| [m.name, model_settings(m)] }
+  end
+
+  def self.set_setting(model_name, key, value)
+    raise "It is not possible to configure settings for the non-indexable model '#{model_name}'." if !model_indexable?(model_name)
+    raise __("The required parameter 'key' is missing.") if key.blank?
+    raise __("The required parameter 'value' is missing.") if value.blank?
+
+    config = Setting.get('es_model_settings')
+    config[model_name] ||= {}
+    config[model_name][key] = value
+
+    Setting.set('es_model_settings', config)
+  end
+
+  def self.unset_setting(model_name, key)
+    raise "It is not possible to configure settings for the non-indexable model '#{model_name}'." if !model_indexable?(model_name)
+    raise __("The required parameter 'key' is missing.") if key.blank?
+
+    config = Setting.get('es_model_settings')
+    config[model_name] ||= {}
+    config[model_name].delete(key)
+
+    Setting.set('es_model_settings', config)
   end
 
   def self.create_index(models = Models.indexable)
@@ -852,7 +888,7 @@ helper method for making HTTP calls and raising error if response was not succes
         name:   local_object.name,
         data:   {
           mappings: SearchIndexBackend.get_mapping_properties_object(local_object),
-          settings: SearchIndexBackend.settings,
+          settings: model_settings(local_object),
         }
       )
     end
