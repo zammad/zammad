@@ -182,9 +182,12 @@ reload search index with full data
       query           = reorder(created_at: :desc)
       total           = query.count
       record_count    = 0
+      offset          = 0
       batch_size      = 200
 
-      query.in_batches(of: batch_size) do |records|
+      while query.offset(offset).limit(batch_size).count.positive?
+        records = query.offset(offset).limit(batch_size)
+
         Parallel.map(records, { in_processes: worker }) do |record|
           next if record.ignore_search_indexing?(:destroy)
 
@@ -197,6 +200,8 @@ reload search index with full data
             raise "Unable to send #{record.class}.find(#{record.id}).search_index_update_backend backend: #{e.inspect}" if tolerance_count == tolerance
           end
         end
+
+        offset += batch_size
 
         next if silent
 
