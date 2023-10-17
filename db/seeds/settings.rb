@@ -3469,6 +3469,15 @@ Setting.create_if_not_exists(
   preferences: { online_service_disable: true },
   frontend:    false
 )
+Setting.create_if_not_exists(
+  title:       __('Elasticsearch Model Configuration'),
+  name:        'es_model_settings',
+  area:        'SearchIndex::Elasticsearch',
+  description: __('Define model configuration for Elasticsearch.'),
+  state:       {},
+  preferences: { online_service_disable: true },
+  frontend:    false
+)
 
 Setting.create_if_not_exists(
   title:       __('Import Mode'),

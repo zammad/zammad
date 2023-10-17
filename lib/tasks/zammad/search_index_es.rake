@@ -69,5 +69,26 @@ namespace :zammad do
 
       abort 'Elasticsearch is not configured.'
     end
+
+    namespace :settings do
+      desc 'Show model configuration'
+      task show: %i[zammad:searchindex:version_supported] do
+        SearchIndexBackend.all_settings.each do |model, settings|
+          puts "#{model} => #{settings.inspect}"
+        end
+      end
+
+      desc 'Set model configuration'
+      task :set, %i[model key value] => %i[zammad:searchindex:version_supported] do |_task, args|
+        SearchIndexBackend.set_setting(args[:model], args[:key], args[:value])
+        puts "#{args[:model]} model settings for key '#{args[:key]}' updated to '#{args[:value]}'."
+      end
+
+      desc 'Unset model configuration'
+      task :unset, %i[model key] => %i[zammad:searchindex:version_supported] do |_task, args|
+        SearchIndexBackend.unset_setting(args[:model], args[:key])
+        puts "#{args[:model]} model settings for key '#{args[:key]}' unset."
+      end
+    end
   end
 end
