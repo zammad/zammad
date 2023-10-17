@@ -87,5 +87,8 @@ export const TicketAttributesFragmentDoc = gql`
   subscribed
   preferences
   stateColorCode
+  firstResponseEscalationAt
+  closeEscalationAt
+  updateEscalationAt
 }
     ${ObjectAttributeValuesFragmentDoc}`;

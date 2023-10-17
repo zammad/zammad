@@ -17,7 +17,16 @@ import {
 import { UserUpdatesDocument } from '#shared/graphql/subscriptions/userUpdates.api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import type { TicketQuery } from '#shared/graphql/types.ts'
-import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
+import { defaultTicket, mockTicketDetailViewGql } from './mocks/detail-view.ts'
+
+vi.hoisted(() => {
+  const now = new Date(2022, 1, 1, 0, 0, 0, 0)
+  vi.setSystemTime(now)
+})
+
+// Vitest has a bug where vi.hoisted is not hoisted if there is no vi.mock
+// TODO: remove when updating to Vitest 1.0
+vi.mock('./non-existing.js')
 
 const visitTicketInformation = async (ticket?: TicketQuery) => {
   mockPermissions(['ticket.agent'])
@@ -139,4 +148,72 @@ describe('updating ticket information', () => {
   })
 
   // since most of it is core workflow + backend, it's tested in the backend
+})
+
+describe('rendering escalation times', () => {
+  const yesterday = new Date(2022, 1, 0, 0, 0, 0, 0)
+  const tomorrow = new Date(2022, 1, 2, 0, 0, 0, 0)
+
+  const regions = ['First Response Time', 'Update Time', 'Solution Time']
+
+  const escalatedClasses = 'text-red-bright bg-red-highlight'
+  const warningClasses = 'text-yellow bg-yellow-highlight'
+
+  it.each([
+    {
+      name: 'all',
+      dates: [yesterday, yesterday, tomorrow],
+      escalated: [true, true, false],
+      labels: ['1 day ago', '1 day ago', 'in 1 day'],
+    },
+    {
+      name: 'partial',
+      dates: [yesterday, null, tomorrow],
+      escalated: [true, null, false],
+      labels: ['1 day ago', null, 'in 1 day'],
+    },
+  ])(
+    'renders escalation time - $name',
+    async ({ dates, escalated, labels }) => {
+      const ticket = defaultTicket()
+      ticket.ticket.firstResponseEscalationAt = dates[0]?.toISOString() ?? null
+      ticket.ticket.updateEscalationAt = dates[1]?.toISOString() ?? null
+      ticket.ticket.closeEscalationAt = dates[2]?.toISOString() ?? null
+
+      const { view } = await visitTicketInformation(ticket)
+
+      expect(view.getByText('Escalation Times')).toBeInTheDocument()
+
+      regions.forEach((region, index) => {
+        if (dates[index] === null) {
+          expect(
+            view.queryByRole('region', { name: region }),
+          ).not.toBeInTheDocument()
+          return
+        }
+
+        const responseTime = view.getByRole('region', { name: region })
+        const classes = escalated[index] ? escalatedClasses : warningClasses
+
+        expect(responseTime).toHaveTextContent(labels[index]!)
+        expect(responseTime.parentElement).toHaveClass(classes)
+      })
+    },
+  )
+
+  it("doesn't render escalation time if it's not provided", async () => {
+    const ticket = defaultTicket()
+    ticket.ticket.closeEscalationAt = null
+    ticket.ticket.firstResponseEscalationAt = null
+    ticket.ticket.updateEscalationAt = null
+
+    const { view } = await visitTicketInformation(ticket)
+
+    expect(view.queryByText('Escalation Times')).not.toBeInTheDocument()
+    regions.forEach((region) => {
+      expect(
+        view.queryByRole('region', { name: region }),
+      ).not.toBeInTheDocument()
+    })
+  })
 })

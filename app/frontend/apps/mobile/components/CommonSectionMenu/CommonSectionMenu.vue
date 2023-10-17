@@ -66,7 +66,7 @@ const showLabel = computed(() => {
   </div>
   <div
     v-if="itemsWithPermission || $slots.default || $slots['before-items']"
-    class="flex w-full flex-col rounded-xl bg-gray-500 px-3 py-1 text-base text-white"
+    class="flex w-full flex-col rounded-xl bg-gray-500 overflow-hidden text-base text-white"
     :class="{ 'mb-6': !hasHelp }"
     v-bind="$attrs"
   >

@@ -82,4 +82,7 @@ fragment ticketAttributes on Ticket {
   subscribed
   preferences
   stateColorCode
+  firstResponseEscalationAt
+  closeEscalationAt
+  updateEscalationAt
 }

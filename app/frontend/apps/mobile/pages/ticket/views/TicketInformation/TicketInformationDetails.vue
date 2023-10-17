@@ -20,6 +20,7 @@ import TicketObjectAttributes from '../../components/TicketDetailView/TicketObje
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 import { useTicketSubscribe } from '../../composable/useTicketSubscribe.ts'
+import TicketEscalationTimeMenuItem from '../../components/TicketDetailView/TicketEscalationTimeMenuItem.vue'
 
 const { attributes: objectAttributes } = useObjectAttributes(
   EnumObjectManagerObjects.Ticket,
@@ -127,6 +128,17 @@ const loadMoreMentions = () => {
 }
 
 const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
+
+const hasEscalation = computed(() => {
+  if (!ticket.value) return false
+  const { closeEscalationAt, updateEscalationAt, firstResponseEscalationAt } =
+    ticket.value
+  return !!(
+    closeEscalationAt ||
+    updateEscalationAt ||
+    firstResponseEscalationAt
+  )
+})
 </script>
 
 <template>
@@ -160,6 +172,24 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 
   <TicketObjectAttributes v-if="isTicketAgent && ticket" :ticket="ticket" />
 
+  <CommonSectionMenu
+    v-if="ticket && hasEscalation"
+    :header-label="__('Escalation Times')"
+  >
+    <TicketEscalationTimeMenuItem
+      :escalation-at="ticket.firstResponseEscalationAt"
+      :label="__('First Response Time')"
+    />
+    <TicketEscalationTimeMenuItem
+      :escalation-at="ticket.updateEscalationAt"
+      :label="__('Update Time')"
+    />
+    <TicketEscalationTimeMenuItem
+      :escalation-at="ticket.closeEscalationAt"
+      :label="__('Solution Time')"
+    />
+  </CommonSectionMenu>
+
   <TicketTags
     v-if="isTicketAgent && isTicketEditable && ticket"
     :ticket="ticket"
@@ -173,6 +203,7 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 
   <CommonSectionMenu
     v-if="canManageSubscription"
+    class="py-1"
     :header-label="__('Subscribers')"
   >
     <!-- Currently only modelValue is working: https://github.com/formkit/formkit/issues/629 -->
@@ -183,7 +214,7 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
       :variants="variants"
       :disabled="isSubscriptionLoading"
       :outer-class="{
-        '!px-0': true,
+        '!px-3': true,
         'border-b border-white/10': subscribers.length,
       }"
       wrapper-class="!px-0"

@@ -1,9 +1,12 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useReactiveNow } from '#shared/composables/useReactiveNow.ts'
+import { toRef } from 'vue'
 import type { Scalars } from '#shared/graphql/types.ts'
+import {
+  useEscalationState,
+  EscalationState,
+} from '#shared/composables/useEscalationState.ts'
 
 export interface Props {
   escalationAt?: Maybe<Scalars['ISO8601DateTime']['output']>
@@ -11,28 +14,7 @@ export interface Props {
 
 const props = defineProps<Props>()
 
-enum EscalationState {
-  Escalated = 'escalated',
-  Warning = 'warning',
-  None = 'none',
-}
-
-const reactiveNow = useReactiveNow()
-
-const escalationState = computed(() => {
-  if (!props.escalationAt) return EscalationState.None
-
-  const date = new Date(props.escalationAt)
-  if (Number.isNaN(date.getTime())) return EscalationState.None
-
-  const diffSeconds = (reactiveNow.value.getTime() - date.getTime()) / 1000
-
-  // Escalation is in the past.
-  if (diffSeconds > -1) return EscalationState.Escalated
-
-  // Escalation is in the future.
-  return EscalationState.Warning
-})
+const escalationState = useEscalationState(toRef(() => props.escalationAt))
 </script>
 
 <template>
