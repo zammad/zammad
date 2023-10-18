@@ -1190,13 +1190,7 @@ returns a hex color code
       end
 
       # loop protection / check if maximal count of trigger mail has reached
-      map = {
-        10  => 10,
-        30  => 15,
-        60  => 25,
-        180 => 50,
-        600 => 100,
-      }
+      map = Setting.get('ticket_trigger_loop_protection_articles_per_ticket')
       skip = false
       map.each do |minutes, count|
         already_sent = Ticket::Article.where(
@@ -1206,19 +1200,13 @@ returns a hex color code
         ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{SqlHelper.quote_like(recipient_email.strip)}%").count
         next if already_sent < count
 
-        logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} for this ticket within last #{minutes} minutes (loop protection)"
+        logger.error "Send no trigger based notification to #{recipient_email} because already sent #{count} for this ticket within last #{minutes} minutes (loop protection set by setting ticket_trigger_loop_protection_articles_per_ticket)"
         skip = true
         break
       end
       next if skip
 
-      map = {
-        10  => 30,
-        30  => 60,
-        60  => 120,
-        180 => 240,
-        600 => 360,
-      }
+      map = Setting.get('ticket_trigger_loop_protection_articles_total')
       skip = false
       map.each do |minutes, count|
         already_sent = Ticket::Article.where(
@@ -1227,7 +1215,7 @@ returns a hex color code
         ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{SqlHelper.quote_like(recipient_email.strip)}%").count
         next if already_sent < count
 
-        logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{minutes} minutes (loop protection)"
+        logger.error "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{minutes} minutes (loop protection set by setting ticket_trigger_loop_protection_articles_total)"
         skip = true
         break
       end
