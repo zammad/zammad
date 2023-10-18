@@ -4,9 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'Manage > Users', type: :system do
   describe 'switching to an alternative user', authenticated_as: :authenticate, authentication_type: :form do
-    let(:original_user)        { create(:admin) }
-    let(:alternative_one_user) { create(:admin) }
-    let(:alternative_two_user) { create(:admin) }
+    let(:original_user)          { create(:admin) }
+    let(:alternative_one_user)   { create(:admin) }
+    let(:alternative_two_user)   { create(:admin) }
+    let(:alternative_three_user) { create(:customer) }
 
     def authenticate
       alternative_one_user
@@ -37,6 +38,12 @@ RSpec.describe 'Manage > Users', type: :system do
       click '.switchBackToUser-close'
 
       expect(current_user).to eq original_user
+    end
+
+    it 'switches to customer user while maintenance mode is active' do
+      Setting.set('maintenance_mode', true)
+      switch_to(alternative_three_user)
+      expect(current_user).to eq alternative_three_user
     end
 
     def switch_to(user)
