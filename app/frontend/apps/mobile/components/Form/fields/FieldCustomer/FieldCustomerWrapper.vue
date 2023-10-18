@@ -44,8 +44,11 @@ Object.assign(props.context, {
 
     return {
       value,
-      label: belongsToObject.fullname,
-      // disabled: !object.active, // TODO: we can not use disabled for the active/inactive flag, because it will be no longer possible to select the option
+      label:
+        belongsToObject.fullname ||
+        belongsToObject.phone ||
+        belongsToObject.login,
+      heading: belongsToObject.organization?.name,
       user: belongsToObject,
     }
   },

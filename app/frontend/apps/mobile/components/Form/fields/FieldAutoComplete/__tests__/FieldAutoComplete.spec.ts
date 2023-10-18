@@ -4,11 +4,17 @@ import { cloneDeep, escapeRegExp } from 'lodash-es'
 import { getByText, waitFor } from '@testing-library/vue'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { provideApolloClient } from '@vue/apollo-composable'
-import { createMockClient } from 'mock-apollo-client'
+import {
+  mockGraphQLApi,
+  type MockGraphQLInstance,
+} from '#tests/support/mock-graphql-api.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { i18n } from '#shared/i18n.ts'
-import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
+import {
+  nullableMock,
+  waitForNextTick,
+  waitUntil,
+} from '#tests/support/utils.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import type { AutocompleteSearchUserQuery } from '#shared/graphql/types.ts'
@@ -73,22 +79,6 @@ const mockQueryResult = (input: {
   return {
     autocompleteSearchUser: filteredOptions.slice(0, input.limit ?? 25),
   }
-}
-
-// TODO: can maybe be replaced with existing helper function?
-const mockClient = () => {
-  const mockApolloClient = createMockClient()
-
-  mockApolloClient.setRequestHandler(
-    AutocompleteSearchUserDocument,
-    (variables) => {
-      return Promise.resolve({
-        data: mockQueryResult(variables.input),
-      })
-    },
-  )
-
-  provideApolloClient(mockApolloClient)
 }
 
 const wrapperParameters = {
@@ -181,7 +171,17 @@ describe('Form - Field - AutoComplete - Dialog', () => {
 })
 
 describe('Form - Field - AutoComplete - Query', () => {
-  mockClient()
+  let mockApi: MockGraphQLInstance
+
+  beforeEach(() => {
+    mockApi = mockGraphQLApi(AutocompleteSearchUserDocument).willBehave(
+      (variables) => {
+        return {
+          data: mockQueryResult(variables.input),
+        }
+      },
+    )
+  })
 
   it('fetches remote options via GraphQL query', async () => {
     const wrapper = renderComponent(FormKit, {
@@ -206,6 +206,8 @@ describe('Form - Field - AutoComplete - Query', () => {
     expect(
       wrapper.queryByText('Start typing to search…'),
     ).not.toBeInTheDocument()
+
+    await waitUntil(() => mockApi.calls.behave)
 
     let selectOptions = wrapper.getAllByRole('option')
 

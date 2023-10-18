@@ -32,10 +32,19 @@ module Gql::Queries
     def coerce_to_result(user)
       {
         value:   user.id,
-        label:   user.fullname,
+        label:   label(user),
         heading: user.organization&.name,
         user:    user,
       }
+    end
+
+    private
+
+    def label(user)
+      return user.fullname if user.fullname.present?
+      return user.phone if user.phone.present?
+
+      user.login
     end
   end
 end

@@ -4,14 +4,20 @@ import { escapeRegExp } from 'lodash-es'
 import { getByTestId, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '#tests/support/components/index.ts'
-import { createMockClient } from 'mock-apollo-client'
-import { provideApolloClient } from '@vue/apollo-composable'
+import {
+  mockGraphQLApi,
+  type MockGraphQLInstance,
+} from '#tests/support/mock-graphql-api.ts'
 import type {
   AutocompleteSearchUserQuery,
   AutocompleteSearchUserEntry,
 } from '#shared/graphql/types.ts'
 import { getNode } from '@formkit/core'
-import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
+import {
+  nullableMock,
+  waitForNextTick,
+  waitUntil,
+} from '#tests/support/utils.ts'
 import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import testOptions from './test-options.json'
 
@@ -49,21 +55,6 @@ const mockQueryResult = (input: {
   }
 }
 
-const mockClient = () => {
-  const mockApolloClient = createMockClient()
-
-  mockApolloClient.setRequestHandler(
-    AutocompleteSearchUserDocument,
-    (variables) => {
-      return Promise.resolve({
-        data: mockQueryResult(variables.input),
-      })
-    },
-  )
-
-  provideApolloClient(mockApolloClient)
-}
-
 const wrapperParameters = {
   form: true,
   formField: true,
@@ -74,6 +65,7 @@ const wrapperParameters = {
 
 const testProps = {
   type: 'customer',
+  label: 'Select…',
 }
 
 beforeAll(async () => {
@@ -107,10 +99,18 @@ describe('Form - Field - Customer - Features', () => {
   })
 })
 
-// We include only some query-related test cases, as the actual autocomplete component has its own unit test.
-// TODO: Skip until the finialize autocomplete branch is merged.
-describe.skip('Form - Field - Customer - Query', () => {
-  mockClient()
+describe('Form - Field - Customer - Query', () => {
+  let mockApi: MockGraphQLInstance
+
+  beforeEach(() => {
+    mockApi = mockGraphQLApi(AutocompleteSearchUserDocument).willBehave(
+      (variables) => {
+        return {
+          data: mockQueryResult(variables.input),
+        }
+      },
+    )
+  })
 
   it('fetches remote options via GraphQL query', async () => {
     const wrapper = renderComponent(FormKit, {
@@ -121,10 +121,7 @@ describe.skip('Form - Field - Customer - Query', () => {
       },
     })
 
-    // Resolve `defineAsyncComponent()` calls first.
-    await vi.dynamicImportSettled()
-
-    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+    await wrapper.events.click(await wrapper.findByLabelText('Select…'))
 
     const filterElement = wrapper.getByRole('searchbox')
 
@@ -147,6 +144,7 @@ describe.skip('Form - Field - Customer - Query', () => {
     expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
     expect(selectOptions[0]).toHaveTextContent(testOptions[0].heading)
 
+    // User with ID 1 should show the logo.
     expect(getByTestId(selectOptions[0], 'common-avatar')).toHaveStyle({
       'background-image': `url(${testOptions[0].user.image})`,
     })
@@ -163,6 +161,8 @@ describe.skip('Form - Field - Customer - Query', () => {
     expect(
       wrapper.queryByText('Start typing to search…'),
     ).not.toBeInTheDocument()
+
+    await waitUntil(() => mockApi.calls.behave)
 
     selectOptions = wrapper.getAllByRole('option')
 
@@ -205,10 +205,7 @@ describe.skip('Form - Field - Customer - Query', () => {
       },
     })
 
-    // Resolve `defineAsyncComponent()` calls first.
-    await vi.dynamicImportSettled()
-
-    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+    await wrapper.events.click(await wrapper.findByLabelText('Select…'))
 
     const filterElement = wrapper.getByRole('searchbox')
 
