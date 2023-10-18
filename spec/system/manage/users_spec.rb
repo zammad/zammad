@@ -12,6 +12,7 @@ RSpec.describe 'Manage > Users', type: :system do
     def authenticate
       alternative_one_user
       alternative_two_user
+      alternative_three_user
       original_user
     end
 
