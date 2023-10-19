@@ -363,7 +363,7 @@ RSpec.describe 'Ticket Update', type: :system do
 
       expect(page).to have_field('owner_id', with: user.id)
 
-      set_tree_select_value('group_id', nil)
+      set_tree_select_value('group_id', '') # empty selection
 
       expect(page).to have_field('owner_id', with: '')
     end

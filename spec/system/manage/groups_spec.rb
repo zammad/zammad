@@ -24,7 +24,7 @@ RSpec.describe 'Manage > Groups', type: :system do
     end
 
     it 'sorts group paths in correct order' do
-      expect(page).to have_text("#{group1.name}\n#{group2.name.gsub!(%r{::}, ' › ')}\n#{group3.name.gsub!(%r{::}, ' › ')}")
+      expect(page).to have_text("#{group1.fullname}\n#{group2.fullname}\n#{group3.fullname}")
     end
 
     describe 'when creating a new group' do
@@ -36,7 +36,7 @@ RSpec.describe 'Manage > Groups', type: :system do
 
       it 'creates a nested group' do
         fill_in 'Name', with: group_name_last
-        set_tree_select_value('parent_id', group3.name_last)
+        set_tree_select_value('parent_id', group3.fullname)
 
         # Needed for chrome, when element is outside viewport.
         scroll_into_view('button.js-submit', position: :bottom)

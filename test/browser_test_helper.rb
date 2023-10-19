@@ -3075,7 +3075,7 @@ wait untill text in selector disabppears
 
           10.times do
             sleep 0.5
-            target = instance.find_elements(css: ".modal li[title='#{data[:organization]}']")[0]
+            target = instance.find_elements(css: ".modal li [title='#{data[:organization]}']")[0]
             break if target
           end
           break if target
@@ -3714,7 +3714,7 @@ wait untill text in selector disabppears
         instance.execute_script('$(".content.active  table [data-id] td").first().trigger("click")')
         modal_ready(browser: instance)
         instance.find_elements(css: '.modal .js-groupListNewItemRow .js-groupListItemAddNew .js-input')[0].click
-        instance.find_elements(css: ".modal .js-groupListNewItemRow .js-optionsList .js-option[title='#{data[:name]}']")[0].click
+        instance.find_elements(css: ".modal .js-groupListNewItemRow .js-optionsList .js-option [title='#{data[:name]}']")[0].click
         instance.find_elements(css: ".modal .js-groupListNewItemRow .js-groupListItem[value='#{member[:access]}']")[0].click
         instance.find_elements(css: '.modal .js-groupListNewItemRow .js-add')[0].click
         instance.find_elements(css: '.modal button.js-submit')[0].click

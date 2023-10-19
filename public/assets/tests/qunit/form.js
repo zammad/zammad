@@ -1719,8 +1719,8 @@ QUnit.test("Fixes #4024 - Tree select value cannot be set to \"-\" (empty) with 
 
   assert.equal(el.find('select[name="4024_select"] option[value=""]').text(), '-', '4024_select has nulloption')
   assert.equal(el.find('select[name="4024_multiselect"] option[value=""]').text(), '-', '4024_multiselect has nulloption')
-  assert.equal(el.find("div[data-attribute-name=4024_tree_select] .js-option[title='-'] .searchableSelect-option-text").text().trim(), '-', '4024_tree_select has nulloption')
-  assert.equal(el.find("div[data-attribute-name=4024_multi_tree_select] .js-option[title='-'] .searchableSelect-option-text").text().trim(), '-', '4024_multi_tree_select has nulloption')
+  assert.equal(el.find("div[data-attribute-name=4024_tree_select] .js-option[data-display-name='-'] .searchableSelect-option-text").text().trim(), '-', '4024_tree_select has nulloption')
+  assert.equal(el.find("div[data-attribute-name=4024_multi_tree_select] .js-option[data-display-name='-'] .searchableSelect-option-text").text().trim(), '-', '4024_multi_tree_select has nulloption')
 });
 
 QUnit.test("Fixes #4027 - undefined method `to_hash` on editing select fields in the admin interface after migration to 5.1.", assert => {

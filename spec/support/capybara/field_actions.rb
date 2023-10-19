@@ -28,17 +28,51 @@ module FieldActions
   # Set the field value of a form tree_select field.
   #
   # @example
-  #  set_tree_select_value('tree_select', 'Users')
+  #  set_tree_select_value('tree_select', 'Users')                       # via label
+  #  set_tree_select_value('tree_select', 1)                             # via value
+  #  set_tree_select_value('tree_select', 'Group 1 › Group 2 › Group 3') # via full path
   #
   def set_tree_select_value(name, value)
-    input_elem = page.find(%( input[name='#{name}']+.js-input ))
+    tree_select_field = page.find(%( input[name='#{name}']+.js-input )) # search input
+      .click                                                            # focus
+      .ancestor('.controls', order: :reverse, match: :first)            # find container
 
-    input_elem.fill_in with: value, fill_options: { clear: :backspace }
+    # Try to find the option via its value.
+    if tree_select_field.has_css?("[data-value='#{value}']", wait: false)
+      tree_select_field.find("[data-value='#{value}']")
+        .click
+      return
+    end
 
-    input_elem
-      .ancestor('.controls', order: :reverse, match: :first)
-      .find('.js-option.is-active')
-      .click
+    # Try to find the option via its label.
+    if tree_select_field.has_css?("[data-display-name='#{value}']", wait: false)
+      tree_select_field.find("[data-display-name='#{value}']")
+        .click
+      return
+    end
+
+    path_delimiter = ' › '
+    raise Capybara::ElementNotFound if !value.match(path_delimiter)
+
+    components   = value.split(path_delimiter)
+    current_path = []
+
+    # Try to drill down to a nested label.
+    components.each_with_index do |component, index|
+      current_path.push(component)
+      display_name = current_path.join(path_delimiter)
+
+      # Handle last item.
+      if index == components.length - 1
+        tree_select_field.find("[role='menu']:not(.velocity-animating) [data-display-name='#{display_name}']")
+        .click
+
+      # Handle parent items.
+      else
+        tree_select_field.find("[role='menu']:not(.velocity-animating) [data-display-name='#{display_name}'] .searchableSelect-option-arrow")
+          .click
+      end
+    end
   end
 
   # Check the field value of a form select field.

@@ -122,7 +122,7 @@ class AdminDragDropToNewGroupTest < TestCase
 
     if group_container.nil?
       @browser.find_elements(css: '.modal .js-groupListNewItemRow .js-groupListItemAddNew .js-input')[0].click
-      @browser.find_elements(css: ".modal .js-groupListNewItemRow .js-optionsList .js-option[title='#{group_name}']")[0].click
+      @browser.find_elements(css: ".modal .js-groupListNewItemRow .js-optionsList .js-option [title='#{group_name}']")[0].click
       @browser.find_elements(css: '.modal .js-groupListNewItemRow .js-add')[0].click
 
       group_container = @browser.find_elements(css: '.modal .settings-list tbody tr').find do |el|

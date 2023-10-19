@@ -180,8 +180,8 @@ QUnit.test( "searchable_select check", assert => {
     searchable_select2: 'ccc::ccc',
   }
   assert.deepEqual(params, test_params, 'form param check')
-  assert.equal(el.find('[name="searchable_select1"].js-shadow + .js-input').val(), 'aaa display L2', 'verify shown input')
-  assert.equal(el.find('[name="searchable_select2"].js-shadow + .js-input').val(), 'ccc display L2', 'verify shown input')
+  assert.equal(el.find('[name="searchable_select1"].js-shadow + .js-input').val(), 'ccc display › aaa display L2', 'verify shown input')
+  assert.equal(el.find('[name="searchable_select2"].js-shadow + .js-input').val(), 'ccc display › ccc display L2', 'verify shown input')
 
 });
 

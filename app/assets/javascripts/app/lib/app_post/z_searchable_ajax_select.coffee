@@ -5,6 +5,19 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     # create cache
     @searchResultCache = {}
 
+  render: ->
+    if not _.isEmpty(@attribute.value) and not @attribute.multiple
+      @attribute.options = [] if not _.isArray(@attribute.options)
+
+      if @attribute.relation
+        if App[@attribute.relation] && App[@attribute.relation].exists(@attribute.value)
+          displayName = App[@attribute.relation].find(@attribute.value).displayName()
+          @attribute.options.push({ value: @attribute.value, name: displayName, selected: true })
+      else
+        @attribute.options.push({ value: @attribute.value, name: @attribute.valueName or @attribute.value, selected: true })
+
+    super
+
   objectString: =>
     # convert requested object
     # e.g. Ticket to ticket or AnotherObject to another_object

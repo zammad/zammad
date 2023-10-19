@@ -23,7 +23,7 @@ RSpec.describe 'Ticket Handling with i-doit', integration: true, required_envs: 
 
     in_modal do
       find('form input.js-input').click
-      find("form li.js-option[title='#{api_category}']").click
+      find("form li.js-option[data-display-name='#{api_category}']").click
       entry_id = find('form.js-result tbody tr:first-child input').tap(&:click).value
       # submit the i-doit object selections
       find('form button.js-submit').click

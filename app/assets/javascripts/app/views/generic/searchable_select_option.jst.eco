@@ -1,10 +1,13 @@
-<li role="presentation" class="<%= @class %>" data-value="<%= @option.value %>" title="<%= @option.name %><% if @detail: %><%= @detail %><% end %>">
+<li role="presentation" class="<%= @class %><% if @option.inactive is true: %> has-inactive<% end %>" data-value="<%= @option.value %>" data-display-name="<%= @option.displayName or @option.name %>">
   <% if @option.category: %><small><%= @option.category %></small><br><% end %>
-  <span class="searchableSelect-option-text<% if @option.inactive is true: %> is-inactive<% end %>">
+  <span role="option" class="searchableSelect-option-text<% if @option.inactive is true: %> is-inactive<% end %>" title="<%= @option.name %><% if @detail: %><%= @detail %><% end %>">
     <%= @option.name %><% if @detail: %><span class="dropdown-detail"><%= @detail %></span><% end %>
   </span>
+  <span class="searchableSelect-option-checkmark <% if !@isSelected: %>hide<% end %>" aria-hidden="true">
+    <%- @Icon('checkmark') %>
+  </span>
   <% if @option.children: %>
-  <span class="searchableSelect-option-arrow">
+  <span role="button" class="searchableSelect-option-arrow" title="<%= @T('Navigate to %s', @option.name) %>">
     <%- @Icon('arrow-right', 'recipientList-arrow') %>
   </span>
   <% end %>
