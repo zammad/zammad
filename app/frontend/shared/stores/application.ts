@@ -42,12 +42,13 @@ export const useApplicationStore = defineStore(
   'application',
   () => {
     const loading = computed(() => !loaded.value)
+    const initialized = ref(false)
 
     const setLoaded = (): void => {
-      const loadingAppElement: Maybe<HTMLElement> =
-        document.getElementById('loading-app')
-
       if (notifications.hasErrors()) {
+        const loadingAppElement: Maybe<HTMLElement> =
+          document.getElementById('loading-app')
+
         loadingAppElement
           ?.getElementsByClassName('loading-animation')
           .item(0)
@@ -69,10 +70,6 @@ export const useApplicationStore = defineStore(
       }
 
       loaded.value = true
-
-      if (loadingAppElement) {
-        loadingAppElement.remove()
-      }
 
       testFlags.set('applicationLoaded.loaded')
     }
@@ -126,6 +123,20 @@ export const useApplicationStore = defineStore(
       ),
     )
 
+    // this is called right before router renders a page, - we remove "loading" element here instead of "setLoaded"
+    // so we don't have a short period when App route is not fetched yet and we see a black screen
+    const setInitialized = () => {
+      initialized.value = true
+
+      const appElement = document.getElementById('app')
+      if (appElement) {
+        appElement.dataset.loaded = 'true'
+      }
+
+      const loadingAppElement = document.getElementById('loading-app')
+      loadingAppElement?.remove()
+    }
+
     return {
       loaded,
       loading,
@@ -135,6 +146,8 @@ export const useApplicationStore = defineStore(
       getConfig,
       resetAndGetConfig,
       hasCustomProductBranding,
+      initialized,
+      setInitialized,
     }
   },
   {

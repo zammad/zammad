@@ -10,6 +10,7 @@ import {
   type RouteRecordRaw,
 } from 'vue-router'
 import type { RouteRecordMeta } from '#shared/types/router.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import authenticationGuard from './guards/before/authentication.ts'
 import permissionGuard from './guards/before/permission.ts'
 import headerTitleGuard from './guards/after/headerTitle.ts'
@@ -30,6 +31,12 @@ export default function initializeRouter(
   const router: Router = createRouter({
     history: createWebHistory(historyBase),
     routes,
+  })
+
+  const removeInitializer = router.beforeResolve(() => {
+    const { setInitialized } = useApplicationStore()
+    setInitialized()
+    removeInitializer()
   })
 
   router.beforeEach(authenticationGuard)
