@@ -147,7 +147,6 @@ export const useTicketArticleContext = () => {
       // setting it to "false" is done via "update:modelValue"
       if (!value) {
         articleForContext.value = undefined
-        // TODO: add tests, when we have an action that uses it
         disposeCallbacks.forEach((callback) => callback())
         disposeCallbacks.length = 0
       }

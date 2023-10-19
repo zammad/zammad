@@ -15,9 +15,7 @@ const { viewTransition } = useViewTransition()
 </template>
 
 <style scoped>
-/* TODO: Styles needs to be aligned/beautified. */
-
-/* Example from: https://codesandbox.io/s/zq5mw2zk9x */
+/* First example idea from: https://codesandbox.io/s/zq5mw2zk9x */
 main {
   grid-template: 'main';
 }

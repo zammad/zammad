@@ -87,7 +87,6 @@ const loginSchema = defineFormSchema([
   },
 ])
 
-// TODO: workaround for disabled button state, will be changed in formkit.
 const { form, isDisabled } = useForm()
 
 const { clearAllNotifications } = useNotifications()

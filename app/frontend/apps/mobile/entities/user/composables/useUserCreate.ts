@@ -34,7 +34,6 @@ export const useUserCreate = () => {
   const onSuccess = (data: { userAdd: UserAddPayload }) => {
     const { internalId } = data.userAdd.user as User
 
-    // TODO change when actually implemented
     router.push(`/users/${internalId}`)
   }
 

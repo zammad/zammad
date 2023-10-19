@@ -22,7 +22,6 @@ const show = computed(() => {
 <template>
   <CommonSectionMenuItem v-if="address && show" :label="label">
     <div v-if="!address.parsed">{{ address.raw }}</div>
-    <!-- TODO no design for how it looks, if there are more than 1 address -->
     <div
       v-for="(contact, idx) of address.parsed || []"
       :key="idx"

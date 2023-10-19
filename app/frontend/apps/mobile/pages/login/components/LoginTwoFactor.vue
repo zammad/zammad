@@ -29,7 +29,6 @@ const emit = defineEmits<{
   (e: 'error', error: UserError): void
 }>()
 
-// TODO: this should be configurable by two factor plugin
 const schema: FormSchemaNode[] = [
   {
     isLayout: true,

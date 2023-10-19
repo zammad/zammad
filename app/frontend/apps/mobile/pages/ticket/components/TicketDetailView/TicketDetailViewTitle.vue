@@ -17,7 +17,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-// TODO: Maybe in the future we can hide the information directly with the graphql query for
+// TODO: Maybe in the future we can hide additional information (e.g. the priority) directly with the graphql query for
 //  the ticket details (similar to the ticket list).
 const { isTicketAgent } = useTicketView(toRef(props, 'ticket'))
 

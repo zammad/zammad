@@ -13,8 +13,6 @@ import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/a
 import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api.ts'
 import type { FieldFileProps } from './types.ts'
 
-// TODO: Add a test + story for this component.
-
 export interface Props {
   context: FormFieldContext<FieldFileProps>
 }

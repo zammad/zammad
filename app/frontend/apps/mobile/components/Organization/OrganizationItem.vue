@@ -48,7 +48,6 @@ const users = computed(() => {
       class="flex flex-1 flex-col overflow-hidden border-b border-white/10 py-3 text-gray-100"
     >
       <span class="truncate">
-        <!-- TODO: Should we show open or closed or nothing at all? -->
         {{
           entity.ticketsCount?.open === 1
             ? `1 ${$t('ticket')}`

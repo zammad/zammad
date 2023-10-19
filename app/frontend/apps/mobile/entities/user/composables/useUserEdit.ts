@@ -77,6 +77,7 @@ export const useUserEdit = () => {
           formChangeFields.organization_id.help = msg
 
           // TODO: helpClass is not reactive right now, should be fine with a future FormKit version
+          // We need to implement the mention workaround: https://github.com/formkit/formkit/issues/828
           formChangeFields.organization_id.helpClass = helpClass
         }
       },

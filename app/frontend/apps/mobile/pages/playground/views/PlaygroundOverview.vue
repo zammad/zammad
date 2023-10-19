@@ -445,7 +445,6 @@ const logSubmit = console.log
 
     <CommonStepper v-model="currentStep" class="mx-20" :steps="steps" />
 
-    <!-- TODO where to put this? -->
     <button @click="openCreateUserDialog()">Create user</button>
 
     <Form id="form" :schema="editorSchema" @submit="logSubmit" />

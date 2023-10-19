@@ -46,12 +46,6 @@ const { stickyStyles } = useStickyHeader([title], headerElement)
     >
       <!-- let's see how it feels without transition -->
       <RouterView />
-      <!-- TODO check when we will have more time -->
-      <!-- <router-view #default="{ Component }">
-        <TransitionViewNavigation>
-          <component :is="Component" />
-        </TransitionViewNavigation>
-      </router-view> -->
       <div v-if="showBottomNavigation" class="BottomNavigationPadding"></div>
     </main>
     <LayoutBottomNavigation v-if="showBottomNavigation" />

@@ -58,7 +58,6 @@ const { forceDesktop } = useForceDesktop()
 const { twoFactorPlugins, twoFactorMethods } = useTwoFactorPlugins()
 
 const finishLogin = () => {
-  // TODO: maybe we need some additional logic for the ThirtParty-Login situtation.
   const { redirect: redirectUrl } = route.query
   if (typeof redirectUrl === 'string') {
     router.replace(redirectUrl)

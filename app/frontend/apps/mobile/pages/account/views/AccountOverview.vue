@@ -150,11 +150,9 @@ const { forceDesktop } = useForceDesktop()
       <div class="mt-2 text-xl font-bold">
         {{ user.firstname }} {{ user.lastname }}
       </div>
-      <!-- TODO email -->
     </div>
 
     <CommonSectionMenu>
-      <!-- TODO maybe instead of a different page we can use a Dialog? -->
       <CommonSectionMenuLink
         v-if="session.hasPermission('user_preferences.avatar')"
         :icon="{ name: 'mobile-person', size: 'base' }"
@@ -183,7 +181,8 @@ const { forceDesktop } = useForceDesktop()
     </CommonSectionMenu>
 
     <!--
-      TODO: no-options-label-translation is not working currently, therefore we need to explicitly set it to true
+      The shorthand "no-options-label-translation" is not working currently because of a FormKit limitation,
+      therefore we need to explicitly set it to true.
     -->
     <FormGroup v-if="session.hasPermission('user_preferences.language')">
       <FormKit

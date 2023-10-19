@@ -42,7 +42,7 @@ const target = computed(() => {
   return null
 })
 
-// TODO: Correct styling is currently missing.
+// TODO: Other default styles possible?
 const linkClass = computed(() => {
   if (props.disabled) {
     return 'pointer-events-none'

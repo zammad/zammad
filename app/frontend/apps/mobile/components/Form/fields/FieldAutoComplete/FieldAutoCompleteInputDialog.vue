@@ -101,9 +101,6 @@ const AutocompleteSearchDocument = gql`
   ${props.context.gqlQuery}
 `
 
-// TODO: Check the cache policy for this query, because already triggered searches are re-used from the cache and if
-//   the source was changed in the meantime, the result will not be updated. It's unclear if there is a subscription in
-//   place to update the result on any changes.
 const autocompleteQueryHandler = new QueryHandler(
   useLazyQuery(
     AutocompleteSearchDocument,
@@ -116,6 +113,7 @@ const autocompleteQueryHandler = new QueryHandler(
     }),
     () => ({
       enabled: !!(debouncedFilter.value || props.context.defaultFilter),
+      cachePolicy: 'no-cache', // Do not use cache, because we want always up-to-date results.
     }),
   ),
 )
@@ -349,8 +347,6 @@ useTraverseOptions(autocompleteList)
           >
             <span>{{ (option as AutoCompleteOption).heading }}</span>
           </span>
-          <!-- since it has fixed height, we add ellipsis on the first line -->
-          <!-- TODO: should it be fixed? or we should allow multiline with maximum lines (3?) -->
           <span
             :class="{
               'opacity-30': option.disabled,

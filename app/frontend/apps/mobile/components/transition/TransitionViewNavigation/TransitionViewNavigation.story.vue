@@ -1,7 +1,6 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-// TODO doesn't work as expected
 import { defineComponent, h, ref } from 'vue'
 import { useViewTransition } from './useViewTransition.ts'
 import TransitionViewNavigation from './TransitionViewNavigation.vue'
