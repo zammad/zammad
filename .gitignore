@@ -13,6 +13,9 @@
 # database (copy from config/database/database.yml, or use `rails bs:init`)
 /config/database.yml
 
+# storage (copy from config/zammad/storage.yml.dist)
+/config/zammad/storage.yml
+
 # local backup config file
 /contrib/backup/config
 

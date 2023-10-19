@@ -62,44 +62,40 @@ class Authorization < ApplicationModel
 
   def self.create_from_hash(hash, user = nil)
 
-    if !user && Setting.get('auth_third_party_auto_link_at_inital_login') && hash['info'] && hash['info']['email'].present?
-      user = User.find_by(email: hash['info']['email'].downcase)
-    end
-
-    if !user
-      user = User.create_from_hash!(hash)
-    end
+    auth_provider = "#{PROVIDER_CLASS_PREFIX}#{hash['provider'].camelize}".constantize.new(hash, user)
 
     # save/update avatar
     if hash['info'].present? && hash['info']['image'].present?
       avatar = Avatar.add(
         object:        'User',
-        o_id:          user.id,
+        o_id:          auth_provider.user.id,
         url:           hash['info']['image'],
-        source:        hash['provider'],
+        source:        auth_provider.name,
         deletable:     true,
-        updated_by_id: user.id,
-        created_by_id: user.id,
+        updated_by_id: auth_provider.user.id,
+        created_by_id: auth_provider.user.id,
       )
 
       # update user link
-      if avatar && user.image != avatar.store_hash
-        user.image = avatar.store_hash
-        user.save
+      if avatar && auth_provider.user.image != avatar.store_hash
+        auth_provider.user.image = avatar.store_hash
+        auth_provider.user.save
       end
     end
 
     Authorization.create!(
-      user:     user,
-      uid:      hash['uid'],
+      user:     auth_provider.user,
+      uid:      auth_provider.uid,
       username: hash['info']['nickname'] || hash['info']['username'] || hash['info']['name'] || hash['info']['email'] || hash['username'],
-      provider: hash['provider'],
+      provider: auth_provider.name,
       token:    hash['credentials']['token'],
       secret:   hash['credentials']['secret']
     )
   end
 
   private
+
+  PROVIDER_CLASS_PREFIX = 'Authorization::Provider::'.freeze
 
   def delete_user_cache
     return if !user

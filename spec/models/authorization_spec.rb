@@ -14,6 +14,72 @@ RSpec.describe Authorization, type: :model do
     end
   end
 
+  describe 'Account linking' do
+    let(:auth_hash) do
+      {
+        'info'        => auth_info,
+        'uid'         => auth_uid,
+        'provider'    => provider,
+        'credentials' => auth_credentials,
+      }
+    end
+    let(:auth_info) { {} }
+    let(:auth_uid)  { SecureRandom.uuid }
+    let(:auth_credentials) do
+      {
+        'token'  => '1234',
+        'secret' => '1234',
+      }
+    end
+    let(:provider) { 'saml' }
+    let(:user) { create(:user, login: auth_uid) }
+
+    before do
+      Setting.set('auth_third_party_auto_link_at_inital_login', true)
+
+      user
+    end
+
+    shared_examples 'links account with email address' do |type:|
+      let(:provider) { type }
+
+      it 'linked account' do
+        authorization = described_class.create_from_hash(auth_hash)
+
+        expect(authorization.user_id).to eq(user.id)
+      end
+    end
+
+    context 'when saml is the provider' do
+      context 'when auth provider provides no email address' do
+        it 'linked account with uid' do
+          authorization = described_class.create_from_hash(auth_hash)
+
+          expect(authorization.user_id).to eq(user.id)
+        end
+      end
+    end
+
+    context 'when auth provider provides an email address' do
+      let(:email) { 'john.doe@example.com' }
+      let(:auth_info) do
+        {
+          'email' => email,
+        }
+      end
+      let(:user) { create(:user, login: auth_uid, email: email) }
+
+      include_examples 'links account with email address', type: 'github'
+      include_examples 'links account with email address', type: 'gitlab'
+      include_examples 'links account with email address', type: 'twitter'
+      include_examples 'links account with email address', type: 'facebook'
+      include_examples 'links account with email address', type: 'linkedin'
+      include_examples 'links account with email address', type: 'microsoft_office365'
+      include_examples 'links account with email address', type: 'google_oauth2'
+      include_examples 'links account with email address', type: 'weibo'
+    end
+  end
+
   describe 'Account linking notification', sends_notification_emails: true do
     subject(:authorization) { create(:authorization, user: agent, provider: provider) }
 
