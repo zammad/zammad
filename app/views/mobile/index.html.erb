@@ -5,13 +5,18 @@
   border-style: solid;
   border-color: #656567;
 }
+body,
+html,
+#loading-app,
+#app[data-loaded="true"] {
+  height: 100%;
+}
 body {
   background-color: #191919;
   margin: 0;
 }
 #loading-app {
   display: flex;
-  height: 100vh;
 }
 .loading-animation {
   margin: 0 auto;
