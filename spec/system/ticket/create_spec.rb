@@ -1476,4 +1476,38 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(Ticket.last).to have_attributes(field_name => 1.day.from_now.to_date)
     end
   end
+
+  describe 'Setting a group via CoreWorkflow in the ticket creation mask does not update text module filters and email signatures #4891', authenticated_as: :authenticate do
+    let(:group_1) { create(:group, signature: create(:signature, body: SecureRandom.uuid)) }
+    let(:group_2) { create(:group, signature: create(:signature, body: SecureRandom.uuid)) }
+    let(:workflow_1) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: { 'ticket.priority_id'=>{ 'operator' => 'is', 'value' => Ticket::Priority.find_by(name: '3 high').id.to_s } },
+             perform:            { 'ticket.group_id' => { 'operator' => 'select', 'select' => group_1.id.to_s } })
+    end
+    let(:workflow_2) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: { 'ticket.priority_id'=>{ 'operator' => 'is', 'value' => Ticket::Priority.find_by(name: '1 low').id.to_s } },
+             perform:            { 'ticket.group_id' => { 'operator' => 'select', 'select' => group_2.id.to_s } })
+    end
+
+    def authenticate
+      workflow_1 && workflow_2
+      group_1 && group_2
+      create(:agent, groups: Group.all)
+    end
+
+    it 'does change the signature when switching group via core workflow' do
+      visit 'ticket/create'
+      find('[data-type=email-out]').click
+
+      page.find('[name=priority_id]').select '3 high'
+      expect(page).to have_text(group_1.signature.body)
+
+      page.find('[name=priority_id]').select '1 low'
+      expect(page).to have_text(group_2.signature.body)
+    end
+  end
 end

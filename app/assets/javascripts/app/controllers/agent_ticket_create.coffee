@@ -137,7 +137,7 @@ class App.TicketCreate extends App.Controller
 
     # force changing signature
     # skip on initialization because it will trigger core workflow
-    @$('[name="group_id"]').trigger('change', true)
+    @$('[name="group_id"]').trigger('change', non_interactive: true)
 
     # add observer to change options
     @$('[name="cc"], [name="group_id"], [name="customer_id"]').on('change', =>
@@ -236,7 +236,7 @@ class App.TicketCreate extends App.Controller
   dirtyMonitorStart: =>
     @dirty = {}
 
-    update = (e, nonInteractive) =>
+    update = (e, args) =>
       { target } = e
 
       field = target.getAttribute('name') || target.getAttribute('data-name')
@@ -247,7 +247,7 @@ class App.TicketCreate extends App.Controller
         return
 
       # Skip tracking of non-interactive fields
-      if nonInteractive || field == 'id'
+      if (_.isObject(args) && args.non_interactive) || field == 'id'
         @log 'debug', 'ticket create dirty monitor', 'non-interactive change', field
         return
 

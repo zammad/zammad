@@ -178,6 +178,9 @@ class App.FormHandlerCoreWorkflow
         else
           ui.optional(field, form)
 
+        if data.select[item.name] isnt undefined
+          form.find('[name="' + field + '"]').trigger('change', skip_core_worfklow: true)
+
   # fill in data in input fields
   @fillIn: (classname, form, ui, attributes, params, data) ->
     return if _.isEmpty(data)
@@ -192,6 +195,7 @@ class App.FormHandlerCoreWorkflow
         fieldElement.val(data[field])
 
       coreWorkflowParams[classname][field] = data[field]
+      fieldElement.trigger('change', skip_core_worfklow: true)
 
   # changes the visibility of form elements
   @changeVisibility: (form, ui, data) ->

@@ -336,11 +336,12 @@ class App.ControllerForm extends App.Controller
         item_bind  = item.find('.richtext-content')
         item_event = 'blur'
 
-      item_bind.on(item_event, (e) =>
+      item_bind.on(item_event, (e, args) =>
         @lastChangedAttribute = attribute.name
         params = App.ControllerForm.params(@form)
         dispatchID = Math.floor( Math.random() * 999999 ).toString()
         for handler in @handlers
+          continue if _.isObject(args) && args.skip_core_worfklow && handler is App.FormHandlerCoreWorkflow.run
           handler(params, attribute, @attributes, idPrefix, form, @, dispatchID)
       )
 
