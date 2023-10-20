@@ -129,12 +129,15 @@ class App.SearchableSelect extends Spine.Controller
     firstSelected = @findFirstSelection(@attribute.options)
 
     if firstSelected
-      @attribute.valueName = firstSelected.displayName
+      @attribute.valueName = firstSelected.name
       @attribute.value = firstSelected.value
+      @attribute.displayName = firstSelected.displayName
     else if @attribute.unknown && @attribute.value
       @attribute.valueName = @attribute.value
+      @attribute.displayName = @attribute.valueName
     else if @hasSubmenu @attribute.options
       @attribute.valueName = @getName(@attribute.value, @attribute.options)
+      @attribute.displayName = @getDisplayName(@attribute.value, @attribute.options)
 
   findFirstSelection: (options) ->
     return if !options
@@ -153,10 +156,19 @@ class App.SearchableSelect extends Spine.Controller
   getName: (value, options) ->
     for option in options
       if option.value?.toString() is value?.toString()
-        return option.displayName
+        return option.name
       if option.children
         name = @getName(value, option.children)
         return name if name isnt undefined
+    undefined
+
+  getDisplayName: (value, options) ->
+    for option in options
+      if option.value?.toString() is value?.toString()
+        return option.displayName
+      if option.children
+        displayName = @getDisplayName(value, option.children)
+        return displayName if displayName isnt undefined
     undefined
 
   renderOptions: (options) =>
@@ -223,6 +235,7 @@ class App.SearchableSelect extends Spine.Controller
     if !@input.val() && !@attribute.multiple
       @updateAttributeValueName()
       @input.val(@attribute.valueName)
+        .attr('title', @attribute.displayName)
     @input.trigger('change')
     @shadowInput.trigger('change')
 
@@ -322,6 +335,7 @@ class App.SearchableSelect extends Spine.Controller
       @addValueToShadowInput(@suggestion, @suggestionValue)
     else
       @input.val(@suggestion)
+        .attr('title', @suggestion)
       @shadowInput.val(@suggestionValue)
     @clearAutocomplete()
     if not @attribute.multiple
@@ -348,16 +362,18 @@ class App.SearchableSelect extends Spine.Controller
     @invisiblePart.text('')
 
   resetSearch: =>
-    @input.val ''
+    @input.val('')
+      .attr('title', '')
     @onInput(null, false)
 
-  selectValue: (key, value) =>
+  selectValue: (value, currentText, displayName) =>
     @resetSearch()
 
-    @input.val value
-    @shadowInput.val key
-    @attribute.valueName = value
-    @attribute.value = key
+    @input.val(currentText)
+      .attr('title', displayName)
+    @shadowInput.val(value)
+    @attribute.valueName = currentText
+    @attribute.value = value
 
 
   selectItem: (event) ->
@@ -369,12 +385,13 @@ class App.SearchableSelect extends Spine.Controller
     return if !currentText
 
     dataId = $(event.target).closest('li').data('value')
+    currentText = $(event.target).text().trim()
     displayName = $(event.target).closest('li').data('displayName')
     if @attribute.multiple
       event.stopPropagation()
-      @addValueToShadowInput(displayName, dataId)
+      @addValueToShadowInput(currentText, dataId)
     else
-      @selectValue(dataId, displayName)
+      @selectValue(dataId, currentText, displayName)
       @markSelected(dataId)
       @toggleClear()
 
@@ -487,6 +504,7 @@ class App.SearchableSelect extends Spine.Controller
       if !@input.val() && !@attribute.multiple
         @updateAttributeValueName()
         @input.val(@attribute.valueName)
+          .attr('title', @attribute.displayName)
 
       @toggleClear()
       return
@@ -515,11 +533,12 @@ class App.SearchableSelect extends Spine.Controller
       return if @currentItem.hasClass('has-inactive')
 
       value       = @currentItem.attr('data-value')
+      name        = @currentItem.text().trim()
       displayName = @currentItem.data('displayName')
       if @attribute.multiple
-        @addValueToShadowInput(displayName, value)
+        @addValueToShadowInput(name, value)
       else
-        @selectValue(value, displayName)
+        @selectValue(value, name, displayName)
         @markSelected(value)
         @toggleClear()
 
@@ -542,6 +561,7 @@ class App.SearchableSelect extends Spine.Controller
 
     # Clear the input value so the user can start searching immediately (#4830).
     @input.val('')
+      .attr('title', '')
 
   # propergate focus to our visible input
   onShadowFocus: ->
@@ -681,7 +701,7 @@ class App.SearchableSelect extends Spine.Controller
   clearValue: =>
     event.stopPropagation()
 
-    @selectValue('', '')
+    @selectValue('', '', '')
     @input.trigger('change')
     @shadowInput.trigger('change')
     @markSelected('')

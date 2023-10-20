@@ -30,6 +30,7 @@
       class="searchableSelect-main form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
       placeholder="<%= @attribute.placeholder %>"
       value="<%= @attribute.valueName %>"
+      title="<%= @attribute.displayName %>"
       autocomplete="off"
       <% if @attribute.disabled: %> disabled<% end %>
     >
