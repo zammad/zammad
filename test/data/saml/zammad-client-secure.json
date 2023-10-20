@@ -1,17 +1,20 @@
 {
-  "clientId": "#ZAMMAD_BASE_URL/auth/saml/metadata",
+  "clientId": "#KEYCLOAK_ZAMMAD_BASE_URL/auth/saml/metadata",
   "name": "Zammad",
   "description": "",
+  "rootUrl": "",
+  "adminUrl": "",
+  "baseUrl": "",
   "surrogateAuthRequired": false,
   "enabled": true,
   "alwaysDisplayInConsole": false,
   "clientAuthenticatorType": "client-secret",
-  "secret": "sgExDFx8OGfCooRBwDYLIV5NnDAzVBey",
+  "secret": "**********",
   "redirectUris": [
-    "#ZAMMAD_BASE_URL/auth/saml/callback"
+    "#KEYCLOAK_ZAMMAD_BASE_URL/auth/saml/callback"
   ],
   "webOrigins": [
-    "#ZAMMAD_BASE_URL"
+    "#KEYCLOAK_ZAMMAD_BASE_URL"
   ],
   "notBefore": 0,
   "bearerOnly": false,
@@ -24,53 +27,34 @@
   "frontchannelLogout": true,
   "protocol": "saml",
   "attributes": {
-    "client.secret.creation.time": "1670334049",
+    "saml.assertion.signature": "true",
+    "client.secret.creation.time": "1697048024",
     "saml.force.post.binding": "true",
-    "saml.encrypt": "false",
+    "saml.encrypt": "true",
     "post.logout.redirect.uris": "+",
-    "saml_assertion_consumer_url_post": "#ZAMMAD_BASE_URL/auth/saml/callback",
-    "saml.server.signature": "true",
+    "saml_assertion_consumer_url_post": "#KEYCLOAK_ZAMMAD_BASE_URL/auth/saml/callback",
+    "saml.server.signature": "false",
     "saml.server.signature.keyinfo.ext": "false",
-    "saml.artifact.binding.identifier": "j8oyl9s6Zci93v0jdlB0lEAYaEU=",
-    "saml_single_logout_service_url_redirect": "#ZAMMAD_BASE_URL/auth/saml/slo",
+    "saml.signing.certificate": "#KEYCLOAK_ZAMMAD_CERTIFICATE",
+    "saml.artifact.binding.identifier": "NzG42pzk2nEJxq+Sj8jqpxslW0Q=",
+    "saml_single_logout_service_url_redirect": "#KEYCLOAK_ZAMMAD_BASE_URL/auth/saml/slo",
+    "saml.artifact.binding": "false",
     "saml.signature.algorithm": "RSA_SHA256",
     "saml_force_name_id_format": "false",
-    "saml.client.signature": "false",
+    "saml.client.signature": "true",
+    "saml.encryption.certificate": "#KEYCLOAK_ZAMMAD_CERTIFICATE",
     "saml.authnstatement": "true",
+    "display.on.consent.screen": "false",
     "saml_name_id_format": "email",
     "saml.allow.ecp.flow": "false",
-    "saml_signature_canonicalization_method": "http://www.w3.org/2001/10/xml-exc-c14n#"
+    "saml_signature_canonicalization_method": "http://www.w3.org/2001/10/xml-exc-c14n#",
+    "saml.onetimeuse.condition": "false",
+    "saml.server.signature.keyinfo.xmlSigKeyInfoKeyNameTransformer": "NONE"
   },
   "authenticationFlowBindingOverrides": {},
   "fullScopeAllowed": true,
   "nodeReRegistrationTimeout": -1,
   "protocolMappers": [
-    {
-      "name": "first_name",
-      "protocol": "saml",
-      "protocolMapper": "saml-user-attribute-mapper",
-      "consentRequired": false,
-      "config": {
-        "attribute.nameformat": "Basic",
-        "user.attribute": "firstName",
-        "aggregate.attrs": "false",
-        "friendly.name": "Given name",
-        "attribute.name": "first_name"
-      }
-    },
-    {
-      "name": "email",
-      "protocol": "saml",
-      "protocolMapper": "saml-user-attribute-mapper",
-      "consentRequired": false,
-      "config": {
-        "attribute.nameformat": "Basic",
-        "user.attribute": "email",
-        "aggregate.attrs": "false",
-        "friendly.name": "Email address",
-        "attribute.name": "email"
-      }
-    },
     {
       "name": "uid",
       "protocol": "saml",
@@ -84,6 +68,18 @@
       }
     },
     {
+      "name": "email",
+      "protocol": "saml",
+      "protocolMapper": "saml-user-attribute-mapper",
+      "consentRequired": false,
+      "config": {
+        "attribute.nameformat": "Basic",
+        "user.attribute": "email",
+        "friendly.name": "Email address",
+        "attribute.name": "email"
+      }
+    },
+    {
       "name": "name",
       "protocol": "saml",
       "protocolMapper": "saml-user-attribute-mapper",
@@ -91,9 +87,20 @@
       "config": {
         "attribute.nameformat": "Basic",
         "user.attribute": "username",
-        "aggregate.attrs": "false",
         "friendly.name": "Full name",
         "attribute.name": "name"
+      }
+    },
+    {
+      "name": "first_name",
+      "protocol": "saml",
+      "protocolMapper": "saml-user-attribute-mapper",
+      "consentRequired": false,
+      "config": {
+        "attribute.nameformat": "Basic",
+        "user.attribute": "firstName",
+        "friendly.name": "Given name",
+        "attribute.name": "first_name"
       }
     },
     {
@@ -104,7 +111,6 @@
       "config": {
         "attribute.nameformat": "Basic",
         "user.attribute": "lastName",
-        "aggregate.attrs": "false",
         "friendly.name": "Family name",
         "attribute.name": "last_name"
       }

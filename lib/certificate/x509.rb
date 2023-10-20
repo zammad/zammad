@@ -30,4 +30,17 @@ class Certificate::X509 < OpenSSL::X509::Certificate
   def usable?
     effective? && !expired?
   end
+
+  def signature?
+    extensions_as_hash.fetch('keyUsage', ['Digital Signature']).include?('Digital Signature')
+  end
+
+  def encryption?
+    extensions_as_hash.fetch('keyUsage', ['Key Encipherment']).include?('Key Encipherment')
+  end
+
+  def key_match?(pem, secret)
+    key = OpenSSL::PKey.read(pem, secret)
+    key.compare?(public_key)
+  end
 end

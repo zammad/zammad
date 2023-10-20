@@ -44,9 +44,12 @@
 
 .variables_auth:
   variables:
-    KEYCLOAK_BASE_URL: http://ci-service-auth:8080
-    KEYCLOAK_ADMIN: admin
-    KEYCLOAK_ADMIN_PASSWORD: admin
+    KEYCLOAK_BASE_URL: 'http://ci-service-auth:8080'
+    KEYCLOAK_CREATE_ADMIN_USER: 'true'
+    KEYCLOAK_ADMIN_USER: 'admin'
+    KEYCLOAK_ADMIN_PASSWORD: 'admin'
+    KEYCLOAK_DATABASE_VENDOR: 'dev-file'
+    KEYCLOAK_EXTRA_ARGS: '--import-realm'
 
 .variables_s3:
   variables:
@@ -98,7 +101,7 @@
     alias: ci-service-proxy
 
   auth:
-    name: $CI_REGISTRY/docker/zammad-auth:stable
+    name: $CI_REGISTRY/docker/zammad-auth:develop
     alias: ci-service-auth
 
   mattermost:

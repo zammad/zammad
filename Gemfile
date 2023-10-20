@@ -255,6 +255,10 @@ group :development, :test do
 
   # self-signed localhost certificates for puma / capybara
   gem 'localhost'
+
+  # Keycloak admin tool for setting up SAML auth tests
+  gem 'httparty'
+  gem 'keycloak-admin', git: 'https://github.com/tschaefer/ruby-keycloak-admin/', branch: 'develop', require: false
 end
 
 # To permanently extend Zammad with additional gems, you can specify them in Gemfile.local.

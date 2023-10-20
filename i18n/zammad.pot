@@ -2066,6 +2066,10 @@ msgstr ""
 msgid "Caution!"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Certificate (PEM)"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
 msgstr ""
@@ -7835,6 +7839,10 @@ msgstr ""
 msgid "No categories"
 msgstr ""
 
+#: app/models/setting/validation/saml/security.rb
+msgid "No certificate found."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
 msgstr ""
@@ -7894,6 +7902,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
+msgstr ""
+
+#: app/models/setting/validation/saml/security.rb
+msgid "No private key found."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7967,6 +7979,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/graphql/gql/types/ticket_type.rb
+#: db/seeds/settings.rb
 msgid "None"
 msgstr ""
 
@@ -8230,6 +8243,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid "Only %s% of this language is already translated. Please help to improve Zammad and complete the translation."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Only Encrypting"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Only Signing"
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -8819,6 +8840,10 @@ msgstr ""
 msgid "Please include a valid url."
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Please note that this attribute is deprecated within one of the next versions of Zammad. Use the IDP certificate instead."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
@@ -8982,6 +9007,14 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Private key (PEM)"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Private key secret"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -10444,6 +10477,10 @@ msgstr ""
 msgid "Signed"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Signing & Encrypting"
+msgstr ""
+
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
 msgstr ""
@@ -11152,6 +11189,14 @@ msgstr ""
 msgid "The browser is outdated. It does not support WebSocket - the technology we use for the chat."
 msgstr ""
 
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate could not be parsed."
+msgstr ""
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate does not match the given private key."
+msgstr ""
+
 #: lib/secure_mailing/smime/security_options.rb
 msgid "The certificate for %s was found, but it is not valid yet or has expired."
 msgstr ""
@@ -11170,6 +11215,18 @@ msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "The certificate for verification could not be found."
+msgstr ""
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate is not usable (e.g. expired)."
+msgstr ""
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate is not usable due to being a CA certificate."
+msgstr ""
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate is not usable for signing and encryption."
 msgstr ""
 
 #: lib/certificate/x509/smime.rb
@@ -11346,6 +11403,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "The language could not be updated."
+msgstr ""
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The length of the private key is too short."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
@@ -11760,6 +11821,10 @@ msgstr ""
 msgid "The two-factor authentication method is not enabled."
 msgstr ""
 
+#: app/models/setting/validation/saml/security.rb
+msgid "The type of the private key is wrong."
+msgstr ""
+
 #: app/controllers/getting_started_controller.rb
 msgid "The uploaded image could not be processed."
 msgstr ""
@@ -11776,6 +11841,10 @@ msgstr ""
 #: app/controllers/sessions_controller.rb
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
 msgid "The username or password is incorrect."
+msgstr ""
+
+#: app/models/setting/validation/saml/tls.rb
+msgid "The verification of the TLS connection failed. Please check the IDP certificate."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
@@ -12823,6 +12892,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: db/seeds/settings.rb
 msgid "Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!"
 msgstr ""
 

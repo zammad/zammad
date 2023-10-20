@@ -2,40 +2,37 @@
 
 require 'rails_helper'
 
-RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN KEYCLOAK_ADMIN_PASSWORD], type: :system do
-  # Shared/persistent variables
-  saml_initialized = false
-  saml_access_token = ''
+require 'keycloak/admin'
 
-  let(:saml_base_url)                { ENV['KEYCLOAK_BASE_URL'] }
+RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN_USER KEYCLOAK_ADMIN_PASSWORD], type: :system do
   let(:zammad_base_url)              { "#{Capybara.app_host}:#{Capybara.current_session.server.port}" }
-  let(:saml_auth_endpoint)           { "#{saml_base_url}/realms/master/protocol/openid-connect/token" }
-  let(:saml_auth_payload)            { { username: ENV['KEYCLOAK_ADMIN'], password: ENV['KEYCLOAK_ADMIN_PASSWORD'], grant_type: 'password', client_id: 'admin-cli' } }
-  let(:saml_client_import_endpoint)  { "#{saml_base_url}/admin/realms/zammad/clients" }
-  let(:saml_auth_headers)            { { Authorization: "Bearer #{saml_access_token}" } }
-  let(:saml_client_json)             { Rails.root.join('test/data/saml/zammad-client.json').read.gsub('ZAMMAD_BASE_URL', zammad_base_url) }
+  let(:zammad_saml_metadata)         { "#{zammad_base_url}/auth/saml/metadata" }
+  let(:saml_base_url)                { ENV['KEYCLOAK_BASE_URL'] }
+  let(:saml_client_json)             { Rails.root.join('test/data/saml/zammad-client.json').read.gsub('#ZAMMAD_BASE_URL', zammad_base_url) }
   let(:saml_realm_zammad_descriptor) { "#{saml_base_url}/realms/zammad/protocol/saml/descriptor" }
   let(:saml_realm_zammad_accounts)   { "#{saml_base_url}/realms/zammad/account" }
 
   # Only before(:each) can access let() variables.
   before do
-    next if saml_initialized
+    # Setup Keycloak SAML authentication.
+    if !Keycloak::Admin.configured?
+      Keycloak::Admin.configure do |config|
+        config.username = ENV['KEYCLOAK_ADMIN_USER']
+        config.password = ENV['KEYCLOAK_ADMIN_PASSWORD']
+        config.realm    = 'zammad'
+        config.base_url = ENV['KEYCLOAK_BASE_URL']
+      end
+    end
 
-    # Get auth token.
-    response = UserAgent.post(saml_auth_endpoint, saml_auth_payload)
-    raise 'Authentication failed' if !response.success?
-
-    saml_access_token = JSON.parse(response.body)['access_token']
-    raise 'No access_token found' if saml_access_token.blank?
-
-    # Import zammad client.
-    response = UserAgent.post(saml_client_import_endpoint, JSON.parse(saml_client_json), { headers: saml_auth_headers, json: true, jsonParseDisable: true })
-    raise 'Authentication failed' if !response.success?
-
-    saml_initialized = true
+    # Force create Zammad client in Keycloak.
+    client = Keycloak::Admin.clients.lookup(clientId: zammad_saml_metadata)
+    if client.count.positive?
+      Keycloak::Admin.clients.delete(client.first['id'])
+    end
+    Keycloak::Admin.clients.create(JSON.parse(saml_client_json))
   end
 
-  def set_saml_config(name_identifier_format: nil, uid_attribute: nil, idp_slo_service_url: true)
+  def set_saml_config(name_identifier_format: nil, uid_attribute: nil, idp_slo_service_url: true, security: nil)
     # Setup Zammad SAML authentication.
     response = UserAgent.get(saml_realm_zammad_descriptor)
     raise 'No Zammad realm descriptor found' if !response.success?
@@ -50,10 +47,20 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
         idp_cert:               "-----BEGIN CERTIFICATE-----\n#{match[:cert]}\n-----END CERTIFICATE-----",
         name_identifier_format: name_identifier_format || 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
       }
-    if idp_slo_service_url
-      auth_saml_credentials[:idp_slo_service_url] = "#{saml_base_url}/realms/zammad/protocol/saml"
-    end
+    auth_saml_credentials[:idp_slo_service_url] = "#{saml_base_url}/realms/zammad/protocol/saml" if idp_slo_service_url
     auth_saml_credentials[:uid_attribute] = uid_attribute if uid_attribute
+
+    if security.present?
+      auth_saml_credentials[:security] = 'on'
+      auth_saml_credentials[:certificate] = "-----BEGIN CERTIFICATE-----\n#{security[:cert]}\n-----END CERTIFICATE-----"
+      auth_saml_credentials[:private_key] = "-----BEGIN RSA PRIVATE KEY-----\n#{security[:key]}\n-----END RSA PRIVATE KEY-----" # gitleaks:allow
+      auth_saml_credentials[:private_key_secret] = ''
+    end
+
+    # Disable setting validation. We have an explicit test for this.
+    setting = Setting.find_by(name: 'auth_saml_credentials')
+    setting.update!(preferences: {})
+
     Setting.set('auth_saml_credentials', auth_saml_credentials)
     Setting.set('auth_saml', true)
   end
@@ -109,8 +116,10 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
 
   describe 'SP login and SP logout' do
     before do
-      set_saml_config
+      set_saml_config(security: security)
     end
+
+    let(:security) { nil }
 
     it 'is successful' do
       login_saml
@@ -124,6 +133,69 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       visit saml_realm_zammad_accounts
       expect(page).to have_no_css('#landingSignOutButton')
       find_by_id('landingWelcomeMessage')
+    end
+
+    context 'with client signature required and encrypted assertions enabled' do
+      let(:security) do
+        # generate a new private key and certificate
+        key = OpenSSL::PKey::RSA.new(2048)
+        cert = OpenSSL::X509::Certificate.new
+        cert.subject = OpenSSL::X509::Name.parse('/CN=Zammad SAML Client')
+        cert.issuer = cert.subject
+        cert.not_before = Time.zone.now
+        cert.not_after = (cert.not_before + (1 * 365 * 24 * 60 * 60)) # 1 year validity
+        cert.public_key = key.public_key
+        cert.serial = 0x0
+        cert.version = 2
+
+        ef = OpenSSL::X509::ExtensionFactory.new
+        ef.subject_certificate = cert
+        ef.issuer_certificate = cert
+        cert.add_extension(ef.create_extension('keyUsage', 'digitalSignature, keyEncipherment', true))
+        cert.add_extension(ef.create_extension('subjectKeyIdentifier', 'hash', false))
+        cert.add_extension(ef.create_extension('basicConstraints', 'CA:FALSE', false))
+
+        cert.sign(key, OpenSSL::Digest.new('SHA256'))
+
+        pem = cert.to_pem
+        pem.gsub!('-----BEGIN CERTIFICATE-----', '')
+        pem.gsub!('-----END CERTIFICATE-----', '')
+        pem.delete!("\n").strip!
+        cert = pem
+
+        pem = key.to_pem
+        pem.gsub!('-----BEGIN RSA PRIVATE KEY-----', '')
+        pem.gsub!('-----END RSA PRIVATE KEY-----', '')
+        pem.delete!("\n").strip!
+        key = pem
+
+        {
+          cert:,
+          key:
+        }
+      end
+      let(:saml_client_json) do
+        client = Rails.root.join('test/data/saml/zammad-client-secure.json').read
+        client.gsub!('#KEYCLOAK_ZAMMAD_BASE_URL', zammad_base_url)
+        client.gsub!('#KEYCLOAK_ZAMMAD_CERTIFICATE', security[:cert])
+
+        client
+      end
+
+      it 'is successful' do
+        login_saml
+
+        visit saml_realm_zammad_accounts
+        expect(page).to have_css('#landingSignOutButton')
+        find_by_id('landingWelcomeMessage')
+
+        logout_saml
+
+        visit saml_realm_zammad_accounts
+        expect(page).to have_no_css('#landingSignOutButton')
+        find_by_id('landingWelcomeMessage')
+      end
+
     end
   end
 
@@ -155,7 +227,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       login_saml
 
       user = User.find_by(email: 'john.doe@saml.example.com')
-      expect(user.login).to eq('73f7c02f-77b1-4cb7-9a2a-0e7a3aeeda52')
+      expect(user.login).to eq('5f8179df-db5e-415c-8090-6cc3634d86b6')
 
       logout_saml
     end
@@ -195,6 +267,10 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
   end
 
   describe 'Mobile View', app: :mobile do
+    before do
+      skip 'Skip mobile tests enforced.' if ENV['SKIP_MOBILE_TESTS']
+    end
+
     context 'when login is tested' do
       before do
         set_saml_config

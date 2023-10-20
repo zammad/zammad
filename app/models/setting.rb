@@ -5,6 +5,7 @@ class Setting < ApplicationModel
   store         :state_current
   store         :state_initial
   store         :preferences
+  before_validation :execute_validations
   before_create :state_check, :set_initial
   after_create  :reset_change_id, :reset_cache, :check_broadcast
   before_update :state_check
@@ -215,5 +216,19 @@ reload config settings
     return if ['auth_saml_credentials'].exclude?(name)
 
     AppVersion.set(true, AppVersion::MSG_CONFIG_CHANGED)
+  end
+
+  def execute_validations
+    return if preferences.blank? || preferences[:validations].blank?
+
+    preferences[:validations].each do |validation_module|
+      validation_result = validation_module.constantize.new(self).run
+
+      next if validation_result[:success]
+
+      errors.add(:base, :invalid, message: validation_result[:message])
+
+      return false
+    end
   end
 end

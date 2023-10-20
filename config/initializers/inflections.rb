@@ -27,4 +27,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'PGP'
   inflect.acronym 'SMIME'
   inflect.acronym 'SSL'
+  inflect.acronym 'TLS'
 end

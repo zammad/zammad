@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/tschaefer/ruby-keycloak-admin/
+  revision: 766702927ae9f2316f4468f8774dc7c018419b16
+  branch: develop
+  specs:
+    keycloak-admin (20.0.3)
+
+GIT
   remote: https://github.com/zammad-deps/autodiscover
   revision: ee9b53dfa797ce6d4f970b82beea7fbdd2df56bb
   specs:
@@ -275,6 +282,9 @@ GEM
     http-parser (1.2.3)
       ffi-compiler (>= 1.0, < 2.0)
     http_parser.rb (0.6.0)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     httpclient (2.8.3)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
@@ -732,9 +742,11 @@ DEPENDENCIES
   graphql-batch
   hiredis
   htmlentities
+  httparty
   icalendar
   icalendar-recurrence
   json
+  keycloak-admin!
   koala
   listen
   localhost

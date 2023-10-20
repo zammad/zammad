@@ -1867,6 +1867,7 @@ Setting.create_if_not_exists(
         name:        'idp_sso_target_url',
         tag:         'input',
         placeholder: 'https://capriza.github.io/samling/samling.html',
+        required:    true,
       },
       {
         display:     __('IDP Single Logout target URL'),
@@ -1874,6 +1875,7 @@ Setting.create_if_not_exists(
         name:        'idp_slo_service_url',
         tag:         'input',
         placeholder: 'https://capriza.github.io/samling/slo.html',
+        required:    true,
       },
       {
         display:     __('IDP certificate'),
@@ -1881,6 +1883,7 @@ Setting.create_if_not_exists(
         name:        'idp_cert',
         tag:         'textarea',
         placeholder: '-----BEGIN CERTIFICATE-----\n...-----END CERTIFICATE-----',
+        required:    true,
       },
       {
         display:     __('IDP certificate fingerprint'),
@@ -1888,6 +1891,7 @@ Setting.create_if_not_exists(
         name:        'idp_cert_fingerprint',
         tag:         'input',
         placeholder: 'E7:91:B2:E1:...',
+        help:        __('Please note that this attribute is deprecated within one of the next versions of Zammad. Use the IDP certificate instead.'),
       },
       {
         display:     __('Name Identifier Format'),
@@ -1895,6 +1899,7 @@ Setting.create_if_not_exists(
         name:        'name_identifier_format',
         tag:         'input',
         placeholder: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+        required:    true,
       },
       {
         display:     __('UID Attribute Name'),
@@ -1903,6 +1908,52 @@ Setting.create_if_not_exists(
         tag:         'input',
         placeholder: '',
         help:        __('Attribute that uniquely identifies the user. If unset, the name identifier returned by the IDP is used.')
+      },
+      {
+        display: 'SSL verification',
+        name:    'ssl_verify',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+        default: true,
+        help:    __('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!'),
+      },
+      {
+        display: __('Signing & Encrypting'),
+        null:    true,
+        name:    'security',
+        tag:     'select',
+        options: {
+          'off'     => __('None'),
+          'on'      => __('Signing & Encrypting'),
+          'sign'    => __('Only Signing'),
+          'encrypt' => __('Only Encrypting'),
+        },
+      },
+      {
+        display:     __('Certificate (PEM)'),
+        null:        true,
+        name:        'certificate',
+        tag:         'textarea',
+        placeholder: '-----BEGIN CERTIFICATE-----\n...-----END CERTIFICATE-----',
+      },
+      {
+        display:     __('Private key (PEM)'),
+        null:        true,
+        name:        'private_key',
+        tag:         'textarea',
+        placeholder: '-----BEGIN RSA PRIVATE KEY-----\n...-----END RSA PRIVATE KEY-----', # gitleaks:allow
+      },
+      {
+        display:     __('Private key secret'),
+        null:        true,
+        name:        'private_key_secret',
+        tag:         'input',
+        type:        'password',
+        single:      true,
+        placeholder: '',
       },
       {
         display:  __('Your callback URL'),
@@ -1915,7 +1966,12 @@ Setting.create_if_not_exists(
   },
   state:       {},
   preferences: {
-    permission: ['admin.security'],
+    permission:  ['admin.security'],
+    validations: [
+      'Setting::Validation::Saml::RequiredAttributes',
+      'Setting::Validation::Saml::TLS',
+      'Setting::Validation::Saml::Security',
+    ],
   },
   frontend:    false
 )
