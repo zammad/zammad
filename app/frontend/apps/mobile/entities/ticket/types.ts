@@ -21,7 +21,7 @@ export interface TicketInformation {
   form: ShallowRef<FormRef | undefined>
   updateFormLocation: (newLocation: string) => void
   canUpdateTicket: ComputedRef<boolean>
-  showArticleReplyDialog: () => void
+  showArticleReplyDialog: () => Promise<void>
   liveUserList?: Ref<TicketLiveAppUser[]>
   refetchingStatus: Ref<boolean>
   newArticlesIds: Set<string>

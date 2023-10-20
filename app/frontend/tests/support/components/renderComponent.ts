@@ -366,7 +366,7 @@ const renderComponent = <Props>(
   if (wrapperOptions?.form && wrapperOptions?.formField) {
     defaultWrapperOptions.props ||= {}
 
-    // Reset the defult of 20ms for testing.
+    // Reset the default of 20ms for testing.
     defaultWrapperOptions.props.delay = 0
   }
 
@@ -385,10 +385,9 @@ const renderComponent = <Props>(
 
   const events = userEvent.setup({
     advanceTimers(delay) {
-      try {
+      if (vi.isFakeTimers()) {
         vi.advanceTimersByTime(delay)
-        // eslint-disable-next-line no-empty
-      } catch {}
+      }
     },
   })
 

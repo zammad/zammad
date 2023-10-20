@@ -6,7 +6,6 @@ type FormSchemaOptions = {
   showDirtyMark: boolean
 }
 
-// TODO: do we need this in future like that?
 export const defineFormSchema = (
   schema: FormSchemaNode[],
   options?: FormSchemaOptions,

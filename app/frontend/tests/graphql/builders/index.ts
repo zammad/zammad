@@ -23,14 +23,16 @@ export interface ResolversMeta {
   cached: boolean
 }
 
-export interface Resolvers {
-  [key: string]: (parent: any, defaults: any, meta: ResolversMeta) => any
+type Resolver = (parent: any, defaults: any, meta: ResolversMeta) => any
+
+interface Resolvers {
+  [key: string]: Resolver
 }
 
-const factoriesModules = import.meta.glob(
-  ['./*.ts', '!./index.ts', '!./utils.ts', '!./mocks.ts'],
-  { eager: true, import: 'default' },
-) as Resolvers
+const factoriesModules = import.meta.glob<Resolver>('../factories/*.ts', {
+  eager: true,
+  import: 'default',
+})
 
 const log = (...mesages: unknown[]) => {
   if (process.env.VITEST_LOG_GQL_FACTORY) {
@@ -55,7 +57,8 @@ const factories: Resolvers = {}
 
 // eslint-disable-next-line guard-for-in
 for (const key in factoriesModules) {
-  factories[key.replace(/\.\/(.*)\.ts/, '$1')] = factoriesModules[key]
+  factories[key.replace(/\.\.\/factories\/(.*)\.ts$/, '$1')] =
+    factoriesModules[key]
 }
 
 interface SchemaObjectType {

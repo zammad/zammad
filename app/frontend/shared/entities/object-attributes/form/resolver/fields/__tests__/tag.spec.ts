@@ -9,7 +9,9 @@ describe('FieldResolverTag', () => {
       name: 'tag',
       display: 'Tag',
       dataOption: {
-        // TODO ...
+        type: 'text',
+        null: true,
+        translate: false,
       },
       isInternal: true,
     })

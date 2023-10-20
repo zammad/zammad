@@ -6,7 +6,7 @@ import type {
   ActivityMessageMetaObject,
   Scalars,
 } from '#shared/graphql/types.ts'
-import type { AvatarUser } from '#shared/components/CommonUserAvatar/index.ts'
+import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { ApolloCache, InMemoryCache } from '@apollo/client'
 import { useOnlineNotificationDeleteMutation } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'

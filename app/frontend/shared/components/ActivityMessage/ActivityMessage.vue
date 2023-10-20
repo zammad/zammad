@@ -10,7 +10,7 @@ import { userDisplayName } from '#shared/entities/user/utils/getUserDisplayName.
 import { markup } from '#shared/utils/markup.ts'
 import CommonUserAvatar from '../CommonUserAvatar/CommonUserAvatar.vue'
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
-import type { AvatarUser } from '../CommonUserAvatar/index.ts'
+import type { AvatarUser } from '../CommonUserAvatar/types.ts'
 import { activityMessageBuilder } from './builders/index.ts'
 
 export interface Props {

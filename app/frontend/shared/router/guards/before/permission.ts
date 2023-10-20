@@ -24,7 +24,7 @@ const permissionGuard: NavigationGuard = (
     return
   }
 
-  // TODO check the permission for the current user...
+  // check the permission for the current user...
   const hasPermission = useSessionStore().hasPermission(
     to.meta.requiredPermission,
   )

@@ -7,7 +7,7 @@ import type {
 import type { PolicyTicket, Ticket } from '#shared/graphql/types.ts'
 import type { AppName } from '#shared/types/app.ts'
 import type { DeepPartial } from '#shared/types/utils.ts'
-import { generateObjectData } from '#tests/graphql/index.ts'
+import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import { initializeStore } from '#tests/support/components/initializeStore.ts'
 import { createArticleActions, createArticleTypes } from '../index.ts'
 import type { TicketActionAddOptions } from '../types.ts'

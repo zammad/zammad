@@ -12,7 +12,6 @@ export interface Props {
   linkExternal?: boolean
   icon?: string | (IconProps & HTMLAttributes)
   iconBg?: string
-  // TODO maybe change the name based on the usage
   information?: string | number
 }
 

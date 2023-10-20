@@ -5,7 +5,7 @@ import type { Scalars, Ticket } from '#shared/graphql/types.ts'
 import { OnlineNotificationDeleteDocument } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { generateObjectData } from '#tests/graphql/index.ts'
+import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import NotificationItem from '../NotificationItem.vue'
 import type { Props } from '../NotificationItem.vue'
 

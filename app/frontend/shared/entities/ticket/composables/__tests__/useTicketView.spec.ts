@@ -2,7 +2,7 @@
 
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { ref } from 'vue'
-import { generateObjectData } from '#tests/graphql/index.ts'
+import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import type { Ticket } from '#shared/graphql/types.ts'
 import { useTicketView } from '../useTicketView.ts'
 

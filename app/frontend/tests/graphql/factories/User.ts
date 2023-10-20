@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker'
 import type { Organization, User } from '#shared/graphql/types.ts'
 import type { DeepPartial } from '#shared/types/utils.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { getStoredMockedObject } from './index.ts'
+import { getStoredMockedObject } from '../builders/index.ts'
 
 export default (
   parent: any | undefined,
@@ -39,7 +39,6 @@ export default (
   } else if (userValue) {
     const organization = getStoredMockedObject<Organization>('Organization', 1)
     if (organization) {
-      // organization.m
       // if the organization already exists, add the user to it
       user.organization = organization
       const members = organization.members.edges

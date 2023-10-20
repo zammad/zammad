@@ -7,7 +7,7 @@ import {
   getIdFromGraphQLId,
 } from '#shared/graphql/utils.ts'
 import { faker } from '@faker-js/faker'
-import { updateGeneratedIds } from './utils.ts'
+import { updateGeneratedIds } from '../builders/utils.ts'
 
 const states: (() => DeepPartial<TicketState>)[] = [
   () => ({ id: convertToGraphQLId('TicketState', 1), name: 'new' }),

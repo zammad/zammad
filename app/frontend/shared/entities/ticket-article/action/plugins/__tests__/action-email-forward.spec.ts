@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { TicketArticle } from '#shared/graphql/types.ts'
-import { generateObjectData } from '#tests/graphql/index.ts'
+import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import { buildEmailForwardHeader } from '../email/forward.ts'
 
 describe('building header, when "forward" action is called', () => {

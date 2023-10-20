@@ -5,5 +5,5 @@ export {
   getGraphQLSubscriptionHandler,
   mockGraphQLResult,
   mockedApolloClient,
-} from './factories/mocks.ts'
-export { generateObjectData } from './factories/index.ts'
+} from './builders/mocks.ts'
+export { generateObjectData } from './builders/index.ts'

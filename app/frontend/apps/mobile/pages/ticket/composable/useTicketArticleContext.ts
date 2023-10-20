@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { PopupItemDescriptor } from '#mobile/components/CommonSectionPopup/index.ts'
+import type { PopupItemDescriptor } from '#mobile/components/CommonSectionPopup/types.ts'
 import { useDialog } from '#shared/composables/useDialog.ts'
 import { computed, nextTick, ref, shallowRef } from 'vue'
 import type {

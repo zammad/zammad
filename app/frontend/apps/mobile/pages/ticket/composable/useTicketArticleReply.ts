@@ -71,12 +71,12 @@ export const useTicketArticleReply = (
     return true
   }
 
-  const openArticleReplyDialog = ({
+  const openArticleReplyDialog = async ({
     updateFormLocation,
   }: ReplyDialogOptions) => {
     if (!ticket.value) return
 
-    articleReplyDialog.open({
+    return articleReplyDialog.open({
       name: articleReplyDialog.name,
       ticket,
       form,

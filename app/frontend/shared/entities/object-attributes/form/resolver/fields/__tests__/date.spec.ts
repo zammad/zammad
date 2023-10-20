@@ -9,7 +9,10 @@ describe('FieldResolverDate', () => {
       name: 'date',
       display: 'Date',
       dataOption: {
-        // TODO ...
+        future: false,
+        past: false,
+        diff: 0,
+        null: true,
       },
       isInternal: true,
     })

@@ -1,6 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 const path = require('path')
+const fs = require('fs')
+
+const pagesDir = path.resolve(__dirname, 'app/frontend/apps/mobile/pages')
+const pagesFolder = fs.readdirSync(pagesDir)
 
 module.exports = {
   root: true,
@@ -79,10 +83,18 @@ module.exports = {
       'error',
       {
         zones: [
+          // restrict import inside shared context from app context
           {
             target: './app/frontend/shared',
             from: './app/frontend/apps',
           },
+          // restrict imports between different pages folder
+          ...pagesFolder.map((page) => {
+            return {
+              target: `./app/frontend/apps/mobile/pages/!(${page})/**/*`,
+              from: `./app/frontend/apps/mobile/pages/${page}/**/*`,
+            }
+          }),
         ],
       },
     ],

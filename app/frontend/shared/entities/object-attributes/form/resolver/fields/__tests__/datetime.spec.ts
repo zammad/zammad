@@ -9,7 +9,12 @@ describe('FieldResolverDateTime', () => {
       name: 'datetime',
       display: 'DateTime',
       dataOption: {
-        // TODO ...
+        future: true,
+        past: false,
+        diff: null,
+        null: true,
+        translate: true,
+        permission: 'ticket.agent',
       },
       isInternal: true,
     })

@@ -115,7 +115,6 @@ describe('Form - Field - Select - Dialog', () => {
     ).toHaveClass('font-semibold')
 
     expect(
-      // TODO should work just with view.getByIconName('mobile-check') with Vitest 0.19
       wrapper.getByIconName((name, node) => {
         return (
           name === '#icon-mobile-check' &&

@@ -9,7 +9,11 @@ describe('FieldResolverRichtext', () => {
       name: 'body',
       display: 'Body',
       dataOption: {
-        // TODO ...
+        type: 'richtext',
+        maxlength: 150_000,
+        upload: true,
+        rows: 8,
+        null: true,
       },
       isInternal: true,
     })

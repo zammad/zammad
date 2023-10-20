@@ -2,7 +2,7 @@
 
 import type { Ticket } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { generateObjectData } from '#tests/graphql/index.ts'
+import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import type { Props } from '../ActivityMessage.vue'
 import ActivityMessage from '../ActivityMessage.vue'
