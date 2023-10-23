@@ -38,7 +38,7 @@
             "port": 25,
             "domain": "localhost",
             "enable_starttls_auto": true,
-            "openssl_verify_mode": "none"
+            "ssl_verify": false
           }
         }
       },
@@ -60,7 +60,7 @@
             "password": "zammad",
             "domain": "mail.test.dc.zammad.com",
             "enable_starttls_auto": true,
-            "openssl_verify_mode": "none"
+            "ssl_verify": false
           }
         }
       },
@@ -78,9 +78,10 @@
           "options": {
             "host": "mail",
             "port": 993,
-            "ssl": true,
             "user": "zammad@mail.test.dc.zammad.com",
-            "password": "zammad"
+            "password": "zammad",
+            "ssl": "ssl",
+            "ssl_verify": false
           }
         },
         "outbound": {
@@ -93,7 +94,7 @@
             "password": "zammad",
             "domain": "mail.test.dc.zammad.com",
             "enable_starttls_auto": true,
-            "openssl_verify_mode": "none"
+            "ssl_verify": false
           }
         }
       }

@@ -40,7 +40,7 @@
             "host": "mx1.example.com",
             "user": "not_existing",
             "password": "not_existing",
-            "ssl": true
+            "ssl": "ssl"
           }
         },
         "outbound": {

@@ -62,7 +62,7 @@
             "host": "mx1.example.com",
             "user": "some user",
             "password": "some pw",
-            "ssl": true
+            "ssl": "ssl"
           }
         },
         "outbound": {
