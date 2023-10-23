@@ -1,9 +1,14 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { FieldResolverTag } from '../tag.ts'
 
 describe('FieldResolverTag', () => {
   it('should return the correct field attributes', () => {
+    mockApplicationConfig({
+      tag_new: true,
+    })
+
     const fieldResolver = new FieldResolverTag({
       dataType: 'tag',
       name: 'tag',
@@ -20,7 +25,9 @@ describe('FieldResolverTag', () => {
       label: 'Tag',
       name: 'tag',
       required: false,
-      props: {},
+      props: {
+        canCreate: true,
+      },
       type: 'tags',
       internal: true,
     })

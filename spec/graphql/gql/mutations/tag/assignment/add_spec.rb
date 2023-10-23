@@ -3,30 +3,31 @@
 require 'rails_helper'
 
 RSpec.describe Gql::Mutations::Tag::Assignment::Add, :aggregate_failures, type: :graphql do
-  context 'when assigning a new tag', authenticated_as: :agent do
-    let(:agent) { create(:agent, groups: [object.group]) }
-    let(:query) do
-      <<~QUERY
-        mutation tagAssignmentAdd($tag: String!, $objectId: ID!) {
-          tagAssignmentAdd(tag: $tag, objectId: $objectId) {
-            success
-            errors {
-              message
-              field
-            }
+  let(:agent) { create(:agent, groups: [object.group]) }
+  let(:query) do
+    <<~QUERY
+      mutation tagAssignmentAdd($tag: String!, $objectId: ID!) {
+        tagAssignmentAdd(tag: $tag, objectId: $objectId) {
+          success
+          errors {
+            message
+            field
           }
         }
-      QUERY
-    end
-
-    let(:variables) do
-      {
-        tag:      tag,
-        objectId: gql.id(object),
       }
-    end
+    QUERY
+  end
 
-    let(:object) { create(:ticket) }
+  let(:variables) do
+    {
+      tag:      tag,
+      objectId: gql.id(object),
+    }
+  end
+
+  let(:object) { create(:ticket) }
+
+  context 'when assigning a new tag', authenticated_as: :agent do
     let(:tag) { 'tag1' }
 
     before do
@@ -85,6 +86,19 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Add, :aggregate_failures, type: 
           expect(gql.result.error_type).to eq(Exceptions::Forbidden)
         end
       end
+    end
+  end
+
+  context 'when tag creation is disabled', authenticated_as: :agent do
+    let(:tag) { SecureRandom.hex(4) }
+
+    before do
+      Setting.set('tag_new', false)
+      gql.execute(query, variables: variables)
+    end
+
+    it 'does not add the tag' do
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
     end
   end
 end

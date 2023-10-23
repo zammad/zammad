@@ -132,7 +132,8 @@ const processSearchKeydown = (event: KeyboardEvent) => {
   if (!filter.value) return
   if (['Enter', 'Tab', ','].includes(key)) {
     stopEvent(event)
-    createTag()
+
+    if (props.context.canCreate) createTag()
   }
 }
 </script>

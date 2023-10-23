@@ -63,5 +63,21 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       expect(Ticket.last.tag_list)
         .to eq sample_tags
     end
+
+    context 'when tag creation is disabled' do
+      before do
+        Setting.set('tag_new', false)
+      end
+
+      it 'does not adds tags when present' do
+        sample_tags = [Faker::Lorem.word]
+
+        ticket_data[:tags] = sample_tags
+
+        service.execute(ticket_data:)
+
+        expect(Ticket.last.tag_list).to eq([])
+      end
+    end
   end
 end

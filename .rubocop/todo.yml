@@ -63,6 +63,7 @@ Metrics/AbcSize:
     - 'app/controllers/search_controller.rb'
     - 'app/controllers/sessions_controller.rb'
     - 'app/controllers/settings_controller.rb'
+    - 'app/controllers/tags_controller.rb'
     - 'app/controllers/text_modules_controller.rb'
     - 'app/controllers/ticket_articles_controller.rb'
     - 'app/controllers/ticket_overviews_controller.rb'

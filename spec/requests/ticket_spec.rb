@@ -2576,4 +2576,27 @@ RSpec.describe 'Ticket', type: :request do
       )
     end
   end
+
+  describe 'Agents can create new tags even if prohibited by the settings #3501', authenticated_as: :agent do
+    let(:tag) { SecureRandom.hex(4) }
+
+    before do
+      Setting.set('tag_new', false)
+    end
+
+    it 'does create the ticket without tags' do
+      params = {
+        title:       'a new ticket #3',
+        group:       Group.first.name,
+        priority:    '2 normal',
+        state:       'new',
+        customer_id: customer.id,
+        tags:        tag,
+      }
+
+      post '/api/v1/tickets', params: params, as: :json
+      expect(response).to have_http_status(:created)
+      expect(Ticket.last.tag_list).to eq([])
+    end
+  end
 end

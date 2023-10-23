@@ -4,6 +4,7 @@ import { TagAssignmentUpdateDocument } from '#shared/entities/tags/graphql/mutat
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { waitUntil } from '#tests/support/utils.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import TicketTags from '../TicketTags.vue'
 
 beforeAll(async () => {
@@ -66,6 +67,60 @@ describe('TicketTags', () => {
     const tags = wrapper.getAllByRole('listitem')
     expect(tags).toHaveLength(1)
     expect(tags[0]).toHaveTextContent('tag2')
+  })
+
+  it('can not add new ticket tags when it is allowed', async () => {
+    mockApplicationConfig({
+      tag_new: false,
+    })
+    const wrapper = renderComponent(TicketTags, {
+      props: {
+        ticket: {
+          id: 1,
+          tags: ['tag1', 'tag2'],
+        },
+      },
+      form: true,
+      dialog: true,
+    })
+
+    const tagsField = wrapper.getByLabelText('Tags')
+
+    await wrapper.events.click(tagsField)
+
+    const filterInput = wrapper.getByPlaceholderText('Tag name…')
+    await wrapper.events.type(filterInput, 'pay')
+
+    expect(
+      wrapper.queryByRole('button', { name: 'Create tag' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('can add new ticket tags when it is allowed', async () => {
+    mockApplicationConfig({
+      tag_new: true,
+    })
+    const wrapper = renderComponent(TicketTags, {
+      props: {
+        ticket: {
+          id: 1,
+          tags: ['tag1', 'tag2'],
+        },
+      },
+      form: true,
+      dialog: true,
+    })
+
+    const tagsField = wrapper.getByLabelText('Tags')
+
+    await wrapper.events.click(tagsField)
+
+    const filterInput = wrapper.getByPlaceholderText('Tag name…')
+    await wrapper.events.type(filterInput, 'pay')
+
+    expect(
+      wrapper.getByRole('button', { name: 'Create tag' }),
+    ).toBeInTheDocument()
   })
 
   it('reset ticket tags again on update error', async () => {

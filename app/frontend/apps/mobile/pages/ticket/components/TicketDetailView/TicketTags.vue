@@ -74,6 +74,7 @@ const handleChangedTicketTags = (node: FormKitNode) => {
       name="tags"
       :label="__('Tags')"
       :plugins="[handleChangedTicketTags]"
+      :can-create="Boolean($c.tag_new)"
     ></FormKit>
   </FormGroup>
 </template>

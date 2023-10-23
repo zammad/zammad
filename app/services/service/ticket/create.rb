@@ -37,7 +37,11 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
   def assign_tags(ticket, tag_data)
     return if tag_data.blank?
 
-    tag_data.each { |tag| ticket.tag_add(tag.strip) }
+    tag_data.each do |tag|
+      next if !::Tag.tag_allowed?(object: 'Ticket', name: tag.strip, user_id: current_user.id)
+
+      ticket.tag_add(tag.strip)
+    end
   end
 
   # Desktop UI supplies this data from frontend

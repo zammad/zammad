@@ -199,10 +199,16 @@ returns
 =end
 
   def self.tag_list(data)
-    Tag.joins(:tag_item, :tag_object)
-       .where(o_id: data[:o_id], tag_objects: { name: data[:object] })
-       .reorder(:id)
-       .pluck('tag_items.name')
+    query = Tag.joins(:tag_item, :tag_object)
+
+    if data.key?(:object)
+      query = query.where(tag_objects: { name: data[:object] })
+    end
+    if data.key?(:o_id)
+      query = query.where(o_id: data[:o_id])
+    end
+
+    query.reorder('tags.id, tag_items.name').pluck('tag_items.name')
   end
 
 =begin
@@ -236,5 +242,16 @@ references # [['Ticket', 1], ['Ticket', 4], ...]
     output = output.where(tag_objects: { name: object }) if object.present?
 
     output.pluck(:'tag_objects.name', :o_id)
+  end
+
+  def self.tag_allowed?(object:, name:, user_id: 1)
+    return true if Setting.get('tag_new').present?
+    return true if User.lookup(id: user_id).permissions?('admin.tag')
+
+    allowed_tags = Auth::RequestCache.fetch_value("tag_list/#{Tag.latest_change}") do
+      tag_list(object: object)
+    end
+
+    allowed_tags.include?(name)
   end
 end

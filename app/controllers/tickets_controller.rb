@@ -168,6 +168,8 @@ class TicketsController < ApplicationController
       if params[:tags].present?
         tags = params[:tags].split(',')
         tags.each do |tag|
+          next if !::Tag.tag_allowed?(object: 'Ticket', name: tag, user_id: UserInfo.current_user_id)
+
           ticket.tag_add(tag)
         end
       end

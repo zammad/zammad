@@ -276,6 +276,25 @@ describe('creating new tag', () => {
     },
   )
 
+  it.each(['{Enter}', '{Tab}', ','])(
+    'can not add new tag with "%s" key when disabled',
+    async (key) => {
+      const view = renderFieldTags({ canCreate: false })
+
+      const node = view.getByLabelText('Tags')
+      await view.events.click(node)
+
+      const filterInput = view.getByPlaceholderText('Tag name…')
+
+      await view.events.type(filterInput, `pay${key}`)
+
+      expect(
+        view.queryByRole('option', { name: 'pay' }),
+      ).not.toBeInTheDocument()
+      expect(filterInput).toHaveDisplayValue('pay')
+    },
+  )
+
   it('cannot input comma', async () => {
     const view = renderFieldTags({ canCreate: true })
 
