@@ -119,6 +119,28 @@ RSpec.describe Import::OTRS::StateFactory do
     expect(state_pending_auto_close_p.next_state_id).to eq(Ticket::State.find_by(name: 'closed successful').id)
   end
 
+  context 'when some default otrs states not exists' do
+    let(:state_backend_param) do
+      states = %w[new open merged pending_reminder pending_auto_close_p pending_auto_close_n pending_auto_close_p removed closed_other]
+
+      state_backend_param = []
+      states.each do |state|
+        state_backend_param.push(load_state_json(state))
+      end
+      state_backend_param
+    end
+
+    it 'use fallback for next state for pending auto states' do
+      described_class.import(state_backend_param)
+
+      state_pending_auto_close_n = Ticket::State.find_by(name: 'pending auto close-')
+      state_pending_auto_close_p = Ticket::State.find_by(name: 'pending auto close+')
+
+      expect(state_pending_auto_close_n.next_state_id).to eq(Ticket::State.find_by(name: 'closed other').id)
+      expect(state_pending_auto_close_p.next_state_id).to eq(Ticket::State.find_by(name: 'closed other').id)
+    end
+  end
+
   context 'changing Ticket::State IDs' do
     it 'updates Overviews' do
       name     = 'My Pending Reached Tickets'

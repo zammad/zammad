@@ -39,7 +39,7 @@ module Import
         state.next_state_id = ::Ticket::State.find_by(name: close_state_name)&.id
 
         if state.next_state_id.blank?
-          state.next_state_id = ::Ticket::StateType.find_by(name: 'closed')&.first&.id
+          state.next_state_id = ::Ticket::State.by_category(:closed)&.first&.id
         end
 
         state.save
