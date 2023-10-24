@@ -129,7 +129,10 @@ class _i18nSingleton extends Spine.Module
   dir: ->
     @dirToSet
 
-  get: ->
+  get: (fallback = false) ->
+    if fallback and !@locale
+      return 'en-us'
+
     @locale
 
   set: (localeToSet) ->

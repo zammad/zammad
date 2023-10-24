@@ -237,7 +237,7 @@ class EmailReply extends App.Controller
       day: 'numeric'
       year: 'numeric'
     }
-    locale = App.i18n.get() || 'en-US'
+    locale = App.i18n.get(true)
     try
       new Date(date_string).toLocaleTimeString(locale, options)
     catch e

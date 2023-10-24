@@ -25,7 +25,7 @@ class App.KnowledgeBaseLocale extends App.Model
     }
 
   @detect: (knowledge_base) ->
-    locale    = App.Locale.findByAttribute('locale', App.i18n.get())
+    locale    = App.Locale.findByAttribute('locale', App.i18n.get(true))
 
     kb_locale = App.KnowledgeBaseLocale
       .all()

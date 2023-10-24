@@ -8,7 +8,7 @@ class TranslationSupport extends App.Controller
       return if !@Config.get('system_init_done')
 
       # do not show for English locales
-      return if App.i18n.get().substr(0,2) is 'en'
+      return if App.i18n.get(true).substr(0,2) is 'en'
 
       # only show for admins
       return if !@permissionCheck('admin.translation')
