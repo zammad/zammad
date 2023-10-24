@@ -58,9 +58,12 @@ export default class QueryHandler<
       options: defaultOptions,
       document: { value: node },
     } = this.operationResult
+    if (import.meta.env.DEV && !node) {
+      throw new Error(`No query document available.`)
+    }
     if (import.meta.env.DEV && !('load' in this.operationResult)) {
       let error = `${getOperationName(
-        node,
+        node!,
       )} is initialized with "useQuery" instead of "useLazyQuery". `
       error += `If you need to get the value immediately with ".query()", use "useLazyQuery" instead to not start extra network requests. `
       error += `"useQuery" should be used inside components to dynamically react to changed data.`
@@ -83,7 +86,7 @@ export default class QueryHandler<
         ...defaultOptionsValue,
         ...options,
         fetchPolicy,
-        query: node,
+        query: node!,
         context: {
           ...defaultOptionsValue.context,
           ...options.context,
@@ -189,14 +192,18 @@ export default class QueryHandler<
         document?: unknown,
         variables?: TVariables,
         options?: UseQueryOptions<TResult, TVariables>,
-      ) => void
+      ) => false | Promise<TResult>
     }
 
     if (typeof operation.load !== 'function') {
       return
     }
 
-    operation.load(undefined, variables, options)
+    const result = operation.load(undefined, variables, options)
+    if (result instanceof Promise) {
+      // error is handled in BaseHandler
+      result.catch(() => {})
+    }
   }
 
   public start(): void {

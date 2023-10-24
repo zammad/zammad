@@ -50,6 +50,7 @@ export default (
         node: userValue as any,
       })
       organization.members.totalCount += 1
+      organization.members.pageInfo ??= {} as any
       organization.members.pageInfo.startCursor = members[0]?.cursor || cursor
       organization.members.pageInfo.endCursor = cursor
     } else {

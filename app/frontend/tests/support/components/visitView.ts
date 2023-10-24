@@ -32,10 +32,19 @@ Object.defineProperty(window, 'fetch', {
 
 const html = String.raw
 
-export const visitView = async (href: string) => {
+interface VisitViewOptions {
+  mockApollo?: boolean
+}
+
+export const visitView = async (
+  href: string,
+  options: VisitViewOptions = { mockApollo: true },
+) => {
   const { routes } = await import('#mobile/router/index.ts')
 
-  mockApolloClient([])
+  if (options.mockApollo) {
+    mockApolloClient([])
+  }
 
   // remove LayoutMain layout, keep only actual content
   if (routes.at(-1)?.name === 'Main') {

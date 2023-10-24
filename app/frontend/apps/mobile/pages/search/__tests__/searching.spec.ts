@@ -1,36 +1,34 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { SearchQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { mockGraphQLResult } from '#tests/graphql/builders/mocks.ts'
+import { getGraphQLResult } from '#tests/graphql/index.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
 import { setupView } from '#tests/support/mock-user.ts'
-import {
-  nullableMock,
-  waitUntil,
-  waitUntilApisResolved,
-} from '#tests/support/utils.ts'
-import { mockSearchOverview } from '../graphql/mocks/mockSearchOverview.ts'
+import { SearchDocument } from '../graphql/queries/searchOverview.api.ts'
 
 describe('visiting search page', () => {
-  let mockSearchApi: MockGraphQLInstance
-
   beforeEach(() => {
-    mockSearchApi = mockSearchOverview([])
     setupView('agent')
   })
 
   it('doesnt search if no type is selected', async () => {
-    const view = await visitView('/search')
+    const view = await visitView('/search', { mockApollo: false })
 
     const searchInput = view.getByPlaceholderText('Search…')
     await view.events.type(searchInput, 'search')
 
-    expect(mockSearchApi.spies.resolve).not.toHaveBeenCalled()
+    expect(getGraphQLResult(SearchDocument)).toBeUndefined()
   })
 
   it('allows searching', async () => {
-    const view = await visitView('/search')
+    const view = await visitView('/search', { mockApollo: false })
+
+    const mocker = mockGraphQLResult<SearchQuery>(SearchDocument, {
+      search: [],
+    })
 
     const searchInput = view.getByPlaceholderText('Search…')
 
@@ -48,9 +46,10 @@ describe('visiting search page', () => {
     // focus shifted to tab with the same type
     expect(view.getByRole('tab', { name: 'Users' })).toHaveFocus()
 
-    await waitUntil(() => mockSearchApi.calls.resolve)
+    const mockCalls = await mocker.waitForCalls()
 
-    expect(mockSearchApi.spies.resolve).toHaveBeenCalledWith({
+    expect(mockCalls).toHaveLength(1)
+    expect(mockCalls[0].variables).toEqual({
       onlyIn: 'User',
       search: 'search',
       limit: 30,
@@ -60,7 +59,8 @@ describe('visiting search page', () => {
 
     await view.events.click(view.getByText('Organizations'))
 
-    expect(mockSearchApi.spies.resolve).toHaveBeenCalledWith({
+    expect(mockCalls).toHaveLength(2)
+    expect(mockCalls[1].variables).toEqual({
       onlyIn: 'Organization',
       search: 'search',
       limit: 30,
@@ -70,7 +70,9 @@ describe('visiting search page', () => {
   })
 
   it('renders correctly if queries are passed down', async () => {
-    const view = await visitView('/search/invalid?search=search')
+    const view = await visitView('/search/invalid?search=search', {
+      mockApollo: false,
+    })
 
     expect(view.getByPlaceholderText('Search…')).toHaveDisplayValue('search')
     expect(view.getByTestId('selectTypesSection')).toBeInTheDocument()
@@ -79,7 +81,7 @@ describe('visiting search page', () => {
   it('opens with type, if there is only single type', async () => {
     // customer can only search for tickets
     setupView('customer')
-    await visitView('/search')
+    await visitView('/search', { mockApollo: false })
     expect(getTestRouter().currentRoute.value.fullPath).toBe('/search/ticket')
   })
 })
@@ -87,36 +89,39 @@ describe('visiting search page', () => {
 describe('avatars', () => {
   it('renders user as inactive', async () => {
     setupView('agent')
-    const mockSearch = mockSearchOverview([
-      nullableMock({
-        __typename: 'User',
-        id: convertToGraphQLId('User', 100),
-        internalId: 100,
-        updatedAt: new Date().toISOString(),
-        active: false,
-        vip: true,
-        firstname: 'Max',
-        lastname: 'Mustermann',
-      }),
-      nullableMock({
-        __typename: 'User',
-        id: convertToGraphQLId('User', 200),
-        internalId: 200,
-        updatedAt: new Date().toISOString(),
-        outOfOffice: true,
-        active: true,
-        image: 'jon.png',
-        firstname: 'Jon',
-        lastname: 'Doe',
-      }),
-    ])
+    mockGraphQLResult<SearchQuery>(SearchDocument, {
+      search: [
+        {
+          __typename: 'User',
+          id: convertToGraphQLId('User', 100),
+          internalId: 100,
+          updatedAt: new Date().toISOString(),
+          active: false,
+          vip: true,
+          firstname: 'Max',
+          lastname: 'Mustermann',
+        },
+        {
+          __typename: 'User',
+          id: convertToGraphQLId('User', 200),
+          internalId: 200,
+          updatedAt: new Date().toISOString(),
+          outOfOffice: true,
+          active: true,
+          vip: false,
+          image: 'jon.png',
+          firstname: 'Jon',
+          lastname: 'Doe',
+        },
+      ],
+    })
 
-    const view = await visitView('/search/user?search=max')
-
-    await waitUntilApisResolved(mockSearch)
+    const view = await visitView('/search/user?search=max', {
+      mockApollo: false,
+    })
 
     expect(
-      view.getByLabelText('Avatar (Max Mustermann) (VIP)'),
+      await view.findByLabelText('Avatar (Max Mustermann) (VIP)'),
     ).toBeAvatarElement({
       active: false,
       vip: true,
@@ -135,7 +140,10 @@ describe('avatars', () => {
 
 test('correctly redirects from hash-based routes', async () => {
   setupView('agent')
-  await visitView('/#search/string')
+  mockGraphQLResult<SearchQuery>(SearchDocument, {
+    search: [],
+  })
+  await visitView('/#search/string', { mockApollo: false })
   const router = getTestRouter()
   const route = router.currentRoute.value
   expect(route.name).toBe('SearchOverview')

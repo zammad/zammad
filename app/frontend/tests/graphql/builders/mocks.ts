@@ -36,8 +36,15 @@ import {
   mockOperation,
 } from './index.ts'
 
+interface MockCall<T = any> {
+  document: DocumentNode
+  result: T
+  variables: Record<string, any>
+}
+
 const mockDefaults = new Map<string, any>()
 const mockResults = new Map<string, any>()
+const mockCalls = new Map<string, MockCall[]>()
 const queryStrings = new WeakMap<DocumentNode, string>()
 
 const stripNames = (query: DocumentNode) => {
@@ -115,6 +122,18 @@ export const getGraphQLResult = <T>(document: DocumentNode): { data: T } => {
   return mockResults.get(requestToKey(document))
 }
 
+export const getGraphQLMockCalls = <T>(
+  document: DocumentNode,
+): MockCall<T>[] => {
+  return mockCalls.get(requestToKey(document)) || []
+}
+
+export const waitForGraphQLMockCalls = async <T>(
+  document: DocumentNode,
+): Promise<MockCall<T>[]> => {
+  return vi.waitUntil(() => getGraphQLMockCalls<T>(document))
+}
+
 export const mockGraphQLResult = <T extends Record<string, any>>(
   document: DocumentNode,
   defaults:
@@ -124,11 +143,16 @@ export const mockGraphQLResult = <T extends Record<string, any>>(
   const key = requestToKey(document)
   mockDefaults.set(key, defaults)
   return {
-    getResult: getGraphQLResult,
+    getResult: () => getGraphQLResult<T>(document),
     updateDefaults: (defaults: DeepPartial<T>) => {
       mockDefaults.set(key, defaults)
     },
+    waitForCalls: () => waitForGraphQLMockCalls<T>(document),
   }
+}
+
+export const waitForGraphQLResult = async <T>(document: DocumentNode) => {
+  return vi.waitUntil(() => getGraphQLResult<T>(document))
 }
 
 export interface TestSubscriptionHandler<T extends Record<string, any> = any> {
@@ -156,6 +180,7 @@ afterEach(() => {
   mockResults.clear()
   mockSubscriptionHanlders.clear()
   mockDefaults.clear()
+  mockCalls.clear()
 })
 
 const getInputObjectType = (variableNode: TypeNode): string | null => {
@@ -249,6 +274,9 @@ class MockLink extends ApolloLink {
       const returnResult = mockOperation(query, variables, defaults)
       let result = { data: returnResult }
       mockResults.set(queryKey, result)
+      const calls = mockCalls.get(queryKey) || []
+      calls.push({ document: query, result: result.data, variables })
+      mockCalls.set(queryKey, calls)
       if (operation === OperationTypeNode.MUTATION) {
         result = { data: stripQueryData(definition, result.data) }
       }

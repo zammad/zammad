@@ -12,7 +12,9 @@ import {
 import { Kind, type DocumentNode, OperationTypeNode } from 'graphql'
 import { createRequire } from 'node:module'
 import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
+import { uniqBy } from 'lodash-es'
 import { generateGraphqlMockId, hasNodeParent, setNodeParent } from './utils.ts'
+import logger from './logger.ts'
 
 const _require = createRequire(import.meta.url)
 const introspection = _require('../../../../graphql/graphql_introspection.json')
@@ -33,12 +35,6 @@ const factoriesModules = import.meta.glob<Resolver>('../factories/*.ts', {
   eager: true,
   import: 'default',
 })
-
-const log = (...mesages: unknown[]) => {
-  if (process.env.VITEST_LOG_GQL_FACTORY) {
-    console.log(...mesages)
-  }
-}
 
 const storedObjects = new Map<string, any>()
 
@@ -77,7 +73,7 @@ interface SchemaEnumType {
 }
 
 interface SchemaObjectFieldType {
-  kind: 'OBJECT' | 'ENUM' | 'LIST' | 'NON_NULL' | 'INPUT_OBJECT'
+  kind: 'OBJECT' | 'ENUM' | 'LIST' | 'NON_NULL' | 'INPUT_OBJECT' | 'UNION'
   name: string
   ofType: null | SchemaObjectFieldType
 }
@@ -98,23 +94,36 @@ interface SchemaScalarType {
   name: string
 }
 
+interface SchemaUnionType {
+  kind: 'UNION'
+  possibleTypes: SchemaType[]
+  name: string
+}
+
 type SchemaType =
   | SchemaObjectType
   | SchemaObjectFieldType
   | SchemaEnumType
   | SchemaScalarType
   | SchemaObjectScalarFieldType
+  | SchemaUnionType
 
 const schemaTypes = introspection.data.__schema.types as SchemaType[]
 
+const queriesTypes = {
+  query: 'Queries',
+  mutation: 'Mutations',
+  subscription: 'Subscriptions',
+}
+
 const queries = schemaTypes.find(
-  (type) => type.kind === 'OBJECT' && type.name === 'Queries',
+  (type) => type.kind === 'OBJECT' && type.name === queriesTypes.query,
 ) as SchemaObjectType
 const mutations = schemaTypes.find(
-  (type) => type.kind === 'OBJECT' && type.name === 'Mutations',
+  (type) => type.kind === 'OBJECT' && type.name === queriesTypes.mutation,
 ) as SchemaObjectType
 const subscriptions = schemaTypes.find(
-  (type) => type.kind === 'OBJECT' && type.name === 'Subscriptions',
+  (type) => type.kind === 'OBJECT' && type.name === queriesTypes.subscription,
 ) as SchemaObjectType
 
 const schemas = {
@@ -184,7 +193,11 @@ const isList = (definitionType: SchemaType): boolean => {
 }
 
 export const getFieldData = (definitionType: SchemaType): any => {
-  if (definitionType.kind === 'SCALAR' || definitionType.kind === 'OBJECT')
+  if (
+    definitionType.kind === 'SCALAR' ||
+    definitionType.kind === 'OBJECT' ||
+    definitionType.kind === 'UNION'
+  )
     return definitionType
   if (definitionType.kind === 'ENUM')
     return getEnumDefinition(definitionType.name)
@@ -195,7 +208,7 @@ const getFieldInformation = (definitionType: SchemaType) => {
   const list = isList(definitionType)
   const field = getFieldData(definitionType)
   if (!field) {
-    log(definitionType)
+    console.dir(definitionType, { depth: null })
     throw new Error(`cannot find type definition for ${definitionType.name}`)
   }
   return {
@@ -271,6 +284,64 @@ const populateObjectFromVariables = (value: any, meta: ResolversMeta) => {
   }
 }
 
+const getObjectDefinitionFromUnion = (fieldDefinition: any) => {
+  if (fieldDefinition.kind === 'UNION') {
+    const unionDefinition = getUnionDefinition(fieldDefinition.name)
+    const randomObjectDefinition = faker.helpers.arrayElement(
+      unionDefinition.possibleTypes,
+    )
+    return getObjectDefinition(randomObjectDefinition.name)
+  }
+  return fieldDefinition
+}
+
+const buildObjectFromInformation = (
+  parent: any,
+  fieldName: string,
+  { list, field }: { list: boolean; field: any },
+  defaults: any,
+  meta: ResolversMeta,
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+) => {
+  if (field.kind === 'UNION' && !defaults) {
+    const factory = factories[field.name as 'Avatar']
+    if (factory) {
+      defaults = list
+        ? faker.helpers.multiple(() => factory(parent, undefined, meta), {
+            count: { min: 1, max: 5 },
+          })
+        : factory(parent, undefined, meta)
+    }
+  }
+  if (!list) {
+    const typeDefinition = getObjectDefinitionFromUnion(field)
+    return generateGqlValue(parent, fieldName, typeDefinition, defaults, meta)
+  }
+  if (defaults) {
+    const isUnion = field.kind === 'UNION'
+    const builtList = defaults.map((item: any) => {
+      const actualFieldType =
+        isUnion && item.__typename
+          ? getObjectDefinition(item.__typename)
+          : field
+      return generateGqlValue(parent, fieldName, actualFieldType, item, meta)
+    })
+    if (typeof builtList[0] === 'object' && builtList[0]?.id) {
+      return uniqBy(builtList, 'id')
+    }
+    return builtList
+  }
+  const typeDefinition = getObjectDefinitionFromUnion(field)
+  const builtList = faker.helpers.multiple(
+    () => generateGqlValue(parent, fieldName, typeDefinition, undefined, meta),
+    { count: { min: 1, max: 5 } },
+  )
+  if (typeof builtList[0] === 'object' && builtList[0]?.id) {
+    return uniqBy(builtList, 'id')
+  }
+  return builtList
+}
+
 const generateObject = (
   parent: Record<string, any> | undefined,
   definition: SchemaObjectType,
@@ -278,7 +349,7 @@ const generateObject = (
   meta: ResolversMeta,
   // eslint-disable-next-line sonarjs/cognitive-complexity
 ): Record<string, any> | null => {
-  log(
+  logger.log(
     'creating',
     definition.name,
     'from',
@@ -311,6 +382,9 @@ const generateObject = (
   if (factoryCached !== undefined) {
     return factoryCached ? deepMerge(factoryCached, defaults) : factoryCached
   }
+  if (value.id) {
+    storedObjects.set(value.id, value)
+  }
   const needUpdateTotalCount =
     type.endsWith('Connection') && !('totalCount' in value)
   definition.fields!.forEach((field) => {
@@ -329,21 +403,13 @@ const generateObject = (
       value[name] = null
       return
     }
-    const { list, field: fieldType } = getFieldInformation(field.type)
-    if (list) {
-      if (name in value) {
-        value[name] = value[name].map((item: any) => {
-          return generateGqlValue(value, name, fieldType, item, meta)
-        })
-      } else {
-        value[name] = faker.helpers.multiple(
-          () => generateGqlValue(value, name, fieldType, undefined, meta),
-          { count: { min: 1, max: 5 } },
-        )
-      }
-    } else {
-      value[name] = generateGqlValue(value, name, fieldType, value[name], meta)
-    }
+    value[name] = buildObjectFromInformation(
+      value,
+      name,
+      getFieldInformation(field.type),
+      value[name],
+      meta,
+    )
     if (meta.cached && name === 'id') {
       storedObjects.set(value.id, value)
     }
@@ -366,6 +432,16 @@ export const getObjectDefinition = (name: string) => {
   ) as SchemaObjectType
   if (!definition) {
     throw new Error(`Object definition not found for ${name}`)
+  }
+  return definition
+}
+
+export const getUnionDefinition = (name: string) => {
+  const definition = schemaTypes.find(
+    (type) => type.kind === 'UNION' && type.name === name,
+  ) as SchemaUnionType
+  if (!definition) {
+    throw new Error(`Union definition not found for ${name}`)
   }
   return definition
 }
@@ -404,7 +480,7 @@ const generateGqlValue = (
   if (typeDefinition.kind === 'ENUM') return generateEnumValue(typeDefinition)
   if (typeDefinition.kind === 'SCALAR')
     return getScalarValue(parent, fieldName, typeDefinition)
-  log(typeDefinition)
+  logger.log(typeDefinition)
   throw new Error(`wrong definition for ${typeDefinition.name}`)
 }
 
@@ -434,56 +510,25 @@ export const mockOperation = (
   if (definition.kind !== Kind.OPERATION_DEFINITION) {
     throw new Error(`${(definition as any).name} is not an operation`)
   }
-  const { operation, name, selectionSet } = definition
+  const { operation, name } = definition
   const operationName = name!.value!
   const operationType = getOperationDefinition(operation, operationName)
-  const query: any = {}
+  const query: any = { __typename: queriesTypes[operation] }
   results.set(document, query)
   const rootName = operationType.name
-  log(`mocking ${rootName}`)
+  logger.log(`[MOCKER] mocking "${rootName}" ${operation}`)
 
-  const queryValueDefinition = getObjectDefinition(
-    getFieldInformation(operationType.type).field.name,
+  query[rootName] = buildObjectFromInformation(
+    query,
+    rootName,
+    getFieldInformation(operationType.type),
+    defaults?.[rootName],
+    {
+      document,
+      variables,
+      cached: true,
+    },
   )
-
-  if (selectionSet.selections.length === 1) {
-    const selection = selectionSet.selections[0]
-    if (selection.kind !== Kind.FIELD) {
-      throw new Error(
-        `unsupported selection kind ${selectionSet.selections[0].kind}`,
-      )
-    }
-    if (selection.name.value !== rootName) {
-      throw new Error(
-        `unsupported selection name ${selection.name.value} (${operation} is ${operationType.name})`,
-      )
-    }
-    query[rootName] = generateObject(
-      query,
-      queryValueDefinition,
-      defaults?.[rootName],
-      { document, variables, cached: true },
-    )
-  } else {
-    query[rootName] = {}
-
-    selectionSet.selections.forEach((selection) => {
-      if (selection.kind !== Kind.FIELD) {
-        throw new Error(`unsupported selection kind ${selection.kind}`)
-      }
-      const operationType = getOperationDefinition(operation, operationName)
-      const fieldName = selection.alias?.value || selection.name.value
-      const operationDefinition = getObjectDefinition(
-        getFieldInformation(operationType.type).field.name,
-      )
-      query[rootName][fieldName] = generateObject(
-        query[rootName],
-        operationDefinition,
-        defaults?.[rootName][fieldName],
-        { document, variables, cached: true },
-      )
-    })
-  }
 
   return query
 }
