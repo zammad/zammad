@@ -302,6 +302,10 @@ class SessionsController < ApplicationController
     # https://github.com/zammad/zammad/issues/4263
     config['auth_saml_display_name'] = Setting.get('auth_saml_credentials')[:display_name]
 
+    # Include the flag for JSON column type support (currently only on PostgreSQL backend).
+    config['column_type_json_supported'] =
+      ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'postgresql'
+
     # Announce searchable models to the front end.
     config['models_searchable'] = Models.searchable.map(&:to_s)
 

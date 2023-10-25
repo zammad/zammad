@@ -184,7 +184,7 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
     )
 
     # remove filter
-    item.off('click.application_selector', '.js-remove').on('click.application_selector', '.js-remove', (e) =>
+    item.off('click.application_selector', '.filter-control.js-remove').on('click.application_selector', '.filter-control.js-remove', (e) =>
       return if $(e.currentTarget).hasClass('is-disabled')
 
       element = $(e.target).closest('.js-filterElement')
@@ -497,9 +497,9 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
     conditions = elementFull.find('.js-filterElement').not('[data-subclause]')
 
     if conditions.length > 1
-      conditions.find('.js-remove').removeClass('is-disabled')
+      conditions.find('.filter-control.js-remove').removeClass('is-disabled')
     else
-      conditions.find('.js-remove').addClass('is-disabled')
+      conditions.find('.filter-control.js-remove').addClass('is-disabled')
 
     subclauses = elementFull.find('.js-filterElement[data-subclause][data-level]')
 
@@ -511,9 +511,9 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
       , '.js-filterElement').not('[data-subclause]')
 
       if nestedConditions.length and conditions.length is nestedConditions.length
-        subclause.find('.js-remove').addClass('is-disabled')
+        subclause.find('.filter-control.js-remove').addClass('is-disabled')
       else
-        subclause.find('.js-remove').removeClass('is-disabled')
+        subclause.find('.filter-control.js-remove').removeClass('is-disabled')
 
   @toggleSubclauseDisableOnMaxLevels: (elementFull) ->
     return if !@maxNestedLevels()

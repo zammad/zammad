@@ -1,10 +1,11 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import getFieldResolver from '../getFieldResolver.ts'
 
 describe('object attribute resolver available', () => {
   it('should return the correct field resolver', () => {
-    const fieldResolver = getFieldResolver({
+    const fieldResolver = getFieldResolver(EnumObjectManagerObjects.Ticket, {
       dataType: 'input',
       name: 'title',
       display: 'Title',

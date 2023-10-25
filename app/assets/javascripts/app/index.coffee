@@ -51,9 +51,18 @@ class App extends Spine.Controller
 
   # define print name helper
   @viewPrintItem: (item, attributeConfig = {}, valueRef, table, object) ->
+
+    # Show all "empty" values as a simple dash (-):
+    #   - undefined
+    #   - empty string
+    #   - null
+    #   - empty object ({})
+    #   - empty array ([] or [''])
     return '-' if item is undefined
     return '-' if item is ''
     return '-' if item is null
+    return '-' if typeof item isnt 'function' and _.isObject(item) and _.isEmpty(item)
+    return '-' if _.isArray(item) and (_.isEmpty(item) or _.isEmpty(_.filter(item, (i) -> i isnt '')))
     result = ''
     items = [item]
     if _.isArray(item)
@@ -86,8 +95,10 @@ class App extends Spine.Controller
           resultLocal = item.displayNameLong()
         else if item.displayName
           resultLocal = item.displayName()
-        else
+        else if not _.isUndefined(item.name)
           resultLocal = item.name
+        else
+          resultLocal = item.label
 
       # execute callback on content
       if attributeConfig.callback

@@ -21,6 +21,7 @@ import useSelectOptions from '#shared/composables/useSelectOptions.ts'
 import type {
   AutoCompleteOption,
   AutoCompleteProps,
+  AutocompleteSelectValue,
 } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
 import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
 
@@ -34,7 +35,7 @@ const props = defineProps<{
 
 const contextReactive = toRef(props, 'context')
 
-const { isCurrentValue } = useValue(contextReactive)
+const { isCurrentValue } = useValue<AutocompleteSelectValue>(contextReactive)
 
 const emit = defineEmits<{
   (e: 'updateOptions', options: AutoCompleteOption[]): void
@@ -101,6 +102,14 @@ const AutocompleteSearchDocument = gql`
   ${props.context.gqlQuery}
 `
 
+const additionalQueryParams = () => {
+  if (typeof props.context.additionalQueryParams === 'function') {
+    return props.context.additionalQueryParams()
+  }
+
+  return props.context.additionalQueryParams || {}
+}
+
 const autocompleteQueryHandler = new QueryHandler(
   useLazyQuery(
     AutocompleteSearchDocument,
@@ -108,7 +117,7 @@ const autocompleteQueryHandler = new QueryHandler(
       input: {
         query: debouncedFilter.value || props.context.defaultFilter || '',
         limit: props.context.limit,
-        ...(props.context.additionalQueryParams || {}),
+        ...(additionalQueryParams() || {}),
       },
     }),
     () => ({

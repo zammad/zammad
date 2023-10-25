@@ -1,18 +1,30 @@
-<div class="dropdown-toggle<%=" tokenfield form-control" if @attribute.multiple %> <% if @attribute.disabled: %> is-disabled<% end %>" data-toggle="dropdown">
+<div class="dropdown-toggle<%=" tokenfield form-control" if @attribute.multiple %> <% if @attribute.disabled: %> is-disabled<% end %>" data-toggle="dropdown" data-name="<%= @attribute.nameRaw or @attribute.name %>">
   <% if @attribute.multiple: %>
-    <select multiple class="js-shadow hide" name="<%- @attribute.name %>" tabindex="-1" <% if @attribute.disabled: %> disabled<% end %>>
-      <% if @attribute.value: %>
-        <% for option in @attribute.value: %>
-          <option value="<%= option.value %>" selected><%= option.name %></option>
+    <% if @attribute.valueType isnt 'json': %>
+      <select multiple class="js-shadow hide" name="<%- @attribute.name %>" tabindex="-1" <% if @attribute.disabled: %> disabled<% end %>>
+        <% if @attribute.value: %>
+          <% for option in @attribute.value: %>
+            <option value="<%= option.value %>" selected><%= option.name %></option>
+          <% end %>
         <% end %>
-      <% end %>
-    </select>
+      </select>
+    <% else: %>
+      <input
+        class="searchableSelect-shadow form-control js-shadow"
+        <% if @attribute.id: %>id="<%= @attribute.id %>"<% end %>
+        name="<%= @attribute.name %>"
+        <%= @attribute.autofocus %>
+        value="<%= @attribute.valueRaw or @attribute.value %>"
+        tabindex="-1"
+        <% if @attribute.disabled: %> disabled<% end %>
+      >
+    <% end %>
     <%- @tokens %>
     <input
       class="searchableSelect-main token-input form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
       placeholder="<%= @attribute.placeholder %>"
       value
-      name="<%- @attribute.name %>_completion"
+      name="<%= @attribute.nameRaw or @attribute.name %>_completion"
       autocomplete="off"
       <% if @attribute.disabled: %> disabled<% end %>
     >
@@ -22,15 +34,15 @@
       <% if @attribute.id: %>id="<%= @attribute.id %>"<% end %>
       name="<%= @attribute.name %>"
       <%= @attribute.autofocus %>
-      value="<%= @attribute.value %>"
+      value="<%= @attribute.valueRaw or @attribute.value %>"
       tabindex="-1"
       <% if @attribute.disabled: %> disabled<% end %>
     >
     <input
-      class="searchableSelect-main form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
+      class="searchableSelect-main <% if @attribute.ajax: %>searchableSelect-main--with-clear-button<% end %> form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
       placeholder="<%= @attribute.placeholder %>"
       value="<%= @attribute.valueName %>"
-      title="<%= @attribute.displayName %>"
+      title="<%= @attribute.displayName or @attribute.valueName %>"
       autocomplete="off"
       <% if @attribute.disabled: %> disabled<% end %>
     >
@@ -40,7 +52,7 @@
     <span class="searchableSelect-autocomplete-visible js-autocomplete-visible"></span>
   </div>
   <% if @attribute.ajax and not @attribute.multiple and not @attribute.disabled: %>
-    <div role="button" title="<%= @T('Clear Selection') %>" tabindex="0" class="dropdown-clear js-clear <% if not @attribute.value: %>hide<% end %>">
+    <div role="button" title="<%= @T('Clear Selection') %>" tabindex="0" class="dropdown-clear <% if @attribute.showArrowIcon: %>dropdown-clear--with-arrow-icon<% end %> js-clear <% if not @attribute.value or _.isEmpty(@attribute.value): %>hide<% end %>">
       <%- @Icon('diagonal-cross') %>
     </div>
   <% end %>

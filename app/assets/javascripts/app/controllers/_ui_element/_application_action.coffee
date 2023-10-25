@@ -91,6 +91,9 @@ class App.UiElement.ApplicationAction
             if !row.readonly
               config = _.clone(row)
 
+              config.objectName    = groupMeta.model
+              config.attributeName = config.name
+
               # disable uploads in richtext attributes
               if attribute.no_richtext_uploads
                 if config.tag is 'richtext'

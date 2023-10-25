@@ -1,6 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
+import type {
+  EnumObjectManagerObjects,
+  ObjectManagerFrontendAttribute,
+} from '#shared/graphql/types.ts'
 import type {
   FieldResolverClass,
   FieldResolverModule,
@@ -22,6 +25,7 @@ Object.entries(fieldResolverModules).forEach(([, resolverModule]) => {
 })
 
 const getFieldResolver = (
+  object: EnumObjectManagerObjects,
   attribute: ObjectManagerFrontendAttribute,
 ): FieldResolver => {
   if (!fieldResolverClasses[attribute.dataType]) {
@@ -30,7 +34,7 @@ const getFieldResolver = (
     )
   }
 
-  return new fieldResolverClasses[attribute.dataType](attribute)
+  return new fieldResolverClasses[attribute.dataType](object, attribute)
 }
 
 export default getFieldResolver

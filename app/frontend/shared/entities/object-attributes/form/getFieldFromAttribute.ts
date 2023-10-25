@@ -4,7 +4,10 @@ import type {
   FormSchemaField,
   FormFieldValue,
 } from '#shared/components/Form/types.ts'
-import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
+import type {
+  EnumObjectManagerObjects,
+  ObjectManagerFrontendAttribute,
+} from '#shared/graphql/types.ts'
 import type { ScreenConfig } from '../types/resolver.ts'
 import getFieldResolver from './resolver/getFieldResolver.ts'
 
@@ -33,9 +36,10 @@ export const transformResolvedFieldForScreen = (
 }
 
 const getFieldFromAttribute = (
+  object: EnumObjectManagerObjects,
   attribute: ObjectManagerFrontendAttribute,
 ): FormSchemaField => {
-  const fieldResolver = getFieldResolver(attribute)
+  const fieldResolver = getFieldResolver(object, attribute)
 
   return fieldResolver.fieldAttributes()
 }

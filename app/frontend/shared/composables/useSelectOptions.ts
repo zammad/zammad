@@ -13,6 +13,8 @@ import type {
 import type { SelectOptionSorting } from '#shared/components/Form/fields/FieldSelect/types.ts'
 import type { FlatSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 
+type AllowedSelectValue = SelectValue | Record<string, unknown>
+
 const useSelectOptions = <
   T extends SelectOption[] | FlatSelectOption[] | AutoCompleteOption[],
 >(
@@ -24,6 +26,7 @@ const useSelectOptions = <
       noOptionsLabelTranslation?: boolean
       rejectNonExistentValues?: boolean
       sorting?: SelectOptionSorting
+      complexValue?: boolean
     }>
   >,
 ) => {
@@ -90,38 +93,54 @@ const useSelectOptions = <
     })
   })
 
-  const getSelectedOption = (selectedValue: SelectValue) => {
+  const getSelectedOption = (
+    selectedValue: AllowedSelectValue,
+  ): SelectOption => {
+    if (typeof selectedValue === 'object' && selectedValue !== null)
+      return selectedValue as unknown as SelectOption
     const key = selectedValue.toString()
     return optionValueLookup.value[key]
   }
 
-  const getSelectedOptionIcon = (selectedValue: SelectValue) => {
+  const getSelectedOptionIcon = (selectedValue: AllowedSelectValue) => {
     const option = getSelectedOption(selectedValue)
     return option?.icon as string
   }
 
-  const getSelectedOptionLabel = (selectedValue: SelectValue) => {
+  const getSelectedOptionValue = (selectedValue: AllowedSelectValue) => {
+    if (typeof selectedValue !== 'object') return selectedValue
+    const option = getSelectedOption(selectedValue)
+    return option?.value
+  }
+
+  const getSelectedOptionLabel = (selectedValue: AllowedSelectValue) => {
     const option = getSelectedOption(selectedValue)
     return option?.label
   }
 
-  const getSelectedOptionStatus = (selectedValue: SelectValue) => {
+  const getSelectedOptionStatus = (selectedValue: AllowedSelectValue) => {
     const option = getSelectedOption(selectedValue) as
       | SelectOption
       | FlatSelectOption
     return option?.status
   }
 
+  const valueBuilder = (option: SelectOption): AllowedSelectValue => {
+    return context.value.complexValue
+      ? { value: option.value, label: option.label }
+      : option.value
+  }
+
   const selectOption = (option: T extends Array<infer V> ? V : never) => {
     if (!context.value.multiple) {
-      context.value.node.input(option.value)
+      context.value.node.input(valueBuilder(option))
       return
     }
 
     const selectedValues = cloneDeep(currentValue.value) || []
     const optionIndex = selectedValues.indexOf(option.value)
     if (optionIndex !== -1) selectedValues.splice(optionIndex, 1)
-    else selectedValues.push(option.value)
+    else selectedValues.push(valueBuilder(option))
     selectedValues.sort(
       (a: string | number, b: string | number) =>
         sortedOptions.value.findIndex((option) => option.value === a) -
@@ -276,6 +295,7 @@ const useSelectOptions = <
     optionValueLookup,
     sortedOptions,
     getSelectedOption,
+    getSelectedOptionValue,
     getSelectedOptionIcon,
     getSelectedOptionLabel,
     getSelectedOptionStatus,

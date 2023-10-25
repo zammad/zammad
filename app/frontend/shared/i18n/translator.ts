@@ -11,7 +11,7 @@ export class Translator {
 
   translate(
     source: string,
-    ...args: Array<number | string | undefined | null>
+    ...args: Array<number | string | undefined | null | boolean>
   ): string {
     let target = this.translationMap.get(source) || source
 

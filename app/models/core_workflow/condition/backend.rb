@@ -20,7 +20,13 @@ class CoreWorkflow::Condition::Backend
   end
 
   def condition_value
-    Array(@condition['value']).map(&:to_s)
+    Array.wrap(@condition['value']).map do |v|
+      if v.is_a?(Hash)
+        v[:value].to_s
+      else
+        v.to_s
+      end
+    end
   end
 
   def time_modifier

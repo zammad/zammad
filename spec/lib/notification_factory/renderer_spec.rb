@@ -454,13 +454,36 @@ RSpec.describe NotificationFactory::Renderer do
 
           it_behaves_like 'correctly rendering the attributes'
         end
+
+        context 'with external data source attribute on chained group object', db_adapter: :postgresql do
+          let(:create_object_manager_attribute) do
+            create(:object_manager_attribute_autocompletion_ajax_external_data_source,
+                   object_lookup_id: ObjectLookup.by_name('Group'),
+                   name:             'external_data_source')
+          end
+          let(:template)        { '#{ticket.group.external_data_source} _SEPERATOR_ #{ticket.group.external_data_source.value}' }
+          let(:expected_render) { '1234 _SEPERATOR_ Example' }
+
+          let(:ticket) { create(:ticket, customer: @user) }
+
+          before do
+            group = ticket.group
+            group.external_data_source = {
+              value: 1234,
+              label: 'Example'
+            }
+            group.save
+          end
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
       end
 
       context 'with a tree select attribute' do
         let(:create_object_manager_attribute) do
           create(:object_manager_attribute_tree_select, name: 'tree_select')
         end
-        let(:ticket) { create(:ticket, customer: @user, tree_select: 'Incident::Hardware::Laptop') }
+        let(:ticket)          { create(:ticket, customer: @user, tree_select: 'Incident::Hardware::Laptop') }
         let(:template)        { '#{ticket.tree_select} _SEPERATOR_ #{ticket.tree_select.value}' }
         let(:expected_render) { 'Incident::Hardware::Laptop _SEPERATOR_ Incident::Hardware::Laptop' }
 

@@ -45,7 +45,15 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
         # cache search result
         @searchResultCache[cacheKey] = data
         @renderResponse(data, query)
+      error: =>
+        @hideLoader()
     }
+
+  hideLoader: =>
+    # Clear timeout and remove the loader icon.
+    clearTimeout @loaderTimeoutId
+    @loaderTimeoutId = undefined
+    @el.removeClass('is-loading')
 
   onInput: (event) =>
     super
@@ -74,10 +82,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     App.Ajax.request(attributes)
 
   renderResponse: (data, originalQuery) =>
-    # clear timout and remove loader icon
-    clearTimeout @loaderTimeoutId
-    @loaderTimeoutId = undefined
-    @el.removeClass('is-loading')
+    @hideLoader()
 
     # load assets
     App.Collection.loadAssets(data.assets)

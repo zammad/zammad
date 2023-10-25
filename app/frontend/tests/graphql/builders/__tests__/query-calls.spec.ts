@@ -1,13 +1,22 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import {
+  EnumObjectManagerObjects,
+  type AutocompleteSearchObjectAttributeExternalDataSourceInput,
+} from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import {
   getGraphQLResult,
   mockGraphQLResult,
   mockedApolloClient,
 } from '../mocks.ts'
-import { TestAvatarDocument, TestUserDocument } from './queries.ts'
+import {
+  TestAutocompleteArrayFirstLevel,
+  TestAvatarDocument,
+  TestUserDocument,
+} from './queries.ts'
 import type {
+  TestAutocompleteArrayFirstLevelQuery,
   TestAvatarQuery,
   TestUserQuery,
   TestUserQueryVariables,
@@ -141,5 +150,37 @@ describe('calling queries with mocked data works correctly', () => {
 
     expect(mock2).toHaveProperty('accountAvatarActive.imageFull', exampleImage2)
     expect(data2).toHaveProperty('accountAvatarActive.imageFull', exampleImage2)
+  })
+
+  it('when operation requests an array inside the first level, it correctly returns an array', async () => {
+    const handler = getQueryHandler<
+      TestAutocompleteArrayFirstLevelQuery,
+      {
+        input: AutocompleteSearchObjectAttributeExternalDataSourceInput
+      }
+    >(TestAutocompleteArrayFirstLevel)
+    const { data } = await handler.query({
+      variables: {
+        input: {
+          query: 'test',
+          attributeName: 'test',
+          object: EnumObjectManagerObjects.Ticket,
+          templateRenderContext: {},
+        },
+      },
+    })
+    const { data: mocked } = handler.getMockedData()
+
+    expect(
+      data?.autocompleteSearchObjectAttributeExternalDataSource,
+    ).toBeInstanceOf(Array)
+    expect(
+      mocked?.autocompleteSearchObjectAttributeExternalDataSource,
+    ).toBeInstanceOf(Array)
+
+    expect(
+      data?.autocompleteSearchObjectAttributeExternalDataSource.length,
+    ).toBe(mocked?.autocompleteSearchObjectAttributeExternalDataSource.length)
+    expect(mocked).toMatchObject(data!)
   })
 })

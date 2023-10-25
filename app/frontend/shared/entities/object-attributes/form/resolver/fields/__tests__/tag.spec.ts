@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { FieldResolverTag } from '../tag.ts'
 
 describe('FieldResolverTag', () => {
@@ -9,17 +10,20 @@ describe('FieldResolverTag', () => {
       tag_new: true,
     })
 
-    const fieldResolver = new FieldResolverTag({
-      dataType: 'tag',
-      name: 'tag',
-      display: 'Tag',
-      dataOption: {
-        type: 'text',
-        null: true,
-        translate: false,
+    const fieldResolver = new FieldResolverTag(
+      EnumObjectManagerObjects.Ticket,
+      {
+        dataType: 'tag',
+        name: 'tag',
+        display: 'Tag',
+        dataOption: {
+          type: 'text',
+          null: true,
+          translate: false,
+        },
+        isInternal: true,
       },
-      isInternal: true,
-    })
+    )
 
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Tag',

@@ -76,6 +76,10 @@ describe('common object attributes interface', () => {
           attribute: attributesByKey.phone,
           value: '+49 123456789',
         },
+        {
+          attribute: attributesByKey.external_attribute,
+          value: { value: 1, label: 'Display External' },
+        },
       ],
     }
 
@@ -116,6 +120,9 @@ describe('common object attributes interface', () => {
     )
     expect(getRegion('Multi Tree Select Field')).toHaveTextContent(
       'key1, key2, key2::key2_child1',
+    )
+    expect(getRegion('External Attribute')).toHaveTextContent(
+      'Display External',
     )
 
     expect(

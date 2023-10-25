@@ -1795,6 +1795,464 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
     end
   end
 
+  describe '.perform - Condition - is' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+
+    context 'when match' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.group_id': {
+                   operator: 'is',
+                   value:    [ticket.group.id.to_s],
+                 },
+               })
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when mismatch' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.group_id': {
+                   operator: 'is',
+                   value:    [Group.first.id],
+                 },
+               })
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'with new external data source field', db_adapter: :postgresql, db_strategy: :reset do
+      let!(:external_data_source_attribute) do
+        attribute = create(:object_manager_attribute_autocompletion_ajax_external_data_source,
+                           name: 'external_data_source_attribute')
+        ObjectManager::Attribute.migration_execute
+
+        attribute
+      end
+
+      let(:condition_field_name) { "ticket.#{external_data_source_attribute.name}" }
+
+      let(:additional_ticket_attributes) do
+        {
+          external_data_source_attribute.name => {
+            value: 123,
+            label: 'Example',
+          }
+        }
+      end
+
+      context 'when match' do
+        let!(:workflow) do
+          create(:core_workflow,
+                 object:             'Ticket',
+                 condition_selected: {
+                   condition_field_name => {
+                     operator: 'is',
+                     value:    [
+                       {
+                         value: 123,
+                         label: 'Example',
+                       }
+                     ],
+                   },
+                 })
+        end
+
+        it 'does match' do
+          expect(result[:matched_workflows]).to include(workflow.id)
+        end
+      end
+
+      context 'when mismatch' do
+        let!(:workflow) do
+          create(:core_workflow,
+                 object:             'Ticket',
+                 condition_selected: {
+                   condition_field_name => {
+                     operator: 'is',
+                     value:    [
+                       {
+                         value: 986,
+                         label: 'Example',
+                       }
+                     ],
+                   },
+                 })
+        end
+
+        it 'does not match' do
+          expect(result[:matched_workflows]).not_to include(workflow.id)
+        end
+      end
+    end
+  end
+
+  describe '.perform - Condition - is not' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+
+    context 'when match' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.group_id': {
+                   operator: 'is not',
+                   value:    [Group.first.id.to_s],
+                 },
+               })
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when mismatch' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.group_id': {
+                   operator: 'is not',
+                   value:    [ticket.group.id.to_s],
+                 },
+               })
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'with new external data source field', db_adapter: :postgresql, db_strategy: :reset do
+      let!(:external_data_source_attribute) do
+        attribute = create(:object_manager_attribute_autocompletion_ajax_external_data_source,
+                           name: 'external_data_source_attribute')
+        ObjectManager::Attribute.migration_execute
+
+        attribute
+      end
+
+      let(:condition_field_name) { "ticket.#{external_data_source_attribute.name}" }
+
+      let(:additional_ticket_attributes) do
+        {
+          external_data_source_attribute.name => {
+            value: 123,
+            label: 'Example',
+          }
+        }
+      end
+
+      context 'when match' do
+        let!(:workflow) do
+          create(:core_workflow,
+                 object:             'Ticket',
+                 condition_selected: {
+                   condition_field_name => {
+                     operator: 'is not',
+                     value:    [
+                       {
+                         value: 986,
+                         label: 'Example',
+                       }
+                     ],
+                   },
+                 })
+        end
+
+        it 'does match' do
+          expect(result[:matched_workflows]).to include(workflow.id)
+        end
+      end
+
+      context 'when mismatch' do
+        let!(:workflow) do
+          create(:core_workflow,
+                 object:             'Ticket',
+                 condition_selected: {
+                   condition_field_name => {
+                     operator: 'is not',
+                     value:    [
+                       {
+                         value: 123,
+                         label: 'Example',
+                       }
+                     ],
+                   },
+                 })
+        end
+
+        it 'does not match' do
+          expect(result[:matched_workflows]).not_to include(workflow.id)
+        end
+      end
+    end
+  end
+
+  describe '.perform - Condition - is set' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+
+    context 'when match' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.group_id': {
+                   operator: 'is set',
+                   value:    [],
+                 },
+               })
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'with new external data source field', db_adapter: :postgresql, db_strategy: :reset do
+      let!(:external_data_source_attribute) do
+        attribute = create(:object_manager_attribute_autocompletion_ajax_external_data_source,
+                           name: 'external_data_source_attribute')
+        ObjectManager::Attribute.migration_execute
+
+        attribute
+      end
+
+      let(:condition_field_name) { "ticket.#{external_data_source_attribute.name}" }
+
+      context 'when match' do
+        let(:additional_ticket_attributes) do
+          {
+            external_data_source_attribute.name => {
+              value: 123,
+              label: 'Example',
+            }
+          }
+        end
+
+        let!(:workflow) do
+          create(:core_workflow,
+                 object:             'Ticket',
+                 condition_selected: {
+                   condition_field_name => {
+                     operator: 'is set',
+                     value:    [],
+                   },
+                 })
+        end
+
+        it 'does match' do
+          expect(result[:matched_workflows]).to include(workflow.id)
+        end
+      end
+
+      context 'when mismatch' do
+        let!(:workflow) do
+          create(:core_workflow,
+                 object:             'Ticket',
+                 condition_selected: {
+                   condition_field_name => {
+                     operator: 'is set',
+                     value:    [],
+                   },
+                 })
+        end
+
+        it 'does not match' do
+          expect(result[:matched_workflows]).not_to include(workflow.id)
+        end
+      end
+    end
+  end
+
+  describe '.perform - Condition - not set' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+
+    context 'with new external data source field', db_adapter: :postgresql, db_strategy: :reset do
+      let!(:external_data_source_attribute) do
+        attribute = create(:object_manager_attribute_autocompletion_ajax_external_data_source,
+                           name: 'external_data_source_attribute')
+        ObjectManager::Attribute.migration_execute
+
+        attribute
+      end
+
+      let(:condition_field_name) { "ticket.#{external_data_source_attribute.name}" }
+
+      context 'when match' do
+        let!(:workflow) do
+          create(:core_workflow,
+                 object:             'Ticket',
+                 condition_selected: {
+                   condition_field_name => {
+                     operator: 'not set',
+                     value:    [],
+                   },
+                 })
+        end
+
+        it 'does match' do
+          expect(result[:matched_workflows]).to include(workflow.id)
+        end
+      end
+
+      context 'when mismatch' do
+        let(:additional_ticket_attributes) do
+          {
+            external_data_source_attribute.name => {
+              value: 123,
+              label: 'Example',
+            }
+          }
+        end
+
+        let!(:workflow) do
+          create(:core_workflow,
+                 object:             'Ticket',
+                 condition_selected: {
+                   condition_field_name => {
+                     operator: 'not set',
+                     value:    [],
+                   },
+                 })
+        end
+
+        it 'does not match' do
+          expect(result[:matched_workflows]).not_to include(workflow.id)
+        end
+      end
+    end
+  end
+
+  describe '.perform - Condition - changed to' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit', 'last_changed_attribute' => 'group_id')
+    end
+
+    context 'when match' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.group_id': {
+                   operator: 'changed to',
+                   value:    [ticket.group.id.to_s],
+                 },
+               })
+      end
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when mismatch' do
+      let!(:workflow) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: {
+                 'ticket.group_id': {
+                   operator: 'changed to',
+                   value:    [Group.first.id],
+                 },
+               })
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'with new external data source field', db_adapter: :postgresql, db_strategy: :reset do
+      let(:payload) do
+        base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit', 'last_changed_attribute' => external_data_source_attribute.name)
+      end
+
+      let!(:external_data_source_attribute) do
+        attribute = create(:object_manager_attribute_autocompletion_ajax_external_data_source,
+                           name: 'external_data_source_attribute')
+        ObjectManager::Attribute.migration_execute
+
+        attribute
+      end
+
+      let(:condition_field_name) { "ticket.#{external_data_source_attribute.name}" }
+
+      let(:additional_ticket_attributes) do
+        {
+          external_data_source_attribute.name => {
+            value: 123,
+            label: 'Example',
+          }
+        }
+      end
+
+      context 'when match' do
+        let!(:workflow) do
+          create(:core_workflow,
+                 object:             'Ticket',
+                 condition_selected: {
+                   condition_field_name => {
+                     operator: 'changed to',
+                     value:    [
+                       {
+                         value: 123,
+                         label: 'Example',
+                       }
+                     ],
+                   },
+                 })
+        end
+
+        it 'does match' do
+          expect(result[:matched_workflows]).to include(workflow.id)
+        end
+      end
+
+      context 'when mismatch' do
+        let!(:workflow) do
+          create(:core_workflow,
+                 object:             'Ticket',
+                 condition_selected: {
+                   condition_field_name => {
+                     operator: 'changed to',
+                     value:    [
+                       {
+                         value: 986,
+                         label: 'Example',
+                       }
+                     ],
+                   },
+                 })
+        end
+
+        it 'does not match' do
+          expect(result[:matched_workflows]).not_to include(workflow.id)
+        end
+      end
+    end
+  end
+
   describe 'New ticket organization condition in core workflow not working for is specific usage #4750' do
     let(:ticket_customer) { create(:customer, :with_org) }
 

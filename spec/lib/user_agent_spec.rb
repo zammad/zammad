@@ -24,6 +24,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
   before :all do # rubocop:disable RSpec/BeforeAfterAll
     ENV['CI_BASIC_AUTH_USER']     = 'basic_auth_user'
     ENV['CI_BASIC_AUTH_PASSWORD'] = 'test123'
+    ENV['CI_BEARER_TOKEN']        = 'test_bearer_123'
 
     puma_thread = Thread.new do
       app = Rack::Builder.new do
@@ -196,6 +197,39 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
         end
       end
 
+      context 'with bearer token auth' do
+        subject(:response) do
+          described_class.get(request_url, {}, {
+                                bearer_token: bearer_token,
+                              })
+        end
+
+        context 'with code 200' do
+          let(:code)          { '200' }
+          let(:content_type)  { 'application/json; charset=utf-8' }
+          let(:request_url)   { "#{host}/test_bearer_auth/get/1?submitted=123" }
+          let(:bearer_token)  { 'test_bearer_123' }
+          let(:expected_body) do
+            {
+              'method'                 => 'get',
+              'submitted'              => '123',
+              'content_type_requested' => nil,
+            }
+          end
+
+          include_examples 'successful get request'
+        end
+
+        context 'with code 401' do
+          let(:code)          { '401' }
+          let(:request_url)   { "#{host}/test_bearer_auth/get/1?submitted=123" }
+          let(:bearer_token)  { 'wrong_test_bearer' }
+          let(:expected_body) { "HTTP Token: Access denied.\n" }
+
+          include_examples 'unsuccessful get/post/put/delete request'
+        end
+      end
+
       context 'when timeouts are raised' do
         subject(:response) do
           described_class.get(request_url, {}, {
@@ -299,6 +333,40 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
           let(:request_params) { { submitted: 'some value' } }
           let(:password)       { 'test<>123' }
           let(:expected_body)  { "HTTP Basic: Access denied.\n" }
+
+          include_examples 'unsuccessful get/post/put/delete request'
+        end
+      end
+
+      context 'with bearer token auth' do
+        subject(:response) do
+          described_class.post(request_url, request_params, {
+                                 bearer_token: bearer_token,
+                               })
+        end
+
+        context 'with code 201' do
+          let(:code) { '201' }
+          let(:request_url)    { "#{host}/test_bearer_auth/post/1" }
+          let(:request_params) { { submitted: 'some value' } }
+          let(:bearer_token)   { 'test_bearer_123' }
+          let(:expected_body) do
+            {
+              'method'                 => 'post',
+              'submitted'              => 'some value',
+              'content_type_requested' => 'application/x-www-form-urlencoded',
+            }
+          end
+
+          include_examples 'successful post/put request'
+        end
+
+        context 'with code 401' do
+          let(:code) { '401' }
+          let(:request_url)    { "#{host}/test_bearer_auth/post/1" }
+          let(:request_params) { { submitted: 'some value' } }
+          let(:bearer_token)   { 'wrong_test_bearer' }
+          let(:expected_body)  { "HTTP Token: Access denied.\n" }
 
           include_examples 'unsuccessful get/post/put/delete request'
         end
@@ -408,6 +476,40 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
           include_examples 'unsuccessful get/post/put/delete request'
         end
       end
+
+      context 'with bearer token auth' do
+        subject(:response) do
+          described_class.put(request_url, request_params, {
+                                bearer_token: bearer_token,
+                              })
+        end
+
+        context 'with code 200' do
+          let(:code) { '200' }
+          let(:request_url)    { "#{host}/test_bearer_auth/put/1" }
+          let(:request_params) { { submitted: 'some value' } }
+          let(:bearer_token)   { 'test_bearer_123' }
+          let(:expected_body) do
+            {
+              'method'                 => 'put',
+              'submitted'              => 'some value',
+              'content_type_requested' => 'application/x-www-form-urlencoded',
+            }
+          end
+
+          include_examples 'successful post/put request'
+        end
+
+        context 'with code 401' do
+          let(:code) { '401' }
+          let(:request_url)    { "#{host}/test_bearer_auth/put/1" }
+          let(:request_params) { { submitted: 'some value' } }
+          let(:bearer_token)   { 'wrong_test_bearer' }
+          let(:expected_body)  { "HTTP Token: Access denied.\n" }
+
+          include_examples 'unsuccessful get/post/put/delete request'
+        end
+      end
     end
 
     describe '#delete' do
@@ -463,6 +565,40 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
           let(:request_url)   { "#{host}/test_basic_auth/delete/1" }
           let(:password)      { 'test<>123' }
           let(:expected_body) { "HTTP Basic: Access denied.\n" }
+
+          include_examples 'unsuccessful get/post/put/delete request'
+        end
+      end
+
+      context 'with bearer token auth' do
+        subject(:response) do
+          described_class.delete(request_url, {}, {
+                                   bearer_token: bearer_token,
+                                 })
+        end
+
+        context 'with code 200' do
+          let(:code) { '200' }
+          let(:content_type)   { 'application/json; charset=utf-8' }
+          let(:request_url)    { "#{host}/test_bearer_auth/delete/1" }
+          let(:request_params) { { submitted: 'some value' } }
+          let(:bearer_token)   { 'test_bearer_123' }
+          let(:expected_body) do
+            {
+              'method'                 => 'delete',
+              'content_type_requested' => nil,
+            }
+          end
+
+          include_examples 'successful delete request'
+        end
+
+        context 'with code 401' do
+          let(:code) { '401' }
+          let(:request_url)    { "#{host}/test_bearer_auth/delete/1" }
+          let(:request_params) { { submitted: 'some value' } }
+          let(:bearer_token)   { 'wrong_test_bearer' }
+          let(:expected_body)  { "HTTP Token: Access denied.\n" }
 
           include_examples 'unsuccessful get/post/put/delete request'
         end

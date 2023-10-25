@@ -1,34 +1,38 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { FieldResolverMultiTreeselect } from '../multitreeselect.ts'
 
 describe('FieldResolverMultiTreeselect', () => {
   it('should return the correct field attributes', () => {
-    const fieldResolver = new FieldResolverMultiTreeselect({
-      dataType: 'multi_tree_select',
-      name: 'category',
-      display: 'Category',
-      dataOption: {
-        options: [
-          {
-            name: 'Category 1',
-            value: 'Category 1',
-            children: [
-              {
-                name: 'Category 1.1',
-                value: 'Category 1::Category 1.1',
-              },
-            ],
-          },
-          {
-            name: 'Category 2',
-            value: 'Category 2',
-          },
-        ],
-        translate: true,
+    const fieldResolver = new FieldResolverMultiTreeselect(
+      EnumObjectManagerObjects.Ticket,
+      {
+        dataType: 'multi_tree_select',
+        name: 'category',
+        display: 'Category',
+        dataOption: {
+          options: [
+            {
+              name: 'Category 1',
+              value: 'Category 1',
+              children: [
+                {
+                  name: 'Category 1.1',
+                  value: 'Category 1::Category 1.1',
+                },
+              ],
+            },
+            {
+              name: 'Category 2',
+              value: 'Category 2',
+            },
+          ],
+          translate: true,
+        },
+        isInternal: true,
       },
-      isInternal: true,
-    })
+    )
 
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Category',

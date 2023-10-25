@@ -79,6 +79,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     autocomplete: addBlockFloatingLabel(classes.autocomplete),
     customer: addBlockFloatingLabel(classes.customer),
     organization: addBlockFloatingLabel(classes.organization),
+    externalDataSource: addBlockFloatingLabel(classes.externalDataSource),
     recipient: addBlockFloatingLabel(classes.recipient),
     button: addButtonVariants(classes.button),
     submit: addButtonVariants(classes.submit),

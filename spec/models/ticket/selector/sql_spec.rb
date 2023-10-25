@@ -269,33 +269,45 @@ RSpec.describe Ticket::Selector::Sql do
   describe '.condition_sql' do
     # We test this monstrous method indirectly though ".selectors" :(
 
+    shared_examples 'finds the ticket' do
+      it 'finds the ticket' do
+        expect(Ticket.selectors(condition, { current_user: agent }).first).to eq 1
+      end
+    end
+
+    shared_examples 'does not find the ticket' do
+      it 'does not find the ticket' do
+        expect(Ticket.selectors(condition, { current_user: agent }).first).to eq 0
+      end
+    end
+
     before do
       Ticket.destroy_all
-      ticket
+    end
+
+    let(:agent) { create(:agent, groups: [Group.first]) }
+    let(:ticket_attributes) do
+      {
+        title: 'Some really nice title',
+        owner: agent,
+        group: Group.first
+      }
+    end
+    let(:additional_ticket_attributes) { {} }
+    let(:ticket)                       { create(:ticket, ticket_attributes.merge(additional_ticket_attributes)) }
+    let(:condition) do
+      { operator: 'AND', conditions: [ {
+        name:     name,
+        operator: operator,
+        value:    value,
+      } ] }
     end
 
     describe 'input fields' do
+      let(:name) { 'ticket.title' }
 
-      let(:agent) { create(:agent, groups: [Group.first]) }
-      let(:ticket) { create(:ticket, title: 'Some really nice title', owner: agent, group: Group.first) }
-      let(:condition) do
-        { operator: 'AND', conditions: [ {
-          name:     'ticket.title',
-          operator: operator,
-          value:    value,
-        } ] }
-      end
-
-      shared_examples 'finds the ticket' do
-        it 'finds the ticket' do
-          expect(Ticket.selectors(condition, { current_user: agent }).first).to eq 1
-        end
-      end
-
-      shared_examples 'does not find the ticket' do
-        it 'does not find the ticket' do
-          expect(Ticket.selectors(condition, { current_user: agent }).first).to eq 0
-        end
+      before do
+        ticket
       end
 
       describe "operator 'contains'" do
@@ -365,7 +377,13 @@ RSpec.describe Ticket::Selector::Sql do
         end
 
         context 'with empty value' do
-          let(:ticket) { create(:ticket, title: '', owner: agent, group: Group.first) }
+          let(:ticket_attributes) do
+            {
+              title: '',
+              owner: agent,
+              group: Group.first
+            }
+          end
 
           context 'with non-matching filter value' do
             let(:value) { 'Another title' }
@@ -404,7 +422,13 @@ RSpec.describe Ticket::Selector::Sql do
         end
 
         context 'with empty value' do
-          let(:ticket) { create(:ticket, title: '', owner: agent, group: Group.first) }
+          let(:ticket_attributes) do
+            {
+              title: '',
+              owner: agent,
+              group: Group.first
+            }
+          end
 
           context 'with non-matching filter value' do
             let(:value) { ['Another title', 'Example'] }
@@ -443,7 +467,13 @@ RSpec.describe Ticket::Selector::Sql do
         end
 
         context 'with empty value' do
-          let(:ticket) { create(:ticket, title: '', owner: agent, group: Group.first) }
+          let(:ticket_attributes) do
+            {
+              title: '',
+              owner: agent,
+              group: Group.first
+            }
+          end
 
           context 'with non-matching filter value' do
             let(:value) { 'Another title' }
@@ -482,7 +512,13 @@ RSpec.describe Ticket::Selector::Sql do
         end
 
         context 'with empty value' do
-          let(:ticket) { create(:ticket, title: '', owner: agent, group: Group.first) }
+          let(:ticket_attributes) do
+            {
+              title: '',
+              owner: agent,
+              group: Group.first
+            }
+          end
 
           context 'with non-matching filter value' do
             let(:value) { %w[A B] }
@@ -514,8 +550,14 @@ RSpec.describe Ticket::Selector::Sql do
         end
 
         context 'with special characters' do
-          let(:ticket) { create(:ticket, title: '\\ [ ]', owner: agent, group: Group.first) }
-          let(:value)  { '\\ [ ]' }
+          let(:ticket_attributes) do
+            {
+              title: '\\ [ ]',
+              owner: agent,
+              group: Group.first
+            }
+          end
+          let(:value) { '\\ [ ]' }
 
           include_examples 'finds the ticket'
         end
@@ -565,7 +607,13 @@ RSpec.describe Ticket::Selector::Sql do
         end
 
         context 'with special characters' do
-          let(:ticket) { create(:ticket, title: '[ ] \\', owner: agent, group: Group.first) }
+          let(:ticket_attributes) do
+            {
+              title: '[ ] \\',
+              owner: agent,
+              group: Group.first
+            }
+          end
           let(:value) { '[ ] \\' }
 
           include_examples 'finds the ticket'
@@ -645,6 +693,127 @@ RSpec.describe Ticket::Selector::Sql do
       end
 
     end
+
+    describe 'external data source field', db_adapter: :postgresql, db_strategy: :reset do
+      let(:external_data_source_attribute) do
+        create(:object_manager_attribute_autocompletion_ajax_external_data_source,
+               name: 'external_data_source_attribute')
+      end
+
+      let(:name) { "ticket.#{external_data_source_attribute.name}" }
+
+      let(:external_data_source_attribute_value) { 123 }
+      let(:additional_ticket_attributes) do
+        {
+          external_data_source_attribute.name => {
+            value: external_data_source_attribute_value,
+            label: 'Example'
+          }
+        }
+      end
+
+      before do
+        external_data_source_attribute
+        ObjectManager::Attribute.migration_execute
+
+        ticket
+      end
+
+      describe "operator 'is'" do
+        let(:operator) { 'is' }
+
+        context 'with matching integer as value' do
+          let(:value) do
+            {
+              value: 123,
+              label: 'Example'
+            }
+          end
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with multiple values for matching' do
+          let(:value) do
+            [
+              {
+                value: 123,
+                label: 'Example'
+              },
+              {
+                value: '987',
+                label: 'Example'
+              }
+            ]
+          end
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with string' do
+          context 'with matching string as value' do
+            let(:external_data_source_attribute_value) { 'Example' }
+            let(:value) do
+              {
+                value: 'Example',
+                label: 'Example'
+              }
+            end
+
+            include_examples 'finds the ticket'
+          end
+
+          context 'with non-matching string' do
+            let(:value) do
+              {
+                value: 'Wrong',
+                label: 'Wrong'
+              }
+            end
+
+            include_examples 'does not find the ticket'
+          end
+        end
+
+        context 'with matching boolean as value' do
+          let(:external_data_source_attribute_value) { true }
+          let(:value) do
+            {
+              value: true,
+              label: 'Yes'
+            }
+          end
+
+          include_examples 'finds the ticket'
+        end
+      end
+
+      describe "operator 'is not'" do
+        let(:operator) { 'is not' }
+
+        context 'with matching integer as value' do
+          let(:value) do
+            {
+              value: 986,
+              label: 'Example'
+            }
+          end
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching integer' do
+          let(:value) do
+            {
+              value: 123,
+              label: 'Example'
+            }
+          end
+
+          include_examples 'does not find the ticket'
+        end
+      end
+    end
   end
 
   describe '.valid?' do
@@ -705,6 +874,32 @@ RSpec.describe Ticket::Selector::Sql do
       end
     end
 
+    context 'with external data source field', db_adapter: :postgresql, db_strategy: :reset do
+      let(:external_data_source_attribute) do
+        create(:object_manager_attribute_autocompletion_ajax_external_data_source,
+               name: 'external_data_source_attribute')
+      end
+
+      let(:condition) do
+        {
+          name:     "ticket.#{external_data_source_attribute.name}",
+          operator: 'is',
+          value:    {
+            value: 123,
+            label: 'Example'
+          }
+        }
+      end
+
+      before do
+        external_data_source_attribute
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it 'validates' do
+        expect(instance.valid?).to be true
+      end
+    end
   end
 
   describe 'Error 500 if overview with "out of office replacement" filter is set to "specific user" #4599' do

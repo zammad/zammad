@@ -12,6 +12,7 @@ import useSelectOptions from '#shared/composables/useSelectOptions.ts'
 import type {
   AutoCompleteOption,
   AutoCompleteProps,
+  AutocompleteSelectValue,
 } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
 
 interface Props {
@@ -22,7 +23,7 @@ const props = defineProps<Props>()
 const contextReactive = toRef(props, 'context')
 
 const { hasValue, valueContainer, currentValue, clearValue } =
-  useValue(contextReactive)
+  useValue<AutocompleteSelectValue>(contextReactive)
 
 const localOptions = ref(props.context.options || [])
 
@@ -58,8 +59,12 @@ const openModal = () => {
   })
 }
 
-const { optionValueLookup, getSelectedOptionIcon, getSelectedOptionLabel } =
-  useSelectOptions(localOptions, contextReactive)
+const {
+  optionValueLookup,
+  getSelectedOptionIcon,
+  getSelectedOptionValue,
+  getSelectedOptionLabel,
+} = useSelectOptions(localOptions, contextReactive)
 
 // Remember current optionValueLookup in node context.
 contextReactive.value.optionValueLookup = optionValueLookup
@@ -131,7 +136,7 @@ useFormBlock(contextReactive, onInputClick)
       <div v-if="hasValue" class="flex grow flex-wrap gap-1" role="list">
         <div
           v-for="(selectedValue, idx) in valueContainer"
-          :key="selectedValue"
+          :key="getSelectedOptionValue(selectedValue)?.toString()"
           class="flex items-center text-base leading-[19px]"
           role="listitem"
         >
@@ -142,7 +147,7 @@ useFormBlock(contextReactive, onInputClick)
             class="ltr:mr-1 rtl:ml-1"
           />{{
             getSelectedOptionLabel(selectedValue) ||
-            i18n.t('%s (unknown)', selectedValue)
+            i18n.t('%s (unknown)', getSelectedOptionValue(selectedValue))
           }}{{ idx === valueContainer.length - 1 ? '' : ',' }}
         </div>
       </div>

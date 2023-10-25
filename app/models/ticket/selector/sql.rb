@@ -122,7 +122,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
         sql_helper      = SqlHelper.new(object: User, table_name: 'owners')
       when 'article'
         tables         |= ['INNER JOIN ticket_articles articles ON tickets.id = articles.ticket_id']
-        sql_helper      = SqlHelper.new(object: Ticket::Article)
+        sql_helper      = SqlHelper.new(object: Ticket::Article, table_name: 'articles')
       when 'ticket_state'
         tables         |= ['INNER JOIN ticket_states ON tickets.state_id = ticket_states.id']
         sql_helper      = SqlHelper.new(object: Ticket::State)
@@ -139,8 +139,10 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
 
     validate_pre_condition_values! block_condition
 
+    is_json_column = sql_helper.json_column?(attribute_name)
+
     # get attributes
-    attribute = "#{ActiveRecord::Base.connection.quote_table_name("#{attribute_table}s")}.#{ActiveRecord::Base.connection.quote_column_name(attribute_name)}"
+    attribute = is_json_column ? sql_helper.json_db_column_with_key(attribute_name, 'value') : sql_helper.db_column(attribute_name)
 
     # magic block_condition
     if attribute_table == 'ticket' && attribute_name == 'out_of_office_replacement_id'
@@ -320,7 +322,10 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
         if block_condition[:value].nil?
           query << "#{attribute} IS NULL"
         else
-          if attribute_name == 'out_of_office_replacement_id'
+          if is_json_column
+            query << "#{attribute} IN (?)"
+            bind_params.push(Array.wrap(block_condition[:value]).map { |item| item[:value].to_s })
+          elsif attribute_name == 'out_of_office_replacement_id'
             query << "#{attribute} IN (?)"
             bind_params.push User.where(id: Array.wrap(block_condition[:value])).map(&:out_of_office_agent_of).flatten.map(&:id)
           else
@@ -360,7 +365,10 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
         if block_condition[:value].nil?
           query << "#{attribute} IS NOT NULL"
         else
-          if attribute_name == 'out_of_office_replacement_id'
+          if is_json_column
+            query << "#{attribute} NOT IN (?)"
+            bind_params.push(Array.wrap(block_condition[:value]).map { |item| item[:value].to_s })
+          elsif attribute_name == 'out_of_office_replacement_id'
             bind_params.push User.find(block_condition[:value]).out_of_office_agent_of.pluck(:id)
             query << "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
           else

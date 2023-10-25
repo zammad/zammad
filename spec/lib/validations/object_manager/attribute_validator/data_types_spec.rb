@@ -20,6 +20,7 @@ RSpec.describe 'Validations::ObjectManager::AttributeValidator::DataTypes', aggr
     integer
     autocompletion_ajax
     autocompletion_ajax_customer_organization
+    autocompletion_ajax_external_data_source
     boolean
     user_permission
     active

@@ -1,0 +1,25 @@
+import * as Types from '../../../../../../graphql/types';
+
+import gql from 'graphql-tag';
+import * as VueApolloComposable from '@vue/apollo-composable';
+import * as VueCompositionApi from 'vue';
+export type ReactiveFunction<TParam> = () => TParam;
+
+export const AutocompleteSearchObjectAttributeExternalDataSourceDocument = gql`
+    query autocompleteSearchObjectAttributeExternalDataSource($input: AutocompleteSearchObjectAttributeExternalDataSourceInput!) {
+  autocompleteSearchObjectAttributeExternalDataSource(input: $input) {
+    value
+    label
+    labelPlaceholder
+    heading
+    headingPlaceholder
+  }
+}
+    `;
+export function useAutocompleteSearchObjectAttributeExternalDataSourceQuery(variables: Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables | VueCompositionApi.Ref<Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables> | ReactiveFunction<Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchObjectAttributeExternalDataSourceQuery, Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchObjectAttributeExternalDataSourceQuery, Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchObjectAttributeExternalDataSourceQuery, Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<Types.AutocompleteSearchObjectAttributeExternalDataSourceQuery, Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables>(AutocompleteSearchObjectAttributeExternalDataSourceDocument, variables, options);
+}
+export function useAutocompleteSearchObjectAttributeExternalDataSourceLazyQuery(variables: Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables | VueCompositionApi.Ref<Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables> | ReactiveFunction<Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchObjectAttributeExternalDataSourceQuery, Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchObjectAttributeExternalDataSourceQuery, Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchObjectAttributeExternalDataSourceQuery, Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.AutocompleteSearchObjectAttributeExternalDataSourceQuery, Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables>(AutocompleteSearchObjectAttributeExternalDataSourceDocument, variables, options);
+}
+export type AutocompleteSearchObjectAttributeExternalDataSourceQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.AutocompleteSearchObjectAttributeExternalDataSourceQuery, Types.AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables>;

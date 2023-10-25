@@ -69,14 +69,27 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
         name: __('Multiple tree selection field'),
         value: 'multi_tree_select',
       },
+      {
+        name: __('External data source field'),
+        value: 'autocompletion_ajax_external_data_source',
+        filterCallback: -> App.Config.get('column_type_json_supported')
+      },
     ]
 
     # if attribute already exists, do not allow to change it anymore
     if params.data_type
       options = _.filter(options, (option) -> option.value is params.data_type)
+      attribute.disabled = true
+
+    # Filter out unsupported options by executing an optional callback.
+    filterOptions = (options) -> _.filter(options, (option) ->
+      return option.filterCallback() if typeof option.filterCallback is 'function'
+
+      true
+    )
 
     configureAttributes = [
-      { name: attribute.name, display: '', tag: 'select', null: false, options: options, translate: true, default: 'input', disabled: attribute.disabled },
+      { name: attribute.name, display: '', tag: 'select', null: false, options: options, translate: true, default: 'input', disabled: attribute.disabled, filter: filterOptions },
     ]
     dataType = new App.ControllerForm(
       el: item.find('.js-dataType')
@@ -251,7 +264,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     )
     configureAttributes = [
       # coffeelint: disable=no_interpolation_in_single_quotes
-      { name: 'data_option::linktemplate', display: __('Link Template'), tag: 'input', type: 'text', null: true, default: '', placeholder: __('https://example.com/?q=#{object.attribute_name} - use ticket, user or organization as object') },
+      { name: 'data_option::linktemplate', display: __('Link template'), tag: 'input', type: 'text', null: true, default: '', placeholder: __('https://example.com/?q=#{object.attribute_name} - use ticket, user or organization as object') },
       # coffeelint: enable=no_interpolation_in_single_quotes
     ]
     inputLinkTemplate = new App.ControllerForm(
@@ -422,7 +435,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     )
     configureAttributes = [
       # coffeelint: disable=no_interpolation_in_single_quotes
-      { name: 'data_option::linktemplate', display: __('Link Template'), tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{ticket.attribute_name}' },
+      { name: 'data_option::linktemplate', display: __('Link template'), tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{ticket.attribute_name}' },
       # coffeelint: enable=no_interpolation_in_single_quotes
     ]
     inputLinkTemplate = new App.ControllerForm(
@@ -682,6 +695,325 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     item.find('.js-autocompletionDefault').html(autocompletionDefault.form)
     item.find('.js-autocompletionUrl').html(autocompletionUrl.form)
     item.find('.js-autocompletionMethod').html(autocompletionMethod.form)
+
+  @autocompletion_ajax_external_data_source: (item, localParams, params) ->
+    configureAttributes = [
+      # coffeelint: disable=no_interpolation_in_single_quotes
+      { name: 'data_option::search_url', display: __('Search URL'), tag: 'input', type: 'text', null: false, default: '', placeholder: 'https://example.com/search?query=#{search.term}' },
+      # coffeelint: disable=no_interpolation_in_single_quotes
+    ]
+    inputSearchURL = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputSearchURL').html(inputSearchURL.form)
+
+    configureAttributes = [
+      { name: 'data_option::verify_ssl', display: __('SSL verification'), tag: 'boolean', null: true, default: true, translate: true, },
+    ]
+    inputSSLVerify = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputSSLVerify').html(inputSSLVerify.form)
+
+    toggleSslVerifyAlert = (e) ->
+      elem           = $(e.target)
+      isAlertVisible = elem.val() != 'true'
+
+      elem.closest('.js-dataOption').find('.js-sslVerifyAlert').toggleClass('hide', !isAlertVisible)
+
+    item.find('select[name="data_option::verify_ssl"]')
+      .off('change.toggleSslVerifyAlert').on('change.toggleSslVerifyAlert', toggleSslVerifyAlert)
+
+    toggleSslVerifyAlert(target: item.find('select[name="data_option::verify_ssl"]'))
+
+    configureAttributes = [
+      { name: 'data_option::http_auth_type', display: __('HTTP Authentication'), tag: 'select', null: true, nulloption: true, default: '', options: { basic_auth: __('Basic Authentication'), bearer_token: __('Authentication Token') }, translate: true },
+    ]
+
+    inputHTTPAuthType = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputHTTPAuthType').html(inputHTTPAuthType.form)
+
+    configureAttributes = [
+      { name: 'data_option::http_basic_auth_username', display: __('HTTP Basic Authentication username'), tag: 'input', type: 'text', null: true, default: '', placeholder: '' },
+    ]
+    inputHTTPBasicAuthUsername = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputHTTPBasicAuthUsername').html(inputHTTPBasicAuthUsername.form)
+
+    configureAttributes = [
+      { name: 'data_option::http_basic_auth_password', display: __('HTTP Basic Authentication password'), tag: 'input', type: 'text', null: true, default: '', placeholder: '' },
+    ]
+    inputHTTPBasicAuthPassword = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputHTTPBasicAuthPassword').html(inputHTTPBasicAuthPassword.form)
+
+    configureAttributes = [
+      { name: 'data_option::bearer_token_auth', display: __('HTTP Authentication token'), tag: 'input', type: 'text', null: true, default: '', placeholder: '' },
+    ]
+    inputBearerTokenAuth = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputBearerTokenAuth').html(inputBearerTokenAuth.form)
+
+    toggleHTTPAuthFields = (value) ->
+      switch value
+        when 'basic_auth'
+          inputHTTPBasicAuthUsername.show('data_option::http_basic_auth_username')
+          inputHTTPBasicAuthPassword.show('data_option::http_basic_auth_password')
+          inputHTTPBasicAuthPassword.show('data_option::http_basic_auth_password_confirm')
+          inputBearerTokenAuth.hide('data_option::bearer_token_auth', undefined, true)
+        when 'bearer_token'
+          inputHTTPBasicAuthUsername.hide('data_option::http_basic_auth_username', undefined, true)
+          inputHTTPBasicAuthPassword.hide('data_option::http_basic_auth_password', undefined, true)
+          inputHTTPBasicAuthPassword.hide('data_option::http_basic_auth_password_confirm', undefined, true)
+          inputBearerTokenAuth.show('data_option::bearer_token_auth')
+        else
+          inputHTTPBasicAuthUsername.hide('data_option::http_basic_auth_username', undefined, true)
+          inputHTTPBasicAuthPassword.hide('data_option::http_basic_auth_password', undefined, true)
+          inputHTTPBasicAuthPassword.hide('data_option::http_basic_auth_password_confirm', undefined, true)
+          inputBearerTokenAuth.hide('data_option::bearer_token_auth', undefined, true)
+
+    item.find("select[name='data_option::http_auth_type']").on('change', (e) ->
+      value = $(e.target).val()
+      toggleHTTPAuthFields(value)
+    )
+
+    toggleHTTPAuthFields(params?.data_option?.http_auth_type)
+
+    configureAttributes = [
+      { name: 'data_option::search_result_list_key', display: __('Search result list key'), tag: 'input', type: 'text', null: true, default: '', placeholder: '' },
+    ]
+    inputSearchResultListKey = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputSearchResultListKey').html(inputSearchResultListKey.form)
+
+    configureAttributes = [
+      { name: 'data_option::search_result_value_key', display: __('Search result value key'), tag: 'input', type: 'text', null: true, default: '', placeholder: '' },
+    ]
+    inputSearchResultValueKey = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputSearchResultValueKey').html(inputSearchResultValueKey.form)
+
+    configureAttributes = [
+      { name: 'data_option::search_result_label_key', display: __('Search result label key'), tag: 'input', type: 'text', null: true, default: '', placeholder: '' },
+    ]
+    inputSearchResultLabelKey = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputSearchResultLabelKey').html(inputSearchResultLabelKey.form)
+
+    configureAttributes = [
+      # coffeelint: disable=no_interpolation_in_single_quotes
+      { name: 'data_option::linktemplate', display: __('Link template'), tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{ticket.attribute_name}' },
+      # coffeelint: disable=no_interpolation_in_single_quotes
+    ]
+    inputLinkTemplate = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputLinkTemplate').html(inputLinkTemplate.form)
+
+    configureAttributes = [
+      { id: 'inputSearchTerm', name: 'query', display: __('Preview'), tag: 'input', type: 'text', null: true, default: '', placeholder: __('Search…') },
+    ]
+    inputSearchTerm = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+    )
+    item.find('.js-inputSearchTerm').html(inputSearchTerm.form)
+
+    debouncedPreviewExternalDataSource = _.debounce(@previewExternalDataSource, 300)
+
+    item.off('input.previewExternalDataSource').on('input.previewExternalDataSource', (e) ->
+      debouncedPreviewExternalDataSource(e, params.object)
+    )
+
+  @previewExternalDataSource: (e, object) =>
+    item = $(e.target).closest('.js-dataMap')
+
+    @resetExternalDataSourcePreview(item)
+
+    params = App.ControllerForm.params($(e.target).closest('form'))
+
+    return if not params.query?.trim()
+
+    item.find('.js-previewInfo')
+      .addClass('hide')
+
+    item.find('.js-loading')
+      .removeClass('hide')
+
+    data = _.extend({},
+      data_option: params.data_option,
+      query: params.query,
+      limit: 10,
+    )
+
+    App.Ajax.request(
+      id:   'previewExternalDataSource'
+      type: 'POST'
+      url:  "#{App.Config.get('api_path')}/external_data_source/preview"
+      data: JSON.stringify(data)
+      success: ({ data, parsed_items, response_body, success, error }, status, xhr) ->
+        item.find('.js-loading')
+          .addClass('hide')
+
+        if response_body
+          configureAttributes = [
+            { id: 'searchResultResponse', name: 'search_result_response', display: __('Search result response'), tag: 'code_editor', null: true, disabled: true, lineNumbers: false, height: 160, value: JSON.stringify(response_body, null, 2) },
+          ]
+          searchResultResponse = new App.ControllerForm(
+            model:
+              configure_attributes: configureAttributes
+            noFieldset: true
+          )
+          item.find('.js-searchResultResponse').html(searchResultResponse.form)
+
+        if parsed_items
+          configureAttributes = [
+            { id: 'searchResultList', name: 'search_result_list', display: __('Search result list'), tag: 'code_editor', null: true, disabled: true, lineNumbers: false, height: 160, value: JSON.stringify(parsed_items, null, 2) },
+          ]
+          searchResultList = new App.ControllerForm(
+            model:
+              configure_attributes: configureAttributes
+            noFieldset: true
+          )
+          item.find('.js-searchResultList').html(searchResultList.form)
+
+        if data
+          table = $('<table class="settings-list settings-list--stretch"><thead><tr /></thead><tbody /></table>')
+
+          if _.isEmpty(data)
+            $('<th />')
+              .text(App.i18n.translatePlain('No Entries'))
+              .appendTo(table.find('thead tr'))
+
+            table.addClass('settings-list--placeholder')
+
+            item.find('.js-searchResultSample').html(table)
+
+          else
+            $('<th />')
+              .text(App.i18n.translatePlain('Value'))
+              .appendTo(table.find('thead tr'))
+
+            $('<th />')
+              .text(App.i18n.translatePlain('Label'))
+              .appendTo(table.find('thead tr'))
+
+            if params.data_option?.linktemplate
+              $('<th />')
+                .text(App.i18n.translatePlain('Link'))
+                .addClass('centered')
+                .appendTo(table.find('thead tr'))
+
+            _.each(data, (searchItem) ->
+              resultValue = $('<td />')
+                .addClass('search-result-value')
+                .text(searchItem.value)
+
+              resultLabel = $('<td />')
+                .addClass('search-result-label')
+                .text(searchItem.label)
+
+              if params.data_option?.linktemplate
+                objects =
+                  user: App.Session.get()
+                  config: App.Config.all()
+
+                  # NB: Simulate the current attribute to certain extent.
+                  "#{object.toLowerCase()}":
+                    "#{params.name}":
+                      searchItem.value
+
+                link = App.Utils.replaceTags(params.data_option?.linktemplate, objects)
+
+                resultLinkIcon = $('<svg class="icon icon-external"><use xlink:href="assets/images/icons.svg#icon-external" /></svg>')
+                resultLinkAnchor = $('<a />')
+                  .addClass('settings-list-control')
+                  .attr('href', link)
+                  .attr('target', '_blank')
+                  .append(resultLinkIcon)
+                resultLink = $('<td />')
+                  .addClass('search-result-link settings-list-controls')
+                  .append(resultLinkAnchor)
+              else
+                $('<span />')
+                  .text(searchItem.label)
+
+              $('<tr />')
+                .attr('data-id', searchItem.value)
+                .append(resultValue)
+                .append(resultLabel)
+                .append(resultLink)
+                .appendTo(table.find('tbody'))
+            )
+
+            item.find('.js-searchResultSample').html(table)
+
+        if not success
+          item.find('.js-previewError')
+            .text(App.i18n.translatePlain(error))
+            .removeClass('hide')
+
+      error: (data, status, message) ->
+        item.find('.js-previewError')
+          .text(App.i18n.translatePlain('An error occurred: %s', message))
+          .removeClass('hide')
+
+        item.find('.js-loading')
+          .addClass('hide')
+    )
+
+  @resetExternalDataSourcePreview: (item) ->
+    item.find('.js-searchResultResponse')
+      .empty()
+    item.find('.js-searchResultList')
+      .empty()
+    item.find('.js-searchResultSample')
+      .empty()
+    item.find('.js-previewError')
+      .addClass('hide')
+    item.find('.js-loading')
+      .addClass('hide')
+    item.find('.js-previewInfo')
+      .removeClass('hide')
 
   @addDragAndDrop: (item, callback) ->
     dndOptions =

@@ -19,6 +19,14 @@ class SqlHelper
     "#{ActiveRecord::Base.connection.quote_table_name(@table_name || @object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(column)}"
   end
 
+  def json_column?(attribute)
+    @object.column_for_attribute(attribute).type == :jsonb
+  end
+
+  def json_db_column_with_key(attribute, key)
+    "#{db_column(attribute)}->>#{ActiveRecord::Base.connection.quote(key)}"
+  end
+
   def get_param_key(key, params)
     sort_by = []
     if params[key].present? && params[key].is_a?(String)

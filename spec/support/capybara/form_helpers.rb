@@ -497,7 +497,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def autocomplete?
-    type_autocomplete? || type_customer? || type_organization? || type_recipient?
+    type_autocomplete? || type_customer? || type_organization? || type_recipient? || type_externalDataSource?
   end
 
   # Input elements in supported fields define data attribute for "multiple" state.
@@ -781,7 +781,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   Otherwise, we will implicitly wait for a query depending on the type of the field.
   #   If no waits are to be done, we display a friendly warning to devs, since this can lead to some instability.
   #   In form context, expected response number will be automatically increased and tracked.
-  def wait_for_autocomplete_gql(gql_filename, gql_number)
+  def wait_for_autocomplete_gql(gql_filename, gql_number) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
     gql_number = autocomplete_gql_number(gql_filename) || gql_number
 
     if gql_filename.present?
@@ -792,6 +792,8 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
       wait_for_gql('shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.graphql', number: gql_number)
     elsif type_recipient?
       wait_for_gql('shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.graphql', number: gql_number)
+    elsif type_externalDataSource?
+      wait_for_gql('shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.graphql', number: gql_number)
     elsif type_tags?
       # NB: tags autocomplete query fires only once?!
       wait_for_gql('shared/entities/tags/graphql/queries/autocompleteTags.graphql', number: 1, skip_clearing: true)
@@ -800,13 +802,14 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     end
   end
 
-  def autocomplete_gql_number(gql_filename)
+  def autocomplete_gql_number(gql_filename) # rubocop:disable Metrics/CyclomaticComplexity
     return nil if form_context.nil?
 
     return form_context.form_gql_number(:autocomplete) if gql_filename.present?
     return form_context.form_gql_number(:customer) if type_customer?
     return form_context.form_gql_number(:organization) if type_organization?
     return form_context.form_gql_number(:recipient) if type_recipient?
+    return form_context.form_gql_number(:externalDataSource) if type_externalDataSource?
 
     form_context.form_gql_number(:tags) if type_tags?
   end

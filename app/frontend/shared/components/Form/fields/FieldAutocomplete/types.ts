@@ -9,6 +9,10 @@ import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type { SelectOptionSorting } from '../FieldSelect/types.ts'
 
+export type AutocompleteSelectValue =
+  | SelectValue
+  | { value: SelectValue; label: string }
+
 export type AutoCompleteOption = {
   value: string | number
   label: string
@@ -37,12 +41,14 @@ export type AutoCompleteProps = FormFieldContext<{
   optionIconComponent?: ConcreteComponent
   options?: AutoCompleteOption[]
   belongsToObjectField?: string
-  additionalQueryParams?: Record<string, JsonValue>
+  additionalQueryParams?:
+    | Record<string, JsonValue>
+    | (() => Record<string, JsonValue>)
   dialogNotFoundMessage?: string
   dialogEmptyMessage?: string
   initialOptionBuilder?: (
     initialEntityObject: ObjectLike,
-    value: SelectValue,
+    value: AutocompleteSelectValue,
     context?: FormFieldContext,
   ) => AutoCompleteOption
   sorting?: SelectOptionSorting

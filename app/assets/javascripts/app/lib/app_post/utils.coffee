@@ -894,11 +894,12 @@ class App.Utils
 
       # if value has content
       else if dataRef isnt undefined && dataRef isnt null && dataRef.toString
-
         # in case if we have a references object, check what datatype the attribute has
         # and e. g. convert timestamps/dates to browser locale
-        if dataRefLast?.constructor?.className
-          localClassRef = App[dataRefLast.constructor.className]
+        lastLevelName = levels[levels.length - 2]
+        className = dataRefLast?.constructor?.className || (lastLevelName.charAt(0).toUpperCase() + lastLevelName.slice(1))
+        if className && App[className]
+          localClassRef = App[className]
           if localClassRef?.attributesGet
             attributes = localClassRef.attributesGet()
             if attributes?[level]
@@ -906,6 +907,8 @@ class App.Utils
                 value = App.i18n.translateTimestamp(dataRef)
               else if attributes[level]['tag'] is 'date'
                 value = App.i18n.translateDate(dataRef)
+              else if attributes[level]['tag'] is 'autocompletion_ajax_external_data_source'
+                value = dataRef.value
 
         # as fallback use value of toString()
         if !value
@@ -935,24 +938,32 @@ class App.Utils
     @_formDiffChanges(dataNow, dataLast)
 
   @_formDiffChanges: (dataNow, dataLast, changes = {}) ->
-    for dataNowkey, dataNowValue of dataNow
-      if dataNow[dataNowkey] isnt dataLast[dataNowkey]
-        if _.isArray( dataNow[dataNowkey] ) && _.isArray( dataLast[dataNowkey] )
-          diffFromLast = _.difference( dataNow[dataNowkey], dataLast[dataNowkey] )
-          diffFromNow  = _.difference( dataLast[dataNowkey], dataNow[dataNowkey] )
+    for dataNowKey, dataNowValue of dataNow
+      if dataNowValue isnt dataLast[dataNowKey]
+        if _.isArray( dataNowValue ) && _.isArray( dataLast[dataNowKey] )
+          diffFromLast = _.difference( dataNowValue, dataLast[dataNowKey] )
+          diffFromNow  = _.difference( dataLast[dataNowKey], dataNowValue )
           diff         = diffFromLast.concat(diffFromNow)
 
           if !_.isEmpty( diff )
-            changes[dataNowkey] = diff
-        else if _.isObject( dataNow[dataNowkey] ) &&  _.isObject( dataLast[dataNowkey] )
-          changes = @_formDiffChanges( dataNow[dataNowkey], dataLast[dataNowkey], changes )
+            changes[dataNowKey] = diff
+        else if _.isObject( dataNowValue ) &&  _.isObject( dataLast[dataNowKey] )
+          if @_formDataStructureField(dataNowValue) || @_formDataStructureField(dataLast[dataNowKey])
+            changed = !_.isEqual(dataNowValue, dataLast[dataNowKey])
+            if changed
+              changes[dataNowKey] = dataNowValue
+          else
+            changes = @_formDiffChanges( dataNowValue, dataLast[dataNowKey], changes )
+        else if _.isObject( dataNowValue ) && _.isEmpty(dataNowValue) && dataLast[dataNowKey] is undefined
+        else if _.isObject( dataNowValue ) && _.isEmpty(dataNowValue) && dataLast[dataNowKey] is undefined
+
         # fix for issue #2042 - incorrect notification when closing a tab after setting up an object
         # Ignore the diff if both conditions are true:
         # 1. current value is the empty string (no user input yet)
         # 2. no previous value (it's a newly added attribute)
-        else if dataNow[dataNowkey] == '' && !dataLast[dataNowkey]?
+        else if dataNowValue == '' && !dataLast[dataNowKey]?
         else
-          changes[dataNowkey] = dataNow[dataNowkey]
+          changes[dataNowKey] = dataNowValue
     changes
 
   @_formDiffNormalizer: (data) ->
@@ -985,6 +996,10 @@ class App.Utils
       value = undefined
 
     value
+
+  @_formDataStructureField: (value) ->
+    keys = Object.keys(value)
+    _.includes(keys, 'value') && _.includes(keys, 'label')
 
   # check if attachment is referenced in message
   @checkAttachmentReference: (message) ->

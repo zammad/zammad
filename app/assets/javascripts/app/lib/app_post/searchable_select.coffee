@@ -42,11 +42,14 @@ class App.SearchableSelect extends Spine.Controller
     @render()
 
   render: ->
+    @renderElement()
+
+  renderElement: =>
     @updateAttributeOptionDisplayName(@attribute.options)
     @updateAttributeValueName()
 
     tokens = ''
-    if @attribute.multiple && @attribute.value
+    if @attribute.multiple && @attribute.value && @attribute.valueType isnt 'json'
       relation = @attribute.relation
 
       # fallback for if the value is not an array
@@ -84,7 +87,7 @@ class App.SearchableSelect extends Spine.Controller
       attribute: @attribute
       options: @renderAllOptions('', @attribute.options, 0)
       submenus: @renderSubmenus(@attribute.options)
-      tokens: tokens
+      tokens: @attribute.existingTokens or tokens
 
     @input.get(0).selectValue = @selectValue
 
@@ -363,7 +366,7 @@ class App.SearchableSelect extends Spine.Controller
 
   resetSearch: =>
     @input.val('')
-      .attr('title', '')
+      .removeAttr('title')
     @onInput(null, false)
 
   selectValue: (value, currentText, displayName) =>
@@ -374,7 +377,6 @@ class App.SearchableSelect extends Spine.Controller
     @shadowInput.val(value)
     @attribute.valueName = currentText
     @attribute.value = value
-
 
   selectItem: (event) ->
     if $(event.target).hasClass('is-inactive')
@@ -532,13 +534,13 @@ class App.SearchableSelect extends Spine.Controller
     if @currentItem || !@attribute.unknown
       return if @currentItem.hasClass('has-inactive')
 
+      valueName   = @currentItem.children('span.searchableSelect-option-text').text().trim()
       value       = @currentItem.attr('data-value')
-      name        = @currentItem.text().trim()
       displayName = @currentItem.data('displayName')
       if @attribute.multiple
-        @addValueToShadowInput(name, value)
+        @addValueToShadowInput(valueName, value)
       else
-        @selectValue(value, name, displayName)
+        @selectValue(value, valueName, displayName)
         @markSelected(value)
         @toggleClear()
 
@@ -561,7 +563,7 @@ class App.SearchableSelect extends Spine.Controller
 
     # Clear the input value so the user can start searching immediately (#4830).
     @input.val('')
-      .attr('title', '')
+      .removeAttr('title')
 
   # propergate focus to our visible input
   onShadowFocus: ->

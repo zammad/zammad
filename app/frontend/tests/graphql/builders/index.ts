@@ -505,6 +505,7 @@ export const mockOperation = (
   document: DocumentNode,
   variables: Record<string, unknown>,
   defaults?: Record<string, any>,
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): Record<string, any> => {
   const definition = document.definitions[0]
   if (definition.kind !== Kind.OPERATION_DEFINITION) {

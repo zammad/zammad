@@ -1561,6 +1561,23 @@ QUnit.test("check replace tags", assert => {
   }
   verify = App.Utils.replaceTags(message, data, true)
   assert.equal(verify, result)
+
+  var attribute_external_source = {
+    name: 'external_data_source', display: 'external_data_source',  tag: 'autocompletion_ajax_external_data_source', null: true
+  };
+  App.Ticket.configure_attributes.push( attribute_external_source )
+  message = "<a href=\"https://example.co/product/#{ticket.external_data_source}\">some text</a>"
+  result  = '<a href=\"https://example.co/product/1234">some text</a>'
+  data    = {
+    ticket: {
+      external_data_source: {
+        value: 1234,
+        label: 'Example Label'
+      }
+    }
+  }
+  verify = App.Utils.replaceTags(message, data, true)
+  assert.equal(verify, result)
 });
 
 // check attibute validation

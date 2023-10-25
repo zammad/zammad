@@ -15,6 +15,13 @@ import { EnumSecurityStateType } from '#shared/components/Form/fields/FieldSecur
 
 const linkSchemaRaw = [
   {
+    type: 'externalDataSource',
+    name: 'external_data_source',
+    label: 'External Data Source',
+    object: 'Ticket',
+    required: true,
+  },
+  {
     type: 'security',
     name: 'security',
     label:

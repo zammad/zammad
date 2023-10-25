@@ -318,5 +318,27 @@
       "relation": ""
     },
     "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "external_attribute",
+    "display": "External Attribute",
+    "dataType": "autocompletion_ajax_external_data_source",
+    "dataOption": {
+      "search_url": "http://localhost:3000/posts/search?q=#{search.term}",
+      "ssl_verify": true,
+      "http_basic_auth_username": "",
+      "http_basic_auth_password": "",
+      "http_basic_auth_password_confirm": "",
+      "bearer_token_auth": "",
+      "search_result_list_key": "posts",
+      "search_result_value_key": "id",
+      "search_result_label_key": "title",
+      "linktemplate": "",
+      "default": null,
+      "null": true,
+      "options": {},
+      "relation": ""
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
   }
 ]

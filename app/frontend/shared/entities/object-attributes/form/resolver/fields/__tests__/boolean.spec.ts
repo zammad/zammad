@@ -1,18 +1,22 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { FieldResolverBoolean } from '../boolean.ts'
 
 describe('FieldResolverBoolean', () => {
   it('should return the correct field attributes', () => {
-    const fieldResolver = new FieldResolverBoolean({
-      dataType: 'boolean',
-      name: 'correct',
-      display: 'Correct?',
-      dataOption: {
-        options: { false: 'no', true: 'yes' },
+    const fieldResolver = new FieldResolverBoolean(
+      EnumObjectManagerObjects.Ticket,
+      {
+        dataType: 'boolean',
+        name: 'correct',
+        display: 'Correct?',
+        dataOption: {
+          options: { false: 'no', true: 'yes' },
+        },
+        isInternal: true,
       },
-      isInternal: true,
-    })
+    )
 
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Correct?',

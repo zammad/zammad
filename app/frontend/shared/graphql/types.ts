@@ -99,6 +99,18 @@ export type AutocompleteSearchEntry = {
   value: Scalars['String']['output'];
 };
 
+/** Type that represents an autocomplete entry with an external data source value. */
+export type AutocompleteSearchExternalDataSourceEntry = {
+  __typename?: 'AutocompleteSearchExternalDataSourceEntry';
+  disabled?: Maybe<Scalars['Boolean']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  headingPlaceholder?: Maybe<Array<Scalars['String']['output']>>;
+  icon?: Maybe<Scalars['String']['output']>;
+  label: Scalars['String']['output'];
+  labelPlaceholder?: Maybe<Array<Scalars['String']['output']>>;
+  value: Scalars['JSON']['output'];
+};
+
 /** The default fields for autocomplete searches. */
 export type AutocompleteSearchInput = {
   /** Limit for the amount of entries */
@@ -128,6 +140,20 @@ export type AutocompleteSearchMergeTicketInput = {
   query: Scalars['String']['input'];
   /** Ticket ID */
   sourceTicketId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+/** The default fields for object attribute external data source autocomplete searches. */
+export type AutocompleteSearchObjectAttributeExternalDataSourceInput = {
+  /** Name of the object attribute */
+  attributeName: Scalars['String']['input'];
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Object name of the object attribute, e.g. Ticket */
+  object: EnumObjectManagerObjects;
+  /** Query from the autocomplete field */
+  query: Scalars['String']['input'];
+  /** Context data for the search url rendering, e.g. customer data. */
+  templateRenderContext: TemplateRenderContextInput;
 };
 
 /** Type that represents an autocomplete organization entry. */
@@ -1351,6 +1377,8 @@ export type Queries = {
   applicationConfig: Array<KeyComplexValue>;
   /** Search for tickets */
   autocompleteSearchMergeTicket: Array<AutocompleteSearchMergeTicketEntry>;
+  /** Search for values in object attributes for external data sources */
+  autocompleteSearchObjectAttributeExternalDataSource: Array<AutocompleteSearchExternalDataSourceEntry>;
   /** Search for organizations */
   autocompleteSearchOrganization: Array<AutocompleteSearchOrganizationEntry>;
   /** Search for recipients */
@@ -1405,6 +1433,12 @@ export type Queries = {
 /** All available queries */
 export type QueriesAutocompleteSearchMergeTicketArgs = {
   input: AutocompleteSearchMergeTicketInput;
+};
+
+
+/** All available queries */
+export type QueriesAutocompleteSearchObjectAttributeExternalDataSourceArgs = {
+  input: AutocompleteSearchObjectAttributeExternalDataSourceInput;
 };
 
 
@@ -2782,6 +2816,13 @@ export type TextModuleSuggestionsQueryVariables = Exact<{
 
 
 export type TextModuleSuggestionsQuery = { __typename?: 'Queries', textModuleSuggestions: Array<{ __typename?: 'TextModule', id: string, name: string, keywords?: string | null, renderedContent?: string | null }> };
+
+export type AutocompleteSearchObjectAttributeExternalDataSourceQueryVariables = Exact<{
+  input: AutocompleteSearchObjectAttributeExternalDataSourceInput;
+}>;
+
+
+export type AutocompleteSearchObjectAttributeExternalDataSourceQuery = { __typename?: 'Queries', autocompleteSearchObjectAttributeExternalDataSource: Array<{ __typename?: 'AutocompleteSearchExternalDataSourceEntry', value: any, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null }> };
 
 export type AutocompleteSearchOrganizationQueryVariables = Exact<{
   input: AutocompleteSearchOrganizationInput;

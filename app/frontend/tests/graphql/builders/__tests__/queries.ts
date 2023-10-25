@@ -120,3 +120,21 @@ export const TestUserUpdatesDocument = gql`
     }
   }
 `
+
+export interface TestAutocompleteArrayFirstLevelQuery {
+  autocompleteSearchObjectAttributeExternalDataSource: {
+    value: number
+    label: string
+  }[]
+}
+
+export const TestAutocompleteArrayFirstLevel = gql`
+  query autocompleteSearchObjectAttributeExternalDataSource(
+    $input: AutocompleteSearchObjectAttributeExternalDataSourceInput!
+  ) {
+    autocompleteSearchObjectAttributeExternalDataSource(input: $input) {
+      value
+      label
+    }
+  }
+`

@@ -196,6 +196,7 @@ examples how to use
   end
 
   def escaping(key, escape)
+    return escaping(key['value'], escape) if key.is_a?(Hash) && key.key?('value')
     return escaping(key.join(', '), escape) if key.respond_to?(:join)
     return key if escape == false
     return key if escape.nil? && !@escape && !@url_encode
@@ -223,7 +224,7 @@ examples how to use
 
   def display_value(object, method_name, previous_method_names, key)
     return key if method_name != 'value' ||
-                  (!key.instance_of?(String) && !key.instance_of?(Array))
+                  (!key.instance_of?(String) && !key.instance_of?(Array) && !key.is_a?(Hash))
 
     attributes = ObjectManager::Attribute
                  .where(object_lookup_id: ObjectLookup.by_name(object.class.to_s))
@@ -232,6 +233,8 @@ examples how to use
     case attributes.first.data_type
     when %r{^(multi)?select$}
       select_value(attributes.first, key)
+    when 'autocompletion_ajax_external_data_source'
+      key['label']
     else
       key
     end

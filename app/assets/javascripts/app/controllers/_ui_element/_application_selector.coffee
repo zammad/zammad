@@ -32,6 +32,7 @@ class App.UiElement.ApplicationSelector
       '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
       '^tree_select$': [__('is'), __('is not')]
       '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
+      '^autocompletion_ajax_external_data_source$': [__('is'), __('is not')]
       '^input$': [__('contains'), __('contains not'), __('is any of'), __('is none of'), __('starts with one of'), __('ends with one of')]
       '^richtext$': [__('contains'), __('contains not')]
       '^textarea$': [__('contains'), __('contains not')]
@@ -49,6 +50,7 @@ class App.UiElement.ApplicationSelector
         '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
         '^tree_select$': [__('is'), __('is not'), __('has changed')]
         '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
+        '^autocompletion_ajax_external_data_source$': [__('is'), __('is not'), __('has changed')]
         '^input$': [__('contains'), __('contains not'), __('has changed'), __('is any of'), __('is none of'), __('starts with one of'), __('ends with one of')]
         '^richtext$': [__('contains'), __('contains not'), __('has changed')]
         '^textarea$': [__('contains'), __('contains not'), __('has changed')]
@@ -123,12 +125,15 @@ class App.UiElement.ApplicationSelector
         attributesByObject = App.ObjectManagerAttribute.selectorAttributesByObject()
         configureAttributes = attributesByObject[groupMeta.model] || []
         for config in configureAttributes
+          config.objectName    = groupMeta.model
+          config.attributeName = config.name
+
           # ignore passwords and relations
           if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
             config.default  = undefined
             if config.type is 'email' || config.type is 'tel' || config.type is 'url'
               config.type = 'text'
-            if config.tag is 'select'
+            if config.tag is 'select' or config.tag is 'autocompletion_ajax_external_data_source'
               config.multiple = true
             for operatorRegEx, operator of operators_type
               myRegExp = new RegExp(operatorRegEx, 'i')
@@ -238,11 +243,11 @@ class App.UiElement.ApplicationSelector
     )
 
     # remove filter
-    item.off('click.application_selector', '.js-remove').on('click.application_selector', '.js-remove', (e) =>
+    item.off('click.application_selector', '.filter-control.js-remove').on('click.application_selector', '.filter-control.js-remove', (e) =>
       return if $(e.currentTarget).hasClass('is-disabled')
 
       if @hasEmptySelectorAtStart()
-        if item.find('.js-remove').length > 1
+        if item.find('.filter-control.js-remove').length > 1
           $(e.target).closest('.js-filterElement').remove()
         else
           $(e.target).closest('.js-filterElement').find('div.horizontal-filter-body').html(@emptyBody(attribute))
@@ -400,15 +405,15 @@ class App.UiElement.ApplicationSelector
   # disable - if we only have one attribute
   @disableRemoveForOneAttribute: (elementFull) ->
     if @hasEmptySelectorAtStart()
-      if elementFull.find('div.horizontal-filter-body input.empty:hidden').length > 0 && elementFull.find('.js-remove').length < 2
-        elementFull.find('.js-remove').addClass('is-disabled')
+      if elementFull.find('div.horizontal-filter-body input.empty:hidden').length > 0 && elementFull.find('.filter-control.js-remove').length < 2
+        elementFull.find('.filter-control.js-remove').addClass('is-disabled')
       else
-        elementFull.find('.js-remove').removeClass('is-disabled')
+        elementFull.find('.filter-control.js-remove').removeClass('is-disabled')
     else
       if elementFull.find('.js-attributeSelector select').length > 1
-        elementFull.find('.js-remove').removeClass('is-disabled')
+        elementFull.find('.filter-control.js-remove').removeClass('is-disabled')
       else
-        elementFull.find('.js-remove').addClass('is-disabled')
+        elementFull.find('.filter-control.js-remove').addClass('is-disabled')
 
   @updateAttributeSelectors: (elementFull) ->
     if !@hasDuplicateSelector()

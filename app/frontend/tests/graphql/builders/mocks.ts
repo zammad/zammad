@@ -28,7 +28,7 @@ import createCache from '#shared/server/apollo/cache.ts'
 import type { CacheInitializerModules } from '#shared/types/server/apollo/client.ts'
 import { noop } from 'lodash-es'
 import { provideApolloClient } from '@vue/apollo-composable'
-import type { DeepPartial } from '#shared/types/utils.ts'
+import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
 import {
   getFieldData,
   getObjectDefinition,
@@ -118,19 +118,21 @@ const stripQueryData = (
 
 // Returns the full query result, not the object that was returned in the operation
 // So, if you didn't ask for a field, but it's defined in the type schema, this field WILL be in the object
-export const getGraphQLResult = <T>(document: DocumentNode): { data: T } => {
+export const getGraphQLResult = <T>(
+  document: DocumentNode,
+): { data: DeepRequired<T> } => {
   return mockResults.get(requestToKey(document))
 }
 
 export const getGraphQLMockCalls = <T>(
   document: DocumentNode,
-): MockCall<T>[] => {
+): MockCall<DeepRequired<T>>[] => {
   return mockCalls.get(requestToKey(document)) || []
 }
 
 export const waitForGraphQLMockCalls = async <T>(
   document: DocumentNode,
-): Promise<MockCall<T>[]> => {
+): Promise<MockCall<DeepRequired<T>>[]> => {
   return vi.waitUntil(() => getGraphQLMockCalls<T>(document))
 }
 
@@ -177,6 +179,7 @@ export const getGraphQLSubscriptionHandler = <T extends Record<string, any>>(
 }
 
 afterEach(() => {
+  mockCalls.clear()
   mockResults.clear()
   mockSubscriptionHanlders.clear()
   mockDefaults.clear()
@@ -270,18 +273,25 @@ class MockLink extends ApolloLink {
         mockSubscriptionHanlders.set(queryKey, handler)
         return noop
       }
-      const defaults = getQueryDefaults(queryKey, definition, variables)
-      const returnResult = mockOperation(query, variables, defaults)
-      let result = { data: returnResult }
-      mockResults.set(queryKey, result)
-      const calls = mockCalls.get(queryKey) || []
-      calls.push({ document: query, result: result.data, variables })
-      mockCalls.set(queryKey, calls)
-      if (operation === OperationTypeNode.MUTATION) {
-        result = { data: stripQueryData(definition, result.data) }
+
+      try {
+        const defaults = getQueryDefaults(queryKey, definition, variables)
+        const returnResult = mockOperation(query, variables, defaults)
+        let result = { data: returnResult }
+        mockResults.set(queryKey, result)
+        const calls = mockCalls.get(queryKey) || []
+        calls.push({ document: query, result: returnResult, variables })
+        mockCalls.set(queryKey, calls)
+        if (operation === OperationTypeNode.MUTATION) {
+          result = { data: stripQueryData(definition, result.data) }
+        }
+        observer.next(cloneDeep(result))
+        observer.complete()
+      } catch (e) {
+        console.error(e)
+        throw e
       }
-      observer.next(cloneDeep(result))
-      observer.complete()
+
       return noop
     })
   }

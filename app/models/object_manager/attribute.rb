@@ -22,6 +22,7 @@ class ObjectManager::Attribute < ApplicationModel
     integer
     autocompletion_ajax
     autocompletion_ajax_customer_organization
+    autocompletion_ajax_external_data_source
     boolean
     user_permission
     group_permissions
@@ -41,6 +42,7 @@ class ObjectManager::Attribute < ApplicationModel
   validate :inactive_must_be_unused_by_references, unless: :active?
   validate :data_option_must_have_appropriate_values
   validate :data_type_must_not_change, on: :update
+  validate :json_field_only_on_postgresql, on: :create
 
   store :screens
   store :data_option
@@ -621,6 +623,8 @@ to send no browser reload event, pass false
       case attribute.data_type
       when %r{^(input|select|tree_select|richtext|textarea|checkbox)$}
         data_type = :string
+      when 'autocompletion_ajax_external_data_source'
+        data_type = :jsonb
       when %r{^(multiselect|multi_tree_select)$}
         data_type = if Rails.application.config.db_column_array
                       :string
@@ -655,6 +659,17 @@ to send no browser reload event, pass false
           if Rails.application.config.db_column_array
             options[:array] = true
           end
+
+          ActiveRecord::Migration.change_column(
+            model.table_name,
+            attribute.name,
+            data_type,
+            options,
+          )
+        when 'autocompletion_ajax_external_data_source'
+          options = {
+            null: true,
+          }
 
           ActiveRecord::Migration.change_column(
             model.table_name,
@@ -702,6 +717,16 @@ to send no browser reload event, pass false
           options[:array] = true
         end
 
+        ActiveRecord::Migration.add_column(
+          model.table_name,
+          attribute.name,
+          data_type,
+          **options,
+        )
+      when 'autocompletion_ajax_external_data_source'
+        options = {
+          null: true,
+        }
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -928,6 +953,8 @@ is certain attribute used by triggers, overviews or schedulers
     when %r{^((multi|tree_)?select|checkbox)$}
       local_data_option[:nulloption] = true if local_data_option[:nulloption].nil?
       local_data_option[:maxlength] ||= 255
+    when 'autocompletion_ajax_external_data_source'
+      local_data_option[:nulloption] = true if local_data_option[:nulloption].nil?
     end
   end
 
@@ -954,6 +981,13 @@ is certain attribute used by triggers, overviews or schedulers
     return if (data_type_change - allowable_changes).empty?
 
     errors.add(:data_type, __("can't be altered after creation (you can delete the attribute and create another with the desired value)"))
+  end
+
+  def json_field_only_on_postgresql
+    return if data_type != 'autocompletion_ajax_external_data_source'
+    return if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'postgresql'
+
+    errors.add(:data_type, __('can only be created on postgresql databases'))
   end
 
   def local_data_option

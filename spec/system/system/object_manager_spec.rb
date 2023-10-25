@@ -777,4 +777,77 @@ RSpec.describe 'System > Objects', type: :system do
       expect(page).to have_css('.js-dataMap table tbody tr')
     end
   end
+
+  describe 'with external data source format', db_adapter: :postgresql, searchindex: true do
+    let(:users)       { create_list(:user, 10) }
+    let(:link_prefix) { "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#user/profile/" }
+
+    before do
+      users
+      searchindex_model_reload([User])
+    end
+
+    shared_examples 'showing preview table below data options' do
+      it 'shows preview table below data options' do
+        fill_in 'Preview', with: '*'
+
+        users.each do |user|
+          within ".js-searchResultSample tr[data-id='#{user.id}']" do
+            expect(page.find('.search-result-value')).to have_text(user.id)
+            expect(page.find('.search-result-label')).to have_text(user.email)
+            expect(page.find('.search-result-link')).to have_css("a[href='#{link_prefix}#{user.id}']")
+          end
+        end
+      end
+    end
+
+    context 'when creating new fields' do
+      before do
+        visit '/#system/object_manager'
+        page.find('.js-new').click
+        fill_in 'Name', with: 'test_json'
+        set_select_field_label('data_type', 'External data source field')
+        fill_in 'Search URL', with: "#{Setting.get('es_url')}/#{Setting.get('es_index')}_test_user/_search?q=\#{search.term}"
+        fill_in 'Search result list key', with: 'hits.hits'
+        fill_in 'Search result value key', with: '_id'
+        fill_in 'Search result label key', with: '_source.email'
+        fill_in 'Link template', with: "#{link_prefix}\#{ticket.test_json}"
+      end
+
+      it_behaves_like 'showing preview table below data options'
+
+      it 'displays helpful messages' do
+        within '.preview' do
+          expect(page).to have_text('To trigger the preview, please enter some search term(s) above.')
+        end
+
+        fill_in 'Search URL', with: ''
+        fill_in 'Preview', with: '*'
+
+        within '.preview' do
+          expect(page).to have_text('Search URL is missing.')
+        end
+
+        fill_in 'Search URL', with: "#{Setting.get('es_url')}/#{Setting.get('es_index')}_test_user/_search?q=\#{search.term}"
+        fill_in 'Search result list key', with: ''
+
+        within '.preview' do
+          expect(page).to have_text('Search result list is not an array.')
+        end
+      end
+    end
+
+    context 'with existing field' do
+      let(:search_url) { "#{Setting.get('es_url')}/#{Setting.get('es_index')}_test_user/_search?q=\#{search.term}" }
+      let(:attribute)  { create(:object_manager_attribute_autocompletion_ajax_external_data_source, :elastic_search, search_url: search_url) }
+
+      before do
+        attribute
+        visit '/#system/object_manager'
+        click "tr[data-id='#{attribute.id}']"
+      end
+
+      it_behaves_like 'showing preview table below data options'
+    end
+  end
 end

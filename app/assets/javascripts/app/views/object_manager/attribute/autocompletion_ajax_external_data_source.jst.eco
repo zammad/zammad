@@ -1,0 +1,32 @@
+<div class="js-dataOption">
+  <div class="alert alert--warning js-sslVerifyAlert hide" role="alert">
+    <%= @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+  </div>
+  <div class="js-inputSearchURL"></div>
+  <div class="js-inputSSLVerify"></div>
+  <div class="js-inputHTTPAuthType"></div>
+  <div class="form-group form-group--nested">
+    <div class="js-inputHTTPBasicAuthUsername"></div>
+    <div class="js-inputHTTPBasicAuthPassword"></div>
+    <div class="js-inputBearerTokenAuth"></div>
+  </div>
+  <div class="js-inputSearchResultListKey"></div>
+  <div class="js-inputSearchResultValueKey"></div>
+  <div class="js-inputSearchResultLabelKey"></div>
+  <div class="js-inputLinkTemplate"></div>
+</div>
+<div class="preview form-group form-group--wide">
+  <div class="js-inputSearchTerm"></div>
+  <div class="alert alert--info js-previewInfo js-alert" role="alert">
+    <%- @T('To trigger the preview, please enter some search term(s) above.') %>
+  </div>
+  <div class="alert alert--danger js-previewError js-alert hide" role="alert"></div>
+  <div class="js-loading centered hide">
+    <div class="loading icon small"></div>
+  </div>
+  <div class="js-searchResultSample"></div>
+  <div class="form-group form-group--nested">
+    <div class="js-searchResultResponse"></div>
+    <div class="js-searchResultList"></div>
+  </div>
+</div>

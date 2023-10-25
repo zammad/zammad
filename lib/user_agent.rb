@@ -20,6 +20,10 @@ get http/https calls
     {
       open_timeout: 4,
       read_timeout: 10,
+      verify_ssl:   true,
+      user:         'http basic auth username',
+      password:     'http basic auth password',
+      bearer_token: 'bearer token authentication',
     },
   )
 
@@ -57,6 +61,9 @@ returns
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
 
+    # bearer token auth (if needed)
+    request = set_bearer_token_auth(request, options)
+
     # add signature
     request = set_signature(request, options)
 
@@ -93,6 +100,10 @@ post http/https calls
     {
       open_timeout: 4,
       read_timeout: 10,
+      verify_ssl:   true,
+      user:         'http basic auth username',
+      password:     'http basic auth password',
+      bearer_token: 'bearer token authentication',
       total_timeout: 60,
     },
   )
@@ -118,6 +129,9 @@ returns
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
+
+    # bearer token auth (if needed)
+    request = set_bearer_token_auth(request, options)
 
     # add signature
     request = set_signature(request, options)
@@ -155,6 +169,10 @@ put http/https calls
     {
       open_timeout: 4,
       read_timeout: 10,
+      verify_ssl:   true,
+      user:         'http basic auth username',
+      password:     'http basic auth password',
+      bearer_token: 'bearer token authentication',
     },
   )
 
@@ -179,6 +197,9 @@ returns
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
+
+    # bearer token auth (if needed)
+    request = set_bearer_token_auth(request, options)
 
     # add signature
     request = set_signature(request, options)
@@ -212,6 +233,10 @@ delete http/https calls
     {
       open_timeout: 4,
       read_timeout: 10,
+      verify_ssl:   true,
+      user:         'http basic auth username',
+      password:     'http basic auth password',
+      bearer_token: 'bearer token authentication',
     },
   )
 
@@ -233,6 +258,9 @@ returns
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
+
+    # bearer token auth (if needed)
+    request = set_bearer_token_auth(request, options)
 
     # add signature
     request = set_signature(request, options)
@@ -326,7 +354,7 @@ returns
     http.open_timeout = options[:open_timeout] || 4
     http.read_timeout = options[:read_timeout] || 10
 
-    if uri.scheme.match?(%r{https}i)
+    if uri.scheme == 'https'
       http.use_ssl = true
 
       if options.fetch(:verify_ssl, true)
@@ -348,6 +376,14 @@ returns
       request.basic_auth options[:user], options[:password]
     end
     request
+  end
+
+  def self.set_bearer_token_auth(request, options)
+    request.tap do |req|
+      next if options[:bearer_token].blank?
+
+      req['Authorization'] = "Bearer #{options[:bearer_token]}"
+    end
   end
 
   def self.parse_uri(url, params = {})

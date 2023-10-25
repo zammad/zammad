@@ -5,7 +5,7 @@ import { type FormFieldContext } from '../types/field.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const useValue = <T = any>(
-  context: Ref<FormFieldContext<{ multiple?: boolean }>>,
+  context: Ref<FormFieldContext<{ multiple?: boolean; clearValue?: unknown }>>,
 ) => {
   const currentValue = computed(() => context.value._value as T)
 
@@ -13,8 +13,8 @@ const useValue = <T = any>(
     return context.value.fns.hasValue(currentValue.value)
   })
 
-  const valueContainer = computed(() =>
-    context.value.multiple ? currentValue.value : [currentValue.value],
+  const valueContainer = computed<T[]>(() =>
+    context.value.multiple ? (currentValue.value as T[]) : [currentValue.value],
   )
 
   const isCurrentValue = (value: T) => {
@@ -26,7 +26,9 @@ const useValue = <T = any>(
     if (!hasValue.value) return
     // if value is undefined, it is not sent to the backend
     // we want to clear the value, so we set it to null
-    context.value.node.input(null, asyncSettling)
+    const clearValue =
+      context.value.clearValue !== undefined ? context.value.clearValue : null
+    context.value.node.input(clearValue, asyncSettling)
   }
 
   const localValue = computed({

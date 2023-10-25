@@ -2049,6 +2049,14 @@ fieldset > .form-group {
     pointer-events: none;
     cursor: not-allowed !important;
   }
+
+  &.form-group--nested {
+    @include bidi-style(padding-left, 30px, padding-right, 30px);
+  }
+
+  &.form-group--wide {
+    @include bidi-style(margin-left, -30px, margin-right, -30px);
+  }
 }
 
 .date.form-group .controls {
@@ -2500,6 +2508,12 @@ input.time.time--12 {
   }
 }
 
+.richtext.is-readonly [contenteditable='false'] {
+  cursor: default;
+  opacity: 1;
+  padding: 7px 12px;
+}
+
 .richtext.form-control .attachments.attachments--list:not(:empty) {
   border-top: 1px solid var(--background-modifier-border);
   white-space: normal;
@@ -2584,6 +2598,10 @@ select[multiple]:focus {
   padding: 1px;
 
   @include bidi-style(right, 12px, left, auto);
+
+  &--with-arrow-icon {
+    @include bidi-style(right, 35px, left, auto);
+  }
 
   top: 50%;
   margin-top: -7px;
@@ -11451,6 +11469,12 @@ output {
   .searchableSelect-main {
     position: relative;
     line-height: 19px;
+
+    &--with-clear-button {
+      padding-right: 60px;
+
+      @include bidi-style(padding-right, 60px, padding-left, 12px);
+    }
 
     &.form-control--small ~ .searchableSelect-autocomplete {
       top: 6px;

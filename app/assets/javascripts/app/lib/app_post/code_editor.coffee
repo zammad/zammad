@@ -157,10 +157,10 @@ class App.CodeEditor extends App.Controller
   editorOptions: =>
     autoCloseBrackets: true
     autofocus: @attribute.autofocus
-    gutters: ['CodeMirror-lint-markers'],
+    gutters: if _.isUndefined(@attribute.lineNumbers) or @attribute.lineNumbers then ['CodeMirror-lint-markers'] else [],
     hintOptions: @hintOptions()
     inputStyle: 'contenteditable'
-    lineNumbers: true
+    lineNumbers: if _.isUndefined(@attribute.lineNumbers) then true else @attribute.lineNumbers
     lint:
       skipEmpty: @attribute.null
     matchBrackets: true
@@ -179,6 +179,8 @@ class App.CodeEditor extends App.Controller
         .after(element)
 
     @editor = CodeMirror(callback, @editorOptions())
+
+    @editor.setSize(null, @attribute.height) if @attribute.height
 
     @editor.on('change', _.throttle(@update, 300))
     @editor.on('cursorActivity', => @editor.showHint())

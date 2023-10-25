@@ -26,6 +26,8 @@ export const autoCompleteProps = [
   'options',
   'initialOptionBuilder',
   'sorting',
+  'complexValue',
+  'clearValue',
 ]
 
 const fieldDefinition = createInput(

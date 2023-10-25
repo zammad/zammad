@@ -72,6 +72,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       '^multiselect$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^tree_select$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^multi_tree_select$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      '^autocompletion_ajax_external_data_source$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^input$': [__('is any of'), __('is none of'), __('starts with one of'), __('ends with one of'), __('matches regex'), __('does not match regex'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^(textarea|richtext)$': [__('is'), __('is not'), __('starts with'), __('ends with'), __('matches regex'), __('does not match regex'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
@@ -177,12 +178,15 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       for config in configureAttributes
         continue if groupKey is 'group' && _.contains(['name'], config.name)
 
+        config.objectName    = groupMeta.model
+        config.attributeName = config.name
+
         # ignore passwords and relations
         if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
           config.default  = undefined
           if config.type is 'email' || config.type is 'tel' || config.type is 'url'
             config.type = 'text'
-          if config.tag && config.tag.match(/^(tree_)?select$/)
+          if config.tag && config.tag.match(/^(tree_)?select$/) or config.tag is 'autocompletion_ajax_external_data_source'
             config.multiple = true
           for operatorRegEx, operator of operatorsType
             myRegExp = new RegExp(operatorRegEx, 'i')

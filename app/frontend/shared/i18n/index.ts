@@ -13,7 +13,7 @@ export class I18N {
 
   t(
     source: string | undefined,
-    ...args: Array<string | number | undefined | null>
+    ...args: Array<string | number | undefined | null | boolean>
   ): string {
     if (typeof source === 'undefined') return ''
 

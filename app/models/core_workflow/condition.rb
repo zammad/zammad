@@ -76,7 +76,13 @@ class CoreWorkflow::Condition
   end
 
   def condition_value_result(obj)
-    Array.wrap(obj).map { |x| x.to_s.html2text }
+    Array.wrap(obj).map do |v|
+      if v.is_a?(Hash)
+        v['value'].to_s.html2text
+      else
+        v.to_s.html2text
+      end
+    end
   end
 
   def condition_value_match?(key, condition, value)
@@ -147,5 +153,4 @@ class CoreWorkflow::Condition
 
     true
   end
-
 end

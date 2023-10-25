@@ -33,6 +33,7 @@ export default (
       update: true,
       destroy: true,
     },
+    authorizations: [],
   }
   if (parent?.__typename === 'Organization') {
     user.organization = parent
