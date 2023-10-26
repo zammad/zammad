@@ -13,11 +13,13 @@ import {
 import {
   TestAutocompleteArrayFirstLevel,
   TestAvatarDocument,
+  TestTicketArticlesMultiple,
   TestUserDocument,
 } from './queries.ts'
 import type {
   TestAutocompleteArrayFirstLevelQuery,
   TestAvatarQuery,
+  TestTicketArticlesMultipleQuery,
   TestUserQuery,
   TestUserQueryVariables,
 } from './queries.ts'
@@ -182,5 +184,25 @@ describe('calling queries with mocked data works correctly', () => {
       data?.autocompleteSearchObjectAttributeExternalDataSource.length,
     ).toBe(mocked?.autocompleteSearchObjectAttributeExternalDataSource.length)
     expect(mocked).toMatchObject(data!)
+  })
+
+  it('query that references itself correctly returns data', async () => {
+    const handler = getQueryHandler<TestTicketArticlesMultipleQuery>(
+      TestTicketArticlesMultiple,
+    )
+
+    const { data, error } = await handler.query()
+    const { data: mock } = handler.getMockedData()
+
+    expect(error).toBeUndefined()
+    expect(data).toHaveProperty(
+      'description.edges.0.node.bodyWithUrls',
+      mock.description.edges[0].node.bodyWithUrls,
+    )
+    expect(data).toHaveProperty('articles.totalCount', mock.articles.totalCount)
+    expect(data).toHaveProperty(
+      'articles.edges.0.node.bodyWithUrls',
+      mock.articles.edges[0].node.bodyWithUrls,
+    )
   })
 })

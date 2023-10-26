@@ -9,6 +9,8 @@ import {
   type FieldNode,
   type OperationDefinitionNode,
   type TypeNode,
+  type SelectionNode,
+  type FragmentDefinitionNode,
 } from 'graphql'
 import { waitForNextTick } from '#tests/support/utils.ts'
 import {
@@ -75,6 +77,7 @@ const requestToKey = (query: DocumentNode) => {
 
 const stripQueryData = (
   definition: DefinitionNode | FieldNode,
+  fragments: FragmentDefinitionNode[],
   resultData: any,
   newData: any = {},
   // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -92,8 +95,28 @@ const stripQueryData = (
   }
 
   const name = definition.name!.value
-  definition.selectionSet?.selections.forEach((node) => {
-    if (node.kind === Kind.INLINE_FRAGMENT) return
+  const processNode = (node: SelectionNode) => {
+    if (node.kind === Kind.INLINE_FRAGMENT) {
+      const condition = node.typeCondition
+      if (!condition || condition.kind !== Kind.NAMED_TYPE) {
+        throw new Error('Unknown type condition!')
+      }
+      const typename = condition.name.value
+      if (resultData.__typename === typename) {
+        node.selectionSet.selections.forEach(processNode)
+      }
+      return
+    }
+    if (node.kind === Kind.FRAGMENT_SPREAD) {
+      const fragment = fragments.find(
+        (fragment) => fragment.name.value === node.name.value,
+      )
+      if (fragment) {
+        fragment.selectionSet.selections.forEach(processNode)
+      }
+      return
+    }
+
     const fieldName =
       'alias' in node && node.alias ? node.alias?.value : node.name!.value
     if (!fieldName) {
@@ -103,15 +126,21 @@ const stripQueryData = (
     if ('selectionSet' in node && node.selectionSet) {
       if (Array.isArray(resultValue)) {
         newData[fieldName] = resultValue.map((item) =>
-          stripQueryData(node, item, newData[name]),
+          stripQueryData(node, fragments, item, newData[name]),
         )
       } else {
-        newData[fieldName] = stripQueryData(node, resultValue, newData[name])
+        newData[fieldName] = stripQueryData(
+          node,
+          fragments,
+          resultValue,
+          newData[name],
+        )
       }
     } else {
       newData[fieldName] = resultValue
     }
-  })
+  }
+  definition.selectionSet?.selections.forEach(processNode)
 
   return newData
 }
@@ -250,6 +279,9 @@ class MockLink extends ApolloLink {
     if (definition.kind !== Kind.OPERATION_DEFINITION) {
       return null
     }
+    const fragments = query.definitions.filter(
+      (def) => def.kind === Kind.FRAGMENT_DEFINITION,
+    ) as FragmentDefinitionNode[]
     const queryKey = requestToKey(query)
     return new Observable((observer) => {
       const { operation } = definition
@@ -257,7 +289,7 @@ class MockLink extends ApolloLink {
         const handler: TestSubscriptionHandler = {
           async trigger(defaults) {
             const resultValue = mockOperation(query, variables, defaults)
-            const data = stripQueryData(definition, resultValue)
+            const data = stripQueryData(definition, fragments, resultValue)
             observer.next({ data })
             await waitForNextTick(true)
             return resultValue
@@ -273,19 +305,19 @@ class MockLink extends ApolloLink {
         mockSubscriptionHanlders.set(queryKey, handler)
         return noop
       }
-
       try {
         const defaults = getQueryDefaults(queryKey, definition, variables)
         const returnResult = mockOperation(query, variables, defaults)
-        let result = { data: returnResult }
+        const result = { data: returnResult }
         mockResults.set(queryKey, result)
         const calls = mockCalls.get(queryKey) || []
-        calls.push({ document: query, result: returnResult, variables })
+        calls.push({ document: query, result: result.data, variables })
         mockCalls.set(queryKey, calls)
-        if (operation === OperationTypeNode.MUTATION) {
-          result = { data: stripQueryData(definition, result.data) }
-        }
-        observer.next(cloneDeep(result))
+        observer.next(
+          cloneDeep({
+            data: stripQueryData(definition, fragments, result.data),
+          }),
+        )
         observer.complete()
       } catch (e) {
         console.error(e)

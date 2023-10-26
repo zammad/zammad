@@ -9,7 +9,12 @@ import {
   getIdFromGraphQLId,
 } from '#shared/graphql/utils.ts'
 
-import { Kind, type DocumentNode, OperationTypeNode } from 'graphql'
+import {
+  Kind,
+  type DocumentNode,
+  OperationTypeNode,
+  type FieldNode,
+} from 'graphql'
 import { createRequire } from 'node:module'
 import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
 import { uniqBy } from 'lodash-es'
@@ -342,6 +347,8 @@ const buildObjectFromInformation = (
   return builtList
 }
 
+// we always generate full object because it might be reused later
+// in another query with more parameters
 const generateObject = (
   parent: Record<string, any> | undefined,
   definition: SchemaObjectType,
@@ -387,8 +394,11 @@ const generateObject = (
   }
   const needUpdateTotalCount =
     type.endsWith('Connection') && !('totalCount' in value)
-  definition.fields!.forEach((field) => {
-    const { name } = field
+  const buildField = (
+    field: SchemaObjectField,
+    node: FieldNode | null,
+    name: string,
+  ) => {
     // ignore null and undefined
     if (name in value && value[name] == null) {
       return
@@ -413,7 +423,8 @@ const generateObject = (
     if (meta.cached && name === 'id') {
       storedObjects.set(value.id, value)
     }
-  })
+  }
+  definition.fields!.forEach((field) => buildField(field, null, field.name))
   if (needUpdateTotalCount) {
     value.totalCount = value.edges.length
   }
@@ -465,7 +476,7 @@ const generateGqlValue = (
   parent: Record<string, any> | undefined,
   fieldName: string,
   typeDefinition: SchemaType,
-  defaults: Record<string, any> | undefined,
+  defaults: Record<string, any> | null | undefined,
   meta: ResolversMeta,
 ) => {
   if (defaults === null) return null
@@ -511,7 +522,7 @@ export const mockOperation = (
   if (definition.kind !== Kind.OPERATION_DEFINITION) {
     throw new Error(`${(definition as any).name} is not an operation`)
   }
-  const { operation, name } = definition
+  const { operation, name, selectionSet } = definition
   const operationName = name!.value!
   const operationType = getOperationDefinition(operation, operationName)
   const query: any = { __typename: queriesTypes[operation] }
@@ -519,17 +530,51 @@ export const mockOperation = (
   const rootName = operationType.name
   logger.log(`[MOCKER] mocking "${rootName}" ${operation}`)
 
-  query[rootName] = buildObjectFromInformation(
-    query,
-    rootName,
-    getFieldInformation(operationType.type),
-    defaults?.[rootName],
-    {
-      document,
-      variables,
-      cached: true,
-    },
-  )
+  const information = getFieldInformation(operationType.type)
+
+  if (selectionSet.selections.length === 1) {
+    const selection = selectionSet.selections[0]
+    if (selection.kind !== Kind.FIELD) {
+      throw new Error(
+        `unsupported selection kind ${selectionSet.selections[0].kind}`,
+      )
+    }
+    if (selection.name.value !== rootName) {
+      throw new Error(
+        `unsupported selection name ${selection.name.value} (${operation} is ${operationType.name})`,
+      )
+    }
+    query[rootName] = buildObjectFromInformation(
+      query,
+      rootName,
+      information,
+      defaults?.[rootName],
+      {
+        document,
+        variables,
+        cached: true,
+      },
+    )
+  } else {
+    selectionSet.selections.forEach((selection) => {
+      if (selection.kind !== Kind.FIELD) {
+        throw new Error(`unsupported selection kind ${selection.kind}`)
+      }
+      const operationType = getOperationDefinition(operation, operationName)
+      const fieldName = selection.alias?.value || selection.name.value
+      query[fieldName] = buildObjectFromInformation(
+        query,
+        rootName,
+        getFieldInformation(operationType.type),
+        defaults?.[rootName],
+        {
+          document,
+          variables,
+          cached: true,
+        },
+      )
+    })
+  }
 
   return query
 }

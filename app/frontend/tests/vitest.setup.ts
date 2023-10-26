@@ -7,7 +7,11 @@ import * as matchers from 'vitest-axe/matchers'
 import { expect } from 'vitest'
 import 'vitest-axe/extend-expect'
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
+import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
 import * as assertions from './support/assertions/index.ts'
+
+loadDevMessages()
+loadErrorMessages()
 
 vi.hoisted(() => {
   globalThis.__ = (source) => {

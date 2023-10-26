@@ -52,6 +52,63 @@ export const TestAvatarDocument = gql`
   }
 `
 
+export interface TestTicketArticlesMultipleQuery {
+  description: {
+    edges: {
+      node: {
+        id: string
+        bodyWithUrls: string
+      }
+    }[]
+  }
+  articles: {
+    totalCount: number
+    edges: {
+      node: {
+        id: string
+        bodyWithUrls: string
+      }
+      cursor: string
+    }[]
+    pageInfo: {
+      endCursor: string
+      startCursor: string
+      hasPreviousPage: boolean
+    }
+  }
+}
+
+export const TestTicketArticlesMultiple = gql`
+  query ticketArticles($ticketId: ID!, $beforeCursor: String) {
+    description: ticketArticles(ticket: { ticketId: $ticketId }, first: 1) {
+      edges {
+        node {
+          id
+          bodyWithUrls
+        }
+      }
+    }
+    articles: ticketArticles(
+      ticket: { ticketId: $ticketId }
+      before: $beforeCursor
+    ) {
+      totalCount
+      edges {
+        node {
+          id
+          bodyWithUrls
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasPreviousPage
+      }
+    }
+  }
+`
+
 export const TestUserDocument = gql`
   query user($userId: ID) {
     user(user: { userId: $userId }) {
