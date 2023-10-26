@@ -34,6 +34,18 @@ RSpec.describe 'KnowledgeBase public answers', type: :request do
         expect(response).to have_http_status :ok
       end
     end
+
+    context 'when knowledge base is inactive' do
+      before do
+        knowledge_base.update! active: false
+      end
+
+      # https://github.com/zammad/zammad/issues/3888
+      it 'returns route not found error' do
+        get help_answer_path(locale_name, category, published_answer)
+        expect(response.body).to include('No route matches')
+      end
+    end
   end
 
   describe '#render_alternative' do

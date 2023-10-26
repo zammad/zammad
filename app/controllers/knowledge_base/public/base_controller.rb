@@ -14,9 +14,7 @@ class KnowledgeBase::Public::BaseController < ApplicationController
   def load_kb
     @knowledge_base = policy_scope(KnowledgeBase)
                       .localed(guess_locale_via_uri)
-                      .first
-
-    raise ActiveRecord::RecordNotFound if @knowledge_base.nil?
+                      .first!
   end
 
   def all_locales
@@ -100,11 +98,25 @@ class KnowledgeBase::Public::BaseController < ApplicationController
     @knowledge_base = policy_scope(KnowledgeBase).first
 
     if @knowledge_base.nil?
-      super
+      mask_as_not_found(e)
       return
     end
 
     @page_title_error = :not_found
     render 'knowledge_base/public/not_found', status: :not_found
+  end
+
+  def mask_as_not_found(e)
+    publicly_visible_error = case Rails.env
+                             when 'development'
+                               e
+                             else
+                               ActionController::RoutingError
+                                 .new "No route matches #{request.path.inspect}"
+                             end
+
+    logger.error e
+    respond_to_exception(publicly_visible_error, :not_found)
+    http_log
   end
 end
