@@ -40,13 +40,12 @@ RSpec.describe Authorization, type: :model do
       user
     end
 
-    shared_examples 'links account with email address' do |type:|
-      let(:provider) { type }
-
+    shared_examples 'links account with email address', :aggregate_failures do
       it 'linked account' do
         authorization = described_class.create_from_hash(auth_hash)
 
         expect(authorization.user_id).to eq(user.id)
+        expect(authorization.provider).to eq(provider)
       end
     end
 
@@ -69,14 +68,53 @@ RSpec.describe Authorization, type: :model do
       end
       let(:user) { create(:user, login: auth_uid, email: email) }
 
-      include_examples 'links account with email address', type: 'github'
-      include_examples 'links account with email address', type: 'gitlab'
-      include_examples 'links account with email address', type: 'twitter'
-      include_examples 'links account with email address', type: 'facebook'
-      include_examples 'links account with email address', type: 'linkedin'
-      include_examples 'links account with email address', type: 'microsoft_office365'
-      include_examples 'links account with email address', type: 'google_oauth2'
-      include_examples 'links account with email address', type: 'weibo'
+      context 'when "github" is the provider' do
+        let(:provider) { 'github' }
+
+        include_examples 'links account with email address'
+      end
+
+      context 'when "gitlab" is the provider' do
+        let(:provider) { 'gitlab' }
+
+        include_examples 'links account with email address'
+      end
+
+      context 'when "facebook" is the provider' do
+        let(:provider) { 'facebook' }
+
+        include_examples 'links account with email address'
+      end
+
+      context 'when "twitter" is the provider' do
+        let(:provider) { 'twitter' }
+
+        include_examples 'links account with email address'
+      end
+
+      context 'when "linkedin" is the provider' do
+        let(:provider) { 'linkedin' }
+
+        include_examples 'links account with email address'
+      end
+
+      context 'when "microsoft_office365" is the provider' do
+        let(:provider) { 'microsoft_office365' }
+
+        include_examples 'links account with email address'
+      end
+
+      context 'when "google_oauth2" is the provider' do
+        let(:provider) { 'google_oauth2' }
+
+        include_examples 'links account with email address'
+      end
+
+      context 'when "weibo" is the provider' do
+        let(:provider) { 'weibo' }
+
+        include_examples 'links account with email address'
+      end
     end
   end
 

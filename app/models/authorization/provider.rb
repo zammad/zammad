@@ -14,7 +14,7 @@ class Authorization::Provider
   end
 
   def name
-    self.class.name.demodulize.downcase
+    self.class.name.demodulize.underscore
   end
 
   private
