@@ -16,9 +16,48 @@ const wsConnectionState = ref(true)
 const wsReopening = ref(false)
 const { loaded } = useApplicationLoaded()
 
-window.setInterval(() => {
-  wsConnectionState.value = !loaded.value || consumer.connection.isOpen()
-}, 1000)
+const isConnectionOpen = () => !loaded.value || consumer.connection.isOpen()
+
+const INTERVAL_CHECK_CONNECTION = 1000
+const TIMEOUT_CONFIRM_FAIL = 2000
+
+let faledTimeout: number | null = null
+let checkInterval: number | null = null
+
+const clearFailedTimeout = () => {
+  if (faledTimeout) window.clearTimeout(faledTimeout)
+  faledTimeout = null
+}
+
+const clearCheckInterval = () => {
+  if (checkInterval) window.clearInterval(checkInterval)
+  checkInterval = null
+}
+
+const checkStatus = () => {
+  clearCheckInterval()
+
+  checkInterval = window.setInterval(() => {
+    const hasConnection = isConnectionOpen()
+
+    if (hasConnection) {
+      wsConnectionState.value = true
+      return
+    }
+
+    // if there is no connection, let's wait a few seconds and check again
+    // pause interval while we wait
+
+    clearCheckInterval()
+    clearFailedTimeout()
+    faledTimeout = window.setTimeout(() => {
+      wsConnectionState.value = isConnectionOpen()
+      checkStatus()
+    }, TIMEOUT_CONFIRM_FAIL)
+  }, INTERVAL_CHECK_CONNECTION)
+}
+
+checkStatus()
 
 let connectionNotificationId: string
 const networkConnectionState = ref(true)
