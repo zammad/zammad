@@ -388,7 +388,7 @@ RSpec.describe 'Clearbit', aggregate_failures: true, current_user_id: 1, integra
 
       expect(customer.organization).to have_attributes(
         name: 'Clearbit',
-        note: 'Clearbit is a B2B data activation platform that helps teams understand customers, identify prospects, and personalize interactions with real-time intelligence.',
+        note: 'Clearbit is a B2B marketing intelligence company that provides go-to-market teams with a comprehensive B2B dataset across company, contact, and IP intelligence. They offer APIs that serve as a data backbone for business decisions, allowing users to enr...',
       )
     end
   end
