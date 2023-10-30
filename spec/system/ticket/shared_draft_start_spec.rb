@@ -210,7 +210,7 @@ RSpec.describe 'Ticket Shared Draft Start', authenticated_as: :authenticate, typ
         click '.js-delete'
       end
 
-      click_on 'Yes'
+      click_button 'Yes'
 
       expect(Ticket::SharedDraftStart).not_to be_exist(draft.id)
 

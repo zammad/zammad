@@ -7,7 +7,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
 
   def open_new_trigger_dialog
     visit '/#manage/trigger'
-    click_on 'New Trigger'
+    click_link 'New Trigger'
   end
 
   context 'Selector' do

@@ -141,8 +141,8 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
       it 'appears verbatim' do
 
         within :active_content do
-          expect(page).to have_selector('.js-callerLog', text: customer_phone)
-            .and have_selector('.js-callerLog', text: agent_phone)
+          expect(page).to have_css('.js-callerLog', text: customer_phone)
+            .and have_css('.js-callerLog', text: agent_phone)
         end
       end
     end
@@ -155,8 +155,8 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
 
       it 'appears prettified' do
         within :active_content do
-          expect(page).to have_selector('.js-callerLog', text: prettified_customer_phone)
-            .and have_selector('.js-callerLog', text: prettified_current_user_phone)
+          expect(page).to have_css('.js-callerLog', text: prettified_customer_phone)
+            .and have_css('.js-callerLog', text: prettified_current_user_phone)
         end
       end
 
@@ -185,7 +185,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
 
     it 'appears inactive' do
       within :active_content do
-        expect(page).to have_selector('span.avatar--inactive', text: 'JD')
+        expect(page).to have_css('span.avatar--inactive', text: 'JD')
       end
     end
   end
@@ -213,7 +213,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
     shared_examples 'showing user with thier organization name' do
       it 'shows user with thier organization name' do
         within :active_content do
-          expect(page).to have_selector(
+          expect(page).to have_css(
             '.js-callerLog tr div.user-popover',
             text: "#{full_name} (#{organization_name})"
           )

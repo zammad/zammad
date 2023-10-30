@@ -83,7 +83,7 @@ RSpec.describe 'Auto wizard', set_up: false, type: :system do
       it 'shows the organization from the auto wizard' do
         fill_in id: 'global-search', with: 'Demo Organization'
 
-        click_on 'Show Search Details'
+        click_link 'Show Search Details'
 
         find('[data-tab-content=Organization]').click
 

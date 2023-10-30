@@ -677,7 +677,7 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
         it 'shows an alert that a data loss may occur upon save' do
           within '.ticket_selector' do
             check_condition(1, 'Title', 'contains', value_input: 'l')
-            expect(self).to have_selector('.js-alert')
+            expect(self).to have_css('.js-alert')
           end
         end
       end

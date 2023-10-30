@@ -21,7 +21,7 @@ RSpec.describe 'Manage > Tags', type: :system do
     end
 
     in_modal do
-      click_on 'Yes'
+      click_button 'Yes'
     end
 
     expect(page).to have_no_css('.modal')

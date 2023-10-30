@@ -50,7 +50,7 @@ RSpec.describe 'Admin password auth', type: :system do
 
         visit "/#login/admin/#{generated_tokens.first.token}"
 
-        expect(page).to have_selector '#username'
+        expect(page).to have_css '#username'
       end
     end
   end

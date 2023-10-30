@@ -205,7 +205,7 @@ RSpec.describe 'Manage > Users', type: :system do
           click 'input[value="read"]', visible: :all
         end
 
-        click_on 'Submit'
+        click_button 'Submit'
       end
 
       # only the first group is added
@@ -242,7 +242,7 @@ RSpec.describe 'Manage > Users', type: :system do
             click '.js-remove'
           end
 
-          click_on 'Submit'
+          click_button 'Submit'
         end
 
         expect(user.reload.user_groups).to contain_exactly(
@@ -258,7 +258,7 @@ RSpec.describe 'Manage > Users', type: :system do
         fill_in 'Email', with: ''
         fill_in 'Phone', with: ''
 
-        click_on 'Submit'
+        click_button 'Submit'
       end
 
       within :active_content do
@@ -276,7 +276,7 @@ RSpec.describe 'Manage > Users', type: :system do
           fill_in 'Email', with: ''
           fill_in 'Phone', with: ''
 
-          click_on 'Submit'
+          click_button 'Submit'
 
           expect(page).to have_text('At least one identifier')
         end
@@ -290,7 +290,7 @@ RSpec.describe 'Manage > Users', type: :system do
         in_modal do
           fill_in 'firstname', with: 'Üser'
 
-          click_on 'Submit'
+          click_button 'Submit'
         end
 
         expect(page).to have_no_text('Invalid email')
@@ -435,7 +435,7 @@ RSpec.describe 'Manage > Users', type: :system do
       open_configure_two_factor
 
       select 'Authenticator App', from: 'method'
-      click_on 'Remove method'
+      click_button 'Remove method'
       wait.until { !User::TwoFactorPreference.exists?(id: two_factor_pref.id) }
 
       expect_no_two_factor
@@ -445,8 +445,8 @@ RSpec.describe 'Manage > Users', type: :system do
       open_configure_two_factor
 
       select 'Authenticator App', from: 'method'
-      click_on 'Remove all methods'
-      click_on 'Yes'
+      click_button 'Remove all methods'
+      click_button 'Yes'
       wait.until { !User::TwoFactorPreference.exists?(id: two_factor_pref.id) }
 
       expect_no_two_factor

@@ -111,7 +111,7 @@ RSpec.describe 'Chat Handling', type: :system do
       expect(page).to have_no_css('.active .chat-window .chat-status.is-modified')
 
       # Keep focus outside of chat window to check .chat-status.is-modified later.
-      click_on 'Dashboard'
+      click_link 'Dashboard'
 
       using_session :customer do
         check_content('.zammad-chat .zammad-chat-agent-status', 'Online')
@@ -385,7 +385,7 @@ RSpec.describe 'Chat Handling', type: :system do
 
           visit chat_url
           click '.zammad-chat .js-chat-open'
-          expect(page).to have_selector('.js-restart', wait: 60)
+          expect(page).to have_css('.js-restart', wait: 60)
           click '.js-chat-toggle .zammad-chat-header-icon'
           expect(page).to have_no_selector('zammad-chat-is-open', wait: 60)
         end

@@ -317,7 +317,7 @@ RSpec.describe 'Overview', type: :system do
 
       it "shows dash '-' for tickets" do
         within :active_content, overview_table_selector do
-          expect(page).to have_selector 'tr.item td', text: expected_text
+          expect(page).to have_css 'tr.item td', text: expected_text
         end
       end
     end
@@ -328,7 +328,7 @@ RSpec.describe 'Overview', type: :system do
 
       it 'shows the display value for tickets' do
         within :active_content, overview_table_selector do
-          expect(page).to have_selector 'tr.item td', text: expected_text
+          expect(page).to have_css 'tr.item td', text: expected_text
         end
       end
     end
@@ -339,7 +339,7 @@ RSpec.describe 'Overview', type: :system do
 
       it 'shows comma seperated diaplay value for tickets' do
         within :active_content, overview_table_selector do
-          expect(page).to have_selector 'tr.item td', text: expected_text
+          expect(page).to have_css 'tr.item td', text: expected_text
         end
       end
     end

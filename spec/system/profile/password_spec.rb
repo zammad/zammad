@@ -155,7 +155,7 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
         in_modal do
           fill_in 'Password', with: user.password_plain
 
-          click_on 'Remove'
+          click_button 'Remove'
         end
 
         within('tr[data-two-factor-key="authenticator_app"]') do

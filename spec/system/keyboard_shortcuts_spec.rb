@@ -35,7 +35,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
       end
 
       it 'changes focus to search input' do
-        expect(page).to have_selector('#global-search:focus')
+        expect(page).to have_css('#global-search:focus')
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
       it 'opens a new ticket page' do
         within :active_content do
-          expect(page).to have_selector('.newTicket h1', text: 'New Ticket')
+          expect(page).to have_css('.newTicket h1', text: 'New Ticket')
         end
       end
     end
@@ -94,7 +94,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
       it 'shows list of shortcuts' do
         in_modal do
-          expect(page).to have_selector('h1', text: 'Keyboard Shortcuts')
+          expect(page).to have_css('h1', text: 'Keyboard Shortcuts')
         end
       end
 

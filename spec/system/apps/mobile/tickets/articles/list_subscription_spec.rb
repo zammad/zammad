@@ -35,7 +35,7 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
 
     visit_ticket
 
-    expect(page).to have_selector('[role="comment"]', count: 3)
+    expect(page).to have_css('[role="comment"]', count: 3)
 
     article = create(:ticket_article, body: 'New Article', ticket: ticket)
 
@@ -49,7 +49,7 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
 
     visit_ticket
 
-    expect(page).to have_selector('[role="comment"]', count: 3)
+    expect(page).to have_css('[role="comment"]', count: 3)
 
     remove_article = articles.second
     remove_article_body = remove_article.body
@@ -58,7 +58,7 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
 
     wait_for_ticket_articles(number: 2)
 
-    expect(page).to have_selector('[role="comment"]', count: 2)
+    expect(page).to have_css('[role="comment"]', count: 2)
     expect(page).to have_no_text(remove_article_body)
   end
 
@@ -88,14 +88,14 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
 
       visit_ticket
 
-      expect(page).to have_selector('[role="comment"]', count: 2)
+      expect(page).to have_css('[role="comment"]', count: 2)
 
       article = articles.last
       article.update!(internal: false)
 
       wait_for_ticket_articles(number: 2)
 
-      expect(page).to have_selector('[role="comment"]', count: 3)
+      expect(page).to have_css('[role="comment"]', count: 3)
       expect(page).to have_text(article.body)
     end
 
@@ -104,14 +104,14 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
 
       visit_ticket
 
-      expect(page).to have_selector('[role="comment"]', count: 3)
+      expect(page).to have_css('[role="comment"]', count: 3)
 
       article = articles.last
       article.update!(internal: true)
 
       wait_for_ticket_articles(number: 2)
 
-      expect(page).to have_selector('[role="comment"]', count: 2)
+      expect(page).to have_css('[role="comment"]', count: 2)
       expect(page).to have_no_text(article.body)
     end
 
@@ -123,14 +123,14 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
       visit_ticket
 
       expect(page).to have_no_text('load 1 more')
-      expect(page).to have_selector('[role="comment"]', count: 6)
+      expect(page).to have_css('[role="comment"]', count: 6)
 
       article.update!(internal: false)
 
       wait_for_ticket_articles(number: 2)
 
       expect(page).to have_no_text('load 1 more')
-      expect(page).to have_selector('[role="comment"]', count: 7)
+      expect(page).to have_css('[role="comment"]', count: 7)
       expect(page).to have_text(article.body)
     end
 
@@ -140,14 +140,14 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
       visit_ticket
 
       expect(page).to have_no_text('load 1 more')
-      expect(page).to have_selector('[role="comment"]', count: 6)
+      expect(page).to have_css('[role="comment"]', count: 6)
 
       articles.second.update!(internal: true)
 
       wait_for_ticket_article_updates
 
       expect(page).to have_no_text('load 1 more')
-      expect(page).to have_selector('[role="comment"]', count: 5)
+      expect(page).to have_css('[role="comment"]', count: 5)
       expect(page).to have_no_text(articles.second.body)
     end
 
@@ -159,14 +159,14 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
       visit_ticket
 
       expect(page).to have_text('load 1 more')
-      expect(page).to have_selector('[role="comment"]', count: 6)
+      expect(page).to have_css('[role="comment"]', count: 6)
 
       article.update!(internal: false)
 
       wait_for_ticket_articles(number: 2)
 
       expect(page).to have_no_text('load 1 more')
-      expect(page).to have_selector('[role="comment"]', count: 8)
+      expect(page).to have_css('[role="comment"]', count: 8)
     end
 
     it 'updates the list after a non-visible article in between is switched to internal' do
@@ -175,14 +175,14 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
       visit_ticket
 
       expect(page).to have_text('load 1 more')
-      expect(page).to have_selector('[role="comment"]', count: 6)
+      expect(page).to have_css('[role="comment"]', count: 6)
 
       articles.second.update!(internal: true)
 
       wait_for_ticket_article_updates
 
       expect(page).to have_no_text('load 1 more')
-      expect(page).to have_selector('[role="comment"]', count: 6)
+      expect(page).to have_css('[role="comment"]', count: 6)
     end
   end
 

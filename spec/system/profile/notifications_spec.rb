@@ -59,7 +59,7 @@ RSpec.describe 'Profile > Notifications', authenticated_as: :user, type: :system
       find('#content_permanent_Profile form .js-reset').click
 
       in_modal do
-        click_on 'Yes'
+        click_button 'Yes'
       end
 
       expect(page).to have_field('matrix.escalation.criteria.owned_by_me', checked: true, visible: :all)

@@ -13,13 +13,13 @@ RSpec.describe 'Ticket Create', type: :system do
       it 'login screen after certain create was called', authenticated_as: false do
         visit '#ticket/create/id/1234'
 
-        expect(page).to have_selector('#login')
+        expect(page).to have_css('#login')
       end
 
       it 'login screen after generic create was called', authenticated_as: false do
         visit '#ticket/create'
 
-        expect(page).to have_selector('#login')
+        expect(page).to have_css('#login')
       end
     end
   end
@@ -329,9 +329,9 @@ RSpec.describe 'Ticket Create', type: :system do
         click('.sidebar-header-headline.js-headline')
 
         # add issue
-        click_on 'Link issue'
+        click_link 'Link issue'
         fill_in 'link', with: ENV['GITLAB_ISSUE_LINK']
-        click_on 'Submit'
+        click_button 'Submit'
 
         # verify issue
         content = find('.sidebar-git-issue-content')
@@ -374,9 +374,9 @@ RSpec.describe 'Ticket Create', type: :system do
         click('.sidebar-header-headline.js-headline')
 
         # add issue
-        click_on 'Link issue'
+        click_link 'Link issue'
         fill_in 'link', with: ENV['GITHUB_ISSUE_LINK']
-        click_on 'Submit'
+        click_button 'Submit'
 
         # verify issue
         content = find('.sidebar-git-issue-content')
@@ -1212,7 +1212,7 @@ RSpec.describe 'Ticket Create', type: :system do
     end
 
     it 'filters active templates only' do
-      expect(find('#form-template select[name="id"]')).to have_selector('option', text: active_template.name).and(have_no_selector('option', text: inactive_template.name))
+      expect(find('#form-template select[name="id"]')).to have_css('option', text: active_template.name).and(have_no_selector('option', text: inactive_template.name))
     end
   end
 
@@ -1315,7 +1315,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
           expect(elem)
             .to have_no_selector('.tabsSidebar-tab-count--danger')
-            .and have_selector('.tabsSidebar-tab-count--warning')
+            .and have_css('.tabsSidebar-tab-count--warning')
         end
       end
 
@@ -1324,7 +1324,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
         it 'highlights as danger' do
           expect(elem)
-            .to have_selector('.tabsSidebar-tab-count--danger')
+            .to have_css('.tabsSidebar-tab-count--danger')
             .and have_no_selector('.tabsSidebar-tab-count--warning')
         end
       end
@@ -1388,9 +1388,9 @@ RSpec.describe 'Ticket Create', type: :system do
       multi_tree_select_click('Change request')
       select '1 low', from: 'priority_id'
       select 'pending reminder', from: 'state_id'
-      expect(page).to have_selector('span.token-label', text: 'Incident')
-      expect(page).to have_selector('span.token-label', text: 'Service request')
-      expect(page).to have_selector('span.token-label', text: 'Change request')
+      expect(page).to have_css('span.token-label', text: 'Incident')
+      expect(page).to have_css('span.token-label', text: 'Service request')
+      expect(page).to have_css('span.token-label', text: 'Change request')
     end
   end
 

@@ -12,7 +12,7 @@ RSpec.describe 'Organization Profile', type: :system do
       it 'login screen', authenticated_as: false do
         visit "#organization/profile/#{organization.id}"
 
-        expect(page).to have_selector('#login')
+        expect(page).to have_css('#login')
       end
     end
   end

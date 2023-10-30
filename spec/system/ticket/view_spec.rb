@@ -12,13 +12,13 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
       it 'login screen after certain overview was called', authenticated_as: false do
         visit '#ticket/view/all_open'
 
-        expect(page).to have_selector('#login')
+        expect(page).to have_css('#login')
       end
 
       it 'login screen after not overview was called', authenticated_as: false do
         visit '#ticket/view'
 
-        expect(page).to have_selector('#login')
+        expect(page).to have_css('#login')
       end
     end
   end
@@ -228,7 +228,7 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
           within(:active_content) do
             display_macro_batches Ticket.first
 
-            expect(page).to have_selector('.batch-overlay-macro-entry.small')
+            expect(page).to have_css('.batch-overlay-macro-entry.small')
           end
         end
       end
@@ -248,7 +248,7 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
           within(:active_content) do
             display_macro_batches Ticket.first
 
-            expect(page).to have_selector('.batch-overlay-macro-entry', count: all)
+            expect(page).to have_css('.batch-overlay-macro-entry', count: all)
           end
         end
       end
@@ -258,7 +258,7 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
           within(:active_content) do
             display_macro_batches Ticket.first
 
-            expect(page).to have_selector('.batch-overlay-macro-entry', count: count)
+            expect(page).to have_css('.batch-overlay-macro-entry', count: count)
           end
         end
       end
@@ -445,7 +445,7 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
 
     it 'shows ticket in my organization tickets' do
       visit 'ticket/view/my_tickets'
-      click_on 'My Organization Tickets'
+      click_link 'My Organization Tickets'
       expect(page).to have_text(ticket.title)
     end
   end

@@ -31,7 +31,7 @@ RSpec.describe 'Manage > Groups', type: :system do
       let(:group_name_last) { Faker::Lorem.unique.word.capitalize }
 
       before do
-        click_on 'New Group'
+        click_link 'New Group'
       end
 
       it 'creates a nested group' do
@@ -84,7 +84,7 @@ RSpec.describe 'Manage > Groups', type: :system do
         lambda {
           ensure_websocket(check_if_pinged: false) do
             visit 'manage/groups'
-            click_on 'New Group'
+            click_link 'New Group'
           end
         }
       end

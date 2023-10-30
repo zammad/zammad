@@ -21,8 +21,8 @@ RSpec.describe 'Ticket zoom > Autosave', type: :system do
 
       within '.article-new' do
         expect(page)
-          .to have_selector('.editControls-icon.icon-public')
-          .and have_selector('.js-selectableTypes[data-type="note"]')
+          .to have_css('.editControls-icon.icon-public')
+          .and have_css('.js-selectableTypes[data-type="note"]')
       end
     end
 
@@ -34,8 +34,8 @@ RSpec.describe 'Ticket zoom > Autosave', type: :system do
 
       within '.article-new' do
         expect(page)
-          .to have_selector('.editControls-icon.icon-internal')
-          .and have_selector('.js-selectableTypes[data-type="note"]')
+          .to have_css('.editControls-icon.icon-internal')
+          .and have_css('.js-selectableTypes[data-type="note"]')
       end
     end
 
@@ -47,8 +47,8 @@ RSpec.describe 'Ticket zoom > Autosave', type: :system do
 
       within '.article-new' do
         expect(page)
-          .to have_selector('.editControls-icon.icon-public')
-          .and have_selector('.js-selectableTypes[data-type="phone"]')
+          .to have_css('.editControls-icon.icon-public')
+          .and have_css('.js-selectableTypes[data-type="phone"]')
       end
     end
 
@@ -61,8 +61,8 @@ RSpec.describe 'Ticket zoom > Autosave', type: :system do
 
       within '.article-new' do
         expect(page)
-          .to have_selector('.editControls-icon.icon-internal')
-          .and have_selector('.js-selectableTypes[data-type="phone"]')
+          .to have_css('.editControls-icon.icon-internal')
+          .and have_css('.js-selectableTypes[data-type="phone"]')
       end
     end
   end

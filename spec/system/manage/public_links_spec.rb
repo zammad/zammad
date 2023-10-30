@@ -7,13 +7,13 @@ RSpec.describe 'Manage > Public Links', type: :system do
     it 'successfully creates a new public link' do
       visit '/#manage/public_links'
 
-      click_on 'New Public Link'
+      click_link 'New Public Link'
 
       in_modal do
         fill_in 'link', with: 'https://zammad.org'
         fill_in 'title', with: 'Zammad <3'
 
-        click_on 'Submit'
+        click_button 'Submit'
       end
 
       expect(page).to have_text('Zammad <3')
@@ -38,7 +38,7 @@ RSpec.describe 'Manage > Public Links', type: :system do
         in_modal do
           fill_in 'title', with: 'Zammad <3'
 
-          click_on 'Submit'
+          click_button 'Submit'
         end
 
         expect(page).to have_text('Zammad <3')
@@ -57,7 +57,7 @@ RSpec.describe 'Manage > Public Links', type: :system do
           fill_in 'title', with: 'Zammad <3'
           fill_in 'link', with: 'https://zammad.org'
 
-          click_on 'Submit'
+          click_button 'Submit'
         end
 
         expect(page).to have_text('Zammad Homepage')
@@ -74,7 +74,7 @@ RSpec.describe 'Manage > Public Links', type: :system do
         row.find('.js-delete').click
 
         in_modal do
-          click_on 'delete'
+          click_button 'delete'
         end
 
         expect(page).to have_no_text('Zammad Homepage')

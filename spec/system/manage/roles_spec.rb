@@ -85,7 +85,7 @@ RSpec.describe 'Manage > Role', type: :system do
           click 'input[value="read"]', visible: :all
         end
 
-        click_on 'Submit'
+        click_button 'Submit'
       end
 
       # only the first group is added
@@ -122,7 +122,7 @@ RSpec.describe 'Manage > Role', type: :system do
             click '.js-remove'
           end
 
-          click_on 'Submit'
+          click_button 'Submit'
         end
 
         expect(role.reload.role_groups).to contain_exactly(

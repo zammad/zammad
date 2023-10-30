@@ -26,7 +26,7 @@ RSpec.describe 'System setup process', authenticated_as: false, required_envs: %
     expect(page).to have_css('.setup.wizard', text: 'Set up a new system')
 
     # choose setup (over migration)
-    click_on('Set up a new system')
+    click_link('Set up a new system')
 
     # admin user form
     expect(page).to have_css('.js-admin h2', text: 'Administrator Account')
@@ -38,7 +38,7 @@ RSpec.describe 'System setup process', authenticated_as: false, required_envs: %
       fill_in 'password',         with: 'TEst1234äöüß'
       fill_in 'password_confirm', with: 'TEst1234äöüß'
 
-      click_on('Create')
+      click_button('Create')
     end
 
     # configure Organization
@@ -48,18 +48,18 @@ RSpec.describe 'System setup process', authenticated_as: false, required_envs: %
 
       # fill in wrong URL
       fill_in 'url', with: 'some host'
-      click_on('Next')
+      click_button('Next')
       expect(page).to have_css('.alert', text: 'A URL looks like')
 
       # fill in valild/current URL
       fill_in 'url', with: app_host
-      click_on('Next')
+      click_button('Next')
     end
 
     # configure Email Notification
     expect(page).to have_css('.js-outbound h2', text: 'Email Notification')
     expect_current_route 'getting_started/email_notification'
-    click_on('Continue')
+    click_button('Continue')
 
     # create email account
     expect(page).to have_css('.js-channel h2', text: 'Connect Channels')
@@ -71,7 +71,7 @@ RSpec.describe 'System setup process', authenticated_as: false, required_envs: %
       fill_in 'email',    with: mailbox_user
       fill_in 'password', with: mailbox_password
 
-      page.element.click_on('Connect')
+      page.element.click_button('Connect')
     end
 
     # wait for verification process to start
@@ -87,14 +87,14 @@ RSpec.describe 'System setup process', authenticated_as: false, required_envs: %
       fill_in 'lastname',  with: 'Test'
       fill_in 'email',     with: 'agent12@example.com'
 
-      click_on('Invite')
+      click_button('Invite')
     end
     expect(page).to have_css('body', text: 'Invitation sent!')
 
     # expect to still be on the same page
     expect_current_route 'getting_started/agents'
     within('.js-agent') do
-      click_on('Continue')
+      click_link('Continue')
     end
 
     # expect Dashboard of a fresh system
@@ -119,7 +119,7 @@ RSpec.describe 'System setup process', authenticated_as: false, required_envs: %
   it 'Shows an error message if too weak password is filled in' do
     visit '/'
 
-    click_on('Set up a new system')
+    click_link('Set up a new system')
 
     within('.js-admin') do
       fill_in 'firstname',        with: 'Test Admin'
@@ -128,7 +128,7 @@ RSpec.describe 'System setup process', authenticated_as: false, required_envs: %
       fill_in 'password',         with: 'asd'
       fill_in 'password_confirm', with: 'asd'
 
-      click_on('Create')
+      click_button('Create')
 
       expect(page).to have_text 'Invalid password'
     end

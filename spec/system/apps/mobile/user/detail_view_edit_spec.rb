@@ -116,7 +116,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
       find_autocomplete('Secondary organizations')
         .search_for_options(organizations[0..1].map(&:name))
 
-      click_on 'Save'
+      click_button 'Save'
 
       expect(page)
         .to have_multiple_texts(organizations[0..1].map(&:name))

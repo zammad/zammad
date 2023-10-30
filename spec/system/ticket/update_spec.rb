@@ -30,7 +30,7 @@ RSpec.describe 'Ticket Update', type: :system do
       # create a new ticket and attempt to update its state without the required select attribute
       visit "#ticket/zoom/#{ticket.id}"
       within(:active_content) do
-        expect(page).to have_selector('.js-objectNumber', text: ticket.number)
+        expect(page).to have_css('.js-objectNumber', text: ticket.number)
 
         select('closed', from: 'state_id')
         click('.js-attributeBar .js-submit')
@@ -146,7 +146,7 @@ RSpec.describe 'Ticket Update', type: :system do
         visit "#ticket/zoom/#{ticket.id}"
 
         within(:active_content) do
-          expect(page).to have_selector('.js-objectNumber', text: ticket.number)
+          expect(page).to have_css('.js-objectNumber', text: ticket.number)
 
           expect(page).to have_field(attribute.name, with: '', visible: :hidden)
           expect(page).to have_select('state_id',
@@ -193,7 +193,7 @@ RSpec.describe 'Ticket Update', type: :system do
         visit "#ticket/zoom/#{ticket.id}"
 
         within(:active_content) do
-          expect(page).to have_selector('.js-objectNumber', text: ticket.number)
+          expect(page).to have_css('.js-objectNumber', text: ticket.number)
           expect(page).to have_select('state_id',
                                       selected: 'new',
                                       options:  ['new', 'closed', 'open', 'pending close', 'pending reminder'])
@@ -203,7 +203,7 @@ RSpec.describe 'Ticket Update', type: :system do
           expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
         end
 
-        expect(page).to have_selector('.content.active .article-content', text: 'test body')
+        expect(page).to have_css('.content.active .article-content', text: 'test body')
         expect(page).to have_select('state_id',
                                     selected: 'closed',
                                     options:  ['closed', 'open', 'pending close', 'pending reminder'])

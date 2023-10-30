@@ -54,7 +54,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
       it 'shows selected customer ticket' do
         within '.js-preview .js-tableBody' do
-          expect(page).to have_selector('tr.item', text: ticket_one.title)
+          expect(page).to have_css('tr.item', text: ticket_one.title)
         end
       end
 
@@ -77,8 +77,8 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
       it 'does not show customer ticket that is not selected' do
         within '.js-preview .js-tableBody' do
-          expect(page).to have_selector('tr.item', text: ticket_two.title)
-          expect(page).to have_selector('tr.item', text: ticket_three.title)
+          expect(page).to have_css('tr.item', text: ticket_two.title)
+          expect(page).to have_css('tr.item', text: ticket_three.title)
         end
       end
     end
@@ -95,8 +95,8 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
       it 'shows selected customer ticket' do
         within '.js-preview .js-tableBody' do
-          expect(page).to have_selector('tr.item', text: ticket_one.title)
-          expect(page).to have_selector('tr.item', text: ticket_two.title)
+          expect(page).to have_css('tr.item', text: ticket_one.title)
+          expect(page).to have_css('tr.item', text: ticket_two.title)
         end
       end
 
@@ -119,7 +119,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
       it 'does not show customer ticket that is not selected' do
         within '.js-preview .js-tableBody' do
-          expect(page).to have_selector('tr.item', text: ticket_three.title)
+          expect(page).to have_css('tr.item', text: ticket_three.title)
         end
       end
     end
@@ -130,7 +130,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
       context 'for new overview' do
         before do
           visit '/#manage/overviews'
-          click_on 'New Overview'
+          click_link 'New Overview'
 
           modal_ready
 
@@ -206,7 +206,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
       context 'for new overview' do
         before do
           visit '/#manage/overviews'
-          click_on 'New Overview'
+          click_link 'New Overview'
 
           modal_ready
 
@@ -282,7 +282,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
       context 'for new overview' do
         before do
           visit '/#manage/overviews'
-          click_on 'New Overview'
+          click_link 'New Overview'
 
           modal_ready
 
@@ -371,11 +371,11 @@ RSpec.describe 'Manage > Overviews', type: :system do
     context 'when new overview is created' do
       before do
         visit '/#manage/overviews'
-        click_on 'New Overview'
+        click_link 'New Overview'
 
         in_modal disappears: false do
           fill_in 'name', with: 'dummy'
-          click_on 'Submit'
+          click_button 'Submit'
         end
       end
 
@@ -401,7 +401,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
           find("div[data-attribute-name='role_ids'] div.u-placeholder").has_content?('Nothing selected')
 
-          click_on 'Submit'
+          click_button 'Submit'
         end
       end
 

@@ -318,7 +318,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         select User.find_by(email: 'admin@example.com').fullname, from: 'Owner'
         find('.js-textarea').send_keys('test 1234')
         find('.js-submit').click
-        expect(page).to have_selector('div.scrollPageHeader .js-ticketTitleContainer')
+        expect(page).to have_css('div.scrollPageHeader .js-ticketTitleContainer')
       end
     end
   end
@@ -825,7 +825,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         visit "ticket/zoom/#{ticket.id}"
 
         find('.articleNewEdit-body').send_keys('Some reply')
-        expect(page).to have_selector('.js-selectedArticleType')
+        expect(page).to have_css('.js-selectedArticleType')
       end
     end
   end
@@ -843,7 +843,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'to next Ticket ID' do
       visit 'ticket/view/all_unassigned'
-      click_on 'Welcome to Zammad!'
+      click_link 'Welcome to Zammad!'
       click '.js-openDropdownMacro'
       find(:macro, macro.id).click
       wait(5, interval: 1).until_constant { current_url }
@@ -924,7 +924,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'adds previous/next buttons to existing ticket' do
       within :active_content do
-        click_on ticket_a.title
+        click_link ticket_a.title
 
         expect(page).to have_css('.pagination-counter')
       end
@@ -932,7 +932,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'keeps previous/next buttons when navigating to overview ticket from elsewhere' do
       within :active_content do
-        click_on ticket_a.title
+        click_link ticket_a.title
         visit 'dashboard'
         visit "ticket/zoom/#{ticket_a.id}"
 
@@ -1019,15 +1019,15 @@ RSpec.describe 'Ticket zoom', type: :system do
           visit "ticket/zoom/#{ticket.id}"
 
           click '.js-subscriptions .js-subscribe input'
-          expect(page).to have_selector('.js-subscriptions .js-unsubscribe input')
-          expect(page).to have_selector('.js-subscriptions span.avatar')
+          expect(page).to have_css('.js-subscriptions .js-unsubscribe input')
+          expect(page).to have_css('.js-subscriptions span.avatar')
 
           click '.js-subscriptions .js-unsubscribe input'
-          expect(page).to have_selector('.js-subscriptions .js-subscribe input')
+          expect(page).to have_css('.js-subscriptions .js-subscribe input')
           expect(page).to have_no_selector('.js-subscriptions span.avatar')
 
           create(:mention, mentionable: ticket, user: other_agent)
-          expect(page).to have_selector('.js-subscriptions span.avatar')
+          expect(page).to have_css('.js-subscriptions span.avatar')
 
           # check history for mention entries
           click 'h2.sidebar-header-headline.js-headline'
@@ -1281,9 +1281,9 @@ RSpec.describe 'Ticket zoom', type: :system do
         click('.sidebar-header-headline.js-headline')
 
         # add issue
-        click_on 'Link issue'
+        click_link 'Link issue'
         fill_in 'link', with: ENV['GITLAB_ISSUE_LINK']
-        click_on 'Submit'
+        click_button 'Submit'
 
         # verify issue
         content = find('.sidebar-git-issue-content')
@@ -1332,9 +1332,9 @@ RSpec.describe 'Ticket zoom', type: :system do
         click('.sidebar-header-headline.js-headline')
 
         # add issue
-        click_on 'Link issue'
+        click_link 'Link issue'
         fill_in 'link', with: ENV['GITHUB_ISSUE_LINK']
-        click_on 'Submit'
+        click_button 'Submit'
 
         # verify issue
         content = find('.sidebar-git-issue-content')
@@ -1577,7 +1577,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       it 'does change the tab without any action' do
-        click_on ticket1.title
+        click_link ticket1.title
         expect(current_url).to include("ticket/zoom/#{ticket1.id}")
         click '.js-submit'
         expect(current_url).to include("ticket/zoom/#{ticket2.id}")
@@ -1586,7 +1586,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       it 'does show default stay on tab if secondary action is not given' do
-        click_on ticket1.title
+        click_link ticket1.title
         refresh
         expect(page).to have_text('Stay on tab')
       end
@@ -1691,7 +1691,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       page.find('.js-input').click
       page.find('.js-input').set('Deutsch')
       page.find('.js-input').send_keys(:enter)
-      click_on 'Submit'
+      click_button 'Submit'
 
       visit "#ticket/zoom/#{ticket.id}"
       expect(page).to have_text(Translation.translate('de-de', 'select attachment…'))
@@ -1898,7 +1898,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       ticket.update(state: pending_state, pending_time: 1.day.from_now)
       wait.until { page.find("select[name='state_id']").value == pending_state.id.to_s }
       expect(page.find("select[name='state_id']").value).to eq(pending_state.id.to_s)
-      expect(page).to have_selector("div[data-name='pending_time']")
+      expect(page).to have_css("div[data-name='pending_time']")
     end
 
     it 'does merge attributes with remote priority (ajax) and local state (user)' do
@@ -1954,7 +1954,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     it 'does open and close by usage' do
       find('.js-writeArea').click
       find('.js-textarea').send_keys(' ')
-      expect(page).to have_selector('form.article-add.is-open')
+      expect(page).to have_css('form.article-add.is-open')
       find('input#global-search').click
       expect(page).to have_no_selector('form.article-add.is-open')
     end
@@ -1963,14 +1963,14 @@ RSpec.describe 'Ticket zoom', type: :system do
       find('.js-textarea').send_keys('test')
       wait.until { Taskbar.find_by(key: "Ticket-#{ticket.id}").state.dig('article', 'body').present? }
       refresh
-      expect(page).to have_selector('form.article-add.is-open')
+      expect(page).to have_css('form.article-add.is-open')
     end
 
     it 'does open automatically when attachment is given from sidebar' do
       page.find('input#fileUpload_1[data-initialized="true"]', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
       wait.until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].present? }
       refresh
-      expect(page).to have_selector('form.article-add.is-open')
+      expect(page).to have_css('form.article-add.is-open')
     end
   end
 
@@ -2295,9 +2295,9 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     it 'does show the attachment once' do
-      expect(page).to have_selector('.sidebar-content .attachment.attachment--preview', count: 2)
-      expect(page).to have_selector('.sidebar-content', text: 'some_file.txt')
-      expect(page).to have_selector('.sidebar-content', text: 'some_file2.txt')
+      expect(page).to have_css('.sidebar-content .attachment.attachment--preview', count: 2)
+      expect(page).to have_css('.sidebar-content', text: 'some_file.txt')
+      expect(page).to have_css('.sidebar-content', text: 'some_file2.txt')
     end
 
     it 'does show up new attachments' do
@@ -2306,7 +2306,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_text('mail001.box')
       wait.until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].present? }
       click '.js-submit'
-      expect(page).to have_selector('.sidebar-content', text: 'mail001.box')
+      expect(page).to have_css('.sidebar-content', text: 'mail001.box')
     end
   end
 
@@ -2499,7 +2499,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
           expect(elem)
             .to have_no_selector('.tabsSidebar-tab-count--danger')
-            .and have_selector('.tabsSidebar-tab-count--warning')
+            .and have_css('.tabsSidebar-tab-count--warning')
         end
       end
 
@@ -2508,7 +2508,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         it 'highlights as danger' do
           expect(elem)
-            .to have_selector('.tabsSidebar-tab-count--danger')
+            .to have_css('.tabsSidebar-tab-count--danger')
             .and have_no_selector('.tabsSidebar-tab-count--warning')
         end
       end

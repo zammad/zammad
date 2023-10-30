@@ -9,7 +9,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
       within form_context do
         fill_in 'Email', with: 'discard@discard.zammad.org'
         fill_in 'Message', with: 'message here'
-        click_on 'Submit'
+        click_button 'Submit'
 
         expect(page).to have_validation_message_for(name_input)
       end
@@ -19,7 +19,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
       within form_context do
         fill_in 'Name', with: 'some sender'
         fill_in 'Message', with: 'message here'
-        click_on 'Submit'
+        click_button 'Submit'
 
         expect(page).to have_validation_message_for(email_input)
       end
@@ -29,7 +29,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
       within form_context do
         fill_in 'Name', with: 'some sender'
         fill_in 'Email', with: 'discard@discard.zammad.org'
-        click_on 'Submit'
+        click_button 'Submit'
 
         expect(page).to have_validation_message_for(body_input)
       end
@@ -39,7 +39,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
       within form_context do
         fill_in 'Name', with: 'some sender'
         fill_in 'Email', with: 'invalidformat'
-        click_on 'Submit'
+        click_button 'Submit'
 
         expect(page).to have_validation_message_for(email_input)
       end
@@ -54,9 +54,9 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
         # We need to wait 10 seconds, because otherwise we are detected as a robot.
         sleep 10
 
-        click_on 'Submit'
+        click_button 'Submit'
 
-        expect(page).to have_selector('.has-error [name=email]').and have_no_button(type: 'submit', disabled: true)
+        expect(page).to have_css('.has-error [name=email]').and have_no_button(type: 'submit', disabled: true)
       end
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
         fill_in 'Message', with: 'message here'
         fill_in 'Email', with: 'discard@discard.zammad.org'
         sleep 10
-        click_on 'Submit'
+        click_button 'Submit'
 
         expect(page).to have_text('Thank you for your inquiry')
       end
@@ -79,7 +79,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
         fill_in 'Name', with: 'some sender'
         fill_in 'Message', with: 'message here'
         fill_in 'Email', with: 'discard@discard.zammad.org'
-        click_on 'Submit'
+        click_button 'Submit'
         accept_alert('Sorry, you look like a robot!')
       end
     end
@@ -134,7 +134,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
     it 'shows an inline form' do
       visit path
       uncheck 'Start modal dialog for form.', allow_label_click: true
-      expect(page).to have_selector('.js-formInline').and have_no_selector('.js-formInline.hide')
+      expect(page).to have_css('.js-formInline').and have_no_selector('.js-formInline.hide')
     end
   end
 

@@ -39,7 +39,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
     context 'with expire date' do
       it 'generates a new personal token' do
         in_modal do
-          expect(page).to have_selector('.form-control.input.js-select')
+          expect(page).to have_css('.form-control.input.js-select')
             .and have_text('Your New Personal Access Token')
         end
       end
@@ -61,7 +61,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
 
       it 'generates a new personal token' do
         in_modal do
-          expect(page).to have_selector('.form-control.input.js-select')
+          expect(page).to have_css('.form-control.input.js-select')
             .and have_text('Your New Personal Access Token')
         end
       end

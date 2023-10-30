@@ -61,14 +61,14 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
         within "##{method_setting}" do
           select 'no', from: method_setting
-          click_on 'Submit'
+          click_button 'Submit'
         end
 
         expect(Setting.find_by(name: method_setting).state_current['value']).to be(false)
 
         within "##{method_setting}" do
           select 'yes', from: method_setting
-          click_on 'Submit'
+          click_button 'Submit'
         end
 
         expect(Setting.find_by(name: method_setting).state_current['value']).to be(true)

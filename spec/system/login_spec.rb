@@ -125,8 +125,8 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
         let(:recovery_codes_enabled) { true }
 
         before do
-          click_on 'Try another method'
-          click_on 'recovery codes'
+          click_link 'Try another method'
+          click_link 'recovery codes'
         end
 
         it 'login with correct payload' do
