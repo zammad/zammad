@@ -10124,10 +10124,10 @@ type-fest@^2.0.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.19.0.tgz#88068015bb33036a598b952e55e9311a60fd3a9b"
   integrity sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==
 
-type-fest@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.5.0.tgz#79208f4dbb8a9946a55889e9f482b95a3292ee41"
-  integrity sha512-diLQivFzddJl4ylL3jxSkEc39Tpw7o1QeEHIPxVwryDK2lpB7Nqhzhuo6v5/Ls08Z0yPSAhsyAWlv1/H0ciNmw==
+type-fest@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.6.0.tgz#9c575f7e20530defef4f9cdc5e2c85d6e4ea0fc9"
+  integrity sha512-rLjWJzQFOq4xw7MgJrCZ6T1jIOvvYElXT12r+y0CC6u67hegDHaxcPqb2fZHOGlqxugGQPNB1EnTezjBetkwkw==
 
 typed-array-buffer@^1.0.0:
   version "1.0.0"
