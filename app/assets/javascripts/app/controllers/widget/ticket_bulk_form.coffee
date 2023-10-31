@@ -89,7 +89,7 @@ class App.TicketBulkForm extends App.Controller
 
     @confirm_attributes = [
       { name: 'type_id',  display: __('Type'),       tag: 'select', multiple: false, null: true, relation: 'TicketArticleType', filter: @articleTypeFilter, default: '9', translate: true, class: 'medium' }
-      { name: 'internal', display: __('Visibility'), tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
+      { name: 'internal', display: __('Visibility'), tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false, translate: true }
     ]
 
     new App.ControllerForm(

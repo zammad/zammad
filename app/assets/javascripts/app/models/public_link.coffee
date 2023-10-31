@@ -6,8 +6,8 @@ class App.PublicLink extends App.Model
     { name: 'link', display: __('Link'), tag: 'input', type: 'text', limit: 500, 'null': false, placeholder: 'https://link' },
     { name: 'title', display: __('Title'), tag: 'input', type: 'text', limit: 200, 'null': false },
     { name: 'description', display: __('Description (shown as title tag for screen readers)'), tag: 'input', type: 'text', limit: 200, 'null': true },
-    { name: 'screen', display: __('Context'), tag: 'multiselect', options: { login: __('Login Screen'), signup: __('Signup Screen'), password_reset: __('Forgot Password Screen') }, default: ['login'], 'null': false, multiple: true },
-    { name: 'new_tab', display: __('Open in new tab'), tag: 'select', options: { true: __('yes'), false: __('no'), }, default: true, 'null': false },
+    { name: 'screen', display: __('Context'), tag: 'multiselect', options: { login: __('Login Screen'), signup: __('Signup Screen'), password_reset: __('Forgot Password Screen') }, default: ['login'], 'null': false, multiple: true, translate: true },
+    { name: 'new_tab', display: __('Open in new tab'), tag: 'select', options: { true: __('yes'), false: __('no'), }, default: true, 'null': false, translate: true },
     { name: 'prio', display: __('Prio'), readonly: 1 },
   ]
 

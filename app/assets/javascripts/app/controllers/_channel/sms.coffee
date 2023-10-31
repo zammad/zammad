@@ -164,7 +164,7 @@ class ChannelSmsAccount extends App.ControllerModal
       el: el.find('.js-channelAdapterSelector')
       model:
         configure_attributes: [
-          { name: 'options::adapter', display: __('Provider'), tag: 'select', null: false, options: options, nulloption: true }
+          { name: 'options::adapter', display: __('Provider'), tag: 'select', null: false, options: options, nulloption: true, translate: true }
         ]
         className: ''
       params: @channel
@@ -303,7 +303,7 @@ class ChannelSmsNotification extends App.ControllerModal
       el: el.find('.js-channelAdapterSelector')
       model:
         configure_attributes: [
-          { name: 'options::adapter', display: __('Provider'), tag: 'select', null: false, options: options, nulloption: true }
+          { name: 'options::adapter', display: __('Provider'), tag: 'select', null: false, options: options, nulloption: true, translate: true }
         ]
         className: ''
       params: @channel

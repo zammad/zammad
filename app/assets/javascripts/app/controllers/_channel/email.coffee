@@ -393,7 +393,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
 
     # outbound
     configureAttributesOutbound = [
-      { name: 'adapter', display: __('Send Mails via'), tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
+      { name: 'adapter', display: __('Send Mails via'), tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound, translate: true },
     ]
     new App.ControllerForm(
       el:    @$('.base-outbound-type')
@@ -407,7 +407,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
 
     # inbound
     configureAttributesInbound = [
-      { name: 'adapter',                 display: __('Type'),     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
+      { name: 'adapter',                 display: __('Type'),     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound, translate: true },
       { name: 'options::host',           display: __('Host'),     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',           display: __('User'),     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off' },
       { name: 'options::password',       display: __('Password'), tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
@@ -883,7 +883,7 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
 
     # outbound
     configureAttributesOutbound = [
-      { name: 'adapter', display: __('Send Mails via'), tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
+      { name: 'adapter', display: __('Send Mails via'), tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound, translate: true },
     ]
     new App.ControllerForm(
       el:    @$('.base-outbound-type')

@@ -47,7 +47,7 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
   render: =>
     @replaceWith App.view('getting_started/email_notification')()
     configureAttributesOutbound = [
-      { name: 'adapter', display: __('Send Mails via'), tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
+      { name: 'adapter', display: __('Send Mails via'), tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound, translate: true },
     ]
     new App.ControllerForm(
       el:    @$('.base-outbound-type')
