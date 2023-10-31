@@ -138,7 +138,7 @@
     "tiptap-text-direction": "^0.3.0",
     "ua-parser-js": "^1.0.37",
     "uuid": "^9.0.1",
-    "vue": "^3.3.6",
+    "vue": "^3.3.7",
     "vue-advanced-cropper": "^2.8.8",
     "vue-easy-lightbox": "1.16.0",
     "vue-router": "^4.2.5",
