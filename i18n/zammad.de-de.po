@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-10-31 20:01+0000\n"
-"Last-Translator: FFA2016 <minecraftffaa@gmail.com>\n"
+"PO-Revision-Date: 2023-11-02 13:04+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -3919,7 +3919,7 @@ msgstr "Definiert die maximale Nutzlast-Größe für Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define model configuration for Elasticsearch."
-msgstr "Definieren Sie den Pipeline-Namen für Elasticsearch."
+msgstr "Definieren Sie die Model-Konfiguration für Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
@@ -4576,16 +4576,15 @@ msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
 msgstr ""
-"Legt fest, wie viele Tickets pro Tag über ein Webformular erstellt werden "
-"können."
+"Definiert, wieviele Artikel pro Minute insgesamt erstellt werden können."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
 msgstr ""
-"Legt fest, wie viele Tickets pro Tag über ein Webformular erstellt werden "
-"können."
+"Definiert, wieviele Artikel für dasselbe Ticket pro Minute insgesamt "
+"erstellt werden können."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5390,7 +5389,7 @@ msgstr "Elasticsearch Endpunkt-Benutzer"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Model Configuration"
-msgstr "Elasticsearch Konfiguration"
+msgstr "Elasticsearch Model-Konfiguration"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -7554,11 +7553,9 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -13273,7 +13270,7 @@ msgstr "Der erforderliche Parameter 'id' fehlt."
 
 #: lib/search_index_backend.rb
 msgid "The required parameter 'key' is missing."
-msgstr "Der erforderliche Parameter 'area' fehlt."
+msgstr "Der erforderliche Parameter 'key' fehlt."
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
@@ -13333,7 +13330,7 @@ msgstr "Der erforderliche Parameter 'ticket_number' fehlt."
 
 #: lib/search_index_backend.rb
 msgid "The required parameter 'value' is missing."
-msgstr "Der erforderliche Parameter 'locale' fehlt."
+msgstr "Der erforderliche Parameter 'value' fehlt."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -15520,11 +15517,9 @@ msgstr "Aus Benutzersicht ansehen"
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb

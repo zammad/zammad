@@ -79,8 +79,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}> : Créé par #{current_user.longname} à #{ticket."
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}> : Créé par #{current_user.longname} à #{ticket."
 "updated_at}_\n"
 "* Groupe : #{ticket.group.name}\n"
 "* Propriétaire : #{ticket.owner.fullname}\n"
@@ -156,8 +156,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Rappel atteint !_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Rappel atteint !_\n"
 "Un ticket a besoin d'attention: rappel atteint pour (#{ticket.title}) avec "
 "client \"*#{ticket.customer.longname}*\".\n"
 "\n"
@@ -1813,7 +1813,8 @@ msgstr "Etes-vous sûr ? Les modifications non sauvegardées seront perdues."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Are you sure? Your notifications settings will be reset to default."
-msgstr "Êtes vous sûr(e) ? Vos paramètres de notification seront réinitialisés."
+msgstr ""
+"Êtes vous sûr(e) ? Vos paramètres de notification seront réinitialisés."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -1844,8 +1845,8 @@ msgid ""
 "Article could not be created. An unsupported key other than 'article.note' "
 "was provided."
 msgstr ""
-"L'article n'a pas pu être créé. Une clé non supportée autre que "
-"'article.note' a été fournie."
+"L'article n'a pas pu être créé. Une clé non supportée autre que 'article."
+"note' a été fournie."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 msgid "Article could not be deleted."
@@ -4695,7 +4696,8 @@ msgstr "Définit combien d'articles peuvent êtres créés par minute."
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
-msgstr "Définit combien d'articles peuvent être créés par minute et par ticket."
+msgstr ""
+"Définit combien d'articles peuvent être créés par minute et par ticket."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -6021,7 +6023,8 @@ msgstr "Saisir l'URL de votre système %s"
 #: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
 #, fuzzy
 msgid "Enter the code from your two-factor authenticator app."
-msgstr "Entrer le code de votre application d'authentification à deux facteurs."
+msgstr ""
+"Entrer le code de votre application d'authentification à deux facteurs."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid ""
@@ -7167,8 +7170,8 @@ msgstr ""
 "Vous pouvez effectuer ici une recherche sur des clients, organisations ou "
 "tickets. Utiliser l'astérisque §*§ pour correspondre à n'importe quelle "
 "suite de lettres : §sou*§ ou §ressen*r§. Vous pouvez également utiliser les "
-"||guillemets|| pour effectuer une recherche sur une phrase : §\"une phrase\""
-"§."
+"||guillemets|| pour effectuer une recherche sur une phrase : §\"une phrase"
+"\"§."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid ""
@@ -7712,11 +7715,9 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -9938,8 +9939,8 @@ msgstr "Tickets ouverts"
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
 msgstr ""
-"Ouvrez votre application d'authentification et scannez le QR code ci-dessous "
-":"
+"Ouvrez votre application d'authentification et scannez le QR code ci-"
+"dessous :"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
@@ -14537,7 +14538,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "This signature is inactive, it won't be included in the reply."
-msgstr "Cette signature est inactive, elle ne sera pas incluse dans la réponse."
+msgstr ""
+"Cette signature est inactive, elle ne sera pas incluse dans la réponse."
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #, fuzzy
@@ -15362,8 +15364,8 @@ msgid ""
 msgstr ""
 "Les déclencheurs activés par des actions sont exécutés à chaque fois qu'un "
 "ticket est créé ou mis à jour, tandis que les déclencheurs activés par des "
-"événements temporels sont exécutés quand un temps spécifique est atteint ("
-"par exemple un temps d'attente ou une escalade)."
+"événements temporels sont exécutés quand un temps spécifique est atteint "
+"(par exemple un temps d'attente ou une escalade)."
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Triggers are …"
@@ -15845,8 +15847,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\""
-">Consulter sur #{config.product_name}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
+"\">Consulter sur #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -16217,11 +16219,9 @@ msgstr "Voir depuis la perspective utilisateur"
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -16757,8 +16757,8 @@ msgid ""
 "of agents."
 msgstr ""
 "Vous pouvez créer des **aperçus** pour vos agents et vos clients. Ils ont de "
-"multiples objectifs, comme servir de liste de choses à faire pour vos agents."
-"\n"
+"multiples objectifs, comme servir de liste de choses à faire pour vos "
+"agents.\n"
 "\n"
 "Vous pouvez aussi créer des aperçus et limiter leur accès à des agents "
 "spécifiques ou des groupes d'agents."
