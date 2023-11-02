@@ -509,4 +509,35 @@ RSpec.shared_examples 'Object custom field values', db_strategy: :reset do |obje
     process(process_payload)
     expect(klass.last).to have_attributes(imported_resource_fields)
   end
+
+  context 'when select option value no longer exists in options' do
+    let(:resource) do
+      resource = super()
+
+      resource['custom_fields'][1]['value'] = '99'
+
+      resource
+    end
+
+    let(:imported_resource_fields) do
+      {
+        custom_textfield:       'Testing',
+        custom_singleselection: nil,
+        custom_multiselection:  %w[two three],
+        custom_boolean:         true,
+        custom_radio:           'third',
+        custom_text_regex:      '999',
+        custom_textarea:        'Example textarea content.\nA new line.',
+        custom_tree_select:     'First-Level 2::Second-Level 2',
+        custom_text_decimal:    '3.5',
+        custom_integer:         3,
+        custom_date:            Date.new(2021, 8, 13)
+      }
+    end
+
+    it 'adds correct custom field data' do
+      process(process_payload)
+      expect(klass.last).to have_attributes(imported_resource_fields)
+    end
+  end
 end
