@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2023-10-03 01:05+0000\n"
 "Last-Translator: Elias Grinias <elgrinias@gmail.com>\n"
-"Language-Team: Greek <https://translations.zammad.org/projects/zammad/"
-"zammad-stable/el/>\n"
+"Language-Team: Greek <https://translations.zammad.org/projects/zammad/zammad-"
+"stable/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -155,8 +155,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Η υπενθύμιση έφτασε!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Η υπενθύμιση έφτασε!_\n"
 "Ένα δελτίο χρειάζεται προσοχή: η υπενθύμιση έφτασε για το δελτίο (#{ticket."
 "title}) από την/τον \"*##{ticket.customer.longname}*\".\n"
 "\n"
@@ -183,9 +183,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Ενημερώθηκε από την/τον #{current_user."
-"longname} στις #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Ενημερώθηκε από την/τον #{current_user.longname} "
+"στις #{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -211,9 +211,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Αναπροσαρμόστηκε στις #{ticket.escalation_at}"
-"_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Αναπροσαρμόστηκε στις #{ticket.escalation_at}_\n"
 "Το αίτημα (#{ticket.title}) της/του \"#{ticket.customer.longname}\" έχει "
 "αναπροσαρμοστεί από τις \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -297,8 +296,8 @@ msgstr ""
 "<div>Η συσκευή σας προστέθηκε στη λίστα των συσκευών, την οποία μπορείτε να "
 "δείτε εδώ:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Εάν η σύνδεση δεν έγινε από εσάς, παρακαλούμε όπως αφαιρέσετε τη "
 "συσκευή, αλλάξετε τον κωδικό του λογαριασμού σας και επικοινωνήσετε με τον "
@@ -4060,6 +4059,10 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Define model configuration for Elasticsearch."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr ""
 
@@ -4642,6 +4645,18 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines the backend for user and organization image lookups."
 msgstr "Ορίζει το backend για χρήστες και αναζητήσεις εικόνων του οργανισμού."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5468,6 +5483,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Configuration"
+msgid "Elasticsearch Model Configuration"
+msgstr "Διαμόρφωση"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -13688,6 +13709,10 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
+#: lib/search_index_backend.rb
+msgid "The required parameter 'key' is missing."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr ""
@@ -13742,6 +13767,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
+msgstr ""
+
+#: lib/search_index_backend.rb
+msgid "The required parameter 'value' is missing."
 msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
@@ -14558,6 +14587,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue

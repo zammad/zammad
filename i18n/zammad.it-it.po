@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-06-09 03:05+0000\n"
-"Last-Translator: Lorenzo Milesi <lorenzo@mile.si>\n"
+"PO-Revision-Date: 2023-10-21 01:09+0000\n"
+"Last-Translator: Marco Badan <info@marcobadan.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/it/>\n"
+"zammad-stable/it/>\n"
 "Language: it-it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -370,10 +370,8 @@ msgid "%s (method)"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
-#, fuzzy
-#| msgid "set optional"
 msgid "%s (option)"
-msgstr "imposta opzionale"
+msgstr "%s (option)"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
@@ -3910,6 +3908,12 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Definisce la dimensione massima del pacchetto per Elasticsearch."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Define pipeline name for Elasticsearch."
+msgid "Define model configuration for Elasticsearch."
+msgstr "Definisce il nome della pipeline di Elasticsearch."
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Definisce il nome della pipeline di Elasticsearch."
 
@@ -4562,6 +4566,28 @@ msgstr ""
 msgid "Defines the backend for user and organization image lookups."
 msgstr ""
 "Definisce il backend per le ricerche di immagini di utenti e organizzazioni."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+"Definisce un limite per il numero di ticket che possono essere creati "
+"tramite form web al giorno."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
+"Definisce un limite per il numero di ticket che possono essere creati "
+"tramite form web al giorno."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5358,6 +5384,12 @@ msgstr "URL endpoint Elasticsearch"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "Utente endpoint Elasticsearch"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Elasticsearch needs to be configured!"
+msgid "Elasticsearch Model Configuration"
+msgstr "Occorre configurare Elasticsearch!"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -13264,6 +13296,12 @@ msgstr "Manca il parametro richiesto 'group_id'."
 msgid "The required parameter 'id' is missing."
 msgstr "Manca il parametro richiesto 'id'."
 
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'area' is missing."
+msgid "The required parameter 'key' is missing."
+msgstr "Manca il parametro richiesto 'area'."
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr "Manca il parametro richiesto 'link_type'."
@@ -13321,6 +13359,12 @@ msgstr "Manca il parametro richiesto 'signup'."
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Manca il parametro richiesto 'ticket_number'."
+
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'locale' is missing."
+msgid "The required parameter 'value' is missing."
+msgstr "Manca il parametro richiesto 'locale'."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -14125,6 +14169,14 @@ msgstr "Dimensione oggetto del ticket"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
 msgstr "ticket di iscrizione"
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Ticket actions"

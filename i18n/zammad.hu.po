@@ -3914,6 +3914,12 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Az Elasticsearch maximális hasznos terhelési méretének meghatározása."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Define pipeline name for Elasticsearch."
+msgid "Define model configuration for Elasticsearch."
+msgstr "Az Elasticsearch pipeline nevének meghatározása."
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Az Elasticsearch pipeline nevének meghatározása."
 
@@ -4597,6 +4603,26 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines the backend for user and organization image lookups."
 msgstr "Meghatározza a felhasználói és szervezeti képkeresés háttérrendszerét."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+"Meghatározza, hogy naponta hány jegy hozható létre webes űrlapon keresztül."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
+"Meghatározza, hogy naponta hány jegy hozható létre webes űrlapon keresztül."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5399,6 +5425,12 @@ msgstr "Elasticsearch végpont URL"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "Elasticsearch végpont felhasználó"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Elasticsearch needs to be configured!"
+msgid "Elasticsearch Model Configuration"
+msgstr "Az Elasticsearch-et konfigurálni kell!"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -13318,6 +13350,12 @@ msgstr "A kötelező 'group_id' paraméter hiányzik."
 msgid "The required parameter 'id' is missing."
 msgstr "A kötelező 'id' paraméter hiányzik."
 
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'area' is missing."
+msgid "The required parameter 'key' is missing."
+msgstr "A kötelező 'area' paraméter hiányzik."
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr "A kötelező 'link_type' paraméter hiányzik."
@@ -13375,6 +13413,12 @@ msgstr "A kötelező 'signup' paraméter hiányzik."
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "A kötelező 'ticket_number' paraméter hiányzik."
+
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'locale' is missing."
+msgid "The required parameter 'value' is missing."
+msgstr "A kötelező 'locale' paraméter hiányzik."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -14179,6 +14223,14 @@ msgstr "A jegy tárgyának mérete"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
 msgstr "Jegy feliratkozások"
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Ticket actions"

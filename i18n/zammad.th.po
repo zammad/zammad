@@ -3888,6 +3888,12 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "กำหนดสูงสุด ขนาดเพย์โหลดสำหรับ Elasticsearch"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Define pipeline name for Elasticsearch."
+msgid "Define model configuration for Elasticsearch."
+msgstr "กำหนดชื่อไปป์ไลน์สำหรับ Elasticsearch"
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "กำหนดชื่อไปป์ไลน์สำหรับ Elasticsearch"
 
@@ -4460,6 +4466,24 @@ msgstr "กำหนดแบ็กเอนด์สำหรับการค
 #: db/seeds/settings.rb
 msgid "Defines the backend for user and organization image lookups."
 msgstr "กำหนดแบ็กเอนด์สำหรับการค้นหารูปภาพของผู้ใช้และองค์กร"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr "กำหนดขีดจำกัดสำหรับจำนวน tickets ที่สามารถสร้างผ่านเว็บฟอร์มต่อวัน"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr "กำหนดขีดจำกัดสำหรับจำนวน tickets ที่สามารถสร้างผ่านเว็บฟอร์มต่อวัน"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5240,6 +5264,12 @@ msgstr "Elasticsearch Endpoint URL"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "ผู้ใช้ปลายทาง Elasticsearch"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Your Email Configuration"
+msgid "Elasticsearch Model Configuration"
+msgstr "ตั้งค่า Email ของคุณ"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -13058,6 +13088,12 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required parameter 'key' is missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr ""
@@ -13119,6 +13155,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
+
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required parameter 'value' is missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -13919,6 +13961,14 @@ msgstr "Ticket ขนาดเรื่อง"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
 msgstr "Ticket สมัครรับข้อมูล"
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy

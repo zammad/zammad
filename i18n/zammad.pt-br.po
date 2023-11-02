@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-10-03 01:05+0000\n"
-"Last-Translator: \"Decio E. Silva\" <decio@verinatec.com.br>\n"
+"PO-Revision-Date: 2023-10-18 01:09+0000\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
 "Language: pt-br\n"
@@ -1400,7 +1400,7 @@ msgstr "Idade"
 #: app/controllers/time_accountings_controller.rb db/seeds/roles.rb
 #: db/seeds/ticket_article_senders.rb
 msgid "Agent"
-msgstr "Atendente"
+msgstr "Agente"
 
 #: db/seeds/settings.rb
 msgid "Agent Name"
@@ -2733,7 +2733,7 @@ msgstr "Checar Canais."
 
 #: lib/search_index_backend.rb
 msgid "Check the response and payload for detailed information:"
-msgstr "Verifique a resposta e a carga para obter informações detalhadas:"
+msgstr "Verifique a resposta e a carga útil para obter informações detalhadas:"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -2970,7 +2970,7 @@ msgstr "Fechar aba"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
 msgid "Close tab on ticket close"
-msgstr "Fechar Aba ao fechar o chamado"
+msgstr "Fechar aba ao fechar o chamado"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
@@ -3292,7 +3292,7 @@ msgstr "Copia o objeto atual (ex. Ticket#) na área de transferencia"
 
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
-msgstr "Fluxo de trabalho"
+msgstr "Fluxo de Trabalho Principal"
 
 #: db/seeds/settings.rb
 msgid "Core Workflow Ajax Mode"
@@ -3887,6 +3887,12 @@ msgstr "Defina tamanho máx. do anexo para o Elasticsearch."
 #: db/seeds/settings.rb
 msgid "Define max. payload size for Elasticsearch."
 msgstr "Defina tamanho máx. do payload para o Elasticsearch."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Define pipeline name for Elasticsearch."
+msgid "Define model configuration for Elasticsearch."
+msgstr "Defina o nome do pipeline para o Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
@@ -4527,6 +4533,28 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines the backend for user and organization image lookups."
 msgstr "Define o backend para imagens de usuarios e organizações."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+"Define um limite para quantos tickets podem ser criados via formulário da "
+"web por dia."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
+"Define um limite para quantos tickets podem ser criados via formulário da "
+"web por dia."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5315,6 +5343,12 @@ msgid "Elasticsearch Endpoint User"
 msgstr "Usuário do Elasticsearch Endpoint"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Elasticsearch needs to be configured!"
+msgid "Elasticsearch Model Configuration"
+msgstr "O Elasticsearch precisa ser configurado!"
+
+#: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
 msgstr "Nome do pipeline do Elasticsearch"
 
@@ -5593,7 +5627,7 @@ msgid ""
 "auth/sso on user interaction."
 msgstr ""
 "Habilita o botão para autenticação do usuário via %s. O botão redirecionará "
-"para /auth/sso quando houver interação do usuário."
+"para /auth/sso ao interagir com o usuário."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Enables console logging."
@@ -10503,7 +10537,7 @@ msgstr "Acionadores de tíquetes recursivos"
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers Loop Max."
-msgstr "Limite Máximo de Loop de Acionadores de Ticket Recursivos."
+msgstr "Máximo de Laço Recursivo para Gatilhos de Tíquete."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -10723,8 +10757,8 @@ msgstr "Requisitos"
 msgid ""
 "Requires the set up of the two-factor authentication for certain user roles."
 msgstr ""
-"Requer a configuração da autenticação de dois fatores para determinadas "
-"funções de usuário."
+"Requer a configuração da autenticação de dois fatores para determinados "
+"papéis de usuário."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -11159,7 +11193,7 @@ msgstr "Agendado para"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/job.coffee db/seeds/permissions.rb
 msgid "Scheduler"
-msgstr "Agendador"
+msgstr "Scheduler"
 
 #: app/assets/javascripts/app/controllers/job.coffee
 msgid "Schedulers"
@@ -11569,7 +11603,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
-msgstr "Defina notas para os tipos de criação de ticket selecionando o tipo."
+msgstr "Defina notas para tipos de criação de tickets selecionando o tipo."
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types."
@@ -13144,6 +13178,12 @@ msgstr "O parâmetro obrigatório 'group_id' está ausente."
 msgid "The required parameter 'id' is missing."
 msgstr "O parâmetro obrigatório 'id' está ausente."
 
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'area' is missing."
+msgid "The required parameter 'key' is missing."
+msgstr "O parâmetro necessário 'área' está ausente."
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr "O parâmetro obrigatório 'link_type' está ausente."
@@ -13199,6 +13239,12 @@ msgstr "O parâmetro necessário 'signup' está ausente."
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "O parâmetro obrigatório 'ticket_number' está ausente."
+
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'locale' is missing."
+msgid "The required parameter 'value' is missing."
+msgstr "O parâmetro necessário 'locale' está ausente."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -13850,7 +13896,7 @@ msgstr "Quinta"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts
 #: db/seeds/permissions.rb
 msgid "Ticket"
-msgstr "Chamado"
+msgstr "Tíquete"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Ticket %s created!"
@@ -13977,6 +14023,14 @@ msgstr "Limite do campo Assunto"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
 msgstr "Inscrições à Chamado(s)"
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Ticket actions"
@@ -14540,7 +14594,7 @@ msgstr "Traduções"
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Trigger"
-msgstr "Gatilhos"
+msgstr "Gatilho"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 #: db/seeds/permissions.rb
@@ -15758,8 +15812,8 @@ msgstr ""
 msgid ""
 "With templates it is possible to fill pre-filled tickets quickly and easily."
 msgstr ""
-"Com os modelos é possível preencher tickets pré-preenchidos de forma rápida "
-"e fácil."
+"Com templates, é possível preencher tickets pré-preenchidos de maneira "
+"rápida e fácil."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "With templates you can pre-fill ticket attributes."
@@ -17270,11 +17324,11 @@ msgstr "ação pendente"
 
 #: db/seeds/ticket_states.rb
 msgid "pending close"
-msgstr "Pendente (Encerrar)"
+msgstr "fechamento pendente"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "pending reminder"
-msgstr "Pendente (Lembrete)"
+msgstr "lembrete pendente"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee
 #: db/seeds/ticket_article_types.rb
@@ -17484,7 +17538,7 @@ msgstr "este ticket foi mesclado com o ticket %s"
 #: app/frontend/apps/mobile/components/User/UserItem.vue
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
-msgstr "ticket"
+msgstr "tíquete"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "ticket %s was merged into this ticket"

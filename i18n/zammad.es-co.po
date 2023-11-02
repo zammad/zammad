@@ -4000,6 +4000,12 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Definir máx. tamaño de la carga útil para Elasticsearch."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Define pipeline name for Elasticsearch."
+msgid "Define model configuration for Elasticsearch."
+msgstr "Defina el nombre de canalización para Elasticsearch."
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Defina el nombre de canalización para Elasticsearch."
 
@@ -4672,6 +4678,28 @@ msgid "Defines the backend for user and organization image lookups."
 msgstr ""
 "Define el backend para las búsquedas de imágenes de usuarios y "
 "organizaciones."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+"Define un límite para la cantidad de tickets que se pueden crear a través "
+"del formulario web por día."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
+"Define un límite para la cantidad de tickets que se pueden crear a través "
+"del formulario web por día."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5510,6 +5538,12 @@ msgstr "URL de punto final de Elasticsearch"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "Usuario de punto final de Elasticsearch"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Elasticsearch needs to be configured!"
+msgid "Elasticsearch Model Configuration"
+msgstr "¡Elasticsearch necesita ser configurado!"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -13769,6 +13803,12 @@ msgstr "Falta el parámetro requerido 'id'."
 msgid "The required parameter 'id' is missing."
 msgstr "Falta el parámetro requerido 'id'."
 
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'area' is missing."
+msgid "The required parameter 'key' is missing."
+msgstr "Falta el parámetro requerido 'área'."
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #, fuzzy
 #| msgid "The required parameter 'signup' is missing."
@@ -13838,6 +13878,12 @@ msgstr "Falta el parámetro requerido 'registro'."
 #| msgid "The required parameter 'consumer_key' is missing."
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Falta el parámetro requerido 'consumer_key'."
+
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'area' is missing."
+msgid "The required parameter 'value' is missing."
+msgstr "Falta el parámetro requerido 'área'."
 
 #: app/controllers/channels_twitter_controller.rb
 #, fuzzy
@@ -14705,6 +14751,14 @@ msgstr "Tamaño del asunto del ticket"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
 msgstr "Suscripciones de boletos"
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy

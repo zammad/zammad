@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-10-07 01:07+0000\n"
-"Last-Translator: Vladimir <sleuths.slews0s@icloud.com>\n"
+"PO-Revision-Date: 2023-10-25 01:05+0000\n"
+"Last-Translator: itgre <dmitrievchallenge@gmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
 "Language: ru\n"
@@ -57,10 +57,10 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
-"\"База данных\" хранит все вложения в базе данных (не рекомендуется для "
-"хранения больших объемов данных). \"Файловая система\" хранит данные в "
-"файловой системе. Вы можете переключаться между модулями даже в системе, "
-"которая уже находится в рабочем состоянии, без какой-либо потери данных."
+"\"База данных\" хранит все вложения (не рекомендуется для хранения больших "
+"объемов). \"Файловая система\" хранит данные в файловой системе. Вы можете "
+"переключаться между модулями даже в системе, которая уже находится в рабочем "
+"состоянии, без какой-либо потери данных."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -80,7 +80,7 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Создана пользователем #{current_user.longname} в "
+"Ticket##{ticket.number}>: Создан пользователем #{current_user.longname} в "
 "#{ticket.updated_at}_\n"
 "* Группа: #{ticket.group.name}\n"
 "* Владелец: #{ticket.owner.fullname}\n"
@@ -3900,6 +3900,12 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Определите максимальный размер полезной нагрузки для Elasticsearch."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Define pipeline name for Elasticsearch."
+msgid "Define model configuration for Elasticsearch."
+msgstr "Определите имя конвейера для Elasticsearch."
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Определите имя конвейера для Elasticsearch."
 
@@ -4554,6 +4560,28 @@ msgid "Defines the backend for user and organization image lookups."
 msgstr ""
 "Определяет серверную часть для запросов изображений пользователей и "
 "организаций."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+"Определяет ограничение на количество заявок, которые могут быть созданы "
+"через веб-форму за день."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
+"Определяет ограничение на количество заявок, которые могут быть созданы "
+"через веб-форму за день."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5347,6 +5375,10 @@ msgstr "URL конечной точки (Endpoint URL) Elasticsearch"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "Пользователь конечной точки (Endpoint User) Elasticsearch"
+
+#: db/seeds/settings.rb
+msgid "Elasticsearch Model Configuration"
+msgstr "Elasticsearch необходимо настроить"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -7746,9 +7778,9 @@ msgstr ""
 "<div>Я (#{current_user.firstname} #{current_user.lastname}) приглашаю Вас в "
 "#{config.product_name} - нашу платформу поддержки клиентов.</div>\n"
 "<br>\n"
-"<div>Нажмите <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.token}\">сюда</a> и установите свой "
-"пароль.</div>\n"
+"<div>Нажмите <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.token}\">сюда</a> и установите свой пароль.</"
+"div>\n"
 "<br>\n"
 "<div>Наслаждайтесь,</div>\n"
 "<br>\n"
@@ -13379,6 +13411,12 @@ msgstr "Отсутствует обязательный параметр «Ид�
 msgid "The required parameter 'id' is missing."
 msgstr "Отсутствует обязательный параметр «Идентификатор» (id)."
 
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'area' is missing."
+msgid "The required parameter 'key' is missing."
+msgstr "Отсутствует обязательный параметр «Область» (area)."
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr "Отсутствует обязательный параметр «тип ссылки» (link_type)."
@@ -13451,6 +13489,12 @@ msgstr "Отсутствует обязательный параметр «ре�
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Отсутствует обязательный параметр «номер_заявки» (ticket_number)."
+
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'locale' is missing."
+msgid "The required parameter 'value' is missing."
+msgstr "Отсутствует обязательный параметр «Региональные_настройки» (locale)."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -14302,6 +14346,14 @@ msgstr "Длина темы заявки"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
 msgstr "Подписки на заявки"
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy

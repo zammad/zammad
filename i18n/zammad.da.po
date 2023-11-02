@@ -3710,6 +3710,10 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Define model configuration for Elasticsearch."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr ""
 
@@ -4248,6 +4252,18 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the backend for user and organization image lookups."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5008,6 +5024,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "OAuth Configuration"
+msgid "Elasticsearch Model Configuration"
+msgstr "OAuth Konfiguration"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -12718,6 +12740,12 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "Current password is wrong!"
+msgid "The required parameter 'key' is missing."
+msgstr "Nuværende adgangskode er forkert!"
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr ""
@@ -12775,6 +12803,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
+
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "Current password is wrong!"
+msgid "The required parameter 'value' is missing."
+msgstr "Nuværende adgangskode er forkert!"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -13558,6 +13592,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue

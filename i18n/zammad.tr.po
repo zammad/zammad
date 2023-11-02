@@ -3889,6 +3889,12 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Elasticsearch için maks. payload boyutunu tanımlayın."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Define pipeline name for Elasticsearch."
+msgid "Define model configuration for Elasticsearch."
+msgstr "Elasticsearch için pipeline adını tanımlayın."
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Elasticsearch için pipeline adını tanımlayın."
 
@@ -4542,6 +4548,28 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines the backend for user and organization image lookups."
 msgstr "Kullanıcı ve organizasyon görsel aramaları için arka ucu tanımlar."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+"Web formu aracılığıyla günde kaç destek talebi oluşturulabileceğine ilişkin "
+"bir sınır tanımlar."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
+"Web formu aracılığıyla günde kaç destek talebi oluşturulabileceğine ilişkin "
+"bir sınır tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5364,6 +5392,11 @@ msgstr "Elasticsearch Endpoint URL'si"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "Elasticsearch Endpoint Kullanıcısı"
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Model Configuration"
+msgstr "True"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -14020,6 +14053,11 @@ msgstr "True"
 msgid "The required parameter 'id' is missing."
 msgstr "True"
 
+#: lib/search_index_backend.rb
+#, fuzzy
+msgid "The required parameter 'key' is missing."
+msgstr "True"
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #, fuzzy
 msgid "The required parameter 'link_type' is missing."
@@ -14085,6 +14123,11 @@ msgstr "True"
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #, fuzzy
 msgid "The required parameter 'ticket_number' is missing."
+msgstr "True"
+
+#: lib/search_index_backend.rb
+#, fuzzy
+msgid "The required parameter 'value' is missing."
 msgstr "True"
 
 #: app/controllers/channels_twitter_controller.rb
@@ -14976,6 +15019,14 @@ msgstr "Ticket Subject Size"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
 msgstr "Ticket Subscriptions"
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy

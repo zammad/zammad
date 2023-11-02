@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-10-07 01:07+0000\n"
+"PO-Revision-Date: 2023-11-02 10:19+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/sr_Cyrl/>\n"
@@ -2074,7 +2074,7 @@ msgstr "Аутоматско повезивање налога приликом 
 
 #: db/seeds/settings.rb
 msgid "Automatic account linking notification"
-msgstr "Аутоматско обавештавање о повезивању налога"
+msgstr "Обавештавање о аутоматском повезивању налога"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -3869,6 +3869,10 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Одређује максималну величину података за Elasticsearch."
 
 #: db/seeds/settings.rb
+msgid "Define model configuration for Elasticsearch."
+msgstr "Одређује подешавање Elasticsearch модела."
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Одређује назив вода за Elasticsearch."
 
@@ -4491,6 +4495,22 @@ msgstr "Одређује позадински модул за тражење с�
 
 #: db/seeds/settings.rb
 msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+"Одређује ограничење броја чланака који могу бити додати у тикет у току "
+"једног минута."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
+"Одређује ограничење броја чланака који могу бити додати у тикет у току "
+"једног минута."
+
+#: db/seeds/settings.rb
+msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr ""
 "Одређује прилагођену јединицу за приказ поред поља за унос обрачунатог "
@@ -5041,7 +5061,7 @@ msgstr "Прикажи"
 
 #: app/assets/javascripts/app/models/email_address.coffee db/seeds/settings.rb
 msgid "Display name"
-msgstr "Прикажи назив"
+msgstr "Назив за приказ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Do not encrypt email"
@@ -5227,7 +5247,7 @@ msgstr "Измени организацију"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
-msgstr "Измени форму"
+msgstr "Форма за измену"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -5265,6 +5285,10 @@ msgstr "URL Elasticsearch путање"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "Корисник Elasticsearch путање"
+
+#: db/seeds/settings.rb
+msgid "Elasticsearch Model Configuration"
+msgstr "Подешавање Elasticsearch модела"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -7101,7 +7125,7 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
-"Уколико се овај регуларни израз подудара, неће бити слања обавештења "
+"Уколико је овај регуларни израз задовољен, неће бити слања обавештења "
 "пошиљаоца."
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
@@ -8569,7 +8593,7 @@ msgstr "Поље за вишеструки избор"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Multiple tree selection field"
-msgstr "Поље за избор вишеструког стабла"
+msgstr "Поље за вишеструки избор стабла"
 
 #: db/seeds/overviews.rb
 msgid "My Assigned Tickets"
@@ -8672,7 +8696,7 @@ msgstr "Nagios интеграција"
 #: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
-msgstr "Име"
+msgstr "Назив"
 
 #: db/seeds/settings.rb
 msgid "Name Identifier Format"
@@ -10955,7 +10979,7 @@ msgstr "SMS проба није успела."
 
 #: lib/email_helper.rb
 msgid "SMTP - configure your own outgoing SMTP settings"
-msgstr "SMTP - конфигуришите своја одлазећа SMTP подешавања"
+msgstr "SMTP - подесите своја одлазна SMTP подешавања"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -11814,11 +11838,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Single selection field"
-msgstr "Поље за једноструког избор"
+msgstr "Поље за једноструки избор"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Single tree selection field"
-msgstr "Поље за избор једноструког стабла"
+msgstr "Поље за једноструки избор стабла"
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Sipgate"
@@ -13034,6 +13058,10 @@ msgstr "Није пронађен обавезни параметар ’group_i
 msgid "The required parameter 'id' is missing."
 msgstr "Није пронађен обавезни параметар ’id’."
 
+#: lib/search_index_backend.rb
+msgid "The required parameter 'key' is missing."
+msgstr "Није пронађен обавезни параметар ’key’."
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr "Није пронађен обавезни параметар ’link_type’."
@@ -13089,6 +13117,10 @@ msgstr "Није пронађен обавезни параметар ’signup�
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Није пронађен обавезни параметар ’ticket_number’."
+
+#: lib/search_index_backend.rb
+msgid "The required parameter 'value' is missing."
+msgstr "Није пронађен обавезни параметар ’value’."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -13854,6 +13886,14 @@ msgstr "Дужина предмета тикета"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Ticket Subscriptions"
 msgstr "Претплате тикета"
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr "Заштита од петље при отварању тикета"
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr "Заштита од петље при додавању чланака у тикет"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Ticket actions"
@@ -15013,7 +15053,7 @@ msgstr "Филтер корисника"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "User Mismatch"
-msgstr "Корисник се не подудара"
+msgstr "Корисник се не поклапа"
 
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
@@ -16191,7 +16231,7 @@ msgstr "укључено"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "add"
-msgstr "Додај"
+msgstr "додај"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "add option"
@@ -16470,7 +16510,7 @@ msgstr "не постоји"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "does not match regex"
-msgstr "не подудара се са регуларним изразом"
+msgstr "не задовољава регуларни израз"
 
 msgid "doesn't match %{attribute}"
 msgstr "не подудара се са %{attribute}"
@@ -16918,7 +16958,7 @@ msgstr "пронађени резултати"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "matches regex"
-msgstr "подудара се са регуларним изразом"
+msgstr "задовољава регуларни израз"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
