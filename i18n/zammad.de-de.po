@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-11-02 10:18+0000\n"
+"PO-Revision-Date: 2023-11-02 13:04+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -2044,7 +2044,7 @@ msgstr "Authentifizierung"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Authentication Token"
-msgstr "Authentifizierungs Token"
+msgstr "Authentifizierungs-Token"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication failed due to incorrect credentials."
@@ -3966,7 +3966,7 @@ msgstr "Definiert die maximale Nutzlast-Größe für Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define model configuration for Elasticsearch."
-msgstr "Definieren Sie den Pipeline-Namen für Elasticsearch."
+msgstr "Definieren Sie die Model-Konfiguration für Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
@@ -4627,16 +4627,15 @@ msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
 msgstr ""
-"Legt fest, wie viele Tickets pro Tag über ein Webformular erstellt werden "
-"können."
+"Definiert, wieviele Artikel pro Minute insgesamt erstellt werden können."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
 msgstr ""
-"Legt fest, wie viele Tickets pro Tag über ein Webformular erstellt werden "
-"können."
+"Definiert, wieviele Artikel für dasselbe Ticket pro Minute insgesamt "
+"erstellt werden können."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5443,7 +5442,7 @@ msgstr "Elasticsearch Endpunkt-Benutzer"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Model Configuration"
-msgstr "Elasticsearch Konfiguration"
+msgstr "Elasticsearch Model-Konfiguration"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -6252,7 +6251,7 @@ msgstr "Erweiterte Suche"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "External data source field"
-msgstr "Externe Datenquelle Feld"
+msgstr "Feld für externe Datenquelle"
 
 #: lib/search_index_backend.rb
 msgid "Extract zammad-attachment information from arrays"
@@ -6977,11 +6976,11 @@ msgstr "Verarbeitungszeitrahmen für den HTML-Bereiniger"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "HTTP Authentication"
-msgstr "HTTP Authentifizierung"
+msgstr "HTTP-Authentifizierung"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "HTTP Authentication token"
-msgstr "HTTP Authentifizierungs Token"
+msgstr "HTTP-Authentifizierungs-Token"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HTTP Basic Authentication Password"
@@ -6993,11 +6992,11 @@ msgstr "HTTP Basic Authentication Benutzername"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "HTTP Basic Authentication password"
-msgstr "HTTP Standardauthentifizierungs Passwort"
+msgstr "Passwort für HTTP Basic Authentication"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "HTTP Basic Authentication username"
-msgstr "HTTP Standardauthentifizierungs Benutzername"
+msgstr "Benutzername für HTTP Basic Authentication"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
@@ -7647,11 +7646,9 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -9715,7 +9712,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Only Encrypting"
-msgstr "Nur verschlüsseln"
+msgstr "Nur Verschlüsseln"
 
 #: db/seeds/settings.rb
 msgid "Only Signing"
@@ -10535,11 +10532,11 @@ msgstr "Prioritätssymbole in Übersichten"
 
 #: db/seeds/settings.rb
 msgid "Private key (PEM)"
-msgstr "Privaten Schlüssel (PEM)"
+msgstr "Privater Schlüssel (PEM)"
 
 #: db/seeds/settings.rb
 msgid "Private key secret"
-msgstr "Secret für privaten Schlüssel eingeben"
+msgstr "Secret für privaten Schlüssel"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
@@ -11483,11 +11480,11 @@ msgstr "Suchbegriffe"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Search URL"
-msgstr "Such URL"
+msgstr "Such-URL"
 
 #: lib/external_data_source/errors.rb
 msgid "Search URL is invalid."
-msgstr "Die angegebene URL ist ungültig."
+msgstr "Die Such-URL ist ungültig."
 
 #: lib/external_data_source/errors.rb
 msgid "Search URL is missing."
@@ -11514,26 +11511,27 @@ msgid ""
 "Search result label is not a string, a number or a boolean. Please provide "
 "search result label key."
 msgstr ""
-"Die Bezeichnung des Suchergebnisses ist keine Zeichenkette, Zahl oder "
-"Boolescher Wert. Bitte geben Sie einen Schlüssel für die Suchergebnisse an."
+"Das Suchergebnis-Label ist weder eine Zeichenkette, eine Zahl noch ein "
+"boolescher Wert. Bitte geben Sie einen Schlüssel für die Suchergebnis-Labels "
+"an."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Search result label key"
-msgstr "Schlüssel Suchergebnisbezeichnung"
+msgstr "Schlüssel für Suchergebnis-Labels"
 
 #: lib/external_data_source/errors.rb
 msgid "Search result label key \"%s\" is not a string, number or boolean."
 msgstr ""
-"Der Suchergebnisbezeichnung \"%s\" ist keine Zeichenkette, Zahl oder "
-"Boolescher Wert."
+"Der Schlüssel \"%s\" für Suchergebnis-Labels ist weder eine Zeichenkette, "
+"ein Zahl noch ein boolescher Wert."
 
 #: lib/external_data_source/errors.rb
 msgid "Search result label key \"%s\" was not found."
-msgstr "Der Schlüssel für das Suchergebnis %s wurde nicht gefunden."
+msgstr "Der Schlüssel \"%s\" für Suchergebnis-Labels wurde nicht gefunden."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Search result list"
-msgstr "Suchergebnis Liste"
+msgstr "Suchergebnis-Liste"
 
 #: lib/external_data_source/errors.rb
 msgid ""
@@ -11554,33 +11552,34 @@ msgstr ""
 
 #: lib/external_data_source/errors.rb
 msgid "Search result list key \"%s\" was not found."
-msgstr "Der Suchergebnis-Listenschlüssel \"%s\" wurde nicht gefunden."
+msgstr "Der Schlüssel \"%s\" der Suchergebnis-Liste wurde nicht gefunden."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Search result response"
-msgstr "Suchergebnis"
+msgstr "Suchergebnis-Antwort"
 
 #: lib/external_data_source/errors.rb
 msgid ""
 "Search result value is not a string, a number or a boolean. Please provide "
 "search result value key."
 msgstr ""
-"Der Wert des Suchergebnisses ist keine Zeichenkette, Zahl oder Boolescher "
-"Wert. Bitte geben Sie einen Schlüssel aus den Suchergebnissen an."
+"Der Suchergebnis-Wert ist weder eine Zeichenkette, ein Zahl noch ein "
+"boolescher Wert. Bitte geben Sie einen Schlüssel für die Suchergebnis-Werte "
+"an."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Search result value key"
-msgstr "Schlüssel Suchergebnis-Wert"
+msgstr "Schlüssel für Suchergebnis-Werte"
 
 #: lib/external_data_source/errors.rb
 msgid "Search result value key \"%s\" is not a string, number or boolean."
 msgstr ""
-"Der Suchergebniswert \"%s\" ist keine Zeichenkette, Zahl oder Boolescher "
-"Wert."
+"Der Schlüssel \"%s\" für Suchergebnis-Werte ist weder eine Zeichenkette, "
+"eine Zahl noch ein boolescher Wert."
 
 #: lib/external_data_source/errors.rb
 msgid "Search result value key \"%s\" was not found."
-msgstr "Der Suchergebnis-Wertschlüssel \"%s\" wurde nicht gefunden."
+msgstr "Der Schlüssel \"%s\" für Suchergebnis-Werte wurde nicht gefunden."
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
@@ -13023,7 +13022,7 @@ msgstr "Das Zertifikat konnte nicht geparst werden."
 
 #: app/models/setting/validation/saml/security.rb
 msgid "The certificate does not match the given private key."
-msgstr "Das Zertifikat passt nicht zum gegebenen privaten Schlüssel."
+msgstr "Das Zertifikat passt nicht zum übergebenen privaten Schlüssel."
 
 #: lib/secure_mailing/smime/security_options.rb
 msgid ""
@@ -13584,7 +13583,7 @@ msgstr "Der erforderliche Parameter 'id' fehlt."
 
 #: lib/search_index_backend.rb
 msgid "The required parameter 'key' is missing."
-msgstr "Der erforderliche Parameter 'area' fehlt."
+msgstr "Der erforderliche Parameter 'key' fehlt."
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
@@ -13644,7 +13643,7 @@ msgstr "Der erforderliche Parameter 'ticket_number' fehlt."
 
 #: lib/search_index_backend.rb
 msgid "The required parameter 'value' is missing."
-msgstr "Der erforderliche Parameter 'locale' fehlt."
+msgstr "Der erforderliche Parameter 'value' fehlt."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -15888,11 +15887,9 @@ msgstr "Aus Benutzersicht ansehen"
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
