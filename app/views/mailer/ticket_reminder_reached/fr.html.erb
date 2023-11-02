@@ -1,12 +1,12 @@
-Rappel atteint (#{ticket.title})
+Rappel de ticket atteint (#{ticket.title})
 
 <div>Bonjour #{recipient.firstname},</div>
 <br>
-<div>Un ticket nécessite une attention, un rappel a été atteint pour (#{ticket.title}) avec le client "<b>#{ticket.customer.longname}</b>".</div>
+<div>Un ticket nécessite une attention, un rappel a été atteint pour (#{ticket.title}) du client "<b>#{ticket.customer.longname}</b>".</div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Informations :
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -14,5 +14,5 @@ Rappel atteint (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Consulter dans #{config.product_name}</a>
 </div>

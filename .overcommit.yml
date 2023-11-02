@@ -38,6 +38,7 @@ PreCommit:
     exclude:
       - 'app/assets/**/*'
       - 'public/assets/chat/**/*'
+      - 'public/assets/form/**/*'
 
 PostCheckout:
   ALL:

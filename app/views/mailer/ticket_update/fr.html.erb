@@ -17,7 +17,7 @@ Le ticket (#{ticket.title}) a été mis à jour par "<b>#{current_user.longname}
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Informations :
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -25,5 +25,5 @@ Le ticket (#{ticket.title}) a été mis à jour par "<b>#{current_user.longname}
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">Consulter sur #{config.product_name}</a>
 </div>
