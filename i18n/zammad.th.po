@@ -1515,6 +1515,7 @@ msgstr "เกิดข้อผิดพลาด"
 msgid "An error occured during the operation."
 msgstr "มีข้อผิดพลาดเกิดขึ้นในระหว่างการดําเนินการ"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "An error occurred: %s"
@@ -2008,6 +2009,12 @@ msgstr "สิงหาคม"
 msgid "Authentication"
 msgstr "การยึนยันตน"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "Authentication Token"
+msgstr "การยึนยันตน"
+
 #: lib/email_helper/probe.rb
 #, fuzzy
 #| msgid "Authentication failed, invalid credentials!"
@@ -2225,6 +2232,7 @@ msgstr "Base DN"
 msgid "Base Objects"
 msgstr "Base Objects"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #, fuzzy
 #| msgid "Authentication"
@@ -2554,6 +2562,10 @@ msgstr "ไม่สามารถติดตามผล ticket ที่ป�
 msgid "Cannot have both response time and update time."
 msgstr "ไม่สามารถมีทั้งเวลาตอบสนองและเวลาอัปเดต"
 
+#: lib/external_data_source/errors.rb
+msgid "Cannot process external data source %s. %s"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #, fuzzy
 #| msgid "Delete old online notification entries."
@@ -2576,6 +2588,12 @@ msgstr "เค้าโครงหน้าหมวดหมู่"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Caution!"
 msgstr "ระมัดระวัง!"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Add Certificate"
+msgid "Certificate (PEM)"
+msgstr "เพิ่ม ใบรับรอง"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
@@ -2895,6 +2913,7 @@ msgstr "ล้าง"
 msgid "Clear Search"
 msgstr "ล้างการค้นหา"
 
+#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3925,6 +3944,12 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "กำหนดสูงสุด ขนาดเพย์โหลดสำหรับ Elasticsearch"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Define pipeline name for Elasticsearch."
+msgid "Define model configuration for Elasticsearch."
+msgstr "กำหนดชื่อไปป์ไลน์สำหรับ Elasticsearch"
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "กำหนดชื่อไปป์ไลน์สำหรับ Elasticsearch"
 
@@ -4503,6 +4528,24 @@ msgstr "กำหนดแบ็กเอนด์สำหรับการค
 #: db/seeds/settings.rb
 msgid "Defines the backend for user and organization image lookups."
 msgstr "กำหนดแบ็กเอนด์สำหรับการค้นหารูปภาพของผู้ใช้และองค์กร"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr "กำหนดขีดจำกัดสำหรับจำนวน tickets ที่สามารถสร้างผ่านเว็บฟอร์มต่อวัน"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr "กำหนดขีดจำกัดสำหรับจำนวน tickets ที่สามารถสร้างผ่านเว็บฟอร์มต่อวัน"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5287,6 +5330,12 @@ msgid "Elasticsearch Endpoint User"
 msgstr "ผู้ใช้ปลายทาง Elasticsearch"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "SSL verification"
+msgid "Elasticsearch Model Configuration"
+msgstr "SSL verification"
+
+#: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
 msgstr "Elasticsearch Pipeline Name"
 
@@ -5866,6 +5915,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Escalation Times"
 msgstr ""
 
@@ -6038,6 +6088,12 @@ msgstr "หมดอายุ"
 msgid "Extended Search"
 msgstr "การค้นหาเพิ่มเติม"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "internal"
+msgid "External data source field"
+msgstr "ภายใน"
+
 #: lib/search_index_backend.rb
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
@@ -6204,6 +6260,7 @@ msgstr "การตอบสนองครั้งแรกในนาที
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "First Response Time"
 msgstr "เวลาตอบกลับครั้งแรก"
 
@@ -6578,6 +6635,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/generic/searchable_select_submenu.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -6781,6 +6839,18 @@ msgstr "HTML Email CSS Font"
 msgid "HTML Sanitizer Processing Timeout"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "HTTP Authentication"
+msgstr "การยึนยันตน"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "HTTP Authentication token"
+msgstr "การยึนยันตน"
+
 #: app/assets/javascripts/app/models/webhook.coffee
 #, fuzzy
 #| msgid "Authentication"
@@ -6791,6 +6861,18 @@ msgstr "การยึนยันตน"
 #, fuzzy
 #| msgid "Authentication"
 msgid "HTTP Basic Authentication Username"
+msgstr "การยึนยันตน"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "HTTP Basic Authentication password"
+msgstr "การยึนยันตน"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "HTTP Basic Authentication username"
 msgstr "การยึนยันตน"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
@@ -7814,6 +7896,12 @@ msgstr "การรวม LDAP"
 msgid "LDAP integration for user management."
 msgstr "รวม LDAP สำหรับการจัดการผู้ใช้"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Labels"
+msgid "Label"
+msgstr "ป้าย"
+
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Labels"
 msgstr "ป้าย"
@@ -7945,6 +8033,7 @@ msgstr "จำกัด tickets ตาม IP ต่อชั่วโมง"
 msgid "Limit tickets per day"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
@@ -7981,13 +8070,15 @@ msgstr ""
 msgid "Link Related Answer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Link Template"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr "ปัญหาเกี่ยวกับลิงค์"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Templates"
+msgid "Link template"
+msgstr "แม่แบบ"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
@@ -8722,6 +8813,12 @@ msgstr "ชื่อปุ่มส่งแบบฟอร์ม"
 msgid "Navigate through article"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
+#, fuzzy
+#| msgid "Navigation"
+msgid "Navigate to %s"
+msgstr "ตัวนำทาง"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Navigation"
 msgstr "ตัวนำทาง"
@@ -8966,6 +9063,7 @@ msgstr "ไม่"
 msgid "No %s configured."
 msgstr "ไม่มี %s ที่กำหนดค่าไว้"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -9027,6 +9125,12 @@ msgstr "ไม่พบกล้อง"
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "No categories"
 msgstr "ไม่มีหมวดหมู่"
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "Locale not found"
+msgid "No certificate found."
+msgstr "ไม่พบสถานที่"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
@@ -9090,6 +9194,12 @@ msgstr "ไม่มีข้อมูล"
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "ไม่มีการค้นหาก่อนหน้า"
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "No camera found."
+msgid "No private key found."
+msgstr "ไม่พบกล้อง"
 
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
@@ -9163,7 +9273,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#: app/graphql/gql/types/ticket_type.rb
+#: app/graphql/gql/types/ticket_type.rb db/seeds/settings.rb
 msgid "None"
 msgstr "ไม่มี"
 
@@ -9437,6 +9547,18 @@ msgid ""
 "Only %s% of this language is already translated. Please help to improve "
 "Zammad and complete the translation."
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Encryption"
+msgid "Only Encrypting"
+msgstr "การเข้ารหัสลับ"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Sign in"
+msgid "Only Signing"
+msgstr "ลงชื่อเข้าใช้"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
@@ -10064,6 +10186,12 @@ msgstr ""
 msgid "Please include a valid url."
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid ""
+"Please note that this attribute is deprecated within one of the next "
+"versions of Zammad. Use the IDP certificate instead."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
 #| msgid "Need recipient in \"TO\" or \"CC\"."
@@ -10181,6 +10309,7 @@ msgid ""
 "e-mail communication."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
@@ -10245,6 +10374,18 @@ msgstr "ความสำคัญ"
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
 msgstr "ไอคอนลำดับความสำคัญในภาพรวม"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Add Private Key"
+msgid "Private key (PEM)"
+msgstr "เพิ่ม Private Key"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enter Private Key Secret"
+msgid "Private key secret"
+msgstr "ป้อนรหัสลับส่วนตัว"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
@@ -11004,6 +11145,7 @@ msgid "SSL Certificates"
 msgstr "เพิ่ม ใบรับรอง"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -11166,6 +11308,22 @@ msgstr ""
 msgid "Search Terms"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Direct URL"
+msgid "Search URL"
+msgstr "URL โดยตรง"
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "Search URL is invalid."
+msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
+
+#: lib/external_data_source/errors.rb
+msgid "Search URL is missing."
+msgstr ""
+
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Search for users"
 msgstr ""
@@ -11182,8 +11340,81 @@ msgstr "ค้นหาหรือป้อนที่อยู่อีเม
 msgid "Search or enter phone number…"
 msgstr "ค้นหาหรือป้อนหมายเลขโทรศัพท์…"
 
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result label is not a string, a number or a boolean. Please provide "
+"search result label key."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result label key"
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+msgid "Search result label key \"%s\" is not a string, number or boolean."
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "Search result label key \"%s\" was not found."
+msgstr "เสียงแจ้งเตือน"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Back to search results"
+msgid "Search result list"
+msgstr "กลับไปที่ผลการค้นหา"
+
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result list is not an array. Please provide search result list key."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result list key"
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+msgid "Search result list key \"%s\" is not an array."
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "Search result list key \"%s\" was not found."
+msgstr "เสียงแจ้งเตือน"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "First response"
+msgid "Search result response"
+msgstr "การตอบสนองครั้งแรก"
+
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result value is not a string, a number or a boolean. Please provide "
+"search result value key."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result value key"
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+msgid "Search result value key \"%s\" is not a string, number or boolean."
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "Search result value key \"%s\" was not found."
+msgstr "เสียงแจ้งเตือน"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -11276,6 +11507,10 @@ msgid ""
 "Security keys are hardware or software credentials that can be used as your "
 "two-factor authentication method."
 msgstr "คลิกที่นี่เพื่อตั้งค่าวิธีการตรวจสอบสิทธิ์สองปัจจัย"
+
+#: lib/external_data_source/errors.rb
+msgid "See HTTPLog for details."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -11851,6 +12086,12 @@ msgstr "ลายเซ็น"
 msgid "Signed"
 msgstr ""
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Sign in using"
+msgid "Signing & Encrypting"
+msgstr "เข้าสู่ระบบโดยใช้"
+
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
 msgstr "หน้าจอลงทะเบียน"
@@ -11958,6 +12199,7 @@ msgstr "sms"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Solution Time"
 msgstr ""
 
@@ -12646,6 +12888,16 @@ msgid ""
 "use for the chat."
 msgstr ""
 
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The certificate could not be parsed."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate does not match the given private key."
+msgstr ""
+
 #: lib/secure_mailing/smime/security_options.rb
 #, fuzzy
 #| msgid "Certificate for verification could not be found."
@@ -12674,6 +12926,22 @@ msgstr ""
 #| msgid "Certificate for verification could not be found."
 msgid "The certificate for verification could not be found."
 msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificate is not usable (e.g. expired)."
+msgstr "เสียงแจ้งเตือน"
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate is not usable due to being a CA certificate."
+msgstr ""
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificate is not usable for signing and encryption."
+msgstr "เสียงแจ้งเตือน"
 
 #: lib/certificate/x509/smime.rb
 msgid ""
@@ -12902,6 +13170,10 @@ msgstr ""
 msgid "The language could not be updated."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
+#: app/models/setting/validation/saml/security.rb
+msgid "The length of the private key is too short."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
@@ -12945,7 +13217,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #, fuzzy
 #| msgid "The file could not be uploaded."
-msgid "The online notifcation could not be marked as seen."
+msgid "The online notification could not be marked as seen."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
@@ -13179,6 +13451,12 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required parameter 'key' is missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr ""
@@ -13240,6 +13518,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
+
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required parameter 'value' is missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -13370,6 +13654,12 @@ msgstr "กำหนดว่าการรวม i-doit (https://www.i-doit.or
 msgid "The two-factor authentication method is not enabled."
 msgstr ""
 
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The type of the private key is wrong."
+msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
+
 #: app/controllers/getting_started_controller.rb
 msgid "The uploaded image could not be processed."
 msgstr "ไม่สามารถประมวลผลภาพที่อัปโหลด"
@@ -13392,6 +13682,12 @@ msgstr "ไม่สามารถแยก 'preferred_username' ของผ�
 #| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The username or password is incorrect."
 msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection failed. Please check the IDP "
+"certificate."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -14056,6 +14352,14 @@ msgstr "Ticket ขนาดเรื่อง"
 msgid "Ticket Subscriptions"
 msgstr "Ticket สมัครรับข้อมูล"
 
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy
 #| msgid "Ticket escalation"
@@ -14483,6 +14787,10 @@ msgid ""
 "your %s integration panel and enter the webhook URL below."
 msgstr ""
 
+#: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
+msgid "To trigger the preview, please enter some search term(s) above."
+msgstr ""
+
 #: db/seeds/roles.rb
 msgid "To work on Tickets."
 msgstr ""
@@ -14657,6 +14965,8 @@ msgstr "เปลี่ยนแชทเป็น ticket"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
+#: db/seeds/settings.rb
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
 "temporary. Use this option at your own risk!"
@@ -14924,6 +15234,7 @@ msgstr "อัพเดทในเวลา"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Update Time"
 msgstr "อัพเดทเวลา"
 
@@ -15339,6 +15650,7 @@ msgstr "การดำเนินการเป็นกลุ่มล้ม
 msgid "Validation failed: %{errors}"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -16446,6 +16758,10 @@ msgstr "ระหว่างการปรับปรุงเจ้าหน
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "busy"
 msgstr "ไม่ว่าง"
+
+#: app/models/object_manager/attribute.rb
+msgid "can only be created on postgresql databases"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb
 msgid ""
@@ -17767,11 +18083,6 @@ msgstr "∅ รอเวลาวันนี้"
 #~ msgstr "URL วิดีโอไม่ถูกต้อง"
 
 #, fuzzy
-#~| msgid "No camera found."
-#~ msgid "No public key found."
-#~ msgstr "ไม่พบกล้อง"
-
-#, fuzzy
 #~| msgid "No record found!"
 #~ msgid "No secret key found."
 #~ msgstr "‎ไม่พบเรกคอร์ด !"
@@ -17790,11 +18101,6 @@ msgstr "∅ รอเวลาวันนี้"
 #~| msgid "Certificate for verification could not be found."
 #~ msgid "Certificate for %s found."
 #~ msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
-
-#, fuzzy
-#~| msgid "Locale not found"
-#~ msgid "Certificate not found."
-#~ msgstr "ไม่พบสถานที่"
 
 #, fuzzy
 #~| msgid "Certificates & Private Keys"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-30 01:08+0000\n"
+"PO-Revision-Date: 2023-11-02 10:18+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -50,12 +50,6 @@ msgid " to "
 msgstr " bis "
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "\"Database\" stores all attachments in the database (not recommended for "
-#| "storing large amounts of data). \"Filesystem\" stores the data in the "
-#| "filesystem. You can switch between the modules even on a system that is "
-#| "already in production without any loss of data."
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
@@ -65,8 +59,9 @@ msgid ""
 msgstr ""
 "\"Datenbank\" speichert alle Anhänge in der Datenbank (nicht für große "
 "Datenmengen empfohlen). \"Dateisystem\" speichert die Daten im Dateisystem. "
-"Sie können jederzeit zwischen den Modulen ohne Datenverlust wechseln - auch "
-"in produktiven Umgebungen."
+"\"Simple Storage (S3)\" speichert die Daten in einem entfernten S3-"
+"kompatiblen Objektdateisystem. Sie können jederzeit zwischen den Modulen "
+"ohne Datenverlust wechseln - auch in produktiven Umgebungen."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1544,6 +1539,7 @@ msgstr "Ein Fehler ist aufgetreten"
 msgid "An error occured during the operation."
 msgstr "Während des Vorgangs ist ein Fehler aufgetreten."
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "An error occurred: %s"
@@ -1959,15 +1955,15 @@ msgstr "Anhänge"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in a Simple Storage Service."
-msgstr ""
+msgstr "Anhänge werden in einem Simple Storage Service gespeichert."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the database."
-msgstr ""
+msgstr "Anhänge werden in der Datenbank gespeichert."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the filesystem."
-msgstr ""
+msgstr "Anhänge werden im Dateisystem gespeichert."
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
@@ -2045,6 +2041,10 @@ msgstr "August"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Authentication"
 msgstr "Authentifizierung"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Authentication Token"
+msgstr "Authentifizierungs Token"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication failed due to incorrect credentials."
@@ -2253,6 +2253,7 @@ msgstr "Base DN"
 msgid "Base Objects"
 msgstr "Basisobjekte"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Basic Authentication"
 msgstr "Basic Authentication"
@@ -2589,6 +2590,10 @@ msgstr ""
 msgid "Cannot have both response time and update time."
 msgstr "Kann nicht gleichzeitig Reaktionszeit und Aktualisierungszeit haben."
 
+#: lib/external_data_source/errors.rb
+msgid "Cannot process external data source %s. %s"
+msgstr "Externe Datenquelle %s kann nicht verarbeitet werden. %s"
+
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
 msgstr "Online-Benachrichtigungen können nicht als gelesen markiert werden"
@@ -2609,6 +2614,10 @@ msgstr "Layout der Kategorieseite"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Caution!"
 msgstr "Vorsicht!"
+
+#: db/seeds/settings.rb
+msgid "Certificate (PEM)"
+msgstr "Zertifikat (PEM)"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
@@ -2933,6 +2942,7 @@ msgstr "Löschen"
 msgid "Clear Search"
 msgstr "Suche löschen"
 
+#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3955,6 +3965,10 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Definiert die maximale Nutzlast-Größe für Elasticsearch."
 
 #: db/seeds/settings.rb
+msgid "Define model configuration for Elasticsearch."
+msgstr "Definieren Sie den Pipeline-Namen für Elasticsearch."
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Definieren Sie den Pipeline-Namen für Elasticsearch."
 
@@ -4607,6 +4621,22 @@ msgid "Defines the backend for user and organization image lookups."
 msgstr ""
 "Definiert das verwendete Backend zur Einblendung von Bildern für Benutzer "
 "und Organisationen."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+"Legt fest, wie viele Tickets pro Tag über ein Webformular erstellt werden "
+"können."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
+"Legt fest, wie viele Tickets pro Tag über ein Webformular erstellt werden "
+"können."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5412,6 +5442,10 @@ msgid "Elasticsearch Endpoint User"
 msgstr "Elasticsearch Endpunkt-Benutzer"
 
 #: db/seeds/settings.rb
+msgid "Elasticsearch Model Configuration"
+msgstr "Elasticsearch Konfiguration"
+
+#: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
 msgstr "Elasticsearch Pipeline-Name"
 
@@ -6050,6 +6084,7 @@ msgstr "Eskalation am"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Escalation Times"
 msgstr "Eskalationszeiten"
 
@@ -6134,10 +6169,8 @@ msgid "Examples"
 msgstr "Beispiele"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-#, fuzzy
-#| msgid "Examples"
 msgid "Examples:"
-msgstr "Beispiele"
+msgstr "Beispiele:"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 msgid "Excepted users"
@@ -6216,6 +6249,10 @@ msgstr "Läuft ab am"
 #: app/assets/javascripts/app/controllers/search.coffee
 msgid "Extended Search"
 msgstr "Erweiterte Suche"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "External data source field"
+msgstr "Externe Datenquelle Feld"
 
 #: lib/search_index_backend.rb
 msgid "Extract zammad-attachment information from arrays"
@@ -6379,6 +6416,7 @@ msgstr "Erstreaktion in Minuten"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "First Response Time"
 msgstr "Reaktionszeit"
 
@@ -6743,6 +6781,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/generic/searchable_select_submenu.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -6936,6 +6975,14 @@ msgstr "HTML E-Mail CSS-Schriftart"
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "Verarbeitungszeitrahmen für den HTML-Bereiniger"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "HTTP Authentication"
+msgstr "HTTP Authentifizierung"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "HTTP Authentication token"
+msgstr "HTTP Authentifizierungs Token"
+
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HTTP Basic Authentication Password"
 msgstr "HTTP Basic Authentication Passwort"
@@ -6943,6 +6990,14 @@ msgstr "HTTP Basic Authentication Passwort"
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HTTP Basic Authentication Username"
 msgstr "HTTP Basic Authentication Benutzername"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "HTTP Basic Authentication password"
+msgstr "HTTP Standardauthentifizierungs Passwort"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "HTTP Basic Authentication username"
+msgstr "HTTP Standardauthentifizierungs Benutzername"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
@@ -8016,6 +8071,10 @@ msgstr "LDAP-Integration"
 msgid "LDAP integration for user management."
 msgstr "LDAP-Integration für Benutzerverwaltung."
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Label"
+msgstr "Label"
+
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Labels"
 msgstr "Etiketten"
@@ -8143,6 +8202,7 @@ msgstr "Schränke Tickets pro Stunde per IP ein"
 msgid "Limit tickets per day"
 msgstr "Begrenze Tickets pro Tag"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
@@ -8179,13 +8239,13 @@ msgstr "Verknüpfen Sie GitLab-Issues mit Ihren Tickets."
 msgid "Link Related Answer"
 msgstr "Verknüpfe ähnliche Antwort"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Link Template"
-msgstr "Link-Template"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr "Issue verknüpfen"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Link template"
+msgstr "Link-Vorlage"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
@@ -8903,6 +8963,10 @@ msgstr "Name für den Absende-Knopf"
 msgid "Navigate through article"
 msgstr "Navigation durch Artikel"
 
+#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
+msgid "Navigate to %s"
+msgstr "Zu %s gehen"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Navigation"
 msgstr "Navigation"
@@ -9171,6 +9235,7 @@ msgstr "Nein"
 msgid "No %s configured."
 msgstr "Kein %s konfiguriert."
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -9230,6 +9295,10 @@ msgstr "Keine Kamera gefunden."
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "No categories"
 msgstr "Keine Kategorien"
+
+#: app/models/setting/validation/saml/security.rb
+msgid "No certificate found."
+msgstr "Kein Zertifikat gefunden."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
@@ -9292,6 +9361,10 @@ msgstr "Keine Makros verfügbar."
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "Keine vorherigen Suchen vorhanden"
+
+#: app/models/setting/validation/saml/security.rb
+msgid "No private key found."
+msgstr "Kein privater Schlüssel gefunden."
 
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
@@ -9365,7 +9438,7 @@ msgstr "Keine 'x-zammad-session-user-id', kein Absender gesetzt!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#: app/graphql/gql/types/ticket_type.rb
+#: app/graphql/gql/types/ticket_type.rb db/seeds/settings.rb
 msgid "None"
 msgstr "Keine"
 
@@ -9639,6 +9712,14 @@ msgid ""
 msgstr ""
 "Nur %s% dieser Sprache sind übersetzt. Bitte helfen Sie mit, Zammad zu "
 "verbessern und die Übersetzung zu vervollständigen."
+
+#: db/seeds/settings.rb
+msgid "Only Encrypting"
+msgstr "Nur verschlüsseln"
+
+#: db/seeds/settings.rb
+msgid "Only Signing"
+msgstr "Nur Signieren"
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
@@ -10255,6 +10336,14 @@ msgstr "Bitte füllen Sie alle Felder aus"
 msgid "Please include a valid url."
 msgstr "Bitte fügen Sie eine gültige URL ein."
 
+#: db/seeds/settings.rb
+msgid ""
+"Please note that this attribute is deprecated within one of the next "
+"versions of Zammad. Use the IDP certificate instead."
+msgstr ""
+"Bitte beachten Sie, dass dieses Attribut in einer der nächsten Versionen von "
+"Zammad veraltet sein wird. Verwenden Sie stattdessen das IDP-Zertifikat."
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Bitte geben Sie einen Empfänger in \"TO\" oder \"CC\" an."
@@ -10380,6 +10469,7 @@ msgstr ""
 "Signieren, Ver- und Entschlüsseln von Nachrichten verwendet werden kann. "
 "Damit kann die Sicherheit von E-Mail-Kommunikation erhöht werden."
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
@@ -10442,6 +10532,14 @@ msgstr "Priorität"
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
 msgstr "Prioritätssymbole in Übersichten"
+
+#: db/seeds/settings.rb
+msgid "Private key (PEM)"
+msgstr "Privaten Schlüssel (PEM)"
+
+#: db/seeds/settings.rb
+msgid "Private key secret"
+msgstr "Secret für privaten Schlüssel eingeben"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
@@ -11224,6 +11322,7 @@ msgid "SSL Certificates"
 msgstr "SSL-Zertifikate"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -11382,6 +11481,18 @@ msgstr "Suchbegriff"
 msgid "Search Terms"
 msgstr "Suchbegriffe"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search URL"
+msgstr "Such URL"
+
+#: lib/external_data_source/errors.rb
+msgid "Search URL is invalid."
+msgstr "Die angegebene URL ist ungültig."
+
+#: lib/external_data_source/errors.rb
+msgid "Search URL is missing."
+msgstr "Die Such-URL fehlt."
+
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Search for users"
 msgstr "Benutzer suchen"
@@ -11398,8 +11509,83 @@ msgstr "Suchen oder E-Mail-Adresse angeben…"
 msgid "Search or enter phone number…"
 msgstr "Suchen oder Telefonnummer angeben…"
 
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result label is not a string, a number or a boolean. Please provide "
+"search result label key."
+msgstr ""
+"Die Bezeichnung des Suchergebnisses ist keine Zeichenkette, Zahl oder "
+"Boolescher Wert. Bitte geben Sie einen Schlüssel für die Suchergebnisse an."
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result label key"
+msgstr "Schlüssel Suchergebnisbezeichnung"
+
+#: lib/external_data_source/errors.rb
+msgid "Search result label key \"%s\" is not a string, number or boolean."
+msgstr ""
+"Der Suchergebnisbezeichnung \"%s\" ist keine Zeichenkette, Zahl oder "
+"Boolescher Wert."
+
+#: lib/external_data_source/errors.rb
+msgid "Search result label key \"%s\" was not found."
+msgstr "Der Schlüssel für das Suchergebnis %s wurde nicht gefunden."
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result list"
+msgstr "Suchergebnis Liste"
+
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result list is not an array. Please provide search result list key."
+msgstr ""
+"Die Suchergebnisliste enthält keine Auflistung von Werten. Bitte geben Sie "
+"den Schlüssel der Suchergebnisliste an."
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result list key"
+msgstr "Schlüssel der Suchergebnisliste"
+
+#: lib/external_data_source/errors.rb
+msgid "Search result list key \"%s\" is not an array."
+msgstr ""
+"Der Schlüssel der Suchergebnisliste \"%s\" enthält keine Auflistung von "
+"Werten."
+
+#: lib/external_data_source/errors.rb
+msgid "Search result list key \"%s\" was not found."
+msgstr "Der Suchergebnis-Listenschlüssel \"%s\" wurde nicht gefunden."
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result response"
+msgstr "Suchergebnis"
+
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result value is not a string, a number or a boolean. Please provide "
+"search result value key."
+msgstr ""
+"Der Wert des Suchergebnisses ist keine Zeichenkette, Zahl oder Boolescher "
+"Wert. Bitte geben Sie einen Schlüssel aus den Suchergebnissen an."
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result value key"
+msgstr "Schlüssel Suchergebnis-Wert"
+
+#: lib/external_data_source/errors.rb
+msgid "Search result value key \"%s\" is not a string, number or boolean."
+msgstr ""
+"Der Suchergebniswert \"%s\" ist keine Zeichenkette, Zahl oder Boolescher "
+"Wert."
+
+#: lib/external_data_source/errors.rb
+msgid "Search result value key \"%s\" was not found."
+msgstr "Der Suchergebnis-Wertschlüssel \"%s\" wurde nicht gefunden."
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -11478,6 +11664,10 @@ msgid ""
 msgstr ""
 "Sicherheitsschlüssel sind Hardware- oder Software-Berechtigungsnachweise, "
 "die als Methode für Zwei-Faktor-Authentifizierung verwendet werden können."
+
+#: lib/external_data_source/errors.rb
+msgid "See HTTPLog for details."
+msgstr "Siehe HTTPLog für Details."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -12055,6 +12245,10 @@ msgstr "Signaturen"
 msgid "Signed"
 msgstr "Signiert"
 
+#: db/seeds/settings.rb
+msgid "Signing & Encrypting"
+msgstr "Signieren & Verschlüsseln"
+
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
 msgstr "Registrierungs-Ansicht"
@@ -12070,15 +12264,15 @@ msgstr "Simple Line Icons"
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Simple Storage (S3)"
-msgstr ""
+msgstr "Simple Storage (S3)"
 
 #: app/models/store/provider/s3/config.rb
 msgid "Simple Storage Service configuration not found or invalid."
-msgstr ""
+msgstr "Simple Storage Service-Konfiguration nicht gefunden oder ungültig."
 
 #: app/models/store/provider/s3.rb
 msgid "Simple Storage Service not reachable."
-msgstr ""
+msgstr "Der Simple Storage Service ist nicht erreichbar."
 
 #: db/seeds/settings.rb
 msgid "Sina Weibo"
@@ -12148,6 +12342,7 @@ msgstr "SMS"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Solution Time"
 msgstr "Lösungszeit"
 
@@ -12822,6 +13017,14 @@ msgstr ""
 "Der Browser ist veraltet. Es unterstützt WebSocket nicht - was aber für den "
 "Chat erforderlich ist."
 
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate could not be parsed."
+msgstr "Das Zertifikat konnte nicht geparst werden."
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate does not match the given private key."
+msgstr "Das Zertifikat passt nicht zum gegebenen privaten Schlüssel."
+
 #: lib/secure_mailing/smime/security_options.rb
 msgid ""
 "The certificate for %s was found, but it is not valid yet or has expired."
@@ -12845,6 +13048,20 @@ msgstr ""
 #: lib/secure_mailing/smime/incoming.rb
 msgid "The certificate for verification could not be found."
 msgstr "Das Zertifikat zur Überprüfung konnte nicht gefunden werden."
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate is not usable (e.g. expired)."
+msgstr "Das Zertifikat ist nicht nutzbar (z.B. abgelaufen)."
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate is not usable due to being a CA certificate."
+msgstr ""
+"Das Zertifikat kann nicht verwendet werden, weil es ein CA-Zertifikat ist."
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate is not usable for signing and encryption."
+msgstr ""
+"Das Zertifikat kann nicht für Signieren und Verschlüsseln verwendet werden."
 
 #: lib/certificate/x509/smime.rb
 msgid ""
@@ -13099,6 +13316,10 @@ msgstr "Das Issue konnte nicht angelegt werden."
 msgid "The language could not be updated."
 msgstr "Die Sprache konnte nicht aktualisiert werden."
 
+#: app/models/setting/validation/saml/security.rb
+msgid "The length of the private key is too short."
+msgstr "Die Länge des privaten Schlüssels ist zu kurz."
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Das Limit von %s darstellbaren Tickets wurde erreicht (%s verbleibend)"
@@ -13136,7 +13357,7 @@ msgid "The object could not be updated."
 msgstr "Das Objekt konnte nicht aktualisiert werden."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
-msgid "The online notifcation could not be marked as seen."
+msgid "The online notification could not be marked as seen."
 msgstr "Die Benachrichtigung konnte nicht als gelesen markiert werden."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
@@ -13361,6 +13582,10 @@ msgstr "Der erforderliche Parameter 'group_id' fehlt."
 msgid "The required parameter 'id' is missing."
 msgstr "Der erforderliche Parameter 'id' fehlt."
 
+#: lib/search_index_backend.rb
+msgid "The required parameter 'key' is missing."
+msgstr "Der erforderliche Parameter 'area' fehlt."
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr "Der erforderliche Parameter 'link_type' fehlt."
@@ -13416,6 +13641,10 @@ msgstr "Der erforderliche Parameter 'signup' fehlt."
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Der erforderliche Parameter 'ticket_number' fehlt."
+
+#: lib/search_index_backend.rb
+msgid "The required parameter 'value' is missing."
+msgstr "Der erforderliche Parameter 'locale' fehlt."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -13545,6 +13774,10 @@ msgstr ""
 msgid "The two-factor authentication method is not enabled."
 msgstr "Die Methode für Zwei-Faktor-Authentifizierung ist nicht aktiviert."
 
+#: app/models/setting/validation/saml/security.rb
+msgid "The type of the private key is wrong."
+msgstr "Der Typ des privaten Schlüssels ist fehlerhaft."
+
 #: app/controllers/getting_started_controller.rb
 msgid "The uploaded image could not be processed."
 msgstr "Das hochgeladene Bild konnte nicht verarbeitet werden."
@@ -13566,6 +13799,14 @@ msgstr ""
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
 msgid "The username or password is incorrect."
 msgstr "Benutzername oder Passwort ist ungültig."
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection failed. Please check the IDP "
+"certificate."
+msgstr ""
+"Die Prüfung der TLS-Verbindung ist fehlgeschlagen. Bitte prüfen Sie das IDP-"
+"Zertifikat."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -13727,10 +13968,8 @@ msgstr ""
 "nicht gültig oder bereits abgelaufen."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "There are no business hours configured."
 msgid "There were errors in your form."
-msgstr "Es sind keine Geschäftszeiten konfiguriert."
+msgstr "Ihr Formular enthielt Fehler."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -14221,6 +14460,14 @@ msgstr "Größe des Ticket-Betreffs"
 msgid "Ticket Subscriptions"
 msgstr "Ticket-Abos"
 
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr "Ticket Trigger Loop Protection Artikel Gesamt"
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr "Ticket Trigger Loop Protection Artikel pro Ticket"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Ticket actions"
 msgstr "Ticket-Aktionen"
@@ -14682,6 +14929,12 @@ msgstr ""
 "\"| in der %s Integrations-Oberfläche angelegt werden und hier unterhalb von "
 "Webhook-URL eingetragen werden."
 
+#: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
+msgid "To trigger the preview, please enter some search term(s) above."
+msgstr ""
+"Um die Vorschau zu sehen, geben Sie bitte oben einen oder mehrere "
+"Suchbegriffe ein."
+
 #: db/seeds/roles.rb
 msgid "To work on Tickets."
 msgstr "Für die Arbeit an Tickets."
@@ -14851,6 +15104,8 @@ msgstr "Chat zu Ticket umwandeln"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
+#: db/seeds/settings.rb
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
 "temporary. Use this option at your own risk!"
@@ -15097,6 +15352,7 @@ msgstr "Aktualisierung in Min"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Update Time"
 msgstr "Aktualisierungszeit"
 
@@ -15555,6 +15811,7 @@ msgstr "Prüfung fehlgeschlagen"
 msgid "Validation failed: %{errors}"
 msgstr "Prüfung fehlgeschlagen: %{errors}"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -16259,16 +16516,12 @@ msgid "You can request your password"
 msgstr "Beantragen eines neuen Passworts"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-#, fuzzy
-#| msgid ""
-#| "You can switch between the backends for new attachments even on a system "
-#| "that is already in production without any loss of data."
 msgid ""
 "You can switch between the following backends for new attachments even on a "
 "system that is already in production without any loss of data."
 msgstr ""
-"Sie können zwischen den Backends für neue Anhänge jederzeit wechseln, auch "
-"wenn es schon ein produktives System ist. Es gehen keine Daten verloren."
+"Sie können zwischen den folgenden Backends für neue Anhänge ohne "
+"Datenverlust wechseln, auch auf einem System, das bereits in Produktion ist."
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "You can use the following script to post the data to %s."
@@ -16712,6 +16965,10 @@ msgstr "zwischen Updates von Agenten"
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "busy"
 msgstr "besetzt"
+
+#: app/models/object_manager/attribute.rb
+msgid "can only be created on postgresql databases"
+msgstr "kann nur auf Postgresql-Datenbanken erstellt werden"
 
 #: app/models/object_manager/attribute.rb
 msgid ""
@@ -17412,10 +17669,8 @@ msgstr "muss größer als %{count} sein"
 msgid "must be greater than or equal to %{count}"
 msgstr "muss %{count} oder größer sein"
 
-#, fuzzy
-#| msgid "must be less than %{count}"
 msgid "must be in %{count}"
-msgstr "muss kleiner als %{count} sein"
+msgstr "muss in %{count} sein"
 
 msgid "must be less than %{count}"
 msgstr "muss kleiner als %{count} sein"
@@ -17988,9 +18243,6 @@ msgstr "∅ Wartezeit heute"
 #~ msgid "No passphrase given."
 #~ msgstr "Keine Passphrase angegeben."
 
-#~ msgid "No public key found."
-#~ msgstr "Kein öffentlicher Schlüssel gefunden."
-
 #~ msgid "No secret key found."
 #~ msgstr "Kein privater Schlüssel gefunden."
 
@@ -18012,9 +18264,6 @@ msgstr "∅ Wartezeit heute"
 
 #~ msgid "Certificate for %s found."
 #~ msgstr "Das Zertifikat für %s wurde gefunden."
-
-#~ msgid "Certificate not found."
-#~ msgstr "Zertifikat nicht gefunden."
 
 #~ msgid "Certificates found for %s."
 #~ msgstr "Die Zertifikate für %s wurden gefunden."

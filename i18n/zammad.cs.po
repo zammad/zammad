@@ -1518,6 +1518,7 @@ msgstr "Nastala chyba"
 msgid "An error occured during the operation."
 msgstr "Během operace nastala chyba."
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "An error occurred: %s"
@@ -2010,6 +2011,12 @@ msgstr "Srpen"
 msgid "Authentication"
 msgstr "Autentizace"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "Authentication Token"
+msgstr "Autentizace"
+
 #: lib/email_helper/probe.rb
 msgid "Authentication failed due to incorrect credentials."
 msgstr "Autentizace selhala z důvodu nesprávného pověření."
@@ -2215,6 +2222,7 @@ msgstr "Base DN"
 msgid "Base Objects"
 msgstr "Základní Objekty"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Basic Authentication"
 msgstr "Basic Authentication"
@@ -2550,6 +2558,10 @@ msgstr "Nelze pokračovat v uzavřeném požadavku. Prosím, vytvořte nový tic
 msgid "Cannot have both response time and update time."
 msgstr "Nelze mít zároveň čas odpovědi a čas aktualizace."
 
+#: lib/external_data_source/errors.rb
+msgid "Cannot process external data source %s. %s"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
 msgstr "Nebylo možné označit online oznámení jako zobrazené"
@@ -2570,6 +2582,12 @@ msgstr "Rozložení stránky kategorie"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Caution!"
 msgstr "Pozor!"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Add Certificate"
+msgid "Certificate (PEM)"
+msgstr "Přidat certifikát"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
@@ -2880,6 +2898,7 @@ msgstr "Vyčistit"
 msgid "Clear Search"
 msgstr "Obnovit hledání"
 
+#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3911,6 +3930,12 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Definujte max. velikost obsahu pro Elasticsearch."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Define pipeline name for Elasticsearch."
+msgid "Define model configuration for Elasticsearch."
+msgstr "Definujte název pipeline pro Elasticsearch."
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Definujte název pipeline pro Elasticsearch."
 
@@ -4566,6 +4591,26 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines the backend for user and organization image lookups."
 msgstr "Definuje službu pro prohledání obrázků/avatarů organizací a uživatelů."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+"Definuje omezení denního počtu ticketů, vytvářených přes webový formulář."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
+"Definuje omezení denního počtu ticketů, vytvářených přes webový formulář."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5352,6 +5397,12 @@ msgid "Elasticsearch Endpoint User"
 msgstr "Uživatel koncového bodu Elasticsearch"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "SSL verification"
+msgid "Elasticsearch Model Configuration"
+msgstr "SSL ověření"
+
+#: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
 msgstr "Název pipeline Elasticsearch"
 
@@ -5978,6 +6029,7 @@ msgstr "Eskalace v"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Escalation Times"
 msgstr "Doby Eskalace"
 
@@ -6141,6 +6193,12 @@ msgstr "Vyprší v"
 msgid "Extended Search"
 msgstr "Rozšířené hledání"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "internal database"
+msgid "External data source field"
+msgstr "interní databáze"
+
 #: lib/search_index_backend.rb
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Extrahujte informace o Zammad přílohách z polí"
@@ -6300,6 +6358,7 @@ msgstr "Prvotní odpověď v min"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "First Response Time"
 msgstr "První Reakční doba"
 
@@ -6666,6 +6725,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/generic/searchable_select_submenu.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -6863,12 +6923,36 @@ msgstr "CSS písmo HTML e-mailů"
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "Čas vypršení HTML Sanitizéru"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "HTTP Authentication"
+msgstr "Autentizace"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "HTTP Basic Authentication Username"
+msgid "HTTP Authentication token"
+msgstr "HTTP Basic Authentication uživatelské jméno"
+
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HTTP Basic Authentication Password"
 msgstr "HTTP Basic Authentication heslo"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HTTP Basic Authentication Username"
+msgstr "HTTP Basic Authentication uživatelské jméno"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "HTTP Basic Authentication Password"
+msgid "HTTP Basic Authentication password"
+msgstr "HTTP Basic Authentication heslo"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "HTTP Basic Authentication Username"
+msgid "HTTP Basic Authentication username"
 msgstr "HTTP Basic Authentication uživatelské jméno"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
@@ -7925,6 +8009,12 @@ msgstr "Integrace LDAP"
 msgid "LDAP integration for user management."
 msgstr "Integrace LDAP pro správu uživatelů."
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Labels"
+msgid "Label"
+msgstr "Štítky"
+
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Labels"
 msgstr "Štítky"
@@ -8054,6 +8144,7 @@ msgstr "Omezit tickety z jedné IP za hodinu"
 msgid "Limit tickets per day"
 msgstr "Omezit tickety za den"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
@@ -8090,13 +8181,15 @@ msgstr "Připojit GitLab problémy (issues) k vašim ticketům."
 msgid "Link Related Answer"
 msgstr "Spoj související odpověď"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Link Template"
-msgstr "Propojit šablonu"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr "Připojit problém"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Link Template"
+msgid "Link template"
+msgstr "Propojit šablonu"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
@@ -8818,6 +8911,12 @@ msgstr "Jméno tlačítka pro odeslání formuláře"
 msgid "Navigate through article"
 msgstr "Navigace skrz položku"
 
+#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
+#, fuzzy
+#| msgid "Navigation"
+msgid "Navigate to %s"
+msgstr "Navigace"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Navigation"
 msgstr "Navigace"
@@ -9086,6 +9185,7 @@ msgstr "Ne"
 msgid "No %s configured."
 msgstr "Chybí konfigurace %s."
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -9145,6 +9245,12 @@ msgstr "Nenalezena žádná kamera."
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "No categories"
 msgstr "Žádné kategorie"
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "Locale not found"
+msgid "No certificate found."
+msgstr "Národní prostředí nenalezeno"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
@@ -9208,6 +9314,12 @@ msgstr "Není k dispozici žádné sezení."
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "Žádná předchozí hledání"
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "No public key found."
+msgid "No private key found."
+msgstr "Nenalezen žádný veřejný klíč."
 
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
@@ -9281,7 +9393,7 @@ msgstr "Žádný x-zammad-session-user-id, žádný nastavený odesílatel!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#: app/graphql/gql/types/ticket_type.rb
+#: app/graphql/gql/types/ticket_type.rb db/seeds/settings.rb
 msgid "None"
 msgstr "Žádný"
 
@@ -9556,6 +9668,18 @@ msgid ""
 msgstr ""
 "Pouze %s% tohoto jazyka je již přeloženo. Prosím, pomozte Zammadu a "
 "dokončete překlad."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Encryption"
+msgid "Only Encrypting"
+msgstr "Šifrování"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Sign in"
+msgid "Only Signing"
+msgstr "Přihlásit"
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
@@ -10168,6 +10292,12 @@ msgstr "Vyplňte prosím všechna pole"
 msgid "Please include a valid url."
 msgstr "Přiložte prosím platnou URL."
 
+#: db/seeds/settings.rb
+msgid ""
+"Please note that this attribute is deprecated within one of the next "
+"versions of Zammad. Use the IDP certificate instead."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Prosím vyplňte příjemce \"Komu\" nebo \"Kopie\"."
@@ -10286,6 +10416,7 @@ msgid ""
 "e-mail communication."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
@@ -10348,6 +10479,18 @@ msgstr "Priorita"
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
 msgstr "Ikonky priority v přehledech"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Add Private Key"
+msgid "Private key (PEM)"
+msgstr "Přidat soukromý klíč"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enter Private Key Secret"
+msgid "Private key secret"
+msgstr "Vložte pověření soukromého klíče"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
@@ -11142,6 +11285,7 @@ msgid "SSL Certificates"
 msgstr "Přidat certifikát"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -11306,6 +11450,22 @@ msgstr "Hledaný výraz"
 msgid "Search Terms"
 msgstr "Hledané výrazy"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Search"
+msgid "Search URL"
+msgstr "Vyhledat"
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+#| msgid "The provided URL is invalid."
+msgid "Search URL is invalid."
+msgstr "Poskytnutá URL je neplatná."
+
+#: lib/external_data_source/errors.rb
+msgid "Search URL is missing."
+msgstr ""
+
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Search for users"
 msgstr "Hledat uživatele"
@@ -11322,8 +11482,83 @@ msgstr "Hledejte nebo zadejte e-mailovou adresu…"
 msgid "Search or enter phone number…"
 msgstr "Vyhledejte nebo vložte telefonní číslo…"
 
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result label is not a string, a number or a boolean. Please provide "
+"search result label key."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result label key"
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+msgid "Search result label key \"%s\" is not a string, number or boolean."
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+#| msgid "The page was not found"
+msgid "Search result label key \"%s\" was not found."
+msgstr "Stránka nebyla nalezena"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Back to search results"
+msgid "Search result list"
+msgstr "Zpět k výsledkům vyhledávání"
+
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result list is not an array. Please provide search result list key."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result list key"
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+msgid "Search result list key \"%s\" is not an array."
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+#| msgid "The page was not found"
+msgid "Search result list key \"%s\" was not found."
+msgstr "Stránka nebyla nalezena"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "First response"
+msgid "Search result response"
+msgstr "První reakce"
+
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result value is not a string, a number or a boolean. Please provide "
+"search result value key."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Separate multiple values by ;"
+msgid "Search result value key"
+msgstr "Více hodnot oddělte pomocí ;"
+
+#: lib/external_data_source/errors.rb
+msgid "Search result value key \"%s\" is not a string, number or boolean."
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+#| msgid "The page was not found"
+msgid "Search result value key \"%s\" was not found."
+msgstr "Stránka nebyla nalezena"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -11412,6 +11647,10 @@ msgid ""
 msgstr ""
 "Bezpečnostní klíče jsou hardwarové nebo softwarové údaje, které mohou být "
 "použity jako dvou faktorové autentizační metody."
+
+#: lib/external_data_source/errors.rb
+msgid "See HTTPLog for details."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -11989,6 +12228,12 @@ msgstr "Podpisy"
 msgid "Signed"
 msgstr "Podepsáno"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Sign in using"
+msgid "Signing & Encrypting"
+msgstr "Přihlaste se pomocí"
+
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
 msgstr "Obrazovka registrace"
@@ -12082,6 +12327,7 @@ msgstr "SMS"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Solution Time"
 msgstr "Čas Řešení"
 
@@ -12781,6 +13027,18 @@ msgstr ""
 "Tento prohlížeč je zastaralý. Nepodporuje technologii (WebSocket) kterou "
 "používáme pro službu Chat."
 
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The certificate could not be parsed."
+msgstr "Soubor se nepodařilo nahrát."
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "The certificate for this private key could not be found."
+msgid "The certificate does not match the given private key."
+msgstr "Certifikát pro tento soukromý klíč se nepodařilo najít."
+
 #: lib/secure_mailing/smime/security_options.rb
 #, fuzzy
 #| msgid "Certificate for verification could not be found."
@@ -12809,6 +13067,28 @@ msgstr "Certifikát pro tento soukromý klíč se nepodařilo najít."
 #| msgid "Certificate for verification could not be found."
 msgid "The certificate for verification could not be found."
 msgstr "Nebyl nalezen certifikát pro ověření."
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "The certificates for %s were found."
+msgid "The certificate is not usable (e.g. expired)."
+msgstr "Certifikáty pro %s byly nalezeny."
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid ""
+#| "The certificate is not valid for S/MIME usage. Please check the "
+#| "certificate format."
+msgid "The certificate is not usable due to being a CA certificate."
+msgstr ""
+"Certifikát není platný pro použití S/MIME. Prosím zkontrolujte formát "
+"certifikátu."
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificate is not usable for signing and encryption."
+msgstr "Zvuk oznámení"
 
 #: lib/certificate/x509/smime.rb
 msgid ""
@@ -13049,6 +13329,10 @@ msgstr "Problém se nepodařilo uložit."
 msgid "The language could not be updated."
 msgstr "Jazyk se nepodařilo aktualizovat."
 
+#: app/models/setting/validation/saml/security.rb
+msgid "The length of the private key is too short."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Dosáhli jste limitu %s zobrazovaných ticketů (zbývá %s)"
@@ -13086,7 +13370,9 @@ msgid "The object could not be updated."
 msgstr "Objekt se nepodařilo aktualizovat."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
-msgid "The online notifcation could not be marked as seen."
+#, fuzzy
+#| msgid "The online notifcation could not be marked as seen."
+msgid "The online notification could not be marked as seen."
 msgstr "Online oznámení nemůže být nastaveno jako shlédnuté."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
@@ -13310,6 +13596,12 @@ msgstr "Chybí požadovaný parametr \"group_id'."
 msgid "The required parameter 'id' is missing."
 msgstr "Chybí požadovaný parametr \"id'."
 
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'area' is missing."
+msgid "The required parameter 'key' is missing."
+msgstr "Chybí požadovaný parametr \"area'."
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
 msgstr "Chybí požadovaný parametr \"link_type'."
@@ -13367,6 +13659,12 @@ msgstr "Chybí požadovaný parametr \"signup'."
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Chybí požadovaný parametr \"ticket_number'."
+
+#: lib/search_index_backend.rb
+#, fuzzy
+#| msgid "The required parameter 'locale' is missing."
+msgid "The required parameter 'value' is missing."
+msgstr "Chybí požadovaný parametr \"locale'."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -13494,6 +13792,12 @@ msgstr "Nastavení 'ticket_number' není nakonfigurováno."
 msgid "The two-factor authentication method is not enabled."
 msgstr ""
 
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "The MIME type of the image is invalid."
+msgid "The type of the private key is wrong."
+msgstr "MIME typ obrázku je neplatný."
+
 #: app/controllers/getting_started_controller.rb
 msgid "The uploaded image could not be processed."
 msgstr "Nahraný obrázek se nepodařilo zpracovat."
@@ -13517,6 +13821,18 @@ msgstr ""
 #| msgid "The required parameter 'params' is missing."
 msgid "The username or password is incorrect."
 msgstr "Chybí požadovaný parametr \"params'."
+
+#: app/models/setting/validation/saml/tls.rb
+#, fuzzy
+#| msgid ""
+#| "The certificate is not valid for S/MIME usage. Please check the "
+#| "certificate format."
+msgid ""
+"The verification of the TLS connection failed. Please check the IDP "
+"certificate."
+msgstr ""
+"Certifikát není platný pro použití S/MIME. Prosím zkontrolujte formát "
+"certifikátu."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -14180,6 +14496,14 @@ msgstr "Délka předmětu ticketu"
 msgid "Ticket Subscriptions"
 msgstr "Odběry ticketů"
 
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Ticket actions"
 msgstr "Akce ticketu"
@@ -14641,6 +14965,10 @@ msgstr ""
 "Pro nastavení této služby musíte vytvořit nový |\"Příchozí webhook\"| v "
 "panelu integrace %s a níže zadat URL webhooku."
 
+#: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
+msgid "To trigger the preview, please enter some search term(s) above."
+msgstr ""
+
 #: db/seeds/roles.rb
 msgid "To work on Tickets."
 msgstr "Pracovat na ticketech."
@@ -14816,6 +15144,8 @@ msgstr "Vytvořit z chatu ticket"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
+#: db/seeds/settings.rb
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
 "temporary. Use this option at your own risk!"
@@ -15073,6 +15403,7 @@ msgstr "Aktualizace v min"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Update Time"
 msgstr "Doba aktualizace"
 
@@ -15530,6 +15861,7 @@ msgstr "Validace selhala"
 msgid "Validation failed: %{errors}"
 msgstr "Ověření se nezdařilo: %{errors}"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -16672,6 +17004,10 @@ msgstr "mezi aktualizacemi řešitele"
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "busy"
 msgstr "zaneprázdněn"
+
+#: app/models/object_manager/attribute.rb
+msgid "can only be created on postgresql databases"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb
 msgid ""
@@ -17963,9 +18299,6 @@ msgstr "dnešní ∅ čekací doby"
 #~ msgid "No passphrase given."
 #~ msgstr "Nebylo vloženo heslo."
 
-#~ msgid "No public key found."
-#~ msgstr "Nenalezen žádný veřejný klíč."
-
 #~ msgid "No secret key found."
 #~ msgstr "Nenalezen žádný tajný klíč."
 
@@ -17983,11 +18316,6 @@ msgstr "dnešní ∅ čekací doby"
 #~| msgid "Certificate for verification could not be found."
 #~ msgid "Certificate for %s found."
 #~ msgstr "Nebyl nalezen certifikát pro ověření."
-
-#, fuzzy
-#~| msgid "Locale not found"
-#~ msgid "Certificate not found."
-#~ msgstr "Národní prostředí nenalezeno"
 
 #, fuzzy
 #~| msgid "Certificates & Private Keys"

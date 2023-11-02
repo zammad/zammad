@@ -1542,6 +1542,7 @@ msgstr "Bir hata oluştu"
 msgid "An error occured during the operation."
 msgstr "İşlem sırasında bir hata oluştu."
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "An error occurred: %s"
@@ -2036,6 +2037,12 @@ msgstr "Ağustos"
 msgid "Authentication"
 msgstr "Kimlik Doğrulama"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "Authentication Token"
+msgstr "Kimlik Doğrulama"
+
 #: lib/email_helper/probe.rb
 msgid "Authentication failed due to incorrect credentials."
 msgstr "Kimlik doğrulama, yanlış kimlik bilgileri nedeniyle başarısız oldu."
@@ -2241,6 +2248,7 @@ msgstr "Temel DN"
 msgid "Base Objects"
 msgstr "Temel Nesneler"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Basic Authentication"
 msgstr "Temel Kimlik Doğrulama"
@@ -2576,6 +2584,10 @@ msgstr ""
 msgid "Cannot have both response time and update time."
 msgstr "Hem yanıt süresine hem de güncelleme süresine sahip olamaz."
 
+#: lib/external_data_source/errors.rb
+msgid "Cannot process external data source %s. %s"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
 msgstr "Çevrimiçi bildirimler görüldü olarak ayarlanamıyor"
@@ -2596,6 +2608,12 @@ msgstr "Kategori sayfa düzeni"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Caution!"
 msgstr "Dikkat!"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Add Certificate"
+msgid "Certificate (PEM)"
+msgstr "Sertifika Ekle"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
@@ -2914,6 +2932,7 @@ msgstr "Temizle"
 msgid "Clear Search"
 msgstr "Aramayı Temizle"
 
+#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3928,6 +3947,12 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Elasticsearch için maks. payload boyutunu tanımlayın."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Define pipeline name for Elasticsearch."
+msgid "Define model configuration for Elasticsearch."
+msgstr "Elasticsearch için pipeline adını tanımlayın."
+
+#: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Elasticsearch için pipeline adını tanımlayın."
 
@@ -4587,6 +4612,28 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines the backend for user and organization image lookups."
 msgstr "Kullanıcı ve organizasyon görsel aramaları için arka ucu tanımlar."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"globally."
+msgstr ""
+"Web formu aracılığıyla günde kaç destek talebi oluşturulabileceğine ilişkin "
+"bir sınır tanımlar."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines a limit for how many tickets can be created via web form per day."
+msgid ""
+"Defines the configuration how many articles can be created in a minute range "
+"per ticket."
+msgstr ""
+"Web formu aracılığıyla günde kaç destek talebi oluşturulabileceğine ilişkin "
+"bir sınır tanımlar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5414,6 +5461,11 @@ msgstr "Elasticsearch Endpoint Kullanıcısı"
 
 #: db/seeds/settings.rb
 #, fuzzy
+msgid "Elasticsearch Model Configuration"
+msgstr "True"
+
+#: db/seeds/settings.rb
+#, fuzzy
 msgid "Elasticsearch Pipeline Name"
 msgstr "True"
 
@@ -6059,6 +6111,7 @@ msgstr "True"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Escalation Times"
 msgstr "Escalation Times"
 
@@ -6228,6 +6281,12 @@ msgstr "Expires"
 #: app/assets/javascripts/app/controllers/search.coffee
 msgid "Extended Search"
 msgstr "Extended Search"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "internal"
+msgid "External data source field"
+msgstr "internal"
 
 #: lib/search_index_backend.rb
 #, fuzzy
@@ -6413,6 +6472,7 @@ msgstr "True"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "First Response Time"
 msgstr "First Response Time"
 
@@ -6834,6 +6894,7 @@ msgstr "True"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/method.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/generic/searchable_select_submenu.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -7049,12 +7110,36 @@ msgstr "True"
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "True"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "HTTP Authentication"
+msgstr "Kimlik Doğrulama"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "HTTP Basic Authentication Username"
+msgid "HTTP Authentication token"
+msgstr "HTTP Temel Kimlik Doğrulama Kullanıcı Adı"
+
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HTTP Basic Authentication Password"
 msgstr "HTTP Temel Kimlik Doğrulama Parolası"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HTTP Basic Authentication Username"
+msgstr "HTTP Temel Kimlik Doğrulama Kullanıcı Adı"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "HTTP Basic Authentication Password"
+msgid "HTTP Basic Authentication password"
+msgstr "HTTP Temel Kimlik Doğrulama Parolası"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "HTTP Basic Authentication Username"
+msgid "HTTP Basic Authentication username"
 msgstr "HTTP Temel Kimlik Doğrulama Kullanıcı Adı"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
@@ -8212,6 +8297,12 @@ msgstr "True"
 msgid "LDAP integration for user management."
 msgstr "LDAP integration for user management."
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Labels"
+msgid "Label"
+msgstr "etiketler"
+
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Labels"
 msgstr "etiketler"
@@ -8361,6 +8452,7 @@ msgstr "True"
 msgid "Limit tickets per day"
 msgstr "True"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
@@ -8399,13 +8491,15 @@ msgstr "Github issue'lerini ticketlarına bağla."
 msgid "Link Related Answer"
 msgstr "Link Related Answer"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Link Template"
-msgstr "Bağlantı Şablonu"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr "Link Hatası"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Link Template"
+msgid "Link template"
+msgstr "Bağlantı Şablonu"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
@@ -9215,6 +9309,11 @@ msgstr "Name of form submit button"
 msgid "Navigate through article"
 msgstr "Navigate through article"
 
+#: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
+#, fuzzy
+msgid "Navigate to %s"
+msgstr "True"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
 msgid "Navigation"
@@ -9474,6 +9573,7 @@ msgstr "Hayır"
 msgid "No %s configured."
 msgstr "No %s configured."
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -9544,6 +9644,11 @@ msgstr "True"
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "No categories"
 msgstr "No categories"
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+msgid "No certificate found."
+msgstr "True"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
@@ -9619,6 +9724,11 @@ msgstr "True"
 #| msgid "Previous tab"
 msgid "No previous searches"
 msgstr "Previous tab"
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+msgid "No private key found."
+msgstr "True"
 
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
@@ -9700,7 +9810,7 @@ msgstr "True"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#: app/graphql/gql/types/ticket_type.rb
+#: app/graphql/gql/types/ticket_type.rb db/seeds/settings.rb
 msgid "None"
 msgstr "Hiçbiri"
 
@@ -10002,6 +10112,17 @@ msgid ""
 "Only %s% of this language is already translated. Please help to improve "
 "Zammad and complete the translation."
 msgstr "True"
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Only Encrypting"
+msgstr "True"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Sign in"
+msgid "Only Signing"
+msgstr "Giriş yap"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
@@ -10700,6 +10821,12 @@ msgstr "True"
 msgid "Please include a valid url."
 msgstr "True"
 
+#: db/seeds/settings.rb
+msgid ""
+"Please note that this attribute is deprecated within one of the next "
+"versions of Zammad. Use the IDP certificate instead."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
@@ -10832,6 +10959,7 @@ msgid ""
 "e-mail communication."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
@@ -10897,6 +11025,18 @@ msgstr "Öncelik"
 #, fuzzy
 msgid "Priority Icons in Overviews"
 msgstr "True"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Add Private Key"
+msgid "Private key (PEM)"
+msgstr "Özel Anahtar Ekle"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enter Private Key Secret"
+msgid "Private key secret"
+msgstr "Özel Anahtar Sırrını Girin"
 
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
@@ -11747,6 +11887,7 @@ msgid "SSL Certificates"
 msgstr "Sertifika Ekle"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -11920,6 +12061,21 @@ msgstr "Arama terimi"
 msgid "Search Terms"
 msgstr "Arama terimleri"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Search"
+msgid "Search URL"
+msgstr "Ara"
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+msgid "Search URL is invalid."
+msgstr "True"
+
+#: lib/external_data_source/errors.rb
+msgid "Search URL is missing."
+msgstr ""
+
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Search for users"
 msgstr "Search for users"
@@ -11942,8 +12098,79 @@ msgstr "Enter your username or email address"
 msgid "Search or enter phone number…"
 msgstr "Enter your username or email address"
 
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result label is not a string, a number or a boolean. Please provide "
+"search result label key."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result label key"
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+msgid "Search result label key \"%s\" is not a string, number or boolean."
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+msgid "Search result label key \"%s\" was not found."
+msgstr "True"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Back to search results"
+msgid "Search result list"
+msgstr "Arama sonuçlarına geri dön"
+
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result list is not an array. Please provide search result list key."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Search result list key"
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+msgid "Search result list key \"%s\" is not an array."
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+msgid "Search result list key \"%s\" was not found."
+msgstr "True"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "First response"
+msgid "Search result response"
+msgstr "First response"
+
+#: lib/external_data_source/errors.rb
+msgid ""
+"Search result value is not a string, a number or a boolean. Please provide "
+"search result value key."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+msgid "Search result value key"
+msgstr "True"
+
+#: lib/external_data_source/errors.rb
+msgid "Search result value key \"%s\" is not a string, number or boolean."
+msgstr ""
+
+#: lib/external_data_source/errors.rb
+#, fuzzy
+msgid "Search result value key \"%s\" was not found."
+msgstr "True"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -12040,6 +12267,10 @@ msgid ""
 msgstr ""
 "Giriş başarısız. Kimlik bilgilerinizi iki kez kontrol ettiniz ve e-posta "
 "doğrulama adımını tamamladınız mı?"
+
+#: lib/external_data_source/errors.rb
+msgid "See HTTPLog for details."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -12695,6 +12926,12 @@ msgstr "İmzalar"
 msgid "Signed"
 msgstr "True"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "or sign in using"
+msgid "Signing & Encrypting"
+msgstr "veya kullanarak oturum açma"
+
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
 #| msgid "Signature"
@@ -12802,6 +13039,7 @@ msgstr "kısa mesaj"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Solution Time"
 msgstr "Çözüm Zamanı"
 
@@ -13551,6 +13789,17 @@ msgstr ""
 "The browser is outdated. It does not support WebSocket - the technology we "
 "use for the chat."
 
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The certificate could not be parsed."
+msgstr "%s Object(s) are created."
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+msgid "The certificate does not match the given private key."
+msgstr "True"
+
 #: lib/secure_mailing/smime/security_options.rb
 #, fuzzy
 #| msgid "When notification is being sent."
@@ -13580,6 +13829,22 @@ msgstr "True"
 #| msgid "When notification is being sent."
 msgid "The certificate for verification could not be found."
 msgstr "When notification is being sent."
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificate is not usable (e.g. expired)."
+msgstr "Notification Sound"
+
+#: app/models/setting/validation/saml/security.rb
+msgid "The certificate is not usable due to being a CA certificate."
+msgstr ""
+
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "The certificate is not usable for signing and encryption."
+msgstr "Notification Sound"
 
 #: lib/certificate/x509/smime.rb
 msgid ""
@@ -13840,6 +14105,10 @@ msgstr "%s Object(s) are created."
 msgid "The language could not be updated."
 msgstr "%s Object(s) are updated."
 
+#: app/models/setting/validation/saml/security.rb
+msgid "The length of the private key is too short."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 #, fuzzy
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
@@ -13890,7 +14159,7 @@ msgstr "%s Object(s) are updated."
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #, fuzzy
 #| msgid "%s Object(s) are updated."
-msgid "The online notifcation could not be marked as seen."
+msgid "The online notification could not be marked as seen."
 msgstr "%s Object(s) are updated."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
@@ -14140,6 +14409,11 @@ msgstr "True"
 msgid "The required parameter 'id' is missing."
 msgstr "True"
 
+#: lib/search_index_backend.rb
+#, fuzzy
+msgid "The required parameter 'key' is missing."
+msgstr "True"
+
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #, fuzzy
 msgid "The required parameter 'link_type' is missing."
@@ -14205,6 +14479,11 @@ msgstr "True"
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #, fuzzy
 msgid "The required parameter 'ticket_number' is missing."
+msgstr "True"
+
+#: lib/search_index_backend.rb
+#, fuzzy
+msgid "The required parameter 'value' is missing."
 msgstr "True"
 
 #: app/controllers/channels_twitter_controller.rb
@@ -14349,6 +14628,11 @@ msgstr "True"
 msgid "The two-factor authentication method is not enabled."
 msgstr ""
 
+#: app/models/setting/validation/saml/security.rb
+#, fuzzy
+msgid "The type of the private key is wrong."
+msgstr "True"
+
 #: app/controllers/getting_started_controller.rb
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -14372,6 +14656,13 @@ msgstr "True"
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
 #, fuzzy
 msgid "The username or password is incorrect."
+msgstr "True"
+
+#: app/models/setting/validation/saml/tls.rb
+#, fuzzy
+msgid ""
+"The verification of the TLS connection failed. Please check the IDP "
+"certificate."
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
@@ -15113,6 +15404,14 @@ msgstr "Ticket Subject Size"
 msgid "Ticket Subscriptions"
 msgstr "Ticket Subscriptions"
 
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles Total"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy
 #| msgid "Ticket escalation"
@@ -15562,6 +15861,10 @@ msgstr ""
 "Bu hizmeti ayarlamak için %s entegrasyon panelinizde yeni bir |\"Gelen "
 "webhook\"| oluşturmanız ve aşağıdaki webhook URL'sini girmeniz gerekir."
 
+#: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
+msgid "To trigger the preview, please enter some search term(s) above."
+msgstr ""
+
 #: db/seeds/roles.rb
 msgid "To work on Tickets."
 msgstr "To work on Tickets."
@@ -15748,6 +16051,8 @@ msgstr "True"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
+#: db/seeds/settings.rb
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
 "temporary. Use this option at your own risk!"
@@ -16018,6 +16323,7 @@ msgstr "True"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Update Time"
 msgstr "Update Time"
 
@@ -16469,6 +16775,7 @@ msgstr "Bulk action executed!"
 msgid "Validation failed: %{errors}"
 msgstr "True"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -17720,6 +18027,10 @@ msgstr "Latest updates"
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "busy"
 msgstr "busy"
+
+#: app/models/object_manager/attribute.rb
+msgid "can only be created on postgresql databases"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb
 msgid ""
@@ -19165,10 +19476,6 @@ msgstr "Bugünkü bekleme süresi"
 #~ msgstr "True"
 
 #, fuzzy
-#~ msgid "No public key found."
-#~ msgstr "True"
-
-#, fuzzy
 #~ msgid "No secret key found."
 #~ msgstr "True"
 
@@ -19185,10 +19492,6 @@ msgstr "Bugünkü bekleme süresi"
 #~| msgid "When notification is being sent."
 #~ msgid "Certificate for %s found."
 #~ msgstr "When notification is being sent."
-
-#, fuzzy
-#~ msgid "Certificate not found."
-#~ msgstr "True"
 
 #, fuzzy
 #~ msgid "Certificates found for %s."
