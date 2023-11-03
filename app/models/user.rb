@@ -13,6 +13,8 @@ class User < ApplicationModel
   include HasObjectManagerAttributes
   include HasTaskbars
   include HasTwoFactor
+  include CanSelector
+  include CanPerformChanges
   include User::Assets
   include User::Avatar
   include User::Search
@@ -52,6 +54,8 @@ class User < ApplicationModel
 
   validate :ensure_identifier, :ensure_email
   validate :ensure_uniq_email, unless: :skip_ensure_uniq_email
+
+  available_perform_change_actions :data_privacy_deletion_task, :attribute_updates
 
   # workflow checks should run after before_create and before_update callbacks
   # the transaction dispatcher must be run after the workflow checks!

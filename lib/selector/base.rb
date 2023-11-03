@@ -1,15 +1,18 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class Ticket::Selector::Base
-  attr_accessor :selector, :options, :changed_attributes
+class Selector::Base
+  attr_accessor :selector, :options, :changed_attributes, :target_class, :target_table, :target_name
 
-  def initialize(selector:, options:)
+  def initialize(selector:, options:, target_class: Ticket)
     if selector.respond_to?(:permit!)
       selector = selector.permit!.to_h
     end
 
     @selector                   = Marshal.load(Marshal.dump(selector)).deep_symbolize_keys
     @options                    = options
+    @target_class               = target_class
+    @target_table               = target_class.table_name
+    @target_name                = target_table.delete_suffix('s')
     @changed_attributes         = {}
     @options[:changes]        ||= {}
 
@@ -36,7 +39,7 @@ class Ticket::Selector::Base
   end
 
   def set_static_conditions
-    conditions = static_conditions_ticket + static_conditions_article + static_conditions_merged + static_conditions_ticket_update
+    conditions = static_conditions_ticket + static_conditions_article + static_conditions_merged + static_conditions_ticket_update + static_conditions_user_one
     return if conditions.blank?
 
     @selector = {
@@ -90,6 +93,18 @@ class Ticket::Selector::Base
         name:     'ticket.action',
         operator: 'is',
         value:    'update'
+      }
+    ]
+  end
+
+  def static_conditions_user_one
+    return [] if target_class != User
+
+    [
+      {
+        name:     'user.id',
+        operator: 'is not',
+        value:    '1'
       }
     ]
   end

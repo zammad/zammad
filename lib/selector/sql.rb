@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class Ticket::Selector::Sql < Ticket::Selector::Base
+class Selector::Sql < Selector::Base
   VALID_OPERATORS = [
     'after (absolute)',
     'after (relative)',
@@ -45,10 +45,10 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     @final_query        = run(selector, 0)
     [query_sql, final_bind_params, tables_sql]
   rescue InvalidCondition => e
-    Rails.logger.error "Ticket::Selector.get->InvalidCondition: #{e}"
+    Rails.logger.error "Selector::Sql.get->InvalidCondition: #{e}"
     nil
   rescue => e
-    Rails.logger.error "Ticket::Selector.get->default: #{e}"
+    Rails.logger.error "Selector::Sql.get->default: #{e}"
     raise e
   end
 
@@ -108,14 +108,14 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     return if !attribute_name
     return if !attribute_table
 
-    sql_helper = SqlHelper.new(object: Ticket)
-    if attribute_table && attribute_table != 'execution_time' && tables.exclude?(attribute_table) && !(attribute_table == 'ticket' && attribute_name != 'mention_user_ids') && !(attribute_table == 'ticket' && attribute_name == 'mention_user_ids' && block_condition[:pre_condition] == 'not_set') && !(attribute_table == 'article' && attribute_name == 'action')
+    sql_helper = SqlHelper.new(object: target_class)
+    if attribute_table && %w[execution_time ticket_owner ticket_customer].exclude?(attribute_table) && attribute_table != target_name && tables.exclude?(attribute_table) && !(attribute_table == 'ticket' && attribute_name != 'mention_user_ids') && !(attribute_table == 'ticket' && attribute_name == 'mention_user_ids' && block_condition[:pre_condition] == 'not_set') && !(attribute_table == 'article' && attribute_name == 'action')
       case attribute_table
       when 'customer'
-        tables         |= ['INNER JOIN users customers ON tickets.customer_id = customers.id']
+        tables         |= ["INNER JOIN users customers ON #{target_table}.customer_id = customers.id"]
         sql_helper      = SqlHelper.new(object: User, table_name: 'customers')
       when 'organization'
-        tables         |= ['LEFT JOIN organizations ON tickets.organization_id = organizations.id']
+        tables         |= ["LEFT JOIN organizations ON #{target_table}.organization_id = organizations.id"]
         sql_helper      = SqlHelper.new(object: Organization)
       when 'owner'
         tables         |= ['INNER JOIN users owners ON tickets.owner_id = owners.id']
@@ -126,8 +126,6 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
       when 'ticket_state'
         tables         |= ['INNER JOIN ticket_states ON tickets.state_id = ticket_states.id']
         sql_helper      = SqlHelper.new(object: Ticket::State)
-      when 'ticket'
-        # nothing
       else
         raise "invalid selector #{attribute_table}, #{attribute_name}"
       end
@@ -156,6 +154,31 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     # Performance: use left join instead of sub select if tags value is only one element and contains all is used
     if attribute_table == 'ticket' && attribute_name == 'tags' && block_condition[:operator] == 'contains all' && block_condition[:value].count == 1
       block_condition[:operator] = 'contains one'
+    end
+
+    # User customer tickets last_contact_at
+    query_wrap = nil
+    if attribute_table == 'ticket_customer' && attribute_name == 'last_contact_at'
+      attribute = 'last_contact_at'
+      query_wrap = 'users.id IN (SELECT DISTINCT tickets.customer_id FROM tickets WHERE ###QUERY###)'
+    end
+
+    # User customer tickets last_contact_agent_at
+    if attribute_table == 'ticket_customer' && attribute_name == 'last_contact_agent_at'
+      attribute = 'last_contact_agent_at'
+      query_wrap = 'users.id IN (SELECT DISTINCT tickets.customer_id FROM tickets WHERE ###QUERY###)'
+    end
+
+    # User customer tickets last_contact_customer_at
+    if attribute_table == 'ticket_customer' && attribute_name == 'last_contact_customer_at'
+      attribute = 'last_contact_customer_at'
+      query_wrap = 'users.id IN (SELECT DISTINCT tickets.customer_id FROM tickets WHERE ###QUERY###)'
+    end
+
+    # User customer tickets updated_at
+    if attribute_table == 'ticket_customer' && attribute_name == 'updated_at'
+      attribute = 'updated_at'
+      query_wrap = 'users.id IN (SELECT DISTINCT tickets.customer_id FROM tickets WHERE ###QUERY###)'
     end
 
     #
@@ -246,6 +269,59 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
           bind_params.push block_condition[:value]
         end
       end
+    elsif attribute_table == 'user' && attribute_name == 'role_ids'
+      query << if block_condition[:operator] == 'is'
+                 "users.id IN (
+                        SELECT
+                          roles_users.user_id
+                        FROM
+                          roles, roles_users
+                        WHERE
+                          roles.id = roles_users.role_id
+                          AND roles.id IN (?)
+                        GROUP BY
+                          roles_users.user_id
+                      )"
+
+               else
+                 "users.id NOT IN (
+                        SELECT
+                          roles_users.user_id
+                        FROM
+                          roles, roles_users
+                        WHERE
+                          roles.id = roles_users.role_id
+                          AND roles.id IN (?)
+                        GROUP BY
+                          roles_users.user_id
+                      )"
+
+               end
+      bind_params.push block_condition[:value]
+    elsif attribute_table == 'organization' && attribute_name == 'members_existing'
+      query << if (block_condition[:operator] == 'is' && block_condition[:value].to_s == 'true') || (block_condition[:operator] == 'is not' && block_condition[:value].to_s != 'true')
+                 'organizations.id IN (SELECT DISTINCT organizations.id FROM organizations, users WHERE organizations.id = users.organization_id)'
+               else
+                 'organizations.id NOT IN (SELECT DISTINCT organizations.id FROM organizations, users WHERE organizations.id = users.organization_id)'
+               end
+    elsif %w[ticket_customer ticket_owner].include?(attribute_table) && %w[existing open_existing].include?(attribute_name)
+      distinct_column = if attribute_table == 'ticket_customer'
+                          'customer_id'
+                        else
+                          'owner_id'
+                        end
+
+      query_where = ''
+      if attribute_name == 'open_existing'
+        query_where = ' WHERE state_id IN (?)'
+        bind_params.push Ticket::State.by_category(:open).pluck(:id)
+      end
+
+      query << if (block_condition[:operator] == 'is' && block_condition[:value].to_s == 'true') || (block_condition[:operator] == 'is not' && block_condition[:value].to_s != 'true')
+                 "users.id IN (SELECT DISTINCT #{distinct_column} FROM tickets#{query_where})"
+               else
+                 "users.id NOT IN (SELECT DISTINCT #{distinct_column} FROM tickets#{query_where})"
+               end
     elsif block_condition[:operator] == 'starts with'
       query << "#{attribute} #{like} (?)"
       bind_params.push "#{SqlHelper.quote_like(block_condition[:value])}%"
@@ -512,6 +588,10 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
       raise "Invalid operator '#{block_condition[:operator]}' for '#{block_condition[:value].inspect}'"
     end
 
+    if query_wrap.present?
+      query << query_wrap.gsub('###QUERY###', query.pop)
+    end
+
     [query, bind_params, tables]
   end
 
@@ -526,7 +606,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
       raise "Invalid condition, operator missing #{condition.inspect}"
     end
 
-    return true if self.class.valid_operator? condition[:operator]
+    return true if self.class.valid_operator?(condition[:operator])
 
     raise "Invalid condition, operator '#{condition[:operator]}' is invalid #{condition.inspect}"
   end
@@ -575,8 +655,8 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
   end
 
   def valid?
-    ticket_count, _tickets = Ticket.selectors(selector, **options.merge(limit: 1, execution_time: true, ticket_id: 1, access: 'ignore'))
-    !ticket_count.nil?
+    object_count, _objects = target_class.selectors(selector, **options.merge(limit: 1, execution_time: true, ticket_id: 1, access: 'ignore'))
+    !object_count.nil?
   rescue
     false
   end

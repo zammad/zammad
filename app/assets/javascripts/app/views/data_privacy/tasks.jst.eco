@@ -1,21 +1,34 @@
 <% if @tasks.length > 0: %>
 <% for task in @tasks: %>
-  <% if task.preferences.user: %>
   <div class="action <% if task.state is 'completed': %>is-inactive<% end %>" data-id="<%- task.id %>">
     <div class="action-row">
       <div class="action-flow action-flow--noWrap">
-        <h2><%- @T('Delete User') %></h2>
+        <% if task.preferences.user: %>
+          <h2><%- @T('Delete User') %></h2>
+        <% else if task.preferences.organization: %>
+          <h2><%- @T('Delete Organization') %></h2>
+        <% else if task.preferences.ticket: %>
+          <h2><%- @T('Delete Ticket') %></h2>
+        <% end %>
       </div>
     </div>
     <div class="action-flow action-flow--row">
       <div class="action-block action-block--flex">
-        <div class="label"><%- @T('User (censored):') %></div>
-        <%= task.preferences.user.firstname %> <%= task.preferences.user.lastname %> (<%= task.preferences.user.email %>)
-    <% if task.preferences.user.organization && task.preferences.delete_organization: %>
-        <br><br>
-        <div class="label"><%- @T('Deleted Organization:') %></div>
-        <%= task.preferences.user.organization %>
-    <% end %>
+        <% if task.preferences.user: %>
+          <div class="label"><%- @T('User (censored):') %></div>
+          <%= task.preferences.user.firstname %> <%= task.preferences.user.lastname %> (<%= task.preferences.user.email %>)
+          <% if task.preferences.user.organization && task.preferences.delete_organization: %>
+          <br><br>
+          <div class="label"><%- @T('Deleted Organization:') %></div>
+          <%= task.preferences.user.organization %>
+          <% end %>
+        <% else if task.preferences.organization: %>
+          <div class="label"><%- @T('Organization (censored):') %></div>
+          <%= task.preferences.organization.name %>
+        <% else if task.preferences.ticket: %>
+          <div class="label"><%- @T('Ticket (censored):') %></div>
+          <%= task.preferences.ticket.title %>
+        <% end %>
         <br><br>
         <div class="label"><%- @T('Started') %></div>
         <%- @humanTime(task.created_at) %>
@@ -24,28 +37,33 @@
         <% if task.state: %><%= @T(task.state) %><% else: %><%- @T('in process') %><% end %>
         <% if task.preferences.error: %> (<%= task.preferences.error %>)<% end %>
       </div>
-      <div class="action-block action-block--flex">
-        <div class="label"><%- @T('Deleted tickets (%s in total):', task.preferences.customer_tickets_count || task.preferences.customer_tickets.length) %></div>
-        <div class="ticket-list">
-      <% if task.preferences.customer_tickets.length > 0: %>
-        <%= task.preferences.customer_tickets.slice(0, 50).join(', ') %><% if task.preferences.customer_tickets.length > 50: %>, ... <br><div href="#" class="btn btn--text js-toggle-tickets" data-type="customer_tickets" data-id="<%= task.id %>"><%- @T('See more') %></div><% end %>
-      <% else: %>
-        -
-      <% end %>
-        </div>
+      <% if task.preferences.user or task.preferences.ticket: %>
+        <div class="action-block action-block--flex">
+        <% if task.preferences.customer_tickets: %>
+          <div class="label"><%- @T('Deleted tickets (%s in total):', task.preferences.customer_tickets_count || task.preferences.customer_tickets.length) %></div>
+          <div class="ticket-list">
+          <% if task.preferences.customer_tickets.length > 0: %>
+            <%= task.preferences.customer_tickets.slice(0, 50).join(', ') %><% if task.preferences.customer_tickets.length > 50: %>, ... <br><div href="#" class="btn btn--text js-toggle-tickets" data-type="customer_tickets" data-id="<%= task.id %>"><%- @T('See more') %></div><% end %>
+          <% else: %>
+            -
+          <% end %>
+            </div>
+        <% end %>
         <br><br>
-        <div class="label"><%- @T('Previously owned tickets (%s in total):', task.preferences.owner_tickets_count || task.preferences.owner_tickets.length) %></div>
-        <div class="ticket-list">
-      <% if task.preferences.owner_tickets.length > 0: %>
-        <%= task.preferences.owner_tickets.slice(0, 50).join(', ') %><% if task.preferences.owner_tickets.length > 50: %>, ... <br><div href="#" class="btn btn--text js-toggle-tickets" data-type="owner_tickets" data-id="<%= task.id %>"><%- @T('See more') %></div><% end %>
-      <% else: %>
-        -
-      <% end %>
+        <% if task.preferences.owner_tickets: %>
+          <div class="label"><%- @T('Previously owned tickets (%s in total):', task.preferences.owner_tickets_count || task.preferences.owner_tickets.length) %></div>
+          <div class="ticket-list">
+          <% if task.preferences.owner_tickets.length > 0: %>
+            <%= task.preferences.owner_tickets.slice(0, 50).join(', ') %><% if task.preferences.owner_tickets.length > 50: %>, ... <br><div href="#" class="btn btn--text js-toggle-tickets" data-type="owner_tickets" data-id="<%= task.id %>"><%- @T('See more') %></div><% end %>
+          <% else: %>
+            -
+          <% end %>
+          </div>
+        <% end %>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
-  <% end %>
 <% end %>
 <% else: %>
   <div class="action action--placeholder">

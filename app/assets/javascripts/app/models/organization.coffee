@@ -15,6 +15,11 @@ class App.Organization extends App.Model
     'name',
     'shared',
   ]
+  @configure_preview = [
+    'name',
+    'shared',
+    'created_at',
+  ]
 
   @description = __('''
 Using **organizations** you can **group** customers. This has two main benefits:

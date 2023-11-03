@@ -490,6 +490,10 @@ ul {
   z-index: 1100;
 }
 
+.zIndex-12 {
+  z-index: 1200;
+}
+
 .clickCatcher {
   top: 0;
   left: 0;
@@ -5894,7 +5898,7 @@ a.list-group-item.active > .badge,
 }
 
 .popover {
-  @extend .zIndex-7;
+  @extend .zIndex-12;
 
   position: absolute;
   font-family: inherit;
@@ -10648,6 +10652,19 @@ label + .wizard-buttonList {
 
   &--with-switch {
     margin-bottom: 10px;
+  }
+
+  .alert {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .alert + .horizontal-filter {
+    border-radius: 4px 4px 0 0;
+  }
+
+  .alert + .horizontal-filter:last-child {
+    border-radius: 4px;
   }
 }
 

@@ -43,7 +43,7 @@ UI Element options:
 ###
 
 class App.UiElement.ApplicationAction
-  @defaults: (attribute) ->
+  @defaults: (attribute, params = {}) ->
     defaults = ['ticket.state_id']
 
     groups =
@@ -144,7 +144,7 @@ class App.UiElement.ApplicationAction
 
   @render: (attribute, params = {}) ->
 
-    [defaults, groups, elements] = @defaults(attribute)
+    [defaults, groups, elements] = @defaults(attribute, params)
 
     # return item
     item = $( App.view('generic/ticket_perform_action/index')( attribute: attribute ) )
@@ -164,7 +164,9 @@ class App.UiElement.ApplicationAction
     # remove filter
     item.on('click', '.js-rowActions .js-remove', (e) =>
       return if $(e.currentTarget).hasClass('is-disabled')
-      $(e.target).closest('.js-filterElement').remove()
+      elementRow = $(e.target).closest('.js-filterElement')
+      @removeAlerts(item, elementRow)
+      elementRow.remove()
       @updateAttributeSelectors(item)
     )
 
@@ -174,6 +176,7 @@ class App.UiElement.ApplicationAction
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, elements, {}, attribute)
       @updateAttributeSelectors(item)
+      @refreshAlerts(item, elementRow, groupAndAttribute, elements, attribute)
     )
 
     # change operator selector
@@ -181,6 +184,13 @@ class App.UiElement.ApplicationAction
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute)
+    )
+
+    # change value selector
+    item.on('change', '.js-value select', (e) =>
+      elementRow = $(e.target).closest('.js-filterElement')
+      groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
+      @refreshAlerts(item, elementRow, groupAndAttribute, elements, attribute)
     )
 
     # build initial params
@@ -192,6 +202,7 @@ class App.UiElement.ApplicationAction
         element = @placeholder(item, attribute, params, groups, elements)
         item.append(element)
         @rebuildAttributeSelectors(item, element, groupAndAttribute, elements, {}, attribute)
+        @refreshAlerts(item, element, groupAndAttribute, elements, attribute)
 
     else
 
@@ -203,6 +214,7 @@ class App.UiElement.ApplicationAction
         element = @placeholder(item, attribute, params, groups, elements)
         @rebuildAttributeSelectors(item, element, groupAndAttribute, elements, meta, attribute)
         item.append(element)
+        @refreshAlerts(item, element, groupAndAttribute, elements, attribute)
 
     @disableRemoveForOneAttribute(item)
     item
@@ -663,3 +675,35 @@ class App.UiElement.ApplicationAction
     )
 
     elementRow.find('.js-setArticle').html(articleElement).removeClass('hide')
+
+  @refreshAlerts: (item, elementRow, groupAndAttribute, elements, attribute) =>
+    @removeAlerts(item, elementRow)
+
+    params = App.ControllerForm.params(elementRow)
+    return if not params
+
+    { value } = params[attribute.name]?[groupAndAttribute]
+    return if not value
+
+    { alerts } = elements[groupAndAttribute]
+    return if not alerts?[value]
+
+    message = alerts[value]
+    return if not message
+
+    # We need a reference to the parent row, since its attribute may be changed to something else.
+    #   In this case, we will clean up all alerts tied to this row only.
+    if not elementRow.data('id')
+      elementRowId = 'elementRow-' + new Date().getTime() + '-' + Math.floor(Math.random() * 999999)
+      elementRow.data('id', elementRowId)
+
+    $('<div />')
+      .addClass('alert alert--warning js-alert')
+      .attr('role', 'alert')
+      .attr('data-element-row-id', elementRow.data('id'))
+      .text(message)
+      .prependTo(item)
+
+  @removeAlerts: (item, elementRow) ->
+    item.find(".js-alert[data-element-row-id='#{elementRow.data('id')}']")
+      .remove()

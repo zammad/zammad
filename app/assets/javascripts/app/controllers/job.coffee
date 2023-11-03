@@ -26,6 +26,9 @@ class Job extends App.ControllerSubContent
         ]
       container: @el.closest('.content')
       veryLarge: true
+      handlers: [
+        App.FormHandlerAdminJobObjectName.run
+      ]
     )
 
   show: (params) =>

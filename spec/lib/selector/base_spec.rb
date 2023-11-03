@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Ticket::Selector::Base, searchindex: true do
+RSpec.describe Selector::Base, searchindex: true do
   let(:agent)    { create(:agent, groups: [Group.first]) }
   let(:ticket_1) { create(:ticket, title: 'bli', group: Group.first) }
   let(:ticket_2) { create(:ticket, title: 'bla', group: Group.first) }

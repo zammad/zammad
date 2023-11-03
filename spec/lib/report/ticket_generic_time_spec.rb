@@ -512,7 +512,7 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
 
     # Regression test for issue #2246 - Records in Reporting not updated when single ActiveRecord can not be found
     it 'correctly handles missing tickets', searchindex: false do
-      class_double(SearchIndexBackend, selectors: { ticket_ids: [-1] }, drop_index: nil, drop_pipeline: nil).as_stubbed_const
+      class_double(SearchIndexBackend, selectors: { object_ids: [-1] }, drop_index: nil, drop_pipeline: nil).as_stubbed_const
 
       expect do
         described_class.items(

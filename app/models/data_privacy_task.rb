@@ -26,6 +26,13 @@ class DataPrivacyTask < ApplicationModel
     handle_exception(e)
   end
 
+  def self.cleanup(diff = 12.months)
+    where('created_at < ?', diff.ago).destroy_all
+    true
+  end
+
+  private
+
   # set user inactive before destroy to prevent
   # new online notifications or other events while
   # the deletion process is running
@@ -40,21 +47,36 @@ class DataPrivacyTask < ApplicationModel
     prepare_deletion_preview
     save!
 
-    if delete_organization?
-      perform_organization
-    else
-      perform_user
+    case deletable
+    when User
+      perform_user_or_organization
+    when Ticket
+      perform_ticket
     end
   end
 
-  def perform_organization
-    update_inactive(deletable.organization)
-    deletable.organization.members.find_each { |user| update_inactive(user) }
-    deletable.organization.destroy(associations: true)
+  def perform_user_or_organization
+    if delete_organization?
+      perform_organization(deletable.organization)
+
+      return
+    end
+
+    perform_user
+  end
+
+  def perform_organization(organization)
+    update_inactive(organization)
+    organization.members.find_each { |user| update_inactive(user) }
+    organization.destroy(associations: true)
   end
 
   def perform_user
     update_inactive(deletable)
+    deletable.destroy
+  end
+
+  def perform_ticket
     deletable.destroy
   end
 
@@ -81,15 +103,42 @@ class DataPrivacyTask < ApplicationModel
     prepare_deletion_preview_anonymize
   end
 
-  def prepare_deletion_preview_tickets # rubocop:disable Metrics/AbcSize
+  def prepare_deletion_preview_tickets
+    case deletable
+    when User
+      prepare_deletion_preview_user_tickets
+    when Ticket
+      prepare_deletion_preview_ticket
+    end
+  end
+
+  def prepare_deletion_preview_user_tickets
+    prepare_deletion_preview_owner_tickets
+    prepare_deletion_preview_customer_tickets
+  end
+
+  def prepare_deletion_preview_owner_tickets
     preferences[:owner_tickets]       = owner_tickets.limit(MAX_PREVIEW_TICKETS).map(&:number)
     preferences[:owner_tickets_count] = owner_tickets.count
+  end
 
+  def prepare_deletion_preview_customer_tickets
     preferences[:customer_tickets]       = customer_tickets.limit(MAX_PREVIEW_TICKETS).map(&:number)
     preferences[:customer_tickets_count] = customer_tickets.count
   end
 
+  def prepare_deletion_preview_ticket
+    preferences[:ticket] = {
+      title: deletable.title,
+    }
+
+    preferences[:customer_tickets]       = [deletable.number]
+    preferences[:customer_tickets_count] = 1
+  end
+
   def prepare_deletion_preview_user
+    return if !deletable.is_a?(User)
+
     preferences[:user] = {
       firstname: deletable.firstname,
       lastname:  deletable.lastname,
@@ -98,21 +147,20 @@ class DataPrivacyTask < ApplicationModel
   end
 
   def prepare_deletion_preview_organization
+    return if !deletable.is_a?(User)
     return if !deletable.organization
 
     preferences[:user][:organization] = deletable.organization.name
   end
 
   def prepare_deletion_preview_anonymize
-    preferences[:user] = Pseudonymisation.of_hash(preferences[:user])
+    case deletable
+    when User
+      preferences[:user] = Pseudonymisation.of_hash(preferences[:user])
+    when Ticket
+      preferences[:ticket] = Pseudonymisation.of_hash(preferences[:ticket])
+    end
   end
-
-  def self.cleanup(diff = 12.months)
-    where('created_at < ?', diff.ago).destroy_all
-    true
-  end
-
-  private
 
   def owner_tickets
     @owner_tickets ||= deletable.owner_tickets.reorder(id: 'DESC')

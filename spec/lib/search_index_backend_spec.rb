@@ -329,12 +329,12 @@ RSpec.describe SearchIndexBackend do
     context 'when limit is used' do
       it 'finds 1 record' do
         result = described_class.selectors('Ticket', { 'ticket.created_at'=>{ 'operator' => 'till (relative)', 'value' => '30', 'range' => 'minute' } }, { limit: 1 }, { field: 'created_at' })
-        expect(result[:ticket_ids].count).to eq(1)
+        expect(result[:object_ids].count).to eq(1)
       end
 
       it 'finds 3 records' do
         result = described_class.selectors('Ticket', { 'ticket.created_at'=>{ 'operator' => 'till (relative)', 'value' => '30', 'range' => 'minute' } }, { limit: 3 }, { field: 'created_at' })
-        expect(result[:ticket_ids].count).to eq(3)
+        expect(result[:object_ids].count).to eq(3)
       end
     end
 
@@ -346,7 +346,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with from (relative)' do
@@ -356,7 +356,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
       end
 
       it 'finds records with till (relative) including +1 hour ticket' do
@@ -366,7 +366,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 8, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 8, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with from (relative) including -1 hour ticket' do
@@ -376,7 +376,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 8, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 8, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with tags which contains all' do
@@ -386,7 +386,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket3.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket3.id.to_s] })
       end
 
       it 'finds records with tags which contains one' do
@@ -396,7 +396,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 3, ticket_ids: [ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 3, object_ids: [ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with tags which contains all not' do
@@ -406,7 +406,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 6, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 6, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with tags which contains one not' do
@@ -416,7 +416,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 6, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket2.id.to_s] })
+        expect(result).to eq({ count: 6, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket2.id.to_s] })
       end
 
       it 'finds records with organization note' do
@@ -431,7 +431,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket8.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket8.id.to_s] })
       end
 
       it 'finds records with customer firstname' do
@@ -446,7 +446,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket8.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket8.id.to_s] })
       end
 
       it 'finds records with article subject' do
@@ -461,7 +461,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket8.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket8.id.to_s] })
       end
 
       it 'finds records with pre_condition not_set' do
@@ -476,7 +476,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
       end
 
       it 'finds records with pre_condition current_user.id' do
@@ -491,7 +491,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket8.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket8.id.to_s] })
       end
 
       it 'finds records with pre_condition current_user.organization_id' do
@@ -506,7 +506,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket8.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket8.id.to_s] })
       end
 
       it 'finds records with containing phrase' do
@@ -521,7 +521,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 3, ticket_ids: [ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s] })
+        expect(result).to eq({ count: 3, object_ids: [ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s] })
       end
 
       it 'finds records with containing some title7' do
@@ -530,7 +530,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'contains',
                                              'value'    => 'some title7',
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket7.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket7.id.to_s] })
       end
 
       it 'finds records with containing -' do
@@ -539,7 +539,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'contains',
                                              'value'    => 'some-title1',
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket1.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket1.id.to_s] })
       end
 
       it 'finds records with containing _' do
@@ -548,7 +548,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'contains',
                                              'value'    => 'some_title2',
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket2.id.to_s] })
       end
 
       it 'finds records with containing ::' do
@@ -557,7 +557,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'contains',
                                              'value'    => 'some::title3',
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket3.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket3.id.to_s] })
       end
 
       it 'finds records with containing 4' do
@@ -566,7 +566,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'contains',
                                              'value'    => 4,
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket2.id.to_s] })
       end
 
       it 'finds records with containing "4"' do
@@ -575,7 +575,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'contains',
                                              'value'    => '4',
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket2.id.to_s] })
       end
     end
 
@@ -592,7 +592,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 5, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 5, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with containing not some title7' do
@@ -601,7 +601,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'contains not',
                                              'value'    => 'some title7',
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with containing not -' do
@@ -610,7 +610,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'contains not',
                                              'value'    => 'some-title1',
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
       end
 
       it 'finds records with containing not _' do
@@ -619,7 +619,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'contains not',
                                              'value'    => 'some_title2',
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with containing not ::' do
@@ -629,7 +629,7 @@ RSpec.describe SearchIndexBackend do
                                              'value'    => 'some::title3',
                                            })
 
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with containing not 4' do
@@ -639,7 +639,7 @@ RSpec.describe SearchIndexBackend do
                                              'value'    => 4,
                                            })
 
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with containing not "4"' do
@@ -648,7 +648,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'contains not',
                                              'value'    => '4',
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
       end
     end
 
@@ -659,7 +659,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is',
                                              'value'    => 'phrase',
                                            })
-        expect(result).to eq({ count: 0, ticket_ids: [] })
+        expect(result).to eq({ count: 0, object_ids: [] })
       end
 
       it 'finds records with is some title7' do
@@ -668,7 +668,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is',
                                              'value'    => 'some title7',
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket7.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket7.id.to_s] })
       end
 
       it 'finds records with is -' do
@@ -677,7 +677,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is',
                                              'value'    => 'some-title1',
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket1.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket1.id.to_s] })
       end
 
       it 'finds records with is _' do
@@ -686,7 +686,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is',
                                              'value'    => 'some_title2',
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket2.id.to_s] })
       end
 
       it 'finds records with is ::' do
@@ -695,7 +695,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is',
                                              'value'    => 'some::title3',
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket3.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket3.id.to_s] })
       end
 
       it 'finds records with is 4' do
@@ -704,7 +704,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is',
                                              'value'    => 4,
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket2.id.to_s] })
       end
 
       it 'finds records with is "4"' do
@@ -714,7 +714,7 @@ RSpec.describe SearchIndexBackend do
                                              'value'    => '4',
                                            })
 
-        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket2.id.to_s] })
       end
     end
 
@@ -725,7 +725,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is not',
                                              'value'    => 'phrase',
                                            })
-        expect(result).to eq({ count: 8, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 8, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with is not some title7' do
@@ -734,7 +734,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is not',
                                              'value'    => 'some title7',
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with is not -' do
@@ -743,7 +743,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is not',
                                              'value'    => 'some-title1',
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
       end
 
       it 'finds records with is not _' do
@@ -752,7 +752,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is not',
                                              'value'    => 'some_title2',
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with is not ::' do
@@ -761,7 +761,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is not',
                                              'value'    => 'some::title3',
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with is not 4' do
@@ -770,7 +770,7 @@ RSpec.describe SearchIndexBackend do
                                              'operator' => 'is not',
                                              'value'    => 4,
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with is not "4"' do
@@ -780,7 +780,7 @@ RSpec.describe SearchIndexBackend do
                                              'value'    => '4',
                                            })
 
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
       end
 
       it 'finds records with is not state_id ["4"] and title ["sometitle"]' do
@@ -794,7 +794,7 @@ RSpec.describe SearchIndexBackend do
                                              'value'    => ['sometitle'],
                                            })
 
-        expect(result).to eq({ count: 1, ticket_ids: [ticket8.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket8.id.to_s] })
       end
 
     end
@@ -812,7 +812,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
       end
 
       it 'finds records with pre_condition is not not_set' do
@@ -827,7 +827,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket1.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket1.id.to_s] })
       end
 
       it 'finds records with pre_condition is current_user.id' do
@@ -842,7 +842,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket1.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket1.id.to_s] })
       end
 
       it 'finds records with pre_condition is not current_user.id' do
@@ -857,7 +857,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
       end
 
       it 'finds records with pre_condition is specific' do
@@ -873,7 +873,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 1, ticket_ids: [ticket1.id.to_s] })
+        expect(result).to eq({ count: 1, object_ids: [ticket1.id.to_s] })
       end
 
       it 'finds records with pre_condition is not specific' do
@@ -889,7 +889,7 @@ RSpec.describe SearchIndexBackend do
                                            {
                                              field: 'created_at', # sort to verify result
                                            })
-        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+        expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
       end
     end
   end

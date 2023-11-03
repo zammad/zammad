@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class Ticket::Selector::SearchIndex < Ticket::Selector::Base
+class Selector::SearchIndex < Selector::Base
   def get
     result = {
       size: options[:limit] || SearchIndexBackend::DEFAULT_QUERY_OPTIONS[:limit],
@@ -26,7 +26,7 @@ class Ticket::Selector::SearchIndex < Ticket::Selector::Base
   end
 
   def query_sort_by_index(query)
-    query[:sort] = SearchIndexBackend.search_by_index_sort(index: 'Ticket', sort_by: options[:sort_by], order_by: options[:order_by])
+    query[:sort] = SearchIndexBackend.search_by_index_sort(index: target_class.to_s, sort_by: options[:sort_by], order_by: options[:order_by])
     query
   end
 
@@ -145,7 +145,7 @@ class Ticket::Selector::SearchIndex < Ticket::Selector::Base
     table, key_tmp = key.split('.')
     if key_tmp.blank?
       key_tmp = table
-      table   = 'ticket'
+      table   = target_name
     end
 
     wildcard_or_term = 'term'
@@ -227,7 +227,7 @@ class Ticket::Selector::SearchIndex < Ticket::Selector::Base
       end
     end
 
-    if table != 'ticket'
+    if table != target_name
       key_tmp = "#{table}.#{key_tmp}"
     end
 

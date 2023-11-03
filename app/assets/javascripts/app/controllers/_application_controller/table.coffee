@@ -115,7 +115,6 @@ class App.ControllerTable extends App.Controller
   pagerItemsPerPage: 150
   pagerShownPage: 0
 
-  destroy: false
   customActions: []
 
   columnsLength: undefined
@@ -148,8 +147,8 @@ class App.ControllerTable extends App.Controller
     @attributesListRaw ||= @attribute_list || @model.configure_attributes || {}
     @attributesList = App.Model.attributesGet(false, @attributesListRaw)
 
-    @destroy = @model.configure_delete
-    @clone = @model.configure_clone
+    @destroy = if _.isNull(@destroy) or _.isUndefined(@destroy) then @model.configure_delete else @destroy
+    @clone = if _.isNull(@clone) or _.isUndefined(@clone) then @model.configure_clone else @clone
     @setAsDefault = @model.configure_set_as_default
     @unsetDefault = @model.configure_unset_default
 

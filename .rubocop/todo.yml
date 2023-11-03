@@ -14,6 +14,8 @@ Lint/MissingCopEnableDirective:
 
 Metrics/AbcSize:
   Exclude:
+    - 'app/models/ticket/can_selector.rb'
+    - 'app/models/concerns/can_selector.rb'
     - 'app/controllers/activity_stream_controller.rb'
     - 'app/controllers/application_controller/authenticates.rb'
     - 'app/controllers/application_controller/handles_devices.rb'
@@ -188,8 +190,8 @@ Metrics/AbcSize:
     - 'app/models/ticket/article/enqueue_communicate_twitter_job.rb'
     - 'app/models/ticket/article/has_ticket_contact_attributes_impact.rb'
     - 'app/models/ticket/article/resets_ticket_state.rb'
-    - 'app/models/ticket/selector/search_index.rb'
-    - 'app/models/ticket/selector/sql.rb'
+    - 'app/models/ticket/search_index.rb'
+    - 'lib/selector/sql.rb'
     - 'app/models/ticket/assets.rb'
     - 'app/models/ticket/escalation.rb'
     - 'app/models/ticket/number/date.rb'
@@ -198,7 +200,7 @@ Metrics/AbcSize:
     - 'app/models/ticket/priority.rb'
     - 'app/models/ticket/screen_options.rb'
     - 'app/models/ticket/search.rb'
-    - 'app/models/ticket/search_index.rb'
+    - 'lib/selector/search_index.rb'
     - 'app/models/ticket/sets_last_owner_update_time.rb'
     - 'app/models/ticket/state.rb'
     - 'app/models/ticket/subject.rb'
@@ -353,6 +355,8 @@ Metrics/BlockLength:
   Exclude:
     - 'Gemfile'
     - 'config/initializers/mariadb_json_columns.rb'
+    - 'app/models/ticket/can_selector.rb'
+    - 'app/models/concerns/can_selector.rb'
     - 'app/controllers/application_controller/authenticates.rb'
     - 'app/controllers/reports_controller.rb'
     - 'app/controllers/time_accountings_controller.rb'
@@ -384,7 +388,7 @@ Metrics/BlockLength:
     - 'app/models/ticket.rb'
     - 'app/models/ticket/overviews.rb'
     - 'app/models/ticket/search.rb'
-    - 'app/models/ticket/search_index.rb'
+    - 'lib/selector/search_index.rb'
     - 'app/models/transaction/notification.rb'
     - 'app/models/transaction/slack.rb'
     - 'app/models/translation.rb'
@@ -432,6 +436,8 @@ Metrics/BlockNesting:
 
 Metrics/CyclomaticComplexity:
   Exclude:
+    - 'app/models/ticket/can_selector.rb'
+    - 'app/models/concerns/can_selector.rb'
     - 'app/models/ticket.rb'
     - 'app/controllers/application_controller/authenticates.rb'
     - 'app/controllers/application_controller/handles_devices.rb'
@@ -547,15 +553,15 @@ Metrics/CyclomaticComplexity:
     - 'app/models/ticket/article/enqueue_communicate_twitter_job.rb'
     - 'app/models/ticket/article/has_ticket_contact_attributes_impact.rb'
     - 'app/models/ticket/article/resets_ticket_state.rb'
-    - 'app/models/ticket/selector/search_index.rb'
-    - 'app/models/ticket/selector/sql.rb'
+    - 'app/models/ticket/search_index.rb'
+    - 'lib/selector/sql.rb'
     - 'app/models/ticket/assets.rb'
     - 'app/models/ticket/escalation.rb'
     - 'app/models/ticket/number/date.rb'
     - 'app/models/ticket/overviews.rb'
     - 'app/models/ticket/screen_options.rb'
     - 'app/models/ticket/search.rb'
-    - 'app/models/ticket/search_index.rb'
+    - 'lib/selector/search_index.rb'
     - 'app/models/ticket/sets_last_owner_update_time.rb'
     - 'app/models/ticket/state.rb'
     - 'app/models/ticket/touches_associations.rb'
@@ -639,6 +645,8 @@ Metrics/CyclomaticComplexity:
 
 Metrics/ModuleLength:
   Exclude:
+    - 'app/models/ticket/can_selector.rb'
+    - 'app/models/concerns/can_selector.rb'
     - 'app/controllers/application_controller/authenticates.rb'
     - 'app/controllers/application_controller/renders_models.rb'
     - 'app/models/application_model/can_assets.rb'
@@ -668,6 +676,8 @@ Metrics/ModuleLength:
 
 Metrics/PerceivedComplexity:
   Exclude:
+    - 'app/models/ticket/can_selector.rb'
+    - 'app/models/concerns/can_selector.rb'
     - 'app/controllers/application_controller/authenticates.rb'
     - 'app/controllers/application_controller/handles_devices.rb'
     - 'app/controllers/application_controller/handles_errors.rb'
@@ -777,11 +787,11 @@ Metrics/PerceivedComplexity:
     - 'app/models/ticket/overviews.rb'
     - 'app/models/ticket/screen_options.rb'
     - 'app/models/ticket/search.rb'
-    - 'app/models/ticket/search_index.rb'
+    - 'lib/selector/search_index.rb'
     - 'app/models/ticket/sets_last_owner_update_time.rb'
     - 'app/models/ticket/touches_associations.rb'
-    - 'app/models/ticket/selector/search_index.rb'
-    - 'app/models/ticket/selector/sql.rb'
+    - 'app/models/ticket/search_index.rb'
+    - 'lib/selector/sql.rb'
     - 'app/models/token.rb'
     - 'app/models/transaction/clearbit_enrichment.rb'
     - 'app/models/transaction/notification.rb'
@@ -924,7 +934,7 @@ Style/ReturnNilInPredicateMethodDefinition:
     - app/models/ticket/article/adds_metadata_email.rb
     - app/models/ticket/article/adds_metadata_general.rb
     - app/models/ticket/article/adds_metadata_origin_by_id.rb
-    - app/models/ticket/selector/base.rb
+    - lib/selector/base.rb
     - app/models/trigger.rb
     - app/models/user/avatar.rb
     - app/policies/ticket/shared_draft_start_policy.rb

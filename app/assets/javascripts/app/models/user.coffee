@@ -5,9 +5,9 @@ class App.User extends App.Model
 
 #  @hasMany 'roles', 'App.Role'
   @configure_attributes = [
-    { name: 'login',            display: __('Login'),         tag: 'input',    type: 'text',     limit: 100, null: false, autocapitalize: false, signup: false, quick: false },
-    { name: 'firstname',        display: __('First name'),     tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'lastname',         display: __('Last name'),      tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'login',            display: __('Login'),         tag: 'input',    type: 'text',     limit: 100, null: false, autocapitalize: false, signup: false, quick: false, no_perform_changes: true },
+    { name: 'firstname',        display: __('First name'),    tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'lastname',         display: __('Last name'),     tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'email',            display: __('Email'),         tag: 'input',    type: 'email',    limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'organization_id',  display: __('Organization'),  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true, note: __("Attention! Changing the organization will update the user's most recent tickets to the new organization.") },
     { name: 'group_ids',        display: __('Group permissions'), tag: 'group_permissions', item_class: 'checkbox' },
@@ -19,6 +19,9 @@ class App.User extends App.Model
   @configure_overview = [
 #    'login', 'firstname', 'lastname', 'email', 'updated_at',
     'login', 'firstname', 'lastname', 'organization'
+  ]
+  @configure_preview = [
+    'login', 'firstname', 'lastname', 'organization', 'created_at'
   ]
 
   uiUrl: ->

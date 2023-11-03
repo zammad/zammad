@@ -7,7 +7,7 @@ class TicketsController < ApplicationController
   include TicketStats
   include CanPaginate
 
-  prepend_before_action -> { authorize! }, only: %i[create selector import_example import_start ticket_customer ticket_history ticket_related ticket_recent ticket_merge ticket_split]
+  prepend_before_action -> { authorize! }, only: %i[create import_example import_start ticket_customer ticket_history ticket_related ticket_recent ticket_merge ticket_split]
   prepend_before_action :authentication_check
 
   # GET /api/v1/tickets
@@ -502,25 +502,6 @@ class TicketsController < ApplicationController
       tickets:       ticket_result,
       tickets_count: tickets.count,
       assets:        assets,
-    }
-  end
-
-  # GET /api/v1/tickets/selector
-  def selector
-    ticket_count, tickets = Ticket.selectors(params[:condition], limit: 6, execution_time: true)
-
-    assets = {}
-    ticket_ids = []
-    tickets&.each do |ticket|
-      ticket_ids.push ticket.id
-      assets = ticket.assets(assets)
-    end
-
-    # return result
-    render json: {
-      ticket_ids:   ticket_ids,
-      ticket_count: ticket_count || 0,
-      assets:       assets,
     }
   end
 

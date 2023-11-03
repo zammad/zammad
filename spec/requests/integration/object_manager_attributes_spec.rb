@@ -663,6 +663,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       # 2. create a scheduler that uses the attribute
       params = {
         name:                 'test_scheduler',
+        object:               'Ticket',
         timeplan:             {
           days:    {
             Mon: true,

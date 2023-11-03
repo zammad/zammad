@@ -171,6 +171,7 @@ returns
     selector.merge!(without_merged_tickets) # do not show merged tickets in reports
 
     result = SearchIndexBackend.selectors('Ticket', selector, { current_user: params[:current_user], limit: limit }, aggs_interval)
+    result[:ticket_ids] = result.delete(:object_ids)
     return result if params[:sheet].present?
 
     assets = {}

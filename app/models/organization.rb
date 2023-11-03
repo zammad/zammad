@@ -11,6 +11,8 @@ class Organization < ApplicationModel
   include ChecksHtmlSanitized
   include HasObjectManagerAttributes
   include HasTaskbars
+  include CanSelector
+  include CanPerformChanges
 
   include Organization::Assets
   include Organization::Search
@@ -25,6 +27,8 @@ class Organization < ApplicationModel
 
   before_create :domain_cleanup
   before_update :domain_cleanup
+
+  available_perform_change_actions :attribute_updates
 
   # workflow checks should run after before_create and before_update callbacks
   # the transaction dispatcher must be run after the workflow checks!

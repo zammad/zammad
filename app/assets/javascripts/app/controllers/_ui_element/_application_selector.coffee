@@ -362,7 +362,7 @@ class App.UiElement.ApplicationSelector
         App.Collection.loadAssets(data.assets)
         item.find('.js-previewCounterContainer').removeClass('hide')
         item.find('.js-previewLoader').addClass('hide')
-        @ticketTable(data.ticket_ids, data.ticket_count, item)
+        @ticketTable(data.object_ids, data.object_count, item)
     )
 
   @ticketTable: (ticket_ids, ticket_count, item) ->

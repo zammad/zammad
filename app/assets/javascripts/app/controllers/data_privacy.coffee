@@ -190,8 +190,8 @@ class Index extends App.ControllerSubContent
             sureInput      = ui.formGenItem(sure_attribute, classname, form).html()
 
             preview_html = App.view('data_privacy/preview')(
-              customer_count:           dataCustomer.ticket_count || 0
-              owner_count:              dataOwner.ticket_count    || 0
+              customer_count:           dataCustomer.object_count || 0
+              owner_count:              dataOwner.object_count    || 0
               delete_organization_html: deleteOrganization
               sure_html:                sureInput
               user_id:                  userID
@@ -205,7 +205,7 @@ class Index extends App.ControllerSubContent
             new App.TicketList(
               tableId:    'ticket-selector'
               el:         form.find('.js-previewTableCustomer')
-              ticket_ids: dataCustomer.ticket_ids
+              ticket_ids: dataCustomer.object_ids
             )
 
             return if !form.find('.js-previewTableOwner').length
@@ -213,7 +213,7 @@ class Index extends App.ControllerSubContent
             new App.TicketList(
               tableId:    'ticket-selector'
               el:         form.find('.js-previewTableOwner')
-              ticket_ids: dataOwner.ticket_ids
+              ticket_ids: dataOwner.object_ids
             )
         )
     )

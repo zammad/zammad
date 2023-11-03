@@ -11,6 +11,7 @@ class Job < ApplicationModel
   store     :condition
   store     :perform
   validates :name,    presence: true
+  validates :object,  presence: true, inclusion: { in: %w[Ticket User Organization] }
   validates :perform, 'validations/verify_perform_rules': true
 
   before_save :updated_matching, :update_next_run_at
@@ -54,11 +55,11 @@ job.run(true)
   def run(force = false, start_at = Time.zone.now)
     logger.debug { "Execute job #{inspect}" }
 
-    ticket_ids = start_job(start_at, force)
+    object_ids = start_job(start_at, force)
 
-    return if ticket_ids.nil?
+    return if object_ids.nil?
 
-    ticket_ids&.each_slice(10) do |slice|
+    object_ids&.each_slice(10) do |slice|
       run_slice(slice)
     end
 
@@ -82,8 +83,8 @@ job.run(true)
   end
 
   def matching_count
-    ticket_count, _tickets = Ticket.selectors(condition, limit: 1, execution_time: true)
-    ticket_count || 0
+    object_count, _objects = object.constantize.selectors(condition, limit: 1, execution_time: true)
+    object_count || 0
   end
 
   private
@@ -121,13 +122,13 @@ job.run(true)
   def start_job(start_at, force)
     Transaction.execute(reset_user_id: true) do
       if start_job_executable?(start_at, force) && start_job_ensure_matching_count && start_job_in_timeplan?(start_at, force)
-        ticket_count, tickets = Ticket.selectors(condition, limit: 2_000, execution_time: true)
+        object_count, objects = object.constantize.selectors(condition, limit: 2_000, execution_time: true)
 
-        logger.debug { "Job #{name} with #{ticket_count} tickets" }
+        logger.debug { "Job #{name} with #{object_count} object(s)" }
 
-        mark_as_started(ticket_count)
+        mark_as_started(object_count)
 
-        tickets&.pluck(:id) || []
+        objects&.pluck(:id) || []
       end
     end
   end
@@ -163,8 +164,8 @@ job.run(true)
     false
   end
 
-  def mark_as_started(ticket_count)
-    self.processed = ticket_count || 0
+  def mark_as_started(object_count)
+    self.processed = object_count || 0
     self.running = true
     self.last_run_at = Time.zone.now
     save!
@@ -172,12 +173,12 @@ job.run(true)
 
   def run_slice(slice)
     Transaction.execute(disable_notification: disable_notification, reset_user_id: true) do
-      _, tickets = Ticket.selectors(condition, limit: 2_000, execution_time: true)
+      _, objects = object.constantize.selectors(condition, limit: 2_000, execution_time: true)
 
-      tickets
+      objects
         &.where(id: slice)
-        &.each do |ticket|
-          ticket.perform_changes(self, 'job')
+        &.each do |object|
+          object.perform_changes(self, 'job')
         end
     end
   end

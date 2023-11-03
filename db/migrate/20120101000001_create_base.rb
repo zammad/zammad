@@ -793,6 +793,29 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :mentions, :users, column: :updated_by_id
     add_foreign_key :mentions, :users, column: :user_id
 
+    create_table :jobs do |t|
+      t.column :name,                 :string,  limit: 250,    null: false
+      t.column :timeplan,             :string,  limit: 2500,   null: false
+      t.column :object,               :string,  limit: 100,    null: false
+      t.column :condition,            :text, limit: 500.kilobytes + 1, null: false
+      t.column :perform,              :text, limit: 500.kilobytes + 1, null: false
+      t.column :disable_notification, :boolean,                null: false, default: true
+      t.column :last_run_at,          :timestamp, limit: 3,    null: true
+      t.column :next_run_at,          :timestamp, limit: 3,    null: true
+      t.column :running,              :boolean,                null: false, default: false
+      t.column :processed,            :integer,                null: false, default: 0
+      t.column :matching,             :integer,                null: false
+      t.column :pid,                  :string,  limit: 250,    null: true
+      t.column :note,                 :string,  limit: 250,    null: true
+      t.column :active,               :boolean,                null: false, default: false
+      t.column :updated_by_id,        :integer,                null: false
+      t.column :created_by_id,        :integer,                null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :jobs, [:name], unique: true
+    add_foreign_key :jobs, :users, column: :created_by_id
+    add_foreign_key :jobs, :users, column: :updated_by_id
+
     create_table :core_workflows do |t|
       t.string :name,                     limit: 100, null: false
       t.string :object,                   limit: 100, null: true

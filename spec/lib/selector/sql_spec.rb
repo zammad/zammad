@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Ticket::Selector::Sql do
+RSpec.describe Selector::Sql do
   context 'when relative time range is selected in ticket selector' do
     def get_condition(operator, range)
       {
