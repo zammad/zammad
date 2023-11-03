@@ -33,6 +33,7 @@ class App.UiElement.object_perform_action extends App.UiElement.ApplicationActio
     switch attribute.object_name
       when 'Ticket' then defaults.push 'ticket.state_id'
       when 'User' then defaults.push 'user.active'
+      when 'Organization' then defaults.push 'organization.active'
 
     for key, data of groups
       continue if _.contains(data.model_show, attribute.object_name)
