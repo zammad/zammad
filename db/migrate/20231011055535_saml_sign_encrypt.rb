@@ -14,7 +14,7 @@ class SamlSignEncrypt < ActiveRecord::Migration[7.0]
     sign_and_encrypt_attributes(saml_setting)
     check_ssl_verify(saml_setting)
 
-    saml_setting.save!
+    saml_setting.save!(validate: false)
   end
 
   private
