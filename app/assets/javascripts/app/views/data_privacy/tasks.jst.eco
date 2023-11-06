@@ -5,8 +5,6 @@
       <div class="action-flow action-flow--noWrap">
         <% if task.preferences.user: %>
           <h2><%- @T('Delete User') %></h2>
-        <% else if task.preferences.organization: %>
-          <h2><%- @T('Delete Organization') %></h2>
         <% else if task.preferences.ticket: %>
           <h2><%- @T('Delete Ticket') %></h2>
         <% end %>
@@ -17,14 +15,11 @@
         <% if task.preferences.user: %>
           <div class="label"><%- @T('User (censored):') %></div>
           <%= task.preferences.user.firstname %> <%= task.preferences.user.lastname %> (<%= task.preferences.user.email %>)
-          <% if task.preferences.user.organization && task.preferences.delete_organization: %>
+          <% if task.preferences.delete_organization: %>
           <br><br>
           <div class="label"><%- @T('Deleted Organization:') %></div>
           <%= task.preferences.user.organization %>
           <% end %>
-        <% else if task.preferences.organization: %>
-          <div class="label"><%- @T('Organization (censored):') %></div>
-          <%= task.preferences.organization.name %>
         <% else if task.preferences.ticket: %>
           <div class="label"><%- @T('Ticket (censored):') %></div>
           <%= task.preferences.ticket.title %>

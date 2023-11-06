@@ -41,8 +41,8 @@ class App.UiElement.object_selector extends App.UiElement.ApplicationSelectorExp
 
     switch attribute.object_name
       when 'Ticket' then defaults.push 'ticket.state_id'
-      when 'User' then defaults.push 'user.firstname'
-      when 'Organization' then defaults.push 'organization.name'
+      when 'User' then defaults.push 'user.role_ids'
+      when 'Organization' then defaults.push 'organization.members_existing'
 
     for key, data of groups
       continue if _.contains(data.model_show, attribute.object_name)

@@ -117,6 +117,8 @@ QUnit.test('defaults to ticket object', (assert) => {
     },
   }
   assert.deepEqual(params, test_params, 'params structure')
+
+
 })
 
 QUnit.test('supports ticket object', (assert) => {
@@ -158,7 +160,14 @@ QUnit.test('supports ticket object', (assert) => {
   assert.deepEqual(el.find('.js-value option').map(function () { return $(this).attr('value') }).toArray(), ['data_privacy_deletion_task', 'delete'], 'has correct actions')
 
   // Alert
-  assert.equal(el.find('.js-alert').text(), 'All affected tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, there is no rollback of this deletion possible.', 'has proper warning shown')
+  assert.equal(el.find('.js-alert').text(), 'All affected tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible.', 'has proper warning shown')
+
+  el.find('select[name="perform::ticket.action::value"]')
+    .val('delete')
+    .trigger('change')
+
+  // Alert #2
+  assert.equal(el.find('.js-alert').text(), 'All affected tickets will be deleted immediately when this job is run, without a history entry. There is no rollback of this deletion possible.')
 })
 
 QUnit.test('supports user object', (assert) => {
@@ -201,5 +210,5 @@ QUnit.test('supports user object', (assert) => {
   assert.deepEqual(el.find('.js-value option').map(function () { return $(this).attr('value') }).toArray(), ['data_privacy_deletion_task'], 'has correct actions')
 
   // Alert
-  assert.equal(el.find('.js-alert').text(), 'All affected users and their customer tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, there is no rollback of this deletion possible.', 'has proper warning shown')
+  assert.equal(el.find('.js-alert').text(), 'All affected users and their customer tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, users and tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible.', 'has proper warning shown')
 })

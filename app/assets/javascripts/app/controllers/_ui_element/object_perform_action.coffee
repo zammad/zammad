@@ -112,8 +112,8 @@ class App.UiElement.object_perform_action extends App.UiElement.ApplicationActio
         translate: true
         options: availableActions
         alerts:
-          delete: __('All affected tickets will be deleted immediately when this job is run. There is no rollback of this deletion possible.')
-          data_privacy_deletion_task: __('All affected tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, there is no rollback of this deletion possible.')
+          delete: __('All affected tickets will be deleted immediately when this job is run, without a history entry. There is no rollback of this deletion possible.')
+          data_privacy_deletion_task: __('All affected tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible.')
 
     # Add data privacy deletion task action for the user object.
     if attribute.object_name is 'User' and attribute.data_privacy_deletion_task
@@ -126,7 +126,7 @@ class App.UiElement.object_perform_action extends App.UiElement.ApplicationActio
         options:
           data_privacy_deletion_task: __('Add a data privacy deletion task')
         alerts:
-          data_privacy_deletion_task: __('All affected users and their customer tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, there is no rollback of this deletion possible.')
+          data_privacy_deletion_task: __('All affected users and their customer tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, users and tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible.')
 
     # add sender type selection as a ticket attribute
     if attribute.object_name is 'Ticket' and attribute.sender_type

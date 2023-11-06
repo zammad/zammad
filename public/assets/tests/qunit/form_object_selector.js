@@ -177,9 +177,9 @@ QUnit.test('supports user object', (assert) => {
   var params = App.ControllerForm.params(el)
   var test_params = {
     condition: {
-      'user.firstname': { // default
-        operator: 'contains',
-        value: '',
+      'user.role_ids': { // default
+        operator: 'is',
+        value: [],
       },
     },
   }
@@ -222,9 +222,9 @@ QUnit.test('supports organization object', (assert) => {
   var params = App.ControllerForm.params(el)
   var test_params = {
     condition: {
-      'organization.name': { // default
-        operator: 'contains',
-        value: '',
+      'organization.members_existing': { // default
+        operator: 'is',
+        value: true,
       },
     },
   }
@@ -322,9 +322,9 @@ QUnit.test('supports user object', (assert) => {
   var params = App.ControllerForm.params(el)
   var test_params = {
     condition: {
-      'user.firstname': { // default
-        operator: 'contains',
-        value: '',
+      'user.role_ids': { // default
+        operator: 'is',
+        value: [],
       },
     },
   }
@@ -367,9 +367,9 @@ QUnit.test('supports organization object', (assert) => {
   var params = App.ControllerForm.params(el)
   var test_params = {
     condition: {
-      'organization.name': { // default
-        operator: 'contains',
-        value: '',
+      'organization.members_existing': { // default
+        operator: 'is',
+        value: true,
       },
     },
   }

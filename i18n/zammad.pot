@@ -1044,15 +1044,15 @@ msgid "All Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
-msgid "All affected tickets will be deleted immediately when this job is run. There is no rollback of this deletion possible."
+msgid "All affected tickets will be deleted immediately when this job is run, without a history entry. There is no rollback of this deletion possible."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
-msgid "All affected tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, there is no rollback of this deletion possible."
+msgid "All affected tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
-msgid "All affected users and their customer tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, there is no rollback of this deletion possible."
+msgid "All affected users and their customer tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, users and tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -4019,10 +4019,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Delete Knowledge Base"
-msgstr ""
-
-#: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Delete Organization"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
@@ -8490,10 +8486,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 msgid "Organization & Department Name"
-msgstr ""
-
-#: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Organization (censored):"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
