@@ -89,7 +89,7 @@ RSpec.describe Calendar, type: :model do
               '2017-01-26' => { 'active' => true, 'summary' => 'day3', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
               '2017-02-26' => { 'active' => true, 'summary' => 'day3', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
               '2017-03-26' => { 'active' => true, 'summary' => 'day3', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2017-04-26' => { 'active' => true, 'summary' => 'day3', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
+              '2017-04-25' => { 'active' => true, 'summary' => 'day3', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
               '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
               '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
               '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
