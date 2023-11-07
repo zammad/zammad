@@ -6,7 +6,6 @@
       - Gemfile.lock
   paths:
     - vendor/ruby
-    - fresh.env
 
 # Cache node_modules likewise
 .cache_nodejs: &cache_nodejs

@@ -116,25 +116,16 @@
   script:
     - bundle exec rake zammad:ci:bundle:orphaned 5
 
-'refresh global envs':
-  services:
-    - !reference [.services, postgresql]
-    - !reference [.services, redis]
-  stage: lint
-  # ensure that only one Job runs in the whole project (branches etc.)
-  resource_group: global_refresh_envs
-  # allow download via the web UI to restore ENVs in case global cache got deleted (see: `.gitlab-ci.yml`)
-  artifacts:
-    expire_in: 1 week
-    paths:
-      - fresh.env
+'update CI variables':
+  extends:
+    - .template_lint_rails
   rules:
-    - if: $CI_COMMIT_REF_NAME =~ /^private/
+    - if: $CI_PIPELINE_SOURCE != "schedule"
       when: manual
       allow_failure: true
     - when: on_success
   script:
-    - bundle exec rake zammad:ci:refresh_envs
+    - bundle exec rake zammad:ci:update_ci_variables
 
 'lint: secret_detection':
   extends: .template_lint

@@ -20,7 +20,6 @@ class ConfigureEnvironment
 
   @env_file_content = <<~ENV_FILE_CONTENT
     #!/bin/bash
-    FRESHENVFILE=fresh.env && test -f $FRESHENVFILE && source $FRESHENVFILE
     true
   ENV_FILE_CONTENT
 
