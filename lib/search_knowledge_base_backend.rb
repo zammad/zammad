@@ -19,7 +19,15 @@ class SearchKnowledgeBaseBackend
     prepare_scope_ids
   end
 
+  def use_internal_assets?
+    flavor == :agent && KnowledgeBase.granular_permissions?
+  end
+
   def search(query, user: nil, pagination: nil)
+    if use_internal_assets? # cache for later use
+      @granular_permissions_handler = KnowledgeBase::InternalAssets.new(user)
+    end
+
     raw_results = raw_results(query, user, pagination: pagination)
 
     filtered = filter_results raw_results, user
@@ -94,23 +102,29 @@ class SearchKnowledgeBaseBackend
 
   def translation_ids_for_answers(user)
     scope = KnowledgeBase::Answer
-            .joins(:category)
-            .where(knowledge_base_categories: { knowledge_base_id: knowledge_bases })
+      .joins(:category)
+      .where(knowledge_base_categories: { knowledge_base_id: knowledge_bases })
+      .then do |relation|
+        if use_internal_assets? # cache for later use
+          relation.where(id: @granular_permissions_handler.all_answer_ids)
+        elsif user&.permissions?('knowledge_base.editor')
+          relation
+        elsif user&.permissions?('knowledge_base.reader') && flavor == :agent
+          relation.internal
+        else
+          relation.published
+        end
+      end
 
-    scope = if user&.permissions?('knowledge_base.editor')
-              scope
-            elsif user&.permissions?('knowledge_base.reader') && flavor == :agent
-              scope.internal
-            else
-              scope.published
-            end
     flatten_translation_ids(scope)
   end
 
   def translation_ids_for_categories(user)
-    scope = KnowledgeBase::Category.where knowledge_base_id: knowledge_bases
+    scope = KnowledgeBase::Category.where(knowledge_base_id: knowledge_bases)
 
-    if user&.permissions?('knowledge_base.editor')
+    if use_internal_assets?
+      flatten_translation_ids scope.where(id: @granular_permissions_handler.all_category_ids)
+    elsif user&.permissions?('knowledge_base.editor')
       flatten_translation_ids scope
     elsif user&.permissions?('knowledge_base.reader') && flavor == :agent
       flatten_answer_translation_ids(scope, :internal)

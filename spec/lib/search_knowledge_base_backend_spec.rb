@@ -156,17 +156,19 @@ RSpec.describe SearchKnowledgeBaseBackend do
       described_class.new options
     end
 
-    shared_examples 'verify given search backend' do |permissions:, ui:, elasticsearch:|
+    shared_examples 'verify given search backend' do |permissions:, ui:|
       is_visible = permissions == :all || permissions == ui
       prefix     = is_visible ? 'lists' : 'does not list'
 
-      it "#{prefix} in #{ui} interface when ES=#{elasticsearch}", searchindex: elasticsearch do
-        instance = expected_visibility_instance ui
-        object
+      [true, false].each do |elasticsearch|
+        it "#{prefix} in #{ui} interface when ES=#{elasticsearch}", searchindex: elasticsearch do
+          instance = expected_visibility_instance ui
+          object
 
-        handle_elasticsearch(elasticsearch)
+          handle_elasticsearch(elasticsearch)
 
-        expect(instance.search(object.translations.first.title, user: user)).to is_visible ? be_present : be_blank
+          expect(instance.search(object.translations.first.title, user: user)).to is_visible ? be_present : be_blank
+        end
       end
     end
 
@@ -183,11 +185,8 @@ RSpec.describe SearchKnowledgeBaseBackend do
       context "with #{user_id}" do
         let(:user) { create(user_id) }
 
-        include_examples 'verify given search backend', permissions: permissions, ui: :agent, elasticsearch: true
-        include_examples 'verify given search backend', permissions: permissions, ui: :agent, elasticsearch: false
-
-        include_examples 'verify given search backend', permissions: permissions, ui: :public, elasticsearch: true
-        include_examples 'verify given search backend', permissions: permissions, ui: :public, elasticsearch: false
+        include_examples 'verify given search backend', permissions: permissions, ui: :agent
+        include_examples 'verify given search backend', permissions: permissions, ui: :public
       end
     end
 
@@ -201,5 +200,57 @@ RSpec.describe SearchKnowledgeBaseBackend do
     include_examples 'verify given permissions', scope: :category, trait: :containing_internal,  admin: :all, agent: :agent
     include_examples 'verify given permissions', scope: :category, trait: :containing_draft,     admin: :all, agent: :none
     include_examples 'verify given permissions', scope: :category, trait: :containing_archived,  admin: :all, agent: :none
+
+    context 'with granular permissions' do
+      before do
+        KnowledgeBase::PermissionsUpdate
+          .new(category)
+          .update! Role.find_by(name: 'Agent') => 'none'
+      end
+
+      context 'with reader with limited access to answer' do
+        let(:object) { internal_answer }
+        let(:user)   { create(:agent)  }
+
+        include_examples 'verify given search backend', permissions: :none, ui: :agent
+      end
+
+      context 'with editor with full access to answer' do
+        let(:object) { internal_answer }
+        let(:user)   { create(:admin)  }
+
+        include_examples 'verify given search backend', permissions: :all, ui: :agent
+        include_examples 'verify given search backend', permissions: :all, ui: :public
+      end
+
+      context 'with reader with limited access to category' do
+        let(:object) { internal_answer.category }
+        let(:user)   { create(:agent)  }
+
+        include_examples 'verify given search backend', permissions: :none, ui: :agent
+      end
+
+      context 'with editor with full access to category' do
+        let(:object) { internal_answer.category }
+        let(:user)   { create(:admin)  }
+
+        include_examples 'verify given search backend', permissions: :all, ui: :agent
+        include_examples 'verify given search backend', permissions: :all, ui: :public
+      end
+
+      context 'with unauthorized user and public answer' do
+        let(:object) { published_answer }
+        let(:user)   { nil }
+
+        include_examples 'verify given search backend', permissions: :all, ui: :public
+      end
+
+      context 'with unauthorized user and internal answer' do
+        let(:object) { internal_answer }
+        let(:user)   { nil }
+
+        include_examples 'verify given search backend', permissions: :none, ui: :public
+      end
+    end
   end
 end
