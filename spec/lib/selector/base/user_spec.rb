@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe Selector::Base, 'user', searchindex: true do
   describe 'Basic tests' do
-    let(:user_1)   { create(:user) }
-    let(:user_2)   { create(:user) }
-    let(:user_3)   { create(:user) }
+    let(:user_1)   { create(:user, firstname: 'Philipp J.', lastname: 'Fry') }
+    let(:user_2)   { create(:user, firstname: 'Turanga', lastname: 'Leela') }
+    let(:user_3)   { create(:user, firstname: 'Bender', lastname: 'Rodriguez') }
 
     before do
       user_1 && user_2 && user_3
