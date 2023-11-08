@@ -118,6 +118,9 @@ RSpec.configure do |config|
         travel_to(cassette.http_interactions.interactions.first.recorded_at)
       end
 
+      # S3 does not play well with time freezing (Aws::S3::Errors::RequestTimeTooSkewed).
+      Setting.set('storage_provider', 'DB') if Setting.get('storage_provider') == 'S3'
+
       example.run
     end
   end

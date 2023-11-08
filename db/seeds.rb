@@ -29,9 +29,10 @@ seeds.each do |seed|
   load Rails.root.join('db', 'seeds', "#{seed}.rb")
 end
 
-# set basic Rails server settings via environment variables
+# set basic settings via environment variables
 Setting.set('http_type', ENV['ZAMMAD_HTTP_TYPE']) if ENV['ZAMMAD_HTTP_TYPE']
 Setting.set('fqdn',      ENV['ZAMMAD_FQDN'])      if ENV['ZAMMAD_FQDN']
+Setting.set('storage_provider', 'S3')             if ENV['S3_URL']
 
 # reset primary key sequences
 DbHelper.import_post
