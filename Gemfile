@@ -254,8 +254,7 @@ group :development, :test do
   gem 'localhost'
 
   # Keycloak admin tool for setting up SAML auth tests
-  gem 'httparty'
-  gem 'keycloak-admin', git: 'https://github.com/tschaefer/ruby-keycloak-admin/', branch: 'develop', require: false
+  gem 'keycloak-admin', git: 'https://github.com/tschaefer/ruby-keycloak-admin/', branch: 'main', require: false
 end
 
 # To permanently extend Zammad with additional gems, you can specify them in Gemfile.local.

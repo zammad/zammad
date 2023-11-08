@@ -1,9 +1,10 @@
 GIT
   remote: https://github.com/tschaefer/ruby-keycloak-admin/
-  revision: 766702927ae9f2316f4468f8774dc7c018419b16
-  branch: develop
+  revision: 037ac274541d513f3edc3df74bc684ff23ecc473
+  branch: main
   specs:
-    keycloak-admin (20.0.3)
+    keycloak-admin (22.0.4)
+      httparty (~> 0.21.0)
 
 GIT
   remote: https://github.com/zammad-deps/autodiscover
@@ -740,7 +741,6 @@ DEPENDENCIES
   graphql-batch
   hiredis
   htmlentities
-  httparty
   icalendar
   icalendar-recurrence
   json
