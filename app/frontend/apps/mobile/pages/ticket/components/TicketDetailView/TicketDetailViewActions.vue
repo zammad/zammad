@@ -16,10 +16,14 @@ const emit = defineEmits<{
   save: []
 }>()
 
+// Turn off transitions in test mode.
 const bannerTransitionDuration = VITE_TEST_MODE ? 0 : { enter: 300, leave: 200 }
 
+// Switch to instant scrolling in test mode as it may interfere with subsequent scroll actions in headless mode.
+const behavior = VITE_TEST_MODE ? 'instant' : 'smooth'
+
 const scrollDown = () => {
-  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+  window.scrollTo({ top: document.body.scrollHeight, behavior })
 }
 </script>
 
