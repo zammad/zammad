@@ -501,20 +501,20 @@ RSpec.describe 'Ticket Create', type: :system do
     let(:agent)    { create(:agent, password: 'test') }
     let(:customer) { create(:customer, password: 'test') }
 
-    it 'customer user should not have agent object attributes', authenticated_as: :agent do
-      # Log out again, so that we can execute the next login.
-      logout
+    it 'customer user should not have agent object attributes', authenticated_as: false do
 
-      # Re-create agent session and fetch object attributes.
+      # Create agent session and fetch object attributes.
       login(
         username: agent.login,
         password: 'test'
       )
       visit 'ticket/create'
 
-      # Re-remove local object attributes bound to the session
-      # there was an issue (#1856) where the old attribute values
-      # persisted and were stored as the original attributes.
+      expect(page).to have_field('customer_id', type: 'hidden')
+
+      # Remove local object attributes bound to the session.
+      #   There was an issue (#1856) where the old attribute values
+      #   persisted and were stored as the original attributes.
       logout
 
       # Create customer session and fetch object attributes.
@@ -522,10 +522,9 @@ RSpec.describe 'Ticket Create', type: :system do
         username: customer.login,
         password: 'test'
       )
-
       visit 'customer_ticket_new'
 
-      expect(page).to have_no_css('.newTicket input[name="customer_id"]')
+      expect(page).to have_no_field('customer_id', type: 'hidden')
     end
   end
 
