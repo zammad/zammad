@@ -6,8 +6,8 @@
     <dd><%- @T('Attachments are stored in the filesystem.') %></dd>
     <dt><%- @T('Database') %><code>DB</code></dt>
     <dd><%- @T('Attachments are stored in the database.') %></dd>
-    <dt><%- @T('Simple Storage (S3)') %><code>S3</code></dt>
-    <dd><%- @T('Attachments are stored in a Simple Storage Service.') %></dd>
+    <dt><%- @T('Simple Storage Service (S3)') %><code>S3</code></dt>
+    <dd><%- @T('Attachments are stored in a Simple Storage Service.') %><br /><%- @T('For more details, please check out our online documentation %l.', 'https://admin-docs.zammad.org/en/latest/settings/system/storage.html') %></dd>
   </dl>
   <p class="help-text"><%- @T('If you want to move already stored attachments from one backend to another, you need to execute the following via console.') %></p>
   <code>

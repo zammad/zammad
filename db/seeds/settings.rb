@@ -362,6 +362,7 @@ Setting.create_if_not_exists(
     controller:             'SettingsAreaStorageProvider',
     online_service_disable: true,
     permission:             ['admin.system'],
+    validations:            ['Setting::Validation::StorageProvider'],
   },
   frontend:    false
 )

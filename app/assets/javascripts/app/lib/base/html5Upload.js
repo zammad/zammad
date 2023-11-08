@@ -244,7 +244,7 @@
                 // call the error callback when the status is not ok
                 if (xhr.status !== 200){
                   console.log('Upload failed: ' + fileName);
-                  upload.events.onError(event.target.statusText);
+                  upload.events.onError(event.target.responseText);
                 } else {
                   console.log('Upload completed: ' + fileName);
                   upload.events.onCompleted(event.target.responseText);

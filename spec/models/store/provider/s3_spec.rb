@@ -106,7 +106,7 @@ RSpec.describe Store::Provider::S3, authenticated_as: false, integration: true d
       end
 
       it 'raises an error' do
-        expect { described_class.add(data, sha256) }.to raise_error(Seahorse::Client::NetworkingError)
+        expect { described_class.add(data, sha256) }.to raise_error(Store::Provider::S3::Error)
       end
     end
 
@@ -143,7 +143,7 @@ RSpec.describe Store::Provider::S3, authenticated_as: false, integration: true d
       end
 
       it 'raises an error' do
-        expect { described_class.upload(data, sha256) }.to raise_error(Aws::S3::Errors::EntityTooSmall)
+        expect { described_class.upload(data, sha256) }.to raise_error(Store::Provider::S3::Error)
       end
     end
   end
@@ -165,7 +165,7 @@ RSpec.describe Store::Provider::S3, authenticated_as: false, integration: true d
       end
 
       it 'raises an error' do
-        expect { described_class.delete(sha256) }.to raise_error(Seahorse::Client::NetworkingError)
+        expect { described_class.delete(sha256) }.to raise_error(Store::Provider::S3::Error)
       end
     end
 

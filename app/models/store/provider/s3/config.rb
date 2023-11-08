@@ -15,18 +15,23 @@ module Store::Provider::S3::Config
       settings[:max_chunk_size].presence || 100.megabytes
     end
 
-    def apply
-      return if Aws.config.present?
+    def apply # rubocop:disable Metrics/AbcSize
+      return true if Aws.config.present?
 
-      config = settings.deep_dup
-      credentials = Aws::Credentials.new(config[:access_key_id], config[:secret_access_key])
-      config[:credentials] = credentials
+      begin
+        config = settings.deep_dup
+        credentials = Aws::Credentials.new(config[:access_key_id], config[:secret_access_key])
+        config[:credentials] = credentials
 
-      %i[access_key_id secret_access_key bucket max_chunk_size].each do |key|
-        config.delete(key)
+        %i[access_key_id secret_access_key bucket max_chunk_size].each do |key|
+          config.delete(key)
+        end
+
+        Aws.config.update(config)
+      rescue => e
+        Rails.logger.error { "#{name}: #{e.message}" }
+        raise Store::Provider::S3::Error, __('Simple Storage Service configuration not found or invalid.')
       end
-
-      Aws.config.update(config)
 
       true
     end

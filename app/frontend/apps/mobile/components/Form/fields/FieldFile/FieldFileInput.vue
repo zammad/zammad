@@ -66,10 +66,14 @@ const loadFiles = async (files: FileList | File[]) => {
 
   const uploads = await convertFileList(files)
 
-  const data = await addFileMutation.send({
-    formId: props.context.formId,
-    files: uploads,
-  })
+  const data = await addFileMutation
+    .send({
+      formId: props.context.formId,
+      files: uploads,
+    })
+    .catch(() => {
+      reset()
+    })
 
   const uploadedFiles = data?.formUploadCacheAdd?.uploadedFiles
 

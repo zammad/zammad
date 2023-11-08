@@ -29,7 +29,7 @@ class App.Setting extends App.Model
         App.Event.trigger 'notify', {
           type:    'error'
           msg:     App.i18n.translateContent(details?.error_human || details?.error || __('The setting could not be updated.'))
-          timeout: 2000
+          timeout: 3000
         }
         if options.failLocal
           options.failLocal(@)
@@ -66,7 +66,7 @@ class App.Setting extends App.Model
         App.Event.trigger 'notify', {
           type:    'error'
           msg:     App.i18n.translateContent(given_error || __('The setting could not be reset.'))
-          timeout: 2000
+          timeout: 3000
         }
     )
 

@@ -91,6 +91,6 @@ class App.SettingsAreaSwitch extends App.Controller
         App.Event.trigger 'notify', {
           type:    'error'
           msg:     App.i18n.translateContent(details.error_human || details.error || __('The object could not be updated.'))
-          timeout: 2000
+          timeout: 3000
         }
     )

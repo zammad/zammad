@@ -13,11 +13,7 @@ module Store::Provider::S3
         return upload(data, sha, content_type:, filename:)
       end
 
-      client.put_object(
-        bucket: bucket,
-        key:    sha,
-        body:   data
-      )
+      request(:put_object, key: sha, body: data)
 
       true
     end
@@ -28,27 +24,25 @@ module Store::Provider::S3
     end
 
     def delete(sha)
-      client.delete_object(
-        bucket: bucket,
-        key:    sha
-      )
+      request(:delete_object, key: sha)
 
       true
     end
 
     def get(sha)
-      object = client.get_object(
-        bucket: bucket,
-        key:    sha
-      )
+      object = request(:get_object, key: sha)
       object.body.read
     end
 
     def upload(data, sha)
-      id    = Store::Provider::S3::Upload.create(sha)
-      parts = Store::Provider::S3::Upload.process(data, sha, id)
+      begin
+        id    = Store::Provider::S3::Upload.create(sha)
+        parts = Store::Provider::S3::Upload.process(data, sha, id)
 
-      Store::Provider::S3::Upload.complete(sha, parts, id)
+        Store::Provider::S3::Upload.complete(sha, parts, id)
+      rescue => e
+        log_and_raise(e)
+      end
 
       true
     end
@@ -56,6 +50,8 @@ module Store::Provider::S3
     def url(sha, expires_in: 3600)
       object = Aws::S3::Object.new(bucket_name: bucket, key: sha, client: client)
       object.presigned_url(:get, expires_in: expires_in)
+    rescue => e
+      log_and_raise(e)
     end
 
     def ping?
@@ -83,6 +79,17 @@ module Store::Provider::S3
 
     def bucket
       Store::Provider::S3::Config.bucket
+    end
+
+    def log_and_raise(error)
+      Rails.logger.error { "#{name}: #{error.message}" }
+      raise Store::Provider::S3::Error, __('Simple Storage Service malfunction. Please contact your Zammad administrator.')
+    end
+
+    def request(method, **kwargs)
+      client.send(method, bucket: bucket, **kwargs)
+    rescue => e
+      log_and_raise(e)
     end
 
   end
