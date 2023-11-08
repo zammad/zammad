@@ -359,7 +359,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
       end
     end
 
-    describe 'iCloud emails are not fetchable via IMAP #4589', required_envs: %w[ICLOUD_USER ICLOUD_PASS] do
+    describe 'iCloud emails are not fetchable via IMAP #4589', required_envs: %w[ICLOUD_USER ICLOUD_PASS], retry: 5, retry_wait: 30.seconds do
       let(:server_address) { 'imap.mail.me.com' }
       let(:server_login)    { ENV['ICLOUD_USER'] }
       let(:server_password) { ENV['ICLOUD_PASS'] }
