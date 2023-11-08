@@ -61,13 +61,11 @@ module Store::Provider::S3
     def ping?
       return false if !client
 
-      begin
-        client.head_bucket(bucket: bucket)
-        true
-      rescue => e
-        Rails.logger.error { "#{name}: #{e.message}" }
-        false
-      end
+      client.head_bucket(bucket: bucket)
+      true
+    rescue => e
+      Rails.logger.error { "#{name}: #{e.message}" }
+      false
     end
 
     def ping!
