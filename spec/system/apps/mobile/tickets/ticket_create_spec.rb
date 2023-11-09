@@ -270,6 +270,26 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
       end
     end
+
+    it 'fills out new customer when it\'s created in place' do
+
+      within_form(form_updater_gql_number: 1) do
+
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
+        next_step
+        next_step
+
+        find_autocomplete('Customer').element.click
+        find_button('Create new customer').click
+
+        find_input('First name').type('John')
+        find_input('Last name').type('Doe')
+
+        click_button('Save')
+
+        expect(find_autocomplete('Customer')).to have_selected_option('John Doe')
+      end
+    end
   end
 
   context 'with accessibility support' do

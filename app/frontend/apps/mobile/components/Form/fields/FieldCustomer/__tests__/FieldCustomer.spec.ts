@@ -89,6 +89,7 @@ describe('Form - Field - Customer - Features', () => {
     const node = getNode('customer')
     node!.context!.initialEntityObject = {
       customer: {
+        internalId: 123,
         fullname: 'John Doe',
       },
     }

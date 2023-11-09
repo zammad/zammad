@@ -16,7 +16,7 @@ defineProps<Props>()
     v-for="user of users"
     :key="user.id"
     :link="`/users/${user.internalId}`"
-    class="flex h-14 items-center"
+    class="flex h-14 items-center px-3"
   >
     <CommonUserAvatar decorative :entity="user" class="ltr:mr-3 rtl:ml-3" />
     <span class="truncate">

@@ -27,7 +27,9 @@ const getTicketsLink = (stateIds: number[]) => {
 
 <template>
   <CommonSectionMenu header-label="Tickets">
-    <slot name="before-fields" />
+    <div class="px-3">
+      <slot name="before-fields" />
+    </div>
     <CommonSectionMenuLink
       :icon="{
         name: 'mobile-check-circle-no',

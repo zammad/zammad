@@ -10,7 +10,11 @@ import {
 } from '#shared/graphql/types.ts'
 import { useRouter } from 'vue-router'
 
-export const useUserCreate = () => {
+interface UserCreateOptions {
+  onUserCreated?: (user: User) => void
+}
+
+export const useUserCreate = (options: UserCreateOptions = {}) => {
   const dialogCreate = useDialogObjectForm(
     'user-create',
     EnumObjectManagerObjects.User,
@@ -41,7 +45,10 @@ export const useUserCreate = () => {
     dialogCreate.openDialog({
       mutation: useUserAddMutation,
       schema,
-      onSuccess,
+      onSuccess: options.onUserCreated
+        ? (query: { userAdd: UserAddPayload }) =>
+            options.onUserCreated!(query.userAdd.user!)
+        : onSuccess,
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserCreate,
       errorNotificationMessage: __('User could not be created.'),
     })

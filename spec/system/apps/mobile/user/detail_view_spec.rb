@@ -55,4 +55,21 @@ RSpec.describe 'Mobile > User > Preview detailed information about user', app: :
       expect_current_route('/error')
     end
   end
+
+  it 'can open ticket create form' do
+    open_user
+
+    click_link 'Create new ticket for this user'
+    expect_current_route("/tickets/create?customer_id=#{user.id}")
+
+    within_form(form_updater_gql_number: 1) do
+      find_input('Title').type(Faker::Name.unique.name_with_middle)
+
+      # open "additional information" step
+      find_button('Continue').click
+      find_button('Continue').click
+
+      expect(find_autocomplete('Customer')).to have_selected_option(user.fullname)
+    end
+  end
 end

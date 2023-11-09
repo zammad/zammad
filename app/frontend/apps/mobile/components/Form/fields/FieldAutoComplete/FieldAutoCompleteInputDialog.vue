@@ -256,17 +256,21 @@ useTraverseOptions(autocompleteList)
       </CommonButton>
     </template>
     <template #after-label>
-      <CommonIcon
+      <button
         v-if="context.action || context.onActionClick"
-        :name="context.actionIcon ? context.actionIcon : 'mobile-external-link'"
-        :label="context.actionLabel"
-        class="cursor-pointer text-white"
-        size="base"
         tabindex="0"
-        role="button"
+        :aria-label="context.actionLabel"
         @click="executeAction"
         @keypress.space="executeAction"
-      />
+      >
+        <CommonIcon
+          :name="
+            context.actionIcon ? context.actionIcon : 'mobile-external-link'
+          "
+          class="cursor-pointer text-white"
+          size="base"
+        />
+      </button>
       <CommonButton
         v-else
         class="grow"

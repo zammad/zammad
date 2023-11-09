@@ -14,7 +14,7 @@ export const useUsersTicketsCount = () => {
     return {
       count: user.ticketsCount,
       createLabel: __('Create new ticket for this user'),
-      createLink: `/tickets/create?user_id=${user.internalId}`,
+      createLink: `/tickets/create?customer_id=${user.internalId}`,
       query: `customer.id: ${user.internalId}`,
     }
   }
