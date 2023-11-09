@@ -103,7 +103,9 @@ class KnowledgeBase::Answer < ApplicationModel
   private
 
   def touch_translations
-    translations.each(&:touch) # move to #touch_all when migrationg to Rails 6
+    translations
+      .reject(&:destroyed?)
+      .each(&:touch) # touch each translation separately to trigger after_commit callbacks
   end
   after_touch :touch_translations
 
