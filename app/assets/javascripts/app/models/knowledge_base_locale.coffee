@@ -16,7 +16,7 @@ class App.KnowledgeBaseLocale extends App.Model
     App.KnowledgeBaseLocale.find object.kb_locale_id
 
   applyOntoPath: (path) ->
-    path.replace /\/locale\/[\w-]{2,5}/, "/#{@urlSuffix()}"
+    path.replace /\/locale\/([\w]{2}((-[\w]{4})?-[\w]{2})?)/, "/#{@urlSuffix()}"
 
   attributesForRendering: (path, options = {}) ->
     {
