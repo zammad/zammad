@@ -70,11 +70,6 @@ class App.KnowledgeBaseAnswerTranslation extends App.Model
 
   @display_name = __('Knowledge Base Answer')
 
-  linked_tickets: ->
-    @linked_references
-      .filter (elem) -> elem['link_object'] == 'Ticket'
-      .map    (elem) -> App.Ticket.find(elem['link_object_value'])
-
 class App.KnowledgeBaseAnswerTranslationContent extends App.Model
   @configure 'KnowledgeBaseAnswerTranslationContent', 'body'
   @extend Spine.Model.Ajax

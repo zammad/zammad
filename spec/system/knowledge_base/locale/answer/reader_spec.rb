@@ -159,8 +159,8 @@ RSpec.describe 'Knowledge Base Locale Answer Reader', time_zone: 'Europe/London'
     end
   end
 
-  context 'when logged in as reader', authenticated: -> { visitor }, current_user_id: -> { editor.id } do
-    let(:editor)  { create(:admin, firstname: 'Editor') }
+  context 'when logged in as reader', authenticated_as: :visitor, current_user_id: -> { editor.id } do
+    let(:editor) { create(:admin, firstname: 'Editor') }
     let(:visitor) { create(:agent) }
 
     it 'state not shown' do
@@ -200,6 +200,22 @@ RSpec.describe 'Knowledge Base Locale Answer Reader', time_zone: 'Europe/London'
         within '.main--article' do
           expect(page).to have_text(published_answer.translations.first.title)
         end
+      end
+    end
+
+    it 'shows linked ticket user is authorized to see' do
+      ticket1 = create(:ticket, title: 'visible linked ticket')
+      ticket2 = create(:ticket, title: 'hidden linked ticket')
+
+      visitor.groups << ticket1.group
+
+      create(:link, from: ticket1, to: published_answer.translations.first)
+      create(:link, from: ticket2, to: published_answer.translations.first)
+
+      open_answer published_answer
+
+      within :active_content do
+        expect(page).to have_text(ticket1.title).and(have_no_text(ticket2.title))
       end
     end
   end

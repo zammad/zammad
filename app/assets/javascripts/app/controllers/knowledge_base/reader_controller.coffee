@@ -74,7 +74,7 @@ class App.KnowledgeBaseReaderController extends App.Controller
 
     @renderAttachments(answer.attachments)
     @renderTags(answer.tags)
-    @renderLinkedTickets(answer.translation(kb_locale.id)?.linked_tickets())
+    @fetchLinkedTickets(answer.translation(kb_locale.id))
 
     answer_translation = answer.translation(kb_locale.id)
 
@@ -166,9 +166,31 @@ class App.KnowledgeBaseReaderController extends App.Controller
       tags: tags
     )
 
-  renderLinkedTickets: (linked_tickets) ->
+  fetchLinkedTickets: (translation) ->
+    return if !translation
+
+    if @linkedTickets
+      @renderLinkedTickets()
+      return
+
+    @ajax(
+      id:   "kb_reader_links_#{translation.id}"
+      type: 'GET'
+      url:  "#{@apiPath}/links"
+      data:
+        link_object:       'KnowledgeBase::Answer::Translation'
+        link_object_value: translation.id
+      processData: true
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets(data.assets)
+        @linkedTickets = data.links.map (elem) -> App[elem.link_object].find(elem.link_object_value)
+        @renderLinkedTickets()
+        @renderPopovers()
+    )
+
+  renderLinkedTickets: =>
     @answerLinkedTickets.html App.view('knowledge_base/_reader_linked_tickets')(
-      tickets: linked_tickets
+      tickets: @linkedTickets
     )
 
   renderTranslationMissing: (answer) ->

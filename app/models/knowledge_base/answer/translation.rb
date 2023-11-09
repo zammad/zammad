@@ -25,17 +25,10 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
 
   alias assets_essential assets
 
-  def attributes_with_association_ids
-    attrs = super
-    attrs[:linked_references] = linked_references
-    attrs
-  end
-
   def assets(data = {})
     return data if assets_added_to?(data)
 
     data = super(data)
-    data = Link.reduce_assets(data, linked_references)
     answer.assets(data)
     ApplicationModel::CanAssets.reduce inline_linked_objects, data
   end
@@ -54,10 +47,6 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
                   attachment: answer.attachments_for_search_index_attribute_lookup,
                   tags:       answer.tag_list
                 })
-  end
-
-  def linked_references
-    Link.list(link_object: self.class.name, link_object_value: id)
   end
 
   def inline_linked_objects

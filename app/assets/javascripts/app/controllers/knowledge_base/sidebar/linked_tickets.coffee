@@ -2,7 +2,7 @@ class App.KnowledgeBaseSidebarLinkedTickets extends App.Controller
   @extend App.PopoverProvidable
   @registerPopovers 'Ticket'
 
-  className: 'sidebar-block'
+  className: 'sidebar-block sidebar-linked-tickets'
 
   events:
     'click .js-add': 'clickedAdd'
@@ -11,15 +11,18 @@ class App.KnowledgeBaseSidebarLinkedTickets extends App.Controller
   constructor: ->
     super
 
+    @fetch()
     @render()
     @listenTo @object, 'refresh', @updateIfNeeded
 
   updateIfNeeded: =>
-    @render()
+    @fetch()
 
   render: ->
+    localTickets = @localLinks?.map (elem) -> App[elem.link_object].find(elem.link_object_value)
+
     @html App.view('knowledge_base/sidebar/linked_tickets')(
-      tickets: @object.translation(@kb_locale.id)?.linked_tickets() || []
+      tickets: localTickets
       editable: true
     )
 
@@ -27,11 +30,15 @@ class App.KnowledgeBaseSidebarLinkedTickets extends App.Controller
 
   fetch: =>
     @ajax(
-      id:   "links_#{@object.id}_knowledge_base_answer"
+      id:   "kb_links_#{@object.id}"
       type: 'GET'
-      url: @object.generateURL() + '?full=true'
+      url:  "#{@apiPath}/links"
+      data:
+        link_object:       'KnowledgeBase::Answer::Translation'
+        link_object_value: @object.translation(@kb_locale.id).id
       processData: true
       success: (data, status, xhr) =>
+        @localLinks = data.links
         App.Collection.loadAssets(data.assets)
         @render()
     )
