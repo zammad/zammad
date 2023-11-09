@@ -183,7 +183,7 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    csv (3.2.7)
+    csv (3.2.8)
     daemons (1.4.1)
     dalli (3.2.6)
     date (3.3.4)
