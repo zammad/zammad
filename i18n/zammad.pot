@@ -7643,6 +7643,10 @@ msgstr ""
 msgid "Name Identifier Format"
 msgstr ""
 
+#: app/models/user.rb
+msgid "Name contains a forbidden string."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Name for this security key"
 msgstr ""

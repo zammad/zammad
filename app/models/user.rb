@@ -52,7 +52,7 @@ class User < ApplicationModel
   before_destroy    :destroy_longer_required_objects, :destroy_move_dependency_ownership
   after_commit      :update_caller_id
 
-  validate :ensure_identifier, :ensure_email
+  validate :ensure_identifier, :ensure_email, :ensure_name
   validate :ensure_uniq_email, unless: :skip_ensure_uniq_email
 
   available_perform_change_actions :data_privacy_deletion_task, :attribute_updates
@@ -924,6 +924,22 @@ try to find correct name
     return if email_address_validation.valid?
 
     errors.add :base, __("Invalid email '%{email}'"), email: email
+  end
+
+  def ensure_name
+    return if fullname.split(%r{[\s,]}).all? { |n| ensure_no_uri(n) }
+
+    errors.add :base, __('Name contains a forbidden string.')
+  end
+
+  def ensure_no_uri(value)
+    uri = URI.parse(value)
+
+    return true if !uri || uri.scheme.blank?
+
+    false
+  rescue URI::Error
+    true
   end
 
   def check_login

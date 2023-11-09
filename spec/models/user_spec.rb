@@ -1815,4 +1815,87 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe 'Checks name attributes for offending URLs' do
+    shared_examples 'raising a validation error' do
+      it 'raises a validation error' do
+        expect { user }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Name contains a forbidden string.')
+      end
+    end
+
+    shared_examples 'not raising a validation error' do
+      it 'does not raise a validation error' do
+        expect { user }.not_to raise_error
+      end
+    end
+
+    context 'with firstname attribute' do
+      let(:user) { create(:customer, firstname: value, email: Faker::Internet.unique.email) }
+
+      context 'when equaling a URL with a scheme' do
+        let(:value) { 'https://zammad.org/participate' }
+
+        it_behaves_like 'raising a validation error'
+      end
+
+      context 'when equaling a URL without a scheme' do
+        let(:value) { 'zammad.org' }
+
+        it_behaves_like 'not raising a validation error'
+      end
+
+      context 'when containing a URL with a scheme' do
+        let(:value) { 'Click here to confirm https://zammad.org/participate, then log in' }
+
+        it_behaves_like 'raising a validation error'
+      end
+    end
+
+    context 'with lastname attribute' do
+      let(:user) { create(:customer, lastname: value, email: Faker::Internet.unique.email) }
+
+      context 'when equaling a URL with a scheme' do
+        let(:value) { 'https://zammad.org/participate' }
+
+        it_behaves_like 'raising a validation error'
+      end
+
+      context 'when equaling a URL without a scheme' do
+        let(:value) { 'zammad.org' }
+
+        it_behaves_like 'not raising a validation error'
+      end
+
+      context 'when containing a URL with a scheme' do
+        let(:value) { 'Click here to confirm https://zammad.org/participate, then log in' }
+
+        it_behaves_like 'raising a validation error'
+      end
+    end
+
+    context 'with both firstname and lastname attribute' do
+      let(:user) { create(:customer, firstname: firstname, lastname: lastname, email: Faker::Internet.unique.email) }
+
+      context 'when equaling a URL with a scheme' do
+        let(:firstname) { 'Click here to confirm' }
+        let(:lastname)  { 'https://zammad.org/participate' }
+
+        it_behaves_like 'raising a validation error'
+      end
+
+      context 'when equaling a URL without a scheme' do
+        let(:firstname) { 'zammad.org' }
+        let(:lastname) { 'Foundation' }
+
+        it_behaves_like 'not raising a validation error'
+      end
+
+      context 'when containing a URL with a scheme' do
+        let(:firstname) { 'Click here to confirm' }
+        let(:lastname)  { 'https://zammad.org/participate, then log in' }
+
+        it_behaves_like 'raising a validation error'
+      end
+    end
+  end
 end
