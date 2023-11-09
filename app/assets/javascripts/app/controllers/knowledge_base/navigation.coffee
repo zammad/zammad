@@ -134,7 +134,10 @@ class App.KnowledgeBaseNavigation extends App.Controller
     if !(object?.visiblePublicly?(kb_locale) or (object?.translation?(kb_locale?.id)? and @parentController.isEditor()))
       return
 
-    object.publicBaseUrl(kb_locale)
+    objectName = object.constructor.className
+    locale     = kb_locale.systemLocale().locale
+
+    "#{@apiPath}/knowledge_bases/preview/#{objectName}/#{object.id}/#{locale}"
 
   kb_locales: ->
     path = '#' + @parentController.lastParams.match.input

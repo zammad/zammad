@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Public::BaseController < ApplicationController
+  before_action :authenticate_with_preview_token
   before_action :load_kb
   helper_method :system_locale_via_uri, :fallback_locale, :current_user, :find_category,
                 :filter_primary_kb_locale, :menu_items, :all_locales, :can_preview?
@@ -118,5 +119,18 @@ class KnowledgeBase::Public::BaseController < ApplicationController
     logger.error e
     respond_to_exception(publicly_visible_error, :not_found)
     http_log
+  end
+
+  def authenticate_with_preview_token
+    if params[:preview_token].present?
+      session[:kb_preview_token] = params[:preview_token]
+    end
+
+    user = Token.check action: 'KnowledgeBasePreview', token: session[:kb_preview_token]
+
+    return if user.blank?
+
+    @_auth_type    = 'kb_preview_token'
+    @_current_user = user
   end
 end

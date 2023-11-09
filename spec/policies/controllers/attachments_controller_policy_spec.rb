@@ -10,6 +10,7 @@ describe Controllers::AttachmentsControllerPolicy do
   let(:record_class) { AttachmentsController }
   let(:object)       { create(:knowledge_base_answer, visibility, :with_attachment, category: category) }
   let(:params)       { { id: object.attachments.first.id } }
+  let(:session)      { {} }
 
   let(:record) do
     rec             = record_class.new
@@ -17,6 +18,10 @@ describe Controllers::AttachmentsControllerPolicy do
     rec.params      = params
 
     rec
+  end
+
+  before do
+    allow(record).to receive(:session).and_return(session)
   end
 
   context 'with no user' do
@@ -63,6 +68,25 @@ describe Controllers::AttachmentsControllerPolicy do
       let(:file) { create(:store, object: 'NonExistingObject') }
       let(:params) { { id: file.id } }
       let(:user)   { create(:admin) }
+
+      it { is_expected.to forbid_actions :show, :destroy }
+    end
+  end
+
+  context 'with a preview token' do
+    let(:user)       { false }
+    let(:visibility) { :draft }
+    let(:session)    { { kb_preview_token: token } }
+
+    context 'when token is valid' do
+      let(:token) { Token.renew_token! 'KnowledgeBasePreview', create(:admin).id }
+
+      it { is_expected.to permit_actions :show }
+      it { is_expected.to forbid_actions :destroy }
+    end
+
+    context 'when token user does not have access' do
+      let(:token) { Token.renew_token! 'KnowledgeBasePreview', create(:customer).id }
 
       it { is_expected.to forbid_actions :show, :destroy }
     end

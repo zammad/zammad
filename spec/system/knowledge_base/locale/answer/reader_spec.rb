@@ -160,7 +160,7 @@ RSpec.describe 'Knowledge Base Locale Answer Reader', time_zone: 'Europe/London'
   end
 
   context 'when logged in as reader', authenticated: -> { visitor }, current_user_id: -> { editor.id } do
-    let(:editor) { create(:admin, firstname: 'Editor') }
+    let(:editor)  { create(:admin, firstname: 'Editor') }
     let(:visitor) { create(:agent) }
 
     it 'state not shown' do
@@ -188,6 +188,18 @@ RSpec.describe 'Knowledge Base Locale Answer Reader', time_zone: 'Europe/London'
 
       within :active_content, '.knowledge-base-article-meta' do
         expect(page).to have_text editor.fullname
+      end
+    end
+
+    it 'opens preview' do
+      open_answer published_answer
+
+      new_window = window_opened_by { click '.icon-external' }
+
+      within_window new_window do
+        within '.main--article' do
+          expect(page).to have_text(published_answer.translations.first.title)
+        end
       end
     end
   end

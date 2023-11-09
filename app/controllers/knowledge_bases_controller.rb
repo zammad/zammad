@@ -1,12 +1,30 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBasesController < KnowledgeBase::BaseController
+  include KnowledgeBaseHelper
+
   def init
     render json: assets(params[:answer_translation_content_ids])
   end
 
   def visible_ids
     render json: calculate_visible_ids
+  end
+
+  def preview
+    token = Token.renew_token! 'KnowledgeBasePreview'
+
+    path = case params[:object]
+           when 'KnowledgeBase'
+             help_root_path params[:locale], preview_token: token
+           when 'KnowledgeBaseCategory'
+             help_category_path params[:locale], params[:id], preview_token: token
+           when 'KnowledgeBaseAnswer'
+             category_id = KnowledgeBase::Answer.find(params[:id]).category_id
+             help_answer_path params[:locale], category_id, params[:id], preview_token: token
+           end
+
+    redirect_to custom_path_if_needed(path, KnowledgeBase.first, full: true)
   end
 
   private

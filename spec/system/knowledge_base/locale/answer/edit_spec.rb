@@ -176,4 +176,26 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
       end
     end
   end
+
+  describe 'previewing' do
+    before do
+      visit "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{draft_answer.id}/edit"
+    end
+
+    it 'opens preview' do
+      new_window = window_opened_by { click '.icon-external' }
+
+      within_window new_window do
+        within '.main--article' do
+          expect(page).to have_text(draft_answer.translations.first.title)
+        end
+      end
+    end
+
+    it 'creates a KB preview token' do
+      expect { click('.icon-external') }
+        .to change { Token.exists?(action: 'KnowledgeBasePreview') }
+        .to(true)
+    end
+  end
 end

@@ -71,6 +71,30 @@ RSpec.describe 'Public Knowledge Base for guest', authenticated_as: false, type:
     end
   end
 
+  context 'preview token' do
+    context 'when token is valid' do
+      let(:token) { Token.renew_token! 'KnowledgeBasePreview', create(:admin).id }
+
+      it 'loads draft answer' do
+        visit help_answer_path(primary_locale.system_locale.locale, category, draft_answer, preview_token: token)
+
+        within '.main--article' do
+          expect(page).to have_text(draft_answer.translations.first.title)
+        end
+      end
+    end
+
+    context 'when token user does not have access' do
+      let(:token) { Token.renew_token! 'KnowledgeBasePreview', create(:customer).id }
+
+      it 'loads draft answer' do
+        visit help_answer_path(primary_locale.system_locale.locale, category, draft_answer, preview_token: token)
+
+        expect(page).to have_no_text(draft_answer.translations.first.title)
+      end
+    end
+  end
+
   context 'wrong locale' do
     before { visit help_root_path(alternative_locale.system_locale.locale) }
 

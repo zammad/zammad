@@ -24,6 +24,8 @@ Zammad::Application.routes.draw do
         post :search,         controller: 'knowledge_base/search'
         get  :recent_answers, controller: 'knowledge_base/answers'
 
+        get 'preview/:object/:id/:locale', to: 'knowledge_bases#preview'
+
         resources :manage, controller: 'knowledge_base/manage' do
           collection do
             get :init
