@@ -1,34 +1,31 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-#
-# Throttle password reset requests
-#
-API_V1_USERS__PASSWORD_RESET_PATH = '/api/v1/users/password_reset'.freeze
-Rack::Attack.throttle('limit password reset requests per username', limit: 3, period: 1.minute.to_i) do |req|
-  if req.path.start_with?(API_V1_USERS__PASSWORD_RESET_PATH) && req.post?
-    # Normalize to protect against rate limit bypasses.
-    req.params['username'].to_s.downcase.gsub(%r{\s+}, '')
-  end
-end
-Rack::Attack.throttle('limit password reset requests per source IP address', limit: 3, period: 1.minute.to_i) do |req|
-  if req.path.start_with?(API_V1_USERS__PASSWORD_RESET_PATH) && req.post?
-    req.ip
-  end
-end
+THROTTLE_PUBLIC_ENDPOINTS = [
+  {
+    url:   '/api/v1/users/password_reset'.freeze,
+    field: 'username',
+  },
+  {
+    url:   '/api/v1/users/email_verify_send'.freeze,
+    field: 'email',
+  },
+  {
+    url:   '/api/v1/users/admin_password_auth'.freeze,
+    field: 'username',
+  },
+].freeze
 
-#
-# Throttle admin auth requests
-#
-API_V1_USERS__ADMIN_PASSWORD_AUTH_PATH = '/api/v1/users/admin_password_auth'.freeze
-Rack::Attack.throttle('limit admi auth requests per username', limit: 3, period: 1.minute.to_i) do |req|
-  if req.path.start_with?(API_V1_USERS__ADMIN_PASSWORD_AUTH_PATH) && req.post?
-    # Normalize to protect against rate limit bypasses.
-    req.params['username'].to_s.downcase.gsub(%r{\s+}, '')
+THROTTLE_PUBLIC_ENDPOINTS.each do |config|
+  Rack::Attack.throttle("limit #{config[:url]} requests per #{config[:field]}", limit: 3, period: 1.minute.to_i) do |req|
+    if req.path.start_with?(config[:url]) && req.post?
+      # Normalize to protect against rate limit bypasses.
+      req.params[config[:field]].to_s.downcase.gsub(%r{\s+}, '')
+    end
   end
-end
-Rack::Attack.throttle('limit admin requests per source IP address', limit: 3, period: 1.minute.to_i) do |req|
-  if req.path.start_with?(API_V1_USERS__ADMIN_PASSWORD_AUTH_PATH) && req.post?
-    req.ip
+  Rack::Attack.throttle("limit #{config[:url]} requests per source IP address", limit: 3, period: 1.minute.to_i) do |req|
+    if req.path.start_with?(config[:url]) && req.post?
+      req.ip
+    end
   end
 end
 
