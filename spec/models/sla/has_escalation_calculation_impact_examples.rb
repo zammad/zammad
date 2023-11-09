@@ -32,6 +32,16 @@ RSpec.shared_examples 'HasEscalationCalculationImpact', :performs_jobs do
       expect { sla }.to change { ticket.reload.close_escalation_at }.to eq(ticket.created_at + 4.hours)
     end
 
+    context 'when SLA is destroyed' do
+      before do
+        sla
+      end
+
+      it 'calculates escalation_at' do
+        expect { sla.reload.destroy }.to change { ticket.reload.escalation_at }.to be_nil
+      end
+    end
+
     context 'when SLA gets updated' do
 
       before do

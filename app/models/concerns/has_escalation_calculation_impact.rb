@@ -13,20 +13,23 @@ module HasEscalationCalculationImpact
 
     # return if we run import mode
     return if Setting.get('import_mode') && !Setting.get('import_ignore_sla')
-
-    # check if condition has changed
-    fields_to_check = if instance_of?(Sla)
-                        %w[condition calendar_id first_response_time update_time solution_time]
-                      else
-                        %w[timezone business_hours default ical_url public_holidays]
-                      end
-
-    return if fields_to_check.none? do |item|
-      next if !saved_change_to_attribute(item)
-
-      saved_change_to_attribute(item)[0] != saved_change_to_attribute(item)[1]
-    end
+    return if !needs_rebuilding?
 
     TicketEscalationRebuildJob.perform_later
+  end
+
+  def needs_rebuilding?
+    case self
+    when Sla
+      return true if destroyed?
+
+      %w[condition calendar_id first_response_time update_time solution_time].any? do |item|
+        saved_change_to_attribute?(item)
+      end
+    when Calendar
+      %w[timezone business_hours default ical_url public_holidays].any? do |item|
+        saved_change_to_attribute?(item)
+      end
+    end
   end
 end
