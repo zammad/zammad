@@ -217,6 +217,15 @@ onMounted(() => {
 })
 
 useArticleSeen(bubbleElement, emit)
+
+const onContextClick = () => {
+  emit('showContext')
+  nextTick(() => {
+    // remove selection because pointerdown event will leave it as is,
+    // all actions inside the context should already have accessed it synchronously
+    window.getSelection()?.removeAllRanges()
+  })
+}
 </script>
 
 <template>
@@ -327,10 +336,15 @@ useArticleSeen(bubbleElement, emit)
             type="button"
             data-name="article-context"
             :aria-label="$t('Article actions')"
-            @click="emit('showContext')"
-            @keydown.enter.prevent="emit('showContext')"
+            @pointerdown="onContextClick()"
+            @keydown.enter.prevent="onContextClick()"
           >
-            <CommonIcon name="mobile-more-vertical" size="small" decorative />
+            <CommonIcon
+              name="mobile-more-vertical"
+              size="small"
+              decorative
+              data-ignore-click
+            />
           </button>
         </div>
       </div>

@@ -276,7 +276,13 @@ test("redirects to error page, if can't find ticket", async () => {
 test('show article context on click', async () => {
   const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
 
-  const view = await visitView('/tickets/1')
+  const view = await visitView('/tickets/1', {
+    global: {
+      stubs: {
+        transition: false,
+      },
+    },
+  })
 
   await waitUntilTicketLoaded()
 

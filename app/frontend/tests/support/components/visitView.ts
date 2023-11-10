@@ -5,7 +5,10 @@ import { random } from 'lodash-es'
 import type { RouteRecordRaw } from 'vue-router'
 import LayoutTest from './LayoutTest.vue'
 import mockApolloClient from '../mock-apollo-client.ts'
-import renderComponent, { getTestRouter } from './renderComponent.ts'
+import renderComponent, {
+  getTestRouter,
+  type ExtendedMountingOptions,
+} from './renderComponent.ts'
 
 vi.mock('#shared/server/apollo/client.ts', () => {
   return {
@@ -32,7 +35,7 @@ Object.defineProperty(window, 'fetch', {
 
 const html = String.raw
 
-interface VisitViewOptions {
+interface VisitViewOptions extends ExtendedMountingOptions<unknown> {
   mockApollo?: boolean
 }
 
@@ -74,6 +77,7 @@ export const visitView = async (
       propsData: {
         testKey,
       },
+      ...options,
     },
   )
 

@@ -29,6 +29,13 @@ const emit = defineEmits<{
 
 const localState = useVModel(props, 'state', emit)
 
+let animating = false
+
+// separate method because eslint doesn't see that when it's reassigned in a template
+const setAnimating = (value: boolean) => {
+  animating = value
+}
+
 const hidePopup = (cancel = true) => {
   emit('close', cancel)
   localState.value = false
@@ -43,7 +50,8 @@ const onItemClick = (item: PopupItemDescriptor) => {
 
 const wrapper = shallowRef<HTMLElement>()
 
-onClickOutside(wrapper, () => hidePopup())
+// ignore clicks while it's rendering
+onClickOutside(wrapper, () => !animating && hidePopup())
 onKeyUp(
   'Escape',
   (e) => {
@@ -107,7 +115,11 @@ const getClassesByType = (type: PopupItemDescriptor['type']) => {
 
 <template>
   <Teleport to="body">
-    <Transition v-bind="transition">
+    <Transition
+      v-bind="transition"
+      @before-enter="setAnimating(true)"
+      @after-enter="setAnimating(false)"
+    >
       <!-- empty @click is needed for https://stackoverflow.com/a/39712411 -->
       <div
         v-if="localState"

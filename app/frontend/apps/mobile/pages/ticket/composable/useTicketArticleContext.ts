@@ -2,6 +2,7 @@
 
 import type { PopupItemDescriptor } from '#mobile/components/CommonSectionPopup/types.ts'
 import { useDialog } from '#shared/composables/useDialog.ts'
+import log from '#shared/utils/log.ts'
 import { computed, nextTick, ref, shallowRef } from 'vue'
 import type {
   TicketArticle,
@@ -160,7 +161,8 @@ export const useTicketArticleContext = () => {
     try {
       // can throw RangeError
       selectionData.value = getArticleSelection(article.internalId)
-    } catch {
+    } catch (err) {
+      log.error('[Article Quote] Failed to parse article selection', err)
       selectionData.value = undefined
     }
   }
