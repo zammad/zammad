@@ -55,16 +55,12 @@ RSpec.describe 'Auto wizard', set_up: false, type: :system do
 
       close_clues_modal
 
-      visit 'logout'
-
-      expect(page).to have_current_route('login')
+      logout
 
       login(
         username: 'hans.atila@zammad.org',
         password: 'Z4mm4dr0ckZ!'
       )
-
-      expect(page).to have_current_path('/')
 
       refresh
 

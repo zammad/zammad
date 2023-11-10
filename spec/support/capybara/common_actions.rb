@@ -132,8 +132,8 @@ module CommonActions
   # @see Capybara::Session#visit
   #
   # @example
-  #  visit('logout')
-  # => visited SPA route 'localhost:32435/#logout'
+  #  visit('signup')
+  # => visited SPA route 'localhost:32435/#signup'
   #
   # @example
   #  visit('/test/ui')
