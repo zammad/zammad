@@ -23,6 +23,7 @@ jobs:
     env:
       RAILS_ENV: test
       Z_LOCALES: "en-us:de-de"
+      TZ: 'Europe/London'
       REDIS_URL: redis://redis:6379
       # Compile assets only once.
       CI_SKIP_ASSETS_PRECOMPILE: 'true'
