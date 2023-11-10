@@ -1816,60 +1816,54 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'Checks name attributes for offending URLs' do
-    shared_examples 'raising a validation error' do
-      it 'raises a validation error' do
-        expect { user }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Name contains a forbidden string.')
+  describe 'Sanitizes name attributes for offending URLs' do
+    shared_examples 'sanitizing user name attributes' do |firstname, lastname|
+      it 'sanitizes user name attributes' do
+        expect(user).to have_attributes(firstname: firstname, lastname: lastname)
       end
     end
 
-    shared_examples 'not raising a validation error' do
-      it 'does not raise a validation error' do
-        expect { user }.not_to raise_error
-      end
-    end
-
-    context 'with firstname attribute' do
-      let(:user) { create(:customer, firstname: value, email: Faker::Internet.unique.email) }
+    context 'with firstname attribute only' do
+      let(:user) { create(:customer, firstname: value, lastname: nil, email: Faker::Internet.unique.email) }
 
       context 'when equaling a URL with a scheme' do
         let(:value) { 'https://zammad.org/participate' }
 
-        it_behaves_like 'raising a validation error'
+        it_behaves_like 'sanitizing user name attributes', 'zammad.org/participate'
       end
 
       context 'when equaling a URL without a scheme' do
         let(:value) { 'zammad.org' }
 
-        it_behaves_like 'not raising a validation error'
+        it_behaves_like 'sanitizing user name attributes', 'zammad.org'
       end
 
       context 'when containing a URL with a scheme' do
-        let(:value) { 'Click here to confirm https://zammad.org/participate, then log in' }
+        let(:value) { 'Click here to confirm https://zammad.org/participate then log in' }
 
-        it_behaves_like 'raising a validation error'
+        it_behaves_like 'sanitizing user name attributes', 'Click', 'here to confirm zammad.org/participate then log in'
       end
     end
 
-    context 'with lastname attribute' do
-      let(:user) { create(:customer, lastname: value, email: Faker::Internet.unique.email) }
+    context 'with lastname attribute only' do
+      let(:user) { create(:customer, firstname: nil, lastname: value, email: Faker::Internet.unique.email) }
 
       context 'when equaling a URL with a scheme' do
         let(:value) { 'https://zammad.org/participate' }
 
-        it_behaves_like 'raising a validation error'
+        it_behaves_like 'sanitizing user name attributes', nil, 'zammad.org/participate'
       end
 
       context 'when equaling a URL without a scheme' do
         let(:value) { 'zammad.org' }
 
-        it_behaves_like 'not raising a validation error'
+        it_behaves_like 'sanitizing user name attributes', nil, 'zammad.org'
       end
 
       context 'when containing a URL with a scheme' do
-        let(:value) { 'Click here to confirm https://zammad.org/participate, then log in' }
+        let(:value) { 'Click here to confirm https://zammad.org/participate then log in' }
 
-        it_behaves_like 'raising a validation error'
+        it_behaves_like 'sanitizing user name attributes', 'Click', 'here to confirm zammad.org/participate then log in'
       end
     end
 
@@ -1880,21 +1874,21 @@ RSpec.describe User, type: :model do
         let(:firstname) { 'Click here to confirm' }
         let(:lastname)  { 'https://zammad.org/participate' }
 
-        it_behaves_like 'raising a validation error'
+        it_behaves_like 'sanitizing user name attributes', 'Click here to confirm', 'zammad.org/participate'
       end
 
       context 'when equaling a URL without a scheme' do
         let(:firstname) { 'zammad.org' }
         let(:lastname) { 'Foundation' }
 
-        it_behaves_like 'not raising a validation error'
+        it_behaves_like 'sanitizing user name attributes', 'zammad.org', 'Foundation'
       end
 
       context 'when containing a URL with a scheme' do
         let(:firstname) { 'Click here to confirm' }
-        let(:lastname)  { 'https://zammad.org/participate, then log in' }
+        let(:lastname)  { 'https://zammad.org/participate then log in' }
 
-        it_behaves_like 'raising a validation error'
+        it_behaves_like 'sanitizing user name attributes', 'Click here to confirm', 'zammad.org/participate then log in'
       end
     end
   end
