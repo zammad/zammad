@@ -41,7 +41,36 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
       visit '/'
 
       within '#navigation .menu' do
+        place_call
         expect(page).to have_link('Phone', href: '#cti')
+      end
+    end
+
+    context 'when agent is on the phone' do
+      let(:agent) do
+        create(:agent, phone: agent_phone).tap do |user|
+          user.preferences[:cti] = true
+          user.save!
+        end
+      end
+
+      let(:cti_log) do
+        create(:cti_log,
+               direction:   'in',
+               from:        customer.phone,
+               preferences: { from: [{ user_id: customer.id }] })
+      end
+
+      before { cti_log }
+
+      it 'shows call and opens user profile on click' do
+        visit '/'
+
+        within '.call-widgets .user-card' do
+          click_link customer.fullname
+        end
+
+        expect(current_url).to end_with("user/profile/#{customer.id}")
       end
     end
   end
@@ -136,7 +165,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
 
     context 'with private number' do
       let(:customer_phone) { '007' }
-      let(:agent_phone) { '008' }
+      let(:agent_phone)    { '008' }
 
       it 'appears verbatim' do
 
