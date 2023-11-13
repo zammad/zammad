@@ -7176,10 +7176,10 @@ linkify-it@^4.0.1:
   dependencies:
     uc.micro "^1.0.1"
 
-linkify-string@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/linkify-string/-/linkify-string-4.1.1.tgz#461eb30b66752dec21f3557ebe55983ae3f5b195"
-  integrity sha512-9+kj8xr7GLiyNyO9ri7lIxq2ixVYjjqvtomPQpeYNNT56/PxQq6utzXFLm8HxOaGTiMpimj1UAQWwYYPV88L1g==
+linkify-string@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/linkify-string/-/linkify-string-4.1.2.tgz#03fb1b7f64f647902dd5a1014640e8315c4167c0"
+  integrity sha512-tYDXkrzKCy5haf9eHS7GWU+a//q0jveP5kX2VF+/47h5jfTTtsqqj3lchacLTwRMB/nJL3trrloyAhPzcvBvqw==
 
 linkifyjs@^4.1.0:
   version "4.1.0"
