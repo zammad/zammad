@@ -101,3 +101,14 @@ export const createDeferred = <T>() => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return { resolve: resolve!, reject: reject!, promise }
 }
+
+export const waitForElement = async (
+  query: string,
+  tries = 60,
+): Promise<Element | null> => {
+  if (tries === 0) return null
+  const element = document.querySelector(query)
+  if (element) return element
+  await new Promise((resolve) => requestAnimationFrame(resolve))
+  return waitForElement(query, tries - 1)
+}

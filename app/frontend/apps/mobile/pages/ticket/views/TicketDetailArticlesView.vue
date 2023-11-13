@@ -17,7 +17,7 @@ import type {
 } from '#shared/graphql/types.ts'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
-import { edgesToArray } from '#shared/utils/helpers.ts'
+import { edgesToArray, waitForElement } from '#shared/utils/helpers.ts'
 import { useRoute } from 'vue-router'
 import { useSessionStore } from '#shared/stores/session.ts'
 import { useEventListener } from '@vueuse/core'
@@ -295,9 +295,7 @@ const initialScroll = async () => {
   const internalId = articles.value[articles.value.length - 1]?.internalId
   if (!internalId) return false
 
-  const lastArticle = document.querySelector(
-    `#article-${internalId}`,
-  ) as HTMLElement | null
+  const lastArticle = await waitForElement(`#article-${internalId}`)
 
   if (!lastArticle) return false
 
