@@ -135,6 +135,18 @@ RSpec.describe 'Knowledge Base Locale Answer Read', authenticated_as: true, type
       end
     end
 
+    it 'switches to invalid locale and back' do
+      open_page('lol')
+
+      in_modal do
+        click_link 'Open in primary locale'
+      end
+
+      within '.knowledge-base-article' do
+        expect(page).to have_text(published_answer.translations.first.title)
+      end
+    end
+
     def open_page(locale_name)
       visit "#knowledge_base/#{knowledge_base.id}/locale/#{locale_name}/answer/#{published_answer.id}"
     end

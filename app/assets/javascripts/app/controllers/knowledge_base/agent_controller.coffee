@@ -250,7 +250,8 @@ class App.KnowledgeBaseAgentController extends App.Controller
   renderError: ->
     @bodyModal?.close()
 
-    url = App.Utils.joinUrlComponents @lastParams.effectivePath, @getKnowledgeBase().primaryKbLocale().urlSuffix()
+    kb  = @getKnowledgeBase()
+    url = (@constructor.pickObjectUsing(@lastParams, @) || kb)?.uiUrl(kb.primaryKbLocale(), @lastParams.action)
 
     @bodyModal = new App.ControllerModal(
       head:          __('Locale not found')
