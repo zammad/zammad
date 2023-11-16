@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class SettingUpdates2 < ActiveRecord::Migration[6.0]
-  def change # rubocop:disable Metrics/AbcSize
+  def change
 
     return if !Setting.exists?(name: 'system_init_done')
 

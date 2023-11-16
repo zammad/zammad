@@ -2,7 +2,7 @@
 
 class Sessions::Event::ChatTransfer < Sessions::Event::ChatBase
 
-  def run # rubocop:disable Metrics/AbcSize
+  def run
     return super if super
     return if !permission_check('chat.agent', 'chat')
 

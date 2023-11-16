@@ -13,7 +13,7 @@ class TicketPolicy < ApplicationPolicy
       super
     end
 
-    def resolve # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    def resolve # rubocop:disable Metrics/AbcSize
       raise NoMethodError, <<~ERR.chomp if instance_of?(TicketPolicy::BaseScope)
         specify an access type using a subclass of TicketPolicy::BaseScope
       ERR

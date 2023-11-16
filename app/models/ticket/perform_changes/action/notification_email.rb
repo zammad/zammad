@@ -253,7 +253,7 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
     end
   end
 
-  def recipients_by_type_article_last_sender # rubocop:disable Metrics/AbcSize
+  def recipients_by_type_article_last_sender
     return nil if article.blank?
 
     if article.reply_to

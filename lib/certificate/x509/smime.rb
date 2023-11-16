@@ -52,7 +52,7 @@ class Certificate::X509::SMIME < Certificate::X509
     extensions_as_hash.fetch('keyUsage', ['Key Encipherment']).include?('Key Encipherment')
   end
 
-  def valid_smime_certificate? # rubocop:disable Metrics/CyclomaticComplexity
+  def valid_smime_certificate?
     return true if ca?
 
     return false if !applicable?

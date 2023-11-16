@@ -8,7 +8,7 @@ module SecureMailing::PGP::Tool::Error::Handler
   included do # rubocop:disable Metrics/BlockLength
     private
 
-    def log(cmd, env, stdin, result) # rubocop:disable Metrics/AbcSize
+    def log(cmd, env, stdin, result)
       log_level = result[:status].success? ? :debug : :error
 
       Rails.logger.send(log_level) { "PGP: Version: #{SecureMailing::PGP::Tool.version}" }

@@ -27,7 +27,7 @@ class ImportKayakoController < ApplicationController
     }
   end
 
-  def credentials_check # rubocop:disable Metrics/AbcSize
+  def credentials_check
     return if setup_done_response
 
     if !params[:username] || !params[:password]

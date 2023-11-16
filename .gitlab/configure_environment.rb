@@ -55,7 +55,7 @@ class ConfigureEnvironment
     false
   end
 
-  def self.configure_database # rubocop:disable Metrics/AbcSize
+  def self.configure_database
 
     if File.exist? File.join(__dir__, '../config/database.yml')
       puts "'config/database.yml' already exists and will not be changed."

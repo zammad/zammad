@@ -21,7 +21,7 @@ module SecureMailing::PGP::Tool::Parse
 
     private
 
-    def parse_info(data) # rubocop:disable Metrics/AbcSize
+    def parse_info(data)
       info = {
         fingerprint: nil,
         uids:        [],

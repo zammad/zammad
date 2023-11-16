@@ -8,7 +8,7 @@ module Translation::SynchronizesFromPo
     attr_reader :source, :translation_file, :skip_sync
     attr_accessor :translation
 
-    def self.create(locale, file, entry) # rubocop:disable Metrics/AbcSize
+    def self.create(locale, file, entry)
       source = unescape_po(entry.msgid.to_s)
 
       # Make sure to ignore fuzzy entries.
@@ -56,7 +56,7 @@ module Translation::SynchronizesFromPo
       end
     end
 
-    def sync_locale_from_po(locale) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    def sync_locale_from_po(locale) # rubocop:disable Metrics/AbcSize
 
       previous_translation_map = Translation.where(locale: locale).index_by(&:source)
 
@@ -115,7 +115,7 @@ module Translation::SynchronizesFromPo
       @cached_strings_for_locale[locale] ||= strings_for_locale(locale).freeze
     end
 
-    def strings_for_locale(locale) # rubocop:disable Metrics/AbcSize
+    def strings_for_locale(locale)
       result = {}
       po_files_for_locale(locale).each do |file|
         require 'poparser' # Only load when it is actually used

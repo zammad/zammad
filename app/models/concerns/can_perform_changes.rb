@@ -95,7 +95,7 @@ module CanPerformChanges
     save! if save_needed
   end
 
-  def prepare_actions(perform_changes_data) # rubocop:disable Metrics/AbcSize
+  def prepare_actions(perform_changes_data)
     action_checks = %w[notification additional_object object attribute_update]
     actions = {}
 

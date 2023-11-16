@@ -89,7 +89,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   # Returns identifier of the form field.
-  def field_id # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+  def field_id
     return element.find('.formkit-input', visible: :all)['id'] if input? || type_date? || type_datetime?
     return element.find('textarea')['id'] if type_textarea?
     return element.find('.formkit-fieldset')['id'] if type_radio?
@@ -314,7 +314,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   find_datepicker('Date Picker').select_date(Date.today)
   #   find_datepicker('Date Picker').select_date('2023-01-01')
   #
-  def select_date(date, with_time: false) # rubocop:disable Metrics/CyclomaticComplexity
+  def select_date(date, with_time: false)
     raise 'Field does not support selecting dates' if !type_date? && !type_datetime?
 
     element.click
@@ -781,7 +781,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   Otherwise, we will implicitly wait for a query depending on the type of the field.
   #   If no waits are to be done, we display a friendly warning to devs, since this can lead to some instability.
   #   In form context, expected response number will be automatically increased and tracked.
-  def wait_for_autocomplete_gql(gql_filename, gql_number) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+  def wait_for_autocomplete_gql(gql_filename, gql_number)
     gql_number = autocomplete_gql_number(gql_filename) || gql_number
 
     if gql_filename.present?
@@ -802,7 +802,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     end
   end
 
-  def autocomplete_gql_number(gql_filename) # rubocop:disable Metrics/CyclomaticComplexity
+  def autocomplete_gql_number(gql_filename)
     return nil if form_context.nil?
 
     return form_context.form_gql_number(:autocomplete) if gql_filename.present?

@@ -15,7 +15,7 @@ module Store::Provider::S3::Config
       settings[:max_chunk_size].presence || 100.megabytes
     end
 
-    def apply # rubocop:disable Metrics/AbcSize
+    def apply
       return true if Aws.config.present?
 
       begin

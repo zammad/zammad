@@ -61,7 +61,7 @@ module Zammad
 
         private
 
-        def yaml # rubocop:disable Metrics/AbcSize
+        def yaml
           return {} if @yaml.blank? || !@yaml.exist?
 
           config = YAML.load_file(@yaml, aliases: true).deep_symbolize_keys
@@ -79,7 +79,7 @@ module Zammad
           resolve_url(ENV[@env])
         end
 
-        def resolve_url(url) # rubocop:disable Metrics/AbcSize
+        def resolve_url(url)
           uri = URI.parse(url)
 
           config = template(uri)

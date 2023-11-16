@@ -24,7 +24,7 @@ class Sequencer::Unit::Import::Freshdesk::Description::Mapping < Sequencer::Unit
     }.freeze
   end
 
-  def process # rubocop:disable Metrics/AbcSize
+  def process
     provide_mapped do
       {
         from:          from,

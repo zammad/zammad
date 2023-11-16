@@ -31,7 +31,7 @@ class Sequencer::Unit::Import::Freshdesk::Conversation::Mapping < Sequencer::Uni
     }.freeze
   end
 
-  def process # rubocop:disable Metrics/AbcSize
+  def process
     provide_mapped do
       {
         from:          resource['from_email'],

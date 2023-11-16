@@ -56,7 +56,7 @@ class SecureMailing::SMIME::SecurityOptions < SecureMailing::Backend::HandlerSec
     false
   end
 
-  def certificates_valid?(encryption_result, certs, recipients) # rubocop:disable Metrics/AbcSize
+  def certificates_valid?(encryption_result, certs, recipients)
     result = false
 
     if certs

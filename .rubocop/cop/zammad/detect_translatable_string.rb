@@ -56,7 +56,7 @@ module RuboCop
           '@'
         ].freeze
 
-        def offense?(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+        def offense?(node)
 
           # Ignore Hash Keys
           return false if node.parent.type.eql?(:pair) && node.parent.children.first.equal?(node)

@@ -71,7 +71,7 @@ class Sequencer::Unit::Import::Freshdesk::ObjectAttribute::Config < Sequencer::U
     }.merge(data_type_options)
   end
 
-  def data_type_options # rubocop:disable Metrics/CyclomaticComplexity
+  def data_type_options
 
     case data_type
     when 'date', 'datetime'

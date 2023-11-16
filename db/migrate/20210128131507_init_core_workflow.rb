@@ -13,7 +13,7 @@ class InitCoreWorkflow < ActiveRecord::Migration[5.2]
     add_workflows
   end
 
-  def add_table # rubocop:disable Metrics/AbcSize
+  def add_table
     create_table :core_workflows do |t|
       t.string :name,                     limit: 100, null: false
       t.string :object,                   limit: 100, null: true
