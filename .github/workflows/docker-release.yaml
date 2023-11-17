@@ -124,8 +124,14 @@ jobs:
           tags: |
             type=sha,suffix=-arm64
 
-      - name: Get version tag in the old way
+      - name: Get incrementing Zammad version from the most recent tag
         run: echo ZAMMAD_VERSION="$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')" >> $GITHUB_ENV
+
+      - name: Get Zammad major.minor version from the most recent tag
+        run: echo ZAMMAD_VERSION_MAJOR_MINOR="$(git describe --tags | cut -f1-2 -d.)" >> $GITHUB_ENV
+
+      - name: Get Zammad major version from the most recent tag
+        run: echo ZAMMAD_VERSION_MAJOR="$(git describe --tags | cut -f1 -d.)" >> $GITHUB_ENV
 
       - name: Get tags for final multiarch reference
         id: meta
@@ -135,12 +141,10 @@ jobs:
           tags: |
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
             type=raw,value=${{ env.ZAMMAD_VERSION }},enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
-            type=raw,value=zammad-${{ env.ZAMMAD_VERSION }},enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
+            type=raw,value=${{ env.ZAMMAD_VERSION_MAJOR_MINOR }},enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
+            type=raw,value=${{ env.ZAMMAD_VERSION_MAJOR }},enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
             type=ref,event=branch
             type=ref,event=tag
-            type=semver,pattern={{major}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{version}}
             type=sha
 
       - name: Create manifest list and push
