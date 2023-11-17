@@ -5,7 +5,6 @@ on:
     branches:
       - stable
       - develop
-      - develop-*
     tags:
       - '*'
 
@@ -60,14 +59,14 @@ jobs:
           tags: |
             type=sha,suffix=-${{ matrix.runs-on.platform }}
 
-      # - name: Build and push
-      #   id: docker_build
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     labels: ${{ steps.meta.outputs.labels }}
-      #     push: true
-      #     tags: ${{ steps.meta.outputs.tags }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
 
   docker-create-multiarch-manifest:
     runs-on: ubuntu-22.04
@@ -148,10 +147,10 @@ jobs:
             type=ref,event=tag
             type=sha
 
-      # - name: Create manifest list and push
-      #   run: |
-      #     docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") ${{ steps.meta_arch_amd64.outputs.tags }} ${{ steps.meta_arch_arm64.outputs.tags }}
+      - name: Create manifest list and push
+        run: |
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") ${{ steps.meta_arch_amd64.outputs.tags }} ${{ steps.meta_arch_arm64.outputs.tags }}
 
-      # - name: Inspect image
-      #   run: |
-      #     docker buildx imagetools inspect ${{ matrix.target.image }}:${{ steps.meta.outputs.version }}
+      - name: Inspect image
+        run: |
+          docker buildx imagetools inspect ${{ matrix.target.image }}:${{ steps.meta.outputs.version }}
