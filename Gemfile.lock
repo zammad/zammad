@@ -362,7 +362,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.4)
+    nokogiri (1.15.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nori (2.6.0)
@@ -637,7 +637,7 @@ GEM
       bindata (~> 2.4)
       openssl (> 2.0)
       openssl-signature_algorithm (~> 1.0)
-    twilio-ruby (6.8.1)
+    twilio-ruby (6.8.2)
       faraday (>= 0.9, < 3.0)
       jwt (>= 1.5, < 3.0)
       nokogiri (>= 1.6, < 2.0)
