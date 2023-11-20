@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-23 01:08+0000\n"
-"Last-Translator: mmbad35171a1be4904 <mm@zammad.com>\n"
+"PO-Revision-Date: 2023-11-19 15:00+0000\n"
+"Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/lt/>\n"
 "Language: lt\n"
@@ -2866,33 +2866,33 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
 msgid "Close tab"
-msgstr "Uždaryti šį langą"
+msgstr "Uždaryti langą"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
 msgid "Close tab on ticket close"
-msgstr ""
+msgstr "Uždaryti langą kai triktis bus uždaryta"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
 msgid "Closed"
-msgstr "Uždarytas"
+msgstr "Uždaryta"
 
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Closed At"
-msgstr ""
+msgstr "Uždaryta"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 msgid "Closed Tickets"
-msgstr ""
+msgstr "Uždarytos triktys"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Closing time"
-msgstr ""
+msgstr "Uždarymo laikas"
 
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
@@ -2904,11 +2904,11 @@ msgstr "Komentaras"
 
 #: app/models/report.rb
 msgid "Communication"
-msgstr ""
+msgstr "Komunikacija"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Company Inc."
-msgstr ""
+msgstr "UAB „Verslas iki nulio“"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
@@ -2943,11 +2943,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 msgid "Config"
-msgstr ""
+msgstr "Konfigūracija"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "Config has changed"
-msgstr ""
+msgstr "Konfigūracija atnaujinta"
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -2975,10 +2975,8 @@ msgid "Configure App"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
-#, fuzzy
-#| msgid "Manage %s Settings"
 msgid "Configure Basic Settings"
-msgstr "Tvarkyti %s nustatymus"
+msgstr "Konfigūruoti pagrindinius parametrus"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #, fuzzy
@@ -2987,20 +2985,16 @@ msgid "Confirm"
 msgstr "Konfiguracija"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
-#, fuzzy
-#| msgid "Change your password"
 msgid "Confirm Password"
-msgstr "Pasikeisti savo slaptažodį"
+msgstr "Patvirtinkite slaptažodį"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#, fuzzy
-#| msgid "Configuration"
 msgid "Confirm dialog"
-msgstr "Konfiguracija"
+msgstr "Patvirtinimo dialogas"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Confirm merge"
-msgstr ""
+msgstr "Patvirtinkite sujungimą"
 
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -3023,7 +3017,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
-msgstr ""
+msgstr "Patvirtinti arba sutikti su dialogu"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
@@ -3032,70 +3026,68 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
-#, fuzzy
-#| msgid "Configuration"
 msgid "Confirmation"
-msgstr "Konfiguracija"
+msgstr "Patvirtinimas"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Confirmation failed."
-msgstr ""
+msgstr "Nepavyko patvirtinti."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Connect"
-msgstr ""
+msgstr "Prisijungti"
 
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email_pre_configured.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 msgid "Connect Channels"
-msgstr ""
+msgstr "Prijungti komunikacijos kanalus"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 msgid "Connect Exchange App"
-msgstr ""
+msgstr "Prijungti Exchange aplikaciją"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 msgid "Connect Facebook App"
-msgstr ""
+msgstr "Prijungti Facebook aplikaciją"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/views/google/index.jst.eco
 msgid "Connect Google App"
-msgstr ""
+msgstr "Prijungti Google aplikaciją"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 msgid "Connect Microsoft 365 App"
-msgstr ""
+msgstr "Prijungti Microsoft 365 aplikaciją"
 
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 msgid "Connect Twitter App"
-msgstr ""
+msgstr "Prijungti Twitter aplikaciją"
 
 #: public/assets/chat/views/loader.eco
 msgid "Connecting"
-msgstr ""
+msgstr "Jungiamasi"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Connecting …"
-msgstr ""
+msgstr "Jungiamasi …"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection lost"
-msgstr ""
+msgstr "Dingo ryšys"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection re-established"
-msgstr ""
+msgstr "Ryšys atnaujintas"
 
 #: lib/search_index_backend.rb
 msgid "Connection refused"
@@ -17358,7 +17350,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
-msgstr "∅ Laukino laikas šiandien"
+msgstr "∅ Laukimo laikas šiandien"
 
 #, fuzzy
 #~| msgid "reply"

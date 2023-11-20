@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-21 01:05+0000\n"
+"PO-Revision-Date: 2023-11-20 12:55+0000\n"
 "Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
@@ -3898,10 +3898,8 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Określ maks. rozmiar ładunku dla Elasticsearch."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Define pipeline name for Elasticsearch."
 msgid "Define model configuration for Elasticsearch."
-msgstr "Zdefiniuj nazwę potoku dla Elasticsearch."
+msgstr "Zdefiniuj konfigurację modelu dla Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
@@ -4554,26 +4552,20 @@ msgstr ""
 "Zdefiniuje backend dla wyszukiwania wizerunku użytkownika i organizacji."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines a limit for how many tickets can be created via web form per day."
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
 msgstr ""
-"Określa limit liczby zgłoszeń, które można utworzyć za pomocą formularza "
-"internetowego dziennie."
+"Definiuje globalną konfigurację określającą liczbę wpisów, które można "
+"utworzyć w ciągu minuty."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines a limit for how many tickets can be created via web form per day."
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
 msgstr ""
-"Określa limit liczby zgłoszeń, które można utworzyć za pomocą formularza "
-"internetowego dziennie."
+"Definiuje konfigurację określającą liczbę wpisów, które można utworzyć w "
+"ciągu minuty dla zgłoszenia."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5365,10 +5357,8 @@ msgid "Elasticsearch Endpoint User"
 msgstr "Użytkownik punktu końcowego Elasticsearch"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Elasticsearch needs to be configured!"
 msgid "Elasticsearch Model Configuration"
-msgstr "Trzeba skonfigurować Elasticsearch!"
+msgstr "Konfiguracja modelu Elasticsearch"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -13187,10 +13177,8 @@ msgid "The required parameter 'id' is missing."
 msgstr "Brak wymaganego parametru „id”."
 
 #: lib/search_index_backend.rb
-#, fuzzy
-#| msgid "The required parameter 'area' is missing."
 msgid "The required parameter 'key' is missing."
-msgstr "Brak wymaganego parametru „area”."
+msgstr "Brak wymaganego parametru „klucz”."
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
@@ -13249,10 +13237,8 @@ msgid "The required parameter 'ticket_number' is missing."
 msgstr "Brak wymaganego parametru „signup”."
 
 #: lib/search_index_backend.rb
-#, fuzzy
-#| msgid "The required parameter 'locale' is missing."
 msgid "The required parameter 'value' is missing."
-msgstr "Brak wymaganego parametru „locale”."
+msgstr "Brak wymaganego parametru „wartość”."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -14034,11 +14020,11 @@ msgstr "Subskrypcja zgłoszeń"
 
 #: db/seeds/settings.rb
 msgid "Ticket Trigger Loop Protection Articles Total"
-msgstr ""
+msgstr "Ochrona zapętlenia wyzwalaczy wpisy ogółem"
 
 #: db/seeds/settings.rb
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
-msgstr ""
+msgstr "Ochrona zapętlenia wyzwalaczy wpis na zgłoszenie"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Ticket actions"
@@ -14147,7 +14133,7 @@ msgstr "Znaczniki zgłoszeń zostały pomyślnie zaktualizowane."
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Ticket title"
-msgstr "Tytuł biletu"
+msgstr "Tytuł zgłoszenia"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
@@ -16389,10 +16375,8 @@ msgid "active"
 msgstr "aktywny"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
-#, fuzzy
-#| msgid "Add"
 msgid "add"
-msgstr "Dodaj"
+msgstr "Dodać"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "add option"
@@ -17134,10 +17118,8 @@ msgid "merged"
 msgstr "scalone"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#, fuzzy
-#| msgid "merged"
 msgid "merged into"
-msgstr "scalone"
+msgstr "połączone w"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
@@ -17351,7 +17333,7 @@ msgstr "osiągnięto"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "received merge"
-msgstr ""
+msgstr "otrzymane połączenie"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"

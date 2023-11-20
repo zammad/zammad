@@ -2,8 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-10-18 01:09+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>\n"
+"PO-Revision-Date: 2023-11-16 14:30+0000\n"
+"Last-Translator: Ricardo Siqueira de Oliveira Leite <ricardooliveira88@gmail."
+"com>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
 "Language: pt-br\n"
@@ -3889,10 +3890,8 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Defina tamanho máx. do payload para o Elasticsearch."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Define pipeline name for Elasticsearch."
 msgid "Define model configuration for Elasticsearch."
-msgstr "Defina o nome do pipeline para o Elasticsearch."
+msgstr "Defina o nome de modelo de configuração para o Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
@@ -4535,26 +4534,20 @@ msgid "Defines the backend for user and organization image lookups."
 msgstr "Define o backend para imagens de usuarios e organizações."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines a limit for how many tickets can be created via web form per day."
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
 msgstr ""
-"Define um limite para quantos tickets podem ser criados via formulário da "
-"web por dia."
+"Define a configuração que determina quantos artigos podem ser criados em um "
+"intervalo de um minuto globalmente."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines a limit for how many tickets can be created via web form per day."
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
 msgstr ""
-"Define um limite para quantos tickets podem ser criados via formulário da "
-"web por dia."
+"Define a configuração que determina quantos artigos podem ser criados em um "
+"intervalo de um minuto por tíquete."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5343,10 +5336,8 @@ msgid "Elasticsearch Endpoint User"
 msgstr "Usuário do Elasticsearch Endpoint"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Elasticsearch needs to be configured!"
 msgid "Elasticsearch Model Configuration"
-msgstr "O Elasticsearch precisa ser configurado!"
+msgstr "Configuração do Modelo Elasticsearch"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -13177,10 +13168,8 @@ msgid "The required parameter 'id' is missing."
 msgstr "O parâmetro obrigatório 'id' está ausente."
 
 #: lib/search_index_backend.rb
-#, fuzzy
-#| msgid "The required parameter 'area' is missing."
 msgid "The required parameter 'key' is missing."
-msgstr "O parâmetro necessário 'área' está ausente."
+msgstr "O parâmetro obrigatório 'chave' está ausente."
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'link_type' is missing."
@@ -13239,10 +13228,8 @@ msgid "The required parameter 'ticket_number' is missing."
 msgstr "O parâmetro obrigatório 'ticket_number' está ausente."
 
 #: lib/search_index_backend.rb
-#, fuzzy
-#| msgid "The required parameter 'locale' is missing."
 msgid "The required parameter 'value' is missing."
-msgstr "O parâmetro necessário 'locale' está ausente."
+msgstr "O parâmetro obrigatório 'valor' está ausente."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -14024,11 +14011,11 @@ msgstr "Inscrições à Chamado(s)"
 
 #: db/seeds/settings.rb
 msgid "Ticket Trigger Loop Protection Articles Total"
-msgstr ""
+msgstr "Proteção de Loop de Gatilho de Ticket Artigos Total"
 
 #: db/seeds/settings.rb
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
-msgstr ""
+msgstr "Artigos de Proteção de Loop de Gatilho por Ticket"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Ticket actions"

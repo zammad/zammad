@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-10-30 10:36+0000\n"
+"PO-Revision-Date: 2023-11-16 14:30+0000\n"
 "Last-Translator: Solenne Lefevre <solenne.lefevre@data-bene.io>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
@@ -1186,7 +1186,7 @@ msgstr "Ajouter une clé publique ou privée"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
 msgid "Add Tag"
-msgstr "Ajouter étiquette"
+msgstr "Ajouter une étiquette"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Add Telegram Bot"
@@ -2634,7 +2634,7 @@ msgstr "Certificats & clés privées"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "Change"
-msgstr "Changer"
+msgstr "Modifier"
 
 #: db/seeds/permissions.rb
 msgid "Change %s"
@@ -2666,7 +2666,7 @@ msgstr "Modifier la date"
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
-msgstr "Modifier la commande"
+msgstr "Inverser l'ordre d'affichage"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed:"
@@ -2872,8 +2872,6 @@ msgid "Choose the group to which messages will get added."
 msgstr "Choisissez le groupe auquel les messages seront ajoutés."
 
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
-#, fuzzy
-#| msgid "Choose the Group to which page posts will get added."
 msgid "Choose the group to which page posts will get added."
 msgstr "Choisissez le groupe auquel les messages de la page seront ajoutés."
 
@@ -3979,11 +3977,11 @@ msgstr "Identification de l'appelant par défaut pour les appels sortants."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
-msgstr "Différence de temps par défaut(heures)"
+msgstr "Différence de temps par défaut (heures)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (minutes)"
-msgstr "Différence de temps par défaut(minutes)"
+msgstr "Différence de temps par défaut (minutes)"
 
 #: db/seeds/settings.rb
 msgid "Default type for a new ticket"
@@ -5335,7 +5333,7 @@ msgstr "Alias du Domaine"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
-msgstr "Affectation basé sur le domaine"
+msgstr "Affectation basée sur le domaine"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""
@@ -6699,7 +6697,7 @@ msgstr "Interface utilisateur"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "Full"
-msgstr "Complet"
+msgstr "Total"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Full Name"
@@ -17412,8 +17410,6 @@ msgid "created"
 msgstr "créé"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
-#, fuzzy
-#| msgid "created"
 msgid "created %s"
 msgstr "a créé %s"
 
@@ -18501,7 +18497,7 @@ msgstr "non modifié"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "updated"
-msgstr "Mis a jour"
+msgstr "a mis à jour"
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"

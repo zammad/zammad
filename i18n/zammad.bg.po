@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-04 03:30+0000\n"
-"Last-Translator: Stefan Choraliev <s.choraliev@velox-systems.com>\n"
+"PO-Revision-Date: 2023-11-16 14:30+0000\n"
+"Last-Translator: mittkkoo <iankoff@yahoo.com>\n"
 "Language-Team: Bulgarian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/bg/>\n"
+"zammad-stable/bg/>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -47,7 +47,7 @@ msgstr "dd.mm.yyyy HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
-msgstr ""
+msgstr " до "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -77,6 +77,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Билет##{ticket.number}>: Създаден от #{current_user.longname} на #{ticket"
+".updated_at}_\n"
+"* Група: #{ticket.group.name}\n"
+"* Притежател: #{ticket.owner.fullname}\n"
+"* Състояние: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -92,6 +103,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Билет##{ticket.number}>: Ескалиран на #{ticket.escalation_at}_\n"
+"Билетът (#{ticket.title}) на \"#{ticket.customer.longname}\" е ескалиран от "
+"\"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -108,6 +128,16 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Билет##{ticket.number}>: Последно обновен на #{ticket.updated_at}_\n"
+"* Група: #{ticket.group.name}\n"
+"* Притежател: #{ticket.owner.fullname}\n"
+"* Състояние: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -123,6 +153,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Билет##{ticket.number}>: Напоминанието е получено!_\n"
+"Билетът има нужда от внимание: напоминание е получено за (#{ticket.title}) "
+"от клиент \"*#{ticket.customer.longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -238,29 +277,27 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "%s (confirm)"
-msgstr ""
+msgstr "%s (потвърди)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (метод)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
-#, fuzzy
-#| msgid "%s Migration"
 msgid "%s (option)"
-msgstr "%s Mиграция"
+msgstr "%s (опция)"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
-msgstr ""
+msgstr "%s (неизвестно)"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "%s API Token"
-msgstr "%s API токън"
+msgstr "%s API ключ"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -293,10 +330,8 @@ msgid "%s ago"
 msgstr "преди %s"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "reached"
 msgid "%s attached files"
-msgstr "достигнати"
+msgstr "%s прикрепени файлове"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
@@ -319,31 +354,23 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
-msgstr "Създадена група"
+msgstr "създадена група"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/organization.ts
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created organization |%s|"
-msgstr "Създадена група"
+msgstr "%s създадена организация |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created role |%s|"
-msgstr "Създадена група"
+msgstr "%s създадена роля |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created ticket |%s|"
-msgstr "Създадена група"
+msgstr "%s създаден билет |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
@@ -380,10 +407,8 @@ msgid "%s groups to %s roles assignments"
 msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
-msgstr "преди %s"
+msgstr "преди %s часа"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -854,8 +879,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#, fuzzy
 msgid "Account"
-msgstr ""
+msgstr "Потребител"
 
 #: app/models/channel/driver/sms/twilio.rb
 msgid "Account SID"
@@ -896,8 +922,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#, fuzzy
 msgid "Accounts"
-msgstr "Акаунти"
+msgstr "Потребителски записи"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -1018,7 +1045,7 @@ msgstr "Активна"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
-msgstr ""
+msgstr "Адаптер"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
@@ -1319,12 +1346,12 @@ msgstr "Агенти"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Alarm"
-msgstr ""
+msgstr "Аларма"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "All Tickets"
-msgstr "Всички Тикети."
+msgstr "Всички билети"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
@@ -1464,7 +1491,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee
 msgid "Answer"
-msgstr ""
+msgstr "Отговор"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "Answers"
@@ -1527,7 +1554,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
-msgstr ""
+msgstr "Приложение"
 
 #: db/seeds/settings.rb
 msgid "Application secret"
@@ -1535,11 +1562,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Applications"
-msgstr ""
+msgstr "Приложения"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Apply"
-msgstr ""
+msgstr "Приложи"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Apply Draft"
@@ -1567,11 +1594,11 @@ msgstr "Април"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Archive"
-msgstr ""
+msgstr "Архивиране"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Archived"
-msgstr ""
+msgstr "Архивирано"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Archived at"
@@ -1663,7 +1690,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Article"
-msgstr ""
+msgstr "Статия"
 
 #: db/seeds/settings.rb
 msgid "Article - visibility confirmation dialog"
@@ -1701,8 +1728,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
+#, fuzzy
 msgid "Article#"
-msgstr ""
+msgstr "Статия №"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign Follow-Ups"
@@ -1726,12 +1754,13 @@ msgid "Assign users based on user domain."
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
+#, fuzzy
 msgid "Assigned"
-msgstr ""
+msgstr "Разпределени"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Assignee"
-msgstr ""
+msgstr "Разпределен на"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Assignment Timeout"
@@ -1807,7 +1836,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
 #: public/assets/form/form.js
 msgid "Attachments"
-msgstr ""
+msgstr "Приложения"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
@@ -1835,7 +1864,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 msgid "Attribute"
-msgstr ""
+msgstr "Атрибут"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Attribute '%s' is required in the mapping"
@@ -1854,7 +1883,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
-msgstr ""
+msgstr "Атрибути"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
@@ -2953,7 +2982,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid "Confirm"
-msgstr ""
+msgstr "Потвърждение"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #, fuzzy
@@ -4903,7 +4932,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Done"
-msgstr ""
+msgstr "Готово"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
 msgid "Download"
