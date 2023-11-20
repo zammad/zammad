@@ -25,7 +25,7 @@ export const transformResolvedFieldForScreen = (
     resolvedField.relation.filterIds = screen.filter as number[]
   }
 
-  // Special handling for the clearable prop in the select/treeselect fields.
+  // Special handling for the clearable prop in the select/treeselect/autocomplete fields.
   if (
     'nulloption' in screen &&
     resolvedField.props &&
