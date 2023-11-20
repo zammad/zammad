@@ -11,7 +11,7 @@ module Sequencer::Unit::Import::Freshdesk::Requester
       return response if response.is_a? Net::HTTPOK
 
       handle_error response, iteration
-    rescue Net::HTTPClientError, OpenSSL::SSL::SSLError => e
+    rescue e
       handle_exception e, iteration
     end
 
