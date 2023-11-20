@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Билет##{ticket.number}>: Ескалиран на #{ticket.escalation_at}_
+Билетът (#{ticket.title}) на "#{ticket.customer.longname}" е ескалиран от "#{ticket.escalation_at}"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

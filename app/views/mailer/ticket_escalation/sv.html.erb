@@ -1,0 +1,18 @@
+Eskalerat ärende (#{ticket.title})
+
+<div>Hej #{recipient.firstname},</div>
+<br>
+<div>Ärende (#{ticket.title}) från "<b>#{ticket.customer.longname}</b>" har eskalerats sedan "#{ticket.escalation_at}"!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Information:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">View this in #{config.product_name}</a>
+</div>
