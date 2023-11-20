@@ -2020,13 +2020,13 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
 
-"@histoire/app@^0.17.4":
-  version "0.17.4"
-  resolved "https://registry.yarnpkg.com/@histoire/app/-/app-0.17.4.tgz#9e9a85581463b95ccbf16ea554a90afaccfb9a78"
-  integrity sha512-I1FmkPvxL76YaUIyruW2TI0F+16TGSOGFBxfMzt0lcHOSJqyf2VYaDp0Z0FKkiQOEtR7JTWlEkYhKTALZaH0Rw==
+"@histoire/app@^0.17.5":
+  version "0.17.5"
+  resolved "https://registry.yarnpkg.com/@histoire/app/-/app-0.17.5.tgz#2fb379581a07e58b52e203063fa14bc868bcba98"
+  integrity sha512-R3mn28OqBLAKzNuTuMpRFiBdRMrMGsn9rOgJZUC/Km1aj1KpRpg5ETzeWRMtqR3ZAWrlT3Z3pzvGAesPNoXHDw==
   dependencies:
     "@histoire/controls" "^0.17.4"
-    "@histoire/shared" "^0.17.4"
+    "@histoire/shared" "^0.17.5"
     "@histoire/vendors" "^0.17.4"
     "@types/flexsearch" "^0.7.3"
     flexsearch "0.7.21"
@@ -2047,13 +2047,13 @@
     "@histoire/shared" "^0.17.4"
     "@histoire/vendors" "^0.17.4"
 
-"@histoire/plugin-vue@^0.17.4":
-  version "0.17.4"
-  resolved "https://registry.yarnpkg.com/@histoire/plugin-vue/-/plugin-vue-0.17.4.tgz#57c2f36ab2d4cc53919666bf5bcdb7ac7791b1c8"
-  integrity sha512-j0gI8dlW2xdpNDvndEkZeanvARYhZTDaCDy1FtB5GixWqoa6Z1pXKhp9urAQs1PixjxRudMGjc/V0fS00d2B1w==
+"@histoire/plugin-vue@^0.17.5":
+  version "0.17.5"
+  resolved "https://registry.yarnpkg.com/@histoire/plugin-vue/-/plugin-vue-0.17.5.tgz#cefdec440b3f14169d7a07da9b82d219cb872c9c"
+  integrity sha512-xP/zQ+N0E83IUaoZgchAKtKJg1OQahih7tEcYgwhrmBxMw9F8TG0TyeGleJYLTbYXcy7THwIANZGfEPdQBuyuA==
   dependencies:
     "@histoire/controls" "^0.17.4"
-    "@histoire/shared" "^0.17.4"
+    "@histoire/shared" "^0.17.5"
     "@histoire/vendors" "^0.17.4"
     change-case "^4.1.2"
     globby "^13.2.2"
@@ -2064,6 +2064,18 @@
   version "0.17.4"
   resolved "https://registry.yarnpkg.com/@histoire/shared/-/shared-0.17.4.tgz#47f5e84a0bdbafa79e4ddc0d0ca87757c76d1378"
   integrity sha512-S2UDTare+ZZi+RBe+fhSJ8qbpulLQvtfeAdun87CQqycuS3lemjqZaDcNxYGeFhmNT17c0HEu6fisRrB3Vk1tw==
+  dependencies:
+    "@histoire/vendors" "^0.17.4"
+    "@types/fs-extra" "^9.0.13"
+    "@types/markdown-it" "^12.2.3"
+    chokidar "^3.5.3"
+    pathe "^0.2.0"
+    picocolors "^1.0.0"
+
+"@histoire/shared@^0.17.5":
+  version "0.17.5"
+  resolved "https://registry.yarnpkg.com/@histoire/shared/-/shared-0.17.5.tgz#b1fc16e6b7576b4df2fe98c7f5b011ebc3cadbed"
+  integrity sha512-sxdbRhYd5puUjM30Je6HpAyU2pCBpltopsZBF+4DhB+GKCWi3unhnwFHC2wCMcsYA+/J/YmYJqI3mVXQJCzmqg==
   dependencies:
     "@histoire/vendors" "^0.17.4"
     "@types/fs-extra" "^9.0.13"
@@ -6157,15 +6169,15 @@ header-case@^2.0.4:
     capital-case "^1.0.4"
     tslib "^2.0.3"
 
-histoire@^0.17.4:
-  version "0.17.4"
-  resolved "https://registry.yarnpkg.com/histoire/-/histoire-0.17.4.tgz#e8f899af7cd561ef0a557ff7cb8ad4d700c5d111"
-  integrity sha512-B0cRe4HlsBLziI1DaPfySvRAJQR0x0TAdEeX1gxTLXYIwq7jFoD1OrXmqHjfwCJQtJzML7WaT851RewtMLCXZw==
+histoire@^0.17.5:
+  version "0.17.5"
+  resolved "https://registry.yarnpkg.com/histoire/-/histoire-0.17.5.tgz#9cb48ec6104eb774e1970d308c1248ebb4eece45"
+  integrity sha512-1Zr/oQbqpsW8K7X/4UHKR2ycdatOvBsVk3oSJ4IyughtmdfyvAvi6YOch38NEbEElqObB446ZrWzESadLorekQ==
   dependencies:
     "@akryum/tinypool" "^0.3.1"
-    "@histoire/app" "^0.17.4"
+    "@histoire/app" "^0.17.5"
     "@histoire/controls" "^0.17.4"
-    "@histoire/shared" "^0.17.4"
+    "@histoire/shared" "^0.17.5"
     "@histoire/vendors" "^0.17.4"
     "@types/flexsearch" "^0.7.3"
     "@types/markdown-it" "^12.2.3"
