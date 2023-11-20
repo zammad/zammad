@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-11-02 10:18+0000\n"
+"PO-Revision-Date: 2023-11-20 12:55+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 5.0.2\n"
 
 #. Default date format to use for the current locale.
@@ -422,9 +422,7 @@ msgstr "%s прилог(а)"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s completed data privacy task to delete user ID |%s|"
-msgstr ""
-"Извршен задатак приватности података од стране %s за брисање корисничког ID |"
-"%s|"
+msgstr "Извршен захтев од стране %s за брисање корисничког ID |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
@@ -434,9 +432,7 @@ msgstr "Додат чланак од стране %s за |%s|"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s created data privacy task to delete user ID |%s|"
-msgstr ""
-"Додат задатак приватности података од стране %s за брисање корисничког ID |"
-"%s|"
+msgstr "Заказан захтев од стране %s за брисање корисничког ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
@@ -587,9 +583,7 @@ msgstr "Освежен чланак од стране %s за |%s|"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s updated data privacy task to delete user ID |%s|"
-msgstr ""
-"Измењен задатак приватности података од стране %s за брисање корисничког ID |"
-"%s|"
+msgstr "Освежен захтев од стране %s за брисање корисничког ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
@@ -692,7 +686,7 @@ msgstr ""
 "Може се користити за брисање тикета, организација и корисника. Додељени "
 "власник ће бити уклоњен колико је обрисани корисник оператер.\n"
 "\n"
-"Задаци приватности података се извршавају сваких 10 минута. Извршавање може "
+"Захтеви приватности података се извршавају сваких 10 минута. Извршавање може "
 "захтевати и додатно време у зависности од броја уклоњених објеката."
 
 #: app/assets/javascripts/app/models/sla.coffee
@@ -871,7 +865,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "A powerful service to get more information about your customers."
-msgstr "Моћна услуга за додатне информације о вашим клијентима."
+msgstr "Моћан сервис за додатне информације о вашим клијентима."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A queue is required!"
@@ -1003,6 +997,8 @@ msgstr "Налози"
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
@@ -1207,6 +1203,10 @@ msgstr "Додај напомену"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Add a Personal Access Token"
 msgstr "Додај лични кључ за приступ"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+msgid "Add a data privacy deletion task"
+msgstr "Закажи захтев за брисање приватних података"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Add a message"
@@ -1436,6 +1436,36 @@ msgstr "Аларм"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "All Tickets"
 msgstr "Сви тикети"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+msgid ""
+"All affected tickets will be deleted immediately when this job is run, "
+"without a history entry. There is no rollback of this deletion possible."
+msgstr ""
+"Сви побројани тикети ће бити избрисани одмах по покретању овог посла "
+"планера, без памћења историјата. Брисање је неповратно."
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+msgid ""
+"All affected tickets will be scheduled for deletion when this job is run. "
+"Once the data privacy task is executed, tickets will be deleted and a "
+"history entry preserved. There is no rollback of this deletion possible."
+msgstr ""
+"Сви побројани тикети ће бити заказани за брисање по покретању овог посла "
+"планера. Након извршавања захтева приватности података, тикети ће бити "
+"избрисани са запамћеним историјатом. Брисање је неповратно."
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+msgid ""
+"All affected users and their customer tickets will be scheduled for deletion "
+"when this job is run. Once the data privacy task is executed, users and "
+"tickets will be deleted and a history entry preserved. There is no rollback "
+"of this deletion possible."
+msgstr ""
+"Сви побројани корисници и њихови клијент тикети ће бити заказани за брисање "
+"по покретању овог посла планера. Након извршавања захтева приватности "
+"података, корисници и тикети ће бити избрисани са запамћеним историјатом. "
+"Брисање је неповратно."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "All agents"
@@ -1731,7 +1761,7 @@ msgstr "Да ли сте сигурни да желите да уклоните 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee
@@ -1788,6 +1818,8 @@ msgstr "Да ли сте сигурни? Ваша подешавања обав�
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "Article"
 msgstr "Чланак"
 
@@ -1806,14 +1838,6 @@ msgstr "Тип чланка"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Article actions"
 msgstr "Радње чланака"
-
-#: app/models/ticket.rb
-msgid ""
-"Article could not be created. An unsupported key other than 'article.note' "
-"was provided."
-msgstr ""
-"Није било могуће додати чланак. Коришћен је неподржан кључ који није "
-"’article.note’."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 msgid "Article could not be deleted."
@@ -1985,7 +2009,7 @@ msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
 msgstr ""
-"Атрибут који идентификује уникатног корисника. Уколико није подешен, биће "
+"Атрибут који идентификује јединственог корисника. Уколико није подешен, биће "
 "коришћен подразумевани IDP идентификатор."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
@@ -2032,7 +2056,7 @@ msgstr "Неуспела аутентификација."
 
 #: lib/email_helper/probe.rb
 msgid "Authentication not possible (not offered by the service)"
-msgstr "Аутентификација није могућа (услуга је не подржава)"
+msgstr "Аутентификација није могућа (сервис је не подржава)"
 
 #: app/controllers/application_controller/authenticates.rb
 #: app/graphql/gql/context/current_user_aware.rb app/policies/pundit_policy.rb
@@ -2420,6 +2444,7 @@ msgstr "БН"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/controllers/calendar.coffee
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -2579,7 +2604,7 @@ msgstr "Категорија"
 msgid "Category page layout"
 msgstr "Распоред странице категорије"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "Caution!"
 msgstr "Опрез!"
 
@@ -2863,7 +2888,7 @@ msgstr "Чисти телефонске логове."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'DataPrivacyTask'."
-msgstr "Чисти задатке приватности података."
+msgstr "Чисти захтеве приватности података."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'HttpLog'."
@@ -3047,7 +3072,7 @@ msgstr "Помози са преводом"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Completed Tasks"
-msgstr "Завршени задаци"
+msgstr "Извршени захтеви"
 
 #: public/assets/chat/views/chat.eco
 msgid "Compose your message…"
@@ -3496,6 +3521,10 @@ msgstr "Додај мој налог"
 msgid "Create new Customer"
 msgstr "Додај новог клијента"
 
+#: app/frontend/apps/mobile/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue
+msgid "Create new customer"
+msgstr "Додај новог клијента"
+
 #: app/assets/javascripts/app/lib/app_post/_object_organization_autocompletion.coffee
 msgid "Create new object"
 msgstr "Додај нови објекат"
@@ -3700,6 +3729,7 @@ msgstr "Прилагођена адреса није подешена"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
@@ -3733,7 +3763,7 @@ msgid ""
 "Customer tickets of the user will get deleted on execution of the task. No "
 "rollback possible."
 msgstr ""
-"Тикети клијент корисника ће бити неповратно обрисани по извршавању задатка."
+"Тикети клијент корисника ће бити неповратно обрисани по извршавању захтева."
 
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -3767,11 +3797,11 @@ msgstr "Приватност података"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
-msgstr "Задатак приватности података"
+msgstr "Захтев приватности података"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTasks"
-msgstr "Задаци приватности података"
+msgstr "Захтеви приватности података"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -4170,7 +4200,7 @@ msgstr "Одређује да ли је апликација у режиму и�
 
 #: db/seeds/settings.rb
 msgid "Defines if application is used as online service."
-msgstr "Одређује да ли се апликација користи као онлајн услуга."
+msgstr "Одређује да ли се апликација користи као онлајн сервис."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4300,7 +4330,7 @@ msgstr "Одређује да ли је могуће отварати тикет
 #: db/seeds/settings.rb
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr ""
-"Одређује да ли тикети треба да буду затворени ако дође до опоравка услуге."
+"Одређује да ли тикети треба да буду затворени ако дође до опоравка сервиса."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter for filters managed via admin interface."
@@ -4671,7 +4701,7 @@ msgstr "Одређује имејл адресу пошиљаоца Nagios им�
 
 #: db/seeds/settings.rb
 msgid "Defines the sender email address of the service emails."
-msgstr "Одређује имејл адресу пошиљаоца услужних имејл порука."
+msgstr "Одређује имејл адресу пошиљаоца сервисних имејл порука."
 
 #: db/seeds/settings.rb
 msgid "Defines the sender of email notifications."
@@ -4867,8 +4897,12 @@ msgid "Delete Knowledge Base"
 msgstr "Избриши чланак базе знања"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
+msgid "Delete Ticket"
+msgstr "Брисање тикета"
+
+#: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Delete User"
-msgstr "Избриши корисника"
+msgstr "Брисање корисника"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Delete all child categories and answers, then try again."
@@ -4882,6 +4916,10 @@ msgstr "Најпре избриши све постојеће записе."
 msgid "Delete avatar"
 msgstr "Избриши аватар"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+msgid "Delete immediately"
+msgstr "Избриши одмах"
+
 #: db/seeds/schedulers.rb
 msgid "Delete obsolete classic IMAP backup."
 msgstr "Избриши застарелу IMAP резервну копију."
@@ -4892,7 +4930,7 @@ msgstr "Избриши старе ’недавно погледане’ упи
 
 #: db/seeds/schedulers.rb
 msgid "Delete old activity stream entries."
-msgstr "Избриши старе уписе тока активности."
+msgstr "Избриши старе записе тока активности."
 
 #: db/seeds/schedulers.rb
 msgid "Delete old online notification entries."
@@ -4932,7 +4970,7 @@ msgstr "Обрисани тикети (укупно %s):"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "Deletion Task"
-msgstr "Задатак брисања"
+msgstr "Захтев за брисање"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Deletion failed."
@@ -5369,6 +5407,7 @@ msgstr "Неопходно је подесити Elasticsearch!"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
@@ -5768,11 +5807,11 @@ msgstr "Подешавања путање"
 
 #: db/seeds/settings.rb
 msgid "Enforce the set up of the two-factor authentication"
-msgstr "Приморај поставку двофакторске аутентификације"
+msgstr "Захтевај поставку двофакторске аутентификације"
 
 #: db/seeds/settings.rb
 msgid "Enforced for user roles"
-msgstr "Приморано за корисничке улоге"
+msgstr "Захтевано за корисничке улоге"
 
 #: db/seeds.rb
 msgid "English (United States)"
@@ -6096,8 +6135,21 @@ msgid "Execute planned jobs."
 msgstr "Извршава заказане послове."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "Execution Time"
 msgstr "Време извршавања"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
+msgid "Existing members"
+msgstr "Постојећи чланови"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
+msgid "Existing tickets"
+msgstr "Постојећи тикети"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
+msgid "Existing tickets (open)"
+msgstr "Постојећи тикети (отворени)"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Expert"
@@ -6171,7 +6223,7 @@ msgstr "Facebook Developer сајт"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
-msgstr "Неуспели задаци"
+msgstr "Неуспели захтеви"
 
 #: app/controllers/channels_google_controller.rb
 #: app/controllers/channels_microsoft365_controller.rb
@@ -6370,6 +6422,10 @@ msgstr "Напомена при дну стране"
 msgid "For example, recently changed tickets, users, or organizations."
 msgstr "На пример, недавно измењени тикети, корисници или организације."
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "For more details, please check out our online documentation %l."
+msgstr "За више детаља, молимо погледајте нашу онлајн документацију %l."
+
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
 msgid ""
 "For security reasons, the API token is shown only once. You'll need to save "
@@ -6555,19 +6611,20 @@ msgstr "Генерише статистике корисника."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Generic API to integrate VoIP service provider with real-time push."
-msgstr "Генерички API за интеграцију провајдера VoIP услуге у реалном времену."
+msgstr ""
+"Генерички API за интеграцију провајдера VoIP сервиса у реалном времену."
 
 #: db/seeds/settings.rb
 msgid "Geo Calendar Service"
-msgstr "Услуга географског календара"
+msgstr "Сервис географског календара"
 
 #: db/seeds/settings.rb
 msgid "Geo IP Service"
-msgstr "Услуга географског IP"
+msgstr "Сервис географског IP"
 
 #: db/seeds/settings.rb
 msgid "Geo Location Service"
-msgstr "Услуга географске локације"
+msgstr "Сервис географске локације"
 
 #: app/assets/javascripts/app/controllers/getting_started.coffee
 msgid "Get Started"
@@ -6644,6 +6701,10 @@ msgstr "GitLab интеграција"
 #: lib/gitlab/http_client.rb
 msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr "Неуспео GitLab захтев! Молимо проверите датотеку евиденције за детаље"
+
+#: app/controllers/selectors_controller.rb
+msgid "Given object does not support selector"
+msgstr "Дат објекат не подржава услов"
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -6881,7 +6942,7 @@ msgstr "HTTP протокол"
 
 #: db/seeds/schedulers.rb
 msgid "Handle data privacy tasks."
-msgstr "Извршава задатке приватности података."
+msgstr "Извршава захтеве приватности података."
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
@@ -7205,7 +7266,7 @@ msgid ""
 "If the host and service have recovered, the ticket can be closed "
 "automatically."
 msgstr ""
-"Уколико се сервер и услуга опораве, тикет може бити аутоматски затворен."
+"Уколико се сервер и сервис опораве, тикет може бити аутоматски затворен."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -7308,7 +7369,7 @@ msgstr "Слика"
 
 #: db/seeds/settings.rb
 msgid "Image Service"
-msgstr "Услуга за слике"
+msgstr "Сервис за слике"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
@@ -7450,6 +7511,7 @@ msgid "Inbound"
 msgstr "Долазнo"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "Inbound Call"
@@ -7617,7 +7679,7 @@ msgstr "Неисправан GitHub GraphQL API кључ"
 
 #: lib/github/linked_issue.rb
 msgid "Invalid GitHub issue link format"
-msgstr "Неисправан формат GitHub проблема"
+msgstr "Неисправан формат GitHub извештаја"
 
 #: lib/gitlab/credentials.rb
 msgid "Invalid GitLab GraphQL API token"
@@ -7625,7 +7687,7 @@ msgstr "Неисправан GitLab GraphQL API кључ"
 
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
-msgstr "Неисправан формат GitLab проблема"
+msgstr "Неисправан формат GitLab извештаја"
 
 #: app/controllers/getting_started_controller.rb
 msgid "Invalid auto wizard file."
@@ -7654,6 +7716,10 @@ msgstr "Неисправан структура везе (Object → LinkType)"
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure (Object)"
 msgstr "Неисправна структура везе (Object)"
+
+#: app/models/concerns/checks_condition_validation.rb
+msgid "Invalid object selector conditions"
+msgstr "Неисправни избори услова објекта"
 
 #: lib/password_policy/min_length.rb
 msgid "Invalid password, it must be at least %s characters long!"
@@ -7684,10 +7750,6 @@ msgstr "Неисправне дозволе, будите пажљиви да с
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr "Неважећи сигурни код! Молимо покушајте поново са новим кодом."
-
-#: app/models/concerns/checks_condition_validation.rb
-msgid "Invalid ticket selector conditions"
-msgstr "Неисправни избори услова тикета"
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
@@ -7769,7 +7831,7 @@ msgstr "Позови оператере/колеге за помоћ око ти
 
 #: app/controllers/first_steps_controller.rb
 msgid "Invite customers to create issues in Zammad"
-msgstr "Позови клијенте да отворе тикете у Zammad"
+msgstr "Позови клијенте да отворе тикете у Zammad-у"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
@@ -7977,20 +8039,27 @@ msgstr "Последња промена %s %s од стране %s"
 msgid "Last changed"
 msgstr "Последњи пут измењено"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Last contact"
 msgstr "Последњи одговор"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Last contact (agent)"
 msgstr "Последњи одговор (оператер)"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Last contact (customer)"
 msgstr "Последњи одговор (клијент)"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
+msgid "Last login"
+msgstr "Последња пријава"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -8077,11 +8146,11 @@ msgstr "Повежи чланак"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 msgid "Link GitHub issues to your tickets."
-msgstr "Повежите GitHub проблеме са тикетима."
+msgstr "Повежите GitHub извештаје са тикетима."
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 msgid "Link GitLab issues to your tickets."
-msgstr "Повежите GitLab проблеме са тикетима."
+msgstr "Повежите GitLab извештаје са тикетима."
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco
 msgid "Link Related Answer"
@@ -8089,7 +8158,7 @@ msgstr "Повежи сродан чланак"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
-msgstr "Повежи проблем"
+msgstr "Повежи извештај"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Link template"
@@ -8198,7 +8267,7 @@ msgstr "Пријави се на %s"
 #: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb
 msgid "Login"
-msgstr "Пријави се"
+msgstr "Пријава"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Login Screen"
@@ -8354,7 +8423,7 @@ msgstr "март"
 msgid "Mark all as read"
 msgstr "Обележи све као прочитано"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "Match all (AND)"
 msgstr "Конјункција (AND)"
 
@@ -8362,11 +8431,11 @@ msgstr "Конјункција (AND)"
 msgid "Match all of the following"
 msgstr "Уколико се следеће подудара"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "Match any (OR)"
 msgstr "Дисјункција (OR)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "Match none (NOT)"
 msgstr "Негација (NOT)"
 
@@ -8893,7 +8962,7 @@ msgstr "Нови календар"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "New Deletion Task"
-msgstr "Нови задатак брисања"
+msgstr "Нови захтев за брисање"
 
 #: app/assets/javascripts/app/controllers/group.coffee
 msgid "New Group"
@@ -9189,7 +9258,7 @@ msgid "No file formats allowed."
 msgstr "Нема дозвољених формата датотека."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "No filter was configured."
 msgstr "Није подешен филтер."
 
@@ -9199,7 +9268,7 @@ msgstr "Нису пронађени фолдери за датог корисн�
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
-msgstr "Нема повезаних проблема"
+msgstr "Нема повезаних извештаја"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco
 msgid "No macros available."
@@ -9358,6 +9427,7 @@ msgid "Not found"
 msgstr "Није пронађено"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -9411,6 +9481,7 @@ msgid "Notice:"
 msgstr "Објава:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/views/mailer/application.html.erb
 msgid "Notification"
 msgstr "Обавештење"
@@ -9490,6 +9561,7 @@ msgid "OTRS"
 msgstr "OTRS"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
+#: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 msgid "Object"
 msgstr "Објекат"
@@ -9548,7 +9620,7 @@ msgstr "Веб форме"
 
 #: db/seeds/settings.rb
 msgid "Online Service"
-msgstr "Услуга веб сервиса"
+msgstr "Онлајн сервис"
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
@@ -9689,11 +9761,14 @@ msgstr "Редослед прегледа"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
+#: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
@@ -9790,6 +9865,7 @@ msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr "Колико је тикета додељено вама од свих отворених (широм организације)?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "Out of office replacement"
 msgstr "Замена за ван канцеларије"
 
@@ -9804,6 +9880,7 @@ msgid "Outbound"
 msgstr "Одлазнo"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Outbound Call"
@@ -10128,7 +10205,7 @@ msgstr "Молимо кликните на линк из имејл поруке
 msgid "Please contact your administrator."
 msgstr "Молимо контактирајте администратора."
 
-#: app/models/ticket/selector/sql.rb
+#: lib/selector/sql.rb
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -10992,6 +11069,7 @@ msgid "Rocket Chat Notifications"
 msgstr "Rocket Chat обавештења"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco
@@ -11040,7 +11118,7 @@ msgstr "У току"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Running Tasks"
-msgstr "Послови у току"
+msgstr "Захтеви у обради"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -11101,6 +11179,7 @@ msgstr "SLA"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid "SMS"
 msgstr "SMS"
 
@@ -11626,6 +11705,7 @@ msgid "Sender Format Separator"
 msgstr "Сепаратор формата пошиљаоца"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid "Sender Type"
 msgstr "Тип пошиљаоца"
 
@@ -11679,15 +11759,15 @@ msgstr "Неуспела серверска операција."
 
 #: app/assets/javascripts/app/views/integration/index.jst.eco
 msgid "Service"
-msgstr "Услуга"
+msgstr "Сервис"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Service Notification"
-msgstr "Обавештење услуге"
+msgstr "Обавештење о сервису"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Services"
-msgstr "Услуге"
+msgstr "Сервиси"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee
@@ -12070,14 +12150,24 @@ msgstr "Пронажени слични тикети"
 msgid "Simple Line Icons"
 msgstr "Simple Line Icons"
 
-#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Simple Storage (S3)"
 msgstr "Simple Storage (S3)"
 
+#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+msgid "Simple Storage Service (S3)"
+msgstr "Simple Storage Service (S3)"
+
 #: app/models/store/provider/s3/config.rb
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr "Подешавања Simple Storage сервиса нису пронађена или су нетачна."
+
+#: app/models/store/provider/s3.rb
+msgid ""
+"Simple Storage Service malfunction. Please contact your Zammad administrator."
+msgstr ""
+"Нешто је кренуло наопако са Simple Storage Service. Молимо контактирајте "
+"вашег Zammad администратора."
 
 #: app/models/store/provider/s3.rb
 msgid "Simple Storage Service not reachable."
@@ -12392,6 +12482,7 @@ msgstr "Пошаљи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Subscribe"
@@ -12743,6 +12834,10 @@ msgstr "PGP потпис је неисправан."
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "The PGP signature key has been revoked."
 msgstr "PGP кључ потписа је опозван."
+
+#: lib/monitoring_helper/health_checker/s3_storage_availability.rb
+msgid "The Simple Storage Service is not available."
+msgstr "Simple Storage Service није доступан."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
@@ -13098,7 +13193,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "The issue could not be saved."
-msgstr "Није било могуће сачувати проблем."
+msgstr "Није било могуће сачувати извештај."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "The language could not be updated."
@@ -13342,10 +13437,6 @@ msgid ""
 msgstr ""
 "Није пронађен обавезни параметар ’crc_token’ у подацима Twitter потврде!"
 
-#: app/models/ticket.rb
-msgid "The required parameter 'current_user_id' is missing."
-msgstr "Није пронађен обавезни параметар ’current_user_id’."
-
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required parameter 'for_user_id' is missing."
 msgstr "Није пронађен обавезни параметар ’for_user_id’."
@@ -13421,6 +13512,10 @@ msgstr "Није пронађен обавезни параметар ’signup�
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Није пронађен обавезни параметар ’ticket_number’."
+
+#: app/models/concerns/perform_changes/action/attribute_updates.rb
+msgid "The required parameter 'user_id' is missing."
+msgstr "Није пронађен обавезни параметар ’user_id’."
 
 #: lib/search_index_backend.rb
 msgid "The required parameter 'value' is missing."
@@ -14008,19 +14103,19 @@ msgstr "Овај ниво дозвола није доступан на осно
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "This service allows you to connect %s with %s."
-msgstr "Ова услуга вам омогућава да повежете %s са %s."
+msgstr "Овај сервис вам омогућава да повежете %s са %s."
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "This service enables Zammad to connect with your Exchange server."
-msgstr "Ова услуга омогућава да повежете Zammad са вашим Exchange сервером."
+msgstr "Овај сервис омогућава да повежете Zammad са вашим Exchange сервером."
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 msgid ""
 "This service receives HTTP requests or emails from %s and creates tickets "
 "with host and service."
 msgstr ""
-"Ова услуга прима HTTP захтеве или имејл поруке од %s и отвара тикете са "
-"сервером и услугом."
+"Овај сервис прима HTTP захтеве или имејл поруке од %s и отвара тикете са "
+"сервером и сервисом."
 
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
@@ -14029,11 +14124,11 @@ msgid ""
 "This service receives emails from %s and creates tickets with host and "
 "service."
 msgstr ""
-"Ова услуга прима имејл поруке од %s и отвара тикете са сервером и услугом."
+"Овај сервис прима имејл поруке од %s и отвара тикете са сервером и сервисом."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "This service sends notifications to your %s channel."
-msgstr "Ова услуга шаље обавештења преко вашег %s канала."
+msgstr "Овај сервис шаље обавештења преко вашег %s канала."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
@@ -14042,7 +14137,7 @@ msgid ""
 "This service shows you contacts of incoming calls and a caller list in "
 "realtime."
 msgstr ""
-"Ова услуга приказује контакте пријемних позива и листу позивалаца у реалном "
+"Овај сервис приказује контакте пријемних позива и листу позивалаца у реалном "
 "времену."
 
 #: app/assets/javascripts/app/models/group.coffee
@@ -14077,8 +14172,11 @@ msgstr "четвртак"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
+#: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
@@ -14128,6 +14226,10 @@ msgstr ""
 "target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
 "</div>\n"
 
+#: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
+msgid "Ticket (censored):"
+msgstr "Тикет (цензурисано):"
+
 #: db/seeds/settings.rb
 msgid "Ticket Conditions Expert Mode"
 msgstr "Стручни режим услова тикета"
@@ -14139,6 +14241,10 @@ msgstr "Оператори регуларних израза услова тик
 #: app/models/report.rb
 msgid "Ticket Count"
 msgstr "Број тикета"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
+msgid "Ticket Customer"
+msgstr "Клијент тикета"
 
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
@@ -14193,6 +14299,10 @@ msgstr "Подешавања прегледа тикета су сачувана
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Ticket Overviews"
 msgstr "Прегледи тикета"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
+msgid "Ticket Owner"
+msgstr "Власник тикета"
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
@@ -14311,7 +14421,7 @@ msgstr ""
 "target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
 "</div>\n"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid ""
 "Ticket selector contains expert conditions. If you turn off the expert mode, "
 "it can lead to data loss in your condition attributes."
@@ -14478,6 +14588,7 @@ msgid "Time"
 msgstr "Време"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: db/seeds/permissions.rb db/seeds/settings.rb
@@ -14668,7 +14779,7 @@ msgid ""
 "To set up this service you need to create a new |\"Incoming webhook\"| in "
 "your %s integration panel and enter the webhook URL below."
 msgstr ""
-"Да бисте подесили ову услугу морате додати нови |„Повратни позив”| у вашeм "
+"Да бисте подесили овај сервис морате додати нови |„Повратни позив”| у вашeм "
 "панелу %s интеграције и унети путању повратног позива испод."
 
 #: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
@@ -15155,6 +15266,7 @@ msgstr "Освежено"
 msgid "Updated At"
 msgstr "Освежено у"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -15372,6 +15484,8 @@ msgstr "Користи се приликом гледања тикета"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -15381,6 +15495,7 @@ msgstr "Користи се приликом гледања тикета"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/mention.coffee
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -15398,7 +15513,7 @@ msgstr "Корисник"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "User (censored):"
-msgstr "Корисник (цензурисани):"
+msgstr "Корисник (цензурисано):"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "User Filter"
@@ -15773,6 +15888,7 @@ msgstr "Подешавање веб сервера"
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Webhook"
@@ -16191,7 +16307,7 @@ msgstr ""
 
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "You can no longer see the data privacy task."
-msgstr "Више немате приступ задатку приватности података."
+msgstr "Више немате приступ захтеву приватности података."
 
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
 msgid "You can no longer see the group."
@@ -16244,7 +16360,7 @@ msgstr "Можете користити следећу скрипту за сл�
 msgid "You currently don't have any tickets."
 msgstr "Тренутно немате ниједан тикет."
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid ""
 "You disabled the expert mode. This will downgrade all expert conditions and "
 "can lead to data loss in your condition attributes. Please check your "
@@ -16491,11 +16607,11 @@ msgstr "Zammad фондација"
 
 #: db/seeds/settings.rb
 msgid "Zammad GeoCalendar Service"
-msgstr "Zammad GeoCalendar услуга"
+msgstr "Zammad GeoCalendar сервис"
 
 #: db/seeds/settings.rb
 msgid "Zammad GeoIP Service"
-msgstr "Zammad GeoIP услуга"
+msgstr "Zammad GeoIP сервис"
 
 #: db/seeds/settings.rb
 msgid "Zammad Helpdesk"
@@ -16503,7 +16619,7 @@ msgstr "Zammad Helpdesk"
 
 #: db/seeds/settings.rb
 msgid "Zammad Image Service"
-msgstr "Zammad услуга за слике"
+msgstr "Zammad сервис за слике"
 
 #: lib/user_agent.rb
 msgid "Zammad User Agent"
@@ -16592,16 +16708,18 @@ msgstr "додај опцију"
 
 #: db/seeds/settings.rb
 msgid "admin"
-msgstr "администратор"
+msgstr "admin"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "after (absolute)"
 msgstr "након (апсолутно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "after (relative)"
 msgstr "након (релативно)"
 
@@ -16654,12 +16772,14 @@ msgstr "аутоматски избор"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "before (absolute)"
 msgstr "пре (апсолутно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "before (relative)"
 msgstr "пре (релативно)"
 
@@ -16731,35 +16851,42 @@ msgstr "повезано"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "contains"
 msgstr "садржи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "contains all"
 msgstr "садржи све"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "contains all not"
 msgstr "не садржи све"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "contains not"
 msgstr "не садржи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "contains one"
 msgstr "садржи једно"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "contains one not"
 msgstr "не садржи једно"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -16774,13 +16901,13 @@ msgstr "додато %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "current user"
 msgstr "тренутни корисник"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "current user organization"
 msgstr "организација тренутног корисника"
 
@@ -16866,6 +16993,7 @@ msgstr "не постоји"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "does not match regex"
 msgstr "не задовољава регуларни израз"
 
@@ -16935,6 +17063,7 @@ msgstr "завршава са"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "ends with one of"
 msgstr "завршава се са једним од"
 
@@ -16984,7 +17113,7 @@ msgstr "попуни"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
-msgstr "остави празно"
+msgstr "попуни празно"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -17002,6 +17131,7 @@ msgstr "од"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "from (relative)"
 msgstr "од (релативно)"
 
@@ -17018,10 +17148,11 @@ msgstr "је већ заузето"
 
 #: lib/validations/data_privacy_task_validator.rb
 msgid "has an existing DataPrivacyTask queued"
-msgstr "има заказан постојећи DataPrivacyTask"
+msgstr "има заказан захтев приватности података"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
 msgstr "је измењено"
@@ -17031,10 +17162,12 @@ msgid "has no agent access to this ticket"
 msgstr "нема приступ оператера тикету"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "has reached"
 msgstr "је достигнуто"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "has reached warning"
 msgstr "је достигло упозорење"
 
@@ -17164,6 +17297,7 @@ msgstr "интерна база података"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is"
 msgstr "је"
 
@@ -17173,10 +17307,12 @@ msgstr "већ се користи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is any of"
 msgstr "је један од"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is in working time"
 msgstr "је у току радног времена"
 
@@ -17197,17 +17333,19 @@ msgstr "је дуже од дозвољене дужине %{maxlength}"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is none of"
 msgstr "није ниједан од"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is not"
 msgstr "није"
 
 #: lib/validations/data_privacy_task_validator.rb
-msgid "is not a User"
-msgstr "није корисник"
+msgid "is not a User or Ticket"
+msgstr "није корисник или тикет"
 
 #: lib/validations/color_validator.rb
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
@@ -17218,6 +17356,7 @@ msgid "is not a number"
 msgstr "није број"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is not in working time"
 msgstr "није у току радног времена"
 
@@ -17237,6 +17376,7 @@ msgstr "је резервисано"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is set"
 msgstr "је постављено"
 
@@ -17314,6 +17454,7 @@ msgstr "пронађени резултати"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "matches regex"
 msgstr "задовољава регуларни израз"
 
@@ -17328,6 +17469,7 @@ msgid "merged"
 msgstr "спојено"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "merged into"
 msgstr "спојено са"
 
@@ -17433,7 +17575,7 @@ msgstr "не"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "no issues"
-msgstr "без проблема"
+msgstr "нема проблема"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "no unit"
@@ -17460,11 +17602,12 @@ msgstr "није достигнуто"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "not set"
 msgstr "није постављено"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "not set (not defined)"
 msgstr "није постављено (није одређено)"
 
@@ -17549,6 +17692,7 @@ msgid "reached"
 msgstr "достигнуто"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "received merge"
 msgstr "примљено спајање"
 
@@ -17695,13 +17839,13 @@ msgstr "размаци нису дозвољени"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "specific organization"
 msgstr "конкретна организација"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "specific user"
 msgstr "конкретан корисник"
 
@@ -17715,6 +17859,7 @@ msgstr "почиње са"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "starts with one of"
 msgstr "почиње са једним од"
 
@@ -17755,6 +17900,7 @@ msgstr "ticket.customer"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "till (relative)"
 msgstr "до (релативно)"
 
@@ -17769,6 +17915,7 @@ msgstr "за повратак на почетну страну."
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "today"
@@ -17814,6 +17961,7 @@ msgid "untouched"
 msgstr "нетакнуто"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -17840,12 +17988,14 @@ msgstr "биће обрисано"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "within last (relative)"
 msgstr "у последњих (релативно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "within next (relative)"
 msgstr "у следећих (релативно)"
 
@@ -17901,6 +18051,25 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Name contains a forbidden string."
+#~ msgstr "Име садржи забрањен садржај."
+
+#~ msgid "Delete Organization"
+#~ msgstr "Брисање организације"
+
+#~ msgid "Organization (censored):"
+#~ msgstr "Организација (цензурисано):"
+
+#~ msgid ""
+#~ "Article could not be created. An unsupported key other than 'article."
+#~ "note' was provided."
+#~ msgstr ""
+#~ "Није било могуће додати чланак. Коришћен је неподржан кључ који није "
+#~ "’article.note’."
+
+#~ msgid "The required parameter 'current_user_id' is missing."
+#~ msgstr "Није пронађен обавезни параметар ’current_user_id’."
 
 #~ msgid "SSL Verify"
 #~ msgstr "Провери SSL"
