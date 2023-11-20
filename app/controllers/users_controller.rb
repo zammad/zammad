@@ -538,7 +538,7 @@ POST /api/v1/users/password_reset_verify
 Payload:
 {
   "token": "SoMeToKeN",
-  "password": "new_password"
+  "password": "new_pw"
 }
 
 Response:
@@ -547,7 +547,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN", "password" "new_password"}'
+curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN", "password": "new_pw"}'
 
 =end
 
@@ -602,8 +602,8 @@ POST /api/v1/users/password_change
 
 Payload:
 {
-  "password_old": "some_password_old",
-  "password_new": "some_password_new"
+  "password_old": "old_pw",
+  "password_new": "new_pw"
 }
 
 Response:
@@ -612,7 +612,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new": "password_new"}'
+curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "old_pw", "password_new": "new_pw"}'
 
 =end
 
