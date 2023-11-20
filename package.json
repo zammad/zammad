@@ -126,7 +126,7 @@
     "async-mutex": "^0.4.0",
     "flatpickr": "^4.6.13",
     "graphql": "^16.8.1",
-    "graphql-ruby-client": "^1.11.9",
+    "graphql-ruby-client": "^1.11.10",
     "graphql-tag": "^2.12.6",
     "linkify-string": "^4.1.2",
     "linkifyjs": "^4.1.2",
