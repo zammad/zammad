@@ -21,7 +21,7 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "yarn@1.22.21",
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
     "@graphql-codegen/cli": "^5.0.0",
