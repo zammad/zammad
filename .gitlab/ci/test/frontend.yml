@@ -16,6 +16,7 @@ frontend:cypress:
   stage: test
   extends:
     - .job_rules_default
+    - .tags_docker_low_concurrency
   cache: !reference [.cache, read_only_nodejs]
   before_script:
     - !reference [.scripts, yarn_install]
