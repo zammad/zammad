@@ -238,7 +238,7 @@ $(function() {
         'Message': 'Meddelande',
         'Name': 'Namn',
         'Your Email': 'Din mejl',
-        'Your Message…': '',
+        'Your Message…': 'Ditt meddelande…',
         'Your Name': 'Ditt namn',
       },
       'zh-cn': {

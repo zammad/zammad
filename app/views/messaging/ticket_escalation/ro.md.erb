@@ -1,0 +1,7 @@
+#{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Escaladat la #{ticket.escalation_at}_{ticket.escalation_at}_.
+Tichetul (#{ticket.title}) de la „#{ticket.customer.longname}” a fost escaladat de la „#{ticket.escalation_at}”!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

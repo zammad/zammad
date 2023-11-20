@@ -1,0 +1,15 @@
+Återställ ditt #{config.product_name} lösenord
+
+<div>Hej #{user.firstname},</div>
+<br>
+<div>Du eller någon annan försökte registrera dig med den här e-postadressen. Dock så är denna e-postadress redan registrerad.</div>
+<br>
+<div>Om du vill återställa lösenordet, klicka på länken nedan (eller kopiera och klistra in URL:en i din webbläsare) för att fortsätta:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}</a></div>
+<br>
+<div>Länken leder till en sida där du kan ändra ditt lösenord.</div>
+<br>
+<div>Om du inte vill återställa ditt lösenord, ignorera det här meddelandet.</div>
+<br>
+<div>Ditt #{config.product_name} Team</div>

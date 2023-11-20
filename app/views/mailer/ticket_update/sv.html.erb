@@ -1,0 +1,29 @@
+Uppdaterat ärende (#{ticket.title})
+
+<div>Hej #{recipient.firstname},</div>
+<br>
+<div>
+Ärende (#{ticket.title}) har uppdatrats av "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<% if @objects[:changes].present? %>
+  <div>
+  Ändringar:<br>
+  <% @objects[:changes].each do |key, value| %>
+    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
+  <% end %>
+  </div>
+<% end %>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Information:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">Visa i #{config.product_name}</a>
+</div>
