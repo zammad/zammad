@@ -308,6 +308,8 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
       let(:object) { create(object_name.to_sym, condition: condition) }
 
       before do
+        object
+
         visit path
 
         within ".table-#{object_name} .js-tableBody" do
@@ -641,6 +643,8 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
       let(:object) { create(object_name.to_sym, condition: condition) }
 
       before do
+        object
+
         visit path
 
         within ".table-#{object_name} .js-tableBody" do
