@@ -23,6 +23,13 @@ class App.User extends App.Model
   @configure_preview = [
     'login', 'firstname', 'lastname', 'organization', 'created_at'
   ]
+  @allowedReplaceTagsFunctionMapping = {
+    avatar: {
+      function_name: 'avatar_image_tag',
+      placeholder_display: __('Avatar'),
+      placeholder_content: 'avatar(60,60)',
+    }
+  }
 
   uiUrl: ->
     "#user/profile/#{@id}"
@@ -110,6 +117,14 @@ class App.User extends App.Model
       vip: vip
       url: @imageUrl()
       initials: @initials()
+
+  # Used to return a image tag (e.g. for variable replacement).
+  avatar_image_tag: (width = 60, height = 60) ->
+    image_url = @imageUrl()
+    return if !image_url
+
+    '<img src="' + image_url + '" width="' + width + '" height="' + height + '" data-user-avatar="true" />'
+
 
   isOutOfOffice: ->
     return false if @out_of_office isnt true

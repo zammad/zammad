@@ -61,6 +61,16 @@ class App.WidgetPlaceholder extends App.Controller
                 name: "#{App.i18n.translateInline(item.display)} > #{App.i18n.translateInline(attribute.display)} > #{App.i18n.translateInline(display)}"
                 content: content
               }
+            if Object.keys(App[attribute.relation].allowedReplaceTagsFunctionMapping).length > 0
+              for functionMapping in Object.values(App[attribute.relation].allowedReplaceTagsFunctionMapping)
+                name = "\#{#{relation}.#{functionMapping.placeholder_content}}"
+                content = "\#{#{relation}.#{functionMapping.placeholder_content}}"
+                all.push {
+                  id: name
+                  keywords: name
+                  name: "#{App.i18n.translateInline(item.display)} > #{App.i18n.translateInline(attribute.display)} > #{App.i18n.translateInline(functionMapping.placeholder_display)}"
+                  content: content
+                }
           else
             all.push {
               id: name
@@ -68,6 +78,16 @@ class App.WidgetPlaceholder extends App.Controller
               name: "#{App.i18n.translateInline(item.display)} > #{App.i18n.translateInline(attribute.display)}"
               content: content
             }
+      if Object.keys(App[item.object].allowedReplaceTagsFunctionMapping).length > 0
+        for functionMapping in Object.values(App[item.object].allowedReplaceTagsFunctionMapping)
+          name = "\#{#{item.prefix}.#{functionMapping.placeholder_content}}"
+          content = "\#{#{item.prefix}.#{functionMapping.placeholder_content}}"
+          all.push {
+            id: name
+            keywords: name
+            name: "#{App.i18n.translateInline(item.display)} > #{App.i18n.translateInline(functionMapping.placeholder_display)}"
+            content: content
+          }
 
     # modify article placeholders
     replaces = [

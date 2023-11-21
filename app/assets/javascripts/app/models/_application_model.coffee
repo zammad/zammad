@@ -1,6 +1,8 @@
 class App.Model extends Spine.Model
   @apiPath: App.Config.get('api_path')
 
+  @allowedReplaceTagsFunctionMapping = {}
+
   constructor: ->
     super
 
@@ -937,6 +939,16 @@ set new attributes of model (remove already available attributes)
         allAttributes.push $.extend(true, {}, attribute)
 
     @configure_attributes = $.extend(true, [], allAttributes.concat(configure_attributes))
+
+  replaceTagsFunctionCallback: (functionName, parameters) ->
+    functionMapping = App[ @constructor.className ].allowedReplaceTagsFunctionMapping[functionName]
+    return if !functionMapping
+
+    # First check, if there is a defined allowed function mapping inside the single moodel.
+    mappedFunctionName = functionMapping.function_name
+    return if !mappedFunctionName
+
+    @[mappedFunctionName](parameters...)
 
   @resetAttributes: ->
     return if _.isEmpty(@org_configure_attributes)

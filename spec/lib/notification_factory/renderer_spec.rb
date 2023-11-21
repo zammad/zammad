@@ -492,4 +492,52 @@ RSpec.describe NotificationFactory::Renderer do
     end
   end
   # rubocop:enable Lint/InterpolationCheck
+
+  context 'with user avatar' do
+    let(:base64_img) { 'iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }
+    let(:decoded_img) { Base64.decode64(base64_img) }
+    let(:mime_type)   { 'image/png' }
+
+    let(:avatar) do
+      Avatar.add(
+        object:        'User',
+        o_id:          owner.id,
+        full:          {
+          content:   decoded_img,
+          mime_type: mime_type,
+        },
+        resize:        {
+          content:   decoded_img,
+          mime_type: mime_type,
+        },
+        source:        "upload #{Time.zone.now}",
+        deletable:     true,
+        created_by_id: owner.id,
+        updated_by_id: owner.id,
+      )
+    end
+
+    let(:owner)  { create(:user, group_ids: Group.pluck(:id)) }
+    let(:ticket) { create(:ticket, owner: owner, group: Group.first) }
+
+    context 'with an avatar' do
+      before do
+        owner.update!(image: avatar.store_hash)
+      end
+
+      it 'returns a <img> tag' do
+        renderer = build(:notification_factory_renderer, template: 'Avatar test #{ticket.owner.avatar(150, 150)}', objects: { ticket: ticket }, trusted: true) # rubocop:disable Lint/InterpolationCheck
+
+        expect(renderer.render).to eq "Avatar test &lt;img src=&#39;data:#{mime_type};base64,#{base64_img}&#39; width=&#39;150&#39; height=&#39;150&#39; /&gt;"
+      end
+    end
+
+    context 'without an avatar' do
+      it 'returns empty string' do
+        renderer = build(:notification_factory_renderer, template: 'Avatar test #{ticket.owner.avatar(150, 150)}', objects: { ticket: ticket }, trusted: true) # rubocop:disable Lint/InterpolationCheck
+
+        expect(renderer.render).to eq 'Avatar test '
+      end
+    end
+  end
 end

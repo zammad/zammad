@@ -96,6 +96,8 @@ examples how to use
       return debug("\#{#{key} / no such method}")
     end
 
+    method_whitelist = %w[avatar]
+
     previous_object_refs = ''
     object_methods_s = ''
     object_methods.each do |method_raw|
@@ -123,13 +125,26 @@ examples how to use
       arguments = nil
       if %r{\A(?<method_id>[^(]+)\((?<parameter>[^)]+)\)\z} =~ method
 
-        if parameter != parameter.to_i.to_s
+        parameters = []
+        parameter.split(',').each do |p|
+          p = p.strip!
+
+          if p != p.to_i.to_s
+            value = debug("\#{#{object_name}.#{object_methods_s} / invalid parameter: #{p}}")
+            break
+          end
+
+          parameters << parameter.to_i
+        end
+
+        # Ensure that e.g. 'ticket.title.slice(3,4)' is not allowed, but 'ticket.owner.avatar(150,150)' is
+        if !parameters.size.eql?(1) && method_whitelist.exclude?(method_id)
           value = debug("\#{#{object_name}.#{object_methods_s} / invalid parameter: #{parameter}}")
           break
         end
 
         begin
-          arguments = Array(parameter.to_i)
+          arguments = parameters
           method    = method_id
         rescue
           value = debug("\#{#{object_name}.#{object_methods_s} / #{e.message}}")
@@ -138,12 +153,19 @@ examples how to use
       end
 
       # if method exists
-      if !object_refs.respond_to?(method.to_sym)
+      if !object_refs.respond_to?(method.to_sym) && method_whitelist.exclude?(method)
         value = debug("\#{#{object_name}.#{object_methods_s} / no such method}")
         break
       end
+
       begin
         previous_object_refs = object_refs
+
+        if method.to_sym.eql?(:avatar)
+          object_refs = handle_user_avatar(previous_object_refs, *arguments)
+          break
+        end
+
         object_refs = object_refs.send(method.to_sym, *arguments)
 
         # body_as_html should trigger the cloning of all inline attachments from the parent article (issue #2399)
@@ -238,5 +260,22 @@ examples how to use
     else
       key
     end
+  end
+
+  def handle_user_avatar(user, width = 60, height = 60)
+    return if user.image.blank?
+
+    file = avatar_file(user.image)
+    return if file.nil?
+
+    file_content_type = file.preferences['Content-Type'] || file.preferences['Mime-Type']
+
+    "<img src='data:#{file_content_type};base64,#{Base64.strict_encode64(file.content)}' width='#{width}' height='#{height}' />"
+  end
+
+  def avatar_file(image_hash)
+    Avatar.get_by_hash(image_hash)
+  rescue
+    nil
   end
 end

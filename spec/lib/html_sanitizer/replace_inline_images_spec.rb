@@ -10,5 +10,35 @@ RSpec.describe HtmlSanitizer::ReplaceInlineImages do
 
     it { expect(sanitized.first).to match(target) }
     it { expect(sanitized.last).to include(include(filename: 'image1.jpeg')) }
+
+    context 'when user avatar image exists' do
+      let(:user) { create(:user) }
+      let(:base64_img)  { 'iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }
+      let(:decoded_img) { Base64.decode64(base64_img) }
+      let(:mime_type)   { 'image/png' }
+      let(:avatar) do
+        Avatar.add(
+          object:        'User',
+          o_id:          user.id,
+          full:          {
+            content:   decoded_img,
+            mime_type: mime_type,
+          },
+          resize:        {
+            content:   decoded_img,
+            mime_type: mime_type,
+          },
+          source:        "upload #{Time.zone.now}",
+          deletable:     true,
+          created_by_id: user.id,
+          updated_by_id: user.id,
+        )
+      end
+
+      let(:input) { "<img src='api/v1/users/image/#{avatar.store_hash}' width='100' height='100' data-user-avatar='true'>" }
+
+      it { expect(sanitized.first).to match(target) }
+      it { expect(sanitized.last).to include(include(filename: 'avatar')) }
+    end
   end
 end

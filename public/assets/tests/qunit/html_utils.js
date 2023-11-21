@@ -1578,6 +1578,28 @@ QUnit.test("check replace tags", assert => {
   }
   verify = App.Utils.replaceTags(message, data, true)
   assert.equal(verify, result)
+
+  message = "<div>#{user.avatar(100, 100)}</div>"
+  result  = '<div></div>'
+  data    = {
+    user: user
+  }
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  user = new App.User({
+    firstname: 'Bob',
+    lastname: 'Smith Good',
+    created_at: '2018-10-31T10:00:00Z',
+    image: '808d0f10f81c8b1117608cb22a73076e'
+  })
+  message = "<div>#{user.avatar(100, 100)}</div>"
+  result  = '<div><img src="api/v1/users/image/' + user.image +  '" width="100" height="100" data-user-avatar="true" /></div>'
+  data    = {
+    user: user
+  }
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
 });
 
 // check attibute validation
@@ -2464,7 +2486,6 @@ QUnit.test('check getRecipientArticle format', assert => {
     in_reply_to: 'message_id7',
   }
   verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
-  console.log(verify)
   assert.deepEqual(verify, result)
 
   customer = {

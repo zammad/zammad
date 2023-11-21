@@ -883,6 +883,15 @@ class App.Utils
         if typeof dataRef is 'object' && level of dataRef
           dataRefLast = dataRef
           dataRef = dataRef[level]
+        else if typeof dataRef is 'object' && typeof level is 'string' && matches = level.match(/(?<functionName>\w+)\((?<params>.*?)\)/)
+          dataRefLast = dataRef
+          { functionName, params } = matches.groups
+          parameters = params.split(',').map((param) -> param.trim())
+
+          if 'replaceTagsFunctionCallback' of dataRefLast
+            return dataRefLast.replaceTagsFunctionCallback(functionName, parameters) || ''
+          else
+            dataRef = ''
         else
           dataRef = ''
           break
