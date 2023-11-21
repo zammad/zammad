@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Channels > Telegram', integration: true, required_envs: %w[TELEGRAM_TOKEN], type: :system do
+RSpec.describe 'Manage > Channels > Telegram', integration: true, required_envs: %w[TELEGRAM_TOKEN], retry: 5, retry_wait: 30.seconds, type: :system do
   before { visit '/#channels/telegram' }
 
   it 'does connect and add the token' do
