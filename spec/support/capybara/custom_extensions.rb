@@ -101,6 +101,12 @@ module ZammadCapybarActionDelegator
   def mac_platform?
     Gem::Platform.local.os.eql? 'darwin'
   end
+
+  def check(...)
+    super.tap do
+      await_empty_ajax_queue
+    end
+  end
 end
 
 module ZammadCapybarSelectorDelegator
