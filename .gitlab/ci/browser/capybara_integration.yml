@@ -1,40 +1,42 @@
-.template_browser-core_capybara_integration:
-  script:
-    - !reference [.scripts, zammad_ci_test_prepare]
-    - bundle exec rspec -t integration --profile 10 spec/system
-  variables:
-    IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
-
-capybara:integration:chrome:
+capybara:integration:other:
   extends:
     - .template_browser-core_capybara_chrome
-    - .template_browser-core_capybara_integration
-    - .variables_auth
     - .variables_idoit
   services:
     - !reference [.services, postgresql]
     - !reference [.services, selenium-chrome]
     - !reference [.services, redis]
-    - !reference [.services, auth]
     - !reference [.services, idoit]
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs6
-      alias: zammad-ci-otrsimport-db
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs6
-      alias: zammad-ci-otrsimport-app
+  script:
+    - !reference [.scripts, zammad_ci_test_prepare]
+    - bundle exec rspec -t integration -t ~integration_standalone --profile 10 spec/system
 
-capybara:integration:firefox:
+capybara:integration:saml:
   extends:
-    - .template_browser-core_capybara_firefox
-    - .template_browser-core_capybara_integration
+    - .template_browser-core_capybara_chrome
     - .variables_auth
-    - .variables_idoit
   services:
     - !reference [.services, postgresql]
-    - !reference [.services, selenium-firefox]
+    - !reference [.services, selenium-chrome]
     - !reference [.services, redis]
     - !reference [.services, auth]
-    - !reference [.services, idoit]
+  script:
+    - !reference [.scripts, zammad_ci_test_prepare]
+    - bundle exec rspec -t integration_standalone:saml --profile 10 spec/system
+
+capybara:integration:otrs:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, selenium-chrome]
+    - !reference [.services, redis]
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs6
       alias: zammad-ci-otrsimport-db
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs6
       alias: zammad-ci-otrsimport-app
+  script:
+    - !reference [.scripts, zammad_ci_test_prepare]
+    - bundle exec rspec -t integration_standalone:otrs --profile 10 spec/system

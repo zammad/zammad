@@ -4,7 +4,7 @@ require 'rails_helper'
 
 require 'keycloak/admin'
 
-RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN_USER KEYCLOAK_ADMIN_PASSWORD], type: :system do
+RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN_USER KEYCLOAK_ADMIN_PASSWORD], type: :system do
   let(:zammad_base_url)              { "#{Capybara.app_host}:#{Capybara.current_session.server.port}" }
   let(:zammad_saml_metadata)         { "#{zammad_base_url}/auth/saml/metadata" }
   let(:saml_base_url)                { ENV['KEYCLOAK_BASE_URL'] }

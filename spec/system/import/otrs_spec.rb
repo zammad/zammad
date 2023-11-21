@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 # Mark this job as integration test to run it in the separate job with the required containers.
-RSpec.describe 'Import from OTRS', authenticated_as: false, db_strategy: :reset, integration: true, performs_jobs: true, required_envs: %w[IMPORT_OTRS_ENDPOINT IMPORT_OTRS_ENDPOINT_KEY], set_up: false, type: :system do
+RSpec.describe 'Import from OTRS', authenticated_as: false, db_strategy: :reset, integration: true, integration_standalone: :otrs, performs_jobs: true, required_envs: %w[IMPORT_OTRS_ENDPOINT IMPORT_OTRS_ENDPOINT_KEY], set_up: false, type: :system do
 
   let(:job) { ImportJob.find_by(name: 'Import::OTRS') }
 
