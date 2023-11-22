@@ -3188,6 +3188,10 @@ msgstr ""
 msgid "Data Privacy"
 msgstr ""
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "Data privacy task allows to delete a user or a ticket only."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
 msgstr ""
@@ -6665,6 +6669,18 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "It is not possible to delete the last account with admin permissions."
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "It is not possible to delete the system user."
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "It is not possible to delete your current account."
 msgstr ""
 
 #: app/models/ticket.rb
@@ -10230,6 +10246,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "Selected object is already queued for deletion."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
@@ -15038,10 +15058,6 @@ msgstr ""
 msgid "has already been taken"
 msgstr ""
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "has an existing DataPrivacyTask queued"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -15211,10 +15227,6 @@ msgstr ""
 msgid "is larger than the allowed maximum value of %{max_value}"
 msgstr ""
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is last account with admin permissions"
-msgstr ""
-
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr ""
@@ -15229,10 +15241,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is not"
-msgstr ""
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is not a User or Ticket"
 msgstr ""
 
 #: lib/validations/color_validator.rb
@@ -15296,14 +15304,6 @@ msgid "is too short (minimum is %{count} characters)"
 msgstr ""
 
 msgid "is too short (minimum is 1 character)"
-msgstr ""
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is undeletable system User with ID 1"
-msgstr ""
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is your current account"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee

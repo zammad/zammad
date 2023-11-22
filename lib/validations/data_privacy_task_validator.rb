@@ -20,7 +20,7 @@ class Validations::DataPrivacyTaskValidator < ActiveModel::Validator
     return if !record.deletable_type_changed?
     return if [User, Ticket].any? { deletable.is_a?(_1) }
 
-    record.errors.add(:deletable, __('is not a User or Ticket'))
+    record.errors.add(:base, __('Data privacy task allows to delete a user or a ticket only.'))
   end
 
   def check_for_user
@@ -35,26 +35,26 @@ class Validations::DataPrivacyTaskValidator < ActiveModel::Validator
   def check_for_system_user
     return if deletable.id != 1
 
-    record.errors.add(:deletable, __('is undeletable system User with ID 1'))
+    record.errors.add(:base, __('It is not possible to delete the system user.'))
   end
 
   def check_for_current_user
     return if deletable.id != UserInfo.current_user_id
 
-    record.errors.add(:deletable, __('is your current account'))
+    record.errors.add(:base, __('It is not possible to delete your current account.'))
   end
 
   def check_for_last_admin
     return if !last_admin?
 
-    record.errors.add(:deletable, __('is last account with admin permissions'))
+    record.errors.add(:base, __('It is not possible to delete the last account with admin permissions.'))
   end
 
   def check_for_existing_task
     return if !record.deletable_id_changed?
     return if !tasks_exists?
 
-    record.errors.add(:deletable, __('has an existing DataPrivacyTask queued'))
+    record.errors.add(:base, __('Selected object is already queued for deletion.'))
   end
 
   def tasks_exists?

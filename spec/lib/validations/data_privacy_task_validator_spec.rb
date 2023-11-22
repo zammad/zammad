@@ -42,7 +42,7 @@ RSpec.describe Validations::DataPrivacyTaskValidator do
       it 'adds error' do
         task.validate(record)
 
-        expect(record.errors.first.message).to include('is not a ')
+        expect(record.errors.full_messages).to include('Data privacy task allows to delete a user or a ticket only.')
       end
     end
   end
@@ -53,7 +53,7 @@ RSpec.describe Validations::DataPrivacyTaskValidator do
 
       task.validate(record)
 
-      expect(record.errors.first.message).to include('has an existing')
+      expect(record.errors.full_messages).to include('Selected object is already queued for deletion.')
     end
 
     it 'passes if existing task is marked as failed' do
@@ -77,7 +77,7 @@ RSpec.describe Validations::DataPrivacyTaskValidator do
     it 'adds error if deleting current user', current_user_id: -> { deletable.id } do
       task.validate(record)
 
-      expect(record.errors.first.message).to include('is your current account')
+      expect(record.errors.full_messages).to include('It is not possible to delete your current account.')
     end
 
     context 'when deleting a system user' do
@@ -86,7 +86,7 @@ RSpec.describe Validations::DataPrivacyTaskValidator do
       it 'adds error' do
         task.validate(record)
 
-        expect(record.errors.first.message).to include('system User')
+        expect(record.errors.full_messages).to include('It is not possible to delete the system user.')
       end
     end
 
@@ -98,7 +98,7 @@ RSpec.describe Validations::DataPrivacyTaskValidator do
       it 'adds error if deleting last admin user' do
         task.validate(record)
 
-        expect(record.errors.first.message).to include('last account with admin')
+        expect(record.errors.full_messages).to include('It is not possible to delete the last account with admin permissions.')
       end
 
       context 'when other admin exists' do
@@ -117,7 +117,7 @@ RSpec.describe Validations::DataPrivacyTaskValidator do
 
           task.validate(record)
 
-          expect(record.errors.first.message).to include('last account with admin')
+          expect(record.errors.full_messages).to include('It is not possible to delete the last account with admin permissions.')
         end
       end
     end
