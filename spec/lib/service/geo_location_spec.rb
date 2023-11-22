@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Service::GeoLocation, integration: true do
+RSpec.describe Service::GeoLocation, integration: true, retry: 5, retry_wait: 30.seconds do
   describe '#geocode' do
     subject(:lookup_result) { described_class.geocode(address) }
 
