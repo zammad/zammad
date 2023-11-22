@@ -257,7 +257,7 @@ RSpec.describe 'Ticket Create', type: :system do
       browser_travel_to Time.current
 
       visit 'ticket/create'
-      use_template template
+      use_template template, without_taskbar: true
     end
 
     let(:field_date) { find 'input[name="{date}date_test"]', visible: :all }
@@ -1030,7 +1030,11 @@ RSpec.describe 'Ticket Create', type: :system do
     end
 
     it 'preserves text input from the user' do
+      taskbar_timestamp = Taskbar.last.updated_at
+
       set_editor_field_value('body', 'foobar')
+
+      wait.until { Taskbar.last.updated_at != taskbar_timestamp }
 
       use_template(template1)
       check_input_field_value('title', 'template 1')
@@ -1046,7 +1050,11 @@ RSpec.describe 'Ticket Create', type: :system do
       check_input_field_value('title', 'template 2')
       check_editor_field_value('body', 'body 2')
 
+      taskbar_timestamp = Taskbar.last.updated_at
+
       set_editor_field_value('body', 'foobar')
+
+      wait.until { Taskbar.last.updated_at != taskbar_timestamp }
 
       # This time body value should be left as-is
       use_template(template1)
@@ -1062,7 +1070,7 @@ RSpec.describe 'Ticket Create', type: :system do
       shared_examples 'calculated datetime value' do
 
         it 'applies correct datetime value' do
-          use_template(template)
+          use_template(template, without_taskbar: true)
 
           check_date_field_value(field, date.strftime('%m/%d/%Y'))
           check_time_field_value(field, date.strftime('%H:%M'))
@@ -1117,7 +1125,7 @@ RSpec.describe 'Ticket Create', type: :system do
       let(:template_value) { date.to_datetime.to_s }
 
       it 'applies correct date value' do
-        use_template(template)
+        use_template(template, without_taskbar: true)
 
         check_date_field_value(field, date.strftime('%m/%d/%Y'))
       end
@@ -1255,8 +1263,6 @@ RSpec.describe 'Ticket Create', type: :system do
       it 'applies configured cc value' do
         use_template(template)
 
-        await_empty_ajax_queue
-
         expect(page).to have_css('label', text: 'CC')
 
         check_input_field_value('cc', cc_recipients, visible: :all)
@@ -1272,8 +1278,6 @@ RSpec.describe 'Ticket Create', type: :system do
 
       it 'ignores configured cc value' do
         use_template(template)
-
-        await_empty_ajax_queue
 
         expect(page).to have_no_css('label', text: 'CC')
 
