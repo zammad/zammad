@@ -142,8 +142,8 @@ returns
                                         .limit(data[:limit] || 15)
                                         .reorder(created_at: :desc)
 
-    open_tickets   = base_query.where(ticket_state_types: { name: Ticket::State::TYPES[:open] })
-    closed_tickets = base_query.where(ticket_state_types: { name: Ticket::State::TYPES[:closed] })
+    open_tickets   = base_query.where(ticket_state_types: { name: Ticket::StateType.names_in_category(:open) })
+    closed_tickets = base_query.where(ticket_state_types: { name: Ticket::StateType.names_in_category(:closed) })
 
     {
       ticket_ids_open:   open_tickets.map(&:id),

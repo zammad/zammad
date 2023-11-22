@@ -38,3 +38,14 @@ class App.ObjectManagerAttribute extends App.Model
         result[object].push(_.clone(row))
 
     result
+
+  manageRoute: ->
+    return if @.object isnt 'Ticket'
+
+    switch @.name
+      when 'priority_id'
+        return '#system/ticket_priorities'
+      when 'state_id'
+        return '#system/ticket_states'
+      else
+        return false

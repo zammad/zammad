@@ -80,6 +80,10 @@
               <span class="is-disabled" title="<%= item.not_deletable_reason %>"><%- @Icon('trash') %></span>
             <% end %>
           <% end %>
+          <% manageRoute = item.manageRoute() %>
+          <% if manageRoute: %>
+            <a href="<%= manageRoute %>" title="<%- @Ti('Manage') %>"><%- @Icon('cog', 'u-highlight') %></a>
+          <% end %>
         </td>
       </tr>
       <% end %>

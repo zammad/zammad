@@ -541,6 +541,14 @@ msgstr ""
 msgid "A ticket cannot be merged into itself."
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "A ticket's priority is simply a ranking of how urgent or important it is. Different priorities allow you to see the importance of your tickets better."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "A ticket's state is used to categorize and manage the lifecycle of a ticket or customer inquiry."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr ""
@@ -3301,6 +3309,15 @@ msgstr ""
 msgid "Default caller ID for outbound calls."
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Default for new tickets"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
 msgstr ""
@@ -3440,6 +3457,14 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines an OTRS endpoint to import users, tickets, states, and articles."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Defines an optional highlight color of this priority in ticket tables. High priority will be rendered in an indian red, while low priority in a baby blue color."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Defines an optional icon of this priority in ticket tables. Important will be rendered with an exclamation point, while low priority with a downwards arrow."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6001,6 +6026,10 @@ msgstr ""
 msgid "Hide authenticator app secret"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "High priority"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
@@ -6207,6 +6236,10 @@ msgstr ""
 msgid "If you want to use additional email addresses, you can configure them later."
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Ignore Escalation"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Ignore Escalation/SLA Information"
 msgstr ""
@@ -6316,6 +6349,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/import/index.jst.eco
 msgid "Import from"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Important"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
@@ -7094,6 +7131,10 @@ msgstr ""
 msgid "Lost network connection!"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Low priority"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
 msgstr ""
@@ -7131,6 +7172,7 @@ msgid "Maintenance mode enabled!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/manage.coffee
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Manage"
 msgstr ""
 
@@ -7752,6 +7794,10 @@ msgstr ""
 msgid "New Overview"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+msgid "New Priority"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
 msgstr ""
@@ -7794,6 +7840,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "New Ticket State"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
@@ -7856,6 +7906,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Next State"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -8154,6 +8208,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -10373,6 +10429,15 @@ msgstr ""
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "Set default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "Set default for new tickets"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
 msgstr ""
@@ -12577,8 +12642,24 @@ msgstr ""
 msgid "Ticket Owner"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+msgid "Ticket Priorities"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+msgid "Ticket Priority"
+msgstr ""
+
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "Ticket State"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "Ticket States"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -13216,6 +13297,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -13230,6 +13312,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "Type:"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "UI color"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "UI icon"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -14474,6 +14564,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "Zammad requires a restart!"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Zammad uses state types to know what it should do with your state. This allows you to have different types like pending actions, pending reminders or closed states."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee

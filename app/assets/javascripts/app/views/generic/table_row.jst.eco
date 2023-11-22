@@ -78,6 +78,13 @@
             <span class="badge badge--primary"><%= @T('Default') %></span>
           <% end %>
          <% end %>
+        <% if @object.constructor.badges && @object.constructor.badges.length > 0: %>
+          <% for badge in @object.constructor.badges: %>
+            <% if badge.attribute == header.name && badge.active(@object): %>
+              <span class="badge badge--<%= badge.class %>"><%= @T(badge.display) %></span>
+            <% end %>
+          <% end %>
+        <% end %>
         <% if header.class || header.data: %></span><% end %>
       <% end %>
       <% if header.link: %></a><% end %>

@@ -5,7 +5,7 @@
       <ul class="nav nav-pills nav-stacked">
       <% if group.items: %>
         <% for item in group.items: %>
-          <li <% if item.active: %>class="active js-item"<% end %>><a href="<%= item.target %>"><%- @T(item.name) %></a></li>
+          <li class="<% if item.active: %>active js-item<% end %> <% if item.hidden: %>hidden<% end %>"><a href="<%= item.target %>"><%- @T(item.name) %></a></li>
         <% end %>
       <% end %>
       </ul>

@@ -1627,7 +1627,7 @@ td.align-right {
 .table tr.is-grayed-out {
   color: var(--text-muted);
 
-  .icon,
+  .icon:not(.u-highlight),
   .btn span {
     opacity: 0.33;
   }
