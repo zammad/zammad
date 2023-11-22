@@ -400,7 +400,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       end
 
       it 'does switch search results properly' do
-        page.find('.js-search').fill_in(with: '"Testing Ticket 1"', fill_options: { clear: :backspace })
+        page.find('.js-search').fill_in(with: '"Testing Ticket 1"')
         expect(page.find('.js-tableBody')).to have_text('Testing Ticket 1')
         expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 2')
         expect(current_url).to include('Testing%20Ticket%201')
