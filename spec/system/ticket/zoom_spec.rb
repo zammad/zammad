@@ -793,6 +793,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       it 'previously created private note shows up via WS push' do
         visit "ticket/zoom/#{ticket_article.ticket.id}"
+        ensure_websocket
 
         # make sure ticket is done loading and change will be pushed via WS
         find(:active_ticket_article, ticket_article)
