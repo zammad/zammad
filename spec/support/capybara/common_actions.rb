@@ -279,11 +279,16 @@ module CommonActions
     end
   end
 
-  def use_template(template)
+  def use_template(template, without_taskbar: false)
     field  = find('#form-template select[name="id"]')
     option = field.find(:option, template.name)
     option.select_option
+
+    taskbar_timestamp = Taskbar.last.updated_at if !without_taskbar
+
     click '.sidebar-content .js-apply'
+
+    wait.until { Taskbar.last.updated_at != taskbar_timestamp } if !without_taskbar
   end
 
   # Checks if modal is ready.
