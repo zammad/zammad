@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Webhook > MS Teams', integration: true, performs_jobs: true, required_envs: %w[MS_TEAMS_CI_WEBHOOK_URL] do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Webhook > MS Teams', integration: true, performs_jobs: true, required_envs: %w[MS_TEAMS_CI_WEBHOOK_URL], retry: 5, retry_wait: 30.seconds, use_vcr: true do # rubocop:disable RSpec/DescribeClass
   let(:webhook)   { create(:ms_teams_webhook, endpoint: ENV['MS_TEAMS_CI_WEBHOOK_URL']) }
   let(:perform)   { { 'notification.webhook' => { 'webhook_id' => webhook.id.to_s } } }
   let(:trigger)   { create(:trigger, activator: 'action', condition: condition, perform: perform) }
