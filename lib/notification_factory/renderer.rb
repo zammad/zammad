@@ -163,6 +163,7 @@ examples how to use
 
         if method.to_sym.eql?(:avatar)
           object_refs = handle_user_avatar(previous_object_refs, *arguments)
+          escape = false
           break
         end
 
