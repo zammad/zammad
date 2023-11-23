@@ -18,9 +18,6 @@ class Template extends App.ControllerSubContent
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#templates'
-        notes: [
-          __('Text modules are …')
-        ]
         buttons: [
           { name: __('New Template'), 'data-type': 'new', class: 'btn--success' }
         ]

@@ -1025,10 +1025,6 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Agent and customer users can be grouped into organizations."
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
 msgstr ""
@@ -2808,7 +2804,6 @@ msgstr ""
 msgid "Core Workflows"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Core Workflows are actions or constraints on selections in forms. Depending on an action, it is possible to hide or restrict fields or to change the obligation to fill them in."
 msgstr ""
@@ -8688,10 +8683,6 @@ msgstr ""
 msgid "Overviews"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/overview.coffee
-msgid "Overviews are …"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
 msgstr ""
@@ -9270,10 +9261,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/public_link.coffee
 #: db/seeds/permissions.rb
 msgid "Public Links"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/public_link.coffee
-msgid "Public Links are …"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
@@ -9976,10 +9963,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee
 msgid "Schedulers"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/job.coffee
-msgid "Schedulers are …"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
@@ -11299,8 +11282,6 @@ msgstr ""
 msgid "Text modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/macro.coffee
-#: app/assets/javascripts/app/controllers/template.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules are …"
 msgstr ""
@@ -13153,10 +13134,6 @@ msgstr ""
 msgid "Triggers activated by actions are executed whenever a ticket is created or updated, while triggers activated by time events are executed when certain times are reached (e.g. pending time, escalation)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/trigger.coffee
-msgid "Triggers are …"
-msgstr ""
-
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try Another Method"
@@ -14027,10 +14004,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook.jst.eco
 #: db/seeds/permissions.rb
 msgid "Webhooks"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/webhook.coffee
-msgid "Webhooks are …"
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee

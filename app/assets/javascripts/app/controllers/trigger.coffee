@@ -19,9 +19,6 @@ class Trigger extends App.ControllerSubContent
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#triggers'
-        notes: [
-          __('Triggers are …')
-        ]
         buttons: [
           { name: __('New Trigger'), 'data-type': 'new', class: 'btn--success' }
         ]

@@ -20,9 +20,6 @@ class Overview extends App.ControllerSubContent
         object: __('Overview')
         objects: __('Overviews')
         navupdate: '#overviews'
-        notes: [
-          __('Overviews are …')
-        ]
         buttons: [
           { name: __('New Overview'), 'data-type': 'new', class: 'btn--success' }
         ]

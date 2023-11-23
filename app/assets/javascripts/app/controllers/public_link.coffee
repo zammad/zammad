@@ -14,9 +14,6 @@ class PublicLink extends App.ControllerSubContent
         object: __('Public Link')
         objects: __('Public Links')
         navupdate: '#public_links'
-        notes: [
-          __('Public Links are …')
-        ]
         buttons: [
           { name: __('New Public Link'), 'data-type': 'new', class: 'btn--success' }
         ]

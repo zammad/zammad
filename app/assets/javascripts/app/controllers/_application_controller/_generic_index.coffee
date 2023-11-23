@@ -105,9 +105,7 @@ class App.ControllerGenericIndex extends App.Controller
 
       @html App.view('generic/admin/index')(
         head:            @pageData.objects
-        notes:           @pageData.notes
         buttons:         @pageData.buttons
-        menus:           @pageData.menus
         subHead:         @pageData.subHead
         showDescription: showDescription
       )

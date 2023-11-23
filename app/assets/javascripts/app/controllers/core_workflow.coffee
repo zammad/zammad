@@ -20,9 +20,6 @@ class CoreWorkflow extends App.ControllerSubContent
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#core_workflow'
-        notes: [
-          __('Core Workflows are actions or constraints on selections in forms. Depending on an action, it is possible to hide or restrict fields or to change the obligation to fill them in.')
-        ]
         buttons: [
           { name: __('New Workflow'), 'data-type': 'new', class: 'btn--success' }
         ]

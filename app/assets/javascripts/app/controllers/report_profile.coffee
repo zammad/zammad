@@ -18,9 +18,6 @@ class ReportProfile extends App.ControllerSubContent
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#report_profiles'
-        notes: [
-#          'Report Profile are ...'
-        ]
         buttons: [
           { name: __('New Profile'), 'data-type': 'new', class: 'btn--success' }
         ]

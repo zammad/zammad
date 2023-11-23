@@ -18,9 +18,6 @@ class Job extends App.ControllerSubContent
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#Jobs'
-        notes: [
-          __('Schedulers are …')
-        ]
         buttons: [
           { name: __('New Scheduler'), 'data-type': 'new', class: 'btn--success' }
         ]
