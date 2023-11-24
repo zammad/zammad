@@ -6029,6 +6029,14 @@ msgstr ""
 msgid "High priority"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight color"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight icon"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
@@ -13309,14 +13317,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "Type:"
-msgstr ""
-
-#: app/assets/javascripts/app/models/ticket_priority.coffee
-msgid "UI color"
-msgstr ""
-
-#: app/assets/javascripts/app/models/ticket_priority.coffee
-msgid "UI icon"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco

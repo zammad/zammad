@@ -40,7 +40,7 @@ class TicketPriority extends App.ControllerSubContent
 
     return if App.Config.get('ui_ticket_overview_priority_icon') and form.find('[name="ui_color"]').val()
 
-    # Hide the UI icon selection in case:
+    # Hide the "highlight icon" selection in case:
     #   - `ui_ticket_overview_priority_icon` setting is disabled
     #   - `ui_color` form field is not set
     form.find('[data-attribute-name="ui_icon"]').hide()
