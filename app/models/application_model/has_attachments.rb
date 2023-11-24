@@ -4,8 +4,7 @@ module ApplicationModel::HasAttachments
   extend ActiveSupport::Concern
 
   included do
-    after_create :attachments_buffer_check
-    after_update :attachments_buffer_check
+    after_save    :attachments_buffer_check
     after_destroy :attachments_remove_all, if: :attachments_cleanup?
 
     class_attribute :attachments_cleanup, default: false
@@ -60,12 +59,7 @@ store attachments for this object with store objects or hashes
 =end
 
   def attachments=(attachments)
-    self.attachments_buffer = attachments
-
-    # update if object already exists
-    return if !id&.nonzero?
-
-    attachments_buffer_check
+    @attachments_buffer = attachments
   end
 
 =begin
@@ -110,39 +104,20 @@ For use in #search_index_attribute_lookup
 
   private
 
-  def attachments_buffer
-    @attachments_buffer_data
-  end
-
-  def attachments_buffer=(attachments)
-    @attachments_buffer_data = attachments
-  end
-
   def attachments_buffer_check
-    # do nothing if no attachment exists
-    return 1 if attachments_buffer.nil?
+    return if @attachments_buffer.blank?
 
-    # store attachments
-    article_store = []
-    attachments_buffer.each do |attachment|
-      data = {
+    @attachments_buffer.each do |attachment|
+      Store.create!(
         object:        self.class.to_s,
         o_id:          id,
         created_by_id: created_by_id,
-      }
-      if attachment.is_a?(Store)
-        data[:data]        = attachment.content
-        data[:filename]    = attachment.filename
-        data[:preferences] = attachment.preferences
-      else
-        data[:data]        = attachment[:data]
-        data[:filename]    = attachment[:filename]
-        data[:preferences] = attachment[:preferences]
-      end
-
-      article_store.push Store.create!(data)
+        filename:      attachment[:filename],
+        preferences:   attachment[:preferences],
+        data:          attachment.try(:content) || attachment[:data]
+      )
     end
 
-    self.attachments_buffer = nil
+    @attachments_buffer = nil
   end
 end
