@@ -2449,7 +2449,7 @@ Setting.create_if_not_exists(
     authentication: true,
     permission:     ['admin.ticket_auto_assignment'],
   },
-  state:       { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } },
+  state:       { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category_ids(:work_on) } } },
   frontend:    true
 )
 Setting.create_or_update(

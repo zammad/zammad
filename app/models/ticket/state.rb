@@ -42,6 +42,10 @@ returns:
       .where(ticket_state_types: { name: Ticket::StateType.names_in_category(category) })
   }
 
+  def self.by_category_ids(category)
+    by_category(category).pluck(:id)
+  end
+
   def ensure_defaults
     return if callback_loop
 
@@ -80,12 +84,12 @@ returns:
       name:   'state_id',
     )
 
-    attr.data_option[:filter] = Ticket::State.by_category(:viewable).pluck(:id)
-
-    attr.screens[:create_middle]['ticket.agent'][:filter]    = Ticket::State.by_category(:viewable_agent_new).pluck(:id)
-    attr.screens[:create_middle]['ticket.customer'][:filter] = Ticket::State.by_category(:viewable_customer_new).pluck(:id)
-    attr.screens[:edit]['ticket.agent'][:filter]             = Ticket::State.by_category(:viewable_agent_edit).pluck(:id)
-    attr.screens[:edit]['ticket.customer'][:filter]          = Ticket::State.by_category(:viewable_customer_edit).pluck(:id)
+    attr.data_option[:filter]                                = Ticket::State.by_category_ids(:viewable)
+    attr.screens[:create_middle]['ticket.agent'][:filter]    = Ticket::State.by_category_ids(:viewable_agent_new)
+    attr.screens[:create_middle]['ticket.customer'][:filter] = Ticket::State.by_category_ids(:viewable_customer_new)
+    attr.screens[:edit]['ticket.agent'][:filter]             = Ticket::State.by_category_ids(:viewable_agent_edit)
+    attr.screens[:edit]['ticket.customer'][:filter]          = Ticket::State.by_category_ids(:viewable_customer_edit)
+    attr.screens[:overview_bulk]['ticket.agent'][:filter]    = Ticket::State.by_category_ids(:viewable_agent_edit)
 
     attr.save!
   end

@@ -11,7 +11,7 @@ FactoryBot.define do
       {
         'ticket.state_id' => {
           operator: 'is',
-          value:    Ticket::State.by_category(:open).pluck(:id),
+          value:    Ticket::State.by_category_ids(:open),
         },
       }
     end

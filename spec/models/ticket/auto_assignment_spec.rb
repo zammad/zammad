@@ -25,7 +25,7 @@ RSpec.describe 'Ticket: #auto_assign' do # rubocop:disable RSpec/DescribeClass
       end
 
       context 'when the condition does not match' do
-        let(:ticket_auto_assignment_condition) { { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } }
+        let(:ticket_auto_assignment_condition) { { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category_ids(:work_on) } } }
 
         it 'does not auto assign' do
           ticket.auto_assign(agent)

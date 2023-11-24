@@ -275,7 +275,7 @@ returns
   def self.process_auto_unassign
 
     # process pending action tickets
-    state_ids = Ticket::State.by_category(:work_on).pluck(:id)
+    state_ids = Ticket::State.by_category_ids(:work_on)
     return [] if state_ids.blank?
 
     result = []

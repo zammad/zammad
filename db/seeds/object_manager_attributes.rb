@@ -186,6 +186,14 @@ ObjectManager::Attribute.add(
         null: false,
       },
     },
+    overview_bulk: {
+      'ticket.agent' => {
+        nulloption: true,
+        null:       true,
+        default:    '',
+        direction:  'up',
+      },
+    },
   },
   to_create:   false,
   to_migrate:  false,
@@ -222,6 +230,11 @@ ObjectManager::Attribute.add(
         null: true,
       },
     },
+    overview_bulk: {
+      'ticket.agent' => {
+        null: true,
+      },
+    },
   },
   to_create:   false,
   to_migrate:  false,
@@ -241,7 +254,7 @@ ObjectManager::Attribute.add(
     null:       false,
     default:    Ticket::State.find_by(default_follow_up: true).id,
     translate:  true,
-    filter:     Ticket::State.by_category(:viewable).pluck(:id),
+    filter:     Ticket::State.by_category_ids(:viewable),
   },
   editable:    false,
   active:      true,
@@ -250,13 +263,13 @@ ObjectManager::Attribute.add(
       'ticket.agent'    => {
         null:       false,
         item_class: 'column',
-        filter:     Ticket::State.by_category(:viewable_agent_new).pluck(:id),
+        filter:     Ticket::State.by_category_ids(:viewable_agent_new),
       },
       'ticket.customer' => {
         item_class: 'column',
         nulloption: false,
         null:       true,
-        filter:     Ticket::State.by_category(:viewable_customer_new).pluck(:id),
+        filter:     Ticket::State.by_category_ids(:viewable_customer_new),
         default:    Ticket::State.find_by(default_create: true).id,
       },
     },
@@ -264,15 +277,23 @@ ObjectManager::Attribute.add(
       'ticket.agent'    => {
         nulloption: false,
         null:       false,
-        filter:     Ticket::State.by_category(:viewable_agent_edit).pluck(:id),
+        filter:     Ticket::State.by_category_ids(:viewable_agent_edit),
       },
       'ticket.customer' => {
         nulloption: false,
         null:       true,
-        filter:     Ticket::State.by_category(:viewable_customer_edit).pluck(:id),
+        filter:     Ticket::State.by_category_ids(:viewable_customer_edit),
         default:    Ticket::State.find_by(default_follow_up: true).id,
       },
     },
+    overview_bulk: {
+      'ticket.agent' => {
+        nulloption: true,
+        null:       true,
+        default:    '',
+        filter:     Ticket::State.by_category_ids(:viewable_agent_edit),
+      },
+    }
   },
   to_create:   false,
   to_migrate:  false,
@@ -307,6 +328,15 @@ ObjectManager::Attribute.add(
         null: false,
       },
     },
+    overview_bulk: {
+      'ticket.agent' => {
+        nulloption:    true,
+        null:          true,
+        default:       '',
+        orientation:   'top',
+        disableScroll: true,
+      },
+    },
   },
   to_create:   false,
   to_migrate:  false,
@@ -339,6 +369,13 @@ ObjectManager::Attribute.add(
     edit:          {
       'ticket.agent' => {
         null: false,
+      },
+    },
+    overview_bulk: {
+      'ticket.agent' => {
+        nulloption: true,
+        null:       true,
+        default:    '',
       },
     },
   },

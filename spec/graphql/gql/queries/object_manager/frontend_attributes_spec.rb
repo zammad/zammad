@@ -390,7 +390,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'null'       => false,
                 'default'    => 2,
                 'translate'  => true,
-                'filter'     => Ticket::State.by_category(:viewable).pluck(:id),
+                'filter'     => Ticket::State.by_category_ids(:viewable),
                 'maxlength'  => 255,
                 'belongs_to' => 'state',
               },
@@ -451,6 +451,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'attributes' => %w[group_id owner_id state_id pending_time priority_id],
               'name'       => 'create_middle'
             },
+            { 'attributes' => %w[group_id owner_id state_id pending_time priority_id], 'name' => 'overview_bulk' },
             {
               'attributes' => ['tags'],
               'name'       => 'create_bottom'
@@ -519,7 +520,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'null'       => false,
                 'default'    => 2,
                 'translate'  => true,
-                'filter'     => Ticket::State.by_category(:viewable).pluck(:id),
+                'filter'     => Ticket::State.by_category_ids(:viewable),
                 'maxlength'  => 255,
                 'belongs_to' => 'state',
               },
@@ -539,6 +540,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'attributes' => %w[group_id state_id],
               'name'       => 'create_middle'
             },
+            { 'attributes' => [], 'name' => 'overview_bulk' },
             {
               'attributes' => [],
               'name'       => 'create_bottom'

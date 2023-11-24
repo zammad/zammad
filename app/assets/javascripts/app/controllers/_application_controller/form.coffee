@@ -268,7 +268,7 @@ class App.ControllerForm extends App.Controller
     attribute.id = "#{idPrefix}_#{attribute.name}"
 
     # set label class name
-    attribute.label_class = @model.labelClass or attribute.label_class
+    attribute.label_class = @labelClass or attribute.label_class
 
     # set autofocus
     if @autofocus && attributeCount is 1

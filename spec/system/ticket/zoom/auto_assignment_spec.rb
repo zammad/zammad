@@ -10,7 +10,7 @@ RSpec.describe 'Ticket zoom > Auto Assignment', type: :system do
     context 'when agent disabled' do
       def authenticate
         Setting.set('ticket_auto_assignment', false)
-        Setting.set('ticket_auto_assignment_selector', { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } })
+        Setting.set('ticket_auto_assignment_selector', { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category_ids(:work_on) } } })
         Setting.set('ticket_auto_assignment_user_ids_ignore', [])
 
         true
@@ -30,7 +30,7 @@ RSpec.describe 'Ticket zoom > Auto Assignment', type: :system do
     context 'when agent enabled' do
       def authenticate
         Setting.set('ticket_auto_assignment', true)
-        Setting.set('ticket_auto_assignment_selector', { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } })
+        Setting.set('ticket_auto_assignment_selector', { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category_ids(:work_on) } } })
         Setting.set('ticket_auto_assignment_user_ids_ignore', setting_user_ids_ignore) if defined?(setting_user_ids_ignore)
 
         true

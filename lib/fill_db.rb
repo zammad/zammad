@@ -277,7 +277,7 @@ or if you only want to create 100 tickets
             condition: {
               'ticket.state_id' => {
                 operator: 'is',
-                value:    Ticket::State.by_category(:work_on_all).pluck(:id),
+                value:    Ticket::State.by_category_ids(:work_on_all),
               },
             },
             order:     {

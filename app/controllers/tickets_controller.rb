@@ -350,7 +350,7 @@ class TicketsController < ApplicationController
     # if we do not have open related tickets, search for any tickets
     tickets ||= TicketPolicy::ReadScope.new(current_user).resolve
                                        .where(customer_id: ticket.customer_id)
-                                       .where.not(state_id: Ticket::State.by_category(:merged).pluck(:id))
+                                       .where.not(state_id: Ticket::State.by_category_ids(:merged))
                                        .where.not(id: ticket.id)
                                        .reorder(created_at: :desc)
                                        .limit(6)
@@ -527,7 +527,7 @@ class TicketsController < ApplicationController
         closed_ids: {
           'ticket.state_id'    => {
             operator: 'is',
-            value:    Ticket::State.by_category(:closed).pluck(:id),
+            value:    Ticket::State.by_category_ids(:closed),
           },
           'ticket.customer_id' => {
             operator: 'is',
@@ -537,7 +537,7 @@ class TicketsController < ApplicationController
         open_ids:   {
           'ticket.state_id'    => {
             operator: 'is',
-            value:    Ticket::State.by_category(:open).pluck(:id),
+            value:    Ticket::State.by_category_ids(:open),
           },
           'ticket.customer_id' => {
             operator: 'is',
@@ -572,7 +572,7 @@ class TicketsController < ApplicationController
         closed_ids: {
           'ticket.state_id'        => {
             operator: 'is',
-            value:    Ticket::State.by_category(:closed).pluck(:id),
+            value:    Ticket::State.by_category_ids(:closed),
           },
           'ticket.organization_id' => {
             operator: 'is',
@@ -582,7 +582,7 @@ class TicketsController < ApplicationController
         open_ids:   {
           'ticket.state_id'        => {
             operator: 'is',
-            value:    Ticket::State.by_category(:open).pluck(:id),
+            value:    Ticket::State.by_category_ids(:open),
           },
           'ticket.organization_id' => {
             operator: 'is',

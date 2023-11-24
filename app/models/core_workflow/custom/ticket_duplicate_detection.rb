@@ -54,7 +54,7 @@ class CoreWorkflow::Custom::TicketDuplicateDetection < CoreWorkflow::Custom::Bac
       if Setting.get('ticket_duplicate_detection_search') == 'open'
         where_condition_selector['ticket.state_id'] = {
           operator: 'is',
-          value:    Ticket::State.by_category(:open).pluck(:id).map(&:to_s),
+          value:    Ticket::State.by_category_ids(:open).map(&:to_s),
         }
       end
 

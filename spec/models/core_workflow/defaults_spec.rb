@@ -298,4 +298,14 @@ RSpec.describe 'CoreWorkflow > Defaults', mariadb: true, type: :model do
       expect(result[:mandatory][field_name]).to be(false)
     end
   end
+
+  describe '.perform - Default - Certain offered states can not be set (never) via the bulk action #4848' do
+    let(:payload) do
+      base_payload.merge('screen' => 'overview_bulk')
+    end
+
+    it 'does not show non-edit states in the bulk edit of the ticket overview' do
+      expect(result[:restrict_values]['state_id']).not_to include(*Ticket::State.where(name: %w[new removed]).pluck(:id).map(&:to_s))
+    end
+  end
 end

@@ -314,7 +314,7 @@ class Selector::Sql < Selector::Base
       query_where = ''
       if attribute_name == 'open_existing'
         query_where = ' WHERE state_id IN (?)'
-        bind_params.push Ticket::State.by_category(:open).pluck(:id)
+        bind_params.push Ticket::State.by_category_ids(:open)
       end
 
       query << if (block_condition[:operator] == 'is' && block_condition[:value].to_s == 'true') || (block_condition[:operator] == 'is not' && block_condition[:value].to_s != 'true')
