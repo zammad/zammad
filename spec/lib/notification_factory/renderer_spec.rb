@@ -528,7 +528,7 @@ RSpec.describe NotificationFactory::Renderer do
       it 'returns a <img> tag' do
         renderer = build(:notification_factory_renderer, template: 'Avatar test #{ticket.owner.avatar(150, 150)}', objects: { ticket: ticket }, trusted: true) # rubocop:disable Lint/InterpolationCheck
 
-        expect(renderer.render).to eq "Avatar test &lt;img src=&#39;data:#{mime_type};base64,#{base64_img}&#39; width=&#39;150&#39; height=&#39;150&#39; /&gt;"
+        expect(renderer.render).to eq "Avatar test <img src='data:#{mime_type};base64,#{base64_img}' width='150' height='150' />"
       end
     end
 
