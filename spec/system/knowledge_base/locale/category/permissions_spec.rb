@@ -69,7 +69,7 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
         expect(page)
           .to have_css("input[name='#{role_another_editor.id}'][value='none']:not([disabled])", visible: :all)
           .and(have_css("input[name='#{role_another_editor.id}'][value='reader'][checked]:not([disabled])", visible: :all))
-          .and(have_css("input[name='#{role_another_editor.id}'][value='editor'][disabled]", visible: :all))
+          .and(have_css("input[name='#{role_another_editor.id}'][value='editor']:not([disabled])", visible: :all))
       end
     end
 
@@ -83,6 +83,19 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
           .to have_css("input[name='#{role_another_editor.id}'][value='none'][checked]:not([disabled])", visible: :all)
           .and(have_css("input[name='#{role_another_editor.id}'][value='reader'][disabled]", visible: :all))
           .and(have_css("input[name='#{role_another_editor.id}'][value='editor'][disabled]", visible: :all))
+      end
+    end
+
+    it 'shows editor permissions limited by editable parent category' do
+      KnowledgeBase::PermissionsUpdate.new(category).update! role_another_editor => 'editor'
+
+      open_page child_category
+
+      in_modal do
+        expect(page)
+          .to have_css("input[name='#{role_another_editor.id}'][value='editor'][checked]:not([disabled])", visible: :all)
+          .and(have_css("input[name='#{role_another_editor.id}'][value='reader'][disabled]", visible: :all))
+          .and(have_css("input[name='#{role_another_editor.id}'][value='none'][disabled]", visible: :all))
       end
     end
 

@@ -98,6 +98,58 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
               )
           end
         end
+
+        context 'when limiting sub-category in category with editor permission' do
+          before do
+            create(:knowledge_base_permission, permissionable: category, role: role_editor, access: 'editor')
+          end
+
+          it 'ignores redundant editor permission' do
+            described_class.new(child_category).update! role_editor => 'editor'
+            child_category.reload
+
+            expect(child_category.permissions_effective)
+              .to contain_exactly(
+                have_attributes(role: role_editor,  access: 'editor', permissionable: category),
+              )
+          end
+
+          it 'raises error on updating to reader permission' do
+            expect { described_class.new(child_category).update! role_editor => 'reader' }
+              .to raise_error(Exceptions::UnprocessableEntity)
+          end
+
+          it 'raises error on updating to none permission' do
+            expect { described_class.new(child_category).update! role_editor => 'none' }
+              .to raise_error(Exceptions::UnprocessableEntity)
+          end
+        end
+
+        context 'when limiting sub-category in category with none permission' do
+          before do
+            create(:knowledge_base_permission, permissionable: category, role: role_editor, access: 'none')
+          end
+
+          it 'ignores redundant none permission' do
+            described_class.new(child_category).update! role_editor => 'none'
+            child_category.reload
+
+            expect(child_category.permissions_effective)
+              .to contain_exactly(
+                have_attributes(role: role_editor,  access: 'none', permissionable: category),
+              )
+          end
+
+          it 'raises error on updating to reader permission' do
+            expect { described_class.new(child_category).update! role_editor => 'reader' }
+              .to raise_error(Exceptions::UnprocessableEntity)
+          end
+
+          it 'raises error on updating to editor permission' do
+            expect { described_class.new(child_category).update! role_editor => 'editor' }
+              .to raise_error(Exceptions::UnprocessableEntity)
+          end
+        end
       end
 
       context 'when saving role on KB category' do

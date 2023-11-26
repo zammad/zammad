@@ -9,6 +9,7 @@ class KnowledgeBase
 
     def update!(**roles_to_permissions)
       ActiveRecord::Base.transaction do
+        ensure_unoverrideable_permissions!(roles_to_permissions)
         update_object(roles_to_permissions)
 
         next if !@object.changed_for_autosave?
@@ -89,9 +90,34 @@ class KnowledgeBase
       matching = parents.find { |elem| elem.role == permission.role }
 
       return if !matching
-      return if matching.access != permission.access && matching.access != 'none'
+      return if matching.access == 'reader' && permission.access != 'reader'
 
       permission.mark_for_destruction
+    end
+
+    def ensure_unoverrideable_permissions!(new_roles_permissions)
+      new_roles_permissions.each do |role, new_permission|
+        ensure_single_unoverrideable_permission!(role, new_permission)
+      end
+    end
+
+    def ensure_single_unoverrideable_permission!(role, new_permission)
+      parent_permission = parent_object_permissions.find { |elem| elem.role == role }
+
+      return if parent_permission.nil?
+      return if parent_permission.access == 'reader'
+      return if parent_permission.access == new_permission
+
+      message = case parent_permission.access
+                when 'editor'
+                  __('Invalid permissions. This role has editor access to parent category. Limiting access is not effective.')
+                when 'none'
+                  __('Invalid permissions. This role does not have access to this category because parent category is not visible for it.')
+                else
+                  __('Invalid permissions.')
+                end
+
+      raise Exceptions::UnprocessableEntity, message
     end
   end
 end

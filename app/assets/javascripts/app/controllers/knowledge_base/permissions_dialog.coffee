@@ -51,21 +51,20 @@ class App.KnowledgeBasePermissionsDialog extends App.ControllerModal
     _.sortBy data.roles_editor.concat(data.roles_reader), (elem) -> elem.name
 
   formRolesItem: (elem, role_name, data) ->
-    elem.accessLevel = role_name
-    elem.limit = _.findWhere(data.inherited, { role_id: elem.id })?.access
-
-    if elem.limit?
-      elem.accessLevelIsDisabled = {
-        editor: elem.limit != 'editor'
-        reader: elem.limit == 'none'
-        none:   false
-      }
+    if limit = _.findWhere(data.inherited, { role_id: elem.id })?.access
+      editor = limit == 'none' || role_name != 'editor'
+      reader = limit != 'reader'
+      none   = limit == 'editor'
     else
-      elem.accessLevelIsDisabled = {
-        editor: elem.accessLevel != 'editor'
-        reader: false
-        none:   false
-      }
+      editor = role_name != 'editor'
+      reader = false
+      none   = false
+
+    elem.accessLevelIsDisabled = {
+      editor: editor
+      reader: reader
+      none:   none
+    }
 
   load: =>
     @ajax(

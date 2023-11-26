@@ -6616,6 +6616,18 @@ msgstr ""
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
+#: lib/knowledge_base/permissions_update.rb
+msgid "Invalid permissions."
+msgstr ""
+
+#: lib/knowledge_base/permissions_update.rb
+msgid "Invalid permissions. This role does not have access to this category because parent category is not visible for it."
+msgstr ""
+
+#: lib/knowledge_base/permissions_update.rb
+msgid "Invalid permissions. This role has editor access to parent category. Limiting access is not effective."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr ""
