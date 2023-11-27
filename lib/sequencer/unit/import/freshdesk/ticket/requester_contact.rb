@@ -5,10 +5,10 @@ class Sequencer::Unit::Import::Freshdesk::Ticket::RequesterContact < Sequencer::
 
   skip_action :skipped, :failed
 
-  uses :dry_run, :import_job, :resource, :field_map, :id_map
+  uses :dry_run, :import_job, :resource, :field_map, :id_map, :skip_initial_contacts
 
   def process
-    return if contact_exists? || resource['requester_id'].blank?
+    return if !skip_initial_contacts || contact_exists? || resource['requester_id'].blank?
 
     ::Sequencer.process('Import::Freshdesk::Contact',
                         parameters: {

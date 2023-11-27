@@ -6,6 +6,8 @@ class Sequencer::Unit::Import::Freshdesk::Mapping::CustomFields < Sequencer::Uni
   uses :resource, :field_map, :model_class
 
   def process
+    return if !resource['custom_fields']
+
     provide_mapped do
       custom_fields
     end

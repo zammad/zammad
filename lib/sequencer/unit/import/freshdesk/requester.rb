@@ -8,7 +8,7 @@ module Sequencer::Unit::Import::Freshdesk::Requester
         params:   params,
       )
 
-      return response if response.is_a? Net::HTTPOK
+      return response if response.is_a?(Net::HTTPOK) || response.is_a?(Net::HTTPNotFound)
 
       handle_error response, iteration
     rescue e

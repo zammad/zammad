@@ -35,11 +35,12 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::TimeEntry, sequencer: :se
     end
     let(:process_payload) do
       {
-        import_job: build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
-        dry_run:    false,
-        resource:   resource,
-        field_map:  {},
-        id_map:     id_map,
+        import_job:            build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
+        dry_run:               false,
+        resource:              resource,
+        field_map:             {},
+        id_map:                id_map,
+        skip_initial_contacts: false,
       }
     end
 
