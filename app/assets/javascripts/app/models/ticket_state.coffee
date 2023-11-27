@@ -4,7 +4,7 @@ class App.TicketState extends App.Model
   @url: @apiPath + '/ticket_states'
   @configure_attributes = [
     { name: 'name',                 display: __('Name'),                tag: 'input',     type: 'text', limit: 100, null: false, translate: true },
-    { name: 'state_type_id',        display: __('Type'),                tag: 'select',    null: false, relation: 'TicketStateType', nulloption: true, help: __('Zammad uses state types to know what it should do with your state. This allows you to have different types like pending actions, pending reminders or closed states.'), translate: true },
+    { name: 'state_type_id',        display: __('Type'),                tag: 'select',    null: false, relation: 'TicketStateType', nulloption: true, help: __('Zammad uses state types to know what it should do with your state. This allows you to have different types like pending actions, pending reminders or closed states. Take a look at our system object documentation for more information.'), helpLink: ' <a href="https://admin-docs.zammad.org/en/latest/system/objects.html#state-type-reference" target="_blank">🔗</a>', translate: true },
     { name: 'next_state_id',        display: __('Next State'),          tag: 'select',    null: true, relation: 'TicketState', nulloption: true },
     { name: 'ignore_escalation',    display: __('Ignore Escalation'),   tag: 'boolean',   null: false, default: false },
     { name: 'note',                 display: __('Note'),                tag: 'textarea',  limit: 250, null: true },

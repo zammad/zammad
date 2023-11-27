@@ -14572,7 +14572,7 @@ msgid "Zammad requires a restart!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
-msgid "Zammad uses state types to know what it should do with your state. This allows you to have different types like pending actions, pending reminders or closed states."
+msgid "Zammad uses state types to know what it should do with your state. This allows you to have different types like pending actions, pending reminders or closed states. Take a look at our system object documentation for more information."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
