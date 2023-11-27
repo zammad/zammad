@@ -110,7 +110,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
       end
     end
 
-    let(:imap) { Net::IMAP.new(server_address, 993, true, nil, false).tap { |imap| imap.login(server_login, server_password) } }
+    let(:imap) { Net::IMAP.new(server_address, port: 993, ssl: { verify_mode: OpenSSL::SSL::VERIFY_NONE }).tap { |imap| imap.login(server_login, server_password) } }
 
     let(:purge_inbox) do
       imap.select('inbox')

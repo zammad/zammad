@@ -116,7 +116,9 @@ example
     Certificate::ApplySSLCertificates.ensure_fresh_ssl_context if ssl || starttls
 
     timeout(check_type_timeout) do
-      @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, ssl_verify)
+      ssl_settings = false
+      ssl_settings = (ssl_verify ? true : { verify_mode: OpenSSL::SSL::VERIFY_NONE }) if ssl
+      @imap = ::Net::IMAP.new(options[:host], port: port, ssl: ssl_settings)
       if starttls
         @imap.starttls(nil, ssl_verify)
       end
