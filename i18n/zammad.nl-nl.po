@@ -894,6 +894,18 @@ msgstr ""
 msgid "A ticket cannot be merged into itself."
 msgstr "Een ticket kan niet met zichzelf worden samengevoegd."
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"A ticket's priority is simply a ranking of how urgent or important it is. "
+"Different priorities allow you to see the importance of your tickets better."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"A ticket's state is used to categorize and manage the lifecycle of a ticket "
+"or customer inquiry."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr "Een gebruiker is verplicht!"
@@ -1431,10 +1443,6 @@ msgstr "Naam behandelaar"
 #: db/seeds/settings.rb
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Naam behandelaar + VanScheiding + Systeemadres naamweergave"
-
-#: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Agent and customer users can be grouped into organizations."
-msgstr "Behandelaren en klanten kunnen worden gegroepeerd in organisaties."
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -2172,6 +2180,7 @@ msgid "Available types for a new ticket"
 msgstr "Beschikbare types voor een nieuw ticket"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
@@ -3373,7 +3382,6 @@ msgstr "Core Workflow Ajax Mode"
 msgid "Core Workflows"
 msgstr "Core Workflows"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid ""
 "Core Workflows are actions or constraints on selections in forms. Depending "
@@ -3818,6 +3826,13 @@ msgstr "Dashboard"
 msgid "Data Privacy"
 msgstr "Gegevensprivacy"
 
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "%s created data privacy task to delete user ID |%s|"
+msgid "Data privacy task allows to delete a user or a ticket only."
+msgstr ""
+"%s heeft de data privacy taak gemaakt om gebruiker ID |%s| te verwijderen"
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
 msgstr "GegevensprivacyTaak"
@@ -3938,6 +3953,17 @@ msgstr "Standaard agendaticket abonnementen"
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Default caller ID for outbound calls."
 msgstr "Standaard Caller ID voor uitgaande gesprekken."
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "Default type for a new ticket"
+msgid "Default for new tickets"
+msgstr "Standaardtype voor een nieuw ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
@@ -4132,6 +4158,20 @@ msgid ""
 msgstr ""
 "Het OTRS endpoint om gebruikers, tickets, statussen en notities te "
 "importeren."
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional highlight color of this priority in ticket tables. High "
+"priority will be rendered in an indian red, while low priority in a baby "
+"blue color."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional icon of this priority in ticket tables. Important will "
+"be rendered with an exclamation point, while low priority with a downwards "
+"arrow."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
@@ -7195,6 +7235,20 @@ msgstr "Hallo! Welke van onze producten?"
 msgid "Hide authenticator app secret"
 msgstr "Verberg het geheim van de authenticator-app"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "High priority"
+msgstr "Prioriteit"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight color"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight icon"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
@@ -7467,6 +7521,12 @@ msgid ""
 msgstr ""
 "Als je extra e-mailadressen wilt gebruiken, kun je deze later configureren."
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "escalation"
+msgid "Ignore Escalation"
+msgstr "escalatie"
+
 #: db/seeds/settings.rb
 msgid "Ignore Escalation/SLA Information"
 msgstr "Negeer escalatie/SLA-informatie"
@@ -7587,6 +7647,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/index.jst.eco
 msgid "Import from"
 msgstr "Importeren van"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Import"
+msgid "Important"
+msgstr "Importeer"
 
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 msgid "Imported"
@@ -7871,6 +7937,24 @@ msgstr ""
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Ongeldige rechten, sluit jezelf niet buiten."
 
+#: lib/knowledge_base/permissions_update.rb
+#, fuzzy
+#| msgid "Invalid video URL"
+msgid "Invalid permissions."
+msgstr "Ongeldige video-URL"
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role does not have access to this category because "
+"parent category is not visible for it."
+msgstr ""
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role has editor access to parent category. "
+"Limiting access is not effective."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr "Ongeldige beveiligingscode! Probeer het opnieuw met een nieuwe code."
@@ -7961,6 +8045,25 @@ msgstr "Nodig klanten uit om problemen te creëren in Zammad"
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
 msgstr "Ionicons"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "is last account with admin permissions"
+msgid "It is not possible to delete the last account with admin permissions."
+msgstr "is het laatste account met beheerdersrechten"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "It is not possible to merge into an already merged ticket."
+msgid "It is not possible to delete the system user."
+msgstr ""
+"Het is niet mogelijk om samen te voegen met een reeds samengevoegd ticket."
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "is your current account"
+msgid "It is not possible to delete your current account."
+msgstr "is je huidige account"
 
 #: app/models/ticket.rb
 msgid "It is not possible to merge into an already merged ticket."
@@ -8441,6 +8544,12 @@ msgstr "Wachtwoord vergeten"
 msgid "Lost network connection!"
 msgstr "Netwerkverbinding verbroken!"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Low priority"
+msgstr "Prioriteit"
+
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
 msgstr "Macro"
@@ -8489,6 +8598,7 @@ msgid "Maintenance mode enabled!"
 msgstr "Onderhoudsmodus geactiveerd!"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Manage"
 msgstr "Beheer"
 
@@ -9120,6 +9230,12 @@ msgstr "Nieuwe organisatie"
 msgid "New Overview"
 msgstr "Nieuw overzicht"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "New Priority"
+msgstr "Prioriteit"
+
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
 msgstr "Nieuw profiel"
@@ -9161,6 +9277,12 @@ msgstr "Nieuw sjabloon"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
+msgstr "Nieuw ticket"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New Ticket State"
 msgstr "Nieuw ticket"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
@@ -9276,6 +9398,12 @@ msgstr "Nieuwe gebruiker?"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "Volgende"
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "Get Started"
+msgid "Next State"
+msgstr "Ermee beginnen"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
@@ -9583,6 +9711,8 @@ msgstr "Niet gevonden"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -10067,10 +10197,6 @@ msgstr "Overzicht bulk mask"
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "Overzichten"
-
-#: app/assets/javascripts/app/controllers/overview.coffee
-msgid "Overviews are …"
-msgstr "Overzichten zijn …"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
@@ -10693,10 +10819,6 @@ msgstr "Publieke link"
 #: db/seeds/permissions.rb
 msgid "Public Links"
 msgstr "Publieke links"
-
-#: app/assets/javascripts/app/controllers/public_link.coffee
-msgid "Public Links are …"
-msgstr "Publieke links zijn…"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -11512,10 +11634,6 @@ msgstr "Taakplanner"
 msgid "Schedulers"
 msgstr "Taakplanners"
 
-#: app/assets/javascripts/app/controllers/job.coffee
-msgid "Schedulers are …"
-msgstr "Taakplanningen zijn …"
-
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
 msgstr "Scherm"
@@ -11822,6 +11940,10 @@ msgstr "Selecteer het type ticket dat je aanmaakt"
 msgid "Selected conditions"
 msgstr "Geselecteerde voorwaarden"
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "Selected object is already queued for deletion."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
 msgid "Selected tickets do not match any macros."
 msgstr ""
@@ -12020,6 +12142,17 @@ msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr ""
 "Stel Caller ID voor uitgaande gesprekken in op basis de bestemmings Caller "
 "ID."
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "Set default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Default type for a new ticket"
+msgid "Set default for new tickets"
+msgstr "Standaardtype voor een nieuw ticket"
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
@@ -12938,8 +13071,6 @@ msgstr "Tekst-module"
 msgid "Text modules"
 msgstr "Tekst modules"
 
-#: app/assets/javascripts/app/controllers/macro.coffee
-#: app/assets/javascripts/app/controllers/template.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules are …"
 msgstr "Tekst modules zijn…"
@@ -14619,9 +14750,33 @@ msgstr "Ticket Overzichten"
 msgid "Ticket Owner"
 msgstr "Ticket raadplegers"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket Priorities"
+msgstr "Ticket titel"
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Ticket Priority"
+msgstr "Prioriteit"
+
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
 msgstr "Ticket selecteerder"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket State"
+msgstr "Ticket titel"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket States"
+msgstr "Ticket titel"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Forward"
@@ -15246,10 +15401,6 @@ msgstr ""
 "door tijdgebeurtenissen worden uitgevoerd wanneer bepaalde tijden worden "
 "bereikt (bijvoorbeeld wachttijd, escalatie)."
 
-#: app/assets/javascripts/app/controllers/trigger.coffee
-msgid "Triggers are …"
-msgstr "Triggers zijn …"
-
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try Another Method"
@@ -15413,6 +15564,7 @@ msgstr "Twee-factor-authenticatiemethode is succesvol ingesteld."
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -16258,10 +16410,6 @@ msgstr "Webhook Token"
 msgid "Webhooks"
 msgstr "Webhooks"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee
-msgid "Webhooks are …"
-msgstr "Webhooks zijn …"
-
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
 "Webhooks make it easy to send information about events within Zammad to "
@@ -17010,6 +17158,14 @@ msgstr "Zammad ziet er zo uit voor \"%s\""
 msgid "Zammad requires a restart!"
 msgstr "Zammad moet opnieuw gestart worden!"
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"Zammad uses state types to know what it should do with your state. This "
+"allows you to have different types like pending actions, pending reminders "
+"or closed states. Take a look at our system object documentation for more "
+"information."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 msgid "Zendesk"
 msgstr "Zendesk"
@@ -17516,10 +17672,6 @@ msgstr "h"
 msgid "has already been taken"
 msgstr "is reeds bezet"
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "has an existing DataPrivacyTask queued"
-msgstr "heeft een bestaande Gegevensprivacytaak de wachtrij geplaatst"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -17695,10 +17847,6 @@ msgstr "is niet geldig"
 msgid "is larger than the allowed maximum value of %{max_value}"
 msgstr "is groter dan de toegestane maximale waarde van %{max_value}"
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is last account with admin permissions"
-msgstr "is het laatste account met beheerdersrechten"
-
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr "is langer dan de toegestane lengte %{maxlength}"
@@ -17716,12 +17864,6 @@ msgstr "is niet"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is not"
 msgstr "is niet"
-
-#: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "is not a User"
-msgid "is not a User or Ticket"
-msgstr "is geen Gebruiker"
 
 #: lib/validations/color_validator.rb
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
@@ -17785,14 +17927,6 @@ msgstr "is te kort (minimum is %{count} tekens)"
 
 msgid "is too short (minimum is 1 character)"
 msgstr "is te kort (minimaal 1 teken)"
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is undeletable system User with ID 1"
-msgstr "is een onverwijderbare systeemgebruiker met ID 1"
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is your current account"
-msgstr "is je huidige account"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -18443,6 +18577,40 @@ msgstr "…van geheel tekstvak"
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
 
+#~ msgid "Agent and customer users can be grouped into organizations."
+#~ msgstr "Behandelaren en klanten kunnen worden gegroepeerd in organisaties."
+
+#~ msgid "Overviews are …"
+#~ msgstr "Overzichten zijn …"
+
+#~ msgid "Public Links are …"
+#~ msgstr "Publieke links zijn…"
+
+#~ msgid "Schedulers are …"
+#~ msgstr "Taakplanningen zijn …"
+
+#~ msgid "Triggers are …"
+#~ msgstr "Triggers zijn …"
+
+#, fuzzy
+#~| msgid "Ionicons"
+#~ msgid "UI icon"
+#~ msgstr "Ionicons"
+
+#~ msgid "Webhooks are …"
+#~ msgstr "Webhooks zijn …"
+
+#~ msgid "has an existing DataPrivacyTask queued"
+#~ msgstr "heeft een bestaande Gegevensprivacytaak de wachtrij geplaatst"
+
+#, fuzzy
+#~| msgid "is not a User"
+#~ msgid "is not a User or Ticket"
+#~ msgstr "is geen Gebruiker"
+
+#~ msgid "is undeletable system User with ID 1"
+#~ msgstr "is een onverwijderbare systeemgebruiker met ID 1"
+
 #, fuzzy
 #~| msgid "Deleted Organization:"
 #~ msgid "Delete Organization"
@@ -18494,11 +18662,6 @@ msgstr "∅ Wachttijd vandaag"
 #~| msgid "Invalid endpoint!"
 #~ msgid "Invalid recipient."
 #~ msgstr "Ongeldig endpoint!"
-
-#, fuzzy
-#~| msgid "Invalid video URL"
-#~ msgid "Invalid signer."
-#~ msgstr "Ongeldige video-URL"
 
 #, fuzzy
 #~| msgid "No record found!"

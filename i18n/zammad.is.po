@@ -799,6 +799,18 @@ msgstr ""
 msgid "A ticket cannot be merged into itself."
 msgstr "%s% hafa verið enduropnaðir"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"A ticket's priority is simply a ranking of how urgent or important it is. "
+"Different priorities allow you to see the importance of your tickets better."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"A ticket's state is used to categorize and manage the lifecycle of a ticket "
+"or customer inquiry."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr ""
@@ -1322,10 +1334,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Agent Name + FromSeparator + System Address Display Name"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Agent and customer users can be grouped into organizations."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2086,6 +2094,7 @@ msgid "Available types for a new ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
@@ -3331,7 +3340,6 @@ msgstr ""
 msgid "Core Workflows"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid ""
 "Core Workflows are actions or constraints on selections in forms. Depending "
@@ -3775,6 +3783,10 @@ msgstr "Mælaborð"
 msgid "Data Privacy"
 msgstr "Persónuvernd gagna"
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "Data privacy task allows to delete a user or a ticket only."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
 msgstr ""
@@ -3909,6 +3921,17 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Default caller ID for outbound calls."
 msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Default for new tickets"
+msgstr "Stofna prufu miða"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
@@ -4078,6 +4101,20 @@ msgstr "Fjöldi misheppnaðra innskráninga áður en aðgangur er afvirkjaður.
 #: db/seeds/settings.rb
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional highlight color of this priority in ticket tables. High "
+"priority will be rendered in an indian red, while low priority in a baby "
+"blue color."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional icon of this priority in ticket tables. Important will "
+"be rendered with an exclamation point, while low priority with a downwards "
+"arrow."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7096,6 +7133,20 @@ msgstr ""
 msgid "Hide authenticator app secret"
 msgstr "Auðkenning"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "High priority"
+msgstr "Forgangur"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight color"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight icon"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
@@ -7358,6 +7409,12 @@ msgid ""
 "If you want to use additional email addresses, you can configure them later."
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "escalation"
+msgid "Ignore Escalation"
+msgstr "hærri forgangur"
+
 #: db/seeds/settings.rb
 msgid "Ignore Escalation/SLA Information"
 msgstr ""
@@ -7473,6 +7530,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/index.jst.eco
 msgid "Import from"
 msgstr "Flytja inn frá"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Import"
+msgid "Important"
+msgstr "Flytja inn"
 
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 msgid "Imported"
@@ -7767,6 +7830,24 @@ msgstr ""
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
+#: lib/knowledge_base/permissions_update.rb
+#, fuzzy
+#| msgid "Any Recipient"
+msgid "Invalid permissions."
+msgstr "Allir viðtakendur"
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role does not have access to this category because "
+"parent category is not visible for it."
+msgstr ""
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role has editor access to parent category. "
+"Limiting access is not effective."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr ""
@@ -7840,6 +7921,20 @@ msgstr "Bjóða viðskiptavinum að stofna mál í Zammad"
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
 msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "It is not possible to delete the last account with admin permissions."
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "It is not possible to delete the system user."
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "Tab has changed, do you really want to close it?"
+msgid "It is not possible to delete your current account."
+msgstr "Flipi hefur breyst, ertu viss um að þú viljir loka?"
 
 #: app/models/ticket.rb
 msgid "It is not possible to merge into an already merged ticket."
@@ -8341,6 +8436,12 @@ msgstr "Týnt lykilorð"
 msgid "Lost network connection!"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Low priority"
+msgstr "Forgangur"
+
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
 msgstr "Fjölvi"
@@ -8382,6 +8483,7 @@ msgid "Maintenance mode enabled!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/manage.coffee
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Manage"
 msgstr "Stjórna"
 
@@ -9063,6 +9165,12 @@ msgstr "Ný stofnun"
 msgid "New Overview"
 msgstr "Nýtt yfirlit"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "New Priority"
+msgstr "Forgangur"
+
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
 msgstr "Nýtt snið"
@@ -9110,6 +9218,12 @@ msgstr "Skapalón"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
+msgstr "Nýr miði"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New Ticket State"
 msgstr "Nýr miði"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
@@ -9201,6 +9315,12 @@ msgstr "Nýr notandi"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "Næst"
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "State"
+msgid "Next State"
+msgstr "Staða"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
@@ -9522,6 +9642,8 @@ msgstr "passar við"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -10035,12 +10157,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: db/seeds/permissions.rb
 msgid "Overviews"
-msgstr "Yfirlit"
-
-#: app/assets/javascripts/app/controllers/overview.coffee
-#, fuzzy
-#| msgid "Overview"
-msgid "Overviews are …"
 msgstr "Yfirlit"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
@@ -10677,12 +10793,6 @@ msgstr ""
 #| msgid "Publish"
 msgid "Public Links"
 msgstr "Gefa út"
-
-#: app/assets/javascripts/app/controllers/public_link.coffee
-#, fuzzy
-#| msgid "Webhook"
-msgid "Public Links are …"
-msgstr "Vefkrókur"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -11509,12 +11619,6 @@ msgstr "Tímaáætlun"
 msgid "Schedulers"
 msgstr "Tímaáætlanir"
 
-#: app/assets/javascripts/app/controllers/job.coffee
-#, fuzzy
-#| msgid "Scheduler"
-msgid "Schedulers are …"
-msgstr "Tímaáætlun"
-
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
 msgstr ""
@@ -11833,6 +11937,10 @@ msgstr "Veldu viðskiptavin fyrir miða eða stofna nýjann."
 msgid "Selected conditions"
 msgstr ""
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "Selected object is already queued for deletion."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
 msgid "Selected tickets do not match any macros."
 msgstr ""
@@ -12043,6 +12151,17 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "Set default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Create your first ticket"
+msgid "Set default for new tickets"
+msgstr "Stofna þinn fyrsta miða"
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
@@ -13008,8 +13127,6 @@ msgstr "Texta einingar"
 msgid "Text modules"
 msgstr "Texta einingar"
 
-#: app/assets/javascripts/app/controllers/macro.coffee
-#: app/assets/javascripts/app/controllers/template.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 #, fuzzy
 #| msgid "Text modules"
@@ -14699,9 +14816,33 @@ msgstr "Nýtt yfirlit"
 msgid "Ticket Owner"
 msgstr "Nýtt yfirlit"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Ticket %s created!"
+msgid "Ticket Priorities"
+msgstr "Miði %s stofnaður!"
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Ticket Priority"
+msgstr "Forgangur"
+
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
 msgstr "Miðaval"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket %s created!"
+msgid "Ticket State"
+msgstr "Miði %s stofnaður!"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket %s created!"
+msgid "Ticket States"
+msgstr "Miði %s stofnaður!"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Forward"
@@ -15283,12 +15424,6 @@ msgid ""
 "times are reached (e.g. pending time, escalation)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/trigger.coffee
-#, fuzzy
-#| msgid "Triggers"
-msgid "Triggers are …"
-msgstr "Gikkir"
-
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try Another Method"
@@ -15471,6 +15606,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -16292,12 +16428,6 @@ msgstr ""
 msgid "Webhooks"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee
-#, fuzzy
-#| msgid "Webhook"
-msgid "Webhooks are …"
-msgstr "Vefkrókur"
-
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
 "Webhooks make it easy to send information about events within Zammad to "
@@ -16994,6 +17124,14 @@ msgstr "Zammad lýtur svona út fyrir \"%s\""
 msgid "Zammad requires a restart!"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"Zammad uses state types to know what it should do with your state. This "
+"allows you to have different types like pending actions, pending reminders "
+"or closed states. Take a look at our system object documentation for more "
+"information."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 msgid "Zendesk"
 msgstr ""
@@ -17502,10 +17640,6 @@ msgstr ""
 msgid "has already been taken"
 msgstr ""
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "has an existing DataPrivacyTask queued"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -17701,10 +17835,6 @@ msgstr ""
 msgid "is larger than the allowed maximum value of %{max_value}"
 msgstr ""
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is last account with admin permissions"
-msgstr ""
-
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr ""
@@ -17722,12 +17852,6 @@ msgstr "er ekki"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is not"
 msgstr "er ekki"
-
-#: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "Min. size of number"
-msgid "is not a User or Ticket"
-msgstr "Lágmarksstærð tölu"
 
 #: lib/validations/color_validator.rb
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
@@ -17794,14 +17918,6 @@ msgid "is too short (minimum is %{count} characters)"
 msgstr ""
 
 msgid "is too short (minimum is 1 character)"
-msgstr ""
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is undeletable system User with ID 1"
-msgstr ""
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is your current account"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -18467,6 +18583,36 @@ msgid "∅ Waiting time today"
 msgstr "∅ Biðtími í dag"
 
 #, fuzzy
+#~| msgid "Overview"
+#~ msgid "Overviews are …"
+#~ msgstr "Yfirlit"
+
+#, fuzzy
+#~| msgid "Webhook"
+#~ msgid "Public Links are …"
+#~ msgstr "Vefkrókur"
+
+#, fuzzy
+#~| msgid "Scheduler"
+#~ msgid "Schedulers are …"
+#~ msgstr "Tímaáætlun"
+
+#, fuzzy
+#~| msgid "Triggers"
+#~ msgid "Triggers are …"
+#~ msgstr "Gikkir"
+
+#, fuzzy
+#~| msgid "Webhook"
+#~ msgid "Webhooks are …"
+#~ msgstr "Vefkrókur"
+
+#, fuzzy
+#~| msgid "Min. size of number"
+#~ msgid "is not a User or Ticket"
+#~ msgstr "Lágmarksstærð tölu"
+
+#, fuzzy
 #~| msgid "Deleted Organization"
 #~ msgid "Delete Organization"
 #~ msgstr "Eyða stofnun"
@@ -18480,11 +18626,6 @@ msgstr "∅ Biðtími í dag"
 #~| msgid "reply"
 #~ msgid "1 new reply"
 #~ msgstr "svara"
-
-#, fuzzy
-#~| msgid "Any Recipient"
-#~ msgid "Invalid recipient."
-#~ msgstr "Allir viðtakendur"
 
 #, fuzzy
 #~| msgid "matches"

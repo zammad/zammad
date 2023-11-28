@@ -885,6 +885,18 @@ msgstr ""
 msgid "A ticket cannot be merged into itself."
 msgstr "Ticket nemůže být sloučen sám se sebou."
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"A ticket's priority is simply a ranking of how urgent or important it is. "
+"Different priorities allow you to see the importance of your tickets better."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"A ticket's state is used to categorize and manage the lifecycle of a ticket "
+"or customer inquiry."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr "Uživatel je vyžadován!"
@@ -1414,10 +1426,6 @@ msgstr "Jméno řešitele"
 #: db/seeds/settings.rb
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Jméno řešitele + Oddělovač Od + Zobrazovaný název adresy systému"
-
-#: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Agent and customer users can be grouped into organizations."
-msgstr "Agenti a zákazníci mohou být zařazeni do organizací."
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -2153,6 +2161,7 @@ msgid "Available types for a new ticket"
 msgstr "Dostupné typy nového ticketu"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
@@ -3351,7 +3360,6 @@ msgstr "Ajax mód běžného pracovního postupu"
 msgid "Core Workflows"
 msgstr "Běžné pracovní postupy"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid ""
 "Core Workflows are actions or constraints on selections in forms. Depending "
@@ -3810,6 +3818,12 @@ msgstr "Nástěnka"
 msgid "Data Privacy"
 msgstr "Soukromí dat"
 
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "%s created data privacy task to delete user ID |%s|"
+msgid "Data privacy task allows to delete a user or a ticket only."
+msgstr "%s vytvořil úkolu Soukromí dat pro vymazání uživatele ID |%s|"
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
 msgstr "ÚlohaSoukromíDat"
@@ -3930,6 +3944,17 @@ msgstr "Výchozí odběry ticketů do kalendáře"
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Default caller ID for outbound calls."
 msgstr "Výchozí ID volajícího pro odchozí hovory."
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "Default type for a new ticket"
+msgid "Default for new tickets"
+msgstr "Výchozí typ nového ticketu"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
@@ -4118,6 +4143,20 @@ msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr ""
 "Definuje koncový bod OTRS pro import uživatelů, ticketů, stavů a článků."
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional highlight color of this priority in ticket tables. High "
+"priority will be rendered in an indian red, while low priority in a baby "
+"blue color."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional icon of this priority in ticket tables. Important will "
+"be rendered with an exclamation point, while low priority with a downwards "
+"arrow."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
@@ -7175,6 +7214,20 @@ msgstr "Zdravím! Který z našich produktů?"
 msgid "Hide authenticator app secret"
 msgstr "Znovupřihlášení"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "High priority"
+msgstr "Priorita"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight color"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight icon"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
@@ -7444,6 +7497,12 @@ msgid ""
 msgstr ""
 "Pokud chcete používat více e-mailových adres, můžete si je nastavit později."
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "escalation"
+msgid "Ignore Escalation"
+msgstr "eskalace"
+
 #: db/seeds/settings.rb
 msgid "Ignore Escalation/SLA Information"
 msgstr "Ignorovat eskalaci/SLA informace"
@@ -7564,6 +7623,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/index.jst.eco
 msgid "Import from"
 msgstr "Importovat z"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Import"
+msgid "Important"
+msgstr "Importovat"
 
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 msgid "Imported"
@@ -7845,6 +7910,24 @@ msgstr "Neplatné heslo, musí obsahovat nejméně 2 malá a 2 velká písmena!"
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Neplatná oprávnění, zabraňte vlastnímu uzamčení."
 
+#: lib/knowledge_base/permissions_update.rb
+#, fuzzy
+#| msgid "Invalid signer."
+msgid "Invalid permissions."
+msgstr "Neplatný podepisovatel."
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role does not have access to this category because "
+"parent category is not visible for it."
+msgstr ""
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role has editor access to parent category. "
+"Limiting access is not effective."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr ""
@@ -7935,6 +8018,24 @@ msgstr "Pozvěte zákazníky aby řešili záležitosti přes Zammad"
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
 msgstr "Ionicons"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "is last account with admin permissions"
+msgid "It is not possible to delete the last account with admin permissions."
+msgstr "je poslední účet s právy administrátora"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "It is not possible to merge into an already merged ticket."
+msgid "It is not possible to delete the system user."
+msgstr "Není možné slučovat již sloučené tickety."
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "is your current account"
+msgid "It is not possible to delete your current account."
+msgstr "je váš aktuální účet"
 
 #: app/models/ticket.rb
 msgid "It is not possible to merge into an already merged ticket."
@@ -8414,6 +8515,12 @@ msgstr "Zapomenuté heslo"
 msgid "Lost network connection!"
 msgstr "Síťové připojení ztraceno!"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Low priority"
+msgstr "Priorita"
+
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
 msgstr "Makro"
@@ -8460,6 +8567,7 @@ msgid "Maintenance mode enabled!"
 msgstr "Mód údržby aktivován!"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Manage"
 msgstr "Spravovat"
 
@@ -9095,6 +9203,12 @@ msgstr "Nová Organizace"
 msgid "New Overview"
 msgstr "Nový Přehled"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "New Priority"
+msgstr "Priorita"
+
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
 msgstr "Nový Profil"
@@ -9136,6 +9250,12 @@ msgstr "Nová šablona"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
+msgstr "Nový ticket"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New Ticket State"
 msgstr "Nový ticket"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
@@ -9250,6 +9370,12 @@ msgstr "Jste u nás nový?"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "Další"
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "Get Started"
+msgid "Next State"
+msgstr "Začínáme"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
@@ -9557,6 +9683,8 @@ msgstr "Nenalezeno"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -10038,10 +10166,6 @@ msgstr "Hromadná maska přehledu"
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "Přehledy"
-
-#: app/assets/javascripts/app/controllers/overview.coffee
-msgid "Overviews are …"
-msgstr "Přehledy jsou …"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
@@ -10661,10 +10785,6 @@ msgstr "Veřejný odkaz"
 #: db/seeds/permissions.rb
 msgid "Public Links"
 msgstr "Veřejné odkazy"
-
-#: app/assets/javascripts/app/controllers/public_link.coffee
-msgid "Public Links are …"
-msgstr "Veřejné odkazy jsou …"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -11492,10 +11612,6 @@ msgstr "Plánovač"
 msgid "Schedulers"
 msgstr "Plánovače"
 
-#: app/assets/javascripts/app/controllers/job.coffee
-msgid "Schedulers are …"
-msgstr "Plánovače jsou …"
-
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
 msgstr "Obrazovka"
@@ -11808,6 +11924,10 @@ msgstr "Vyberte typ ticketu, který vytváříte"
 msgid "Selected conditions"
 msgstr "Vybrané podmínky"
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "Selected object is already queued for deletion."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
 msgid "Selected tickets do not match any macros."
 msgstr ""
@@ -12007,6 +12127,17 @@ msgstr "Nastavit rozhraní, které se používá pro import."
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr ""
 "Nastavit ID volajícího pro odchozí hovory na základě cílového ID volajícího."
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "Set default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Default type for a new ticket"
+msgid "Set default for new tickets"
+msgstr "Výchozí typ nového ticketu"
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
@@ -12930,8 +13061,6 @@ msgstr "Textový modul"
 msgid "Text modules"
 msgstr "TextModuly"
 
-#: app/assets/javascripts/app/controllers/macro.coffee
-#: app/assets/javascripts/app/controllers/template.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules are …"
 msgstr "Textové moduly jsou …"
@@ -14610,9 +14739,33 @@ msgstr "Přehledy ticketů"
 msgid "Ticket Owner"
 msgstr "Zobrazení ticketu"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket Priorities"
+msgstr "Titulek ticketu"
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Ticket Priority"
+msgstr "Priorita"
+
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
 msgstr "Podmínky výběru ticketů"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket State"
+msgstr "Titulek ticketu"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket States"
+msgstr "Titulek ticketu"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Forward"
@@ -15225,10 +15378,6 @@ msgstr ""
 "nebo upraven, zatímco triggery aktivované časovými událostmi jsou vykonány "
 "vždy, když je dosažen stanovený čas (např. zbývající čas, eskalace)."
 
-#: app/assets/javascripts/app/controllers/trigger.coffee
-msgid "Triggers are …"
-msgstr "Spouštěče jsou …"
-
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try Another Method"
@@ -15412,6 +15561,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -16255,10 +16405,6 @@ msgstr "Token webhooku"
 msgid "Webhooks"
 msgstr "Webhooky"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee
-msgid "Webhooks are …"
-msgstr "Webhooky jsou …"
-
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
 "Webhooks make it easy to send information about events within Zammad to "
@@ -16999,6 +17145,14 @@ msgstr "Zammad vypadá takto pro \"%s\""
 msgid "Zammad requires a restart!"
 msgstr "Zammad vyžaduje restartování!"
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"Zammad uses state types to know what it should do with your state. This "
+"allows you to have different types like pending actions, pending reminders "
+"or closed states. Take a look at our system object documentation for more "
+"information."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 msgid "Zendesk"
 msgstr "Zendesk"
@@ -17505,10 +17659,6 @@ msgstr "h"
 msgid "has already been taken"
 msgstr "je již obsazeno"
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "has an existing DataPrivacyTask queued"
-msgstr "má existující DataPrivacyTask ve frontě"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -17684,10 +17834,6 @@ msgstr "je neplatné"
 msgid "is larger than the allowed maximum value of %{max_value}"
 msgstr "je větší než nejvyšší dovolená hodnota %{max_value}"
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is last account with admin permissions"
-msgstr "je poslední účet s právy administrátora"
-
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr "je delší než maximální dovolená délka %{maxlength}"
@@ -17705,12 +17851,6 @@ msgstr "není"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is not"
 msgstr "není"
-
-#: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "is not a User"
-msgid "is not a User or Ticket"
-msgstr "není uživatel"
 
 #: lib/validations/color_validator.rb
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
@@ -17774,14 +17914,6 @@ msgstr "je příliš krátké (minimum je %{count} znaků)"
 
 msgid "is too short (minimum is 1 character)"
 msgstr "je příliš krátké (minimum je 1 znak)"
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is undeletable system User with ID 1"
-msgstr "je nesmazatelný systémový uživatel s ID 1"
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is your current account"
-msgstr "je váš aktuální účet"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -18429,6 +18561,40 @@ msgstr "...celé textové oblasti"
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
 
+#~ msgid "Agent and customer users can be grouped into organizations."
+#~ msgstr "Agenti a zákazníci mohou být zařazeni do organizací."
+
+#~ msgid "Overviews are …"
+#~ msgstr "Přehledy jsou …"
+
+#~ msgid "Public Links are …"
+#~ msgstr "Veřejné odkazy jsou …"
+
+#~ msgid "Schedulers are …"
+#~ msgstr "Plánovače jsou …"
+
+#~ msgid "Triggers are …"
+#~ msgstr "Spouštěče jsou …"
+
+#, fuzzy
+#~| msgid "Ionicons"
+#~ msgid "UI icon"
+#~ msgstr "Ionicons"
+
+#~ msgid "Webhooks are …"
+#~ msgstr "Webhooky jsou …"
+
+#~ msgid "has an existing DataPrivacyTask queued"
+#~ msgstr "má existující DataPrivacyTask ve frontě"
+
+#, fuzzy
+#~| msgid "is not a User"
+#~ msgid "is not a User or Ticket"
+#~ msgstr "není uživatel"
+
+#~ msgid "is undeletable system User with ID 1"
+#~ msgstr "je nesmazatelný systémový uživatel s ID 1"
+
 #, fuzzy
 #~| msgid "Deleted Organization:"
 #~ msgid "Delete Organization"
@@ -18480,9 +18646,6 @@ msgstr "dnešní ∅ čekací doby"
 
 #~ msgid "Invalid recipient."
 #~ msgstr "Chybný příjemce."
-
-#~ msgid "Invalid signer."
-#~ msgstr "Neplatný podepisovatel."
 
 #~ msgid "Key expired."
 #~ msgstr "Klíč vypršel."

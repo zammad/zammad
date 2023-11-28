@@ -901,6 +901,18 @@ msgstr ""
 msgid "A ticket cannot be merged into itself."
 msgstr "Egy jegy nem egyesíthető önmagába."
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"A ticket's priority is simply a ranking of how urgent or important it is. "
+"Different priorities allow you to see the importance of your tickets better."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"A ticket's state is used to categorize and manage the lifecycle of a ticket "
+"or customer inquiry."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr "Szükség van egy felhasználóra!"
@@ -1439,10 +1451,6 @@ msgstr "Ügynök neve"
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 "Ügynök neve + From elválasztójel + A rendszer címének megjelenített neve"
-
-#: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Agent and customer users can be grouped into organizations."
-msgstr "Az ügynök- és ügyfélfelhasználók szervezetekbe csoportosíthatók."
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -2188,6 +2196,7 @@ msgid "Available types for a new ticket"
 msgstr "Új jegyhez rendelkezésre álló típusok"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
@@ -3400,7 +3409,6 @@ msgstr "Fő munkafolyamat Ajax mód"
 msgid "Core Workflows"
 msgstr "Fő munkafolyamatok"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid ""
 "Core Workflows are actions or constraints on selections in forms. Depending "
@@ -3852,6 +3860,14 @@ msgstr "Műszerfal"
 msgid "Data Privacy"
 msgstr "Adatvédelem"
 
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "%s created data privacy task to delete user ID |%s|"
+msgid "Data privacy task allows to delete a user or a ticket only."
+msgstr ""
+"%s létrehozott egy adatvédelmi feladatot a felhasználói azonosító |%s| "
+"törléséhez"
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
 msgstr "AdatvédelmiFeladat"
@@ -3972,6 +3988,17 @@ msgstr "Alapértelmezett naptárjegy feliratkozások"
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Default caller ID for outbound calls."
 msgstr "A kimenő hívások alapértelmezett hívóazonosítója."
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "Default type for a new ticket"
+msgid "Default for new tickets"
+msgstr "Az új jegy alapértelmezett típusa"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
@@ -4169,6 +4196,20 @@ msgid ""
 msgstr ""
 "Meghatároz egy OTRS végpontot a felhasználók, jegyek, állapotok és cikkek "
 "importálásához."
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional highlight color of this priority in ticket tables. High "
+"priority will be rendered in an indian red, while low priority in a baby "
+"blue color."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional icon of this priority in ticket tables. Important will "
+"be rendered with an exclamation point, while low priority with a downwards "
+"arrow."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
@@ -7295,6 +7336,20 @@ msgstr "Üdvözlöm! Melyik termékünk?"
 msgid "Hide authenticator app secret"
 msgstr "Hitelesítő alkalmazás titkának elrejtése"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "High priority"
+msgstr "Prioritás"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight color"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight icon"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
@@ -7569,6 +7624,12 @@ msgstr ""
 "Amennyiben további e-mail címeket szeretne használni, ezeket később is "
 "beállíthatja."
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "escalation"
+msgid "Ignore Escalation"
+msgstr "eszkaláció"
+
 #: db/seeds/settings.rb
 msgid "Ignore Escalation/SLA Information"
 msgstr "Az eszkaláció/SLA információk figyelmen kívül hagyása"
@@ -7690,6 +7751,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/index.jst.eco
 msgid "Import from"
 msgstr "Import from"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Import"
+msgid "Important"
+msgstr "Importálás"
 
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 msgid "Imported"
@@ -7976,6 +8043,24 @@ msgstr ""
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Érvénytelen jogosultságok, ne zárja ki magát."
 
+#: lib/knowledge_base/permissions_update.rb
+#, fuzzy
+#| msgid "Invalid video URL"
+msgid "Invalid permissions."
+msgstr "Érvénytelen videó URL"
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role does not have access to this category because "
+"parent category is not visible for it."
+msgstr ""
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role has editor access to parent category. "
+"Limiting access is not effective."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr "Érvénytelen biztonsági kód! Kérjük, próbálja meg újra egy új kóddal."
@@ -8065,6 +8150,24 @@ msgstr "Ügyfelek meghívása a Zammad rendszerben történő ügyek létrehozá
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
 msgstr "Ionicons"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "is last account with admin permissions"
+msgid "It is not possible to delete the last account with admin permissions."
+msgstr "az utolsó rendszergazdai jogosultsággal rendelkező fiók"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "It is not possible to merge into an already merged ticket."
+msgid "It is not possible to delete the system user."
+msgstr "Nem lehetséges egyesíteni egy már egyesített jegybe."
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "is your current account"
+msgid "It is not possible to delete your current account."
+msgstr "az Ön jelenlegi fiókja"
 
 #: app/models/ticket.rb
 msgid "It is not possible to merge into an already merged ticket."
@@ -8544,6 +8647,12 @@ msgstr "Elfelejtett jelszó"
 msgid "Lost network connection!"
 msgstr "Megszakadt a hálózati kapcsolat!"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Low priority"
+msgstr "Prioritás"
+
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
 msgstr "Makró"
@@ -8592,6 +8701,7 @@ msgid "Maintenance mode enabled!"
 msgstr "Karbantartási üzemmód engedélyezve!"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Manage"
 msgstr "Kezelés"
 
@@ -9222,6 +9332,12 @@ msgstr "Új szervezet"
 msgid "New Overview"
 msgstr "Új áttekintés"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "New Priority"
+msgstr "Prioritás"
+
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
 msgstr "Új profil"
@@ -9263,6 +9379,12 @@ msgstr "Új sablon"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
+msgstr "Új jegy"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New Ticket State"
 msgstr "Új jegy"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
@@ -9378,6 +9500,12 @@ msgstr "Új felhasználó?"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "Következő"
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "Get Started"
+msgid "Next State"
+msgstr "Indulás"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
@@ -9684,6 +9812,8 @@ msgstr "Nem található"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -10173,10 +10303,6 @@ msgstr "Tömeges maszk áttekintése"
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "Áttekintések"
-
-#: app/assets/javascripts/app/controllers/overview.coffee
-msgid "Overviews are …"
-msgstr "Az áttekintések …"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
@@ -10802,10 +10928,6 @@ msgstr "Nyilvános hivatkozás"
 #: db/seeds/permissions.rb
 msgid "Public Links"
 msgstr "Nyilvános hivatkozások"
-
-#: app/assets/javascripts/app/controllers/public_link.coffee
-msgid "Public Links are …"
-msgstr "A nyilvános hivatkozások …"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -11627,10 +11749,6 @@ msgstr "Ütemező"
 msgid "Schedulers"
 msgstr "Ütemezők"
 
-#: app/assets/javascripts/app/controllers/job.coffee
-msgid "Schedulers are …"
-msgstr "Az ütemezők …"
-
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
 msgstr "Képernyő"
@@ -11931,6 +12049,10 @@ msgstr "Válassza ki a létrehozandó jegy típusát"
 msgid "Selected conditions"
 msgstr "Kiválasztott feltételek"
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "Selected object is already queued for deletion."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
 msgid "Selected tickets do not match any macros."
 msgstr "A kiválasztott jegyek nem felelnek meg egyetlen makrónak sem."
@@ -12127,6 +12249,17 @@ msgstr "Az importáláshoz használt háttérrendszer beállítása."
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr "A kimenő hívások hívószámának beállítása a cél hívószám alapján."
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "Set default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Default type for a new ticket"
+msgid "Set default for new tickets"
+msgstr "Az új jegy alapértelmezett típusa"
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
@@ -13047,8 +13180,6 @@ msgstr "Szövegmodul"
 msgid "Text modules"
 msgstr "Szövegmodulok"
 
-#: app/assets/javascripts/app/controllers/macro.coffee
-#: app/assets/javascripts/app/controllers/template.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules are …"
 msgstr "A szövegmodulok …"
@@ -14764,9 +14895,33 @@ msgstr "Jegyek áttekintése"
 msgid "Ticket Owner"
 msgstr "Jegyet megtekintők"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket Priorities"
+msgstr "Jegy címe"
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Ticket Priority"
+msgstr "Prioritás"
+
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
 msgstr "Jegyválasztó"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket State"
+msgstr "Jegy címe"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket States"
+msgstr "Jegy címe"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Forward"
@@ -15357,10 +15512,6 @@ msgstr ""
 "eseményindítók bizonyos időpontok elérésekor (pl. függőben lévő idő, "
 "eszkaláció) kerülnek végrehajtásra."
 
-#: app/assets/javascripts/app/controllers/trigger.coffee
-msgid "Triggers are …"
-msgstr "Az eseményindítók …"
-
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try Another Method"
@@ -15525,6 +15676,7 @@ msgstr "A kétfaktoros hitelesítési módszer beállítása sikeresen megtört�
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -16372,10 +16524,6 @@ msgstr "Webhook token"
 msgid "Webhooks"
 msgstr "Webhookok"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee
-msgid "Webhooks are …"
-msgstr "A webhookok …"
-
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
 "Webhooks make it easy to send information about events within Zammad to "
@@ -17120,6 +17268,14 @@ msgstr "A Zammad így néz ki \"%s\" számára"
 msgid "Zammad requires a restart!"
 msgstr "A Zammad újraindítást igényel!"
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"Zammad uses state types to know what it should do with your state. This "
+"allows you to have different types like pending actions, pending reminders "
+"or closed states. Take a look at our system object documentation for more "
+"information."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 msgid "Zendesk"
 msgstr "Zendesk"
@@ -17625,10 +17781,6 @@ msgstr "ó"
 msgid "has already been taken"
 msgstr "már foglalt"
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "has an existing DataPrivacyTask queued"
-msgstr "van egy meglévő Adatvédelmi Feladat várakozóban"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -17803,10 +17955,6 @@ msgstr "érvénytelen"
 msgid "is larger than the allowed maximum value of %{max_value}"
 msgstr "nagyobb, mint a megengedett maximális érték %{max_value}"
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is last account with admin permissions"
-msgstr "az utolsó rendszergazdai jogosultsággal rendelkező fiók"
-
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr "hosszabb, mint a megengedett hossz %{maxlength}"
@@ -17824,12 +17972,6 @@ msgstr "≠"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is not"
 msgstr "≠"
-
-#: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "is not a User"
-msgid "is not a User or Ticket"
-msgstr "nem egy Felhasználó"
 
 #: lib/validations/color_validator.rb
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
@@ -17893,14 +18035,6 @@ msgstr "túl rövid (minimum %{count} karakter)"
 
 msgid "is too short (minimum is 1 character)"
 msgstr "túl rövid (minimum 1 karakter)"
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is undeletable system User with ID 1"
-msgstr ""
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is your current account"
-msgstr "az Ön jelenlegi fiókja"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -18546,6 +18680,37 @@ msgstr "...a teljes szövegterületből"
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
 
+#~ msgid "Agent and customer users can be grouped into organizations."
+#~ msgstr "Az ügynök- és ügyfélfelhasználók szervezetekbe csoportosíthatók."
+
+#~ msgid "Overviews are …"
+#~ msgstr "Az áttekintések …"
+
+#~ msgid "Public Links are …"
+#~ msgstr "A nyilvános hivatkozások …"
+
+#~ msgid "Schedulers are …"
+#~ msgstr "Az ütemezők …"
+
+#~ msgid "Triggers are …"
+#~ msgstr "Az eseményindítók …"
+
+#, fuzzy
+#~| msgid "Ionicons"
+#~ msgid "UI icon"
+#~ msgstr "Ionicons"
+
+#~ msgid "Webhooks are …"
+#~ msgstr "A webhookok …"
+
+#~ msgid "has an existing DataPrivacyTask queued"
+#~ msgstr "van egy meglévő Adatvédelmi Feladat várakozóban"
+
+#, fuzzy
+#~| msgid "is not a User"
+#~ msgid "is not a User or Ticket"
+#~ msgstr "nem egy Felhasználó"
+
 #, fuzzy
 #~| msgid "Deleted Organization:"
 #~ msgid "Delete Organization"
@@ -18593,11 +18758,6 @@ msgstr "Várakozási idő ma"
 #~| msgid "Any recipient"
 #~ msgid "Invalid recipient."
 #~ msgstr "Bármelyik címzett"
-
-#, fuzzy
-#~| msgid "Invalid video URL"
-#~ msgid "Invalid signer."
-#~ msgstr "Érvénytelen videó URL"
 
 #, fuzzy
 #~| msgid "No recipient found."

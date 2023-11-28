@@ -903,6 +903,18 @@ msgstr ""
 msgid "A ticket cannot be merged into itself."
 msgstr "Bir destek talebi kendi içinde birleştirilemez."
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"A ticket's priority is simply a ranking of how urgent or important it is. "
+"Different priorities allow you to see the importance of your tickets better."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"A ticket's state is used to categorize and manage the lifecycle of a ticket "
+"or customer inquiry."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr "Kullanıcı gerekli!"
@@ -1434,11 +1446,6 @@ msgstr "Temsilci Adı"
 #: db/seeds/settings.rb
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Temsilci Adı + GönderenAyırıcı + Sistem Adresi Görünen Ad"
-
-#: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Agent and customer users can be grouped into organizations."
-msgstr ""
-"Temsilci ve müşteri kullanıcıları organizasyonlar halinde gruplandırılabilir."
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -2179,6 +2186,7 @@ msgid "Available types for a new ticket"
 msgstr "Yeni bir destek talebi için kullanılabilir türler"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
@@ -3384,7 +3392,6 @@ msgstr "Ana İş Akışı Ajax Modu"
 msgid "Core Workflows"
 msgstr "Ana İş Akışları"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid ""
 "Core Workflows are actions or constraints on selections in forms. Depending "
@@ -3827,6 +3834,13 @@ msgstr "Gösterge Paneli"
 msgid "Data Privacy"
 msgstr "Veri Gizliliği"
 
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "%s created data privacy task to delete user ID |%s|"
+msgid "Data privacy task allows to delete a user or a ticket only."
+msgstr ""
+"%s, |%s| olan kullanıcı kimliğini silmek için veri gizliliği görevi oluşturdu"
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
 msgstr "DataPrivacyTask"
@@ -3947,6 +3961,17 @@ msgstr "Varsayılan takvim destek talepleri abonelikleri"
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Default caller ID for outbound calls."
 msgstr "Giden aramalar için varsayılan arayan kimliği."
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "Default type for a new ticket"
+msgid "Default for new tickets"
+msgstr "Yeni bir destek talebi için varsayılan tür"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
@@ -4143,6 +4168,20 @@ msgid ""
 msgstr ""
 "Kullanıcıları, destek taleplerini, durumları ve yazıları içe aktarmak için "
 "bir OTRS endpoint'i tanımlar."
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional highlight color of this priority in ticket tables. High "
+"priority will be rendered in an indian red, while low priority in a baby "
+"blue color."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional icon of this priority in ticket tables. Important will "
+"be rendered with an exclamation point, while low priority with a downwards "
+"arrow."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
@@ -7385,6 +7424,20 @@ msgstr "Selam! Ürünlerimizden hangisi?"
 msgid "Hide authenticator app secret"
 msgstr "Kimlik doğrulayıcı uygulama sırrını gizle"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "High priority"
+msgstr "Öncelik"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight color"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight icon"
+msgstr ""
+
 #: db/seeds/settings.rb
 #, fuzzy
 msgid "Highlights if the note a user is writing is public or private"
@@ -7683,6 +7736,12 @@ msgid ""
 "If you want to use additional email addresses, you can configure them later."
 msgstr "True"
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "escalation"
+msgid "Ignore Escalation"
+msgstr "escalation"
+
 #: db/seeds/settings.rb
 msgid "Ignore Escalation/SLA Information"
 msgstr "Yükseltme/SLA Bilgilerini Yok Say"
@@ -7816,6 +7875,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/index.jst.eco
 msgid "Import from"
 msgstr "Import from"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Import"
+msgid "Important"
+msgstr "İçeri aktar"
 
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #, fuzzy
@@ -8138,6 +8203,23 @@ msgstr "Geçersiz şifre, en az 2 küçük harf ve 2 büyük harf içermelidir!"
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "True"
 
+#: lib/knowledge_base/permissions_update.rb
+#, fuzzy
+msgid "Invalid permissions."
+msgstr "True"
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role does not have access to this category because "
+"parent category is not visible for it."
+msgstr ""
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role has editor access to parent category. "
+"Limiting access is not effective."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr ""
@@ -8215,6 +8297,22 @@ msgstr "Müşterilerinizi davet edin"
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 #, fuzzy
 msgid "Ionicons"
+msgstr "True"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "At least one user needs to have admin permissions."
+msgid "It is not possible to delete the last account with admin permissions."
+msgstr "En az 1 kullanici yönetici yetkilerine sahip olmalıdır."
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+msgid "It is not possible to delete the system user."
+msgstr "True"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+msgid "It is not possible to delete your current account."
 msgstr "True"
 
 #: app/models/ticket.rb
@@ -8746,6 +8844,12 @@ msgstr "Lost Password"
 msgid "Lost network connection!"
 msgstr "True"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Low priority"
+msgstr "Öncelik"
+
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
 msgstr "Macro"
@@ -8792,6 +8896,7 @@ msgid "Maintenance mode enabled!"
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Manage"
 msgstr "Yönet"
 
@@ -9499,6 +9604,12 @@ msgstr "New Organization"
 msgid "New Overview"
 msgstr "New Overview"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "New Priority"
+msgstr "Öncelik"
+
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
 msgstr "New Profile"
@@ -9544,6 +9655,12 @@ msgstr "Yeni Şablon"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
+msgstr "Yeni Destek Talebi"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New Ticket State"
 msgstr "Yeni Destek Talebi"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
@@ -9638,6 +9755,11 @@ msgstr "New User"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "Ileri"
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+msgid "Next State"
+msgstr "True"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
@@ -9983,6 +10105,8 @@ msgstr "Sonuç bulunamadı"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -10516,12 +10640,6 @@ msgstr "True"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: db/seeds/permissions.rb
 msgid "Overviews"
-msgstr "Konular"
-
-#: app/assets/javascripts/app/controllers/overview.coffee
-#, fuzzy
-#| msgid "Overview"
-msgid "Overviews are …"
 msgstr "Konular"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
@@ -11221,12 +11339,6 @@ msgstr "Public Menu"
 #| msgid "Public Menu"
 msgid "Public Links"
 msgstr "Public Menu"
-
-#: app/assets/javascripts/app/controllers/public_link.coffee
-#, fuzzy
-#| msgid "Webhook"
-msgid "Public Links are …"
-msgstr "Webhook"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -12102,10 +12214,6 @@ msgstr "Zamanlayıcı"
 msgid "Schedulers"
 msgstr "Zamanlayıcılar"
 
-#: app/assets/javascripts/app/controllers/job.coffee
-msgid "Schedulers are …"
-msgstr "Zamanlayıcılar …"
-
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
 msgstr "Ekran"
@@ -12433,6 +12541,10 @@ msgstr "Select the customer of the ticket or create one."
 msgid "Selected conditions"
 msgstr "Seçili şartlar"
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "Selected object is already queued for deletion."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
 msgid "Selected tickets do not match any macros."
 msgstr ""
@@ -12654,6 +12766,17 @@ msgstr "True"
 #| msgid "Set caller id of outbound calls based on destination caller id."
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr "Set caller id of outbound calls based on destination caller id."
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "Set default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Default type for a new ticket"
+msgid "Set default for new tickets"
+msgstr "Yeni bir destek talebi için varsayılan tür"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -13676,8 +13799,6 @@ msgstr "Text modules"
 msgid "Text modules"
 msgstr "Text modules"
 
-#: app/assets/javascripts/app/controllers/macro.coffee
-#: app/assets/javascripts/app/controllers/template.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 #, fuzzy
 #| msgid "Text modules"
@@ -15513,9 +15634,33 @@ msgstr "New Overview"
 msgid "Ticket Owner"
 msgstr "New Overview"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket Priorities"
+msgstr "Konu güncellenmesi"
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Ticket Priority"
+msgstr "Öncelik"
+
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
 msgstr "Ticket Selector"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket State"
+msgstr "Konu güncellenmesi"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket States"
+msgstr "Konu güncellenmesi"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Forward"
@@ -16121,12 +16266,6 @@ msgid ""
 "times are reached (e.g. pending time, escalation)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/trigger.coffee
-#, fuzzy
-#| msgid "Triggers"
-msgid "Triggers are …"
-msgstr "Triggers"
-
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try Another Method"
@@ -16311,6 +16450,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -17195,10 +17335,6 @@ msgstr "Webhook Token"
 msgid "Webhooks"
 msgstr "Webhooklar"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee
-msgid "Webhooks are …"
-msgstr "Webhooklar şunlardır …"
-
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
 "Webhooks make it easy to send information about events within Zammad to "
@@ -18016,6 +18152,14 @@ msgstr "Zammad looks like this for \"%s\""
 msgid "Zammad requires a restart!"
 msgstr "True"
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"Zammad uses state types to know what it should do with your state. This "
+"allows you to have different types like pending actions, pending reminders "
+"or closed states. Take a look at our system object documentation for more "
+"information."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 #, fuzzy
 msgid "Zendesk"
@@ -18556,10 +18700,6 @@ msgstr "True"
 msgid "has already been taken"
 msgstr "True"
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "has an existing DataPrivacyTask queued"
-msgstr "kuyruğa alınmış mevcut bir VeriGizliliğiGörevi var"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -18763,12 +18903,6 @@ msgstr "True"
 msgid "is larger than the allowed maximum value of %{max_value}"
 msgstr ""
 
-#: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "At least one user needs to have admin permissions."
-msgid "is last account with admin permissions"
-msgstr "En az 1 kullanici yönetici yetkilerine sahip olmalıdır."
-
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr ""
@@ -18786,12 +18920,6 @@ msgstr "is not"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is not"
 msgstr "is not"
-
-#: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "Min. size of number"
-msgid "is not a User or Ticket"
-msgstr "Min. size of number"
 
 #: lib/validations/color_validator.rb
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
@@ -18869,14 +18997,6 @@ msgstr "True"
 #, fuzzy
 msgid "is too short (minimum is 1 character)"
 msgstr "True"
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is undeletable system User with ID 1"
-msgstr "ID 1'e sahip silinemez sistem Kullanıcısıdır"
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is your current account"
-msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -19603,6 +19723,47 @@ msgstr "...of whole textarea"
 msgid "∅ Waiting time today"
 msgstr "Bugünkü bekleme süresi"
 
+#~ msgid "Agent and customer users can be grouped into organizations."
+#~ msgstr ""
+#~ "Temsilci ve müşteri kullanıcıları organizasyonlar halinde "
+#~ "gruplandırılabilir."
+
+#, fuzzy
+#~| msgid "Overview"
+#~ msgid "Overviews are …"
+#~ msgstr "Konular"
+
+#, fuzzy
+#~| msgid "Webhook"
+#~ msgid "Public Links are …"
+#~ msgstr "Webhook"
+
+#~ msgid "Schedulers are …"
+#~ msgstr "Zamanlayıcılar …"
+
+#, fuzzy
+#~| msgid "Triggers"
+#~ msgid "Triggers are …"
+#~ msgstr "Triggers"
+
+#, fuzzy
+#~ msgid "UI icon"
+#~ msgstr "True"
+
+#~ msgid "Webhooks are …"
+#~ msgstr "Webhooklar şunlardır …"
+
+#~ msgid "has an existing DataPrivacyTask queued"
+#~ msgstr "kuyruğa alınmış mevcut bir VeriGizliliğiGörevi var"
+
+#, fuzzy
+#~| msgid "Min. size of number"
+#~ msgid "is not a User or Ticket"
+#~ msgstr "Min. size of number"
+
+#~ msgid "is undeletable system User with ID 1"
+#~ msgstr "ID 1'e sahip silinemez sistem Kullanıcısıdır"
+
 #, fuzzy
 #~| msgid "Deleted Organization:"
 #~ msgid "Delete Organization"
@@ -19658,10 +19819,6 @@ msgstr "Bugünkü bekleme süresi"
 #~| msgid "Any recipient"
 #~ msgid "Invalid recipient."
 #~ msgstr "Herhangi Alıcı"
-
-#, fuzzy
-#~ msgid "Invalid signer."
-#~ msgstr "True"
 
 #, fuzzy
 #~ msgid "No secret key found."

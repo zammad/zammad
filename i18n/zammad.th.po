@@ -892,6 +892,18 @@ msgstr "สร้าง ticket ทดสอบแล้ว คุณสามา
 msgid "A ticket cannot be merged into itself."
 msgstr "ticket ไม่สามารถรวมเข้ากับตัวเองได้"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"A ticket's priority is simply a ranking of how urgent or important it is. "
+"Different priorities allow you to see the importance of your tickets better."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"A ticket's state is used to categorize and manage the lifecycle of a ticket "
+"or customer inquiry."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr "ต้องการ User!"
@@ -1415,10 +1427,6 @@ msgstr "ชื่อเจ้าหน้าที่"
 #: db/seeds/settings.rb
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "ชื่อเจ้าหน้าที่ + FromSeparator + System Address Display Name"
-
-#: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Agent and customer users can be grouped into organizations."
-msgstr "ผู้ใช้ตัวแทนและลูกค้าสามารถจัดกลุ่มเป็นองค์กรได้"
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -2167,6 +2175,7 @@ msgid "Available types for a new ticket"
 msgstr "ประเภทที่มีสำหรับ ticket ใหม่"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
@@ -3364,7 +3373,6 @@ msgstr "หมด Ajax เวิร์กโฟลว์หลัก"
 msgid "Core Workflows"
 msgstr "Core Workflows"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid ""
 "Core Workflows are actions or constraints on selections in forms. Depending "
@@ -3824,6 +3832,12 @@ msgstr "หน้าหลัก"
 msgid "Data Privacy"
 msgstr "ความเป็นส่วนตัวของข้อมูล"
 
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "%s created data privacy task to delete user ID |%s|"
+msgid "Data privacy task allows to delete a user or a ticket only."
+msgstr "%s ได้สร้างภารกิจความเป็นส่วนตัวของข้อมูลเพื่อลบ ID ผู้ใช้ |%s|"
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
 msgstr "งานความเป็นส่วนตัวของข้อมูล"
@@ -3948,6 +3962,17 @@ msgstr "การสมัคร tickets ปฏิทินเริ่มต้
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Default caller ID for outbound calls."
 msgstr "ID ผู้โทรเริ่มต้นสำหรับการโทรออก"
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid "Default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "Default type for a new ticket"
+msgid "Default for new tickets"
+msgstr "ประเภทเริ่มต้นสำหรับ Tickets ใหม่"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
@@ -4124,6 +4149,20 @@ msgstr "กำหนดหลังจากจำนวนบัญชีที
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr "กำหนดปลายทาง OTRS เพื่อนำเข้าผู้ใช้ ตั๋ว สถานะ และบทความ"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional highlight color of this priority in ticket tables. High "
+"priority will be rendered in an indian red, while low priority in a baby "
+"blue color."
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid ""
+"Defines an optional icon of this priority in ticket tables. Important will "
+"be rendered with an exclamation point, while low priority with a downwards "
+"arrow."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
@@ -7087,6 +7126,20 @@ msgstr "สวัสดี! ผลิตภัณฑ์ใดของเรา?
 msgid "Hide authenticator app secret"
 msgstr "ตรวจสอบอีกครั้ง"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "High priority"
+msgstr "ความสำคัญ"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight color"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+msgid "Highlight icon"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
@@ -7331,6 +7384,12 @@ msgid ""
 "If you want to use additional email addresses, you can configure them later."
 msgstr "หากคุณต้องการใช้ที่อยู่อีเมลเพิ่มเติม คุณสามารถกำหนดค่าได้ในภายหลัง"
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "escalation"
+msgid "Ignore Escalation"
+msgstr "การยกระดับ"
+
 #: db/seeds/settings.rb
 msgid "Ignore Escalation/SLA Information"
 msgstr ""
@@ -7450,6 +7509,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/index.jst.eco
 msgid "Import from"
 msgstr "นำเข้าจาก"
+
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Import"
+msgid "Important"
+msgstr "นำเข้า"
 
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 msgid "Imported"
@@ -7730,6 +7795,24 @@ msgstr "รหัสผ่านไม่ถูกต้อง ต้องม�
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
+#: lib/knowledge_base/permissions_update.rb
+#, fuzzy
+#| msgid "Invalid video URL"
+msgid "Invalid permissions."
+msgstr "URL วิดีโอไม่ถูกต้อง"
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role does not have access to this category because "
+"parent category is not visible for it."
+msgstr ""
+
+#: lib/knowledge_base/permissions_update.rb
+msgid ""
+"Invalid permissions. This role has editor access to parent category. "
+"Limiting access is not effective."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
 msgstr "รหัสความปลอดภัยไม่ถูกต้อง! โปรดลองอีกครั้งด้วยรหัสใหม่"
@@ -7819,6 +7902,22 @@ msgstr "เชิญลูกค้าสร้างปัญหาใน Zamma
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
 msgstr "Ionicons"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "At least one user needs to have admin permissions."
+msgid "It is not possible to delete the last account with admin permissions."
+msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ."
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "It is not possible to delete the system user."
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "Do you really want to delete your current avatar?"
+msgid "It is not possible to delete your current account."
+msgstr "คุณต้องการลบอวาตาร์ปัจจุบันของคุณหรือไม่?"
 
 #: app/models/ticket.rb
 msgid "It is not possible to merge into an already merged ticket."
@@ -8302,6 +8401,12 @@ msgstr "จำรหัสผ่านไม่ได้"
 msgid "Lost network connection!"
 msgstr "ขาดการเชื่อมต่อเครือข่าย!"
 
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Low priority"
+msgstr "ความสำคัญ"
+
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
 msgstr "แมโคร"
@@ -8343,6 +8448,7 @@ msgid "Maintenance mode enabled!"
 msgstr "เปิดใช้งานโหมดบำรุงรักษาแล้ว!"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Manage"
 msgstr "จัดการ"
 
@@ -8994,6 +9100,12 @@ msgstr "องค์กรใหม่"
 msgid "New Overview"
 msgstr "ภาพรวมใหม่"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "New Priority"
+msgstr "ความสำคัญ"
+
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
 msgstr "โปรไฟล์ใหม่"
@@ -9037,6 +9149,12 @@ msgstr "แม่แบบ"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
+msgstr "Ticket ใหม่"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New Ticket State"
 msgstr "Ticket ใหม่"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
@@ -9126,6 +9244,12 @@ msgstr "ผู้ใช้ใหม่?"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "ถัดไป"
+
+#: app/assets/javascripts/app/models/ticket_state.coffee
+#, fuzzy
+#| msgid "Get Started"
+msgid "Next State"
+msgstr "เริ่ม"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
@@ -9435,6 +9559,8 @@ msgstr "ไม่พบ"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/ticket_priority.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -9926,10 +10052,6 @@ msgstr ""
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "ภาพรวม"
-
-#: app/assets/javascripts/app/controllers/overview.coffee
-msgid "Overviews are …"
-msgstr "ภาพรวมทั้งหมด …"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
@@ -10554,10 +10676,6 @@ msgstr "ลิ้งสาธารณะ"
 #: db/seeds/permissions.rb
 msgid "Public Links"
 msgstr "ลิ้งสาธารณะ"
-
-#: app/assets/javascripts/app/controllers/public_link.coffee
-msgid "Public Links are …"
-msgstr "ลิงค์สาธารณะคือ …"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -11350,10 +11468,6 @@ msgstr ""
 msgid "Schedulers"
 msgstr "ตารางเวลา"
 
-#: app/assets/javascripts/app/controllers/job.coffee
-msgid "Schedulers are …"
-msgstr ""
-
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
 msgstr "หน้าจอ"
@@ -11664,6 +11778,10 @@ msgstr ""
 msgid "Selected conditions"
 msgstr ""
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "Selected object is already queued for deletion."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
 msgid "Selected tickets do not match any macros."
 msgstr ""
@@ -11864,6 +11982,17 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr "ตั้งค่า ID ผู้โทรของการโทรออกตาม ID ผู้โทรปลายทาง"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+msgid "Set default for follow-ups"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Default type for a new ticket"
+msgid "Set default for new tickets"
+msgstr "ประเภทเริ่มต้นสำหรับ Tickets ใหม่"
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
@@ -12783,8 +12912,6 @@ msgstr "โมดูลข้อความ"
 msgid "Text modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/macro.coffee
-#: app/assets/javascripts/app/controllers/template.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules are …"
 msgstr "โมดูลข้อความ…"
@@ -14460,9 +14587,33 @@ msgstr "ภาพรวม Ticket ทั้งหมด"
 msgid "Ticket Owner"
 msgstr "ภาพรวม Ticket ทั้งหมด"
 
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket Priorities"
+msgstr "Ticket อัปเดต"
+
+#: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#, fuzzy
+#| msgid "Priority"
+msgid "Ticket Priority"
+msgstr "ความสำคัญ"
+
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
 msgstr "Ticket ตัวเลือก"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket State"
+msgstr "Ticket อัปเดต"
+
+#: app/assets/javascripts/app/controllers/ticket_state.coffee
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket States"
+msgstr "Ticket อัปเดต"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Forward"
@@ -15038,10 +15189,6 @@ msgid ""
 "times are reached (e.g. pending time, escalation)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/trigger.coffee
-msgid "Triggers are …"
-msgstr "ทริกเกอร์คือ …"
-
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try Another Method"
@@ -15234,6 +15381,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -16038,10 +16186,6 @@ msgstr ""
 msgid "Webhooks"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee
-msgid "Webhooks are …"
-msgstr ""
-
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
 "Webhooks make it easy to send information about events within Zammad to "
@@ -16758,6 +16902,14 @@ msgstr "Zammad มีลักษณะเช่นนี้สำหรับ \
 msgid "Zammad requires a restart!"
 msgstr "Zammad ต้องรีสตาร์ท!"
 
+#: app/assets/javascripts/app/models/ticket_state.coffee
+msgid ""
+"Zammad uses state types to know what it should do with your state. This "
+"allows you to have different types like pending actions, pending reminders "
+"or closed states. Take a look at our system object documentation for more "
+"information."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 msgid "Zendesk"
 msgstr ""
@@ -17259,10 +17411,6 @@ msgstr "ซ"
 msgid "has already been taken"
 msgstr ""
 
-#: lib/validations/data_privacy_task_validator.rb
-msgid "has an existing DataPrivacyTask queued"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -17444,12 +17592,6 @@ msgstr "ไม่ถูกต้อง"
 msgid "is larger than the allowed maximum value of %{max_value}"
 msgstr ""
 
-#: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "At least one user needs to have admin permissions."
-msgid "is last account with admin permissions"
-msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ."
-
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr ""
@@ -17467,12 +17609,6 @@ msgstr "ไม่เท่ากับ"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "is not"
 msgstr "ไม่เท่ากับ"
-
-#: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "Min. size of number"
-msgid "is not a User or Ticket"
-msgstr "ต่ำสุด. ขนาดของตัวเลข"
 
 #: lib/validations/color_validator.rb
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
@@ -17543,14 +17679,6 @@ msgid "is too short (minimum is %{count} characters)"
 msgstr ""
 
 msgid "is too short (minimum is 1 character)"
-msgstr ""
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is undeletable system User with ID 1"
-msgstr ""
-
-#: lib/validations/data_privacy_task_validator.rb
-msgid "is your current account"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -18213,6 +18341,28 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
 
+#~ msgid "Agent and customer users can be grouped into organizations."
+#~ msgstr "ผู้ใช้ตัวแทนและลูกค้าสามารถจัดกลุ่มเป็นองค์กรได้"
+
+#~ msgid "Overviews are …"
+#~ msgstr "ภาพรวมทั้งหมด …"
+
+#~ msgid "Public Links are …"
+#~ msgstr "ลิงค์สาธารณะคือ …"
+
+#~ msgid "Triggers are …"
+#~ msgstr "ทริกเกอร์คือ …"
+
+#, fuzzy
+#~| msgid "Ionicons"
+#~ msgid "UI icon"
+#~ msgstr "Ionicons"
+
+#, fuzzy
+#~| msgid "Min. size of number"
+#~ msgid "is not a User or Ticket"
+#~ msgstr "ต่ำสุด. ขนาดของตัวเลข"
+
 #, fuzzy
 #~| msgid "Deleted Organization:"
 #~ msgid "Delete Organization"
@@ -18258,11 +18408,6 @@ msgstr "∅ รอเวลาวันนี้"
 #~| msgid "Any recipient"
 #~ msgid "Invalid recipient."
 #~ msgstr "ผู้รับ ทั้งหมด"
-
-#, fuzzy
-#~| msgid "Invalid video URL"
-#~ msgid "Invalid signer."
-#~ msgstr "URL วิดีโอไม่ถูกต้อง"
 
 #, fuzzy
 #~| msgid "No record found!"
