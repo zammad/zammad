@@ -37,13 +37,13 @@ RSpec.describe 'Freshdesk import', db_strategy: :reset, integration: true, requi
         },
         'Users'         => {
           'skipped'     => 0,
-          'created'     => 19,
+          'created'     => 18,
           'updated'     => 0,
           'unchanged'   => 0,
           'failed'      => 0,
           'deactivated' => 0,
-          'sum'         => 19,
-          'total'       => 19,
+          'sum'         => 18,
+          'total'       => 18,
         },
         'Organizations' => {
           'skipped'     => 0,

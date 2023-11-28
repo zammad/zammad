@@ -87,7 +87,7 @@ module Import
       def update_ticket_state
         agent_new = fetch_ticket_states(%w[merged removed])
         agent_edit = fetch_ticket_states(%w[new merged removed])
-        customer_new = fetch_ticket_states(%w[ew closed])
+        customer_new = fetch_ticket_states(%w[new closed])
         customer_edit = fetch_ticket_states(%w[open closed])
 
         ticket_state_id = ::ObjectManager::Attribute.get(

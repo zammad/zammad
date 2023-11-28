@@ -8,16 +8,16 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::TimeEntries, db_strategy:
 
   let(:process_payload) do
     {
-      import_job:           build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
-      dry_run:              false,
-      object:               'TimeEntry',
-      request_params:       {
+      import_job:            build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
+      dry_run:               false,
+      object:                'TimeEntry',
+      request_params:        {
         ticket: {
           'id' => 1001,
         },
       },
-      field_map:            {},
-      id_map:               {
+      field_map:             {},
+      id_map:                {
         'Ticket' => {
           1001 => ticket.id,
         },
@@ -25,8 +25,9 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::TimeEntries, db_strategy:
           80_014_400_475 => 1,
         }
       },
-      skipped_resource_id:  nil,
-      time_entry_available: time_entry_available,
+      skipped_resource_id:   nil,
+      time_entry_available:  time_entry_available,
+      skip_initial_contacts: false,
     }
   end
 

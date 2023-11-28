@@ -61,12 +61,13 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: 
     end
     let(:process_payload) do
       {
-        import_job:           build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
-        dry_run:              false,
-        resource:             resource,
-        field_map:            {},
-        id_map:               id_map,
-        time_entry_available: false,
+        import_job:            build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
+        dry_run:               false,
+        resource:              resource,
+        field_map:             {},
+        id_map:                id_map,
+        time_entry_available:  false,
+        skip_initial_contacts: false,
       }
     end
 
