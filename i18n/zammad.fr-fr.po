@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-11-17 02:05+0000\n"
-"Last-Translator: Solenne Lefevre <solenne.lefevre@data-bene.io>\n"
+"PO-Revision-Date: 2023-11-28 07:37+0000\n"
+"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
-"zammad-development/fr/>\n"
+"zammad-stable/fr/>\n"
 "Language: fr-fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -112,10 +112,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Escaladé à #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}> : Escaladé à #{ticket.escalation_at}_\n"
 "Le ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" a été "
-"escaladé depuis \"#{ticket.escalation_at}\"!\n"
+"escaladé depuis \"#{ticket.escalation_at}\" !\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -137,12 +137,12 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Mis à jour par #{current_user.longname} à #{ticket."
-"updated_at}_\n"
-"* Group: #{ticket.group.name}\n"
-"* Owner: #{ticket.owner.fullname}\n"
-"* State: #{t(ticket.state.name)}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}> : Mis à jour par #{current_user.longname} à "
+"#{ticket.updated_at}_\n"
+"* Groupe : #{ticket.group.name}\n"
+"* Propriétaire : #{ticket.owner.fullname}\n"
+"* Statut : #{t(ticket.state.name)}\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -163,9 +163,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Rappel atteint !_\n"
-"Un ticket a besoin d'attention: rappel atteint pour (#{ticket.title}) avec "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}> : Rappel atteint !_\n"
+"Un ticket a besoin d'attention : rappel atteint pour (#{ticket.title}) avec "
 "client \"*#{ticket.customer.longname}*\".\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -191,12 +191,12 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Mis à jour par #{current_user.longname} à #{ticket."
-"updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}> : Mis à jour par #{current_user.longname} à "
+"#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
-"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  * <%= t key %> : <%= h value[0] %> -> <%= h value[1] %>\n"
 "  <% end %>\n"
 "<% end %>\n"
 "\n"
@@ -219,8 +219,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Va être escaladé à #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}> : Va être escaladé à #{ticket.escalation_at}_\n"
 "Le ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" va être "
 "escaladé à \"#{ticket.escalation_at}\" !\n"
 "\n"
@@ -2165,7 +2165,7 @@ msgstr "OAuth"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
 msgid "Auto Assignment"
-msgstr "Assignement automatique"
+msgstr "Affectation automatique"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -2518,7 +2518,7 @@ msgstr "Dernière activité du client CTI"
 
 #: db/seeds/settings.rb
 msgid "CTI integration"
-msgstr "Integration CTI"
+msgstr "Intégration CTI"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #, fuzzy
@@ -2985,7 +2985,7 @@ msgstr "Vider 'Cti::Log'."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'DataPrivacyTask'."
-msgstr "Nettoyer 'TâcheConfidentialitéDesDonnées'"
+msgstr "Nettoyer 'TâcheConfidentialitéDesDonnées'."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'HttpLog'."
@@ -3516,19 +3516,13 @@ msgstr ""
 "Définit si l'intégration i-doit (http://www.i-doit.org) est active ou non."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
-#, fuzzy
 msgid "Could not remove two-factor authentication method"
-msgstr "Impossible de supprimer la méthode d'authentification à deux facteurs."
+msgstr "Impossible de supprimer la méthode d'authentification à deux facteurs"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
-#, fuzzy
-#| msgid ""
-#| "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
-#| "not."
 msgid "Could not set two-factor authentication method as default"
 msgstr ""
-"Impossible de définir la méthode d'authentification à deux facteur par "
-"défaut."
+"Impossible de définir la méthode d'authentification à deux facteur par défaut"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
@@ -3843,14 +3837,14 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "Currently no overview is assigned to your roles."
-msgstr "Aucun aperçu n'est actuellement assigné à vos rôles."
+msgstr "Aucun aperçu n'est actuellement affecté à vos rôles."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/navbar.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
 msgstr ""
-"Aucun aperçu n'est actuellement assigné à vos roles. Veuillez contacter "
+"Aucun aperçu n'est actuellement affecté à vos rôles. Veuillez contacter "
 "votre administrateur."
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -4085,8 +4079,8 @@ msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
 msgstr ""
-"Definir une exception de \"l'assignement automatique\" pour certains "
-"utilisateurs (Les responsables par exemple)."
+"Définir une exception à \"l'affectation automatique\" pour certains "
+"utilisateurs (les responsables par exemple)."
 
 #: db/seeds/settings.rb
 msgid "Define max. attachment size for Elasticsearch."
@@ -5826,7 +5820,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
-"Activer l'assignement automatique lorsqu'un agent ouvre un ticket pour la "
+"Activer l'affectation automatique lorsqu'un agent ouvre un ticket pour la "
 "première fois."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -5905,7 +5899,7 @@ msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
-"Active un avertissement vers les utilisateurs durant la création du ticket "
+"Active l'envoi d'un avertissement aux utilisateurs à la création du ticket "
 "si un ticket existe déjà avec les mêmes attributs."
 
 #: db/seeds/settings.rb
@@ -5947,7 +5941,7 @@ msgstr ""
 "Autorise le lien automatique d'un compte existant aux applications tiers à "
 "sa connexion initiale. Si c'est désactivé, un utilisateur existant doit "
 "d'abord se connecter à Zammad, puis lier son compte \"Partie Tiers\" à son "
-"compte Zammad via Profil -> Comptes liés"
+"compte Zammad via Profil -> Comptes liés."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via %s."
@@ -6066,7 +6060,7 @@ msgstr "Paramètres du point de terminaison"
 #: db/seeds/settings.rb
 #, fuzzy
 msgid "Enforce the set up of the two-factor authentication"
-msgstr "Forcer le paramétrage de l'authentification à deux facteurs."
+msgstr "Forcer le paramétrage de l'authentification à deux facteurs"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -6254,11 +6248,11 @@ msgstr ""
 "<div>Bonjour #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>Le ticket (#{ticket.title}) de \"<b>#{ticket.customer.longname}</b>\" "
-"est escaladé depuis \"#{ticket.escalation_at}\"!</div>\n"
+"est escaladé depuis \"#{ticket.escalation_at}\" !</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
-"  #{t('Information')}:\n"
+"  #{t('Information')} :\n"
 "  <blockquote type=\"cite\">\n"
 "  #{article.body_as_html}\n"
 "  </blockquote>\n"
@@ -6362,10 +6356,8 @@ msgid "Examples"
 msgstr "Exemples"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-#, fuzzy
-#| msgid "Examples"
 msgid "Examples:"
-msgstr "Exemples"
+msgstr "Exemples :"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 msgid "Excepted users"
@@ -6388,7 +6380,7 @@ msgstr "configuration exchange"
 #: db/seeds/settings.rb
 #, fuzzy
 msgid "Exchange integration"
-msgstr "integration exchange"
+msgstr "Intégration Exchange"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #, fuzzy
@@ -6578,7 +6570,7 @@ msgstr "Formulaire de Commentaire"
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 #, fuzzy
 msgid "File '%s' is uploading"
-msgstr "Le fichier '%s' est en train de charger."
+msgstr "Le fichier '%s' est en cours de chargement"
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
@@ -6964,7 +6956,7 @@ msgstr "Information d'identification de GitHub"
 
 #: db/seeds/settings.rb
 msgid "GitHub OAuth Applications"
-msgstr "Applications  OAuth GitHub"
+msgstr "Applications OAuth GitHub"
 
 #: db/seeds/settings.rb
 msgid "GitHub config"
@@ -7297,7 +7289,7 @@ msgstr "Passez une bonne journée."
 #, fuzzy
 #| msgid "in process"
 msgid "Having problems?"
-msgstr "en cours"
+msgstr "Des problèmes ?"
 
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid "Header"
@@ -7897,7 +7889,7 @@ msgstr "Incrément (IDSystème.Compteur)"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Info: %s"
-msgstr "Info: %s"
+msgstr "Info : %s"
 
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -8015,7 +8007,7 @@ msgstr "Introduction"
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid 'direction'!"
-msgstr "'direction' invalide!"
+msgstr "'direction' invalide !"
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "Invalid BasicAuth credentials"
@@ -8675,8 +8667,8 @@ msgstr ""
 msgid ""
 "Login failed. Please double-check your two-factor authentication method."
 msgstr ""
-"Echec d'authentification. Avez-vous vérifié vos informations de connexion et "
-"validé votre adresse e-mail ?"
+"Échec d'authentification. Veuillez revérifier votre méthode "
+"d'authentification à deux facteurs."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
@@ -9171,7 +9163,7 @@ msgstr "Champ Sélection d'arbres multiples"
 
 #: db/seeds/overviews.rb
 msgid "My Assigned Tickets"
-msgstr "Mes Tickets Assignés"
+msgstr "Mes Tickets Affectés"
 
 #: db/seeds/overviews.rb
 msgid "My Organization Tickets"
@@ -9482,34 +9474,6 @@ msgstr "Nouveau module de texte"
 #. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_create/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "New Ticket (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>A new ticket (#{ticket.title}) has been created by "
-#| "\"<b>#{current_user.longname}</b>\".</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "#{t('Group')}: #{ticket.group.name}<br>\n"
-#| "#{t('Owner')}: #{ticket.owner.fullname}<br>\n"
-#| "#{t('State')}: #{t(ticket.state.name)}<br>\n"
-#| "</div>\n"
-#| "<br>\n"
-#| "<% if @objects[:article] %>\n"
-#| "  <div>\n"
-#| "  #{t('Information')}:\n"
-#| "  <blockquote type=\"cite\">\n"
-#| "  #{article.body_as_html}\n"
-#| "  </blockquote>\n"
-#| "  </div>\n"
-#| "<% end %>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-#| "id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
-#| "</div>\n"
 msgid ""
 "New ticket (#{ticket.title})\n"
 "\n"
@@ -9546,14 +9510,14 @@ msgstr ""
 "longname}</b>\".</div>\n"
 "<br>\n"
 "<div>\n"
-"#{t('Group')}: #{ticket.group.name}<br>\n"
-"#{t('Owner')}: #{ticket.owner.fullname}<br>\n"
-"#{t('State')}: #{t(ticket.state.name)}<br>\n"
+"#{t('Group')} : #{ticket.group.name}<br>\n"
+"#{t('Owner')} : #{ticket.owner.fullname}<br>\n"
+"#{t('State')} : #{t(ticket.state.name)}<br>\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
-"  #{t('Information')}:\n"
+"  #{t('Information')} :\n"
 "  <blockquote type=\"cite\">\n"
 "  #{article.body_as_html}\n"
 "  </blockquote>\n"
@@ -9656,10 +9620,8 @@ msgid "No categories"
 msgstr "Aucune catégorie"
 
 #: app/models/setting/validation/saml/security.rb
-#, fuzzy
-#| msgid "Locale not found"
 msgid "No certificate found."
-msgstr "Localisation non trouvée"
+msgstr "Certificat non trouvé."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
@@ -9820,7 +9782,7 @@ msgstr "Normal"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Not Assigned"
-msgstr "Non assignés"
+msgstr "Non affectés"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Not Available"
@@ -10346,8 +10308,8 @@ msgstr "Message d'absence"
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
-"Combien de tickets vous sont assignés sur l'ensemble des tickets ouverts "
-"(dans la société) ?"
+"Combien de tickets vous sont affectés sur l'ensemble des tickets ouverts ("
+"dans la société) ?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -10433,7 +10395,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: db/seeds/settings.rb
 msgid "PGP Recipient Alias Configuration"
@@ -11458,7 +11420,7 @@ msgstr "Réinitialiser l'ordre des aperçus"
 #, fuzzy
 #| msgid "Sent successfully!"
 msgid "Reset successful."
-msgstr "Envoyé avec succès !"
+msgstr "Réinitialisation réussie."
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 #, fuzzy
@@ -12170,10 +12132,8 @@ msgstr "Test SMS raté."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
-#, fuzzy
-#| msgid "Signature verification failed!"
 msgid "Security key verification failed."
-msgstr "Vérification de la signature échouée !"
+msgstr "La vérification de la clé de sécurité a échoué."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
 #, fuzzy
@@ -13382,7 +13342,7 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"Ticket de Test!\n"
+"Ticket de Test !\n"
 "\n"
 "<div>Cher #{agent.firstname},</div>\n"
 "<br>\n"
@@ -13704,10 +13664,8 @@ msgid "The certificate for verification could not be found."
 msgstr "Le certificat de vérification n'a pas pu être trouvé."
 
 #: app/models/setting/validation/saml/security.rb
-#, fuzzy
-#| msgid "Notification Sound"
 msgid "The certificate is not usable (e.g. expired)."
-msgstr "Alert sonore de la notification"
+msgstr "Le certificat n'est pas utilisable (il a expiré par exemple)."
 
 #: app/models/setting/validation/saml/security.rb
 msgid "The certificate is not usable due to being a CA certificate."
@@ -13814,10 +13772,8 @@ msgstr "La connexion au serveur a été perdue."
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
-#, fuzzy
-#| msgid "Connection refused"
 msgid "The connection was refused."
-msgstr "Connexion refusée"
+msgstr "La connexion a été refusée."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
@@ -14144,10 +14100,8 @@ msgid "The public PGP key could not be found."
 msgstr "'Locale' n'a pas été trouvé."
 
 #: app/assets/javascripts/app/controllers/report.coffee
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The report could not be generated"
-msgstr "%s objet(s) créé(s)."
+msgstr "Le rapport n'a pas pu être généré"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "The request could not be processed."
@@ -14678,10 +14632,8 @@ msgid "There was no PGP key found."
 msgstr "La page n'a pas été trouvée"
 
 #: lib/secure_mailing/smime/security_options.rb
-#, fuzzy
-#| msgid "The page was not found"
 msgid "There was no certificate found."
-msgstr "La page n'a pas été trouvée"
+msgstr "Aucun certificat n'a été trouvé."
 
 #: lib/secure_mailing/pgp/tool/error.rb
 #, fuzzy
@@ -14690,10 +14642,8 @@ msgid "There was no public PGP key found."
 msgstr "La page n'a pas été trouvée"
 
 #: lib/secure_mailing/backend/handler_security_options.rb
-#, fuzzy
-#| msgid "No record found!"
 msgid "There was no recipient found."
-msgstr "Aucun enregistrement trouvé !"
+msgstr "Aucun destinataire n'a été trouvé."
 
 #: lib/secure_mailing/pgp/tool/error.rb
 #, fuzzy
@@ -14869,10 +14819,8 @@ msgid "This field must contain at least one character."
 msgstr "Ce champ doit contenir au moins un caractère."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "This field must contain between %s and %s characters."
-msgstr "Le mot de passe doit contenir 2 minuscules et 2 majuscules"
+msgstr "Ce champ doit contenir entre %s et %s caractères."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain letters or numbers."
@@ -15238,7 +15186,7 @@ msgstr "Nouvel Aperçu"
 #, fuzzy
 #| msgid "Overviews"
 msgid "Ticket Overview settings are saved."
-msgstr "Aperçus"
+msgstr "Les paramètres des Aperçus de Tickets sont sauvegardés."
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #, fuzzy
@@ -15423,28 +15371,6 @@ msgstr "Nouvel Aperçu"
 #. This is the template file app/views/mailer/ticket_escalation_warning/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_escalation_warning/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Ticket will escalate (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-#| "\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
-#| "<br>\n"
-#| "<% if @objects[:article] %>\n"
-#| "  <div>\n"
-#| "  #{t('Information')}:\n"
-#| "  <blockquote type=\"cite\">\n"
-#| "  #{article.body_as_html}\n"
-#| "  </blockquote>\n"
-#| "  </div>\n"
-#| "<% end %>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-#| "id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
-#| "</div>\n"
 msgid ""
 "Ticket will escalate (#{ticket.title})\n"
 "\n"
@@ -15472,11 +15398,11 @@ msgstr ""
 "<div>Bonjour #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>Le ticket (#{ticket.title}) de \"<b>#{ticket.customer.longname}</b>\" "
-"escaladera \"#{ticket.escalation_at}\" !</div>\n"
+"escaladera à \"#{ticket.escalation_at}\" !</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
-"  #{t('Information')}:\n"
+"  #{t('Information')} :\n"
 "  <blockquote type=\"cite\">\n"
 "  #{article.body_as_html}\n"
 "  </blockquote>\n"
@@ -15537,7 +15463,7 @@ msgstr "Ticket"
 msgid ""
 "Tickets are only assigned automatically if they do not already have an owner."
 msgstr ""
-"Les tickets ne sont assignés automatiquement que s'ils n'ont pas déjà de "
+"Les tickets ne sont affectés automatiquement que s'ils n'ont pas déjà de "
 "propriétaire."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
@@ -15546,7 +15472,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Tickets assigned to me: %s of %s"
-msgstr "Tickets qui me sont assignés : %s sur %s"
+msgstr "Tickets qui me sont affectés : %s sur %s"
 
 #: app/controllers/ticket_articles_controller.rb
 #: app/controllers/tickets_controller.rb
@@ -16094,10 +16020,9 @@ msgid "Two-factor authentication method was removed."
 msgstr "La méthode d'authentification à deux facteurs a été supprimée."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
-#, fuzzy
-#| msgid "Basic Authentication"
 msgid "Two-factor authentication method was set as default."
-msgstr "Basic Authentication"
+msgstr ""
+"La méthode d'authentification à deux facteurs a été paramétrée par défaut."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
 msgid "Two-factor authentication method was set up successfully."
@@ -16394,9 +16319,9 @@ msgstr ""
 "<br>\n"
 "<% if @objects[:changes].present? %>\n"
 "  <div>\n"
-"  #{t('Changes')}:<br>\n"
+"  #{t('Changes')} : <br>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
-"    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n"
+"    <%= t key %> : <%= h value[0] %> -&gt; <%= h value[1] %><br>\n"
 "  <% end %>\n"
 "  </div>\n"
 "<% end %>\n"
@@ -16412,8 +16337,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
-"\">Consulter sur #{config.product_name}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\""
+">Consulter sur #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -16751,7 +16676,7 @@ msgstr "Vérifier l'envoi et la réception"
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Verifying key information…"
-msgstr "Exceptions de notifications"
+msgstr "Vérification des informations clés…"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
@@ -17792,6 +17717,7 @@ msgstr ""
 "votre compréhension.\n"
 "\n"
 "Toutes nos excuses,\n"
+"\n"
 "Postmaster - #{config.fqdn}\n"
 
 #: db/seeds/settings.rb
@@ -18450,11 +18376,8 @@ msgid "is larger than the allowed maximum value of %{max_value}"
 msgstr "est plus grand que la valeur maximale autorisée de %{max_value}"
 
 #: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "At least one user needs to have admin permissions."
 msgid "is last account with admin permissions"
-msgstr ""
-"Au moins un utilisateur doit disposer des permissions d'administration."
+msgstr "est le dernier compte avec des permissions d'administration"
 
 #: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"

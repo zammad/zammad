@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-11-20 14:18+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2023-11-28 07:37+0000\n"
+"Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
-"zammad-development/sv/>\n"
+"zammad-stable/sv/>\n"
 "Language: sv-se\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -80,9 +80,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Skapad av #{current_user.longname} på #{ticket."
-"updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Skapad av #{current_user.longname} vid #{ticket"
+".updated_at}_\n"
 "* Grupp: #{ticket.group.name}\n"
 "* Ägare: #{ticket.owner.fullname}\n"
 "* Status: #{t(ticket.state.name)}\n"
@@ -106,8 +106,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Eskalerad vid #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Eskalerad vid #{ticket.escalation_at}_\n"
 "Ärendet (#{ticket.title}) från \"#{ticket.customer.longname}\" har "
 "eskalerats sedan \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -131,8 +131,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Senast uppderad på #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Senast uppdaterad #{ticket.updated_at}_\n"
 "* Grupp: #{ticket.group.name}\n"
 "* Ägare: #{ticket.owner.fullname}\n"
 "* Status: #{t(ticket.state.name)}\n"
@@ -156,8 +156,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Påminnelse uppnådd!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Påminnelse uppnådd!_\n"
 "Åtgärd behövs: påminnelse uppnådd för (#{ticket.title}) med kund \"*#{ticket."
 "customer.longname}*\".\n"
 "\n"
@@ -184,8 +184,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ärende##{ticket.number}>: Uppdaterad av #{current_user.longname} vid "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ärende##{ticket.number}>: Uppdaterad av #{current_user.longname} vid "
 "#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -212,8 +212,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ärende##{ticket.number}>: Kommer att eskaleras vid #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ärende##{ticket.number}>: Kommer att eskaleras vid #{ticket."
+"escalation_at}_\n"
 "Ärendet (#{ticket.title}) från \"#{ticket.customer.longname}\" kommer att "
 "eskaleras vid \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -293,17 +294,17 @@ msgstr ""
 "Din IP-adress: #{user_device.ip}<br>\n"
 "</div>\n"
 "<br>\n"
-"<div>Landet är tillagt till din lista på kända enheter, du kan se den här:</"
-"div>\n"
+"<div>Landet är tillagt till din lista på kända enheter, som du kan se "
+"här:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
-"<div>Om det inte var du, ta genast bort enheten från listan och byt ditt "
-"lösenord för #{config.product_name}, samt kontakta din administratör. Någon "
-"kan ha fått tillgång till ditt #{config.product_name}-konto.</div>\n"
+"<div>Om det inte var du, ta genast bort enheten från listan, byt ditt "
+"lösenord samt kontakta din administratör. Någon kan ha fått tillgång till "
+"ditt #{config.product_name}-konto.</div>\n"
 "<br>\n"
-"<div>Dina #{config.product_name}-administratörer</div>\n"
+"<div>Ditt #{config.product_name} Team</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -350,12 +351,12 @@ msgstr ""
 "<div>Din enhet har lagts till i din lista med kända enheter, du kan se "
 "listan här:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
-"<div>Om det inte var du, ta bort enheten, ändra ditt lösenord och kontakta "
-"din administratör. Då någon kan ha gett sig själv olovligt tillträde till "
-"ditt konto.</div>\n"
+"<div>Om det inte var du, ta genast bort enheten från listan, byt ditt "
+"lösenord samt kontakta din administratör. Någon kan ha fått tillgång till "
+"ditt #{config.product_name}-konto.</div>\n"
 "<br>\n"
 "<div>Ditt #{config.product_name} Team</div>\n"
 
@@ -430,7 +431,7 @@ msgstr "%s skapade en artikel åt |%s|"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s created data privacy task to delete user ID |%s|"
-msgstr "%s startade GDRP-uppgiften att radera användar-ID |%s|"
+msgstr "%s skapade dataskyddsuppgiften för att radera användar-ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
@@ -445,7 +446,7 @@ msgstr "%s skapade organisation |%s|"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s created role |%s|"
-msgstr "%s skapade grupp |%s|"
+msgstr "%s skapade roll |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
@@ -461,7 +462,7 @@ msgstr "%s skapade användare |%s|"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s credentials"
-msgstr "%s uppgifter"
+msgstr "%s inloggningsuppgifter"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s days ago"
@@ -552,7 +553,7 @@ msgstr "%s krävs!"
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s started a new session"
-msgstr "%s startade en session"
+msgstr "%s startade en ny session"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -581,7 +582,7 @@ msgstr "%s uppdaterade en artikel åt |%s|"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s updated data privacy task to delete user ID |%s|"
-msgstr "%s updaterade GDRP-uppgiften att radera |%s|"
+msgstr "%s updaterade dataskyddsuppgiften att radera |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
@@ -677,15 +678,15 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"**Dataintegritet** - hjälper dig att radera och verifiera borttagning av "
+"**Dataskydd** - hjälper dig att radera och verifiera borttagning av "
 "existerande data från systemet.\n"
 "\n"
 "Det kan användas för att ta bort ärenden, organisationer och användare. "
 "Ägartilldelningen kommer att avaktiveras om den borttagna användaren är en "
-"handläggare.\n"
+"agent.\n"
 "\n"
-"Uppgifter om datasekretess kommer att utföras var tionde minut. Körningen "
-"kan ta lite längre tid beroende på antalet objekt som ska tas bort."
+"Uppgifter om dataskydd kommer att utföras var tionde minut. Körningen kan ta "
+"lite längre tid beroende på antalet objekt som ska tas bort."
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
@@ -703,15 +704,15 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure "
 "**email notifications**."
 msgstr ""
-"**Servicenivavtal**, Service Level Agreement förkortat **SLA**, hjälper till "
-"att möta specifika svarstider för kundens förfrågningar. Du kan ange mål som "
-"att svara på varje förfrågan inom åtta timmar. Om du håller på att missa "
-"målet påminner Zammad dig.\n"
+"**Servicenivåavtal**, (Service Level Agreement) förkortat **SLA**, hjälper "
+"till att uppfylla specifika svarstider för kundens förfrågningar. Du kan "
+"ange mål som att svara på varje förfrågan inom åtta timmar. Om du håller på "
+"att missa målet påminner Zammad dig.\n"
 "\n"
 "Du kan sätta mål för tre olika mått: **svarstid** (tiden mellan skapandet av "
 "ärendet och första svaret från en handläggare), **uppdateringstid** (tiden "
-"mellan kundens förfrågan och handläggarens reaktion), samt **lösningstid** "
-"(tiden mellan skapandet av ärendet och dess strängning).\n"
+"mellan kundens förfrågan och handläggarens reaktion), samt **lösningstid** ("
+"tiden mellan skapandet av ärendet och dess stängning).\n"
 "\n"
 "Eskalerade ärenden (d v s ärenden som har missat målet) visas i en separat "
 "vy i översikten. Du kan också ställa in **mejlnotifieringar**."
@@ -722,7 +723,7 @@ msgstr "1 bifogad fil"
 
 #: db/seeds/settings.rb
 msgid "1 day"
-msgstr "en dag"
+msgstr "1 dag"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 day ago"
@@ -730,7 +731,7 @@ msgstr "1 dag sedan"
 
 #: db/seeds/settings.rb
 msgid "1 hour"
-msgstr "en timme"
+msgstr "1 timme"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 hour ago"
@@ -770,7 +771,7 @@ msgstr "2 timmar"
 
 #: db/seeds/settings.rb
 msgid "2 lower case and 2 upper case characters"
-msgstr "2 gemena och 2 versala bokstäver"
+msgstr "2 små och 2 stora bokstäver"
 
 #: db/seeds/ticket_priorities.rb
 msgid "2 normal"
@@ -786,7 +787,7 @@ msgstr "2. Ärende-uppdatering"
 
 #: db/seeds/ticket_priorities.rb
 msgid "3 high"
-msgstr "hög"
+msgstr "3 hög"
 
 #: db/seeds/settings.rb
 msgid "3 weeks"
@@ -1290,7 +1291,7 @@ msgstr "Ytterligare uppföljningsdetektering"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Additional information"
-msgstr "Blockera notifieringar"
+msgstr "Ytterlig information"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
@@ -1386,7 +1387,7 @@ msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
 msgstr ""
-"Efter installation, uppdatering eller avinstalltion av paket, behöver "
+"Efter installation, uppdatering eller avinstallation av paket, behöver "
 "följande steg genomföras på servern:"
 
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -1937,7 +1938,7 @@ msgstr "Bifogade filer"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "Attachment"
-msgstr "Bilagor"
+msgstr "Bifogad fil"
 
 #: db/seeds/settings.rb
 msgid "Attachment - Search for follow-up also in attachments."
@@ -7199,7 +7200,7 @@ msgstr "Hur man gör"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 msgid "ID"
-msgstr "id"
+msgstr "ID"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "ID:"
@@ -11346,7 +11347,7 @@ msgstr "Schemalagd för"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/job.coffee db/seeds/permissions.rb
 msgid "Scheduler"
-msgstr "Schemaläggaren"
+msgstr "Schemaläggare"
 
 #: app/assets/javascripts/app/controllers/job.coffee
 msgid "Schedulers"
@@ -17689,7 +17690,7 @@ msgstr "pågående åtgärder"
 
 #: db/seeds/ticket_states.rb
 msgid "pending close"
-msgstr "väntande stängningar"
+msgstr "väntande stängning"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "pending reminder"
