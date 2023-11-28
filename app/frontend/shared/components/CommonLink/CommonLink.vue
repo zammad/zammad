@@ -39,7 +39,7 @@ const emit = defineEmits<{
 const target = computed(() => {
   if (props.target) return props.target
   if (props.openInNewTab) return '_blank'
-  return null
+  return undefined
 })
 
 // TODO: Other default styles possible?
