@@ -2,11 +2,11 @@ Le ticket va escalader (#{ticket.title})
 
 <div>Bonjour #{recipient.firstname},</div>
 <br>
-<div>Le ticket (#{ticket.title}) de "<b>#{ticket.customer.longname}</b>" escaladera "#{ticket.escalation_at}" !</div>
+<div>Le ticket (#{ticket.title}) de "<b>#{ticket.customer.longname}</b>" escaladera à "#{ticket.escalation_at}" !</div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  #{t('Information')} :
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>

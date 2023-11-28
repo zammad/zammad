@@ -5,14 +5,14 @@ Nouveau Ticket (#{ticket.title})
 <div>Un nouveau ticket (#{ticket.title}) a été créé par "<b>#{current_user.longname}</b>".</div>
 <br>
 <div>
-#{t('Group')}: #{ticket.group.name}<br>
-#{t('Owner')}: #{ticket.owner.fullname}<br>
-#{t('State')}: #{t(ticket.state.name)}<br>
+#{t('Group')} : #{ticket.group.name}<br>
+#{t('Owner')} : #{ticket.owner.fullname}<br>
+#{t('State')} : #{t(ticket.state.name)}<br>
 </div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  #{t('Information')} :
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
