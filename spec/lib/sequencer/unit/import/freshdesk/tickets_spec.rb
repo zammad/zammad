@@ -71,6 +71,7 @@ RSpec.describe Sequencer::Unit::Import::Freshdesk::Tickets, db_strategy: 'reset'
         id_map:                id_map,
         time_entry_available:  true,
         tickets_updated_since: nil,
+        skip_initial_contacts: false,
       }
     end
 

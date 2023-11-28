@@ -5,18 +5,19 @@ class Sequencer::Unit::Import::Freshdesk::Perform < Sequencer::Unit::Base
 
   skip_action :skipped, :failed
 
-  uses :resources, :object, :import_job, :dry_run, :field_map, :id_map, :time_entry_available
+  uses :resources, :object, :import_job, :dry_run, :field_map, :id_map, :time_entry_available, :skip_initial_contacts
 
   def process
     resources.each do |resource|
       ::Sequencer.process("Import::Freshdesk::#{object}",
                           parameters: {
-                            import_job:           import_job,
-                            dry_run:              dry_run,
-                            resource:             resource,
-                            field_map:            field_map,
-                            id_map:               id_map,
-                            time_entry_available: time_entry_available,
+                            import_job:            import_job,
+                            dry_run:               dry_run,
+                            resource:              resource,
+                            field_map:             field_map,
+                            id_map:                id_map,
+                            time_entry_available:  time_entry_available,
+                            skip_initial_contacts: skip_initial_contacts,
                           })
     end
   end

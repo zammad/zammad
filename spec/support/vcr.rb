@@ -80,6 +80,9 @@ end
 RSpec.configure do |config|
   config.around(:each, use_vcr: true) do |example|
 
+    # S3 does not play well with time freezing (Aws::S3::Errors::RequestTimeTooSkewed).
+    Setting.set('storage_provider', 'DB') if Setting.get('storage_provider') == 'S3'
+
     # Perform live integration tests without using VCR cassettes if CI_IGNORE_CASSETTES is set.
     if example.metadata[:integration] && %w[1 true].include?(ENV['CI_IGNORE_CASSETTES'])
       next VCR.turned_off(ignore_cassettes: true) do

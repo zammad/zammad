@@ -2,7 +2,7 @@
 
 class Sequencer::Unit::Import::Freshdesk::SubSequence::Generic < Sequencer::Unit::Base
 
-  uses :dry_run, :import_job, :field_map, :id_map, :time_entry_available
+  uses :dry_run, :import_job, :field_map, :id_map, :time_entry_available, :skip_initial_contacts
 
   attr_accessor :iteration, :result
 
@@ -13,14 +13,15 @@ class Sequencer::Unit::Import::Freshdesk::SubSequence::Generic < Sequencer::Unit
       @iteration = iteration
       @result = ::Sequencer.process(sequence_name,
                                     parameters: {
-                                      request_params:       request_params,
-                                      import_job:           import_job,
-                                      dry_run:              dry_run,
-                                      object:               object,
-                                      field_map:            field_map,
-                                      id_map:               id_map,
-                                      skipped_resource_id:  skipped_resource_id,
-                                      time_entry_available: time_entry_available,
+                                      request_params:        request_params,
+                                      import_job:            import_job,
+                                      dry_run:               dry_run,
+                                      object:                object,
+                                      field_map:             field_map,
+                                      id_map:                id_map,
+                                      skipped_resource_id:   skipped_resource_id,
+                                      skip_initial_contacts: skip_initial_contacts,
+                                      time_entry_available:  time_entry_available,
                                     },
                                     expecting:  self.class.const_get(:EXPECTING))
       break if iteration_should_stop?
