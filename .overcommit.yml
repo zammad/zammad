@@ -14,6 +14,8 @@ PreCommit:
     enabled: true
     on_warn: fail
   CoffeeLint:
+    required_executable: 'coffeelint'
+    install_command: 'npm install -g @coffeelint/cli'
     # .coffeelint/rules/* not supported in YAML, specify all rules separately.
     flags:
       [

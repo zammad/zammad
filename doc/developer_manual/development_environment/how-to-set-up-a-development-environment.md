@@ -68,7 +68,7 @@ Before executing the following snippet, please, make sure to look up the most re
 For Linux and macOS:
 
 ```screen
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
 nvm install node
 npm install -g yarn
 
