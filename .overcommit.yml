@@ -65,6 +65,12 @@ PostRewrite:
 PrePush:
   ALL:
     enabled: false
+  CustomScript:
+    enabled: true
+    description: "Verify GraphQL introspection file is not empty."
+    required_executable: 'bash'
+    command: [ 'bash', '-c', 'test -s app/graphql/graphql_introspection.json' ]
+    on_warn: fail
 
 PreRebase:
   ALL:
