@@ -834,15 +834,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def clear_date
-    element.click
-
-    wait_for_test_flag("field-date-time-#{field_id}.opened")
-
-    element.find_button('Clear').click
-
-    close_date_picker(element)
-
-    wait_for_test_flag("field-date-time-#{field_id}.closed")
+    input_element.send_keys(:backspace)
 
     maybe_wait_for_form_updater
 
