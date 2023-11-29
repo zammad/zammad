@@ -47,6 +47,9 @@ class App.TicketOverviewNavbar extends App.Controller
 
   autoFoldTabs: =>
     items = App.OverviewIndexCollection.get()
+
+    return if not items
+
     if App.UserOverviewSorting.count()
       items.sort(App.UserOverviewSortingOverview.overviewSort)
     else

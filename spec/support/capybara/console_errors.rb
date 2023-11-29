@@ -6,11 +6,6 @@ RSpec.configure do |config|
 
     logs   = page.driver.browser.logs.get(:browser)
     errors = logs.select { |m| m.level == 'SEVERE' && m.to_s =~ %r{EvalError|InternalError|RangeError|ReferenceError|SyntaxError|TypeError|URIError} }
-
-    # FIXME: Ignore certain unexplained JS errors that happen at the end of a test.
-    #   - 127865:14 Uncaught TypeError: Cannot read properties of undefined (reading 'sort')
-    errors = errors.filter { |e| e.message !~ %r{Uncaught TypeError: Cannot read properties of undefined \(reading 'sort'\)$} }
-
     if errors.present?
       Rails.logger.error "JS ERRORS: #{errors.to_json}"
       errors.each do |error|
