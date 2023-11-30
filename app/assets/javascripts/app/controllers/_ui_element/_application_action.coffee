@@ -701,7 +701,7 @@ class App.UiElement.ApplicationAction
       .addClass('alert alert--warning js-alert')
       .attr('role', 'alert')
       .attr('data-element-row-id', elementRow.data('id'))
-      .text(message)
+      .text(App.i18n.translatePlain(message))
       .prependTo(item)
 
   @removeAlerts: (item, elementRow) ->
