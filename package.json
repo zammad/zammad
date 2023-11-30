@@ -124,6 +124,7 @@
     "@vueuse/router": "^10.6.1",
     "@vueuse/shared": "^10.6.1",
     "async-mutex": "^0.4.0",
+    "daisyui": "^4.4.2",
     "flatpickr": "^4.6.13",
     "graphql": "^16.8.1",
     "graphql-ruby-client": "^1.11.10",

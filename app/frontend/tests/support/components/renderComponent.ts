@@ -1,5 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+// import of these files takes 2.5 seconds for each test file!
+// need to optimize this somehow
+
 import type { Plugin, Ref } from 'vue'
 import { isRef, nextTick, ref, watchEffect, unref } from 'vue'
 import type { Router, RouteRecordRaw } from 'vue-router'
@@ -16,22 +19,56 @@ import applicationConfigPlugin from '#shared/plugins/applicationConfigPlugin.ts'
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
-import CommonConfirmation from '#mobile/components/CommonConfirmation/CommonConfirmation.vue'
 import { imageViewerOptions } from '#shared/composables/useImageViewer.ts'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '#shared/router/walker.ts'
-import { initializeMobileVisuals } from '#mobile/initializer/mobileVisuals.ts'
 import { i18n } from '#shared/i18n.ts'
 import {
   setupCommonVisualConfig,
   type SharedVisualConfig,
 } from '#shared/composables/useSharedVisualConfig.ts'
-import { mobileFormFieldModules } from '#mobile/form/index.ts'
 import type { AppName } from '#shared/types/app.ts'
+import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
+import type { FormFieldTypeImportModules } from '#shared/types/form.ts'
 import buildIconsQueries from './iconQueries.ts'
 import buildLinksQueries from './linkQueries.ts'
 import { setTestState, waitForNextTick } from '../utils.ts'
 import { cleanupStores, initializeStore } from './initializeStore.ts'
+
+// internal Vitest variable, ideally should check expect.getState().testPath, but it's not populated in 0.34.6 (a bug)
+const { filepath } = (globalThis as any).__vitest_worker__ as any
+
+let formFields: ImportGlobEagerOutput<FormFieldTypeImportModules>
+let ConformationComponent: unknown
+let initDefaultVisuals: () => void
+
+const isMobile =
+  filepath.includes('apps/mobile') || filepath.includes('frontend/shared')
+const isDesktop = filepath.includes('apps/desktop')
+
+// TODO: have a separate check for shared components
+if (isMobile) {
+  const [
+    { default: CommonConfirmation },
+    { initializeMobileVisuals },
+    { mobileFormFieldModules },
+  ] = await Promise.all([
+    import('#mobile/components/CommonConfirmation/CommonConfirmation.vue'),
+    import('#mobile/initializer/mobileVisuals.ts'),
+    import('#mobile/form/index.ts'),
+  ])
+  initDefaultVisuals = initializeMobileVisuals
+  ConformationComponent = CommonConfirmation
+  formFields = mobileFormFieldModules
+} else if (isDesktop) {
+  const { desktopFormFieldModules } = await import('#desktop/form/index.ts')
+  formFields = desktopFormFieldModules
+  // TODO: Desktop visuals composable was not defined yet
+  initDefaultVisuals = () => {}
+  // TODO: conformation component is not implemented yet
+} else {
+  throw new Error(`Was not able to detect the app type from ${filepath} test.`)
+}
 
 // TODO: some things can be handled differently: https://test-utils.vuejs.org/api/#config-global
 
@@ -63,6 +100,7 @@ interface PageEvents extends UserEvent {
 
 export interface ExtendedRenderResult extends RenderResult {
   events: PageEvents
+  router: Router
   queryAllByIconName(matcher: Matcher): SVGElement[]
   queryByIconName(matcher: Matcher): SVGElement | null
   getAllByIconName(matcher: Matcher): SVGElement[]
@@ -154,8 +192,7 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
   }
 
   router = createRouter({
-    // TODO should use the app.
-    history: createWebHistory('/mobile'),
+    history: createWebHistory(isDesktop ? '/desktop' : '/mobile'),
     routes: localRoutes,
   }) as MockedRouter
 
@@ -206,16 +243,10 @@ export const initializePiniaStore = () => {
 
 let formInitialized = false
 
-const initializeForm = (appName: AppName) => {
+const initializeForm = () => {
   if (formInitialized) return
 
-  plugins.push([
-    formPlugin,
-    buildFormKitPluginConfig(
-      undefined,
-      appName === 'mobile' ? mobileFormFieldModules : undefined,
-    ),
-  ])
+  plugins.push([formPlugin, buildFormKitPluginConfig(undefined, formFields)])
   defaultWrapperOptions.shallow = false
 
   formInitialized = true
@@ -282,11 +313,15 @@ afterEach(() => {
 
 let confirmationMounted = false
 
-const mountconfirmation = () => {
+const mountConfirmation = () => {
   if (confirmationMounted) return
 
+  if (!ConformationComponent) {
+    throw new Error('ConformationComponent is not defined.')
+  }
+
   const Confirmation = {
-    components: { CommonConfirmation },
+    components: { CommonConfirmation: ConformationComponent },
     template: '<CommonConfirmation />',
   } as any
 
@@ -346,13 +381,13 @@ const renderComponent = <Props>(
     initializePiniaStore()
   }
   if (wrapperOptions?.form) {
-    initializeForm(wrapperOptions?.app || 'mobile')
+    initializeForm()
   }
   if (wrapperOptions?.dialog) {
     mountDialog()
   }
   if (wrapperOptions?.confirmation) {
-    mountconfirmation()
+    mountConfirmation()
   }
 
   initializeApplicationConfig()
@@ -360,7 +395,7 @@ const renderComponent = <Props>(
   if (wrapperOptions.visuals) {
     setupCommonVisualConfig(wrapperOptions.visuals)
   } else {
-    initializeMobileVisuals()
+    initDefaultVisuals()
   }
 
   if (wrapperOptions?.form && wrapperOptions?.formField) {
@@ -417,6 +452,14 @@ const renderComponent = <Props>(
   wrappers.add([localWrapperOptions, view])
 
   startWatchingModel(view)
+
+  Object.defineProperty(view, 'router', {
+    get() {
+      return router
+    },
+    enumerable: true,
+    configurable: true,
+  })
 
   return view
 }

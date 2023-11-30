@@ -11,7 +11,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       apps: ['mobile'],
       label: __('Split'),
       name: 'split',
-      icon: { mobile: 'mobile-split' },
+      icon: { mobile: 'mobile-split', desktop: 'desktop-split' },
       view: {
         agent: ['change'],
       },

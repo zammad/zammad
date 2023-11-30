@@ -12,7 +12,7 @@ import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
 import type { OptionsParameter } from '@vue/apollo-composable/dist/useQuery'
 import {
-  getGraphQLResult,
+  getGraphQLMockCalls,
   getGraphQLSubscriptionHandler,
   type TestSubscriptionHandler,
 } from '../mocks.ts'
@@ -45,7 +45,8 @@ const getHandler = (document: DocumentNode, cb: () => any) => {
     setup() {
       handler = cb()
       handler.getMockedData = () => {
-        return getGraphQLResult(document)
+        const { result } = getGraphQLMockCalls(document).at(-1) as any
+        return { data: result }
       }
     },
   })

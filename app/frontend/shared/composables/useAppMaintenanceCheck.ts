@@ -20,7 +20,6 @@ import {
   SubscriptionHandler,
 } from '#shared/server/apollo/handler/index.ts'
 import testFlags from '#shared/utils/testFlags.ts'
-import { registerSW } from '#shared/sw/register.ts'
 
 let checksumQuery: QueryHandler<
   ApplicationBuildChecksumQuery,
@@ -32,13 +31,14 @@ let appMaintenanceSubscription: SubscriptionHandler<
   AppMaintenanceSubscriptionVariables
 >
 
-const useAppMaintenanceCheck = () => {
-  const updateServiceWorker = registerSW({
-    path: '/mobile/sw.js',
-    scope: '/mobile/',
-  })
+interface UseAppMaintenanceCheckOptions {
+  onNeedRefresh?: () => void
+}
 
-  const notify = (message: string, callback: () => void) => {
+const useAppMaintenanceCheck = (
+  maintenanceOptions: UseAppMaintenanceCheckOptions = {},
+) => {
+  const notify = (message: string, callback?: () => void) => {
     useNotifications().notify({
       message,
       type: NotificationTypes.Warn,
@@ -79,9 +79,7 @@ const useAppMaintenanceCheck = () => {
         testFlags.set('useApplicationBuildChecksumQuery.firstResult')
       }
       if (queryResult?.applicationBuildChecksum !== previousChecksum) {
-        notify(notificationMessage, () => {
-          updateServiceWorker(true)
-        })
+        notify(notificationMessage, maintenanceOptions.onNeedRefresh)
       }
     })
 

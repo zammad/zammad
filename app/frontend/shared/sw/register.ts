@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { noop } from 'lodash-es'
+import noop from 'lodash-es/noop'
 import type { RegisterSWOptions } from './types.ts'
 
 // should service worker be updated automatically without a prompt
@@ -34,7 +34,7 @@ export const registerSW = (options: RegisterSWOptions) => {
       onNeedRefresh?.()
     }
     // you can disable service worker in development mode by running in console: pwa.enable()
-    // you can enable service worker, it will point to /public/assets/mobile/vite-dev/sw.js
+    // you can enable service worker, it will point to /public/assets/frontend/vite-dev/sw.js
     // don't forget to unregister service worker, when you are done in console: pwa.disable()
     if (!sw.isEnabled()) {
       return () => {

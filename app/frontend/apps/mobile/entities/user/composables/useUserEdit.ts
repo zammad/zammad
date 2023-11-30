@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
-import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import { useUserUpdateMutation } from '#mobile/pages/user/graphql/mutations/update.api.ts'
 import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import type { UserQuery } from '#shared/graphql/types.ts'

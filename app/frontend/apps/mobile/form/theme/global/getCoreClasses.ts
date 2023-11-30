@@ -4,11 +4,11 @@ import type {
   FormThemeClasses,
   FormThemeExtension,
 } from '#shared/types/form.ts'
+import type { Classes } from '#shared/form/plugins/utils.ts'
+import { clean, extendClasses } from '#shared/form/plugins/utils.ts'
 import { addAbsoluteFloatingLabel } from './addAbsoluteFloatingLabel.ts'
 import { addFloatingTextareaLabel } from './addFloatingTextareaLabel.ts'
 import { addBlockFloatingLabel } from './addBlockFloatingLabel.ts'
-import type { Classes } from './utils.ts'
-import { clean, extendClasses } from './utils.ts'
 import { addStaticFloatingLabel } from './addStaticFloatingLabel.ts'
 
 export const addDateLabel = (classes: Classes = {}): Classes => {

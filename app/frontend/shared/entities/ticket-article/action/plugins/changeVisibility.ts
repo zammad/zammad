@@ -32,13 +32,13 @@ const actionPlugin: TicketArticleActionPlugin = {
       ? __('Set to internal')
       : __('Set to public')
 
-    const iconName = targetInternalState ? 'mobile-lock' : 'mobile-lock-open'
+    const iconName = targetInternalState ? 'lock' : 'lock-open'
 
     const action: TicketArticleAction = {
       apps: ['mobile'],
       label,
       name: 'changeVisibility',
-      icon: { mobile: iconName },
+      icon: { mobile: `mobile-${iconName}`, desktop: `desktop-${iconName}` },
       view: {
         agent: ['change'],
       },

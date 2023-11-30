@@ -20,7 +20,7 @@ import UserError from '#shared/errors/UserError.ts'
 import { useTicketCustomerUpdateMutation } from '#shared/entities/ticket/graphql/mutations/customerUpdate.api.ts'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import type {
   TicketById,
   TicketCustomerUpdateFormData,

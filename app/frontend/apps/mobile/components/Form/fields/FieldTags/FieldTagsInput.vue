@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 import { useDialog } from '#shared/composables/useDialog.ts'
-import { useFormBlock } from '#mobile/form/useFormBlock.ts'
+import { useFormBlock } from '#shared/form/useFormBlock.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { FieldTagsContext } from '#shared/components/Form/fields/FieldTags/types.ts'
 

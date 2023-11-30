@@ -12,6 +12,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       label: __('Note'),
       icon: {
         mobile: 'mobile-note',
+        desktop: 'desktop-note',
       },
       view: {
         agent: ['change'],

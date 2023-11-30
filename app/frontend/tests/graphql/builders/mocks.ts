@@ -45,9 +45,11 @@ interface MockCall<T = any> {
 }
 
 const mockDefaults = new Map<string, any>()
-const mockResults = new Map<string, any>()
 const mockCalls = new Map<string, MockCall[]>()
 const queryStrings = new WeakMap<DocumentNode, string>()
+
+// mutation:login will return query string for mutation login
+const namesToQueryKeys = new Map<string, string>()
 
 const stripNames = (query: DocumentNode) => {
   return visit(query, {
@@ -68,10 +70,17 @@ const normalize = (query: DocumentNode) => {
 const requestToKey = (query: DocumentNode) => {
   const cached = queryStrings.get(query)
   if (cached) return cached
+  const operationNode = query.definitions.find(
+    (node) => node.kind === Kind.OPERATION_DEFINITION,
+  ) as OperationDefinitionNode
+  const operationNameKey = `${operationNode.operation}:${
+    operationNode.name?.value || ''
+  }`
   const normalized = normalize(query)
   const queryString = query && print(normalized)
   const stringified = JSON.stringify({ query: queryString })
   queryStrings.set(query, stringified)
+  namesToQueryKeys.set(operationNameKey, stringified)
   return stringified
 }
 
@@ -145,24 +154,31 @@ const stripQueryData = (
   return newData
 }
 
-// Returns the full query result, not the object that was returned in the operation
-// So, if you didn't ask for a field, but it's defined in the type schema, this field WILL be in the object
-export const getGraphQLResult = <T>(
-  document: DocumentNode,
-): { data: DeepRequired<T> } => {
-  return mockResults.get(requestToKey(document))
-}
+type OperationType = 'query' | 'mutation' | 'subscription'
 
 export const getGraphQLMockCalls = <T>(
-  document: DocumentNode,
+  documentOrOperation: DocumentNode | OperationType,
+  operationName?: string,
 ): MockCall<DeepRequired<T>>[] => {
-  return mockCalls.get(requestToKey(document)) || []
+  const key =
+    typeof documentOrOperation === 'string'
+      ? namesToQueryKeys.get(`${documentOrOperation}:${operationName}`)
+      : requestToKey(documentOrOperation)
+  if (!key) {
+    throw new Error(
+      `Not able to find key for ${documentOrOperation}:${operationName}`,
+    )
+  }
+  return mockCalls.get(key) || []
 }
 
-export const waitForGraphQLMockCalls = async <T>(
-  document: DocumentNode,
+export const waitForGraphQLMockCalls = <T>(
+  documentOrOperation: DocumentNode | OperationType,
+  operationName?: string,
 ): Promise<MockCall<DeepRequired<T>>[]> => {
-  return vi.waitUntil(() => getGraphQLMockCalls<T>(document))
+  return vi.waitUntil(() =>
+    getGraphQLMockCalls<T>(documentOrOperation, operationName),
+  )
 }
 
 export const mockGraphQLResult = <T extends Record<string, any>>(
@@ -174,16 +190,11 @@ export const mockGraphQLResult = <T extends Record<string, any>>(
   const key = requestToKey(document)
   mockDefaults.set(key, defaults)
   return {
-    getResult: () => getGraphQLResult<T>(document),
     updateDefaults: (defaults: DeepPartial<T>) => {
       mockDefaults.set(key, defaults)
     },
     waitForCalls: () => waitForGraphQLMockCalls<T>(document),
   }
-}
-
-export const waitForGraphQLResult = async <T>(document: DocumentNode) => {
-  return vi.waitUntil(() => getGraphQLResult<T>(document))
 }
 
 export interface TestSubscriptionHandler<T extends Record<string, any> = any> {
@@ -209,7 +220,6 @@ export const getGraphQLSubscriptionHandler = <T extends Record<string, any>>(
 
 afterEach(() => {
   mockCalls.clear()
-  mockResults.clear()
   mockSubscriptionHanlders.clear()
   mockDefaults.clear()
   mockCalls.clear()
@@ -309,7 +319,6 @@ class MockLink extends ApolloLink {
         const defaults = getQueryDefaults(queryKey, definition, variables)
         const returnResult = mockOperation(query, variables, defaults)
         const result = { data: returnResult }
-        mockResults.set(queryKey, result)
         const calls = mockCalls.get(queryKey) || []
         calls.push({ document: query, result: result.data, variables })
         mockCalls.set(queryKey, calls)
@@ -345,6 +354,7 @@ const createMockClient = () => {
   return client
 }
 
+// this enabled automocking - if this file is not imported somehow, fetch request will throw an error
 export const mockedApolloClient = createMockClient()
 
 afterEach(() => {

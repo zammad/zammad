@@ -4,7 +4,7 @@
 import Form from '#shared/components/Form/Form.vue'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
-import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'

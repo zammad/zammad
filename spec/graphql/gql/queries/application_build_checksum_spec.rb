@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::ApplicationBuildChecksum, authenticated_as: false, type: :graphql do
 
   context 'when checking the application build checksum' do
-    let(:vite_path) { Rails.public_path.join('assets/mobile/vite') }
+    let(:vite_path) { Rails.public_path.join('assets/frontend/vite') }
     let(:filename)  { "#{vite_path}/manifest.json" }
     let!(:initial_checksum) do
       # Create some content to the file at the beginning, because normally it not exists for the graphql tests.

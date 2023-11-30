@@ -2,8 +2,10 @@
 
 import type { SearchQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { mockGraphQLResult } from '#tests/graphql/builders/mocks.ts'
-import { getGraphQLResult } from '#tests/graphql/index.ts'
+import {
+  getGraphQLMockCalls,
+  mockGraphQLResult,
+} from '#tests/graphql/builders/mocks.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { setupView } from '#tests/support/mock-user.ts'
@@ -20,7 +22,7 @@ describe('visiting search page', () => {
     const searchInput = view.getByPlaceholderText('Search…')
     await view.events.type(searchInput, 'search')
 
-    expect(getGraphQLResult(SearchDocument)).toBeUndefined()
+    expect(getGraphQLMockCalls(SearchDocument)).toHaveLength(0)
   })
 
   it('allows searching', async () => {

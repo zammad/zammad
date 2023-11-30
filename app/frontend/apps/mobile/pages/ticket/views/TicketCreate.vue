@@ -30,7 +30,7 @@ import {
 } from '#shared/components/CommonNotifications/index.ts'
 import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
 import type UserError from '#shared/errors/UserError.ts'
-import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'

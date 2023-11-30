@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "#mobile/*": ["app/frontend/apps/mobile/*"],
+      "#desktop/*": ["app/frontend/apps/desktop/*"],
       "#shared/*": ["app/frontend/shared/*"],
       "#tests/*": ["app/frontend/tests/*"],
       "#cy/*": [".cypress/*"]

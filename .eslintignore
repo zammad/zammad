@@ -9,5 +9,5 @@ app/frontend/shared/types/config.ts
 public/assets/tests/**/*.js
 public/assets/form/**/*.js
 
-public/assets/mobile/vite/**/*.js
-public/assets/mobile/vite-dev/**/*.js
+public/assets/frontend/vite/**/*.js
+public/assets/frontend/vite-dev/**/*.js

@@ -93,7 +93,10 @@ const actionPlugin: TicketArticleActionPlugin = {
       apps: ['mobile'],
       label: __('Reply'),
       name: type,
-      icon: { mobile: 'mobile-reply' },
+      icon: {
+        mobile: 'mobile-reply',
+        desktop: 'desktop-reply',
+      },
       view: {
         agent: ['change'],
       },
@@ -121,6 +124,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       label: __('Twitter'),
       icon: {
         mobile: 'mobile-twitter',
+        desktop: 'desktop-twitter',
       },
       view: {
         agent: ['change'],

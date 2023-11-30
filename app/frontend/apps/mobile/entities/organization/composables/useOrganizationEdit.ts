@@ -2,7 +2,7 @@
 
 import { reactive } from 'vue'
 import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
-import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import type { OrganizationQuery } from '#shared/graphql/types.ts'
 import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import {

@@ -10,5 +10,6 @@ export default {
   helpMessage: __('Enter the code from your two-factor authenticator app.'),
   icon: {
     mobile: 'mobile-mobile-code',
+    desktop: 'desktop-mobile-code',
   },
 } satisfies TwoFactorPlugin

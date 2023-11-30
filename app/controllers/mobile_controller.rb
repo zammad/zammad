@@ -27,9 +27,9 @@ class MobileController < ApplicationController
         display:          'standalone',
         start_url:        '/mobile/',
         icons:            [
-          # files are relative to manifest.webmanifest and are stored in public/assets/mobile
-          { src: '../assets/mobile/app-icon-512.png', sizes: '512x512', type: 'image/png' },
-          { src: '../assets/mobile/app-icon-192.png', sizes: '192x192', type: 'image/png' },
+          # files are relative to manifest.webmanifest and are stored in public/assets/frontend
+          { src: '../assets/frontend/app-icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: '../assets/frontend/app-icon-192.png', sizes: '192x192', type: 'image/png' },
         ]
       },
       content_type: 'application/manifest+json'

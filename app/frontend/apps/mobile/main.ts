@@ -2,7 +2,7 @@
 
 import { createApp } from 'vue'
 import initializeApp from '#mobile/initialize.ts'
-import App from '#mobile/App.vue'
+import App from '#mobile/AppMobile.vue'
 import { useSessionStore } from '#shared/stores/session.ts'
 import initializeStoreSubscriptions from '#shared/initializer/storeSubscriptions.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'

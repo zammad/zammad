@@ -3,8 +3,14 @@
 const path = require('path')
 const fs = require('fs')
 
-const pagesDir = path.resolve(__dirname, 'app/frontend/apps/mobile/pages')
-const pagesFolder = fs.readdirSync(pagesDir)
+const mobilePagesDir = path.resolve(__dirname, 'app/frontend/apps/mobile/pages')
+const mobilePagesFolder = fs.readdirSync(mobilePagesDir)
+
+const desktopPagesDir = path.resolve(
+  __dirname,
+  'app/frontend/apps/desktop/pages',
+)
+const desktopPagesFolder = fs.readdirSync(desktopPagesDir)
 
 module.exports = {
   root: true,
@@ -89,17 +95,21 @@ module.exports = {
             from: './app/frontend/apps',
           },
           // restrict imports between different pages folder
-          ...pagesFolder.map((page) => {
+          ...mobilePagesFolder.map((page) => {
             return {
               target: `./app/frontend/apps/mobile/pages/!(${page})/**/*`,
               from: `./app/frontend/apps/mobile/pages/${page}/**/*`,
             }
           }),
+          ...desktopPagesFolder.map((page) => {
+            return {
+              target: `./app/frontend/apps/desktop/pages/!(${page})/**/*`,
+              from: `./app/frontend/apps/desktop/pages/${page}/**/*`,
+            }
+          }),
         ],
       },
     ],
-
-    // TODO: Add import rule to not allow that "app/**/modules/**" can import from each other and also add a rule that apps/** can not import from other apps.
 
     /* We strongly recommend that you do not use the no-undef lint rule on TypeScript projects. The checks it provides are already provided by TypeScript without the need for configuration - TypeScript just does this significantly better (Source: https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/FAQ.md#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors). */
     'no-undef': 'off',

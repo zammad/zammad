@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Classes } from './utils.ts'
-import { clean, extendClasses } from './utils.ts'
+import type { Classes } from '#shared/form/plugins/utils.ts'
+import { clean, extendClasses } from '#shared/form/plugins/utils.ts'
 
 /**
  * Creates classes for a floating input label. Here we don't have a problem, where

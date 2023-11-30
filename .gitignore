@@ -50,8 +50,8 @@
 # logfiles and tempfiles
 /log
 /public/assets/*.*
-/public/assets/mobile/vite
-/public/assets/mobile/vite-dev
+/public/assets/frontend/vite
+/public/assets/frontend/vite-dev
 /public/assets/addons
 /public/assets/app
 /public/assets/custom

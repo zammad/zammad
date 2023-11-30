@@ -18,6 +18,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       name: 'sms',
       icon: {
         mobile: 'mobile-reply',
+        desktop: 'desktop-reply',
       },
       view: {
         agent: ['change'],
@@ -45,6 +46,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       label: __('Sms'),
       icon: {
         mobile: 'mobile-message',
+        desktop: 'desktop-message',
       },
       view: {
         agent: ['change'],

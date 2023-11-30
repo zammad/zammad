@@ -1,24 +1,23 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useTicketOverviewsStore } from '#mobile/entities/ticket/stores/ticketOverviews.ts'
+import useFormKitConfig from '#shared/composables/form/useFormKitConfig.ts'
 import CommonNotifications from '#shared/components/CommonNotifications/CommonNotifications.vue'
+import useAppMaintenanceCheck from '#shared/composables/useAppMaintenanceCheck.ts'
+import { useAppTheme } from '#shared/stores/theme.ts'
+import useAuthenticationChanges from '#shared/composables/useAuthenticationUpdates.ts'
+import useMetaTitle from '#shared/composables/useMetaTitle.ts'
+import usePushMessages from '#shared/composables/usePushMessages.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
-import useMetaTitle from '#shared/composables/useMetaTitle.ts'
-import emitter from '#shared/utils/emitter.ts'
-import useAppMaintenanceCheck from '#shared/composables/useAppMaintenanceCheck.ts'
-import usePushMessages from '#shared/composables/usePushMessages.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
-import useFormKitConfig from '#shared/composables/form/useFormKitConfig.ts'
-import { useAppTheme } from '#shared/composables/useAppTheme.ts'
-import useAuthenticationChanges from '#shared/composables/useAuthenticationUpdates.ts'
-import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
-import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
 import { useSessionStore } from '#shared/stores/session.ts'
-import CommonConfirmation from '#mobile/components/CommonConfirmation/CommonConfirmation.vue'
-import { useTicketOverviewsStore } from './entities/ticket/stores/ticketOverviews.ts'
+import emitter from '#shared/utils/emitter.ts'
+import { onBeforeMount, watch, onBeforeUnmount } from 'vue'
+import { useRouter } from 'vue-router'
+
+import LayoutSidebar from './components/layout/LayoutSidebar.vue'
 
 const router = useRouter()
 
@@ -28,7 +27,7 @@ const session = useSessionStore()
 useMetaTitle().initializeMetaTitle()
 
 const application = useApplicationStore()
-onMounted(() => {
+onBeforeMount(() => {
   // If Zammad was not properly set up yet, redirect to desktop front end.
   if (!application.config.system_init_done) {
     window.location.pathname = '/'
@@ -39,7 +38,6 @@ onMounted(() => {
 
 useAppMaintenanceCheck()
 usePushMessages()
-useAppTheme()
 
 // Add a check for authenticated changes (e.g. login/logout in a other
 // browser tab or maintenance mode switch).
@@ -82,32 +80,34 @@ onBeforeUnmount(() => {
   emitter.off('sessionInvalid')
 })
 
-// Do not animate transitions in the test mode.
-const transition = VITE_TEST_MODE
-  ? undefined
-  : {
-      enterActiveClass: 'duration-300 ease-out',
-      enterFromClass: 'opacity-0 translate-y-3/4',
-      enterToClass: 'opacity-100 translate-y-0',
-      leaveActiveClass: 'duration-200 ease-in',
-      leaveFromClass: 'opacity-100 translate-y-0',
-      leaveToClass: 'opacity-0 translate-y-3/4',
-    }
+const appTheme = useAppTheme()
 </script>
 
 <template>
   <template v-if="application.loaded">
     <CommonNotifications />
-    <CommonConfirmation />
-    <Teleport to="body">
-      <CommonImageViewer />
-    </Teleport>
   </template>
-  <div
-    v-if="application.loaded"
-    class="min-w-full h-full bg-black font-sans text-sm text-white antialiased"
-  >
-    <RouterView />
+  <!-- TODO: styles are placeholders -->
+  <div v-if="application.loaded" class="flex h-full">
+    <aside
+      v-if="$route.meta.sidebar !== false"
+      class="w-1/5"
+      :aria-label="__('Sidebar')"
+    >
+      <LayoutSidebar />
+    </aside>
+
+    <article class="w-full h-full antialiased">
+      <RouterView />
+
+      <div class="flex">
+        Change Theme:
+        <CommonIcon
+          name="mobile-info"
+          :class="appTheme.theme === 'dark' ? 'text-black' : 'text-yellow'"
+          @click="appTheme.toggleTheme(false)"
+        />
+      </div>
+    </article>
   </div>
-  <DynamicInitializer name="dialog" :transition="transition" />
 </template>

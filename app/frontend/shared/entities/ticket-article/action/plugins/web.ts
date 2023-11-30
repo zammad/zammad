@@ -12,6 +12,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       label: __('Web'),
       icon: {
         mobile: 'mobile-web',
+        desktop: 'desktop-web',
       },
       view: {
         customer: ['change'],

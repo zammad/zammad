@@ -28,9 +28,8 @@ const props = defineProps<{
 const router = useRouter()
 const route = useRoute()
 
-const { overviews, loading: loadingOverviews } = storeToRefs(
-  useTicketOverviews(),
-)
+const { overviews, loading: loadingOverviews } =
+  storeToRefs(useTicketOverviews())
 
 const optionsOverviews = computed(() => {
   return overviews.value.map((overview) => ({

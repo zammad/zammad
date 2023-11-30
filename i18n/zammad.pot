@@ -5420,6 +5420,7 @@ msgid "Forgot Password Screen"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr ""
@@ -6062,6 +6063,7 @@ msgstr ""
 msgid "Holidays iCalendar Feed"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/home/routes.ts
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -7072,7 +7074,7 @@ msgstr ""
 msgid "Loading content"
 msgstr ""
 
-#: app/views/mobile/index.html.erb
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading failed, please try again later."
 msgstr ""
 
@@ -7091,7 +7093,7 @@ msgstr ""
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
-#: app/views/mobile/index.html.erb
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading…"
 msgstr ""
 
@@ -7145,6 +7147,7 @@ msgid "Login failed. Please double-check your two-factor authentication method."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
@@ -8792,6 +8795,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/permissions.rb
@@ -9102,6 +9106,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr ""
@@ -9432,6 +9437,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr ""
@@ -10665,6 +10671,10 @@ msgstr ""
 msgid "Shown when the chat is closed."
 msgstr ""
 
+#: app/frontend/apps/desktop/AppDesktop.vue
+msgid "Sidebar"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr ""
@@ -10693,6 +10703,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
+#: app/frontend/apps/desktop/pages/login/routes.ts
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
@@ -13730,6 +13742,7 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Username / Email"
 msgstr ""
@@ -14516,6 +14529,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
@@ -14555,6 +14569,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 msgid "Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over."
 msgstr ""

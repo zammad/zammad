@@ -20,6 +20,9 @@ export interface RouteRecordMeta {
   hasHeader?: boolean
   hasOwnLandmarks?: boolean
   level?: number
+
+  // desktop-only
+  sidebar?: boolean
 }
 
 export type Link = RouteLocationRaw

@@ -1,0 +1,8 @@
+@import '#shared/styles/main.css';
+@config './tailwind.desktop.js';
+
+@layer utilities {
+  .group-block {
+    @apply rounded-xl bg-neutral p-4 border border-base-300 dark:border-neutral;
+  }
+}

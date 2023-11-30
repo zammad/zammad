@@ -3,16 +3,12 @@
 import { FormKit } from '@formkit/vue'
 import { getNode } from '@formkit/core'
 import { renderComponent } from '#tests/support/components/index.ts'
-import {
-  getGraphQLMockCalls,
-  getGraphQLResult,
-} from '#tests/graphql/builders/mocks.ts'
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { AutocompleteSearchObjectAttributeExternalDataSourceDocument } from '#shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.api.ts'
 import {
   EnumObjectManagerObjects,
   type AutocompleteSearchObjectAttributeExternalDataSourceQuery,
 } from '#shared/graphql/types.ts'
-import type { DeepRequired } from '#shared/types/utils.ts'
 import { ensureGraphqlId } from '#shared/graphql/utils.ts'
 
 const wrapperParameters = {
@@ -71,20 +67,17 @@ describe('Form - Field - External Data Source - Query', () => {
       wrapper.queryByText('Start typing to search…'),
     ).not.toBeInTheDocument()
 
-    const testOptions = await vi.waitUntil(
+    const callResult = await vi.waitUntil(
       () =>
-        getGraphQLResult<
-          DeepRequired<AutocompleteSearchObjectAttributeExternalDataSourceQuery>
-        >(AutocompleteSearchObjectAttributeExternalDataSourceDocument).data
-          .autocompleteSearchObjectAttributeExternalDataSource,
+        getGraphQLMockCalls<AutocompleteSearchObjectAttributeExternalDataSourceQuery>(
+          AutocompleteSearchObjectAttributeExternalDataSourceDocument,
+        ).at(-1)!,
     )
 
-    const callResults =
-      getGraphQLMockCalls<AutocompleteSearchObjectAttributeExternalDataSourceQuery>(
-        AutocompleteSearchObjectAttributeExternalDataSourceDocument,
-      )
+    const testOptions =
+      callResult.result.autocompleteSearchObjectAttributeExternalDataSource
 
-    expect(callResults.at(-1)?.variables).toMatchObject({
+    expect(callResult.variables).toMatchObject({
       input: {
         attributeName: 'test',
         object: EnumObjectManagerObjects.Ticket,
@@ -125,12 +118,11 @@ describe('Form - Field - External Data Source - Query', () => {
 
     selectOptions = wrapper.getAllByRole('option')
 
-    const newTestOptions = await vi.waitUntil(
+    const newTestOptions = await vi.waitFor(
       () =>
-        getGraphQLResult<
-          DeepRequired<AutocompleteSearchObjectAttributeExternalDataSourceQuery>
-        >(AutocompleteSearchObjectAttributeExternalDataSourceDocument).data
-          .autocompleteSearchObjectAttributeExternalDataSource,
+        getGraphQLMockCalls<AutocompleteSearchObjectAttributeExternalDataSourceQuery>(
+          AutocompleteSearchObjectAttributeExternalDataSourceDocument,
+        ).at(-1)!.result.autocompleteSearchObjectAttributeExternalDataSource,
     )
 
     expect(newTestOptions[0].value).not.toBe(testOptions[0].value)

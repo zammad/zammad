@@ -19,7 +19,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       apps: ['mobile'],
       label: __('Reply'),
       name: 'telegram personal-message',
-      icon: { mobile: 'mobile-reply' },
+      icon: { mobile: 'mobile-reply', desktop: 'desktop-reply' },
       view: {
         agent: ['change'],
       },
@@ -46,6 +46,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       label: __('Telegram'),
       icon: {
         mobile: 'mobile-telegram',
+        desktop: 'desktop-telegram',
       },
       view: {
         agent: ['change'],

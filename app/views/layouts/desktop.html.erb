@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- TODO: use session user preference theme if logged in -->
+<html dir="ltr" lang="en-us" data-theme="light">
+  <head>
+    <title><%= Setting.get('product_name') %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+    <meta name="theme-color" content="#191919">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <%= stylesheet_link_tag '/assets/frontend/fonts.css', nonce: true %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= action_cable_meta_tag %>
+
+    <%= vite_client_tag nonce: true %>
+    <%= vite_typescript_tag 'desktop', nonce: true %>
+    <%= javascript_tag nonce: true do -%>
+      window.__ = (str) => str
+    <% end -%>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

@@ -6,11 +6,13 @@ import type { ToBeAvatarOptions } from './toBeAvatarElement.ts'
 export { default as toBeAvatarElement } from './toBeAvatarElement.ts'
 export { default as toHaveClasses } from './toHaveClasses.ts'
 export { default as toHaveImagePreview } from './toHaveImagePreview.ts'
+export { default as toHaveCurrentUrl } from './toHaveCurrentUrl.ts'
 
 interface CustomMatchers<R = unknown> {
   toBeAvatarElement(options?: ToBeAvatarOptions): R
   toHaveClasses(classes?: string[]): R
   toHaveImagePreview(content: string): R
+  toHaveCurrentUrl(url: `/${string}`): R
 }
 
 declare module 'vitest' {

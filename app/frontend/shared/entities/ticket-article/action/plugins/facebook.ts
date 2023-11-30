@@ -19,7 +19,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       apps: ['mobile'],
       label: __('Reply'),
       name: type,
-      icon: { mobile: 'mobile-reply' },
+      icon: { mobile: 'mobile-reply', desktop: 'desktop-reply' },
       view: {
         agent: ['change'],
       },
@@ -48,6 +48,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       label: __('Facebook'),
       icon: {
         mobile: 'mobile-facebook',
+        desktop: 'desktop-facebook',
       },
       view: {
         agent: ['change'],

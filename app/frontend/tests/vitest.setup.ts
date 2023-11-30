@@ -8,6 +8,8 @@ import { expect } from 'vitest'
 import 'vitest-axe/extend-expect'
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+
+// Zammad custom assertions: toBeAvatarElement, toHaveClasses, toHaveImagePreview, toHaveCurrentUrl
 import * as assertions from './support/assertions/index.ts'
 
 loadDevMessages()

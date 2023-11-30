@@ -41,5 +41,6 @@ export default {
   },
   icon: {
     mobile: 'mobile-security-key',
+    desktop: 'desktop-security-key',
   },
 } satisfies TwoFactorPlugin

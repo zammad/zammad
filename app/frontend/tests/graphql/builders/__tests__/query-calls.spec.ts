@@ -6,7 +6,7 @@ import {
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import {
-  getGraphQLResult,
+  getGraphQLMockCalls,
   mockGraphQLResult,
   mockedApolloClient,
 } from '../mocks.ts'
@@ -31,7 +31,7 @@ describe('calling queries without mocking document works correctly', () => {
   })
 
   it('query correctly returns data', async () => {
-    expect(getGraphQLResult(TestAvatarDocument)).toBeUndefined()
+    expect(getGraphQLMockCalls(TestAvatarDocument)).toHaveLength(0)
 
     const handler = getQueryHandler<TestAvatarQuery>(TestAvatarDocument)
     const { data } = await handler.query()
@@ -46,7 +46,7 @@ describe('calling queries without mocking document works correctly', () => {
   })
 
   it('when user is already created, return it if variable is referencing it', async () => {
-    expect(getGraphQLResult(TestAvatarDocument)).toBeUndefined()
+    expect(getGraphQLMockCalls(TestAvatarDocument)).toHaveLength(0)
     const handler = getQueryHandler<TestUserQuery, TestUserQueryVariables>(
       TestUserDocument,
     )
@@ -88,7 +88,7 @@ describe('calling queries without mocking document works correctly', () => {
 
 describe('calling queries with mocked data works correctly', () => {
   it('query correctly uses default data when generating a new item each time', async () => {
-    expect(getGraphQLResult(TestAvatarDocument)).toBeUndefined()
+    expect(getGraphQLMockCalls(TestAvatarDocument)).toHaveLength(0)
 
     const exampleImage = 'https://example.com/image.png'
 
@@ -121,7 +121,7 @@ describe('calling queries with mocked data works correctly', () => {
   })
 
   it('query correctly uses default data when updating the same object', async () => {
-    expect(getGraphQLResult(TestAvatarDocument)).toBeUndefined()
+    expect(getGraphQLMockCalls(TestAvatarDocument)).toHaveLength(0)
 
     const exampleImage = 'https://example.com/image.png'
 

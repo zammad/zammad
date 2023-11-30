@@ -39,14 +39,25 @@ interface VisitViewOptions extends ExtendedMountingOptions<unknown> {
   mockApollo?: boolean
 }
 
+// internal Vitest variable, ideally should check expect.getState().testPath, but it's not populated in 0.34.6 (a bug)
+const { filepath } = (globalThis as any).__vitest_worker__ as any
+const isDesktop = filepath.includes('apps/desktop')
+
+// TODO: for desktop app `LayoutTest` should have an abstract header component instead of mobile one
 export const visitView = async (
   href: string,
-  options: VisitViewOptions = { mockApollo: true },
+  // rely on new way to mock apollo in desktop by default
+  options: VisitViewOptions = { mockApollo: !isDesktop },
 ) => {
-  const { routes } = await import('#mobile/router/index.ts')
+  const { routes } = isDesktop
+    ? await import('#desktop/router/index.ts')
+    : await import('#mobile/router/index.ts')
 
   if (options.mockApollo) {
     mockApolloClient([])
+  } else if (isDesktop) {
+    // automocking is enabled when this file is imported because it happens on the top level
+    await import('#tests/graphql/builders/mocks.ts')
   }
 
   // remove LayoutMain layout, keep only actual content

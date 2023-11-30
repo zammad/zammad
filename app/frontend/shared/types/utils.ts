@@ -25,12 +25,12 @@ export type NestedKeyOf<T> = {
 type TakeInternal<T, K extends string | number> = K extends keyof T
   ? NonNullable<T[K]>
   : K extends `${infer L}.${infer M}`
-  ? L extends keyof T
-    ? NonNullable<T[L]> extends Array<unknown>
-      ? TakeInternal<NonNullable<NonNullable<T[L]>[number]>, M>
-      : TakeInternal<NonNullable<T[L]>, M>
+    ? L extends keyof T
+      ? NonNullable<T[L]> extends Array<unknown>
+        ? TakeInternal<NonNullable<NonNullable<T[L]>[number]>, M>
+        : TakeInternal<NonNullable<T[L]>, M>
+      : never
     : never
-  : never
 
 export type ConfidentTake<T, K extends NestedKeyOf<T>> = TakeInternal<T, K>
 

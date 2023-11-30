@@ -3,7 +3,7 @@
 import type { MutationsAccountAvatarAddArgs } from '#shared/graphql/types.ts'
 import { faker } from '@faker-js/faker'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { getGraphQLResult, mockGraphQLResult } from '../mocks.ts'
+import { getGraphQLMockCalls, mockGraphQLResult } from '../mocks.ts'
 import { getMutationHandler, getQueryHandler } from './utils.ts'
 import {
   type TestAvatarMutation,
@@ -18,7 +18,9 @@ import {
 
 describe('calling mutation without mocking document works correctly', () => {
   it('mutation correctly returns data', async () => {
-    expect(getGraphQLResult(TestAvatarActiveMutationDocument)).toBeUndefined()
+    expect(getGraphQLMockCalls(TestAvatarActiveMutationDocument)).toHaveLength(
+      0,
+    )
 
     const handler = getMutationHandler<
       TestAvatarMutation,
@@ -42,7 +44,7 @@ describe('calling mutation without mocking document works correctly', () => {
   })
 
   it('mutation correctly processed data with arrays', async () => {
-    expect(getGraphQLResult(TestUserAutorizationsDocument)).toBeUndefined()
+    expect(getGraphQLMockCalls(TestUserAutorizationsDocument)).toHaveLength(0)
 
     const handler = getMutationHandler<
       TestUserAuthorizationsMutation,
@@ -73,7 +75,7 @@ describe('calling mutation without mocking document works correctly', () => {
   })
 
   it('returns the same object if it already exists, but values are updated', async () => {
-    expect(getGraphQLResult(TestUserDocument)).toBeUndefined()
+    expect(getGraphQLMockCalls(TestUserDocument)).toHaveLength(0)
 
     const queryHandler = getQueryHandler<TestUserQuery, TestUserQueryVariables>(
       TestUserDocument,
@@ -123,7 +125,9 @@ describe('calling mutation without mocking document works correctly', () => {
 
 describe('calling mutation with mocked return data correctly returns data', () => {
   it('returns mocked data when mutation is mocked and then called', async () => {
-    expect(getGraphQLResult(TestAvatarActiveMutationDocument)).toBeUndefined()
+    expect(getGraphQLMockCalls(TestAvatarActiveMutationDocument)).toHaveLength(
+      0,
+    )
 
     const avatarId = convertToGraphQLId('Avatar', 42)
     const imageFull = 'https://example.com/image.png'

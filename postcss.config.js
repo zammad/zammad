@@ -1,12 +1,17 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 const path = require('path')
+const tailwindcss = require('tailwindcss')
+const autoprefixer = require('autoprefixer')
+
+const entrypoints = path.resolve(__dirname, 'app/frontend/apps')
 
 module.exports = {
-  plugins: {
-    tailwindcss: {
-      config: path.resolve(__dirname, 'tailwind.config.js'),
-    },
-    autoprefixer: {},
-  },
+  plugins: [
+    tailwindcss(path.resolve(entrypoints, 'mobile/styles/tailwind.mobile.js')),
+    tailwindcss(
+      path.resolve(entrypoints, 'desktop/styles/tailwind.desktop.js'),
+    ),
+    autoprefixer,
+  ],
 }

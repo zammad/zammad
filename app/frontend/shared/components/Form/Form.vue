@@ -87,6 +87,7 @@ export interface Props {
     Partial<FormKitSchemaNode> | FormKitSchemaCondition
   >
   class?: FormKitClasses | string | Record<string, boolean>
+  formClass?: string | Record<string, string>
 
   // Can be used to define initial values on frontend side and fetched schema from the server.
   initialValues?: Partial<FormValues>
@@ -1215,6 +1216,7 @@ export default {
           formKitInitialNodesSettled && !debouncedShowInitialLoadingAnimation
         "
         ref="formElement"
+        :class="formClass"
       >
         <FormKitSchema
           :schema="staticSchema"
