@@ -33,7 +33,7 @@ class GroupHierarchy < ActiveRecord::Migration[6.1]
   def migrate_group_name
     Group.all.each do |group|
       if group.name.exclude?('::')
-        group.update!(name_last: group.name)
+        group.update!(name_last: group.name, updated_by_id: 1)
 
         next
       end
@@ -48,7 +48,7 @@ class GroupHierarchy < ActiveRecord::Migration[6.1]
         try += 1
       end
 
-      group.update!(name: new_name, name_last: new_name)
+      group.update!(name: new_name, name_last: new_name, updated_by_id: 1)
     end
   end
 
