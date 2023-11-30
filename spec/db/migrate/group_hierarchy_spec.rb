@@ -30,7 +30,8 @@ RSpec.describe GroupHierarchy, db_strategy: :reset, type: :db_migration do
 
   describe '#migrate_group_name' do
     context 'when group name does not contain reserved characters' do
-      let(:group) { create(:group, name: 'A') }
+      let(:user)  { create(:user) }
+      let(:group) { create(:group, name: 'A', updated_by_id: user.id) }
 
       before do
         group
@@ -38,7 +39,7 @@ RSpec.describe GroupHierarchy, db_strategy: :reset, type: :db_migration do
       end
 
       it 'does not migrate name' do
-        expect(group.reload).to have_attributes(name: 'A', name_last: 'A')
+        expect(group.reload).to have_attributes(name: 'A', name_last: 'A', updated_by_id: 1)
       end
     end
 
@@ -52,7 +53,7 @@ RSpec.describe GroupHierarchy, db_strategy: :reset, type: :db_migration do
         end
 
         it 'migrates name with an alternative delimiter' do
-          expect(group.reload).to have_attributes(name: 'A-B', name_last: 'A-B')
+          expect(group.reload).to have_attributes(name: 'A-B', name_last: 'A-B', updated_by_id: 1)
         end
       end
 
