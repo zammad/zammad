@@ -88,7 +88,10 @@ class HtmlSanitizer
       end
 
       def node_has_css?(node, key)
-        node['style'].present? && node['style']&.include?("#{key}:")
+        return false if node['style'].blank?
+        return false if node['style'].split(';').blank?
+
+        node['style'].split(';').filter_map { |attr| attr.split(':')&.first&.strip }.include?(key)
       end
 
       def node_init_style(node)

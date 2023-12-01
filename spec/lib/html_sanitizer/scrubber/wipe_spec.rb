@@ -49,6 +49,13 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
       it { is_expected.to eq target }
     end
 
+    context 'when has width and max-width attributes' do
+      let(:input)  { '<img width="100px" style="max-width: 600px">' }
+      let(:target) { '<img style="max-width: 600px;width:100px;">' }
+
+      it { is_expected.to eq target }
+    end
+
     context 'when has not allowed attributes' do
       let(:input)  { '<div width="100px" style="color:#ff0000" other="true">test</div>' }
       let(:target) { '<div style="color:#ff0000;">test</div>' }
