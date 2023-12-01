@@ -1,5 +1,5 @@
 class TicketPriority extends App.ControllerSubContent
-  @requiredPermission: 'admin.object'
+  @requiredPermission: 'admin.ticket_priority'
   header: __('Ticket Priority')
   constructor: ->
     super

@@ -1,5 +1,5 @@
 class TicketState extends App.ControllerSubContent
-  @requiredPermission: 'admin.object'
+  @requiredPermission: 'admin.ticket_state'
   header: __('Ticket States')
   constructor: ->
     super

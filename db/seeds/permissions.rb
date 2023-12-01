@@ -202,6 +202,20 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name:        'admin.ticket_state',
+  note:        __('Manage %s Settings'),
+  preferences: {
+    translations: [__('Ticket States')]
+  },
+)
+Permission.create_if_not_exists(
+  name:        'admin.ticket_priority',
+  note:        __('Manage %s Settings'),
+  preferences: {
+    translations: [__('Ticket Priorities')]
+  },
+)
+Permission.create_if_not_exists(
   name:        'admin.package',
   note:        __('Manage %s'),
   preferences: {

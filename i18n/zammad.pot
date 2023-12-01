@@ -12680,6 +12680,7 @@ msgid "Ticket Owner"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: db/seeds/permissions.rb
 msgid "Ticket Priorities"
 msgstr ""
 
@@ -12696,6 +12697,7 @@ msgid "Ticket State"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
+#: db/seeds/permissions.rb
 msgid "Ticket States"
 msgstr ""
 
