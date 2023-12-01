@@ -415,4 +415,212 @@ RSpec.describe 'Overview', type: :system do
 
     # TODO: Add a test example for touch input once the tablet emulation mode starts working in the CI.
   end
+
+  # https://github.com/zammad/zammad/issues/4409
+  context 'when sorting by display values', authenticated_as: :authenticate, db_strategy: :reset do
+    def authenticate
+      custom_field
+      ObjectManager::Attribute.migration_execute
+      true
+    end
+
+    let(:overview)     { create(:overview, view: { 's'=>%w[number title overview_test] }) }
+    let(:custom_field) { create("object_manager_attribute_#{field_type}", name: :overview_test, data_option: data_option) }
+    let(:data_option)  { { options: options_hash, translate: translate, default: '' } }
+    let(:translate)    { false }
+    let(:group)        { Group.first }
+
+    let(:options_hash) do
+      {
+        'key_1' => 'A value',
+        'key_2' => 'D value',
+        'key_3' => 'B value',
+        'key_4' => 'C value',
+      }
+    end
+
+    let(:custom_sorted_array) do
+      [
+        { value: 'key_1', name: 'C value' },
+        { value: 'key_3', name: 'A value' },
+        { value: 'key_2', name: 'B value' },
+        { value: 'key_4', name: 'D value' },
+      ]
+    end
+
+    let(:translations_hash) do
+      {
+        'A value' => 'Pirma vertė',
+        'B value' => 'Antra vertė',
+        'C value' => 'Trečia vertė',
+        'D value' => 'Ketvirta vertė'
+      }
+    end
+
+    before do
+      Ticket.destroy_all
+
+      translations_hash.each { |key, value| create(:translation, locale: 'en-us', source: key, target: value) }
+
+      ticket_1 && ticket_2 && ticket_3 && ticket_4
+
+      visit "ticket/view/#{overview.link}"
+
+      find('[data-column-key=overview_test] .js-sort').click
+    end
+
+    context 'when field is select' do
+      let(:field_type) { 'select' }
+
+      let(:ticket_1) { create(:ticket, title: 'A ticket', overview_test: 'key_1', group: group) }
+      let(:ticket_2) { create(:ticket, title: 'B ticket', overview_test: 'key_2', group: group) }
+      let(:ticket_3) { create(:ticket, title: 'C ticket', overview_test: 'key_3', group: group) }
+      let(:ticket_4) { create(:ticket, title: 'D ticket', overview_test: 'key_4', group: group) }
+
+      context 'when custom sort is on' do
+        let(:data_option) { { options: custom_sorted_array, default: '', customsort: 'on' } }
+
+        it 'sorts tickets correctly' do
+          within '.js-tableBody' do
+            expect(page)
+              .to have_css('tr:nth-child(1)', text: ticket_1.title)
+              .and have_css('tr:nth-child(2)', text: ticket_3.title)
+              .and have_css('tr:nth-child(3)', text: ticket_2.title)
+              .and have_css('tr:nth-child(4)', text: ticket_4.title)
+          end
+        end
+      end
+
+      context 'when custom sort is off' do
+        it 'sorts tickets correctly' do
+          within '.js-tableBody' do
+            expect(page)
+              .to have_css('tr:nth-child(1)', text: ticket_1.title)
+              .and have_css('tr:nth-child(2)', text: ticket_3.title)
+              .and have_css('tr:nth-child(3)', text: ticket_4.title)
+              .and have_css('tr:nth-child(4)', text: ticket_2.title)
+          end
+        end
+      end
+
+      context 'when display values are translated' do
+        let(:translate) { true }
+
+        it 'sorts tickets correctly' do
+          within '.js-tableBody' do
+            expect(page)
+              .to have_css('tr:nth-child(1)', text: ticket_3.title)
+              .and have_css('tr:nth-child(2)', text: ticket_2.title)
+              .and have_css('tr:nth-child(3)', text: ticket_1.title)
+              .and have_css('tr:nth-child(4)', text: ticket_4.title)
+          end
+        end
+      end
+    end
+
+    context 'when field is multiselect' do
+      let(:field_type) { 'multiselect' }
+
+      let(:ticket_1) { create(:ticket, title: 'A ticket', overview_test: '{key_1}', group: group) }
+      let(:ticket_2) { create(:ticket, title: 'B ticket', overview_test: '{key_2,key_3}', group: group) }
+      let(:ticket_3) { create(:ticket, title: 'C ticket', overview_test: '{key_4,key_3,key_2}', group: group) }
+      let(:ticket_4) { create(:ticket, title: 'D ticket', overview_test: '{key_2}', group: group) }
+
+      context 'when custom sort is on' do
+        let(:data_option) { { options: custom_sorted_array, default: '', customsort: 'on' } }
+
+        it 'sorts tickets correctly' do
+          within '.js-tableBody' do
+            expect(page)
+              .to have_css('tr:nth-child(1)', text: ticket_1.title)
+              .and have_css('tr:nth-child(2)', text: ticket_2.title)
+              .and have_css('tr:nth-child(3)', text: ticket_3.title)
+              .and have_css('tr:nth-child(4)', text: ticket_4.title)
+          end
+        end
+      end
+
+      context 'when custom sort is off' do
+        it 'sorts tickets correctly' do
+          within '.js-tableBody' do
+            expect(page)
+              .to have_css('tr:nth-child(1)', text: ticket_1.title)
+              .and have_css('tr:nth-child(2)', text: ticket_3.title)
+              .and have_css('tr:nth-child(3)', text: ticket_2.title)
+              .and have_css('tr:nth-child(4)', text: ticket_4.title)
+          end
+        end
+      end
+
+      context 'when display values are translated' do
+        let(:translate) { true }
+
+        it 'sorts tickets correctly' do
+          within '.js-tableBody' do
+            expect(page)
+              .to have_css('tr:nth-child(1)', text: ticket_2.title)
+              .and have_css('tr:nth-child(2)', text: ticket_3.title)
+              .and have_css('tr:nth-child(3)', text: ticket_4.title)
+              .and have_css('tr:nth-child(4)', text: ticket_1.title)
+          end
+        end
+      end
+    end
+  end
+
+  # https://github.com/zammad/zammad/issues/4409
+  # Touched by above issue, but not directly related
+  context 'when sorting by select field without options' do
+    let(:overview) do
+      create(:overview, condition: {
+               'ticket.state_id' => {
+                 operator: 'is',
+                 value:    Ticket::State.where(name: %w[new open closed]).pluck(:id),
+               },
+             })
+    end
+
+    let(:ticket_1) { create(:ticket, title: 'A ticket', state_name: 'open', group: group) }
+    let(:ticket_2) { create(:ticket, title: 'B ticket', state_name: 'closed', group: group) }
+    let(:ticket_3) { create(:ticket, title: 'C ticket', state_name: 'new', group: group) }
+    let(:group)    { Group.first }
+
+    before do
+      if defined?(translations_hash)
+        translations_hash.each do |key, value|
+          Translation.find_or_create_by(locale: 'en-us', source: key).update!(target: value)
+        end
+      end
+
+      Ticket.destroy_all
+
+      ticket_1 && ticket_2 && ticket_3
+
+      visit "ticket/view/#{overview.link}"
+
+      find('[data-column-key=state_id] .js-sort').click
+    end
+
+    it 'sorts tickets correctly' do
+      within '.js-tableBody' do
+        expect(page)
+          .to have_css('tr:nth-child(1)', text: ticket_2.title)
+          .and have_css('tr:nth-child(2)', text: ticket_3.title)
+          .and have_css('tr:nth-child(3)', text: ticket_1.title)
+      end
+    end
+
+    context 'when states are translated' do
+      let(:translations_hash) { { 'closed' => 'zzz closed' } }
+
+      it 'sorts tickets correctly' do
+        within '.js-tableBody' do
+          expect(page)
+            .to have_css('tr:nth-child(1)', text: ticket_3.title)
+            .and have_css('tr:nth-child(2)', text: ticket_1.title)
+            .and have_css('tr:nth-child(3)', text: ticket_2.title)
+        end
+      end
+    end
+  end
 end

@@ -74,8 +74,28 @@ class App extends Spine.Controller
         hasMoreItems = true
       items = items.slice(0, attributeConfig.display_limit)
 
+    sorted = if attributeConfig.tag is 'multiselect'
+               if _.isArray(attributeConfig.options)
+                 _.sortBy(items, (elem) -> _.findIndex(attributeConfig.options, (option) -> option.value == elem))
+               else
+                 _.sortBy(items, (elem) ->
+                   displayValue = attributeConfig.options[elem]
+
+                   if displayValue && attributeConfig.translate
+                     displayValue = App.i18n.translateInline(displayValue)
+
+                   value = displayValue || elem
+
+                   if typeof value is 'string'
+                     value = value.toLocaleLowerCase()
+
+                   value
+                 )
+             else
+               items.sort()
+
     # lookup relation
-    for item in items.sort()
+    for item in sorted
       resultLocal = item
       if attributeConfig.relation || valueRef
         if valueRef
@@ -99,6 +119,9 @@ class App extends Spine.Controller
           resultLocal = item.name
         else
           resultLocal = item.label
+
+        if attributeConfig.translate
+          resultLocal = App.i18n.translateInline(resultLocal)
 
       # execute callback on content
       if attributeConfig.callback
