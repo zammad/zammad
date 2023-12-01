@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-11-28 07:37+0000\n"
-"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
+"PO-Revision-Date: 2023-12-01 02:05+0000\n"
+"Last-Translator: Solenne Lefevre <solenne.lefevre@data-bene.io>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.0.2\n"
+"X-Generator: Weblate 5.2.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1776,7 +1776,7 @@ msgstr "Archivé le"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
 msgid "Are you sure to remove this article?"
-msgstr "Êtes-vous sûr de vouloir supprimer cet article ?"
+msgstr "Êtes-vous sûr(e) de vouloir supprimer cet article ?"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure you want to delete \"%s\"?"
@@ -1784,7 +1784,7 @@ msgstr "Êtes-vous sûr(e) de vouloir supprimer \"%s\" ?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
-msgstr "Êtes-vous sûr de vouloir fusionner ce ticket (#%s) dans #%s ?"
+msgstr "Êtes-vous sûr(e) de vouloir fusionner ce ticket (#%s) dans #%s ?"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
@@ -1840,7 +1840,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
-msgstr "Etes-vous sûr ? L'article préparé sera supprimé."
+msgstr "Êtes-vous sûr(e) ? L'article préparé sera supprimé."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #, fuzzy
@@ -1853,7 +1853,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? You have changes that will get lost."
-msgstr "Etes vous sûr ? Les modifications non sauvegardées seront perdues."
+msgstr "Êtes-vous sûr(e) ? Les modifications seront perdues."
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -1861,12 +1861,11 @@ msgstr "Etes vous sûr ? Les modifications non sauvegardées seront perdues."
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
-msgstr "Etes-vous sûr ? Les modifications non sauvegardées seront perdues."
+msgstr "Êtes-vous sûr(e) ? Les modifications non sauvegardées seront perdues."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Are you sure? Your notifications settings will be reset to default."
-msgstr ""
-"Êtes vous sûr(e) ? Vos paramètres de notification seront réinitialisés."
+msgstr "Êtes-vous sûr(e) ? Vos paramètres de notification seront réinitialisés."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -13236,8 +13235,8 @@ msgstr "Comportement de l'onglet après l'action du ticket"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 msgid "Tab has changed, do you really want to close it?"
 msgstr ""
-"Des modifications sur l'onglet n'ont pas été sauvegardées, êtes-vous sûr de "
-"vouloir fermer cet onglet ?"
+"Des modifications sur l'onglet n'ont pas été sauvegardées, êtes-vous sûr(e) "
+"de vouloir fermer cet onglet ?"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Tag \"%s\" already exists."
@@ -13702,7 +13701,7 @@ msgid ""
 "signed certificate, you can press \"Proceed\". Otherwise, please \"Cancel\"."
 msgstr ""
 "Le certificat du domaine |%s| n' a pas pu être vérifié. Cela peut permettre "
-"aux pirates de voler vos identifiants. Si vous êtes sûr d'utiliser un "
+"aux pirates de voler vos identifiants. Si vous êtes sûr(e) d'utiliser un "
 "certificat auto-signé, vous pouvez cliquer sur \"Continuer\". Sinon, "
 "veuillez \"Annuler\"."
 
@@ -14559,29 +14558,22 @@ msgid "There is no match for your search."
 msgstr "Il n'y a pas de correspondance pour votre recherche."
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
-#, fuzzy
-#| msgid ""
-#| "There is no rollback of this deletion possible. If you are absolutely "
-#| "sure to do this, then type in \"%s\" into the input."
 msgid ""
 "There is no rollback of this deletion possible. If you are sure that you "
 "wish to proceed, please type \"%s\" into the input."
 msgstr ""
-"Il n'y a pas de retour de possible à cette suppression. Si vous êtes "
-"absolument sûre de faire cela, alors entrez \"%s\" dans le champ."
+"Il n'y a pas de retour de possible à cette suppression. Si vous êtes sûr(e) "
+"de vouloir faire cela, veuillez écrire \"%s\" dans le champ."
 
 #: app/assets/javascripts/app/controllers/package.coffee
-#, fuzzy
-#| msgid ""
-#| "There is no rollback of this deletion possible. If you are absolutely "
-#| "sure to do this, then type in \"%s\" into the input."
 msgid ""
 "There is no rollback of this deletion. If you are sure that you wish to "
 "proceed, please type \"%s\" into the input. All related data to this package "
 "will be lost."
 msgstr ""
-"Il n'y a pas de retour de possible à cette suppression. Si vous êtes "
-"absolument sûre de faire cela, alors entrez \"%s\" dans le champ."
+"On ne peut pas annuler cette suppression. Si vous êtes sûr(e) de vouloir "
+"faire cela, veuillez écrire \"%s\" dans le champ. Toutes les données liées à "
+"ce paquet seront perdues."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -15262,10 +15254,8 @@ msgid "Ticket has %s viewers"
 msgstr "Nouvel Aperçu"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "The test run was successful."
 msgid "Ticket has been created successfully."
-msgstr "Testé avec succès."
+msgstr "Le ticket a bien été créé."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-11-28 07:37+0000\n"
+"PO-Revision-Date: 2023-12-01 02:05+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.2\n"
+"X-Generator: Weblate 5.2.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -340,7 +340,7 @@ msgstr ""
 "<div>Hej #{user.firstname},</div>\n"
 "<br>\n"
 "<div>Det ser ut som att du har loggat in på ditt konto <b>med en ny enhet</"
-"b> vid den \"#{user_device.created_at}\":</div>\n"
+"b> den: #{user_device.created_at}</div>\n"
 "<br>\n"
 "<div>\n"
 "Din enhet: #{user_device.name}<br>\n"
@@ -791,7 +791,7 @@ msgstr "3 hög"
 
 #: db/seeds/settings.rb
 msgid "3 weeks"
-msgstr "tre veckor"
+msgstr "3 veckor"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "3. Ticket Reminder Reached"
@@ -799,7 +799,7 @@ msgstr "3. Ärende-påminnelsetid nådd"
 
 #: db/seeds/settings.rb
 msgid "4 weeks"
-msgstr "fyra veckor"
+msgstr "4 veckor"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "4. Ticket Escalation"
@@ -6026,7 +6026,7 @@ msgstr "Eskaleringstider"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at"
-msgstr "Eskalera vid"
+msgstr "Eskaleras om"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
