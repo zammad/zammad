@@ -11,6 +11,8 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
     preprocess_article_data(article_data, ticket)
 
     ticket.articles.new(article_data).tap do |article|
+      article.check_mentions_raises_error = true
+
       transform_article(article, attachments_raw, subtype)
 
       article.save!

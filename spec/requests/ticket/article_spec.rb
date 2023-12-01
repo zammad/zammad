@@ -493,6 +493,21 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(Mention.where(mentionable: Ticket.last).count).to eq(1)
     end
 
+    it 'does not ticket create with invalid mentions' do
+      params = {
+        title:       'a new ticket #1',
+        group:       'Users',
+        customer_id: customer.id,
+        article:     {
+          body: "some body <a data-mention-user-id=\"#{create(:customer).id}\">customer</a>",
+        }
+      }
+      authenticated_as(agent)
+      post '/api/v1/tickets', params: params, as: :json
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(Mention.count).to eq(0)
+    end
+
     it 'does not ticket create with mentions when customer' do
       params = {
         title:       'a new ticket #1',
@@ -504,7 +519,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       }
       authenticated_as(customer)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:internal_server_error)
+      expect(response).to have_http_status(:forbidden)
       expect(Mention.count).to eq(0)
     end
   end

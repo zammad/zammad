@@ -2200,7 +2200,7 @@ RSpec.describe 'Ticket', type: :request do
     let(:user2) { create(:agent, groups: [ticket_group]) }
     let(:user3) { create(:agent, groups: [ticket_group]) }
 
-    def new_ticket_with_mentions
+    def new_ticket_with_mentions(*user_ids)
       params = {
         title:    'a new ticket #11',
         group:    ticket_group.name,
@@ -2212,22 +2212,28 @@ RSpec.describe 'Ticket', type: :request do
         article:  {
           body: 'some test 123',
         },
-        mentions: [user1.id, user2.id, user3.id]
+        mentions: user_ids
       }
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:created)
 
       json_response
     end
 
     it 'create ticket with mentions' do
-      new_ticket_with_mentions
+      new_ticket_with_mentions(user1.id, user2.id, user3.id)
+      expect(response).to have_http_status(:created)
       expect(Mention.count).to eq(3)
     end
 
+    it 'create ticket with one of mentions being invalid' do
+      new_ticket_with_mentions(user1.id, user2.id, create(:customer).id)
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(Mention.count).to eq(0)
+    end
+
     it 'check ticket get' do
-      ticket = new_ticket_with_mentions
+      ticket = new_ticket_with_mentions(user1.id, user2.id, user3.id)
 
       get "/api/v1/tickets/#{ticket['id']}?all=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)

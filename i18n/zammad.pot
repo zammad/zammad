@@ -509,6 +509,10 @@ msgstr ""
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
 
+#: lib/validations/mention_validator.rb
+msgid "A mentioned user has no agent access to this ticket"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid "A new session was created with your account. This session will be stopped to prevent a conflict."
 msgstr ""
@@ -14386,6 +14390,10 @@ msgstr ""
 msgid "You have exceeded the character limit by %s"
 msgstr ""
 
+#: app/policies/ticket_policy.rb
+msgid "You have insufficient permissions to mention other users."
+msgstr ""
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
 msgid "You have insufficient rights to view this organization."
 msgstr ""
@@ -15063,10 +15071,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
-msgstr ""
-
-#: lib/validations/mention_validator.rb
-msgid "has no agent access to this ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee

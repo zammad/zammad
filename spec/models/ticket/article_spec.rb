@@ -523,6 +523,145 @@ RSpec.describe Ticket::Article, type: :model do
         end
       end
     end
+
+    describe '#check_mentions' do
+      def text_blob_with(user)
+        "Lorem ipsum dolor <a data-mention-user-id='#{user.id}'>#{user.fullname}</a>"
+      end
+
+      let(:ticket)              { create(:ticket) }
+      let(:agent_with_access)   { create(:agent, groups: [ticket.group]) }
+      let(:user_without_access) { create(:agent) }
+
+      let(:passing_body) { text_blob_with(agent_with_access) }
+      let(:failing_body) { text_blob_with(user_without_access) }
+      let(:partial_body) { text_blob_with(user_without_access) + text_blob_with(agent_with_access) }
+
+      context 'when created in email parsing' do
+        before { ApplicationHandleInfo.current = 'postmaster' }
+
+        it 'silently ignores mentions if agent cannot mention users' do
+          UserInfo.current_user_id = user_without_access.id
+          record = create(:ticket_article, body: passing_body)
+
+          expect(record).to be_persisted
+          expect(Mention.count).to be_zero
+        end
+
+        it 'silently ignores mentions if given users cannot be mentioned' do
+          UserInfo.current_user_id = agent_with_access.id
+          article = build(:ticket_article, ticket: ticket, body: failing_body)
+          article.save
+
+          expect(article).to be_persisted
+          expect(Mention.count).to eq(0)
+        end
+
+        it 'silently saves passing user while failing user is skipped' do
+          UserInfo.current_user_id = agent_with_access.id
+
+          article = create(:ticket_article, ticket: ticket, body: partial_body)
+
+          expect(article).to be_persisted
+          expect(Mention.count).to eq(1)
+        end
+
+        it 'mentioned user is added' do
+          UserInfo.current_user_id = agent_with_access.id
+
+          create(:ticket_article, ticket: ticket, body: passing_body)
+
+          expect(article).to be_persisted
+          expect(Mention.count).to eq(1)
+        end
+      end
+
+      context 'when created with check_mentions_raises_error set to true' do
+        it 'raises an error if agent cannot mention users' do
+          UserInfo.current_user_id = create(:customer).id
+
+          article = build(:ticket_article, ticket: ticket, body: passing_body)
+          article.check_mentions_raises_error = true
+
+          expect { article.save! }
+            .to raise_error(Pundit::NotAuthorizedError)
+          expect(Mention.count).to eq(0)
+        end
+
+        it 'raises an error if given users cannot be mentioned' do
+          UserInfo.current_user_id = agent_with_access.id
+
+          article = build(:ticket_article, ticket: ticket, body: failing_body)
+          article.check_mentions_raises_error = true
+
+          expect { article.save! }
+            .to raise_error(ActiveRecord::RecordInvalid)
+          expect(Mention.count).to eq(0)
+        end
+
+        it 'raises an error if one if given users cannot be mentioned' do
+          UserInfo.current_user_id = agent_with_access.id
+
+          article = build(:ticket_article, ticket: ticket, body: partial_body)
+          article.check_mentions_raises_error = true
+
+          expect { article.save! }
+            .to raise_error(ActiveRecord::RecordInvalid)
+          expect(Mention.count).to eq(0)
+        end
+
+        it 'mentioned user is added' do
+          UserInfo.current_user_id = agent_with_access.id
+
+          article = build(:ticket_article, ticket: ticket, body: passing_body)
+          article.check_mentions_raises_error = true
+          article.save!
+
+          expect(article).to be_persisted
+          expect(Mention.count).to eq(1)
+        end
+      end
+
+      context 'when created with check_mentions_raises_error set to false' do
+        it 'silently ignores mentions if agent cannot mention users' do
+          UserInfo.current_user_id = create(:customer).id
+
+          article = build(:ticket_article, ticket: ticket, body: failing_body)
+          article.save
+
+          expect(article).to be_persisted
+          expect(Mention.count).to eq(0)
+        end
+
+        it 'silently ignores mentions if given users cannot be mentioned' do
+          UserInfo.current_user_id = agent_with_access.id
+
+          article = build(:ticket_article, ticket: ticket, body: failing_body)
+          article.save
+
+          expect(article).to be_persisted
+          expect(Mention.count).to eq(0)
+        end
+
+        it 'silently saves passing user while failing user is skipped' do
+          UserInfo.current_user_id = agent_with_access.id
+
+          article = create(:ticket_article, ticket: ticket, body: partial_body)
+
+          expect(article).to be_persisted
+          expect(Mention.count).to eq(1)
+        end
+
+        it 'mentioned user is added' do
+          UserInfo.current_user_id = agent_with_access.id
+
+          create(:ticket_article, ticket: ticket, body: passing_body)
+
+          expect(article).to be_persisted
+          expect(Mention.count).to eq(1)
+        end
+      end
+    end
   end
 
   describe 'clone attachments' do

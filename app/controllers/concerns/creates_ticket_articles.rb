@@ -53,6 +53,7 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
 
     article = Ticket::Article.new(clean_params)
     article.ticket_id = ticket.id
+    article.check_mentions_raises_error = true
 
     # store dataurl images to store
     attachments_inline = []

@@ -63,7 +63,7 @@ class Ticket::Article < ApplicationModel
                              :to,
                              :cc
 
-  attr_accessor :should_clone_inline_attachments
+  attr_accessor :should_clone_inline_attachments, :check_mentions_raises_error
 
   alias should_clone_inline_attachments? should_clone_inline_attachments
 
@@ -357,16 +357,26 @@ returns
 
     return if mention_user_ids.blank?
 
-    if !TicketPolicy.new(updated_by, ticket).create_mentions?
+    begin
+      Pundit.authorize updated_by, ticket, :create_mentions?
+    rescue Pundit::NotAuthorizedError => e
       return if ApplicationHandleInfo.postmaster?
       return if updated_by.id == 1
+      return if !check_mentions_raises_error
 
-      raise "User #{updated_by_id} has no permission to mention other users!"
+      raise e
     end
 
-    user_ids = User.where(id: mention_user_ids).pluck(:id)
-    user_ids.each do |user_id|
-      Mention.where(mentionable: ticket, user_id: user_id).first_or_create(mentionable: ticket, user_id: user_id)
+    mention_user_ids.each do |user_id|
+      begin
+        Mention.subscribe! ticket, User.find(user_id)
+      rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid => e
+        next if ApplicationHandleInfo.postmaster?
+        next if updated_by.id == 1
+        next if !check_mentions_raises_error
+
+        raise e
+      end
     end
   end
 
