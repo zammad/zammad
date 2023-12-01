@@ -22,6 +22,8 @@ module Import
       private
 
       def import(state)
+        return if skip?(state)
+
         create_or_update(map(state))
       end
 
@@ -29,6 +31,15 @@ module Import
         return if updated?(state)
 
         create(state)
+      end
+
+      def skip?(state)
+        if state['TypeName'].eql?('removed')
+          log "skip Ticket::State.find_by(id: #{state[:id]}) due to state #{state['Name']} and state type #{state['TypeName']}"
+          return true
+        end
+
+        false
       end
 
       def updated?(state)

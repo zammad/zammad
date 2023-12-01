@@ -22,7 +22,6 @@ class Sequencer::Unit::Import::Zendesk::Ticket::StateId < Sequencer::Unit::Commo
       'new'     => 'new',
       'pending' => 'pending reminder',
       'solved'  => 'closed',
-      'deleted' => 'removed',
       'hold'    => 'open'
     }.freeze
   end

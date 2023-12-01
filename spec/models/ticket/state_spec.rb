@@ -14,9 +14,9 @@ RSpec.describe Ticket::State, type: :model do
 
   describe 'Default state' do
     describe 'of whole table:' do
-      it 'has seven records' do
+      it 'has default records' do
         expect(described_class.pluck(:name))
-          .to contain_exactly('closed', 'merged', 'new', 'open', 'pending close', 'pending reminder', 'removed')
+          .to contain_exactly('closed', 'merged', 'new', 'open', 'pending close', 'pending reminder')
       end
     end
 

@@ -61,6 +61,7 @@ A ticket's state is used to categorize and manage the lifecycle of a ticket or c
         state_types = ['new', 'open', 'pending reminder']
         break
       when 'viewable'
+        # Legacy systems may have a state type 'removed', which should still be available.
         state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed']
         break
       when 'viewable_agent_new'

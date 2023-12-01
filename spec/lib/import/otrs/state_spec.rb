@@ -54,4 +54,15 @@ RSpec.describe Import::OTRS::State do
       updates_with(zammad_structure)
     end
   end
+
+  context 'with removed state' do
+    let(:object_structure) { load_state_json('removed') }
+
+    it 'skips', :aggregate_failures do
+      start_import_test
+
+      expect(import_object).not_to receive(:new)
+      expect(Ticket::State.find_by(name: 'removed')).to be_nil
+    end
+  end
 end

@@ -15609,11 +15609,6 @@ msgstr ""
 msgid "remove option"
 msgstr ""
 
-#: db/seeds/ticket_state_types.rb
-#: db/seeds/ticket_states.rb
-msgid "removed"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee

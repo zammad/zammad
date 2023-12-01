@@ -639,12 +639,6 @@ RSpec.describe Channel::EmailParser, type: :model do
 
                 include_examples 'creates a new ticket'
               end
-
-              context 'and ticket is removed' do
-                before { ticket.update(state: Ticket::State.find_by(name: 'removed')) }
-
-                include_examples 'creates a new ticket'
-              end
             end
 
             context 'and "ticket_hook" setting is non-default value' do

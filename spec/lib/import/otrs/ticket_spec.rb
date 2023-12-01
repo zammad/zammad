@@ -173,4 +173,19 @@ RSpec.describe Import::OTRS::Ticket do
       updates_with(zammad_structure)
     end
   end
+
+  context 'with removed state' do
+    let(:object_structure) { load_ticket_json('removed_state') }
+
+    it 'skips', :aggregate_failures do
+      expect(Import::OTRS::ArticleCustomerFactory).not_to receive(:import)
+      expect(Import::OTRS::ArticleFactory).not_to receive(:import)
+      expect(Import::OTRS::HistoryFactory).not_to receive(:import)
+
+      expect(import_object).not_to receive(:new)
+      start_import_test
+
+      expect(Ticket.find_by(title: 'test #3 - removed')).to be_nil
+    end
+  end
 end

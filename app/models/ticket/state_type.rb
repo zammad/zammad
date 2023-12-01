@@ -20,6 +20,7 @@ class Ticket::StateType < ApplicationModel
     pending:                ['pending reminder', 'pending action'],
     work_on:                %w[new open],
     work_on_all:            ['new', 'open', 'pending reminder'],
+    # Legacy systems may have a state type 'removed', which should still be available.
     viewable:               ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed'],
     viewable_agent_new:     ['new', 'open', 'pending reminder', 'pending action', 'closed'],
     viewable_agent_edit:    ['open', 'pending reminder', 'pending action', 'closed'],

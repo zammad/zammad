@@ -85,8 +85,8 @@ module Import
       end
 
       def update_ticket_state
-        agent_new = fetch_ticket_states(%w[merged removed])
-        agent_edit = fetch_ticket_states(%w[new merged removed])
+        agent_new = fetch_ticket_states(%w[merged])
+        agent_edit = fetch_ticket_states(%w[new merged])
         customer_new = fetch_ticket_states(%w[new closed])
         customer_edit = fetch_ticket_states(%w[open closed])
 

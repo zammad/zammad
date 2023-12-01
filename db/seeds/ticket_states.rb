@@ -32,13 +32,6 @@ Ticket::State.create_if_not_exists(
 )
 Ticket::State.create_if_not_exists(
   id:                6,
-  name:              __('removed'),
-  state_type_id:     Ticket::StateType.find_by(name: 'removed').id,
-  active:            false,
-  ignore_escalation: true,
-)
-Ticket::State.create_if_not_exists(
-  id:                7,
   name:              __('pending close'),
   state_type_id:     Ticket::StateType.find_by(name: 'pending action').id,
   next_state_id:     Ticket::State.by_category(:closed).first.id,

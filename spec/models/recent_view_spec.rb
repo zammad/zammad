@@ -45,13 +45,6 @@ RSpec.describe RecentView, type: :model do
 
         expect(described_class.list(admin, 10, 'Ticket').length).to eq(0)
       end
-
-      it 'does not include removed tickets in results' do
-        described_class.log('Ticket', ticket.id, admin)
-        ticket.update(state: Ticket::State.find_by(name: 'removed'))
-
-        expect(described_class.list(admin, 10, 'Ticket').length).to eq(0)
-      end
     end
 
     it 'does not include duplicate results' do

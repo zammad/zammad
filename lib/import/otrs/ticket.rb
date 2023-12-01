@@ -26,6 +26,8 @@ module Import
       }.freeze
 
       def initialize(ticket)
+        return if skip?(ticket)
+
         fix(ticket)
         import(ticket)
       end
@@ -45,6 +47,15 @@ module Import
         return if updated?(ticket)
 
         create(ticket)
+      end
+
+      def skip?(ticket)
+        if ticket['StateType'].eql?('removed')
+          log "skip Ticket.find_by(id: #{ticket['TicketID']}) due to state #{ticket['State']} and state type #{ticket['StateType']}"
+          return true
+        end
+
+        false
       end
 
       def updated?(ticket)
