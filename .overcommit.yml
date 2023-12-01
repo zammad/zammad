@@ -33,6 +33,8 @@ PreCommit:
     flags: ['.overcommit.sh']
   Stylelint:
     enabled: true
+    required_executable: 'yarn'
+    command: ['yarn', '--silent', 'lint:css']
   EsLint:
     required_executable: 'yarn'
     enabled: true
