@@ -243,7 +243,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.2)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.11)
+    faraday (2.7.12)
       base64
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -638,7 +638,7 @@ GEM
       bindata (~> 2.4)
       openssl (> 2.0)
       openssl-signature_algorithm (~> 1.0)
-    twilio-ruby (6.8.2)
+    twilio-ruby (6.8.3)
       faraday (>= 0.9, < 3.0)
       jwt (>= 1.5, < 3.0)
       nokogiri (>= 1.6, < 2.0)
