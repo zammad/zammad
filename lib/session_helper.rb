@@ -43,16 +43,21 @@ module SessionHelper
   end
 
   def self.models(user = nil)
-    models = {}
-    objects = ObjectManager.list_objects
-    objects.each do |object|
-      # User related fields are needed for register.
-      next if user.nil? && !object.eql?('User')
+    return models_public if user.blank?
 
-      attributes = ObjectManager::Object.new(object).attributes(user, skip_permission: user.nil?)
+    ObjectManager.list_objects.each_with_object({}) do |object, models|
+      attributes = ObjectManager::Object.new(object).attributes(user)
       models[object] = attributes
     end
-    models
+  end
+
+  def self.models_public
+    allowed_user_attributes = %w[firstname lastname email password]
+    user_attributes         = ObjectManager::Object.new('User').attributes(nil, skip_permission: true).select { |attribute| allowed_user_attributes.include?(attribute[:name]) }
+
+    {
+      'User' => user_attributes,
+    }
   end
 
   def self.cleanup_expired

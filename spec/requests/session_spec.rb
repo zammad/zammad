@@ -125,6 +125,12 @@ RSpec.describe 'Sessions endpoints', type: :request do
 
         expect(json_response['models'].keys).to match_array(%w[User])
       end
+
+      it 'does not contain fields with permission admin.*' do
+        get '/api/v1/signshow', params: {}, as: :json
+
+        expect(json_response['models']['User']).not_to include(hash_including('name' => 'role_ids'))
+      end
     end
   end
 
