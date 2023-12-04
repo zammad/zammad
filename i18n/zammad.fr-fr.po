@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-11-24 02:05+0000\n"
-"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
+"PO-Revision-Date: 2023-12-01 02:05+0000\n"
+"Last-Translator: Solenne Lefevre <solenne.lefevre@data-bene.io>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.0.2\n"
+"X-Generator: Weblate 5.2.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -279,8 +279,8 @@ msgid ""
 "<div>The country has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -304,8 +304,8 @@ msgstr ""
 "<div>Le pays a été ajouté à votre liste d'appareils connus, que vous pouvez "
 "consulter ici :</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Si ce n'était pas vous, supprimez l'appareil, modifiez le mot de passe "
 "de votre compte et contactez votre administrateur. Quelqu'un a peut-être "
@@ -333,8 +333,8 @@ msgid ""
 "<div>Your device has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -358,8 +358,8 @@ msgstr ""
 "<div>Votre appareil a été ajouté à votre liste d'appareils connus, que vous "
 "pouvez consulter ici :</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Si ce n'était pas vous, supprimez l'appareil, modifiez le mot de passe "
 "de votre compte et contactez votre administrateur. Quelqu'un a peut-être "
@@ -854,6 +854,12 @@ msgstr "Une URL ressemble à ceci : https://zammad.example.com"
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
 "Une liste des imports actifs de backends qui sont planifiés automatiquement."
+
+#: lib/validations/mention_validator.rb
+#, fuzzy
+#| msgid "Not allowed to access this task."
+msgid "A mentioned user has no agent access to this ticket"
+msgstr "n'a pas l'autorisation agent pour accéder à ce ticket"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -1784,7 +1790,7 @@ msgstr "Archivé le"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
 msgid "Are you sure to remove this article?"
-msgstr "Êtes-vous sûr de vouloir supprimer cet article ?"
+msgstr "Êtes-vous sûr(e) de vouloir supprimer cet article ?"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure you want to delete \"%s\"?"
@@ -1792,7 +1798,7 @@ msgstr "Êtes-vous sûr(e) de vouloir supprimer \"%s\" ?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
-msgstr "Êtes-vous sûr de vouloir fusionner ce ticket (#%s) dans #%s ?"
+msgstr "Êtes-vous sûr(e) de vouloir fusionner ce ticket (#%s) dans #%s ?"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
@@ -1848,7 +1854,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
-msgstr "Etes-vous sûr ? L'article préparé sera supprimé."
+msgstr "Êtes-vous sûr(e) ? L'article préparé sera supprimé."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #, fuzzy
@@ -1861,7 +1867,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? You have changes that will get lost."
-msgstr "Etes vous sûr ? Les modifications non sauvegardées seront perdues."
+msgstr "Êtes-vous sûr(e) ? Les modifications seront perdues."
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -1869,12 +1875,12 @@ msgstr "Etes vous sûr ? Les modifications non sauvegardées seront perdues."
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
-msgstr "Etes-vous sûr ? Les modifications non sauvegardées seront perdues."
+msgstr "Êtes-vous sûr(e) ? Les modifications non sauvegardées seront perdues."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
-"Êtes vous sûr(e) ? Vos paramètres de notification seront réinitialisés."
+"Êtes-vous sûr(e) ? Vos paramètres de notification seront réinitialisés."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -6266,8 +6272,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -6773,6 +6779,7 @@ msgid "Forgot Password Screen"
 msgstr "Écran Mot de passe oublié"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "Mot de passe oublié ?"
@@ -7396,8 +7403,8 @@ msgstr ""
 "Vous pouvez effectuer ici une recherche sur des clients, organisations ou "
 "tickets. Utiliser l'astérisque §*§ pour correspondre à n'importe quelle "
 "suite de lettres : §sou*§ ou §ressen*r§. Vous pouvez également utiliser les "
-"||guillemets|| pour effectuer une recherche sur une phrase : §\"une phrase"
-"\"§."
+"||guillemets|| pour effectuer une recherche sur une phrase : §\"une "
+"phrase\"§."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid ""
@@ -7488,6 +7495,7 @@ msgstr "Vacances"
 msgid "Holidays iCalendar Feed"
 msgstr "Flux des vacances au format iCal"
 
+#: app/frontend/apps/desktop/pages/home/routes.ts
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -8690,7 +8698,7 @@ msgstr "Charger plus"
 msgid "Loading content"
 msgstr "Chargement du contenu"
 
-#: app/views/mobile/index.html.erb
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading failed, please try again later."
 msgstr "Chargement en échec, veuillez essayer ultérieurement."
 
@@ -8708,7 +8716,8 @@ msgstr "Échec du chargement."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
-#: app/frontend/shared/form/i18n/locales.ts app/views/mobile/index.html.erb
+#: app/frontend/shared/form/i18n/locales.ts
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading…"
 msgstr "Chargement…"
 
@@ -8774,6 +8783,7 @@ msgstr ""
 "d'authentification à deux facteurs."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
@@ -10588,6 +10598,7 @@ msgstr "Parent"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10931,6 +10942,7 @@ msgstr "Filtre Postmaster"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Propulsé par"
@@ -11306,6 +11318,7 @@ msgstr "Recharger l'application"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "Se souvenir de moi"
@@ -12809,6 +12822,10 @@ msgstr "Montrer les inscriptions dans le journal d'appels."
 msgid "Shown when the chat is closed."
 msgstr "Afficher quand la fenêtre de discussion est fermée."
 
+#: app/frontend/apps/desktop/AppDesktop.vue
+msgid "Sidebar"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr ""
@@ -12839,6 +12856,8 @@ msgstr "Déconnexion"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
+#: app/frontend/apps/desktop/pages/login/routes.ts
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
@@ -13042,8 +13061,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid ""
 "Some system settings have changed, please restart all Zammad processes! If "
-"you want to do this automatically, set environment variable APP_RESTART_CMD="
-"\"/path/to/your_app_script.sh restart\"."
+"you want to do this automatically, set environment variable "
+"APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 "Certains paramètres du système ont changé, veuillez redémarrer tous les "
 "processus Zammad ! Si vous voulez le faire automatiquement, définissez la "
@@ -13369,8 +13388,8 @@ msgstr "Comportement de l'onglet après l'action du ticket"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 msgid "Tab has changed, do you really want to close it?"
 msgstr ""
-"Des modifications sur l'onglet n'ont pas été sauvegardées, êtes-vous sûr de "
-"vouloir fermer cet onglet ?"
+"Des modifications sur l'onglet n'ont pas été sauvegardées, êtes-vous sûr(e) "
+"de vouloir fermer cet onglet ?"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Tag \"%s\" already exists."
@@ -13833,7 +13852,7 @@ msgid ""
 "signed certificate, you can press \"Proceed\". Otherwise, please \"Cancel\"."
 msgstr ""
 "Le certificat du domaine |%s| n' a pas pu être vérifié. Cela peut permettre "
-"aux pirates de voler vos identifiants. Si vous êtes sûr d'utiliser un "
+"aux pirates de voler vos identifiants. Si vous êtes sûr(e) d'utiliser un "
 "certificat auto-signé, vous pouvez cliquer sur \"Continuer\". Sinon, "
 "veuillez \"Annuler\"."
 
@@ -14690,29 +14709,22 @@ msgid "There is no match for your search."
 msgstr "Il n'y a pas de correspondance pour votre recherche."
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
-#, fuzzy
-#| msgid ""
-#| "There is no rollback of this deletion possible. If you are absolutely "
-#| "sure to do this, then type in \"%s\" into the input."
 msgid ""
 "There is no rollback of this deletion possible. If you are sure that you "
 "wish to proceed, please type \"%s\" into the input."
 msgstr ""
-"Il n'y a pas de retour de possible à cette suppression. Si vous êtes "
-"absolument sûre de faire cela, alors entrez \"%s\" dans le champ."
+"Il n'y a pas de retour de possible à cette suppression. Si vous êtes sûr(e) "
+"de vouloir faire cela, veuillez écrire \"%s\" dans le champ."
 
 #: app/assets/javascripts/app/controllers/package.coffee
-#, fuzzy
-#| msgid ""
-#| "There is no rollback of this deletion possible. If you are absolutely "
-#| "sure to do this, then type in \"%s\" into the input."
 msgid ""
 "There is no rollback of this deletion. If you are sure that you wish to "
 "proceed, please type \"%s\" into the input. All related data to this package "
 "will be lost."
 msgstr ""
-"Il n'y a pas de retour de possible à cette suppression. Si vous êtes "
-"absolument sûre de faire cela, alors entrez \"%s\" dans le champ."
+"On ne peut pas annuler cette suppression. Si vous êtes sûr(e) de vouloir "
+"faire cela, veuillez écrire \"%s\" dans le champ. Toutes les données liées à "
+"ce paquet seront perdues."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -15332,6 +15344,7 @@ msgid "Ticket Owner"
 msgstr "Nouvel Aperçu"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket Priorities"
@@ -15354,6 +15367,7 @@ msgid "Ticket State"
 msgstr "Mettre a jour le ticket"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket States"
@@ -15417,10 +15431,8 @@ msgid "Ticket has %s viewers"
 msgstr "Nouvel Aperçu"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "The test run was successful."
 msgid "Ticket has been created successfully."
-msgstr "Testé avec succès."
+msgstr "Le ticket a bien été créé."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy
@@ -15531,8 +15543,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -15844,8 +15856,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/webhook.coffee
 #, fuzzy
 msgid ""
-"To revert back to the default payload, simply turn off the \"Custom Payload"
-"\" switch above."
+"To revert back to the default payload, simply turn off the \"Custom "
+"Payload\" switch above."
 msgstr ""
 "Pour revenir à la charge par défaut, désactiver simplement le bouton ci-"
 "dessus \"Charge Personnalisée\"."
@@ -16489,8 +16501,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
-"\">Consulter sur #{config.product_name}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" "
+"target=\"zammad_app\">Consulter sur #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -16708,6 +16720,7 @@ msgstr ""
 msgid "Username"
 msgstr "Identifiant"
 
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Username / Email"
 msgstr "Identifiant / Email"
@@ -16762,8 +16775,8 @@ msgid ""
 "1. As an **agent** you don't just have an overview of the open tickets for "
 "one person but an **overview over their whole organization**.\n"
 "2. As a **customer** you can also check the **tickets which your colleagues "
-"created** and modify their tickets (if your organization is set to \"shared"
-"\", which can be defined per organization)."
+"created** and modify their tickets (if your organization is set to "
+"\"shared\", which can be defined per organization)."
 msgstr ""
 "En utilisant des **organisations**, vous pouvez **regrouper** des clients. "
 "Cela a deux avantages principaux :\n"
@@ -17557,6 +17570,12 @@ msgstr ""
 msgid "You have exceeded the character limit by %s"
 msgstr "Vous avez dépassé la limite de caractères de %s"
 
+#: app/policies/ticket_policy.rb
+#, fuzzy
+#| msgid "You have insufficient rights to view this user."
+msgid "You have insufficient permissions to mention other users."
+msgstr "Vous n'avez pas les droits suffisants pour consulter cet utilisateur."
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
 msgid "You have insufficient rights to view this organization."
 msgstr ""
@@ -17757,6 +17776,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
@@ -17804,6 +17824,7 @@ msgstr "User Agent Zammad"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
@@ -18358,12 +18379,6 @@ msgstr "a déjà été pris"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
 msgstr "a changé"
-
-#: lib/validations/mention_validator.rb
-#, fuzzy
-#| msgid "Not allowed to access this task."
-msgid "has no agent access to this ticket"
-msgstr "n'a pas l'autorisation agent pour accéder à ce ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -18920,10 +18935,6 @@ msgstr "supprimer"
 msgid "remove option"
 msgstr "supprimer l'option"
 
-#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
-msgid "removed"
-msgstr "supprimé"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
@@ -19265,6 +19276,9 @@ msgstr "... de toute la zone de texte"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
+
+#~ msgid "removed"
+#~ msgstr "supprimé"
 
 #~ msgid "Agent and customer users can be grouped into organizations."
 #~ msgstr "Opérateurs et clients peuvent être groupés dans des organisations."

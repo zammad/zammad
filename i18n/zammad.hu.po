@@ -279,8 +279,8 @@ msgid ""
 "<div>The country has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -305,8 +305,8 @@ msgstr ""
 "<div>Az ország hozzá lett adva az ismert eszközök listájához, amelyet itt "
 "tekinthet meg:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Amennyiben ez nem Ön volt, kérjük, távolítsa el az eszközt, változtassa "
 "meg fiókja jelszavát, és lépjen kapcsolatba a rendszergazdájával. Valaki "
@@ -334,8 +334,8 @@ msgid ""
 "<div>Your device has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -359,8 +359,8 @@ msgstr ""
 "<div>Az Ön eszköze felkerült az ismert eszközök listájára, amelyet itt "
 "tekinthet meg:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Amennyiben ez nem Ön volt, kérjük, távolítsa el az eszközt, változtassa "
 "meg fiókja jelszavát, és lépjen kapcsolatba a rendszergazdájával. Valaki "
@@ -856,6 +856,12 @@ msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
 "Az aktív importáló háttérrendszerek listája, amely automatikusan ütemezésre "
 "kerül."
+
+#: lib/validations/mention_validator.rb
+#, fuzzy
+#| msgid "has no agent access to this ticket"
+msgid "A mentioned user has no agent access to this ticket"
+msgstr "nincs ügynöki hozzáférése ehhez a jegyhez"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -6177,8 +6183,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -6680,6 +6686,7 @@ msgid "Forgot Password Screen"
 msgstr "Elfelejtett jelszó képernyő"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "Elfelejtette a jelszót?"
@@ -7377,6 +7384,7 @@ msgstr "Ünnepek"
 msgid "Holidays iCalendar Feed"
 msgstr "Ünnepek iCalendar hírfolyam"
 
+#: app/frontend/apps/desktop/pages/home/routes.ts
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -8551,7 +8559,7 @@ msgstr "Bővebben"
 msgid "Loading content"
 msgstr "Tartalom betöltése"
 
-#: app/views/mobile/index.html.erb
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading failed, please try again later."
 msgstr "A betöltés nem sikerült, kérjük, próbálja meg később újra."
 
@@ -8569,7 +8577,8 @@ msgstr "A betöltés nem sikerült."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
-#: app/frontend/shared/form/i18n/locales.ts app/views/mobile/index.html.erb
+#: app/frontend/shared/form/i18n/locales.ts
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading…"
 msgstr "Betöltés…"
 
@@ -8630,6 +8639,7 @@ msgstr ""
 "hitelesítési módszerét."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
@@ -10402,6 +10412,7 @@ msgstr "Szülő"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10731,6 +10742,7 @@ msgstr "Postmaster szűrő"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Powered by"
@@ -11100,6 +11112,7 @@ msgstr "Alkalmazás újratöltése"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "Emlékezzen rám"
@@ -12489,6 +12502,10 @@ msgstr "Megjelenített bejegyzések a hívásnaplóban."
 msgid "Shown when the chat is closed."
 msgstr "Akkor jelenik meg, amikor a csevegés zárva van."
 
+#: app/frontend/apps/desktop/AppDesktop.vue
+msgid "Sidebar"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr "Oldalsáv csatolmányok"
@@ -12520,6 +12537,8 @@ msgstr "Kijelentkezés"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
+#: app/frontend/apps/desktop/pages/login/routes.ts
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
@@ -12703,8 +12722,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid ""
 "Some system settings have changed, please restart all Zammad processes! If "
-"you want to do this automatically, set environment variable APP_RESTART_CMD="
-"\"/path/to/your_app_script.sh restart\"."
+"you want to do this automatically, set environment variable "
+"APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 "Néhány rendszerbeállítás megváltozott, kérjük, indítsa újra az összes Zammad "
 "folyamatot! Amennyiben ezt automatikusan szeretné elvégezni, állítsa be az "
@@ -12806,8 +12825,8 @@ msgid ""
 "Starting with Zammad 5.1, translations can be contributed exclusively via "
 "\"translations.zammad.org\" %l."
 msgstr ""
-"A Zammad 5.1-től kezdve a fordításokhoz kizárólag a \"translations.zammad.org"
-"\" %l oldalon keresztül lehet hozzájárulni."
+"A Zammad 5.1-től kezdve a fordításokhoz kizárólag a \"translations.zammad."
+"org\" %l oldalon keresztül lehet hozzájárulni."
 
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
@@ -14502,8 +14521,8 @@ msgstr "Ennek a mezőnek a kitöltése kötelező."
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr ""
-"Ez a mező nem érvényes dátum, kérjük, használja a következő formátumot: \"%s"
-"\"."
+"Ez a mező nem érvényes dátum, kérjük, használja a következő formátumot: "
+"\"%s\"."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be a symbol."
@@ -14896,6 +14915,7 @@ msgid "Ticket Owner"
 msgstr "Jegyet megtekintők"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Ticket title"
 msgid "Ticket Priorities"
@@ -14918,6 +14938,7 @@ msgid "Ticket State"
 msgstr "Jegy címe"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Ticket title"
 msgid "Ticket States"
@@ -15057,8 +15078,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -15363,8 +15384,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
-"To revert back to the default payload, simply turn off the \"Custom Payload"
-"\" switch above."
+"To revert back to the default payload, simply turn off the \"Custom "
+"Payload\" switch above."
 msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -15949,8 +15970,8 @@ msgstr ""
 "<div>Üdvözöljük #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"A jegyet (#{ticket.title}) frissítette: \"<b>#{current_user.longname}</b>"
-"\".\n"
+"A jegyet (#{ticket.title}) frissítette: \"<b>#{current_user.longname}</"
+"b>\".\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:changes].present? %>\n"
@@ -15972,9 +15993,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"   <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<"
-"% if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
-"\">Tekintse meg ebben: #{config.product_name}</a>\n"
+"   <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}"
+"<% if @objects[:article] %>/#{article.id}<% end %>\" "
+"target=\"zammad_app\">Tekintse meg ebben: #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -16189,6 +16210,7 @@ msgstr ""
 msgid "Username"
 msgstr "Felhasználónév"
 
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Username / Email"
 msgstr "Felhasználónév / E-mail cím"
@@ -16243,8 +16265,8 @@ msgid ""
 "1. As an **agent** you don't just have an overview of the open tickets for "
 "one person but an **overview over their whole organization**.\n"
 "2. As a **customer** you can also check the **tickets which your colleagues "
-"created** and modify their tickets (if your organization is set to \"shared"
-"\", which can be defined per organization)."
+"created** and modify their tickets (if your organization is set to "
+"\"shared\", which can be defined per organization)."
 msgstr ""
 "A **szervezetek** segítségével **csoportosíthatja** az ügyfeleket. Ennek két "
 "fő előnye van:\n"
@@ -17000,6 +17022,13 @@ msgstr "Nincs meg a szükséges jogosultsága az oldal eléréséhez."
 msgid "You have exceeded the character limit by %s"
 msgstr "Túllépte a karakterkorlátot %s értékkel"
 
+#: app/policies/ticket_policy.rb
+#, fuzzy
+#| msgid "You have insufficient rights to view this user."
+msgid "You have insufficient permissions to mention other users."
+msgstr ""
+"Ön nem rendelkezik elegendő joggal ennek a felhasználónak a megtekintéséhez."
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
 msgid "You have insufficient rights to view this organization."
 msgstr ""
@@ -17201,6 +17230,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
@@ -17248,6 +17278,7 @@ msgstr "Zammad felhasználói ügynök"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
@@ -17787,10 +17818,6 @@ msgstr "már foglalt"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
 msgstr "megváltozott"
-
-#: lib/validations/mention_validator.rb
-msgid "has no agent access to this ticket"
-msgstr "nincs ügynöki hozzáférése ehhez a jegyhez"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -18342,10 +18369,6 @@ msgstr "eltávolít"
 msgid "remove option"
 msgstr "lehetőség eltávolítása"
 
-#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
-msgid "removed"
-msgstr "eltávolított"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
@@ -18679,6 +18702,9 @@ msgstr "...a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#~ msgid "removed"
+#~ msgstr "eltávolított"
 
 #~ msgid "Agent and customer users can be grouped into organizations."
 #~ msgstr "Az ügynök- és ügyfélfelhasználók szervezetekbe csoportosíthatók."

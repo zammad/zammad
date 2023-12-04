@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-11-28 02:05+0000\n"
+"PO-Revision-Date: 2023-11-29 13:33+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0.2\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.2.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -273,8 +273,8 @@ msgid ""
 "<div>The country has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -298,8 +298,8 @@ msgstr ""
 "<div>Држава је додата на вашу листу познатих уређаја, коју можете прегледати "
 "овде:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Уколико ово нисте били ви, молимо уклоните уређај, промените вашу "
 "лозинку и контактирајте свог администратора. Постоји могућност да је неко "
@@ -327,8 +327,8 @@ msgid ""
 "<div>Your device has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -352,8 +352,8 @@ msgstr ""
 "<div>Уређај је додат на листу познатих уређаја, коју можете прегледати овде:"
 "</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Уколико ово нисте били ви, молимо уклоните уређај, промените вашу "
 "лозинку и контактирајте свог администратора. Постоји могућност да је неко "
@@ -844,6 +844,12 @@ msgstr "URL изгледа овако: https://zammad.example.com"
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "Листа активних позадинских модула увоза који се аутоматски планирају."
+
+#: lib/validations/mention_validator.rb
+#, fuzzy
+#| msgid "has no agent access to this ticket"
+msgid "A mentioned user has no agent access to this ticket"
+msgstr "нема приступ оператера тикету"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -6007,8 +6013,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -6491,6 +6497,7 @@ msgid "Forgot Password Screen"
 msgstr "Страна заборављене лозинке"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "Заборављена лозинка?"
@@ -7162,6 +7169,7 @@ msgstr "Празници"
 msgid "Holidays iCalendar Feed"
 msgstr "iCalendar извор празника"
 
+#: app/frontend/apps/desktop/pages/home/routes.ts
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -8308,7 +8316,7 @@ msgstr "Учитај више"
 msgid "Loading content"
 msgstr "Учитавање садржаја"
 
-#: app/views/mobile/index.html.erb
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading failed, please try again later."
 msgstr "Неуспешно учитавање, молимо покушајте поново касније."
 
@@ -8326,7 +8334,8 @@ msgstr "Неуспешно учитавање."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
-#: app/frontend/shared/form/i18n/locales.ts app/views/mobile/index.html.erb
+#: app/frontend/shared/form/i18n/locales.ts
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading…"
 msgstr "Учитавање…"
 
@@ -8387,6 +8396,7 @@ msgstr ""
 "аутентификације."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
@@ -10122,6 +10132,7 @@ msgstr "Надређена група"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10448,6 +10459,7 @@ msgstr "Postmaster филтер"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Покреће"
@@ -10803,6 +10815,7 @@ msgstr "Освежи апликацију"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "Запамти ме"
@@ -12169,6 +12182,10 @@ msgstr "Приказани записи евиденције позива."
 msgid "Shown when the chat is closed."
 msgstr "Приказује се када је ћаскање затворено."
 
+#: app/frontend/apps/desktop/AppDesktop.vue
+msgid "Sidebar"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr "Трака са стране прилога"
@@ -12198,6 +12215,8 @@ msgstr "Грешка потписа"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
+#: app/frontend/apps/desktop/pages/login/routes.ts
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
@@ -12377,8 +12396,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid ""
 "Some system settings have changed, please restart all Zammad processes! If "
-"you want to do this automatically, set environment variable APP_RESTART_CMD="
-"\"/path/to/your_app_script.sh restart\"."
+"you want to do this automatically, set environment variable "
+"APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 "Нека системска подешавања су промењена, молимо рестартујте све Zammad "
 "процесе! Уколико желите да се ово деси аутоматски, подесите променљиву "
@@ -14421,6 +14440,7 @@ msgid "Ticket Owner"
 msgstr "Власник тикета"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: db/seeds/permissions.rb
 msgid "Ticket Priorities"
 msgstr "Приоритети тикета"
 
@@ -14437,6 +14457,7 @@ msgid "Ticket State"
 msgstr "Стање тикета"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
+#: db/seeds/permissions.rb
 msgid "Ticket States"
 msgstr "Стања тикета"
 
@@ -14594,8 +14615,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -14890,8 +14911,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
-"To revert back to the default payload, simply turn off the \"Custom Payload"
-"\" switch above."
+"To revert back to the default payload, simply turn off the \"Custom "
+"Payload\" switch above."
 msgstr ""
 "За повратак на подразумеване податке, једноставно искључите дугме "
 "„Прилагођени подаци” изнад."
@@ -15489,8 +15510,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
-"\">Погледај у #{config.product_name}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" "
+"target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -15703,6 +15724,7 @@ msgstr ""
 msgid "Username"
 msgstr "Корисничко име"
 
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Username / Email"
 msgstr "Корисничко име / имејл"
@@ -15757,8 +15779,8 @@ msgid ""
 "1. As an **agent** you don't just have an overview of the open tickets for "
 "one person but an **overview over their whole organization**.\n"
 "2. As a **customer** you can also check the **tickets which your colleagues "
-"created** and modify their tickets (if your organization is set to \"shared"
-"\", which can be defined per organization)."
+"created** and modify their tickets (if your organization is set to "
+"\"shared\", which can be defined per organization)."
 msgstr ""
 "Коришћењем **организација** можете **груписати** клијенте. Ово вам даје две "
 "предности:\n"
@@ -16507,6 +16529,12 @@ msgstr "Немате довољно дозвола за приступ овој 
 msgid "You have exceeded the character limit by %s"
 msgstr "Прекорачили сте дозвољени број знакова за %s"
 
+#: app/policies/ticket_policy.rb
+#, fuzzy
+#| msgid "You have insufficient rights to view this user."
+msgid "You have insufficient permissions to mention other users."
+msgstr "Немате дозволу за приступ овом кориснику."
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
 msgid "You have insufficient rights to view this organization."
 msgstr "Немате дозволу за приступ овој организацији."
@@ -16705,6 +16733,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
@@ -16752,6 +16781,7 @@ msgstr "Zammad User Agent"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
@@ -16773,11 +16803,6 @@ msgid "Zammad requires a restart!"
 msgstr "Zammad захтева рестарт!"
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
-#, fuzzy
-#| msgid ""
-#| "Zammad uses state types to know what it should do with your state. This "
-#| "allows you to have different types like pending actions, pending "
-#| "reminders or closed states."
 msgid ""
 "Zammad uses state types to know what it should do with your state. This "
 "allows you to have different types like pending actions, pending reminders "
@@ -16786,7 +16811,8 @@ msgid ""
 msgstr ""
 "Zammad користи типове стања да би знао шта да ради са вашим стањем. Ово вам "
 "омогућава да имате различите типове као што су радње на чекању, подсетници "
-"на чекању или затворена стања."
+"на чекању или затворена стања. Погледајте нашу документацију системских "
+"објеката за више детаља."
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 msgid "Zendesk"
@@ -17293,10 +17319,6 @@ msgstr "је већ заузето"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
 msgstr "је измењено"
-
-#: lib/validations/mention_validator.rb
-msgid "has no agent access to this ticket"
-msgstr "нема приступ оператера тикету"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -17838,10 +17860,6 @@ msgstr "уклони"
 msgid "remove option"
 msgstr "уклони опцију"
 
-#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
-msgid "removed"
-msgstr "учлоњено"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
@@ -18172,6 +18190,9 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "removed"
+#~ msgstr "учлоњено"
 
 #~ msgid "Agent and customer users can be grouped into organizations."
 #~ msgstr "Оператери и клијенти се могу груписати у организације."

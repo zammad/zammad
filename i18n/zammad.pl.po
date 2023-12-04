@@ -273,8 +273,8 @@ msgid ""
 "<div>The country has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -298,8 +298,8 @@ msgstr ""
 "<div>Kraj został dodany do Twojej listy znanych urządzeń, którą możesz "
 "zobaczyć tutaj:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Jeśli to nie Ty, usuń urządzenie, zmień hasło do konta i skontaktuj się "
 "z administratorem. Ktoś mógł uzyskać nieautoryzowany dostęp do Twojego konta."
@@ -327,8 +327,8 @@ msgid ""
 "<div>Your device has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -352,8 +352,8 @@ msgstr ""
 "<div>Twoje urządzenie zostało dodane do listy znanych urządzeń, którą możesz "
 "wyświetlić tutaj:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Jeśli to nie Ty, usuń urządzenie, zmień hasło do konta i skontaktuj się "
 "z administratorem. Ktoś mógł uzyskać nieautoryzowany dostęp do Twojego konta."
@@ -855,6 +855,12 @@ msgstr "Adres URL powinien wyglądać tak: https://zammad.domenamojafirma.pl"
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
 "Lista aktywnych backendów importu, które zostaną zaplanowane automatycznie."
+
+#: lib/validations/mention_validator.rb
+#, fuzzy
+#| msgid "has no agent access to this ticket"
+msgid "A mentioned user has no agent access to this ticket"
+msgstr "agent nie ma dostępu do tego zgłoszenia"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -6089,8 +6095,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -6576,6 +6582,7 @@ msgid "Forgot Password Screen"
 msgstr "Ekran zapomnianego hasła"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "Zapomniałeś hasła?"
@@ -7253,6 +7260,7 @@ msgstr "wakacje"
 msgid "Holidays iCalendar Feed"
 msgstr "Zasilenie dniami wolnymi z iCalendar"
 
+#: app/frontend/apps/desktop/pages/home/routes.ts
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -8404,7 +8412,7 @@ msgstr "Załaduj więcej"
 msgid "Loading content"
 msgstr "Ładowanie treści"
 
-#: app/views/mobile/index.html.erb
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading failed, please try again later."
 msgstr "Ładowanie nie powiodło się, proszę spróbować ponownie."
 
@@ -8422,7 +8430,8 @@ msgstr "Ładowanie nie powiodło się."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
-#: app/frontend/shared/form/i18n/locales.ts app/views/mobile/index.html.erb
+#: app/frontend/shared/form/i18n/locales.ts
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading…"
 msgstr "Ładowanie…"
 
@@ -8483,6 +8492,7 @@ msgstr ""
 "dwuskładnikowego."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
@@ -10227,6 +10237,7 @@ msgstr "Grupa rodziców"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10556,6 +10567,7 @@ msgstr "Filtr postmastera"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Zasilane przez"
@@ -10914,6 +10926,7 @@ msgstr "Załaduj ponownie aplikację"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "Zapamiętaj mnie"
@@ -12288,6 +12301,10 @@ msgstr "Wyświetlane rekordy w dzienniku rozmówców."
 msgid "Shown when the chat is closed."
 msgstr "Pokazuj, gdy czat jest zamknięty."
 
+#: app/frontend/apps/desktop/AppDesktop.vue
+msgid "Sidebar"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr "Załączniki paska bocznego"
@@ -12317,6 +12334,8 @@ msgstr "Błąd Podpisu"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
+#: app/frontend/apps/desktop/pages/login/routes.ts
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
@@ -12499,8 +12518,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid ""
 "Some system settings have changed, please restart all Zammad processes! If "
-"you want to do this automatically, set environment variable APP_RESTART_CMD="
-"\"/path/to/your_app_script.sh restart\"."
+"you want to do this automatically, set environment variable "
+"APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 "Niektóre ustawienia systemu uległy zmianie, uruchom ponownie wszystkie "
 "procesy Zammad! Jeśli chcesz zrobić to automatycznie, ustaw zmienną "
@@ -14566,6 +14585,7 @@ msgid "Ticket Owner"
 msgstr "Właściciel zgłoszenia"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: db/seeds/permissions.rb
 msgid "Ticket Priorities"
 msgstr "Priorytety Zgłoszenia"
 
@@ -14582,6 +14602,7 @@ msgid "Ticket State"
 msgstr "Stan Zgłoszenia"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
+#: db/seeds/permissions.rb
 msgid "Ticket States"
 msgstr "Stany Zgłoszenia"
 
@@ -14739,8 +14760,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -15040,8 +15061,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
-"To revert back to the default payload, simply turn off the \"Custom Payload"
-"\" switch above."
+"To revert back to the default payload, simply turn off the \"Custom "
+"Payload\" switch above."
 msgstr ""
 "Aby przywrócić domyślny ładunek, wystarczy wyłączyć przełącznik „Custom "
 "Payload” powyżej."
@@ -15645,8 +15666,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
-"\">Zobacz w #{config.product_name}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" "
+"target=\"zammad_app\">Zobacz w #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -15862,6 +15883,7 @@ msgstr ""
 msgid "Username"
 msgstr "Nazwa użytkownika"
 
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Username / Email"
 msgstr "Nazwa użytkownika / E-mail"
@@ -15916,8 +15938,8 @@ msgid ""
 "1. As an **agent** you don't just have an overview of the open tickets for "
 "one person but an **overview over their whole organization**.\n"
 "2. As a **customer** you can also check the **tickets which your colleagues "
-"created** and modify their tickets (if your organization is set to \"shared"
-"\", which can be defined per organization)."
+"created** and modify their tickets (if your organization is set to "
+"\"shared\", which can be defined per organization)."
 msgstr ""
 "Używając **organizacji** możesz **grupować** klientów. Ma to dwie główne "
 "zalety:\n"
@@ -16666,6 +16688,12 @@ msgstr "Nie masz niezbędnych uprawnień, aby uzyskać dostęp do tej strony."
 msgid "You have exceeded the character limit by %s"
 msgstr "Przekroczyłeś limit znaków o %s"
 
+#: app/policies/ticket_policy.rb
+#, fuzzy
+#| msgid "You have insufficient rights to view this user."
+msgid "You have insufficient permissions to mention other users."
+msgstr "Nie masz wystarczających uprawnień, aby wyświetlić tego użytkownika."
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
 msgid "You have insufficient rights to view this organization."
 msgstr "Nie masz wystarczających uprawnień, aby wyświetlić tę organizację."
@@ -16866,6 +16894,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
@@ -16913,6 +16942,7 @@ msgstr "Agent użytkownika Zammad"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
@@ -17457,10 +17487,6 @@ msgstr "została już zajęta"
 msgid "has changed"
 msgstr "zmieniony"
 
-#: lib/validations/mention_validator.rb
-msgid "has no agent access to this ticket"
-msgstr "agent nie ma dostępu do tego zgłoszenia"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "has reached"
@@ -18001,10 +18027,6 @@ msgstr "usunąć"
 msgid "remove option"
 msgstr "usuń opcje"
 
-#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
-msgid "removed"
-msgstr "usunięte"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
@@ -18304,8 +18326,8 @@ msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
-"Zwiększa numer zgłoszenia, SystemID i licznik w formacie \"SystemID.Counter"
-"\" (np. 1010138, 1010139)."
+"Zwiększa numer zgłoszenia, SystemID i licznik w formacie \"SystemID."
+"Counter\" (np. 1010138, 1010139)."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Left| means |[Ticket#12345] Some Subject|"
@@ -18338,6 +18360,9 @@ msgstr "...całego pola tekstowego"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ dzisiejszy czas oczekiwania"
+
+#~ msgid "removed"
+#~ msgstr "usunięte"
 
 #~ msgid "Agent and customer users can be grouped into organizations."
 #~ msgstr "Agenci i klienci mogą być grupowani w organizacje."

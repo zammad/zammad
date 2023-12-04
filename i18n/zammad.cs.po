@@ -276,8 +276,8 @@ msgid ""
 "<div>The country has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -301,8 +301,8 @@ msgstr ""
 "<div>Tento stát bude přidán do seznamu známých zařízení, jenž můžete "
 "shlédnout v níže zmíněném odkazu:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Pokud jste to nebyli Vy, odstraňte toto zařízení ze seznamu, změňte své "
 "heslo, případně smažte osobní přístupové tokeny a kontaktujte správce. Někdo "
@@ -330,8 +330,8 @@ msgid ""
 "<div>Your device has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -355,8 +355,8 @@ msgstr ""
 "<div>Vaše zařízení bylo přidáno do vašeho seznamu známých zařízení, jenž si "
 "můžete prohlédnout na níže zmíněném odkazu:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Pokud jste to nebyli Vy, odstraňte toto zařízení ze seznamu, změňte své "
 "heslo, případně smažte osobní přístupové tokeny a co nejdříve kontaktujte "
@@ -840,6 +840,12 @@ msgstr "URL vypadá jako například: https://zammad.priklad.cz"
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "Seznam aktivních zdrojů importu, který je naplánován automaticky."
+
+#: lib/validations/mention_validator.rb
+#, fuzzy
+#| msgid "has no agent access to this ticket"
+msgid "A mentioned user has no agent access to this ticket"
+msgstr "nemá agenta pro přístup k tomuto ticketu"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -4564,9 +4570,9 @@ msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
 msgstr ""
-"Definuje filtr správce pošty, který nastaví viditelnost článků jako \"interní"
-"\", pokud závisí na interním článku nebo pokud poslední odchozí e-mail je "
-"také interní."
+"Definuje filtr správce pošty, který nastaví viditelnost článků jako "
+"\"interní\", pokud závisí na interním článku nebo pokud poslední odchozí e-"
+"mail je také interní."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter."
@@ -6068,8 +6074,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -6089,8 +6095,8 @@ msgstr ""
 "\n"
 "<div>Dobrý den, #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>ticket (#{ticket.title}) zákazníka \"<b>#{ticket.customer.longname}</b>"
-"\" eskaloval \"#{ticket.escalation_at}\"!</div>\n"
+"<div>ticket (#{ticket.title}) zákazníka \"<b>#{ticket.customer.longname}</"
+"b>\" eskaloval \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -6560,6 +6566,7 @@ msgid "Forgot Password Screen"
 msgstr "Obrazovka zapomenutého hesla"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "Zapoměl(a) jste heslo?"
@@ -7254,6 +7261,7 @@ msgstr "Svátky"
 msgid "Holidays iCalendar Feed"
 msgstr "iCalendar zdroj pro svátky"
 
+#: app/frontend/apps/desktop/pages/home/routes.ts
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -8419,7 +8427,7 @@ msgstr "Načíst další"
 msgid "Loading content"
 msgstr "Nahrávání obsahu"
 
-#: app/views/mobile/index.html.erb
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading failed, please try again later."
 msgstr "Načítání selhalo, prosím zkuste načtení znovu později."
 
@@ -8437,7 +8445,8 @@ msgstr "Nahrávání se nezdařilo."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
-#: app/frontend/shared/form/i18n/locales.ts app/views/mobile/index.html.erb
+#: app/frontend/shared/form/i18n/locales.ts
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading…"
 msgstr "Načítám…"
 
@@ -8498,6 +8507,7 @@ msgstr ""
 "faktorovou autentizaci."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
@@ -10265,6 +10275,7 @@ msgstr "Nadřazený"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10591,6 +10602,7 @@ msgstr "Filtr správce pošty"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Powered by"
@@ -10961,6 +10973,7 @@ msgstr "Znovu načíst aplikaci"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "Zapamatovat si mne"
@@ -12367,6 +12380,10 @@ msgstr "Zobrazených záznamů v historii volání."
 msgid "Shown when the chat is closed."
 msgstr "Zobrazí se, když je chat zavřený."
 
+#: app/frontend/apps/desktop/AppDesktop.vue
+msgid "Sidebar"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr "Přílohy bočního panelu"
@@ -12397,6 +12414,8 @@ msgstr "Odhlásit"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
+#: app/frontend/apps/desktop/pages/login/routes.ts
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
@@ -12514,8 +12533,8 @@ msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
 "<strong>%s</strong> was closed."
 msgstr ""
-"Jelikož jste nereagovali v posledních %s minutách, vaše konverzace s <strong>"
-"%s</strong> byla uzavřena."
+"Jelikož jste nereagovali v posledních %s minutách, vaše konverzace s "
+"<strong>%s</strong> byla uzavřena."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Single selection field"
@@ -12581,8 +12600,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid ""
 "Some system settings have changed, please restart all Zammad processes! If "
-"you want to do this automatically, set environment variable APP_RESTART_CMD="
-"\"/path/to/your_app_script.sh restart\"."
+"you want to do this automatically, set environment variable "
+"APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 "Některá systémová nastavení se změnila, restartujte prosím všechny procesy "
 "Zammadu! Pokud si přejete, aby se tak dělo automaticky, nastavte proměnnou "
@@ -14740,6 +14759,7 @@ msgid "Ticket Owner"
 msgstr "Zobrazení ticketu"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Ticket title"
 msgid "Ticket Priorities"
@@ -14762,6 +14782,7 @@ msgid "Ticket State"
 msgstr "Titulek ticketu"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Ticket title"
 msgid "Ticket States"
@@ -14922,8 +14943,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -14943,8 +14964,8 @@ msgstr ""
 "\n"
 "<div>Dobrý den, #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>ticket (#{ticket.title}) uživatele \"<b>#{ticket.customer.longname}</b>"
-"\" bude \"#{ticket.escalation_at}\" eskalovat!</div>\n"
+"<div>ticket (#{ticket.title}) uživatele \"<b>#{ticket.customer.longname}</"
+"b>\" bude \"#{ticket.escalation_at}\" eskalovat!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -15231,8 +15252,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
-"To revert back to the default payload, simply turn off the \"Custom Payload"
-"\" switch above."
+"To revert back to the default payload, simply turn off the \"Custom "
+"Payload\" switch above."
 msgstr ""
 "K navrácení základní přílohy, jednoduše vypněte přepínač \"Vlastní příloha\" "
 "nahoře."
@@ -15857,8 +15878,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
-"\">Zobrazit v aplikaci #{config.product_name}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" "
+"target=\"zammad_app\">Zobrazit v aplikaci #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -16072,6 +16093,7 @@ msgstr ""
 msgid "Username"
 msgstr "Uživatelské jméno"
 
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Username / Email"
 msgstr "Uživatelské jméno / E-mail"
@@ -16126,8 +16148,8 @@ msgid ""
 "1. As an **agent** you don't just have an overview of the open tickets for "
 "one person but an **overview over their whole organization**.\n"
 "2. As a **customer** you can also check the **tickets which your colleagues "
-"created** and modify their tickets (if your organization is set to \"shared"
-"\", which can be defined per organization)."
+"created** and modify their tickets (if your organization is set to "
+"\"shared\", which can be defined per organization)."
 msgstr ""
 "Použitím **organizací** můžete seskupovat zákazníky do **skupin**. To má dvě "
 "hlavní výhody:\n"
@@ -16633,9 +16655,9 @@ msgid ""
 "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgstr ""
 "S |Datem| budou čísla ticketů generována dle aktuálního data, systémového ID "
-"a počítadla. Výsledek bude ve formátu \"Rok.Měsíc.Den.SystémovéID.Počítadlo"
-"\" (např. 201706231010138 kde 2017 je rok, 06 měsíc, 23 den v měsíci, 101 "
-"systémové ID a 0138 hodnota počítadla)."
+"a počítadla. Výsledek bude ve formátu \"Rok.Měsíc.Den.SystémovéID."
+"Počítadlo\" (např. 201706231010138 kde 2017 je rok, 06 měsíc, 23 den v "
+"měsíci, 101 systémové ID a 0138 hodnota počítadla)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Woo hoo! Your email address has been verified!"
@@ -16879,6 +16901,12 @@ msgstr "Pro přístup k této stránce nemáte potřebná oprávnění."
 msgid "You have exceeded the character limit by %s"
 msgstr "Překročili jste maximální limit znaků o %s"
 
+#: app/policies/ticket_policy.rb
+#, fuzzy
+#| msgid "You have insufficient rights to view this user."
+msgid "You have insufficient permissions to mention other users."
+msgstr "Nemáte dostatečná oprávnění pro zobrazení tohoto uživatele."
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
 msgid "You have insufficient rights to view this organization."
 msgstr "Nemáte dostatečná práva pro zobrazení této organizace."
@@ -17078,6 +17106,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
@@ -17125,6 +17154,7 @@ msgstr "Zammad User Agent"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
@@ -17665,10 +17695,6 @@ msgstr "je již obsazeno"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
 msgstr "byl změněn"
-
-#: lib/validations/mention_validator.rb
-msgid "has no agent access to this ticket"
-msgstr "nemá agenta pro přístup k tomuto ticketu"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -18223,10 +18249,6 @@ msgstr "odstranit"
 msgid "remove option"
 msgstr "odstranit možnost"
 
-#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
-msgid "removed"
-msgstr "odstraněno"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
@@ -18560,6 +18582,9 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#~ msgid "removed"
+#~ msgstr "odstraněno"
 
 #~ msgid "Agent and customer users can be grouped into organizations."
 #~ msgstr "Agenti a zákazníci mohou být zařazeni do organizací."

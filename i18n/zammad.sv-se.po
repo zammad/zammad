@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-11-28 02:05+0000\n"
+"PO-Revision-Date: 2023-12-02 02:07+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.2\n"
+"X-Generator: Weblate 5.2.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -271,8 +271,8 @@ msgid ""
 "<div>The country has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -296,8 +296,8 @@ msgstr ""
 "<div>Landet är tillagt till din lista på kända enheter, som du kan se här:</"
 "div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Om det inte var du, ta genast bort enheten från listan, byt ditt "
 "lösenord samt kontakta din administratör. Någon kan ha fått tillgång till "
@@ -325,8 +325,8 @@ msgid ""
 "<div>Your device has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -339,7 +339,7 @@ msgstr ""
 "<div>Hej #{user.firstname},</div>\n"
 "<br>\n"
 "<div>Det ser ut som att du har loggat in på ditt konto <b>med en ny enhet</"
-"b> vid den \"#{user_device.created_at}\":</div>\n"
+"b> den: #{user_device.created_at}</div>\n"
 "<br>\n"
 "<div>\n"
 "Din enhet: #{user_device.name}<br>\n"
@@ -350,8 +350,8 @@ msgstr ""
 "<div>Din enhet har lagts till i din lista med kända enheter, du kan se "
 "listan här:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Om det inte var du, ta genast bort enheten från listan, byt ditt "
 "lösenord samt kontakta din administratör. Någon kan ha fått tillgång till "
@@ -790,7 +790,7 @@ msgstr "3 hög"
 
 #: db/seeds/settings.rb
 msgid "3 weeks"
-msgstr "tre veckor"
+msgstr "3 veckor"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "3. Ticket Reminder Reached"
@@ -798,7 +798,7 @@ msgstr "3. Ärende-påminnelsetid nådd"
 
 #: db/seeds/settings.rb
 msgid "4 weeks"
-msgstr "fyra veckor"
+msgstr "4 veckor"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "4. Ticket Escalation"
@@ -841,6 +841,12 @@ msgstr "En URL ser ut såhär: https://zammad.example.com"
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "En lista med aktiva import-backendar som körs automatiskt."
+
+#: lib/validations/mention_validator.rb
+#, fuzzy
+#| msgid "has no agent access to this ticket"
+msgid "A mentioned user has no agent access to this ticket"
+msgstr "har ingen agentåtkomst till detta ärende"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -6020,8 +6026,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -6071,7 +6077,7 @@ msgstr "Eskaleringstider"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at"
-msgstr "Eskalera vid"
+msgstr "Eskaleras om"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -6505,6 +6511,7 @@ msgid "Forgot Password Screen"
 msgstr "Glömt lösenord-sidan"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "Glömt lösenord?"
@@ -7177,6 +7184,7 @@ msgstr "LEDIGA DAGAR"
 msgid "Holidays iCalendar Feed"
 msgstr "iCalendar-flöde med helgdagar"
 
+#: app/frontend/apps/desktop/pages/home/routes.ts
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -8324,7 +8332,7 @@ msgstr "Läs in fler"
 msgid "Loading content"
 msgstr "Läser in innehåll"
 
-#: app/views/mobile/index.html.erb
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading failed, please try again later."
 msgstr "Laddningen misslyckades, försök igen senare."
 
@@ -8342,7 +8350,8 @@ msgstr "Sidan kunde inte laddas."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
-#: app/frontend/shared/form/i18n/locales.ts app/views/mobile/index.html.erb
+#: app/frontend/shared/form/i18n/locales.ts
+#: app/views/init/spinner-loading.html.erb
 msgid "Loading…"
 msgstr "Läser in …"
 
@@ -8402,6 +8411,7 @@ msgstr ""
 "Inloggningen misslyckades. Kontrollera din två-faktorautentiseringsmetod."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
@@ -10139,6 +10149,7 @@ msgstr "Föräldergrupp"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10465,6 +10476,7 @@ msgstr "Postmaster-filter"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Powered by"
@@ -10822,6 +10834,7 @@ msgstr "Ladda om applikationen"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "Kom ihåg mig"
@@ -12184,6 +12197,10 @@ msgstr "Visade poster i samtalslog."
 msgid "Shown when the chat is closed."
 msgstr "Visas när chatten är stängd."
 
+#: app/frontend/apps/desktop/AppDesktop.vue
+msgid "Sidebar"
+msgstr "Sidomeny"
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr "Sidofältsbilagor"
@@ -12212,6 +12229,8 @@ msgstr "Logga ut fel"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
+#: app/frontend/apps/desktop/pages/login/routes.ts
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
@@ -12389,8 +12408,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid ""
 "Some system settings have changed, please restart all Zammad processes! If "
-"you want to do this automatically, set environment variable APP_RESTART_CMD="
-"\"/path/to/your_app_script.sh restart\"."
+"you want to do this automatically, set environment variable "
+"APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 "Vissa systeminställningar har ändrats, var vänlig starta om alla Zammad-"
 "processer! Om du vill att detta ska göras automatiskt, ange miljövariabeln "
@@ -14450,6 +14469,7 @@ msgid "Ticket Owner"
 msgstr "Ärendeägare"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
+#: db/seeds/permissions.rb
 msgid "Ticket Priorities"
 msgstr "Ärendeprioriteringar"
 
@@ -14466,6 +14486,7 @@ msgid "Ticket State"
 msgstr "Ärendestatus"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
+#: db/seeds/permissions.rb
 msgid "Ticket States"
 msgstr "Ärendestatus"
 
@@ -14623,8 +14644,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -14922,8 +14943,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
-"To revert back to the default payload, simply turn off the \"Custom Payload"
-"\" switch above."
+"To revert back to the default payload, simply turn off the \"Custom "
+"Payload\" switch above."
 msgstr ""
 "Om du vill återgå till standardpayload stänger du av \"Anpassad payload\" "
 "ovan."
@@ -15497,8 +15518,8 @@ msgstr ""
 "<div>Hej #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Ärende (#{ticket.title}) har uppdatrats av \"<b>#{current_user.longname}</b>"
-"\".\n"
+"Ärende (#{ticket.title}) har uppdatrats av \"<b>#{current_user.longname}</"
+"b>\".\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:changes].present? %>\n"
@@ -15736,6 +15757,7 @@ msgstr ""
 msgid "Username"
 msgstr "Användarnamn"
 
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Username / Email"
 msgstr "Användarnamn / mejl-adress"
@@ -15790,8 +15812,8 @@ msgid ""
 "1. As an **agent** you don't just have an overview of the open tickets for "
 "one person but an **overview over their whole organization**.\n"
 "2. As a **customer** you can also check the **tickets which your colleagues "
-"created** and modify their tickets (if your organization is set to \"shared"
-"\", which can be defined per organization)."
+"created** and modify their tickets (if your organization is set to "
+"\"shared\", which can be defined per organization)."
 msgstr ""
 "Med hjälp av **organisationer** kan du **gruppera** kunder. Detta har två "
 "huvudsakliga fördelar:\n"
@@ -15799,8 +15821,8 @@ msgstr ""
 "1. Som **agent** har du inte bara en översikt över de öppna ärendena för en "
 "person utan en **översikt över hela deras organisation**.\n"
 "2. Som **kund** kan du också kontrollera de **ärenden som dina kollegor har "
-"skapat** och ändra deras ärenden (om din organisation är inställd som \"delad"
-"\", vilket kan definieras per organisation)."
+"skapat** och ändra deras ärenden (om din organisation är inställd som "
+"\"delad\", vilket kan definieras per organisation)."
 
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/object_manager_attributes.rb
@@ -16538,6 +16560,12 @@ msgstr ""
 msgid "You have exceeded the character limit by %s"
 msgstr "Du har överskridit teckengränsen med %s"
 
+#: app/policies/ticket_policy.rb
+#, fuzzy
+#| msgid "You have insufficient rights to view this user."
+msgid "You have insufficient permissions to mention other users."
+msgstr "Du har inte tillräckliga rättigheter för att se den här användaren."
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
 msgid "You have insufficient rights to view this organization."
 msgstr "Du har inte tillräckliga rättigheter för att se denna organisation."
@@ -16678,8 +16706,8 @@ msgid ""
 "again via \"add account\"."
 msgstr ""
 "Ditt Twitter-konto använder inte Twitter Account Activity API och är därför "
-"begränsat till sökord. Lägg till/uppdatera kontot igen via \"Lägg till konto"
-"\"."
+"begränsat till sökord. Lägg till/uppdatera kontot igen via \"Lägg till "
+"konto\"."
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid ""
@@ -16735,6 +16763,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"
@@ -16782,6 +16811,7 @@ msgstr "Zammad User Agent"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
@@ -16803,11 +16833,6 @@ msgid "Zammad requires a restart!"
 msgstr "Zammad kräver en omstart!"
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
-#, fuzzy
-#| msgid ""
-#| "Zammad uses state types to know what it should do with your state. This "
-#| "allows you to have different types like pending actions, pending "
-#| "reminders or closed states."
 msgid ""
 "Zammad uses state types to know what it should do with your state. This "
 "allows you to have different types like pending actions, pending reminders "
@@ -16816,7 +16841,8 @@ msgid ""
 msgstr ""
 "Zammad använder statustyper för att veta vad den ska göra med din status. "
 "Detta gör att du kan ha olika typer som väntande åtgärder, väntande "
-"påminnelser eller stängd status."
+"påminnelser eller stängd status. Ta en titt på dokumentationen om "
+"systemobjekt för mer information."
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 msgid "Zendesk"
@@ -17323,10 +17349,6 @@ msgstr "har redan tagits"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
 msgstr "har ändrats"
-
-#: lib/validations/mention_validator.rb
-msgid "has no agent access to this ticket"
-msgstr "har ingen agentåtkomst till detta ärende"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -17871,10 +17893,6 @@ msgstr "radera"
 msgid "remove option"
 msgstr "raderingsalternativ"
 
-#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
-msgid "removed"
-msgstr "borttagen"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
@@ -18205,6 +18223,9 @@ msgstr "... av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "removed"
+#~ msgstr "borttagen"
 
 #~ msgid "Agent and customer users can be grouped into organizations."
 #~ msgstr "Agenter och kunder kan grupperas i organisationer."
