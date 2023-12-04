@@ -367,6 +367,25 @@
           range.surroundContents(nnode)
           nnode.innerHTML = string
     }
+    else if (document.queryCommandSupported && document.queryCommandSupported('insertHTML')) {
+      if(!!window.chrome) { // Is Chrome-like browser? It will eat up the single trailing space!
+        range = document.getSelection().getRangeAt(0)
+
+        var walker         = document.createTreeWalker(document.body, NodeFilter.SHOW_ALL);
+        walker.currentNode = range.startContainer;
+        var previousNode   = walker.previousNode()
+
+        if(previousNode && !range.startContainer.previousSibling && ['<p></p>', '<div></div>'].includes(previousNode.outerHTML)) {
+          document.execCommand('insertHTML', false, "<br><br>")
+        }
+
+        if(range && range.endContainer.textContent && range.endContainer.textContent.match(/(?<=\S) $/)) {
+          document.execCommand('insertHTML', false, '&nbsp;')
+        }
+      }
+
+      document.execCommand('insertHTML', false, string)
+    }
     else {
       var sel = rangy.getSelection();
       if (!sel.rangeCount) return
