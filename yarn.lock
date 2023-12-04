@@ -2421,10 +2421,10 @@
     lz-string "^1.5.0"
     pretty-format "^27.0.2"
 
-"@testing-library/jest-dom@^6.1.4":
-  version "6.1.4"
-  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-6.1.4.tgz#cf0835c33bc5ef00befb9e672b1e3e6a710e30e3"
-  integrity sha512-wpoYrCYwSZ5/AxcrjLxJmCU6I5QAJXslEeSiMQqaWmP2Kzpd1LvF/qxmAIW2qposULGWq2gw30GgVNFLSc2Jnw==
+"@testing-library/jest-dom@^6.1.5":
+  version "6.1.5"
+  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-6.1.5.tgz#0a635d0ad4a1a880089d967299d94e9cfc81fbe1"
+  integrity sha512-3y04JLW+EceVPy2Em3VwNr95dOKqA8DhR0RJHhHKDZNYXcVXnEK7WIrpj4eYU8SVt/qYZ2aRWt/WgQ+grNES8g==
   dependencies:
     "@adobe/css-tools" "^4.3.1"
     "@babel/runtime" "^7.9.2"
