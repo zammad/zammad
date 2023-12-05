@@ -84,7 +84,7 @@ RSpec.describe 'System > Objects', type: :system do
           expect(page).to have_text('Database Update Required')
           click '.js-execute', wait: 7.minutes
           expect(page).to have_text('Zammad requires a restart')
-          page.refresh
+          refresh_with_wait
 
           # Update
           click 'tbody tr:last-child'
@@ -104,12 +104,15 @@ RSpec.describe 'System > Objects', type: :system do
             click '.js-submit'
           end
 
+          # After the reload, we must explictly wait for the app to be completely ready.
+          wait_for_loading_to_complete(wait_ws: true)
+
           # Delete
           click 'tbody tr:last-child .js-delete'
           expect(page).to have_text('Database Update Required')
           click '.js-execute', wait: 7.minutes
           expect(page).to have_text('Zammad requires a restart')
-          page.refresh
+          refresh_with_wait
           expect(page).to have_no_text('New field updated')
         end
       end
@@ -136,7 +139,6 @@ RSpec.describe 'System > Objects', type: :system do
       # Create the field via API.
       object_attribute
       visit '/#system/object_manager'
-      page.refresh
       click 'tbody tr:last-child'
 
       in_modal do
@@ -193,8 +195,6 @@ RSpec.describe 'System > Objects', type: :system do
     before do
       object_attribute
       ObjectManager::Attribute.migration_execute
-
-      refresh
 
       visit '/#system/object_manager'
       click 'tbody tr:last-child td:first-child'
@@ -308,7 +308,6 @@ RSpec.describe 'System > Objects', type: :system do
 
     it 'handles removed options correctly' do
       object_attribute
-      page.refresh
 
       # Make sure option is present in the first place.
       ticket = create(:ticket, group: Group.find_by(name: 'Users'), object_attribute.name => 'delete')
@@ -373,7 +372,6 @@ RSpec.describe 'System > Objects', type: :system do
     it 'shows user and organization attributes even if they are set to false' do
       organization_object_attribute
       user_object_attribute
-      page.refresh
       visit "/#ticket/zoom/#{ticket.id}"
       click('.content.active .tabsSidebar-tab[data-tab="organization"]')
       expect(page).to have_text('organization:false')
