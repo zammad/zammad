@@ -911,11 +911,11 @@ try to find correct name
   def strip_uri(value)
     uri = URI.parse(value)
 
-    return value if !uri || uri.scheme.blank?
+    return value if !uri || uri.scheme.blank? || uri.hostname.blank?
 
     # Strip the scheme from the URI.
     uri.hostname + uri.path
-  rescue URI::Error
+  rescue
     value
   end
 
