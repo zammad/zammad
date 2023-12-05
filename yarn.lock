@@ -3000,10 +3000,10 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@vitejs/plugin-vue@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-4.5.0.tgz#b4569fcb1faac054eba4f5efc1aaf4d39f4379e5"
-  integrity sha512-a2WSpP8X8HTEww/U00bU4mX1QpLINNuz/2KMNpLsdu3BzOpak3AGI1CJYBTXcc4SPhaD0eNRUp7IyQK405L5dQ==
+"@vitejs/plugin-vue@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-4.5.1.tgz#84815bfeb46928c03a9ed765e4a8425c22345e15"
+  integrity sha512-DaUzYFr+2UGDG7VSSdShKa9sIWYBa1LL8KC0MNOf2H5LjcTPjob0x8LbkqXWmAtbANJCkpiQTj66UVcQkN2s3g==
 
 "@vitest/expect@0.34.6":
   version "0.34.6"
@@ -10491,10 +10491,10 @@ vite-node@0.34.6, vite-node@^0.34.6:
     picocolors "^1.0.0"
     vite "^3.0.0 || ^4.0.0 || ^5.0.0-0"
 
-vite-plugin-pwa@^0.17.2:
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/vite-plugin-pwa/-/vite-plugin-pwa-0.17.2.tgz#2ce9b0b14b058321c58d2a066daffe6860a08a78"
-  integrity sha512-aVH9sxcTDumiWYiNcLrFqu+FdL79I2cT5EhlVe5V6nGcC64yQNGT1jamMytwi+OdfXl4VYic0LtoJ6JHMkM3ZQ==
+vite-plugin-pwa@^0.17.3:
+  version "0.17.3"
+  resolved "https://registry.yarnpkg.com/vite-plugin-pwa/-/vite-plugin-pwa-0.17.3.tgz#eab6ab2950012e483ab6959172a15c796fd0d1e3"
+  integrity sha512-ilOs0mGxIxKQN3FZYX8pys5DmY/wI9A6oojlY5rrd7mAxCVcSbtjDVAhm62C+3Ww6KQrNr/jmiRUCplC8AsaBw==
   dependencies:
     debug "^4.3.4"
     fast-glob "^3.3.2"
@@ -10521,10 +10521,10 @@ vite-plugin-ruby@^3.2.2:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vite@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-4.5.0.tgz#ec406295b4167ac3bc23e26f9c8ff559287cff26"
-  integrity sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==
+vite@^4.5.1:
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-4.5.1.tgz#3370986e1ed5dbabbf35a6c2e1fb1e18555b968a"
+  integrity sha512-AXXFaAJ8yebyqzoNB9fu2pHoo/nWX+xZlaRwoeYUxEqBO+Zj4msE5G+BhGBll9lYEKv9Hfks52PAF2X7qDYXQA==
   dependencies:
     esbuild "^0.18.10"
     postcss "^8.4.27"
