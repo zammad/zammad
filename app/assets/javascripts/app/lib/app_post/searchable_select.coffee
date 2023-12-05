@@ -398,10 +398,10 @@ class App.SearchableSelect extends Spine.Controller
       @toggleClear()
 
   markSelected: (value) ->
-    @el.find('.searchableSelect-option-checkmark')
-      .addClass('hide')
-    @el.find("li[data-value='#{jQuery.escapeSelector(value)}'] .searchableSelect-option-checkmark")
-      .removeClass('hide')
+    @el.find('li')
+      .removeClass('is-selected')
+    @el.find("li[data-value='#{jQuery.escapeSelector(value)}']")
+      .addClass('is-selected')
 
   navigateIn: (event) ->
     event.stopPropagation()
