@@ -1843,6 +1843,12 @@ RSpec.describe User, type: :model do
 
         it_behaves_like 'sanitizing user name attributes', 'Click', 'here to confirm zammad.org/participate then log in'
       end
+
+      context 'when containing a URL with an invalid scheme' do
+        let(:value) { 'A: Testing' }
+
+        it_behaves_like 'sanitizing user name attributes', 'A:', 'Testing'
+      end
     end
 
     context 'with lastname attribute only' do
@@ -1889,6 +1895,13 @@ RSpec.describe User, type: :model do
         let(:lastname)  { 'https://zammad.org/participate then log in' }
 
         it_behaves_like 'sanitizing user name attributes', 'Click here to confirm', 'zammad.org/participate then log in'
+      end
+
+      context 'when containing a URL with an invalid scheme' do
+        let(:firstname) { 'Dummy R: Berlin' }
+        let(:lastname)  { 'Mail' }
+
+        it_behaves_like 'sanitizing user name attributes', 'Dummy R: Berlin', 'Mail'
       end
     end
   end
