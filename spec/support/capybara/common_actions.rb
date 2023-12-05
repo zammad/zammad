@@ -165,7 +165,7 @@ module CommonActions
     wait_for_loading_to_complete(route: route, app: app, skip_waiting: skip_waiting)
   end
 
-  def wait_for_loading_to_complete(route:, app: self.class.metadata[:app], skip_waiting: false)
+  def wait_for_loading_to_complete(route: nil, app: self.class.metadata[:app], skip_waiting: false, wait_ws: false)
     case app
     when :mobile
       return if skip_waiting
@@ -181,6 +181,9 @@ module CommonActions
 
       # make sure loading is completed (e.g. ticket zoom may take longer)
       expect(page).to have_no_css('.icon-loading', wait: 30) if !skip_waiting
+
+      # make sure WS connection is ready to use
+      ensure_websocket if wait_ws
     end
   end
 
@@ -387,6 +390,13 @@ module CommonActions
         click '.js-submit'
       end
     end
+  end
+
+  def refresh_with_wait
+    page.refresh
+
+    # After the refresh, we must explictly wait for the app to be completely ready.
+    wait_for_loading_to_complete(wait_ws: true)
   end
 
   private
