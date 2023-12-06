@@ -196,17 +196,27 @@ export enum FormHandlerExecution {
   FieldChange = 'fieldChange',
 }
 
-export type FormHandlerFunction = (
-  execution: FormHandlerExecution,
-  formNode: FormKitNode | undefined,
-  values: FormValues,
-  changeFields: Ref<Record<string, Partial<FormSchemaField>>>,
+export interface FormHandlerFunctionData {
+  formNode: FormKitNode | undefined
+  values: FormValues
+  changedField?: ChangedField
+  initialEntityObject?: ObjectLike
+}
+
+export interface FormHandlerFunctionReactivity {
+  changeFields: Ref<Record<string, Partial<FormSchemaField>>>
+  schemaData: ReactiveFormSchemData
+  // This can be used to update the current schema data, but without remembering it inside
+  // the changeFields and schemaData objects (which means it's persistent).
   updateSchemaDataField: (
     field: FormSchemaField | SetRequired<Partial<FormSchemaField>, 'name'>,
-  ) => void,
-  schemaData: ReactiveFormSchemData,
-  changedField?: ChangedField,
-  initialEntityObject?: ObjectLike,
+  ) => void
+}
+
+export type FormHandlerFunction = (
+  execution: FormHandlerExecution,
+  reactivity: FormHandlerFunctionReactivity,
+  data: FormHandlerFunctionData,
 ) => void
 
 export interface FormHandler {

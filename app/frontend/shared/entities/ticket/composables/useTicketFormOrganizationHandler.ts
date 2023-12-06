@@ -33,15 +33,13 @@ export const useTicketFormOganizationHandler = (): FormHandler => {
 
   const handleOrganizationField: FormHandlerFunction = (
     execution,
-    formNode,
-    values,
-    changeFields,
-    updateSchemaDataField,
-    schemaData,
-    changedField,
-    initialEntityObject,
+    reactivity,
+    data,
     // eslint-disable-next-line sonarjs/cognitive-complexity
   ) => {
+    const { formNode, values, initialEntityObject, changedField } = data
+    const { schemaData, changeFields, updateSchemaDataField } = reactivity
+
     if (!executeHandler(execution, schemaData, changedField)) return
 
     const session = useSessionStore()

@@ -51,13 +51,11 @@ export const useTicketSignature = (ticket?: Ref<TicketById | undefined>) => {
   const signatureHandling = (editorName: string): FormHandler => {
     const handleSignature: FormHandlerFunction = (
       execution,
-      formNode,
-      values,
-      changeFields,
-      updateSchemaDataField,
-      schemaData,
-      changedField,
+      reactivity,
+      data,
     ) => {
+      const { formNode, values, changedField } = data
+
       if (
         changedField?.name !== 'group_id' &&
         changedField?.name !== 'articleSenderType'

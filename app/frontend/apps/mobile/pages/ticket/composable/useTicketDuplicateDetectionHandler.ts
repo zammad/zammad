@@ -42,21 +42,20 @@ export const useTicketDuplicateDetectionHandler = (
 
   const handleTicketDuplicateDetection: FormHandlerFunction = async (
     execution,
-    formNode,
-    values,
-    changeFields,
-    updateSchemaDataField,
-    schemaData,
-    changedField,
+    reactivity,
+    data,
   ) => {
+    const { changedField } = data
+    const { schemaData } = reactivity
+
     if (!executeHandler(execution, schemaData, changedField)) return
 
-    const data =
+    const newFieldData =
       changedField?.newValue as unknown as TicketDuplicateDetectionPayload
 
-    if (!data?.count) return
+    if (!newFieldData?.count) return
 
-    showTicketDuplicateDetectionDialog(data)
+    showTicketDuplicateDetectionDialog(newFieldData)
   }
 
   return {

@@ -16,6 +16,7 @@ Welcome to the developer docs of Zammad. 👋 This is a work in progress, and yo
 - [How to add an SVG Icon](standards/how-to-add-an-svg-icon.md)
 - [How to handle localization & translations](standards/how-to-handle-localization.md)
 - [How to rebuild the chat](standards/how-to-rebuild-the-chat.md)
+- [How to use forms](standards/how-to-use-forms.md)
 
 # Cookbook / Recipes
 

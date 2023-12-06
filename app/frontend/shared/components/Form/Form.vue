@@ -74,13 +74,13 @@ import FormGroup from './FormGroup.vue'
 export interface Props {
   id?: string
   schema?: FormSchemaNode[]
-  formUpdaterId?: EnumFormUpdaterId
+  schemaData?: Except<ReactiveFormSchemData, 'fields'>
   handlers?: FormHandler[]
   changeFields?: Record<string, Partial<FormSchemaField>>
+  formUpdaterId?: EnumFormUpdaterId
   // Maybe in the future this is no longer needed, when FormKit supports group
   // without value grouping below group name (https://github.com/formkit/formkit/issues/461).
   flattenFormGroups?: string[]
-  schemaData?: Except<ReactiveFormSchemData, 'fields'>
   formKitPlugins?: FormKitPlugin[]
   formKitSectionsSchema?: Record<
     string,
@@ -774,13 +774,17 @@ const executeFormHandler = (
   formHandlerExecution[execution].forEach((handler) => {
     handler(
       execution,
-      formNode.value,
-      currentValues,
-      changeFields,
-      updateSchemaDataField,
-      schemaData,
-      changedField,
-      props.initialEntityObject,
+      {
+        changeFields,
+        updateSchemaDataField,
+        schemaData,
+      },
+      {
+        formNode: formNode.value,
+        values: currentValues,
+        changedField,
+        initialEntityObject: props.initialEntityObject,
+      },
     )
   })
 }

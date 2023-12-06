@@ -249,13 +249,12 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
 
     const handleArticleType: FormHandlerFunction = (
       execution,
-      formNode,
-      values,
-      changeFields,
-      updateSchemaDataField,
-      schemaData,
-      changedField,
+      reactivity,
+      data,
     ) => {
+      const { formNode, changedField } = data
+      const { schemaData } = reactivity
+
       if (
         !executeHandler(execution, schemaData, changedField) ||
         !ticket.value ||
