@@ -68,8 +68,17 @@ if [ "$1" = 'zammad-init' ]; then
       base64 -d <<< "${AUTOWIZARD_JSON}" > "${AUTOWIZARD_RELATIVE_PATH}"
     fi
   else
+    echo Clearing cache...
     bundle exec rails r "Rails.cache.clear"
+
+    echo Executing migrations...
     bundle exec rake db:migrate
+
+    echo Synchronizing locales...
+    bundle exec rails r "Locale.sync"
+
+    echo Synchronizing translations...
+    bundle exec rails r "Translation.sync"
   fi
 
   # es config
