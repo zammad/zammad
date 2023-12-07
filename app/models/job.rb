@@ -8,6 +8,8 @@ class Job < ApplicationModel
 
   include Job::Assets
 
+  OBJECTS_BATCH_SIZE = 2_000
+
   store     :condition
   store     :perform
   validates :name,    presence: true
@@ -29,12 +31,13 @@ Job.run
 
   def self.run
     start_at = Time.zone.now
-    jobs = Job.where(active: true)
-    jobs.each do |job|
+
+    Job.where(active: true).each do |job|
       next if !job.executable?
 
       job.run(false, start_at)
     end
+
     true
   end
 
@@ -59,7 +62,7 @@ job.run(true)
 
     return if object_ids.nil?
 
-    object_ids&.each_slice(10) do |slice|
+    object_ids.each_slice(10) do |slice|
       run_slice(slice)
     end
 
@@ -121,15 +124,16 @@ job.run(true)
 
   def start_job(start_at, force)
     Transaction.execute(reset_user_id: true) do
-      if start_job_executable?(start_at, force) && start_job_ensure_matching_count && start_job_in_timeplan?(start_at, force)
-        object_count, objects = object.constantize.selectors(condition, limit: 2_000, execution_time: true)
+      next if !start_job_executable?(start_at, force)
+      next if !start_job_in_timeplan?(start_at, force)
 
-        logger.debug { "Job #{name} with #{object_count} object(s)" }
+      object_count, objects = object.constantize.selectors(condition, limit: OBJECTS_BATCH_SIZE, execution_time: true)
 
-        mark_as_started(object_count)
+      logger.debug { "Job #{name} with #{object_count} object(s)" }
 
-        objects&.pluck(:id) || []
-      end
+      mark_as_started(objects&.count || 0)
+
+      objects&.pluck(:id) || []
     end
   end
 
@@ -143,29 +147,16 @@ job.run(true)
     false
   end
 
-  def start_job_ensure_matching_count
-    matching = matching_count
-
-    if self.matching != matching
-      self.matching = matching
-      save!
-    end
-
-    true
-  end
-
   def start_job_in_timeplan?(start_at, force)
     return true if in_timeplan?(start_at) || force
 
-    if next_run_at && next_run_at <= Time.zone.now
-      save!
-    end
+    save! # trigger updating matching tickets count and next_run_at time even if not in timeplan
 
     false
   end
 
-  def mark_as_started(object_count)
-    self.processed = object_count || 0
+  def mark_as_started(batch_count)
+    self.processed = batch_count
     self.running = true
     self.last_run_at = Time.zone.now
     save!
@@ -173,11 +164,13 @@ job.run(true)
 
   def run_slice(slice)
     Transaction.execute(disable_notification: disable_notification, reset_user_id: true) do
-      _, objects = object.constantize.selectors(condition, limit: 2_000, execution_time: true)
+      _, objects = object.constantize.selectors(condition, limit: OBJECTS_BATCH_SIZE, execution_time: true)
+
+      return if objects.nil?
 
       objects
-        &.where(id: slice)
-        &.each do |object|
+        .where(id: slice)
+        .each do |object|
           object.perform_changes(self, 'job')
         end
     end

@@ -97,6 +97,10 @@ RSpec.describe Job, type: :model do
           expect { job.run }.to not_change { job.reload.last_run_at }
         end
 
+        it 'does not update #matching' do
+          expect { job.run }.to not_change { job.reload.matching }
+        end
+
         context 'but "force" flag is given' do
           it 'performs changes on matching tickets' do
             expect { job.run(true) }
@@ -107,6 +111,11 @@ RSpec.describe Job, type: :model do
           it 'updates #last_run_at' do
             expect { job.run(true) }
               .to change { job.reload.last_run_at }
+          end
+
+          it 'updates #matching' do
+            expect { job.run(true) }
+              .to change { job.reload.matching }
           end
         end
       end
@@ -119,6 +128,27 @@ RSpec.describe Job, type: :model do
 
           it 'updates #last_run_at' do
             expect { job.run }.to change { job.reload.last_run_at }
+          end
+
+          it 'updates #matching' do
+            expect { job.run }.to change { job.reload.matching }
+          end
+
+          context 'with exactly 2 tickets' do
+            before do
+              Ticket.destroy_all
+              create_list(:ticket, 2, state_name: 'new', created_at: 3.days.ago)
+            end
+
+            it 'sets processed tickets count' do
+              expect { job.run }.to change(job, :processed).to(2)
+            end
+
+            it 'sets processed tickets count to tickets processed in this batch' do
+              stub_const "#{described_class}::OBJECTS_BATCH_SIZE", 1
+
+              expect { job.run }.to change(job, :processed).to(1)
+            end
           end
 
           it 'performs changes on matching tickets' do
@@ -186,6 +216,12 @@ RSpec.describe Job, type: :model do
 
           it 'does not update #last_run_at' do
             expect { job.run }.to not_change { job.reload.last_run_at }
+          end
+
+          it 'updates #matching' do
+            create(:ticket, state_name: 'new', created_at: 3.days.ago)
+
+            expect { job.run }.to change { job.reload.matching }
           end
 
           it 'updates #next_run_at' do
