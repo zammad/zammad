@@ -2,13 +2,33 @@
 @config './tailwind.desktop.js';
 
 @layer components {
+  .btn {
+    @apply rounded-xl border-0 text-base shadow-none;
+  }
+
+  .btn:hover {
+    @apply bg-blue-600 dark:bg-blue-900 text-black dark:text-white;
+  }
+
+  .btn-accent {
+    @apply bg-yellow-300 text-black;
+  }
+
   .required-indicator {
     @apply text-yellow-600;
+  }
+
+  .link-primary {
+    @apply text-blue-800;
+  }
+
+  .link-primary:hover {
+    @apply text-blue-800 underline;
   }
 }
 
 @layer utilities {
   .group-block {
-    @apply rounded-xl bg-neutral p-4 border border-base-300 dark:border-neutral;
+    @apply p-5 bg-white dark:bg-gray-500 text-black dark:text-white rounded-3xl;
   }
 }

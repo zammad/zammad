@@ -64,8 +64,12 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     ),
     checkbox: extendClasses(classes.checkbox, {
       wrapper: 'ltr:pl-2 rtl:pr-2 w-full select-none',
+      inner: 'ltr:mr-2 rtl:ml-2',
       input:
         'h-4 w-4 border-[1.5px] border-white rounded-sm bg-transparent focus:border-blue focus:bg-blue-highlight checked:focus:color-blue checked:bg-blue checked:border-blue checked:focus:bg-blue checked:hover:bg-blue',
+    }),
+    radio: extendClasses(classes.radio, {
+      inner: 'ltr:mr-2 rtl:ml-2',
     }),
     toggle: extendClasses(classes.toggle, {
       outer: 'relative px-2',

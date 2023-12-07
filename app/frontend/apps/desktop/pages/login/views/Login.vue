@@ -77,7 +77,7 @@ const loginSchema = [
               isLayout: true,
               component: 'CommonLink',
               props: {
-                class: 'link-primary text-right',
+                class: 'link-primary text-right text-sm',
                 link: '/#password_reset',
                 onClick(e: Event) {
                   e.preventDefault()
@@ -97,12 +97,14 @@ const { form, isDisabled } = useForm()
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col items-center">
+  <div
+    class="min-h-screen flex flex-col items-center bg-neutral-950 text-stone-200 dark:text-neutral-500"
+  >
     <div class="group-block max-w-md w-full m-auto">
       <div class="flex justify-center p-2">
         <CommonLogo />
       </div>
-      <h1 class="mb-6 flex justify-center p-2 text-2xl font-extrabold">
+      <h1 class="mb-6 flex justify-center p-2 text-xl">
         {{ $c.product_name }}
       </h1>
       <template v-if="$c.maintenance_mode">
@@ -133,10 +135,7 @@ const { form, isDisabled } = useForm()
         @submit="login($event as FormSubmitData<LoginCredentials>)"
       >
         <template #after-fields>
-          <button
-            class="btn btn-accent btn-block text-base"
-            :disabled="isDisabled"
-          >
+          <button class="btn btn-accent btn-block" :disabled="isDisabled">
             {{ $t('Sign in') }}
           </button>
         </template>

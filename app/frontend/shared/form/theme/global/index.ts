@@ -31,7 +31,7 @@ const classes: FormThemeClasses = {
   password: defaultTextInput,
   checkbox: {
     wrapper: 'inline-flex items-center cursor-pointer',
-    inner: 'ltr:mr-2 rtl:ml-2 flex',
+    inner: 'flex',
     input:
       'appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
     decorator:
@@ -40,7 +40,7 @@ const classes: FormThemeClasses = {
   },
   radio: {
     wrapper: 'inline-flex items-center cursor-pointer',
-    inner: 'ltr:mr-2 rtl:ml-2 flex',
+    inner: 'flex',
     input:
       'appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
     decorator:
