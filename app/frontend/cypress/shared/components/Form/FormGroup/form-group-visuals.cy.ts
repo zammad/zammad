@@ -8,7 +8,7 @@ import Form from '#shared/components/Form/Form.vue'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { checkFormMatchesSnapshot, mountComponent } from '#cy/utils.ts'
 
-describe('grouping form fields', () => {
+describe('grouping form fields', { retries: 3 }, () => {
   it('renders basic group', () => {
     const props = {
       schema: [

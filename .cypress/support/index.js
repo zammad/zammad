@@ -5,6 +5,8 @@ import './prepare.js'
 import '#mobile/styles/main.scss'
 import '#shared/components/CommonIcon/injectIcons.ts'
 
+import '../../public/assets/frontend/fonts.css'
+
 import './commands.js'
 
 // @testing-library/cypress uses env to display errors
