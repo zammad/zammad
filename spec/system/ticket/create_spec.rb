@@ -823,8 +823,10 @@ RSpec.describe 'Ticket Create', type: :system do
     end
 
     def add_email(input)
-      fill_in 'CC', with: input
-      send_keys(:enter) # trigger blur
+      field = find_field('CC')
+      field.fill_in with: input
+      field.execute_script "$(this).trigger('blur')" # trigger blur
+
       find '.token', text: input # wait for email to tokenize
     end
   end
