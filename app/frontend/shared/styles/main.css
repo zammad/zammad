@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 @layer components {
+  .required-indicator {
+    /* no default color */
+  }
+
   .required::after {
-    @apply inline-block font-extrabold text-yellow content-['•'] ltr:ml-1 rtl:mr-1;
+    @apply inline-block font-extrabold content-['•'] ltr:ml-1 rtl:mr-1 required-indicator;
   }
 }

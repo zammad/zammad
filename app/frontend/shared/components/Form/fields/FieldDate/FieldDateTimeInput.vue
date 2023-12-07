@@ -368,7 +368,7 @@ span.flatpickr-weekday {
 
 .flatpickr-day.selected:hover,
 .flatpickr-day.selected {
-  @apply border-blue bg-blue bg-none;
+  @apply date-selection;
 }
 
 .flatpickr-months .flatpickr-prev-month.flatpickr-prev-month:hover,
@@ -385,7 +385,7 @@ span.flatpickr-weekday {
 .flatpickr-months .flatpickr-next-month:hover,
 .flatpickr-months .flatpickr-next-month,
 .flatpickr-months .flatpickr-prev-month {
-  @apply text-blue;
+  @apply date-navigation;
 }
 
 .flatpickr-months .flatpickr-prev-month:hover svg,

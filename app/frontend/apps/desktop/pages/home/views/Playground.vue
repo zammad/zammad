@@ -22,9 +22,7 @@
     <div class="p-2 w-24 rounded-xl h-14 bg-warning text-warning-content">
       warning
     </div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-info text-info-content">
-      info
-    </div>
+    <div class="p-2 w-24 rounded-xl h-14 bg-info text-info-content">info</div>
     <div class="p-2 w-24 rounded-xl h-14 bg-success text-success-content">
       success
     </div>

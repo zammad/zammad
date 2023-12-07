@@ -1,6 +1,12 @@
 @import '#shared/styles/main.css';
 @config './tailwind.desktop.js';
 
+@layer components {
+  .required-indicator {
+    @apply text-yellow-600;
+  }
+}
+
 @layer utilities {
   .group-block {
     @apply rounded-xl bg-neutral p-4 border border-base-300 dark:border-neutral;
