@@ -2,7 +2,7 @@
 
 <template>
   <!-- TODO: use tw styles, don't rely on "style" block! -->
-  <div class="navigation flex flex-col h-full">
+  <div class="p-2 bg-neutral-950 text-neutral-400 flex flex-col h-full">
     <div class="text-lg h-10">Zammad</div>
     <nav class="links h-full">
       <ol>
@@ -14,14 +14,3 @@
     <RouterLink class="btn btn-error" to="/logout">Logout</RouterLink>
   </div>
 </template>
-
-<style scoped>
-.navigation {
-  background-color: hsl(230, 7%, 13%);
-  color: white;
-}
-
-.links {
-  background-color: hsl(230, 7%, 17%);
-}
-</style>

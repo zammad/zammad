@@ -97,7 +97,9 @@ const appTheme = useAppTheme()
       <LayoutSidebar />
     </aside>
 
-    <article class="w-full h-full antialiased">
+    <article
+      class="w-full h-full antialiased bg-white dark:bg-gray-500 text-gray-100 dark:text-neutral-400"
+    >
       <RouterView />
 
       <div class="flex">

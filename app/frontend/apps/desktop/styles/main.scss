@@ -3,11 +3,15 @@
 
 @layer components {
   .btn {
-    @apply rounded-xl border-0 text-base shadow-none;
+    @apply rounded-xl border-0 text-base shadow-none font-normal;
   }
 
   .btn:hover {
     @apply bg-blue-600 dark:bg-blue-900 text-black dark:text-white;
+  }
+
+  .btn-primary {
+    @apply bg-blue-800 text-white;
   }
 
   .btn-accent {

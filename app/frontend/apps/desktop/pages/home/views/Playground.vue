@@ -1,33 +1,23 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <template>
-  <h1>Colors</h1>
-  <div class="space-x-2 space-y-2 p-4 flex flex-wrap">
-    <div class="p-2 w-24 rounded-xl h-14 bg-base-100">base-100</div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-base-200">base-200</div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-base-300">base-300</div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-neutral">neutral</div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-primary text-primary-content">
-      primary
-    </div>
-    <div class="p-2 w-24 rounded-xl h-14 link link-primary">primary</div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-secondary text-secondary-content">
-      secondary
-    </div>
-    <div class="p-2 w-24 rounded-xl h-14 link link-secondary">secondary</div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-accent text-accent-content">
-      accent
-    </div>
-    <div class="p-2 w-24 rounded-xl h-14 link link-accent">accent</div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-warning text-warning-content">
-      warning
-    </div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-info text-info-content">info</div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-success text-success-content">
-      success
-    </div>
-    <div class="p-2 w-24 rounded-xl h-14 bg-error text-error-content">
-      error
-    </div>
+  <div class="space-y-2 p-4 flex flex-wrap text-xs">
+    Filler text above
+    <button
+      class="w-full px-4 py-2.5 bg-green-200 dark:bg-gray-600 text-gray-300 dark:text-neutral-400 text-base rounded-xl inline-flex justify-center items-center gap-1.5"
+    >
+      <CommonIcon name="desktop-logo-flat" size="small" />
+      Security Keys
+    </button>
+    <button
+      class="w-full px-4 py-2.5 bg-blue-800 text-white text-base rounded-xl inline-flex justify-center items-center gap-1.5"
+    >
+      <CommonIcon name="desktop-logo-flat" size="small" />
+      Authenticator App
+    </button>
+    <button class="btn btn-primary btn-block">
+      <CommonIcon name="desktop-logo-flat" size="small" />
+      Authenticator App
+    </button>
   </div>
 </template>
