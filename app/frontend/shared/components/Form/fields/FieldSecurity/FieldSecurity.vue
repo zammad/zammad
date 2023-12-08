@@ -68,12 +68,14 @@ const options = computed(() => {
     {
       option: 'encryption',
       label: 'Encrypt',
-      icon: isCurrentValue('encryption') ? 'mobile-lock' : 'mobile-unlock',
+      icon: isCurrentValue('encryption')
+        ? 'encryption-enabled'
+        : 'encryption-disabled',
     },
     {
       option: 'sign',
       label: 'Sign',
-      icon: isCurrentValue('sign') ? 'mobile-signed' : 'mobile-not-signed',
+      icon: isCurrentValue('sign') ? 'sign-enabled' : 'sign-disabled',
     },
   ] as const
 })
@@ -180,8 +182,7 @@ const changeSecurityState = (method: EnumSecurityStateType) => {
         :messages="tooltipMessages"
         :heading="__('Security Information')"
       >
-        <!-- TODO: use another icon when we figure out desktop icons -->
-        <CommonIcon name="mobile-info" size="small" />
+        <CommonIcon name="tooltip" size="small" />
       </CommonTooltip>
       <div
         ref="optionsContainer"

@@ -162,7 +162,7 @@ describe('Form - Field - AutoComplete - Dialog', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    expect(wrapper.getByIconName('mobile-check')).toBeInTheDocument()
+    expect(wrapper.getByIconName('check')).toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByRole('button', { name: /Done/ }))
 
@@ -284,7 +284,7 @@ describe('Form - Field - AutoComplete - Query', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    expect(wrapper.getByIconName('mobile-check')).toBeInTheDocument()
+    expect(wrapper.getByIconName('check')).toBeInTheDocument()
   })
 
   it('restores selection on clearing search input (multiple)', async () => {
@@ -305,9 +305,7 @@ describe('Form - Field - AutoComplete - Query', () => {
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent(testOptions[2].label)
-    expect(
-      getByIconName(selectOptions[0], 'mobile-check-box-yes'),
-    ).toBeInTheDocument()
+    expect(getByIconName(selectOptions[0], 'check-box-yes')).toBeInTheDocument()
 
     const filterElement = wrapper.getByRole('searchbox')
 
@@ -319,9 +317,7 @@ describe('Form - Field - AutoComplete - Query', () => {
     expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
     expect(selectOptions[1]).toHaveTextContent(testOptions[1].label)
     expect(selectOptions[2]).toHaveTextContent(testOptions[2].label)
-    expect(
-      getByIconName(selectOptions[2], 'mobile-check-box-yes'),
-    ).toBeInTheDocument()
+    expect(getByIconName(selectOptions[2], 'check-box-yes')).toBeInTheDocument()
 
     wrapper.events.click(selectOptions[0])
 
@@ -342,13 +338,9 @@ describe('Form - Field - AutoComplete - Query', () => {
 
     expect(selectOptions).toHaveLength(2)
     expect(selectOptions[0]).toHaveTextContent(testOptions[2].label)
-    expect(
-      getByIconName(selectOptions[0], 'mobile-check-box-yes'),
-    ).toBeInTheDocument()
+    expect(getByIconName(selectOptions[0], 'check-box-yes')).toBeInTheDocument()
     expect(selectOptions[1]).toHaveTextContent(testOptions[0].label)
-    expect(
-      getByIconName(selectOptions[1], 'mobile-check-box-yes'),
-    ).toBeInTheDocument()
+    expect(getByIconName(selectOptions[1], 'check-box-yes')).toBeInTheDocument()
   })
 
   it('supports storing complex non-multiple values', async () => {
@@ -484,12 +476,12 @@ describe('Form - Field - AutoComplete - Initial Options', () => {
       {
         value: 1,
         label: 'GitLab',
-        icon: 'mobile-gitlab',
+        icon: 'gitlab',
       },
       {
         value: 2,
         label: 'GitHub',
-        icon: 'mobile-github',
+        icon: 'github',
       },
     ]
 
@@ -608,7 +600,7 @@ describe('Form - Field - AutoComplete - Features', () => {
     const selectOptions = wrapper.getAllByRole('option')
 
     expect(selectOptions).toHaveLength(
-      wrapper.queryAllByIconName('mobile-check-box-no').length,
+      wrapper.queryAllByIconName('check-box-no').length,
     )
 
     wrapper.events.click(selectOptions[0])
@@ -620,8 +612,8 @@ describe('Form - Field - AutoComplete - Features', () => {
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toStrictEqual([testOptions[0].value])
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(2)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(1)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(1)
 
@@ -638,8 +630,8 @@ describe('Form - Field - AutoComplete - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(1)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(2)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
 
@@ -657,8 +649,8 @@ describe('Form - Field - AutoComplete - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(0)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(3)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(0)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(3)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(3)
 
@@ -675,8 +667,8 @@ describe('Form - Field - AutoComplete - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(1)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(2)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
 
@@ -823,13 +815,13 @@ describe('Form - Field - AutoComplete - Features', () => {
       props: {
         ...testProps,
         action: '/route',
-        actionIcon: 'mobile-web',
+        actionIcon: 'web',
       },
     })
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    expect(wrapper.getByIconName('mobile-web')).toBeInTheDocument()
+    expect(wrapper.getByIconName('web')).toBeInTheDocument()
   })
 
   it('supports selection of unknown values', async () => {

@@ -11,7 +11,7 @@ const alert = window.alert?.bind
     <Variant title="Default">
       <CommonSectionMenuLink
         link="/"
-        icon="mobile-home"
+        icon="home"
         information="33"
         label="Home"
       />

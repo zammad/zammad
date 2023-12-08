@@ -38,8 +38,8 @@ describe('LoginThirdParty.vue', () => {
     expect(view.getByText('GitHub')).toBeInTheDocument()
     expect(view.getByText('GitLab')).toBeInTheDocument()
 
-    expect(view.getByIconName('mobile-saml')).toBeInTheDocument()
-    expect(view.getByIconName('mobile-github')).toBeInTheDocument()
-    expect(view.getByIconName('mobile-gitlab')).toBeInTheDocument()
+    expect(view.getByIconName('saml')).toBeInTheDocument()
+    expect(view.getByIconName('github')).toBeInTheDocument()
+    expect(view.getByIconName('gitlab')).toBeInTheDocument()
   })
 })

@@ -132,6 +132,6 @@ describe('CommonNotifications.vue', () => {
       type: NotificationTypes.Warn,
     })
 
-    expect(wrapper.getByIconName('mobile-info')).toBeInTheDocument()
+    expect(wrapper.getByIconName('info')).toBeInTheDocument()
   })
 })

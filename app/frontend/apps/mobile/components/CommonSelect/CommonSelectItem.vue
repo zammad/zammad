@@ -55,7 +55,7 @@ const label = computed(() => {
       }"
       size="base"
       decorative
-      :name="selected ? 'mobile-check-box-yes' : 'mobile-check-box-no'"
+      :name="selected ? 'check-box-yes' : 'check-box-no'"
       class="text-white/50 ltr:mr-3 rtl:ml-3"
     />
     <CommonTicketStateIndicator
@@ -96,7 +96,7 @@ const label = computed(() => {
       }"
       decorative
       size="tiny"
-      name="mobile-check"
+      name="check"
     />
   </div>
 </template>

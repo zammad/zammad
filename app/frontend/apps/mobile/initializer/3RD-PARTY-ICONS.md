@@ -1,34 +1,34 @@
-# Third Party Icons
+# Third Party Icons (`mobile`)
 
-* `mobile/apple.svg`
+* `assets/apple.svg`
   * Author: Apple
   * URL: https://www.apple.com/uk/legal/intellectual-property/guidelinesfor3rdparties.html
 
-* `mobile/crown.svg`
+* `assets/crown.svg`
   * Author: Felix Niklas
   * License: MIT
 
-* `mobile/github.svg`
+* `assets/github.svg`
   * Author: GitHub
   * URL: https://github.com/logos
 
-* `mobile/gitlab.svg`
+* `assets/gitlab.svg`
   * Author: GitLab
   * URL: https://about.gitlab.com/press/press-kit/
   * URL: https://github.com/logos
 
-* `mobile/google.svg`
+* `assets/google.svg`
   * Author: Google
   * URL: https://about.google/brand-resource-center/
 
-* `mobile/facebook.svg`
+* `assets/facebook.svg`
   * Author: Facebook
   * URL: https://www.facebook.com/brand/resources/facebookapp/logo
 
-* `mobile/microsoft.svg`
+* `assets/microsoft.svg`
   * Author: Microsoft
   * URL: https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks
 
-* `mobile/twitter.svg`
+* `assets/twitter.svg`
   * Author: Twitter
   * URL: https://about.twitter.com/en/who-we-are/brand-toolkit

@@ -60,7 +60,7 @@ const backgroundClass = computed(() => {
     <CommonIcon
       :size="pill ? 'tiny' : 'base'"
       :label="$t('(state: %s)', $t(label))"
-      name="mobile-check-circle-no"
+      name="ticket-state-circle"
     />
     <div
       v-if="pill"

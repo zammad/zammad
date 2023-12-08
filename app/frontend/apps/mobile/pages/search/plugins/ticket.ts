@@ -10,7 +10,7 @@ export default <SearchPlugin>{
   component: TicketItem,
   link: '/tickets/#{internalId}',
   permissions: ['ticket.agent', 'ticket.customer'],
-  icon: { name: 'mobile-all-tickets', size: 'base' },
+  icon: { name: 'all-tickets', size: 'base' },
   iconBg: 'bg-blue',
   order: 100,
 }

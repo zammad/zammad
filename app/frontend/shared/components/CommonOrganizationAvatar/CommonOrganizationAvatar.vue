@@ -14,9 +14,7 @@ export interface Props {
 const props = defineProps<Props>()
 
 const icon = computed(() => {
-  return props.entity.active
-    ? 'mobile-organization'
-    : 'mobile-inactive-organization'
+  return props.entity.active ? 'organization' : 'inactive-organization'
 })
 </script>
 
@@ -26,6 +24,6 @@ const icon = computed(() => {
     :size="size"
     :icon="icon"
     :aria-label="`Avatar (${entity.name})`"
-    :vip-icon="entity.vip ? 'mobile-crown-silver' : undefined"
+    :vip-icon="entity.vip ? 'vip-organization' : undefined"
   />
 </template>

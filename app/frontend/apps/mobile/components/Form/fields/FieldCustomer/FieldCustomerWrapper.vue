@@ -74,7 +74,7 @@ Object.assign(props.context, {
     return buildEntityOption(belongsToObject)
   },
 
-  actionIcon: 'mobile-new-customer',
+  actionIcon: 'new-customer',
   actionLabel: __('Create new customer'),
 
   gqlQuery: AutocompleteSearchUserDocument,

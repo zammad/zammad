@@ -168,8 +168,8 @@ const createCalendarFooter = (picker: flatpickr.Instance) => {
   return footer
 }
 
-const iconPrevArrow = useRawHTMLIcon({ name: 'mobile-chevron-left' })
-const iconNextArrow = useRawHTMLIcon({ name: 'mobile-chevron-right' })
+const iconPrevArrow = useRawHTMLIcon({ name: 'chevron-left' })
+const iconNextArrow = useRawHTMLIcon({ name: 'chevron-right' })
 
 const createFlatpickr = () => {
   if (!pickerNode.value || props.context.disabled) return undefined

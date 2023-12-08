@@ -99,11 +99,11 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
         type: 'button',
         id: 'button',
         label: 'Sign In',
-        prefixIcon: 'mobile-arrow-right',
+        prefixIcon: 'arrow-right',
       },
     })
 
-    const icon = view.getByIconName('mobile-arrow-right')
+    const icon = view.getByIconName('arrow-right')
 
     expect(icon).toBeInTheDocument()
   })
@@ -117,12 +117,12 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
         type: 'button',
         id: 'button',
         label: 'Sign In',
-        prefixIcon: 'mobile-arrow-right',
+        prefixIcon: 'arrow-right',
         onPrefixIconClick: iconClickSpy,
       },
     })
 
-    const icon = view.getByIconName('mobile-arrow-right')
+    const icon = view.getByIconName('arrow-right')
 
     await view.events.click(icon)
 

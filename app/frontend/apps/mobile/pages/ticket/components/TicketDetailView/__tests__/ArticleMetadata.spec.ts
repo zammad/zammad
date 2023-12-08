@@ -77,7 +77,7 @@ describe('visuals for metadata', () => {
     )
     const channel = view.getByRole('region', { name: 'Channel' })
     expect(channel).toHaveTextContent(/email/)
-    expect(view.getByIconName('mobile-mail')).toBeInTheDocument()
+    expect(view.getByIconName('mail')).toBeInTheDocument()
     const links = getAllByRole(channel, 'link')
     expect(links).toHaveLength(3)
 
@@ -177,7 +177,7 @@ describe('rendering security field', () => {
 
       const security = view.getByRole('region', { name: 'Security' })
       expect(security).toHaveTextContent('Encrypted')
-      expect(getByIconName(security, 'mobile-lock')).toBeInTheDocument()
+      expect(getByIconName(security, 'lock')).toBeInTheDocument()
     })
 
     it('renders unsuccessful encryption, if provided', () => {
@@ -187,9 +187,7 @@ describe('rendering security field', () => {
       expect(security).toHaveTextContent(
         'Encryption error Private key could not be found.',
       )
-      expect(
-        getByIconName(security, 'mobile-encryption-error'),
-      ).toBeInTheDocument()
+      expect(getByIconName(security, 'encryption-error')).toBeInTheDocument()
     })
   })
 
@@ -213,7 +211,7 @@ describe('rendering security field', () => {
 
       const security = view.getByRole('region', { name: 'Security' })
       expect(security).toHaveTextContent('Signed')
-      expect(getByIconName(security, 'mobile-signed')).toBeInTheDocument()
+      expect(getByIconName(security, 'signed')).toBeInTheDocument()
     })
 
     it('renders unsuccessful signature, if provided', () => {
@@ -223,7 +221,7 @@ describe('rendering security field', () => {
       expect(security).toHaveTextContent(
         'Sign error Public key could not be found.',
       )
-      expect(getByIconName(security, 'mobile-not-signed')).toBeInTheDocument()
+      expect(getByIconName(security, 'not-signed')).toBeInTheDocument()
     })
   })
 
@@ -247,7 +245,7 @@ describe('rendering security field', () => {
 
     const security = view.getByRole('region', { name: 'Security' })
     expect(security).toHaveTextContent('Encrypted Signed')
-    expect(getByIconName(security, 'mobile-lock')).toBeInTheDocument()
-    expect(getByIconName(security, 'mobile-signed')).toBeInTheDocument()
+    expect(getByIconName(security, 'lock')).toBeInTheDocument()
+    expect(getByIconName(security, 'signed')).toBeInTheDocument()
   })
 })

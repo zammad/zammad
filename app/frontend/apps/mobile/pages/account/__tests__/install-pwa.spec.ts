@@ -71,7 +71,7 @@ describe('Installing Zammad as PWA', () => {
     expect(
       view.getByText(/To install Zammad as an app, press/),
     ).toBeInTheDocument()
-    expect(view.getByIconName('mobile-ios-share')).toBeInTheDocument()
-    expect(view.getByIconName('mobile-add-square')).toBeInTheDocument()
+    expect(view.getByIconName('ios-share')).toBeInTheDocument()
+    expect(view.getByIconName('add-square')).toBeInTheDocument()
   })
 })

@@ -127,7 +127,7 @@ describe('basic toolbar testing', () => {
     ).not.toBeInTheDocument()
     expect(view.queryByLabelText('Mention user')).not.toBeInTheDocument()
     expect(view.queryByText('Mention user')).not.toBeInTheDocument()
-    expect(view.queryByIconName('mobile-at-sign')).not.toBeInTheDocument()
+    expect(view.queryByIconName('at-sign')).not.toBeInTheDocument()
   })
 
   it("don't see plain text actions", () => {
@@ -142,12 +142,12 @@ describe('basic toolbar testing', () => {
     expect(
       view.getByLabelText('Insert text from text module'),
     ).toBeInTheDocument()
-    expect(view.getByIconName('mobile-snippet')).toBeInTheDocument()
+    expect(view.getByIconName('snippet')).toBeInTheDocument()
 
     expect(
       view.getByLabelText('Insert text from Knowledge Base article'),
     ).toBeInTheDocument()
-    expect(view.getByIconName('mobile-mention-kb')).toBeInTheDocument()
+    expect(view.getByIconName('mention-kb')).toBeInTheDocument()
 
     expect(
       view.queryByRole('button', { name: 'Mention user' }),

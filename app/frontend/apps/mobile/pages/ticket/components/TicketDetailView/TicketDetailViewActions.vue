@@ -60,7 +60,7 @@ const scrollDown = () => {
               "
               @click="scrollDown"
             >
-              <CommonIcon name="mobile-arrow-down" size="small" decorative />
+              <CommonIcon name="arrow-down" size="small" decorative />
               <div
                 v-if="newRepliesCount"
                 aria-hidden="true"
@@ -82,7 +82,7 @@ const scrollDown = () => {
             @click.prevent="emit('reply')"
           >
             <div>
-              <CommonIcon name="mobile-chat" size="small" decorative />
+              <CommonIcon name="chat" size="small" decorative />
             </div>
             <span class="line-clamp-1 break-all">
               {{ newArticlePresent ? $t('Edit reply') : $t('Add reply') }}
@@ -108,7 +108,7 @@ const scrollDown = () => {
           >
             <CommonIcon
               class="mx-auto h-5"
-              name="mobile-close"
+              name="close"
               size="tiny"
               decorative
             />

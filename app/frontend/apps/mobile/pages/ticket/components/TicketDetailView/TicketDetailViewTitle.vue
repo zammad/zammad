@@ -91,9 +91,7 @@ const customer = computed(() => {
         </div>
       </div>
       <CommonIcon
-        :name="`mobile-chevron-${
-          locale.localeData?.dir === 'rtl' ? 'left' : 'right'
-        }`"
+        :name="`chevron-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"
         size="base"
         class="shrink-0 self-center ltr:-mr-2 ltr:ml-auto rtl:-ml-2 rtl:mr-auto"
         decorative

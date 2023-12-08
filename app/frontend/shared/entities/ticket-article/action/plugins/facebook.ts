@@ -19,7 +19,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       apps: ['mobile'],
       label: __('Reply'),
       name: type,
-      icon: { mobile: 'mobile-reply', desktop: 'desktop-reply' },
+      icon: 'reply',
       view: {
         agent: ['change'],
       },
@@ -46,10 +46,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       apps: ['mobile'],
       value: 'facebook feed comment',
       label: __('Facebook'),
-      icon: {
-        mobile: 'mobile-facebook',
-        desktop: 'desktop-facebook',
-      },
+      icon: 'facebook',
       view: {
         agent: ['change'],
       },

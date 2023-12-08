@@ -150,8 +150,8 @@ describe('Form - Field - Organization - Query', () => {
       queryByIconName(
         selectOptions[0],
         testOptions[0].organization.active
-          ? 'mobile-organization'
-          : 'mobile-inactive-organization',
+          ? 'organization'
+          : 'inactive-organization',
       ),
     ).toBeInTheDocument()
 
@@ -178,8 +178,8 @@ describe('Form - Field - Organization - Query', () => {
       queryByIconName(
         selectOptions[0],
         testOptions[7].organization.active
-          ? 'mobile-organization'
-          : 'mobile-inactive-organization',
+          ? 'organization'
+          : 'inactive-organization',
       ),
     ).toBeInTheDocument()
 
@@ -204,8 +204,8 @@ describe('Form - Field - Organization - Query', () => {
       queryByIconName(
         selectOptions[0],
         testOptions[7].organization.active
-          ? 'mobile-organization'
-          : 'mobile-inactive-organization',
+          ? 'organization'
+          : 'inactive-organization',
       ),
     ).toBeInTheDocument()
   })
@@ -245,6 +245,6 @@ describe('Form - Field - Organization - Query', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    expect(wrapper.getByIconName('mobile-check')).toBeInTheDocument()
+    expect(wrapper.getByIconName('check')).toBeInTheDocument()
   })
 })

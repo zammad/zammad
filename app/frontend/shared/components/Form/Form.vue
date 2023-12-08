@@ -1185,7 +1185,7 @@ export default {
     v-if="debouncedShowInitialLoadingAnimation"
     class="flex items-center justify-center"
   >
-    <CommonIcon name="mobile-loading" animation="spin" />
+    <CommonIcon name="loading" animation="spin" />
   </div>
   <FormKit
     v-if="

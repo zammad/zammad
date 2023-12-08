@@ -8,9 +8,20 @@ import { expect } from 'vitest'
 import 'vitest-axe/extend-expect'
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+import { provideIcons } from '#shared/components/CommonIcon/useIcons.ts'
+
+import mobileIconsAliases from '#mobile/initializer/mobileIconsAliasesMap.ts'
 
 // Zammad custom assertions: toBeAvatarElement, toHaveClasses, toHaveImagePreview, toHaveCurrentUrl
 import * as assertions from './support/assertions/index.ts'
+
+// not eager because we don't actually want to import all those components, we only need their names
+const icons = import.meta.glob('../apps/mobile/initializer/assets/*.svg')
+
+provideIcons(
+  Object.keys(icons).map((icon) => [icon, { default: '' }]),
+  mobileIconsAliases,
+)
 
 loadDevMessages()
 loadErrorMessages()

@@ -4,7 +4,6 @@ import type {
   EnumTwoFactorAuthenticationMethod,
   Scalars,
 } from '#shared/graphql/types.ts'
-import type { AppSpecificRecord } from '#shared/types/app.ts'
 
 export interface TwoFactorSetupResult {
   success: boolean
@@ -17,7 +16,7 @@ export interface TwoFactorPlugin {
   name: EnumTwoFactorAuthenticationMethod
   label: string
   order: number
-  icon: AppSpecificRecord<string>
+  icon: string
   setup?(data: Scalars['JSON']['input']): Promise<TwoFactorSetupResult>
   form?: boolean
   helpMessage?: string

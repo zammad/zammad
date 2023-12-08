@@ -8,8 +8,5 @@ export default {
   label: __('Authenticator App'),
   order: 200,
   helpMessage: __('Enter the code from your two-factor authenticator app.'),
-  icon: {
-    mobile: 'mobile-mobile-code',
-    desktop: 'desktop-mobile-code',
-  },
+  icon: 'mobile-code',
 } satisfies TwoFactorPlugin

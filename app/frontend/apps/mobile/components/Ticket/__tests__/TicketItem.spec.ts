@@ -47,7 +47,7 @@ describe('ticket item display', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-yellow')
-    expect(view.getByIconName('mobile-check-circle-no')).toHaveAccessibleName(
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
       '(state: open)',
     )
 
@@ -83,7 +83,7 @@ describe('ticket item display', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-yellow')
-    expect(view.getByIconName('mobile-check-circle-no')).toHaveAccessibleName(
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
       '(state: open)',
     )
 

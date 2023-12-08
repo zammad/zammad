@@ -40,14 +40,14 @@ const classes = computed(() => {
     <CommonIcon
       v-else-if="completed && !valid"
       decorative
-      name="mobile-close"
+      name="close"
       size="tiny"
       class="text-red-bright"
     />
     <CommonIcon
       v-else-if="completed"
       :aria-label="$t('Step %s is completed', label)"
-      name="mobile-check"
+      name="check"
       size="tiny"
       class="text-blue"
     />

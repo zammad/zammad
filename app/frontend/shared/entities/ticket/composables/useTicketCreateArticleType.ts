@@ -12,19 +12,19 @@ export const useTicketCreateArticleType = (
 
   const ticketCreateArticleType = {
     [TicketCreateArticleType.PhoneIn]: {
-      icon: 'mobile-phone-in',
+      icon: 'phone-in',
       label: __('Received Call'),
       sender: 'Customer',
       type: 'phone',
     },
     [TicketCreateArticleType.PhoneOut]: {
-      icon: 'mobile-phone-out',
+      icon: 'phone-out',
       label: __('Outbound Call'),
       sender: 'Agent',
       type: 'phone',
     },
     [TicketCreateArticleType.EmailOut]: {
-      icon: 'mobile-mail-out',
+      icon: 'mail-out',
       label: __('Send Email'),
       sender: 'Agent',
       type: 'email',

@@ -59,11 +59,7 @@ defineEmits<{
   >
     <div class="flex items-center ltr:mr-4 rtl:ml-4">
       <CommonUserAvatar v-if="createdBy" :entity="createdBy" />
-      <CommonAvatar
-        v-else
-        class="bg-red-bright text-white"
-        icon="mobile-lock"
-      />
+      <CommonAvatar v-else class="bg-red-bright text-white" icon="lock" />
     </div>
 
     <div class="flex flex-col">

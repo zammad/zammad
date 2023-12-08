@@ -16,7 +16,7 @@ const alert = () => window.alert('click')
         {
           label: 'with-icon',
           onAction: alert,
-          icon: 'mobile-home',
+          icon: 'home',
           disabled: true,
         },
       ]"

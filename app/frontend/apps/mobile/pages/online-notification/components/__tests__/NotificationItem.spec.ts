@@ -72,7 +72,7 @@ describe('NotificationItem.vue', () => {
   it('can delete online notification', async () => {
     const view = renderNotificationItem()
 
-    const deleteIcon = view.getByIconName('mobile-delete')
+    const deleteIcon = view.getByIconName('delete')
     expect(deleteIcon).toBeInTheDocument()
 
     await view.events.click(deleteIcon)

@@ -126,8 +126,8 @@ const hasSecurityAttribute = computed(
               size="tiny"
               :name="
                 article.securityState?.encryptionSuccess
-                  ? 'mobile-lock'
-                  : 'mobile-encryption-error'
+                  ? 'lock'
+                  : 'encryption-error'
               "
             />
             {{
@@ -147,9 +147,7 @@ const hasSecurityAttribute = computed(
               class="mb-1 inline"
               size="tiny"
               :name="
-                article.securityState?.signingSuccess
-                  ? 'mobile-signed'
-                  : 'mobile-not-signed'
+                article.securityState?.signingSuccess ? 'signed' : 'not-signed'
               "
             />
             {{

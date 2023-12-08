@@ -42,8 +42,8 @@ export default function toBeAvatar(
   const errors: string[] = []
 
   if (options.vip != null) {
-    const iconName =
-      options.type === 'user' ? 'mobile-crown' : 'mobile-crown-silver'
+    // TODO: if names are different in desktop, we should use a different name here
+    const iconName = options.type === 'user' ? 'crown' : 'crown-silver'
     const icon = received.querySelector(`use[href="#icon-${iconName}"]`)
     const localPass = options.vip ? !!icon : !icon
     if (!localPass) {
@@ -69,7 +69,7 @@ export default function toBeAvatar(
     const isActive =
       options.type === 'user'
         ? !received.classList.contains('opacity-20 grayscale')
-        : !!received.querySelector('use[href="#icon-mobile-organization"]')
+        : !!received.querySelector('use[href="#icon-organization"]')
     const localPass = options.active ? isActive : !isActive
     if (!localPass) {
       errors.push(`active class is ${options.active ? 'missing' : 'present'}`)

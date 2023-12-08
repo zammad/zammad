@@ -54,7 +54,7 @@ export default {
     <CommonIcon
       class="absolute shrink-0 text-gray ltr:left-2 rtl:right-2"
       size="base"
-      name="mobile-search"
+      name="search"
       decorative
     />
     <input
@@ -77,7 +77,7 @@ export default {
         :aria-label="i18n.t('Clear Search')"
         class="text-gray"
         size="base"
-        name="mobile-close-small"
+        name="input-cancel"
         @click.stop="clearFilter"
       />
     </div>

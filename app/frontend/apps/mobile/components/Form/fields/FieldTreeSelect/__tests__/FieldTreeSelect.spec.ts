@@ -139,7 +139,7 @@ describe('Form - Field - TreeSelect - Dialog', () => {
       getByText(wrapper.getByRole('listbox'), testOptions[1].label),
     ).toHaveClass('font-semibold')
 
-    expect(wrapper.getByIconName('mobile-check')).toBeInTheDocument()
+    expect(wrapper.getByIconName('check')).toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByRole('button', { name: /Done/ }))
 
@@ -557,12 +557,12 @@ describe('Form - Field - TreeSelect - Options', () => {
       {
         value: 1,
         label: 'GitLab',
-        icon: 'mobile-gitlab',
+        icon: 'gitlab',
       },
       {
         value: 2,
         label: 'GitHub',
-        icon: 'mobile-github',
+        icon: 'github',
       },
     ]
 
@@ -654,7 +654,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     const selectOptions = wrapper.getAllByRole('option')
 
     expect(selectOptions).toHaveLength(
-      wrapper.queryAllByIconName('mobile-check-box-no').length,
+      wrapper.queryAllByIconName('check-box-no').length,
     )
 
     wrapper.events.click(selectOptions[0])
@@ -666,8 +666,8 @@ describe('Form - Field - TreeSelect - Features', () => {
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toStrictEqual([testOptions[0].value])
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(2)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(1)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(1)
 
@@ -684,8 +684,8 @@ describe('Form - Field - TreeSelect - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(1)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(2)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
 
@@ -703,8 +703,8 @@ describe('Form - Field - TreeSelect - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(0)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(3)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(0)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(3)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(3)
 
@@ -721,8 +721,8 @@ describe('Form - Field - TreeSelect - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(1)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(2)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
 
@@ -1401,7 +1401,7 @@ describe('Form - Field - TreeSelect - Visuals', () => {
       },
     })
 
-    expect(view.getByIconName('mobile-chevron-right')).toBeInTheDocument()
+    expect(view.getByIconName('chevron-right')).toBeInTheDocument()
 
     const locale = useLocaleStore()
     locale.localeData = {
@@ -1409,7 +1409,7 @@ describe('Form - Field - TreeSelect - Visuals', () => {
     } as any
 
     await expect(
-      view.findByIconName('mobile-chevron-left'),
+      view.findByIconName('chevron-left'),
     ).resolves.toBeInTheDocument()
   })
 
@@ -1425,9 +1425,9 @@ describe('Form - Field - TreeSelect - Visuals', () => {
 
     await view.events.click(view.getByLabelText('Select…'))
 
-    await view.events.click(view.getAllByIconName('mobile-chevron-right')[0])
+    await view.events.click(view.getAllByIconName('chevron-right')[0])
 
-    expect(view.getByIconName('mobile-chevron-left')).toBeInTheDocument()
+    expect(view.getByIconName('chevron-left')).toBeInTheDocument()
 
     const locale = useLocaleStore()
     locale.localeData = {
@@ -1435,7 +1435,7 @@ describe('Form - Field - TreeSelect - Visuals', () => {
     } as any
 
     await expect(
-      view.findByIconName('mobile-chevron-right'),
+      view.findByIconName('chevron-right'),
     ).resolves.toBeInTheDocument()
   })
 })

@@ -208,19 +208,19 @@ const allowedImageTypes = computed(() => {
 const actions = computed<CommonButtonOption[]>(() => [
   {
     label: __('Library'),
-    icon: 'mobile-photos',
+    icon: 'photos',
     value: 'library',
     onAction: () => fileGalleryInput.value?.click(),
   },
   {
     label: __('Camera'),
-    icon: 'mobile-camera',
+    icon: 'camera',
     value: 'camera',
     onAction: () => fileCameraInput.value?.click(),
   },
   {
     label: __('Delete'),
-    icon: 'mobile-delete',
+    icon: 'delete',
     value: 'delete',
     disabled: avatarDeleteDisabled.value,
     class: 'bg-red-dark !text-red-bright',

@@ -49,5 +49,5 @@ it('renders delivery messages', () => {
 
   expect(view.container).toHaveTextContent('Delivery failed')
   expect(view.container).toHaveTextContent(articles[0].bodyWithUrls)
-  expect(view.getByIconName('mobile-warning')).toBeInTheDocument()
+  expect(view.getByIconName('warning')).toBeInTheDocument()
 })

@@ -101,14 +101,14 @@ const installPWAMessage = computed(() => {
     class: 'inline-flex text-blue',
     decorative: true,
     size: 'small',
-    name: 'mobile-ios-share',
+    name: 'ios-share',
   })
 
   const iconAdd = useRawHTMLIcon({
     class: 'inline-flex',
     decorative: true,
     size: 'small',
-    name: 'mobile-add-square',
+    name: 'add-square',
   })
 
   return i18n.t(
@@ -155,7 +155,7 @@ const { forceDesktop } = useForceDesktop()
     <CommonSectionMenu>
       <CommonSectionMenuLink
         v-if="session.hasPermission('user_preferences.avatar')"
-        :icon="{ name: 'mobile-person', size: 'base' }"
+        :icon="{ name: 'person', size: 'base' }"
         icon-bg="bg-pink"
         link="/account/avatar"
       >
@@ -163,7 +163,7 @@ const { forceDesktop } = useForceDesktop()
       </CommonSectionMenuLink>
       <CommonSectionMenuLink
         v-if="showInstallButton"
-        :icon="{ name: 'mobile-install', size: 'small' }"
+        :icon="{ name: 'install', size: 'small' }"
         icon-bg="bg-blue"
         @click="installZammadPWA"
       >
@@ -172,7 +172,7 @@ const { forceDesktop } = useForceDesktop()
       <CommonSectionMenuLink
         link="/"
         link-external
-        :icon="{ name: 'mobile-desktop', size: 'base' }"
+        :icon="{ name: 'desktop', size: 'base' }"
         icon-bg="bg-orange"
         @click="forceDesktop"
       >

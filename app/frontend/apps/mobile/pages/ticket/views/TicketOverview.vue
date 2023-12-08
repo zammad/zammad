@@ -223,7 +223,7 @@ const showRefetch = ref(false)
         v-else
         class="flex items-center justify-center gap-2 p-4 text-center"
       >
-        <CommonIcon class="text-red" name="mobile-close-small" />
+        <CommonIcon class="text-red" name="close-small" />
         {{ $t('Currently no overview is assigned to your roles.') }}
       </div>
     </div>

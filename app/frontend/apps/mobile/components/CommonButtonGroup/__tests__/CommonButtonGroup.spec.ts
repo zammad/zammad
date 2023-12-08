@@ -21,7 +21,7 @@ describe('buttons group', () => {
       {
         label: 'with-icon',
         onAction,
-        icon: 'mobile-home',
+        icon: 'home',
         disabled: true,
         value: 'icon',
       },
@@ -50,7 +50,7 @@ describe('buttons group', () => {
     const iconButton = view.getByRole('button', { name: 'with-icon' })
 
     expect(iconButton).toBeDisabled()
-    expect(getByIconName(iconButton, 'mobile-home')).toBeInTheDocument()
+    expect(getByIconName(iconButton, 'home')).toBeInTheDocument()
   })
 
   it("doesn't call action, if disabled", async () => {

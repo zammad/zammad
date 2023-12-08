@@ -340,7 +340,7 @@ const onContextClick = () => {
             @keydown.enter.prevent="onContextClick()"
           >
             <CommonIcon
-              name="mobile-more-vertical"
+              name="more-vertical"
               size="small"
               decorative
               data-ignore-click

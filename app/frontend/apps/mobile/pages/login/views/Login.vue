@@ -154,7 +154,7 @@ const hasAlternativeLoginMethod = computed(() => {
         :aria-label="__('Go back')"
         @click="goBack"
       >
-        <CommonIcon name="mobile-chevron-left" decorative />
+        <CommonIcon name="chevron-left" decorative />
       </button>
     </div>
     <main class="m-auto w-full max-w-md">

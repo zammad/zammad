@@ -33,11 +33,11 @@ describe('rendering security badge', () => {
     it('renders successful encryption, if provided', async () => {
       const view = renderEncryption(true, SUCCESS_COMMENT)
 
-      expect(view.getByIconName('mobile-lock')).toBeInTheDocument()
+      expect(view.getByIconName('lock')).toBeInTheDocument()
       expect(view.getByLabelText('Encrypted')).toBeInTheDocument()
-      expect(view.queryByIconName('mobile-unlock')).not.toBeInTheDocument()
-      expect(view.queryByIconName('mobile-signed')).not.toBeInTheDocument()
-      expect(view.queryByIconName('mobile-not-signed')).not.toBeInTheDocument()
+      expect(view.queryByIconName('unlock')).not.toBeInTheDocument()
+      expect(view.queryByIconName('signed')).not.toBeInTheDocument()
+      expect(view.queryByIconName('not-signed')).not.toBeInTheDocument()
 
       await view.events.click(view.getByRole('button'))
 
@@ -50,7 +50,7 @@ describe('rendering security badge', () => {
     it('ignores encryption error, if comment is not provided', () => {
       const view = renderEncryption(false, '')
 
-      expect(view.queryByIconName('mobile-lock')).not.toBeInTheDocument()
+      expect(view.queryByIconName('lock')).not.toBeInTheDocument()
       expect(view.queryByLabelText('Encrypted')).not.toBeInTheDocument()
     })
 
@@ -59,7 +59,7 @@ describe('rendering security badge', () => {
 
       expect(view.getByText('Security Error')).toBeInTheDocument()
 
-      const icon = view.getByIconName('mobile-unlock')
+      const icon = view.getByIconName('unlock')
       expect(icon).toBeInTheDocument()
 
       await view.events.click(icon)
@@ -85,9 +85,9 @@ describe('rendering security badge', () => {
       const view = renderSign(true, SUCCESS_COMMENT)
 
       expect(view.getByLabelText('Signed')).toBeInTheDocument()
-      expect(view.getByIconName('mobile-signed')).toBeInTheDocument()
-      expect(view.queryByIconName('mobile-not-signed')).not.toBeInTheDocument()
-      expect(view.queryByIconName('mobile-lock')).not.toBeInTheDocument()
+      expect(view.getByIconName('signed')).toBeInTheDocument()
+      expect(view.queryByIconName('not-signed')).not.toBeInTheDocument()
+      expect(view.queryByIconName('lock')).not.toBeInTheDocument()
       expect(view.queryByLabelText('Encrypted')).not.toBeInTheDocument()
 
       await view.events.click(view.getByRole('button'))
@@ -99,8 +99,8 @@ describe('rendering security badge', () => {
     it('ignores sign error, if comment is not provided', () => {
       const view = renderSign(false, '')
 
-      expect(view.queryByIconName('mobile-signed')).not.toBeInTheDocument()
-      expect(view.queryByIconName('mobile-not-signed')).not.toBeInTheDocument()
+      expect(view.queryByIconName('signed')).not.toBeInTheDocument()
+      expect(view.queryByIconName('not-signed')).not.toBeInTheDocument()
       expect(view.queryByLabelText('Signed')).not.toBeInTheDocument()
       expect(view.queryByLabelText('Unsigned')).not.toBeInTheDocument()
     })
@@ -110,7 +110,7 @@ describe('rendering security badge', () => {
 
       expect(view.getByText('Security Error')).toBeInTheDocument()
 
-      const icon = view.getByIconName('mobile-not-signed')
+      const icon = view.getByIconName('not-signed')
       expect(icon).toBeInTheDocument()
 
       await view.events.click(icon)
@@ -137,8 +137,8 @@ describe('rendering security badge', () => {
 
     expect(view.queryByText('Security Error')).not.toBeInTheDocument()
     expect(view.getByLabelText('Signed')).toBeInTheDocument()
-    expect(view.getByIconName('mobile-signed')).toBeInTheDocument()
-    expect(view.getByIconName('mobile-lock')).toBeInTheDocument()
+    expect(view.getByIconName('signed')).toBeInTheDocument()
+    expect(view.getByIconName('lock')).toBeInTheDocument()
     expect(view.getByLabelText('Encrypted')).toBeInTheDocument()
   })
 
@@ -156,7 +156,7 @@ describe('rendering security badge', () => {
     expect(view.getByText('Security Error')).toBeInTheDocument()
 
     // signed icon has priority over lock icon, when both failed
-    const icon = view.getByIconName('mobile-not-signed')
+    const icon = view.getByIconName('not-signed')
     expect(icon).toBeInTheDocument()
 
     await view.events.click(icon)

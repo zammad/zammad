@@ -23,7 +23,7 @@ const emit = defineEmits<{
       v-for="method of methods"
       :key="method.name"
       :label="method.label"
-      :icon="method.icon.mobile"
+      :icon="method.icon"
       @click="emit('select', method.name)"
     />
   </CommonSectionMenu>

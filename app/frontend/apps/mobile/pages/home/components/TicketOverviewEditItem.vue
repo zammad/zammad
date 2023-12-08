@@ -17,13 +17,13 @@ const emit = defineEmits<{
 const icon = computed(() => {
   if (props.action === 'add') {
     return {
-      name: 'mobile-plus',
+      name: 'plus',
       class: 'text-green',
     }
   }
 
   return {
-    name: 'mobile-minus',
+    name: 'minus',
     class: 'text-red',
   }
 })
@@ -46,7 +46,7 @@ const icon = computed(() => {
     </div>
     <CommonIcon
       v-if="draggable"
-      name="mobile-change-order"
+      name="change-order"
       size="small"
       class="handler shrink-0 cursor-move text-gray ltr:mr-4 rtl:ml-4"
     />

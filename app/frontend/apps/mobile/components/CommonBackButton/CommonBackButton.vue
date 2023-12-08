@@ -29,9 +29,9 @@ const isHomeButton = computed(() => {
 const locale = useLocaleStore()
 
 const icon = computed(() => {
-  if (isHomeButton.value) return 'mobile-home'
-  if (locale.localeData?.dir === 'rtl') return 'mobile-chevron-right'
-  return 'mobile-chevron-left'
+  if (isHomeButton.value) return 'home'
+  if (locale.localeData?.dir === 'rtl') return 'chevron-right'
+  return 'chevron-left'
 })
 </script>
 

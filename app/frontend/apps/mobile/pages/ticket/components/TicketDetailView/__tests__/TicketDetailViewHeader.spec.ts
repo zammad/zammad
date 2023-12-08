@@ -34,10 +34,7 @@ describe('tickets zoom header', () => {
       router: true,
     })
 
-    expect(
-      view.getByIconName('mobile-home'),
-      'has home icon',
-    ).toBeInTheDocument()
+    expect(view.getByIconName('home'), 'has home icon').toBeInTheDocument()
     expect(
       view.getByText(`#${ticket.number}`),
       'has ticket id',

@@ -14,13 +14,6 @@ const notificationTypeClassMap = {
   info: 'bg-white text-black',
 }
 
-const iconNameMap = {
-  warn: 'mobile-info',
-  success: 'mobile-check',
-  error: 'mobile-warning',
-  info: 'mobile-info',
-}
-
 const { notifications, removeNotification } = useNotifications()
 
 const getClassName = (notification: Notification) => {
@@ -53,7 +46,10 @@ const clickHandler = (notification: Notification) => {
               :class="getClassName(notification)"
               @click="clickHandler(notification)"
             >
-              <CommonIcon :name="iconNameMap[notification.type]" size="small" />
+              <CommonIcon
+                :name="`notification-${notification.type}`"
+                size="small"
+              />
               <span
                 class="text-sm ltr:ml-2 rtl:mr-2"
                 v-html="

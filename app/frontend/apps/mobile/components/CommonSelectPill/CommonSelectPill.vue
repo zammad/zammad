@@ -58,7 +58,7 @@ const defaultLabel = computed(() => {
       </slot>
       <CommonIcon
         class="self-center"
-        name="mobile-caret-down"
+        name="caret-down"
         size="tiny"
         decorative
       />

@@ -229,12 +229,12 @@ const options = [
       {
         value: 1,
         label: 'GitLab',
-        icon: 'mobile-gitlab',
+        icon: 'gitlab',
       },
       {
         value: 2,
         label: 'GitHub',
-        icon: 'mobile-github',
+        icon: 'github',
       },
     ],
     clearable: false,

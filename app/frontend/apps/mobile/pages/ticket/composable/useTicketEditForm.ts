@@ -126,12 +126,12 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
             {
               value: true,
               label: __('Internal'),
-              icon: 'mobile-lock',
+              icon: 'lock',
             },
             {
               value: false,
               label: __('Public'),
-              icon: 'mobile-unlock',
+              icon: 'unlock',
             },
           ],
         },

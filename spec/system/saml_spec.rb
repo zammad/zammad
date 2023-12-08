@@ -73,7 +73,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       find('.auth-provider--saml').click
     when 'mobile'
       visit '/login', app: :mobile
-      find('.icon-mobile-saml').click
+      find('.icon-saml').click
     end
 
     login_saml_keycloak

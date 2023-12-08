@@ -82,7 +82,7 @@ describe('component for displaying text article', () => {
       'flex-row-reverse',
     )
     expect(
-      view.queryByIconName('mobile-lock'),
+      view.queryByIconName('lock'),
       'doesnt have a lock icon',
     ).not.toBeInTheDocument()
     expect(view.getByText('Me'), 'instead of name shows me').toBeInTheDocument()

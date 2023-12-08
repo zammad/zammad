@@ -46,15 +46,15 @@ const topButtons = computed(() =>
   [
     {
       label: __('Merge tickets'),
-      icon: 'mobile-merge',
+      icon: 'merge',
       hidden: !isTicketEditable.value || !isTicketAgent.value,
       onAction: openMergeTicketsDialog,
     },
     {
       label: isSubscribed.value ? __('Unsubscribe') : __('Subscribe'),
       icon: isSubscribed.value
-        ? 'mobile-notification-unsubscribed'
-        : 'mobile-notification-subscribed',
+        ? 'notification-unsubscribed'
+        : 'notification-subscribed',
       value: 'subscribe',
       hidden: !canManageSubscription.value,
       selected: isSubscribed.value,
@@ -63,7 +63,7 @@ const topButtons = computed(() =>
     },
     {
       label: __('Ticket info'),
-      icon: 'mobile-info',
+      icon: 'info',
       onAction() {
         const informationRoute = {
           name: 'TicketInformationDetails',
@@ -111,13 +111,13 @@ const showChangeCustomer = () => {
         :action-label="__('Confirm merge')"
         :additional-query-params="{ sourceTicketId: ticket.id }"
         :label-empty="__('Start typing to find the ticket to merge into.')"
-        action-icon="mobile-merge"
+        action-icon="merge"
       />
       <!-- Postponed
       <CommonSectionMenu>
         <CommonSectionMenuLink
           :label="__('Execute configured macros')"
-          icon="mobile-macros"
+          icon="macros"
           icon-bg="bg-green"
         />
       </CommonSectionMenu> -->
@@ -125,7 +125,7 @@ const showChangeCustomer = () => {
       <CommonSectionMenu>
         <CommonSectionMenuLink
           :label="__('History')"
-          icon="mobile-history"
+          icon="history"
           icon-bg="bg-gray"
         />
       </CommonSectionMenu> -->

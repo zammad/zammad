@@ -62,7 +62,7 @@ const sources = ['facebook', 'twitter']
 
 const icon = computed(() => {
   const { source } = props.entity
-  if (source && sources.includes(source)) return `mobile-${source}`
+  if (source && sources.includes(source)) return source
   return null
 })
 
@@ -114,7 +114,7 @@ const label = computed(() => {
     :icon="icon"
     :class="className"
     :image="image"
-    :vip-icon="isVip ? 'mobile-crown' : undefined"
+    :vip-icon="isVip ? 'vip-user' : undefined"
     :decorative="decorative"
     :aria-label="label"
   />

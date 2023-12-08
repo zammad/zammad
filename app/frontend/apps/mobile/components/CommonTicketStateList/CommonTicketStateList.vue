@@ -32,7 +32,7 @@ const getTicketsLink = (stateIds: number[]) => {
     </div>
     <CommonSectionMenuLink
       :icon="{
-        name: 'mobile-check-circle-no',
+        name: 'check-circle-no',
         size: 'base',
         class: 'text-yellow',
         decorative: true,
@@ -44,7 +44,7 @@ const getTicketsLink = (stateIds: number[]) => {
     </CommonSectionMenuLink>
     <CommonSectionMenuLink
       :icon="{
-        name: 'mobile-check-circle-no',
+        name: 'check-circle-no',
         size: 'base',
         class: 'text-green',
         decorative: true,
@@ -59,7 +59,7 @@ const getTicketsLink = (stateIds: number[]) => {
       class="flex min-h-[54px] items-center justify-center gap-2 text-blue"
       :link="createLink"
     >
-      <CommonIcon name="mobile-add" size="tiny" decorative />
+      <CommonIcon name="add" size="tiny" decorative />
       {{ $t(createLabel) }}
     </CommonLink>
   </CommonSectionMenu>

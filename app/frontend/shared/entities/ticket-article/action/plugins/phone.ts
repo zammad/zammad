@@ -10,10 +10,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       apps: ['mobile'],
       value: 'phone',
       label: __('Phone'),
-      icon: {
-        mobile: 'mobile-phone',
-        desktop: 'desktop-phone',
-      },
+      icon: 'phone',
       view: {
         agent: ['change'],
       },

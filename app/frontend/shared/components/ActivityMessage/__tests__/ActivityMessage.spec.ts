@@ -98,7 +98,7 @@ describe('NotificationItem.vue', () => {
     expect(view.container).toHaveTextContent(
       'You can no longer see the ticket.',
     )
-    expect(view.getByIconName('mobile-lock')).toBeInTheDocument()
+    expect(view.getByIconName('lock')).toBeInTheDocument()
   })
 
   it('should emit "seen" event on click for none linked notifications', async () => {

@@ -11,8 +11,7 @@ const formLocaleDir = (node: FormKitNode) => {
 
   props.localeDir = toRef(() => locale.localeData?.dir ?? 'ltr')
   props.arrowIconName = toRef(
-    () =>
-      `mobile-chevron-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`,
+    () => `chevron-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`,
   )
 }
 

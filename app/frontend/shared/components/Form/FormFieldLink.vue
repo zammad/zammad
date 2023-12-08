@@ -18,7 +18,7 @@ defineProps<{
       class="flex h-10 w-12 items-center justify-center"
       open-in-new-tab
     >
-      <CommonIcon name="mobile-external-link" decorative size="small" />
+      <CommonIcon name="external-link" decorative size="small" />
     </CommonLink>
   </div>
 </template>

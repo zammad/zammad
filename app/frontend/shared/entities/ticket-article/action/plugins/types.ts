@@ -11,7 +11,7 @@ import type {
   TicketById,
 } from '#shared/entities/ticket/types.ts'
 import type { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
-import type { AppName, AppSpecificRecord } from '#shared/types/app.ts'
+import type { AppName } from '#shared/types/app.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 import type { SelectionData } from '#shared/utils/selection.ts'
 import type { SecurityValue } from '#shared/components/Form/fields/FieldSecurity/types.ts'
@@ -65,7 +65,7 @@ export interface TicketArticleAction {
   apps: AppName[]
   label: string // "name" in desktop view
   name: string // "type" in desktop view, but clashes with ArticleType
-  icon: AppSpecificRecord<string>
+  icon: string
   view: TicketViewPolicyMap
   link?: string // do we need it(?)
 
@@ -105,7 +105,7 @@ export interface AppSpecificTicketArticleType {
 export interface TicketArticleType
   extends Omit<AppSpecificTicketArticleType, 'icon'> {
   apps: AppName[]
-  icon: AppSpecificRecord<string>
+  icon: string
 }
 
 // inspired by tiptap plugins config

@@ -199,9 +199,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
       <CommonIcon
         size="base"
         class="ltr:mr-3 rtl:ml-3"
-        :name="`mobile-chevron-${
-          locale.localeData?.dir === 'rtl' ? 'right' : 'left'
-        }`"
+        :name="`chevron-${locale.localeData?.dir === 'rtl' ? 'right' : 'left'}`"
       />
       <span class="grow font-semibold text-white/80">
         {{ currentParent.label || currentParent.value }}
@@ -268,9 +266,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
             'opacity-30': option.disabled,
           }"
           :name="
-            isCurrentValue(option.value)
-              ? 'mobile-check-box-yes'
-              : 'mobile-check-box-no'
+            isCurrentValue(option.value) ? 'check-box-yes' : 'check-box-no'
           "
           size="base"
           decorative
@@ -327,13 +323,13 @@ const getCurrentIndex = (option: FlatSelectOption) => {
           }"
           size="tiny"
           decorative
-          name="mobile-check"
+          name="check"
         />
         <CommonIcon
           v-if="option.hasChildren && !filter"
           class="pointer-events-auto"
           size="base"
-          :name="`mobile-chevron-${
+          :name="`chevron-${
             locale.localeData?.dir === 'rtl' ? 'left' : 'right'
           }`"
           role="link"

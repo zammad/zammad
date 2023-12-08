@@ -35,18 +35,14 @@ const idleClasses = computed(() => {
       <CommonIcon
         v-if="editing && showDesktopIcon"
         :label="__('Editing on Desktop')"
-        name="mobile-desktop-edit"
+        name="desktop-edit"
       />
       <CommonIcon
         v-else-if="showDesktopIcon"
         :label="__('Desktop')"
-        name="mobile-desktop"
+        name="desktop"
       />
-      <CommonIcon
-        v-else-if="editing"
-        :label="__('Editing')"
-        name="mobile-edit"
-      />
+      <CommonIcon v-else-if="editing" :label="__('Editing')" name="edit" />
     </div>
   </div>
 </template>

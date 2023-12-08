@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { dirname, basename } from 'node:path'
+import { basename } from 'node:path'
 import { optimize } from 'svgo'
 import SVGCompiler from 'svg-baker'
 import { readFileSync } from 'node:fs'
@@ -30,10 +30,9 @@ export default () => ({
       const filepath = id.replace(/\?.*$/, '')
       const svgContent = optimizeSvg(filepath)
       const compiler = new SVGCompiler()
-      const dir = basename(dirname(filepath))
       const name = basename(filepath).split('.')[0]
       const symbol = await compiler.addSymbol({
-        id: `icon-${dir}-${name}`,
+        id: `icon-${name}`,
         content: svgContent,
         path: filepath,
       })

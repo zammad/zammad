@@ -220,7 +220,7 @@ setupMissingOrDisabledOptionHandling()
         v-if="context.clearable && hasValue && !context.disabled"
         :label="__('Clear Selection')"
         class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
-        name="mobile-close-small"
+        name="close-small"
         size="base"
         role="button"
         tabindex="0"

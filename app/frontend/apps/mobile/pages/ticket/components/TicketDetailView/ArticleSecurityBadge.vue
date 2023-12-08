@@ -22,8 +22,8 @@ const props = defineProps<Props>()
 
 const securityIcon = computed(() => {
   const { signingSuccess } = props.security
-  if (signingSuccess === false) return 'mobile-not-signed'
-  return 'mobile-unlock'
+  if (signingSuccess === false) return 'not-signed'
+  return 'unlock'
 })
 
 const hasError = computed(() => {
@@ -152,13 +152,13 @@ const popupItems = computed(() =>
   >
     <CommonIcon
       v-if="security.encryptionSuccess"
-      name="mobile-lock"
+      name="lock"
       size="tiny"
       :label="$t('Encrypted')"
     />
     <CommonIcon
       v-if="security.signingSuccess"
-      name="mobile-signed"
+      name="signed"
       size="tiny"
       :label="$t('Signed')"
     />

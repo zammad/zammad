@@ -104,7 +104,7 @@ const showActions = () => {
           :aria-label="$t('Show ticket actions')"
           @click="showActions()"
         >
-          <CommonIcon name="mobile-more" size="base" decorative />
+          <CommonIcon name="more" size="base" decorative />
         </button>
       </div>
     </CommonLoader>

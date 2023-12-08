@@ -21,7 +21,7 @@ describe('CommonTicketStateIndicator.vue', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-yellow')
-    expect(view.getByIconName('mobile-check-circle-no')).toHaveAccessibleName(
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
       '(state: open)',
     )
   })
@@ -33,7 +33,7 @@ describe('CommonTicketStateIndicator.vue', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-gray')
-    expect(view.getByIconName('mobile-check-circle-no')).toHaveAccessibleName(
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
       '(state: pending reminder)',
     )
   })
@@ -45,7 +45,7 @@ describe('CommonTicketStateIndicator.vue', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-red-bright')
-    expect(view.getByIconName('mobile-check-circle-no')).toHaveAccessibleName(
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
       '(state: new)',
     )
   })
@@ -57,7 +57,7 @@ describe('CommonTicketStateIndicator.vue', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-green')
-    expect(view.getByIconName('mobile-check-circle-no')).toHaveAccessibleName(
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
       '(state: closed)',
     )
   })

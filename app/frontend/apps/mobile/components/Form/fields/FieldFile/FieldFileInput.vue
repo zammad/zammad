@@ -207,7 +207,7 @@ useTraverseOptions(filesContainer, {
     :disabled="!canInteract"
     @click="canInteract && fileInput?.click()"
   >
-    <CommonIcon name="mobile-attachment" size="base" decorative />
+    <CommonIcon name="attachment" size="base" decorative />
     <span class="text-base">
       {{ $t(uploadTitle) }}
     </span>

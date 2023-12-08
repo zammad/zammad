@@ -42,7 +42,7 @@ const directionOptions = computed(() => [
   {
     value: EnumOrderDirection.Descending,
     label: __('descending'),
-    icon: 'mobile-arrow-down',
+    icon: 'arrow-down',
     iconProps: {
       class: {
         'text-blue': props.direction === EnumOrderDirection.Descending,
@@ -53,7 +53,7 @@ const directionOptions = computed(() => [
   {
     value: EnumOrderDirection.Ascending,
     label: __('ascending'),
-    icon: 'mobile-arrow-up',
+    icon: 'arrow-up',
     iconProps: {
       class: [
         {
@@ -119,8 +119,8 @@ const advanceFocus = (event: KeyboardEvent, idx: number) => {
             decorative
             :name="
               direction === EnumOrderDirection.Ascending
-                ? 'mobile-arrow-up'
-                : 'mobile-arrow-down'
+                ? 'arrow-up'
+                : 'arrow-down'
             "
             size="tiny"
           />

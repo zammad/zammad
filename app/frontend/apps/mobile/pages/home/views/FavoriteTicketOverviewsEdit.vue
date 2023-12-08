@@ -89,7 +89,7 @@ const addToFavorites = (id: string) => {
 <template>
   <div class="mx-4 mt-6">
     <div v-if="overviewsLoading" class="flex items-center justify-center">
-      <CommonIcon name="mobile-loading" animation="spin" />
+      <CommonIcon name="loading" animation="spin" />
     </div>
 
     <CommonSectionMenu

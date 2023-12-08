@@ -230,6 +230,6 @@ describe('Form - Field - Customer - Query', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    expect(wrapper.getByIconName('mobile-check')).toBeInTheDocument()
+    expect(wrapper.getByIconName('check')).toBeInTheDocument()
   })
 })

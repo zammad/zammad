@@ -222,11 +222,11 @@ const checkSelectClearable = (
 
   if (clearable) {
     expect(
-      getByIconName(wrapper.getByLabelText(label), 'mobile-close-small'),
+      getByIconName(wrapper.getByLabelText(label), 'close-small'),
     ).toBeInTheDocument()
   } else {
     expect(
-      queryByIconName(wrapper.getByLabelText(label), 'mobile-close-small'),
+      queryByIconName(wrapper.getByLabelText(label), 'close-small'),
     ).not.toBeInTheDocument()
   }
 }

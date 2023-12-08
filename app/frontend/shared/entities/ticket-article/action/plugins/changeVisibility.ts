@@ -38,7 +38,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       apps: ['mobile'],
       label,
       name: 'changeVisibility',
-      icon: { mobile: `mobile-${iconName}`, desktop: `desktop-${iconName}` },
+      icon: iconName,
       view: {
         agent: ['change'],
       },

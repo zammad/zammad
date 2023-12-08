@@ -23,7 +23,7 @@ describe('displaying single ticket viewer items', () => {
 
     expect(view.getByText('JD')).toBeInTheDocument()
     expect(view.getByText('John Doe')).toBeInTheDocument()
-    expect(view.getByIconName('mobile-desktop')).toBeInTheDocument()
+    expect(view.getByIconName('desktop')).toBeInTheDocument()
   })
 
   it('with desktop editing icon', () => {
@@ -37,7 +37,7 @@ describe('displaying single ticket viewer items', () => {
 
     expect(view.getByText('JD')).toBeInTheDocument()
     expect(view.getByText('John Doe')).toBeInTheDocument()
-    expect(view.getByIconName('mobile-desktop-edit')).toBeInTheDocument()
+    expect(view.getByIconName('desktop-edit')).toBeInTheDocument()
   })
 
   it('with only editing icon', () => {
@@ -51,7 +51,7 @@ describe('displaying single ticket viewer items', () => {
 
     expect(view.getByText('JD')).toBeInTheDocument()
     expect(view.getByText('John Doe')).toBeInTheDocument()
-    expect(view.getByIconName('mobile-edit')).toBeInTheDocument()
+    expect(view.getByIconName('edit')).toBeInTheDocument()
   })
 
   it('without any icon and idle state', () => {
@@ -65,9 +65,9 @@ describe('displaying single ticket viewer items', () => {
 
     expect(view.getByText('JD')).toBeInTheDocument()
     expect(view.getByText('John Doe')).toBeInTheDocument()
-    expect(view.queryByIconName('mobile-desktop-edit')).not.toBeInTheDocument()
-    expect(view.queryByIconName('mobile-desktop')).not.toBeInTheDocument()
-    expect(view.queryByIconName('mobile-edit')).not.toBeInTheDocument()
+    expect(view.queryByIconName('desktop-edit')).not.toBeInTheDocument()
+    expect(view.queryByIconName('desktop')).not.toBeInTheDocument()
+    expect(view.queryByIconName('edit')).not.toBeInTheDocument()
 
     const avatar = view.getByTestId('common-avatar')
     expect(avatar).not.toHaveClass('grayscale')

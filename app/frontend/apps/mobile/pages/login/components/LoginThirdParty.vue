@@ -38,7 +38,7 @@ const { fingerprint } = useFingerprint()
           class="m-1 flex h-14 w-full cursor-pointer select-none items-center justify-center rounded-xl bg-gray-600 px-4 py-2 text-white"
         >
           <CommonIcon
-            :name="`mobile-${provider.icon}`"
+            :name="provider.icon"
             size="base"
             decorative
             class="shrink-0 ltr:mr-2.5 rtl:ml-2.5"

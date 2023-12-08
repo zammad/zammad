@@ -66,7 +66,7 @@ const removeNotification = () => {
       :disabled="loading"
       @click="removeNotification()"
     >
-      <CommonIcon name="mobile-delete" class="text-red" size="tiny" />
+      <CommonIcon name="delete" class="text-red" size="tiny" />
     </button>
     <div class="flex items-center ltr:pr-2 rtl:pl-2">
       <div

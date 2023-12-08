@@ -117,7 +117,7 @@ describe('Form - Field - Select - Dialog', () => {
     expect(
       wrapper.getByIconName((name, node) => {
         return (
-          name === '#icon-mobile-check' &&
+          name === '#icon-check' &&
           !node?.parentElement?.classList.contains('invisible')
         )
       }),
@@ -346,12 +346,12 @@ describe('Form - Field - Select - Options', () => {
       {
         value: 1,
         label: 'GitLab',
-        icon: 'mobile-gitlab',
+        icon: 'gitlab',
       },
       {
         value: 2,
         label: 'GitHub',
-        icon: 'mobile-github',
+        icon: 'github',
       },
     ]
 
@@ -661,7 +661,7 @@ describe('Form - Field - Select - Features', () => {
     let selectOptions = wrapper.getAllByRole('option')
 
     expect(selectOptions).toHaveLength(
-      wrapper.queryAllByIconName('mobile-check-box-no').length,
+      wrapper.queryAllByIconName('check-box-no').length,
     )
 
     await wrapper.events.click(selectOptions[0])
@@ -673,8 +673,8 @@ describe('Form - Field - Select - Features', () => {
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toStrictEqual([testOptions[0].value])
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(2)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(1)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(1)
 
@@ -693,8 +693,8 @@ describe('Form - Field - Select - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(1)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(2)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
 
@@ -714,8 +714,8 @@ describe('Form - Field - Select - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(0)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(3)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(0)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(3)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(3)
 
@@ -734,8 +734,8 @@ describe('Form - Field - Select - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(1)
-    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('check-box-no')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('check-box-yes')).toHaveLength(2)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
 

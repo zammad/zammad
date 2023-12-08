@@ -40,7 +40,7 @@ watch(
     >
       <CommonIcon
         :label="__('Loading content')"
-        name="mobile-loading"
+        name="loading"
         animation="spin"
       />
     </div>

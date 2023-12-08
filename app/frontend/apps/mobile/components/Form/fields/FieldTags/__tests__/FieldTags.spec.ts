@@ -71,13 +71,9 @@ describe('Form - Field - Tags', () => {
     await view.events.click(options[0])
     await view.events.click(options[1])
 
-    expect(
-      getByIconName(options[0], 'mobile-check-box-yes'),
-    ).toBeInTheDocument()
+    expect(getByIconName(options[0], 'check-box-yes')).toBeInTheDocument()
 
-    expect(
-      getByIconName(options[1], 'mobile-check-box-yes'),
-    ).toBeInTheDocument()
+    expect(getByIconName(options[1], 'check-box-yes')).toBeInTheDocument()
 
     await view.events.click(view.getByRole('button', { name: 'Done' }))
 

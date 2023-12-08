@@ -94,6 +94,14 @@ module.exports = {
             target: './app/frontend/shared',
             from: './app/frontend/apps',
           },
+          {
+            target: './app/frontend/apps/desktop',
+            from: './app/frontend/apps/mobile',
+          },
+          {
+            target: './app/frontend/apps/mobile',
+            from: './app/frontend/apps/desktop',
+          },
           // restrict imports between different pages folder
           ...mobilePagesFolder.map((page) => {
             return {

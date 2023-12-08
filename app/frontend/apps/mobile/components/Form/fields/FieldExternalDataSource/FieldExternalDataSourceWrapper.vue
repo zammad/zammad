@@ -66,7 +66,7 @@ const additionalQueryParams = () => {
 }
 
 Object.assign(props.context, {
-  actionIcon: 'mobile-search',
+  actionIcon: 'search',
 
   gqlQuery: AutocompleteSearchObjectAttributeExternalDataSourceDocument,
 

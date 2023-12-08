@@ -1,8 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { useIcons } from './useIcons.ts'
-
-const loadSvg = () => {
+const loadSvg = (symbols: [string, string][]) => {
   const { body } = document
   let svgDom = document.getElementById('__svg__icons__dom__') as unknown as
     | SVGSVGElement
@@ -16,13 +14,15 @@ const loadSvg = () => {
     svgDom.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
     svgDom.setAttribute('xmlns:link', 'http://www.w3.org/1999/xlink')
   }
-  const { symbols } = useIcons()
   const html = symbols.map((symb) => symb[1]).join('\n')
   svgDom.innerHTML = html
   body.insertBefore(svgDom, body.lastChild)
 }
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadSvg)
-} else {
-  loadSvg()
+
+export const injectSvgIcons = (symbols: [string, string][]) => {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => loadSvg(symbols))
+  } else {
+    loadSvg(symbols)
+  }
 }

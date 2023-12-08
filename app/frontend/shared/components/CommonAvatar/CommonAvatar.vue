@@ -12,7 +12,7 @@ export interface Props {
   // name of the icon
   icon?: Maybe<string>
   size?: AvatarSize
-  vipIcon?: Maybe<'mobile-crown' | 'mobile-crown-silver'>
+  vipIcon?: Maybe<'vip-user' | 'vip-organization'>
   ariaLabel?: Maybe<string>
   decorative?: boolean
 }
@@ -62,9 +62,7 @@ const avatarLabel = computed(() => {
       v-if="vipIcon"
       size="xl"
       class="vip pointer-events-none absolute -top-[48px] w-10 ltr:left-1/2 ltr:-ml-5 rtl:right-1/2 rtl:-mr-5"
-      :class="
-        vipIcon === 'mobile-crown-silver' ? 'text-gray-100' : 'text-yellow'
-      "
+      :class="vipIcon === 'vip-organization' ? 'text-gray-100' : 'text-yellow'"
       :name="vipIcon"
       decorative
     />

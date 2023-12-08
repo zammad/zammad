@@ -75,7 +75,7 @@ const actionPlugin: TicketArticleActionPlugin = {
           name: 'email-reply',
           view: { agent: ['change'] },
           label: __('Reply'),
-          icon: { mobile: 'mobile-reply', desktop: 'desktop-reply' },
+          icon: 'reply',
           perform: (t, a, o) => replyToEmail(t, a, o, config),
         },
         {
@@ -83,7 +83,7 @@ const actionPlugin: TicketArticleActionPlugin = {
           name: 'email-forward',
           view: { agent: ['change'] },
           label: __('Forward'),
-          icon: { mobile: 'mobile-forward', desktop: 'desktop-forward' },
+          icon: 'forward',
           perform: (t, a, o) => forwardEmail(t, a, o, config),
         },
       )
@@ -95,7 +95,7 @@ const actionPlugin: TicketArticleActionPlugin = {
         name: 'email-reply-all',
         view: { agent: ['change'] },
         label: __('Reply All'),
-        icon: { mobile: 'mobile-reply-alt', desktop: 'desktop-reply-alt' },
+        icon: 'reply-alt',
         perform: (t, a, o) => replyToEmail(t, a, o, config, true),
       })
     }
@@ -122,7 +122,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       value: 'email',
       label: __('Email'),
       apps: ['mobile'],
-      icon: { mobile: 'mobile-mail', desktop: 'desktop-mail' },
+      icon: 'mail',
       attributes: Array.from(attributes),
       view: { agent: ['change'] },
       validation: {

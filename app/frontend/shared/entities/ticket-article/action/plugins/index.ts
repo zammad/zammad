@@ -75,7 +75,7 @@ export const createArticleTypes = (
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .map(({ apps, ...type }) => ({
         ...type,
-        icon: type.icon[app],
+        icon: type.icon,
       }))
   )
 }

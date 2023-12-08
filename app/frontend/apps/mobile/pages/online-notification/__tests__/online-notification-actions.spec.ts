@@ -169,7 +169,7 @@ describe('selecting a online notification', () => {
       },
     })
 
-    await view.events.click(view.getAllByIconName('mobile-delete')[0])
+    await view.events.click(view.getAllByIconName('delete')[0])
 
     notificationItems = view.getAllByText('Ticket Title', {
       exact: false,
