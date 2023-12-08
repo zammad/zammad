@@ -905,8 +905,11 @@ class App.Utils
       else if dataRef isnt undefined && dataRef isnt null && dataRef.toString
         # in case if we have a references object, check what datatype the attribute has
         # and e. g. convert timestamps/dates to browser locale
+        className     = dataRefLast?.constructor?.className
         lastLevelName = levels[levels.length - 2]
-        className = dataRefLast?.constructor?.className || (lastLevelName.charAt(0).toUpperCase() + lastLevelName.slice(1))
+        if lastLevelName && !className
+          className = lastLevelName.charAt(0).toUpperCase() + lastLevelName.slice(1)
+
         if className && App[className]
           localClassRef = App[className]
           if localClassRef?.attributesGet
