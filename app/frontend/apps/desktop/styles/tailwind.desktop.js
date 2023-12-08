@@ -45,14 +45,6 @@ module.exports = {
       },
       black: '#000000',
       white: '#FFFFFF',
-      neutral: {
-        100: '#E6E6E6',
-        200: '#E3E3E3',
-        300: '#DCDCDC',
-        400: '#D1D1D1',
-        500: '#999999',
-        950: '#191919',
-      },
       gray: {
         100: '#585856',
         200: '#535355',
@@ -114,13 +106,26 @@ module.exports = {
         500: '#FF006B',
       },
     },
+    extend: {
+      // NB: daisyUI overrides `neutral` color as a last step.
+      //   Here we apply our original theme values by using the same way they were overridden (via full class name).
+      //   https://github.com/saadeghi/daisyui/issues/2368
+      colors: {
+        'neutral-100': '#E6E6E6',
+        'neutral-200': '#E3E3E3',
+        'neutral-300': '#DCDCDC',
+        'neutral-400': '#D1D1D1',
+        'neutral-500': '#999999',
+        'neutral-950': '#191919',
+      },
+    },
   },
   // XXX: daisyUI is used only in desktop view, so its classes CANNOT be used in "shared" components.
   daisyui: {
     base: false,
     // Do not show info about daisyUI version and used config in the console when building CSS.
     logs: false,
-    // Disable all DaisyUI themes which in turn disables all built-in colors.
+    // Disable all daisyUI themes which in turn disables all built-in colors.
     //   https://daisyui.com/docs/themes/#-2
     themes: [],
   },
