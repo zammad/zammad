@@ -21,8 +21,8 @@ class SMIMEMetaInformationTable < ActiveRecord::Migration[6.1]
   end
 
   def remove_columns(t)
-    t.remove_index :modulus
-    t.remove_index :subject
+    t.remove_index :modulus if t.index_exists?(:modulus)
+    t.remove_index :subject if t.index_exists?(:subject)
 
     t.remove :subject, :doc_hash, :not_before_at, :not_after_at
   end
