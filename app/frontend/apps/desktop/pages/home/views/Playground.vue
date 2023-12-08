@@ -1,5 +1,9 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
+<script setup lang="ts">
+import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+</script>
+
 <template>
   <div class="space-y-2 p-4 flex flex-wrap text-xs">
     Filler text above
@@ -19,5 +23,27 @@
       <CommonIcon name="desktop-logo-flat" size="small" />
       Authenticator App
     </button>
+  </div>
+
+  <div class="w-1/2 ltr:ml-2 rtl:mr-2">
+    <h1>Alerts</h1>
+
+    <CommonAlert
+      variant="info"
+      dismissible
+      link="https://youtu.be/U6n2NcJ7rLc"
+      link-text="Party 🎉"
+      class="mb-2.5"
+      >It's Friday!</CommonAlert
+    >
+    <CommonAlert variant="success" class="mb-2.5"
+      >Hooray! Ticket got updated.</CommonAlert
+    >
+    <CommonAlert variant="warning" class="mb-2.5"
+      >Heee! You're typing too fast.</CommonAlert
+    >
+    <CommonAlert variant="danger" class="mb-2.5"
+      >Ooops! You broke it.</CommonAlert
+    >
   </div>
 </template>
