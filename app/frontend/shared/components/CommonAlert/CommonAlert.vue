@@ -18,15 +18,14 @@ const props = withDefaults(defineProps<Props>(), {
 const icon = computed(() => {
   switch (props.variant) {
     case 'success':
-      return 'desktop-check-circle-outline'
-    case 'info':
-      return 'desktop-info-circle'
+      return 'alert-success'
     case 'warning':
-      return 'desktop-exclamation-triangle'
+      return 'alert-warning'
     case 'danger':
-      return 'desktop-x-circle'
+      return 'alert-danger'
+    case 'info':
     default:
-      return 'desktop-info-circle'
+      return 'alert-info'
   }
 })
 
@@ -69,7 +68,7 @@ const dismissed = ref(false)
         v-if="props.dismissible"
         size="small"
         decorative
-        name="mobile-close"
+        name="alert-dismiss"
         class="ltr:mr-2 rtl:ml-2 cursor-pointer"
         @click="dismissed = true"
       />

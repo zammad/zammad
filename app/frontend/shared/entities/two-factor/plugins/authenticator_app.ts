@@ -8,5 +8,5 @@ export default {
   label: __('Authenticator App'),
   order: 200,
   helpMessage: __('Enter the code from your two-factor authenticator app.'),
-  icon: 'mobile-code',
+  icon: '2fa-authenticator-app',
 } satisfies TwoFactorPlugin

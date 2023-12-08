@@ -16,8 +16,8 @@ describe('CommonAlert.vue', () => {
     expect(alert).toHaveTextContent('Dummy')
     expect(alert).toHaveClass('alert-info')
 
-    expect(view.getByIconName('desktop-info-circle')).toBeInTheDocument()
-    expect(view.queryByIconName('mobile-close')).not.toBeInTheDocument()
+    expect(view.getByIconName('info-circle')).toBeInTheDocument()
+    expect(view.queryByIconName('close')).not.toBeInTheDocument()
   })
 
   it('renders an alert with a specific variant', () => {
@@ -35,8 +35,8 @@ describe('CommonAlert.vue', () => {
     expect(alert).toHaveTextContent('Dummy')
     expect(alert).toHaveClass('alert-error')
 
-    expect(view.getByIconName('desktop-x-circle')).toBeInTheDocument()
-    expect(view.queryByIconName('mobile-close')).not.toBeInTheDocument()
+    expect(view.getByIconName('x-circle')).toBeInTheDocument()
+    expect(view.queryByIconName('close')).not.toBeInTheDocument()
   })
 
   it('renders an dismissible alert', () => {
@@ -53,7 +53,7 @@ describe('CommonAlert.vue', () => {
 
     expect(alert).toHaveTextContent('Dummy')
     expect(alert).toHaveClass('alert-info')
-    expect(view.getByIconName('mobile-close')).toBeInTheDocument()
+    expect(view.getByIconName('close')).toBeInTheDocument()
   })
 
   it('renders an alert with a link', () => {

@@ -4,6 +4,11 @@ export default {
   'vip-user': 'crown',
   'vip-organization': 'crown-silver',
   'input-cancel': 'close-small',
+  'alert-danger': 'x-circle',
+  'alert-dismiss': 'close',
+  'alert-info': 'info-circle',
+  'alert-success': 'check-circle-outline',
+  'alert-warning': 'exclamation-triangle',
   tooltip: 'info',
 
   'notification-warn': 'info',
@@ -35,6 +40,9 @@ export default {
   'editor-mention-user': 'at-sign',
   'editor-mention-knowledge-base': 'mention-kb',
   'editor-mention-text-module': 'snippet',
+
+  '2fa-security-keys': 'security-key',
+  '2fa-authenticator-app': 'mobile-code',
 
   // these aliases are used in shared context, but they refer to the same name
   search: 'search',

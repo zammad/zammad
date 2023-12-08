@@ -39,5 +39,5 @@ export default {
       }
     }
   },
-  icon: 'security-key',
+  icon: '2fa-security-keys',
 } satisfies TwoFactorPlugin
