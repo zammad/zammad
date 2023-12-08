@@ -1525,6 +1525,17 @@ QUnit.test("check replace tags", assert => {
   verify = App.Utils.replaceTags(message, data)
   assert.equal(verify, result)
 
+  message = "<div>issue #4973 #{user,firstname}</div>"
+  result = '<div>issue #4973 -</div>'
+  data = {
+    user: {
+      firstname: 'Bob',
+      lastname: 'Smith',
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
   user = new App.User({
     firstname: 'Bob',
     lastname: 'Smith Good',
