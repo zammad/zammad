@@ -11527,7 +11527,8 @@ output {
 
   .searchableSelect-shadow {
     position: absolute;
-    left: -9999px;
+
+    @include bidi-style(left, -9999px, right, -9999px);
   }
 
   .dropdown-menu {
