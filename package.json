@@ -86,7 +86,7 @@
     "vite-plugin-ruby": "^5.0.0",
     "vitest": "^1.0.1",
     "vitest-axe": "^0.1.0",
-    "vue-tsc": "^1.8.24"
+    "vue-tsc": "^1.8.25"
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
@@ -120,9 +120,9 @@
     "@tiptap/suggestion": "^2.1.13",
     "@tiptap/vue-3": "^2.1.13",
     "@vue/apollo-composable": "^4.0.0-beta.12",
-    "@vueuse/core": "^10.6.1",
-    "@vueuse/router": "^10.6.1",
-    "@vueuse/shared": "^10.6.1",
+    "@vueuse/core": "^10.7.0",
+    "@vueuse/router": "^10.7.0",
+    "@vueuse/shared": "^10.7.0",
     "async-mutex": "^0.4.0",
     "daisyui": "^4.4.19",
     "flatpickr": "^4.6.13",
