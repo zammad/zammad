@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 </script>
 
 <template>
@@ -44,6 +45,31 @@ import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
     >
     <CommonAlert variant="danger" class="mb-2.5"
       >Ooops! You broke it.</CommonAlert
+    >
+  </div>
+
+  <div class="ltr:ml-2 rtl:mr-2">
+    <h1>Labels</h1>
+    <CommonLabel size="small" prefix="logo" suffix="logo-flat"
+      >Small</CommonLabel
+    >
+
+    <br />
+
+    <CommonLabel size="medium" prefix="logo" suffix="logo-flat"
+      >Medium</CommonLabel
+    >
+
+    <br />
+
+    <CommonLabel size="large" prefix="logo" suffix="logo-flat"
+      >Large</CommonLabel
+    >
+
+    <br />
+
+    <CommonLabel size="xl" prefix="logo" suffix="logo-flat"
+      >Extra large</CommonLabel
     >
   </div>
 </template>
