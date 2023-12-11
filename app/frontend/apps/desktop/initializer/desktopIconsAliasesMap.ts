@@ -5,7 +5,7 @@ export default {
   'vip-organization': 'crown-silver',
   'input-cancel': 'close-small',
   'alert-danger': 'x-circle',
-  'alert-dismiss': 'close',
+  'alert-dismiss': 'x-lg',
   'alert-info': 'info-circle',
   'alert-success': 'check-circle-outline',
   'alert-warning': 'exclamation-triangle',
