@@ -19,6 +19,7 @@ import applicationConfigPlugin from '#shared/plugins/applicationConfigPlugin.ts'
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import { imageViewerOptions } from '#shared/composables/useImageViewer.ts'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '#shared/router/walker.ts'
@@ -124,6 +125,7 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
       CommonIcon,
       CommonLink,
       CommonDateTime,
+      CommonLabel,
     },
     stubs: {},
     plugins,
