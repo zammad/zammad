@@ -5,8 +5,8 @@ import type { Sizes } from './types.ts'
 
 export interface Props {
   size?: Sizes
-  prefix?: string
-  suffix?: string
+  prefixIcon?: string
+  suffixIcon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -34,10 +34,18 @@ const iconClassMap = {
     :class="fontSizeClassMap[props.size]"
     data-test-id="common-label"
   >
-    <CommonIcon v-if="prefix" :size="iconClassMap[props.size]" :name="prefix" />
+    <CommonIcon
+      v-if="prefixIcon"
+      :size="iconClassMap[props.size]"
+      :name="prefixIcon"
+    />
 
     <slot />
 
-    <CommonIcon v-if="suffix" :size="iconClassMap[props.size]" :name="suffix" />
+    <CommonIcon
+      v-if="suffixIcon"
+      :size="iconClassMap[props.size]"
+      :name="suffixIcon"
+    />
   </span>
 </template>

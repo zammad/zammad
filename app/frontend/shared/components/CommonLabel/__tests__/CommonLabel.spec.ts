@@ -33,11 +33,11 @@ describe('CommonLabel.vue', () => {
     expect(label).toHaveClass('text-base')
   })
 
-  it('renders icons (pre + post)', () => {
+  it('renders icons (prefix + suffix)', () => {
     const view = renderComponent(CommonLabel, {
       props: {
-        prefix: 'logo',
-        suffix: 'logo-flat',
+        prefixIcon: 'logo',
+        suffixIcon: 'logo-flat',
       },
       slots: {
         default: 'Dummy',
