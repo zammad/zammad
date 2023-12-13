@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-const { splitVendorChunk } = require('vite')
+import { splitVendorChunk } from 'vite'
 
 const matchers = [
   {
@@ -48,7 +48,7 @@ const matchers = [
 /**
  * @returns {import("vite").Plugin}
  */
-const PluginManualChunks = () => {
+const ManualChunksPlugin = () => {
   const getChunk = splitVendorChunk()
 
   return {
@@ -93,4 +93,4 @@ const PluginManualChunks = () => {
   }
 }
 
-module.exports = PluginManualChunks
+export default ManualChunksPlugin

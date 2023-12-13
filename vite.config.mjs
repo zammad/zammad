@@ -10,6 +10,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { homedir } from 'os'
 import svgIconsPlugin from './app/frontend/build/iconsPlugin.mjs'
+import ManualChunksPlugin from './app/frontend/build/manualChunks.mjs'
 import tsconfig from './tsconfig.base.json' assert { type: 'json' }
 
 const dir = dirname(fileURLToPath(import.meta.url))
@@ -38,12 +39,11 @@ export default defineConfig(({ mode, command }) => {
     svgIconsPlugin(),
   ]
 
-  // Ruby plugin is not needed inside of the vitest context and has some side effects.
   if (!isTesting || isBuild) {
+    // Ruby plugin is not needed inside of the vitest context and has some side effects.
     const { default: RubyPlugin } = require('vite-plugin-ruby')
-    const ManualChunks = require('./app/frontend/build/manualChunks.js')
-
     plugins.push(RubyPlugin())
+
     plugins.push(
       ...VitePWA({
         disable: isTesting || !!process.env.VITE_TEST_MODE,
@@ -57,7 +57,7 @@ export default defineConfig(({ mode, command }) => {
         strategies: 'injectManifest',
       }),
     )
-    plugins.push(ManualChunks())
+    plugins.push(ManualChunksPlugin())
   }
 
   let https = false
