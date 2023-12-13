@@ -409,7 +409,11 @@ const generateObject = (
     // by default, don't populate those fields since
     // first two can lead to recursions or inconsistent data
     // the "errors" should usually be "null" anyway
-    if (name === 'updatedBy' || name === 'createdBy' || name === 'errors') {
+    // this is still possible to override with defaults
+    if (
+      !(name in value) &&
+      (name === 'updatedBy' || name === 'createdBy' || name === 'errors')
+    ) {
       value[name] = null
       return
     }

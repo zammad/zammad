@@ -3,6 +3,7 @@
 import type { MutationsAccountAvatarAddArgs } from '#shared/graphql/types.ts'
 import { faker } from '@faker-js/faker'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import UserError from '#shared/errors/UserError.ts'
 import { getGraphQLMockCalls, mockGraphQLResult } from '../mocks.ts'
 import { getMutationHandler, getQueryHandler } from './utils.ts'
 import {
@@ -164,5 +165,34 @@ describe('calling mutation with mocked return data correctly returns data', () =
       'imageFull',
       imageFull,
     )
+  })
+
+  it('correctly returns errors if provided', async () => {
+    mockGraphQLResult(TestAvatarActiveMutationDocument, {
+      accountAvatarAdd: {
+        errors: [
+          {
+            message: 'Some error',
+          },
+        ],
+      },
+    })
+
+    const handler = getMutationHandler<
+      TestAvatarMutation,
+      MutationsAccountAvatarAddArgs
+    >(TestAvatarActiveMutationDocument)
+    const data = await handler
+      .send({
+        images: {
+          original: { name: faker.word.noun() },
+          resized: { name: faker.word.noun() },
+        },
+      })
+      .catch((e) => e)
+
+    expect(data).toBeInstanceOf(UserError)
+    expect(data.errors).toHaveLength(1)
+    expect(data.errors[0].message).toBe('Some error')
   })
 })
