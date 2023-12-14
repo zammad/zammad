@@ -107,7 +107,7 @@ module BrowserTestHelper
   def await_empty_ajax_queue
 
     # Waiting not supported/required by mobile app.
-    return if self.class.metadata[:app] == :mobile # self.class needed to get metadata from within an `it` block.
+    return if %i[desktop_view mobile].include?(self.class.metadata[:app]) # self.class needed to get metadata from within an `it` block.
 
     # page.evaluate_script silently discards any present alerts, which is not desired.
     begin

@@ -13,17 +13,18 @@ import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import type UserError from '#shared/errors/UserError.ts'
-import type {
-  EnumTwoFactorAuthenticationMethod,
-  UserTwoFactorMethods,
+import {
+  EnumPublicLinksScreen,
+  type EnumTwoFactorAuthenticationMethod,
+  type UserTwoFactorMethods,
 } from '#shared/graphql/types.ts'
+import { usePublicLinks } from '#shared/composables/usePublicLinks.ts'
 import LoginThirdParty from '../components/LoginThirdParty.vue'
 import LoginCredentialsForm from '../components/LoginCredentialsForm.vue'
 import LoginHeader from '../components/LoginHeader.vue'
 import LoginTwoFactor from '../components/LoginTwoFactor.vue'
 import LoginTwoFactorMethods from '../components/LoginTwoFactorMethods.vue'
 import LoginRecoveryCode from '../components/LoginRecoveryCode.vue'
-import { usePublicLinks } from '../composable/usePublicLinks.ts'
 import type { LoginFlow, LoginFormData } from '../types/login.ts'
 import LoginFooter from '../components/LoginFooter.vue'
 
@@ -45,7 +46,7 @@ if (route.query.invalidatedSession === '1') {
 
 const application = useApplicationStore()
 
-const { links } = usePublicLinks()
+const { links } = usePublicLinks(EnumPublicLinksScreen.Login)
 
 const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
 

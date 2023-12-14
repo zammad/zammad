@@ -14,9 +14,9 @@ describe('CommonAlert.vue', () => {
     const alert = view.getByTestId('common-alert')
 
     expect(alert).toHaveTextContent('Dummy')
-    expect(alert).toHaveClass('alert-info')
+    expect(alert).toHaveClass('common-alert-info')
 
-    expect(view.getByIconName('info-circle')).toBeInTheDocument()
+    expect(view.getByIconName('info')).toBeInTheDocument()
     expect(view.queryByIconName('close')).not.toBeInTheDocument()
   })
 
@@ -33,9 +33,9 @@ describe('CommonAlert.vue', () => {
     const alert = view.getByTestId('common-alert')
 
     expect(alert).toHaveTextContent('Dummy')
-    expect(alert).toHaveClass('alert-error')
+    expect(alert).toHaveClass('common-alert-danger')
 
-    expect(view.getByIconName('x-circle')).toBeInTheDocument()
+    expect(view.getByIconName('close-small')).toBeInTheDocument()
     expect(view.queryByIconName('close')).not.toBeInTheDocument()
   })
 
@@ -52,7 +52,7 @@ describe('CommonAlert.vue', () => {
     const alert = view.getByTestId('common-alert')
 
     expect(alert).toHaveTextContent('Dummy')
-    expect(alert).toHaveClass('alert-info')
+    expect(alert).toHaveClass('common-alert-info')
     expect(view.getByIconName('close')).toBeInTheDocument()
   })
 
@@ -71,7 +71,7 @@ describe('CommonAlert.vue', () => {
     const alert = view.getByTestId('common-alert')
 
     expect(alert).toHaveTextContent('Dummy')
-    expect(alert).toHaveClass('alert-info')
+    expect(alert).toHaveClass('common-alert-info')
 
     const link = view.getByText('Zammad')
     expect(link).toBeInTheDocument()

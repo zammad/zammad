@@ -35,9 +35,13 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       outer: 'formkit-invalid:bg-red-dark formkit-errors:bg-red-dark',
       label: 'formkit-required:required formkit-invalid:text-red-bright',
       messages: 'px-2',
-      help: 'px-2 pb-2',
+      message: 'text-red-bright pb-1',
+      help: 'mt-0.5 px-2 pb-2',
       arrow: 'formkit-arrow flex items-center formkit-disabled:opacity-30',
-      suffixIcon: 'text-white fill-current flex justify-center items-center',
+      prefixIcon:
+        'absolute top-1/2 transform -translate-y-1/2 rtl:right-3 ltr:left-3',
+      suffixIcon:
+        'absolute top-1/2 transform -translate-y-1/2 rtl:left-3 ltr:right-3 text-white fill-current flex justify-center items-center',
     }),
     text: addAbsoluteFloatingLabel(classes.text),
     email: addAbsoluteFloatingLabel(classes.email),

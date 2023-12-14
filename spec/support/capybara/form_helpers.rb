@@ -871,4 +871,5 @@ end
 
 RSpec.configure do |config|
   config.include FormHelpers, type: :system, app: :mobile
+  config.include FormHelpers, type: :system, app: :desktop_view
 end

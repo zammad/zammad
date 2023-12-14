@@ -510,12 +510,6 @@ export const generateObjectData = <T>(
   }) as T
 }
 
-const results = new WeakMap<DocumentNode, unknown>()
-
-export const getGqlOperationResult = <T>(document: DocumentNode): T => {
-  return results.get(document) as T
-}
-
 export const mockOperation = (
   document: DocumentNode,
   variables: Record<string, unknown>,
@@ -530,7 +524,6 @@ export const mockOperation = (
   const operationName = name!.value!
   const operationType = getOperationDefinition(operation, operationName)
   const query: any = { __typename: queriesTypes[operation] }
-  results.set(document, query)
   const rootName = operationType.name
   logger.log(`[MOCKER] mocking "${rootName}" ${operation}`)
 

@@ -10,13 +10,9 @@ const classes: FormThemeClasses = {
   global: {
     wrapper: 'formkit-disabled:opacity-30',
     label: 'formkit-label-hidden:sr-only',
-    help: 'mt-0.5 text-xs',
+    help: 'text-xs',
     messages: 'list-none',
-    message: 'text-red-bright pb-1 text-xs',
-    prefixIcon:
-      'absolute top-1/2 transform -translate-y-1/2 rtl:right-3 ltr:left-3',
-    suffixIcon:
-      'absolute top-1/2 transform -translate-y-1/2 rtl:left-3 ltr:right-3',
+    message: 'text-xs',
   },
   text: defaultTextInput,
   email: defaultTextInput,

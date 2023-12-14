@@ -50,3 +50,8 @@ export interface FormDefaultProps {
 }
 
 export type FormUpdaterTrigger = 'direct' | 'delayed' | 'blur' | 'form-reset'
+
+export interface FormDecoratorIcons {
+  checkboxDecorator?: string
+  radioDecorator?: string
+}

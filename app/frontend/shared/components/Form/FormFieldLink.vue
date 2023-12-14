@@ -18,7 +18,7 @@ defineProps<{
       class="flex h-10 w-12 items-center justify-center"
       open-in-new-tab
     >
-      <CommonIcon name="external-link" decorative size="small" />
+      <CommonIcon name="form-field-link" decorative size="small" />
     </CommonLink>
   </div>
 </template>

@@ -2,9 +2,11 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
+import type { AlertVariant } from './types.ts'
 
 export interface Props {
-  variant?: 'success' | 'info' | 'warning' | 'danger'
+  variant?: AlertVariant
   dismissible?: boolean
   link?: string | null
   linkText?: string | null
@@ -18,23 +20,18 @@ const props = withDefaults(defineProps<Props>(), {
 const icon = computed(() => {
   switch (props.variant) {
     case 'success':
-      return 'alert-success'
+      return 'common-alert-success'
     case 'warning':
-      return 'alert-warning'
+      return 'common-alert-warning'
     case 'danger':
-      return 'alert-danger'
+      return 'common-alert-danger'
     case 'info':
     default:
-      return 'alert-info'
+      return 'common-alert-info'
   }
 })
 
-const classMap = {
-  success: 'alert-success bg-green-900 text-green-500',
-  info: 'alert-info bg-blue-950 text-blue-800',
-  warning: 'alert-warning bg-yellow-900 text-yellow-600',
-  danger: 'alert-error bg-red-900 text-red-500',
-}
+const classMap = getAlertClasses()
 
 const dismissed = ref(false)
 </script>
@@ -42,8 +39,8 @@ const dismissed = ref(false)
 <template>
   <div
     v-if="!dismissed"
-    class="alert rounded-lg gap-1.5 p-2 border-transparent"
-    :class="classMap[props.variant]"
+    class="rounded-lg gap-1.5 p-2 border-transparent"
+    :class="[classMap.base, classMap[props.variant]]"
     role="alert"
     data-test-id="common-alert"
   >
@@ -57,7 +54,8 @@ const dismissed = ref(false)
     >
       <CommonLink
         v-if="props.link"
-        class="ltr:mr-2 rtl:ml-2 font-extrabold underline text-ellipsis"
+        class="ltr:mr-2 rtl:ml-2 text-ellipsis"
+        :class="classMap.link"
         :link="props.link"
         open-in-new-tab
         rel="noopener noreferrer"
@@ -68,7 +66,7 @@ const dismissed = ref(false)
         v-if="props.dismissible"
         size="small"
         decorative
-        name="alert-dismiss"
+        name="common-alert-dismiss"
         class="ltr:mr-2 rtl:ml-2 cursor-pointer"
         @click="dismissed = true"
       />

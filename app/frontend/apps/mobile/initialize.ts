@@ -11,15 +11,17 @@ import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
 import initializeForm from '#mobile/form/index.ts'
 import { initializeMobileVisuals } from './initializer/mobileVisuals.ts'
 import { initializeMobileIcons } from './initializer/initializeMobileIcons.ts'
+import { initializeGlobalComponentStyles } from './initializer/initializeGlobalComponentStyles.ts'
 
 export default function initializeApp(app: App) {
   initializeAppName('mobile')
   initializeStore(app)
+  initializeGlobalComponentStyles()
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
+  initializeMobileIcons()
   initializeForm(app)
   initializeMobileVisuals()
-  initializeMobileIcons()
 
   return app
 }

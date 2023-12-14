@@ -4,17 +4,18 @@ export default {
   'vip-user': 'crown',
   'vip-organization': 'crown-silver',
   'input-cancel': 'close-small',
-  'alert-danger': 'x-circle',
-  'alert-dismiss': 'close',
-  'alert-info': 'info-circle',
-  'alert-success': 'check-circle-outline',
-  'alert-warning': 'exclamation-triangle',
   tooltip: 'info',
 
-  'notification-warn': 'info',
-  'notification-success': 'check',
-  'notification-error': 'warning',
-  'notification-info': 'info',
+  'common-alert-danger': 'close-small',
+  'common-alert-dismiss': 'close',
+  'common-alert-info': 'info',
+  'common-alert-success': 'check-circle-outline',
+  'common-alert-warning': 'warning',
+
+  'common-notification-warn': 'info',
+  'common-notification-success': 'check',
+  'common-notification-error': 'warning',
+  'common-notification-info': 'info',
 
   'ticket-escalating': 'warning-triangle',
   'ticket-state-circle': 'check-circle-no',
@@ -44,8 +45,11 @@ export default {
   '2fa-security-keys': 'security-key',
   '2fa-authenticator-app': 'mobile-code',
 
+  'form-field-link': 'external-link',
+
   // these aliases are used in shared context, but they refer to the same name
   search: 'search',
   loading: 'loading',
-  'external-link': 'external-link',
+  show: 'show',
+  hide: 'hide',
 }

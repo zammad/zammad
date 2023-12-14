@@ -2768,6 +2768,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 msgid "Continue to mobile"
 msgstr ""
 
@@ -7151,7 +7152,6 @@ msgid "Login failed. Please double-check your two-factor authentication method."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
@@ -7932,6 +7932,7 @@ msgstr ""
 msgid "New ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>The new ticket (#{ticket.title}) has been created by \"<b>#{current_user.longname}</b>\".</div>\n<br>\n<div>\nGroup: #{ticket.group.name}<br>\nOwner: #{ticket.owner.fullname}<br>\nState: #{t(ticket.state.name)}<br>\n</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "New user?"
 msgstr ""
@@ -8540,6 +8541,7 @@ msgstr ""
 msgid "Or migrate from another system."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/components/LoginThirdParty.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
 msgid "Or sign in using"
 msgstr ""
@@ -9110,7 +9112,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Powered by"
 msgstr ""
@@ -9419,6 +9421,7 @@ msgstr ""
 msgid "Regenerate recovery codes"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Register"
 msgstr ""
@@ -10718,6 +10721,7 @@ msgid "Sign in"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/components/LoginThirdParty.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
 msgid "Sign in using"
 msgstr ""
@@ -14539,7 +14543,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
 msgid "Zammad"

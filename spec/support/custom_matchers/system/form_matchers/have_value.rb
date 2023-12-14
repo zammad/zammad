@@ -54,4 +54,5 @@ end
 
 RSpec.configure do |config|
   config.include FormMatchers, type: :system, app: :mobile
+  config.include FormMatchers, type: :system, app: :desktop_view
 end

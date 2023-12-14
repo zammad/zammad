@@ -928,11 +928,13 @@ const buildStaticSchema = () => {
     if ('component' in layoutNode) {
       layoutField = {
         $cmp: layoutNode.component,
+        ...(layoutNode.if && { if: layoutNode.if }),
         props: layoutNode.props,
       }
     } else {
       layoutField = {
         $el: layoutNode.element,
+        ...(layoutNode.if && { if: layoutNode.if }),
         attrs: layoutNode.attrs,
       }
     }

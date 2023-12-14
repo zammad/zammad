@@ -3,16 +3,12 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
+import { getNotificationClasses } from '#shared/initializer/initializeNotificationClasses.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import type { Notification } from '#shared/components/CommonNotifications/types.ts'
 import { markup } from '#shared/utils/markup.ts'
 
-const notificationTypeClassMap = {
-  warn: 'bg-yellow text-black',
-  success: 'bg-green text-white',
-  error: 'bg-red/60 text-white',
-  info: 'bg-white text-black',
-}
+const notificationTypeClassMap = getNotificationClasses()
 
 const { notifications, removeNotification } = useNotifications()
 
@@ -29,7 +25,11 @@ const clickHandler = (notification: Notification) => {
 
 <template>
   <div id="Notifications" class="flex w-full justify-center">
-    <div class="fixed top-0 z-50 ltr:right-0 rtl:left-0" role="alert">
+    <div
+      class="fixed top-0 z-50"
+      :class="notificationTypeClassMap.baseContainer"
+      role="alert"
+    >
       <TransitionGroup
         tag="div"
         enter-class="opacity-0"
@@ -42,16 +42,20 @@ const clickHandler = (notification: Notification) => {
         >
           <div class="flex justify-center">
             <div
-              class="m-3 flex cursor-pointer items-center rounded px-4 py-2"
-              :class="getClassName(notification)"
+              class="m-3 flex cursor-pointer items-center"
+              :class="[
+                notificationTypeClassMap.base,
+                getClassName(notification),
+              ]"
               @click="clickHandler(notification)"
             >
               <CommonIcon
-                :name="`notification-${notification.type}`"
+                :name="`common-notification-${notification.type}`"
                 size="small"
               />
               <span
-                class="text-sm ltr:ml-2 rtl:mr-2"
+                class="text-sm"
+                :class="notificationTypeClassMap.message"
                 v-html="
                   markup(
                     $t(

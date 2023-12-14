@@ -13,7 +13,7 @@ defineProps<{
     <CommonLogo />
   </div>
   <h1 class="mb-6 flex justify-center p-2 text-2xl font-extrabold">
-    {{ title }}
+    {{ $t(title) }}
   </h1>
   <template v-if="$c.maintenance_mode">
     <div class="my-1 flex items-center rounded-xl bg-red px-4 py-2 text-white">

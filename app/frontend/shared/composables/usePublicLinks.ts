@@ -11,12 +11,8 @@ import {
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { computed } from 'vue'
 
-export const usePublicLinks = () => {
-  const publicLinksQuery = new QueryHandler(
-    usePublicLinksQuery({
-      screen: EnumPublicLinksScreen.Login,
-    }),
-  )
+export const usePublicLinks = (screen: EnumPublicLinksScreen) => {
+  const publicLinksQuery = new QueryHandler(usePublicLinksQuery({ screen }))
 
   publicLinksQuery.subscribeToMore<
     PublicLinkUpdatesSubscriptionVariables,

@@ -90,7 +90,13 @@ class SessionsController < ApplicationController
 
     auth = request.env['omniauth.auth']
 
-    redirect_url = request.env['omniauth.origin']&.include?('/mobile') ? '/mobile' : '/#'
+    redirect_url = if request.env['omniauth.origin']&.include?('/mobile')
+                     '/mobile'
+                   elsif request.env['omniauth.origin']&.include?('/desktop')
+                     '/desktop'
+                   else
+                     '/#'
+                   end
 
     if !auth
       logger.info('AUTH IS NULL, SERVICE NOT LINKED TO ACCOUNT')

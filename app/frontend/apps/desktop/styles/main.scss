@@ -1,33 +1,53 @@
 @import '#shared/styles/main.css';
 @config './tailwind.desktop.js';
 
+@layer base {
+  /* Override autofill styles in Firefox. */
+  :-moz-autofill {
+    background: transparent;
+  }
+
+  /* Override autofill styles in Webkit-based browsers. */
+  :-webkit-autofill {
+    -webkit-text-fill-color: theme('colors.black');
+    -webkit-background-clip: text;
+    caret-color: theme('colors.black');
+  }
+
+  [data-theme='dark'] :-webkit-autofill {
+    -webkit-text-fill-color: theme('colors.white');
+    caret-color: theme('colors.white');
+  }
+
+  /* No-op animation for hooking into autofill mechanism in Webkit-based browsers. */
+  :-webkit-autofill {
+    animation-name: onAutoFillStart;
+  }
+
+  :not(:-webkit-autofill) {
+    animation-name: onAutoFillEnd;
+  }
+
+  @keyframes onAutoFillStart {
+    from {
+    }
+
+    to {
+    }
+  }
+
+  @keyframes onAutoFillEnd {
+    from {
+    }
+
+    to {
+    }
+  }
+}
+
 @layer components {
-  .btn {
-    @apply rounded-xl border-0 text-base shadow-none font-normal;
-  }
-
-  .btn:hover {
-    @apply bg-blue-600 dark:bg-blue-900 text-black dark:text-white;
-  }
-
-  .btn-primary {
-    @apply bg-blue-800 text-white;
-  }
-
-  .btn-accent {
-    @apply bg-yellow-300 text-black;
-  }
-
   .required-indicator {
     @apply text-yellow-600;
-  }
-
-  .link-primary {
-    @apply text-blue-800;
-  }
-
-  .link-primary:hover {
-    @apply text-blue-800 underline;
   }
 }
 

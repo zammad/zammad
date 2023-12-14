@@ -30,7 +30,7 @@ const iconClassMap = {
 
 <template>
   <span
-    class="inline-flex justify-start items-center gap-1"
+    class="dark:text-neutral-400 text-gray-100 inline-flex justify-start items-center gap-1"
     :class="fontSizeClassMap[props.size]"
     data-test-id="common-label"
   >

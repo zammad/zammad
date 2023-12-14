@@ -50,6 +50,8 @@ RSpec.configure do |config|
     screen_size = example.metadata[:screen_size] || case example.metadata[:app]
                                                     when :mobile
                                                       :mobile
+                                                    when :desktop_view
+                                                      :desktop_view
                                                     else
                                                       :desktop
                                                     end

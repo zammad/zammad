@@ -102,8 +102,8 @@ const appTheme = useAppTheme()
       <div class="flex">
         Change Theme:
         <CommonIcon
-          name="info"
-          :class="appTheme.theme === 'dark' ? 'text-black' : 'text-yellow'"
+          name="info-circle"
+          size="small"
           @click="appTheme.toggleTheme(false)"
         />
       </div>

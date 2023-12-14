@@ -7,17 +7,18 @@ import { createThemePlugin } from '@formkit/themes'
 import '@formkit/dev'
 import type {
   FormAppSpecificTheme,
+  FormDecoratorIcons,
   FormFieldTypeImportModules,
 } from '#shared/types/form.ts'
 import type {
   ImportGlobEagerOutput,
   ImportGlobEagerDefault,
 } from '#shared/types/utils.ts'
-import { useIcons } from '#shared/components/CommonIcon/useIcons.ts'
 import createFieldPlugin from './core/createFieldPlugin.ts'
 import createValidationPlugin from './core/createValidationPlugin.ts'
 import createI18nPlugin from './core/createI18nPlugin.ts'
 import createTailwindClasses from './core/createTailwindClasses.ts'
+import createCustomIcons from './core/createCustomIcons.ts'
 
 export const getFormPlugins = (
   modules: ImportGlobEagerOutput<FormKitPlugin>,
@@ -48,8 +49,9 @@ export const buildFormKitPluginConfig = (
   appSpecificFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> = {},
   appSpecificPlugins: FormKitPlugin[] = [],
   appSpecificTheme: FormAppSpecificTheme = {},
+  appSpecificDecoratorIcons: FormDecoratorIcons = {},
 ) => {
-  const { icons: customIcons } = useIcons()
+  const customIcons = createCustomIcons()
 
   return {
     plugins: [
@@ -60,8 +62,9 @@ export const buildFormKitPluginConfig = (
       createThemePlugin(
         undefined,
         {
-          checkboxDecorator: checkIcon,
-          radioDecorator: checkIcon,
+          checkboxDecorator:
+            appSpecificDecoratorIcons.checkboxDecorator || checkIcon,
+          radioDecorator: appSpecificDecoratorIcons.radioDecorator || checkIcon,
           ...customIcons,
         },
         undefined,
@@ -87,6 +90,7 @@ export default function initializeForm(
   appSpecificFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> = {},
   appSpecificPlugins: FormKitPlugin[] = [],
   appSpecificTheme: FormAppSpecificTheme = {},
+  appSpecificDecoratorIcons: FormDecoratorIcons = {},
 ) {
   app.use(
     formPlugin,
@@ -95,6 +99,7 @@ export default function initializeForm(
       appSpecificFieldModules,
       appSpecificPlugins,
       appSpecificTheme,
+      appSpecificDecoratorIcons,
     ),
   )
 }

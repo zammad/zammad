@@ -114,6 +114,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
     find_by_id('app')
   end
 
+  # TODO: Should be replaced with tests for the new desktop-view (or the test in general should be removed outside of selenium).
   describe 'SP login and SP logout' do
     before do
       set_saml_config(security: security)

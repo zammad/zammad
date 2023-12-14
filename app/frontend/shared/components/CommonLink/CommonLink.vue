@@ -6,6 +6,7 @@ import { useLink } from 'vue-router'
 import stopEvent from '#shared/utils/events.ts'
 import type { Link } from '#shared/types/router.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
+import { getLinkClasses } from '#shared/initializer/initializeLinkClasses.ts'
 
 export interface Props {
   link: Link
@@ -42,13 +43,10 @@ const target = computed(() => {
   return undefined
 })
 
-// TODO: Other default styles possible?
 const linkClass = computed(() => {
-  if (props.disabled) {
-    return 'pointer-events-none'
-  }
-
-  return ''
+  const { base } = getLinkClasses()
+  if (props.disabled) return `${base} pointer-events-none`
+  return base
 })
 
 const { href, route, navigate, isActive, isExactActive } = useLink({

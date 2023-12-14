@@ -43,6 +43,19 @@ module CommonActions
       end
 
       wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded', skip_clearing: true) if !skip_waiting
+    when :desktop_view
+      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
+
+      within('#signin') do
+        find_input('Username / Email').type(username)
+        find_input('Password').type(password)
+
+        find_toggle('Remember me').toggle_on if remember_me
+      end
+
+      click_button('Sign in')
+
+      wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded', skip_clearing: true) if !skip_waiting
     else
       expect(page).to have_button('Sign in')
 
@@ -119,6 +132,8 @@ module CommonActions
     case app
     when :mobile
       wait_for_test_flag('logout.success', skip_clearing: true)
+    when :desktop_view # rubocop:disable Lint/DuplicateBranch
+      wait_for_test_flag('logout.success', skip_clearing: true)
     else
       wait.until_disappears { find('.user-menu .user a', wait: false) }
     end
@@ -149,7 +164,7 @@ module CommonActions
         super(route)
       end
     elsif !route.start_with?('/')
-      route = if app == :mobile || route.start_with?('#')
+      route = if %i[mobile desktop_view].include?(app) || route.start_with?('#')
                 "/#{route}"
               else
                 "/##{route}"
@@ -158,6 +173,8 @@ module CommonActions
 
     if app == :mobile
       route = "/mobile#{route}"
+    elsif app == :desktop_view
+      route = "/desktop#{route}"
     end
 
     super(route)
@@ -168,6 +185,10 @@ module CommonActions
   def wait_for_loading_to_complete(route: nil, app: self.class.metadata[:app], skip_waiting: false, wait_ws: false)
     case app
     when :mobile
+      return if skip_waiting
+
+      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
+    when :desktop_view # rubocop:disable Lint/DuplicateBranch
       return if skip_waiting
 
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
@@ -215,6 +236,11 @@ module CommonActions
           route = "/#{route}"
         end
         route = Regexp.new(Regexp.quote("/mobile#{route}"))
+      when :desktop_view
+        if !route.start_with?('/')
+          route = "/#{route}"
+        end
+        route = Regexp.new(Regexp.quote("/desktop#{route}"))
       else
         route = Regexp.new(Regexp.quote("/##{route}"))
       end

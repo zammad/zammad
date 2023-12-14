@@ -166,7 +166,7 @@ export const getGraphQLMockCalls = <T>(
       : requestToKey(documentOrOperation)
   if (!key) {
     throw new Error(
-      `Not able to find key for ${documentOrOperation}:${operationName}`,
+      `Cannot find key for ${documentOrOperation}:${operationName}. This happens if query was not executed yet or if it was not mocked.`,
     )
   }
   return mockCalls.get(key) || []
@@ -176,9 +176,14 @@ export const waitForGraphQLMockCalls = <T>(
   documentOrOperation: DocumentNode | OperationType,
   operationName?: string,
 ): Promise<MockCall<DeepRequired<T>>[]> => {
-  return vi.waitUntil(() =>
-    getGraphQLMockCalls<T>(documentOrOperation, operationName),
-  )
+  return vi.waitUntil(() => {
+    try {
+      const calls = getGraphQLMockCalls<T>(documentOrOperation, operationName)
+      return calls.length && calls
+    } catch {
+      return false
+    }
+  })
 }
 
 export const mockGraphQLResult = <T extends Record<string, any>>(

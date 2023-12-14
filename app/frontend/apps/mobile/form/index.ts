@@ -9,7 +9,7 @@ import type {
   InitializeAppForm,
 } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
-import getCoreClasses from './theme/global/getCoreClasses.ts'
+import getCoreClasses from './theme/global/getCoreMobileClasses.ts'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
   './plugins/global/*.ts',

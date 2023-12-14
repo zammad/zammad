@@ -1,27 +1,35 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed, ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
-import {
-  useNotifications,
-  NotificationTypes,
-} from '#shared/components/CommonNotifications/index.ts'
 import UserError from '#shared/errors/UserError.ts'
 import Form from '#shared/components/Form/Form.vue'
-import CommonLogo from '#shared/components/CommonLogo/CommonLogo.vue'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
+import { useThirdPartyAuthentication } from '#shared/composables/useThirdPartyAuthentication.ts'
+import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage.vue'
+import LoginThirdParty from '#desktop/pages/login/components/LoginThirdParty.vue'
+import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
+import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
 
 const application = useApplicationStore()
 
 const router = useRouter()
 const route = useRoute()
 
-const { notify } = useNotifications()
-
 const authentication = useAuthenticationStore()
+
+const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
+
+const showPasswordLogin = computed(
+  () =>
+    application.config.user_show_password_login || !hasEnabledProviders.value,
+)
 
 interface LoginCredentials {
   login: string
@@ -29,18 +37,16 @@ interface LoginCredentials {
   rememberMe: boolean
 }
 
+const passwordLoginErrorMessage = ref('')
+
 const login = async (credentials: LoginCredentials) => {
   try {
     await authentication.login(credentials)
     const { redirect: redirectUrl } = route.query
     router.replace(typeof redirectUrl === 'string' ? redirectUrl : '/')
   } catch (error) {
-    const message =
+    passwordLoginErrorMessage.value =
       error instanceof UserError ? error.generalErrors[0] : String(error)
-    notify({
-      message,
-      type: NotificationTypes.Error,
-    })
   }
 }
 
@@ -61,7 +67,7 @@ const loginSchema = [
     isLayout: true,
     element: 'div',
     attrs: {
-      class: 'mt-2.5 flex grow items-center justify-between',
+      class: 'flex grow items-center justify-between',
     },
     children: [
       {
@@ -70,97 +76,97 @@ const loginSchema = [
         label: __('Remember me'),
         value: false,
       },
-      // TODO support if/then in form-schema
-      ...(application.config.user_lost_password
-        ? [
-            {
-              isLayout: true,
-              component: 'CommonLink',
-              props: {
-                class: 'link-primary text-right text-sm',
-                link: '/#password_reset',
-                onClick(e: Event) {
-                  e.preventDefault()
-                  // eslint-disable-next-line no-alert
-                  window.alert('LOL')
-                },
-              },
-              children: __('Forgot password?'),
-            },
-          ]
-        : []),
+      {
+        if: '$userLostPassword === true',
+        isLayout: true,
+        component: 'CommonLink',
+        props: {
+          class: 'text-right text-sm',
+          link: '/#password_reset',
+          onClick(e: Event) {
+            e.preventDefault()
+            // eslint-disable-next-line no-alert
+            window.alert('TEST')
+          },
+        },
+        children: __('Forgot password?'),
+      },
     ],
   },
 ]
+
+const userLostPassword = computed(() => application.config.user_lost_password)
+
+const schemaData = reactive({
+  userLostPassword,
+})
 
 const { form, isDisabled } = useForm()
 </script>
 
 <template>
-  <div
-    class="min-h-screen flex flex-col items-center bg-neutral-950 text-stone-200 dark:text-neutral-500"
-  >
-    <div class="group-block max-w-md w-full m-auto">
-      <div class="flex justify-center p-2">
-        <CommonLogo />
-      </div>
-      <h1 class="mb-6 flex justify-center p-2 text-xl">
-        {{ $c.product_name }}
-      </h1>
-      <template v-if="$c.maintenance_mode">
-        <div
-          class="my-1 flex items-center rounded-xl bg-red px-4 py-2 text-white"
-        >
-          {{
-            $t(
-              'Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.',
-            )
-          }}
-        </div>
-      </template>
-      <template v-if="$c.maintenance_login && $c.maintenance_login_message">
-        <!-- eslint-disable vue/no-v-html -->
-        <div
-          class="my-1 flex items-center rounded-xl bg-green px-4 py-2 text-white"
-          v-html="$c.maintenance_login_message"
-        ></div>
-      </template>
+  <LayoutPublicPage box-size="small" :title="$c.product_name" show-logo>
+    <div
+      v-if="$c.maintenance_mode"
+      class="my-1 flex items-center rounded-xl bg-red px-4 py-2 text-white"
+    >
+      {{
+        $t(
+          'Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.',
+        )
+      }}
+    </div>
+    <!-- eslint-disable vue/no-v-html -->
+    <div
+      v-if="$c.maintenance_login && $c.maintenance_login_message"
+      class="my-1 flex items-center rounded-xl bg-green px-4 py-2 text-white"
+      v-html="$c.maintenance_login_message"
+    ></div>
 
-      <!-- TODO: there was no design with login, so I am using "reply" block -->
+    <template v-if="showPasswordLogin">
+      <CommonAlert v-if="passwordLoginErrorMessage" variant="danger">{{
+        $t(passwordLoginErrorMessage)
+      }}</CommonAlert>
       <Form
-        id="signing"
+        id="signin"
         ref="form"
-        form-class="mb-3 space-y-2"
+        form-class="mb-2.5 space-y-2.5"
         :schema="loginSchema"
+        :schema-data="schemaData"
         @submit="login($event as FormSubmitData<LoginCredentials>)"
       >
-        <template #after-fields>
-          <button class="btn btn-accent btn-block" :disabled="isDisabled">
-            {{ $t('Sign in') }}
-          </button>
-        </template>
+        <template #after-fields> </template>
       </Form>
-    </div>
-
-    <div
-      class="mt-4 flex w-full max-w-md justify-center border-t border-base-300 py-4 text-base leading-4"
-    >
-      <a
-        v-if="application.hasCustomProductBranding"
-        href="https://zammad.org"
-        target="_blank"
-        class="ltr:mr-1 rtl:ml-1"
+      <div class="flex justify-center py-3">
+        <CommonLabel>
+          {{ $t('New user?') }}
+          <CommonLink link="/#signup" class="select-none">{{
+            $t('Register')
+          }}</CommonLink>
+        </CommonLabel>
+      </div>
+      <CommonButton
+        form="signin"
+        type="submit"
+        variant="submit"
+        size="large"
+        block
+        :disabled="isDisabled"
       >
-        <img
-          :src="'/assets/images/icons/logo.svg'"
-          :alt="$t('Logo')"
-          class="h-6 w-6"
-        />
-      </a>
-      <span class="ltr:mr-1 rtl:ml-1">{{ $t('Powered by') }}</span>
-      <a href="https://zammad.org" target="_blank" class="font-semibold">
-        {{ $t('Zammad') }}
-      </a>
-    </div>
-  </div>
+        {{ $t('Sign in') }}
+      </CommonButton>
+    </template>
+
+    <LoginThirdParty v-if="hasEnabledProviders" :providers="enabledProviders" />
+
+    <!-- TODO output of "If you have problems with the third-party login you can request a one-time password login as an admin." -->
+
+    <template #bottomContent>
+      <!-- TODO: Remember the choice when we have a switch between the two desktop apps -->
+      <CommonLink class="text-sm" link="/mobile" external>
+        {{ $t('Continue to mobile') }}
+      </CommonLink>
+      <CommonPublicLinks :screen="EnumPublicLinksScreen.Login" />
+    </template>
+  </LayoutPublicPage>
 </template>
