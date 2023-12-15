@@ -38,7 +38,7 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
     return if tag_data.blank?
 
     tag_data.each do |tag|
-      next if !::Tag.tag_allowed?(object: 'Ticket', name: tag.strip, user_id: current_user.id)
+      next if !::Tag.tag_allowed?(name: tag.strip, user_id: current_user.id)
 
       ticket.tag_add(tag.strip)
     end

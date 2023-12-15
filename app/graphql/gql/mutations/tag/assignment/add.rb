@@ -11,7 +11,7 @@ module Gql::Mutations
 
     def resolve(tag:, object_id:)
       object = fetch_object(object_id)
-      raise Exceptions::Forbidden if !::Tag.tag_allowed?(object: object, name: tag, user_id: context.current_user.id)
+      raise Exceptions::Forbidden if !::Tag.tag_allowed?(name: tag, user_id: context.current_user.id)
 
       { success: object.tag_add(tag, context.current_user.id) }
     end

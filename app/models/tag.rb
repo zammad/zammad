@@ -244,14 +244,10 @@ references # [['Ticket', 1], ['Ticket', 4], ...]
     output.pluck(:'tag_objects.name', :o_id)
   end
 
-  def self.tag_allowed?(object:, name:, user_id: 1)
+  def self.tag_allowed?(name:, user_id: 1)
     return true if Setting.get('tag_new').present?
     return true if User.lookup(id: user_id).permissions?('admin.tag')
 
-    allowed_tags = Auth::RequestCache.fetch_value("tag_list/#{Tag.latest_change}") do
-      tag_list(object: object)
-    end
-
-    allowed_tags.include?(name)
+    Tag::Item.lookup(name: name).present?
   end
 end
