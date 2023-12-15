@@ -7,8 +7,9 @@ import type { TwoFactorPlugin } from '../types.ts'
 export default {
   name: EnumTwoFactorAuthenticationMethod.SecurityKeys,
   label: __('Security Keys'),
+  description: __('Complete the sign-in with your security key.'),
   order: 100,
-  helpMessage: __('Complete the sign-in with your security key.'),
+  helpMessage: __('Verifying key information…'),
   errorHelpMessage: __('Try using your security key again.'),
   form: false,
   async setup(
@@ -23,6 +24,7 @@ export default {
     }
     try {
       const { get } = await import('@github/webauthn-json')
+
       const publicKeyCredential = await get({ publicKey })
       return {
         success: true,

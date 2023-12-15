@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import useFormKitConfig from '#shared/composables/form/useFormKitConfig.ts'
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonNotifications from '#shared/components/CommonNotifications/CommonNotifications.vue'
 import useAppMaintenanceCheck from '#shared/composables/useAppMaintenanceCheck.ts'
 import { useAppTheme } from '#shared/stores/theme.ts'
@@ -83,6 +84,13 @@ const appTheme = useAppTheme()
 <template>
   <template v-if="application.loaded">
     <CommonNotifications />
+    <CommonButton
+      class="fixed top-2 ltr:right-2 rtl:left-2"
+      size="medium"
+      aria-label="Change theme"
+      :icon="appTheme.theme === 'light' ? 'sun' : 'moon'"
+      @click="appTheme.toggleTheme(false)"
+    />
   </template>
   <!-- TODO: styles are placeholders -->
   <div v-if="application.loaded" class="flex h-full">
@@ -98,15 +106,6 @@ const appTheme = useAppTheme()
       class="w-full h-full antialiased bg-white dark:bg-gray-500 text-gray-100 dark:text-neutral-400"
     >
       <RouterView />
-
-      <div class="flex">
-        Change Theme:
-        <CommonIcon
-          name="info-circle"
-          size="small"
-          @click="appTheme.toggleTheme(false)"
-        />
-      </div>
     </article>
   </div>
 </template>

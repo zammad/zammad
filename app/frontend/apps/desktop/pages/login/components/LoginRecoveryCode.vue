@@ -1,7 +1,6 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
 import Form from '#shared/components/Form/Form.vue'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import type {
@@ -11,9 +10,10 @@ import type {
 import UserError from '#shared/errors/UserError.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import type {
-  LoginCredentials,
   RecoveryCodeFormData,
+  LoginCredentials,
 } from '#shared/entities/two-factor/types.ts'
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 const props = defineProps<{
   credentials: LoginCredentials
@@ -22,33 +22,28 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'finish'): void
   (e: 'error', error: UserError): void
+  (e: 'clear-error'): void
 }>()
 
 const schema: FormSchemaNode[] = [
   {
-    isLayout: true,
-    component: 'FormGroup',
+    type: 'text',
+    name: 'code',
+    label: __('Recovery Code'),
+    required: true,
     props: {
       help: __('Enter one of your unused recovery codes.'),
     },
-    children: [
-      {
-        type: 'text',
-        name: 'code',
-        label: __('Recovery Code'),
-        required: true,
-      },
-    ],
   },
 ]
 
-const { clearAllNotifications } = useNotifications()
 const authentication = useAuthenticationStore()
 const { form, isDisabled } = useForm()
 
 const enterRecoveryCode = (formData: FormSubmitData<RecoveryCodeFormData>) => {
   // Clear notifications to avoid duplicated error messages.
-  clearAllNotifications()
+  emit('clear-error')
+
   const { login, password, rememberMe } = props.credentials
 
   return authentication
@@ -76,15 +71,16 @@ const enterRecoveryCode = (formData: FormSubmitData<RecoveryCodeFormData>) => {
     @submit="enterRecoveryCode($event as FormSubmitData<RecoveryCodeFormData>)"
   >
     <template #after-fields>
-      <FormKit
-        wrapper-class="mt-6 flex grow justify-center items-center"
-        input-class="py-2 px-4 w-full h-14 text-xl rounded-xl select-none"
-        variant="submit"
+      <CommonButton
         type="submit"
+        variant="submit"
+        size="large"
+        class="mt-8"
+        block
         :disabled="isDisabled"
       >
         {{ $t('Sign in') }}
-      </FormKit>
+      </CommonButton>
     </template>
   </Form>
 </template>

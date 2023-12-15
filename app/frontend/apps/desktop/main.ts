@@ -21,13 +21,15 @@ import initializeApolloClient from '#desktop/server/apollo/index.ts'
 import initializeRouter from '#desktop/router/index.ts'
 import initializeForm from '#desktop/form/index.ts'
 
+import { ensureAfterAuth } from './pages/login/after-auth/composable/useAfterAuthPlugins.ts'
+
 import App from './AppDesktop.vue'
 
 export const mountApp = async () => {
   const app = createApp(App)
 
-  initializeRouter(app)
   initializeApolloClient(app)
+  const router = initializeRouter(app)
   initializeStore(app)
   initializeDesktopIcons()
   initializeForm(app)
@@ -75,5 +77,7 @@ export const mountApp = async () => {
 
   app.mount('#app')
 
-  // TODO: afterAuth
+  if (session.afterAuth) {
+    await ensureAfterAuth(router, session.afterAuth)
+  }
 }

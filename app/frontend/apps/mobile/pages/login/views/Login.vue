@@ -7,31 +7,25 @@ import {
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { computed, reactive, ref } from 'vue'
-import { useThirdPartyAuthentication } from '#shared/composables/useThirdPartyAuthentication.ts'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import { computed } from 'vue'
+import { useThirdPartyAuthentication } from '#shared/composables/login/useThirdPartyAuthentication.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
-import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import type UserError from '#shared/errors/UserError.ts'
-import {
-  EnumPublicLinksScreen,
-  type EnumTwoFactorAuthenticationMethod,
-  type UserTwoFactorMethods,
-} from '#shared/graphql/types.ts'
+import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
 import { usePublicLinks } from '#shared/composables/usePublicLinks.ts'
+import useLoginTwoFactor from '#shared/composables/login/useLoginTwoFactor.ts'
 import LoginThirdParty from '../components/LoginThirdParty.vue'
 import LoginCredentialsForm from '../components/LoginCredentialsForm.vue'
 import LoginHeader from '../components/LoginHeader.vue'
 import LoginTwoFactor from '../components/LoginTwoFactor.vue'
 import LoginTwoFactorMethods from '../components/LoginTwoFactorMethods.vue'
 import LoginRecoveryCode from '../components/LoginRecoveryCode.vue'
-import type { LoginFlow, LoginFormData } from '../types/login.ts'
 import LoginFooter from '../components/LoginFooter.vue'
 
 const route = useRoute()
 const router = useRouter()
 
-const { notify } = useNotifications()
+const { notify, clearAllNotifications } = useNotifications()
 
 // Output a hint when the session is no longer valid.
 // This could happen because the session was deleted on the server.
@@ -43,6 +37,19 @@ if (route.query.invalidatedSession === '1') {
 
   router.replace({ name: 'Login' })
 }
+
+const {
+  loginFlow,
+  askTwoFactor,
+  twoFactorPlugin,
+  twoFactorAllowedMethods,
+  updateState,
+  updateSecondFactor,
+  hasAlternativeLoginMethod,
+  goBack,
+  statePreviousMap,
+  loginPageTitle,
+} = useLoginTwoFactor(clearAllNotifications)
 
 const application = useApplicationStore()
 
@@ -56,7 +63,6 @@ const showPasswordLogin = computed(
 )
 
 const { forceDesktop } = useForceDesktop()
-const { twoFactorPlugins, twoFactorMethods } = useTwoFactorPlugins()
 
 const finishLogin = () => {
   const { redirect: redirectUrl } = route.query
@@ -67,84 +73,12 @@ const finishLogin = () => {
   }
 }
 
-const loginFlow = reactive<LoginFlow>({
-  state: 'credentials',
-  allowedMethods: [],
-  recoveryCodesAvailable: false,
-})
-
-const statePreviousMap = {
-  credentials: null,
-  '2fa': 'credentials',
-  '2fa-select': '2fa',
-  'recovery-code': '2fa-select',
-} satisfies Record<string, LoginFlow['state'] | null>
-
-const states = ref<LoginFlow['state'][]>([loginFlow.state])
-
-const goBack = () => {
-  const preivousState = statePreviousMap[loginFlow.state] || 'credentials'
-  loginFlow.state = preivousState
-  // if we go to the first state, reset credentials
-  if (preivousState === 'credentials') {
-    loginFlow.credentials = undefined
-  }
-}
-
-const updateState = (state: LoginFlow['state']) => {
-  states.value.push(state)
-  loginFlow.state = state
-}
-
-const updateSecondFactor = (factor: EnumTwoFactorAuthenticationMethod) => {
-  loginFlow.twoFactor = factor
-  updateState('2fa')
-}
-
-const askTwoFactor = (
-  twoFactor: UserTwoFactorMethods,
-  formData: FormSubmitData<LoginFormData>,
-) => {
-  loginFlow.credentials = formData
-  loginFlow.recoveryCodesAvailable = twoFactor.recoveryCodesAvailable
-  loginFlow.allowedMethods = twoFactor.availableTwoFactorAuthenticationMethods
-  updateSecondFactor(
-    twoFactor.defaultTwoFactorAuthenticationMethod as EnumTwoFactorAuthenticationMethod,
-  )
-}
-
-const twoFactorAllowedMethods = computed(() => {
-  return twoFactorMethods.filter((method) =>
-    loginFlow.allowedMethods.includes(method.name),
-  )
-})
-
-const twoFactorPlugin = computed(() => {
-  return loginFlow.twoFactor ? twoFactorPlugins[loginFlow.twoFactor] : undefined
-})
-
-const loginPageTitle = computed(() => {
-  const productName = application.config.product_name
-  if (loginFlow.state === 'credentials') return productName
-  if (loginFlow.state === 'recovery-code') return __('Recovery Code')
-  if (loginFlow.state === '2fa') {
-    return twoFactorPlugin.value?.label ?? productName
-  }
-  return __('Try Another Method')
-})
-
 const showError = (error: UserError) => {
   notify({
     message: error.generalErrors[0],
     type: NotificationTypes.Error,
   })
 }
-
-const hasAlternativeLoginMethod = computed(() => {
-  return (
-    twoFactorAllowedMethods.value.length > 1 || loginFlow.recoveryCodesAvailable
-  )
-})
 </script>
 
 <template>

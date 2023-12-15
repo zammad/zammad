@@ -46,7 +46,7 @@ module CommonActions
     when :desktop_view
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
 
-      within('#signin') do
+      within('main') do
         find_input('Username / Email').type(username)
         find_input('Password').type(password)
 

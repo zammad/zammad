@@ -6,8 +6,8 @@ import CommonLogo from '#shared/components/CommonLogo/CommonLogo.vue'
 import type { BoxSizes } from './types'
 
 export interface Props {
-  title: string
-  showLogo: boolean
+  title?: string
+  showLogo?: boolean
   boxSize?: BoxSizes
 }
 
@@ -38,7 +38,7 @@ const hoverPoweredByLogo = ref(false)
         <div v-if="showLogo" class="flex justify-center">
           <CommonLogo />
         </div>
-        <h1 class="mb-5 flex justify-center text-xl">
+        <h1 v-if="title" class="mb-5 text-xl text-center">
           {{ $t(title) }}
         </h1>
         <slot />
@@ -62,13 +62,32 @@ const hoverPoweredByLogo = ref(false)
           @mouseover="hoverPoweredByLogo = true"
           @mouseleave="hoverPoweredByLogo = false"
         >
-          <CommonIcon
-            :name="hoverPoweredByLogo ? 'logo' : 'logo-flat'"
-            size="base"
-          />
+          <div class="relative">
+            <CommonIcon name="logo-flat" size="base" />
+            <Transition name="fade">
+              <CommonIcon
+                v-if="hoverPoweredByLogo"
+                class="absolute top-0"
+                name="logo"
+                size="base"
+              />
+            </Transition>
+          </div>
           {{ $t('Zammad') }}
         </CommonLink>
       </footer>
     </div>
   </div>
 </template>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

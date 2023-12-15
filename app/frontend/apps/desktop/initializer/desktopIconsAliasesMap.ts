@@ -52,8 +52,8 @@ export default {
   'editor-mention-knowledge-base': 'mention-kb',
   'editor-mention-text-module': 'snippet',
 
-  '2fa-security-keys': 'security-key',
-  '2fa-authenticator-app': 'mobile-code',
+  '2fa-security-keys': 'key',
+  '2fa-authenticator-app': 'phone',
 
   'form-field-link': 'box-arrow-up-right',
 

@@ -1,24 +1,24 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import Form from '#shared/components/Form/Form.vue'
 import type {
   FormSubmitData,
   FormSchemaNode,
 } from '#shared/components/Form/types.ts'
-import type {
-  TwoFactorFormData,
-  TwoFactorPlugin,
-  LoginCredentials,
-} from '#shared/entities/two-factor/types.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { computed, onMounted, ref } from 'vue'
-import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import { useTwoFactorMethodInitiateAuthenticationMutation } from '#shared/graphql/mutations/twoFactorMethodInitiateAuthentication.api.ts'
+import type {
+  TwoFactorFormData,
+  LoginCredentials,
+  TwoFactorPlugin,
+} from '#shared/entities/two-factor/types.ts'
 
 export interface Props {
   credentials: LoginCredentials
@@ -30,33 +30,25 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   (e: 'finish'): void
   (e: 'error', error: UserError): void
+  (e: 'clear-error'): void
 }>()
 
 const schema: FormSchemaNode[] = [
   {
-    isLayout: true,
-    component: 'FormGroup',
+    type: 'text',
+    name: 'code',
+    label: __('Security Code'),
+    required: true,
     props: {
       help: computed(() => props.twoFactor.helpMessage),
+      autocomplete: 'one-time-code',
+      autofocus: true,
+      inputmode: 'numeric',
+      pattern: '[0-9]*',
     },
-    children: [
-      {
-        type: 'text',
-        name: 'code',
-        label: __('Security Code'),
-        required: true,
-        props: {
-          autocomplete: 'one-time-code',
-          autofocus: true,
-          inputmode: 'numeric',
-          pattern: '[0-9]*',
-        },
-      },
-    ],
   },
 ]
 
-const { clearAllNotifications } = useNotifications()
 const authentication = useAuthenticationStore()
 
 const loading = ref(false)
@@ -64,7 +56,8 @@ const error = ref<string | null>(null)
 const canRetry = ref(true)
 
 const login = (payload: unknown) => {
-  clearAllNotifications()
+  emit('clear-error')
+
   const { login, password, rememberMe } = props.credentials
 
   return authentication
@@ -94,6 +87,8 @@ const tryMethod = async () => {
   const initialDataMutation = new MutationHandler(
     useTwoFactorMethodInitiateAuthenticationMutation(),
   )
+
+  emit('clear-error')
 
   error.value = null
   loading.value = true
@@ -139,35 +134,38 @@ onMounted(async () => {
     @submit="login(($event as FormSubmitData<TwoFactorFormData>).code)"
   >
     <template #after-fields>
-      <FormKit
-        wrapper-class="mt-6 flex grow justify-center items-center"
-        input-class="py-2 px-4 w-full h-14 text-xl rounded-xl select-none"
-        variant="submit"
+      <CommonButton
         type="submit"
+        variant="submit"
+        size="large"
+        class="mt-8"
+        block
+        :disabled="loading"
       >
         {{ $t('Sign in') }}
-      </FormKit>
+      </CommonButton>
     </template>
   </Form>
   <section
     v-else-if="twoFactor.setup"
     class="flex flex-col items-center justify-center"
   >
-    <CommonLoader :loading="loading" :error="error" />
+    <CommonLabel v-if="error && twoFactor.errorHelpMessage" class="mt-5">
+      {{ $t(twoFactor.errorHelpMessage) }}
+    </CommonLabel>
 
-    <div class="pb-2 pt-2 font-medium leading-4 text-gray">
-      <template v-if="error && twoFactor.errorHelpMessage">
-        {{ $t(twoFactor.errorHelpMessage) }}
-      </template>
-      <template v-else-if="twoFactor.helpMessage">
-        {{ $t(twoFactor.helpMessage) }}
-      </template>
-    </div>
+    <CommonLabel v-else-if="twoFactor.helpMessage" class="mt-5">
+      {{ $t(twoFactor.helpMessage) }}
+    </CommonLabel>
+
+    <CommonLoader class="mt-8 mb-3" :loading="loading" :error="error" />
 
     <CommonButton
       v-if="!loading && canRetry"
+      size="large"
       variant="primary"
-      class="mt-3 px-5 py-2 text-base"
+      class="mt-5"
+      block
       @click="tryMethod"
     >
       {{ $t('Retry') }}

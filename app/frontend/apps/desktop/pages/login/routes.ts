@@ -3,7 +3,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { useThirdPartyAuthentication } from '#shared/composables/useThirdPartyAuthentication.ts'
+import { useThirdPartyAuthentication } from '#shared/composables/login/useThirdPartyAuthentication.ts'
 
 export const isMainRoute = true
 
@@ -46,27 +46,27 @@ const route: RouteRecordRaw[] = [
       sidebar: false,
     },
   },
-  // TODO: after-auth
-  // {
-  //   path: '/login/after-auth',
-  //   name: 'LoginAfterAuth',
-  //   component: () => import('./views/LoginAfterAuth.vue'),
-  //   async beforeEnter(to) {
-  //     // don't open the page if there is nothing to show
-  //     const { useAfterAuthPlugins } = await import(
-  //       './after-auth/composable/useAfterAuthPlugins.ts'
-  //     )
-  //     const { currentPlugin } = useAfterAuthPlugins()
-  //     if (!currentPlugin.value) {
-  //       return to.redirectedFrom ? false : '/'
-  //     }
-  //   },
-  //   meta: {
-  //     requiresAuth: false,
-  //     requiredPermission: null,
-  //     hasOwnLandmarks: true,
-  //   },
-  // },
+  {
+    path: '/login/after-auth',
+    name: 'LoginAfterAuth',
+    component: () => import('./views/LoginAfterAuth.vue'),
+    async beforeEnter(to) {
+      // don't open the page if there is nothing to show
+      const { useAfterAuthPlugins } = await import(
+        './after-auth/composable/useAfterAuthPlugins.ts'
+      )
+      const { currentPlugin } = useAfterAuthPlugins()
+      if (!currentPlugin.value) {
+        return to.redirectedFrom ? false : '/'
+      }
+    },
+    meta: {
+      requiresAuth: true,
+      requiredPermission: null,
+      hasOwnLandmarks: true,
+      sidebar: false,
+    },
+  },
   {
     path: '/logout',
     name: 'Logout',

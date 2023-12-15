@@ -40,7 +40,7 @@ describe('testing login product branding', () => {
 
     expect(logo).toBeInTheDocument()
 
-    const link = logo.parentElement
+    const link = logo.parentElement?.parentElement
 
     expect(link).toHaveAttribute('href', 'https://zammad.org')
     expect(link).toHaveAttribute('target', '_blank')

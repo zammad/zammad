@@ -13,14 +13,22 @@ import type {
   FormValues,
 } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { useThirdPartyAuthentication } from '#shared/composables/useThirdPartyAuthentication.ts'
+import { useThirdPartyAuthentication } from '#shared/composables/login/useThirdPartyAuthentication.ts'
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
-import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage.vue'
 import LoginThirdParty from '#desktop/pages/login/components/LoginThirdParty.vue'
 import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
+import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
+import type { LoginCredentials } from '#shared/entities/two-factor/types.ts'
+import useLoginTwoFactor from '#shared/composables/login/useLoginTwoFactor.ts'
+import LoginTwoFactor from '../components/LoginTwoFactor.vue'
+import LoginTwoFactorMethods from '../components/LoginTwoFactorMethods.vue'
+import LoginRecoveryCode from '../components/LoginRecoveryCode.vue'
 import { useAdminPasswordAuthVerify } from '../composables/useAdminPasswordAuthVerify.ts'
+import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
 
 const application = useApplicationStore()
 
@@ -29,19 +37,54 @@ const route = useRoute()
 
 const authentication = useAuthenticationStore()
 
-interface LoginCredentials {
-  login: string
-  password: string
-  rememberMe: boolean
-}
+const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
 
 const passwordLoginErrorMessage = ref('')
 
+const showError = (error: UserError) => {
+  passwordLoginErrorMessage.value = error.generalErrors[0]
+}
+
+const clearError = () => {
+  passwordLoginErrorMessage.value = ''
+}
+
+const {
+  loginFlow,
+  askTwoFactor,
+  twoFactorPlugin,
+  twoFactorAllowedMethods,
+  updateState,
+  updateSecondFactor,
+  hasAlternativeLoginMethod,
+  loginPageTitle,
+  cancelAndGoBack,
+} = useLoginTwoFactor(clearError)
+
+const finishLogin = () => {
+  const { redirect: redirectUrl } = route.query
+  if (typeof redirectUrl === 'string') {
+    router.replace(redirectUrl)
+  } else {
+    router.replace('/')
+  }
+}
+
 const login = async (credentials: LoginCredentials) => {
   try {
-    await authentication.login(credentials)
-    const { redirect: redirectUrl } = route.query
-    router.replace(typeof redirectUrl === 'string' ? redirectUrl : '/')
+    const { twoFactor, afterAuth } = await authentication.login(credentials)
+
+    if (afterAuth) {
+      ensureAfterAuth(router, afterAuth)
+      return
+    }
+
+    if (twoFactor?.defaultTwoFactorAuthenticationMethod) {
+      askTwoFactor(twoFactor, credentials)
+      return
+    }
+
+    finishLogin()
   } catch (error) {
     passwordLoginErrorMessage.value =
       error instanceof UserError ? error.generalErrors[0] : String(error)
@@ -110,8 +153,6 @@ const { verifyTokenResult, verifyTokenMessage, verifyTokenAlertVariant } =
     formInitialValues,
   })
 
-const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
-
 const showPasswordLogin = computed(
   () =>
     application.config.user_show_password_login ||
@@ -121,7 +162,7 @@ const showPasswordLogin = computed(
 </script>
 
 <template>
-  <LayoutPublicPage box-size="small" :title="$c.product_name" show-logo>
+  <LayoutPublicPage box-size="small" :title="loginPageTitle" show-logo>
     <div
       v-if="$c.maintenance_mode"
       class="my-1 flex items-center rounded-xl bg-red px-4 py-2 text-white"
@@ -147,8 +188,9 @@ const showPasswordLogin = computed(
       <CommonAlert v-if="passwordLoginErrorMessage" variant="danger">{{
         $t(passwordLoginErrorMessage)
       }}</CommonAlert>
+
       <Form
-        id="signin"
+        v-if="loginFlow.state === 'credentials' && showPasswordLogin"
         ref="form"
         form-class="mb-2.5 space-y-2.5"
         :schema="loginSchema"
@@ -157,36 +199,85 @@ const showPasswordLogin = computed(
         :change-fields="formChangeFields"
         @submit="login($event as FormSubmitData<LoginCredentials>)"
       >
-        <template #after-fields> </template>
+        <template #after-fields>
+          <div class="flex justify-center py-3">
+            <CommonLabel>
+              {{ $t('New user?') }}
+              <CommonLink link="/#signup" class="select-none">{{
+                $t('Register')
+              }}</CommonLink>
+            </CommonLabel>
+          </div>
+          <CommonButton
+            type="submit"
+            variant="submit"
+            size="large"
+            block
+            :disabled="isDisabled"
+          >
+            {{ $t('Sign in') }}
+          </CommonButton>
+        </template>
       </Form>
-      <div class="flex justify-center py-3">
-        <CommonLabel>
-          {{ $t('New user?') }}
-          <CommonLink link="/#signup" class="select-none">{{
-            $t('Register')
-          }}</CommonLink>
-        </CommonLabel>
-      </div>
-      <CommonButton
-        form="signin"
-        type="submit"
-        variant="submit"
-        size="large"
-        block
-        :disabled="isDisabled"
+
+      <LoginTwoFactor
+        v-else-if="
+          loginFlow.state === '2fa' && twoFactorPlugin && loginFlow.credentials
+        "
+        :credentials="loginFlow.credentials"
+        :two-factor="twoFactorPlugin"
+        @error="showError"
+        @clear-error="clearError"
+        @finish="finishLogin"
+      />
+      <LoginRecoveryCode
+        v-else-if="loginFlow.state === 'recovery-code' && loginFlow.credentials"
+        :credentials="loginFlow.credentials"
+        @error="showError"
+        @clear-error="clearError"
+        @finish="finishLogin"
+      />
+      <LoginTwoFactorMethods
+        v-else-if="loginFlow.state === '2fa-select'"
+        :methods="twoFactorAllowedMethods"
+        :default-method="loginFlow.defaultMethod"
+        :recovery-codes-available="loginFlow.recoveryCodesAvailable"
+        @select="updateSecondFactor"
+        @use-recovery-code="updateState('recovery-code')"
+        @cancel="cancelAndGoBack()"
+      />
+
+      <section
+        v-if="
+          (loginFlow.state === '2fa' || loginFlow.state === 'recovery-code') &&
+          hasAlternativeLoginMethod
+        "
+        class="mt-3 text-center"
       >
-        {{ $t('Sign in') }}
-      </CommonButton>
+        <CommonLabel>
+          {{ $t('Having problems?') }}
+          <CommonLink
+            link="#"
+            class="select-none"
+            @click="updateState('2fa-select')"
+          >
+            {{ $t('Try another method') }}
+          </CommonLink>
+        </CommonLabel>
+      </section>
     </template>
 
-    <LoginThirdParty v-if="hasEnabledProviders" :providers="enabledProviders" />
+    <LoginThirdParty
+      v-if="hasEnabledProviders && loginFlow.state === 'credentials'"
+      :providers="enabledProviders"
+    />
 
     <template #bottomContent>
       <div
         v-if="!showPasswordLogin"
-        class="p-2 inline-flex items-center justify-center flex-wrap"
+        class="p-2 inline-flex items-center justify-center flex-wrap text-sm"
       >
-        <CommonLabel class="text-center">
+        <CommonLabel class="text-stone-200 dark:text-neutral-500 text-center">
           {{
             $t(
               'If you have problems with the third-party login you can request a one-time password login as an admin.',
@@ -198,8 +289,22 @@ const showPasswordLogin = computed(
         }}</CommonLink>
       </div>
 
+      <CommonLabel
+        v-if="loginFlow.state === '2fa-select'"
+        class="text-stone-200 dark:text-neutral-500 mt-3 mb-3"
+      >
+        {{
+          $t('Contact the administrator if you have any problems logging in.')
+        }}
+      </CommonLabel>
+
       <!-- TODO: Remember the choice when we have a switch between the two desktop apps -->
-      <CommonLink class="text-sm" link="/mobile" external>
+      <CommonLink
+        v-if="loginFlow.state === 'credentials'"
+        class="mt-3 text-sm"
+        link="/mobile"
+        external
+      >
         {{ $t('Continue to mobile') }}
       </CommonLink>
       <CommonPublicLinks :screen="EnumPublicLinksScreen.Login" />

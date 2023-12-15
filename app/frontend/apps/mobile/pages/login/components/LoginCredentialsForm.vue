@@ -12,7 +12,7 @@ import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import type { UserTwoFactorMethods } from '#shared/graphql/types.ts'
 import { useRouter } from 'vue-router'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
-import type { LoginFormData } from '../types/login.ts'
+import type { LoginCredentials } from '#shared/entities/two-factor/types.ts'
 import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
 
 const emit = defineEmits<{
@@ -21,7 +21,7 @@ const emit = defineEmits<{
   (
     e: 'askTwoFactor',
     twoFactor: Required<UserTwoFactorMethods>,
-    formData: FormSubmitData<LoginFormData>,
+    formData: FormSubmitData<LoginCredentials>,
   ): void
 }>()
 
@@ -94,7 +94,7 @@ const { clearAllNotifications } = useNotifications()
 const authentication = useAuthenticationStore()
 const router = useRouter()
 
-const sendCredentials = (formData: FormSubmitData<LoginFormData>) => {
+const sendCredentials = (formData: FormSubmitData<LoginCredentials>) => {
   // Clear notifications to avoid duplicated error messages.
   clearAllNotifications()
 
@@ -129,7 +129,7 @@ const sendCredentials = (formData: FormSubmitData<LoginFormData>) => {
     ref="form"
     class="text-left"
     :schema="loginSchema"
-    @submit="sendCredentials($event as FormSubmitData<LoginFormData>)"
+    @submit="sendCredentials($event as FormSubmitData<LoginCredentials>)"
   >
     <template #after-fields>
       <div

@@ -2048,6 +2048,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/pages/login/components/LoginTwoFactorMethods.vue
 #: app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
 msgid "Cancel & Go Back"
 msgstr ""
@@ -2432,6 +2433,7 @@ msgstr ""
 msgid "Click here"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
 #: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "Click here to set up a two-factor authentication method."
 msgstr ""
@@ -2715,6 +2717,7 @@ msgid "Connection test successful"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Contact the administrator if you have any problems logging in."
 msgstr ""
@@ -4927,6 +4930,7 @@ msgid "Enter link URL"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
+#: app/frontend/apps/desktop/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
 msgid "Enter one of your unused recovery codes."
 msgstr ""
@@ -5182,7 +5186,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/controllers/first_steps_controller.rb
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
 #: db/seeds/settings.rb
 msgid "Facebook"
@@ -5617,6 +5621,7 @@ msgid "Get notified"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
 #: db/seeds/settings.rb
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
@@ -5631,7 +5636,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "GitHub"
 msgstr ""
@@ -5658,7 +5663,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "GitLab"
 msgstr ""
@@ -5732,7 +5737,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Google"
 msgstr ""
@@ -5945,6 +5950,7 @@ msgid "Have a nice day."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Having problems?"
 msgstr ""
@@ -7049,7 +7055,7 @@ msgid "Linked Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr ""
@@ -7101,6 +7107,7 @@ msgstr ""
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue
 #: app/frontend/shared/form/i18n/locales.ts
 #: app/views/init/spinner-loading.html.erb
 msgid "Loading…"
@@ -7441,7 +7448,7 @@ msgid "Method (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Microsoft"
 msgstr ""
@@ -8550,6 +8557,7 @@ msgstr ""
 msgid "Or sign in using"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/components/LoginTwoFactorMethods.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactorMethods.vue
 msgid "Or use one of your recovery codes."
 msgstr ""
@@ -9396,8 +9404,9 @@ msgid "Records that exist in the import data (but not in Zammad) will always be 
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/recovery_codes.coffee
+#: app/frontend/apps/desktop/pages/login/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/shared/composables/login/useLoginTwoFactor.ts
 msgid "Recovery Code"
 msgstr ""
 
@@ -9720,6 +9729,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/apps/desktop/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 msgid "Retry"
@@ -9824,7 +9834,7 @@ msgid "S/MIME integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "SAML"
 msgstr ""
@@ -9910,7 +9920,7 @@ msgid "SSL/STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "SSO"
 msgstr ""
@@ -10165,6 +10175,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee
+#: app/frontend/apps/desktop/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 msgid "Security Code"
 msgstr ""
@@ -10717,6 +10728,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
+#: app/frontend/apps/desktop/pages/login/components/LoginRecoveryCode.vue
+#: app/frontend/apps/desktop/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/desktop/pages/login/routes.ts
 #: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
@@ -12124,6 +12137,7 @@ msgstr ""
 msgid "The token is valid. You are now able to login via password once."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
 #: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "The two-factor authentication is not configured yet."
 msgstr ""
@@ -13199,7 +13213,7 @@ msgid "Triggers activated by actions are executed whenever a ticket is created o
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/shared/composables/login/useLoginTwoFactor.ts
 msgid "Try Another Method"
 msgstr ""
 
@@ -13208,6 +13222,7 @@ msgid "Try again"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Try another method"
 msgstr ""
@@ -13262,7 +13277,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/controllers/first_steps_controller.rb
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 #: db/seeds/settings.rb
 msgid "Twitter"
@@ -13320,6 +13335,7 @@ msgstr ""
 msgid "Twitter Secret"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/after-auth/plugins/twoFactorSetup.ts
 #: app/frontend/apps/mobile/pages/login/after-auth/plugins/twoFactorSetup.ts
 msgid "Two-Factor Authentication Configuration Is Required"
 msgstr ""
@@ -13337,6 +13353,7 @@ msgstr ""
 msgid "Two-factor authentication is not supported with HTTP BasicAuth."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 msgid "Two-factor authentication method could not be initiated."
 msgstr ""
@@ -13882,6 +13899,7 @@ msgid "Verify sending and receiving"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 msgid "Verifying key information…"
 msgstr ""
 
@@ -14112,7 +14130,7 @@ msgid "Week(s)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/login/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Weibo"
 msgstr ""
