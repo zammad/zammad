@@ -33,7 +33,7 @@ class TagsController < ApplicationController
 
   # POST /api/v1/tags/add
   def add
-    raise Exceptions::Forbidden if !::Tag.tag_allowed?(object: params[:object], name: params[:item], user_id: UserInfo.current_user_id)
+    raise Exceptions::Forbidden if !::Tag.tag_allowed?(name: params[:item], user_id: UserInfo.current_user_id)
 
     success = Tag.tag_add(
       object: params[:object],
