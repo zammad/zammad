@@ -74,7 +74,7 @@ const retry = () => {
 </script>
 
 <template>
-  <LayoutPublicPage box-size="small" :show-logo="false" :title="pageTitle">
+  <LayoutPublicPage box-size="medium" :show-logo="false" :title="pageTitle">
     <CommonAlert v-if="adminPasswordAuthError" variant="danger">{{
       $t(adminPasswordAuthError)
     }}</CommonAlert>

@@ -953,6 +953,10 @@ msgstr ""
 msgid "Additional information"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+msgid "Additional information and links"
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
 msgstr ""

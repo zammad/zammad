@@ -44,12 +44,13 @@ const hoverPoweredByLogo = ref(false)
         <slot />
       </main>
 
-      <div
+      <section
         v-if="$slots.bottomContent"
+        :aria-label="$t('Additional information and links')"
         class="flex flex-col space-y-3 w-full items-center justify-center py-3 align-middle text-xs"
       >
         <slot name="bottomContent" />
-      </div>
+      </section>
       <footer
         class="flex w-full items-center justify-center py-3 align-middle text-xs"
       >
