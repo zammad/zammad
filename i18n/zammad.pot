@@ -975,13 +975,14 @@ msgid "Admin Interface"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
+#: app/frontend/apps/desktop/pages/login/routes.ts
 msgid "Admin Password Login"
 msgstr ""
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
-msgid "Administration login to #{config.product_name}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>We received a request for an administration login for your #{config.product_name} account <b>#{user.login}</b>.</div>\n<br>\n<div>Please, click on the link below (or copy and paste the URL into your browser) to proceed:</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</a></div>\n<br>\n<div>This link takes you to a page where you can log in.</div>\n<br>\n<div>If you don't want to log in, please ignore this message.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
+msgid "Administration login to #{config.product_name}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>We received a request for an administration login for your #{config.product_name} account <b>#{user.login}</b>.</div>\n<br>\n<div>Please, click on the link below (or copy and paste the URL into your browser) to proceed:</div>\n<br>\n<div><a href=\"#{url}\">#{url}</a></div>\n<br>\n<div>This link takes you to a page where you can log in.</div>\n<br>\n<div>If you don't want to log in, please ignore this message.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
@@ -2047,6 +2048,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
 msgid "Cancel & Go Back"
 msgstr ""
 
@@ -6217,6 +6219,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
 msgid "If you don't receive instructions within a minute or two, check your email's spam and junk filters, or try resending your request."
 msgstr ""
 
@@ -6226,6 +6229,7 @@ msgid "If you don't see the email, check other places it might be, like your jun
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "If you have problems with the third-party login you can request a one-time password login as an admin."
 msgstr ""
@@ -9602,10 +9606,12 @@ msgid "Request for Change"
 msgstr ""
 
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
 msgid "Request password login for admin?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Request the password login here."
 msgstr ""
@@ -9714,6 +9720,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
 msgid "Retry"
 msgstr ""
@@ -11087,6 +11094,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/switch.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr ""
@@ -11713,6 +11721,10 @@ msgstr ""
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
 
+#: app/services/service/auth/verify_admin_token.rb
+msgid "The login is not possible."
+msgstr ""
+
 #: app/models/ticket/number.rb
 msgid "The new ticket number could not be generated."
 msgstr ""
@@ -12104,7 +12116,12 @@ msgid "The tickets could not be merged."
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/login/composables/useAdminPasswordAuthVerify.ts
 msgid "The token for the admin password login is invalid."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/login/composables/useAdminPasswordAuthVerify.ts
+msgid "The token is valid. You are now able to login via password once."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
@@ -12314,6 +12331,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
+msgstr ""
+
+#: app/services/service/auth/send_admin_token.rb
+#: app/services/service/auth/verify_admin_token.rb
+msgid "This feature is not enabled."
 msgstr ""
 
 #: config/initializers/activemodel_error.rb
@@ -13376,6 +13398,11 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
+#: app/services/service/auth/send_admin_token.rb
+msgid "Unable to send admin password auth email."
+msgstr ""
+
 #: app/controllers/first_steps_controller.rb
 #: db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
@@ -13752,6 +13779,7 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/login/views/Login.vue
 #: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
 msgid "Username / Email"
@@ -13995,6 +14023,7 @@ msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+#: app/frontend/apps/desktop/pages/login/views/AdminPasswordAuth.vue
 msgid "We've sent admin password login instructions to your email address."
 msgstr ""
 

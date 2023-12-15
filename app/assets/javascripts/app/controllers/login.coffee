@@ -42,11 +42,13 @@ class Login extends App.ControllerFullPage
         data:        JSON.stringify(params)
         processData: true
         success:     (verify_data, status, xhr) =>
-          if verify_data.message is 'ok'
-            data.showAdminPasswordLogin = true
-            data.username = verify_data.user_login
-          else
-            data.showAdminPasswordLoginFailed = true
+          data.showAdminPasswordLogin = true
+          data.username = verify_data.user_login
+
+          @render(data)
+          @navupdate '#login'
+        error: =>
+          data.showAdminPasswordLoginFailed = true
 
           @render(data)
           @navupdate '#login'

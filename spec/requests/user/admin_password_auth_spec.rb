@@ -95,30 +95,19 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
       context 'when any third-party authenticator is enabled' do
         before { Setting.set('auth_saml', true) }
 
-        it 'is processable' do
-          post api_v1_users_admin_password_auth_verify_path, params: { token: 4711 }
+        it 'is processable with valid token', :aggregate_failures do
+          user  = create(:admin)
+          token = Token.create(action: 'AdminAuth', user_id: user.id, persistent: false)
+
+          post api_v1_users_admin_password_auth_verify_path, params: { token: token.token }
           expect(response).to have_http_status(:ok)
+          expect(response.parsed_body).to include('message' => 'ok', 'user_login' => user.login)
         end
-      end
-    end
 
-    describe 'returns valid content' do
-      before do
-        Setting.set('user_show_password_login', false)
-        Setting.set('auth_saml', true)
-      end
-
-      it "'failed' if invalid token" do
-        post api_v1_users_admin_password_auth_verify_path, params: { token: 4711 }
-        expect(response.parsed_body).to include('message' => 'failed')
-      end
-
-      it "'ok' and user login if valid token" do
-        user  = create(:admin)
-        token = Token.create(action: 'AdminAuth', user_id: user.id, persistent: false)
-
-        post api_v1_users_admin_password_auth_verify_path, params: { token: token.token }
-        expect(response.parsed_body).to include('message' => 'ok', 'user_login' => user.login)
+        it 'is not processable with invalid token' do
+          post api_v1_users_admin_password_auth_verify_path, params: { token: 4711 }
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
       end
     end
   end

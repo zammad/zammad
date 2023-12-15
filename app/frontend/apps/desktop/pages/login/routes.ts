@@ -2,6 +2,9 @@
 
 import type { RouteRecordRaw } from 'vue-router'
 
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { useThirdPartyAuthentication } from '#shared/composables/useThirdPartyAuthentication.ts'
+
 export const isMainRoute = true
 
 const route: RouteRecordRaw[] = [
@@ -11,6 +14,32 @@ const route: RouteRecordRaw[] = [
     component: () => import('./views/Login.vue'),
     meta: {
       title: __('Sign in'),
+      requiresAuth: false,
+      requiredPermission: null,
+      hasOwnLandmarks: true,
+      sidebar: false,
+    },
+  },
+  {
+    path: '/admin-password-auth',
+    name: 'AdminPasswordAuth',
+    component: () => import('./views/AdminPasswordAuth.vue'),
+    async beforeEnter(to) {
+      const application = useApplicationStore()
+      const { hasEnabledProviders } = useThirdPartyAuthentication()
+
+      if (application.config.user_show_password_login) {
+        return to.redirectedFrom ? false : '/'
+      }
+
+      if (!hasEnabledProviders.value) {
+        return to.redirectedFrom ? false : '/'
+      }
+
+      return true
+    },
+    meta: {
+      title: __('Admin Password Login'),
       requiresAuth: false,
       requiredPermission: null,
       hasOwnLandmarks: true,

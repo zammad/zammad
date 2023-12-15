@@ -444,44 +444,23 @@ curl http://localhost/api/v1/users/admin_login -v -u #{login}:#{password} -H "Co
 =end
 
   def admin_password_auth_send
-    # check if feature is enabled
-    raise Exceptions::UnprocessableEntity, __('Feature not enabled!') if password_login?
     raise Exceptions::UnprocessableEntity, 'username param needed!' if params[:username].blank?
 
-    result = User.admin_password_auth_new_token(params[:username])
-    if result && result[:token]
+    send = Service::Auth::Deprecated::SendAdminToken.new(login: params[:username])
+    send.execute
 
-      # unable to send email
-      if !result[:user] || result[:user].email.blank?
-        render json: { message: 'failed' }, status: :ok
-        return
-      end
-
-      # send password reset emails
-      NotificationFactory::Mailer.notification(
-        template: 'admin_password_auth',
-        user:     result[:user],
-        objects:  result
-      )
-    end
-
-    # result is always positive to avoid leaking of existing user accounts
     render json: { message: 'ok' }, status: :ok
   end
 
   def admin_password_auth_verify
-    # check if feature is enabled
-    raise Exceptions::UnprocessableEntity, __('Feature not enabled!') if password_login?
     raise Exceptions::UnprocessableEntity, 'token param needed!' if params[:token].blank?
 
-    user = User.admin_password_auth_via_token(params[:token])
-    if !user
-      render json: { message: 'failed' }, status: :ok
-      return
-    end
+    verify = Service::Auth::VerifyAdminToken.new(token: params[:token])
+    user = verify.execute
 
-    # result is always positive to avoid leaking of existing user accounts
-    render json: { message: 'ok', user_login: user.login }, status: :ok
+    msg = user ? { message: 'ok', user_login: user.login } : { message: 'failed' }
+
+    render json: msg, status: :ok
   end
 
 =begin

@@ -7,15 +7,20 @@ import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import UserError from '#shared/errors/UserError.ts'
 import Form from '#shared/components/Form/Form.vue'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import type {
+  FormSubmitData,
+  FormSchemaField,
+  FormValues,
+} from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useThirdPartyAuthentication } from '#shared/composables/useThirdPartyAuthentication.ts'
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage.vue'
 import LoginThirdParty from '#desktop/pages/login/components/LoginThirdParty.vue'
 import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
-import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
+import { useAdminPasswordAuthVerify } from '../composables/useAdminPasswordAuthVerify.ts'
 
 const application = useApplicationStore()
 
@@ -23,13 +28,6 @@ const router = useRouter()
 const route = useRoute()
 
 const authentication = useAuthenticationStore()
-
-const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
-
-const showPasswordLogin = computed(
-  () =>
-    application.config.user_show_password_login || !hasEnabledProviders.value,
-)
 
 interface LoginCredentials {
   login: string
@@ -102,6 +100,24 @@ const schemaData = reactive({
 })
 
 const { form, isDisabled } = useForm()
+
+const formInitialValues: FormValues = {}
+const formChangeFields = reactive<Record<string, Partial<FormSchemaField>>>({})
+
+const { verifyTokenResult, verifyTokenMessage, verifyTokenAlertVariant } =
+  useAdminPasswordAuthVerify({
+    formChangeFields,
+    formInitialValues,
+  })
+
+const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
+
+const showPasswordLogin = computed(
+  () =>
+    application.config.user_show_password_login ||
+    !hasEnabledProviders.value ||
+    verifyTokenResult?.value,
+)
 </script>
 
 <template>
@@ -123,6 +139,10 @@ const { form, isDisabled } = useForm()
       v-html="$c.maintenance_login_message"
     ></div>
 
+    <CommonAlert v-if="verifyTokenMessage" :variant="verifyTokenAlertVariant">{{
+      $t(verifyTokenMessage)
+    }}</CommonAlert>
+
     <template v-if="showPasswordLogin">
       <CommonAlert v-if="passwordLoginErrorMessage" variant="danger">{{
         $t(passwordLoginErrorMessage)
@@ -133,6 +153,8 @@ const { form, isDisabled } = useForm()
         form-class="mb-2.5 space-y-2.5"
         :schema="loginSchema"
         :schema-data="schemaData"
+        :initial-values="formInitialValues"
+        :change-fields="formChangeFields"
         @submit="login($event as FormSubmitData<LoginCredentials>)"
       >
         <template #after-fields> </template>
@@ -159,9 +181,23 @@ const { form, isDisabled } = useForm()
 
     <LoginThirdParty v-if="hasEnabledProviders" :providers="enabledProviders" />
 
-    <!-- TODO output of "If you have problems with the third-party login you can request a one-time password login as an admin." -->
-
     <template #bottomContent>
+      <div
+        v-if="!showPasswordLogin"
+        class="p-2 inline-flex items-center justify-center flex-wrap"
+      >
+        <CommonLabel class="text-center">
+          {{
+            $t(
+              'If you have problems with the third-party login you can request a one-time password login as an admin.',
+            )
+          }}
+        </CommonLabel>
+        <CommonLink link="/admin-password-auth">{{
+          $t('Request the password login here.')
+        }}</CommonLink>
+      </div>
+
       <!-- TODO: Remember the choice when we have a switch between the two desktop apps -->
       <CommonLink class="text-sm" link="/mobile" external>
         {{ $t('Continue to mobile') }}
