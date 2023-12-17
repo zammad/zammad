@@ -124,11 +124,6 @@ const loginSchema = [
         props: {
           class: 'text-right text-sm',
           link: '/#password_reset',
-          onClick(e: Event) {
-            e.preventDefault()
-            // eslint-disable-next-line no-alert
-            window.alert('TEST')
-          },
         },
         children: __('Forgot password?'),
       },
