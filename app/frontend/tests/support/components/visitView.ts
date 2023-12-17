@@ -9,6 +9,7 @@ import renderComponent, {
   getTestRouter,
   type ExtendedMountingOptions,
 } from './renderComponent.ts'
+import { getTestAppName } from './app.ts'
 
 vi.mock('#shared/server/apollo/client.ts', () => {
   return {
@@ -39,9 +40,7 @@ interface VisitViewOptions extends ExtendedMountingOptions<unknown> {
   mockApollo?: boolean
 }
 
-// internal Vitest variable, ideally should check expect.getState().testPath, but it's not populated in 0.34.6 (a bug)
-const { filepath } = (globalThis as any).__vitest_worker__ as any
-const isDesktop = filepath.includes('apps/desktop')
+const isDesktop = getTestAppName() === 'desktop'
 
 // TODO: for desktop app `LayoutTest` should have an abstract header component instead of mobile one
 export const visitView = async (

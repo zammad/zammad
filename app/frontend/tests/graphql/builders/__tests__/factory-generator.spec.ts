@@ -114,4 +114,17 @@ describe('correctly mocks operations', () => {
       agentReadAccess: false,
     })
   })
+
+  it('fixes ID if its not in graphql format', () => {
+    const { id } = generateObjectData<Ticket>('Ticket', { id: '1' })
+    expect(id).toBe(convertToGraphQLId('Ticket', 1))
+  })
+
+  it('throws an error if ID is in invalid format', () => {
+    expect(() => {
+      generateObjectData<Ticket>('Ticket', { id: 'dsfsdffds' })
+    }).toThrowErrorMatchingInlineSnapshot(
+      `[Error: expected numerical or graphql id for Ticket, got dsfsdffds]`,
+    )
+  })
 })

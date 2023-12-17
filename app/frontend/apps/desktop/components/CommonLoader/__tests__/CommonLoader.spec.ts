@@ -51,7 +51,7 @@ describe('CommonLoader.vue', () => {
     const alert = view.getByRole('alert')
 
     expect(alert).toHaveTextContent('foobar')
-    expect(getByIconName(alert, 'close-small')).toBeInTheDocument()
+    expect(getByIconName(alert, 'x-circle')).toBeInTheDocument()
   })
 
   it('provides default slot', async () => {

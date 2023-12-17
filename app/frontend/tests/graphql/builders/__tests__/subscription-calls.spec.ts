@@ -86,9 +86,7 @@ describe('mocked subscription works correctly', () => {
     expect(reactiveResult.value?.user.fullname).toBe(mocked.user.fullname)
 
     const mockedSubscription =
-      getGraphQLSubscriptionHandler<TestUserUpdatesSubscription>(
-        TestUserUpdatesDocument,
-      )
+      getGraphQLSubscriptionHandler<TestUserUpdatesSubscription>('userUpdates')
 
     await mockedSubscription.trigger({
       userUpdates: {
