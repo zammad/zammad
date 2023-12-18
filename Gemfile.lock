@@ -346,7 +346,7 @@ GEM
     mysql2 (0.5.5)
     naught (1.1.0)
     nestful (1.1.4)
-    net-ftp (0.3.2)
+    net-ftp (0.3.3)
       net-protocol
       time
     net-http (0.4.0)
