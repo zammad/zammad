@@ -127,7 +127,7 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
 
     context 'when not authenticated', authenticated_as: false do
       it 'forgot password doesn\'t redirect back' do
-        visit '/login', skip_waiting: true
+        visit '/login', app: :mobile
 
         click_link 'Forgot password?'
 
@@ -137,7 +137,7 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
       end
 
       it "register doesn't redirect back" do
-        visit '/login', skip_waiting: true
+        visit '/login', app: :mobile
 
         click_link 'Register'
 
