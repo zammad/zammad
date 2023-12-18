@@ -61,7 +61,7 @@ class KnowledgeBase < ApplicationModel
   def assets_public(data)
     data = assets_essential(data)
 
-    data[:KnowledgeBase].each do |_, elem|
+    data[:KnowledgeBase].each_value do |elem|
       elem.delete_if do |k, _|
         k.end_with?('_ids')
       end

@@ -19,6 +19,6 @@ module Rszr
 
     sample_image.height != 25
   rescue Rszr::LoadError
-    true  # Platform with outdated imlib2, handle gracefully.
+    true # Platform with outdated imlib2, handle gracefully.
   end
 end

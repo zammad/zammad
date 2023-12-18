@@ -45,7 +45,7 @@ module ZammadSpecSupportGraphql
       end
 
       def mock_broadcast(message)
-        @mock_channels.each do |_channel, handler|
+        @mock_channels.each_value do |handler|
           handler&.call(message)
         end
       end

@@ -58,7 +58,7 @@ returns
       end
 
       # get groups
-      local_attributes['group_ids']&.each do |group_id, _access|
+      local_attributes['group_ids']&.each_key do |group_id|
         next if data[:Group] && data[:Group][group_id]
 
         group = Group.lookup(id: group_id)

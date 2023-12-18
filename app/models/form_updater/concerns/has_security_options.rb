@@ -18,7 +18,7 @@ module FormUpdater::Concerns::HasSecurityOptions
   private
 
   def fetch_security_options(klass, security_type)
-    security_result = klass.new(ticket: data, article: (data['article'] || {})).process
+    security_result = klass.new(ticket: data, article: data['article'] || {}).process
 
     return if !result
 

@@ -10,14 +10,14 @@ class Issue2429UserIdentifierValidation < ActiveRecord::Migration[6.0]
   def update_single(elem)
     attr = ObjectManager::Attribute.for_object(User).find_by(name: elem)
 
-    attr.screens.each do |_, value|
+    attr.screens.each_value do |value|
       if value.try(:key?, 'null')
         value['null'] = true
       end
 
       next if !value.is_a? Hash
 
-      value.each do |_, inner_value|
+      value.each_value do |inner_value|
         if inner_value.try(:key?, 'null')
           inner_value['null'] = true
         end

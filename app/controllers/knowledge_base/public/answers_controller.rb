@@ -17,7 +17,7 @@ class KnowledgeBase::Public::AnswersController < KnowledgeBase::Public::BaseCont
 
     @alternative = find_answer(answers, params[:answer], locale: false)
 
-    raise ActiveRecord::RecordNotFound if !@alternative&.translations&.any?
+    raise ActiveRecord::RecordNotFound if !@alternative&.translations&.any? # rubocop:disable Style/InverseMethods
 
     @object_locales = @alternative.translations.map { |x| x.kb_locale.system_locale }
 

@@ -21,7 +21,7 @@ class RegexOperatorRenaming < ActiveRecord::Migration[6.1]
     return if selector.blank?
     return if selector[:condition].blank?
 
-    selector[:condition].each do |_key, value|
+    selector[:condition].each_value do |value|
       next if value[:operator].blank?
       next if OPERATOR_MAPPING.keys.exclude?(value[:operator])
 

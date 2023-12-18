@@ -77,7 +77,7 @@ class TimeAccountingsController < ApplicationController
                  {
                    ticket:       ticket.attributes,
                    time_unit:    record[2],
-                   type:         ((types[record[3]] || '-') if Setting.get('time_accounting_types')),
+                   type:         (types[record[3]] || '-' if Setting.get('time_accounting_types')),
                    customer:     customers[ticket.customer_id] || '-',
                    organization: organizations[ticket.organization_id] || '-',
                    agent:        agents[record[4]].fullname,

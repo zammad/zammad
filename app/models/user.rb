@@ -1274,7 +1274,7 @@ raise 'At least one user need to have admin permissions'
   # (see https://github.com/zammad/zammad/issues/2057)
   def update_caller_id
     # skip if "phone" does not change, or changes like [nil, ""]
-    return if persisted? && !previous_changes[:phone]&.any?(&:present?)
+    return if persisted? && !previous_changes[:phone]&.any?(&:present?) # rubocop:disable Style/InverseMethods
     return if destroyed? && phone.blank?
 
     Cti::CallerId.build(self)

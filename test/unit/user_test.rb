@@ -467,9 +467,6 @@ class UserTest < ActiveSupport::TestCase
       admin2.save!
     end
 
-    admin1.email = admin1.email
-    admin1.save!
-
     admin2.destroy!
     admin1.destroy!
   end

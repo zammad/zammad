@@ -674,7 +674,7 @@ returns
           last_name:  'Channel',
           username:   "channel#{params.dig(:channel_post, :chat, :id)}"
         },
-        caption:    (params.dig(:channel_post, :caption) || {}),
+        caption:    params.dig(:channel_post, :caption) || {},
         date:       params.dig(:channel_post, :date),
         message_id: params.dig(:channel_post, :message_id),
         text:       params.dig(:channel_post, :text),

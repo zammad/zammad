@@ -26,7 +26,7 @@ RSpec.describe Gql::Mutations::OnlineNotification::MarkAllAsSeen, authenticated_
 
   before do
     user.groups << Ticket.first.group
-    notifications_to_mark   # Pre-create them to ignore trigger events from that.
+    notifications_to_mark # Pre-create them to ignore trigger events from that.
     allow(Gql::Subscriptions::OnlineNotificationsCount).to receive(:trigger)
     gql.execute(query, variables: variables)
   end

@@ -5,7 +5,7 @@ class TwoFactorDefaultAuthenticationMethod < ActiveRecord::Migration[6.1]
     # return if it's a new setup
     return if !Setting.exists?(name: 'system_init_done')
 
-    ::User::TwoFactorPreference.authentication_methods.group_by(&:user_id).each do |_user_id, two_factor_preferences|
+    ::User::TwoFactorPreference.authentication_methods.group_by(&:user_id).each_value do |two_factor_preferences|
       user = two_factor_preferences.first.user
 
       next if user_has_default_two_factor_authentication_method?(user)

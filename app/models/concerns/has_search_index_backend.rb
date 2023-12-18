@@ -36,7 +36,7 @@ update search index, if configured - will be executed automatically
 
   def search_index_indexable_attributes(index_class)
     result = []
-    index_class.new.attributes.each do |key, _value|
+    index_class.new.attributes.each_key do |key|
       attribute_name = key.to_s
       next if attribute_name.blank?
 

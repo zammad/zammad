@@ -210,7 +210,7 @@ This function updates specifc attributes of an index based on a query.
     return if url.blank?
 
     script_list = []
-    data.each do |key, _value|
+    data.each_key do |key|
       script_list.push("ctx._source.#{key}=params.#{key}")
     end
 
