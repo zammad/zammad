@@ -233,7 +233,10 @@ const recalculateHeight = async (
   })
 }
 
+const rendered = ref(false)
+
 const rerenderFlatpickr = async () => {
+  if (rendered.value) rendered.value = false
   const flatpickr = createFlatpickr()
   if (flatpickr) {
     const footer = createCalendarFooter(flatpickr)
@@ -244,6 +247,7 @@ const rerenderFlatpickr = async () => {
     await recalculateHeight(flatpickr)
   }
   datepicker.value = flatpickr
+  rendered.value = true
 }
 
 onMounted(rerenderFlatpickr)
@@ -319,6 +323,7 @@ useEventListener('click', (e) => {
 })
 
 onBeforeUnmount(() => {
+  rendered.value = false
   datepicker.value?.destroy?.()
 })
 </script>
@@ -332,6 +337,7 @@ onBeforeUnmount(() => {
       :name="props.context.node.name"
       :class="props.context.classes.input"
       :disabled="props.context.disabled as boolean"
+      :data-rendered="rendered"
       @blur="context.handlers.blur"
       @focus="showPicker = true"
     />
