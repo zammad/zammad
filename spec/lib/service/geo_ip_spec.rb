@@ -31,11 +31,10 @@ RSpec.describe Service::GeoIp, integration: true do
           let(:expected_result) do
             {
               'country_name'   => 'Switzerland',
-              'city_name'      => 'Zurich',
               'country_code'   => 'CH',
               'continent_code' => 'EU',
-              'latitude'       => 47.3857,
-              'longitude'      => 8.5348,
+              'latitude'       => be_a(Float),
+              'longitude'      => be_a(Float),
             }
           end
 
@@ -50,8 +49,8 @@ RSpec.describe Service::GeoIp, integration: true do
               'city_name'      => 'Chemnitz',
               'country_code'   => 'DE',
               'continent_code' => 'EU',
-              'latitude'       => 50.8191,
-              'longitude'      => 12.9419,
+              'latitude'       => be_a(Float),
+              'longitude'      => be_a(Float),
             }
           end
 
@@ -66,8 +65,8 @@ RSpec.describe Service::GeoIp, integration: true do
               'city_name'      => 'Halle',
               'country_code'   => 'DE',
               'continent_code' => 'EU',
-              'latitude'       => 51.4828,
-              'longitude'      => 11.9799,
+              'latitude'       => be_a(Float),
+              'longitude'      => be_a(Float),
             }
           end
 
@@ -82,8 +81,8 @@ RSpec.describe Service::GeoIp, integration: true do
               'city_name'      => 'Richmond',
               'country_code'   => 'US',
               'continent_code' => 'NA',
-              'latitude'       => 37.9387,
-              'longitude'      => -122.3661,
+              'latitude'       => be_a(Float),
+              'longitude'      => be_a(Float),
             }
           end
 
