@@ -102,6 +102,19 @@ RSpec.describe ExternalDataSource do
         end
       end
 
+      context 'when search term contains umlauts (#4980)' do
+        let(:search_term) { 'bücher' }
+        let(:search_url)  { 'https://dummyjson.com/products/search?q=#{search.term}' } # rubocop:disable Lint/InterpolationCheck
+
+        it 'properly URL encodes search term' do
+          described_class.new(options: data_option, render_context: {}, term: search_term, limit: 1).process
+
+          expect(UserAgent)
+            .to have_received(:get)
+            .with("https://dummyjson.com/products/search?q=#{ERB::Util.url_encode(search_term)}", anything, anything)
+        end
+      end
+
       context 'when http basic username and password present' do
         before do
           data_option[:http_basic_auth_username] = 'test_username'
