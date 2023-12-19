@@ -67,11 +67,9 @@ const notificationCount = computed(() => {
   </footer>
 </template>
 
-<style scoped lang="scss">
-.user-active {
-  .user-avatar {
-    @apply ring-2 ring-blue;
-  }
+<style scoped>
+.user-active .user-avatar {
+  @apply ring-2 ring-blue;
 }
 
 .bottom-navigation {
