@@ -999,7 +999,7 @@ is certain attribute used by triggers, overviews or schedulers
   end
 
   def local_data_option=(val)
-    send("#{local_data_attr}=", val)
+    send(:"#{local_data_attr}=", val)
   end
 
   def data_option_maxlength_check

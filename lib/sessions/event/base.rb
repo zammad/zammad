@@ -4,7 +4,7 @@ class Sessions::Event::Base
 
   def initialize(params)
     params.each do |key, value|
-      instance_variable_set "@#{key}", value
+      instance_variable_set :"@#{key}", value
     end
 
     @is_web_socket = false

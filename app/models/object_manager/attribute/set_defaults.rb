@@ -15,7 +15,7 @@ class ObjectManager
         method_name = "#{attr}="
 
         return if !record.respond_to? method_name
-        return if record.send("#{attr}_came_from_user?")
+        return if record.send(:"#{attr}_came_from_user?")
 
         record.send method_name, build_value(config)
       end

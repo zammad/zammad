@@ -2,7 +2,7 @@
 
 class ExternalDataSourcePolicy < ApplicationPolicy
   def fetch?
-    send "fetch_#{record.downcase}?"
+    send :"fetch_#{record.downcase}?"
   end
 
   private

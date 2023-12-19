@@ -60,7 +60,7 @@ returns
 
       next if Array(list).sort == Array(send(real_ids)).sort
 
-      send("#{real_ids}=", list)
+      send(:"#{real_ids}=", list)
       self.updated_at = Time.zone.now
     end
 
@@ -109,7 +109,7 @@ returns
 
       next if Array(list).sort == Array(send(real_ids)).sort
 
-      send("#{real_ids}=", list)
+      send(:"#{real_ids}=", list)
       self.updated_at = Time.zone.now
     end
   end

@@ -26,6 +26,6 @@ class Issue4322SessionTimeoutStringify < ActiveRecord::Migration[6.1]
       hash['value'][key] = hash['value'][key].to_s
     end
 
-    object.send("#{attr}=", hash)
+    object.send(:"#{attr}=", hash)
   end
 end

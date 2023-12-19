@@ -5,7 +5,7 @@ module HasPublishing
 
   included do
     CanBePublished::StateMachine.aasm.events.each do |event|
-      define_method "has_publishing_#{event.name}" do
+      define_method :"has_publishing_#{event.name}" do
         object = klass.find params[:id]
         object.can_be_published_aasm.aasm.fire! event.name, current_user
 

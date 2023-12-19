@@ -91,9 +91,9 @@ module CanBePublished
   end
 
   def update_user_reference_item(scope_name)
-    return if !send("#{scope_name}_at_changed?")
+    return if !send(:"#{scope_name}_at_changed?")
 
-    send("#{scope_name}_by_id=", UserInfo.current_user_id)
+    send(:"#{scope_name}_by_id=", UserInfo.current_user_id)
   end
 
   def archived_after_internal

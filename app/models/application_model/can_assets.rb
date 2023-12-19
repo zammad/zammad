@@ -205,7 +205,7 @@ Compiles an assets hash for given items
 
     def reduce(items, data = {}, suffix = nil)
       items.reduce(data) do |memo, elem|
-        method_name = if suffix.present? && elem.respond_to?("assets_#{suffix}")
+        method_name = if suffix.present? && elem.respond_to?(:"assets_#{suffix}")
                         "assets_#{suffix}"
                       else
                         :assets

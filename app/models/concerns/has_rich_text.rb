@@ -70,7 +70,7 @@ Checks if file is used inline
 
     (parsed, attachments_inline) = HtmlSanitizer.replace_inline_images(parsed, image_prefix)
 
-    send("#{attr}=", parsed)
+    send(:"#{attr}=", parsed)
 
     self.has_rich_text_attachments_cache ||= []
     self.has_rich_text_attachments_cache += attachments_inline
@@ -94,7 +94,7 @@ Checks if file is used inline
     attrs = super
 
     self.class.has_rich_text_attributes.each do |attr|
-      attrs[attr.to_s] = send("#{attr}_with_urls")
+      attrs[attr.to_s] = send(:"#{attr}_with_urls")
     end
 
     attrs
@@ -125,7 +125,7 @@ Checks if file is used inline
       (self.has_rich_text_attributes += attrs.map(&:to_sym)).freeze
 
       attrs.each do |attr|
-        define_method "#{attr}_with_urls" do
+        define_method :"#{attr}_with_urls" do
           self.class.has_rich_text_insert_urls(self, attr)
         end
       end

@@ -4,7 +4,7 @@ module KnowledgeBaseHelper
   def effective_layout_name(knowledge_base, object)
     layout_prefix = object.present? ? :category : :homepage
 
-    knowledge_base.send("#{layout_prefix}_layout")
+    knowledge_base.send(:"#{layout_prefix}_layout")
   end
 
   def custom_path_if_needed(path, knowledge_base, full: false)

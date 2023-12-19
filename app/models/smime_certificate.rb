@@ -33,7 +33,7 @@ class SMIMECertificate < ApplicationModel
     return cert_selector.all if filter.nil?
 
     filter.each do |filter_key, filter_value|
-      cert_selector = send("filter_#{filter_key}", cert_selector, filter_value)
+      cert_selector = send(:"filter_#{filter_key}", cert_selector, filter_value)
       return [] if cert_selector.blank?
     end
 
@@ -79,7 +79,7 @@ class SMIMECertificate < ApplicationModel
     raise ArgumentError, 'filter_value must be either "signature" or "encryption"' if %w[signature encryption].exclude?(filter_value.to_s)
     return cert_selector if cert_selector.blank?
 
-    cert_selector.select { |cert| cert.parsed.send("#{filter_value}?") }
+    cert_selector.select { |cert| cert.parsed.send(:"#{filter_value}?") }
   end
 
   def self.parts(pem)

@@ -104,7 +104,7 @@ module CanPerformChanges
 
       action = nil
       action_checks.each do |key|
-        action = send("#{key}_action", object_name, object_key, action_value, actions)
+        action = send(:"#{key}_action", object_name, object_key, action_value, actions)
         break if action
       end
 

@@ -283,7 +283,7 @@ class SearchKnowledgeBaseBackend
       return false
     end
 
-    translation.category.send("#{visibility}_content?", translation.kb_locale)
+    translation.category.send(:"#{visibility}_content?", translation.kb_locale)
   end
 
   def prepare_scope_ids

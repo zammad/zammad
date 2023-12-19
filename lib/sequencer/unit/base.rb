@@ -199,7 +199,7 @@ class Sequencer::Unit::Base
   # This method creates the convenience method
   # setter for the given attribute.
   def self.provide_setter(attribute)
-    define_method("#{attribute}=") do |value|
+    define_method(:"#{attribute}=") do |value|
       state.provide(attribute, value)
     end
   end
