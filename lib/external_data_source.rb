@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ExternalDataSource
-  attr_reader :json, :parsed_items, :options
+  attr_reader :json, :parsed_items, :options, :term
 
   def initialize(options:, term:, render_context:, limit: 10)
     @term    = term
@@ -44,8 +44,16 @@ class ExternalDataSource
     raise Errors::SearchUrlMissingError, self if options[:search_url].blank?
 
     NotificationFactory::Renderer.new(
-      objects:    @render_context,
-      template:   options[:search_url].gsub("\#{search.term}", @term),
+      objects:    {
+        **@render_context,
+
+        # Extend the render context with the current object instance.
+        #   This will allow for usage of `search.term` in the search URL, as this property is readily available here.
+        #   Only this approach will guarantee that the template variable is replaced with a properly URL encoded value.
+        #   https://github.com/zammad/zammad/issues/4980
+        search: self,
+      },
+      template:   options[:search_url],
       escape:     false,
       url_encode: true,
     ).render(debug_errors: false)
