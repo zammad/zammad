@@ -7,6 +7,6 @@ class Sequencer::Unit::Import::Kayako::Case::Tags < Sequencer::Unit::Common::Mod
   private
 
   def tags
-    resource['tags']&.map { |tag| tag['name'] }
+    resource['tags']&.pluck('name')
   end
 end
