@@ -262,7 +262,7 @@ GEM
       activesupport (>= 6.1)
     gmail_xoauth (0.4.2)
       oauth (>= 0.3.6)
-    graphql (2.1.7)
+    graphql (2.2.0)
       racc (~> 1.4)
     graphql-batch (0.5.3)
       graphql (>= 1.12.18, < 3)
