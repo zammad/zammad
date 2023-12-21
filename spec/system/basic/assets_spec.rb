@@ -22,9 +22,17 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
       page.execute_script('return App.Group.first().note')
     end
 
+    def group_name_last
+      page.execute_script('return App.Group.first().name_last')
+    end
+
     describe 'when customer', authenticated_as: :customer do
       it 'can not access group details' do
         expect(group_note).to be_nil
+      end
+
+      it 'can access name_last attribute (#4981)' do
+        expect(group_name_last).not_to be_nil
       end
     end
 
