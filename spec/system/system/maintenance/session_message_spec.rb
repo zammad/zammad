@@ -15,12 +15,14 @@ RSpec.describe 'System > Maintenance - Session Message', type: :system do
   context 'when maintenance session message is used and a open session exists' do
     before do
       visit '/'
+      ensure_websocket
 
       using_session(:second_browser) do
         login(
           username: agent.login,
           password: 'test',
         )
+        ensure_websocket
       end
     end
 
