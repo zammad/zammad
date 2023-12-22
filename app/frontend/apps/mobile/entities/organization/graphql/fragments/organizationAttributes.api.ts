@@ -1,4 +1,4 @@
-import * as Types from '../../../../../../shared/graphql/types';
+import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ObjectAttributeValuesFragmentDoc } from '../../../../../../shared/graphql/fragments/objectAttributeValues.api';

@@ -1,4 +1,4 @@
-import * as Types from '../../../../../../../../../graphql/types';
+import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../../../../graphql/fragments/errors.api';

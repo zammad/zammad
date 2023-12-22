@@ -193,19 +193,19 @@ export const waitForGraphQLMockCalls = <T>(
   })
 }
 
-type DefaultsValue<T, V> = DeepPartial<T> | ((variables: V) => DeepPartial<T>)
+export type MockDefaultsValue<T, V> = DeepPartial<T> | ((variables: V) => DeepPartial<T>)
 
 export const mockGraphQLResult = <
   T extends Record<string, any>,
   V extends Record<string, any> = Record<string, never>,
 >(
   document: DocumentNode,
-  defaults: DefaultsValue<T, V>,
+  defaults: MockDefaultsValue<T, V>,
 ) => {
   const key = requestToKey(document)
   mockDefaults.set(key, defaults)
   return {
-    updateDefaults: (defaults: DefaultsValue<T, V>) => {
+    updateDefaults: (defaults: MockDefaultsValue<T, V>) => {
       mockDefaults.set(key, defaults)
     },
     waitForCalls: () => waitForGraphQLMockCalls<T>(document),

@@ -47,6 +47,8 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'consistent-return': 'off', // allow implicit return
 
+    'class-methods-use-this': 'off',
+
     'prefer-destructuring': [
       'error',
       {

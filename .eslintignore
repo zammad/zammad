@@ -1,7 +1,7 @@
 **/*{.,-}min.js
 
 # Skip auto generated files.
-app/frontend/**/graphql/**/*.api.ts
+app/frontend/**/graphql/**/*.ts
 app/frontend/shared/graphql/types.ts
 app/frontend/shared/types/config.ts
 

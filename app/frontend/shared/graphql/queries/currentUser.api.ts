@@ -1,4 +1,4 @@
-import * as Types from '../types';
+import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { CurrentUserAttributesFragmentDoc } from '../fragments/currentUserAttributes.api';

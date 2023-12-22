@@ -1,4 +1,4 @@
-import * as Types from '../../../../../../shared/graphql/types';
+import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { OverviewAttributesFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/overviewAttributes.api';
