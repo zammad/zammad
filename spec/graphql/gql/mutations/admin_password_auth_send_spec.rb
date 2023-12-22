@@ -64,6 +64,27 @@ RSpec.describe Gql::Mutations::AdminPasswordAuthSend, type: :graphql do
 
           expect(message).to include "<a href=\"http://zammad.example.com/desktop/login?token=#{Token.last.token}\">"
         end
+
+        context 'when user requests admin auth more than throttle allows', :rack_attack do
+
+          let(:static_ipv4) { Faker::Internet.ip_v4_address }
+
+          it 'blocks due to username throttling (multiple IPs)' do
+            4.times do
+              gql.execute(query, variables: variables, context: { REMOTE_IP: Faker::Internet.ip_v4_address })
+            end
+
+            expect(gql.result.error_message).to eq 'The request limit for this operation was exceeded.'
+          end
+
+          it 'blocks due to source IP address throttling (multiple usernames)' do
+            4.times do
+              gql.execute(query, variables: variables.merge(username: create(:admin).login), context: { REMOTE_IP: static_ipv4 })
+            end
+
+            expect(gql.result.error_message).to eq 'The request limit for this operation was exceeded.'
+          end
+        end
       end
     end
   end

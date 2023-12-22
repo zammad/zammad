@@ -2,6 +2,8 @@
 
 module Gql::Mutations
   class AdminPasswordAuthSend < BaseMutation
+    include Gql::Concerns::HandlesThrottling
+
     description 'Sends a email with a token to login via password.'
 
     argument :login, String, 'Login information that is used to create a token.'
@@ -10,6 +12,10 @@ module Gql::Mutations
 
     def self.authorize(...)
       true
+    end
+
+    def ready?(login:)
+      throttle!(limit: 3, period: 1.minute, by_identifier: login)
     end
 
     def resolve(login:)

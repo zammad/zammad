@@ -11878,6 +11878,10 @@ msgstr ""
 msgid "The request could not be processed."
 msgstr ""
 
+#: lib/operations_rate_limiter.rb
+msgid "The request limit for this operation was exceeded."
+msgstr ""
+
 #: lib/validations/verify_perform_rules_validator.rb
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
 msgstr ""

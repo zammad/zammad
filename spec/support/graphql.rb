@@ -201,6 +201,12 @@ module ZammadSpecSupportGraphql
     #   gql.result
     #
     def execute(query, variables: {}, context: {})
+      context[:controller] ||= GraphqlController.new
+                                 .tap do |controller|
+                                   controller.request = ActionDispatch::Request.new({})
+                                   controller.request.remote_ip = context[:REMOTE_IP] || '127.0.0.1'
+                                 end
+
       context[:current_user] ||= @graphql_current_user
       if @graphql_current_user
         # TODO: we only fake a SID for now, create a real session?
