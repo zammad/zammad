@@ -86,7 +86,7 @@
     "vite-plugin-ruby": "^5.0.0",
     "vitest": "^1.0.4",
     "vitest-axe": "^0.1.0",
-    "vue-tsc": "^1.8.25"
+    "vue-tsc": "^1.8.27"
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
@@ -141,7 +141,7 @@
     "uuid": "^9.0.1",
     "vue": "^3.3.11",
     "vue-advanced-cropper": "^2.8.8",
-    "vue-easy-lightbox": "1.16.0",
+    "vue-easy-lightbox": "1.17.0",
     "vue-router": "^4.2.5",
     "vue3-draggable-resizable": "^1.6.5",
     "vuedraggable": "^4.1.0",

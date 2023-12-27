@@ -3358,10 +3358,10 @@
     "@typescript-eslint/parser" "^6.7.0"
     vue-eslint-parser "^9.3.1"
 
-"@vue/language-core@1.8.25":
-  version "1.8.25"
-  resolved "https://registry.yarnpkg.com/@vue/language-core/-/language-core-1.8.25.tgz#b44b4e3c244ba9b1b79cccf9eb7b046535a4676f"
-  integrity sha512-NJk/5DnAZlpvXX8BdWmHI45bWGLViUaS3R/RMrmFSvFMSbJKuEODpM4kR0F0Ofv5SFzCWuNiMhxameWpVdQsnA==
+"@vue/language-core@1.8.27":
+  version "1.8.27"
+  resolved "https://registry.yarnpkg.com/@vue/language-core/-/language-core-1.8.27.tgz#2ca6892cb524e024a44e554e4c55d7a23e72263f"
+  integrity sha512-L8Kc27VdQserNaCUNiSFdDl9LWT24ly8Hpwf1ECy3aFb9m6bDhBGQYOujDm21N7EW3moKIOKEanQwe1q5BK+mA==
   dependencies:
     "@volar/language-core" "~1.11.1"
     "@volar/source-map" "~1.11.1"
@@ -10911,10 +10911,10 @@ vue-demi@>=0.14.6, vue-demi@^0.14.6:
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.14.6.tgz#dc706582851dc1cdc17a0054f4fec2eb6df74c92"
   integrity sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==
 
-vue-easy-lightbox@1.16.0:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.16.0.tgz#151db0a332eb32ac30616afb4e7dc09f3c82281b"
-  integrity sha512-9ckBIi56kTNkfbxioTBLKR3xnFjmkIs4SOvePn6XUciR+Dzuav0tgNjqDHkfsoo3nxIpUmfpQAT0YDl9TpJ5jA==
+vue-easy-lightbox@1.17.0:
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.17.0.tgz#f2678a71b0969d47be8830372d81d6cfeca3c0f4"
+  integrity sha512-dPkfNzcXQmiG7neNjJ9pDoWXWncOriVn9I/R7E8reEuRJ2GGScEcGB/fEtoqFnbcFzWYYPlcPGLc7q556nhHGQ==
 
 vue-eslint-parser@^9.3.1:
   version "9.3.1"
@@ -10944,13 +10944,13 @@ vue-template-compiler@^2.7.14:
     de-indent "^1.0.2"
     he "^1.2.0"
 
-vue-tsc@^1.8.25:
-  version "1.8.25"
-  resolved "https://registry.yarnpkg.com/vue-tsc/-/vue-tsc-1.8.25.tgz#90cd03e71d28c5c4a8068167b232eb97cc96b77f"
-  integrity sha512-lHsRhDc/Y7LINvYhZ3pv4elflFADoEOo67vfClAfF2heVHpHmVquLSjojgCSIwzA4F0Pc4vowT/psXCYcfk+iQ==
+vue-tsc@^1.8.27:
+  version "1.8.27"
+  resolved "https://registry.yarnpkg.com/vue-tsc/-/vue-tsc-1.8.27.tgz#feb2bb1eef9be28017bb9e95e2bbd1ebdd48481c"
+  integrity sha512-WesKCAZCRAbmmhuGl3+VrdWItEvfoFIPXOvUJkjULi+x+6G/Dy69yO3TBRJDr9eUlmsNAwVmxsNZxvHKzbkKdg==
   dependencies:
     "@volar/typescript" "~1.11.1"
-    "@vue/language-core" "1.8.25"
+    "@vue/language-core" "1.8.27"
     semver "^7.5.4"
 
 vue3-draggable-resizable@^1.6.5:
