@@ -464,7 +464,9 @@ class Selector::Sql < Selector::Base
       query << "#{attribute} #{like} (?)"
       bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}%"
     elsif block_condition[:operator] == 'contains not'
-      query << "#{attribute} NOT #{like} (?)"
+      # NOT LIKE is always false on NULL values
+      # https://github.com/zammad/zammad/issues/4948
+      query << "#{attribute} NOT #{like} (?) OR #{attribute} IS NULL"
       bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}%"
     elsif block_condition[:operator] == 'matches regex'
       query << sql_helper.regex_match(attribute, negated: false)
