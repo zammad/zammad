@@ -677,7 +677,7 @@ GEM
       dry-cli (>= 0.7, < 2)
       rack-proxy (~> 0.6, >= 0.6.1)
       zeitwerk (~> 2.2)
-    webauthn (3.0.0)
+    webauthn (3.1.0)
       android_key_attestation (~> 0.3.0)
       awrence (~> 1.1)
       bindata (~> 2.4)
