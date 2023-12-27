@@ -352,6 +352,25 @@ RSpec.describe Selector::Sql do
 
           include_examples 'finds the ticket'
         end
+
+        context 'with empty-looking values in DB' do
+          let(:value) { 'Some' }
+          let(:name)  { 'ticket.note' }
+
+          before { ticket.update! note: database_value }
+
+          context 'when value is empty string' do
+            let(:database_value) { '' }
+
+            include_examples 'finds the ticket'
+          end
+
+          context 'when value is NULL' do
+            let(:database_value) { nil }
+
+            include_examples 'finds the ticket'
+          end
+        end
       end
 
       describe "operator 'is'" do
