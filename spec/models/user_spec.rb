@@ -506,7 +506,7 @@ RSpec.describe User, type: :model do
       let!(:token) { create(:token_password_reset) }
 
       it 'changes the password of the token user and destroys the token' do
-        expect { described_class.password_reset_via_token(token.token, Faker::Internet.password) }
+        expect { described_class.password_reset_via_token(token.token, 'VYxesRc6O2') }
           .to change { user.reload.password }
           .and change(Token, :count).by(-1)
       end

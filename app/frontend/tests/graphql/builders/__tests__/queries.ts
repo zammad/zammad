@@ -1,6 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { UserError, UserInput } from '#shared/graphql/types.ts'
+import type {
+  UserError,
+  UserInput,
+  UserSignupInput,
+} from '#shared/graphql/types.ts'
 import gql from 'graphql-tag'
 
 export interface TestAvatarQuery {
@@ -195,3 +199,25 @@ export const TestAutocompleteArrayFirstLevel = gql`
     }
   }
 `
+
+export const TestUserSignupMutationDocument = gql`
+  mutation userSignup($input: UserSignupInput!) {
+    userSignup(input: $input) {
+      success
+      errors {
+        ...errors
+      }
+    }
+  }
+`
+
+export interface TestUserSignupMutationQuery {
+  userSignup: {
+    success: boolean
+    errors: UserError[] | null
+  }
+}
+
+export interface TestUserSignupArgs {
+  input: UserSignupInput
+}

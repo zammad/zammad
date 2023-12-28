@@ -193,7 +193,9 @@ export const waitForGraphQLMockCalls = <T>(
   })
 }
 
-export type MockDefaultsValue<T, V> = DeepPartial<T> | ((variables: V) => DeepPartial<T>)
+export type MockDefaultsValue<T, V = Record<string, never>> =
+  | DeepPartial<T>
+  | ((variables: V) => DeepPartial<T>)
 
 export const mockGraphQLResult = <
   T extends Record<string, any>,

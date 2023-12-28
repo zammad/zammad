@@ -310,6 +310,7 @@ const loadLocales = (): FormKitLocaleExtended => {
        * @see {@link https://docs.formkit.com/essentials/validation#confirm}
        */
       confirm() {
+        // TODO: Check if message is in a good shape (e.g. for the usage for password + confirm password).
         /* <i18n case="Shown when the user-provided value does not equal the value of the matched input."> */
         return i18n.t("This field doesn't correspond to the expected value.")
         /* </i18n> */

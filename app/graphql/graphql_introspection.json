@@ -299,13 +299,9 @@
 
               ],
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -5422,7 +5418,7 @@
             },
             {
               "name": "adminPasswordAuthSend",
-              "description": "Sends a email with a token to login via password.",
+              "description": "Sends an email with a token to login via password.",
               "args": [
                 {
                   "name": "login",
@@ -6428,6 +6424,182 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "UserAddPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userPasswordResetSend",
+              "description": "Send password reset link to the user.",
+              "args": [
+                {
+                  "name": "username",
+                  "description": "The user login or email",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserPasswordResetSendPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userPasswordResetUpdate",
+              "description": "Update user password via reset token.",
+              "args": [
+                {
+                  "name": "token",
+                  "description": "Verification token",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "password",
+                  "description": "The user password",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserPasswordResetUpdatePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userPasswordResetVerify",
+              "description": "Verify password reset token.",
+              "args": [
+                {
+                  "name": "token",
+                  "description": "Verification token",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserPasswordResetVerifyPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userSignup",
+              "description": "Sign-up / register user.",
+              "args": [
+                {
+                  "name": "input",
+                  "description": "The user data",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "UserSignupInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserSignupPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userSignupResend",
+              "description": "Resend signup verification email.",
+              "args": [
+                {
+                  "name": "email",
+                  "description": "The user email",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserSignupResendPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userSignupVerify",
+              "description": "Verify a signed up user.",
+              "args": [
+                {
+                  "name": "token",
+                  "description": "Verification token",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserSignupVerifyPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -16413,6 +16585,153 @@
         },
         {
           "kind": "OBJECT",
+          "name": "UserPasswordResetSendPayload",
+          "description": "Autogenerated return type of UserPasswordResetSend.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "success",
+              "description": "This indicates if sending of the password reset link was successful.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "UserPasswordResetUpdatePayload",
+          "description": "Autogenerated return type of UserPasswordResetUpdate.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "success",
+              "description": "This indicates if the password update was successful.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "UserPasswordResetVerifyPayload",
+          "description": "Autogenerated return type of UserPasswordResetVerify.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "success",
+              "description": "This indicates if the password reset token is valid.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "UserPermission",
           "description": "Permissions for the current user",
           "fields": [
@@ -16464,6 +16783,240 @@
                     }
                   }
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "UserSignupInput",
+          "description": "The user sign-up fields.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "objectAttributeValues",
+              "description": "Additional custom attributes (names + values)",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "ObjectAttributeValueInput",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "login",
+              "description": "The user login",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "firstname",
+              "description": "The user first name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "lastname",
+              "description": "The user last name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "email",
+              "description": "The user email",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "password",
+              "description": "The user password",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "UserSignupPayload",
+          "description": "Autogenerated return type of UserSignup.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "success",
+              "description": "This indicates if creating the user and sending the token was successful.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "UserSignupResendPayload",
+          "description": "Autogenerated return type of UserSignupResend.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "success",
+              "description": "This indicates if sending of the token via email was successful.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "UserSignupVerifyPayload",
+          "description": "Autogenerated return type of UserSignupVerify.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "session",
+              "description": "The current session, if the verification was successful.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Session",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null

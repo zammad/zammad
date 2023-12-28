@@ -7,6 +7,15 @@ import type { RouteLocationRaw } from 'vue-router'
 import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage.vue'
 import { useAfterAuthPlugins } from '../after-auth/composable/useAfterAuthPlugins.ts'
 
+defineOptions({
+  beforeRouteEnter(to) {
+    const { currentPlugin } = useAfterAuthPlugins()
+    if (!currentPlugin.value) {
+      return to.redirectedFrom ? false : '/'
+    }
+  },
+})
+
 const { currentPlugin, data } = useAfterAuthPlugins()
 
 const finished = ref(false)

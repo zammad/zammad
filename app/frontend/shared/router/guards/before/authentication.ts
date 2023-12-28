@@ -27,7 +27,7 @@ const checkAuthenticated = (
     } else {
       next({ path: '/login' })
     }
-  } else if (to.name === 'Login' && authenticated) {
+  } else if (to.meta.redirectToDefaultRoute && authenticated) {
     // Use the default route here.
     log.debug(
       `Route guard for '${to.path}': authentication - forbidden - authenticated.`,

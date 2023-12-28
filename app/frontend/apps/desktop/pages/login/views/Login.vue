@@ -123,7 +123,7 @@ const loginSchema = [
         component: 'CommonLink',
         props: {
           class: 'text-right text-sm',
-          link: '/#password_reset',
+          link: '/reset-password',
         },
         children: __('Forgot password?'),
       },
@@ -195,10 +195,10 @@ const showPasswordLogin = computed(
         @submit="login($event as FormSubmitData<LoginCredentials>)"
       >
         <template #after-fields>
-          <div class="flex justify-center py-3">
+          <div v-if="$c.user_create_account" class="flex justify-center py-3">
             <CommonLabel>
               {{ $t('New user?') }}
-              <CommonLink link="/#signup" class="select-none">{{
+              <CommonLink link="/signup" class="select-none">{{
                 $t('Register')
               }}</CommonLink>
             </CommonLabel>

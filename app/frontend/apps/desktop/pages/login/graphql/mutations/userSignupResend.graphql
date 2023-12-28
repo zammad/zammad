@@ -1,0 +1,8 @@
+mutation userSignupResend($email: String!) {
+  userSignupResend(email: $email) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -9,12 +9,31 @@ import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { useThirdPartyAuthentication } from '#shared/composables/login/useThirdPartyAuthentication.ts'
 
 import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 import type { AdminPasswordAuthRequestData } from '../types/admin-password-auth'
 import { useAdminPasswordAuthSendMutation } from '../graphql/mutations/adminPasswordAuthSend.api.ts'
+
+defineOptions({
+  beforeRouteEnter(to) {
+    const application = useApplicationStore()
+    const { hasEnabledProviders } = useThirdPartyAuthentication()
+
+    if (application.config.user_show_password_login) {
+      return to.redirectedFrom ? false : '/'
+    }
+
+    if (!hasEnabledProviders.value) {
+      return to.redirectedFrom ? false : '/'
+    }
+
+    return true
+  },
+})
 
 const router = useRouter()
 
@@ -96,7 +115,7 @@ const retry = () => {
       }}
     </CommonLabel>
 
-    <div class="flex justify-end items-end gap-2">
+    <template #boxActions>
       <CommonButton
         variant="secondary"
         size="medium"
@@ -117,14 +136,9 @@ const retry = () => {
         {{ $t('Submit') }}
       </CommonButton>
 
-      <CommonButton
-        v-if="requestSent"
-        variant="submit"
-        size="medium"
-        @click="retry()"
-      >
+      <CommonButton v-else variant="submit" size="medium" @click="retry()">
         {{ $t('Retry') }}
       </CommonButton>
-    </div>
+    </template>
   </LayoutPublicPage>
 </template>

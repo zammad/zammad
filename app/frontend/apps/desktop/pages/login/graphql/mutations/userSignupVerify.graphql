@@ -1,0 +1,14 @@
+mutation userSignupVerify($token: String!) {
+  userSignupVerify(token: $token) {
+    session {
+      id
+      afterAuth {
+        type
+        data
+      }
+    }
+    errors {
+      message
+    }
+  }
+}

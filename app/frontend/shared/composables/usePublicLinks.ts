@@ -20,7 +20,7 @@ export const usePublicLinks = (screen: EnumPublicLinksScreen) => {
   >({
     document: PublicLinkUpdatesDocument,
     variables: {
-      screen: EnumPublicLinksScreen.Login,
+      screen,
     },
     updateQuery(_, { subscriptionData }) {
       const publicLinks = subscriptionData.data.publicLinkUpdates?.publicLinks

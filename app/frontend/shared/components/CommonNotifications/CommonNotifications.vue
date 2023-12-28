@@ -52,6 +52,7 @@ const clickHandler = (notification: Notification) => {
               <CommonIcon
                 :name="`common-notification-${notification.type}`"
                 size="small"
+                decorative
               />
               <span
                 class="text-sm"

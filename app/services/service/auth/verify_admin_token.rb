@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Auth::VerifyAdminToken < Service::Base
-  include Service::Auth::Concerns::CheckPasswordLogin
+  include Service::Auth::Concerns::CheckAdminPasswordAuth
 
   attr_reader :token
 
@@ -11,10 +11,10 @@ class Service::Auth::VerifyAdminToken < Service::Base
   end
 
   def execute
-    raise Exceptions::UnprocessableEntity, __('This feature is not enabled.') if password_login?
+    admin_password_auth!
 
     user = ::User.admin_password_auth_via_token(token)
-    raise Exceptions::UnprocessableEntity, __('The login is not possible.') if !user
+    raise Exceptions::Forbidden, __('The login is not possible.') if !user
 
     user
   end

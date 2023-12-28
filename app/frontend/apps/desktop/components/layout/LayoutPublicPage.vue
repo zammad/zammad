@@ -42,6 +42,10 @@ const hoverPoweredByLogo = ref(false)
           {{ $t(title) }}
         </h1>
         <slot />
+
+        <div v-if="$slots.boxActions" class="flex justify-end items-end gap-2">
+          <slot name="boxActions" />
+        </div>
       </main>
 
       <section

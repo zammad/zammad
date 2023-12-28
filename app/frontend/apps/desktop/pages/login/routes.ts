@@ -2,9 +2,6 @@
 
 import type { RouteRecordRaw } from 'vue-router'
 
-import { useApplicationStore } from '#shared/stores/application.ts'
-import { useThirdPartyAuthentication } from '#shared/composables/login/useThirdPartyAuthentication.ts'
-
 export const isMainRoute = true
 
 const route: RouteRecordRaw[] = [
@@ -16,6 +13,7 @@ const route: RouteRecordRaw[] = [
       title: __('Sign in'),
       requiresAuth: false,
       requiredPermission: null,
+      redirectToDefaultRoute: true,
       hasOwnLandmarks: true,
       sidebar: false,
     },
@@ -24,24 +22,11 @@ const route: RouteRecordRaw[] = [
     path: '/admin-password-auth',
     name: 'AdminPasswordAuth',
     component: () => import('./views/AdminPasswordAuth.vue'),
-    async beforeEnter(to) {
-      const application = useApplicationStore()
-      const { hasEnabledProviders } = useThirdPartyAuthentication()
-
-      if (application.config.user_show_password_login) {
-        return to.redirectedFrom ? false : '/'
-      }
-
-      if (!hasEnabledProviders.value) {
-        return to.redirectedFrom ? false : '/'
-      }
-
-      return true
-    },
     meta: {
       title: __('Admin Password Login'),
       requiresAuth: false,
       requiredPermission: null,
+      redirectToDefaultRoute: true,
       hasOwnLandmarks: true,
       sidebar: false,
     },
@@ -50,19 +35,34 @@ const route: RouteRecordRaw[] = [
     path: '/login/after-auth',
     name: 'LoginAfterAuth',
     component: () => import('./views/LoginAfterAuth.vue'),
-    async beforeEnter(to) {
-      // don't open the page if there is nothing to show
-      const { useAfterAuthPlugins } = await import(
-        './after-auth/composable/useAfterAuthPlugins.ts'
-      )
-      const { currentPlugin } = useAfterAuthPlugins()
-      if (!currentPlugin.value) {
-        return to.redirectedFrom ? false : '/'
-      }
-    },
     meta: {
       requiresAuth: true,
       requiredPermission: null,
+      hasOwnLandmarks: true,
+      sidebar: false,
+    },
+  },
+  {
+    path: '/reset-password',
+    name: 'PasswordReset',
+    component: () => import('./views/PasswordReset.vue'),
+    meta: {
+      requiresAuth: false,
+      requiredPermission: null,
+      redirectToDefaultRoute: true,
+      hasOwnLandmarks: true,
+      sidebar: false,
+    },
+  },
+  {
+    path: '/reset-password/verify/:token?',
+    name: 'PasswordResetVerify',
+    props: true,
+    component: () => import('./views/PasswordResetVerify.vue'),
+    meta: {
+      requiresAuth: false,
+      requiredPermission: null,
+      redirectToDefaultRoute: true,
       hasOwnLandmarks: true,
       sidebar: false,
     },
@@ -95,6 +95,33 @@ const route: RouteRecordRaw[] = [
     meta: {
       requiresAuth: false,
       requiredPermission: null,
+    },
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: () => import('./views/Signup.vue'),
+    meta: {
+      title: __('Signup'),
+      requiresAuth: false,
+      requiredPermission: null,
+      redirectToDefaultRoute: true,
+      hasOwnLandmarks: true,
+      sidebar: false,
+    },
+  },
+  {
+    path: '/signup/verify/:token?',
+    name: 'SignupVerify',
+    props: true,
+    component: () => import('./views/SignupVerify.vue'),
+    meta: {
+      title: __('Email Verification'),
+      requiresAuth: false,
+      requiredPermission: null,
+      redirectToDefaultRoute: true,
+      hasOwnLandmarks: true,
+      sidebar: false,
     },
   },
 ]

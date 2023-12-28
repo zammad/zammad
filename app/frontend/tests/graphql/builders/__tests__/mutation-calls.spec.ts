@@ -15,6 +15,9 @@ import {
   TestUserDocument,
   type TestUserQuery,
   type TestUserQueryVariables,
+  type TestUserSignupMutationQuery,
+  TestUserSignupMutationDocument,
+  type TestUserSignupArgs,
 } from './queries.ts'
 
 describe('calling mutation without mocking document works correctly', () => {
@@ -194,5 +197,21 @@ describe('calling mutation with mocked return data correctly returns data', () =
     expect(data).toBeInstanceOf(UserError)
     expect(data.errors).toHaveLength(1)
     expect(data.errors[0].message).toBe('Some error')
+  })
+
+  it('mutation is always successful by defualt', async () => {
+    const handler = getMutationHandler<
+      TestUserSignupMutationQuery,
+      TestUserSignupArgs
+    >(TestUserSignupMutationDocument)
+
+    const data = await handler.send({
+      input: {
+        email: faker.internet.userName(),
+        password: faker.internet.password(),
+      },
+    })
+    expect(data?.userSignup.success).toBe(true)
+    expect(data?.userSignup.errors).toBeNull()
   })
 })

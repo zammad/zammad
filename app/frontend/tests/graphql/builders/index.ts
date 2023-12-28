@@ -253,7 +253,7 @@ const deepMerge = (target: any, source: any): any => {
   for (const key in source) {
     const value = source[key]
 
-    if (typeof value === 'object') {
+    if (typeof value === 'object' && value !== null) {
       if (Array.isArray(value)) {
         target[key] = value.map((v, index) => {
           return deepMerge(target[key]?.[index] || {}, v)
@@ -377,7 +377,7 @@ const generateObject = (
     for (const key in resolved) {
       if (!(key in value)) {
         value[key] = resolved[key]
-      } else if (value[key] && typeof value[key] === 'object') {
+      } else if (value[key] && typeof value[key] === 'object' && resolved[key]) {
         value[key] = deepMerge(resolved[key], value[key])
       }
     }
@@ -430,6 +430,15 @@ const generateObject = (
       (name === 'updatedBy' || name === 'createdBy' || name === 'errors')
     ) {
       value[name] = null
+      return
+    }
+    // by default, all mutations are successful because errors are null
+    if (
+      field.type.kind === 'SCALAR' &&
+      name === 'success' &&
+      !(name in value)
+    ) {
+      value[name] = true
       return
     }
     value[name] = buildObjectFromInformation(

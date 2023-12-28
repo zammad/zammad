@@ -78,6 +78,7 @@ describe('authenticationGuard', () => {
       path: '/login',
       meta: {
         requiresAuth: true,
+        redirectToDefaultRoute: true,
       },
     } as RouteLocationNormalized
     const next = vi.fn()

@@ -8,6 +8,8 @@ import '#tests/graphql/builders/mocks.ts'
 describe('testing login a11y', () => {
   beforeEach(() => {
     mockApplicationConfig({
+      user_create_account: true,
+      user_show_password_login: true,
       product_name: 'Zammad Test System',
     })
   })

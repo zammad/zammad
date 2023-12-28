@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Auth::SendAdminToken < Service::Base
-  include Service::Auth::Concerns::CheckPasswordLogin
+  include Service::Auth::Concerns::CheckAdminPasswordAuth
 
   attr_reader :login
 
@@ -12,16 +12,13 @@ class Service::Auth::SendAdminToken < Service::Base
   end
 
   def execute
-    raise Exceptions::UnprocessableEntity, __('This feature is not enabled.') if password_login?
+    admin_password_auth!
 
     result = ::User.admin_password_auth_new_token(login)
-
-    return false if !result || !result[:token]
-
-    raise Exceptions::UnprocessableEntity, __('Unable to send admin password auth email.') if !result[:user] || result[:user].email.blank?
+    raise TokenError if !result || !result[:token]
+    raise EmailError if !result[:user] || result[:user].email.blank?
 
     result[:url] = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#{@path}#{result[:token].token}"
-
     NotificationFactory::Mailer.notification(
       template: 'admin_password_auth',
       user:     result[:user],
@@ -29,5 +26,17 @@ class Service::Auth::SendAdminToken < Service::Base
     )
 
     true
+  end
+
+  class TokenError < StandardError
+    def initialize
+      super(__('Unable to create token for the user.'))
+    end
+  end
+
+  class EmailError < StandardError
+    def initialize
+      super(__('Unable to send email to the user.'))
+    end
   end
 end

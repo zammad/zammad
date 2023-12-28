@@ -4,11 +4,11 @@ module Gql::Mutations
   class AdminPasswordAuthSend < BaseMutation
     include Gql::Concerns::HandlesThrottling
 
-    description 'Sends a email with a token to login via password.'
+    description 'Sends an email with a token to login via password.'
 
     argument :login, String, 'Login information that is used to create a token.'
 
-    field :success, Boolean, null: false, description: 'This indicates if sending the token was successful.'
+    field :success, Boolean, null: true, description: 'This indicates if sending the token was successful.'
 
     def self.authorize(...)
       true
@@ -20,9 +20,14 @@ module Gql::Mutations
 
     def resolve(login:)
       send = Service::Auth::SendAdminToken.new(login: login)
-      succeeded = send.execute
 
-      succeeded ? { success: true } : { success: false }
+      begin
+        send.execute
+      rescue Service::Auth::SendAdminToken::TokenError, Service::Auth::SendAdminToken::EmailError
+        return { success: false }
+      end
+
+      { success: true }
     end
   end
 end

@@ -26,8 +26,10 @@ export const usePrivateIcon = (
 
   const iconClass = computed(() => {
     let className = `icon-${props.name}`
-    if (props.animation) {
-      className += ` ${animationClassMap[props.animation]}`
+    // by default, always spin the spinner
+    const animation = props.animation || (props.name === 'spinner' && 'spin')
+    if (animation) {
+      className += ` ${animationClassMap[animation]}`
     }
     return className
   })

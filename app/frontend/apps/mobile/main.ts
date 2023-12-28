@@ -11,7 +11,7 @@ import initializeApolloClient from '#mobile/server/apollo/index.ts'
 import initializeRouter from '#mobile/router/index.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
-import { ensureAfterAuth } from './pages/login/after-auth/composable/useAfterAuthPlugins.ts'
+import { ensureAfterAuth } from './pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
 
 const { forceDesktopLocalStorage } = useForceDesktop()
 

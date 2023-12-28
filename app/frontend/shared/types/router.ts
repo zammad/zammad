@@ -15,6 +15,7 @@ export interface RouteRecordMeta {
   title?: string
   requiresAuth: boolean
   requiredPermission: Maybe<RequiredPermission>
+  redirectToDefaultRoute?: boolean
   hasBottomNavigation?: boolean
   customBottomNavigation?: boolean
   hasHeader?: boolean

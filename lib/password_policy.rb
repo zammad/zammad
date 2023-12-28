@@ -4,11 +4,19 @@
 class PasswordPolicy
   include ::Mixin::HasBackends
 
+  class PasswordPolicy::Error < StandardError; end
+
   attr_reader :password
 
   # @param password [String, nil] to evaluate. nil is treated as empty string
   def initialize(password)
     @password = password || ''
+  end
+
+  def valid!
+    return if valid?
+
+    raise PasswordPolicy::Error, error.first
   end
 
   def valid?

@@ -364,12 +364,19 @@ curl http://localhost/api/v1/users/email_verify -v -u #{login}:#{password} -H "C
   def email_verify
     raise Exceptions::UnprocessableEntity, __('No token!') if !params[:token]
 
-    user = User.signup_verify_via_token(params[:token], current_user)
-    raise Exceptions::UnprocessableEntity, __('The provided token is invalid.') if !user
+    verify = Service::User::SignupVerify.new(token: params[:token], current_user: current_user)
 
-    current_user_set(user)
+    begin
+      user = verify.execute
+    rescue Service::CheckFeatureEnabled::FeatureDisabledError, Service::User::SignupVerify::InvalidTokenError => e
+      raise Exceptions::UnprocessableEntity, e.message
+    end
 
-    render json: { message: 'ok', user_email: user.email }, status: :ok
+    current_user_set(user) if user
+
+    msg = user ? { message: 'ok', user_email: user.email } : { message: 'failed' }
+
+    render json: msg, status: :ok
   end
 
 =begin
@@ -396,31 +403,18 @@ curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} 
 
     raise Exceptions::UnprocessableEntity, __('No email!') if !params[:email]
 
-    user = User.find_by(email: params[:email].downcase)
-    if !user || user.verified == true
-      # result is always positive to avoid leaking of existing user accounts
-      render json: { message: 'ok' }, status: :ok
-      return
+    signup = Service::User::Deprecated::Signup.new(user_data: { email: params[:email] }, resend: true)
+
+    begin
+      signup.execute
+    rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
+      raise Exceptions::UnprocessableEntity, e.message
+    rescue Service::User::Signup::TokenGenerationError
+      render json: { message: 'failed' }, status: :ok
     end
 
-    Token.create(action: 'Signup', user_id: user.id)
-
-    result = User.signup_new_token(user)
-    if result && result[:token]
-      user = result[:user]
-      NotificationFactory::Mailer.notification(
-        template: 'signup',
-        user:     user,
-        objects:  result
-      )
-
-      # token sent to user, send ok to browser
-      render json: { message: 'ok' }, status: :ok
-      return
-    end
-
-    # unable to generate token
-    render json: { message: 'failed' }, status: :ok
+    # Result is always positive to avoid leaking of existing user accounts.
+    render json: { message: 'ok' }, status: :ok
   end
 
 =begin
@@ -447,7 +441,14 @@ curl http://localhost/api/v1/users/admin_login -v -u #{login}:#{password} -H "Co
     raise Exceptions::UnprocessableEntity, 'username param needed!' if params[:username].blank?
 
     send = Service::Auth::Deprecated::SendAdminToken.new(login: params[:username])
-    send.execute
+    begin
+      send.execute
+    rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
+      raise Exceptions::UnprocessableEntity, e.message
+    rescue Service::Auth::Deprecated::SendAdminToken::TokenError, Service::Auth::Deprecated::SendAdminToken::EmailError
+      render json: { message: 'failed' }, status: :ok
+      return
+    end
 
     render json: { message: 'ok' }, status: :ok
   end
@@ -456,7 +457,12 @@ curl http://localhost/api/v1/users/admin_login -v -u #{login}:#{password} -H "Co
     raise Exceptions::UnprocessableEntity, 'token param needed!' if params[:token].blank?
 
     verify = Service::Auth::VerifyAdminToken.new(token: params[:token])
-    user = verify.execute
+
+    user = begin
+      verify.execute
+    rescue => e
+      raise Exceptions::UnprocessableEntity, e.message
+    end
 
     msg = user ? { message: 'ok', user_login: user.login } : { message: 'failed' }
 
@@ -484,28 +490,20 @@ curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H 
 =end
 
   def password_reset_send
+    raise Exceptions::UnprocessableEntity, 'username param needed!' if params[:username].blank?
 
-    # check if feature is enabled
-    raise Exceptions::UnprocessableEntity, __('Feature not enabled!') if !Setting.get('user_lost_password')
+    send = Service::User::PasswordReset::Deprecated::Send.new(username: params[:username])
 
-    result = User.password_reset_new_token(params[:username])
-    if result && result[:token]
-
-      # unable to send email
-      if !result[:user] || result[:user].email.blank?
-        render json: { message: 'failed' }, status: :ok
-        return
-      end
-
-      # send password reset emails
-      NotificationFactory::Mailer.notification(
-        template: 'password_reset',
-        user:     result[:user],
-        objects:  result
-      )
+    begin
+      send.execute
+    rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
+      raise Exceptions::UnprocessableEntity, e.message
+    rescue Service::User::PasswordReset::Send::EmailError
+      render json: { message: 'failed' }, status: :ok
+      return
     end
 
-    # result is always positive to avoid leaking of existing user accounts
+    # Result is always positive to avoid leaking of existing user accounts.
     render json: { message: 'ok' }, status: :ok
   end
 
@@ -531,45 +529,38 @@ curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{passwo
 =end
 
   def password_reset_verify
-
-    # check if feature is enabled
-    raise Exceptions::UnprocessableEntity, __('Feature not enabled!') if !Setting.get('user_lost_password')
     raise Exceptions::UnprocessableEntity, 'token param needed!' if params[:token].blank?
 
-    # if no password is given, verify token only
+    # If no password is given, verify token only.
     if params[:password].blank?
-      user = User.by_reset_token(params[:token])
-      if user
-        render json: { message: 'ok', user_login: user.login }, status: :ok
+      verify = Service::User::PasswordReset::Verify.new(token: params[:token])
+
+      begin
+        user = verify.execute
+      rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
+        raise Exceptions::UnprocessableEntity, e.message
+      rescue Service::User::PasswordReset::Verify::InvalidTokenError
+        render json: { message: 'failed' }, status: :ok
         return
       end
+
+      render json: { message: 'ok', user_login: user.login }, status: :ok
+      return
+    end
+
+    update = Service::User::PasswordReset::Update.new(token: params[:token], password: params[:password])
+
+    begin
+      user = update.execute
+    rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
+      raise Exceptions::UnprocessableEntity, e.message
+    rescue Service::User::PasswordReset::Update::InvalidTokenError, Service::User::PasswordReset::Update::EmailError
       render json: { message: 'failed' }, status: :ok
       return
-    end
-
-    result = PasswordPolicy.new(params[:password])
-    if !result.valid?
-      render json: { message: 'failed', notice: result.error }, status: :ok
+    rescue PasswordPolicy::Error => e
+      render json: { message: 'failed', notice: [e] }, status: :ok
       return
     end
-
-    # set new password with token
-    user = User.password_reset_via_token(params[:token], params[:password])
-
-    # send mail
-    if !user || user.email.blank?
-      render json: { message: 'failed' }, status: :ok
-      return
-    end
-
-    NotificationFactory::Mailer.notification(
-      template: 'password_change',
-      user:     user,
-      objects:  {
-        user:         user,
-        current_user: current_user,
-      }
-    )
 
     render json: { message: 'ok', user_login: user.login }, status: :ok
   end
@@ -1013,11 +1004,6 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   # @response_message 200 [User] Created User record.
   # @response_message 403        Forbidden / Invalid session.
   def create_signup
-    # check if feature is enabled
-    if !Setting.get('user_create_account')
-      raise Exceptions::UnprocessableEntity, __('Feature not enabled!')
-    end
-
     # check signup option only after admin account is created
     if !params[:signup]
       raise Exceptions::UnprocessableEntity, __("The required parameter 'signup' is missing.")
@@ -1032,43 +1018,16 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       raise Exceptions::UnprocessableEntity, __('Attribute \'email\' required!')
     end
 
-    email_taken_by = User.find_by email: new_params[:email].downcase.strip
+    signup = Service::User::Deprecated::Signup.new(user_data: new_params)
 
-    result = PasswordPolicy.new(new_params[:password])
-    if !result.valid?
-      render json: { error: result.error }, status: :unprocessable_entity
+    begin
+      signup.execute
+    rescue PasswordPolicy::Error => e
+      render json: { error: e.message }, status: :unprocessable_entity
       return
+    rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
+      raise Exceptions::UnprocessableEntity, e.message
     end
-
-    user = User.new(new_params)
-    user.role_ids = Role.signup_role_ids
-    user.source = 'signup'
-
-    if email_taken_by # show fake OK response to avoid leaking that email is already in use
-      user.skip_ensure_uniq_email = true
-      user.validate!
-
-      result = User.password_reset_new_token(email_taken_by.email)
-      NotificationFactory::Mailer.notification(
-        template: 'signup_taken_reset',
-        user:     email_taken_by,
-        objects:  result,
-      )
-
-      render json: { message: 'ok' }, status: :created
-      return
-    end
-
-    UserInfo.ensure_current_user_id do
-      user.save!
-    end
-
-    result = User.signup_new_token(user)
-    NotificationFactory::Mailer.notification(
-      template: 'signup',
-      user:     user,
-      objects:  result,
-    )
 
     render json: { message: 'ok' }, status: :created
   end

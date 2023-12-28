@@ -666,6 +666,9 @@ returns
     return if !user
     return if !user.email
 
+    # Discard any possible previous tokens for safety reasons.
+    Token.where(action: 'Signup', user_id: user.id).destroy_all
+
     # generate token
     token = Token.create(action: 'Signup', user_id: user.id)
 

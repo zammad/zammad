@@ -90,7 +90,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to be_truthy
-      expect(json_response['error']).to eq('Feature not enabled!')
+      expect(json_response['error']).to eq('This feature is not enabled.')
 
       # token based on headers
       headers = { 'X-CSRF-Token' => token }
@@ -98,7 +98,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to be_truthy
-      expect(json_response['error']).to eq('Feature not enabled!')
+      expect(json_response['error']).to eq('This feature is not enabled.')
 
       Setting.set('user_create_account', true)
 
@@ -212,7 +212,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
         params = { email: 'some_new_customer@example.com', password: 'asdasdasdasd', signup: true }
         post '/api/v1/users', params: params, headers: headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['error']).to be_a(Array).and(include(match(%r{Invalid password})))
+        expect(json_response['error']).to include('Invalid password')
       end
 
       it 'verified with no current user', authenticated_as: :admin do
@@ -1105,7 +1105,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
           expect(response).to have_http_status(:unprocessable_entity)
           expect(json_response['error']).to be_truthy
-          expect(json_response['error']).to eq('Feature not enabled!')
+          expect(json_response['error']).to eq('This feature is not enabled.')
         end
       end
     end
@@ -1144,7 +1144,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
           expect(response).to have_http_status(:unprocessable_entity)
           expect(json_response['error']).to be_truthy
-          expect(json_response['error']).to eq('Feature not enabled!')
+          expect(json_response['error']).to eq('This feature is not enabled.')
         end
       end
     end

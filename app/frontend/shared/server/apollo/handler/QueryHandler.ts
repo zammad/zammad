@@ -4,6 +4,7 @@
 import type { Ref, WatchStopHandle } from 'vue'
 import { watch } from 'vue'
 import type {
+  ApolloError,
   ApolloQueryResult,
   FetchMoreOptions,
   FetchMoreQueryOptions,
@@ -98,7 +99,7 @@ export default class QueryHandler<
     } catch (error) {
       return {
         data: null,
-        error,
+        error: error as ApolloError,
       }
     } finally {
       this.lastCancel = null
