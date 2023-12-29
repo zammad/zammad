@@ -36,7 +36,7 @@ module.exports = {
     '@vue/typescript/recommended',
     'prettier',
     'plugin:sonarjs/recommended',
-    'plugin:security/recommended',
+    'plugin:security/recommended-legacy',
   ],
   rules: {
     'zammad/zammad-copyright': 'error',
