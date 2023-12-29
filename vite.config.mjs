@@ -19,9 +19,8 @@ const SSL_PATH = resolve(homedir(), '.localhost')
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default defineConfig(({ mode, command }) => {
-  const isStory = Boolean(process.env.HISTOIRE)
-  const isTesting = ['test', 'cypress'].includes(mode) || isStory
-  const isBuild = command === 'build' && !isStory
+  const isTesting = ['test', 'cypress'].includes(mode)
+  const isBuild = command === 'build'
 
   const require = createRequire(import.meta.url)
 
@@ -77,8 +76,6 @@ export default defineConfig(({ mode, command }) => {
 
   if (!isBuild) {
     publicDir = resolve(dir, 'public')
-  } else if (isStory) {
-    publicDir = resolve(dir, 'app/frontend/public-build')
   }
 
   return {

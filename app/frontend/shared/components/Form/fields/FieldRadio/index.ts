@@ -7,8 +7,6 @@ import initializeFieldDefinition from '#shared/form/core/initializeFieldDefiniti
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
 
-// TODO: Add story, when storybook replacement (histoire) was merged.
-
 const addOptionCheckedDataAttribute = (node: FormKitNode) => {
   extendSchemaDefinition(node, 'wrapper', {
     attrs: {
