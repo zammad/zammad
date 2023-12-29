@@ -713,6 +713,104 @@ RSpec.describe Selector::Sql do
 
     end
 
+    describe 'complex conditions' do
+      context "when 'contains not' operator is after negative operator" do
+        let(:condition) do
+          { operator: 'AND', conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is not',
+              value:    'title',
+            }, {
+              name:     'ticket.note',
+              operator: 'contains not',
+              value:    'some',
+            },
+          ] }
+        end
+
+        let(:additional_ticket_attributes) { { title: 'title' } }
+
+        before do
+          ticket
+        end
+
+        include_examples 'does not find the ticket'
+      end
+
+      context "when 'contains not' operator is before negative operator" do
+        let(:condition) do
+          { operator: 'AND', conditions: [
+            {
+              name:     'ticket.note',
+              operator: 'contains not',
+              value:    'some',
+            }, {
+              name:     'ticket.title',
+              operator: 'is not',
+              value:    'title',
+            }
+          ] }
+        end
+
+        let(:additional_ticket_attributes) { { title: 'title' } }
+
+        before do
+          ticket
+        end
+
+        include_examples 'does not find the ticket'
+      end
+
+      context "when 'contains not' operator on a related table is after negative operator" do
+        let(:condition) do
+          { operator: 'AND', conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is not',
+              value:    'title',
+            }, {
+              name:     'customer.email',
+              operator: 'contains not',
+              value:    'some',
+            },
+          ] }
+        end
+
+        let(:additional_ticket_attributes) { { title: 'title' } }
+
+        before do
+          ticket
+        end
+
+        include_examples 'does not find the ticket'
+      end
+
+      context "when 'contains not' operator on a related table is before negative operator" do
+        let(:condition) do
+          { operator: 'AND', conditions: [
+            {
+              name:     'customer.email',
+              operator: 'contains not',
+              value:    'some',
+            }, {
+              name:     'ticket.title',
+              operator: 'is not',
+              value:    'title',
+            }
+          ] }
+        end
+
+        let(:additional_ticket_attributes) { { title: 'title' } }
+
+        before do
+          ticket
+        end
+
+        include_examples 'does not find the ticket'
+      end
+    end
+
     describe 'external data source field', db_adapter: :postgresql, db_strategy: :reset do
       let(:external_data_source_attribute) do
         create(:object_manager_attribute_autocompletion_ajax_external_data_source,
