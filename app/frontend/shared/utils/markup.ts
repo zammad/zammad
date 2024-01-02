@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 // to be compatible with app/assets/javascripts/app/lib/app_post/i18n.coffee:267
 export const markup = (source: string): string => {

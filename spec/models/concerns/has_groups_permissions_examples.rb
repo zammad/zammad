@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'HasGroups and Permissions' do |group_access_no_permission_factory:|
   context 'group' do

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 /* eslint-disable security/detect-non-literal-fs-filename */
 
 import { createRequire } from 'module'

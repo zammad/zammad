@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 module EscapeHtmlHelper
   # From now on, CGI#escapeHTML escapes single quotes `'` as `&#39;`, in addition to other supported HTML entities.

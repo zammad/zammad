@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Selector::Base
   attr_accessor :selector, :options, :changed_attributes, :target_class, :target_table, :target_name

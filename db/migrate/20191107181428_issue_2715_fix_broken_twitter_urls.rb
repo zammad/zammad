@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require_dependency 'issue_2715_fix_broken_twitter_urls_job' # Rails autoloading expects `issue2715_fix...`
 

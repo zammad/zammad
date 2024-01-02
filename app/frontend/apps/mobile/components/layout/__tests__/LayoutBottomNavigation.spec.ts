@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { OnlineNotificationsCountDocument } from '#shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.api.ts'
 import { useSessionStore } from '#shared/stores/session.ts'

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_context 'with KB policy check' do |editor:, reader:, none:, method:, access_method: :access|
   let(:access_method) { access_method }

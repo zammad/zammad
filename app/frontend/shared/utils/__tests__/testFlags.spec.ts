@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitForTimeout } from '#tests/support/utils.ts'
 import testFlags from '../testFlags.ts'

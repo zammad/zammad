@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 # This command will automatically be run when you run "rails" with Rails 3 gems installed from the root of your application.
 

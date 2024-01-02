@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 module Sequencer::Unit::Import::Common::Model::Statistics::Mixin::ActionDiff
   include Sequencer::Unit::Import::Common::Model::Statistics::Mixin::Common

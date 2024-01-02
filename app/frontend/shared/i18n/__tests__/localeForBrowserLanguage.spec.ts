@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import localeForBrowserLanguage from '../localeForBrowserLanguage.ts'

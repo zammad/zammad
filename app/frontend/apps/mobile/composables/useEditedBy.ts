@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { userDisplayName } from '#shared/entities/user/utils/getUserDisplayName.ts'
 import { i18n } from '#shared/i18n.ts'

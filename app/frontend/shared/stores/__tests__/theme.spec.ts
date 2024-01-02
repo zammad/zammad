@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 // mounted makes store to reinitiate on each test
 import { mounted } from '#tests/support/components/mounted.ts'

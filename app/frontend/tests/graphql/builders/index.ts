@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-use-before-define */
@@ -377,7 +377,11 @@ const generateObject = (
     for (const key in resolved) {
       if (!(key in value)) {
         value[key] = resolved[key]
-      } else if (value[key] && typeof value[key] === 'object' && resolved[key]) {
+      } else if (
+        value[key] &&
+        typeof value[key] === 'object' &&
+        resolved[key]
+      ) {
         value[key] = deepMerge(resolved[key], value[key])
       }
     }

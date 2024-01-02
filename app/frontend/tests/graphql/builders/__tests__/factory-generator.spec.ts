@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
 import { UserDocument } from '#mobile/entities/user/graphql/queries/user.api.ts'

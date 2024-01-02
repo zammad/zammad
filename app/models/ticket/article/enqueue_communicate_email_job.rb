@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 # Schedules a backgrond communication job for new email articles.
 module Ticket::Article::EnqueueCommunicateEmailJob

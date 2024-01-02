@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -70,7 +70,7 @@ declare global {
           title: string
         }>,
       ): Chainable<Subject>
-      mount: typeof import('cypress/vue')['mount']
+      mount: (typeof import('cypress/vue'))['mount']
     }
   }
 }
