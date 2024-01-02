@@ -29,7 +29,7 @@
   variables:
     MATTERMOST_URL: 'http://ci-service-mattermost:8065'
     MATTERMOST_USER: 'zammad'
-    MATTERMOST_PASSWORD: 'zammad'
+    MATTERMOST_PASSWORD: 'ZammaD-2024-Mattermost!'
     MATTERMOST_CHANNEL: 'zammad-channel'
 
 .variables_idoit:
