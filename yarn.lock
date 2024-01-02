@@ -5824,10 +5824,10 @@ graphql-request@^6.0.0:
     "@graphql-typed-document-node/core" "^3.2.0"
     cross-fetch "^3.1.5"
 
-graphql-ruby-client@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/graphql-ruby-client/-/graphql-ruby-client-1.12.0.tgz#091fb981821695533224bec8e22141b7e87a6abf"
-  integrity sha512-0tMA2ErsRazxgEANpfqg4s3qSlJ0Bn93yDyNXZX7zwEsW1LYBtud3UmQDcqtEmkPPbgLbWkkh2MB2Bs/NYUspA==
+graphql-ruby-client@^1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/graphql-ruby-client/-/graphql-ruby-client-1.12.1.tgz#8caa304893870dc4793f26372d60808474364330"
+  integrity sha512-MlNTJQIIl3LEPu1Zx8dBS7ysAgOi/jlFPtqMoc1yySeNjfmX33k7sGgXx8pZVv40aXOyDqm2YrpW81x8LBgNWA==
   dependencies:
     glob "^7.1.4"
     minimist "^1.2.0"
