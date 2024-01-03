@@ -67,8 +67,8 @@ module BrowserTestHelper
   #
   #  click(:href, '#settings/branding')
   #
-  def click(*args)
-    find(*args).click
+  def click(...)
+    find(...).click
   end
 
   # Finds svg icon in Mobile View
@@ -91,8 +91,8 @@ module BrowserTestHelper
   # @example
   #  wait(5, interval: 0.5).until { ... }
   #
-  def wait(seconds = Capybara.default_max_wait_time, **kargs)
-    wait_args   = Hash(kargs).merge(timeout: seconds)
+  def wait(seconds = Capybara.default_max_wait_time, **kwargs)
+    wait_args   = Hash(kwargs).merge(timeout: seconds)
     wait_handle = Selenium::WebDriver::Wait.new(wait_args)
     Waiter.new(wait_handle)
   end

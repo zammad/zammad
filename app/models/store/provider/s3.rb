@@ -86,8 +86,8 @@ module Store::Provider::S3
       raise Store::Provider::S3::Error, __('Simple Storage Service malfunction. Please contact your Zammad administrator.')
     end
 
-    def request(method, **kwargs)
-      client.send(method, bucket: bucket, **kwargs)
+    def request(method, **)
+      client.send(method, bucket: bucket, **)
     rescue => e
       log_and_raise(e)
     end

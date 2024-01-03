@@ -45,13 +45,13 @@ module ActiveModel
       alias orig_add add
 
       # This will add custom string errors to the I18n translation store.
-      def add(attribute, type = :invalid, **options)
-        return orig_add(attribute, type, **options) if !type.is_a?(String)
+      def add(attribute, type = :invalid, **)
+        return orig_add(attribute, type, **) if !type.is_a?(String)
 
         # I18n uses namespacing to access the messages, so generate a safe symbol without the namespace separator '.'.
         type_sym = type.gsub(%r{\W}, '').to_sym
         ::I18n.backend.translations[:en][:errors][:messages][type_sym] = type
-        orig_add(attribute, type_sym, **options)
+        orig_add(attribute, type_sym, **)
       end
     end
   end

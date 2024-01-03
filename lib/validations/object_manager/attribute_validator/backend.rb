@@ -14,7 +14,7 @@ class Validations::ObjectManager::AttributeValidator::Backend
     @previous_value = record.attribute_in_database(attribute.name)
   end
 
-  def invalid_because_attribute(message, **options)
-    record.errors.add attribute.name.to_sym, message, **options
+  def invalid_because_attribute(message, **)
+    record.errors.add attribute.name.to_sym, message, **
   end
 end

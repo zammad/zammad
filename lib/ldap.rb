@@ -82,9 +82,9 @@ class Ldap
   #  #=> true
   #
   # @return [Boolean] Returns true if entries are present false if not.
-  def entries?(*args)
+  def entries?(*)
     found = false
-    search(*args) do |_entry|
+    search(*) do |_entry|
       found = true
       break
     end
@@ -100,9 +100,9 @@ class Ldap
   #  #=> 10
   #
   # @return [Number] The count of matching entries.
-  def count(*args)
+  def count(*)
     counter = 0
-    search(*args) do |_entry|
+    search(*) do |_entry|
       counter += 1
     end
     counter

@@ -3,14 +3,8 @@
 source 'https://rubygems.org'
 
 # core - base
-ruby '3.1.3'
+ruby '3.2.2'
 gem 'rails', '~> 7.0.8'
-
-# TEMPORARY Security updates from Ruby 3.1.4. Can be removed when updating from Ruby 3.1.3 to a higher version.
-# See also: https://www.ruby-lang.org/en/news/2023/03/30/ruby-3-1-4-released/
-gem 'time', '>= 0.2.2'
-gem 'uri', '>= 0.12.1'
-# END TEMPORARY
 
 # core - rails additions
 gem 'activerecord-import'
@@ -26,7 +20,7 @@ gem 'puma', group: :puma
 # core - supported ORMs
 gem 'activerecord-nulldb-adapter', group: :nulldb
 gem 'mysql2', group: :mysql
-gem 'pg', '~> 1.2.0', group: :postgres
+gem 'pg', '~> 1.5', '>= 1.5.4', group: :postgres
 
 # core - asynchrous task execution
 gem 'daemons'

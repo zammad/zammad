@@ -349,9 +349,9 @@ RSpec.describe User, type: :model do
           let(:ids_executed) { [] }
 
           before do
-            allow_any_instance_of(described_class).to receive(:out_of_office_agent).and_wrap_original do |method, *args|
+            allow_any_instance_of(described_class).to receive(:out_of_office_agent).and_wrap_original do |method, **kwargs|
               ids_executed << method.receiver.id
-              method.call(*args)
+              method.call(**kwargs)
             end
 
             allow(Rails.logger).to receive(:warn)

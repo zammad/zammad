@@ -429,7 +429,7 @@ GEM
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
-    pg (1.2.3)
+    pg (1.5.4)
     power_assert (2.0.3)
     promise.rb (0.7.4)
     pry (0.14.2)
@@ -786,7 +786,7 @@ DEPENDENCIES
   openssl
   overcommit
   parallel
-  pg (~> 1.2.0)
+  pg (~> 1.5, >= 1.5.4)
   pry-byebug
   pry-doc
   pry-rails
@@ -827,11 +827,9 @@ DEPENDENCIES
   terser
   test-unit
   thor
-  time (>= 0.2.2)
   twilio-ruby
   twitter
   tzinfo-data
-  uri (>= 0.12.1)
   vcr
   viewpoint
   vite_rails
@@ -841,7 +839,7 @@ DEPENDENCIES
   zendesk_api
 
 RUBY VERSION
-   ruby 3.1.3p185
+   ruby 3.2.2p53
 
 BUNDLED WITH
    2.4.1

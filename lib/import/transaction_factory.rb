@@ -7,9 +7,9 @@ module Import
     # rubocop:disable Style/ModuleFunction
     extend self
 
-    def import(records, *args)
+    def import(records, *)
       ActiveRecord::Base.transaction do
-        import_action(records, *args)
+        import_action(records, *)
       end
     end
   end

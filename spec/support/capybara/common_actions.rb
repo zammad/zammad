@@ -258,8 +258,8 @@ module CommonActions
   #  expect_current_route('login')
   # => checks for SPA route '/#login'
   #
-  def expect_current_route(route, app: self.class.metadata[:app], **options)
-    expect(page).to have_current_route(route, app: app, **options)
+  def expect_current_route(route, app: self.class.metadata[:app], **)
+    expect(page).to have_current_route(route, app: app, **)
   end
 
   # Create and migrate an object manager attribute and verify that it exists. Returns the newly attribute.

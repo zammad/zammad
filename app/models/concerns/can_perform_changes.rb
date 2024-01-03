@@ -134,10 +134,10 @@ module CanPerformChanges
     { name: :"notification_#{object_key}", value: action_value }
   end
 
-  def additional_object_action(*args)
+  def additional_object_action(*)
     return if !respond_to?(:additional_object_actions)
 
-    additional_object_action(*args)
+    additional_object_action(*)
   end
 
   def object_action(object_name, object_key, action_value, _prepared_actions)

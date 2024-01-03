@@ -101,8 +101,8 @@ module ZammadSpecSupportRequest
   #  # => {firstname: 'Nicole', email: 'custom@example.com', ...}
   #
   # @return [Hash{Symbol => <String, Array, Hash>}] request cleaned attributes
-  def attributes_params_for(*args)
-    filter_unused_params(attributes_for(*args))
+  def attributes_params_for(*)
+    filter_unused_params(attributes_for(*))
   end
 
   # Provides a Hash of attributes for the given Model instance which can

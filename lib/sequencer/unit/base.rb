@@ -243,8 +243,8 @@ class Sequencer::Unit::Base
 
   # This method is an convenience wrapper to create an instance
   # and then directly processing it.
-  def self.process(*args)
-    new(*args).process
+  def self.process(*)
+    new(*).process
   end
 
   def initialize(state)

@@ -9,22 +9,22 @@ module Gql::Types::Concerns::HasModelRelations
     #   because the ConnectionTypes generate their own, non-preloadable queries.
     # See also https://github.com/Shopify/graphql-batch/issues/114.
 
-    def belongs_to(association, *args, **kwargs, &)
+    def belongs_to(association, *, **kwargs, &)
       kwargs[:resolver_class] = Gql::Resolvers::BelongsToResolver
 
-      field(association, *args, **kwargs, is_dependent_field: true, &)
+      field(association, *, **kwargs, is_dependent_field: true, &)
     end
 
-    def has_one(association, *args, **kwargs, &)
+    def has_one(association, *, **kwargs, &)
       kwargs[:resolver_class] = Gql::Resolvers::HasOneResolver
 
-      field(association, *args, **kwargs, is_dependent_field: true, &)
+      field(association, *, **kwargs, is_dependent_field: true, &)
     end
 
-    def lookup_field(name, *args, **kwargs, &)
+    def lookup_field(name, *, **kwargs, &)
       kwargs[:resolver_class] = Gql::Resolvers::LookupResolver
 
-      field(name, *args, **kwargs, &)
+      field(name, *, **kwargs, &)
     end
   end
 end

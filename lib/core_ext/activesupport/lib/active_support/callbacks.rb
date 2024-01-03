@@ -23,12 +23,12 @@ module ActiveSupport::Callbacks::ClassMethods
   #  #=> 'example return value'
   #
   # @return [optional] Returns the return value of the given block
-  def without_callback(*args)
+  def without_callback(*)
     begin
-      skip_callback(*args)
+      skip_callback(*)
       result = yield
     ensure
-      set_callback(*args)
+      set_callback(*)
     end
     result
   end
