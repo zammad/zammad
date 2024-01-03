@@ -169,7 +169,7 @@ const goToLogin = () => {
       v-if="!signupSent"
       id="signup"
       ref="form"
-      form-class="mb-2.5 space-y-2.5"
+      form-class="mb-2.5"
       :schema="signupSchema"
       @submit="singup($event as FormSubmitData<SignupRequestData>)"
     />

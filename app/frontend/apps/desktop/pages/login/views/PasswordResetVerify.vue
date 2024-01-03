@@ -126,42 +126,45 @@ const updatePassword = async (form: FormSubmitData<FormValues>) => {
   })
   router.replace('/login')
 }
+
+const goToLogin = () => {
+  router.replace('/login')
+}
 </script>
 
 <template>
   <LayoutPublicPage box-size="medium" :title="__('Choose your new password')">
     <CommonLoader :loading="loading" :error="errorMessage" />
-    <div
-      v-if="!canResetPassword"
-      class="flex gap-3 justify-end items-center mt-3"
-    >
-      <CommonLink link="/login" replace class="select-none">
-        {{ $t('Cancel & Go Back') }}
-      </CommonLink>
-    </div>
     <Form
-      v-else
+      v-if="canResetPassword"
+      id="password-reset-verify"
       ref="form"
-      form-class="grid grid-cols-2 gap-y-2.5 gap-x-3"
+      form-class="mb-2.5 grid grid-cols-2 gap-y-2.5 gap-x-3"
       :schema="formSchema"
       @submit="updatePassword($event as FormSubmitData<FormValues>)"
-    >
-      <template #after-fields>
-        <div class="flex gap-3 justify-end items-center pt-5">
-          <CommonLink link="/login" replace class="select-none">
-            {{ $t('Cancel & Go Back') }}
-          </CommonLink>
-          <CommonButton
-            type="submit"
-            variant="submit"
-            size="large"
-            :disabled="isDisabled"
-          >
-            {{ $t('Submit') }}
-          </CommonButton>
-        </div>
-      </template>
-    </Form>
+    />
+
+    <template #boxActions>
+      <CommonButton
+        variant="secondary"
+        size="medium"
+        :disabled="isDisabled"
+        @click="goToLogin()"
+      >
+        {{ $t('Cancel & Go Back') }}
+      </CommonButton>
+
+      <CommonButton
+        v-if="canResetPassword"
+        type="submit"
+        variant="submit"
+        size="medium"
+        form="password-reset-verify"
+        :disabled="isDisabled"
+      >
+        {{ $t('Submit') }}
+      </CommonButton>
+    </template>
     <template #bottomContent>
       <CommonPublicLinks :screen="EnumPublicLinksScreen.PasswordReset" />
     </template>

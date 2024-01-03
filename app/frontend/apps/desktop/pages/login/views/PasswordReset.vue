@@ -1,14 +1,17 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+
 import type {
   FormSchemaNode,
   FormSubmitData,
 } from '#shared/components/Form/types.ts'
 import Form from '#shared/components/Form/Form.vue'
+import { useForm } from '#shared/components/Form/useForm.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
-import { ref } from 'vue'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
@@ -29,6 +32,8 @@ defineOptions({
   },
 })
 
+const router = useRouter()
+
 interface FormValues {
   login: string
 }
@@ -41,6 +46,8 @@ const formSchema: FormSchemaNode[] = [
     required: true,
   },
 ]
+
+const { form, isDisabled } = useForm()
 
 const showSuccessScreen = ref(false)
 const resetHandler = new MutationHandler(useUserPasswordResetSendMutation())
@@ -65,6 +72,10 @@ const resetPassword = async (form: FormSubmitData<FormValues>) => {
 const resetForm = () => {
   showSuccessScreen.value = false
 }
+
+const goToLogin = () => {
+  router.replace('/login')
+}
 </script>
 
 <template>
@@ -78,20 +89,12 @@ const resetForm = () => {
   >
     <Form
       v-if="!showSuccessScreen"
+      id="password-reset"
+      ref="form"
+      form-class="mb-2.5"
       :schema="formSchema"
       @submit="resetPassword($event as FormSubmitData<FormValues>)"
-    >
-      <template #after-fields>
-        <div class="flex gap-3 justify-end items-center pt-5">
-          <CommonLink link="/login" replace class="select-none">
-            {{ $t('Cancel & Go Back') }}
-          </CommonLink>
-          <CommonButton type="submit" variant="submit" size="large">
-            {{ $t('Submit') }}
-          </CommonButton>
-        </div>
-      </template>
-    </Form>
+    />
     <section v-else>
       <CommonLabel class="text-center mb-5">
         {{
@@ -105,15 +108,30 @@ const resetForm = () => {
           )
         }}
       </CommonLabel>
-      <div class="flex gap-3 justify-end items-center pt-5">
-        <CommonLink link="/login" replace class="select-none">
-          {{ $t('Cancel & Go Back') }}
-        </CommonLink>
-        <CommonButton variant="submit" size="large" @click="resetForm">
-          {{ $t('Try again') }}
-        </CommonButton>
-      </div>
     </section>
+    <template #boxActions>
+      <CommonButton
+        variant="secondary"
+        size="medium"
+        :disabled="isDisabled"
+        @click="goToLogin()"
+      >
+        {{ $t('Cancel & Go Back') }}
+      </CommonButton>
+      <CommonButton
+        v-if="!showSuccessScreen"
+        type="submit"
+        variant="submit"
+        size="medium"
+        form="password-reset"
+        :disabled="isDisabled"
+      >
+        {{ $t('Submit') }}
+      </CommonButton>
+      <CommonButton v-else variant="submit" size="medium" @click="resetForm">
+        {{ $t('Try again') }}
+      </CommonButton>
+    </template>
     <template #bottomContent>
       <CommonPublicLinks :screen="EnumPublicLinksScreen.PasswordReset" />
     </template>

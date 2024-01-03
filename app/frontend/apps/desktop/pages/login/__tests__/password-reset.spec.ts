@@ -54,10 +54,9 @@ it('can reset a password and try again', async () => {
 
   const view = await visitView('/reset-password')
 
-  expect(view.getByRole('link', { name: 'Cancel & Go Back' })).toHaveProperty(
-    'href',
-    expect.stringMatching(/\/login$/),
-  )
+  expect(
+    await view.findByRole('button', { name: 'Cancel & Go Back' }),
+  ).toBeInTheDocument()
 
   const [imprint, privacy] = publicLinks
 

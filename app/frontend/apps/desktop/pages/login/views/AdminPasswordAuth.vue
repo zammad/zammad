@@ -84,7 +84,7 @@ const send = (data: AdminPasswordAuthRequestData) => {
 }
 
 const goToLogin = () => {
-  router.replace('login')
+  router.replace('/login')
 }
 
 const retry = () => {
@@ -102,7 +102,7 @@ const retry = () => {
       v-if="!requestSent"
       id="admin-password-auth"
       ref="form"
-      form-class="mb-2.5 space-y-2.5"
+      form-class="mb-2.5"
       :schema="adminPasswordAuthRequestSchema"
       @submit="send($event as FormSubmitData<AdminPasswordAuthRequestData>)"
     />
