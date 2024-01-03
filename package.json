@@ -72,7 +72,7 @@
     "stylelint-prettier": "^5.0.0",
     "stylelint-scss": "^6.0.0",
     "svg-baker": "^1.7.0",
-    "svgo": "^3.1.0",
+    "svgo": "^3.2.0",
     "tailwindcss": "^3.4.0",
     "timezone-mock": "^1.3.6",
     "type-fest": "^4.9.0",
