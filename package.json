@@ -120,7 +120,7 @@
     "@vueuse/router": "^10.7.1",
     "@vueuse/shared": "^10.7.1",
     "async-mutex": "^0.4.0",
-    "daisyui": "^4.4.24",
+    "daisyui": "^4.5.0",
     "flatpickr": "^4.6.13",
     "graphql": "^16.8.1",
     "graphql-ruby-client": "^1.12.1",
