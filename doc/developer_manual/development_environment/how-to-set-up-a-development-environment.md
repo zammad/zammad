@@ -55,8 +55,8 @@ For Linux and macOS:
 
 ```screen
 curl -sSL https://get.rvm.io | bash -s stable --rails
-rvm install ruby-3.1.3
-rvm --default use 3.1.3
+rvm install ruby-3.2.2
+rvm --default use 3.2.2
 ```
 
 ## NVM, Node.js and Yarn
@@ -184,9 +184,9 @@ $ docker run --rm -it -v /path/to/certs:/etc/letsencrypt certbot/dns-cloudflare 
 
 Where:
 
-* `/path/to/certs` is a local directory where your certificate files will be stored
-* `you@example.com` is your email address
-* `localhost.example.com` is the FQDN of your subdomain
+- `/path/to/certs` is a local directory where your certificate files will be stored
+- `you@example.com` is your email address
+- `localhost.example.com` is the FQDN of your subdomain
 
 When asked to deploy a DNS TXT record by certbot, open the DNS table of your domain. Add a TXT record with suggested name in form of `_acme-challenge.localhost.example.com.` and suggested random value. Save the record and wait some seconds for changes to propagate (this may depend on your DNS host).
 
