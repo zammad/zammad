@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { onError } from '@apollo/client/link/error'
 import getErrorContext from '#shared/server/apollo/utils/getErrorContext.ts'

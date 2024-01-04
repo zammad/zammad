@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 # Fixes issue #2333 - Object country already exists
 # The country column already exists in the database, but there is no corresponding ObjectManager::Attribute for it

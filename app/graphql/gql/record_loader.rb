@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 # https://github.com/Shopify/graphql-batch/blob/af45e5b9e560abb8eb2b97657928e460d4dcf96a/examples/record_loader.rb
 class Gql::RecordLoader < GraphQL::Batch::Loader # rubocop:disable GraphQL/ObjectDescription

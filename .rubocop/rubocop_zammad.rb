@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require_relative 'cop/zammad/active_record_reorder'
 require_relative 'cop/zammad/correct_migration_timestamp'

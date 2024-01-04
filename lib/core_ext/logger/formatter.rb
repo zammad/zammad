@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 # This customization adds the id of the current Thread to all log lines.
 # The #msg2str method will be extended, so that the "Rails.bracktrace_cleaner" can be used to clean the exceptions.

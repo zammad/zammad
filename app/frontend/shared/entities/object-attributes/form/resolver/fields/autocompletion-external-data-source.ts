@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import type { JsonValue } from 'type-fest'
 import type { FieldResolverModule } from '#shared/entities/object-attributes/types/resolver.ts'

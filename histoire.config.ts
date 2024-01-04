@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineConfig } from 'histoire'
 import { HstVue } from '@histoire/plugin-vue'
@@ -14,7 +14,10 @@ export default defineConfig({
         name: 'inject-fonts',
         transformIndexHtml() {
           return [
-            { tag: 'link', attrs: { rel: 'stylesheet', href: '/assets/mobile/fonts.css' } },
+            {
+              tag: 'link',
+              attrs: { rel: 'stylesheet', href: '/assets/mobile/fonts.css' },
+            },
           ]
         },
       },

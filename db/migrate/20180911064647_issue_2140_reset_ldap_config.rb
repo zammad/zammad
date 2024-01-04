@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 # ATTENTION: This migration is most likely not required anymore
 # because the encoding error was fixed by using a newer version of the psych gem (3.1.0).

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::CategoriesController < KnowledgeBase::BaseController
   before_action :load_knowledge_base, only: %i[reorder_root_categories reorder_categories reorder_answers]

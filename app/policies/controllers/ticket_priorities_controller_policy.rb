@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::TicketPrioritiesControllerPolicy < Controllers::ApplicationControllerPolicy
   permit! %i[index show], to: ['ticket.agent', 'admin.object', 'ticket.customer']

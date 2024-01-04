@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 # This validator is used in special situations only. In most cases CoreWorkflow is used instead.
 # It does not run for any object which has ChecksCoreWorkflow concern.

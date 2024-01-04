@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Auth::Error::TwoFactorRequired < Auth::Error::Base
   attr_reader :default_two_factor_authentication_method, :available_two_factor_authentication_methods, :recovery_codes_available

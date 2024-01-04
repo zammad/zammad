@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 # When building generic Sequencer Units in various contexts it's not possible know
 # which model, resource, mapped or instance is present at the moment or even used

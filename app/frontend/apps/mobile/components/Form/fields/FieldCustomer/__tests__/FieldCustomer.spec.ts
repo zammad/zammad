@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { escapeRegExp } from 'lodash-es'
 import { getByTestId, waitFor } from '@testing-library/vue'

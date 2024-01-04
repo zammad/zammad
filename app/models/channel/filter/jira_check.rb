@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Filter::JiraCheck < Channel::Filter::BaseExternalCheck
   MAIL_HEADER        = 'x-jira-fingerprint'.freeze
