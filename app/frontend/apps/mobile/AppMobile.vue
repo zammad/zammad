@@ -12,7 +12,7 @@ import useAppMaintenanceCheck from '#shared/composables/useAppMaintenanceCheck.t
 import usePushMessages from '#shared/composables/usePushMessages.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import useFormKitConfig from '#shared/composables/form/useFormKitConfig.ts'
-import useAuthenticationChanges from '#shared/composables/useAuthenticationUpdates.ts'
+import useAuthenticationChanges from '#shared/composables/authentication/useAuthenticationUpdates.ts'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
 import { useSessionStore } from '#shared/stores/session.ts'

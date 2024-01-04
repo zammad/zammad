@@ -7,7 +7,7 @@ import { useRoute } from 'vue-router'
 import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
 import CommonNotifications from '#shared/components/CommonNotifications/CommonNotifications.vue'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
-import useAuthenticationChanges from '#shared/composables/useAuthenticationUpdates.ts'
+import useAuthenticationChanges from '#shared/composables/authentication/useAuthenticationUpdates.ts'
 import CommonConfirmation from '#mobile/components/CommonConfirmation/CommonConfirmation.vue'
 import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
 

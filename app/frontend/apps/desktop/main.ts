@@ -21,7 +21,7 @@ import initializeApolloClient from '#desktop/server/apollo/index.ts'
 import initializeRouter from '#desktop/router/index.ts'
 import initializeForm from '#desktop/form/index.ts'
 
-import { ensureAfterAuth } from './pages/login/after-auth/composable/useAfterAuthPlugins.ts'
+import { ensureAfterAuth } from './pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
 
 import App from './AppDesktop.vue'
 

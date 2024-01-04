@@ -3,7 +3,7 @@
 import { createTestingPinia } from '@pinia/testing'
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import useLoginTwoFactor from '../login/useLoginTwoFactor.ts'
+import useLoginTwoFactor from '../authentication/useLoginTwoFactor.ts'
 
 describe('useLoginTwoFactor', () => {
   createTestingPinia({ createSpy: vi.fn })
