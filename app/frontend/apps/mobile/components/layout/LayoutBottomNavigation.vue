@@ -52,13 +52,13 @@ const notificationCount = computed(() => {
       </CommonLink>
       <CommonLink
         link="/account"
-        class="flex-1"
+        class="flex-1 group"
         exact-active-class="user-active"
       >
         <CommonUserAvatar
           v-if="user"
           :entity="user"
-          class="user-avatar"
+          class="group-[.user-active]:ring-2 group-[.user-active]:ring-blue"
           size="small"
           personal
         />
@@ -68,10 +68,6 @@ const notificationCount = computed(() => {
 </template>
 
 <style scoped>
-.user-active .user-avatar {
-  @apply ring-2 ring-blue;
-}
-
 .bottom-navigation {
   padding-bottom: env(safe-area-inset-bottom);
 }
