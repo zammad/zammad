@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-14 01:05+0000\n"
-"Last-Translator: chen <chenchen@4chian.com>\n"
+"PO-Revision-Date: 2023-12-19 02:05+0000\n"
+"Last-Translator: yvanjay <181923630@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://translations.zammad.org/"
-"projects/zammad/zammad-development/zh_Hans/>\n"
+"projects/zammad/zammad-stable/zh_Hans/>\n"
 "Language: zh-cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.3\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -311,8 +311,9 @@ msgstr ""
 #| "<div>The country has been added to your list of known devices, which you "
 #| "can view here:</div>\n"
 #| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-#| "\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+#| "devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></"
+#| "div>\n"
 #| "<br>\n"
 #| "<div>If this wasn't you, remove the device, changing your account "
 #| "password, and contacting your administrator. Somebody might have gained "
@@ -336,8 +337,8 @@ msgid ""
 "<div>The country has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -360,8 +361,8 @@ msgstr ""
 "<br>\n"
 "<div>您可以点击如下连接查看那些设备被添加到已知清单里:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>如果这不是您的设备, 请删除该设备, 更改该帐号的密码, 并马上向系统管理员报"
 "告. 有可能是有人未经授权登录了您的帐号.</div>\n"
@@ -389,8 +390,9 @@ msgstr ""
 #| "<div>Your device has been added to your list of known devices, which you "
 #| "can view here:</div>\n"
 #| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-#| "\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+#| "devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></"
+#| "div>\n"
 #| "<br>\n"
 #| "<div>If this wasn't you, remove the device, changing your account "
 #| "password, and contacting your administrator. Somebody might have gained "
@@ -414,8 +416,8 @@ msgid ""
 "<div>Your device has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -438,8 +440,8 @@ msgstr ""
 "<br>\n"
 "<div>您可以点击如下连接查看那些设备被添加到已知清单里:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>如果这不是您的设备, 请删除该设备, 更改该帐号的密码, 并马上向系统管理员报"
 "告. 有可能是有人未经授权登录了您的帐号.</div>\n"
@@ -1358,7 +1360,7 @@ msgstr "添加个人Access Token"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid "Add a data privacy deletion task"
-msgstr ""
+msgstr "添加一个数据隐私删除任务"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #, fuzzy
@@ -1631,7 +1633,8 @@ msgstr "所有工单"
 msgid ""
 "All affected tickets will be deleted immediately when this job is run, "
 "without a history entry. There is no rollback of this deletion possible."
-msgstr ""
+msgstr "运行此作业后，所有受影响的工单都将立即被删除，且不会留下历史记录条目。此删除"
+"操作无法回滚。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid ""
@@ -2021,7 +2024,7 @@ msgstr "请确认是否需要重新加载？没有保存的改动会丢失"
 msgid ""
 "Are you sure? The user will have to to reconfigure all two-factor "
 "authentication methods."
-msgstr ""
+msgstr "您确定吗？用户将不得不重新配置所有双因素身份验证方法。"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #, fuzzy
@@ -2199,15 +2202,15 @@ msgstr "附件"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in a Simple Storage Service."
-msgstr ""
+msgstr "附件存储在简单存储服务中。"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the database."
-msgstr ""
+msgstr "附件存储在数据库中。"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the filesystem."
-msgstr ""
+msgstr "附件存储在文件系统中。"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
@@ -2218,7 +2221,7 @@ msgstr "参与者"
 msgid ""
 "Attention! Changing the organization will update the user's most recent "
 "tickets to the new organization."
-msgstr ""
+msgstr "注意！更改机构会将用户最近的工单更新到新机构中。"
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -2334,7 +2337,7 @@ msgstr "通过 s% 认证"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2342,7 +2345,7 @@ msgstr "认证失败"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Authy"
-msgstr ""
+msgstr "Authy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
@@ -2410,6 +2413,7 @@ msgid "Available types for a new ticket"
 msgstr "新工单的可用类型"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
@@ -2644,7 +2648,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "CA"
-msgstr ""
+msgstr "证书颁发机构"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -2843,7 +2847,7 @@ msgstr "不能同时具有响应时间和更新时间。"
 
 #: lib/external_data_source/errors.rb
 msgid "Cannot process external data source %s. %s"
-msgstr ""
+msgstr "无法处理外部数据源%s. %s"
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #, fuzzy
@@ -3148,7 +3152,7 @@ msgstr "选择您的新密码。"
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
 msgid "Choose your preferred two-factor authentication method to set it up."
-msgstr ""
+msgstr "选择您较喜欢的双重身份验证方法进行设置。"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Christmas holiday"
@@ -3237,8 +3241,9 @@ msgid "Click here"
 msgstr "点击这里"
 
 #: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+#, fuzzy
 msgid "Click here to set up a two-factor authentication method."
-msgstr ""
+msgstr "单击此处设置双因素身份验证方法。"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -3350,7 +3355,7 @@ msgstr "Company Inc."
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 #: db/seeds/settings.rb
 msgid "Complete the sign-in with your security key."
-msgstr ""
+msgstr "使用您的安全密钥完成登录。"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Complete translations"
@@ -3579,7 +3584,7 @@ msgstr "连接测试成功"
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Contact the administrator if you have any problems logging in."
-msgstr ""
+msgstr "如果您在登录时遇到任何问题，请联系管理员。"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -3699,7 +3704,7 @@ msgstr "需要认证"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Could not remove all two-factor authentication methods for this user."
-msgstr ""
+msgstr "无法删除该用户的所有双因素身份验证方法。"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #, fuzzy
@@ -3711,7 +3716,7 @@ msgstr "登录失败。 您是否仔细检查了凭据并完成了电子邮件�
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Could not remove two-factor authentication method"
-msgstr ""
+msgstr "无法删除双因素身份验证方法"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #, fuzzy
@@ -6344,8 +6349,8 @@ msgstr "SLA層級提升時間"
 #| "\n"
 #| "<div>Hi #{recipient.firstname},</div>\n"
 #| "<br>\n"
-#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-#| "\" is escalated since \"#{ticket.escalation_at}\"!</div>\n"
+#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+#| "b>\" is escalated since \"#{ticket.escalation_at}\"!</div>\n"
 #| "<br>\n"
 #| "<% if @objects[:article] %>\n"
 #| "  <div>\n"
@@ -6365,8 +6370,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -13221,8 +13226,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid ""
 "Some system settings have changed, please restart all Zammad processes! If "
-"you want to do this automatically, set environment variable APP_RESTART_CMD="
-"\"/path/to/your_app_script.sh restart\"."
+"you want to do this automatically, set environment variable "
+"APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
@@ -15330,8 +15335,8 @@ msgstr "工单 %s 已合并。"
 #| "\n"
 #| "<div>Hi #{recipient.firstname},</div>\n"
 #| "<br>\n"
-#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-#| "\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+#| "b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 #| "<br>\n"
 #| "<% if @objects[:article] %>\n"
 #| "  <div>\n"
@@ -15679,8 +15684,8 @@ msgstr "新增工单概览"
 #| "\n"
 #| "<div>Hi #{recipient.firstname},</div>\n"
 #| "<br>\n"
-#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-#| "\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+#| "b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 #| "<br>\n"
 #| "<% if @objects[:article] %>\n"
 #| "  <div>\n"
@@ -15700,8 +15705,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -16008,8 +16013,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
-"To revert back to the default payload, simply turn off the \"Custom Payload"
-"\" switch above."
+"To revert back to the default payload, simply turn off the \"Custom "
+"Payload\" switch above."
 msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -16610,8 +16615,8 @@ msgstr "更新者"
 #| "<br>\n"
 #| "<div>\n"
 #| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}"
-#| "<% if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
-#| "\">#{t('View this in Zammad')}</a>\n"
+#| "<% if @objects[:article] %>/#{article.id}<% end %>\" "
+#| "target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
 #| "</div>\n"
 msgid ""
 "Updated ticket (#{ticket.title})\n"
@@ -16675,8 +16680,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
-"\">#{t('View this in Zammad')}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -16952,8 +16957,8 @@ msgid ""
 "1. As an **agent** you don't just have an overview of the open tickets for "
 "one person but an **overview over their whole organization**.\n"
 "2. As a **customer** you can also check the **tickets which your colleagues "
-"created** and modify their tickets (if your organization is set to \"shared"
-"\", which can be defined per organization)."
+"created** and modify their tickets (if your organization is set to "
+"\"shared\", which can be defined per organization)."
 msgstr ""
 
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
@@ -19205,7 +19210,7 @@ msgstr "设置可选"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set readonly"
-msgstr ""
+msgstr "设置为只读"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -19228,7 +19233,7 @@ msgstr "显示"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "show more"
-msgstr ""
+msgstr "显示更多"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -19267,7 +19272,7 @@ msgstr "短信"
 
 #: app/models/object_manager/attribute.rb
 msgid "spaces are not allowed"
-msgstr ""
+msgstr "不允许使用空格"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -19346,11 +19351,11 @@ msgstr "直到（相对）"
 
 #: db/seeds/settings.rb
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
-msgstr ""
+msgstr "时间戳，例如\"2018-08-30 14:30\""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "to go to the homepage."
-msgstr ""
+msgstr "转到主页。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -19375,7 +19380,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 msgid "try again"
-msgstr ""
+msgstr "再试一次"
 
 #: db/seeds/ticket_article_types.rb
 msgid "twitter direct-message"
@@ -19391,7 +19396,7 @@ msgstr "解封用户\t"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "unset readonly"
-msgstr ""
+msgstr "取消设置为只读"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -19411,19 +19416,19 @@ msgstr "更新了"
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"
-msgstr ""
+msgstr "网页"
 
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "welcome message"
-msgstr ""
+msgstr "欢迎信息"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
-msgstr ""
+msgstr "将被创建"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be deleted"
-msgstr ""
+msgstr "将被删除"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee

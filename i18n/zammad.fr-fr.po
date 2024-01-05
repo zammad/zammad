@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-12-01 02:05+0000\n"
-"Last-Translator: Solenne Lefevre <solenne.lefevre@data-bene.io>\n"
+"PO-Revision-Date: 2024-01-05 02:05+0000\n"
+"Last-Translator: Samuel Granjeaud <samuel.granjeaud@inserm.fr>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.2.1\n"
+"X-Generator: Weblate 5.3\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -50,12 +50,6 @@ msgid " to "
 msgstr " à "
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "\"Database\" stores all attachments in the database (not recommended for "
-#| "storing large amounts of data). \"Filesystem\" stores the data in the "
-#| "filesystem. You can switch between the modules even on a system that is "
-#| "already in production without any loss of data."
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
@@ -64,10 +58,10 @@ msgid ""
 "system that is already in production without any loss of data."
 msgstr ""
 "\"Base de données\" stocke toutes les pièces jointes dans la base de données "
-"(non recommandé pour stocker de grandes quantités de données). \"Système de "
-"Fichiers\" stocke les données dans le système de fichiers. Vous pouvez "
-"passer d'un module à l'autre même sur un système déjà en production sans "
-"aucune perte de données."
+"(non recommandé pour stocker de grandes quantités de données). \"Simple "
+"Storage (S3)\" stocke les données dans un système de fichiers objet distant "
+"compatible S3. Vous pouvez passer d'un module à l'autre même sur un système "
+"déjà en production sans aucune perte de données."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -112,8 +106,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}> : Escaladé à #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}> : Escaladé à #{ticket.escalation_at}_\n"
 "Le ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" a été "
 "escaladé depuis \"#{ticket.escalation_at}\" !\n"
 "\n"
@@ -137,8 +131,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}> : Mis à jour par #{current_user.longname} à "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}> : Mis à jour par #{current_user.longname} à "
 "#{ticket.updated_at}_\n"
 "* Groupe : #{ticket.group.name}\n"
 "* Propriétaire : #{ticket.owner.fullname}\n"
@@ -163,8 +157,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}> : Rappel atteint !_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}> : Rappel atteint !_\n"
 "Un ticket a besoin d'attention : rappel atteint pour (#{ticket.title}) avec "
 "client \"*#{ticket.customer.longname}*\".\n"
 "\n"
@@ -191,8 +185,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}> : Mis à jour par #{current_user.longname} à "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}> : Mis à jour par #{current_user.longname} à "
 "#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -219,8 +213,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}> : Va être escaladé à #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}> : Va être escaladé à #{ticket.escalation_at}_\n"
 "Le ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" va être "
 "escaladé à \"#{ticket.escalation_at}\" !\n"
 "\n"
@@ -279,8 +273,8 @@ msgid ""
 "<div>The country has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -304,8 +298,8 @@ msgstr ""
 "<div>Le pays a été ajouté à votre liste d'appareils connus, que vous pouvez "
 "consulter ici :</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Si ce n'était pas vous, supprimez l'appareil, modifiez le mot de passe "
 "de votre compte et contactez votre administrateur. Quelqu'un a peut-être "
@@ -333,8 +327,8 @@ msgid ""
 "<div>Your device has been added to your list of known devices, which you can "
 "view here:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the device, change your account "
 "password, and contact your administrator. Somebody might have gained "
@@ -358,8 +352,8 @@ msgstr ""
 "<div>Votre appareil a été ajouté à votre liste d'appareils connus, que vous "
 "pouvez consulter ici :</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Si ce n'était pas vous, supprimez l'appareil, modifiez le mot de passe "
 "de votre compte et contactez votre administrateur. Quelqu'un a peut-être "
@@ -670,6 +664,14 @@ msgid ""
 "activity type will be rendered for an entry in the **Activity** table under "
 "the **Accounted Time** tab."
 msgstr ""
+"**Types d'activité** peut être utilisé pour regrouper les différentes "
+"entrées de comptabilisation de temps de ticket. Par exemple, les entrées "
+"correspondant à un type de \"facturation\".\n"
+"\n"
+"Lorsque vous activez l'enregistrement du type d'activité, les utilisateurs "
+"pourront sélectionner un type dans cette liste. De plus, une colonne avec un "
+"type d'activité associé sera affichée pour une entrée dans le tableau "
+"**Activité** sous l'onglet **Temps comptabilisé**."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -1225,10 +1227,8 @@ msgid "Add a Personal Access Token"
 msgstr "Ajouter un Jeton (Token) d'Accès Personnel"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
-#, fuzzy
-#| msgid "Handle data privacy tasks."
 msgid "Add a data privacy deletion task"
-msgstr "Gérer les tâches liées à la confidentialité des données."
+msgstr "Ajouter une tâche de suppression de la confidentialité des données"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Add a message"
@@ -1502,6 +1502,10 @@ msgid ""
 "Once the data privacy task is executed, tickets will be deleted and a "
 "history entry preserved. There is no rollback of this deletion possible."
 msgstr ""
+"La suppression de tous les tickets concernés sera programmée lors de "
+"l'exécution de cette tâche. Une fois la tâche de confidentialité des données "
+"exécutée, les tickets seront supprimés et une entrée d'historique sera "
+"conservée. Il n'est pas possible de revenir sur cette suppression."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid ""
@@ -1510,6 +1514,11 @@ msgid ""
 "tickets will be deleted and a history entry preserved. There is no rollback "
 "of this deletion possible."
 msgstr ""
+"La suppression de tous les utilisateurs concernés et de leurs tickets "
+"clients sera programmée lors de l'exécution de cette tâche. Une fois la "
+"tâche de confidentialité des données exécutée, les utilisateurs et les "
+"tickets seront supprimés et un historique sera conservé. Il n'est pas "
+"possible de revenir sur cette suppression."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "All agents"
@@ -1865,7 +1874,8 @@ msgstr "Êtes-vous sûr(e) ? Les modifications non sauvegardées seront perdue
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Are you sure? Your notifications settings will be reset to default."
-msgstr "Êtes-vous sûr(e) ? Vos paramètres de notification seront réinitialisés."
+msgstr ""
+"Êtes-vous sûr(e) ? Vos paramètres de notification seront réinitialisés."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -2009,7 +2019,7 @@ msgstr "Pièces jointes"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in a Simple Storage Service."
-msgstr ""
+msgstr "Les pièces jointes sont stockées dans un service de stockage simple."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the database."
@@ -2229,6 +2239,7 @@ msgid "Available types for a new ticket"
 msgstr "Types disponibles pour les nouveaux tickets"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
@@ -2674,7 +2685,7 @@ msgstr ""
 
 #: lib/external_data_source/errors.rb
 msgid "Cannot process external data source %s. %s"
-msgstr ""
+msgstr "Impossible de traiter la source de données externe %s. %s"
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #, fuzzy
@@ -2930,6 +2941,10 @@ msgid ""
 "signing or encrypting is not possible, the setting has no effect. Agents can "
 "always manually alter the behavior for each article."
 msgstr ""
+"Choisissez le fonctionnement par défaut d'intégration PGP pour chaque "
+"groupe. Si la signature ou le cryptage n'est pas possible, le paramètre n'a "
+"aucun effet. Les agents peuvent toujours modifier manuellement le "
+"comportement pour chaque article."
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid ""
@@ -2937,6 +2952,10 @@ msgid ""
 "signing or encrypting is not possible, the setting has no effect. Agents can "
 "always manually alter the behavior for each article."
 msgstr ""
+"Choisissez le fonctionnement par défaut de l'intégration de S/MIME pour "
+"chaque groupe. Si la signature ou le cryptage n'est pas possible, le "
+"paramètre n'a aucun effet. Les agents peuvent toujours modifier manuellement "
+"le comportement pour chaque article."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose the group to which direct messages will get added."
@@ -5336,6 +5355,9 @@ msgid ""
 "Disabling the notifications from all groups will turn off the limit. "
 "Instead, to disable the notifications use the settings above."
 msgstr ""
+"La désactivation des notifications de tous les groupes désactivera la "
+"limite. Pour désactiver les notifications, utilisez plutôt les paramètres ci-"
+"dessus."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -6225,8 +6247,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -7002,7 +7024,7 @@ msgstr ""
 
 #: app/controllers/selectors_controller.rb
 msgid "Given object does not support selector"
-msgstr ""
+msgstr "L'objet donné ne supporte pas de sélecteur"
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -7159,7 +7181,7 @@ msgstr "Groupe nécessaire dans la définition du canal !"
 
 #: app/models/group.rb
 msgid "Group or children exceeded max depth!"
-msgstr ""
+msgstr "Le groupe ou les enfants ont dépassé la profondeur maximale !"
 
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/user.coffee
@@ -7355,8 +7377,8 @@ msgstr ""
 "Vous pouvez effectuer ici une recherche sur des clients, organisations ou "
 "tickets. Utiliser l'astérisque §*§ pour correspondre à n'importe quelle "
 "suite de lettres : §sou*§ ou §ressen*r§. Vous pouvez également utiliser les "
-"||guillemets|| pour effectuer une recherche sur une phrase : §\"une phrase"
-"\"§."
+"||guillemets|| pour effectuer une recherche sur une phrase : §\"une "
+"phrase\"§."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid ""
@@ -10192,7 +10214,7 @@ msgstr "Ou utilisez l'un de vos codes de récupération."
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "Or, use one of your"
-msgstr ""
+msgstr "Ou, utilisez un de vos"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: db/seeds/permissions.rb
@@ -10307,8 +10329,8 @@ msgstr "Message d'absence"
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
-"Combien de tickets vous sont affectés sur l'ensemble des tickets ouverts ("
-"dans la société) ?"
+"Combien de tickets vous sont affectés sur l'ensemble des tickets ouverts "
+"(dans la société) ?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -10398,7 +10420,7 @@ msgstr "PGP"
 
 #: db/seeds/settings.rb
 msgid "PGP Recipient Alias Configuration"
-msgstr ""
+msgstr "Configuration de l'alias de destinataire PGP"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -10718,6 +10740,8 @@ msgid ""
 "Please note that this attribute is deprecated within one of the next "
 "versions of Zammad. Use the IDP certificate instead."
 msgstr ""
+"Veuillez noter que cet attribut sera obsolète dans l'une des prochaines "
+"versions de Zammad. Utilisez plutôt le certificat IDP."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
@@ -10728,6 +10752,9 @@ msgid ""
 "Please save your recovery codes listed below somewhere safe. You can use "
 "them to sign in if you lose access to another two-factor method:"
 msgstr ""
+"Veuillez enregistrer vos codes de récupération listés ci-dessous dans un "
+"endroit sûr. Vous pourrez les utiliser pour vous connecter si vous perdez "
+"l'accès à une autre méthode à deux facteurs :"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Please select a ticket to merge into."
@@ -10842,6 +10869,9 @@ msgid ""
 "signing, encrypting and decrypting messages and to increase the security of "
 "e-mail communication."
 msgstr ""
+"Pretty Good Privacy (PGP) est un programme de cryptage qui peut être utilisé "
+"pour signer, crypter et décrypter des messages et pour accroître la sécurité "
+"des communications par courrier électronique."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -11139,6 +11169,9 @@ msgid ""
 "Recovery codes can be used to access your account in the event you lose "
 "access to other two-factor authentication methods."
 msgstr ""
+"Les codes de récupération peuvent être utilisés pour accéder à votre compte "
+"au cas où vous auriez perdu l'accès à d'autres méthodes d'authentification à "
+"deux facteurs."
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
@@ -11223,7 +11256,7 @@ msgstr "Supprimer %s"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Remove a configured two-factor authentication method"
-msgstr ""
+msgstr "Supprimer une méthode d'authentification à deux facteurs configurée"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
@@ -11381,6 +11414,8 @@ msgstr "Prérequis"
 msgid ""
 "Requires the set up of the two-factor authentication for certain user roles."
 msgstr ""
+"Nécessite la mise en place de l'authentification à deux facteurs pour "
+"certains rôles."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -11958,7 +11993,7 @@ msgstr "L'URL fournie n'est pas valide."
 
 #: lib/external_data_source/errors.rb
 msgid "Search URL is missing."
-msgstr ""
+msgstr "L'URL de recherche est manquante."
 
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Search for users"
@@ -11981,14 +12016,18 @@ msgid ""
 "Search result label is not a string, a number or a boolean. Please provide "
 "search result label key."
 msgstr ""
+"Le libellé du résultat de la recherche n'est ni une chaîne, ni un nombre, ni "
+"un booléen. Veuillez fournir la clé du libellé du résultat de la recherche."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Search result label key"
-msgstr ""
+msgstr "Clé du libellé du résultat de la recherche"
 
 #: lib/external_data_source/errors.rb
 msgid "Search result label key \"%s\" is not a string, number or boolean."
 msgstr ""
+"La clé du libellé du résultat de la recherche \"%s\" n'est pas une chaîne, "
+"un nombre ou un booléen."
 
 #: lib/external_data_source/errors.rb
 #, fuzzy
@@ -12006,14 +12045,17 @@ msgstr "Retour vers les résultats de la recherche"
 msgid ""
 "Search result list is not an array. Please provide search result list key."
 msgstr ""
+"La liste des résultats de la recherche n'est pas un tableau. Veuillez "
+"fournir la clé de la liste des résultats de la recherche."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Search result list key"
-msgstr ""
+msgstr "Clé de la liste des résultats de la recherche"
 
 #: lib/external_data_source/errors.rb
 msgid "Search result list key \"%s\" is not an array."
 msgstr ""
+"La clé de la liste des résultats de la recherche \"%s\" n'est pas un tableau."
 
 #: lib/external_data_source/errors.rb
 #, fuzzy
@@ -12032,6 +12074,8 @@ msgid ""
 "Search result value is not a string, a number or a boolean. Please provide "
 "search result value key."
 msgstr ""
+"La valeur du résultat de la recherche n'est pas une chaîne, un nombre ou un "
+"booléen. Veuillez fournir la clé de la valeur du résultat de la recherche."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -12042,6 +12086,8 @@ msgstr "Séparez les valeurs multiples par ;"
 #: lib/external_data_source/errors.rb
 msgid "Search result value key \"%s\" is not a string, number or boolean."
 msgstr ""
+"La clé de la valeur du résultat de la recherche \"%s\" n'est pas une chaîne, "
+"un nombre ou un booléen."
 
 #: lib/external_data_source/errors.rb
 #, fuzzy
@@ -12148,7 +12194,7 @@ msgstr ""
 
 #: lib/external_data_source/errors.rb
 msgid "See HTTPLog for details."
-msgstr ""
+msgstr "Regardez HTTPLog pour les details."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -12268,6 +12314,8 @@ msgstr "Envoyer un e-mail d'erreur si l'e-mail est trop grand"
 #: db/seeds/settings.rb
 msgid "Send postmaster reject mail to sender of mail if mail is too large."
 msgstr ""
+"Envoyer un message de rejet à l'expéditeur du courrier si celui-ci est trop "
+"volumineux."
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Send to clients"
@@ -12377,7 +12425,7 @@ msgstr "Sessions"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Set Up"
-msgstr ""
+msgstr "Installation"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Set a title for your ticket"
@@ -12423,10 +12471,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
 msgstr ""
+"Définir des notes pour les types de création de tickets en sélectionnant le "
+"type."
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types."
-msgstr ""
+msgstr "Définir des notes pour les types de création de ticket."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -12677,7 +12727,7 @@ msgstr "Afficher quand la fenêtre de discussion est fermée."
 
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
-msgstr ""
+msgstr "Pièces jointes dans la barre latérale"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
@@ -12688,11 +12738,13 @@ msgstr "Signer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Sign email (if not possible, discard notification)"
-msgstr ""
+msgstr "Signer le courriel (si ce n'est pas possible, effacer la notification)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
+"Signer le courriel (si ce n'est pas possible, envoyer quand même la "
+"notification)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -12908,8 +12960,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid ""
 "Some system settings have changed, please restart all Zammad processes! If "
-"you want to do this automatically, set environment variable APP_RESTART_CMD="
-"\"/path/to/your_app_script.sh restart\"."
+"you want to do this automatically, set environment variable "
+"APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 "Certains paramètres du système ont changé, veuillez redémarrer tous les "
 "processus Zammad ! Si vous voulez le faire automatiquement, définissez la "
@@ -15366,8 +15418,8 @@ msgid ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -15679,8 +15731,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/webhook.coffee
 #, fuzzy
 msgid ""
-"To revert back to the default payload, simply turn off the \"Custom Payload"
-"\" switch above."
+"To revert back to the default payload, simply turn off the \"Custom "
+"Payload\" switch above."
 msgstr ""
 "Pour revenir à la charge par défaut, désactiver simplement le bouton ci-"
 "dessus \"Charge Personnalisée\"."
@@ -16327,8 +16379,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\""
-">Consulter sur #{config.product_name}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" "
+"target=\"zammad_app\">Consulter sur #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -16600,8 +16652,8 @@ msgid ""
 "1. As an **agent** you don't just have an overview of the open tickets for "
 "one person but an **overview over their whole organization**.\n"
 "2. As a **customer** you can also check the **tickets which your colleagues "
-"created** and modify their tickets (if your organization is set to \"shared"
-"\", which can be defined per organization)."
+"created** and modify their tickets (if your organization is set to "
+"\"shared\", which can be defined per organization)."
 msgstr ""
 "En utilisant des **organisations**, vous pouvez **regrouper** des clients. "
 "Cela a deux avantages principaux :\n"
