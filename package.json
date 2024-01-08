@@ -58,10 +58,10 @@
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
     "jsdom": "^23.0.1",
     "mock-apollo-client": "^1.2.1",
-    "postcss": "^8.4.32",
+    "postcss": "^8.4.33",
     "postcss-html": "^1.5.0",
     "prettier": "3.1.1",
-    "prettier-plugin-tailwindcss": "^0.5.10",
+    "prettier-plugin-tailwindcss": "^0.5.11",
     "regenerator-runtime": "^0.14.1",
     "sass": "^1.69.7",
     "stylelint": "^16.1.0",
@@ -73,7 +73,7 @@
     "stylelint-scss": "^6.0.0",
     "svg-baker": "^1.7.0",
     "svgo": "^3.2.0",
-    "tailwindcss": "^3.4.0",
+    "tailwindcss": "^3.4.1",
     "timezone-mock": "^1.3.6",
     "type-fest": "^4.9.0",
     "typescript": "^5.3.3",
@@ -147,7 +147,7 @@
   },
   "resolutions": {
     "loader-utils": "^3.2.1",
-    "postcss": "^8.4.32",
+    "postcss": "^8.4.33",
     "stylelint-config-recommended": "^14.0.0"
   }
 }
