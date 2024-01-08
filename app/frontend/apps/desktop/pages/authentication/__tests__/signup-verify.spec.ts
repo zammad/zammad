@@ -26,7 +26,7 @@ describe('signup verify view', () => {
   it('shows a loading indicator during the verification process', async () => {
     const view = await visitView('/signup/verify/123')
 
-    expect(view.getByText('Verifying your email...')).toBeInTheDocument()
+    expect(view.getByText('Verifying your email…')).toBeInTheDocument()
 
     const loader = view.getByRole('status')
 

@@ -47,7 +47,7 @@ const message = computed(() => {
       )
     case 'loading':
     default:
-      return __('Verifying your email...')
+      return __('Verifying your email…')
   }
 })
 
