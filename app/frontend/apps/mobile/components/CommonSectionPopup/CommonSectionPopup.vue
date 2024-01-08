@@ -51,7 +51,9 @@ const onItemClick = (item: PopupItemDescriptor) => {
 const wrapper = shallowRef<HTMLElement>()
 
 // ignore clicks while it's rendering
-onClickOutside(wrapper, () => !animating && hidePopup())
+onClickOutside(wrapper, () => !animating && hidePopup(), {
+  ignore: ['button > [data-ignore-click]'],
+})
 onKeyUp(
   'Escape',
   (e) => {
