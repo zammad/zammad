@@ -78,7 +78,7 @@ const send = (data: AdminPasswordAuthRequestData) => {
     })
     .catch(() => {
       adminPasswordAuthError.value = __(
-        'Unable to send admin password auth email.',
+        'The admin password auth email could not be sent.',
       )
     })
 }

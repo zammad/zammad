@@ -19,5 +19,5 @@ class App.Template extends App.Model
     App.Template.search(filter: { active: true }, sortBy:'name', order:'ASC')
 
   @description = __('''
-With templates it is possible to fill pre-filled tickets quickly and easily.
+With templates it is possible to pre-fill tickets quickly and easily.
 ''')

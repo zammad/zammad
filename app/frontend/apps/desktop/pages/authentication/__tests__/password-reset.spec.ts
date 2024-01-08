@@ -24,7 +24,7 @@ const confirmSuccess = async (view: ExtendedRenderResult, login: string) => {
   })
 
   expect(
-    await view.findByText('Password reset request successful!'),
+    await view.findByText('The password reset request was successful.'),
   ).toBeInTheDocument()
 }
 

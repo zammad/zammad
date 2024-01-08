@@ -153,7 +153,7 @@ const resendVerifyEmail = () => {
     .catch(() => {
       notify({
         type: NotificationTypes.Error,
-        message: __('Unable to resend verification email.'),
+        message: __('The verification email could not be resent.'),
       })
     })
 }

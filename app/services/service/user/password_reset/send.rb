@@ -35,7 +35,7 @@ class Service::User::PasswordReset::Send < Service::Base
 
   class EmailError < StandardError
     def initialize
-      super(__('Unable to send email to the user.'))
+      super(__('The email could not be sent to the user.'))
     end
   end
 end

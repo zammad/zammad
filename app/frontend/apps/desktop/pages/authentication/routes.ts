@@ -102,7 +102,7 @@ const route: RouteRecordRaw[] = [
     name: 'Signup',
     component: () => import('./views/Signup.vue'),
     meta: {
-      title: __('Signup'),
+      title: __('Sign up'),
       requiresAuth: false,
       requiredPermission: null,
       redirectToDefaultRoute: true,

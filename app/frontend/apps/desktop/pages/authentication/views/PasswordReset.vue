@@ -83,7 +83,7 @@ const goToLogin = () => {
     box-size="small"
     :title="
       showSuccessScreen
-        ? __('Password reset request successful!')
+        ? __('The password reset request was successful.')
         : __('Forgot your password?')
     "
   >

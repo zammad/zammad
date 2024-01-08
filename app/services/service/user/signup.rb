@@ -47,7 +47,7 @@ class Service::User::Signup < Service::Base
 
   class TokenGenerationError < StandardError
     def initialize
-      super(__('Unable to generate token.'))
+      super(__('The token could not be generated.'))
     end
   end
 

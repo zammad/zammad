@@ -30,13 +30,13 @@ class Service::Auth::SendAdminToken < Service::Base
 
   class TokenError < StandardError
     def initialize
-      super(__('Unable to create token for the user.'))
+      super(__('The user token could not be generated.'))
     end
   end
 
   class EmailError < StandardError
     def initialize
-      super(__('Unable to send email to the user.'))
+      super(__('The email could not be sent to the user.'))
     end
   end
 end

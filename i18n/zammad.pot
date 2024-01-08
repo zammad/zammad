@@ -8889,10 +8889,6 @@ msgstr ""
 msgid "Password needs to have at least a minimal number of characters."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-msgid "Password reset request successful!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
 msgstr ""
@@ -10790,6 +10786,7 @@ msgid "Sign out"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Sign up"
 msgstr ""
 
@@ -10827,10 +10824,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Signing & Encrypting"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/authentication/routes.ts
-msgid "Signup"
 msgstr ""
 
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -11513,6 +11506,10 @@ msgstr ""
 msgid "The admin consent request was sent to your administrator."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+msgid "The admin password auth email could not be sent."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
@@ -11679,6 +11676,12 @@ msgstr ""
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
+#: app/services/service/auth/send_admin_token.rb
+#: app/services/service/user/password_reset/send.rb
+#: app/services/service/user/password_reset/update.rb
+msgid "The email could not be sent to the user."
+msgstr ""
+
 #: lib/secure_mailing/pgp/incoming.rb
 msgid "The encrypted part of this PGP email has an incorrect MIME type according to RFC 3156."
 msgstr ""
@@ -11838,6 +11841,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "The password could not be set. Please contact your administrator."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+msgid "The password reset request was successful."
 msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb
@@ -12180,6 +12187,10 @@ msgstr ""
 msgid "The tickets could not be merged."
 msgstr ""
 
+#: app/services/service/user/signup.rb
+msgid "The token could not be generated."
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "The token could not be verified. Please contact your administrator."
 msgstr ""
@@ -12220,6 +12231,10 @@ msgstr ""
 msgid "The uploaded image could not be processed. Need data:image in logo or logo_resize param."
 msgstr ""
 
+#: app/services/service/auth/send_admin_token.rb
+msgid "The user token could not be generated."
+msgstr ""
+
 #: lib/external_credential/exchange.rb
 #: lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -12228,6 +12243,10 @@ msgstr ""
 #: app/controllers/sessions_controller.rb
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
 msgid "The username or password is incorrect."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+msgid "The verification email could not be resent."
 msgstr ""
 
 #: app/models/setting/validation/saml/tls.rb
@@ -13479,28 +13498,6 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/services/service/auth/send_admin_token.rb
-msgid "Unable to create token for the user."
-msgstr ""
-
-#: app/services/service/user/signup.rb
-msgid "Unable to generate token."
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-msgid "Unable to resend verification email."
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-msgid "Unable to send admin password auth email."
-msgstr ""
-
-#: app/services/service/auth/send_admin_token.rb
-#: app/services/service/user/password_reset/send.rb
-#: app/services/service/user/password_reset/update.rb
-msgid "Unable to send email to the user."
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb
 #: db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
@@ -14338,7 +14335,7 @@ msgid "With form you can add a form to your web page which directly generates a 
 msgstr ""
 
 #: app/assets/javascripts/app/models/template.coffee
-msgid "With templates it is possible to fill pre-filled tickets quickly and easily."
+msgid "With templates it is possible to pre-fill tickets quickly and easily."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
