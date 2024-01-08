@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-14 01:05+0000\n"
-"Last-Translator: chen <chenchen@4chian.com>\n"
+"PO-Revision-Date: 2023-12-18 02:05+0000\n"
+"Last-Translator: yvanjay <181923630@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/zh_Hans/>\n"
 "Language: zh-cn\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.2.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1376,7 +1376,7 @@ msgstr "添加个人Access Token"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid "Add a data privacy deletion task"
-msgstr ""
+msgstr "添加一个数据隐私删除任务"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #, fuzzy
@@ -1479,6 +1479,12 @@ msgstr "額外追蹤後續檢查"
 msgid "Additional information"
 msgstr "阻止通知"
 
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Additional information and links"
+msgstr "阻止通知"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
 msgstr "地址"
@@ -1501,6 +1507,7 @@ msgid "Admin Interface"
 msgstr "管理界面"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
 #, fuzzy
 #| msgid "Bind Password"
 msgid "Admin Password Login"
@@ -1543,9 +1550,7 @@ msgid ""
 "<div>Please, click on the link below (or copy and paste the URL into your "
 "browser) to proceed:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
-"a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
 "<br>\n"
@@ -1646,6 +1651,8 @@ msgid ""
 "All affected tickets will be deleted immediately when this job is run, "
 "without a history entry. There is no rollback of this deletion possible."
 msgstr ""
+"运行此作业后，所有受影响的工单都将立即被删除，且不会留下历史记录条目。此删除"
+"操作无法回滚。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid ""
@@ -2035,7 +2042,7 @@ msgstr "请确认是否需要重新加载？没有保存的改动会丢失"
 msgid ""
 "Are you sure? The user will have to to reconfigure all two-factor "
 "authentication methods."
-msgstr ""
+msgstr "您确定吗？用户将不得不重新配置所有双因素身份验证方法。"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #, fuzzy
@@ -2213,15 +2220,15 @@ msgstr "附件"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in a Simple Storage Service."
-msgstr ""
+msgstr "附件存储在简单存储服务中。"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the database."
-msgstr ""
+msgstr "附件存储在数据库中。"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the filesystem."
-msgstr ""
+msgstr "附件存储在文件系统中。"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
@@ -2232,7 +2239,7 @@ msgstr "参与者"
 msgid ""
 "Attention! Changing the organization will update the user's most recent "
 "tickets to the new organization."
-msgstr ""
+msgstr "注意！更改机构会将用户最近的工单更新到新机构中。"
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -2348,7 +2355,7 @@ msgstr "通过 s% 认证"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2356,7 +2363,7 @@ msgstr "认证失败"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Authy"
-msgstr ""
+msgstr "Authy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
@@ -2659,7 +2666,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "CA"
-msgstr ""
+msgstr "证书颁发机构"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -2824,6 +2831,11 @@ msgstr "取消"
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Cancel & Go Back"
 msgstr "取消并返回"
 
@@ -2858,7 +2870,7 @@ msgstr "不能同时具有响应时间和更新时间。"
 
 #: lib/external_data_source/errors.rb
 msgid "Cannot process external data source %s. %s"
-msgstr ""
+msgstr "无法处理外部数据源%s. %s"
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #, fuzzy
@@ -3157,13 +3169,19 @@ msgstr "選擇要新增頁面張貼的群組"
 msgid "Choose your language."
 msgstr "更換個人語言"
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#, fuzzy
+#| msgid "Choose your new password."
+msgid "Choose your new password"
+msgstr "选择您的新密码。"
+
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 msgid "Choose your new password."
 msgstr "选择您的新密码。"
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
 msgid "Choose your preferred two-factor authentication method to set it up."
-msgstr ""
+msgstr "选择您较喜欢的双重身份验证方法进行设置。"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Christmas holiday"
@@ -3251,9 +3269,11 @@ msgstr "Clearbit集成"
 msgid "Click here"
 msgstr "点击这里"
 
-#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
+#: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
+#, fuzzy
 msgid "Click here to set up a two-factor authentication method."
-msgstr ""
+msgstr "单击此处设置双因素身份验证方法。"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -3365,7 +3385,7 @@ msgstr "Company Inc."
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 #: db/seeds/settings.rb
 msgid "Complete the sign-in with your security key."
-msgstr ""
+msgstr "使用您的安全密钥完成登录。"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Complete translations"
@@ -3457,6 +3477,13 @@ msgstr "确认/提交对话框"
 msgid "Confirm merge"
 msgstr "配置"
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#, fuzzy
+#| msgid "Bind Password"
+msgid "Confirm password"
+msgstr "绑定密码"
+
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
@@ -3484,9 +3511,7 @@ msgid ""
 "<div>Confirm your email address to complete your #{config.product_name} "
 "account. It's easy, just click the link below.</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
-"a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
@@ -3592,9 +3617,10 @@ msgid "Connection test successful"
 msgstr "连接测试成功"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Contact the administrator if you have any problems logging in."
-msgstr ""
+msgstr "如果您在登录时遇到任何问题，请联系管理员。"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -3645,7 +3671,7 @@ msgid "Continue session"
 msgstr "切換登入 回復連線"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 #, fuzzy
 #| msgid "Continue session"
 msgid "Continue to desktop"
@@ -3653,6 +3679,7 @@ msgstr "切換登入 回復連線"
 
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #, fuzzy
 #| msgid "Continue session"
 msgid "Continue to mobile"
@@ -3713,7 +3740,7 @@ msgstr "需要认证"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Could not remove all two-factor authentication methods for this user."
-msgstr ""
+msgstr "无法删除该用户的所有双因素身份验证方法。"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #, fuzzy
@@ -3725,7 +3752,7 @@ msgstr "登录失败。 您是否仔细检查了凭据并完成了电子邮件�
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Could not remove two-factor authentication method"
-msgstr ""
+msgstr "无法删除双因素身份验证方法"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #, fuzzy
@@ -3862,6 +3889,7 @@ msgid "Create and set up %s"
 msgstr "建立及設定 %s"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Create my account"
 msgstr "创建我的账户"
 
@@ -5850,6 +5878,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
@@ -5914,11 +5943,19 @@ msgstr ""
 msgid "Email Outbound"
 msgstr "Email 電子郵件出站"
 
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
+#, fuzzy
+#| msgid "Email Notification"
+msgid "Email Verification"
+msgstr "邮件通知"
+
 #: app/models/user.rb
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "Email could not be verified. Please contact your administrator."
@@ -5936,6 +5973,7 @@ msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr ""
 
@@ -6282,7 +6320,8 @@ msgid "Enter link URL"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
-#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue
 msgid "Enter one of your unused recovery codes."
 msgstr ""
 
@@ -6661,7 +6700,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/controllers/first_steps_controller.rb
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
 #: db/seeds/settings.rb
 msgid "Facebook"
@@ -6732,10 +6771,6 @@ msgstr "功能已禁用，请联系您的管理员！"
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Feature not configured, please contact your admin!"
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "Feature not enabled!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -6835,6 +6870,7 @@ msgid "First Steps"
 msgstr "提示"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
 #| msgid "Firstname"
@@ -6935,12 +6971,13 @@ msgid "Forgot Password Screen"
 msgstr "密码遗忘?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "密码遗忘?"
 
 #: app/assets/javascripts/app/views/password/reset.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 msgid "Forgot your password?"
 msgstr "忘记密码了吗？"
 
@@ -7141,6 +7178,7 @@ msgid "Get notified"
 msgstr "账号尚未通过验证"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
 #: db/seeds/settings.rb
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
@@ -7155,7 +7193,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "GitHub"
 msgstr ""
@@ -7186,7 +7224,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "GitLab"
 msgstr ""
@@ -7243,7 +7281,7 @@ msgid "Go Back"
 msgstr "返回"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Go back"
 msgstr ""
 
@@ -7264,7 +7302,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Google"
 msgstr ""
@@ -7507,7 +7545,8 @@ msgid "Have a nice day."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 #, fuzzy
 #| msgid "in process"
 msgid "Having problems?"
@@ -7854,6 +7893,8 @@ msgstr "如果正則表達式匹配，則寄件人將不會發送任何通知"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 msgid ""
 "If you don't receive instructions within a minute or two, check your email's "
 "spam and junk filters, or try resending your request."
@@ -7871,7 +7912,8 @@ msgstr ""
 "夹。"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid ""
 "If you have problems with the third-party login you can request a one-time "
 "password login as an admin."
@@ -8521,6 +8563,7 @@ msgid "John Smith"
 msgstr "John Smith"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Join %s"
 msgstr "加入％s"
 
@@ -8733,6 +8776,7 @@ msgid "Last login"
 msgstr "最后运行"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
 #| msgid "Lastname"
@@ -8855,7 +8899,7 @@ msgid "Linked Tickets"
 msgstr "連結的工單"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr ""
@@ -8911,6 +8955,7 @@ msgstr "加载失败。"
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue
 #: app/frontend/shared/form/i18n/locales.ts
 #: app/views/init/spinner-loading.html.erb
 #, fuzzy
@@ -8979,8 +9024,7 @@ msgid ""
 msgstr "登录失败。 您是否仔细检查了凭据并完成了电子邮件验证步骤？"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
 msgstr "标志"
@@ -9300,7 +9344,7 @@ msgid "Method (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 #, fuzzy
 #| msgid "Macros"
@@ -9916,7 +9960,8 @@ msgstr ""
 "target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
 "</div>\n"
 
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #, fuzzy
 #| msgid "New User"
 msgid "New user?"
@@ -10588,13 +10633,15 @@ msgstr "选项"
 msgid "Or migrate from another system."
 msgstr "從另一個系統遷移"
 
-#: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginThirdParty.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginThirdParty.vue
 #, fuzzy
 #| msgid "or sign in using"
 msgid "Or sign in using"
 msgstr "或使用第三方登录"
 
-#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactorMethods.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactorMethods.vue
 msgid "Or use one of your recovery codes."
 msgstr ""
 
@@ -10870,8 +10917,10 @@ msgstr "父"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "密码"
@@ -10924,6 +10973,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "密碼必須至少包含最少幾個字符"
+
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Password reset request successful!"
+msgstr "測試運行成功"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -11083,6 +11138,19 @@ msgstr "請點擊下面的按鈕"
 msgid "Please click on the link in the verification email."
 msgstr "请点击验证邮件中的链接。"
 
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#, fuzzy
+#| msgid ""
+#| "If you don't see the email, check other places it might be, like your "
+#| "junk, spam, social, or other folders."
+msgid ""
+"Please click on the link in the verification email. If you don't see the "
+"email, check other places it might be, like your junk, spam, social, or "
+"other folders."
+msgstr ""
+"如果你看不到邮件，可以查看其他地方，比如垃圾邮件、垃圾邮件、社交或其他文件"
+"夹。"
+
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 msgid "Please contact your administrator."
 msgstr ""
@@ -11214,8 +11282,8 @@ msgstr "邮件管理过滤器"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Powered by"
 
@@ -11542,8 +11610,9 @@ msgid ""
 msgstr "始終建立匯入數據中存在的記錄（但在Zammad中不存在）"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/recovery_codes.coffee
-#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue
+#: app/frontend/shared/composables/authentication/useLoginTwoFactor.ts
 #, fuzzy
 #| msgid "Security"
 msgid "Recovery Code"
@@ -11580,7 +11649,8 @@ msgstr ""
 msgid "Regenerate recovery codes"
 msgstr "刪除紀錄"
 
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 msgid "Register"
 msgstr ""
 
@@ -11589,6 +11659,7 @@ msgid "Register as a new customer"
 msgstr "注册成为我们的用户"
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Registration successful!"
 msgstr "注册成功！"
 
@@ -11602,8 +11673,8 @@ msgstr "重新加載應用"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "记住我(请不要在公共电脑勾选此选项)"
 
@@ -11784,11 +11855,13 @@ msgid "Request for Change"
 msgstr ""
 
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 msgid "Request password login for admin?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Request the password login here."
 msgstr ""
 
@@ -11817,6 +11890,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Resend verification email"
 msgstr "重发验证邮件"
 
@@ -11904,9 +11978,7 @@ msgid ""
 "<div>If you want to reset your password, click on the link below (or copy "
 "and paste the URL into your browser):</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can change your password.</"
 "div>\n"
@@ -11974,9 +12046,7 @@ msgid ""
 "<div>If you want to reset your password, click on the link below (or copy "
 "and paste the URL into your browser):</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can change your password.</"
 "div>\n"
@@ -12033,7 +12103,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 msgid "Retry"
 msgstr ""
 
@@ -12144,7 +12216,7 @@ msgid "S/MIME integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "SAML"
 msgstr ""
@@ -12233,7 +12305,7 @@ msgid "SSL/STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "SSO"
 msgstr ""
@@ -12521,7 +12593,8 @@ msgstr "安全"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee
-#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 #, fuzzy
 #| msgid "Security"
 msgid "Security Code"
@@ -13161,18 +13234,21 @@ msgstr "注销登录"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
-#: app/frontend/apps/desktop/pages/login/routes.ts
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
-#: app/frontend/apps/mobile/pages/login/routes.ts
+#: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
+#: app/frontend/apps/mobile/pages/authentication/routes.ts
 #: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue
 msgid "Sign in"
 msgstr "登录"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginThirdParty.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginThirdParty.vue
 #, fuzzy
 #| msgid "or sign in using"
 msgid "Sign in using"
@@ -13228,6 +13304,12 @@ msgstr ""
 #| msgid "or sign in using"
 msgid "Signing & Encrypting"
 msgstr "或使用第三方登录"
+
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
+#, fuzzy
+#| msgid "Sign up"
+msgid "Signup"
+msgstr "注册"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
@@ -13593,6 +13675,9 @@ msgstr "主题"
 #: app/assets/javascripts/app/views/settings/switch.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr "提交"
@@ -13901,6 +13986,7 @@ msgid ""
 msgstr "多謝您的詢問 (＃％s)！我們會盡快與您聯繫"
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "谢谢你的加入。电子邮件已发送到“%s”。"
 
@@ -14382,6 +14468,12 @@ msgstr ""
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
 
+#: app/services/service/auth/verify_admin_token.rb
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "The login is not possible."
+msgstr "工时"
+
 #: app/models/ticket/number.rb
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -14528,7 +14620,10 @@ msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
 #: app/controllers/integration/check_mk_controller.rb
-#: app/controllers/users_controller.rb
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/services/service/user/password_reset/update.rb
+#: app/services/service/user/password_reset/verify.rb
+#: app/services/service/user/signup_verify.rb
 msgid "The provided token is invalid."
 msgstr ""
 
@@ -14546,6 +14641,10 @@ msgstr "％s 对象已创建。"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "The request could not be processed."
+msgstr ""
+
+#: lib/operations_rate_limiter.rb
+msgid "The request limit for this operation was exceeded."
 msgstr ""
 
 #: lib/validations/verify_perform_rules_validator.rb
@@ -14744,7 +14843,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/login.coffee
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "The session is no longer valid. Please log in again."
 msgstr ""
 
@@ -14824,11 +14923,23 @@ msgstr "電子郵件回覆中主旨開頭的文本，例如RE，AW或AS"
 msgid "The tickets could not be merged."
 msgstr "％s 对象已创建。"
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#, fuzzy
+#| msgid "Unable to verify email. Please contact your administrator."
+msgid "The token could not be verified. Please contact your administrator."
+msgstr "無法驗證電子郵件 請與您的管理員聯繫"
+
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts
 msgid "The token for the admin password login is invalid."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+#: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts
+msgid "The token is valid. You are now able to login via password once."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
+#: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "The two-factor authentication is not configured yet."
 msgstr ""
 
@@ -15122,6 +15233,12 @@ msgstr "此類在初始化時添加到按鈕上，並且在建立文字對話連
 msgid "This entry already exists!"
 msgstr "帐号已经存在！"
 
+#: app/services/service/check_feature_enabled.rb
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "This feature is not enabled."
+msgstr "工时"
+
 #: config/initializers/activemodel_error.rb
 #, fuzzy
 #| msgid "A user is required!"
@@ -15410,6 +15527,18 @@ msgid ""
 "This service shows you contacts of incoming calls and a caller list in "
 "realtime."
 msgstr "此服務可以即時顯示來電聯繫人和呼叫者列表"
+
+#: app/services/service/concerns/handles_setting.rb
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "This setting is not disabled."
+msgstr "工时"
+
+#: app/services/service/concerns/handles_setting.rb
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "This setting is not enabled."
+msgstr "工时"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "This signature is inactive, it won't be included in the reply."
@@ -16325,10 +16454,11 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/shared/composables/authentication/useLoginTwoFactor.ts
 msgid "Try Another Method"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
 #| msgid "again"
@@ -16336,7 +16466,8 @@ msgid "Try again"
 msgstr "再一次"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Try another method"
 msgstr ""
 
@@ -16392,7 +16523,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/controllers/first_steps_controller.rb
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 #: db/seeds/settings.rb
 msgid "Twitter"
@@ -16460,7 +16591,8 @@ msgstr "Twitter Key"
 msgid "Twitter Secret"
 msgstr "Twitter Secret"
 
-#: app/frontend/apps/mobile/pages/login/after-auth/plugins/twoFactorSetup.ts
+#: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/twoFactorSetup.ts
+#: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/twoFactorSetup.ts
 #, fuzzy
 #| msgid "Authentication required"
 msgid "Two-Factor Authentication Configuration Is Required"
@@ -16483,7 +16615,8 @@ msgstr "验证"
 msgid "Two-factor authentication is not supported with HTTP BasicAuth."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 #, fuzzy
 #| msgid "Authentication"
 msgid "Two-factor authentication method could not be initiated."
@@ -16551,6 +16684,36 @@ msgstr "URL"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "URL (AJAX endpoint)"
 msgstr ""
+
+#: app/services/service/auth/send_admin_token.rb
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Unable to create token for the user."
+msgstr "機構中的工單"
+
+#: app/services/service/user/signup.rb
+#, fuzzy
+#| msgid "Unable to save Bot."
+msgid "Unable to generate token."
+msgstr "無法保存 Bot機器人"
+
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#, fuzzy
+#| msgid "Resend verification email"
+msgid "Unable to resend verification email."
+msgstr "重发验证邮件"
+
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+msgid "Unable to send admin password auth email."
+msgstr ""
+
+#: app/services/service/auth/send_admin_token.rb
+#: app/services/service/user/password_reset/send.rb
+#: app/services/service/user/password_reset/update.rb
+#, fuzzy
+#| msgid "Unable to save Bot."
+msgid "Unable to send email to the user."
+msgstr "無法保存 Bot機器人"
 
 #: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 #, fuzzy
@@ -17059,8 +17222,10 @@ msgstr ""
 msgid "Username"
 msgstr "用户名"
 
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #, fuzzy
 #| msgid "Username / email"
 msgid "Username / Email"
@@ -17178,9 +17343,16 @@ msgid "Verify sending and receiving"
 msgstr "驗證寄送和接收"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Verifying key information…"
+msgstr "阻止通知"
+
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Verifying your email..."
 msgstr "阻止通知"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -17364,6 +17536,7 @@ msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #, fuzzy
 #| msgid "We've sent password reset instructions to your email address."
 msgid "We've sent admin password login instructions to your email address."
@@ -17376,6 +17549,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 msgid "We've sent password reset instructions to your email address."
 msgstr "我們已將密碼重設說明發送到您的電子郵件地址"
 
@@ -17465,7 +17639,7 @@ msgid "Week(s)"
 msgstr "周"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Weibo"
 msgstr ""
@@ -17641,10 +17815,12 @@ msgstr ""
 "Month.Day.SystemID.Counter” (例如201206231010138、201206231010139)"
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
 msgid "Woo hoo! Your email address has been verified!"
 msgstr "太棒了！您的邮箱验证通过了！"
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "Woo hoo! Your password has been changed!"
 msgstr "太棒了！您的密码修改成功了！"
 
@@ -17834,6 +18010,12 @@ msgstr ""
 msgid "You can request your password"
 msgstr "您可以尝试通过邮件重设密码"
 
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#, fuzzy
+#| msgid "You can request your password"
+msgid "You can request your password here."
+msgstr "您可以尝试通过邮件重设密码"
+
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #, fuzzy
 #| msgid ""
@@ -17952,6 +18134,7 @@ msgid ""
 msgstr "您在文本中使用 ％s，但未附加任何附件。你想繼續嗎 ？"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #, fuzzy
 #| msgid ""
 #| "You're already registered with your email address if you've been in touch "
@@ -18085,9 +18268,9 @@ msgstr "無法驗證電子郵件 請與您的管理員聯繫"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr ""
 
@@ -18141,8 +18324,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginHeader.vue
 #, fuzzy
 #| msgid ""
 #| "Zammad is currently in maintenance mode. Only administrators can login. "
@@ -19351,7 +19534,7 @@ msgstr "设置可选"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set readonly"
-msgstr ""
+msgstr "设置为只读"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -19374,7 +19557,7 @@ msgstr "显示"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "show more"
-msgstr ""
+msgstr "显示更多"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -19413,7 +19596,7 @@ msgstr "短信"
 
 #: app/models/object_manager/attribute.rb
 msgid "spaces are not allowed"
-msgstr ""
+msgstr "不允许使用空格"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -19492,11 +19675,11 @@ msgstr "直到（相对）"
 
 #: db/seeds/settings.rb
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
-msgstr ""
+msgstr "时间戳，例如\"2018-08-30 14:30\""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "to go to the homepage."
-msgstr ""
+msgstr "转到主页。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -19521,7 +19704,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 msgid "try again"
-msgstr ""
+msgstr "再试一次"
 
 #: db/seeds/ticket_article_types.rb
 msgid "twitter direct-message"
@@ -19537,7 +19720,7 @@ msgstr "解封用户\t"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "unset readonly"
-msgstr ""
+msgstr "取消设置为只读"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -19557,19 +19740,19 @@ msgstr "更新了"
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"
-msgstr ""
+msgstr "网页"
 
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "welcome message"
-msgstr ""
+msgstr "欢迎信息"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
-msgstr ""
+msgstr "将被创建"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be deleted"
-msgstr ""
+msgstr "将被删除"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -20113,9 +20296,6 @@ msgstr "∅轮候时间"
 
 #~ msgid "Unable to load issues"
 #~ msgstr "无法加载问题"
-
-#~ msgid "Unable to save Bot."
-#~ msgstr "無法保存 Bot機器人"
 
 #~ msgid "Setup new System"
 #~ msgstr "设置新系统"

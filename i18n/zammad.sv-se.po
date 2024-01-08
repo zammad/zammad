@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-12-02 02:07+0000\n"
-"Last-Translator: chrand818 <can@telenabler.com>\n"
+"PO-Revision-Date: 2024-01-08 09:42+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
 "Language: sv-se\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.2.1\n"
+"X-Generator: Weblate 5.3\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -527,7 +527,7 @@ msgstr "%s objekt kommer att uppdateras."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s of my tickets are currently in process."
-msgstr "%s av mina ärenden är under bearbetning."
+msgstr "%s av mina ärenden är pågående."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
@@ -762,7 +762,7 @@ msgstr "1 år sedan"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "1. Ticket Create"
-msgstr "1. Ärende-skapande"
+msgstr "1. Ärende Skapa"
 
 #: db/seeds/settings.rb
 msgid "2 hours"
@@ -843,10 +843,8 @@ msgid "A list of active import backends that gets scheduled automatically."
 msgstr "En lista med aktiva import-backendar som körs automatiskt."
 
 #: lib/validations/mention_validator.rb
-#, fuzzy
-#| msgid "has no agent access to this ticket"
 msgid "A mentioned user has no agent access to this ticket"
-msgstr "har ingen agentåtkomst till detta ärende"
+msgstr "En nämnd användare har ingen agentåtkomst till detta ärende"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -1315,6 +1313,10 @@ msgstr "Ytterligare uppföljningsdetektering"
 msgid "Additional information"
 msgstr "Ytterlig information"
 
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+msgid "Additional information and links"
+msgstr "Ytterlig information och länkar"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
 msgstr "Adress"
@@ -1337,6 +1339,7 @@ msgid "Admin Interface"
 msgstr "Admin-gränssnitt"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Admin Password Login"
 msgstr "Admin-lösenord"
 
@@ -1354,9 +1357,7 @@ msgid ""
 "<div>Please, click on the link below (or copy and paste the URL into your "
 "browser) to proceed:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
-"a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
 "<br>\n"
@@ -1374,9 +1375,7 @@ msgstr ""
 "<div>Om det stämmer klicka på länken nedan (eller kopiera och klistra in URL:"
 "en i din webbläsare) för att fortsätta:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
-"a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Länken leder till en inloggningssida.</div>\n"
 "<br>\n"
@@ -2572,6 +2571,11 @@ msgstr "Avbryt"
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Cancel & Go Back"
 msgstr "Avbryt & Gå tillbaka"
 
@@ -2672,7 +2676,7 @@ msgstr "Ändra datum"
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
-msgstr "Ändra order"
+msgstr "Ändra ordning"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed:"
@@ -2885,6 +2889,10 @@ msgstr "Välj den grupp som sidpostningar ska läggas till i."
 msgid "Choose your language."
 msgstr "Välj ditt språk."
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+msgid "Choose your new password"
+msgstr "Välj ditt nya lösenord"
+
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 msgid "Choose your new password."
 msgstr "Välj ditt nya lösenord."
@@ -2970,7 +2978,8 @@ msgstr "Clearbit-integration"
 msgid "Click here"
 msgstr "Klicka här"
 
-#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
+#: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Tryck här för att sätta upp en två-faktorautentiseringsmetod."
 
@@ -3162,6 +3171,11 @@ msgstr "Bekräfta dialog"
 msgid "Confirm merge"
 msgstr "Konfigurera sammanslagning"
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+msgid "Confirm password"
+msgstr "Bekräfta lösenord"
+
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
@@ -3174,9 +3188,7 @@ msgid ""
 "<div>Confirm your email address to complete your #{config.product_name} "
 "account. It's easy, just click the link below.</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
-"a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
@@ -3188,9 +3200,7 @@ msgstr ""
 "<div>bekräfta din mejladress för att slutföra ditt #{config.product_name}-"
 "konto. Det går snabbt. Klicka på länken nedan.</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
-"a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Dina #{config.product_name}-administratörer</div>\n"
 
@@ -3277,7 +3287,8 @@ msgid "Connection test successful"
 msgstr "Uppkopplingstest lyckat"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Contact the administrator if you have any problems logging in."
 msgstr "Kontakt administratören om du har problem med att logga in."
 
@@ -3326,12 +3337,13 @@ msgid "Continue session"
 msgstr "Fortsätt session"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Continue to desktop"
 msgstr "Gå till desktopversion"
 
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 msgid "Continue to mobile"
 msgstr "Gå till mobilversion"
 
@@ -3528,6 +3540,7 @@ msgid "Create and set up %s"
 msgstr "Skapa och konfigurera %s"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Create my account"
 msgstr "Skapa mitt konto"
 
@@ -5480,6 +5493,7 @@ msgstr "Elasticsearch behöver konfigureras!"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
@@ -5544,11 +5558,17 @@ msgstr "E-postnotifieringar"
 msgid "Email Outbound"
 msgstr "Utgående e-post"
 
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
+msgid "Email Verification"
+msgstr "E-postverifiering"
+
 #: app/models/user.rb
 msgid "Email address '%{email}' is already used for another user."
 msgstr "E-postadress '%{email}' används redan för en annan användare."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
 msgid "Email could not be verified. Please contact your administrator."
 msgstr "Det gick inte att verifiera mejladressen. Kontakta din administratör."
 
@@ -5565,6 +5585,7 @@ msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr "E-post skickat till \"%s\". Be användaren verifiera deras e-postkonto."
 
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr "E-post skickat till \"%s\". Verifiera ditt e-postkonto."
 
@@ -5918,7 +5939,8 @@ msgid "Enter link URL"
 msgstr "Ange länkadress"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
-#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue
 msgid "Enter one of your unused recovery codes."
 msgstr "Ange en av dina oanvända återställningskoder."
 
@@ -6260,7 +6282,7 @@ msgstr "Extrahera zammad-attachment information från matriser"
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/controllers/first_steps_controller.rb
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
 #: db/seeds/settings.rb
 msgid "Facebook"
@@ -6326,10 +6348,6 @@ msgstr ""
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Feature not configured, please contact your admin!"
 msgstr "Funktionen är inte konfigurerad, vänligen kontakta din administratör!"
-
-#: app/controllers/users_controller.rb
-msgid "Feature not enabled!"
-msgstr "Funktionen är inte aktiverad!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -6424,6 +6442,7 @@ msgid "First Steps"
 msgstr "Första stegen"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "First name"
 msgstr "Förnamn"
@@ -6511,12 +6530,13 @@ msgid "Forgot Password Screen"
 msgstr "Glömt lösenord-sidan"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 msgid "Forgot password?"
 msgstr "Glömt lösenord?"
 
 #: app/assets/javascripts/app/views/password/reset.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 msgid "Forgot your password?"
 msgstr "Har du glömt ditt lösenord?"
 
@@ -6701,6 +6721,7 @@ msgid "Get notified"
 msgstr "Bli notifierad"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
+#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
 #: db/seeds/settings.rb
 msgid "Get the security code from the authenticator app on your device."
 msgstr "Hämta säkerhetskoden från autentiseringsappen på din enhet."
@@ -6715,7 +6736,7 @@ msgstr "Hämtar viktig information från webbläsaren…"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "GitHub"
 msgstr "GitHub"
@@ -6743,7 +6764,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "GitLab"
 msgstr "GitLab"
@@ -6799,7 +6820,7 @@ msgid "Go Back"
 msgstr "Tillbaka"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Go back"
 msgstr "Gå tillbaka"
 
@@ -6818,7 +6839,7 @@ msgstr "Hejdå meddelande"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Google"
 msgstr "Google"
@@ -7032,7 +7053,8 @@ msgid "Have a nice day."
 msgstr "Ha en trevlig dag."
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Having problems?"
 msgstr "Upplever du problem?"
 
@@ -7367,6 +7389,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 msgid ""
 "If you don't receive instructions within a minute or two, check your email's "
 "spam and junk filters, or try resending your request."
@@ -7384,7 +7408,8 @@ msgstr ""
 "kan vara, som ditt skräp, skräppost, sociala eller andra mappar."
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid ""
 "If you have problems with the third-party login you can request a one-time "
 "password login as an admin."
@@ -7989,6 +8014,7 @@ msgid "John Smith"
 msgstr "John Smith"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Join %s"
 msgstr "Gå med %s"
 
@@ -8184,6 +8210,7 @@ msgid "Last login"
 msgstr "Senaste inloggning"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Last name"
 msgstr "Efternamn"
@@ -8298,7 +8325,7 @@ msgid "Linked Tickets"
 msgstr "Länkade ärenden"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -8350,6 +8377,7 @@ msgstr "Sidan kunde inte laddas."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue
 #: app/frontend/shared/form/i18n/locales.ts
 #: app/views/init/spinner-loading.html.erb
 msgid "Loading…"
@@ -8411,8 +8439,7 @@ msgstr ""
 "Inloggningen misslyckades. Kontrollera din två-faktorautentiseringsmetod."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
 msgstr "Logo"
@@ -8711,7 +8738,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Metod (AJAX-slutpunkt)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Microsoft"
 msgstr "Microsoft"
@@ -9259,7 +9286,8 @@ msgstr ""
 "target=\"zammad_app\">Visa ärendet i #{config.product_name}</a>\n"
 "</div>\n"
 
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 msgid "New user?"
 msgstr "Ny användare?"
 
@@ -9886,11 +9914,13 @@ msgstr "Tillval"
 msgid "Or migrate from another system."
 msgstr "Eller migrera från ett annat system."
 
-#: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginThirdParty.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginThirdParty.vue
 msgid "Or sign in using"
 msgstr "Eller logga in med"
 
-#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactorMethods.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactorMethods.vue
 msgid "Or use one of your recovery codes."
 msgstr "Eller använd en av dina återställningskoder."
 
@@ -10149,8 +10179,10 @@ msgstr "Föräldergrupp"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "Lösenord"
@@ -10195,6 +10227,10 @@ msgstr "Lösenordet måste innehålla minst ett specialtecken."
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "Lösenord måste ha minst ett minimalt antal tecken."
+
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+msgid "Password reset request successful!"
+msgstr "Återställning av lösenordet lyckades!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -10342,6 +10378,16 @@ msgstr "Klicka på knappen nedan för att skapa din första."
 msgid "Please click on the link in the verification email."
 msgstr "Klicka på länken i verifieringsmejlet."
 
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+msgid ""
+"Please click on the link in the verification email. If you don't see the "
+"email, check other places it might be, like your junk, spam, social, or "
+"other folders."
+msgstr ""
+"Klicka på länken i verifieringsmailet. Om du inte ser e-postmeddelandet kan "
+"du kontrollera andra platser som det kan vara på, som ditt skräp, skräppost, "
+"sociala eller andra mappar."
+
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 msgid "Please contact your administrator."
 msgstr "Kontakta din administratör."
@@ -10476,8 +10522,8 @@ msgstr "Postmaster-filter"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Powered by"
 
@@ -10776,8 +10822,9 @@ msgstr ""
 "skapas."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/recovery_codes.coffee
-#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue
+#: app/frontend/shared/composables/authentication/useLoginTwoFactor.ts
 msgid "Recovery Code"
 msgstr "Återställningskod"
 
@@ -10812,7 +10859,8 @@ msgstr ""
 msgid "Regenerate recovery codes"
 msgstr "Generera återställningskoder"
 
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 msgid "Register"
 msgstr "Registrera"
 
@@ -10821,6 +10869,7 @@ msgid "Register as a new customer"
 msgstr "Registrera som ny kund"
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Registration successful!"
 msgstr "Registrering lyckad!"
 
@@ -10834,8 +10883,8 @@ msgstr "Ladda om applikationen"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 msgid "Remember me"
 msgstr "Kom ihåg mig"
 
@@ -10992,11 +11041,13 @@ msgid "Request for Change"
 msgstr "Begäran om ändring"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 msgid "Request password login for admin?"
 msgstr "Begär lösenord för administratörsinloggning?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Request the password login here."
 msgstr "Begär lösenordsinloggning här."
 
@@ -11026,6 +11077,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Resend verification email"
 msgstr "Skicka bekräftelsemail igen"
 
@@ -11082,9 +11134,7 @@ msgid ""
 "<div>If you want to reset your password, click on the link below (or copy "
 "and paste the URL into your browser):</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can change your password.</"
 "div>\n"
@@ -11104,9 +11154,7 @@ msgstr ""
 "<div>Om det stämmer klicka på länken nedan (eller kopiera och klistra in URL:"
 "en i din webbläsare) för att fortsätta:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Länken leder till en sida där du kan ändra ditt lösenord.</div>\n"
 "<br>\n"
@@ -11129,9 +11177,7 @@ msgid ""
 "<div>If you want to reset your password, click on the link below (or copy "
 "and paste the URL into your browser):</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can change your password.</"
 "div>\n"
@@ -11151,9 +11197,7 @@ msgstr ""
 "<div>Om du vill återställa lösenordet, klicka på länken nedan (eller kopiera "
 "och klistra in URL:en i din webbläsare) för att fortsätta:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Länken leder till en sida där du kan ändra ditt lösenord.</div>\n"
 "<br>\n"
@@ -11188,7 +11232,9 @@ msgstr "Resultat:"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 msgid "Retry"
 msgstr "Försök igen"
 
@@ -11297,7 +11343,7 @@ msgid "S/MIME integration"
 msgstr "S/MIME integration"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "SAML"
 msgstr "SAML"
@@ -11382,7 +11428,7 @@ msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "SSO"
 msgstr "SSO"
@@ -11652,7 +11698,8 @@ msgstr "Säkerhet"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee
-#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 msgid "Security Code"
 msgstr "Säkerhetskod"
 
@@ -12229,18 +12276,21 @@ msgstr "Logga ut fel"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco
-#: app/frontend/apps/desktop/pages/login/routes.ts
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginRecoveryCode.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
-#: app/frontend/apps/mobile/pages/login/routes.ts
+#: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
+#: app/frontend/apps/mobile/pages/authentication/routes.ts
 #: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue
 msgid "Sign in"
 msgstr "Logga in"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginThirdParty.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginThirdParty.vue
 msgid "Sign in using"
 msgstr "Logga in med"
 
@@ -12288,6 +12338,10 @@ msgstr "Signerad"
 #: db/seeds/settings.rb
 msgid "Signing & Encrypting"
 msgstr "Signering & Kryptering"
+
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
+msgid "Signup"
+msgstr "Registring"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
@@ -12625,6 +12679,9 @@ msgstr "Ämne"
 #: app/assets/javascripts/app/views/settings/switch.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr "Spara"
@@ -12912,6 +12969,7 @@ msgid ""
 msgstr "Tack för din förfrågan (#%s)! Vi kontaktar dig så snart som möjligt."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "Tack för att du gick med. E-post skickas till \"%s\"."
 
@@ -13359,6 +13417,10 @@ msgstr "Längden på den privata nyckeln är för kort."
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Gränsen för %s visningsbara ärenden har nåtts (%s återstår)"
 
+#: app/services/service/auth/verify_admin_token.rb
+msgid "The login is not possible."
+msgstr "Inloggning är inte möjlig."
+
 #: app/models/ticket/number.rb
 msgid "The new ticket number could not be generated."
 msgstr "Det nya ärendenumret kunde inte genereras."
@@ -13491,7 +13553,10 @@ msgstr "Den angivna payload är ogiltig. Kontrollera din syntax."
 
 #: app/controllers/application_controller/authenticates.rb
 #: app/controllers/integration/check_mk_controller.rb
-#: app/controllers/users_controller.rb
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/services/service/user/password_reset/update.rb
+#: app/services/service/user/password_reset/verify.rb
+#: app/services/service/user/signup_verify.rb
 msgid "The provided token is invalid."
 msgstr "Den angivna token är ogiltig."
 
@@ -13506,6 +13571,10 @@ msgstr "Rapporten kunde inte genereras"
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr "Begäran kunde inte behandlas."
+
+#: lib/operations_rate_limiter.rb
+msgid "The request limit for this operation was exceeded."
+msgstr "Gränsen för begäranden överskreds för denna operation."
 
 #: lib/validations/verify_perform_rules_validator.rb
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
@@ -13710,7 +13779,7 @@ msgstr ""
 "manuellt."
 
 #: app/assets/javascripts/app/controllers/login.coffee
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "The session is no longer valid. Please log in again."
 msgstr "Sessionen är inte längre giltig. Logga in på nytt."
 
@@ -13778,11 +13847,21 @@ msgstr "Texten i början av ämnet i ett e-postsvar, t.ex. RE, AW eller AS."
 msgid "The tickets could not be merged."
 msgstr "Ärendena kunde inte sammanfogas."
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+msgid "The token could not be verified. Please contact your administrator."
+msgstr "Token kunde inte verifieras. Kontakta din administratör."
+
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts
 msgid "The token for the admin password login is invalid."
 msgstr "Token för inloggning med administratörslösenord är ogiltig."
 
-#: app/frontend/apps/mobile/pages/login/components/AfterAuth/TwoFactorConfiguration.vue
+#: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts
+msgid "The token is valid. You are now able to login via password once."
+msgstr "Token är giltig. Du kan nu logga in en gång med lösenord."
+
+#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
+#: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "The two-factor authentication is not configured yet."
 msgstr "Tvåfaktorsautentiseringen är inte konfigurerad."
 
@@ -14034,6 +14113,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
 msgstr "Denna post finns redan!"
+
+#: app/services/service/check_feature_enabled.rb
+msgid "This feature is not enabled."
+msgstr "Den här funktionen är inte aktiverad."
 
 #: config/initializers/activemodel_error.rb
 msgid "This field %s"
@@ -14303,6 +14386,16 @@ msgid ""
 msgstr ""
 "Den här tjänsten visar kontakter för inkommande samtal och en samtalslista i "
 "realtid."
+
+#: app/services/service/concerns/handles_setting.rb
+#, fuzzy
+#| msgid "This feature is not enabled."
+msgid "This setting is not disabled."
+msgstr "Den här funktionen är inte aktiverad."
+
+#: app/services/service/concerns/handles_setting.rb
+msgid "This setting is not enabled."
+msgstr "Denna inställning är inte aktiverad."
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "This signature is inactive, it won't be included in the reply."
@@ -15086,16 +15179,18 @@ msgstr ""
 "tider uppnås (t.ex. väntetid, eskalering)."
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/shared/composables/authentication/useLoginTwoFactor.ts
 msgid "Try Another Method"
 msgstr "Prova en annan metod"
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Try again"
 msgstr "Försök igen"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
-#: app/frontend/apps/mobile/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Try another method"
 msgstr "Prova en annan metod"
 
@@ -15153,7 +15248,7 @@ msgstr "Tweets som innehåller sökord omvandlas automatiskt till ärenden."
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/controllers/first_steps_controller.rb
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 #: db/seeds/settings.rb
 msgid "Twitter"
@@ -15211,7 +15306,8 @@ msgstr "Twitternyckel"
 msgid "Twitter Secret"
 msgstr "Twitterhemlighet"
 
-#: app/frontend/apps/mobile/pages/login/after-auth/plugins/twoFactorSetup.ts
+#: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/twoFactorSetup.ts
+#: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/twoFactorSetup.ts
 msgid "Two-Factor Authentication Configuration Is Required"
 msgstr "Konfiguration av två-faktorautentisering krävs"
 
@@ -15229,7 +15325,8 @@ msgid "Two-factor authentication is not supported with HTTP BasicAuth."
 msgstr ""
 "Två-faktorautentisering stöds inte med grundläggande HTTP-autentisering."
 
-#: app/frontend/apps/mobile/pages/login/components/LoginTwoFactor.vue
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 msgid "Two-factor authentication method could not be initiated."
 msgstr "Två-faktorautentiseringsmetoden kunde inte initieras."
 
@@ -15289,6 +15386,29 @@ msgstr "URL"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX-slutpunkt)"
+
+#: app/services/service/auth/send_admin_token.rb
+msgid "Unable to create token for the user."
+msgstr "Det gick inte att skapa en token för användaren."
+
+#: app/services/service/user/signup.rb
+msgid "Unable to generate token."
+msgstr "Det gick inte att generera token."
+
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+msgid "Unable to resend verification email."
+msgstr "Det gick inte att skicka om verifieringsmailet."
+
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+msgid "Unable to send admin password auth email."
+msgstr ""
+"Det gick inte att skicka e-post om autentisering av administratörslösenord."
+
+#: app/services/service/auth/send_admin_token.rb
+#: app/services/service/user/password_reset/send.rb
+#: app/services/service/user/password_reset/update.rb
+msgid "Unable to send email to the user."
+msgstr "Det gick inte att skicka e-post till användaren."
 
 #: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
@@ -15757,8 +15877,10 @@ msgstr ""
 msgid "Username"
 msgstr "Användarnamn"
 
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginCredentialsForm.vue
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 msgid "Username / Email"
 msgstr "Användarnamn / mejl-adress"
 
@@ -15874,8 +15996,13 @@ msgid "Verify sending and receiving"
 msgstr "Verifiera sändning och mottagning"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 msgid "Verifying key information…"
 msgstr "Verifierar nyckelinformation…"
+
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
+msgid "Verifying your email..."
+msgstr "Verifierar din e-post…"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
@@ -16037,6 +16164,7 @@ msgid "We're sorry, but this page doesn't exist."
 msgstr "Vi beklagar, men den här sidan finns inte."
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 msgid "We've sent admin password login instructions to your email address."
 msgstr ""
 "Vi har skickat instruktioner för adminlösenordsinloggning till din mejl."
@@ -16050,6 +16178,7 @@ msgstr ""
 "postmeddelandet för att verifiera ditt konto."
 
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 msgid "We've sent password reset instructions to your email address."
 msgstr ""
 "Vi har skickat instruktioner för återställning av lösenord till din e-"
@@ -16146,7 +16275,7 @@ msgid "Week(s)"
 msgstr "Vecka/-or"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Weibo"
 msgstr "Weibo"
@@ -16321,10 +16450,12 @@ msgstr ""
 "löpnummer\" (t ex 201206231010138, 201206231010139)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
 msgid "Woo hoo! Your email address has been verified!"
 msgstr "Woo hoo! Din e-postadress har verifierats!"
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "Woo hoo! Your password has been changed!"
 msgstr "Woo hoo! Ditt lösenord har ändrats!"
 
@@ -16521,6 +16652,10 @@ msgstr ""
 msgid "You can request your password"
 msgstr "Du kan få ditt lösenord"
 
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+msgid "You can request your password here."
+msgstr "Du kan beställa ditt lösenord här."
+
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
 "You can switch between the following backends for new attachments even on a "
@@ -16561,10 +16696,8 @@ msgid "You have exceeded the character limit by %s"
 msgstr "Du har överskridit teckengränsen med %s"
 
 #: app/policies/ticket_policy.rb
-#, fuzzy
-#| msgid "You have insufficient rights to view this user."
 msgid "You have insufficient permissions to mention other users."
-msgstr "Du har inte tillräckliga rättigheter för att se den här användaren."
+msgstr "Du har inte tillräckliga behörigheter för att nämna andra användare."
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
 msgid "You have insufficient rights to view this organization."
@@ -16632,6 +16765,7 @@ msgstr ""
 "Du använder %s i texten, men ingen bilaga har bifogats. Vill du fortsätta?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid ""
 "You're already registered with your email address if you've been in touch "
 "with our Support team."
@@ -16763,9 +16897,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginFooter.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
 
@@ -16811,8 +16945,8 @@ msgstr "Zammad User Agent"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/desktop/pages/login/views/Login.vue
-#: app/frontend/apps/mobile/pages/login/components/LoginHeader.vue
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue
+#: app/frontend/apps/mobile/pages/authentication/components/LoginHeader.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
@@ -18224,6 +18358,9 @@ msgstr "... av hela textfältet"
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
 
+#~ msgid "Feature not enabled!"
+#~ msgstr "Funktionen är inte aktiverad!"
+
 #~ msgid "removed"
 #~ msgstr "borttagen"
 
@@ -18651,9 +18788,6 @@ msgstr "∅ Väntetid idag"
 
 #~ msgid "Unable to load issues"
 #~ msgstr "Det gick inte att ladda problem"
-
-#~ msgid "Unable to save Bot."
-#~ msgstr "Kan inte spara bot."
 
 #~ msgid "Setup new System"
 #~ msgstr "Installera nytt system"
