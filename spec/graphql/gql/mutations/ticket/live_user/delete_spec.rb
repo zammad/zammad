@@ -32,7 +32,7 @@ RSpec.describe Gql::Mutations::Ticket::LiveUser::Delete, :aggregate_failures, ty
 
     context 'when live user entry does exist' do
       it 'does delete' do
-        expect(live_user_entry.class).not_to be_exist(live_user_entry.id)
+        expect(live_user_entry.class).not_to exist(live_user_entry.id)
       end
 
       it 'returns success' do
@@ -44,7 +44,7 @@ RSpec.describe Gql::Mutations::Ticket::LiveUser::Delete, :aggregate_failures, ty
       let(:live_user_entry) { create(:taskbar, key: "Ticket-#{ticket.id}", user: User.find(1)) }
 
       it 'does not delete' do
-        expect(live_user_entry.class).to be_exist(live_user_entry.id)
+        expect(live_user_entry.class).to exist(live_user_entry.id)
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Gql::Mutations::Ticket::LiveUser::Delete, :aggregate_failures, ty
       let(:live_user_entry) { create(:taskbar, key: "Ticket-#{ticket.id}", user: agent, app: 'desktop') }
 
       it 'does not delete' do
-        expect(live_user_entry.class).to be_exist(live_user_entry.id)
+        expect(live_user_entry.class).to exist(live_user_entry.id)
       end
     end
 

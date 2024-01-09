@@ -363,7 +363,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       expect(user).not_to be_role('Admin')
       expect(user).not_to be_role('Agent')
       expect(user).to be_role('Customer')
-      expect(json_response['login']).to be_start_with('auto-')
+      expect(json_response['login']).to start_with('auto-')
       expect(json_response['email']).to eq('')
       expect(json_response['firstname']).to eq('newfirstname123')
       expect(json_response['lastname']).to eq('')

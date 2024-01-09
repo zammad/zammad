@@ -39,7 +39,7 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
       within :active_content do
         elem = find('.article-add input[name=shared_draft_id]', visible: :all)
 
-        expect(Ticket::SharedDraftZoom).to be_exist(elem.value)
+        expect(Ticket::SharedDraftZoom).to exist(elem.value)
       end
     end
   end
@@ -134,7 +134,7 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
         click '.js-delete'
       end
 
-      click_button 'Yes'
+      click_on 'Yes'
 
       within :active_content do
         expect(page).to have_no_selector :draft_share_button

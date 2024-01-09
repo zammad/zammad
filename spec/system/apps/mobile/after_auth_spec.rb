@@ -27,7 +27,7 @@ RSpec.describe 'Mobile > After Auth', :aggregate_failures, app: :mobile, authent
       find_input('Username / Email').type(agent.login)
       find_input('Password').type('test')
 
-      click_button('Sign in')
+      click_on('Sign in')
 
       expect(page).to have_content('The two-factor authentication is not configured yet')
       expect(page).to have_link('Click here to set up a two-factor authentication method.', href: '/#')

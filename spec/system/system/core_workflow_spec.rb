@@ -10,7 +10,7 @@ RSpec.describe 'System > Core Workflows', type: :system do
   end
 
   it 'shows correct screens and objects' do
-    click_link 'New Workflow'
+    click_on 'New Workflow'
     expect(all("select[name='object'] option").map(&:text)).not_to include('Sla')
     find_field('object').select 'Ticket'
     expect(all("select[name='preferences::screen'] option").map(&:text)).to eq(['Creation mask', 'Edit mask'])

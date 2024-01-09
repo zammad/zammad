@@ -21,7 +21,7 @@ RSpec.describe 'Manage > Integration > sipgate.io', type: :system do
         click '.js-add'
       end
 
-      click_button
+      click_on 'Save'
     end
 
     shared_examples 'showing added caller id details' do
@@ -63,7 +63,7 @@ RSpec.describe 'Manage > Integration > sipgate.io', type: :system do
           click '.js-remove'
         end
 
-        click_button
+        click_on 'Save'
       end
 
       shared_examples 'not showing removed caller id details' do

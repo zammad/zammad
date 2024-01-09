@@ -364,7 +364,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
 
       find_editor('Text').type(Faker::Lorem.characters(number: 161))
 
-      click_button('Save')
+      click_on('Save')
 
       expect(find_editor('Text')).to have_text('This field must contain between 1 and 160 characters')
     end
@@ -405,7 +405,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
 
       find_editor('Text').type(Faker::Lorem.characters(number: 281))
 
-      click_button('Save')
+      click_on('Save')
 
       expect(find_editor('Text')).to have_text('This field must contain between 1 and 280 characters')
     end
@@ -442,7 +442,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       # unselect preselected field
       find_select('To').select_options([article.from])
 
-      click_button('Save')
+      click_on('Save')
 
       expect(find_select('To')).to have_text('This field is required')
     end

@@ -108,7 +108,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       it 'creates draft' do
         post path, params: base_params, as: :json
 
-        expect(Ticket::SharedDraftStart).to be_exist json_response['shared_draft_id']
+        expect(Ticket::SharedDraftStart).to exist json_response['shared_draft_id']
       end
 
       it 'creates draft with attachment' do
@@ -130,7 +130,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       it 'grants access via role groups' do
         post path, params: base_params.merge(group_id: group_d.id), as: :json
 
-        expect(Ticket::SharedDraftStart).to be_exist json_response['shared_draft_id']
+        expect(Ticket::SharedDraftStart).to exist json_response['shared_draft_id']
       end
 
       it 'raises error when user has no create permission on any group', authenticated_as: :other_agent do
@@ -212,13 +212,13 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       it 'destroys draft' do
         delete path_draft_a, as: :json
 
-        expect(Ticket::SharedDraftStart).not_to be_exist draft_a.id
+        expect(Ticket::SharedDraftStart).not_to exist draft_a.id
       end
 
       it 'grants access via role groups' do
         delete path_draft_d, as: :json
 
-        expect(Ticket::SharedDraftStart).not_to be_exist draft_d.id
+        expect(Ticket::SharedDraftStart).not_to exist draft_d.id
       end
 
       it 'returns 404 when draft does not exist' do
@@ -277,19 +277,19 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
     it 'removes draft when creating a ticket' do
       post_new_ticket group_a.id, draft_a.id
 
-      expect(Ticket::SharedDraftStart).not_to be_exist(draft_a.id)
+      expect(Ticket::SharedDraftStart).not_to exist(draft_a.id)
     end
 
     it 'grants access via role groups' do
       post_new_ticket group_d.id, draft_d.id
 
-      expect(Ticket::SharedDraftStart).not_to be_exist(draft_d.id)
+      expect(Ticket::SharedDraftStart).not_to exist(draft_d.id)
     end
 
     it 'not removes draft when fails creating a ticket' do
       post_new_ticket group_a.id, draft_a.id, valid: false
 
-      expect(Ticket::SharedDraftStart).to be_exist(draft_a.id)
+      expect(Ticket::SharedDraftStart).to exist(draft_a.id)
     end
 
     it 'raises error if draft is not applicable in this context' do
@@ -301,7 +301,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
     it 'keeps draft if not applicable in this context' do
       post_new_ticket group_b.id, draft_a.id
 
-      expect(Ticket::SharedDraftStart).to be_exist(draft_a.id)
+      expect(Ticket::SharedDraftStart).to exist(draft_a.id)
     end
 
     it 'raises error if group does not support drafts' do

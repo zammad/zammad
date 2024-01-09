@@ -34,7 +34,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
       in_modal do
         find('[name="pre_defined_webhook_id"]').select 'Mattermost Notifications'
 
-        click_button 'Next'
+        click_on 'Next'
 
         expect(page).to have_field('Name', with: 'Mattermost Notifications')
         expect(page).to have_select('Pre-defined Webhook', text: 'Mattermost Notifications', disabled: :all)
@@ -49,7 +49,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
         fill_in 'Messaging Username', with: 'username'
         fill_in 'Messaging Channel', with: '#channel'
 
-        click_button 'Submit'
+        click_on 'Submit'
       end
 
       expect(Webhook.last).to have_attributes(
@@ -75,7 +75,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
         in_modal do
           find('[name="pre_defined_webhook_id"]').select 'Rocket Chat Notifications'
 
-          click_button 'Next'
+          click_on 'Next'
 
           expect(page).to have_field('Custom Payload', checked: false, visible: :all)
           expect(page).to have_field('custom_payload', with: custom_payload, disabled: :all, visible: :all)
@@ -83,7 +83,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
           fill_in 'Endpoint', with: 'https://example.com/rocketchat_endpoint'
           click 'label[for="attribute-customized_payload"]'
 
-          click_button 'Submit'
+          click_on 'Submit'
         end
 
         expect(Webhook.last).to have_attributes(
@@ -120,7 +120,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
         fill_in 'Messaging Channel', with: '#channel'
         fill_in 'Messaging Icon URL', with: 'https://example.com/logo.png'
 
-        click_button 'Submit'
+        click_on 'Submit'
       end
 
       expect(webhook.reload).to have_attributes(
@@ -144,7 +144,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
 
           click 'label[for="attribute-customized_payload"]'
 
-          click_button 'Submit'
+          click_on 'Submit'
         end
 
         expect(webhook.reload).to have_attributes(

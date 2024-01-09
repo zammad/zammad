@@ -39,7 +39,7 @@ module CommonActions
 
         find_toggle('Remember me').toggle_on if remember_me
 
-        click_button('Sign in')
+        click_on('Sign in')
       end
 
       wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded', skip_clearing: true) if !skip_waiting
@@ -53,7 +53,7 @@ module CommonActions
         find_toggle('Remember me').toggle_on if remember_me
       end
 
-      click_button('Sign in')
+      click_on('Sign in')
 
       wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded', skip_clearing: true) if !skip_waiting
     else
@@ -67,7 +67,7 @@ module CommonActions
         click('.checkbox-replacement') if remember_me
 
         # submit
-        click_button
+        click_on('Sign in')
       end
 
       current_login

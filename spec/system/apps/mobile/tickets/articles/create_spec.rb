@@ -70,7 +70,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
       wait_for_form_to_settle('form-ticket-edit')
 
       find_input('Ticket title').type('foobar')
-      click_button('Add reply')
+      click_on('Add reply')
 
       expect(find_select('Article Type', visible: :all)).to have_selected_option('Note')
       expect(find_select('Visibility', visible: :all)).to have_selected_option('Internal')
@@ -172,8 +172,8 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
           find('[data-name="article-context"]').click
         end
 
-        click_button 'Delete Article'
-        click_button 'OK'
+        click_on 'Delete Article'
+        click_on 'OK'
 
         wait_for_subscription_update('ticketArticleUpdates', number: number)
       end
@@ -407,7 +407,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
       open_article_dialog
 
       find_editor('Text').type(Faker::Hacker.say_something_smart)
-      click_button('Add image') # inserts an invisible input
+      click_on('Add image') # inserts an invisible input
       find('[data-test-id="editor-image-input"]', visible: :all).attach_file(Rails.root.join('spec/fixtures/files/image/large2.png'))
       wait_for_test_flag('editor.imageResized')
 

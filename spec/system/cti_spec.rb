@@ -73,7 +73,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
         visit '/'
 
         within '.call-widgets .user-card' do
-          click_link customer.fullname
+          click_on customer.fullname
         end
 
         expect(current_url).to end_with("user/profile/#{customer.id}")

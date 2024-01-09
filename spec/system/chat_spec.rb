@@ -111,7 +111,7 @@ RSpec.describe 'Chat Handling', type: :system do
       expect(page).to have_no_css('.active .chat-window .chat-status.is-modified')
 
       # Keep focus outside of chat window to check .chat-status.is-modified later.
-      click_link 'Dashboard'
+      click_on 'Dashboard'
 
       using_session :customer do
         check_content('.zammad-chat .zammad-chat-agent-status', 'Online')

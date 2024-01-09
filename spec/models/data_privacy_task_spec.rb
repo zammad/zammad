@@ -32,7 +32,7 @@ RSpec.describe DataPrivacyTask, type: :model do
       it 'deletes the user' do
         task.perform
 
-        expect(User).not_to be_exist(deletable.id)
+        expect(User).not_to exist(deletable.id)
       end
 
       context 'when user belongs to an organization' do
@@ -43,8 +43,8 @@ RSpec.describe DataPrivacyTask, type: :model do
         it 'deletes the user only' do
           task.perform
 
-          expect(User).not_to be_exist(deletable.id)
-          expect(Organization).to be_exist(organization.id)
+          expect(User).not_to exist(deletable.id)
+          expect(Organization).to exist(organization.id)
         end
 
         context 'when organization shall be deleted' do
@@ -56,8 +56,8 @@ RSpec.describe DataPrivacyTask, type: :model do
           it 'deletes the user and organization' do
             task.perform
 
-            expect(User).not_to be_exist(deletable.id)
-            expect(Organization).not_to be_exist(organization.id)
+            expect(User).not_to exist(deletable.id)
+            expect(Organization).not_to exist(organization.id)
           end
 
           context 'when organization has more members' do
@@ -68,9 +68,9 @@ RSpec.describe DataPrivacyTask, type: :model do
             it 'deletes the original user only' do
               task.perform
 
-              expect(User).not_to be_exist(deletable.id)
-              expect(Organization).to be_exist(organization.id)
-              expect(User).to be_exist(other_agent.id)
+              expect(User).not_to exist(deletable.id)
+              expect(Organization).to exist(organization.id)
+              expect(User).to exist(other_agent.id)
             end
           end
 
@@ -82,9 +82,9 @@ RSpec.describe DataPrivacyTask, type: :model do
             it 'deletes the original user and main organization only' do
               task.perform
 
-              expect(User).not_to be_exist(deletable.id)
-              expect(Organization).not_to be_exist(organization.id)
-              expect(Organization).to be_exist(other_organization.id)
+              expect(User).not_to exist(deletable.id)
+              expect(Organization).not_to exist(organization.id)
+              expect(Organization).to exist(other_organization.id)
             end
           end
         end
@@ -96,7 +96,7 @@ RSpec.describe DataPrivacyTask, type: :model do
 
       it 'deletes the ticket' do
         task.perform
-        expect(Ticket).not_to be_exist(deletable.id)
+        expect(Ticket).not_to exist(deletable.id)
       end
 
       context 'when ticket has a customer that belongs to an organization' do
@@ -114,9 +114,9 @@ RSpec.describe DataPrivacyTask, type: :model do
         it 'deletes the ticket only' do
           task.perform
 
-          expect(Ticket).not_to be_exist(deletable.id)
-          expect(User).to be_exist(customer.id)
-          expect(Organization).to be_exist(organization.id)
+          expect(Ticket).not_to exist(deletable.id)
+          expect(User).to exist(customer.id)
+          expect(Organization).to exist(organization.id)
         end
       end
     end

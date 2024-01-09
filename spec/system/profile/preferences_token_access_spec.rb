@@ -32,7 +32,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
         checkbox.check allow_label_click: true
         find('.js-datepicker').fill_in with: expiry_date
         send_keys(:tab)
-        click_button
+        click_on 'Create'
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
 
       it 'shows active report profile' do
         in_modal do
-          click_button
+          click_on "OK, I've copied my token"
         end
 
         within :active_content do
@@ -68,7 +68,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
 
       it 'shows active report profile' do
         in_modal do
-          click_button
+          click_on "OK, I've copied my token"
         end
 
         within :active_content do
@@ -100,7 +100,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
         in_modal disappears: false do
           checkbox = find(checkbox_input, visible: :all)
           checkbox.check allow_label_click: true
-          click_button
+          click_on 'Create'
         end
       end
 
@@ -111,7 +111,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
       let(:name) { nil }
       let(:error_message) { "The required parameter 'permission' is missing." }
 
-      before { click_button }
+      before { click_on 'Create' }
 
       it_behaves_like 'having an error notification message'
     end
@@ -140,7 +140,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
       token_delete_button.click
 
       in_modal do
-        click_button
+        click_on 'Yes'
       end
 
       expect(token_list).to have_no_text(name)

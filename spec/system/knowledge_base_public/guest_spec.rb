@@ -103,7 +103,7 @@ RSpec.describe 'Public Knowledge Base for guest', authenticated_as: false, type:
     context 'switch to correct locale after clicking on language banner' do
       before do
         within '.language-banner' do
-          click_link 'activate'
+          click_on 'activate'
         end
       end
 
@@ -122,7 +122,7 @@ RSpec.describe 'Public Knowledge Base for guest', authenticated_as: false, type:
     it { expect(page).to have_no_selector('h1', text: published_answer.translation_primary.title) }
 
     context 'follow primary locale' do
-      before { click_link published_answer.translation_primary.title }
+      before { click_on published_answer.translation_primary.title }
 
       it { expect(page).to have_css('h1', text: published_answer.translation_primary.title) }
     end

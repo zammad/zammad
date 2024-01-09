@@ -29,7 +29,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
 
     if create_new_article
       find(:richtext).send_keys article_body
-      click_button 'Update'
+      click_on 'Update'
 
       accounted_time_modal_hook if defined?(accounted_time_modal_hook)
     end
@@ -47,7 +47,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
 
           fill_in 'time_unit', with: time_unit
 
-          click_button 'Account Time'
+          click_on 'Account Time'
         end
 
         expect(find('.accounted-time-value-row:nth-of-type(1)')).to have_text("Total\n#{time_unit}", exact: true)
@@ -60,7 +60,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
 
           fill_in 'time_unit', with: time_unit
 
-          click_button 'Account Time'
+          click_on 'Account Time'
         end
 
         expect(find('.accounted-time-value-row:nth-of-type(1)')).to have_text("Total\n#{time_unit}\n#{display_unit}", exact: true)
@@ -88,12 +88,12 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
       end
 
       # try to submit again
-      click_button 'Update'
+      click_on 'Update'
 
       in_modal do
         fill_in 'time_unit', with: '123'
 
-        click_button 'Account Time'
+        click_on 'Account Time'
       end
 
       expect(find('.accounted-time-value-row:nth-of-type(1)')).to have_text("Total\n123.0", exact: true)
@@ -103,7 +103,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
       in_modal do
         fill_in 'time_unit', with: '4,6'
 
-        click_button 'Account Time'
+        click_on 'Account Time'
       end
 
       expect(find('.accounted-time-value-row:nth-of-type(1)')).to have_text("Total\n4.6", exact: true)
@@ -113,7 +113,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
       in_modal do
         fill_in 'time_unit', with: '4 '
 
-        click_button 'Account Time'
+        click_on 'Account Time'
       end
 
       expect(find('.accounted-time-value-row:nth-of-type(1)')).to have_text("Total\n4.0", exact: true)
@@ -123,7 +123,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
       in_modal do
         fill_in 'time_unit', with: '4abc'
 
-        click_button 'Account Time'
+        click_on 'Account Time'
 
         expect(page).to have_css('.input.has-error [name=time_unit]')
       end
@@ -190,7 +190,7 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
             fill_in 'time_unit', with: '123'
             select types[0].name, from: 'Activity Type'
 
-            click_button 'Account Time'
+            click_on 'Account Time'
           end
         end
 

@@ -9,8 +9,8 @@ RSpec.describe 'Mobile > Ticket > Update Customer', app: :mobile, authenticated_
 
   before do
     visit "/tickets/#{ticket.id}"
-    click_button 'Show ticket actions'
-    click_button 'Change customer'
+    click_on 'Show ticket actions'
+    click_on 'Change customer'
   end
 
   context 'with a single-organization customer' do
@@ -19,7 +19,7 @@ RSpec.describe 'Mobile > Ticket > Update Customer', app: :mobile, authenticated_
 
     it 'allows selecting customer' do
       find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
-      click_button 'Save'
+      click_on 'Save'
 
       wait.until do
         ticket.reload.customer == customer && ticket.organization = organization
@@ -35,7 +35,7 @@ RSpec.describe 'Mobile > Ticket > Update Customer', app: :mobile, authenticated_
     it 'allows selecting customer' do
       find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
       find_autocomplete('Organization').search_for_option(secondary_orgs.last.name)
-      click_button 'Save'
+      click_on 'Save'
 
       wait.until do
         ticket.reload.customer == customer && ticket.organization == secondary_orgs.last

@@ -20,7 +20,7 @@ RSpec.describe 'Manage > Integration > Slack', type: :system do
         select group_ids,	from: 'group_ids'
         fill_in 'webhook',	with: webhook
         fill_in 'username',	with: username
-        click_button
+        click_on 'Submit'
       end
     end
 

@@ -445,7 +445,7 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
 
     it 'shows ticket in my organization tickets' do
       visit 'ticket/view/my_tickets'
-      click_link 'My Organization Tickets'
+      click_on 'My Organization Tickets'
       expect(page).to have_text(ticket.title)
     end
   end

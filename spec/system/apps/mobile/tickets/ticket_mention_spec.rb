@@ -25,7 +25,7 @@ RSpec.describe 'Mobile > Ticket > Mentions', app: :mobile, authenticated_as: :ag
 
     expect(page).to have_button('Unsubscribe')
 
-    click_button 'Done'
+    click_on 'Done'
 
     expect(find_toggle('Get notified')).to be_toggled_on
     expect(Mention.subscribed?(ticket, agent)).to be true

@@ -8,7 +8,7 @@ RSpec.describe 'Profile > Appearance', type: :system do
 
     before do
       visit 'profile/language'
-      click_link 'Appearance'
+      click_on 'Appearance'
     end
 
     it 'can change appearance' do

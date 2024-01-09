@@ -12,7 +12,7 @@ RSpec.describe 'User Profile', type: :system do
   it 'does show the edit link' do
     visit "#user/profile/#{customer.id}"
     click '#userAction label'
-    click_link 'Edit'
+    click_on 'Edit'
     modal_ready
   end
 

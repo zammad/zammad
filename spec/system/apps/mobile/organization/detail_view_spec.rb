@@ -80,7 +80,7 @@ RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, ty
       wait_for_subscription_update('organizationUpdates')
 
       expect(page).to have_button('Show 3 more')
-      click_button('Show 3 more')
+      click_on('Show 3 more')
 
       expect(page).to have_text(members.first.fullname)
         .and have_text(members.last.fullname)

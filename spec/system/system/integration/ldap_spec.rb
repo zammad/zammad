@@ -8,7 +8,7 @@ RSpec.describe 'Manage > Integration > Ldap', type: :system do
   end
 
   def open_ldap_wizard
-    click_link 'New Source'
+    click_on 'New Source'
 
     modal_ready
   end
@@ -22,7 +22,7 @@ RSpec.describe 'Manage > Integration > Ldap', type: :system do
           fill_in 'name', with: 'Example LDAP'
           fill_in 'host', with: 'example.ldap.okta.com'
 
-          click_button 'Connect'
+          click_on 'Connect'
 
           wait.until { find('input[name="base_dn"]').present? }
 

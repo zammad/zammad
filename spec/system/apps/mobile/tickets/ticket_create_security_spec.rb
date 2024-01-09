@@ -95,12 +95,12 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
         expect(find_button('Encrypt')['aria-selected']).to eq('true')
         expect(find_button('Sign')['aria-selected']).to eq('true')
 
-        click_button('PGP')
+        click_on('PGP')
 
         expect(find_button('Encrypt')['aria-selected']).to eq('true')
         expect(find_button('Sign')['aria-selected']).to eq('true')
 
-        click_button('S/MIME')
+        click_on('S/MIME')
 
         expect(find_button('Encrypt')['aria-selected']).to eq('true')
         expect(find_button('Sign')['aria-selected']).to eq('true')

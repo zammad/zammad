@@ -152,7 +152,7 @@ RSpec.describe 'Manage > Settings > Ticket', type: :system do
           find('.js-ticketDefaultNotificationsReset').click
 
           in_modal do
-            click_button 'Yes'
+            click_on 'Yes'
           end
 
           await_empty_ajax_queue
@@ -181,7 +181,7 @@ RSpec.describe 'Manage > Settings > Ticket', type: :system do
 
       in_modal disappears: false do
         find('[name="sure"]').fill_in with: 'CONFIRM'
-        click_button 'Yes'
+        click_on 'Yes'
       end
 
       perform_enqueued_jobs only: ResetNotificationsPreferencesJob

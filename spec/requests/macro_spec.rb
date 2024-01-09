@@ -99,7 +99,7 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
       end
 
       it 'macro is destroyed' do
-        expect(Macro).not_to be_exist(macro.id)
+        expect(Macro).not_to exist(macro.id)
       end
     end
   end

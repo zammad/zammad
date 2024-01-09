@@ -409,12 +409,18 @@ Capybara/NegationMatcher:
   Description: Enforces use of have_no_* or not_to for negated expectations.
   EnforcedStyle: have_no
 
+Capybara/ClickLinkOrButtonStyle:
+  EnforcedStyle: link_or_button
+
 RSpec/ExampleLength:
   CountAsOne:
     - 'array'
     - 'hash'
     - 'heredoc'
   Max: 25
+
+FactoryBot/ExcessiveCreateList:
+  Enabled: false
 
 Zammad/PreferNegatedIfOverUnless:
   Exclude:

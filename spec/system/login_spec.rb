@@ -17,7 +17,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
         fill_in 'username', with: 'admin@example.com'
         fill_in 'password', with: 'wrong'
 
-        click_button
+        click_on('Sign in')
       end
 
       expect(page).to have_css('#login .alert')
@@ -43,7 +43,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
           fill_in 'username', with: 'admin@example.com'
           fill_in 'password', with: 'test'
 
-          click_button
+          click_on('Sign in')
         end
       end
 
@@ -77,7 +77,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
           fill_in 'username', with: 'admin@example.com'
           fill_in 'password', with: 'test'
 
-          click_button
+          click_on('Sign in')
         end
       end
 
@@ -85,7 +85,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
         within('#login') do
           fill_in 'security_code', with: token
 
-          click_button
+          click_on('Sign in')
         end
 
         expect(page).to have_no_selector('#login')
@@ -95,7 +95,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
         within('#login') do
           fill_in 'security_code', with: 'asd'
 
-          click_button
+          click_on('Sign in')
         end
 
         expect(page).to have_css('#login .alert')
@@ -117,7 +117,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
           fill_in 'username', with: 'admin@example.com'
           fill_in 'password', with: 'test'
 
-          click_button
+          click_on('Sign in')
         end
       end
 
@@ -125,14 +125,14 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
         let(:recovery_codes_enabled) { true }
 
         before do
-          click_link 'Try another method'
-          click_link 'recovery codes'
+          click_on 'Try another method'
+          click_on 'recovery codes'
         end
 
         it 'login with correct payload' do
           within('#login') do
             fill_in 'security_code', with: token
-            click_button
+            click_on('Sign in')
           end
 
           expect(page).to have_no_selector('#login')
@@ -141,7 +141,7 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
         it 'login with wrong payload' do
           within('#login') do
             fill_in 'security_code', with: 'wrong token'
-            click_button
+            click_on('Sign in')
           end
 
           expect(page).to have_css('#login .alert')

@@ -52,14 +52,14 @@ RSpec.describe 'Manage > Ticket Priorities', type: :system do
 
     before do
       visit 'manage/ticket_priorities'
-      click_link 'New Priority'
+      click_on 'New Priority'
     end
 
     it 'creates a new priority' do
       fill_in 'Name', with: new_priority_name
 
       scroll_into_view('button.js-submit', position: :bottom)
-      click_button
+      click_on 'Submit'
 
       within :active_content do
         expect(find("tr[data-id='#{Ticket::Priority.last.id}']")).to have_text(new_priority_name)
@@ -108,7 +108,7 @@ RSpec.describe 'Manage > Ticket Priorities', type: :system do
       fill_in 'Name', with: new_priority_name
 
       scroll_into_view('button.js-submit', position: :bottom)
-      click_button
+      click_on 'Submit'
 
       within :active_content do
         expect(find("tr[data-id='#{priority.id}']")).to have_text(new_priority_name)

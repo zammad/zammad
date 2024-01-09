@@ -20,7 +20,7 @@ RSpec.describe 'Manage > Settings > System > Network', required_envs: %w[CI_PROX
         fill_in 'proxy',            with: proxy
         fill_in 'proxy_username',   with: proxy_username
         fill_in 'proxy_password',   with: proxy_password
-        click_button 'Test Connection'
+        click_on 'Test Connection'
 
         expect(page).to have_button('Test Connection', visible: :hidden)
         expect(page).to have_button('Submit', visible: :visible)
@@ -42,7 +42,7 @@ RSpec.describe 'Manage > Settings > System > Network', required_envs: %w[CI_PROX
           fill_in 'proxy',            with: 'invalid_proxy'
           fill_in 'proxy_username',   with: proxy_username
           fill_in 'proxy_password',   with: proxy_password
-          click_button 'Test Connection'
+          click_on 'Test Connection'
 
           in_modal do
             expect(page).to have_css('h1', text: 'Error')
@@ -63,7 +63,7 @@ RSpec.describe 'Manage > Settings > System > Network', required_envs: %w[CI_PROX
           fill_in 'proxy',            with: 'proxy.example.com:3128'
           fill_in 'proxy_username',   with: proxy_username
           fill_in 'proxy_password',   with: proxy_password
-          click_button 'Test Connection'
+          click_on 'Test Connection'
 
           in_modal do
             expect(page).to have_css('h1', text: 'Error')
@@ -84,7 +84,7 @@ RSpec.describe 'Manage > Settings > System > Network', required_envs: %w[CI_PROX
           fill_in 'proxy',            with: proxy
           fill_in 'proxy_username',   with: 'invalid_username'
           fill_in 'proxy_password',   with: proxy_password
-          click_button 'Test Connection'
+          click_on 'Test Connection'
 
           in_modal do
             expect(page).to have_css('h1', text: 'Error')
@@ -105,7 +105,7 @@ RSpec.describe 'Manage > Settings > System > Network', required_envs: %w[CI_PROX
           fill_in 'proxy',            with: proxy
           fill_in 'proxy_username',   with: proxy_username
           fill_in 'proxy_password',   with: 'invalid_password'
-          click_button 'Test Connection'
+          click_on 'Test Connection'
 
           in_modal do
             expect(page).to have_css('h1', text: 'Error')

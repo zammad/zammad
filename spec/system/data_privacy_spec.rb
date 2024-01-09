@@ -77,7 +77,7 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
       ensure_websocket
 
       click '.dropdown--actions'
-      click_link 'Delete'
+      click_on 'Delete'
 
       fill_in 'Are you sure?', with: 'DELETE'
       click '.js-submit'
@@ -95,7 +95,7 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
 
       click '.tabsSidebar-tab[data-tab=customer]'
       click 'h2.js-headline'
-      click_link 'Delete Customer'
+      click_on 'Delete Customer'
 
       fill_in 'Are you sure?', with: 'DELETE'
       click '.js-submit'

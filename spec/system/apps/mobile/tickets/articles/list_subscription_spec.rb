@@ -238,8 +238,8 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
 
     expect(page).to have_button('Scroll down')
 
-    click_link(ticket.title)
-    click_button('Go back')
+    click_on(ticket.title)
+    click_on('Go back')
 
     expect(page).to have_button('Scroll down')
   end

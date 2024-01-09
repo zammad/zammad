@@ -26,7 +26,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
     it 'switches article to internal' do
       find('[data-name="article-context"]').click
-      click_button 'Set to internal'
+      click_on 'Set to internal'
       wait_for_gql('shared/entities/ticket-article/graphql/mutations/changeVisibility.graphql')
       expect(page).to have_css('.Article.Internal')
     end
@@ -36,8 +36,8 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
       it 'deletes article' do
         find('[data-name="article-context"]').click
-        click_button 'Delete Article'
-        click_button 'OK'
+        click_on 'Delete Article'
+        click_on 'OK'
 
         expect(page).to have_no_text(article.body)
       end
@@ -91,8 +91,8 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
       expect(page).to have_button('Delete Article')
 
-      click_button 'Delete Article'
-      click_button 'OK'
+      click_on 'Delete Article'
+      click_on 'OK'
 
       expect(page).to have_no_text(articles.last.body)
     end

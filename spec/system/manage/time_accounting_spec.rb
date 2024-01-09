@@ -47,7 +47,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
             .find('option', text: '3 high')
             .select_option
 
-          click_button 'Save'
+          click_on 'Save'
         end
       end
 
@@ -81,7 +81,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
             find('#timeAccountingCustomUnit').fill_in with: custom_unit
           end
 
-          click_button 'Save'
+          click_on 'Save'
         end
       end
 
@@ -115,7 +115,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
   context 'with activity types' do
     before do
       within :active_content do
-        click_link 'Activity Types'
+        click_on 'Activity Types'
       end
     end
 
@@ -126,7 +126,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
             .find('option', text: setting_option)
             .select_option
 
-          click_button 'Save'
+          click_on 'Save'
         end
       end
 
@@ -162,13 +162,13 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
 
       before do
         within :active_content do
-          click_link 'New Activity Type'
+          click_on 'New Activity Type'
         end
 
         in_modal do
           fill_in 'Name', with: name
 
-          click_button 'Submit'
+          click_on 'Submit'
         end
       end
 
@@ -195,7 +195,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
         in_modal do
           fill_in 'Name', with: new_name
 
-          click_button 'Submit'
+          click_on 'Submit'
         end
       end
 
@@ -228,7 +228,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
           end
 
           in_modal do
-            click_button 'Yes'
+            click_on 'Yes'
           end
         end
 
@@ -251,7 +251,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
           end
 
           in_modal do
-            click_button 'Yes'
+            click_on 'Yes'
           end
         end
 
@@ -271,7 +271,7 @@ RSpec.describe 'Manage > Time Accounting', authenticated_as: :authenticate, type
 
     before do
       within :active_content do
-        click_link 'Accounted Time'
+        click_on 'Accounted Time'
       end
     end
 

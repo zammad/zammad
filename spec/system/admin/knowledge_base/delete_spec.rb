@@ -14,7 +14,7 @@ RSpec.describe 'Admin Panel > Knowledge Base > Delete', type: :system do
   it 'deletes the knowledge base' do
     find('input[name="title"]').fill_in with: knowledge_base.translations.first.title
 
-    click_button 'Delete Knowledge Base'
+    click_on 'Delete Knowledge Base'
 
     expect(KnowledgeBase.count).to be_zero
   end

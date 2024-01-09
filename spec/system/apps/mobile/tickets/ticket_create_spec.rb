@@ -285,7 +285,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         find_input('First name').type('John')
         find_input('Last name').type('Doe')
 
-        click_button('Save')
+        click_on('Save')
 
         expect(find_autocomplete('Customer')).to have_selected_option('John Doe')
       end

@@ -11,7 +11,7 @@ RSpec.describe 'Manage > SSL Certificates', type: :system do
   describe 'adding a certificate' do
     before do
       visit 'system/security'
-      click_link 'SSL Certificates'
+      click_on 'SSL Certificates'
       click '.js-addCertificate'
     end
 
@@ -20,7 +20,7 @@ RSpec.describe 'Manage > SSL Certificates', type: :system do
         in_modal do
           find('[type=file]').attach_file certificate_file
 
-          click_button 'Add'
+          click_on 'Add'
         end
 
         expect(page).to have_css("tr[data-id='#{SSLCertificate.last.id}']")
@@ -30,7 +30,7 @@ RSpec.describe 'Manage > SSL Certificates', type: :system do
         in_modal do
           fill_in 'Paste Certificate', with: certificate_content
 
-          click_button 'Add'
+          click_on 'Add'
         end
 
         expect(page).to have_css("tr[data-id='#{SSLCertificate.last.id}']")
@@ -44,7 +44,7 @@ RSpec.describe 'Manage > SSL Certificates', type: :system do
         in_modal do
           fill_in 'Paste Certificate', with: certificate_content
 
-          click_button 'Add'
+          click_on 'Add'
 
           expect(page).to have_text('The certificate is not valid for SSL usage.')
         end
@@ -58,7 +58,7 @@ RSpec.describe 'Manage > SSL Certificates', type: :system do
     before do
       certificate
       visit 'system/security'
-      click_link 'SSL Certificates'
+      click_on 'SSL Certificates'
     end
 
     it 'is listed' do
@@ -74,7 +74,7 @@ RSpec.describe 'Manage > SSL Certificates', type: :system do
       end
 
       in_modal do
-        click_button 'Yes'
+        click_on 'Yes'
       end
 
       expect(page).to have_no_css("tr[data-id='#{certificate.id}']")

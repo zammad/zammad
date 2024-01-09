@@ -29,7 +29,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
     # Switch to ticket information screen.
     click '[data-test-id="title-content"]'
 
-    click_button('Customer')
+    click_on('Customer')
 
     wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql')
     wait_for_gql('shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.graphql', number: 2)
@@ -43,7 +43,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
     expect(find('section', text: 'Address')).to have_text(customer.address)
     expect(page).to have_no_css('section', text: 'Text Attribute')
 
-    click_button('Show 1 more')
+    click_on('Show 1 more')
 
     wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql', number: 2)
 
@@ -56,7 +56,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
   end
 
   it 'supports editing customer data' do
-    click_button('Edit Customer')
+    click_on('Edit Customer')
 
     wait_for_form_to_settle('user-edit')
 
@@ -72,7 +72,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
       # find_autocomplete('Secondary organizations').select_options(secondary_organizations.map { |organization| organization.name })
     end
 
-    click_button('Save')
+    click_on('Save')
 
     wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
 
@@ -92,7 +92,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
   end
 
   it 'has an always enabled cancel button' do
-    click_button('Edit Customer')
+    click_on('Edit Customer')
 
     wait_for_form_to_settle('user-edit')
 
@@ -102,7 +102,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
   end
 
   it 'shows a confirmation dialog when leaving the screen' do
-    click_button('Edit Customer')
+    click_on('Edit Customer')
 
     wait_for_form_to_settle('user-edit')
 

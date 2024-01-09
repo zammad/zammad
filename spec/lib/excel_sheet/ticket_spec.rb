@@ -25,7 +25,7 @@ RSpec.describe ExcelSheet::Ticket do
     end
 
     it 'all elements have width attribute' do
-      expect(instance.ticket_header).to be_all(have_key(:width))
+      expect(instance.ticket_header).to all(have_key(:width))
     end
   end
 end

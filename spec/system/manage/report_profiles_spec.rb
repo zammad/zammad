@@ -21,7 +21,7 @@ RSpec.describe 'Manage > Report Profiles', type: :system do
           select profile_active, from: 'active'
           select 'open', from: 'condition::ticket.state_id::value'
 
-          click_button
+          click_on 'Submit'
         end
       end
     end

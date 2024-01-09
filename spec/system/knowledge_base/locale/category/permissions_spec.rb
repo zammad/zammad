@@ -133,7 +133,7 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
           .ancestor('label')
           .click
 
-        click_button 'Submit'
+        click_on 'Submit'
       end
 
       expect(category.reload.permissions)
@@ -153,7 +153,7 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
           .ancestor('label')
           .click
 
-        click_button 'Submit'
+        click_on 'Submit'
       end
 
       expect(category.reload.permissions)
@@ -171,7 +171,7 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
           .ancestor('label')
           .click
 
-        click_button 'Submit'
+        click_on 'Submit'
 
         expect(page).to have_css('.alert')
       end

@@ -20,7 +20,7 @@ RSpec.describe 'Manage > Templates', type: :system do
     it 'with default attributes' do
       in_modal do
         fill_in('name', with: 'template 1')
-        click_button('Submit')
+        click_on('Submit')
       end
     end
 
@@ -28,7 +28,7 @@ RSpec.describe 'Manage > Templates', type: :system do
       in_modal do
         fill_in('name', with: Faker::Name.unique.name)
         find_field('active').select('inactive')
-        click_button('Submit')
+        click_on('Submit')
 
         await_empty_ajax_queue
 
@@ -43,7 +43,7 @@ RSpec.describe 'Manage > Templates', type: :system do
         fill_in('name', with: Faker::Name.unique.name)
         find('.js-attributeSelector select').find(:option, 'CC').select_option
         fill_in('options::article.cc::value', with: cc_recipients)
-        click_button('Submit')
+        click_on('Submit')
 
         await_empty_ajax_queue
       end
@@ -237,7 +237,7 @@ RSpec.describe 'Manage > Templates', type: :system do
 
       it 'supports modifying active state' do
         find_field('active').select('active')
-        click_button('Submit')
+        click_on('Submit')
 
         await_empty_ajax_queue
 

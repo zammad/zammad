@@ -90,7 +90,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       fill_in 'username', with: 'john.doe'
       fill_in 'password', with: 'test'
 
-      click_button
+      click_on 'Sign In'
     end
   end
 
@@ -295,7 +295,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
         login_saml(app: 'mobile')
 
         visit '/account', app: :mobile
-        click_button('Sign out')
+        click_on('Sign out')
 
         wait.until do
           expect(page).to have_button('Sign in')
@@ -334,7 +334,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
         login_saml(app: 'mobile')
 
         visit '/account', app: :mobile
-        click_button('Sign out')
+        click_on('Sign out')
 
         wait.until do
           expect(page).to have_button('Sign in')

@@ -45,7 +45,7 @@ RSpec.describe 'After Auth', type: :system do
 
       context 'with security keys method' do
         before do
-          click_button 'Security Keys'
+          click_on 'Security Keys'
         end
 
         include_examples 'security keys setup' do
@@ -55,7 +55,7 @@ RSpec.describe 'After Auth', type: :system do
 
       context 'with authenticator app method' do
         before do
-          click_button 'Authenticator App'
+          click_on 'Authenticator App'
         end
 
         include_examples 'authenticator app setup' do

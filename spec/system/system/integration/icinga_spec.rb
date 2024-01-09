@@ -18,7 +18,7 @@ RSpec.describe 'Manage > Integration > Icinga', type: :system do
       within :active_content, '.main' do
         fill_in 'icinga_sender',	with: icinga_sender
         select icinga_auto_close,	from: 'icinga_auto_close'
-        click_button
+        click_on 'Submit'
       end
     end
 

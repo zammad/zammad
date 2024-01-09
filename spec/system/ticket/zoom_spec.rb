@@ -59,14 +59,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     it 'does show the edit link for the customer' do
       click '.tabsSidebar-tab[data-tab=customer]'
       click '#userAction'
-      click_link 'Edit Customer'
+      click_on 'Edit Customer'
       modal_ready
     end
 
     it 'does show the edit link for the organization' do
       click '.tabsSidebar-tab[data-tab=organization]'
       click '#userAction'
-      click_link 'Edit Organization'
+      click_on 'Edit Organization'
       modal_ready
     end
 
@@ -146,7 +146,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       before do
         within :active_ticket_article, article do
           within '.attachment.file-calendar' do
-            click_button 'Preview'
+            click_on 'Preview'
           end
         end
       end
@@ -844,7 +844,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'to next Ticket ID' do
       visit 'ticket/view/all_unassigned'
-      click_link 'Welcome to Zammad!'
+      click_on 'Welcome to Zammad!'
       click '.js-openDropdownMacro'
       find(:macro, macro.id).click
       wait(5, interval: 1).until_constant { current_url }
@@ -925,7 +925,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'adds previous/next buttons to existing ticket' do
       within :active_content do
-        click_link ticket_a.title
+        click_on ticket_a.title
 
         expect(page).to have_css('.pagination-counter')
       end
@@ -933,7 +933,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'keeps previous/next buttons when navigating to overview ticket from elsewhere' do
       within :active_content do
-        click_link ticket_a.title
+        click_on ticket_a.title
         visit 'dashboard'
         visit "ticket/zoom/#{ticket_a.id}"
 
@@ -1165,7 +1165,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     context 'when long articles are present' do
-      it 'will properly show the "See more" link if you switch between the ticket and the dashboard on new articles' do
+      it 'shows the "See more" link if you switch between the ticket and the dashboard on new articles' do
         ensure_websocket do
           # prerender ticket
           visit "ticket/zoom/#{ticket.id}"
@@ -1282,9 +1282,9 @@ RSpec.describe 'Ticket zoom', type: :system do
         click('.sidebar-header-headline.js-headline')
 
         # add issue
-        click_link 'Link issue'
+        click_on 'Link issue'
         fill_in 'link', with: ENV['GITLAB_ISSUE_LINK']
-        click_button 'Submit'
+        click_on 'Submit'
 
         # verify issue
         content = find('.sidebar-git-issue-content')
@@ -1333,9 +1333,9 @@ RSpec.describe 'Ticket zoom', type: :system do
         click('.sidebar-header-headline.js-headline')
 
         # add issue
-        click_link 'Link issue'
+        click_on 'Link issue'
         fill_in 'link', with: ENV['GITHUB_ISSUE_LINK']
-        click_button 'Submit'
+        click_on 'Submit'
 
         # verify issue
         content = find('.sidebar-git-issue-content')
@@ -1578,7 +1578,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       it 'does change the tab without any action' do
-        click_link ticket1.title
+        click_on ticket1.title
         expect(current_url).to include("ticket/zoom/#{ticket1.id}")
         click '.js-submit'
         expect(current_url).to include("ticket/zoom/#{ticket2.id}")
@@ -1587,7 +1587,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       it 'does show default stay on tab if secondary action is not given' do
-        click_link ticket1.title
+        click_on ticket1.title
         refresh
         expect(page).to have_text('Stay on tab')
       end
@@ -1692,7 +1692,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       page.find('.js-input').click
       page.find('.js-input').set('Deutsch')
       page.find('.js-input').send_keys(:enter)
-      click_button 'Submit'
+      click_on 'Submit'
 
       visit "#ticket/zoom/#{ticket.id}"
       expect(page).to have_text(Translation.translate('de-de', 'select attachment…'))

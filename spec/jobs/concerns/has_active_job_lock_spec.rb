@@ -40,7 +40,7 @@ RSpec.describe HasActiveJobLock, type: :job do
 
       before { job_class.perform_later }
 
-      it "won't enqueue perform_later jobs" do
+      it 'does not enqueue perform_later jobs' do
         expect { job_class.perform_later }.not_to have_enqueued_job(job_class)
       end
 

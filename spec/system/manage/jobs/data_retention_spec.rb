@@ -35,22 +35,22 @@ RSpec.describe 'Data retention rules for object cleanup from the system with the
           set_condition(1, 'Action', nil, value_action: 'Add a data privacy deletion task')
         end
 
-        click_button 'Submit'
+        click_on 'Submit'
       end
 
       run_last_job_and_perform_last_deletion_task
     end
 
     it 'deletes user via data privacy task', if: object_name == 'User' do
-      expect(User).not_to be_exist(user.id)
-      expect(Organization).to be_exist(organization.id)
-      expect(Ticket).not_to be_exist(ticket.id)
+      expect(User).not_to exist(user.id)
+      expect(Organization).to exist(organization.id)
+      expect(Ticket).not_to exist(ticket.id)
     end
 
     it 'deletes ticket via data privacy task', if: object_name == 'Ticket' do
-      expect(Ticket).not_to be_exist(ticket.id)
-      expect(User).to be_exist(user.id)
-      expect(Organization).to be_exist(organization.id)
+      expect(Ticket).not_to exist(ticket.id)
+      expect(User).to exist(user.id)
+      expect(Organization).to exist(organization.id)
     end
   end
 

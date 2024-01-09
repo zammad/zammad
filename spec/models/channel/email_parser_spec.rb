@@ -154,8 +154,8 @@ RSpec.describe Channel::EmailParser, type: :model do
             From: john.doe@xn--cme-pla.corp
             To: jane.doe@xn--cme-pla.corp
           RAW
-          expect(User).to be_exist(login: 'john.doe@äcme.corp')
-            .and(be_exist(email: 'jane.doe@äcme.corp'))
+          expect(User).to exist(login: 'john.doe@äcme.corp')
+            .and(exist(email: 'jane.doe@äcme.corp'))
         end
       end
 

@@ -12,7 +12,7 @@ RSpec.describe 'Manage > Settings > Branding', type: :system do
       within :active_content do
         within '#product_name' do
           fill_in 'product_name', with: new_name
-          click_button 'Submit'
+          click_on 'Submit'
         end
       end
 

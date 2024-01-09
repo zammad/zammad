@@ -14,12 +14,12 @@ RSpec.describe 'Desktop > Admin Password Auth', app: :desktop_view, authenticate
     expect(page).to have_no_field 'login'
     expect(page).to have_no_field 'password'
 
-    click_link 'Request the password login here.'
+    click_on 'Request the password login here.'
 
     expect(page).to have_text 'Username'
 
     fill_in 'login', with: 'admin@example.com'
-    click_button 'Submit'
+    click_on 'Submit'
 
     expect(page).to have_text "We've sent admin password login instructions to your email address."
 

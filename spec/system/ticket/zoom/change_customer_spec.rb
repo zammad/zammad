@@ -17,7 +17,7 @@ RSpec.describe 'Ticket zoom > Sidebar > Customer', :aggregate_failures, type: :s
       it 'shows the organization field with all possible organizations' do
         click '.tabsSidebar-tab[data-tab=customer]'
         click '#userAction'
-        click_link 'Change Customer'
+        click_on 'Change Customer'
         modal_ready
 
         in_modal do

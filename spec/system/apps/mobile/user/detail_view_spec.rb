@@ -59,7 +59,7 @@ RSpec.describe 'Mobile > User > Preview detailed information about user', app: :
   it 'can open ticket create form' do
     open_user
 
-    click_link 'Create new ticket for this user'
+    click_on 'Create new ticket for this user'
     expect_current_route("/tickets/create?customer_id=#{user.id}")
 
     within_form(form_updater_gql_number: 1) do

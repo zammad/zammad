@@ -29,7 +29,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
   it 'shows default widgets' do
     fill_in id: 'global-search', with: '"Welcome"'
 
-    click_link 'Show Search Details'
+    click_on 'Show Search Details'
 
     within '#navigation .tasks a[data-key=Search]' do
       expect(page).to have_content '"Welcome"'
@@ -42,7 +42,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
 
     before do
       fill_in id: 'global-search', with: 'Testing'
-      click_link 'Show Search Details'
+      click_on 'Show Search Details'
 
       find('[data-tab-content=Ticket]').click
     end
@@ -162,7 +162,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
 
     before do
       fill_in id: 'global-search', with: search_query
-      click_link 'Show Search Details'
+      click_on 'Show Search Details'
 
       find('[data-tab-content=Ticket]').click
 
@@ -416,7 +416,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     context 'when search changed via global search' do
       before do
         fill_in id: 'global-search', with: '"Testing Ticket 1"'
-        click_link 'Show Search Details'
+        click_on 'Show Search Details'
       end
 
       it 'does switch search results properly' do
@@ -426,7 +426,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
 
         # switch by global search
         fill_in id: 'global-search', with: '"Testing Ticket 2"'
-        click_link 'Show Search Details'
+        click_on 'Show Search Details'
         expect(page.find('.js-tableBody')).to have_text('Testing Ticket 2')
         expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 1')
         expect(current_url).to include('Testing%20Ticket%202')
@@ -556,7 +556,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     before do
       fill_in id: 'global-search', with: 'Nico'
 
-      click_link 'Show Search Details'
+      click_on 'Show Search Details'
 
       find('.table-column-title', text: 'TITLE').click
     end
@@ -564,7 +564,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     it 'when switching to other taskbar keep sorting' do
       visit "ticket/zoom/#{Ticket.first.id}"
 
-      click_link 'Nico'
+      click_on 'Nico'
 
       within('.table-column-head', text: 'TITLE') do
         expect(page).to have_css('.table-sort-arrow')
@@ -597,7 +597,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     it 'when changing search query after navigation away-and-back clear sorting' do
       visit "ticket/zoom/#{Ticket.first.id}"
 
-      click_link 'Nico'
+      click_on 'Nico'
 
       within :active_content do
         find('.js-search').fill_in with: 'Nicole'

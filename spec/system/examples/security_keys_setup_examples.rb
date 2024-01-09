@@ -33,12 +33,12 @@ def setup_security_keys_method(user:, password_check:)
 
       fill_in 'Password', with: user.password_plain
 
-      click_button 'Next'
+      click_on 'Next'
     end
 
     expect(page).to have_text('Set up two-factor authentication: Security Keys')
 
-    click_button 'Set Up'
+    click_on 'Set Up'
 
     expect(page).to have_text('Set up two-factor authentication: Security Key')
 
@@ -46,11 +46,11 @@ def setup_security_keys_method(user:, password_check:)
 
     mock_security_key
 
-    click_button 'Next'
+    click_on 'Next'
 
     expect(page).to have_text('Set up two-factor authentication: Save Codes')
 
-    click_button "OK, I've saved my recovery codes"
+    click_on "OK, I've saved my recovery codes"
   end
 
   expect(page).to have_no_css('.modal')

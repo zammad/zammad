@@ -256,7 +256,7 @@ RSpec.describe 'System > Objects', type: :system do
               end
             end
 
-            click_button 'Submit'
+            click_on 'Submit'
           end
 
           click 'tbody tr:last-child td:first-child'
@@ -721,7 +721,7 @@ RSpec.describe 'System > Objects', type: :system do
           it 'saves a customsort data option attribute' do
             in_modal do
               check 'data_option::customsort', allow_label_click: true
-              click_button
+              click_on 'Submit'
             end
 
             # Update Database
@@ -735,7 +735,7 @@ RSpec.describe 'System > Objects', type: :system do
           it 'does not have a customsort data option attribute' do
             in_modal do
               uncheck 'data_option::customsort', allow_label_click: true
-              click_button
+              click_on 'Submit'
             end
 
             # Update Database

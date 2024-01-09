@@ -130,7 +130,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
       context 'for new overview' do
         before do
           visit '/#manage/overviews'
-          click_link 'New Overview'
+          click_on 'New Overview'
 
           modal_ready
 
@@ -206,7 +206,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
       context 'for new overview' do
         before do
           visit '/#manage/overviews'
-          click_link 'New Overview'
+          click_on 'New Overview'
 
           modal_ready
 
@@ -282,7 +282,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
       context 'for new overview' do
         before do
           visit '/#manage/overviews'
-          click_link 'New Overview'
+          click_on 'New Overview'
 
           modal_ready
 
@@ -371,11 +371,11 @@ RSpec.describe 'Manage > Overviews', type: :system do
     context 'when new overview is created' do
       before do
         visit '/#manage/overviews'
-        click_link 'New Overview'
+        click_on 'New Overview'
 
         in_modal disappears: false do
           fill_in 'name', with: 'dummy'
-          click_button 'Submit'
+          click_on 'Submit'
         end
       end
 
@@ -401,7 +401,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
           find("div[data-attribute-name='role_ids'] div.u-placeholder").has_content?('Nothing selected')
 
-          click_button 'Submit'
+          click_on 'Submit'
         end
       end
 

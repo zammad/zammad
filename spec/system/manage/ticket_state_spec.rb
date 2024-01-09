@@ -8,7 +8,7 @@ RSpec.describe 'Manage > Ticket States', type: :system do
 
     before do
       visit 'manage/ticket_states'
-      click_link 'New Ticket State'
+      click_on 'New Ticket State'
     end
 
     it 'creates a new state' do
@@ -16,7 +16,7 @@ RSpec.describe 'Manage > Ticket States', type: :system do
       find('[name=state_type_id]').select('pending reminder')
 
       scroll_into_view('button.js-submit', position: :bottom)
-      click_button
+      click_on 'Submit'
 
       within :active_content do
         expect(find("tr[data-id='#{Ticket::State.last.id}']")).to have_text(new_state_name)

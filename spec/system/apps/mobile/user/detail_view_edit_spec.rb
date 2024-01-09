@@ -49,7 +49,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
       expect(page).to have_no_css('section', text: 'Text Attribute')
 
-      click_button('Edit')
+      click_on('Edit')
 
       wait_for_form_to_settle('user-edit')
 
@@ -57,7 +57,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
         find_input('Text Attribute').type('foobar')
       end
 
-      click_button('Save')
+      click_on('Save')
 
       wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
 
@@ -103,7 +103,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
         .to have_multiple_texts(organizations[0..2].map(&:name))
         .and(have_no_text(organizations.last.name))
 
-      click_button('Show 1 more')
+      click_on('Show 1 more')
 
       wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql', number: 2)
 
@@ -116,7 +116,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
       find_autocomplete('Secondary organizations')
         .search_for_options(organizations[0..1].map(&:name))
 
-      click_button 'Save'
+      click_on 'Save'
 
       expect(page)
         .to have_multiple_texts(organizations[0..1].map(&:name))
@@ -138,7 +138,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
         find_autocomplete('Organization').search_for_option(organization.name)
       end
 
-      click_button('Save')
+      click_on('Save')
 
       wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
 
@@ -175,7 +175,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
         within_form(form_updater_gql_number: 1) do
           find_input('First name').type('No Email')
 
-          click_button('Save')
+          click_on('Save')
 
           wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
 

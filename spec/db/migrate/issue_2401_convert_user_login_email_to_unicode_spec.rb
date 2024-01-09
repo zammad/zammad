@@ -26,8 +26,8 @@ RSpec.describe Issue2401ConvertUserLoginEmailToUnicode, db_strategy: :reset, typ
       create_user
       migrate
 
-      expect(User).to be_exist(login: 'john.doe@äcme.corp')
-        .and(be_exist(email: 'john.doe@äcme.corp'))
+      expect(User).to exist(login: 'john.doe@äcme.corp')
+        .and(exist(email: 'john.doe@äcme.corp'))
 
     end
   end
@@ -44,8 +44,8 @@ RSpec.describe Issue2401ConvertUserLoginEmailToUnicode, db_strategy: :reset, typ
     it 'still allows to lookup user with origin login/email', :aggregate_failures do
       migrate
 
-      expect(User).to be_exist(login: 'john.doe@äcme.corp')
-        .and(be_exist(email: 'john.doe@äcme.corp'))
+      expect(User).to exist(login: 'john.doe@äcme.corp')
+        .and(exist(email: 'john.doe@äcme.corp'))
     end
 
   end

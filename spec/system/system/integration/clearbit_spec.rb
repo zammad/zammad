@@ -25,7 +25,7 @@ RSpec.describe 'Manage > Integration > Clearbit', type: :system do
           click '.js-add'
         end
 
-        click_button
+        click_on 'Save'
       end
     end
 

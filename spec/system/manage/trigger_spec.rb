@@ -7,7 +7,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
 
   def open_new_trigger_dialog
     visit '/#manage/trigger'
-    click_link 'New Trigger'
+    click_on 'New Trigger'
   end
 
   context 'Selector' do
@@ -181,7 +181,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
           end
         end
 
-        click_button
+        click_on 'Submit'
       end
 
       visit "#ticket/zoom/#{ticket.id}"
@@ -192,7 +192,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
         end
       end
 
-      click_button 'Update'
+      click_on 'Update'
 
     end
 

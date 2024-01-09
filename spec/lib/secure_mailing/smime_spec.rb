@@ -457,7 +457,7 @@ RSpec.describe SecureMailing::SMIME do
               stub_const('SecureMailing::SMIME::Incoming::OPENSSL_PKCS7_VERIFY_FLAGS', OpenSSL::PKCS7::NOVERIFY)
             end
 
-            it "won't perform verification" do
+            it 'does not perform verification' do
               expect(mail[:body]).to include(raw_body)
               expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
               expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')

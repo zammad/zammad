@@ -78,11 +78,11 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
           visit '/'
           disable_auto_redirect
 
-          click_link('Continue to desktop')
+          click_on('Continue to desktop')
 
           expect_current_route('login', app: :desktop)
 
-          click_link('Continue to mobile')
+          click_on('Continue to mobile')
 
           expect(page).to have_no_text('Loading failed')
           expect_current_route('login', app: :mobile)
@@ -129,7 +129,7 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
       it 'forgot password doesn\'t redirect back' do
         visit '/login', app: :mobile
 
-        click_link 'Forgot password?'
+        click_on 'Forgot password?'
 
         expect_current_route('password_reset', app: :desktop)
 
@@ -139,7 +139,7 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
       it "register doesn't redirect back" do
         visit '/login', app: :mobile
 
-        click_link 'Register'
+        click_on 'Register'
 
         expect_current_route('signup', app: :desktop)
 

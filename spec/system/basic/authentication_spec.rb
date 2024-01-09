@@ -46,7 +46,7 @@ RSpec.describe 'Authentication', type: :system do
     expect_current_route 'login'
   end
 
-  it 'will unset user attributes after logout' do
+  it 'unsets user attributes after logout' do
     logout
     expect_current_route 'login'
 

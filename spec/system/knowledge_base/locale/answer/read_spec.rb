@@ -139,7 +139,7 @@ RSpec.describe 'Knowledge Base Locale Answer Read', authenticated_as: true, type
       open_page('lol')
 
       in_modal do
-        click_link 'Open in primary locale'
+        click_on 'Open in primary locale'
       end
 
       within '.knowledge-base-article' do

@@ -31,7 +31,7 @@ RSpec.describe 'Manage > Groups', type: :system do
       let(:group_name_last) { Faker::Lorem.unique.word.capitalize }
 
       before do
-        click_link 'New Group'
+        click_on 'New Group'
       end
 
       it 'creates a nested group' do
@@ -41,7 +41,7 @@ RSpec.describe 'Manage > Groups', type: :system do
         # Needed for chrome, when element is outside viewport.
         scroll_into_view('button.js-submit', position: :bottom)
 
-        click_button
+        click_on 'Submit'
 
         expect(Group.last.name).to eq("#{group3.name}::#{Group.last.name_last}")
       end
@@ -84,7 +84,7 @@ RSpec.describe 'Manage > Groups', type: :system do
         lambda {
           ensure_websocket(check_if_pinged: false) do
             visit 'manage/groups'
-            click_link 'New Group'
+            click_on 'New Group'
           end
         }
       end
@@ -105,7 +105,7 @@ RSpec.describe 'Manage > Groups', type: :system do
         # Needed for chrome, when element is outside viewport.
         scroll_into_view('button.js-submit', position: :bottom)
 
-        click_button
+        click_on 'Submit'
       end
 
       expect(Group.find_by(name: 'Users').assignment_timeout).to eq(30)
@@ -118,7 +118,7 @@ RSpec.describe 'Manage > Groups', type: :system do
         # Needed for chrome, when element is outside viewport.
         scroll_into_view('button.js-submit', position: :bottom)
 
-        click_button
+        click_on 'Submit'
       end
       expect(Group.find_by(name: 'Users').assignment_timeout).to be_nil
     end
