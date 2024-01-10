@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 module ChecksCoreWorkflow
   extend ActiveSupport::Concern
@@ -41,9 +41,7 @@ module ChecksCoreWorkflow
     check_mandatory(perform_result)
   end
 
-
   def check_restrict_values(perform_result)
-
     merged_restrict_values = merge_changes_into_restrict_values(perform_result[:restrict_values], changes)
     changes.each_key do |key|
       Rails.logger.warn "SWIFT_KEV Restricted Values Key :::: #{merged_restrict_values}"
@@ -69,8 +67,6 @@ module ChecksCoreWorkflow
 
     restrict_values
   end
-
-
 
   def restricted_value?(perform_result, key)
     if self[key].is_a?(Array)
