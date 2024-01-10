@@ -57,7 +57,7 @@ module ChecksCoreWorkflow
   end
 
   def merge_changes_into_restrict_values(restrict_values, changes)
-    return restrict_values unless restrict_values.is_a?(Hash) && changes.is_a?(Hash)
+    return restrict_values if !(restrict_values.is_a?(Hash) && changes.is_a?(Hash))
 
     # Iterate through changes and merge each value into the corresponding key in restrict_values
     changes.each do |key, value|
