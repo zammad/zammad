@@ -20,7 +20,6 @@ import type { FormFieldContext } from '../../types/field.ts'
 
 interface FieldSecurityProps {
   context: FormFieldContext<{
-    disabled?: boolean
     securityAllowed?: SecurityAllowed
     securityDefaultOptions?: SecurityDefaultOptions
     securityMessages?: SecurityMessages

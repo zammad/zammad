@@ -84,6 +84,10 @@ describe('CommonButton.vue', () => {
       variant: 'danger',
       classes: ['btn-error'],
     },
+    {
+      variant: 'remove',
+      classes: ['btn-info'],
+    },
   ])('supports $variant variant', async ({ variant, classes }) => {
     const view = renderComponent(CommonButton, {
       props: {

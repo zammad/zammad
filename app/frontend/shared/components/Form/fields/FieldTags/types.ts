@@ -3,7 +3,6 @@
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
 export interface FieldTagsProps {
-  disabled?: boolean
   canCreate?: boolean
   sorting?: 'label' | 'value'
 }

@@ -28,7 +28,7 @@ export const getCoreDesktopClasses: FormThemeExtension = (
       wrapper: 'flex-grow',
       block: 'flex items-end',
       label:
-        'formkit-required:required formkit-invalid:text-red-500 formkit-errors:text-red-500',
+        'block mb-1 text-sm text-gray-100 dark:text-neutral-400 formkit-required:required formkit-invalid:text-red-500 formkit-errors:text-red-500',
       inner: 'rounded-lg text-sm',
       messages: 'mt-1 formkit-invalid:text-red-500 formkit-errors:text-red-500',
       help: 'text-stone-200 dark:text-neutral-500 mt-1',
@@ -59,6 +59,10 @@ export const getCoreDesktopClasses: FormThemeExtension = (
     },
     radio: extendClasses(classes.radio, {
       inner: 'ltr:mr-1 rtl:ml-1',
+    }),
+    imageUpload: extendClasses(classes.imageUpload, {
+      inner:
+        'w-full bg-blue-200 dark:bg-gray-700 formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
     }),
   }
 }

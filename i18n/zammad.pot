@@ -4454,6 +4454,10 @@ msgstr ""
 msgid "Drop files here"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Drop image file here"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/login.coffee
 msgid "Due to inactivity, you have been automatically logged out."
 msgstr ""
@@ -5302,6 +5306,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr ""
 
@@ -6314,6 +6319,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Image preview"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/import.coffee
@@ -9547,6 +9556,10 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Remove image"
 msgstr ""
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
@@ -13702,6 +13715,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Upload Private Key"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Upload image"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee

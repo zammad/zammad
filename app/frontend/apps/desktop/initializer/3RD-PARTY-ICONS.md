@@ -5,12 +5,14 @@
 - `assets/exclamation-triangle.svg`
 - `assets/eye-slash.svg`
 - `assets/eye.svg`
+- `assets/image.svg`
 - `assets/info-circle.svg`
 - `assets/key.svg`
 - `assets/moon.svg`
 - `assets/phone.svg`
 - `assets/spinner.svg`
 - `assets/sun.svg`
+- `assets/upload.svg`
 - `assets/x-circle.svg`
 - `assets/x-lg.svg`
   - Author: The Bootstrap Authors

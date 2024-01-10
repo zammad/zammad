@@ -53,6 +53,15 @@ const variantClasses = computed(() => {
         'dark:hover:bg-red-900',
         'text-red-500',
       ]
+    case 'remove':
+      return [
+        'btn-info',
+        'bg-red-400',
+        'hover:bg-red-400',
+        'dark:bg-red-600',
+        'dark:hover:bg-red-600',
+        'text-white',
+      ]
     case 'secondary':
     default:
       return [
@@ -138,6 +147,7 @@ const iconSizeClass = computed(() => {
       borderRadiusClass,
       {
         'btn-block': block,
+        'w-min': !block,
       },
     ]"
     :type="type"

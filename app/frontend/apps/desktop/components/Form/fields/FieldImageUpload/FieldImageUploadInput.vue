@@ -1,0 +1,139 @@
+<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<script setup lang="ts">
+import { computed, ref, toRef } from 'vue'
+import { useDropZone } from '@vueuse/core'
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
+import { i18n } from '#shared/i18n.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+
+export interface Props {
+  context: FormFieldContext
+}
+
+const props = defineProps<Props>()
+
+const contextReactive = toRef(props, 'context')
+
+const imageUpload = computed<string>({
+  get() {
+    return contextReactive.value._value || ''
+  },
+  set(value) {
+    props.context.node.input(value)
+  },
+})
+
+const MAX_IMAGE_SIZE_IN_MB = 8
+
+const imageUploadInput = ref<HTMLInputElement>()
+
+const reset = () => {
+  imageUpload.value = ''
+  const input = imageUploadInput.value
+  if (!input) return
+  input.value = ''
+  input.files = null
+}
+
+const loadImages = async (files: FileList | File[] | null) => {
+  Array.from(files || []).forEach((file) => {
+    const reader = new FileReader()
+
+    reader.onload = (e) => {
+      if (!e.target || !e.target.result) return
+
+      imageUpload.value = e.target.result as string
+    }
+
+    if (file.size && file.size > 1024 * 1024 * MAX_IMAGE_SIZE_IN_MB) {
+      props.context.node.setErrors(
+        i18n.t(
+          'File too big, max. %s MB allowed.',
+          MAX_IMAGE_SIZE_IN_MB.toString(),
+        ),
+      )
+      return
+    }
+
+    reader.readAsDataURL(file)
+  })
+}
+
+const onFileChanged = async ($event: Event) => {
+  const input = $event.target as HTMLInputElement
+  const { files } = input
+  if (files) await loadImages(files)
+}
+
+const dropZoneRef = ref<HTMLDivElement>()
+
+const { isOverDropZone } = useDropZone(dropZoneRef, {
+  onDrop: loadImages,
+  dataTypes: (types) => types.every((type) => type.startsWith('image/')),
+})
+</script>
+
+<template>
+  <div
+    ref="dropZoneRef"
+    class="w-full flex flex-col items-center gap-2 p-2"
+    :class="context.classes.input"
+  >
+    <div
+      v-if="isOverDropZone"
+      class="w-full rounded outline-dashed outline-1 outline-blue-800 text-center"
+    >
+      <CommonLabel class="py-2 !text-blue-800" prefix-icon="upload">
+        {{ $t('Drop image file here') }}
+      </CommonLabel>
+    </div>
+    <template v-else>
+      <template v-if="imageUpload">
+        <div
+          class="w-full p-2.5 grid grid-cols-[20px_auto_20px] gap-2.5 justify-items-center items-center"
+        >
+          <img
+            class="max-h-32 col-start-2"
+            :src="imageUpload"
+            :alt="$t('Image preview')"
+          />
+          <CommonButton
+            variant="remove"
+            size="small"
+            icon="x-lg"
+            :aria-label="$t('Remove image')"
+            @click="!context.disabled && reset()"
+          />
+        </div>
+        <CommonDivider padding />
+      </template>
+      <CommonButton
+        variant="secondary"
+        size="medium"
+        prefix-icon="image"
+        :disabled="context.disabled"
+        @click="!context.disabled && imageUploadInput?.click()"
+        @blur="context.handlers.blur"
+        >{{ $t('Upload image') }}</CommonButton
+      >
+    </template>
+    <input
+      :id="context.id"
+      ref="imageUploadInput"
+      data-test-id="imageUploadInput"
+      type="file"
+      :name="context.node.name"
+      :disabled="context.disabled"
+      class="hidden"
+      tabindex="-1"
+      aria-hidden="true"
+      accept="image/*"
+      v-bind="{
+        ...context.attrs,
+        onBlur: undefined,
+      }"
+      @change="!context.disabled && onFileChanged($event)"
+    />
+  </div>
+</template>

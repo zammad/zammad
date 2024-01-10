@@ -7,7 +7,6 @@ export type SelectOptionSorting = 'label' | 'value'
 
 export type SelectContext = FormFieldContext<{
   clearable?: boolean
-  disabled?: boolean
   historicalOptions: Record<string, string>
   multiple?: boolean
   noOptionsLabelTranslation?: boolean

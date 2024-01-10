@@ -47,6 +47,7 @@ export interface FormDefaultProps {
   labelSrOnly?: boolean
   labelPlaceholder?: string[]
   internal?: boolean
+  disabled?: boolean
 }
 
 export type FormUpdaterTrigger = 'direct' | 'delayed' | 'blur' | 'form-reset'

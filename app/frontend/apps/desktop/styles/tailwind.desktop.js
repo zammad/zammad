@@ -111,7 +111,7 @@ module.exports = {
       //   Here we apply our original theme values by using the same way they were overridden (via full class name).
       //   https://github.com/saadeghi/daisyui/issues/2368
       colors: {
-        'neutral-100': '#E6E6E6',
+        'neutral-100': '#E5E5E5',
         'neutral-200': '#E3E3E3',
         'neutral-300': '#DCDCDC',
         'neutral-400': '#D1D1D1',

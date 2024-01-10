@@ -15,7 +15,6 @@ export type FlatSelectOption = SelectOption & {
 
 export interface TreeSelectProps {
   clearable?: boolean
-  disabled?: boolean
   historicalOptions?: Record<string, string>
   multiple?: boolean
   options: TreeSelectOption[]
