@@ -87,7 +87,7 @@ const useAppMaintenanceCheck = (
       useAppMaintenanceSubscription(),
     )
     appMaintenanceSubscription.onResult((result) => {
-      const type = result.data?.appMaintenance.type
+      const type = result.data?.appMaintenance?.type
       let message = notificationMessage
 
       if (!type) {

@@ -105,4 +105,24 @@ describe('useAppMaintenanceCheck', () => {
       'A newer version of the app is available. Please reload at your earliest.',
     )
   })
+
+  it('does not raise unhandled exceptions if the payload structure is wrong', async (context) => {
+    context.skipConsole = true
+
+    vi.spyOn(console, 'log').mockClear()
+
+    await subscriptionAppMaintenance.next({
+      data: {
+        pushMessages: {
+          title: null,
+          text: null,
+        },
+      },
+    })
+
+    expect(console.log).not.toHaveBeenCalledWith(
+      'Uncaught Exception',
+      new TypeError("Cannot read properties of undefined (reading 'type')"),
+    )
+  })
 })
