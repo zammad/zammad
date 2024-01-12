@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-01-05 02:05+0000\n"
-"Last-Translator: Samuel Granjeaud <samuel.granjeaud@inserm.fr>\n"
+"PO-Revision-Date: 2024-01-12 09:50+0000\n"
+"Last-Translator: Solenne Lefevre <solenne.lefevre@data-bene.io>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -879,7 +879,6 @@ msgstr ""
 "plus tôt possible."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
-#, fuzzy
 msgid "A powerful service to get more information about your customers."
 msgstr "Un service puissant pour avoir plus d'informations sur vos clients."
 
@@ -1181,8 +1180,6 @@ msgid "Add Certificate"
 msgstr "Ajouter un certificat"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco
-#, fuzzy
-#| msgid "Add reply"
 msgid "Add Key"
 msgstr "Ajouter la clé"
 
@@ -1200,10 +1197,8 @@ msgid "Add Public or Private Key"
 msgstr "Ajouter une clé publique ou privée"
 
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco
-#, fuzzy
-#| msgid "Add Certificate"
 msgid "Add SSL Certificate"
-msgstr "Ajouter un certificat"
+msgstr "Ajouter un certificat SSL"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
