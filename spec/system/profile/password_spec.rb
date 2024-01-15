@@ -54,7 +54,7 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
 
       click '.btn--primary'
 
-      expect(page).to have_text 'Current password is wrong'
+      expect(page).to have_text 'The current password you provided is incorrect.'
     end
 
     it 'when new passwords do not match, show error' do

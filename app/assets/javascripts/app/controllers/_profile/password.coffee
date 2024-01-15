@@ -91,14 +91,14 @@ class ProfilePassword extends App.ControllerSubContent
       @$('[name=password_new_confirm]').val('')
       @notify
         type:      'error'
-        msg:       __('Can\'t update password, your entered passwords do not match. Please try again!')
+        msg:       __('Can\'t update password, your entered passwords do not match. Please try again.')
         removeAll: true
       return
     if !params['password_new']
       @formEnable(e)
       @notify
         type:      'error'
-        msg:       __('Please supply your new password!')
+        msg:       __('Please provide your new password.')
         removeAll: true
       return
 

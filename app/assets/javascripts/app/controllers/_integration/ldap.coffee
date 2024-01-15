@@ -4,7 +4,7 @@ class Ldap extends App.ControllerIntegrationBase
   description: [
     [__('Use this switch to start synchronization of your ldap sources.')]
     [__('If a user is found in two (or more) configured LDAP sources, the last synchronisation will win.')]
-    [__('In order to be able to influence the desired behaviour in this regard, you can influence the order of the LDAP sources via drag & drop.')]
+    [__('In order to be able to influence the desired behavior in this regard, you can influence the order of the LDAP sources via drag & drop.')]
   ]
   events:
     'change .js-switch input': 'switch'

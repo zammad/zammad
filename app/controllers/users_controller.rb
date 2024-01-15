@@ -590,19 +590,19 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
 
     # check old password
     if !params[:password_old] || !PasswordPolicy::MaxLength.valid?(params[:password_old])
-      render json: { message: 'failed', notice: [__('Current password needed!')] }, status: :unprocessable_entity
+      render json: { message: 'failed', notice: [__('Please provide your current password.')] }, status: :unprocessable_entity
       return
     end
 
     current_password_verified = PasswordHash.verified?(current_user.password, params[:password_old])
     if !current_password_verified
-      render json: { message: 'failed', notice: [__('Current password is wrong!')] }, status: :unprocessable_entity
+      render json: { message: 'failed', notice: [__('The current password you provided is incorrect.')] }, status: :unprocessable_entity
       return
     end
 
     # set new password
     if !params[:password_new]
-      render json: { message: 'failed', notice: [__('Please supply your new password!')] }, status: :unprocessable_entity
+      render json: { message: 'failed', notice: [__('Please provide your new password.')] }, status: :unprocessable_entity
       return
     end
 

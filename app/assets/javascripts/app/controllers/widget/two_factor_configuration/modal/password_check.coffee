@@ -42,7 +42,7 @@ class App.TwoFactorConfigurationModalPasswordCheck extends App.TwoFactorConfigur
           return
 
         @formValidate( form: e.target, errors:
-          password: __('Current password is wrong!')
+          password: __('The current password you provided is incorrect.')
         )
 
         @formEnable(e)
