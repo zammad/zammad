@@ -12580,7 +12580,7 @@ msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
 #: app/models/group.rb
-msgid "This group or its children exceed the allowed max nesting depth."
+msgid "This group or its children exceed the allowed nesting depth."
 msgstr ""
 
 #: lib/email_helper/probe.rb
