@@ -1513,4 +1513,55 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(page).to have_text(group_2.signature.body)
     end
   end
+
+  describe 'CoreWorkflow "fill in empty" fires on non-empty fields during ticket creation when logged in as customer #5004' do
+    let(:body_content) { SecureRandom.uuid }
+    let(:workflow) do
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: { 'article.body' => { 'operator' => 'fill_in_empty', 'fill_in_empty' => body_content } })
+    end
+
+    def setup_workflows
+      workflow
+    end
+
+    context 'when agent', authenticated_as: :authenticate do
+      def authenticate
+        setup_workflows
+        true
+      end
+
+      before do
+        visit '#ticket/create'
+      end
+
+      it 'does fill the body' do
+        check_editor_field_value('body', body_content)
+        set_editor_field_value('body', 'new_content')
+        check_editor_field_value('body', 'new_content')
+        page.find('[name=priority_id]').select '3 high'
+        check_editor_field_value('body', 'new_content')
+      end
+    end
+
+    context 'when customer', authenticated_as: :authenticate do
+      def authenticate
+        setup_workflows
+        create(:customer)
+      end
+
+      before do
+        visit 'customer_ticket_new'
+      end
+
+      it 'does fill the body' do
+        check_editor_field_value('body', body_content)
+        set_editor_field_value('body', 'new_content')
+        check_editor_field_value('body', 'new_content')
+        page.find('[name=state_id]').select 'closed'
+        check_editor_field_value('body', 'new_content')
+      end
+    end
+  end
 end
