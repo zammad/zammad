@@ -3,7 +3,9 @@
 class CoreWorkflow::Result
   include ::Mixin::HasBackends
 
-  attr_accessor :payload, :payload_backup, :user, :assets, :assets_in_result, :result, :rerun, :form_updater, :restricted_fields
+  MAX_RERUN = 25
+
+  attr_accessor :payload, :payload_backup, :user, :assets, :assets_in_result, :result, :rerun, :rerun_history, :form_updater, :restricted_fields
 
   def initialize(payload:, user:, assets: {}, assets_in_result: true, result: {}, form_updater: false)
     if payload.respond_to?(:permit!)
@@ -22,6 +24,7 @@ class CoreWorkflow::Result
     @result            = result
     @form_updater      = form_updater
     @rerun             = false
+    @rerun_history     = []
   end
 
   def attributes
@@ -193,8 +196,15 @@ class CoreWorkflow::Result
     end
   end
 
+  def rerun_loop?
+    return false if rerun_history.size < 3
+
+    rerun_history.last(3).uniq.size != 3
+  end
+
   def consider_rerun
-    if @rerun && @result[:rerun_count] < 25
+    @rerun_history << Marshal.load(Marshal.dump(@result.except(:rerun_count)))
+    if @rerun && @result[:rerun_count] < MAX_RERUN && !rerun_loop?
       @result[:rerun_count] += 1
       return run
     end
