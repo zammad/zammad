@@ -2,7 +2,7 @@
 
 import type { App } from 'vue'
 
-import '#mobile/styles/main.scss'
+import '#mobile/styles/main.css'
 
 import initializeStore from '#shared/stores/index.ts'
 import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'

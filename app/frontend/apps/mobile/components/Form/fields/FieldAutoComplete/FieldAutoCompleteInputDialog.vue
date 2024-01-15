@@ -407,7 +407,7 @@ useTraverseOptions(autocompleteList)
   </CommonDialog>
 </template>
 
-<style lang="scss">
+<style>
 .field-autocomplete-dialog {
   .formkit-wrapper {
     @apply px-0;

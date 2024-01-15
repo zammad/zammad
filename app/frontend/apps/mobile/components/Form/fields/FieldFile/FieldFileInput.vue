@@ -227,7 +227,7 @@ useTraverseOptions(filesContainer, {
   />
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .ShadowGradient::before {
   content: '';
   position: absolute;

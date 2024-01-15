@@ -52,7 +52,7 @@ const { stickyStyles } = useStickyHeader([title], headerElement)
   </div>
 </template>
 
-<style land="scss" scoped>
+<style scoped>
 .BottomNavigationPadding {
   @apply w-full shrink-0;
 

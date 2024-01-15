@@ -352,7 +352,14 @@ const onContextClick = () => {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
+/*
+  NB: Explicitly import the global app stylesheet.
+    This will avoid the build issue with the wrong app-specific Tailwind config being applied.
+    Investigate if this can be also done automatically via Vite or PostCSS config.
+*/
+@import '#mobile/styles/main.css';
+
 .Content {
   word-break: break-word;
 }

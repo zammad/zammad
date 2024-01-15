@@ -2,7 +2,7 @@
 
 import { createApp } from 'vue'
 
-import '#desktop/styles/main.scss'
+import '#desktop/styles/main.css'
 
 import { useSessionStore } from '#shared/stores/session.ts'
 import initializeStoreSubscriptions from '#shared/initializer/storeSubscriptions.ts'

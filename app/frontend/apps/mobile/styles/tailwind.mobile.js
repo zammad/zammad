@@ -11,8 +11,8 @@ const sharedDir = path.resolve(__dirname, '../../../shared')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    `${mobileDir}/**/*.{js,jsx,ts,tsx,vue,css,scss}`,
-    `${sharedDir}/**/*.{js,jsx,ts,tsx,vue,css,scss}`,
+    `${mobileDir}/**/*.{js,jsx,ts,tsx,vue,css}`,
+    `${sharedDir}/**/*.{js,jsx,ts,tsx,vue,css}`,
   ],
   plugins: [
     formKitTailwind,

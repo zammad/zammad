@@ -126,7 +126,7 @@ useTraverseOptions(actionBar, { direction: 'horizontal', ignoreTabindex: true })
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .Menubar {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */

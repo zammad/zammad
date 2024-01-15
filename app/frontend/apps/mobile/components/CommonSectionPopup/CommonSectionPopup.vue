@@ -165,7 +165,7 @@ const getClassesByType = (type: PopupItemDescriptor['type']) => {
   </Teleport>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .window-open {
   &.window {
     transition: opacity 0.2s ease-in;

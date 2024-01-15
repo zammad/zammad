@@ -73,7 +73,7 @@ const avatarLabel = computed(() => {
   </span>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .size-xs {
   @apply h-6 w-6 text-xs leading-6;
 

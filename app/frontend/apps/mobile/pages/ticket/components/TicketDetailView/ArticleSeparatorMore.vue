@@ -20,7 +20,7 @@ defineProps<Props>()
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .line-more {
   height: 1px;
   background: repeating-linear-gradient(

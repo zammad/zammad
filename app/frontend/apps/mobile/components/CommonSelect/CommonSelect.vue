@@ -217,7 +217,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
   </Teleport>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .v-enter-active {
   .select-overlay,
   .select-dialog {

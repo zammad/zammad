@@ -13,8 +13,8 @@ const sharedDir = path.resolve(__dirname, '../../../shared')
 module.exports = {
   darkMode: ['class', '[data-theme="dark"]'],
   content: [
-    `${desktopDir}/**/*.{js,jsx,ts,tsx,vue,css,scss}`,
-    `${sharedDir}/**/*.{js,jsx,ts,tsx,vue,css,scss}`,
+    `${desktopDir}/**/*.{js,jsx,ts,tsx,vue,css}`,
+    `${sharedDir}/**/*.{js,jsx,ts,tsx,vue,css}`,
   ],
   plugins: [
     formKitTailwind,

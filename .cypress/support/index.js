@@ -2,7 +2,7 @@
 
 import './prepare.js'
 
-import '#mobile/styles/main.scss'
+import '#mobile/styles/main.css'
 import '#shared/components/CommonIcon/injectIcons.ts'
 
 import '../../public/assets/frontend/fonts.css'

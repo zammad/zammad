@@ -25,7 +25,7 @@ const hasHelp = computed(() => slots.help || props.help)
   </div>
 </template>
 
-<style lang="scss">
+<style>
 .form-group {
   &.form-group-mark-dirty .formkit-outer[data-dirty]::before {
     content: '';

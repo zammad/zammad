@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .line-new {
   background: linear-gradient(
     180deg,
