@@ -1,11 +1,7 @@
 mutation login($input: LoginInput!) {
   login(input: $input) {
     session {
-      id
-      afterAuth {
-        type
-        data
-      }
+      ...session
     }
     errors {
       ...errors

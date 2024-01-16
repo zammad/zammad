@@ -1,0 +1,9 @@
+mutation systemSetupLock($ttl: Int) {
+  systemSetupLock(ttl: $ttl) {
+    resource
+    value
+    errors {
+      ...errors
+    }
+  }
+}

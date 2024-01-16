@@ -3,11 +3,14 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage.vue'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
+import useFingerprint from '#shared/composables/useFingerprint.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
+
 import { useUserSignupVerifyMutation } from '../graphql/mutations/userSignupVerify.api.ts'
 import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
 
@@ -57,9 +60,16 @@ onMounted(() => {
     return
   }
 
+  const { fingerprint } = useFingerprint()
+
   const userSignupVerify = new MutationHandler(
     useUserSignupVerifyMutation({
       variables: { token: props.token },
+      context: {
+        headers: {
+          'X-Browser-Fingerprint': fingerprint.value,
+        },
+      },
     }),
     {
       errorShowNotification: false,

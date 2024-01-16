@@ -12,7 +12,7 @@ import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
 
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage.vue'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 import type { AdminPasswordAuthRequestData } from '../types/admin-password-auth'

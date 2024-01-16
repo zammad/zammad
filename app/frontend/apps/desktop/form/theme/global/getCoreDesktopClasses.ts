@@ -14,7 +14,8 @@ const textInputClasses = (classes: Classes = {}) => {
 
   return extendClasses(classes, {
     wrapper: 'flex flex-col items-start justify-start mb-1.5 last:mb-0',
-    input: 'grow bg-transparent py-2 px-2.5',
+    input:
+      'grow bg-transparent py-2 px-2.5 placeholder:text-stone-200 dark:placeholder:text-neutral-500',
     label: 'block mb-1 text-sm text-gray-100 dark:text-neutral-400',
     inner: `flex items-center w-full h-10 bg-blue-200 dark:bg-gray-700 text-black dark:text-white hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900 focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 focus-within:outline-blue-800 hover:focus-within:outline-blue-800 dark:hover:focus-within:outline-blue-800 ${innerInvalidClasses} ${innerErrorsClasses}`,
   })

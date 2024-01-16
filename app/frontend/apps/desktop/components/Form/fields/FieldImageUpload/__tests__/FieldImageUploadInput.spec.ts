@@ -3,6 +3,7 @@
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { dataURItoBlob } from '#tests/support/utils.ts'
 
 const renderImageUploadInput = (props: Record<string, unknown> = {}) => {
   return renderComponent(FormKit, {
@@ -17,19 +18,6 @@ const renderImageUploadInput = (props: Record<string, unknown> = {}) => {
     form: true,
     router: true,
   })
-}
-
-const dataURItoBlob = (dataURI: string) => {
-  const byteString = atob(dataURI.split(',')[1])
-  const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-
-  const ab = new ArrayBuffer(byteString.length)
-  const ia = new Uint8Array(ab)
-  for (let i = 0; i < byteString.length; i += 1) {
-    ia[i] = byteString.charCodeAt(i)
-  }
-
-  return new Blob([ab], { type: mimeString })
 }
 
 describe('Fields - FieldImageUpload', () => {
@@ -86,6 +74,28 @@ describe('Fields - FieldImageUpload', () => {
     expect(uploadImage).toHaveAttribute('src', testValue)
   })
 
+  it('renders placeholder value as image preview', async () => {
+    const testValue = '/api/v1/system_assets/product_logo/1704708731'
+
+    const view = renderImageUploadInput({
+      placeholderImagePath: testValue,
+    })
+
+    const uploadImage = view.getByRole('img', { name: 'Image preview' })
+
+    expect(uploadImage).toHaveAttribute('src', testValue)
+  })
+
+  it('does not allow to remove placeholder image', async () => {
+    const view = renderImageUploadInput({
+      placeholderImagePath: '/api/v1/system_assets/product_logo/1704708731',
+    })
+
+    expect(
+      view.queryByRole('button', { name: 'Remove image' }),
+    ).not.toBeInTheDocument()
+  })
+
   it('supports removal of the uploaded image', async () => {
     const view = renderImageUploadInput({
       value: '/api/v1/system_assets/product_logo/1704708731',
@@ -100,6 +110,26 @@ describe('Fields - FieldImageUpload', () => {
     ).not.toBeInTheDocument()
 
     expect(getNode('imageUpload')?._value).toEqual('')
+  })
+
+  it('shows placeholder image after removing uploaded image', async () => {
+    const placeholder = '/api/v1/system_assets/product_logo/placeholder'
+    const value = '/api/v1/system_assets/product_logo/value'
+
+    const view = renderImageUploadInput({
+      placeholderImagePath: placeholder,
+      value,
+    })
+
+    const uploadImage = view.getByRole('img', { name: 'Image preview' })
+
+    expect(uploadImage).toHaveAttribute('src', value)
+
+    const removeImageButton = view.getByRole('button', { name: 'Remove image' })
+
+    await view.events.click(removeImageButton)
+
+    expect(uploadImage).toHaveAttribute('src', placeholder)
   })
 
   it('supports disabled prop', async () => {

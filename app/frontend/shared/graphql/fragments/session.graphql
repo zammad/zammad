@@ -1,0 +1,7 @@
+fragment session on Session {
+  id
+  afterAuth {
+    type
+    data
+  }
+}

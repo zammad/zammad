@@ -1,0 +1,6 @@
+query systemSetupInfo {
+  systemSetupInfo {
+    status
+    type
+  }
+}

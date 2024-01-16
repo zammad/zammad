@@ -8,7 +8,9 @@ import { i18n } from '#shared/i18n.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
 export interface Props {
-  context: FormFieldContext
+  context: FormFieldContext<{
+    placeholderImagePath?: string
+  }>
 }
 
 const props = defineProps<Props>()
@@ -22,6 +24,14 @@ const imageUpload = computed<string>({
   set(value) {
     props.context.node.input(value)
   },
+})
+
+const imageUploadOrPlaceholder = computed<string>(() => {
+  if (props.context.placeholderImagePath && !imageUpload.value) {
+    return props.context.placeholderImagePath || ''
+  }
+
+  return imageUpload.value
 })
 
 const MAX_IMAGE_SIZE_IN_MB = 8
@@ -89,16 +99,17 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
       </CommonLabel>
     </div>
     <template v-else>
-      <template v-if="imageUpload">
+      <template v-if="imageUploadOrPlaceholder">
         <div
           class="w-full p-2.5 grid grid-cols-[20px_auto_20px] gap-2.5 justify-items-center items-center"
         >
           <img
             class="max-h-32 col-start-2"
-            :src="imageUpload"
+            :src="imageUploadOrPlaceholder"
             :alt="$t('Image preview')"
           />
           <CommonButton
+            v-if="imageUpload"
             variant="remove"
             size="small"
             icon="x-lg"

@@ -8,6 +8,8 @@ module Exceptions
 
   class UnprocessableEntity < StandardError; end
 
+  class MissingAttribute < StandardError; end
+
   class ApplicationModel < UnprocessableEntity
     attr_reader :record
 

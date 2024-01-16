@@ -52,7 +52,7 @@ class SessionsController < ApplicationController
     session.delete(:switched_from_user_id)
     authentication_check_prerequesits(user, 'SSO')
 
-    initiate_session_for(user, 'sso')
+    initiate_session_for(user, 'SSO')
 
     redirect_to '/#'
   end

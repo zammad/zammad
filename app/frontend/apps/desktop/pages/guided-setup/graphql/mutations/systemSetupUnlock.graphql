@@ -1,0 +1,8 @@
+mutation systemSetupUnlock($value: String!) {
+  systemSetupUnlock(value: $value) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

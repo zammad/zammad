@@ -119,14 +119,14 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to be_truthy
-      expect(json_response['error']).to eq('Attribute \'email\' required!')
+      expect(json_response['error']).to eq("The required attribute 'email' is missing.")
 
       # email missing with enabled feature
       params = { firstname: 'some firstname', signup: true }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to be_truthy
-      expect(json_response['error']).to eq('Attribute \'email\' required!')
+      expect(json_response['error']).to eq("The required attribute 'email' is missing.")
 
       # create user with enabled feature (take customer role)
       params = { firstname: 'Me First', lastname: 'Me Last', email: 'new_here@example.com', password: '1asdASDasd', signup: true }
@@ -1293,6 +1293,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
   describe 'POST /api/v1/users processed by #create_admin', authenticated_as: false do
     before do
       User.all[2...].each(&:destroy) # destroy previously created users
+      Setting.set('system_init_done', false)
     end
 
     def make_request(params)
@@ -1305,7 +1306,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       { firstname: 'Admin First', lastname: 'Admin Last', email: email, password: 'asd1ASDasd!' }
     end
 
-    it 'succeds' do
+    it 'succeeds' do
       make_request successful_params
       expect(response).to have_http_status(:created)
     end
@@ -1328,6 +1329,11 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
     it 'requires valid email' do
       make_request successful_params.merge(email: 'invalid_email')
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'checks password policy' do
+      make_request successful_params.merge(password: '1234')
       expect(response).to have_http_status(:unprocessable_entity)
     end
 

@@ -59,6 +59,13 @@ returns
 =end
 
   def self.setup
+    raise AutoWizardDisabledError if !enabled?
+
+    ttl = 60.minutes.to_i * 60.seconds.to_i * 1000
+    Service::ExecuteLockedBlock.new('Zammad::System::Setup', ttl).execute { run }
+  end
+
+  def self.run
     auto_wizard_file_location = file_location
 
     auto_wizard_hash = data
@@ -156,4 +163,10 @@ returns
     Rails.root.join(ENV['AUTOWIZARD_RELATIVE_PATH'].presence || 'auto_wizard.json')
   end
   private_class_method :file_location
+
+  class AutoWizardDisabledError < StandardError
+    def initialize
+      super(__('AutoWizard is disabled'))
+    end
+  end
 end

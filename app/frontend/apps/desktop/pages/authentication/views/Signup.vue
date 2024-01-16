@@ -13,12 +13,13 @@ import { i18n } from '#shared/i18n.ts'
 import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import type { SignupFormData } from '#shared/entities/user/types.ts'
 
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage.vue'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
+import { useSignupForm } from '#desktop/composables/authentication/useSignupForm.ts'
 
-import type { SignupRequestData } from '../types/signup'
 import { useUserSignupMutation } from '../graphql/mutations/userSignup.api.ts'
 import { useUserSignupResendMutation } from '../graphql/mutations/userSignupResend.api.ts'
 
@@ -36,67 +37,7 @@ const application = useApplicationStore()
 
 const router = useRouter()
 
-const signupSchema = [
-  {
-    isLayout: true,
-    element: 'div',
-    attrs: {
-      class: 'grid grid-cols-2 gap-y-2.5 gap-x-3',
-    },
-    children: [
-      {
-        name: 'firstname',
-        label: __('First name'),
-        type: 'text',
-        outerClass: 'col-span-1',
-        props: {
-          maxLength: 150,
-        },
-      },
-      {
-        name: 'lastname',
-        label: __('Last name'),
-        type: 'text',
-        outerClass: 'col-span-1',
-        props: {
-          maxLength: 150,
-        },
-      },
-      {
-        name: 'email',
-        label: __('Email'),
-        type: 'email',
-        validation: 'email',
-        outerClass: 'col-span-2',
-        props: {
-          maxLength: 150,
-        },
-        required: true,
-      },
-      {
-        name: 'password',
-        label: __('Password'),
-        type: 'password',
-        outerClass: 'col-span-1',
-        props: {
-          maxLength: 1001,
-        },
-        required: true,
-      },
-      {
-        name: 'password_confirm',
-        label: __('Confirm password'),
-        type: 'password',
-        validation: 'confirm',
-        outerClass: 'col-span-1',
-        props: {
-          maxLength: 1001,
-        },
-        required: true,
-      },
-    ],
-  },
-]
+const { signupSchema } = useSignupForm()
 
 const { form, isDisabled } = useForm()
 
@@ -109,7 +50,7 @@ const pageTitle = computed(() => {
   return i18n.t('Join %s', application.config.product_name)
 })
 
-const singup = async (data: SignupRequestData) => {
+const singup = async (data: SignupFormData) => {
   const sendSignup = new MutationHandler(useUserSignupMutation())
 
   return sendSignup
@@ -171,7 +112,7 @@ const goToLogin = () => {
       ref="form"
       form-class="mb-2.5"
       :schema="signupSchema"
-      @submit="singup($event as FormSubmitData<SignupRequestData>)"
+      @submit="singup($event as FormSubmitData<SignupFormData>)"
     />
 
     <div v-else class="flex flex-col items-center gap-2.5">

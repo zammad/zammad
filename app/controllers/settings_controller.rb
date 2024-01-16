@@ -36,27 +36,29 @@ class SettingsController < ApplicationController
 
   # PUT /settings/image/:id
   def update_image
-    clean_params = keep_certain_attributes
+    logo_content = %i[logo logo_resize].each_with_object({}) do |key, memo|
+      data = params[key]
 
-    if !clean_params[:logo]
+      next if !data&.match? %r{^data:image}i
+
+      file = ImageHelper.data_url_attributes(data)
+
+      memo[key] = file[:content] if file
+    end
+
+    logo_timestamp = Service::SystemAssets::ProductLogo.store(logo_content[:logo], logo_content[:logo_resize])
+
+    if !logo_timestamp
       render json: {
         result:  'invalid',
-        message: __('Need logo param'),
+        message: __('The uploaded image could not be processed. Need data:image in logo or logo_resize param.'),
       }
       return
     end
 
     setting = Setting.lookup(name: 'product_logo')
-
-    if (logo_timestamp = Service::SystemAssets::ProductLogo.store(params[:logo], params[:logo_resize]))
-      setting.state = logo_timestamp
-      setting.save!
-    else
-      render json: {
-        result:  'invalid',
-        message: __('The uploaded image could not be processed. Need data:image in logo or logo_resize param.'),
-      }
-    end
+    setting.state = logo_timestamp
+    setting.save!
 
     render json: {
       result:   'ok',

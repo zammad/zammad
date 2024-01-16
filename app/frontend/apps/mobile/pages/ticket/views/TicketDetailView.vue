@@ -304,7 +304,6 @@ const showBottomBanner = computed(() => {
       :class="formVisible ? 'visible' : 'hidden'"
       :loading="!ticket"
     >
-      <!-- TODO: Maybe we need not to initialize the form, when someone has only readonly access? -->
       <Form
         v-if="ticket?.id && initialTicketValue"
         id="form-ticket-edit"

@@ -18,8 +18,8 @@ import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage.vue'
 import LoginThirdParty from '#desktop/pages/authentication/components/LoginThirdParty.vue'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
 import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
 import type { LoginCredentials } from '#shared/entities/two-factor/types.ts'
@@ -186,6 +186,7 @@ const showPasswordLogin = computed(
 
       <Form
         v-if="loginFlow.state === 'credentials' && showPasswordLogin"
+        id="login"
         ref="form"
         form-class="mb-2.5 space-y-2.5"
         :schema="loginSchema"

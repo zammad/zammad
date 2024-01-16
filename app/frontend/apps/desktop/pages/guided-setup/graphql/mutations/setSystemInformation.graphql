@@ -1,0 +1,8 @@
+mutation guidedSetupSetSystemInformation($input: SystemInformation!) {
+  guidedSetupSetSystemInformation(input: $input) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

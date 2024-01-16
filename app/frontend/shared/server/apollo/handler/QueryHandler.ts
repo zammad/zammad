@@ -97,6 +97,8 @@ export default class QueryHandler<
         },
       })
     } catch (error) {
+      // TODO: do we need to handleError here also in a genric way?
+
       return {
         data: null,
         error: error as ApolloError,

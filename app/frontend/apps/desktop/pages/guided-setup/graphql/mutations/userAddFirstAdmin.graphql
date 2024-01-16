@@ -1,0 +1,10 @@
+mutation userAddFirstAdmin($input: UserSignupInput!) {
+  userAddFirstAdmin(input: $input) {
+    session {
+      ...session
+    }
+    errors {
+      ...errors
+    }
+  }
+}

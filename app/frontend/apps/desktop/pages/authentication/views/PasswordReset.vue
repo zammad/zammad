@@ -17,7 +17,7 @@ import { useNotifications } from '#shared/components/CommonNotifications/useNoti
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import UserError from '#shared/errors/UserError.ts'
 
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage.vue'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
 import { useUserPasswordResetSendMutation } from '../graphql/mutations/userPasswordResetSend.api.ts'

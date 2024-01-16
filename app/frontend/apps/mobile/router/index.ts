@@ -4,7 +4,6 @@ import type { App } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import mainInitializeRouter from '#shared/router/index.ts'
 import type { InitializeAppRouter, RoutesModule } from '#shared/types/router.ts'
-import { errorAfterGuard } from '#shared/router/error.ts'
 import transitionViewGuard from './guards/before/viewTransition.ts'
 
 const routeModules: Record<string, RoutesModule> = import.meta.glob(
@@ -62,13 +61,7 @@ export const routes: Array<RouteRecordRaw> = [
 ]
 
 const initializeRouter: InitializeAppRouter = (app: App) => {
-  return mainInitializeRouter(
-    app,
-    routes,
-    [transitionViewGuard],
-    [errorAfterGuard],
-    'mobile',
-  )
+  return mainInitializeRouter(app, routes, [transitionViewGuard], [], 'mobile')
 }
 
 export default initializeRouter

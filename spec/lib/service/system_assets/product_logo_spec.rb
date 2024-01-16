@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Service::SystemAssets::ProductLogo do
   let(:base64) { 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }
+  let(:data)   { Rails.root.join('test/data/image/1000x1000.png').binread }
+
   let(:raw_logo) do
     create(:store,
            object:      'System::Logo',
@@ -79,45 +81,58 @@ RSpec.describe Service::SystemAssets::ProductLogo do
   end
 
   describe '.store', aggregate_failures: true do
-    before do
-      raw_logo
-      resized_logo
+    it 'returns timestamp' do
+      freeze_time
+
+      expect(described_class.store(data)).to eq(Time.current.to_i)
     end
 
-    it 'stores raw logo' do
-      expect { described_class.store(base64, nil) }
-        .to change { Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RAW).first.id }
+    it 'returns nil if given invalid data' do
+      expect(described_class.store('invalid string')).to be_nil
+    end
 
-      expect(Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RESIZED)).to be_blank
+    it 'stores original logo' do
+      described_class.store(data)
+
+      Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RAW)
+
+      expect(Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RAW)).to be_present
     end
 
     it 'stores resized logo' do
-      expect { described_class.store(nil, base64) }
-        .to change { Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RESIZED).first.id }
+      described_class.store(nil, data)
 
+      Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RESIZED)
+
+      expect(Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RESIZED)).to be_present
       expect(Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RAW)).to be_blank
     end
 
-    it 'stores both logos' do
-      expect { described_class.store(base64, base64) }
-        .to change { Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RESIZED).first.id }
-        .and change { Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RAW).first.id }
+    it 'resized original logo and stores as resized' do
+      described_class.store(data)
+
+      stored = Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RESIZED).first
+
+      expect(Rszr::Image.load_data(stored.content))
+        .to have_attributes(width: 100, height: 100)
     end
 
-    it 'returns timestamp if either logo present' do
-      freeze_time
-      expect(described_class.store(base64, nil)).to eq Time.current.to_i
-    end
+    context 'when logos exist beforehand' do
+      before do
+        raw_logo
+        resized_logo
+      end
 
-    it 'returns nil if both logos are unprocessable' do
-      expect(described_class.store(nil, nil)).to be_nil
-    end
+      it 'stores both logos' do
+        expect { described_class.store(data) }
+          .to change { Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RESIZED).first.id }
+          .and change { Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RAW).first.id }
+      end
 
-    it 'does not clear all stored logos when both new logos are unprocessable' do
-      described_class.store(nil, nil)
-
-      expect(Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RAW)).to be_present
-      expect(Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RESIZED)).to be_present
+      it 'does not change logos if given content is invalid' do
+        expect(Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RAW)).to be_present
+        expect(Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RESIZED)).to be_present
+      end
     end
   end
 end

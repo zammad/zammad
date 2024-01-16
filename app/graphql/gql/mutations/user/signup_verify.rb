@@ -23,7 +23,7 @@ module Gql::Mutations
         return error_response({ message: e.message })
       end
 
-      create_session(user, false, 'session')
+      create_session(user, false, 'password')
 
       authenticate_result
     end

@@ -5,7 +5,10 @@ require 'rails_helper'
 # Session handling works only via controller, so use type: request.
 RSpec.describe Gql::Mutations::User::SignupVerify, :aggregate_failures, type: :request do
   context 'when verifying signed up user' do
-    let(:user) { create(:user, verified: false) }
+    let(:user) do
+      create(:role, name: 'user_preferences_device', default_at_signup: true, permission_names: ['user_preferences.device'])
+      create(:user, verified: false)
+    end
     let(:query) do
       <<~QUERY
         mutation userSignupVerify($token: String!) {
@@ -27,13 +30,19 @@ RSpec.describe Gql::Mutations::User::SignupVerify, :aggregate_failures, type: :r
 
     let(:variables) { { token: token } }
 
+    let(:headers) do
+      {
+        'X-Browser-Fingerprint' => 'some-fingerprint',
+      }
+    end
+
     let(:graphql_response) do
       execute_graphql_query
       json_response
     end
 
     def execute_graphql_query
-      post '/graphql', params: { query: query, variables: variables }, as: :json
+      post '/graphql', params: { query: query, variables: variables }, headers: headers, as: :json
     end
 
     shared_examples 'returning an error' do |message|

@@ -105,83 +105,38 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   end
 
   def base
-    # validate url
-    messages = {}
-    settings = {}
-    if !Setting.get('system_online_service')
-      if (result = self.class.validate_uri(params[:url]))
-        settings[:http_type] = result[:scheme]
-        settings[:fqdn]      = result[:fqdn]
-      else
-        messages[:url] = __('A URL looks like this: https://zammad.example.com')
-      end
+    args = params.slice(:url, :locale_default, :timezone_default, :organization)
+
+    %i[logo logo_resize].each do |key|
+      data = params[key]
+
+      next if !data&.match? %r{^data:image}i
+
+      file = ImageHelper.data_url_attributes(data)
+
+      args[key] = file[:content] if file
     end
 
-    # validate organization
-    if params[:organization].blank?
-      messages[:organization] = 'Invalid!'
-    else
-      settings[:organization] = params[:organization]
-    end
+    result = Service::System::SetSystemInformation.new.execute(args)
 
-    # validate image
-    if params[:logo] && params[:logo] =~ %r{^data:image}i
-      file = ImageHelper.data_url_attributes(params[:logo])
-      if !file[:content] || !file[:mime_type]
-        messages[:logo] = __('The uploaded image could not be processed.')
-      end
-    end
+    if !result.success?
+      errors_hash = {}
 
-    # add locale_default
-    if params[:locale_default].present?
-      settings[:locale_default] = params[:locale_default]
-    end
+      errors_hash[:url] = __('A URL looks like this: https://zammad.example.com') if result.errors.any? { _1[:field] == :url }
+      errors_hash[:organization] = __('Invalid!') if result.errors.any? { _1[:field] == :organization }
+      errors_hash[:logo] = __('The uploaded image could not be processed.') if result.errors.any? { _1[:field] == :logo }
 
-    # add timezone_default
-    if params[:timezone_default].present?
-      settings[:timezone_default] = params[:timezone_default]
-    end
-
-    if messages.present?
       render json: {
         result:   'invalid',
-        messages: messages,
+        messages: errors_hash,
       }
       return
     end
 
-    if (logo_timestamp = Service::SystemAssets::ProductLogo.store(params[:logo], params[:logo_resize]))
-      settings[:product_logo] = logo_timestamp
-    end
-
-    # set changed settings
-    settings.each do |key, value|
-      Setting.set(key, value)
-    end
-
     render json: {
       result:   'ok',
-      settings: settings,
+      settings: result.updated_settings,
     }
-  end
-
-  def self.validate_uri(string)
-    uri = URI(string)
-
-    return false if %w[http https].exclude?(uri.scheme) || uri.host.blank?
-
-    defaults = [['http', 80], ['https', 443]]
-    actual   = [uri.scheme, uri.port]
-
-    fqdn = if defaults.include? actual
-             uri.host
-           else
-             "#{uri.host}:#{uri.port}"
-           end
-
-    { scheme: uri.scheme, fqdn: fqdn }
-  rescue
-    false
   end
 
   private

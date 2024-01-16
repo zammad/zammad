@@ -1015,7 +1015,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     # check if user already exists
     if new_params[:email].blank?
-      raise Exceptions::UnprocessableEntity, __('Attribute \'email\' required!')
+      raise Exceptions::UnprocessableEntity, __("The required attribute 'email' is missing.")
     end
 
     signup = Service::User::Deprecated::Signup.new(user_data: new_params)
@@ -1040,49 +1040,15 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   # @response_message 200 [User] Created User record.
   # @response_message 403        Forbidden / Invalid session.
   def create_admin
-    if User.count > 2 # system and example users
-      raise Exceptions::UnprocessableEntity, __('Administrator account already created')
-    end
-
-    # check if user already exists
-    if clean_user_params[:email].blank?
-      raise Exceptions::UnprocessableEntity, __('Attribute \'email\' required!')
-    end
-
-    # check password policy
-    result = PasswordPolicy.new(clean_user_params[:password])
-    if !result.valid?
-      render json: { error: result.error }, status: :unprocessable_entity
-      return
-    end
-
-    user = User.new(clean_user_params)
-    user.associations_from_param(params)
-    user.role_ids  = Role.where(name: %w[Admin Agent]).pluck(:id)
-    user.group_ids = Group.pluck(:id)
-
-    UserInfo.ensure_current_user_id do
-      user.save!
-    end
-
-    Setting.set('system_init_done', true)
-
-    # fetch org logo
-    if user.email.present?
-      Service::Image.organization_suggest(user.email)
-    end
-
-    # load calendar
-    Calendar.init_setup(request.remote_ip)
-
-    # load text modules
-    begin
-      TextModule.load(request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us')
-    rescue => e
-      logger.error "Unable to load text modules #{request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us'}: #{e.message}"
-    end
-
+    Service::User::AddFirstAdmin.new.execute(
+      user_data: clean_user_params.slice(:firstname, :lastname, :email, :password),
+      request:   request,
+    )
     render json: { message: 'ok' }, status: :created
+  rescue PasswordPolicy::Error => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  rescue Exceptions::MissingAttribute, Service::System::CheckSetup::SystemSetupError => e
+    raise Exceptions::UnprocessableEntity, e.message
   end
 
   def serve_default_image

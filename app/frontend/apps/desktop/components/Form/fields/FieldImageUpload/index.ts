@@ -3,7 +3,9 @@
 import createInput from '#shared/form/core/createInput.ts'
 import FieldImageUploadInput from './FieldImageUploadInput.vue'
 
-const fieldDefinition = createInput(FieldImageUploadInput)
+const fieldDefinition = createInput(FieldImageUploadInput, [
+  'placeholderImagePath',
+])
 
 export default {
   fieldType: 'imageUpload',

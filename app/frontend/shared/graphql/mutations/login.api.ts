@@ -1,6 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
+import { SessionFragmentDoc } from '../fragments/session.api';
 import { ErrorsFragmentDoc } from '../fragments/errors.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
@@ -10,11 +11,7 @@ export const LoginDocument = gql`
     mutation login($input: LoginInput!) {
   login(input: $input) {
     session {
-      id
-      afterAuth {
-        type
-        data
-      }
+      ...session
     }
     errors {
       ...errors
@@ -26,7 +23,8 @@ export const LoginDocument = gql`
     }
   }
 }
-    ${ErrorsFragmentDoc}`;
+    ${SessionFragmentDoc}
+${ErrorsFragmentDoc}`;
 export function useLoginMutation(options: VueApolloComposable.UseMutationOptions<Types.LoginMutation, Types.LoginMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.LoginMutation, Types.LoginMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.LoginMutation, Types.LoginMutationVariables>(LoginDocument, options);
 }

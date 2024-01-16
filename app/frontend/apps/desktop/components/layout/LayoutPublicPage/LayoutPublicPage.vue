@@ -3,7 +3,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import CommonLogo from '#shared/components/CommonLogo/CommonLogo.vue'
-import type { BoxSizes } from './types'
+import LayoutPublicPageBoxActions from './LayoutPublicPageBoxActions.vue'
+import type { BoxSizes } from '../types'
 
 export interface Props {
   title?: string
@@ -43,9 +44,9 @@ const hoverPoweredByLogo = ref(false)
         </h1>
         <slot />
 
-        <div v-if="$slots.boxActions" class="flex justify-end items-end gap-2">
+        <LayoutPublicPageBoxActions v-if="$slots.boxActions">
           <slot name="boxActions" />
-        </div>
+        </LayoutPublicPageBoxActions>
       </main>
 
       <section

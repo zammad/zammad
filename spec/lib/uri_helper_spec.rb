@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe GettingStartedController do
+RSpec.describe UriHelper do
   describe '.validate_uri' do
     it 'false for nil' do
       expect(described_class.validate_uri(nil)).to be_falsey

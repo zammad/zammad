@@ -14,6 +14,7 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import authenticationGuard from './guards/before/authentication.ts'
 import permissionGuard from './guards/before/permission.ts'
 import headerTitleGuard from './guards/after/headerTitle.ts'
+import { errorAfterGuard } from './error.ts'
 import { initializeWalker } from './walker.ts'
 
 declare module 'vue-router' {
@@ -45,6 +46,7 @@ export default function initializeRouter(
   beforeGuards?.forEach((guard) => router.beforeEach(guard))
 
   router.afterEach(headerTitleGuard)
+  router.afterEach(errorAfterGuard)
 
   afterGuards?.forEach((guard) => router.afterEach(guard))
 

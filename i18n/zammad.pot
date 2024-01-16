@@ -953,7 +953,7 @@ msgstr ""
 msgid "Additional information"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 msgid "Additional information and links"
 msgstr ""
 
@@ -991,10 +991,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "Administrator account already created"
 msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee
@@ -1537,10 +1533,6 @@ msgstr ""
 msgid "Attribute '%s' is required in the mapping"
 msgstr ""
 
-#: app/controllers/users_controller.rb
-msgid "Attribute 'email' required!"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Attribute that uniquely identifies the user. If unset, the name identifier returned by the IDP is used."
 msgstr ""
@@ -1654,6 +1646,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Auto-close state"
+msgstr ""
+
+#: lib/auto_wizard.rb
+msgid "AutoWizard is disabled"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2552,6 +2548,7 @@ msgid "Communication"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Company Inc."
 msgstr ""
 
@@ -2637,8 +2634,8 @@ msgstr ""
 msgid "Confirm merge"
 msgstr ""
 
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Confirm password"
 msgstr ""
 
@@ -2884,6 +2881,11 @@ msgstr ""
 msgid "Create Admin"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+msgid "Create Administrator Account"
+msgstr ""
+
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
 msgstr ""
@@ -2923,6 +2925,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+msgid "Create account"
 msgstr ""
 
 #: db/seeds/permissions.rb
@@ -4575,7 +4581,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb
 #: public/assets/form/form.js
@@ -4629,6 +4635,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 msgid "Email Notification"
 msgstr ""
 
@@ -5361,7 +5369,7 @@ msgid "First Steps"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "First name"
 msgstr ""
@@ -5628,6 +5636,7 @@ msgid "Geo Location Service"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Get Started"
 msgstr ""
 
@@ -5729,6 +5738,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Go Back"
 msgstr ""
 
@@ -6679,6 +6689,10 @@ msgstr ""
 msgid "Invalid video URL"
 msgstr ""
 
+#: app/controllers/getting_started_controller.rb
+msgid "Invalid!"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
 msgid "Invitation sent!"
 msgstr ""
@@ -6957,7 +6971,7 @@ msgid "Last login"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Last name"
 msgstr ""
@@ -7785,10 +7799,6 @@ msgstr ""
 msgid "Need fingerprint param!"
 msgstr ""
 
-#: app/controllers/settings_controller.rb
-msgid "Need logo param"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
 msgstr ""
@@ -8566,6 +8576,10 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+msgid "Or migrate from another system"
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Or migrate from another system."
 msgstr ""
@@ -8623,7 +8637,12 @@ msgstr ""
 msgid "Organization & Department Name"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "Organization Logo"
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Organization Name"
 msgstr ""
 
@@ -8831,9 +8850,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/permissions.rb
@@ -9152,7 +9171,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Powered by"
 msgstr ""
@@ -10010,6 +10029,11 @@ msgstr ""
 msgid "Save Draft"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "Save and Continue"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
 msgstr ""
@@ -10553,6 +10577,7 @@ msgid "Set to public"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Set up a new system"
 msgstr ""
 
@@ -10893,6 +10918,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Skip"
 msgstr ""
 
@@ -11145,6 +11171,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr ""
@@ -11219,11 +11246,17 @@ msgstr ""
 msgid "System Address Display Name"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "System Information"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "System Init Done"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "System URL"
 msgstr ""
 
@@ -11491,6 +11524,10 @@ msgstr ""
 
 #: lib/telegram_helper.rb
 msgid "The Telegram integration can only be configured on systems using the HTTPS protocol."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "The URL of this installation of Zammad."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -11950,6 +11987,11 @@ msgstr ""
 msgid "The required PGP passphrase is missing."
 msgstr ""
 
+#: app/controllers/users_controller.rb
+#: app/services/service/user/add_first_admin.rb
+msgid "The required attribute 'email' is missing."
+msgstr ""
+
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
 msgid "The required event field 'execution' is missing."
 msgstr ""
@@ -12151,6 +12193,10 @@ msgstr ""
 msgid "The setting could not be updated."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+msgid "The setup has already been started. Please wait until it is finished."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
 msgstr ""
@@ -12170,6 +12216,14 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 msgid "The source ticket could not be found."
+msgstr ""
+
+#: app/services/service/system/check_setup.rb
+msgid "The system setup cannot be started, because there is another one running or it was completed before."
+msgstr ""
+
+#: app/services/service/system/check_setup.rb
+msgid "The system setup is marked as done, but no admin user is existing. Please run the system setup again."
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
@@ -12629,12 +12683,20 @@ msgstr ""
 msgid "This object already exists."
 msgstr ""
 
+#: app/services/service/system/check_setup.rb
+msgid "This operation cannot be continued, because the system set-up was not completed yet."
+msgstr ""
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr ""
 
 #: app/models/knowledge_base/permission.rb
 msgid "This permission level is not available based on the current roles permissions."
+msgstr ""
+
+#: app/services/service/execute_locked_block.rb
+msgid "This resource cannot be locked, because it has already been locked by another process."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -12677,6 +12739,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "This signature is inactive, it won't be included in the reply."
+msgstr ""
+
+#: app/services/service/user/add_first_admin.rb
+msgid "This system has already been configured and an administrator account exists."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
@@ -14249,6 +14315,7 @@ msgid "Welcome to Zammad!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Welcome!"
 msgstr ""
 
@@ -14694,7 +14761,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
@@ -15421,6 +15488,7 @@ msgid "is not included in the list"
 msgstr ""
 
 #: app/assets/javascripts/app/models/_application_model.coffee
+#: app/services/service/system/set_system_information.rb
 msgid "is required"
 msgstr ""
 
@@ -15836,6 +15904,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to public"
+msgstr ""
+
+#: app/services/service/system/set_system_information.rb
+msgid "should look like this: https://zammad.example.com"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee

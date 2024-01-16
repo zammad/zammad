@@ -4,7 +4,7 @@ import type { App } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import mainInitializeRouter from '#shared/router/index.ts'
 import type { InitializeAppRouter, RoutesModule } from '#shared/types/router.ts'
-import { errorAfterGuard } from '#shared/router/error.ts'
+import systemSetupInfo from './guards/before/systemSetupInfo.ts'
 
 const routeModules: Record<string, RoutesModule> = import.meta.glob(
   ['../pages/*/routes.ts', '../pages/*/routes/*.ts'],
@@ -61,7 +61,7 @@ export const routes: Array<RouteRecordRaw> = [
 ]
 
 const initializeRouter: InitializeAppRouter = (app: App) => {
-  return mainInitializeRouter(app, routes, [], [errorAfterGuard], 'desktop')
+  return mainInitializeRouter(app, routes, [systemSetupInfo], [], 'desktop')
 }
 
 export default initializeRouter

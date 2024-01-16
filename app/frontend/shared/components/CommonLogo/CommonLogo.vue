@@ -1,14 +1,9 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useApplicationStore } from '#shared/stores/application.ts'
+import { useLogoUrl } from '#shared/composables/useLogoUrl.ts'
 
-const application = useApplicationStore()
-
-const logoUrl = computed(() => {
-  return `/api/v1/system_assets/product_logo/${application.config.product_logo}`
-})
+const { logoUrl } = useLogoUrl()
 </script>
 
 <template>

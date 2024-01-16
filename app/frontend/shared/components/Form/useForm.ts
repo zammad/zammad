@@ -2,12 +2,12 @@
 
 import type { FormKitNode } from '@formkit/core'
 import { computed, shallowRef } from 'vue'
-import type { ShallowRef } from 'vue'
+import type { ShallowRef, Ref } from 'vue'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import type { FormRef, FormResetOptions, FormValues } from './types.ts'
 
-export const useForm = () => {
-  const form: ShallowRef<FormRef | undefined> = shallowRef()
+export const useForm = (formRef?: Ref<FormRef | undefined>) => {
+  const form: ShallowRef<FormRef | undefined> = formRef || shallowRef()
 
   const node = computed(() => form.value?.formNode)
 
@@ -27,6 +27,10 @@ export const useForm = () => {
 
   const isDisabled = computed(() => {
     return !!context.value?.disabled || !!state.value?.formUpdaterProcessing
+  })
+
+  const formNodeId = computed(() => {
+    return context.value?.id
   })
 
   /**
@@ -85,6 +89,7 @@ export const useForm = () => {
     isComplete,
     isSubmitted,
     isDisabled,
+    formNodeId,
     canSubmit,
     formReset,
     formGroupReset,
