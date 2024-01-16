@@ -64,7 +64,10 @@ describe('guided setup system information', () => {
       expect(urlField).toBeInTheDocument()
       expect(logoField).toBeInTheDocument()
 
+      expect(urlField).toHaveValue('http://localhost:3000')
+
       await view.events.type(organizationField, "Don't be Evil Inc")
+      await view.events.clear(urlField)
       await view.events.type(urlField, 'https://example.com')
 
       const testValue =

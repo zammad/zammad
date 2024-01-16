@@ -4,21 +4,28 @@
 import { shallowRef, computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import type {
+  FormSubmitData,
+  FormValues,
+} from '#shared/components/Form/types.ts'
 import Form from '#shared/components/Form/Form.vue'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useLogoUrl } from '#shared/composables/useLogoUrl.ts'
 
+import type { SystemInformationData } from '../../types/setup-manual.ts'
 import { useSystemSetupManual } from '../../composables/useSystemSetupManual.ts'
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
 import { useGuidedSetupSetSystemInformationMutation } from '../../graphql/mutations/setSystemInformation.api.ts'
 
 const router = useRouter()
+const application = useApplicationStore()
 
 const { logoUrl } = useLogoUrl()
 
 const { setTitle } = useSystemSetupManual()
+setTitle(__('System Information'))
+
 const systemInformationSchema = [
   {
     isLayout: true,
@@ -55,26 +62,29 @@ const systemInformationSchema = [
   },
 ]
 
-setTitle(__('System Information'))
+const getInitialInstanceUrl = () => {
+  const { fqdn } = application.config
 
-interface SystemInformationData {
-  organization: string
-  logo: string
-  url: string
-  localeDefault: string
-  timezoneDefault: string
+  if (!fqdn || fqdn === 'zammad.example.com') {
+    return window.location.origin
+  }
+
+  return `${application.config.http_type}://${fqdn}`
+}
+
+const initialValues: FormValues = {
+  organization: application.config.organization,
+  url: getInitialInstanceUrl(),
 }
 
 const form = shallowRef()
 
-const application = useApplicationStore()
 const isSystemOnlineService = computed(
   () => application.config.system_online_service,
 )
 
 const schemaData = reactive({
   isSystemOnlineService,
-  logoPlaceholderUrl: logoUrl,
 })
 
 const dateTimeFormatOptions = Intl?.DateTimeFormat
@@ -102,6 +112,7 @@ const setSystemInformation = async (formData: SystemInformationData) => {
     .then(() => {
       router.push('/guided-setup/manual/email-notification')
     })
+    .catch(() => {})
 }
 </script>
 
@@ -112,6 +123,7 @@ const setSystemInformation = async (formData: SystemInformationData) => {
     form-class="mb-2.5"
     :schema="systemInformationSchema"
     :schema-data="schemaData"
+    :initial-values="initialValues"
     @submit="
       setSystemInformation($event as FormSubmitData<SystemInformationData>)
     "

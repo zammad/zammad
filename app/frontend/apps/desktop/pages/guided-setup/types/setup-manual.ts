@@ -3,3 +3,11 @@
 export interface SystemSetupManual {
   setTitle: (title: string) => void
 }
+
+export interface SystemInformationData {
+  organization: string
+  logo: string
+  url: string
+  localeDefault: string
+  timezoneDefault: string
+}
