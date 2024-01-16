@@ -5,15 +5,17 @@ import type { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <!-- LayoutBreadcrumbs -->
-  <div class="text-sm breadcrumbs">
-    <ul>
-      <li><a>Home</a></li>
-      <li><a>Documents</a></li>
-      <li>Add Document</li>
-    </ul>
-  </div>
-  <!-- LayoutHeader -->
+  <div class="h-full overflow-y-auto">
+    <!-- LayoutBreadcrumbs -->
+    <div class="text-sm breadcrumbs">
+      <ul>
+        <li><a>Home</a></li>
+        <li><a>Documents</a></li>
+        <li>Add Document</li>
+      </ul>
+    </div>
+    <!-- LayoutHeader -->
 
-  <RouterView />
+    <RouterView />
+  </div>
 </template>

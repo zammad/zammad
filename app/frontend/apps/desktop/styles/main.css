@@ -46,6 +46,11 @@
 }
 
 @layer components {
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-stone-200 dark:text-neutral-500;
+  }
+
   .required-indicator {
     @apply text-yellow-600;
   }

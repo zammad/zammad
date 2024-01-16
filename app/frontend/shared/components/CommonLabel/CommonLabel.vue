@@ -38,6 +38,7 @@ const iconClassMap = {
       v-if="prefixIcon"
       :size="iconClassMap[props.size]"
       :name="prefixIcon"
+      decorative
     />
 
     <slot />
@@ -46,6 +47,7 @@ const iconClassMap = {
       v-if="suffixIcon"
       :size="iconClassMap[props.size]"
       :name="suffixIcon"
+      decorative
     />
   </span>
 </template>

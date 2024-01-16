@@ -98,7 +98,7 @@ const appTheme = useAppTheme()
     </aside>
 
     <article
-      class="w-full h-full antialiased bg-white dark:bg-gray-500 text-gray-100 dark:text-neutral-400"
+      class="w-full h-full antialiased bg-white dark:bg-gray-500 text-gray-100 dark:text-neutral-400 overflow-hidden"
     >
       <RouterView />
     </article>

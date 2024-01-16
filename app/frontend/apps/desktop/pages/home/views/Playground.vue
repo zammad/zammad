@@ -1,13 +1,87 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- eslint-disable zammad/zammad-detect-translatable-string -->
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import Form from '#shared/components/Form/Form.vue'
+import { useIcons } from '#shared/components/CommonIcon/useIcons.ts'
+
+const alphabetOptions = computed(() =>
+  [...Array(26).keys()].map((i) => ({
+    value: i,
+    label: `Item ${String.fromCharCode(65 + i)}`,
+    disabled: Math.random() < 0.5,
+  })),
+)
+
+const { icons } = useIcons()
+
+const iconOptions = computed(() =>
+  Object.keys(icons).map((icon) => ({
+    icon,
+    value: icon,
+    label: icon,
+    disabled: Math.random() < 0.5,
+  })),
+)
+
+const formSchema = [
+  {
+    type: 'select',
+    name: 'select_1',
+    label: 'Single select',
+    clearable: true,
+    props: {
+      options: alphabetOptions.value,
+    },
+  },
+  {
+    type: 'select',
+    name: 'select_2',
+    label: 'Multi select',
+    clearable: true,
+    props: {
+      multiple: true,
+      options: alphabetOptions.value,
+    },
+  },
+  {
+    type: 'select',
+    name: 'select_3',
+    label: 'Disabled select',
+    disabled: true,
+    clearable: true,
+    props: {
+      options: [],
+    },
+  },
+  {
+    type: 'select',
+    name: 'select_4',
+    label: 'Icon single select',
+    clearable: true,
+    props: {
+      options: iconOptions.value,
+    },
+  },
+  {
+    type: 'select',
+    name: 'select_5',
+    label: 'Icon multi select',
+    clearable: true,
+    props: {
+      multiple: true,
+      options: iconOptions.value,
+    },
+  },
+]
 </script>
 
 <template>
   <div class="w-1/2 ltr:ml-2 rtl:mr-2">
-    <h2>Buttons</h2>
+    <h2 class="text-xl">Buttons</h2>
 
     <h3>Text only</h3>
     <div class="space-x-3 py-2 flex">
@@ -17,20 +91,6 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
       <CommonButton variant="submit" />
       <CommonButton variant="danger" />
     </div>
-    <div class="space-x-3 py-2 flex">
-      <CommonButton variant="primary" size="medium" />
-      <CommonButton variant="secondary" size="medium" />
-      <CommonButton variant="tertiary" size="medium" />
-      <CommonButton variant="submit" size="medium" />
-      <CommonButton variant="danger" size="medium" />
-    </div>
-    <div class="space-x-3 py-2 flex">
-      <CommonButton variant="primary" size="large" />
-      <CommonButton variant="secondary" size="large" />
-      <CommonButton variant="tertiary" size="large" />
-      <CommonButton variant="submit" size="large" />
-      <CommonButton variant="danger" size="large" />
-    </div>
 
     <h3>With icon</h3>
     <div class="space-x-3 py-2 flex">
@@ -39,13 +99,6 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
       <CommonButton variant="tertiary" prefix-icon="logo-flat" />
       <CommonButton variant="submit" prefix-icon="logo-flat" />
       <CommonButton variant="danger" prefix-icon="logo-flat" />
-    </div>
-    <div class="space-x-3 py-2 flex">
-      <CommonButton variant="primary" suffix-icon="logo-flat" />
-      <CommonButton variant="secondary" suffix-icon="logo-flat" />
-      <CommonButton variant="tertiary" suffix-icon="logo-flat" />
-      <CommonButton variant="submit" suffix-icon="logo-flat" />
-      <CommonButton variant="danger" suffix-icon="logo-flat" />
     </div>
 
     <h3>Icon only</h3>
@@ -75,7 +128,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
   </div>
 
   <div class="w-1/2 ltr:ml-2 rtl:mr-2">
-    <h2>Alerts</h2>
+    <h2 class="text-xl">Alerts</h2>
 
     <CommonAlert
       variant="info"
@@ -119,5 +172,10 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
     <CommonLabel size="xl" prefix-icon="logo" suffix-icon="logo-flat"
       >Extra large</CommonLabel
     >
+  </div>
+  <div class="w-1/2 ltr:ml-2 rtl:mr-2">
+    <h2 class="text-lg">Form</h2>
+
+    <Form class="mb-96" form-class="mb-2.5 space-y-2.5" :schema="formSchema" />
   </div>
 </template>
