@@ -8,13 +8,11 @@ export type ImportGlobEagerDefault<T> = Record<string, T>
 
 export type ImportGlobEagerOutput<T> = Record<string, ImportGlobEagerDefault<T>>
 
-type ObjectKeys<T, K extends string | number> = T extends Record<
-  string,
-  unknown
->
-  ? // eslint-disable-next-line no-use-before-define
-    K | `${K}.${NestedKeyOf<T>}`
-  : K
+type ObjectKeys<T, K extends string | number> =
+  T extends Record<string, unknown>
+    ? // eslint-disable-next-line no-use-before-define
+      K | `${K}.${NestedKeyOf<T>}`
+    : K
 
 export type NestedKeyOf<T> = {
   [K in keyof T & (string | number)]: NonNullable<T[K]> extends Array<unknown>

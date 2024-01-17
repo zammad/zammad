@@ -53,8 +53,8 @@ const filterOptions = (
   options: SecurityOption[],
 ) => {
   return options
-    .filter(
-      (option) => props.context.securityAllowed?.[method]?.includes(option),
+    .filter((option) =>
+      props.context.securityAllowed?.[method]?.includes(option),
     )
     .sort()
 }

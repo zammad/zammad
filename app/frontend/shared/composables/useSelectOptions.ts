@@ -42,11 +42,10 @@ const useSelectOptions = <
     ...appendedOptions.value,
   ])
 
-  const hasStatusProperty = computed(
-    () =>
-      availableOptions.value?.some(
-        (option) => (option as SelectOption | FlatSelectOption).status,
-      ),
+  const hasStatusProperty = computed(() =>
+    availableOptions.value?.some(
+      (option) => (option as SelectOption | FlatSelectOption).status,
+    ),
   )
 
   const translatedOptions = computed(() => {
