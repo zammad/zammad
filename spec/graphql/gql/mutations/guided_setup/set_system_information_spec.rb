@@ -78,9 +78,9 @@ RSpec.describe Gql::Mutations::GuidedSetup::SetSystemInformation, type: :graphql
 
           expect(gql.result.data)
             .to include(
-              'success' => false,
+              'success' => nil,
               'errors'  => include(
-                'message' => 'should look like this: https://zammad.example.com', 'field' => 'url'
+                'message' => 'Please include a valid url.', 'field' => 'url'
               )
             )
         end

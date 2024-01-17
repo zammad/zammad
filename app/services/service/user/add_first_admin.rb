@@ -9,7 +9,7 @@ class Service::User::AddFirstAdmin < Service::Base
     end
 
     if user_data[:email].blank?
-      raise Exceptions::MissingAttribute, __("The required attribute 'email' is missing.")
+      raise Exceptions::MissingAttribute.new('email', __("The required attribute 'email' is missing."))
     end
 
     PasswordPolicy.new(user_data[:password]).valid!

@@ -117,26 +117,20 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       args[key] = file[:content] if file
     end
 
-    result = Service::System::SetSystemInformation.new.execute(args)
-
-    if !result.success?
-      errors_hash = {}
-
-      errors_hash[:url] = __('A URL looks like this: https://zammad.example.com') if result.errors.any? { _1[:field] == :url }
-      errors_hash[:organization] = __('Invalid!') if result.errors.any? { _1[:field] == :organization }
-      errors_hash[:logo] = __('The uploaded image could not be processed.') if result.errors.any? { _1[:field] == :logo }
+    begin
+      set_system_information_service = Service::System::SetSystemInformation.new(data: args)
+      result = set_system_information_service.execute
 
       render json: {
-        result:   'invalid',
-        messages: errors_hash,
+        result:   'ok',
+        settings: result,
       }
-      return
+    rescue Exceptions::MissingAttribute, Exceptions::InvalidAttribute => e
+      render json: {
+        result:   'invalid',
+        messages: { e.attribute => e.message }
+      }
     end
-
-    render json: {
-      result:   'ok',
-      settings: result.updated_settings,
-    }
   end
 
   private

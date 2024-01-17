@@ -502,10 +502,6 @@ msgstr ""
 msgid "A **calendar** is needed to calculate escalations based on business hours and to send out escalation notifications.\n\nDefine a **\"standard\"** calendar which is valid system-wide. The escalation notifications will only be sent to your agents during the defined business hours.\n\nIf you have customers with different business hours, you can create multiple calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
 
-#: app/controllers/getting_started_controller.rb
-msgid "A URL looks like this: https://zammad.example.com"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
@@ -6692,10 +6688,6 @@ msgstr ""
 msgid "Invalid video URL"
 msgstr ""
 
-#: app/controllers/getting_started_controller.rb
-msgid "Invalid!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
 msgid "Invitation sent!"
 msgstr ""
@@ -9092,6 +9084,7 @@ msgid "Please fill in all fields"
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+#: app/services/service/system/set_system_information.rb
 msgid "Please include a valid url."
 msgstr ""
 
@@ -11998,6 +11991,10 @@ msgstr ""
 msgid "The required attribute 'email' is missing."
 msgstr ""
 
+#: app/services/service/system/set_system_information.rb
+msgid "The required attribute 'organization' is missing."
+msgstr ""
+
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
 msgid "The required event field 'execution' is missing."
 msgstr ""
@@ -12286,10 +12283,6 @@ msgstr ""
 
 #: app/models/setting/validation/saml/security.rb
 msgid "The type of the private key is wrong."
-msgstr ""
-
-#: app/controllers/getting_started_controller.rb
-msgid "The uploaded image could not be processed."
 msgstr ""
 
 #: app/controllers/settings_controller.rb
@@ -15498,7 +15491,6 @@ msgid "is not included in the list"
 msgstr ""
 
 #: app/assets/javascripts/app/models/_application_model.coffee
-#: app/services/service/system/set_system_information.rb
 msgid "is required"
 msgstr ""
 
@@ -15918,10 +15910,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to public"
-msgstr ""
-
-#: app/services/service/system/set_system_information.rb
-msgid "should look like this: https://zammad.example.com"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee

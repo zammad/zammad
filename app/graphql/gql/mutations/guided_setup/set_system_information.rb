@@ -7,17 +7,19 @@ module Gql::Mutations
 
     argument :input, Gql::Types::Input::SystemInformationType, 'Basic system information'
 
-    field :success, Boolean, null: false, description: 'Did system setup succeed?'
+    field :success, Boolean, description: 'System setup information updated successfully?'
 
     def self.authorize(_obj, ctx)
       ctx[:current_user].permissions?('admin.wizard')
     end
 
     def resolve(input:)
-      result = Service::System::SetSystemInformation.new.execute(input)
-
-      if !result.success?
-        return { success: false, errors: result.errors }
+      begin
+        # TODO: what are we doing with required string parameter which only holding whitespaces?
+        set_system_information = Service::System::SetSystemInformation.new(data: input.to_h)
+        set_system_information.execute
+      rescue Exceptions::InvalidAttribute => e
+        return error_response({ message: e.message, field: e.attribute })
       end
 
       { success: true }

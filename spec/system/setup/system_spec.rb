@@ -49,7 +49,7 @@ RSpec.describe 'System setup process', authenticated_as: false, required_envs: %
       # fill in wrong URL
       fill_in 'url', with: 'some host'
       click_on('Next')
-      expect(page).to have_css('.alert', text: 'A URL looks like')
+      expect(page).to have_css('.alert', text: 'Please include a valid url.')
 
       # fill in valild/current URL
       fill_in 'url', with: app_host

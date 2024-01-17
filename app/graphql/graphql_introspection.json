@@ -3245,18 +3245,14 @@
             },
             {
               "name": "success",
-              "description": "Did system setup succeed?",
+              "description": "System setup information updated successfully?",
               "args": [
 
               ],
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null

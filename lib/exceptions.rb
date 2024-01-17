@@ -8,7 +8,23 @@ module Exceptions
 
   class UnprocessableEntity < StandardError; end
 
-  class MissingAttribute < StandardError; end
+  class InvalidAttribute < StandardError
+    attr_reader :attribute
+
+    def initialize(attribute, message)
+      super(message)
+      @attribute = attribute
+    end
+  end
+
+  class MissingAttribute < StandardError
+    attr_reader :attribute
+
+    def initialize(attribute, message)
+      super(message)
+      @attribute = attribute
+    end
+  end
 
   class ApplicationModel < UnprocessableEntity
     attr_reader :record

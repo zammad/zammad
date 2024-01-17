@@ -525,8 +525,8 @@ export type GuidedSetupSetSystemInformationPayload = {
   __typename?: 'GuidedSetupSetSystemInformationPayload';
   /** Errors encountered during execution of the mutation. */
   errors?: Maybe<Array<UserError>>;
-  /** Did system setup succeed? */
-  success: Scalars['Boolean']['output'];
+  /** System setup information updated successfully? */
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 /** Key/value type with complex (JSON) values. */
@@ -2879,7 +2879,7 @@ export type GuidedSetupSetSystemInformationMutationVariables = Exact<{
 }>;
 
 
-export type GuidedSetupSetSystemInformationMutation = { __typename?: 'Mutations', guidedSetupSetSystemInformation?: { __typename?: 'GuidedSetupSetSystemInformationPayload', success: boolean, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+export type GuidedSetupSetSystemInformationMutation = { __typename?: 'Mutations', guidedSetupSetSystemInformation?: { __typename?: 'GuidedSetupSetSystemInformationPayload', success?: boolean | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type SystemSetupLockMutationVariables = Exact<{
   ttl?: InputMaybe<Scalars['Int']['input']>;
