@@ -9,6 +9,7 @@ import type {
   InitializeAppForm,
 } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
+import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
 import { getCoreDesktopClasses } from './theme/global/getCoreDesktopClasses.ts'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
@@ -20,7 +21,7 @@ export const desktopFormFieldModules: ImportGlobEagerOutput<FormFieldTypeImportM
 const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> =
   import.meta.glob('./theme/global/extensions/*.ts', { eager: true })
 
-const initializeForm: InitializeAppForm = (app: App) => {
+export const initializeForm: InitializeAppForm = (app: App) => {
   const plugins = getFormPlugins(pluginModules)
   const theme = {
     coreClasses: getCoreDesktopClasses,
@@ -42,4 +43,11 @@ const initializeForm: InitializeAppForm = (app: App) => {
   )
 }
 
-export default initializeForm
+export const initializeFormFields = () => {
+  initializeToggleClasses({
+    track:
+      'bg-stone-200 dark:bg-gray-500 ring-1 ring-neutral-100 dark:ring-gray-900 hover:outline hover:outline-1 hover:outline-offset-2 hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline focus:outline-1 focus:outline-offset-2 focus:outline-blue-800 hover:focus:outline-blue-800 dark:hover:focus:outline-blue-800 formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-2 formkit-invalid:outline-red-500 dark:hover:formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-2 formkit-errors:outline-red-500 dark:hover:formkit-errors:outline-red-500',
+    trackOn: '!bg-blue-800',
+    knob: 'bg-white',
+  })
+}

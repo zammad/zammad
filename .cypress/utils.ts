@@ -4,7 +4,7 @@ import { merge } from 'lodash-es'
 import initializeStore from '#shared/stores/index.ts'
 import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
 import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
-import initializeForm from '#mobile/form/index.ts'
+import { initializeForm, initializeFormFields } from '#mobile/form/index.ts'
 
 // imported only for types
 // for some reason adding it to tsconfig doesn't work
@@ -38,6 +38,7 @@ export const mountComponent: typeof mount = (
   plugins.push(initializeGlobalComponents)
   plugins.push(initializeGlobalProperties)
   plugins.push(initializeForm)
+  plugins.push(initializeFormFields)
   plugins.push((app: App) => router.install(app))
 
   return cy.mount(component, merge({ global: { plugins } }, options))

@@ -9,6 +9,7 @@ import type {
   InitializeAppForm,
 } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
+import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
 import getCoreClasses from './theme/global/getCoreMobileClasses.ts'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
@@ -20,7 +21,7 @@ export const mobileFormFieldModules: ImportGlobEagerOutput<FormFieldTypeImportMo
 const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> =
   import.meta.glob('./theme/global/extensions/*.ts', { eager: true })
 
-const initializeForm: InitializeAppForm = (app: App) => {
+export const initializeForm: InitializeAppForm = (app: App) => {
   const plugins = getFormPlugins(pluginModules)
   const theme = {
     coreClasses: getCoreClasses,
@@ -30,4 +31,11 @@ const initializeForm: InitializeAppForm = (app: App) => {
   mainInitializeForm(app, undefined, mobileFormFieldModules, plugins, theme)
 }
 
-export default initializeForm
+export const initializeFormFields = () => {
+  initializeToggleClasses({
+    track:
+      'bg-gray-300 border border-transparent focus-within:ring-1 focus-within:ring-white focus-within:ring-opacity-75 focus:outline-none formkit-invalid:border-solid formkit-invalid:border-red',
+    trackOn: '!bg-blue',
+    knob: 'bg-white shadow-lg ring-0',
+  })
+}

@@ -76,6 +76,48 @@ const formSchema = [
       options: iconOptions.value,
     },
   },
+  {
+    isLayout: true,
+    element: 'div',
+    attrs: {
+      class: 'grid grid-cols-2 gap-y-2.5 gap-x-3',
+    },
+    children: [
+      {
+        name: 'text_1',
+        label: 'Text input',
+        type: 'text',
+        outerClass: 'col-span-1',
+        props: {
+          maxLength: 150,
+        },
+      },
+      {
+        name: 'toggle_1',
+        label: 'Column toggle',
+        type: 'toggle',
+        outerClass: 'col-span-1',
+        wrapperClass: 'mt-6',
+        props: {
+          variants: {
+            true: 'yes',
+            false: 'no',
+          },
+        },
+      },
+      {
+        name: 'toggle_2',
+        label: 'Row toggle',
+        type: 'toggle',
+        props: {
+          variants: {
+            true: 'yes',
+            false: 'no',
+          },
+        },
+      },
+    ],
+  },
 ]
 </script>
 

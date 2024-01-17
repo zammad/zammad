@@ -19,7 +19,7 @@ import { initializeDesktopIcons } from '#desktop/initializer/initializeDesktopIc
 import { initializeGlobalComponentStyles } from '#desktop/initializer/initializeGlobalComponentStyles.ts'
 import initializeApolloClient from '#desktop/server/apollo/index.ts'
 import initializeRouter from '#desktop/router/index.ts'
-import initializeForm from '#desktop/form/index.ts'
+import { initializeForm, initializeFormFields } from '#desktop/form/index.ts'
 
 import { ensureAfterAuth } from './pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
 
@@ -33,6 +33,7 @@ export const mountApp = async () => {
   initializeStore(app)
   initializeDesktopIcons()
   initializeForm(app)
+  initializeFormFields()
   initializeGlobalComponentStyles()
   initializeGlobalComponents(app)
   initializeAppName('desktop')

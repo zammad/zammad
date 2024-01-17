@@ -115,7 +115,7 @@ setupMissingOrDisabledOptionHandling()
     ref="input"
     :class="[
       context.classes.input,
-      'flex h-auto min-h-10 bg-blue-200 dark:bg-gray-700 duration-200 has-[output:focus,input:focus]:outline has-[output:focus,input:focus]:outline-1 has-[output:focus,input:focus]:outline-offset-1 has-[output:focus,input:focus]:outline-blue-800',
+      `flex h-auto min-h-10 bg-blue-200 dark:bg-gray-700 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900 has-[output:focus,input:focus]:outline has-[output:focus,input:focus]:outline-1 has-[output:focus,input:focus]:outline-offset-1 has-[output:focus,input:focus]:outline-blue-800 dark:has-[output:focus,input:focus]:outline-blue-800`,
       {
         'rounded-lg': !select?.isOpen,
         'rounded-t-lg': select?.isOpen && !isBelowHalfScreen,

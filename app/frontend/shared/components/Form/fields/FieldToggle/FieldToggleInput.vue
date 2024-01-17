@@ -1,9 +1,10 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import stopEvent from '#shared/utils/events.ts'
 import { computed, nextTick, toRef, watch } from 'vue'
+import stopEvent from '#shared/utils/events.ts'
 import useValue from '../../composables/useValue.ts'
+import { getToggleClasses } from './initializeToggleClasses.ts'
 import type { FormFieldContext } from '../../types/field.ts'
 
 const props = defineProps<{
@@ -76,6 +77,8 @@ const updateLocalValue = (e: Event) => {
     localValue.value = newValue === 'true'
   }
 }
+
+const classMap = getToggleClasses()
 </script>
 
 <template>
@@ -83,8 +86,14 @@ const updateLocalValue = (e: Event) => {
     :id="context.id"
     type="button"
     role="switch"
-    class="relative inline-flex h-6 w-10 flex-shrink-0 cursor-pointer rounded-full border border-transparent bg-gray-300 transition-colors duration-200 ease-in-out focus-within:ring-1 focus-within:ring-white focus-within:ring-opacity-75 focus:outline-none formkit-invalid:border-solid formkit-invalid:border-red"
-    :class="[context.classes.input, { '!bg-blue': localValue }]"
+    class="relative inline-flex items-center h-6 w-10 flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out"
+    :class="[
+      context.classes.input,
+      classMap.track,
+      {
+        [classMap.trackOn]: localValue,
+      },
+    ]"
     :aria-labelledby="`label-${context.id}`"
     :aria-disabled="disabled"
     :aria-checked="localValue"
@@ -93,10 +102,14 @@ const updateLocalValue = (e: Event) => {
     @keydown.space="updateLocalValue"
   >
     <div
-      class="pointer-events-none inline-block h-[22px] w-[22px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ltr:translate-x-0 rtl:-translate-x-0"
-      :class="{
-        'ltr:translate-x-4 rtl:-translate-x-4': localValue,
-      }"
+      class="pointer-events-none inline-block h-[22px] w-[22px] transform rounded-full transition duration-200 ease-in-out"
+      :class="[
+        classMap.knob,
+        {
+          'ltr:translate-x-px rtl:-translate-x-px': !localValue,
+          'ltr:translate-x-[17px] rtl:-translate-x-[17px]': localValue,
+        },
+      ]"
     ></div>
   </button>
 </template>
