@@ -261,7 +261,7 @@ GEM
     gli (2.21.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    gmail_xoauth (0.4.2)
+    gmail_xoauth (0.4.3)
       oauth (>= 0.3.6)
     graphql (2.2.5)
       racc (~> 1.4)
