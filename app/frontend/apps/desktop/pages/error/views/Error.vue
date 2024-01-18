@@ -5,5 +5,5 @@
 </script>
 
 <template>
-  <div>ERROR 404</div>
+  <div>ERROR XYZ</div>
 </template>
