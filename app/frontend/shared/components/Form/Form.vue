@@ -794,6 +794,15 @@ let nextFormUpdaterVariables: Maybe<FormUpdaterQueryVariables>
 const executeFormUpdaterRefetch = () => {
   if (!nextFormUpdaterVariables) return
 
+  formNode.value?.store.set(
+    createMessage({
+      blocking: true,
+      key: 'formUpdaterProcessing',
+      value: true,
+      visible: false,
+    }),
+  )
+
   formUpdaterVariables.value = nextFormUpdaterVariables
 
   // Reset the next variables so that it's not triggered a second time.
@@ -833,15 +842,6 @@ const handlesFormUpdater = (
     meta,
     relationFields,
   })
-
-  formNode.value?.store.set(
-    createMessage({
-      blocking: true,
-      key: 'formUpdaterProcessing',
-      value: true,
-      visible: false,
-    }),
-  )
 
   if (trigger !== 'blur') executeFormUpdaterRefetch()
 }

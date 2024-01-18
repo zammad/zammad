@@ -24,7 +24,7 @@ const switchPasswordVisibility = (node: FormKitNode) => {
 }
 
 initializeFieldDefinition(localPasswordDefinition, {
-  features: [switchPasswordVisibility, formUpdaterTrigger('blur')],
+  features: [switchPasswordVisibility, formUpdaterTrigger('delayed')],
 })
 
 export default {
