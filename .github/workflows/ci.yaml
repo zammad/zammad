@@ -34,13 +34,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Cache node modules
         id: cache-npm
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .yarn/cache
           key: ${{ runner.os }}-cache-npm-${{ hashFiles('yarn.lock') }}
       - name: Cache Rubygems
         id: cache-bundler
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: vendor/ruby
           key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
