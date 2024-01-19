@@ -286,4 +286,32 @@ RSpec.describe Package, type: :model do
       expect(described_class.last.url).to eq('https://zammad.org/')
     end
   end
+
+  describe 'Package: Missing backup files for files with the same content #5012' do
+    let(:package_v1_files) do
+      <<-JSON
+        [
+          {
+            "permission": "644",
+            "location": "lib/version.rb",
+            "content": "#{Base64.strict_encode64(File.read('lib/version.rb')).strip}"
+          }
+        ]
+      JSON
+    end
+    let(:package_v2_files) do
+      <<-JSON
+        []
+      JSON
+    end
+
+    let(:package_v1) { get_package_structure(package_name, package_v1_files, '1.0.0') }
+    let(:package_v2) { get_package_structure(package_name, package_v2_files, '1.0.1') }
+
+    it 'does not lose core files when patched by package and released in future updates of zammad' do
+      described_class.install(string: package_v1)
+      described_class.install(string: package_v2)
+      expect(File.exist?('lib/version.rb')).to be(true)
+    end
+  end
 end
