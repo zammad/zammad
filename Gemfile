@@ -113,7 +113,6 @@ gem 'omniauth-weibo-oauth2', git: 'https://github.com/zammad-deps/omniauth-weibo
 gem 'rack-attack'
 
 # channels
-gem 'gmail_xoauth'
 gem 'koala'
 gem 'telegram-bot-ruby'
 gem 'twitter'

@@ -146,7 +146,7 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
       let(:message_human) { [ 'This host cannot be reached.', 'There is no route to this host.' ] }
 
       before do
-        allow(Socket).to receive(:tcp).and_raise(Errno::EHOSTUNREACH)
+        allow(TCPSocket).to receive(:open).and_raise(Errno::EHOSTUNREACH)
       end
 
       include_examples 'probe tests with invalid result'
