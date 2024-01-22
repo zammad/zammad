@@ -90,7 +90,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       fill_in 'username', with: 'john.doe'
       fill_in 'password', with: 'test'
 
-      click_button
+      click_button 'Sign In'
     end
   end
 
