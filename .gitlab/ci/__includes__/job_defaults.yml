@@ -1,5 +1,5 @@
 default:
-  image: $CI_REGISTRY/docker/zammad-ci:3.2.2
+  image: $CI_REGISTRY/docker/zammad-ci:3.2.3
 
   tags:
     - docker
