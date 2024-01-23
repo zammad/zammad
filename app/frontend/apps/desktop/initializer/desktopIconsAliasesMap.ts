@@ -59,7 +59,7 @@ export default {
 
   // these aliases are used in shared context, but they refer to the same name
   search: 'search',
-  loading: 'loading',
+  loading: 'spinner',
   show: 'eye',
   hide: 'eye-slash',
 }

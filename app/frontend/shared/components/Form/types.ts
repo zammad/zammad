@@ -253,3 +253,6 @@ export interface FormStep {
   disabled: boolean
   completed: boolean
 }
+
+export type FormClass = 'loading'
+export type FormClassMap = Record<FormClass, string>

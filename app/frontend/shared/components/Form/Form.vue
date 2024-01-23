@@ -55,6 +55,7 @@ import { cloneAny } from '@formkit/utils'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api.ts'
 import { FormHandlerExecution, FormValidationVisibility } from './types.ts'
 import { getNodeByName as getFormkitFieldNode } from './utils.ts'
+import { getFormClasses } from './initializeFormClasses.ts'
 import type {
   ChangedField,
   FormSubmitData,
@@ -1174,6 +1175,8 @@ if (props.schema) {
     initializeFormSchema()
   }
 }
+
+const classMap = getFormClasses()
 </script>
 
 <script lang="ts">
@@ -1187,7 +1190,7 @@ export default {
     v-if="debouncedShowInitialLoadingAnimation"
     class="flex items-center justify-center"
   >
-    <CommonIcon name="loading" animation="spin" />
+    <CommonIcon :class="classMap.loading" name="loading" animation="spin" />
   </div>
   <FormKit
     v-if="
