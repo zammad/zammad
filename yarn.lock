@@ -2894,10 +2894,10 @@
     "@volar/language-core" "1.11.1"
     path-browserify "^1.0.1"
 
-"@vue/apollo-composable@^4.0.0-beta.12":
-  version "4.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/@vue/apollo-composable/-/apollo-composable-4.0.0-beta.12.tgz#bc9413b7efbcc8f5ab117065c1efc8278251cf76"
-  integrity sha512-qfi6B6obkzvCUVGB9l28s96xCzPfffB0c7esR8y3UbKc1KwzdOIESMHmoYv0xM2isYP0pu+dz6Rt9KUn7zNf4Q==
+"@vue/apollo-composable@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@vue/apollo-composable/-/apollo-composable-4.0.0.tgz#5cd8d3a8207754718b38deae797a29c90e1f56bb"
+  integrity sha512-n0S/qN9OoguCrND79osTkf0uOluHfyMd+HJbaMh/JhVrv0u6NlK4mPHUWSAxri+8jYFh8H//TrC72tepy3jO8g==
   dependencies:
     throttle-debounce "^5.0.0"
     ts-essentials "^9.4.0"

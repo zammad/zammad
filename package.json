@@ -116,7 +116,7 @@
     "@tiptap/starter-kit": "^2.1.16",
     "@tiptap/suggestion": "^2.1.16",
     "@tiptap/vue-3": "^2.1.16",
-    "@vue/apollo-composable": "^4.0.0-beta.12",
+    "@vue/apollo-composable": "^4.0.0",
     "@vueuse/core": "^10.7.2",
     "@vueuse/router": "^10.7.2",
     "@vueuse/shared": "^10.7.2",
