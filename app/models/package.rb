@@ -284,6 +284,8 @@ subsequently in a separate step.
           raise "Can't create file, because of not allowed file location: #{file['location']}!"
         end
 
+        ensure_no_duplicate_files!(package_db.name, file['location'])
+
         permission = file['permission'] || '644'
         content    = Base64.decode64(file['content'])
         _write_file(file['location'], permission, content)
@@ -296,6 +298,25 @@ subsequently in a separate step.
     end
 
     package_db
+  end
+
+  def self.ensure_no_duplicate_files!(name, location)
+    all_files.each do |check_package, check_files|
+      next if check_package == name
+      next if check_files.exclude?(location)
+
+      raise "Can't create file, because file '#{location}' is already provided by package '#{check_package}'!"
+    end
+  end
+
+  def self.all_files
+    Auth::RequestCache.fetch_value('Package/all_files') do
+      Package.all.each_with_object({}) do |package, result|
+        json_file    = Package._get_bin(package.name, package.version)
+        package_json = JSON.parse(json_file)
+        result[package.name] = package_json['files'].pluck('location')
+      end
+    end
   end
 
 =begin

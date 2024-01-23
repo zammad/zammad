@@ -314,4 +314,14 @@ RSpec.describe Package, type: :model do
       expect(File.exist?('lib/version.rb')).to be(true)
     end
   end
+
+  describe 'Package: File conflict with packages which include the same file location #5014' do
+    let(:package_1) { get_package_structure('PackageA', package_zpm_files_json, '1.0.0') }
+    let(:package_2) { get_package_structure('PackageB', package_zpm_files_json, '1.0.0') }
+
+    it 'does not allow to patch the same file twice via package' do
+      described_class.install(string: package_1)
+      expect { described_class.install(string: package_2) }.to raise_error("Can't create file, because file 'example.rb' is already provided by package 'PackageA'!")
+    end
+  end
 end
