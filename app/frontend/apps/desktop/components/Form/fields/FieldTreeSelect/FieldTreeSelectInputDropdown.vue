@@ -407,7 +407,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
         v-if="showDropdown"
         id="field-tree-select-input-dropdown"
         ref="dropdownElement"
-        class="fixed z-10 flex antialiased"
+        class="fixed z-10 min-h-9 flex antialiased"
         :style="dropdownStyle"
       >
         <div

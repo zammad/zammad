@@ -210,17 +210,25 @@ setupMissingOrDisabledOptionHandling()
               <CommonIcon
                 v-if="getSelectedOptionIcon(selectedValue)"
                 :name="getSelectedOptionIcon(selectedValue)"
-                class="fill-gray-100 dark:fill-neutral-400"
+                class="shrink-0 fill-gray-100 dark:fill-neutral-400"
                 size="xs"
                 decorative
               />
-              {{
-                getSelectedOptionLabel(selectedValue) ||
-                i18n.t('%s (unknown)', selectedValue)
-              }}
+              <span
+                class="line-clamp-3"
+                :title="
+                  getSelectedOptionLabel(selectedValue) ||
+                  i18n.t('%s (unknown)', selectedValue)
+                "
+              >
+                {{
+                  getSelectedOptionLabel(selectedValue) ||
+                  i18n.t('%s (unknown)', selectedValue)
+                }}
+              </span>
               <CommonIcon
                 :aria-label="i18n.t('Unselect Option')"
-                class="fill-stone-200 dark:fill-neutral-500 hover:fill-black dark:hover:fill-white focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+                class="shrink-0 fill-stone-200 dark:fill-neutral-500 hover:fill-black dark:hover:fill-white focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
                 name="x-lg"
                 size="xs"
                 role="button"
@@ -252,14 +260,22 @@ setupMissingOrDisabledOptionHandling()
             <CommonIcon
               v-if="getSelectedOptionIcon(currentValue)"
               :name="getSelectedOptionIcon(currentValue)"
-              class="fill-gray-100 dark:fill-neutral-400"
+              class="shrink-0 fill-gray-100 dark:fill-neutral-400"
               size="tiny"
               decorative
             />
-            {{
-              getSelectedOptionLabel(currentValue) ||
-              i18n.t('%s (unknown)', currentValue)
-            }}
+            <span
+              class="line-clamp-3"
+              :title="
+                getSelectedOptionLabel(currentValue) ||
+                i18n.t('%s (unknown)', currentValue)
+              "
+            >
+              {{
+                getSelectedOptionLabel(currentValue) ||
+                i18n.t('%s (unknown)', currentValue)
+              }}
+            </span>
           </div>
         </div>
         <CommonIcon

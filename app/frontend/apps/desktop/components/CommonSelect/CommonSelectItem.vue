@@ -30,11 +30,13 @@ const select = (option: SelectOption) => {
 
 const label = computed(() => {
   const { option } = props
-  if (props.noLabelTranslate) {
-    return option.label
-  }
 
-  return i18n.t(option.label, ...(option.labelPlaceholder || []))
+  if (props.noLabelTranslate) return option.label || option.value.toString()
+
+  return (
+    i18n.t(option.label, ...(option.labelPlaceholder || [])) ||
+    option.value.toString()
+  )
 })
 </script>
 
@@ -61,7 +63,7 @@ const label = computed(() => {
       size="xs"
       decorative
       :name="selected ? 'check-square' : 'square'"
-      class="fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0 fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
     />
     <CommonIcon
       v-if="option.icon"
@@ -71,14 +73,15 @@ const label = computed(() => {
         'fill-stone-200 dark:fill-neutral-500': option.disabled,
       }"
       decorative
-      class="fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0 fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
     />
     <span
       v-if="filter"
       :class="{
         'text-stone-200 dark:text-neutral-500': option.disabled,
       }"
-      class="grow"
+      class="grow truncate"
+      :title="label"
       v-html="(option as MatchedSelectOption).matchedLabel"
     />
     <span
@@ -86,13 +89,14 @@ const label = computed(() => {
       :class="{
         'text-stone-200 dark:text-neutral-500': option.disabled,
       }"
-      class="grow"
+      class="grow truncate"
+      :title="label"
     >
-      {{ label || option.value }}
+      {{ label }}
     </span>
     <CommonIcon
       v-if="!multiple"
-      class="fill-stone-200 dark:fill-neutral-500 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0 fill-stone-200 dark:fill-neutral-500 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
       :class="{
         invisible: !selected,
         'fill-gray-100 dark:fill-neutral-400': option.disabled,

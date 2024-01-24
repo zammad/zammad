@@ -76,7 +76,7 @@ export default {
       name="search"
       decorative
     />
-    <div class="relative grow inline-flex">
+    <div class="relative grow inline-flex overflow-clip">
       <input
         ref="filterInput"
         v-model="filter"

@@ -2,7 +2,7 @@
 <!-- eslint-disable zammad/zammad-detect-translatable-string -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import Form from '#shared/components/Form/Form.vue'
@@ -14,6 +14,12 @@ const alphabetOptions = computed(() =>
     disabled: Math.random() < 0.5,
   })),
 )
+
+const longOption = ref({
+  value: 999,
+  label:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, nullam pulvinar nunc sapien, vitae malesuada justo interdum feugiat, mauris odio, mattis et malesuada quis, vulputate vitae enim',
+})
 
 const treeselectOptions = [
   {
@@ -42,6 +48,7 @@ const treeselectOptions = [
         value: 5,
         label: 'Item 2',
         children: [
+          ...[longOption.value],
           {
             value: 6,
             label: 'Item IV',
@@ -113,7 +120,7 @@ const formSchema = [
     label: 'Single select',
     clearable: true,
     props: {
-      options: alphabetOptions.value,
+      options: [...alphabetOptions.value, ...[longOption.value]],
     },
   },
   {
@@ -123,7 +130,7 @@ const formSchema = [
     clearable: true,
     props: {
       multiple: true,
-      options: alphabetOptions.value,
+      options: [...alphabetOptions.value, ...[longOption.value]],
     },
   },
   {

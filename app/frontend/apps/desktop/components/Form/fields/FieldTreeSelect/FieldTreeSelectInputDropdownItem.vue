@@ -39,9 +39,12 @@ const select = (option: FlatSelectOption) => {
 const label = computed(() => {
   const { option } = props
 
-  if (props.noLabelTranslate) return option.label
+  if (props.noLabelTranslate) return option.label || option.value.toString()
 
-  return i18n.t(option.label, ...(option.labelPlaceholder || []))
+  return (
+    i18n.t(option.label, ...(option.labelPlaceholder || [])) ||
+    option.value.toString()
+  )
 })
 
 const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
@@ -72,7 +75,7 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
       size="xs"
       decorative
       :name="selected ? 'check-square' : 'square'"
-      class="fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0 fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
     />
     <CommonIcon
       v-if="option.icon"
@@ -82,14 +85,15 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
         'fill-stone-200 dark:fill-neutral-500': option.disabled,
       }"
       decorative
-      class="fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0 fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
     />
     <span
       v-if="filter"
       :class="{
         'text-stone-200 dark:text-neutral-500': option.disabled,
       }"
-      class="grow"
+      class="grow truncate"
+      :title="label"
       v-html="(option as MatchedFlatSelectOption).matchedPath"
     />
     <span
@@ -97,13 +101,14 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
       :class="{
         'text-stone-200 dark:text-neutral-500': option.disabled,
       }"
-      class="grow"
+      :title="label"
+      class="grow truncate"
     >
-      {{ label || option.value }}
+      {{ label }}
     </span>
     <CommonIcon
       v-if="!multiple"
-      class="fill-stone-200 dark:fill-neutral-500 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0 fill-stone-200 dark:fill-neutral-500 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
       :class="{
         invisible: !selected,
         'fill-gray-100 dark:fill-neutral-400': option.disabled,
@@ -114,7 +119,7 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     />
     <div
       v-if="option.hasChildren && !filter"
-      class="group/nav p-2.5 -me-2 flex-nowrap items-center justify-center gap-x-2.5 rounded-[5px] hover:bg-blue-800 group-focus:hover:bg-blue-600 dark:group-focus:hover:bg-blue-900"
+      class="group/nav shrink-0 p-2.5 -me-2 flex-nowrap items-center justify-center gap-x-2.5 rounded-[5px] hover:bg-blue-800 group-focus:hover:bg-blue-600 dark:group-focus:hover:bg-blue-900"
       :aria-label="$t('Has submenu')"
       role="button"
       tabindex="-1"
