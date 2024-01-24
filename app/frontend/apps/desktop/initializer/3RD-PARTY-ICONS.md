@@ -6,6 +6,8 @@
 - `assets/check-square.svg`
 - `assets/check2.svg`
 - `assets/chevron-down.svg`
+- `assets/chevron-left.svg`
+- `assets/chevron-right.svg`
 - `assets/exclamation-triangle.svg`
 - `assets/eye-slash.svg`
 - `assets/eye.svg`

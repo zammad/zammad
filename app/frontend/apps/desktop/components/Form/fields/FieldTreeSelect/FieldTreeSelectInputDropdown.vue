@@ -3,32 +3,33 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
 import { onUnmounted, computed, nextTick, ref, toRef } from 'vue'
-import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
-import { useTrapTab } from '#shared/composables/useTrapTab.ts'
-import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
-import stopEvent from '#shared/utils/events.ts'
 import {
   type UseElementBoundingReturn,
   onClickOutside,
   onKeyDown,
   useVModel,
 } from '@vueuse/core'
-import type {
-  MatchedSelectOption,
-  SelectOption,
-} from '#shared/components/CommonSelect/types.ts'
+import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import { useTrapTab } from '#shared/composables/useTrapTab.ts'
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
+import stopEvent from '#shared/utils/events.ts'
 import testFlags from '#shared/utils/testFlags.ts'
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import { i18n } from '#shared/i18n.ts'
-import CommonSelectItem from './CommonSelectItem.vue'
-import { useCommonSelect } from './useCommonSelect.ts'
-import type { CommonSelectInternalInstance } from './types.ts'
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import { useCommonSelect } from '#desktop/components/CommonSelect/useCommonSelect.ts'
+import type {
+  FlatSelectOption,
+  MatchedFlatSelectOption,
+} from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
+import type { FieldTreeSelectInputDropdownInternalInstance } from './types.ts'
+import FieldTreeSelectInputDropdownItem from './FieldTreeSelectInputDropdownItem.vue'
 
 export interface Props {
   // we cannot move types into separate file, because Vue would not be able to
   // transform these into runtime types
   modelValue?: string | number | boolean | (string | number | boolean)[] | null
-  options: SelectOption[]
+  options: FlatSelectOption[]
   /**
    * Do not modify local value
    */
@@ -38,16 +39,25 @@ export interface Props {
   noRefocus?: boolean
   owner?: string
   noOptionsLabelTranslation?: boolean
-  filter?: string
+  currentPath: FlatSelectOption[]
+  filter: string
+  flatOptions: FlatSelectOption[]
+  currentOptions: FlatSelectOption[]
+  optionValueLookup: { [index: string | number]: FlatSelectOption }
 }
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
   (e: 'update:modelValue', option: string | number | (string | number)[]): void
-  (e: 'select', option: SelectOption): void
+  (e: 'select', option: FlatSelectOption): void
   (e: 'close'): void
+  (e: 'push', option: FlatSelectOption): void
+  (e: 'pop'): void
+  (e: 'clear-filter'): void
 }>()
+
+const locale = useLocaleStore()
 
 const dropdownElement = ref<HTMLElement>()
 const localValue = useVModel(props, 'modelValue', emit)
@@ -116,7 +126,7 @@ const closeDropdown = () => {
   }
 
   nextTick(() => {
-    testFlags.set('common-select.closed')
+    testFlags.set('field-tree-select-input-dropdown.closed')
   })
 }
 
@@ -138,7 +148,7 @@ const openDropdown = (
 
   requestAnimationFrame(() => {
     nextTick(() => {
-      testFlags.set('common-select.opened')
+      testFlags.set('field-tree-select-input-dropdown.opened')
     })
   })
 }
@@ -164,7 +174,7 @@ const moveFocusToDropdown = (lastOption = false) => {
   activateTabTrap()
 }
 
-const exposedInstance: CommonSelectInternalInstance = {
+const exposedInstance: FieldTreeSelectInputDropdownInternalInstance = {
   isOpen: computed(() => showDropdown.value),
   openDropdown,
   closeDropdown,
@@ -203,7 +213,7 @@ const isCurrentValue = (value: string | number | boolean) => {
   return localValue.value === value
 }
 
-const select = (option: SelectOption) => {
+const select = (option: FlatSelectOption) => {
   if (option.disabled) return
 
   emit('select', option)
@@ -236,21 +246,117 @@ const select = (option: SelectOption) => {
   }
 }
 
-const hasMoreSelectableOptions = computed(
-  () =>
+const hasMoreSelectableOptions = computed(() => {
+  if (props.currentPath.length)
+    return props.currentOptions.some(
+      (option) => !option.disabled && !isCurrentValue(option.value),
+    )
+
+  return (
     props.options.filter(
       (option) => !option.disabled && !isCurrentValue(option.value),
-    ).length > 0,
-)
+    ).length > 0
+  )
+})
 
-const selectAll = () => {
-  props.options
-    .filter((option) => !option.disabled && !isCurrentValue(option.value))
-    .forEach((option) => select(option))
+const focusFirstOption = () => {
+  const focusableElements = getFocusableOptions()
+  if (!focusableElements?.length) return
+
+  const focusElement = focusableElements[0]
+
+  focusElement?.focus()
+}
+
+const selectAll = (noFocus?: boolean) => {
+  // If currently viewing a parent, select visible only.
+  if (props.currentPath.length) {
+    props.currentOptions
+      .filter((option) => !option.disabled && !isCurrentValue(option.value))
+      .forEach((option) => select(option))
+  } else {
+    props.options
+      .filter((option) => !option.disabled && !isCurrentValue(option.value))
+      .forEach((option) => select(option))
+  }
+
+  if (noFocus) return
+
+  nextTick(() => {
+    focusFirstOption()
+  })
+}
+
+const previousPageCallback = (noFocus?: boolean) => {
+  emit('pop')
+  emit('clear-filter')
+
+  if (noFocus) return
+
+  nextTick(() => {
+    focusFirstOption()
+  })
+}
+
+const goToPreviousPage = (noFocus?: boolean) => {
+  previousPageCallback(noFocus)
+}
+
+const nextPageCallback = (option?: FlatSelectOption, noFocus?: boolean) => {
+  if (option?.hasChildren) {
+    emit('push', option)
+
+    if (noFocus) return
+
+    nextTick(() => {
+      focusFirstOption()
+    })
+  }
+}
+
+const goToNextPage = ({
+  option,
+  noFocus,
+}: {
+  option: FlatSelectOption
+  noFocus?: boolean
+}) => {
+  nextPageCallback(option, noFocus)
+}
+
+const maybeGoToNextOrPreviousPage = (
+  option: FlatSelectOption,
+  direction: 'left' | 'right',
+) => {
+  if (
+    (locale.localeData?.dir === 'rtl' && direction === 'right') ||
+    (locale.localeData?.dir === 'ltr' && direction === 'left')
+  ) {
+    goToPreviousPage()
+
+    return
+  }
+
+  goToNextPage({ option })
+}
+
+const getCurrentIndex = (option: FlatSelectOption) => {
+  return props.flatOptions.findIndex((o) => o.value === option.value)
 }
 
 const highlightedOptions = computed(() =>
   props.options.map((option) => {
+    let parentPaths: string[] = []
+
+    if (option.parents) {
+      parentPaths = option.parents.map((parentValue) => {
+        const parentOption =
+          props.optionValueLookup[parentValue as string | number]
+
+        return `${parentOption.label || parentOption.value} \u203A `
+      })
+    }
+
     let label = option.label || i18n.t('%s (unknown)', option.value.toString())
 
     // Highlight the matched text within the option label by re-using passed regex match object.
@@ -273,15 +379,15 @@ const highlightedOptions = computed(() =>
 
       const highlightClasses = option.disabled
         ? 'bg-blue-200 dark:bg-gray-300'
-        : 'bg-blue-600 dark:bg-blue-900 group-hover:bg-blue-800 group-hover:group-focus:bg-blue-600 dark:group-hover:group-focus:bg-blue-900 group-hover:text-white group-focus:text-black dark:group-focus:text-white group-hover:group-focus:text-black dark:group-hover:group-focus:text-white'
+        : 'bg-blue-600 dark:bg-blue-900 group-hover:bg-blue-800 group-hover:group-focus:bg-blue-600 group-hover:text-white group-focus:text-black group-hover:group-focus:text-black'
 
       label = `${labelBeforeMatch}<span class="${highlightClasses}">${labelMatchedText}</span>${labelAfterMatch}`
     }
 
     return {
       ...option,
-      matchedLabel: label,
-    } as MatchedSelectOption
+      matchedPath: parentPaths.join('') + label,
+    } as MatchedFlatSelectOption
   }),
 )
 
@@ -299,7 +405,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
     <Transition :duration="duration">
       <div
         v-if="showDropdown"
-        id="common-select"
+        id="field-tree-select-input-dropdown"
         ref="dropdownElement"
         class="fixed z-10 flex antialiased"
         :style="dropdownStyle"
@@ -320,19 +426,41 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
             }"
           >
             <div
-              v-if="multiple && hasMoreSelectableOptions"
+              v-if="
+                currentPath.length || (multiple && hasMoreSelectableOptions)
+              "
               class="w-full px-2.5 py-1.5 flex justify-between gap-2"
             >
               <CommonLabel
+                v-if="currentPath.length"
+                class="!text-blue-800 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+                :prefix-icon="
+                  locale.localeData?.dir === 'rtl'
+                    ? 'chevron-right'
+                    : 'chevron-left'
+                "
+                :aria-label="$t('Back to previous page')"
+                role="button"
+                tabindex="1"
+                @click.stop="goToPreviousPage(true)"
+                @keypress.enter.prevent.stop="goToPreviousPage()"
+                @keypress.space.prevent.stop="goToPreviousPage()"
+              >
+                {{ $t('Back') }}
+              </CommonLabel>
+              <CommonLabel
+                v-if="multiple && hasMoreSelectableOptions"
                 class="ms-auto !text-blue-800 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
                 prefix-icon="check-all"
                 role="button"
-                tabindex="1"
-                @click.stop="selectAll()"
+                tabindex="2"
+                @click.stop="selectAll(true)"
                 @keypress.enter.prevent.stop="selectAll()"
                 @keypress.space.prevent.stop="selectAll()"
               >
-                {{ $t('select all') }}
+                {{
+                  currentPath.length ? $t('select visible') : $t('select all')
+                }}
               </CommonLabel>
             </div>
             <div
@@ -342,28 +470,41 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
               tabindex="-1"
               class="w-full overflow-y-auto"
             >
-              <CommonSelectItem
-                v-for="option in filter ? highlightedOptions : options"
+              <FieldTreeSelectInputDropdownItem
+                v-for="option in filter ? highlightedOptions : currentOptions"
                 :key="String(option.value)"
                 :class="{
-                  'first:rounded-t-lg':
-                    hasDirectionUp && (!multiple || !hasMoreSelectableOptions),
-                  'last:rounded-b-lg': !hasDirectionUp,
+                  'first:rounded-t-[7px]':
+                    hasDirectionUp &&
+                    !currentPath.length &&
+                    (!multiple || !hasMoreSelectableOptions),
+                  'last:rounded-b-[7px]': !hasDirectionUp,
                 }"
+                :aria-setsize="flatOptions.length"
+                :aria-posinset="getCurrentIndex(option) + 1"
                 :selected="isCurrentValue(option.value)"
                 :multiple="multiple"
+                :filter="filter"
                 :option="option"
                 :no-label-translate="noOptionsLabelTranslation"
-                :filter="filter"
                 @select="select($event)"
+                @next="goToNextPage($event)"
+                @keydown.right.prevent="
+                  maybeGoToNextOrPreviousPage(option, 'right')
+                "
+                @keydown.left.prevent="
+                  maybeGoToNextOrPreviousPage(option, 'left')
+                "
               />
-              <CommonSelectItem
+              <FieldTreeSelectInputDropdownItem
                 v-if="!options.length"
-                :option="{
-                  label: __('No results found'),
-                  value: '',
-                  disabled: true,
-                }"
+                :option="
+                  {
+                    label: __('No results found'),
+                    value: '',
+                    disabled: true,
+                  } as MatchedFlatSelectOption
+                "
               />
               <slot name="footer" />
             </div>

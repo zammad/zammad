@@ -69,6 +69,10 @@ export const getCoreDesktopClasses: FormThemeExtension = (
       inner:
         'w-full formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
     }),
+    treeselect: extendClasses(classes.treeselect, {
+      inner:
+        'w-full formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
+    }),
     toggle: extendClasses(classes.toggle, {
       wrapper: 'h-10 flex flex-row-reverse items-center gap-1.5',
       label: '!mb-0 grow',

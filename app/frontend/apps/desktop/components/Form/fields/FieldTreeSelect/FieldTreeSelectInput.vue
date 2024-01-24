@@ -5,36 +5,56 @@ import { computed, nextTick, ref, toRef, watch } from 'vue'
 import { useElementBounding, useWindowSize } from '@vueuse/core'
 import { escapeRegExp } from 'lodash-es'
 import { i18n } from '#shared/i18n.ts'
-import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonSelect from '#desktop/components/CommonSelect/CommonSelect.vue'
-import type { CommonSelectInstance } from '#desktop/components/CommonSelect/types.ts'
+import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useFormBlock } from '#shared/form/useFormBlock.ts'
-import useValue from '#shared/components/Form/composables/useValue.ts'
 import useSelectOptions from '#shared/composables/useSelectOptions.ts'
 import useSelectPreselect from '#shared/composables/useSelectPreselect.ts'
-import type { SelectContext } from '#shared/components/Form/fields/FieldSelect/types.ts'
-import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
+import useValue from '#shared/components/Form/composables/useValue.ts'
+import type { CommonSelectInstance } from '#desktop/components/CommonSelect/types.ts'
+import type {
+  FlatSelectOption,
+  TreeSelectContext,
+} from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
+import FieldTreeSelectInputDropdown from './FieldTreeSelectInputDropdown.vue'
+import useFlatSelectOptions from './useFlatSelectOptions.ts'
 
 interface Props {
-  context: SelectContext
+  context: TreeSelectContext
 }
 
 const props = defineProps<Props>()
-
 const contextReactive = toRef(props, 'context')
 
-const { hasValue, valueContainer, currentValue, clearValue } =
-  useValue(contextReactive)
+const {
+  hasValue,
+  valueContainer,
+  currentValue,
+  clearValue: clearInternalValue,
+} = useValue(contextReactive)
+
+const { flatOptions } = useFlatSelectOptions(toRef(props.context, 'options'))
 
 const {
   sortedOptions,
+  optionValueLookup,
   selectOption,
   getSelectedOption,
   getSelectedOptionIcon,
   getSelectedOptionLabel,
+  getSelectedOptionFullPath,
   setupMissingOrDisabledOptionHandling,
-} = useSelectOptions(toRef(props.context, 'options'), contextReactive)
+} = useSelectOptions<FlatSelectOption[]>(flatOptions, toRef(props, 'context'))
+
+const currentPath = ref<FlatSelectOption[]>([])
+
+const clearPath = () => {
+  currentPath.value = []
+}
+
+const currentParent = computed<FlatSelectOption>(
+  () => currentPath.value[currentPath.value.length - 1] ?? null,
+)
 
 const input = ref<HTMLDivElement>()
 const outputElement = ref<HTMLOutputElement>()
@@ -54,6 +74,15 @@ const deaccent = (s: string) =>
   s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
 const filteredOptions = computed(() => {
+  // In case we are not currently filtering for a parent, search across all options.
+  let options = sortedOptions.value
+
+  // Otherwise, search across options which are children of the current parent.
+  if (currentParent.value)
+    options = sortedOptions.value.filter((option) =>
+      option.parents.includes(currentParent.value?.value),
+    )
+
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.
   //   Make sure to escape special regex characters!
   const filterRegex = new RegExp(
@@ -61,7 +90,7 @@ const filteredOptions = computed(() => {
     'i',
   )
 
-  return sortedOptions.value
+  return options
     .map(
       (option) =>
         ({
@@ -71,7 +100,7 @@ const filteredOptions = computed(() => {
           match: filterRegex.exec(
             deaccent(option.label || String(option.value)),
           ),
-        }) as SelectOption,
+        }) as FlatSelectOption,
     )
     .filter((option) => option.match)
 })
@@ -92,6 +121,31 @@ const suggestedOptionLabel = computed(() => {
 
   return getSelectedOptionLabel(exactMatches[0].value)
 })
+
+const currentOptions = computed(() => {
+  // In case we are not currently filtering for a parent, return only top-level options.
+  if (!currentParent.value)
+    return sortedOptions.value.filter((option) => !option.parents?.length)
+
+  // Otherwise, return all options which are children of the current parent.
+  return sortedOptions.value.filter(
+    (option) =>
+      option.parents.length &&
+      option.parents[option.parents.length - 1] === currentParent.value?.value,
+  )
+})
+
+const focusOutputElement = () => {
+  if (!props.context.disabled) {
+    outputElement.value?.focus()
+  }
+}
+
+const clearValue = () => {
+  if (props.context.disabled) return
+  clearInternalValue()
+  focusOutputElement()
+}
 
 const inputElementBounds = useElementBounding(input)
 const windowSize = useWindowSize()
@@ -129,12 +183,21 @@ const openOrMoveFocusToDropdown = (lastOption = false) => {
 
 const onCloseDropdown = () => {
   clearFilter()
+  clearPath()
   deactivateTabTrap()
+}
+
+const onPathPush = (option: FlatSelectOption) => {
+  currentPath.value.push(option)
+}
+
+const onPathPop = () => {
+  currentPath.value.pop()
 }
 
 useFormBlock(contextReactive, openSelectDropdown)
 
-useSelectPreselect(sortedOptions, contextReactive)
+useSelectPreselect(flatOptions, contextReactive)
 setupMissingOrDisabledOptionHandling()
 </script>
 
@@ -150,42 +213,49 @@ setupMissingOrDisabledOptionHandling()
         'rounded-b-lg': select?.isOpen && isBelowHalfScreen,
       },
     ]"
-    data-test-id="field-select"
+    data-test-id="field-treeselect"
   >
-    <CommonSelect
+    <FieldTreeSelectInputDropdown
       ref="select"
       #default="{ state: expanded, close: closeDropdown }"
       :model-value="currentValue"
       :options="filteredOptions"
       :multiple="context.multiple"
       :owner="context.id"
+      :current-path="currentPath"
       :filter="filter"
+      :flat-options="flatOptions"
+      :current-options="currentOptions"
+      :option-value-lookup="optionValueLookup"
       no-options-label-translation
       no-close
       passive
-      @select="selectOption"
+      @clear-filter="clearFilter"
       @close="onCloseDropdown"
+      @push="onPathPush"
+      @pop="onPathPop"
+      @select="selectOption"
     >
+      <!-- https://www.w3.org/WAI/ARIA/apg/patterns/combobox/ -->
       <output
         :id="context.id"
         ref="outputElement"
         role="combobox"
-        aria-controls="common-select"
-        aria-owns="common-select"
-        aria-haspopup="menu"
-        :aria-expanded="expanded"
         :name="context.node.name"
         class="px-2.5 py-2 flex grow gap-2.5 items-center text-black dark:text-white focus:outline-none formkit-disabled:pointer-events-none"
+        :tabindex="context.disabled ? '-1' : '0'"
         :aria-labelledby="`label-${context.id}`"
-        :aria-disabled="context.disabled"
-        :data-multiple="context.multiple"
-        :tabindex="
-          context.disabled || (expanded && !context.noFiltering) ? '-1' : '0'
-        "
+        :aria-disabled="context.disabled ? 'true' : undefined"
         v-bind="{
           ...context.attrs,
           onBlur: undefined,
         }"
+        :data-multiple="context.multiple"
+        aria-autocomplete="none"
+        aria-controls="field-tree-select-input-dropdown"
+        aria-owns="field-tree-select-input-dropdown"
+        aria-haspopup="menu"
+        :aria-expanded="expanded"
         @keydown.escape.prevent="closeDropdown()"
         @keypress.enter.prevent="openSelectDropdown()"
         @keydown.down.prevent="openOrMoveFocusToDropdown()"
@@ -205,7 +275,7 @@ setupMissingOrDisabledOptionHandling()
             role="listitem"
           >
             <div
-              class="inline-flex items-center px-1.5 py-0.5 gap-1 rounded bg-white dark:bg-gray-200 text-black dark:text-white text-xs"
+              class="inline-flex items-center px-1.5 py-0.5 gap-1 rounded bg-white dark:bg-gray-200 text-black dark:text-white text-xs cursor-default"
             >
               <CommonIcon
                 v-if="getSelectedOptionIcon(selectedValue)"
@@ -214,10 +284,7 @@ setupMissingOrDisabledOptionHandling()
                 size="xs"
                 decorative
               />
-              {{
-                getSelectedOptionLabel(selectedValue) ||
-                i18n.t('%s (unknown)', selectedValue)
-              }}
+              {{ getSelectedOptionFullPath(selectedValue) }}
               <CommonIcon
                 :aria-label="i18n.t('Unselect Option')"
                 class="fill-stone-200 dark:fill-neutral-500 hover:fill-black dark:hover:fill-white focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
@@ -256,10 +323,7 @@ setupMissingOrDisabledOptionHandling()
               size="tiny"
               decorative
             />
-            {{
-              getSelectedOptionLabel(currentValue) ||
-              i18n.t('%s (unknown)', currentValue)
-            }}
+            {{ getSelectedOptionFullPath(currentValue) }}
           </div>
         </div>
         <CommonIcon
@@ -281,6 +345,6 @@ setupMissingOrDisabledOptionHandling()
           decorative
         />
       </output>
-    </CommonSelect>
+    </FieldTreeSelectInputDropdown>
   </div>
 </template>

@@ -2,12 +2,13 @@
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
-import { shallowRef } from 'vue'
+import { computed, shallowRef } from 'vue'
 
 export interface CommonInputSearchProps {
   modelValue?: string
   wrapperClass?: string
   placeholder?: string
+  suggestion?: string
 }
 
 export interface CommonInputSearchEmits {
@@ -37,6 +38,25 @@ const clearFilter = () => {
   filter.value = ''
   focus()
 }
+
+const suggestionVisiblePart = computed(() =>
+  props.suggestion?.slice(filter.value?.length),
+)
+
+const maybeAcceptSuggestion = (event: Event) => {
+  if (
+    !props.suggestion ||
+    !filter.value ||
+    !filterInput.value ||
+    !filterInput.value.selectionStart ||
+    filter.value.length >= props.suggestion.length ||
+    filterInput.value.selectionStart < filter.value.length
+  )
+    return
+
+  event.preventDefault()
+  filter.value = props.suggestion
+}
 </script>
 
 <script lang="ts">
@@ -56,19 +76,34 @@ export default {
       name="search"
       decorative
     />
-    <input
-      ref="filterInput"
-      v-model="filter"
-      v-bind="$attrs"
-      :placeholder="i18n.t(placeholder)"
-      class="grow bg-blue-200 dark:bg-gray-700 text-black dark:text-white outline-none"
-      type="text"
-      role="searchbox"
-    />
+    <div class="relative grow inline-flex">
+      <input
+        ref="filterInput"
+        v-model="filter"
+        v-bind="$attrs"
+        :placeholder="i18n.t(placeholder)"
+        class="grow bg-blue-200 dark:bg-gray-700 text-black dark:text-white outline-none"
+        type="text"
+        role="searchbox"
+        @keydown.right="maybeAcceptSuggestion"
+        @keydown.end="maybeAcceptSuggestion"
+        @keydown.tab="maybeAcceptSuggestion"
+      />
+      <div
+        v-if="suggestionVisiblePart?.length"
+        class="absolute top-0 flex whitespace-pre pointer-events-none"
+        data-test-id="suggestion"
+      >
+        <span class="invisible">{{ filter }}</span>
+        <span class="text-stone-200 dark:text-neutral-500">{{
+          suggestionVisiblePart
+        }}</span>
+      </div>
+    </div>
     <div class="flex shrink-0 items-center gap-1">
       <slot name="controls" />
       <CommonIcon
-        class="fill-stone-200 dark:fill-neutral-500 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+        class="fill-stone-200 dark:fill-neutral-500 hover:fill-black dark:hover:fill-white focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
         :class="{
           invisible: !filter?.length,
         }"

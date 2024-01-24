@@ -24,9 +24,9 @@ import {
 } from '#tests/support/components/iconQueries.ts'
 import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
-import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api.ts'
-import type { FormSchemaField, FormValues } from '../types.ts'
-import additionalFrontendObjectAttributes from './mocks/additionalFrontendObjectAttributes.json'
+import { FormUpdaterDocument } from '../../../graphql/queries/formUpdater.api.ts'
+import type { FormSchemaField, FormValues } from '../../../types.ts'
+import additionalFrontendObjectAttributes from '../../mocks/additionalFrontendObjectAttributes.json'
 
 beforeAll(async () => {
   // so we don't need to wait until it loads inside test

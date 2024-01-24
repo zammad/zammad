@@ -67,7 +67,7 @@ const useSelectOptions = <
         ...option,
         label,
         heading,
-      } as SelectOption | AutoCompleteOption
+      }
     })
   })
 
@@ -92,11 +92,9 @@ const useSelectOptions = <
     })
   })
 
-  const getSelectedOption = (
-    selectedValue: AllowedSelectValue,
-  ): SelectOption => {
+  const getSelectedOption = (selectedValue: AllowedSelectValue): T[number] => {
     if (typeof selectedValue === 'object' && selectedValue !== null)
-      return selectedValue as unknown as SelectOption
+      return selectedValue as unknown as T[number]
     const key = selectedValue.toString()
     return optionValueLookup.value[key]
   }
@@ -123,6 +121,20 @@ const useSelectOptions = <
       | FlatSelectOption
     return option?.status
   }
+
+  const getSelectedOptionParents = (
+    selectedValue: string | number,
+  ): SelectValue[] =>
+    (optionValueLookup.value[selectedValue] &&
+      (optionValueLookup.value[selectedValue] as FlatSelectOption).parents) ||
+    []
+
+  const getSelectedOptionFullPath = (selectedValue: string | number) =>
+    getSelectedOptionParents(selectedValue)
+      .map((parentValue) => `${getSelectedOptionLabel(parentValue)} \u203A `)
+      .join('') +
+    (getSelectedOptionLabel(selectedValue) ||
+      i18n.t('%s (unknown)', selectedValue.toString()))
 
   const valueBuilder = (option: SelectOption): AllowedSelectValue => {
     return context.value.complexValue
@@ -298,6 +310,8 @@ const useSelectOptions = <
     getSelectedOptionIcon,
     getSelectedOptionLabel,
     getSelectedOptionStatus,
+    getSelectedOptionParents,
+    getSelectedOptionFullPath,
     selectOption,
     getDialogFocusTargets,
     setupMissingOrDisabledOptionHandling,

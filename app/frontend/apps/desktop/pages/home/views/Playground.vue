@@ -6,7 +6,6 @@ import { computed } from 'vue'
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import Form from '#shared/components/Form/Form.vue'
-import { useIcons } from '#shared/components/CommonIcon/useIcons.ts'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -16,66 +15,56 @@ const alphabetOptions = computed(() =>
   })),
 )
 
-const { icons } = useIcons()
-
-const iconOptions = computed(() =>
-  Object.keys(icons).map((icon) => ({
-    icon,
-    value: icon,
-    label: icon,
-    disabled: Math.random() < 0.5,
-  })),
-)
+const treeselectOptions = [
+  {
+    value: 0,
+    label: 'Item A',
+    children: [
+      {
+        value: 1,
+        label: 'Item 1',
+        children: [
+          {
+            value: 2,
+            label: 'Item I',
+          },
+          {
+            value: 3,
+            label: 'Item II',
+          },
+          {
+            value: 4,
+            label: 'Item III',
+          },
+        ],
+      },
+      {
+        value: 5,
+        label: 'Item 2',
+        children: [
+          {
+            value: 6,
+            label: 'Item IV',
+          },
+        ],
+      },
+      {
+        value: 7,
+        label: 'Item 3',
+      },
+    ],
+  },
+  {
+    value: 8,
+    label: 'Item B',
+  },
+  {
+    value: 9,
+    label: 'Ítem C',
+  },
+]
 
 const formSchema = [
-  {
-    type: 'select',
-    name: 'select_1',
-    label: 'Single select',
-    clearable: true,
-    props: {
-      options: alphabetOptions.value,
-    },
-  },
-  {
-    type: 'select',
-    name: 'select_2',
-    label: 'Multi select',
-    clearable: true,
-    props: {
-      multiple: true,
-      options: alphabetOptions.value,
-    },
-  },
-  {
-    type: 'select',
-    name: 'select_3',
-    label: 'Disabled select',
-    disabled: true,
-    clearable: true,
-    props: {
-      options: [],
-    },
-  },
-  {
-    type: 'select',
-    name: 'select_4',
-    label: 'Icon single select',
-    clearable: true,
-    props: {
-      options: iconOptions.value,
-    },
-  },
-  {
-    type: 'select',
-    name: 'select_5',
-    label: 'Icon multi select',
-    clearable: true,
-    props: {
-      multiple: true,
-      options: iconOptions.value,
-    },
-  },
   {
     isLayout: true,
     element: 'div',
@@ -117,6 +106,44 @@ const formSchema = [
         },
       },
     ],
+  },
+  {
+    type: 'select',
+    name: 'select_1',
+    label: 'Single select',
+    clearable: true,
+    props: {
+      options: alphabetOptions.value,
+    },
+  },
+  {
+    type: 'select',
+    name: 'select_2',
+    label: 'Multi select',
+    clearable: true,
+    props: {
+      multiple: true,
+      options: alphabetOptions.value,
+    },
+  },
+  {
+    type: 'treeselect',
+    name: 'treeselect_1',
+    label: 'Single treeselect',
+    clearable: true,
+    props: {
+      options: treeselectOptions,
+    },
+  },
+  {
+    type: 'treeselect',
+    name: 'treeselect_2',
+    label: 'Multi treeselect',
+    clearable: true,
+    props: {
+      multiple: true,
+      options: treeselectOptions,
+    },
   },
 ]
 </script>

@@ -624,6 +624,43 @@ describe('Form - Field - Select - Options', () => {
 
     expect(wrapper.queryByRole('searchbox')).not.toBeInTheDocument()
   })
+
+  it('highlights matched text in filtered options', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...commonProps,
+        options: [
+          ...testOptions,
+          {
+            value: 3,
+            label: 'Ítem D',
+          },
+        ],
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select'))
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    await wrapper.events.type(filterElement, 'item')
+
+    const selectOptions = wrapper.getAllByRole('option')
+
+    selectOptions.forEach((selectOption) => {
+      if (selectOption.textContent === 'Ítem D') {
+        expect(selectOption.children[0].children[0]).toHaveTextContent('Ítem')
+      } else {
+        expect(selectOption.children[0].children[0]).toHaveTextContent('Item')
+      }
+
+      expect(selectOption.children[0].children[0]).toHaveClasses([
+        'bg-blue-600',
+        'dark:bg-blue-900',
+      ])
+    })
+  })
 })
 
 describe('Form - Field - Select - Features', () => {
@@ -710,6 +747,7 @@ describe('Form - Field - Select - Features', () => {
     const selectOptions = getAllByRole(listbox, 'option')
 
     expect(selectAllButton).toBeInTheDocument()
+
     expect(selectOptions).toHaveLength(
       queryAllByIconName(listbox, 'square').length,
     )
@@ -781,15 +819,21 @@ describe('Form - Field - Select - Features', () => {
       ])
     })
 
+    await wrapper.events.click(selectOptions[1])
+
+    await waitFor(() => {
+      expect(emittedInput[4][0]).toStrictEqual([testOptions[0].value])
+    })
+
     selectAllButton = getByRole(menu, 'button', {
       name: 'select all',
     })
 
     expect(selectAllButton).toBeInTheDocument()
-    expect(queryAllByIconName(listbox, 'square')).toHaveLength(1)
-    expect(queryAllByIconName(listbox, 'check-square')).toHaveLength(2)
+    expect(queryAllByIconName(listbox, 'square')).toHaveLength(2)
+    expect(queryAllByIconName(listbox, 'check-square')).toHaveLength(1)
     expect(wrapper.queryByRole('menu')).toBeInTheDocument()
-    expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
+    expect(wrapper.queryAllByRole('listitem')).toHaveLength(1)
 
     wrapper.queryAllByRole('listitem').forEach((selectedLabel, index) => {
       expect(selectedLabel).toHaveTextContent(testOptions[index].label)
@@ -798,7 +842,7 @@ describe('Form - Field - Select - Features', () => {
     await wrapper.events.click(selectAllButton)
 
     await waitFor(() => {
-      expect(emittedInput[4][0]).toStrictEqual([
+      expect(emittedInput[5][0]).toStrictEqual([
         testOptions[0].value,
         testOptions[1].value,
         testOptions[2].value,
@@ -1096,7 +1140,7 @@ describe('Form - Field - Select - Accessibility', () => {
 
     const selectAllButton = getByRole(menu, 'button', { name: 'select all' })
 
-    expect(selectAllButton).toHaveAttribute('tabindex', '0')
+    expect(selectAllButton).toHaveAttribute('tabindex', '1')
 
     const listbox = getByRole(menu, 'listbox')
 

@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '#tests/support/components/index.ts'
 import { onMounted, ref } from 'vue'
+import { renderComponent } from '#tests/support/components/index.ts'
 import CommonInputSearch, {
   type CommonInputSearchExpose,
 } from '../CommonInputSearch.vue'
@@ -52,5 +52,38 @@ describe('testing input for searching', () => {
     focus!()
 
     expect(view.getByRole('searchbox')).toHaveFocus()
+  })
+
+  it('provides search suggestion', async () => {
+    const modelValue = ref('')
+
+    const view = renderComponent(CommonInputSearch, {
+      vModel: {
+        modelValue,
+      },
+    })
+
+    const search = view.getByRole('searchbox')
+
+    expect(search).toHaveDisplayValue('')
+    expect(view.queryByTestId('suggestion')).not.toBeInTheDocument()
+
+    await view.events.type(search, 'foo')
+
+    expect(modelValue.value).toBe('foo')
+
+    await view.rerender({
+      suggestion: 'foobar',
+    })
+
+    const suggestion = view.getByTestId('suggestion')
+
+    expect(suggestion.firstChild).toHaveTextContent('foo')
+    expect(suggestion.lastChild).toHaveTextContent('bar')
+
+    await view.events.keyboard('{Tab}')
+
+    expect(modelValue.value).toBe('foobar')
+    expect(suggestion).not.toBeInTheDocument()
   })
 })

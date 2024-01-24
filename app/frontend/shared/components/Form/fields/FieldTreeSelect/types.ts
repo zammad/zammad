@@ -13,6 +13,10 @@ export type FlatSelectOption = SelectOption & {
   parents: (string | number | boolean)[]
 }
 
+export type MatchedFlatSelectOption = FlatSelectOption & {
+  matchedPath?: string
+}
+
 export interface TreeSelectProps {
   clearable?: boolean
   historicalOptions?: Record<string, string>
