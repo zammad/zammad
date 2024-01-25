@@ -311,6 +311,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
     'change .js-inbound [name=adapter]':   'toggleInboundAdapter'
     'change .js-outbound [name=adapter]':  'toggleOutboundAdapter'
     'change [name="options::ssl"]':        'toggleSslVerifyVisibility'
+    'change [name="options::port"]':       'toggleSslVerifyVisibility'
     'change [name="options::ssl_verify"]': 'toggleSslVerifyAlert'
     'submit .js-outbound':                 'probleOutbound'
     'click  .js-goToSlide':                'goToSlide'
@@ -497,7 +498,11 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
 
   toggleSslVerifyVisibility: (e) ->
     elem      = $(e.target)
-    isEnabled = elem.val() isnt 'off'
+
+    # Skip the handler for port field in inbound dialog.
+    return if elem.attr('name') is 'options::port' and elem.closest('form').find('[name="options::ssl"]').length
+
+    isEnabled = if elem.attr('name') is 'options::port' then (elem.val() is '' or elem.val() is '465' or elem.val() is '587') else elem.val() isnt 'off'
 
     sslVerifyField = elem.closest('form')
       .find('[name="options::ssl_verify"]')
@@ -727,6 +732,11 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       if email_addresses && email_addresses[0]
         params['email'] = email_addresses[0].email
 
+    sslVerifyField = $(e.target).closest('form').find('[name="options::ssl_verify"]')
+
+    if sslVerifyField[0]?.disabled
+      params.options.ssl_verify = false
+
     # let backend know about the channel
     if @channel
       params.channel_id = @channel.id
@@ -820,6 +830,7 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
     '.modal-body': 'body'
   events:
     'change [name="options::ssl_verify"]': 'toggleSslVerifyAlert'
+    'change [name="options::port"]':       'toggleSslVerifyVisibility'
     'change .js-outbound [name=adapter]':  'toggleOutboundAdapter'
     'submit .js-outbound':                 'probleOutbound'
     'click  .js-close':                    'hide'
@@ -916,6 +927,21 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
         params: @account.outbound
       )
 
+  toggleSslVerifyVisibility: (e) ->
+    elem      = $(e.target)
+
+    isEnabled = elem.val() is '' or elem.val() is '465' or elem.val() is '587'
+
+    sslVerifyField = elem.closest('form')
+      .find('[name="options::ssl_verify"]')
+
+    if isEnabled
+      sslVerifyField.removeAttr('disabled')
+    else
+      sslVerifyField.attr('disabled', 'disabled')
+
+    @toggleSslVerifyAlert(target: sslVerifyField, !isEnabled)
+
   toggleSslVerifyAlert: (e, forceInvisible) ->
     elem           = $(e.target)
     isAlertVisible = if forceInvisible then false else elem.val() != 'true'
@@ -935,6 +961,11 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
 
     # let backend know about the channel
     params.channel_id = @channel.id
+
+    sslVerifyField = $(e.target).closest('form').find('[name="options::ssl_verify"]')
+
+    if sslVerifyField[0]?.disabled
+      params.options.ssl_verify = false
 
     @disable(e)
 

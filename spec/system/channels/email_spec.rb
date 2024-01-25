@@ -288,6 +288,18 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
         verify_select.find(:option, 'yes').select_option
 
         expect(page).to have_no_text('Turning off SSL verification')
+
+        port_field = find('input[name="options::port"]')
+
+        port_field.fill_in with: '25'
+        port_field.execute_script "$(this).trigger('blur')"
+
+        expect(page).to have_css('select[name="options::ssl_verify"][disabled]')
+
+        port_field.fill_in with: '465'
+        port_field.execute_script "$(this).trigger('blur')"
+
+        expect(page).to have_css('select[name="options::ssl_verify"]:not([disabled])')
       end
     end
   end

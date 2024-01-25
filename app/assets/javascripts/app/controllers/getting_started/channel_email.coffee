@@ -322,6 +322,12 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
     # get params
     params          = @formParam(e.target)
     params['email'] = @account['meta']['email']
+
+    sslVerifyField = $(e.target).closest('form').find('[name="options::ssl_verify"]')
+
+    if sslVerifyField[0]?.disabled
+      params.options.ssl_verify = false
+
     @disable(e)
 
     @showSlide('js-test')
