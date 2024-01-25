@@ -459,7 +459,9 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
                 @keypress.space.prevent.stop="selectAll()"
               >
                 {{
-                  currentPath.length ? $t('select visible') : $t('select all')
+                  currentPath.length
+                    ? $t('select visible options')
+                    : $t('select all options')
                 }}
               </CommonLabel>
             </div>

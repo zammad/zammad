@@ -664,7 +664,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     const menu = wrapper.getByRole('menu')
 
     const selectAllButton = getByRole(menu, 'button', {
-      name: 'select all',
+      name: 'select all options',
     })
 
     const listbox = getByRole(menu, 'listbox')
@@ -774,7 +774,7 @@ describe('Form - Field - TreeSelect - Features', () => {
 
     expect(
       queryByRole(menu, 'button', {
-        name: 'select visible',
+        name: 'select visible options',
       }),
     ).not.toBeInTheDocument()
 
@@ -791,7 +791,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     })
 
     const selectVisibleButton = getByRole(menu, 'button', {
-      name: 'select visible',
+      name: 'select visible options',
     })
 
     await wrapper.events.click(selectVisibleButton)
@@ -1256,7 +1256,9 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
 
     const menu = wrapper.getByRole('menu')
 
-    const selectAllButton = getByRole(menu, 'button', { name: 'select all' })
+    const selectAllButton = getByRole(menu, 'button', {
+      name: 'select all options',
+    })
 
     expect(selectAllButton).toHaveAttribute('tabindex', '2')
 

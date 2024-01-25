@@ -739,7 +739,7 @@ describe('Form - Field - Select - Features', () => {
     const menu = wrapper.getByRole('menu')
 
     let selectAllButton = getByRole(menu, 'button', {
-      name: 'select all',
+      name: 'select all options',
     })
 
     const listbox = getByRole(menu, 'listbox')
@@ -826,7 +826,7 @@ describe('Form - Field - Select - Features', () => {
     })
 
     selectAllButton = getByRole(menu, 'button', {
-      name: 'select all',
+      name: 'select all options',
     })
 
     expect(selectAllButton).toBeInTheDocument()
@@ -1138,7 +1138,9 @@ describe('Form - Field - Select - Accessibility', () => {
 
     const menu = wrapper.getByRole('menu')
 
-    const selectAllButton = getByRole(menu, 'button', { name: 'select all' })
+    const selectAllButton = getByRole(menu, 'button', {
+      name: 'select all options',
+    })
 
     expect(selectAllButton).toHaveAttribute('tabindex', '1')
 

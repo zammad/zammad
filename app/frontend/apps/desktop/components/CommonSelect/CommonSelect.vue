@@ -332,7 +332,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
                 @keypress.enter.prevent.stop="selectAll()"
                 @keypress.space.prevent.stop="selectAll()"
               >
-                {{ $t('select all') }}
+                {{ $t('select all options') }}
               </CommonLabel>
             </div>
             <div

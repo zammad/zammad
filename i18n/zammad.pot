@@ -15889,7 +15889,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
-msgid "select all"
+msgid "select all options"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
@@ -15898,7 +15898,7 @@ msgid "select attachment…"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
-msgid "select visible"
+msgid "select visible options"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
