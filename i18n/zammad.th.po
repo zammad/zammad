@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-01-08 09:46+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
-"Language-Team: Thai <https://translations.zammad.org/projects/zammad/"
-"zammad-development/th/>\n"
+"Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
+"development/th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -387,10 +387,14 @@ msgstr "%s (method)"
 msgid "%s (option)"
 msgstr "%s ตัวเลือก"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/shared/composables/useSelectOptions.ts
 msgid "%s (unknown)"
 msgstr "%s (ไม่ระบุ)"
 
@@ -845,10 +849,6 @@ msgstr ""
 "\n"
 "หากคุณมีลูกค้าที่มีเวลาทำการต่างกัน คุณสามารถสร้างปฏิทินได้หลายปฏิทิน Tickets "
 "เชื่อมโยงกับปฏิทินโดยใช้ **SLA**"
-
-#: app/controllers/getting_started_controller.rb
-msgid "A URL looks like this: https://zammad.example.com"
-msgstr "URL คล้ายแบบนี้: https://zammad.example.com"
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
@@ -1317,7 +1317,7 @@ msgstr "การตรวจจับการติดตามเพิ่ม
 msgid "Additional information"
 msgstr "ข้อมูลเพิ่มเติม"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #, fuzzy
 #| msgid "Additional information"
 msgid "Additional information and links"
@@ -1396,14 +1396,14 @@ msgstr ""
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>เราได้รับคําขอสําหรับผู้ดูแลระบบสําหรับบัญชี #{config.product_name} "
-"ของคุณ <b>#{user.login}</b>.</div><br><div>\n"
+"<div>เราได้รับคําขอสําหรับผู้ดูแลระบบสําหรับบัญชี #{config.product_name} ของคุณ <b>#{user."
+"login}</b>.</div><br><div>\n"
 "\n"
-"โปรดคลิกที่ลิงค์ด้านล่าง (หรือคัดลอกและวาง URL ลงในเบราว์เซอร์ของคุณ) "
-"เพื่อดําเนินการต่อ: </div>\n"
+"โปรดคลิกที่ลิงค์ด้านล่าง (หรือคัดลอกและวาง URL ลงในเบราว์เซอร์ของคุณ) เพื่อดําเนินการต่อ: </"
+"div>\n"
 "<br>\n"
-"<div><a href=\"#{url}\">#{url}</a></div><br><div>ลิงก์นี้จะนําคุณไปยังหน้าเว็"
-"บที่คุณสามารถเข้าสู่ระบบได้</div>\n"
+"<div><a href=\"#{url}\">#{url}</a></"
+"div><br><div>ลิงก์นี้จะนําคุณไปยังหน้าเว็บที่คุณสามารถเข้าสู่ระบบได้</div>\n"
 "<br><div>หากคุณ\n"
 "\n"
 "\n"
@@ -1414,10 +1414,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
 msgstr "Administrator Account"
-
-#: app/controllers/users_controller.rb
-msgid "Administrator account already created"
-msgstr "สร้างบัญชีผู้ดูแลระบบแล้ว"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
@@ -2033,10 +2029,6 @@ msgstr "แอตทริบิวต์"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "จำเป็นต้องมีแอตทริบิวต์ '%s' ในการแมป"
 
-#: app/controllers/users_controller.rb
-msgid "Attribute 'email' required!"
-msgstr "ต้องการแอตทริบิวต์ 'อีเมล'!"
-
 #: db/seeds/settings.rb
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
@@ -2170,6 +2162,12 @@ msgstr "สร้างอัตโนมัติ"
 msgid "Auto-close state"
 msgstr "สถานะปิดอัตโนมัติ"
 
+#: lib/auto_wizard.rb
+#, fuzzy
+#| msgid "Auto Wizard"
+msgid "AutoWizard is disabled"
+msgstr "ตัวช่วยสร้างอัตโนมัติ"
+
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
 msgstr "ลิงค์บัญชีอัตโนมัติเมื่อเข้าสู่ระบบครั้งแรก"
@@ -2242,6 +2240,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "BCC address สำหรับอีเมลขาออกทั้งหมด"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 msgid "Back"
 msgstr "ย้อนกลับ"
 
@@ -2253,6 +2252,7 @@ msgstr "กลับมาที่มุมมองของฉัน"
 msgid "Back to overview"
 msgstr "กลับมาที่มุมมองของฉัน"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Back to previous page"
 msgstr "กลับไปยังหน้าก่อนหน้า"
@@ -2563,8 +2563,12 @@ msgstr "ไม่พบผู้ใช้สำหรับโทเค็น"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#, fuzzy
+#| msgid ""
+#| "Can't update password, your entered passwords do not match. Please try "
+#| "again!"
 msgid ""
-"Can't update password, your entered passwords do not match. Please try again!"
+"Can't update password, your entered passwords do not match. Please try again."
 msgstr "อัปเดตรหัสผ่านไม่ได้ รหัสผ่านที่คุณป้อนไม่ตรงกัน กรุณาลองอีกครั้ง!"
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee
@@ -2984,11 +2988,14 @@ msgstr "ล้างการล็อก ActiveJob"
 msgid "Clear"
 msgstr "ล้าง"
 
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Clear Search"
 msgstr "ล้างการค้นหา"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3120,6 +3127,7 @@ msgid "Communication"
 msgstr "การติดต่อสื่อสาร"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Company Inc."
 msgstr "Company Inc."
 
@@ -3211,8 +3219,8 @@ msgstr "ยืนยัน/ส่งกล่องโต้ตอบ"
 msgid "Confirm merge"
 msgstr "ตั้งค่า"
 
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #, fuzzy
 #| msgid "Confirm Password"
 msgid "Confirm password"
@@ -3310,10 +3318,6 @@ msgstr "การเชื่อมต่อล้มเหลว"
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection re-established"
 msgstr "เชื่อมต่อใหม่แล้ว"
-
-#: lib/search_index_backend.rb
-msgid "Connection refused"
-msgstr "ไม่รับการเชื่อมต่อ"
 
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
@@ -3497,6 +3501,13 @@ msgstr "สร้าง"
 msgid "Create Admin"
 msgstr "สร้างแอดมิน"
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+#, fuzzy
+#| msgid "Administrator Account"
+msgid "Create Administrator Account"
+msgstr "Administrator Account"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
 msgstr "สร้างช่องทางสื่อสาร"
@@ -3580,6 +3591,12 @@ msgstr "สร้างแบบร่างที่ใช้ร่วมกั
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
 msgstr "สร้างคำแปล"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+#, fuzzy
+#| msgid "Create my account"
+msgid "Create account"
+msgstr "สร้างบัญชีของฉัน"
 
 #: db/seeds/permissions.rb
 msgid "Create and set up %s"
@@ -3769,15 +3786,6 @@ msgstr "ผู้ใช้ปัจจุบัน"
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Current password"
 msgstr "รหัสผ่าน ปัจจุบัน"
-
-#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
-#: app/controllers/users_controller.rb
-msgid "Current password is wrong!"
-msgstr "รหัสผ่าน ปัจจุบันผิด!"
-
-#: app/controllers/users_controller.rb
-msgid "Current password needed!"
-msgstr "ต้องใช้รหัสผ่านปัจจุบัน!"
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -5357,6 +5365,12 @@ msgstr "ลากเพื่อจัดลำดับใหม่"
 msgid "Drop files here"
 msgstr "วางไฟล์ที่นี่"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Drop files here"
+msgid "Drop image file here"
+msgstr "วางไฟล์ที่นี่"
+
 #: app/assets/javascripts/app/controllers/login.coffee
 msgid "Due to inactivity, you have been automatically logged out."
 msgstr "เนื่องจากไม่มีการใช้งาน คุณจึงออกจากระบบโดยอัตโนมัติ"
@@ -5503,7 +5517,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
@@ -5556,6 +5570,8 @@ msgstr "อีเมลขาเข้า"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 msgid "Email Notification"
 msgstr "การแจ้งเตือนทางอีเมล"
 
@@ -6362,6 +6378,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "ไฟล์ใหญ่เกินไป สูงสุด อนุญาต %s MB"
 
@@ -6431,7 +6448,7 @@ msgid "First Steps"
 msgstr "ขั้นตอนแรก"
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "First name"
 msgstr "ชื่อ"
@@ -6712,6 +6729,7 @@ msgid "Geo Location Service"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Get Started"
 msgstr "เริ่ม"
 
@@ -6819,6 +6837,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Go Back"
 msgstr "ย้อนกลับ"
 
@@ -6953,10 +6972,6 @@ msgstr "กลุ่มไม่ถูกต้อง!"
 msgid "Group needed in channel definition!"
 msgstr "ต้องการกลุ่มในช่องนิยาม!"
 
-#: app/models/group.rb
-msgid "Group or children exceeded max depth!"
-msgstr ""
-
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -7061,6 +7076,7 @@ msgstr "จัดการงานความเป็นส่วนตัว
 msgid "Has processed"
 msgstr "Has processed"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #, fuzzy
 #| msgid "%s subdomain"
@@ -7483,6 +7499,12 @@ msgstr ""
 msgid "Image of %s"
 msgstr "ของภาพ %s"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Zammad Image Service"
+msgid "Image preview"
+msgstr "Zammad Image Service"
+
 #: app/assets/javascripts/app/controllers/import.coffee
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
@@ -7606,7 +7628,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid ""
-"In order to be able to influence the desired behaviour in this regard, you "
+"In order to be able to influence the desired behavior in this regard, you "
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 
@@ -8220,7 +8242,7 @@ msgid "Last login"
 msgstr "ล็อกอิน"
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Last name"
 msgstr "นามสกุล"
@@ -9089,10 +9111,6 @@ msgstr ""
 msgid "Need fingerprint param!"
 msgstr "——"
 
-#: app/controllers/settings_controller.rb
-msgid "Need logo param"
-msgstr "ต้องการโลโก้ param"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
 msgstr "ต้องการผู้รับใน \"ถึง\""
@@ -9483,6 +9501,8 @@ msgid "No record found!"
 msgstr "‎ไม่พบเรกคอร์ด !"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
@@ -9943,6 +9963,10 @@ msgstr "เปิด Ticket"
 msgid "Options"
 msgstr "ตัวเลือก"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+msgid "Or migrate from another system"
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Or migrate from another system."
 msgstr ""
@@ -10000,7 +10024,14 @@ msgstr "องค์กร"
 msgid "Organization & Department Name"
 msgstr "ชื่อหน่วยงานและหน่วยงาน"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "Organization"
+msgid "Organization Logo"
+msgstr "องค์กร"
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Organization Name"
 msgstr "ชื่อองค์กร"
 
@@ -10221,9 +10252,9 @@ msgstr "หลัก"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10271,12 +10302,6 @@ msgstr "รหัสผ่านต้องมีอักขระพิเศ
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "รหัสผ่านต้องมีอักขระอย่างน้อยจำนวนน้อยที่สุด."
-
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-#, fuzzy
-#| msgid "Password changed successfully!"
-msgid "Password reset request successful!"
-msgstr "เปลี่ยนรหัสผ่านสำเร็จ!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -10480,6 +10505,7 @@ msgid "Please fill in all fields"
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+#: app/services/service/system/set_system_information.rb
 msgid "Please include a valid url."
 msgstr ""
 
@@ -10494,6 +10520,20 @@ msgstr ""
 #| msgid "Need recipient in \"TO\" or \"CC\"."
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "ต้องการผู้รับใน \"TO\" หรือ \"CC\""
+
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "Please supply your new password!"
+msgid "Please provide your current password."
+msgstr "กรุณาระบุรหัสผ่านใหม่ของคุณ!"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "Please supply your new password!"
+msgid "Please provide your new password."
+msgstr "กรุณาระบุรหัสผ่านใหม่ของคุณ!"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
 msgid ""
@@ -10532,12 +10572,6 @@ msgstr "การตรวจสอบล้มเหลว ข้อมูล�
 msgid "Please submit custom address before generating the snippet"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
-#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-#: app/controllers/users_controller.rb
-msgid "Please supply your new password!"
-msgstr "กรุณาระบุรหัสผ่านใหม่ของคุณ!"
-
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
@@ -10572,7 +10606,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "ขับเคลื่อนโดย"
@@ -11001,6 +11035,12 @@ msgstr "ลบทั้งหมด"
 msgid "Remove formatting"
 msgstr "เอารูปแบบออก"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Remove all"
+msgid "Remove image"
+msgstr "ลบทั้งหมด"
+
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 #, fuzzy
 #| msgid "Remove %s"
@@ -11243,14 +11283,14 @@ msgstr ""
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>เราได้รับคําขอสําหรับผู้ดูแลระบบสําหรับบัญชี #{config.product_name} "
-"ของคุณ <b>#{user.login}</b>.</div><br><div>\n"
+"<div>เราได้รับคําขอสําหรับผู้ดูแลระบบสําหรับบัญชี #{config.product_name} ของคุณ <b>#{user."
+"login}</b>.</div><br><div>\n"
 "\n"
-"โปรดคลิกที่ลิงค์ด้านล่าง (หรือคัดลอกและวาง URL ลงในเบราว์เซอร์ของคุณ) "
-"เพื่อดําเนินการต่อ: </div>\n"
+"โปรดคลิกที่ลิงค์ด้านล่าง (หรือคัดลอกและวาง URL ลงในเบราว์เซอร์ของคุณ) เพื่อดําเนินการต่อ: </"
+"div>\n"
 "<br>\n"
-"<div><a href=\"#{url}\">#{url}</a></div><br><div>ลิงก์นี้จะนําคุณไปยังหน้าเว็"
-"บที่คุณสามารถเข้าสู่ระบบได้</div>\n"
+"<div><a href=\"#{url}\">#{url}</a></"
+"div><br><div>ลิงก์นี้จะนําคุณไปยังหน้าเว็บที่คุณสามารถเข้าสู่ระบบได้</div>\n"
 "<br><div>หากคุณ\n"
 "\n"
 "\n"
@@ -11307,14 +11347,14 @@ msgstr ""
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>เราได้รับคําขอสําหรับผู้ดูแลระบบสําหรับบัญชี #{config.product_name} "
-"ของคุณ <b>#{user.login}</b>.</div><br><div>\n"
+"<div>เราได้รับคําขอสําหรับผู้ดูแลระบบสําหรับบัญชี #{config.product_name} ของคุณ <b>#{user."
+"login}</b>.</div><br><div>\n"
 "\n"
-"โปรดคลิกที่ลิงค์ด้านล่าง (หรือคัดลอกและวาง URL ลงในเบราว์เซอร์ของคุณ) "
-"เพื่อดําเนินการต่อ: </div>\n"
+"โปรดคลิกที่ลิงค์ด้านล่าง (หรือคัดลอกและวาง URL ลงในเบราว์เซอร์ของคุณ) เพื่อดําเนินการต่อ: </"
+"div>\n"
 "<br>\n"
-"<div><a href=\"#{url}\">#{url}</a></div><br><div>ลิงก์นี้จะนําคุณไปยังหน้าเว็"
-"บที่คุณสามารถเข้าสู่ระบบได้</div>\n"
+"<div><a href=\"#{url}\">#{url}</a></"
+"div><br><div>ลิงก์นี้จะนําคุณไปยังหน้าเว็บที่คุณสามารถเข้าสู่ระบบได้</div>\n"
 "<br><div>หากคุณ\n"
 "\n"
 "\n"
@@ -11602,6 +11642,13 @@ msgstr "บันทึกเป็น"
 msgid "Save Draft"
 msgstr "บันทึกฉบับร่าง"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "Continue"
+msgid "Save and Continue"
+msgstr "ดำเนินการต่อ"
+
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
 msgstr "บันทึกเป็น"
@@ -11792,6 +11839,7 @@ msgstr "เสียงแจ้งเตือน"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search…"
@@ -11973,6 +12021,8 @@ msgstr "ตัวเลือก"
 msgid "Selects the ticket number generator module."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
@@ -12200,6 +12250,7 @@ msgid "Set to public"
 msgstr "ตั้งเป็นสาธารณะ"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Set up a new system"
 msgstr ""
 
@@ -12452,6 +12503,7 @@ msgid "Sign out"
 msgstr "ออกจากระบบ"
 
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Sign up"
 msgstr "ลงชื่อ"
 
@@ -12492,12 +12544,6 @@ msgstr ""
 #| msgid "Sign in using"
 msgid "Signing & Encrypting"
 msgstr "เข้าสู่ระบบโดยใช้"
-
-#: app/frontend/apps/desktop/pages/authentication/routes.ts
-#, fuzzy
-#| msgid "Sign up"
-msgid "Signup"
-msgstr "ลงชื่อ"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
@@ -12586,6 +12632,7 @@ msgstr "ไซต์"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Skip"
 msgstr "ข้าม"
 
@@ -12848,6 +12895,7 @@ msgstr "หัวเรื่อง"
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr "ส่ง"
@@ -12923,11 +12971,19 @@ msgstr "ระบบ"
 msgid "System Address Display Name"
 msgstr "ชื่อที่แสดงที่อยู่ของระบบ"
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "Information"
+msgid "System Information"
+msgstr "ข้อมูลข่าวสาร"
+
 #: db/seeds/settings.rb
 msgid "System Init Done"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "System URL"
 msgstr ""
 
@@ -13241,6 +13297,10 @@ msgid ""
 "protocol."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "The URL of this installation of Zammad."
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr ""
@@ -13255,6 +13315,12 @@ msgstr "ไม่พบโปรไฟล์การรายงานที่
 #| msgid "The password could not be set. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
 msgstr "ไม่สามารถตั้งรหัสผ่านได้ โปรดติดต่อผู้ดูแลระบบของคุณ"
+
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#, fuzzy
+#| msgid "Verification email could not be sent."
+msgid "The admin password auth email could not be sent."
+msgstr "ไม่สามารถส่งอีเมลยืนยันได้"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
@@ -13454,6 +13520,13 @@ msgstr ""
 msgid "The connection was refused."
 msgstr "ไม่รับการเชื่อมต่อ"
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The current password you provided is incorrect."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
+
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
 "The data must be in the comma separated values (CSV) format and saved as "
@@ -13480,6 +13553,14 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
+
+#: app/services/service/auth/send_admin_token.rb
+#: app/services/service/user/password_reset/send.rb
+#: app/services/service/user/password_reset/update.rb
+#, fuzzy
+#| msgid "Article could not be deleted."
+msgid "The email could not be sent to the user."
+msgstr "ไม่สามารถลบบทความได้"
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -13671,6 +13752,12 @@ msgstr ""
 msgid "The password could not be set. Please contact your administrator."
 msgstr "ไม่สามารถตั้งรหัสผ่านได้ โปรดติดต่อผู้ดูแลระบบของคุณ"
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#, fuzzy
+#| msgid "Password changed successfully!"
+msgid "The password reset request was successful."
+msgstr "เปลี่ยนรหัสผ่านสำเร็จ!"
+
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
@@ -13788,6 +13875,19 @@ msgstr ""
 #| msgid "The required match value is missing."
 msgid "The required PGP passphrase is missing."
 msgstr "ไม่มีค่าการจับคู่ที่จำเป็น"
+
+#: app/controllers/users_controller.rb
+#: app/services/service/user/add_first_admin.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required attribute 'email' is missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
+
+#: app/services/service/system/set_system_information.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required attribute 'organization' is missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
 #, fuzzy
@@ -14021,6 +14121,10 @@ msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 msgid "The setting could not be updated."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+msgid "The setup has already been started. Please wait until it is finished."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
 msgstr ""
@@ -14046,6 +14150,18 @@ msgstr "ตรวจสอบลายเซ็นเรียบร้อยแ
 msgid "The source ticket could not be found."
 msgstr "ไม่พบ Tickets ต้นทาง"
 
+#: app/services/service/system/check_setup.rb
+msgid ""
+"The system setup cannot be started, because there is another one running or "
+"it was completed before."
+msgstr ""
+
+#: app/services/service/system/check_setup.rb
+msgid ""
+"The system setup is marked as done, but no admin user is existing. Please "
+"run the system setup again."
+msgstr ""
+
 #: app/controllers/tickets_controller.rb
 msgid "The target ticket number could not be found."
 msgstr "ไม่พบหมายเลข Tickets เป้าหมาย"
@@ -14068,6 +14184,12 @@ msgstr "ข้อความที่จุดเริ่มต้นของ
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "The tickets could not be merged."
 msgstr "ไม่สามารถรวม tickets ได้"
+
+#: app/services/service/user/signup.rb
+#, fuzzy
+#| msgid "The report could not be generated"
+msgid "The token could not be generated."
+msgstr "ไม่สามารถสร้างรายงานได้"
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 #, fuzzy
@@ -14111,10 +14233,6 @@ msgstr ""
 msgid "The type of the private key is wrong."
 msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
 
-#: app/controllers/getting_started_controller.rb
-msgid "The uploaded image could not be processed."
-msgstr "ไม่สามารถประมวลผลภาพที่อัปโหลด"
-
 #: app/controllers/settings_controller.rb
 #, fuzzy
 #| msgid "The uploaded image could not be processed."
@@ -14122,6 +14240,12 @@ msgid ""
 "The uploaded image could not be processed. Need data:image in logo or "
 "logo_resize param."
 msgstr "ไม่สามารถประมวลผลภาพที่อัปโหลด"
+
+#: app/services/service/auth/send_admin_token.rb
+#, fuzzy
+#| msgid "The report could not be generated"
+msgid "The user token could not be generated."
+msgstr "ไม่สามารถสร้างรายงานได้"
 
 #: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -14133,6 +14257,12 @@ msgstr "ไม่สามารถแยก 'preferred_username' ของผ�
 #| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The username or password is incorrect."
 msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
+
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#, fuzzy
+#| msgid "Verification email could not be sent."
+msgid "The verification email could not be resent."
+msgstr "ไม่สามารถส่งอีเมลยืนยันได้"
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
@@ -14534,6 +14664,10 @@ msgstr "ช่องนี้ต้องมีอักขระไม่เก
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "ฟิลด์นี้ได้รับการกำหนดค่าไม่ถูกต้องและไม่สามารถส่งได้"
 
+#: app/models/group.rb
+msgid "This group or its children exceed the allowed nesting depth."
+msgstr ""
+
 #: lib/email_helper/probe.rb
 #, fuzzy
 #| msgid "The file could not be uploaded."
@@ -14597,6 +14731,12 @@ msgstr "การดำเนินการนี้อาจใช้เวล
 msgid "This object already exists."
 msgstr "รายการนี้อยู่แล้ว!."
 
+#: app/services/service/system/check_setup.rb
+msgid ""
+"This operation cannot be continued, because the system set-up was not "
+"completed yet."
+msgstr ""
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr "หน้านี้ไม่ปรากฏต่อสาธารณะ"
@@ -14606,6 +14746,12 @@ msgid ""
 "This permission level is not available based on the current roles "
 "permissions."
 msgstr "ระดับการอนุญาตนี้ไม่พร้อมใช้งานตามการอนุญาตของบทบาทปัจจุบัน"
+
+#: app/services/service/execute_locked_block.rb
+msgid ""
+"This resource cannot be locked, because it has already been locked by "
+"another process."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
@@ -14664,6 +14810,11 @@ msgid "This signature is inactive, it won't be included in the reply."
 msgstr ""
 "ลายเซ็นนี้ไม่ทำงาน จะไม่รวมอยู่ในการตอบกลับ เปลี่ยนสถานะ<a href=\"#channels/"
 "email\">ที่นี่</a>"
+
+#: app/services/service/user/add_first_admin.rb
+msgid ""
+"This system has already been configured and an administrator account exists."
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -15664,36 +15815,6 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX endpoint)"
 
-#: app/services/service/auth/send_admin_token.rb
-#, fuzzy
-#| msgid "Create new ticket for this user"
-msgid "Unable to create token for the user."
-msgstr "สร้าง Tickets ใหม่สําหรับผู้ใช้รายนี้"
-
-#: app/services/service/user/signup.rb
-#, fuzzy
-#| msgid "Generate Token"
-msgid "Unable to generate token."
-msgstr "สร้างโทเค็น"
-
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-#, fuzzy
-#| msgid "Resend verification email"
-msgid "Unable to resend verification email."
-msgstr "ส่งอีเมลยืนยันอีกครั้ง"
-
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-msgid "Unable to send admin password auth email."
-msgstr ""
-
-#: app/services/service/auth/send_admin_token.rb
-#: app/services/service/user/password_reset/send.rb
-#: app/services/service/user/password_reset/update.rb
-#, fuzzy
-#| msgid "User email for multiple users"
-msgid "Unable to send email to the user."
-msgstr "อีเมล สำหรับผู้ใช้หลายคน"
-
 #: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
 msgstr "ไม่มีผู้รับผิดชอบ และ เปิดแจ้งซ่อมไว้"
@@ -15733,6 +15854,13 @@ msgstr "การแจ้งเตือน"
 #| msgid "Notification"
 msgid "Unread notifications"
 msgstr "การแจ้งเตือน"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#, fuzzy
+#| msgid "set optional"
+msgid "Unselect Option"
+msgstr "ตั้งค่าตัวเลือก"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #, fuzzy
@@ -15943,6 +16071,12 @@ msgstr "การอัพโหลดล้มเหลว"
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Upload Private Key"
 msgstr "อัปโหลด Private Key"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Uploading"
+msgid "Upload image"
+msgstr "กำลังส่งข้อมูล"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #, fuzzy
@@ -16252,7 +16386,7 @@ msgstr "แจ้งเตือน Ticket."
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
 #, fuzzy
 #| msgid "Ticket notifications"
-msgid "Verifying your email..."
+msgid "Verifying your email…"
 msgstr "แจ้งเตือน Ticket."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -16546,6 +16680,7 @@ msgid "Welcome to Zammad!"
 msgstr "ยินดีต้อนรับเข้าสู่ Zammad!"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Welcome!"
 msgstr "ยินดีต้อนรับ!"
 
@@ -16664,8 +16799,7 @@ msgstr "ด้วยแบบฟอร์ม สามารถเพิ่ม�
 #: app/assets/javascripts/app/models/template.coffee
 #, fuzzy
 #| msgid "With templates you can pre-fill ticket attributes."
-msgid ""
-"With templates it is possible to fill pre-filled tickets quickly and easily."
+msgid "With templates it is possible to pre-fill tickets quickly and easily."
 msgstr "ด้วยเทมเพลต คุณสามารถเติมแอตทริบิวต์ Tickets ล่วงหน้าได้"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
@@ -17135,7 +17269,7 @@ msgstr "บทบาทผู้ใช้ของคุณไม่ได้ร
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
@@ -18329,10 +18463,23 @@ msgstr "run macro"
 msgid "select"
 msgstr "เลือก"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#, fuzzy
+#| msgid "set optional"
+msgid "select all options"
+msgstr "ตั้งค่าตัวเลือก"
+
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "select attachment…"
 msgstr "เลือกไฟล์แนบ…"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#, fuzzy
+#| msgid "Select All"
+msgid "select visible options"
+msgstr "เลือกทั้งหมด"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -18632,6 +18779,70 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#, fuzzy
+#~| msgid "Select All"
+#~ msgid "select all"
+#~ msgstr "เลือกทั้งหมด"
+
+#~ msgid "A URL looks like this: https://zammad.example.com"
+#~ msgstr "URL คล้ายแบบนี้: https://zammad.example.com"
+
+#, fuzzy
+#~| msgid "is invalid"
+#~ msgid "Invalid!"
+#~ msgstr "ไม่ถูกต้อง"
+
+#~ msgid "The uploaded image could not be processed."
+#~ msgstr "ไม่สามารถประมวลผลภาพที่อัปโหลด"
+
+#, fuzzy
+#~| msgid "A URL looks like this: https://zammad.example.com"
+#~ msgid "should look like this: https://zammad.example.com"
+#~ msgstr "URL คล้ายแบบนี้: https://zammad.example.com"
+
+#~ msgid "Administrator account already created"
+#~ msgstr "สร้างบัญชีผู้ดูแลระบบแล้ว"
+
+#~ msgid "Attribute 'email' required!"
+#~ msgstr "ต้องการแอตทริบิวต์ 'อีเมล'!"
+
+#~ msgid "Need logo param"
+#~ msgstr "ต้องการโลโก้ param"
+
+#~ msgid "Connection refused"
+#~ msgstr "ไม่รับการเชื่อมต่อ"
+
+#~ msgid "Current password is wrong!"
+#~ msgstr "รหัสผ่าน ปัจจุบันผิด!"
+
+#~ msgid "Current password needed!"
+#~ msgstr "ต้องใช้รหัสผ่านปัจจุบัน!"
+
+#, fuzzy
+#~| msgid "Sign up"
+#~ msgid "Signup"
+#~ msgstr "ลงชื่อ"
+
+#, fuzzy
+#~| msgid "Create new ticket for this user"
+#~ msgid "Unable to create token for the user."
+#~ msgstr "สร้าง Tickets ใหม่สําหรับผู้ใช้รายนี้"
+
+#, fuzzy
+#~| msgid "Generate Token"
+#~ msgid "Unable to generate token."
+#~ msgstr "สร้างโทเค็น"
+
+#, fuzzy
+#~| msgid "Resend verification email"
+#~ msgid "Unable to resend verification email."
+#~ msgstr "ส่งอีเมลยืนยันอีกครั้ง"
+
+#, fuzzy
+#~| msgid "User email for multiple users"
+#~ msgid "Unable to send email to the user."
+#~ msgstr "อีเมล สำหรับผู้ใช้หลายคน"
 
 #~ msgid "Feature not enabled!"
 #~ msgstr "ไม่ได้เปิดใช้งานคุณสมบัติ!"

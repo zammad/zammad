@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-12-19 02:05+0000\n"
+"PO-Revision-Date: 2024-01-19 02:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -373,10 +373,14 @@ msgstr "%s (врста)"
 msgid "%s (option)"
 msgstr "%s (опција)"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/shared/composables/useSelectOptions.ts
 msgid "%s (unknown)"
 msgstr "%s (непознато)"
 
@@ -836,10 +840,6 @@ msgstr ""
 "\n"
 "Уколико имате клијенте са различитим радним временом, можете додати више "
 "календара. Тикети су повезани са календарима путем **SLA**."
-
-#: app/controllers/getting_started_controller.rb
-msgid "A URL looks like this: https://zammad.example.com"
-msgstr "URL изгледа овако: https://zammad.example.com"
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
@@ -1315,7 +1315,7 @@ msgstr "Додатна детекција настављања"
 msgid "Additional information"
 msgstr "Информације тикета"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 msgid "Additional information and links"
 msgstr "Додатне информације и линкови"
 
@@ -1388,10 +1388,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
 msgstr "Налог администратора"
-
-#: app/controllers/users_controller.rb
-msgid "Administrator account already created"
-msgstr "Налог администратора већ постоји"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
@@ -2017,10 +2013,6 @@ msgstr "Атрибут"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "Неопходно је да атрибут ’%s’ постоји у мапирању"
 
-#: app/controllers/users_controller.rb
-msgid "Attribute 'email' required!"
-msgstr "Неопходан је ’email’ атрибут!"
-
 #: db/seeds/settings.rb
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
@@ -2138,6 +2130,10 @@ msgstr "Аутоматско отварање"
 msgid "Auto-close state"
 msgstr "Стање аутоматског затварања"
 
+#: lib/auto_wizard.rb
+msgid "AutoWizard is disabled"
+msgstr "Аутоматски асистент је искључен"
+
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
 msgstr "Аутоматско повезивање налога приликом иницијалне пријаве"
@@ -2210,6 +2206,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "BCC адреса за све одлазеће имејл поруке"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 msgid "Back"
 msgstr "Иди назад"
 
@@ -2221,6 +2218,7 @@ msgstr "Иди назад на мој преглед"
 msgid "Back to overview"
 msgstr "Иди назад на преглед"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Back to previous page"
 msgstr "Иди на претходну страну"
@@ -2537,10 +2535,10 @@ msgstr "Није било могуће пронађи корисника на о
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid ""
-"Can't update password, your entered passwords do not match. Please try again!"
+"Can't update password, your entered passwords do not match. Please try again."
 msgstr ""
 "Није било могуће освежити лозинку, унете лозинке се не подударају. Молимо "
-"покушајте поново!"
+"покушајте поново."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
@@ -2890,10 +2888,8 @@ msgid "Choose your language."
 msgstr "Изабери свој језик."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#, fuzzy
-#| msgid "Choose your new password."
 msgid "Choose your new password"
-msgstr "Изабери своју нову лозинку."
+msgstr "Одаберите своју нову лозинку"
 
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 msgid "Choose your new password."
@@ -2951,11 +2947,14 @@ msgstr "Чисти радне траке мобилних уређаја."
 msgid "Clear"
 msgstr "Очисти"
 
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Clear Search"
 msgstr "Очисти претрагу"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3087,6 +3086,7 @@ msgid "Communication"
 msgstr "Комуникација"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Company Inc."
 msgstr "Предузеће д.о.о."
 
@@ -3172,31 +3172,14 @@ msgstr "Дијалог потврде"
 msgid "Confirm merge"
 msgstr "Потврди спајање"
 
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-#, fuzzy
-#| msgid "Confirm Password"
 msgid "Confirm password"
 msgstr "Потврдите лозинку"
 
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Confirm your #{config.product_name} account, #{user.firstname} #{user."
-#| "lastname}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>Confirm your email address to complete your #{config.product_name} "
-#| "account. It's easy, just click the link below.</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-#| "token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}"
-#| "</a></div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Confirm your #{config.product_name} account, #{user.firstname} #{user."
 "lastname}\n"
@@ -3218,9 +3201,7 @@ msgstr ""
 "<div>Потврдите своју имејл адресу за отварање #{config.product_name} налога. "
 "Врло је једноставно, само кликните на линк испод.</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
-"a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Ваш #{config.product_name} тим</div>\n"
 
@@ -3297,10 +3278,6 @@ msgstr "Веза је изгубљена"
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection re-established"
 msgstr "Веза је поново успостављена"
-
-#: lib/search_index_backend.rb
-msgid "Connection refused"
-msgstr "Веза је одбијена"
 
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
@@ -3476,6 +3453,11 @@ msgstr "Додавање"
 msgid "Create Admin"
 msgstr "Додај администратора"
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+msgid "Create Administrator Account"
+msgstr "Додајте налог администратора"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
 msgstr "Додај канал"
@@ -3559,6 +3541,10 @@ msgstr "Додај заједнички нацрт"
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
 msgstr "Додај превод"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+msgid "Create account"
+msgstr "Додајте налог"
 
 #: db/seeds/permissions.rb
 msgid "Create and set up %s"
@@ -3734,15 +3720,6 @@ msgstr "Тренутни корисник"
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Current password"
 msgstr "Тренутна лозинка"
-
-#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
-#: app/controllers/users_controller.rb
-msgid "Current password is wrong!"
-msgstr "Погрешна тренутна лозинка!"
-
-#: app/controllers/users_controller.rb
-msgid "Current password needed!"
-msgstr "Недостаје тренутна лозинка!"
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -5366,6 +5343,10 @@ msgstr "Превуци за промену редоследа"
 msgid "Drop files here"
 msgstr "Испустите датотеке овде"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Drop image file here"
+msgstr "Испустите датотеке сличице овде"
+
 #: app/assets/javascripts/app/controllers/login.coffee
 msgid "Due to inactivity, you have been automatically logged out."
 msgstr "Услед неактивности, аутоматски сте одјављени."
@@ -5502,7 +5483,7 @@ msgstr "Неопходно је подесити Elasticsearch!"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
@@ -5555,6 +5536,8 @@ msgstr "Долазни имејл"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 msgid "Email Notification"
 msgstr "Имејл обавештење"
 
@@ -5569,10 +5552,8 @@ msgstr "Одлазни имејл"
 
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
-#, fuzzy
-#| msgid "Email Notification"
 msgid "Email Verification"
-msgstr "Имејл обавештење"
+msgstr "Провера имејл адресе"
 
 #: app/models/user.rb
 msgid "Email address '%{email}' is already used for another user."
@@ -6384,6 +6365,7 @@ msgstr "Датотека ’%s’ се отпрема"
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "Датотека је превелика, највише дозвољено %s MB."
 
@@ -6451,7 +6433,7 @@ msgid "First Steps"
 msgstr "Први кораци"
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "First name"
 msgstr "Име"
@@ -6723,6 +6705,7 @@ msgid "Geo Location Service"
 msgstr "Сервис географске локације"
 
 #: app/assets/javascripts/app/controllers/getting_started.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Get Started"
 msgstr "Први кораци"
 
@@ -6825,6 +6808,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Go Back"
 msgstr "Иди назад"
 
@@ -6951,10 +6935,6 @@ msgstr "Неисправна група!"
 msgid "Group needed in channel definition!"
 msgstr "Неопходна група у подешавању канала!"
 
-#: app/models/group.rb
-msgid "Group or children exceeded max depth!"
-msgstr "Група или број подређених група су прекорачили максималну дубину!"
-
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -7045,6 +7025,7 @@ msgstr "Извршава захтеве приватности података.
 msgid "Has processed"
 msgstr "Обрађено је"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Has submenu"
 msgstr "Има подмени"
@@ -7493,6 +7474,10 @@ msgstr "Сервис за слике"
 msgid "Image of %s"
 msgstr "Слика за %s"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Image preview"
+msgstr "Приказ слике"
+
 #: app/assets/javascripts/app/controllers/import.coffee
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
@@ -7616,7 +7601,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid ""
-"In order to be able to influence the desired behaviour in this regard, you "
+"In order to be able to influence the desired behavior in this regard, you "
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 "Да бисте могли да утичете на жељено понашање у том погледу, можете одредити "
@@ -8217,7 +8202,7 @@ msgid "Last login"
 msgstr "Последња пријава"
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Last name"
 msgstr "Презиме"
@@ -9063,10 +9048,6 @@ msgstr "Неопходно барем поље текста чланка."
 msgid "Need fingerprint param!"
 msgstr "Неопходан fingerprint параметар!"
 
-#: app/controllers/settings_controller.rb
-msgid "Need logo param"
-msgstr "Неопходан logo параметар"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
 msgstr "Неопходан прималац у „За”."
@@ -9467,6 +9448,8 @@ msgid "No record found!"
 msgstr "Нису пронађени записи!"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
@@ -9916,6 +9899,10 @@ msgstr "Отворено у прозорима"
 msgid "Options"
 msgstr "Опције"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+msgid "Or migrate from another system"
+msgstr "Или мигрирајте са другог система"
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Or migrate from another system."
 msgstr "Или мигрирајте са другог система."
@@ -9971,7 +9958,12 @@ msgstr "Организација"
 msgid "Organization & Department Name"
 msgstr "Назив организације и одељења"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "Organization Logo"
+msgstr "Лого организације"
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Organization Name"
 msgstr "Назив организације"
 
@@ -10185,9 +10177,9 @@ msgstr "Надређена група"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10233,12 +10225,6 @@ msgstr "Лозинка мора садржати најмање један сп�
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "Лозинка мора садржати минимално дозвољени број знакова."
-
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-#, fuzzy
-#| msgid "Password changed successfully!"
-msgid "Password reset request successful!"
-msgstr "Успешно промењена лозинка!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -10387,17 +10373,14 @@ msgid "Please click on the link in the verification email."
 msgstr "Молимо кликните на линк из имејл поруке са потврдом."
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-#, fuzzy
-#| msgid ""
-#| "If you don't see the email, check other places it might be, like your "
-#| "junk, spam, social, or other folders."
 msgid ""
 "Please click on the link in the verification email. If you don't see the "
 "email, check other places it might be, like your junk, spam, social, or "
 "other folders."
 msgstr ""
-"Уколико не видите имејл поруку, проверите и друга места као што су фолдери "
-"нежељене поште, друштвених мрежа и сл."
+"Молимо кликните на линк из имејла за проверу. Уколико не видите имејл "
+"поруку, проверите и друга места као што су фолдери нежељене поште, "
+"друштвених мрежа и сл."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 msgid "Please contact your administrator."
@@ -10440,6 +10423,7 @@ msgid "Please fill in all fields"
 msgstr "Молимо попуните сва поља"
 
 #: app/frontend/shared/form/i18n/locales.ts
+#: app/services/service/system/set_system_information.rb
 msgid "Please include a valid url."
 msgstr "Молимо унесите исправан URL."
 
@@ -10454,6 +10438,16 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Неопходан прималац у „За” или „CC”."
+
+#: app/controllers/users_controller.rb
+msgid "Please provide your current password."
+msgstr "Молимо унесите своју тренутну лозинку."
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/controllers/users_controller.rb
+msgid "Please provide your new password."
+msgstr "Молимо унесите своју нову лозинку."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
 msgid ""
@@ -10493,12 +10487,6 @@ msgstr "Молимо покрените реаутентификацију и у
 msgid "Please submit custom address before generating the snippet"
 msgstr "Молимо унесите прилагођену адресу пре генерисања исечка"
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
-#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-#: app/controllers/users_controller.rb
-msgid "Please supply your new password!"
-msgstr "Молимо обезбедите нову лозинку!"
-
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
@@ -10533,7 +10521,7 @@ msgstr "Postmaster филтер"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Покреће"
@@ -10951,6 +10939,10 @@ msgstr "Избриши све вредности"
 msgid "Remove formatting"
 msgstr "Уклони форматирање"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Remove image"
+msgstr "Уклони слику"
+
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 msgid "Remove method"
 msgstr "Уклони метод"
@@ -11132,29 +11124,6 @@ msgstr "Поништи на подразумеване вредности"
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_reset/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Reset your #{config.product_name} password\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>We received a request to reset the password for your #{config."
-#| "product_name} account <b>#{user.login}</b>.</div>\n"
-#| "<br>\n"
-#| "<div>If you want to reset your password, click on the link below (or copy "
-#| "and paste the URL into your browser):</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.token}\">#{config.http_type}://#{config."
-#| "fqdn}/#password_reset_verify/#{token.token}</a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can change your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to reset your password, please ignore this "
-#| "message. Your password will not be reset.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Reset your #{config.product_name} password\n"
 "\n"
@@ -11186,9 +11155,7 @@ msgstr ""
 "<div>Уколико желите да поништите вашу лозинку, кликните на линк испод (или "
 "ископирајте URL у ваш претраживач):</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Овај линк вас води на страну где можете поништити вашу лозинку.</div>\n"
 "<br>\n"
@@ -11200,29 +11167,6 @@ msgstr ""
 #. This is the template file app/views/mailer/signup_taken_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup_taken_reset/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Reset your #{config.product_name} password\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>You or someone else tried to sign up with this email address. "
-#| "However, this email is already being used.</div>\n"
-#| "<br>\n"
-#| "<div>If you want to reset your password, click on the link below (or copy "
-#| "and paste the URL into your browser):</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.token}\">#{config.http_type}://#{config."
-#| "fqdn}/#password_reset_verify/#{token.token}</a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can change your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to reset your password, please ignore this "
-#| "message. Your password will not be reset.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Reset your #{config.product_name} password\n"
 "\n"
@@ -11254,9 +11198,7 @@ msgstr ""
 "<div>Уколико желите да поништите вашу лозинку, кликните на линк испод (или "
 "ископирајте URL у ваш претраживач):</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Овај линк вас води на страну где можете поништити вашу лозинку.</div>\n"
 "<br>\n"
@@ -11542,6 +11484,11 @@ msgstr "Сачувај шифре"
 msgid "Save Draft"
 msgstr "Сачувај нацрт"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "Save and Continue"
+msgstr "Сачувај и настави"
+
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
 msgstr "Сачувај као"
@@ -11727,6 +11674,7 @@ msgstr "Кључ вредности резулата претраге „%s” �
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search…"
@@ -11893,6 +11841,8 @@ msgstr "Избор услова"
 msgid "Selects the ticket number generator module."
 msgstr "Одређује модул генератора броја тикета."
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
@@ -12113,6 +12063,7 @@ msgid "Set to public"
 msgstr "Постави на јавно"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Set up a new system"
 msgstr "Подеси нови систем"
 
@@ -12364,6 +12315,7 @@ msgid "Sign out"
 msgstr "Одјави се"
 
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Sign up"
 msgstr "Региструј се"
 
@@ -12402,12 +12354,6 @@ msgstr "Потписано"
 #: db/seeds/settings.rb
 msgid "Signing & Encrypting"
 msgstr "Потписивање и шифровање"
-
-#: app/frontend/apps/desktop/pages/authentication/routes.ts
-#, fuzzy
-#| msgid "Sign up"
-msgid "Signup"
-msgstr "Региструј се"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
@@ -12485,6 +12431,7 @@ msgstr "Путања"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Skip"
 msgstr "Прескочи"
 
@@ -12750,6 +12697,7 @@ msgstr "Предмет"
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr "Пошаљи"
@@ -12823,11 +12771,17 @@ msgstr "Систем"
 msgid "System Address Display Name"
 msgstr "Назив системске адресе"
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "System Information"
+msgstr "Информације о систему"
+
 #: db/seeds/settings.rb
 msgid "System Init Done"
 msgstr "Завршена иницијализација система"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "System URL"
 msgstr "URL система"
 
@@ -13128,6 +13082,10 @@ msgstr ""
 "Telegram интеграцију је могуће подесити само на системима који користе HTTPS "
 "протокол."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "The URL of this installation of Zammad."
+msgstr "URL путања ове инсталације Zammad-а."
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr "URL путања ове инсталације Zammad-а."
@@ -13140,6 +13098,11 @@ msgstr "Није пронађен активни профил за извешт�
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "The admin consent request was sent to your administrator."
 msgstr "Захтев за сагласност је послат вашем администратору."
+
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+msgid "The admin password auth email could not be sent."
+msgstr ""
+"Није било могуће послати имејл поруку са привременом лозинком администратора."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
@@ -13325,6 +13288,11 @@ msgstr "Изгубљена је веза са сервером."
 msgid "The connection was refused."
 msgstr "Веза је одбијена."
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/controllers/users_controller.rb
+msgid "The current password you provided is incorrect."
+msgstr "Унета тренутна лозинка није исправна."
+
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
 "The data must be in the comma separated values (CSV) format and saved as "
@@ -13353,6 +13321,12 @@ msgstr "Стандардна величина фонта је 12px."
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Сепаратор између прикључка и броја тикета. Нпр. ’: ’."
+
+#: app/services/service/auth/send_admin_token.rb
+#: app/services/service/user/password_reset/send.rb
+#: app/services/service/user/password_reset/update.rb
+msgid "The email could not be sent to the user."
+msgstr "Није било могуће послати имејл поруку кориснику."
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -13542,6 +13516,10 @@ msgid "The password could not be set. Please contact your administrator."
 msgstr ""
 "Није било могуће подесити лозинку. Молимо контактирајте администратора."
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+msgid "The password reset request was successful."
+msgstr "Захтев за поништавање лозинке је примљен."
+
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
@@ -13637,7 +13615,7 @@ msgstr "Није било могуће обрадити захтев."
 
 #: lib/operations_rate_limiter.rb
 msgid "The request limit for this operation was exceeded."
-msgstr ""
+msgstr "Прекорачено је ограничење у броју захтева ове операције."
 
 #: lib/validations/verify_perform_rules_validator.rb
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
@@ -13650,6 +13628,15 @@ msgstr "Није пронађен обавезни ’ExternalCredential’ ’t
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "The required PGP passphrase is missing."
 msgstr "Недостаје обавезна лозинка PGP кључа."
+
+#: app/controllers/users_controller.rb
+#: app/services/service/user/add_first_admin.rb
+msgid "The required attribute 'email' is missing."
+msgstr "Није пронађен обавезни параметар ’email’."
+
+#: app/services/service/system/set_system_information.rb
+msgid "The required attribute 'organization' is missing."
+msgstr "Није пронађен обавезни параметар ’organization’."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
 msgid "The required event field 'execution' is missing."
@@ -13860,6 +13847,10 @@ msgstr "Није било могуће поништити подешавање."
 msgid "The setting could not be updated."
 msgstr "Није било могуће освежити подешавање."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+msgid "The setup has already been started. Please wait until it is finished."
+msgstr "Поставка система је већ започета. Молимо сачекајте док се не заврши."
+
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
 msgstr "Пријављивање није успело. Молимо контактирајте тим подршке."
@@ -13885,6 +13876,22 @@ msgstr "Потпис је успешно потврђен."
 msgid "The source ticket could not be found."
 msgstr "Није пронађен изворни тикет."
 
+#: app/services/service/system/check_setup.rb
+msgid ""
+"The system setup cannot be started, because there is another one running or "
+"it was completed before."
+msgstr ""
+"Није било могуће започети поставку система зато што је друга у току или је "
+"већ завршена."
+
+#: app/services/service/system/check_setup.rb
+msgid ""
+"The system setup is marked as done, but no admin user is existing. Please "
+"run the system setup again."
+msgstr ""
+"Поставка система је означена као завршена, али недостаје корисник "
+"администратора. Молимо поново покрените поставку система."
+
 #: app/controllers/tickets_controller.rb
 msgid "The target ticket number could not be found."
 msgstr "Није пронађен циљни број тикета."
@@ -13908,12 +13915,13 @@ msgstr "Текст на почетку предмета одговорене и�
 msgid "The tickets could not be merged."
 msgstr "Није било могуће спојити тикете."
 
+#: app/services/service/user/signup.rb
+msgid "The token could not be generated."
+msgstr "Није било могуће генерисати кључ."
+
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#, fuzzy
-#| msgid "Email could not be verified. Please contact your administrator."
 msgid "The token could not be verified. Please contact your administrator."
-msgstr ""
-"Није било могуће проверити имејл адресу. Молимо контактирајте администратора."
+msgstr "Није било могуће проверити кључ. Молимо контактирајте администратора."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts
@@ -13945,10 +13953,6 @@ msgstr "Метод двофакторске аутентификације ни�
 msgid "The type of the private key is wrong."
 msgstr "Врста тајног кључа је неисправна."
 
-#: app/controllers/getting_started_controller.rb
-msgid "The uploaded image could not be processed."
-msgstr "Није било могуће обрадити отпремљену слику."
-
 #: app/controllers/settings_controller.rb
 msgid ""
 "The uploaded image could not be processed. Need data:image in logo or "
@@ -13956,6 +13960,10 @@ msgid ""
 msgstr ""
 "Није било могуће обрадити отпремљену слику. Неопходно је приложити ’data:"
 "image’ за лого или ’logo_resize’ параметар."
+
+#: app/services/service/auth/send_admin_token.rb
+msgid "The user token could not be generated."
+msgstr "Није било могуће генерисати кориснички кључ."
 
 #: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -13966,6 +13974,10 @@ msgstr ""
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
 msgid "The username or password is incorrect."
 msgstr "Корисничко име или лозинка нису исправни."
+
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+msgid "The verification email could not be resent."
+msgstr "Није било могуће поново послати имејл поруку са провером."
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
@@ -14329,6 +14341,11 @@ msgstr "Ово поље не сме садржати више од %s знак(�
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "Ово поље је неисправно унето и не може бити послато."
 
+#: app/models/group.rb
+msgid "This group or its children exceed the allowed nesting depth."
+msgstr ""
+"Ова група или број подређених група прекорачују максималну дозвољену дубину."
+
 #: lib/email_helper/probe.rb
 msgid "This host cannot be reached."
 msgstr "Није било могуће остварити везу са овим сервером."
@@ -14392,6 +14409,13 @@ msgstr "Ово може потрајати неко време за које с�
 msgid "This object already exists."
 msgstr "Овај објекат већ постоји."
 
+#: app/services/service/system/check_setup.rb
+msgid ""
+"This operation cannot be continued, because the system set-up was not "
+"completed yet."
+msgstr ""
+"Није било могуће наставити операцију зато што поставка система није завршена."
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr "Ова страна није јавно видљива."
@@ -14401,6 +14425,14 @@ msgid ""
 "This permission level is not available based on the current roles "
 "permissions."
 msgstr "Овај ниво дозвола није доступан на основу дозвола за тренутне улоге."
+
+#: app/services/service/execute_locked_block.rb
+msgid ""
+"This resource cannot be locked, because it has already been locked by "
+"another process."
+msgstr ""
+"Овај ресурс не може бити закључан зато што је већ закључан од стране другог "
+"процеса."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
@@ -14444,20 +14476,21 @@ msgstr ""
 "времену."
 
 #: app/services/service/concerns/handles_setting.rb
-#, fuzzy
-#| msgid "This feature is not enabled."
 msgid "This setting is not disabled."
-msgstr "Ова функција је искључена."
+msgstr "Ово подешавање није искључено."
 
 #: app/services/service/concerns/handles_setting.rb
-#, fuzzy
-#| msgid "This feature is not enabled."
 msgid "This setting is not enabled."
-msgstr "Ова функција је искључена."
+msgstr "Ово подешавање је искључено."
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "This signature is inactive, it won't be included in the reply."
 msgstr "Овај потпис је искључен, неће бити убачен у одговор."
+
+#: app/services/service/user/add_first_admin.rb
+msgid ""
+"This system has already been configured and an administrator account exists."
+msgstr "Овај систем је већ постављен и налог администратора постоји."
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -15443,38 +15476,6 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX путања)"
 
-#: app/services/service/auth/send_admin_token.rb
-#, fuzzy
-#| msgid "Create new ticket for this user"
-msgid "Unable to create token for the user."
-msgstr "Отвори нови тикет за овог корисника"
-
-#: app/services/service/user/signup.rb
-#, fuzzy
-#| msgid "Generate Token"
-msgid "Unable to generate token."
-msgstr "Генериши кључ"
-
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-#, fuzzy
-#| msgid "Resend verification email"
-msgid "Unable to resend verification email."
-msgstr "Пошаљи поново имејл поруку за потврду"
-
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-msgid "Unable to send admin password auth email."
-msgstr ""
-"Није било могуће послати поруку за пријаву путем администраторске лозинке."
-
-#: app/services/service/auth/send_admin_token.rb
-#: app/services/service/user/password_reset/send.rb
-#: app/services/service/user/password_reset/update.rb
-#, fuzzy
-#| msgid "Unable to send admin password auth email."
-msgid "Unable to send email to the user."
-msgstr ""
-"Није било могуће послати поруку за пријаву путем администраторске лозинке."
-
 #: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
 msgstr "Недодељени и отворени тикети"
@@ -15512,6 +15513,11 @@ msgstr "Непрочитано обавештење"
 #: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
 msgid "Unread notifications"
 msgstr "Непрочитана обавештења"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+msgid "Unselect Option"
+msgstr "Опозови избор опције"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 msgid "Unset default"
@@ -15752,6 +15758,10 @@ msgstr "Неуспешно отпремање"
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Upload Private Key"
 msgstr "Отпреми тајни кључ"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Upload image"
+msgstr "Отпреми слику"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 msgid "Upload key"
@@ -16064,10 +16074,8 @@ msgid "Verifying key information…"
 msgstr "Провера информација о кључу…"
 
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
-#, fuzzy
-#| msgid "Verifying key information…"
-msgid "Verifying your email..."
-msgstr "Провера информација о кључу…"
+msgid "Verifying your email…"
+msgstr "Провера ваше имејл адресе је у току…"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
@@ -16362,6 +16370,7 @@ msgid "Welcome to Zammad!"
 msgstr "Добродошли у Zammad!"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Welcome!"
 msgstr "Добродошли!"
 
@@ -16491,8 +16500,7 @@ msgstr ""
 "за вас."
 
 #: app/assets/javascripts/app/models/template.coffee
-msgid ""
-"With templates it is possible to fill pre-filled tickets quickly and easily."
+msgid "With templates it is possible to pre-fill tickets quickly and easily."
 msgstr "Са шаблонима је могуће аутоматски попунити тикете брзо и једноставно."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
@@ -16721,10 +16729,8 @@ msgid "You can request your password"
 msgstr "Можете затражити вашу лозинку"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-#, fuzzy
-#| msgid "You can request your password"
 msgid "You can request your password here."
-msgstr "Можете затражити вашу лозинку"
+msgstr "Можете затражити вашу лозинку овде."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
@@ -16967,7 +16973,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
@@ -18131,10 +18137,23 @@ msgstr "покрени макро"
 msgid "select"
 msgstr "изабери"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#, fuzzy
+#| msgid "Unselect Option"
+msgid "select all options"
+msgstr "Опозови избор опције"
+
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "select attachment…"
 msgstr "изабери прилог…"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#, fuzzy
+#| msgid "select all"
+msgid "select visible options"
+msgstr "изабери све"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -18425,6 +18444,69 @@ msgstr "…целог текстуалног поља"
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
 
+#~ msgid "select all"
+#~ msgstr "изабери све"
+
+#~ msgid "A URL looks like this: https://zammad.example.com"
+#~ msgstr "URL изгледа овако: https://zammad.example.com"
+
+#~ msgid "Invalid!"
+#~ msgstr "Неисправно!"
+
+#~ msgid "The uploaded image could not be processed."
+#~ msgstr "Није било могуће обрадити отпремљену слику."
+
+#~ msgid "should look like this: https://zammad.example.com"
+#~ msgstr "изгледа овако: https://zammad.example.com"
+
+#~ msgid "Administrator account already created"
+#~ msgstr "Налог администратора већ постоји"
+
+#~ msgid "Attribute 'email' required!"
+#~ msgstr "Неопходан је ’email’ атрибут!"
+
+#~ msgid "Need logo param"
+#~ msgstr "Неопходан logo параметар"
+
+#~ msgid "Connection refused"
+#~ msgstr "Веза је одбијена"
+
+#~ msgid "Current password is wrong!"
+#~ msgstr "Погрешна тренутна лозинка!"
+
+#~ msgid "Current password needed!"
+#~ msgstr "Недостаје тренутна лозинка!"
+
+#, fuzzy
+#~| msgid "Sign up"
+#~ msgid "Signup"
+#~ msgstr "Региструј се"
+
+#, fuzzy
+#~| msgid "Create new ticket for this user"
+#~ msgid "Unable to create token for the user."
+#~ msgstr "Отвори нови тикет за овог корисника"
+
+#, fuzzy
+#~| msgid "Generate Token"
+#~ msgid "Unable to generate token."
+#~ msgstr "Генериши кључ"
+
+#, fuzzy
+#~| msgid "Resend verification email"
+#~ msgid "Unable to resend verification email."
+#~ msgstr "Пошаљи поново имејл поруку за потврду"
+
+#~ msgid "Unable to send admin password auth email."
+#~ msgstr ""
+#~ "Није било могуће послати поруку за пријаву путем администраторске лозинке."
+
+#, fuzzy
+#~| msgid "Unable to send admin password auth email."
+#~ msgid "Unable to send email to the user."
+#~ msgstr ""
+#~ "Није било могуће послати поруку за пријаву путем администраторске лозинке."
+
 #~ msgid "Feature not enabled!"
 #~ msgstr "Функција није укључена!"
 
@@ -18602,9 +18684,6 @@ msgstr "∅ Време чекања данас"
 
 #~ msgid "Need label!"
 #~ msgstr "Неопходан label параметар!"
-
-#~ msgid "Mobile frontend is disabled."
-#~ msgstr "Мобилна апликација је искључена."
 
 #~ msgid ""
 #~ "Here you can create new tickets. Also, if you have the permission, you "

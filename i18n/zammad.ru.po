@@ -377,10 +377,14 @@ msgstr "%s (метод)"
 msgid "%s (option)"
 msgstr "%s (необязательно)"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/shared/composables/useSelectOptions.ts
 msgid "%s (unknown)"
 msgstr "%s (неизвестно)"
 
@@ -842,10 +846,6 @@ msgstr ""
 "\n"
 "Если у вас есть клиенты с разными рабочими часами, вы можете создать "
 "несколько календарей. Заявки привязываются к календарям с помощью ** SLA **."
-
-#: app/controllers/getting_started_controller.rb
-msgid "A URL looks like this: https://zammad.example.com"
-msgstr "URL-адрес выглядит следующим образом: https://zammad.example.com"
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
@@ -1333,7 +1333,7 @@ msgstr "Дополнительные способы проверки"
 msgid "Additional information"
 msgstr "Дополнительная информация"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #, fuzzy
 #| msgid "Additional information"
 msgid "Additional information and links"
@@ -1430,10 +1430,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
 msgstr "Административная учетная запись"
-
-#: app/controllers/users_controller.rb
-msgid "Administrator account already created"
-msgstr "Учетная запись администратора уже создана"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
@@ -2060,10 +2056,6 @@ msgstr "Атрибут"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "Атрибут '%s' требуется для сопоставления"
 
-#: app/controllers/users_controller.rb
-msgid "Attribute 'email' required!"
-msgstr "Атрибут «электронная почта» (email) обязателен!"
-
 #: db/seeds/settings.rb
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
@@ -2183,6 +2175,12 @@ msgstr "Создавать автоматически"
 msgid "Auto-close state"
 msgstr "Закрыто автоматически"
 
+#: lib/auto_wizard.rb
+#, fuzzy
+#| msgid "Auto Wizard"
+msgid "AutoWizard is disabled"
+msgstr "Автоматический Мастер"
+
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
 msgstr "Автоматическая привязка учетной записи при первом входе в систему"
@@ -2255,6 +2253,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "Адрес BCC (Скрытая копия) для всех исходящих писем"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 msgid "Back"
 msgstr "Назад"
 
@@ -2266,6 +2265,7 @@ msgstr "Вернуться к моему виду"
 msgid "Back to overview"
 msgstr "Назад к обзору"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Back to previous page"
 msgstr "Вернуться на предыдущую страницу"
@@ -2588,8 +2588,12 @@ msgstr "Не удается найти пользователя для ключ�
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#, fuzzy
+#| msgid ""
+#| "Can't update password, your entered passwords do not match. Please try "
+#| "again!"
 msgid ""
-"Can't update password, your entered passwords do not match. Please try again!"
+"Can't update password, your entered passwords do not match. Please try again."
 msgstr ""
 "Не удается обновить пароль, введенные вами пароли не совпадают. Пожалуйста, "
 "повторите попытку!"
@@ -3007,11 +3011,14 @@ msgstr "Очистить панель задач мобильных устрой
 msgid "Clear"
 msgstr "Очистить"
 
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Clear Search"
 msgstr "Очистить поиск"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3143,6 +3150,7 @@ msgid "Communication"
 msgstr "Коммуникация"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Company Inc."
 msgstr "Компания."
 
@@ -3228,8 +3236,8 @@ msgstr "Подтвердить диалог"
 msgid "Confirm merge"
 msgstr "Подтвердить слияние"
 
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #, fuzzy
 #| msgid "Confirm Password"
 msgid "Confirm password"
@@ -3354,10 +3362,6 @@ msgstr "Подключение потеряно"
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection re-established"
 msgstr "Подключение восстановлено"
-
-#: lib/search_index_backend.rb
-msgid "Connection refused"
-msgstr "В подключении отказано"
 
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
@@ -3532,6 +3536,13 @@ msgstr "Создать"
 msgid "Create Admin"
 msgstr "Создать администратора"
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+#, fuzzy
+#| msgid "Administrator Account"
+msgid "Create Administrator Account"
+msgstr "Административная учетная запись"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
 msgstr "Создать канал"
@@ -3615,6 +3626,12 @@ msgstr "Создать общий черновик"
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
 msgstr "Создать перевод"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+#, fuzzy
+#| msgid "Create my account"
+msgid "Create account"
+msgstr "Создать мой аккаунт"
 
 #: db/seeds/permissions.rb
 msgid "Create and set up %s"
@@ -3794,15 +3811,6 @@ msgstr "Текущий Пользователь"
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Current password"
 msgstr "Текущий пароль"
-
-#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
-#: app/controllers/users_controller.rb
-msgid "Current password is wrong!"
-msgstr "Текущий пароль неверен!"
-
-#: app/controllers/users_controller.rb
-msgid "Current password needed!"
-msgstr "Требуется текущий пароль!"
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -5492,6 +5500,12 @@ msgstr "Перетащите чтобы изменить порядок"
 msgid "Drop files here"
 msgstr "Перетяните мышкой файл сюда"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Drop files here"
+msgid "Drop image file here"
+msgstr "Перетяните мышкой файл сюда"
+
 #: app/assets/javascripts/app/controllers/login.coffee
 msgid "Due to inactivity, you have been automatically logged out."
 msgstr "Из-за бездействия, вы автоматически отключены из системы."
@@ -5632,7 +5646,7 @@ msgstr "Elasticsearch необходимо настроить!"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
@@ -5685,6 +5699,8 @@ msgstr "Входящая электронная почта"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 msgid "Email Notification"
 msgstr "Уведомление по электронной почте"
 
@@ -6540,6 +6556,7 @@ msgstr "Файл \"%s\" загружается"
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "Файл слишком большой, максимально допустимо %s Мбайт."
 
@@ -6607,7 +6624,7 @@ msgid "First Steps"
 msgstr "Первые шаги"
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "First name"
 msgstr "Имя"
@@ -6880,6 +6897,7 @@ msgid "Geo Location Service"
 msgstr "Служба геолокации"
 
 #: app/assets/javascripts/app/controllers/getting_started.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Get Started"
 msgstr "Начать"
 
@@ -6983,6 +7001,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Go Back"
 msgstr "Назад"
 
@@ -7109,10 +7128,6 @@ msgstr "Группа недействительна!"
 msgid "Group needed in channel definition!"
 msgstr "Требуется группа для определения канала!"
 
-#: app/models/group.rb
-msgid "Group or children exceeded max depth!"
-msgstr ""
-
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -7213,6 +7228,7 @@ msgstr "Выполнить задачи по обеспечению защиты
 msgid "Has processed"
 msgstr "Обработано"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Has submenu"
 msgstr "Содержит подменю"
@@ -7682,6 +7698,12 @@ msgstr "Служба изображений"
 msgid "Image of %s"
 msgstr "Изображение %s"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Image Service"
+msgid "Image preview"
+msgstr "Служба изображений"
+
 #: app/assets/javascripts/app/controllers/import.coffee
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
@@ -7811,8 +7833,12 @@ msgstr ""
 "Чтобы Zammad мог получить доступ к %s, здесь должен храниться API-ключ %s:"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+#, fuzzy
+#| msgid ""
+#| "In order to be able to influence the desired behaviour in this regard, "
+#| "you can influence the order of the LDAP sources via drag & drop."
 msgid ""
-"In order to be able to influence the desired behaviour in this regard, you "
+"In order to be able to influence the desired behavior in this regard, you "
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 "Чтобы влиять на поведение в этом отношении, вы можете изменить порядок "
@@ -8430,7 +8456,7 @@ msgid "Last login"
 msgstr "Последний запуск"
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Last name"
 msgstr "Фамилия"
@@ -9285,10 +9311,6 @@ msgstr "Необходимо хотя бы поле «тело статьи»."
 msgid "Need fingerprint param!"
 msgstr "Необходимы параметры отпечатка!"
 
-#: app/controllers/settings_controller.rb
-msgid "Need logo param"
-msgstr "Необходим параметры логотипа"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
 msgstr "Необходим получатель в поле \"Кому\" (\"TO\")."
@@ -9701,6 +9723,8 @@ msgid "No record found!"
 msgstr "Запись не найдена!"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
@@ -10161,6 +10185,12 @@ msgstr "Открыта во вкладках"
 msgid "Options"
 msgstr "Настройки"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+#, fuzzy
+#| msgid "Or migrate from another system."
+msgid "Or migrate from another system"
+msgstr "Или перейти с другой системы."
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Or migrate from another system."
 msgstr "Или перейти с другой системы."
@@ -10216,7 +10246,14 @@ msgstr "Организация"
 msgid "Organization & Department Name"
 msgstr "Название Организации и Отдела"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "Organization"
+msgid "Organization Logo"
+msgstr "Организация"
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Organization Name"
 msgstr "Название организации"
 
@@ -10432,9 +10469,9 @@ msgstr "Родитель"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10480,12 +10517,6 @@ msgstr "Пароль должен содержать хотя бы один сп
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "Пароль должен содержать хотя бы минимальное количество символов."
-
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-#, fuzzy
-#| msgid "Password changed successfully!"
-msgid "Password reset request successful!"
-msgstr "Пароль успешно изменен!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -10689,6 +10720,7 @@ msgid "Please fill in all fields"
 msgstr "Пожалуйста, заполните все поля"
 
 #: app/frontend/shared/form/i18n/locales.ts
+#: app/services/service/system/set_system_information.rb
 msgid "Please include a valid url."
 msgstr "Укажите действительный URL."
 
@@ -10703,6 +10735,20 @@ msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 "Пожалуйста, укажите получателя в поле \"Кому\" (\"TO\") или "
 "\"Копия\" (\"CC\")."
+
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "Please supply your new password!"
+msgid "Please provide your current password."
+msgstr "Пожалуйста, введите свой новый пароль!"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "Please supply your new password!"
+msgid "Please provide your new password."
+msgstr "Пожалуйста, введите свой новый пароль!"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
 msgid ""
@@ -10745,12 +10791,6 @@ msgid "Please submit custom address before generating the snippet"
 msgstr ""
 "Пожалуйста, определите свой собственный URL-адрес перед созданием фрагмента"
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
-#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-#: app/controllers/users_controller.rb
-msgid "Please supply your new password!"
-msgstr "Пожалуйста, введите свой новый пароль!"
-
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
@@ -10787,7 +10827,7 @@ msgstr "Фильтр почтового мастера"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Работает на"
@@ -11211,6 +11251,12 @@ msgstr "Удалить все значения"
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
 msgstr "Удалить форматирование"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Remove all"
+msgid "Remove image"
+msgstr "Удалить всё"
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 msgid "Remove method"
@@ -11812,6 +11858,13 @@ msgstr "Сохранить коды"
 msgid "Save Draft"
 msgstr "Сохранить черновик"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "Saved conditions"
+msgid "Save and Continue"
+msgstr "Сохраненные условия"
+
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
 msgstr "Сохранить как"
@@ -12004,6 +12057,7 @@ msgstr "Страница не найдена"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search…"
@@ -12183,6 +12237,8 @@ msgstr "Отборщик"
 msgid "Selects the ticket number generator module."
 msgstr "Определяет способ формирования номера заявки."
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
@@ -12416,6 +12472,7 @@ msgid "Set to public"
 msgstr "сделать публичной(-ым)"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Set up a new system"
 msgstr "Установка новой системы"
 
@@ -12678,6 +12735,7 @@ msgid "Sign out"
 msgstr "Выход"
 
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Sign up"
 msgstr "Регистрация"
 
@@ -12718,12 +12776,6 @@ msgstr "Подписано"
 #| msgid "Sign in using"
 msgid "Signing & Encrypting"
 msgstr "Войдите в систему, используя"
-
-#: app/frontend/apps/desktop/pages/authentication/routes.ts
-#, fuzzy
-#| msgid "Sign up"
-msgid "Signup"
-msgstr "Регистрация"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
@@ -12816,6 +12868,7 @@ msgstr "Сайт"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Skip"
 msgstr "Пропустить"
 
@@ -13087,6 +13140,7 @@ msgstr "Тема"
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr "Отправить"
@@ -13162,11 +13216,19 @@ msgstr "Система"
 msgid "System Address Display Name"
 msgstr "Отображаемое название системного адреса"
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "Information"
+msgid "System Information"
+msgstr "Информация"
+
 #: db/seeds/settings.rb
 msgid "System Init Done"
 msgstr "Инициализация системы завершена"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "System URL"
 msgstr "Системный URL"
 
@@ -13499,6 +13561,12 @@ msgstr ""
 "Интеграцию с Telegram можно настроить только в системах, использующих "
 "протокол HTTPS."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "The URL to this installation of Zammad."
+msgid "The URL of this installation of Zammad."
+msgstr "URL этой установки Zammad."
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr "URL этой установки Zammad."
@@ -13511,6 +13579,12 @@ msgstr "Не удалось найти активный профиль отче�
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "The admin consent request was sent to your administrator."
 msgstr "Запрос на согласование был отправлен вашему администратору."
+
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#, fuzzy
+#| msgid "Verification email could not be sent."
+msgid "The admin password auth email could not be sent."
+msgstr "Не удалось отправить электронное письмо с подтверждением."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
@@ -13715,6 +13789,13 @@ msgstr "Соединение с сервером было потеряно."
 msgid "The connection was refused."
 msgstr "В подключении было отказано."
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "The required parameter 'params' is missing."
+msgid "The current password you provided is incorrect."
+msgstr "Отсутствует обязательный параметр «параметры» (params)."
+
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
 "The data must be in the comma separated values (CSV) format and saved as "
@@ -13746,6 +13827,14 @@ msgstr "Размер шрифта по умолчанию 12рх."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 "Разделитель между идентификатором заявки и номером билета. Например ': '."
+
+#: app/services/service/auth/send_admin_token.rb
+#: app/services/service/user/password_reset/send.rb
+#: app/services/service/user/password_reset/update.rb
+#, fuzzy
+#| msgid "Article could not be deleted."
+msgid "The email could not be sent to the user."
+msgstr "Статья не может быть удалена."
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -13935,6 +14024,12 @@ msgid "The password could not be set. Please contact your administrator."
 msgstr ""
 "Не удалось установить пароль. Пожалуйста, свяжитесь с вашим администратором."
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#, fuzzy
+#| msgid "Password changed successfully!"
+msgid "The password reset request was successful."
+msgstr "Пароль успешно изменен!"
+
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
@@ -14057,6 +14152,19 @@ msgstr ""
 #| msgid "The required match value is missing."
 msgid "The required PGP passphrase is missing."
 msgstr "Отсутствует требуемое значение соответствия."
+
+#: app/controllers/users_controller.rb
+#: app/services/service/user/add_first_admin.rb
+#, fuzzy
+#| msgid "The required parameter 'area' is missing."
+msgid "The required attribute 'email' is missing."
+msgstr "Отсутствует обязательный параметр «Область» (area)."
+
+#: app/services/service/system/set_system_information.rb
+#, fuzzy
+#| msgid "The required parameter 'area' is missing."
+msgid "The required attribute 'organization' is missing."
+msgstr "Отсутствует обязательный параметр «Область» (area)."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
 #, fuzzy
@@ -14322,6 +14430,10 @@ msgstr "Не удалось создать запись."
 msgid "The setting could not be updated."
 msgstr "Не удалось обновить объект."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+msgid "The setup has already been started. Please wait until it is finished."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
 msgstr "Не удалось выполнить вход. Пожалуйста, свяжитесь со службой поддержки."
@@ -14347,6 +14459,18 @@ msgstr "Подпись успешно проверена."
 msgid "The source ticket could not be found."
 msgstr "Не удалось найти исходную заявку."
 
+#: app/services/service/system/check_setup.rb
+msgid ""
+"The system setup cannot be started, because there is another one running or "
+"it was completed before."
+msgstr ""
+
+#: app/services/service/system/check_setup.rb
+msgid ""
+"The system setup is marked as done, but no admin user is existing. Please "
+"run the system setup again."
+msgstr ""
+
 #: app/controllers/tickets_controller.rb
 msgid "The target ticket number could not be found."
 msgstr "Не удалось найти номер целевой заявки."
@@ -14371,6 +14495,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "The tickets could not be merged."
 msgstr "Заявки не могут быть объединены."
+
+#: app/services/service/user/signup.rb
+#, fuzzy
+#| msgid "The report could not be generated"
+msgid "The token could not be generated."
+msgstr "Не удалось сформировать отчет"
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 #, fuzzy
@@ -14414,10 +14544,6 @@ msgstr ""
 msgid "The type of the private key is wrong."
 msgstr "Недопустимый мультимедиа тип (MIME type) изображения."
 
-#: app/controllers/getting_started_controller.rb
-msgid "The uploaded image could not be processed."
-msgstr "Загруженное изображение не может быть обработано."
-
 #: app/controllers/settings_controller.rb
 #, fuzzy
 #| msgid "The uploaded image could not be processed."
@@ -14425,6 +14551,12 @@ msgid ""
 "The uploaded image could not be processed. Need data:image in logo or "
 "logo_resize param."
 msgstr "Загруженное изображение не может быть обработано."
+
+#: app/services/service/auth/send_admin_token.rb
+#, fuzzy
+#| msgid "The report could not be generated"
+msgid "The user token could not be generated."
+msgstr "Не удалось сформировать отчет"
 
 #: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -14438,6 +14570,12 @@ msgstr ""
 #| msgid "The required parameter 'params' is missing."
 msgid "The username or password is incorrect."
 msgstr "Отсутствует обязательный параметр «параметры» (params)."
+
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#, fuzzy
+#| msgid "Verification email could not be sent."
+msgid "The verification email could not be resent."
+msgstr "Не удалось отправить электронное письмо с подтверждением."
 
 #: app/models/setting/validation/saml/tls.rb
 #, fuzzy
@@ -14853,6 +14991,10 @@ msgstr "Это поле не должно содержать более %s си�
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "Это поле настроено неправильно и не может быть передано."
 
+#: app/models/group.rb
+msgid "This group or its children exceed the allowed nesting depth."
+msgstr ""
+
 #: lib/email_helper/probe.rb
 #, fuzzy
 #| msgid "The object could not be created."
@@ -14924,6 +15066,12 @@ msgstr ""
 msgid "This object already exists."
 msgstr "Этот объект уже существует."
 
+#: app/services/service/system/check_setup.rb
+msgid ""
+"This operation cannot be continued, because the system set-up was not "
+"completed yet."
+msgstr ""
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr "Эта страница недоступна для общего просмотра."
@@ -14934,6 +15082,12 @@ msgid ""
 "permissions."
 msgstr ""
 "Этот уровень разрешений недоступен, на основе текущих разрешений ролей."
+
+#: app/services/service/execute_locked_block.rb
+msgid ""
+"This resource cannot be locked, because it has already been locked by "
+"another process."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
@@ -14992,6 +15146,11 @@ msgstr "Функция не включена!"
 #: app/assets/javascripts/app/models/group.coffee
 msgid "This signature is inactive, it won't be included in the reply."
 msgstr "Эта подпись неактивна, она не будет включена в ответ."
+
+#: app/services/service/user/add_first_admin.rb
+msgid ""
+"This system has already been configured and an administrator account exists."
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -16094,36 +16253,6 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL-адрес (конечная точка (endpoint) AJAX)"
 
-#: app/services/service/auth/send_admin_token.rb
-#, fuzzy
-#| msgid "Create new ticket for this user"
-msgid "Unable to create token for the user."
-msgstr "Создать новую заявку для этого пользователя"
-
-#: app/services/service/user/signup.rb
-#, fuzzy
-#| msgid "Unable to save Bot."
-msgid "Unable to generate token."
-msgstr "Невозможно сохранить Бота."
-
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-#, fuzzy
-#| msgid "Resend verification email"
-msgid "Unable to resend verification email."
-msgstr "Отправить письмо с подтверждением"
-
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-msgid "Unable to send admin password auth email."
-msgstr ""
-
-#: app/services/service/auth/send_admin_token.rb
-#: app/services/service/user/password_reset/send.rb
-#: app/services/service/user/password_reset/update.rb
-#, fuzzy
-#| msgid "Unable to save Bot."
-msgid "Unable to send email to the user."
-msgstr "Невозможно сохранить Бота."
-
 #: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
 msgstr "Не назначенные и открытые заявки"
@@ -16165,6 +16294,13 @@ msgstr "Уведомление от службы"
 #| msgid "Service Notification"
 msgid "Unread notifications"
 msgstr "Уведомление от службы"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#, fuzzy
+#| msgid "set optional"
+msgid "Unselect Option"
+msgstr "установить необязательный"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #, fuzzy
@@ -16443,6 +16579,12 @@ msgstr "Загрузка не удалась"
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Upload Private Key"
 msgstr "Загрузить закрытый ключ"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Uploading"
+msgid "Upload image"
+msgstr "Загрузка"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #, fuzzy
@@ -16768,7 +16910,7 @@ msgstr "Уведомления о заявках"
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
 #, fuzzy
 #| msgid "Ticket notifications"
-msgid "Verifying your email..."
+msgid "Verifying your email…"
 msgstr "Уведомления о заявках"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -17078,6 +17220,7 @@ msgid "Welcome to Zammad!"
 msgstr "Добро пожаловать в Zammad!"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Welcome!"
 msgstr "Добро пожаловать!"
 
@@ -17211,8 +17354,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/template.coffee
 #, fuzzy
 #| msgid "With templates you can pre-fill ticket attributes."
-msgid ""
-"With templates it is possible to fill pre-filled tickets quickly and easily."
+msgid "With templates it is possible to pre-fill tickets quickly and easily."
 msgstr "С шаблонами вы можете предварительно заполнить атрибуты заявки."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
@@ -17709,7 +17851,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
@@ -18917,10 +19059,23 @@ msgstr "запустить макрос"
 msgid "select"
 msgstr "Выбрать"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#, fuzzy
+#| msgid "set optional"
+msgid "select all options"
+msgstr "установить необязательный"
+
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "select attachment…"
 msgstr "выберите вложение…"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#, fuzzy
+#| msgid "Select All"
+msgid "select visible options"
+msgstr "Выбрать все"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19225,6 +19380,70 @@ msgstr "…всей текстовой области"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Сегодня время ожидания"
+
+#, fuzzy
+#~| msgid "Select All"
+#~ msgid "select all"
+#~ msgstr "Выбрать все"
+
+#~ msgid "A URL looks like this: https://zammad.example.com"
+#~ msgstr "URL-адрес выглядит следующим образом: https://zammad.example.com"
+
+#, fuzzy
+#~| msgid "is invalid"
+#~ msgid "Invalid!"
+#~ msgstr "является недействительным"
+
+#~ msgid "The uploaded image could not be processed."
+#~ msgstr "Загруженное изображение не может быть обработано."
+
+#, fuzzy
+#~| msgid "A URL looks like this: https://zammad.example.com"
+#~ msgid "should look like this: https://zammad.example.com"
+#~ msgstr "URL-адрес выглядит следующим образом: https://zammad.example.com"
+
+#~ msgid "Administrator account already created"
+#~ msgstr "Учетная запись администратора уже создана"
+
+#~ msgid "Attribute 'email' required!"
+#~ msgstr "Атрибут «электронная почта» (email) обязателен!"
+
+#~ msgid "Need logo param"
+#~ msgstr "Необходим параметры логотипа"
+
+#~ msgid "Connection refused"
+#~ msgstr "В подключении отказано"
+
+#~ msgid "Current password is wrong!"
+#~ msgstr "Текущий пароль неверен!"
+
+#~ msgid "Current password needed!"
+#~ msgstr "Требуется текущий пароль!"
+
+#, fuzzy
+#~| msgid "Sign up"
+#~ msgid "Signup"
+#~ msgstr "Регистрация"
+
+#, fuzzy
+#~| msgid "Create new ticket for this user"
+#~ msgid "Unable to create token for the user."
+#~ msgstr "Создать новую заявку для этого пользователя"
+
+#, fuzzy
+#~| msgid "Unable to save Bot."
+#~ msgid "Unable to generate token."
+#~ msgstr "Невозможно сохранить Бота."
+
+#, fuzzy
+#~| msgid "Resend verification email"
+#~ msgid "Unable to resend verification email."
+#~ msgstr "Отправить письмо с подтверждением"
+
+#, fuzzy
+#~| msgid "Unable to save Bot."
+#~ msgid "Unable to send email to the user."
+#~ msgstr "Невозможно сохранить Бота."
 
 #~ msgid "Feature not enabled!"
 #~ msgstr "Функция не включена!"

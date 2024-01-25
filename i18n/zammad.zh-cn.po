@@ -464,10 +464,14 @@ msgstr ""
 msgid "%s (option)"
 msgstr "设置可选"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/shared/composables/useSelectOptions.ts
 msgid "%s (unknown)"
 msgstr "%s (未知)"
 
@@ -980,10 +984,6 @@ msgstr ""
 "\n"
 "您有不同营业时间的客户，您可以创建多个日历。 票证使用**SLAs** 链接到日历。"
 
-#: app/controllers/getting_started_controller.rb
-msgid "A URL looks like this: https://zammad.example.com"
-msgstr "URL 如下所示：http://zammad.example.com"
-
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "自动安排的活动导入后端列表。"
@@ -1479,7 +1479,7 @@ msgstr "額外追蹤後續檢查"
 msgid "Additional information"
 msgstr "阻止通知"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Additional information and links"
@@ -1582,10 +1582,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
 msgstr "管理员账户"
-
-#: app/controllers/users_controller.rb
-msgid "Administrator account already created"
-msgstr "管理员帐号已经创建"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
@@ -2262,10 +2258,6 @@ msgstr "属性"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "映射中需要属性“%s”"
 
-#: app/controllers/users_controller.rb
-msgid "Attribute 'email' required!"
-msgstr "需要属性“电子邮件”！"
-
 #: db/seeds/settings.rb
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
@@ -2399,6 +2391,12 @@ msgstr "自动建立"
 msgid "Auto-close state"
 msgstr "自动关闭状态"
 
+#: lib/auto_wizard.rb
+#, fuzzy
+#| msgid "Auto Wizard"
+msgid "AutoWizard is disabled"
+msgstr "自动向导"
+
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
 msgstr "首次登录时自动链接帐户"
@@ -2471,6 +2469,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "所有外发电子邮件的密件抄送地址"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 msgid "Back"
 msgstr "返回"
 
@@ -2484,6 +2483,7 @@ msgstr "返回我的视图"
 msgid "Back to overview"
 msgstr "返回我的视图"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #, fuzzy
 #| msgid "Back to my view"
@@ -2798,8 +2798,12 @@ msgstr "不能找到用户Token"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#, fuzzy
+#| msgid ""
+#| "Can't update password, your entered passwords do not match. Please try "
+#| "again!"
 msgid ""
-"Can't update password, your entered passwords do not match. Please try again!"
+"Can't update password, your entered passwords do not match. Please try again."
 msgstr "不能更新密码，输入的密码不对。请重试！"
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee
@@ -3237,6 +3241,7 @@ msgstr "清除活动任务锁定。"
 msgid "Clear"
 msgstr "清除"
 
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
 #| msgid "Search"
@@ -3244,6 +3249,8 @@ msgid "Clear Search"
 msgstr "搜索"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3378,6 +3385,7 @@ msgid "Communication"
 msgstr "沟通"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Company Inc."
 msgstr "Company Inc."
 
@@ -3477,8 +3485,8 @@ msgstr "确认/提交对话框"
 msgid "Confirm merge"
 msgstr "配置"
 
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #, fuzzy
 #| msgid "Bind Password"
 msgid "Confirm password"
@@ -3607,10 +3615,6 @@ msgstr "连接丢失"
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection re-established"
 msgstr "正在重新建立连接"
-
-#: lib/search_index_backend.rb
-msgid "Connection refused"
-msgstr "连接被拒绝"
 
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
@@ -3796,6 +3800,13 @@ msgstr "创建"
 msgid "Create Admin"
 msgstr "建立系統管理員"
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+#, fuzzy
+#| msgid "Administrator Account"
+msgid "Create Administrator Account"
+msgstr "管理员账户"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
 msgstr "创建频道"
@@ -3881,6 +3892,12 @@ msgstr "创建时间"
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
 msgstr "建立翻譯"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+#, fuzzy
+#| msgid "Create my account"
+msgid "Create account"
+msgstr "创建我的账户"
 
 #: db/seeds/permissions.rb
 #, fuzzy
@@ -4084,15 +4101,6 @@ msgstr "当前用户"
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Current password"
 msgstr "当前密码"
-
-#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
-#: app/controllers/users_controller.rb
-msgid "Current password is wrong!"
-msgstr "当前密码错误！"
-
-#: app/controllers/users_controller.rb
-msgid "Current password needed!"
-msgstr "需要当前密码！"
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -5731,6 +5739,12 @@ msgstr "拖曳重新排序"
 msgid "Drop files here"
 msgstr "拖拽文件至此"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Drop files here"
+msgid "Drop image file here"
+msgstr "拖拽文件至此"
+
 #: app/assets/javascripts/app/controllers/login.coffee
 msgid "Due to inactivity, you have been automatically logged out."
 msgstr "由于不活动，您将自动注销。"
@@ -5878,7 +5892,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
@@ -5931,6 +5945,8 @@ msgstr "Email 電子郵件入站"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 msgid "Email Notification"
 msgstr "邮件通知"
 
@@ -6799,6 +6815,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr ""
 
@@ -6870,7 +6887,7 @@ msgid "First Steps"
 msgstr "提示"
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
 #| msgid "Firstname"
@@ -7168,6 +7185,7 @@ msgid "Geo Location Service"
 msgstr "Geo 地理位置 服務"
 
 #: app/assets/javascripts/app/controllers/getting_started.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Get Started"
 msgstr ""
 
@@ -7277,6 +7295,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Go Back"
 msgstr "返回"
 
@@ -7411,10 +7430,6 @@ msgstr ""
 msgid "Group needed in channel definition!"
 msgstr ""
 
-#: app/models/group.rb
-msgid "Group or children exceeded max depth!"
-msgstr ""
-
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -7525,6 +7540,7 @@ msgstr ""
 msgid "Has processed"
 msgstr "任務進行中"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #, fuzzy
 #| msgid "%s subdomain"
@@ -7990,6 +8006,12 @@ msgstr "圖像服務"
 msgid "Image of %s"
 msgstr "管理 ％s"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Image Service"
+msgid "Image preview"
+msgstr "圖像服務"
+
 #: app/assets/javascripts/app/controllers/import.coffee
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
@@ -8117,7 +8139,7 @@ msgstr "为了Zammad访问 %s 时，%s API 令牌必须被保存在这里"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid ""
-"In order to be able to influence the desired behaviour in this regard, you "
+"In order to be able to influence the desired behavior in this regard, you "
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 
@@ -8776,7 +8798,7 @@ msgid "Last login"
 msgstr "最后运行"
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
 #| msgid "Lastname"
@@ -9691,10 +9713,6 @@ msgstr ""
 msgid "Need fingerprint param!"
 msgstr ""
 
-#: app/controllers/settings_controller.rb
-msgid "Need logo param"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
 msgstr ""
@@ -10159,6 +10177,8 @@ msgid "No record found!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
@@ -10627,6 +10647,12 @@ msgstr "下一标签"
 msgid "Options"
 msgstr "选项"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+#, fuzzy
+#| msgid "migrate from another system"
+msgid "Or migrate from another system"
+msgstr "從另一個系統遷移"
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #, fuzzy
 #| msgid "migrate from another system"
@@ -10688,7 +10714,14 @@ msgstr "组织"
 msgid "Organization & Department Name"
 msgstr "機構名稱 & 部門名稱"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "Organization"
+msgid "Organization Logo"
+msgstr "组织"
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Organization Name"
 msgstr "企业名称"
 
@@ -10917,9 +10950,9 @@ msgstr "父"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10973,12 +11006,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "密碼必須至少包含最少幾個字符"
-
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-#, fuzzy
-#| msgid "The test run was successful."
-msgid "Password reset request successful!"
-msgstr "測試運行成功"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -11194,6 +11221,7 @@ msgid "Please fill in all fields"
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
+#: app/services/service/system/set_system_information.rb
 msgid "Please include a valid url."
 msgstr ""
 
@@ -11206,6 +11234,20 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
+
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "Choose your new password."
+msgid "Please provide your current password."
+msgstr "选择您的新密码。"
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "Choose your new password."
+msgid "Please provide your new password."
+msgstr "选择您的新密码。"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
 msgid ""
@@ -11242,12 +11284,6 @@ msgstr "登录失败，无效的凭据！"
 msgid "Please submit custom address before generating the snippet"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
-#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-#: app/controllers/users_controller.rb
-msgid "Please supply your new password!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
@@ -11282,7 +11318,7 @@ msgstr "邮件管理过滤器"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Powered by"
@@ -11741,6 +11777,12 @@ msgstr "删除"
 #| msgid "Removes the formatting"
 msgid "Remove formatting"
 msgstr "刪除格式"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove image"
+msgstr "删除"
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 #, fuzzy
@@ -12365,6 +12407,13 @@ msgstr "安全"
 msgid "Save Draft"
 msgstr "草稿"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "Saved conditions"
+msgid "Save and Continue"
+msgstr "保存的条件"
+
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
 msgstr ""
@@ -12561,6 +12610,7 @@ msgstr "通知音"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search…"
@@ -12744,6 +12794,8 @@ msgstr "選擇器"
 msgid "Selects the ticket number generator module."
 msgstr "選擇工單產生器模組"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
@@ -12983,6 +13035,7 @@ msgid "Set to public"
 msgstr "设为外部可见"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 #, fuzzy
 #| msgid "Setup new System"
 msgid "Set up a new system"
@@ -13260,6 +13313,7 @@ msgid "Sign out"
 msgstr "注销登录"
 
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Sign up"
 msgstr "注册"
 
@@ -13304,12 +13358,6 @@ msgstr ""
 #| msgid "or sign in using"
 msgid "Signing & Encrypting"
 msgstr "或使用第三方登录"
-
-#: app/frontend/apps/desktop/pages/authentication/routes.ts
-#, fuzzy
-#| msgid "Sign up"
-msgid "Signup"
-msgstr "注册"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
@@ -13402,6 +13450,7 @@ msgstr "站点"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Skip"
 msgstr "跳过"
 
@@ -13678,6 +13727,7 @@ msgstr "主题"
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr "提交"
@@ -13753,11 +13803,19 @@ msgstr "系统"
 msgid "System Address Display Name"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "System Information"
+msgstr "阻止通知"
+
 #: db/seeds/settings.rb
 msgid "System Init Done"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "System URL"
 msgstr "系统网址"
 
@@ -14094,6 +14152,12 @@ msgid ""
 "protocol."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+#, fuzzy
+#| msgid "The URL to this installation of Zammad."
+msgid "The URL of this installation of Zammad."
+msgstr "Zammad 安裝的 URL"
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr "Zammad 安裝的 URL"
@@ -14110,6 +14174,12 @@ msgstr "不能找到验证的证书。"
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
 msgstr "無法驗證電子郵件 請與您的管理員聯繫"
+
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#, fuzzy
+#| msgid "When notification is being sent."
+msgid "The admin password auth email could not be sent."
+msgstr "触发该通知的事件."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
@@ -14315,6 +14385,11 @@ msgstr ""
 msgid "The connection was refused."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/controllers/users_controller.rb
+msgid "The current password you provided is incorrect."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
 "The data must be in the comma separated values (CSV) format and saved as "
@@ -14342,6 +14417,14 @@ msgstr "默认的字体大小是 12px"
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
+
+#: app/services/service/auth/send_admin_token.rb
+#: app/services/service/user/password_reset/send.rb
+#: app/services/service/user/password_reset/update.rb
+#, fuzzy
+#| msgid "Article could not be deleted."
+msgid "The email could not be sent to the user."
+msgstr "文章不能被删除。"
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -14545,6 +14628,12 @@ msgstr ""
 msgid "The password could not be set. Please contact your administrator."
 msgstr "無法驗證電子郵件 請與您的管理員聯繫"
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "The password reset request was successful."
+msgstr "測試運行成功"
+
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
@@ -14657,6 +14746,15 @@ msgstr ""
 
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "The required PGP passphrase is missing."
+msgstr ""
+
+#: app/controllers/users_controller.rb
+#: app/services/service/user/add_first_admin.rb
+msgid "The required attribute 'email' is missing."
+msgstr ""
+
+#: app/services/service/system/set_system_information.rb
+msgid "The required attribute 'organization' is missing."
 msgstr ""
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
@@ -14867,6 +14965,10 @@ msgstr "％s 对象已更新。"
 msgid "The setting could not be updated."
 msgstr "％s 对象已更新。"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+msgid "The setup has already been started. Please wait until it is finished."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
 msgstr ""
@@ -14896,6 +14998,18 @@ msgstr "測試運行成功"
 msgid "The source ticket could not be found."
 msgstr "％s 对象已创建。"
 
+#: app/services/service/system/check_setup.rb
+msgid ""
+"The system setup cannot be started, because there is another one running or "
+"it was completed before."
+msgstr ""
+
+#: app/services/service/system/check_setup.rb
+msgid ""
+"The system setup is marked as done, but no admin user is existing. Please "
+"run the system setup again."
+msgstr ""
+
 #: app/controllers/tickets_controller.rb
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -14921,6 +15035,12 @@ msgstr "電子郵件回覆中主旨開頭的文本，例如RE，AW或AS"
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The tickets could not be merged."
+msgstr "％s 对象已创建。"
+
+#: app/services/service/user/signup.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The token could not be generated."
 msgstr "％s 对象已创建。"
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
@@ -14959,18 +15079,18 @@ msgstr ""
 msgid "The type of the private key is wrong."
 msgstr ""
 
-#: app/controllers/getting_started_controller.rb
-#, fuzzy
-#| msgid "%s Object(s) are created."
-msgid "The uploaded image could not be processed."
-msgstr "％s 对象已创建。"
-
 #: app/controllers/settings_controller.rb
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid ""
 "The uploaded image could not be processed. Need data:image in logo or "
 "logo_resize param."
+msgstr "％s 对象已创建。"
+
+#: app/services/service/auth/send_admin_token.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The user token could not be generated."
 msgstr "％s 对象已创建。"
 
 #: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
@@ -14981,6 +15101,12 @@ msgstr ""
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
 msgid "The username or password is incorrect."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#, fuzzy
+#| msgid "When notification is being sent."
+msgid "The verification email could not be resent."
+msgstr "触发该通知的事件."
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
@@ -15417,6 +15543,10 @@ msgstr "密码无效，长度至少为%s个字符！"
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
+#: app/models/group.rb
+msgid "This group or its children exceed the allowed nesting depth."
+msgstr ""
+
 #: lib/email_helper/probe.rb
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -15478,6 +15608,12 @@ msgstr "無法使用該系統可能需要一些時間"
 msgid "This object already exists."
 msgstr "帐号已经存在！"
 
+#: app/services/service/system/check_setup.rb
+msgid ""
+"This operation cannot be continued, because the system set-up was not "
+"completed yet."
+msgstr ""
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr ""
@@ -15486,6 +15622,12 @@ msgstr ""
 msgid ""
 "This permission level is not available based on the current roles "
 "permissions."
+msgstr ""
+
+#: app/services/service/execute_locked_block.rb
+msgid ""
+"This resource cannot be locked, because it has already been locked by "
+"another process."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
@@ -15542,6 +15684,11 @@ msgstr "工时"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "This signature is inactive, it won't be included in the reply."
+msgstr ""
+
+#: app/services/service/user/add_first_admin.rb
+msgid ""
+"This system has already been configured and an administrator account exists."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
@@ -16685,36 +16832,6 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/services/service/auth/send_admin_token.rb
-#, fuzzy
-#| msgid "Tickets of Organization"
-msgid "Unable to create token for the user."
-msgstr "機構中的工單"
-
-#: app/services/service/user/signup.rb
-#, fuzzy
-#| msgid "Unable to save Bot."
-msgid "Unable to generate token."
-msgstr "無法保存 Bot機器人"
-
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-#, fuzzy
-#| msgid "Resend verification email"
-msgid "Unable to resend verification email."
-msgstr "重发验证邮件"
-
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-msgid "Unable to send admin password auth email."
-msgstr ""
-
-#: app/services/service/auth/send_admin_token.rb
-#: app/services/service/user/password_reset/send.rb
-#: app/services/service/user/password_reset/update.rb
-#, fuzzy
-#| msgid "Unable to save Bot."
-msgid "Unable to send email to the user."
-msgstr "無法保存 Bot機器人"
-
 #: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 #, fuzzy
 #| msgid "Unassigned & Open"
@@ -16756,6 +16873,13 @@ msgstr "通知"
 #| msgid "Notification"
 msgid "Unread notifications"
 msgstr "通知"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#, fuzzy
+#| msgid "set optional"
+msgid "Unselect Option"
+msgstr "设置可选"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #, fuzzy
@@ -17031,6 +17155,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Upload Private Key"
 msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+#, fuzzy
+#| msgid "Uploading"
+msgid "Upload image"
+msgstr "上传中"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #, fuzzy
@@ -17352,7 +17482,7 @@ msgstr "阻止通知"
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
 #, fuzzy
 #| msgid "Block Notifications"
-msgid "Verifying your email..."
+msgid "Verifying your email…"
 msgstr "阻止通知"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -17661,6 +17791,7 @@ msgid "Welcome to Zammad!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Welcome!"
 msgstr "欢迎！"
 
@@ -17785,8 +17916,7 @@ msgstr "您可以在网页中添加一个表单，以用于创建工单。"
 #: app/assets/javascripts/app/models/template.coffee
 #, fuzzy
 #| msgid "With templates you can pre-fill ticket attributes."
-msgid ""
-"With templates it is possible to fill pre-filled tickets quickly and easily."
+msgid "With templates it is possible to pre-fill tickets quickly and easily."
 msgstr "模板是预置工单参数, 帮助快速创建新工单."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
@@ -18268,7 +18398,7 @@ msgstr "無法驗證電子郵件 請與您的管理員聯繫"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
@@ -19515,10 +19645,23 @@ msgstr "執行巨集"
 msgid "select"
 msgstr "选择"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#, fuzzy
+#| msgid "set optional"
+msgid "select all options"
+msgstr "设置可选"
+
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "select attachment…"
 msgstr "增加附件…"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#, fuzzy
+#| msgid "select"
+msgid "select visible options"
+msgstr "选择"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19836,6 +19979,64 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#, fuzzy
+#~| msgid "select"
+#~ msgid "select all"
+#~ msgstr "选择"
+
+#~ msgid "A URL looks like this: https://zammad.example.com"
+#~ msgstr "URL 如下所示：http://zammad.example.com"
+
+#, fuzzy
+#~| msgid "%s Object(s) are created."
+#~ msgid "The uploaded image could not be processed."
+#~ msgstr "％s 对象已创建。"
+
+#, fuzzy
+#~| msgid "A URL looks like this: https://zammad.example.com"
+#~ msgid "should look like this: https://zammad.example.com"
+#~ msgstr "URL 如下所示：http://zammad.example.com"
+
+#~ msgid "Administrator account already created"
+#~ msgstr "管理员帐号已经创建"
+
+#~ msgid "Attribute 'email' required!"
+#~ msgstr "需要属性“电子邮件”！"
+
+#~ msgid "Connection refused"
+#~ msgstr "连接被拒绝"
+
+#~ msgid "Current password is wrong!"
+#~ msgstr "当前密码错误！"
+
+#~ msgid "Current password needed!"
+#~ msgstr "需要当前密码！"
+
+#, fuzzy
+#~| msgid "Sign up"
+#~ msgid "Signup"
+#~ msgstr "注册"
+
+#, fuzzy
+#~| msgid "Tickets of Organization"
+#~ msgid "Unable to create token for the user."
+#~ msgstr "機構中的工單"
+
+#, fuzzy
+#~| msgid "Unable to save Bot."
+#~ msgid "Unable to generate token."
+#~ msgstr "無法保存 Bot機器人"
+
+#, fuzzy
+#~| msgid "Resend verification email"
+#~ msgid "Unable to resend verification email."
+#~ msgstr "重发验证邮件"
+
+#, fuzzy
+#~| msgid "Unable to save Bot."
+#~ msgid "Unable to send email to the user."
+#~ msgstr "無法保存 Bot機器人"
 
 #~ msgid "removed"
 #~ msgstr "已删除"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-01-08 09:42+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-01-23 02:05+0000\n"
+"Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
 "Language: sv-se\n"
@@ -371,10 +371,14 @@ msgstr "%s (metod)"
 msgid "%s (option)"
 msgstr "%s (val)"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#: app/frontend/shared/composables/useSelectOptions.ts
 msgid "%s (unknown)"
 msgstr "%s (okänd)"
 
@@ -833,10 +837,6 @@ msgstr ""
 "\n"
 "Om det finns kunder med olika arbetstider, kan du skapa flera kalendrar. "
 "Ärenden länkas till kalendrar genom **SLA**."
-
-#: app/controllers/getting_started_controller.rb
-msgid "A URL looks like this: https://zammad.example.com"
-msgstr "En URL ser ut såhär: https://zammad.example.com"
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
@@ -1313,7 +1313,7 @@ msgstr "Ytterligare uppföljningsdetektering"
 msgid "Additional information"
 msgstr "Ytterlig information"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 msgid "Additional information and links"
 msgstr "Ytterlig information och länkar"
 
@@ -1386,10 +1386,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
 msgstr "Administratörskonto"
-
-#: app/controllers/users_controller.rb
-msgid "Administrator account already created"
-msgstr "Administratörskonto redan skapat"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
@@ -2018,10 +2014,6 @@ msgstr "Attribut"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "Attributet '%s' krävs i mappningen"
 
-#: app/controllers/users_controller.rb
-msgid "Attribute 'email' required!"
-msgstr "Attributet 'email' krävs!"
-
 #: db/seeds/settings.rb
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
@@ -2139,6 +2131,10 @@ msgstr "Skapa automatiskt"
 msgid "Auto-close state"
 msgstr "Auto-stängd status"
 
+#: lib/auto_wizard.rb
+msgid "AutoWizard is disabled"
+msgstr "Automatisk assistent är inaktiverad"
+
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
 msgstr "Automatisk kontolänkning vid första inloggning"
@@ -2211,6 +2207,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "Hemlig kopia-adress för all utgående e-post"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 msgid "Back"
 msgstr "Tillbaka"
 
@@ -2222,6 +2219,7 @@ msgstr "Tillbaka till min vy"
 msgid "Back to overview"
 msgstr "Tillbaka till översikt"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Back to previous page"
 msgstr "Tillbaka till föregående sida"
@@ -2537,10 +2535,10 @@ msgstr "Hittar inte användaren för token"
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid ""
-"Can't update password, your entered passwords do not match. Please try again!"
+"Can't update password, your entered passwords do not match. Please try again."
 msgstr ""
 "Lösenordsuppdatering misslyckades, de angivna lösenorden matchar inte. "
-"Försök igen!"
+"Försök igen."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
@@ -2950,11 +2948,14 @@ msgstr "Rensa aktivitetsfält för mobil."
 msgid "Clear"
 msgstr "Rensa"
 
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Clear Search"
 msgstr "Rensa sökningar"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3086,6 +3087,7 @@ msgid "Communication"
 msgstr "Kommunikation"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Company Inc."
 msgstr "Företag AB"
 
@@ -3171,8 +3173,8 @@ msgstr "Bekräfta dialog"
 msgid "Confirm merge"
 msgstr "Konfigurera sammanslagning"
 
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Confirm password"
 msgstr "Bekräfta lösenord"
 
@@ -3277,10 +3279,6 @@ msgstr "Anslutningen försvann"
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection re-established"
 msgstr "Anslutningen återupprättas"
-
-#: lib/search_index_backend.rb
-msgid "Connection refused"
-msgstr "Anslutningen förvägrades"
 
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
@@ -3452,6 +3450,11 @@ msgstr "Skapa"
 msgid "Create Admin"
 msgstr "Skapa admin"
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+msgid "Create Administrator Account"
+msgstr "Skapa administratörskonto"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
 msgstr "Skapa kanal"
@@ -3497,7 +3500,8 @@ msgstr ""
 "\n"
 "Exampel på block är:\n"
 "\n"
-"* Hej #{ticket.customer.lastname},\n"
+"* Hej Fru #{ticket.customer.lastname},\n"
+"* Hej Herr #{ticket.customer.lastname},\n"
 "* Hej #{ticket.customer.firstname},\n"
 "* Jag heter #{user.firstname},\n"
 "\n"
@@ -3534,6 +3538,10 @@ msgstr "Skapa ett delat utkast"
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
 msgstr "Skapa översättning"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
+msgid "Create account"
+msgstr "Skapa konto"
 
 #: db/seeds/permissions.rb
 msgid "Create and set up %s"
@@ -3709,15 +3717,6 @@ msgstr "Nuvarande användare"
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Current password"
 msgstr "Nuvarande lösenord"
-
-#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
-#: app/controllers/users_controller.rb
-msgid "Current password is wrong!"
-msgstr "Fel lösenord!"
-
-#: app/controllers/users_controller.rb
-msgid "Current password needed!"
-msgstr "Skriv ditt aktuella lösenord!"
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -5357,6 +5356,10 @@ msgstr "Drag för att ändra ordning"
 msgid "Drop files here"
 msgstr "Släpp filer här"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Drop image file here"
+msgstr "Släpp bildfil här"
+
 #: app/assets/javascripts/app/controllers/login.coffee
 msgid "Due to inactivity, you have been automatically logged out."
 msgstr "Du har blivit utloggad på grund av inaktivitet."
@@ -5493,7 +5496,7 @@ msgstr "Elasticsearch behöver konfigureras!"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
@@ -5546,6 +5549,8 @@ msgstr "Inkommande e-post"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 msgid "Email Notification"
 msgstr "E-postnotifieringar"
 
@@ -6375,6 +6380,7 @@ msgstr "Filen '%s' håller på att laddas upp"
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "Filen är för stor, max. %s MB tillåtet."
 
@@ -6442,7 +6448,7 @@ msgid "First Steps"
 msgstr "Första stegen"
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "First name"
 msgstr "Förnamn"
@@ -6713,6 +6719,7 @@ msgid "Geo Location Service"
 msgstr "Geo Location Service"
 
 #: app/assets/javascripts/app/controllers/getting_started.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Get Started"
 msgstr "Kom igång"
 
@@ -6816,6 +6823,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Go Back"
 msgstr "Tillbaka"
 
@@ -6941,10 +6949,6 @@ msgstr "Gruppen är ogiltig!"
 msgid "Group needed in channel definition!"
 msgstr "Grupp behövs i kanaldefinition!"
 
-#: app/models/group.rb
-msgid "Group or children exceeded max depth!"
-msgstr "Grupp eller barn överskrider maxdjup!"
-
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -6967,7 +6971,7 @@ msgstr "Gruppera efter"
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Grouping order"
-msgstr "Grupperingsordning"
+msgstr "Gruppordning"
 
 #: app/assets/javascripts/app/controllers/group.coffee
 #: app/assets/javascripts/app/models/macro.coffee
@@ -7035,6 +7039,7 @@ msgstr "Hantera uppgifter för dataskydd."
 msgid "Has processed"
 msgstr "Har bearbetat"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Has submenu"
 msgstr "Har undermeny"
@@ -7485,6 +7490,10 @@ msgstr "Bildtjänst"
 msgid "Image of %s"
 msgstr "Bild av %s"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Image preview"
+msgstr "Förhandsvisning bild"
+
 #: app/assets/javascripts/app/controllers/import.coffee
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
@@ -7607,7 +7616,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid ""
-"In order to be able to influence the desired behaviour in this regard, you "
+"In order to be able to influence the desired behavior in this regard, you "
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 "För att kunna påverka beteendet, kan du påverka ordningen på LDAP-källorna "
@@ -8210,7 +8219,7 @@ msgid "Last login"
 msgstr "Senaste inloggning"
 
 #: app/assets/javascripts/app/models/user.coffee
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Last name"
 msgstr "Efternamn"
@@ -9055,10 +9064,6 @@ msgstr "Behöver minst ett 'article body' fält."
 msgid "Need fingerprint param!"
 msgstr "Behöver fingeravtryckparameter!"
 
-#: app/controllers/settings_controller.rb
-msgid "Need logo param"
-msgstr "Behöver logo parameter"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
 msgstr "Behöver mottagare i \"Till\"."
@@ -9459,6 +9464,8 @@ msgid "No record found!"
 msgstr "Inga uppgifter har hittats!"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
@@ -9910,6 +9917,10 @@ msgstr "Öppna i flikar"
 msgid "Options"
 msgstr "Tillval"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+msgid "Or migrate from another system"
+msgstr "Eller migrera från ett annat system"
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Or migrate from another system."
 msgstr "Eller migrera från ett annat system."
@@ -9965,7 +9976,12 @@ msgstr "Organisation"
 msgid "Organization & Department Name"
 msgstr "Organisation- och avdelningsnamn"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "Organization Logo"
+msgstr "Organisation Logga"
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Organization Name"
 msgstr "Bolags namn"
 
@@ -10179,9 +10195,9 @@ msgstr "Föräldergrupp"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10227,10 +10243,6 @@ msgstr "Lösenordet måste innehålla minst ett specialtecken."
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "Lösenord måste ha minst ett minimalt antal tecken."
-
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-msgid "Password reset request successful!"
-msgstr "Återställning av lösenordet lyckades!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -10429,6 +10441,7 @@ msgid "Please fill in all fields"
 msgstr "Fyll i alla fält"
 
 #: app/frontend/shared/form/i18n/locales.ts
+#: app/services/service/system/set_system_information.rb
 msgid "Please include a valid url."
 msgstr "Ange en giltig webbadress."
 
@@ -10443,6 +10456,16 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Ange en mottagare i \"Till\" eller \"CC\"."
+
+#: app/controllers/users_controller.rb
+msgid "Please provide your current password."
+msgstr "Ange ditt nuvarande lösenord."
+
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+#: app/controllers/users_controller.rb
+msgid "Please provide your new password."
+msgstr "Ange ditt nya lösenord."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
 msgid ""
@@ -10482,12 +10505,6 @@ msgstr "Vänligen starta autentiseringen igen och ange rätt användaruppgifter.
 msgid "Please submit custom address before generating the snippet"
 msgstr "Vänligen ange anpassad adress innan du genererar snippet"
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
-#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-#: app/controllers/users_controller.rb
-msgid "Please supply your new password!"
-msgstr "Ange ditt nya lösenord!"
-
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
@@ -10522,7 +10539,7 @@ msgstr "Postmaster-filter"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Powered by"
 msgstr "Powered by"
@@ -10941,6 +10958,10 @@ msgstr "Ta bort samtliga värden"
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
 msgstr "Ta bort formatering"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Remove image"
+msgstr "Ta bort bild"
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 msgid "Remove method"
@@ -11484,6 +11505,11 @@ msgstr "Spara Koder"
 msgid "Save Draft"
 msgstr "Spara utkast"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "Save and Continue"
+msgstr "Spara och fortsätt"
+
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
 msgstr "Spara som"
@@ -11666,6 +11692,7 @@ msgstr "Sökresultat värdenyckel \"%s\" hittades inte."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search…"
@@ -11833,6 +11860,8 @@ msgstr "Selektor"
 msgid "Selects the ticket number generator module."
 msgstr "Väljer generatormodulen för ärendenummer."
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
@@ -12053,6 +12082,7 @@ msgid "Set to public"
 msgstr "Sätt som publik"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Set up a new system"
 msgstr "Installera ett nytt system"
 
@@ -12300,6 +12330,7 @@ msgid "Sign out"
 msgstr "Logga ut"
 
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Sign up"
 msgstr "Registrera"
 
@@ -12338,10 +12369,6 @@ msgstr "Signerad"
 #: db/seeds/settings.rb
 msgid "Signing & Encrypting"
 msgstr "Signering & Kryptering"
-
-#: app/frontend/apps/desktop/pages/authentication/routes.ts
-msgid "Signup"
-msgstr "Registring"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
@@ -12417,6 +12444,7 @@ msgstr "Sidplats"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Skip"
 msgstr "Skippa"
 
@@ -12682,6 +12710,7 @@ msgstr "Ämne"
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr "Spara"
@@ -12755,11 +12784,17 @@ msgstr "System"
 msgid "System Address Display Name"
 msgstr "Systemadress Visningsnamn"
 
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "System Information"
+msgstr "Systeminformation"
+
 #: db/seeds/settings.rb
 msgid "System Init Done"
 msgstr "Systeminit klar"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "System URL"
 msgstr "System URL"
 
@@ -13061,6 +13096,10 @@ msgstr ""
 "Telegram integration kan endast konfigureras på system som använder HTTPS "
 "protokoll."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
+msgid "The URL of this installation of Zammad."
+msgstr "URL-adress till denna installation av Zammad."
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr "URL-adressen till denna installation av Zammad."
@@ -13073,6 +13112,10 @@ msgstr "Den aktiva rapportprofilen kunde inte hittas."
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "The admin consent request was sent to your administrator."
 msgstr "Begäran om administratörsmedgivande skickades till din administratör."
+
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+msgid "The admin password auth email could not be sent."
+msgstr "Admin lösenord autentiseringsmail kunde inte skickas."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
@@ -13258,6 +13301,11 @@ msgstr "Anslutningen till servern förlorades."
 msgid "The connection was refused."
 msgstr "Anslutningen nekades."
 
+#: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/controllers/users_controller.rb
+msgid "The current password you provided is incorrect."
+msgstr "Det nuvarande lösenordet är felaktigt."
+
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
 "The data must be in the comma separated values (CSV) format and saved as "
@@ -13288,6 +13336,12 @@ msgstr "Standard teckenstorlek är 12px."
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Avdelaren mellan TicketHook och ärendenummer. T.ex. ': '."
+
+#: app/services/service/auth/send_admin_token.rb
+#: app/services/service/user/password_reset/send.rb
+#: app/services/service/user/password_reset/update.rb
+msgid "The email could not be sent to the user."
+msgstr "Email kunde inte skickas till användaren."
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -13478,6 +13532,10 @@ msgstr "Parametern 'mentionable_type' är ogiltig."
 msgid "The password could not be set. Please contact your administrator."
 msgstr "Lösenordet kunde inte sättas. Kontakta din administratör."
 
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+msgid "The password reset request was successful."
+msgstr "Återställning av lösenordet lyckades."
+
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
@@ -13587,6 +13645,15 @@ msgstr "Den nödvändiga 'ExternalCredential' 'twitter' kunde inte hittas."
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "The required PGP passphrase is missing."
 msgstr "Obligatorisk PGP lösenord saknas."
+
+#: app/controllers/users_controller.rb
+#: app/services/service/user/add_first_admin.rb
+msgid "The required attribute 'email' is missing."
+msgstr "Den obligatoriska parametern 'email' saknas."
+
+#: app/services/service/system/set_system_information.rb
+msgid "The required attribute 'organization' is missing."
+msgstr "Den obligatoriska parametern 'organisation' saknas."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
 msgid "The required event field 'execution' is missing."
@@ -13799,6 +13866,10 @@ msgstr "Inställningen kunde inte återställas."
 msgid "The setting could not be updated."
 msgstr "Inställningen kunde inte uppdateras."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
+msgid "The setup has already been started. Please wait until it is finished."
+msgstr "Installation har redan startats. Vänta till den är färdig."
+
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
 msgstr "Inloggningen misslyckades. Vänligen kontakta supportteamet."
@@ -13824,6 +13895,22 @@ msgstr "Signaturen verifierades framgångsrikt."
 msgid "The source ticket could not be found."
 msgstr "Det ursprungliga ärendet kunde inte hittas."
 
+#: app/services/service/system/check_setup.rb
+msgid ""
+"The system setup cannot be started, because there is another one running or "
+"it was completed before."
+msgstr ""
+"Systeminstallationen kan inte startas, för där redan finns en pågående eller "
+"som har slutförts tidigare."
+
+#: app/services/service/system/check_setup.rb
+msgid ""
+"The system setup is marked as done, but no admin user is existing. Please "
+"run the system setup again."
+msgstr ""
+"Systeminställningen är markerad som färdig, men det finns ingen "
+"administratör. Vänligen kör systeminstallationen igen."
+
 #: app/controllers/tickets_controller.rb
 msgid "The target ticket number could not be found."
 msgstr "Mål-ärendenumret kunde inte hittas."
@@ -13846,6 +13933,10 @@ msgstr "Texten i början av ämnet i ett e-postsvar, t.ex. RE, AW eller AS."
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "The tickets could not be merged."
 msgstr "Ärendena kunde inte sammanfogas."
+
+#: app/services/service/user/signup.rb
+msgid "The token could not be generated."
+msgstr "Token kunde inte genereras."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "The token could not be verified. Please contact your administrator."
@@ -13879,10 +13970,6 @@ msgstr "Tvåfaktorsautentiseringmetoden är inte aktiverad."
 msgid "The type of the private key is wrong."
 msgstr "Den privata nyckeln är av fel typ."
 
-#: app/controllers/getting_started_controller.rb
-msgid "The uploaded image could not be processed."
-msgstr "Den uppladdade bilden kunde inte bearbetas."
-
 #: app/controllers/settings_controller.rb
 msgid ""
 "The uploaded image could not be processed. Need data:image in logo or "
@@ -13890,6 +13977,10 @@ msgid ""
 msgstr ""
 "Den uppladdade bilden kunde inte bearbetas. Behöver data:image in logo or "
 "logo_resize param."
+
+#: app/services/service/auth/send_admin_token.rb
+msgid "The user token could not be generated."
+msgstr "Användartoken kunde inte genereras."
 
 #: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -13900,6 +13991,10 @@ msgstr ""
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
 msgid "The username or password is incorrect."
 msgstr "Användarnamnet eller lösenordet är felaktigt."
+
+#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+msgid "The verification email could not be resent."
+msgstr "Verifikationsmail kunde inte skickas."
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
@@ -14266,6 +14361,10 @@ msgstr "Fältet får inte innehålla mer än %s tecken."
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "Detta fält har konfigurerats felaktigt och kan inte skickas."
 
+#: app/models/group.rb
+msgid "This group or its children exceed the allowed nesting depth."
+msgstr "Denna grupp eller dess barn överskrider det tillåtna nestingdjupet."
+
 #: lib/email_helper/probe.rb
 msgid "This host cannot be reached."
 msgstr "Värden kan inte nås."
@@ -14332,6 +14431,14 @@ msgstr "Det kan ta lite tid. Under den tiden kan systemet inte användas."
 msgid "This object already exists."
 msgstr "Objektet finns redan."
 
+#: app/services/service/system/check_setup.rb
+msgid ""
+"This operation cannot be continued, because the system set-up was not "
+"completed yet."
+msgstr ""
+"Denna åtgärd kan inte fortsätta, eftersom systeminstallationen inte har "
+"slutförts ännu."
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr "Denna sida är osynlig för allmänheten."
@@ -14343,6 +14450,14 @@ msgid ""
 msgstr ""
 "Denna behörighetsnivå är inte tillgänglig baserat på de aktuella "
 "rollbehörigheterna."
+
+#: app/services/service/execute_locked_block.rb
+msgid ""
+"This resource cannot be locked, because it has already been locked by "
+"another process."
+msgstr ""
+"Denna resurs kan inte låsas, eftersom den redan har låsts av en annan "
+"process."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
@@ -14388,10 +14503,8 @@ msgstr ""
 "realtid."
 
 #: app/services/service/concerns/handles_setting.rb
-#, fuzzy
-#| msgid "This feature is not enabled."
 msgid "This setting is not disabled."
-msgstr "Den här funktionen är inte aktiverad."
+msgstr "Den här inställningen är inte inaktiverad."
 
 #: app/services/service/concerns/handles_setting.rb
 msgid "This setting is not enabled."
@@ -14400,6 +14513,12 @@ msgstr "Denna inställning är inte aktiverad."
 #: app/assets/javascripts/app/models/group.coffee
 msgid "This signature is inactive, it won't be included in the reply."
 msgstr "Denna signatur är inaktiv, den kommer inte att inkluderas i svaret."
+
+#: app/services/service/user/add_first_admin.rb
+msgid ""
+"This system has already been configured and an administrator account exists."
+msgstr ""
+"Systemet har redan konfigurerats och det finns ett administratörskonto."
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -15387,29 +15506,6 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX-slutpunkt)"
 
-#: app/services/service/auth/send_admin_token.rb
-msgid "Unable to create token for the user."
-msgstr "Det gick inte att skapa en token för användaren."
-
-#: app/services/service/user/signup.rb
-msgid "Unable to generate token."
-msgstr "Det gick inte att generera token."
-
-#: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-msgid "Unable to resend verification email."
-msgstr "Det gick inte att skicka om verifieringsmailet."
-
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-msgid "Unable to send admin password auth email."
-msgstr ""
-"Det gick inte att skicka e-post om autentisering av administratörslösenord."
-
-#: app/services/service/auth/send_admin_token.rb
-#: app/services/service/user/password_reset/send.rb
-#: app/services/service/user/password_reset/update.rb
-msgid "Unable to send email to the user."
-msgstr "Det gick inte att skicka e-post till användaren."
-
 #: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
 msgstr "Ej tilldelade och öppna ärenden"
@@ -15448,6 +15544,11 @@ msgstr "Oläst notifiering"
 #: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
 msgid "Unread notifications"
 msgstr "Olästa notifieringar"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+msgid "Unselect Option"
+msgstr "Avmarkera alternativ"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 msgid "Unset default"
@@ -15688,6 +15789,10 @@ msgstr "Uppladdning misslyckades"
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Upload Private Key"
 msgstr "Ladda upp privat nyckel"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
+msgid "Upload image"
+msgstr "Ladda upp bild"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 msgid "Upload key"
@@ -16001,7 +16106,7 @@ msgid "Verifying key information…"
 msgstr "Verifierar nyckelinformation…"
 
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
-msgid "Verifying your email..."
+msgid "Verifying your email…"
 msgstr "Verifierar din e-post…"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -16297,6 +16402,7 @@ msgid "Welcome to Zammad!"
 msgstr "Välkommen till Zammad!"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Welcome!"
 msgstr "Välkommen!"
 
@@ -16426,8 +16532,7 @@ msgstr ""
 "genererar ett ärende."
 
 #: app/assets/javascripts/app/models/template.coffee
-msgid ""
-"With templates it is possible to fill pre-filled tickets quickly and easily."
+msgid "With templates it is possible to pre-fill tickets quickly and easily."
 msgstr "Med mallar kan du lägga till förifyllda ärenden snabbt och enkelt."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
@@ -16897,7 +17002,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage.vue
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
@@ -18064,10 +18169,23 @@ msgstr "kör macro"
 msgid "select"
 msgstr "välj"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#, fuzzy
+#| msgid "Unselect Option"
+msgid "select all options"
+msgstr "Avmarkera alternativ"
+
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "select attachment…"
 msgstr "Välj bilagor …"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#, fuzzy
+#| msgid "select all"
+msgid "select visible options"
+msgstr "välj alla"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -18357,6 +18475,59 @@ msgstr "... av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "select all"
+#~ msgstr "välj alla"
+
+#~ msgid "A URL looks like this: https://zammad.example.com"
+#~ msgstr "En URL ser ut såhär: https://zammad.example.com"
+
+#~ msgid "Invalid!"
+#~ msgstr "Ogiltig!"
+
+#~ msgid "The uploaded image could not be processed."
+#~ msgstr "Den uppladdade bilden kunde inte bearbetas."
+
+#~ msgid "should look like this: https://zammad.example.com"
+#~ msgstr "ska se ut på följande sätt: https://zammad.example.com"
+
+#~ msgid "Administrator account already created"
+#~ msgstr "Administratörskonto redan skapat"
+
+#~ msgid "Attribute 'email' required!"
+#~ msgstr "Attributet 'email' krävs!"
+
+#~ msgid "Need logo param"
+#~ msgstr "Behöver logo parameter"
+
+#~ msgid "Connection refused"
+#~ msgstr "Anslutningen förvägrades"
+
+#~ msgid "Current password is wrong!"
+#~ msgstr "Fel lösenord!"
+
+#~ msgid "Current password needed!"
+#~ msgstr "Skriv ditt aktuella lösenord!"
+
+#~ msgid "Signup"
+#~ msgstr "Registring"
+
+#~ msgid "Unable to create token for the user."
+#~ msgstr "Det gick inte att skapa en token för användaren."
+
+#~ msgid "Unable to generate token."
+#~ msgstr "Det gick inte att generera token."
+
+#~ msgid "Unable to resend verification email."
+#~ msgstr "Det gick inte att skicka om verifieringsmailet."
+
+#~ msgid "Unable to send admin password auth email."
+#~ msgstr ""
+#~ "Det gick inte att skicka e-post om autentisering av "
+#~ "administratörslösenord."
+
+#~ msgid "Unable to send email to the user."
+#~ msgstr "Det gick inte att skicka e-post till användaren."
 
 #~ msgid "Feature not enabled!"
 #~ msgstr "Funktionen är inte aktiverad!"
