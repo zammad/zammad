@@ -9,7 +9,7 @@ RSpec.describe 'Popover', type: :system do
     visit "#ticket/zoom/#{Ticket.first.id}"
 
     within :active_content do
-      find('.ticketZoom-header .js-avatar').hover
+      trigger_popover('.ticketZoom-header .js-avatar .user-popover')
     end
 
     # popover opened up
@@ -31,7 +31,7 @@ RSpec.describe 'Popover', type: :system do
     expect(page).to have_no_css('.popover')
 
     within :active_content do
-      find('.ticketZoom-header .js-avatar').hover
+      trigger_popover('.ticketZoom-header .js-avatar .user-popover')
     end
 
     # popover opens up again
@@ -44,7 +44,7 @@ RSpec.describe 'Popover', type: :system do
     end
 
     within :active_content do
-      find('.user-popover').hover
+      trigger_popover('.user-popover')
     end
 
     expect(page).to have_css('.popover')
@@ -74,7 +74,7 @@ RSpec.describe 'Popover', type: :system do
       }] }
       TransactionDispatcher.commit
 
-      find('.js-attributeBar .user-popover').hover
+      trigger_popover('.js-attributeBar .user-popover')
     end
 
     expect(page).to have_css('.popover')
@@ -83,5 +83,11 @@ RSpec.describe 'Popover', type: :system do
     TransactionDispatcher.commit
 
     expect(page).to have_no_css('.popover')
+  end
+
+  def trigger_popover(selector)
+    find(selector) do |elem|
+      elem.evaluate_script('Object.keys($(this).data()).includes("bs.popover")')
+    end.hover
   end
 end
