@@ -290,19 +290,26 @@ App.Config.set(
 
                 url = window.location.toString()
                 if lastKey && lastKey.count is 3
-                  item = new window.ClipboardItem(
-                    {
-                      'text/plain': new Blob(
-                        ["#{text}: #{title}\n#{url}"],
-                        { type: 'text/plain' }
-                      ),
-                      'text/html': new Blob(
-                        ["<a href=\"#{url}\">#{text}</a>: #{title}"],
-                        { type: 'text/html' }
-                      ),
-                    }
-                  )
-                  clipboard.write([item])
+
+                  # in firefox `new window.ClipboardItem` may not work
+                  # https://github.com/zammad/zammad/issues/4492
+                  try
+                    item = new window.ClipboardItem(
+                      {
+                        'text/plain': new Blob(
+                          ["#{text}: #{title}\n#{url}"],
+                          { type: 'text/plain' }
+                        ),
+                        'text/html': new Blob(
+                          ["<a href=\"#{url}\">#{text}</a>: #{title}"],
+                          { type: 'text/html' }
+                        ),
+                      }
+                    )
+                    clipboard.write([item])
+                  catch e
+                    text = "#{text}: #{title}\n#{url}"
+                    clipboard.writeText(text)
             }
             {
               keyPrefix: '2x'
