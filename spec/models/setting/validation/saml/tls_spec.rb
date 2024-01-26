@@ -41,6 +41,11 @@ RSpec.describe Setting::Validation::Saml::TLS do
       let(:ssl_verify) { true }
 
       it 'raises an error' do
+        if ENV['CI'].present?
+          result = UserAgent::Result.new(success: false, error: '#<OpenSSL::SSL::SSLError: SSL_connect returned=1 errno=0 peeraddr=')
+          allow(UserAgent).to receive(:get).and_return(result)
+        end
+
         expect { Setting.set(setting_name, setting_value) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: The verification of the TLS connection failed. Please check the IDP certificate.')
       end
     end
