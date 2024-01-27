@@ -8,6 +8,8 @@ class Channel < ApplicationModel
   store :options
   store :preferences
 
+  validates_with Validations::EmailAccountUniquenessValidator
+
   after_create   :email_address_check
   after_update   :email_address_check
   after_destroy  :email_address_check

@@ -1,0 +1,12 @@
+mutation channelEmailSetNotificationConfiguration(
+  $outboundConfiguration: ChannelEmailOutboundConfigurationInput!
+) {
+  channelEmailSetNotificationConfiguration(
+    outboundConfiguration: $outboundConfiguration
+  ) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

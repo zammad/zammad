@@ -16,6 +16,7 @@ import { merge, cloneDeep } from 'lodash-es'
 import { plugin as formPlugin } from '@formkit/vue'
 import { buildFormKitPluginConfig } from '#shared/form/index.ts'
 import applicationConfigPlugin from '#shared/plugins/applicationConfigPlugin.ts'
+import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
@@ -124,6 +125,7 @@ const plugins: (Plugin | [Plugin, ...unknown[]])[] = [
 const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
   global: {
     components: {
+      CommonAlert,
       CommonIcon,
       CommonLink,
       CommonDateTime,

@@ -36,9 +36,7 @@ export interface FormValues {
 }
 
 export type FormSubmitData<TFormValues = FormValues> = FormKitGroupValue &
-  TFormValues & {
-    formId: string
-  }
+  TFormValues
 
 // https://formkit.com/essentials/validation#showing-errors
 export enum FormValidationVisibility {
@@ -193,24 +191,29 @@ export interface ChangedField {
 
 export enum FormHandlerExecution {
   Initial = 'initial',
+  InitialSettled = 'initialSettled',
   FieldChange = 'fieldChange',
 }
 
 export interface FormHandlerFunctionData {
   formNode: FormKitNode | undefined
+  getNodeByName(id: string): FormKitNode | undefined
+  findNodeByName(name: string): FormKitNode | undefined
   values: FormValues
   changedField?: ChangedField
   initialEntityObject?: ObjectLike
 }
+
+type UpdateSchemaDataFieldFunction = (
+  field: FormSchemaField | SetRequired<Partial<FormSchemaField>, 'name'>,
+) => void
 
 export interface FormHandlerFunctionReactivity {
   changeFields: Ref<Record<string, Partial<FormSchemaField>>>
   schemaData: ReactiveFormSchemData
   // This can be used to update the current schema data, but without remembering it inside
   // the changeFields and schemaData objects (which means it's persistent).
-  updateSchemaDataField: (
-    field: FormSchemaField | SetRequired<Partial<FormSchemaField>, 'name'>,
-  ) => void
+  updateSchemaDataField: UpdateSchemaDataFieldFunction
 }
 
 export type FormHandlerFunction = (
@@ -235,6 +238,11 @@ export interface FormResetOptions {
 export interface FormRef {
   formId: string
   formNode: FormKitNode
+  values: FormValues
+  updateSchemaDataField: UpdateSchemaDataFieldFunction
+  updateChangedFields: (
+    changedFields: Record<string, Partial<FormSchemaField>>,
+  ) => void
   getNodeByName(id: string): FormKitNode | undefined
   findNodeByName(name: string): FormKitNode | undefined
   resetForm(

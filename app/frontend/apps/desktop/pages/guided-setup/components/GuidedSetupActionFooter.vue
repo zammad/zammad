@@ -9,6 +9,10 @@ import type { FormRef } from '#shared/components/Form/types.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import LayoutPublicPageBoxActions from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPageBoxActions.vue'
+import type {
+  ButtonType,
+  ButtonVariant,
+} from '#desktop/components/CommonButton/types.ts'
 
 interface Props {
   form?: FormRef
@@ -16,10 +20,16 @@ interface Props {
   goBackRoute?: RouteLocationRaw
   onSkip?: () => void
   onBack?: () => void
+  onSubmit?: () => void
   submitButtonText?: string
+  submitButtonVariant?: ButtonVariant
+  submitButtonType?: ButtonType
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  submitButtonVariant: 'submit',
+  submitButtonType: 'submit',
+})
 
 const emit = defineEmits<{
   (e: 'submit'): void
@@ -73,9 +83,10 @@ const submit = () => {
       {{ $t('Skip') }}
     </CommonButton>
     <CommonButton
-      type="submit"
-      variant="submit"
+      v-if="form || onSubmit"
+      :type="submitButtonType"
       size="large"
+      :variant="submitButtonVariant"
       :disabled="isDisabled"
       :form="formNodeId"
       @click="submit()"

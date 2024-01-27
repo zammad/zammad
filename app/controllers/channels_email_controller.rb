@@ -137,44 +137,13 @@ class ChannelsEmailController < ApplicationController
       return
     end
 
-    # create new account
-    channel = Channel.create(
-      area:         'Email::Account',
-      options:      {
-        inbound:  params[:inbound].to_h,
-        outbound: params[:outbound].to_h,
-      },
-      group_id:     params[:group_id],
-      last_log_in:  nil,
-      last_log_out: nil,
-      status_in:    'ok',
-      status_out:   'ok',
-      active:       true,
+    ::Service::Channel::Email::Add.new.execute(
+      inbound_configuration:  params[:inbound].to_h,
+      outbound_configuration: params[:outbound].to_h,
+      group:                  ::Group.find(params[:group_id]),
+      email_address:          email,
+      email_realname:         params[:meta][:realname],
     )
-
-    # remember address && set channel for email address
-    address = EmailAddress.find_by(email: email)
-
-    # on initial setup, use placeholder email address
-    if Channel.count == 1
-      address = EmailAddress.first
-    end
-
-    if address
-      address.update!(
-        name:       params[:meta][:realname],
-        email:      email,
-        active:     true,
-        channel_id: channel.id,
-      )
-    else
-      EmailAddress.create(
-        name:       params[:meta][:realname],
-        email:      email,
-        active:     true,
-        channel_id: channel.id,
-      )
-    end
 
     render json: result
   end
@@ -221,24 +190,13 @@ class ChannelsEmailController < ApplicationController
 
     # save settings
     if result[:result] == 'ok'
-
-      Channel.where(area: 'Email::Notification').each do |channel|
-        active = false
-        if adapter.match?(%r{^#{channel.options[:outbound][:adapter]}$}i)
-          active = true
-          channel.options = {
-            outbound: {
-              adapter: adapter,
-              options: params[:options].to_h,
-            },
-          }
-          channel.status_out   = 'ok'
-          channel.last_log_out = nil
-        end
-        channel.active = active
-        channel.save
-      end
+      Service::System::SetEmailNotificationConfiguration
+        .new(
+          adapter:,
+          new_configuration: params[:options].to_h
+        ).execute
     end
+
     render json: result
   end
 

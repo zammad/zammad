@@ -102,12 +102,7 @@ const paddingClasses = computed(() => {
 const disabledClasses = computed(() => {
   if (!props.disabled) return []
 
-  return [
-    '!bg-green-100',
-    'dark:!bg-gray-400',
-    'text-stone-200',
-    'dark:text-neutral-500',
-  ]
+  return ['opacity-30', 'pointer-events-none']
 })
 
 const borderRadiusClass = computed(() => {
@@ -152,7 +147,7 @@ const iconSizeClass = computed(() => {
     ]"
     :type="type"
     :form="form"
-    :disabled="disabled"
+    :aria-disabled="disabled ? 'true' : undefined"
   >
     <CommonIcon
       v-if="prefixIcon"

@@ -3,17 +3,27 @@
 import type { FormKitNode } from '@formkit/core'
 import { computed, shallowRef } from 'vue'
 import type { ShallowRef, Ref } from 'vue'
-import type { ObjectLike } from '#shared/types/utils.ts'
-import type { FormRef, FormResetOptions, FormValues } from './types.ts'
 
-export const useForm = (formRef?: Ref<FormRef | undefined>) => {
+import type { MutationSendError } from '#shared/types/error.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+
+import { setErrors } from './utils.ts'
+import type {
+  FormRef,
+  FormResetOptions,
+  FormFieldValue,
+  FormValues,
+  FormSchemaField,
+} from './types.ts'
+
+export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
   const form: ShallowRef<FormRef | undefined> = formRef || shallowRef()
 
   const node = computed(() => form.value?.formNode)
 
   const context = computed(() => node.value?.context)
 
-  const values = computed(() => context.value?.value)
+  const nodeValues = computed<FormValues>(() => context.value?.value)
 
   const state = computed(() => context.value?.state)
 
@@ -78,10 +88,36 @@ export const useForm = (formRef?: Ref<FormRef | undefined>) => {
     })
   }
 
+  const updateFieldValues = (fieldValues: Record<string, FormFieldValue>) => {
+    const changedFieldValues: Record<
+      string,
+      Pick<FormSchemaField, 'value'>
+    > = {}
+
+    Object.keys(fieldValues).forEach((fieldName) => {
+      changedFieldValues[fieldName] = {
+        value: fieldValues[fieldName],
+      }
+    })
+
+    form.value?.updateChangedFields(changedFieldValues)
+  }
+
+  const values = computed<T>(() => {
+    return (form.value?.values || {}) as T
+  })
+
+  const formSetErrors = (errors: MutationSendError) => {
+    if (!node.value) return
+
+    setErrors(node.value, errors)
+  }
+
   return {
     form,
     node,
     context,
+    nodeValues,
     values,
     state,
     isValid,
@@ -91,9 +127,11 @@ export const useForm = (formRef?: Ref<FormRef | undefined>) => {
     isDisabled,
     formNodeId,
     canSubmit,
+    formSetErrors,
     formReset,
     formGroupReset,
     formSubmit,
     waitForFormSettled,
+    updateFieldValues,
   }
 }

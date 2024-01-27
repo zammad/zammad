@@ -79,11 +79,11 @@ class Gql::ZammadSchema < GraphQL::Schema
   rescue_from(StandardError) do |err, _obj, _args, ctx, field|
     if field&.path&.start_with?('Mutations.')
       user_locale = ctx.current_user?&.locale
-      if err.is_a? ActiveRecord::RecordInvalid
-        user_errors = err.record.errors.map { |e| { field: e.attribute.to_s.camelize(:lower), message: e.localized_full_message(locale: user_locale, no_field_name: true) } }
-        next { errors: user_errors }
-      end
-      if err.is_a? ActiveRecord::RecordNotUnique
+
+      case err
+      when ActiveRecord::RecordInvalid
+        next { errors: build_record_invalid_errors(err.record, user_locale) }
+      when ActiveRecord::RecordNotUnique
         next { errors: [ message: Translation.translate(user_locale, 'This object already exists.') ] }
       end
     end
@@ -103,4 +103,16 @@ class Gql::ZammadSchema < GraphQL::Schema
     # We need to throw an ExecutionError, all others would cause the GraphQL processing to die.
     raise GraphQL::ExecutionError.new(err.message, extensions: extensions)
   end
+
+  def self.build_record_invalid_errors(record, user_locale)
+    record.errors.map do |e|
+      field_name = e.attribute.to_s.camelize(:lower)
+
+      {
+        field:   field_name == 'base' ? nil : field_name,
+        message: e.localized_full_message(locale: user_locale, no_field_name: true)
+      }
+    end
+  end
+  private_class_method :build_record_invalid_errors
 end

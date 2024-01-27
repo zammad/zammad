@@ -14,7 +14,6 @@ import type {
 } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
-import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'

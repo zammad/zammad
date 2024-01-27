@@ -208,6 +208,138 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
       end
     end
 
+    context 'when SSL Verify setting is set according to provider configuration', :aggregate_failures do
+      before do
+        allow(described_class).to receive_messages(
+          inbound:  { result: 'ok' },
+          outbound: { result: 'ok' }
+        )
+      end
+
+      let(:mock_server) do
+        {
+          adapter: 'imap',
+          options: {
+            host:      'imap',
+            port:      993,
+            ssl:       mock_server_ssl,
+            start_tls: mock_server_starttls,
+            user:      'user',
+            password:  'password',
+          },
+        }
+      end
+
+      let(:mock_providers) do
+        {
+          bigtech: {
+            domain:   'bigtechmail.com',
+            inbound:  mock_server,
+            outbound: mock_server,
+          },
+        }
+      end
+
+      context 'when using a provider' do
+        before { allow(EmailHelper).to receive(:provider).and_return(mock_providers) }
+
+        context 'when server has no SSL or STARTTLS' do
+          let(:mock_server_ssl)      { false }
+          let(:mock_server_starttls) { false }
+
+          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = false } }
+
+          it 'adds ssl_verify set to false' do
+            described_class.full(email: 'user@bigtechmail.com')
+
+            expect(described_class).to have_received(:inbound).with(config)
+            expect(described_class).to have_received(:outbound).with(config, anything)
+          end
+        end
+
+        context 'when server has SSL' do
+          let(:mock_server_ssl)      { true }
+          let(:mock_server_starttls) { false }
+
+          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = true } }
+
+          it 'adds ssl_verify set to true' do
+            described_class.full(email: 'user@bigtechmail.com')
+
+            expect(described_class).to have_received(:inbound).with(config)
+            expect(described_class).to have_received(:outbound).with(config, anything)
+          end
+        end
+
+        context 'when server has STARTTLS' do
+          let(:mock_server_ssl)      { false }
+          let(:mock_server_starttls) { true }
+
+          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = true } }
+
+          it 'adds ssl_verify set to true' do
+            described_class.full(email: 'user@bigtechmail.com')
+
+            expect(described_class).to have_received(:inbound).with(config)
+            expect(described_class).to have_received(:outbound).with(config, anything)
+          end
+        end
+      end
+
+      context 'when using a custom server' do
+        before do
+          allow(EmailHelper).to receive_messages(
+            provider_inbound_mx:     [],
+            provider_outbound_mx:    [],
+            provider_inbound_guess:  [mock_server],
+            provider_outbound_guess: [mock_server]
+          )
+        end
+
+        context 'when server has no SSL or STARTTLS' do
+          let(:mock_server_ssl)      { false }
+          let(:mock_server_starttls) { false }
+
+          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = false } }
+
+          it 'adds ssl_verify set to false' do
+            described_class.full(email: 'user@example.com')
+
+            expect(described_class).to have_received(:inbound).with(config)
+            expect(described_class).to have_received(:outbound).with(config, anything)
+          end
+        end
+
+        context 'when server has SSL' do
+          let(:mock_server_ssl)      { true }
+          let(:mock_server_starttls) { false }
+
+          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = true } }
+
+          it 'adds ssl_verify set to true' do
+            described_class.full(email: 'user@example.com')
+
+            expect(described_class).to have_received(:inbound).with(config)
+            expect(described_class).to have_received(:outbound).with(config, anything)
+          end
+        end
+
+        context 'when server has STARTTLS' do
+          let(:mock_server_ssl)      { false }
+          let(:mock_server_starttls) { true }
+
+          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = true } }
+
+          it 'adds ssl_verify set to true' do
+            described_class.full(email: 'user@example.com')
+
+            expect(described_class).to have_received(:inbound).with(config)
+            expect(described_class).to have_received(:outbound).with(config, anything)
+          end
+        end
+      end
+    end
+
     context 'when doing real tests' do
       let(:email)          { ENV['MAIL_ADDRESS'] }
       let(:password)       { ENV['MAIL_PASS'] }

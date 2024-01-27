@@ -3,56 +3,9 @@
 class EmailHelper
   class Probe
 
-=begin
-
-get result of probe
-
-  result = EmailHelper::Probe.full(
-    email: 'zammad@example.com',
-    password: 'somepassword',
-    folder: 'some_folder', # optional in imap
-    ssl_verify: false,    # optional
-  )
-
-returns on success
-
-  {
-    result: 'ok',
-    settings: {
-      inbound: {
-        adapter: 'imap',
-        options: {
-          host: 'imap.gmail.com',
-          port: 993,
-          ssl: true,
-          user: 'some@example.com',
-          password: 'password',
-          folder: 'some_folder', # optional im imap
-          ssl_verify: false,     # optional
-         },
-      },
-      outbound: {
-        adapter: 'smtp',
-        options: {
-          host: 'smtp.gmail.com',
-          port: 25,
-          ssl: true,
-          user: 'some@example.com',
-          password: 'password',
-          ssl_verify: false, # optional
-        },
-      },
-    }
-  }
-
-returns on fail
-
-  result = {
-    result: 'failed',
-  }
-
-=end
-
+    #
+    # Try to guess email channel configuration from basic user data.
+    #
     def self.full(params)
 
       user, domain = EmailHelper.parse_email(params[:email])
@@ -82,6 +35,9 @@ returns on fail
           if params[:folder].present? && settings[:inbound] && settings[:inbound][:options]
             settings[:inbound][:options][:folder] = params[:folder]
           end
+
+          config_set_verify_ssl(settings[:inbound], params)
+          config_set_verify_ssl(settings[:outbound], params)
 
           # probe inbound
           Rails.logger.debug { "INBOUND PROBE PROVIDER: #{settings[:inbound].inspect}" }
@@ -124,9 +80,7 @@ returns on fail
         end
 
         # Add SSL verification flag to configuration, if needed.
-        if params.key?(:ssl_verify) && config[:options]
-          config[:options][:ssl_verify] = params[:ssl_verify]
-        end
+        config_set_verify_ssl(config, params)
 
         Rails.logger.debug { "INBOUND PROBE GUESS: #{config.inspect}" }
         result_inbound = EmailHelper::Probe.inbound(config)
@@ -160,9 +114,7 @@ returns on fail
       outbound_map.each do |config|
 
         # Add SSL verification flag to configuration, if needed.
-        if params.key?(:ssl_verify) && config[:options]
-          config[:options][:ssl_verify] = params[:ssl_verify]
-        end
+        config_set_verify_ssl(config, params)
 
         Rails.logger.debug { "OUTBOUND PROBE GUESS: #{config.inspect}" }
         result_outbound = EmailHelper::Probe.outbound(config, params[:email])
@@ -186,46 +138,9 @@ returns on fail
       result
     end
 
-=begin
-
-get result of inbound probe
-
-  result = EmailHelper::Probe.inbound(
-    adapter: 'imap',
-    options: {
-      host: 'imap.gmail.com',
-      port: 993,
-      ssl: true,
-      user: 'some@example.com',
-      password: 'password',
-      folder: 'some_folder', # optional
-    }
-  )
-
-returns on success
-
-  {
-    result: 'ok'
-  }
-
-returns on fail
-
-  result = {
-    result: 'invalid',
-    settings: {
-      host: 'imap.gmail.com',
-      port: 993,
-      ssl: true,
-      user: 'some@example.com',
-      password: 'password',
-      folder: 'some_folder', # optional im imap
-    },
-    message: 'error message from used lib',
-    message_human: 'translated error message, readable for humans',
-  }
-
-=end
-
+    #
+    # Validate an inbound email channel configuration.
+    #
     def self.inbound(params)
 
       adapter = params[:adapter].downcase
@@ -258,48 +173,9 @@ returns on fail
       result_inbound
     end
 
-=begin
-
-get result of outbound probe
-
-  result = EmailHelper::Probe.outbound(
-    {
-      adapter: 'smtp',
-      options: {
-        host: 'smtp.gmail.com',
-        port: 25,
-        ssl: true,
-        user: 'some@example.com',
-        password: 'password',
-      }
-    },
-    'sender_and_recipient_of_test_email@example.com',
-    'subject of probe email',
-  )
-
-returns on success
-
-  {
-    result: 'ok'
-  }
-
-returns on fail
-
-  result = {
-    result: 'invalid',
-    settings: {
-      host: 'stmp.gmail.com',
-      port: 25,
-      ssl: true,
-      user: 'some@example.com',
-      password: 'password',
-    },
-    message: 'error message from used lib',
-    message_human: 'translated error message, readable for humans',
-  }
-
-=end
-
+    #
+    # Validate an outbound email channel configuration.
+    #
     def self.outbound(params, email, subject = nil)
 
       adapter = params[:adapter].downcase
@@ -433,6 +309,17 @@ returns on fail
       }
     end
 
+    def self.config_set_verify_ssl(config, params)
+      return if !config[:options]
+
+      if params.key?(:ssl_verify)
+        config[:options][:ssl_verify] = params[:ssl_verify]
+      elsif config[:options][:ssl] || config[:options][:start_tls]
+        config[:options][:ssl_verify] = true
+      else
+        config[:options][:ssl_verify] ||= false
+      end
+    end
   end
 
 end

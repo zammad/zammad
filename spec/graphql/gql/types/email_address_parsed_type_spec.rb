@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Types::Email::AddressType do
+RSpec.describe Gql::Types::EmailAddressParsedType do
   let(:email)    { 'test@zammad.org' }
   let(:instance) { described_class.send(:new, { email_address: email, name: 'test' }, nil) }
 

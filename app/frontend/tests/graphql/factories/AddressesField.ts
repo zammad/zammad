@@ -11,7 +11,7 @@ export default (): DeepPartial<AddressesField> => {
   return {
     parsed: [
       {
-        __typename: 'EmailAddress',
+        __typename: 'EmailAddressParsed',
         emailAddress: email,
         isSystemAddress: false,
         name,

@@ -10,6 +10,7 @@ export interface Props {
   dismissible?: boolean
   link?: string | null
   linkText?: string | null
+  id?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -39,6 +40,7 @@ const dismissed = ref(false)
 <template>
   <div
     v-if="!dismissed"
+    :id="props.id"
     class="rounded-lg gap-1.5 p-2 border-transparent"
     :class="[classMap.base, classMap[props.variant]]"
     role="alert"

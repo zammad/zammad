@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import type { Primitive } from 'type-fest'
 import type {
   FormFieldValue,
   FormValues,
@@ -10,7 +11,6 @@ import type {
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId, isGraphQLId } from '#shared/graphql/utils.ts'
 import { camelize, toClassName } from '#shared/utils/formatter.ts'
-import type { Primitive } from 'type-fest'
 
 export const useObjectAttributeFormData = (
   objectAttributes: Map<string, ObjectManagerFrontendAttribute>,

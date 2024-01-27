@@ -4,6 +4,7 @@ import { shallowRef } from 'vue'
 
 import Form from '#shared/components/Form/Form.vue'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 import GuidedSetupActionFooter from '../GuidedSetupActionFooter.vue'
 
 const wrapperParameters = {
@@ -14,7 +15,7 @@ const wrapperParameters = {
 }
 
 describe('GuidedSetupActionFooter.vue', () => {
-  it('renders only submit button and submit', async () => {
+  it('renders no submit button when no form is given', async () => {
     const view = renderComponent(GuidedSetupActionFooter, {
       props: {
         submitButtonText: 'Create Account',
@@ -22,13 +23,9 @@ describe('GuidedSetupActionFooter.vue', () => {
       ...wrapperParameters,
     })
 
-    const submitButton = view.getByRole('button', { name: 'Create Account' })
+    const submitButton = view.queryByRole('button', { name: 'Create Account' })
 
-    expect(submitButton).toBeInTheDocument()
-
-    await view.events.click(submitButton)
-
-    expect(view.emitted()).toHaveProperty('submit')
+    expect(submitButton).not.toBeInTheDocument()
   })
 
   it('submit form when form reference was given', async () => {
@@ -60,6 +57,8 @@ describe('GuidedSetupActionFooter.vue', () => {
       },
       wrapperParameters,
     )
+
+    await waitForNextTick(true)
 
     await view.events.click(view.getByRole('button', { name: 'Submit' }))
 

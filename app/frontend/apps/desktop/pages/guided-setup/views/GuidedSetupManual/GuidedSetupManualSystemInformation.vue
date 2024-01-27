@@ -110,9 +110,13 @@ const setSystemInformation = async (formData: SystemInformationData) => {
       },
     })
     .then(() => {
+      if (application.config.system_online_service) {
+        router.push('/guided-setup/manual/channels/email-pre-configured')
+        return
+      }
+
       router.push('/guided-setup/manual/email-notification')
     })
-    .catch(() => {})
 }
 </script>
 

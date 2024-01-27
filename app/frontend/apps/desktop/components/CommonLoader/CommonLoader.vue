@@ -4,7 +4,6 @@
 /* eslint-disable vue/no-v-html */
 
 import { markup } from '#shared/utils/markup.ts'
-import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 
 interface Props {
   loading?: boolean

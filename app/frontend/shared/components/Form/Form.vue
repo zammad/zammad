@@ -14,7 +14,7 @@ import {
   markRaw,
   useSlots,
 } from 'vue'
-import { FormKit, FormKitSchema } from '@formkit/vue'
+import { FormKit, FormKitMessages, FormKitSchema } from '@formkit/vue'
 import type {
   FormKitPlugin,
   FormKitSchemaNode,
@@ -28,7 +28,11 @@ import type {
 import { getNode, createMessage } from '@formkit/core'
 import type { Except, SetRequired } from 'type-fest'
 import { refDebounced, watchOnce } from '@vueuse/shared'
+import { cloneAny } from '@formkit/utils'
+
+import { I18N, i18n } from '#shared/i18n.ts'
 import getUuid from '#shared/utils/getUuid.ts'
+import { markup } from '#shared/utils/markup.ts'
 import log from '#shared/utils/log.ts'
 import { camelize } from '#shared/utils/formatter.ts'
 import UserError from '#shared/errors/UserError.ts'
@@ -51,10 +55,9 @@ import type { FormUpdaterTrigger } from '#shared/types/form.ts'
 import type { EntityObject } from '#shared/types/entity.ts'
 import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 import { parseGraphqlId } from '#shared/graphql/utils.ts'
-import { cloneAny } from '@formkit/utils'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api.ts'
 import { FormHandlerExecution, FormValidationVisibility } from './types.ts'
-import { getNodeByName as getFormkitFieldNode } from './utils.ts'
+import { getNodeByName as getFormkitFieldNode, setErrors } from './utils.ts'
 import { getFormClasses } from './initializeFormClasses.ts'
 import type {
   ChangedField,
@@ -93,6 +96,7 @@ export interface Props {
   // Can be used to define initial values on frontend side and fetched schema from the server.
   initialValues?: Partial<FormValues>
   initialEntityObject?: EntityObject
+
   queryParams?: Record<string, unknown>
   validationVisibility?: FormValidationVisibility
   disabled?: boolean
@@ -221,6 +225,7 @@ const setFormNode = (node: FormKitNode) => {
       const formName = node.context?.id || node.name
       testFlags.set(`${formName}.settled`)
       emit('settled')
+      executeFormHandler(FormHandlerExecution.InitialSettled, values.value)
 
       if (props.autofocus) autofocusFirstInput(node)
     })
@@ -279,18 +284,16 @@ const onSubmit = (values: FormSubmitData) => {
   const flatValues = props.flattenFormGroups
     ? getFlatValues(values, props.flattenFormGroups)
     : values
-  const emitValues = {
-    ...flatValues,
-    formId,
-  }
 
-  const submitResult = props.onSubmit(emitValues)
+  formNode.value?.clearErrors()
+
+  const submitResult = props.onSubmit(flatValues)
 
   if (submitResult instanceof Promise) {
     return submitResult
       .then((afterReset) => {
-        // it's possible to destroy Form before this is called
-        if (!formNode.value) return
+        // it's possible to destroy Form before this is called and the reset should not run when errors exists.
+        if (!formNode.value || formNode.value.context?.state.errors) return
         formNode.value.reset(values)
         // "dirty" check checks "_init" instead of "initial"
         // "initial" is updated with resetValues in "reset" function, but "_init" is static
@@ -306,13 +309,7 @@ const onSubmit = (values: FormSubmitData) => {
         afterReset?.()
       })
       .catch((errors: UserError) => {
-        if (errors instanceof UserError) {
-          formNode.value?.setErrors(
-            // TODO: we need to check/style the general error output when we want to show it related to the form
-            errors.generalErrors as string[],
-            errors.getFieldErrorList(),
-          )
-        }
+        if (formNode.value) setErrors(formNode.value, errors)
       })
   }
 
@@ -366,6 +363,15 @@ const fixedAndSkippedFields: string[] = []
 const schemaData = reactive<ReactiveFormSchemData>({
   fields: {},
   values,
+  // Helper function to translate directly with the formkit syntax.
+  // Wrapper is neded, because of unexpected side effects.
+  t: (
+    source: Parameters<I18N['t']>[0],
+    ...args: Array<Parameters<I18N['t']>[1]>
+  ) => {
+    return i18n.t(source, ...args)
+  },
+  markup,
   ...props.schemaData,
 })
 
@@ -548,14 +554,6 @@ const resetForm = (
   handlesFormUpdater('form-reset')
 }
 
-defineExpose({
-  formNode,
-  formId,
-  getNodeByName,
-  findNodeByName,
-  resetForm,
-})
-
 const localInitialValues: FormValues = { ...props.initialValues }
 
 const initializeFieldRelation = (
@@ -704,7 +702,7 @@ const updateChangedFields = (
     }
 
     // This happens for the initial updater, when the form is not settled yet or the field was not rendered yet.
-    // In this ase we need to remember the changes and do it afterwards after the form is settled the first time.
+    // In this case we need to remember the changes and do it afterwards after the form is settled the first time.
     // Sometimes the value from the server is the "real" initial value, for this the `initialValue` can be used.
     handleUpdatedInitialFieldValue(
       fieldName,
@@ -753,6 +751,7 @@ const formHandlerExecution: Record<
   FormHandlerFunction[]
 > = {
   [FormHandlerExecution.Initial]: [],
+  [FormHandlerExecution.InitialSettled]: [],
   [FormHandlerExecution.FieldChange]: [],
 }
 if (props.handlers) {
@@ -782,6 +781,8 @@ const executeFormHandler = (
       },
       {
         formNode: formNode.value,
+        getNodeByName,
+        findNodeByName,
         values: currentValues,
         changedField,
         initialEntityObject: props.initialEntityObject,
@@ -1177,6 +1178,17 @@ if (props.schema) {
 }
 
 const classMap = getFormClasses()
+
+defineExpose({
+  formNode,
+  formId,
+  values,
+  updateChangedFields,
+  updateSchemaDataField,
+  getNodeByName,
+  findNodeByName,
+  resetForm,
+})
 </script>
 
 <script lang="ts">
@@ -1213,7 +1225,32 @@ export default {
     @submit="onSubmit"
     @submit-raw="onSubmitRaw"
   >
+    <FormKitMessages
+      :sections-schema="{
+        messages: {
+          $el: 'div',
+        },
+        message: {
+          $el: undefined,
+          $cmp: 'CommonAlert',
+          props: {
+            id: `$id + '-' + $message.key`,
+            key: '$message.key',
+            variant: {
+              if: '$message.type == error || $message.type == validation',
+              then: 'danger',
+              else: '$message.type',
+            },
+          },
+          slots: {
+            default: '$message.value',
+          },
+        },
+      }"
+    />
+
     <slot name="before-fields" />
+
     <slot
       name="default"
       :schema="staticSchema"

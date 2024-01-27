@@ -1190,7 +1190,6 @@ describe('Form.vue - Form Updater - special situtations', () => {
       expect(submitCallbackSpy).toHaveBeenCalledWith({
         title: 'Example title',
         textarea: 'Some text',
-        formId: expect.any(String),
         date_time: undefined,
         example: '',
         group_id: undefined,

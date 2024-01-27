@@ -105,7 +105,7 @@ export const defaultTicket = (policies: Partial<PolicyTicket> = {}) => {
         id: convertToGraphQLId('Group', 1),
         name: 'Users',
         emailAddress: {
-          __typename: 'EmailAddress',
+          __typename: 'EmailAddressParsed',
           name: 'zammad',
           emailAddress: 'zammad@example.com',
         },

@@ -43,6 +43,20 @@ const route: RouteRecordRaw[] = [
             },
           },
           {
+            path: 'finish',
+            alias: '',
+            name: 'GuidedSetupManualFinish',
+            component: () =>
+              import('./views/GuidedSetupManual/GuidedSetupManualFinish.vue'),
+            meta: {
+              title: __('Setup Finished'),
+              requiresAuth: true,
+              requiredPermission: 'admin.wizard',
+              hasOwnLandmarks: true,
+              sidebar: false,
+            },
+          },
+          {
             path: 'system-information',
             name: 'GuidedSetupManualSystemInformation',
             component: () =>
@@ -66,6 +80,49 @@ const route: RouteRecordRaw[] = [
               ),
             meta: {
               title: __('Email Notification'),
+              requiresAuth: true,
+              requiredPermission: 'admin.wizard',
+              hasOwnLandmarks: true,
+              sidebar: false,
+            },
+          },
+          {
+            path: 'channels',
+            name: 'GuidedSetupManualChannels',
+            component: () =>
+              import('./views/GuidedSetupManual/GuidedSetupManualChannels.vue'),
+            meta: {
+              title: __('Connect Channels'),
+              requiresAuth: true,
+              requiredPermission: 'admin.wizard',
+              hasOwnLandmarks: true,
+              sidebar: false,
+            },
+          },
+          {
+            path: 'channels/email',
+            name: 'GuidedSetupManualChannelEmail',
+            component: () =>
+              import(
+                './views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue'
+              ),
+            meta: {
+              title: __('Email Account'),
+              requiresAuth: true,
+              requiredPermission: 'admin.wizard',
+              hasOwnLandmarks: true,
+              sidebar: false,
+            },
+          },
+          {
+            path: 'channels/email-pre-configured',
+            name: 'GuidedSetupManualChannelEmailPreConfigured',
+            component: () =>
+              import(
+                './views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue'
+              ),
+            meta: {
+              title: __('Connect Channels'),
               requiresAuth: true,
               requiredPermission: 'admin.wizard',
               hasOwnLandmarks: true,

@@ -22,7 +22,12 @@ import {
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
 import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api.ts'
-import type { FormRef, FormValues, FormSchemaField } from '../types.ts'
+import {
+  type FormRef,
+  type FormValues,
+  type FormSchemaField,
+  FormHandlerExecution,
+} from '../types.ts'
 
 const wrapperParameters = {
   form: true,
@@ -110,7 +115,6 @@ describe('Form.vue', () => {
     expect(submitCallbackSpy).toHaveBeenCalledWith({
       title: 'Example title',
       text: 'Some text',
-      formId: expect.any(String),
     })
   })
 
@@ -749,13 +753,58 @@ describe('Form.vue - Flatten form groups', () => {
     expect(wrapper.emitted().submit).toBeTruthy()
 
     expect(submitCallbackSpy).toHaveBeenCalledWith({
-      formId: expect.any(String),
       street: 'Street 12',
       city: '',
       other: 'Some text',
       title: '',
       fullname: 'John Doe',
     })
+  })
+})
+
+describe('Form.vue - Handlers', () => {
+  it('check that initial form handler is called before form creation', async () => {
+    const handlerCallbackSpy = vi.fn()
+
+    await renderForm({
+      props: {
+        handlers: [
+          {
+            execution: [FormHandlerExecution.Initial],
+            callback: handlerCallbackSpy,
+          },
+        ],
+      },
+    })
+
+    expect(handlerCallbackSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('check that initial and initial settled form handler is called once', async () => {
+    const handlerCallbackInitialSpy = vi.fn()
+    const handlerCallbackInitialSettledSpy = vi.fn()
+
+    const wrapper = await renderForm({
+      props: {
+        handlers: [
+          {
+            execution: [FormHandlerExecution.Initial],
+            callback: handlerCallbackInitialSpy,
+          },
+          {
+            execution: [FormHandlerExecution.InitialSettled],
+            callback: handlerCallbackInitialSettledSpy,
+          },
+        ],
+      },
+    })
+
+    const text = wrapper.getByLabelText('Title')
+    await wrapper.events.type(text, 'Example title')
+    expect(text).toHaveDisplayValue('Example title')
+
+    expect(handlerCallbackInitialSpy).toHaveBeenCalledTimes(1)
+    expect(handlerCallbackInitialSettledSpy).toHaveBeenCalledTimes(1)
   })
 })
 

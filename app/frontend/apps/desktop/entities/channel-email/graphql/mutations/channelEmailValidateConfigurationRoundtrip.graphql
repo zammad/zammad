@@ -1,0 +1,16 @@
+mutation channelEmailValidateConfigurationRoundtrip(
+  $inboundConfiguration: ChannelEmailInboundConfigurationInput!
+  $outboundConfiguration: ChannelEmailOutboundConfigurationInput!
+  $emailAddress: String!
+) {
+  channelEmailValidateConfigurationRoundtrip(
+    inboundConfiguration: $inboundConfiguration
+    outboundConfiguration: $outboundConfiguration
+    emailAddress: $emailAddress
+  ) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -89,7 +89,7 @@ export const useTicketEdit = (
   }
 
   const editTicket = async (formData: FormSubmitData) => {
-    if (!ticket.value) return undefined
+    if (!ticket.value || !form.value) return undefined
 
     if (!formData.owner_id) {
       formData.owner_id = 1
@@ -101,7 +101,7 @@ export const useTicketEdit = (
     const formArticle = formData.article as
       | TicketArticleReceivedFormValues
       | undefined
-    const article = processArticle(formData.formId, formArticle)
+    const article = processArticle(form.value.formId, formArticle)
 
     return mutationUpdate.send({
       ticketId: ticket.value.id,

@@ -57,7 +57,7 @@ module Gql::Mutations
       group = Group.find_by(name: find_user_by_raw_email(article.to))
       return article.to if !group
 
-      Channel::EmailBuild.recipient_line(group.fullname, group.email)
+      ::Channel::EmailBuild.recipient_line(group.fullname, group.email)
     end
 
     def to_agent(article)
@@ -93,7 +93,7 @@ module Gql::Mutations
       return if !user
 
       if !user.permissions?('ticket.agent') && user.email
-        Channel::EmailBuild.recipient_line(user.fullname, user.email)
+        ::Channel::EmailBuild.recipient_line(user.fullname, user.email)
       else
         user.fullname.presence
       end

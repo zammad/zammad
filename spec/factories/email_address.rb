@@ -5,6 +5,7 @@ FactoryBot.define do
     channel factory: %i[email_channel]
     sequence(:email) { |n| "zammad#{n}@localhost.com" }
     sequence(:name)  { |n| "zammad#{n}" }
+    active           { true }
     created_by_id    { 1 }
     updated_by_id    { 1 }
   end

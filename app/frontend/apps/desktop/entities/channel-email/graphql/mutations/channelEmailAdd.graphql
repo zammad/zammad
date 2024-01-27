@@ -1,0 +1,13 @@
+mutation channelEmailAdd($input: ChannelEmailAddInput!) {
+  channelEmailAdd(input: $input) {
+    channel {
+      options
+      group {
+        id
+      }
+    }
+    errors {
+      ...errors
+    }
+  }
+}

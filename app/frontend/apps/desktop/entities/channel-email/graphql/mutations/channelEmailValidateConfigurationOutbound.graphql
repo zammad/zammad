@@ -1,0 +1,14 @@
+mutation channelEmailValidateConfigurationOutbound(
+  $outboundConfiguration: ChannelEmailOutboundConfigurationInput!
+  $emailAddress: String!
+) {
+  channelEmailValidateConfigurationOutbound(
+    outboundConfiguration: $outboundConfiguration
+    emailAddress: $emailAddress
+  ) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -3,58 +3,9 @@
 class EmailHelper
   class Verify
 
-=begin
-
-get result of inbound probe
-
-  result = EmailHelper::Verify.email(
-    inbound: {
-      adapter: 'imap',
-      options: {
-        host: 'imap.gmail.com',
-        port: 993,
-        ssl: true,
-        user: 'some@example.com',
-        password: 'password',
-      },
-    },
-    outbound: {
-      adapter: 'smtp',
-      options: {
-        host: 'smtp.gmail.com',
-        port: 25,
-        ssl: true,
-        user: 'some@example.com',
-        password: 'password',
-      },
-    },
-    sender: 'sender_and_recipient_of_verify_email@example.com',
-  )
-
-returns on success
-
-  {
-    result: 'ok'
-  }
-
-returns on fail
-
-  {
-    result: 'invalid',
-    message: 'Verification Email not found in mailbox.',
-    subject: subject,
-  }
-
-or
-
-  {
-    result: 'invalid',
-    message: 'Authentication failed.',
-    subject: subject,
-  }
-
-=end
-
+    #
+    # Validate an email channel configuration first sending and then fetching that same mail.
+    #
     def self.email(params)
 
       # send verify email

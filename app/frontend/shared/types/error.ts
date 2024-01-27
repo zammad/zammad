@@ -2,6 +2,7 @@
 
 import type { GraphQLErrorExtensions } from 'graphql'
 import type { Except } from 'type-fest'
+import type { ApolloError } from '@apollo/client'
 import type { UserError } from '#shared/graphql/types.ts'
 
 export enum GraphQLErrorTypes {
@@ -29,6 +30,8 @@ export interface GraphQLHandlerError {
   type: GraphQLErrorTypes
   message?: string
 }
+
+export type MutationSendError = ApolloError | UserError
 
 export enum ErrorStatusCodes {
   'Forbidden' = 403,

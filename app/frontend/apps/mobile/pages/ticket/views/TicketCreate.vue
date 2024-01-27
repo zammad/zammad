@@ -4,6 +4,8 @@
 import { computed, nextTick, reactive, ref, watch } from 'vue'
 import { onBeforeRouteLeave, useRouter } from 'vue-router'
 import { useEventListener } from '@vueuse/core'
+import type { ApolloError } from '@apollo/client'
+
 import Form from '#shared/components/Form/Form.vue'
 import {
   EnumFormUpdaterId,
@@ -45,7 +47,6 @@ import type { TicketFormData } from '#shared/entities/ticket/types.ts'
 import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
 import { useDialog } from '#shared/composables/useDialog.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
-import type { ApolloError } from '@apollo/client'
 import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 import { useUserQuery } from '#mobile/entities/user/graphql/queries/user.api.ts'
 import { useTicketCreateMutation } from '../graphql/mutations/create.api.ts'
@@ -410,9 +411,9 @@ const createTicket = async (formData: FormSubmitData<TicketFormData>) => {
     objectAttributeValues: additionalObjectAttributeValues,
   } as TicketCreateInput
 
-  if (formData.attachments && input.article) {
+  if (formData.attachments && input.article && form.value?.formId) {
     input.article.attachments = convertFilesToAttachmentInput(
-      formData.formId,
+      form.value.formId,
       formData.attachments,
     )
   }

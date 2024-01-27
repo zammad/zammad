@@ -1,0 +1,38 @@
+mutation channelEmailGuessConfiguration(
+  $emailAddress: String!
+  $password: String!
+) {
+  channelEmailGuessConfiguration(
+    emailAddress: $emailAddress
+    password: $password
+  ) {
+    result {
+      inboundConfiguration {
+        adapter
+        host
+        port
+        ssl
+        user
+        password
+        sslVerify
+        folder
+      }
+      outboundConfiguration {
+        adapter
+        host
+        port
+        user
+        password
+        sslVerify
+      }
+      mailboxStats {
+        contentMessages
+        archivePossible
+        archiveWeekRange
+      }
+    }
+    errors {
+      ...errors
+    }
+  }
+}

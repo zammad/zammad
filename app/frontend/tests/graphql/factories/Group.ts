@@ -9,7 +9,7 @@ export default (): DeepPartial<Group> => {
     id: convertToGraphQLId('Group', 1), // will not generate more than 1 group
     name: 'Users',
     emailAddress: {
-      __typename: 'EmailAddress',
+      __typename: 'EmailAddressParsed',
       name: 'zammad',
       emailAddress: 'zammad@example.com',
       isSystemAddress: false,

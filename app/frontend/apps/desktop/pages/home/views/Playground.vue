@@ -197,8 +197,12 @@ const formSchema = [
     </div>
 
     <h3>Misc</h3>
-    <div class="space-y-2 py-2 flex-wrap">
+    <div class="space-x-3 space-y-2 py-2 flex-wrap">
       <CommonButton variant="submit" block>Block button</CommonButton>
+      <CommonButton variant="primary" disabled>Disabled button</CommonButton>
+      <CommonButton variant="secondary" disabled>Disabled button</CommonButton>
+      <CommonButton variant="tertiary" disabled>Disabled button</CommonButton>
+      <CommonButton variant="submit" disabled>Disabled button</CommonButton>
       <CommonButton variant="danger" disabled>Disabled button</CommonButton>
     </div>
   </div>

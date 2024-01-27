@@ -50,7 +50,7 @@ describe('CommonButton.vue', () => {
       },
     })
 
-    expect(view.getByRole('button')).toHaveAttribute('disabled')
+    expect(view.getByRole('button')).toBeDisabled()
   })
 
   it('supports block prop', async () => {

@@ -15,7 +15,7 @@ module Gql::Types
     field :active, Boolean, null: false
 
     scoped_fields do
-      field :email_address, Gql::Types::Email::AddressType
+      field :email_address, Gql::Types::EmailAddressParsedType
       field :assignment_timeout, Integer
       field :follow_up_possible, String
       field :follow_up_assignment, Boolean

@@ -5,7 +5,7 @@ module Gql::Types
     description 'A field which may contain one or more email or other addresses.'
 
     field :raw, String, null: false, description: 'Unparsed content of the addresses field.'
-    field :parsed, [Gql::Types::Email::AddressType], description: 'If email addresses were found and parseable, this will hold the parsed result.'
+    field :parsed, [Gql::Types::EmailAddressParsedType], description: 'If email addresses were found and parseable, this will hold the parsed result.'
 
     def raw
       object

@@ -13,6 +13,7 @@ import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/Layout
 
 import { useUserSignupVerifyMutation } from '../graphql/mutations/userSignupVerify.api.ts'
 import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
+import type { VerifyState } from '../types/signup.ts'
 
 defineOptions({
   beforeRouteEnter(to) {
@@ -31,8 +32,6 @@ interface Props {
 const props = defineProps<Props>()
 
 const router = useRouter()
-
-type VerifyState = 'loading' | 'success' | 'error'
 
 const state = ref<VerifyState>('loading')
 

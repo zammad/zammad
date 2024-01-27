@@ -29,7 +29,7 @@ export const getCoreDesktopClasses: FormThemeExtension = (
       wrapper: 'flex-grow',
       block: 'flex items-end',
       label:
-        'block mb-1 text-sm text-gray-100 dark:text-neutral-400 formkit-required:required formkit-invalid:text-red-500 formkit-errors:text-red-500',
+        'block mb-1 text-sm text-gray-100 dark:text-neutral-400 formkit-disabled:pointer-events-none formkit-required:required formkit-invalid:text-red-500 formkit-errors:text-red-500',
       inner: 'rounded-lg text-sm',
       messages: 'mt-1 formkit-invalid:text-red-500 formkit-errors:text-red-500',
       help: 'text-stone-200 dark:text-neutral-500 mt-1',
@@ -37,6 +37,9 @@ export const getCoreDesktopClasses: FormThemeExtension = (
         'relative h-5 w-5 flex justify-center items-center fill-current text-stone-200 dark:text-neutral-500 ltr:ml-2.5 rtl:mr-2.5',
       suffixIcon:
         'relative h-5 w-5 flex justify-center items-center fill-current text-stone-200 dark:text-neutral-500 ltr:mr-2.5 rtl:ml-2.5',
+    }),
+    form: extendClasses(classes.form, {
+      messages: 'mb-2.5 space-y-2 flex-wrap',
     }),
     text: textInputClasses(classes.text),
     password: textInputClasses(classes.password),

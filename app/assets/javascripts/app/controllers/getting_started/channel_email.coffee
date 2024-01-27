@@ -230,7 +230,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
           @account.inbound = params
 
           if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
-            @probeInboundMessagesFound(data, true)
+            @probeInboundMessagesFound(data, false)
             @probeInboundArchive(data)
           else
             @showSlide('js-outbound')

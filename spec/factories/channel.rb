@@ -64,7 +64,16 @@ FactoryBot.define do
       transient do
         inbound do
           {
-            adapter: 'null', options: {}
+            'adapter' => 'imap',
+            'options' => {
+              'auth_type'      => 'plain',
+              'host'           => 'imap.example.com',
+              'ssl'            => 'ssl',
+              'ssl_verify'     => true,
+              'user'           => mail_server_user,
+              'folder'         => '',
+              'keep_on_server' => false,
+            }
           }
         end
 
@@ -73,6 +82,8 @@ FactoryBot.define do
             adapter: 'sendmail'
           }
         end
+
+        sequence(:mail_server_user) { |n| "user#{n}@example.com" }
       end
 
       trait :sendmail do
@@ -96,7 +107,7 @@ FactoryBot.define do
               'port'           => outbound_port,
               'ssl'            => true,
               'ssl_verify'     => true,
-              'user'           => 'user@example.com',
+              'user'           => mail_server_user,
               'authentication' => 'plain',
             }
           }
@@ -112,7 +123,7 @@ FactoryBot.define do
               'host'           => 'imap.example.com',
               'ssl'            => 'ssl',
               'ssl_verify'     => true,
-              'user'           => 'user@example.com',
+              'user'           => mail_server_user,
               'folder'         => '',
               'keep_on_server' => false,
             }
@@ -129,7 +140,7 @@ FactoryBot.define do
               'host'           => 'pop3.example.com',
               'ssl'            => 'ssl',
               'ssl_verify'     => true,
-              'user'           => 'user@example.com',
+              'user'           => mail_server_user,
               'folder'         => '',
               'keep_on_server' => false,
             }

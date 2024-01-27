@@ -5,7 +5,7 @@ import { useForm } from '#shared/components/Form/useForm.ts'
 import { createMessage, getNode, type FormKitNode } from '@formkit/core'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
-import type { FormRef } from '../types.ts'
+import type { FormRef, FormValues } from '../types.ts'
 import { FormValidationVisibility } from '../types.ts'
 
 const wrapperParameters = {
@@ -45,6 +45,9 @@ const getFormContext = (): FormRef => {
   return {
     formId: 'test-form',
     formNode: getNode('test-form') as FormKitNode,
+    values: getNode('test-form')?.value as FormValues,
+    updateChangedFields: vi.fn(),
+    updateSchemaDataField: vi.fn(),
     getNodeByName: vi.fn(),
     findNodeByName: vi.fn(),
     resetForm: vi.fn(),
