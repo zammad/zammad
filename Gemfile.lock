@@ -187,7 +187,8 @@ GEM
     crass (1.0.6)
     csv (3.2.8)
     daemons (1.4.1)
-    dalli (3.2.6)
+    dalli (3.2.7)
+      base64
     date (3.3.4)
     debug_inspector (1.1.0)
     delayed_job (4.1.11)
