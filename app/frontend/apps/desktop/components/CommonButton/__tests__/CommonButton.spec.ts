@@ -101,25 +101,26 @@ describe('CommonButton.vue', () => {
   it('supports prefix/suffix icon props', async () => {
     const view = renderComponent(CommonButton, {
       props: {
-        prefixIcon: 'web',
-        suffixIcon: 'web',
+        prefixIcon: 'logo',
+        suffixIcon: 'logo',
       },
     })
 
-    expect(view.getAllByIconName('web').length).toBe(2)
+    expect(view.getAllByIconName('logo').length).toBe(2)
   })
 
   it('supports icon prop', async () => {
     const view = renderComponent(CommonButton, {
       props: {
-        icon: 'web',
+        icon: 'logo',
       },
       slots: {
         default: 'foobar',
       },
     })
 
-    expect(view.getByIconName('web')).toBeInTheDocument()
+    expect(view.getByIconName('logo')).toBeInTheDocument()
+
     expect(
       view.queryByRole('button', { name: 'foobar' }),
     ).not.toBeInTheDocument()

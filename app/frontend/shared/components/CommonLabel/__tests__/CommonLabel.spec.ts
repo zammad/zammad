@@ -36,8 +36,8 @@ describe('CommonLabel.vue', () => {
   it('renders icons (prefix + suffix)', () => {
     const view = renderComponent(CommonLabel, {
       props: {
-        prefixIcon: 'logo',
-        suffixIcon: 'logo-flat',
+        prefixIcon: 'web',
+        suffixIcon: 'web',
       },
       slots: {
         default: 'Dummy',
@@ -47,7 +47,6 @@ describe('CommonLabel.vue', () => {
     const label = view.getByTestId('common-label')
 
     expect(label).toHaveTextContent('Dummy')
-    expect(view.queryByIconName('logo')).toBeInTheDocument()
-    expect(view.queryByIconName('logo-flat')).toBeInTheDocument()
+    expect(view.getAllByIconName('web')).toHaveLength(2)
   })
 })
