@@ -85,17 +85,17 @@ export const useEmailInboundMessagesForm = (
             {
               if: '$metaInformationInbound.archivePossible === true',
               name: 'importAs',
-              label: __('Import as'),
+              label: __('Email import mode'),
               type: 'select',
               value: 'false',
               options: [
                 {
                   value: 'true',
-                  label: __('archive'),
+                  label: __('Import as archive'),
                 },
                 {
                   value: 'false',
-                  label: __('regular'),
+                  label: __('Import as regular'),
                 },
               ],
             },

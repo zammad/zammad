@@ -4689,6 +4689,10 @@ msgstr ""
 msgid "Email could not be verified. Please contact your administrator."
 msgstr ""
 
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+msgid "Email import mode"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
@@ -6422,13 +6426,17 @@ msgid "Import User for requesting the Zendesk API"
 msgstr ""
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-msgid "Import as"
+msgid "Import as archive"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 msgid "Import as archive: |No notifications are sent|, the |tickets are closed|, and original timestamps are used. You can still find them in Zammad using the search."
+msgstr ""
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+msgid "Import as regular"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -14969,10 +14977,6 @@ msgstr ""
 msgid "and"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-msgid "archive"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
 msgstr ""
@@ -15913,10 +15917,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
-msgstr ""
-
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-msgid "regular"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee

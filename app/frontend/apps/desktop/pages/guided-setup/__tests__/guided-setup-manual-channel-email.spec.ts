@@ -425,8 +425,9 @@ describe('guided setup manual channel email', () => {
       )
 
       expect(
-        getByLabelText(inboundMessagesForm, 'Import as'),
+        getByLabelText(inboundMessagesForm, 'Email import mode'),
       ).toBeInTheDocument()
+
       expect(view.getByRole('button', { name: 'Continue' })).toBeInTheDocument()
     })
 
