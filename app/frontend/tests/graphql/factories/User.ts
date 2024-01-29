@@ -21,7 +21,9 @@ export default (
     email: faker.internet.email(),
     fax: null,
     login: faker.internet.userName(),
-    phone: faker.helpers.replaceSymbolWithNumber('+49 #### ######'),
+    phone: '+49 #### ######'.replace(/#+/g, (m) =>
+      faker.string.numeric(m.length),
+    ),
     objectAttributeValues: [],
     createdBy: null,
     secondaryOrganizations: {

@@ -1292,10 +1292,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.56.0.tgz#ef20350fec605a7f7035a01764731b2de0f3782b"
   integrity sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==
 
-"@faker-js/faker@^8.3.1":
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-8.3.1.tgz#7753df0cb88d7649becf984a96dd1bd0a26f43e3"
-  integrity sha512-FdgpFxY6V6rLZE9mmIBb9hM0xpfvQOSNOLnzolzKwsE1DH+gC7lEKV1p1IbR0lAYyvYd5a4u3qWJzowUkw1bIw==
+"@faker-js/faker@^8.4.0":
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-8.4.0.tgz#dc09924ee5fa6438eaaa49d0a8820c64d2f8518f"
+  integrity sha512-htW87352wzUCdX1jyUQocUcmAaFqcR/w082EC8iP/gtkF0K+aKcBp0hR5Arb7dzR8tQ1TrhE9DNa5EbJELm84w==
 
 "@formkit/core@1.2.2", "@formkit/core@^1.2.2":
   version "1.2.2"
