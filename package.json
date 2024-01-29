@@ -79,7 +79,7 @@
     "type-fest": "^4.9.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.12",
-    "vite-plugin-pwa": "^0.17.4",
+    "vite-plugin-pwa": "^0.17.5",
     "vite-plugin-ruby": "^5.0.0",
     "vitest": "^1.2.1",
     "vitest-axe": "^0.1.0",
