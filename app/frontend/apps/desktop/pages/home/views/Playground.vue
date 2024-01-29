@@ -3,6 +3,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { reset } from '@formkit/core'
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import Form from '#shared/components/Form/Form.vue'
@@ -76,16 +77,18 @@ const formSchema = [
     isLayout: true,
     element: 'div',
     attrs: {
-      class: 'grid grid-cols-2 gap-y-2.5 gap-x-3',
+      class: 'grid md:grid-cols-2 gap-y-2.5 gap-x-3',
     },
     children: [
       {
-        name: 'text_1',
-        label: 'Text input',
-        type: 'text',
+        name: 'select_0',
+        label: 'Column select',
+        type: 'select',
         outerClass: 'col-span-1',
         props: {
           maxLength: 150,
+          options: [...alphabetOptions.value, ...[longOption.value]],
+          clearable: true,
         },
       },
       {
@@ -93,7 +96,7 @@ const formSchema = [
         label: 'Column toggle',
         type: 'toggle',
         outerClass: 'col-span-1',
-        wrapperClass: 'mt-6',
+        wrapperClass: 'md:mt-6',
         props: {
           variants: {
             true: 'yes',
@@ -256,6 +259,27 @@ const formSchema = [
   <div class="w-1/2 ltr:ml-2 rtl:mr-2">
     <h2 class="text-lg">Form</h2>
 
-    <Form class="mb-96" form-class="mb-2.5 space-y-2.5" :schema="formSchema" />
+    <Form
+      id="playground-form"
+      class="mb-96"
+      form-class="mb-2.5 space-y-2.5"
+      :schema="formSchema"
+      @submit="console.debug($event)"
+    >
+      <template #after-fields>
+        <div class="mt-5 flex justify-end items-center gap-2">
+          <CommonButton
+            variant="secondary"
+            size="medium"
+            @click="reset('playground-form')"
+          >
+            Reset
+          </CommonButton>
+          <CommonButton variant="submit" type="submit" size="medium">
+            Submit
+          </CommonButton>
+        </div>
+      </template>
+    </Form>
   </div>
 </template>

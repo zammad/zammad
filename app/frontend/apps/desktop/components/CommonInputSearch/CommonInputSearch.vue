@@ -77,18 +77,20 @@ export default {
       decorative
     />
     <div class="relative grow inline-flex overflow-clip">
-      <input
-        ref="filterInput"
-        v-model="filter"
-        v-bind="$attrs"
-        :placeholder="i18n.t(placeholder)"
-        class="grow bg-blue-200 dark:bg-gray-700 text-black dark:text-white outline-none"
-        type="text"
-        role="searchbox"
-        @keydown.right="maybeAcceptSuggestion"
-        @keydown.end="maybeAcceptSuggestion"
-        @keydown.tab="maybeAcceptSuggestion"
-      />
+      <div class="grow">
+        <input
+          ref="filterInput"
+          v-model="filter"
+          v-bind="$attrs"
+          :placeholder="i18n.t(placeholder)"
+          class="w-full min-w-16 bg-blue-200 dark:bg-gray-700 text-black dark:text-white outline-none"
+          type="text"
+          role="searchbox"
+          @keydown.right="maybeAcceptSuggestion"
+          @keydown.end="maybeAcceptSuggestion"
+          @keydown.tab="maybeAcceptSuggestion"
+        />
+      </div>
       <div
         v-if="suggestionVisiblePart?.length"
         class="absolute top-0 flex whitespace-pre pointer-events-none"
