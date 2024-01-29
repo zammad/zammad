@@ -617,7 +617,7 @@ class App.SearchableSelect extends Spine.Controller
       else
         token = which
 
-    id = token.data('value')
+    id = jQuery.escapeSelector(token.data('value'))
     @shadowInput.find("[value=\"#{id}\"]").remove()
     @shadowInput.trigger('change')
     token.remove()
