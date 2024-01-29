@@ -50,14 +50,11 @@ export const useEmailChannelConfiguration = (
       return
     }
 
-    console.log('pendingActiveStep', nextStep)
     pendingActiveStep.value = nextStep
   }
 
   watch(debouncedLoading, (newValue: boolean) => {
-    console.log('activeStep', activeStep.value)
     if (!newValue && pendingActiveStep.value) {
-      console.log('SWITCH', pendingActiveStep.value)
       activeStep.value = pendingActiveStep.value
       pendingActiveStep.value = null
     }
