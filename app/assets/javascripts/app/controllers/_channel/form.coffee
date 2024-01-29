@@ -6,7 +6,7 @@ class ChannelForm extends App.ControllerSubContent
     'change form.js-paramsDesigner': 'updateParamsDesigner'
     'keyup form.js-paramsDesigner': 'updateParamsDesigner'
     'change .js-formSetting input': 'toggleFormSetting'
-    'change .js-paramsSetting select': 'updateGroup'
+    'change .js-paramsSetting input': 'updateGroup'
 
   elements:
     '.js-code': 'code'

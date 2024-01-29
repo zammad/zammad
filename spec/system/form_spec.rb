@@ -99,6 +99,24 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
     end
   end
 
+  context 'when settings are changed' do
+    let(:path)  { 'channels/form' }
+    let(:group) { create(:group) }
+
+    before do
+      group
+      visit path
+    end
+
+    it 'stores settings correctly' do
+      set_tree_select_value('group_id', group.name)
+
+      check_input_field_value('group_id', group.id.to_s, visible: :all)
+
+      wait.until { Setting.get('form_ticket_create_group_id') == group.id.to_s }
+    end
+  end
+
   context 'with in-app form' do
     let(:path)                  { 'channels/form' }
     let(:feedback_modal_button) { '.js-formBtn' }
@@ -139,7 +157,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
   end
 
   context 'with external form' do
-    let(:path) { '/assets/form/form.html' }
+    let(:path)                  { '/assets/form/form.html' }
     let(:feedback_modal_button) { '#feedback-form-modal' }
     let(:form_inline_selector)  { '#feedback-form-inline form.zammad-form' }
 
