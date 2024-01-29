@@ -2894,10 +2894,10 @@
     "@volar/language-core" "1.11.1"
     path-browserify "^1.0.1"
 
-"@vue/apollo-composable@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@vue/apollo-composable/-/apollo-composable-4.0.0.tgz#5cd8d3a8207754718b38deae797a29c90e1f56bb"
-  integrity sha512-n0S/qN9OoguCrND79osTkf0uOluHfyMd+HJbaMh/JhVrv0u6NlK4mPHUWSAxri+8jYFh8H//TrC72tepy3jO8g==
+"@vue/apollo-composable@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@vue/apollo-composable/-/apollo-composable-4.0.1.tgz#94cf7132e81f2187b0f76f841f19be06586b4cdf"
+  integrity sha512-mUiC2ucO4CeRhedC5wcEzzoweuDLB/rgKPAcZEtDYBpErRTeK3CQ1ffygp1E9GbibuTfKms11k5P/DgDYdzhZA==
   dependencies:
     throttle-debounce "^5.0.0"
     ts-essentials "^9.4.0"
@@ -3119,10 +3119,10 @@
     js-beautify "^1.14.9"
     vue-component-type-helpers "^1.8.21"
 
-"@vue/test-utils@^2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.4.3.tgz#d86786d809f918c77fb9e1fafaa2438af37c17d3"
-  integrity sha512-F4K7mF+ad++VlTrxMJVRnenKSJmO6fkQt2wpRDiKDesQMkfpniGWsqEi/JevxGBo2qEkwwjvTUAoiGJLNx++CA==
+"@vue/test-utils@^2.4.4":
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.4.4.tgz#36ba31f90332fb25a5ab2e553652c21d33057094"
+  integrity sha512-8jkRxz8pNhClAf4Co4ZrpAoFISdvT3nuSkUlY6Ys6rmTpw3DMWG/X3mw3gQ7QJzgCZO9f+zuE2kW57fi09MW7Q==
   dependencies:
     js-beautify "^1.14.9"
     vue-component-type-helpers "^1.8.21"
