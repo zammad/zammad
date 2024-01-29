@@ -3,7 +3,7 @@ class Index extends App.ControllerIntegrationBase
   featureName: __('PGP')
   featureConfig: 'pgp_config'
   description: [
-    [__('Pretty Good Privacy (PGP) is an encryption program that can be used for signing, encrypting and decrypting messages and to increase the security of e-mail communication.')]
+    [__('Pretty Good Privacy (PGP) is an encryption program that can be used for signing, encrypting and decrypting messages and to increase the security of email communication.')]
   ]
   events:
     'change .js-switch input': 'switch'

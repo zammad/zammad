@@ -4,7 +4,7 @@ class Auth::TwoFactor::AuthenticationMethod < Auth::TwoFactor::Method
   include Mixin::RequiredSubPaths
 
   # Implement it in the real method itself if you need it.
-  # This needs to be used for e.g. sending out e-mails or SMS.
+  # This needs to be used for e.g. sending out emails or SMS.
   def initiate_authentication; end
 
   # TODO: Add documentation.

@@ -9254,7 +9254,7 @@ msgid "Pretty Good Privacy (PGP) enables you to send digitally signed and encryp
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-msgid "Pretty Good Privacy (PGP) is an encryption program that can be used for signing, encrypting and decrypting messages and to increase the security of e-mail communication."
+msgid "Pretty Good Privacy (PGP) is an encryption program that can be used for signing, encrypting and decrypting messages and to increase the security of email communication."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
