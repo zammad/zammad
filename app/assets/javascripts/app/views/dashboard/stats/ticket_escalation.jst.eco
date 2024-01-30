@@ -8,6 +8,6 @@
   <div class="stat-graphic">
     <%- @Icon("mood-#{@StatsTicketEscalation.state}", 'stat-icon mood-icon') %>
   </div>
-  <div class="stat-label"><%- @T('%s of my tickets escalated.', @StatsTicketEscalation.own) %></div>
+  <div class="stat-label"><%- @T('%s of my tickets escalated', @StatsTicketEscalation.own) %></div>
   <div class="stat-detail"><%- @T('Total: %s', @StatsTicketEscalation.total) %></div>
 </div>
