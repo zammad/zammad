@@ -10,7 +10,7 @@ DeprecationToolkit::Configuration.warnings_treated_as_deprecation = [ %r{depreca
 # Ignore deprecation warnings from dependencies.
 DeprecationToolkit::Configuration.allowed_deprecations = [
   lambda do |_message, stack|
-    path = stack.first.absolute_path.to_s
+    path = stack.reject { |s| s.absolute_path.nil? }.first.absolute_path.to_s
     path.include?('/ruby/') || path.include?('/gems/')
   end
 ]
