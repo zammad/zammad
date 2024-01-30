@@ -9,18 +9,11 @@ export const link = createSection(
   'link',
   () =>
     ({
-      $el: 'div',
+      $cmp: markRaw(FormFieldLink),
       if: '$link',
-      attrs: {
-        class: 'formkit-link flex items-center py-2',
+      props: {
+        link: '$link',
+        linkIcon: '$linkIcon',
       },
-      children: [
-        {
-          $cmp: markRaw(FormFieldLink),
-          props: {
-            link: '$link',
-          },
-        },
-      ],
     }) as unknown as FormKitSchemaNode,
 )

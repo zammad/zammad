@@ -10,6 +10,7 @@ import type {
 } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 import { initializeFormClasses } from '#shared/components/Form/initializeFormClasses.ts'
+import { initializeFieldLinkClasses } from '#shared/components/Form/initializeFieldLinkClasses.ts'
 import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
 import getCoreClasses from './theme/global/getCoreMobileClasses.ts'
 
@@ -35,6 +36,12 @@ export const initializeForm: InitializeAppForm = (app: App) => {
 export const initializeFormFields = () => {
   initializeFormClasses({
     loading: 'my-4',
+  })
+
+  initializeFieldLinkClasses({
+    container: 'formkit-link flex items-center py-2',
+    base: 'border-white/10 ltr:border-l ltr:pl-1 rtl:border-r rtl:pr-1',
+    link: 'h-10 w-12',
   })
 
   initializeToggleClasses({

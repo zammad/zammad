@@ -2,23 +2,36 @@
 
 <script setup lang="ts">
 import type { RouteLocationRaw } from 'vue-router'
+import { getFieldLinkClasses } from './initializeFieldLinkClasses.ts'
 
-defineProps<{
-  link: RouteLocationRaw
-}>()
+withDefaults(
+  defineProps<{
+    link: RouteLocationRaw
+    linkIcon?: string
+  }>(),
+  {
+    linkIcon: 'form-field-link',
+  },
+)
+
+const classMap = getFieldLinkClasses()
 </script>
 
 <template>
-  <div
-    class="flex h-full items-center border-white/10 focus:outline-none ltr:border-l ltr:pl-1 rtl:border-r rtl:pr-1"
-  >
-    <CommonLink
-      v-if="link"
-      :link="link"
-      class="flex h-10 w-12 items-center justify-center"
-      open-in-new-tab
+  <div :class="classMap.container">
+    <div
+      :class="classMap.base"
+      class="flex h-full items-center focus:outline-none"
     >
-      <CommonIcon name="form-field-link" decorative size="small" />
-    </CommonLink>
+      <CommonLink
+        v-if="link"
+        :link="link"
+        :class="classMap.link"
+        class="flex items-center justify-center"
+        open-in-new-tab
+      >
+        <CommonIcon :name="linkIcon" size="small" decorative />
+      </CommonLink>
+    </div>
   </div>
 </template>

@@ -65,6 +65,7 @@ describe('correctly adds signature', () => {
         })
     })
   })
+
   it('add bottom signature when content is already there', () => {
     mountEditor()
 
@@ -95,6 +96,7 @@ describe('correctly adds signature', () => {
           })
       })
   })
+
   it('add signature before marker', () => {
     const originalBody = html`<p data-marker="signature-before"></p>
       <blockquote type="cite">
@@ -120,7 +122,9 @@ describe('correctly adds signature', () => {
         'contain.html',
         '<p data-marker="signature-before"><br class="ProseMirror-trailingBreak"></p><blockquote ',
       )
-      .type('text')
+      .type('{moveToStart}text')
+
+    cy.findByRole('textbox')
       .should('contain.html', '<p>text</p><div data-signature')
       .then(resolveContext)
       .then((context) => {

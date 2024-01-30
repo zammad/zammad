@@ -124,6 +124,8 @@ const formSchema = [
     clearable: true,
     props: {
       options: [...alphabetOptions.value, ...[longOption.value]],
+      link: '/',
+      linkIcon: 'person-add',
     },
   },
   {

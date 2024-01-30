@@ -1,5 +1,6 @@
 # Third Party Icons (`desktop`)
 
+- `assets/backspace.svg`
 - `assets/box-arrow-up-right.svg`
 - `assets/check-all.svg`
 - `assets/check-circle-outline.svg`
@@ -15,6 +16,7 @@
 - `assets/info-circle.svg`
 - `assets/key.svg`
 - `assets/moon.svg`
+- `assets/person-add.svg`
 - `assets/phone.svg`
 - `assets/search.svg`
 - `assets/spinner.svg`
