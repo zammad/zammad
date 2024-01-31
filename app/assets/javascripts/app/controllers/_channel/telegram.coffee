@@ -137,6 +137,12 @@ class BotAdd extends App.ControllerModal
     @load()
 
   onSubmit: (e) =>
+
+    # validate form using HTML5 validity check
+    element = $(e.target).closest('form').get(0)
+    if element && element.reportValidity && !element.reportValidity()
+      return false
+
     @formDisable(e)
     @ajax(
       id:   'telegram_app_verify'
@@ -183,6 +189,12 @@ class BotEdit extends App.ControllerModal
     @load()
 
   onSubmit: (e) =>
+
+    # validate form using HTML5 validity check
+    element = $(e.target).closest('form').get(0)
+    if element && element.reportValidity && !element.reportValidity()
+      return false
+
     @formDisable(e)
     params = @formParams()
     @channel.options = params

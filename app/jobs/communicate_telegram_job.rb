@@ -31,7 +31,7 @@ class CommunicateTelegramJob < ApplicationJob
     begin
       Telegram::Bot::Client.run(channel.options[:api_token]) do |bot|
         chat_id = ticket.preferences[:telegram][:chat_id]
-        result = bot.api.sendMessage(chat_id: chat_id, text: article.body)['result']
+        result = bot.api.sendMessage(chat_id: chat_id, text: article.body)
 
         article.attachments.each do |file|
           parts = file.filename.split(%r{^(.*)(\..+?)$})
@@ -57,27 +57,27 @@ class CommunicateTelegramJob < ApplicationJob
     Rails.logger.debug { "result info: #{result}" }
 
     # only private, group messages. channel messages do not have from key
-    if result['from'] && result['chat']
+    if result.from && result.chat
       # fill article with message info
-      article.from = "@#{result['from']['username']}"
-      article.to = "@#{result['chat']['username']}"
+      article.from = "@#{result.from.username}"
+      article.to = "@#{result.chat.username}"
 
       article.preferences['telegram'] = {
-        date:       result['date'],
-        from_id:    result['from']['id'],
-        chat_id:    result['chat']['id'],
-        message_id: result['message_id']
+        date:       result.date,
+        from_id:    result.from.id,
+        chat_id:    result.chat.id,
+        message_id: result.message_id
       }
     else
       # fill article with message info (telegram channel)
       article.from = "@#{me['username']}"
-      article.to = "#{result['chat']['title']} Channel"
+      article.to = "#{result.chat.title} Channel"
 
       article.preferences['telegram'] = {
-        date:       result['date'],
+        date:       result.date,
         from_id:    me['id'],
-        chat_id:    result['chat']['id'],
-        message_id: result['message_id']
+        chat_id:    result.chat.id,
+        message_id: result.message_id
       }
     end
 
@@ -86,7 +86,7 @@ class CommunicateTelegramJob < ApplicationJob
     article.preferences['delivery_status'] = 'success'
     article.preferences['delivery_status_date'] = Time.zone.now
 
-    article.message_id = "telegram.#{result['message_id']}.#{result['chat']['id']}"
+    article.message_id = "telegram.#{result.message_id}.#{result.chat.id}"
 
     article.save!
 

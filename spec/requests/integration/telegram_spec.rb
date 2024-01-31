@@ -26,10 +26,10 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
       it 'valid token' do
 
         stub_request(:post, "https://api.telegram.org/bot#{token}/getMe")
-          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
+          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\",\"is_bot\":true}}", headers: {})
 
         bot = TelegramHelper.check_token(token)
-        expect(bot['id']).to eq(bot_id)
+        expect(bot.id).to eq(bot_id)
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
         Setting.set('http_type', 'http')
 
         stub_request(:post, "https://api.telegram.org/bot#{token}/getMe")
-          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
+          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\",\"is_bot\":true}}", headers: {})
 
         expect do
           TelegramHelper.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
@@ -54,7 +54,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
         Setting.set('fqdn', 'somehost.example.com:12345')
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token}/getMe")
-          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
+          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\",\"is_bot\":true}}", headers: {})
         stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
           .with(body: { 'url' => URI.encode_www_form(["https://somehost.example.com:12345/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}"]) })
           .to_return(status: 400, body: '{"ok":false,"error_code":400,"description":"Bad Request: bad webhook: Webhook can be set up only on ports 80, 88, 443 or 8443"}', headers: {})
@@ -70,7 +70,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
         Setting.set('fqdn', 'somehost.example.com')
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token}/getMe")
-          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
+          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\",\"is_bot\":true}}", headers: {})
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
           .with(body: { 'url' => URI.encode_www_form(["https://somehost.example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}"]) })
@@ -88,7 +88,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
         UserInfo.current_user_id = 1
 
         stub_request(:post, "https://api.telegram.org/bot#{token}/getMe")
-          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
+          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\",\"is_bot\":true}}", headers: {})
 
         stub_request(:post, "https://api.telegram.org/bot#{token}/setWebhook")
           .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}" })
@@ -107,14 +107,14 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
         Setting.set('fqdn', 'example.com')
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token}/getMe")
-          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
+          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\",\"is_bot\":true}}", headers: {})
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
           .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}" })
           .to_return(status: 200, body: '{"ok":true,"result":true,"description":"Webhook was set"}', headers: {})
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token2}/getMe")
-          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id2},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot2\"}}", headers: {})
+          .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id2},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot2\",\"is_bot\":true}}", headers: {})
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token2}/setWebhook")
           .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id2}" })
@@ -424,7 +424,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
       %w[document documentthumb voice sticker stickerthumb video videothumb photo].each do |file|
         stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
           .with(body: { 'file_id' => "#{file}fileid" })
-          .to_return(status: 200, body: "{\"result\":{\"file_size\":123456,\"file_id\":\"#{file}fileid\",\"file_path\":\"documentfile\"}}", headers: {})
+          .to_return(status: 200, body: "{\"result\":{\"file_size\":123456,\"file_id\":\"#{file}fileid\",\"file_path\":\"documentfile\",\"file_unique_id\":\"file123\"}}", headers: {})
         stub_request(:get, "https://api.telegram.org/file/bot#{token}/#{file}file")
           .to_return(status: 200, body: "#{file}file", headers: {})
       end
@@ -432,7 +432,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
       [1, 2, 3].each do |id|
         stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
           .with(body: { 'file_id' => "photofileid#{id}" })
-          .to_return(status: 200, body: "{\"result\":{\"file_size\":3622849,\"file_id\":\"photofileid#{id}\",\"file_path\":\"photofile\"}}", headers: {})
+          .to_return(status: 200, body: "{\"result\":{\"file_size\":3622849,\"file_id\":\"photofileid#{id}\",\"file_path\":\"photofile\",\"file_unique_id\":\"file456\"}}", headers: {})
         stub_request(:get, "https://api.telegram.org/file/bot#{token}/photofile")
           .to_return(status: 200, body: 'photofile', headers: {})
       end
