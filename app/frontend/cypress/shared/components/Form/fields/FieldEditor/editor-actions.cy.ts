@@ -13,13 +13,16 @@ const testAction = (
       mountEditor()
       cy.findByRole('textbox').click()
       cy.findByTestId('action-bar').findByLabelText(action).click()
-      cy.findByRole('textbox')
-        .type(typeText)
-        .should('contain.html', expected(typeText))
+
+      // It is unsafe to chain further commands that rely on the subject after `.type()`.
+      //   https://docs.cypress.io/api/commands/type
+      cy.findByRole('textbox').type(typeText)
+      cy.findByRole('textbox').should('contain.html', expected(typeText))
     })
 
     it(`${action}${hint} - toggle text`, () => {
       mountEditor()
+
       cy.findByRole('textbox').type(`${typeText}{selectall}`)
       cy.findByTestId('action-bar').findByLabelText(action).click()
       cy.findByRole('textbox').should('contain.html', expected(typeText))
@@ -54,14 +57,20 @@ describe('testing actions', () => {
   describe('testing action - remove formatting', () => {
     it('removes formatting', () => {
       mountEditor()
+
       cy.findByRole('textbox').click()
       cy.findByTestId('action-bar').findByLabelText('Format as bold').click()
-      cy.findByRole('textbox')
-        .type('Text')
-        .should('have.html', '<p><strong>Text</strong></p>')
-        .type('{selectall}')
+      cy.findByRole('textbox').type('Text')
+
+      cy.findByRole('textbox').should(
+        'have.html',
+        '<p><strong>Text</strong></p>',
+      )
+
+      cy.findByRole('textbox').type('{selectall}')
       cy.findByTestId('action-bar').findByLabelText('Remove formatting').click()
-      cy.findByRole('textbox').type('Text').should('have.html', '<p>Text</p>')
+      cy.findByRole('textbox').type('Text')
+      cy.findByRole('textbox').should('have.html', '<p>Text</p>')
     })
   })
 
@@ -81,7 +90,9 @@ describe('testing actions', () => {
   it('makes text into a link', () => {
     cy.window().then((win) => {
       cy.stub(win, 'prompt').returns('https://example.com')
+
       mountEditor()
+
       cy.findByRole('textbox').click().type('Text{selectAll}')
       cy.findByTestId('action-bar').findByLabelText('Add link').click()
       cy.findByRole('textbox')
