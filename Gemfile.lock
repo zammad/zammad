@@ -601,7 +601,7 @@ GEM
     simpleidn (0.2.1)
       unf (~> 0.1.4)
     slack-notifier (2.4.0)
-    slack-ruby-client (2.2.0)
+    slack-ruby-client (2.3.0)
       faraday (>= 2.0)
       faraday-mashify
       faraday-multipart
