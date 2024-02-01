@@ -210,10 +210,9 @@ It should get used in batches to prevent performance issues on entities which ha
     return if where.blank?
 
     url_params = {
-      conflicts:           'proceed',
-      slices:              'auto',
-      requests_per_second: 5000,
-      max_docs:            25_000,
+      conflicts: 'proceed',
+      slices:    'auto',
+      max_docs:  1_000,
     }
     url = build_url(type: type, action: '_update_by_query', with_pipeline: false, with_document_type: false, url_params: url_params)
     return if url.blank?
