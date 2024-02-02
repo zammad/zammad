@@ -30,7 +30,9 @@ const testAction = (
   })
 }
 
-describe('testing actions', () => {
+// Some test examples in this suite may be flaky due to asynchronous nature of the editor typing mechanism.
+//   Configure run mode to retry several times before giving up.
+describe('testing actions', { retries: { runMode: 2 } }, () => {
   testAction('Format as underlined', (text) => `<u>${text}</u>`)
   testAction('Format as bold', (text) => `<strong>${text}</strong>`)
   testAction('Format as italic', (text) => `<em>${text}</em>`)
