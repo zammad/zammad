@@ -118,6 +118,51 @@ const formSchema = [
     ],
   },
   {
+    name: 'group_permission_0',
+    label: 'Group permissions',
+    type: 'groupPermissions',
+    props: {
+      groups: [
+        {
+          value: 1,
+          label: 'Users',
+        },
+        {
+          value: 2,
+          label: 'some_group1',
+          children: [
+            {
+              value: 3,
+              label: 'Nested group',
+            },
+          ],
+        },
+      ],
+      groupAccesses: [
+        {
+          access: 'read',
+          label: 'Read',
+        },
+        {
+          access: 'create',
+          label: 'Create',
+        },
+        {
+          access: 'change',
+          label: 'Change',
+        },
+        {
+          access: 'overview',
+          label: 'Overview',
+        },
+        {
+          access: 'full',
+          label: 'Full',
+        },
+      ],
+    },
+  },
+  {
     type: 'select',
     name: 'select_1',
     label: 'Single select',

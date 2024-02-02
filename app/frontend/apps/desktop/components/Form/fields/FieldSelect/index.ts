@@ -9,6 +9,7 @@ import FieldSelectInput from './FieldSelectInput.vue'
 const fieldDefinition = createInput(
   FieldSelectInput,
   [
+    'alternativeBackground',
     'clearable',
     'historicalOptions',
     'multiple',

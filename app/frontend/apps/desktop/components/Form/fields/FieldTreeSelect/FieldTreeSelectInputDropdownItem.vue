@@ -55,12 +55,13 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
 <template>
   <div
     :class="{
-      'pointer-events-none': option.disabled,
+      'hover:bg-blue-600 dark:hover:bg-blue-900 focus:bg-blue-800 dark:hover:focus:bg-blue-800 focus:text-white cursor-pointer':
+        !option.disabled,
     }"
     :tabindex="option.disabled ? '-1' : '0'"
     :aria-selected="selected"
     :aria-disabled="option.disabled ? 'true' : undefined"
-    class="group h-9 px-2.5 flex cursor-pointer items-center self-stretch gap-1.5 text-sm text-black dark:text-white outline-none hover:bg-blue-600 dark:hover:bg-blue-900 focus:bg-blue-800 dark:hover:focus:bg-blue-800 focus:text-white"
+    class="group h-9 px-2.5 flex items-center self-stretch gap-1.5 text-sm text-black dark:text-white outline-none"
     role="option"
     :data-value="option.value"
     @click="select(option)"
@@ -70,12 +71,14 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     <CommonIcon
       v-if="multiple"
       :class="{
+        'fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white':
+          !option.disabled,
         'fill-stone-200 dark:fill-neutral-500': option.disabled,
       }"
       size="xs"
       decorative
       :name="selected ? 'check-square' : 'square'"
-      class="shrink-0 fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0"
     />
     <CommonIcon
       v-if="option.icon"
@@ -90,7 +93,8 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     <span
       v-if="filter"
       :class="{
-        'text-stone-200 dark:text-neutral-500': option.disabled,
+        'text-stone-200 dark:text-neutral-500 pointer-events-none':
+          option.disabled,
       }"
       class="grow truncate"
       :title="label"
@@ -99,7 +103,8 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     <span
       v-else
       :class="{
-        'text-stone-200 dark:text-neutral-500': option.disabled,
+        'text-stone-200 dark:text-neutral-500 pointer-events-none':
+          option.disabled,
       }"
       :title="label"
       class="grow truncate"
@@ -128,7 +133,11 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
       @keypress.space.prevent.stop="goToNextPage(option)"
     >
       <CommonIcon
-        class="shrink-0 fill-stone-200 dark:fill-neutral-500 group-hover:fill-black group-hover/nav:!fill-white dark:group-hover:fill-white group-focus:group-hover/nav:!fill-black dark:group-focus:group-hover/nav:!fill-white group-focus:fill-white"
+        :class="{
+          'group-hover:fill-black dark:group-hover:fill-white group-focus:group-hover/nav:!fill-black dark:group-focus:group-hover/nav:!fill-white group-focus:fill-white':
+            !option.disabled,
+        }"
+        class="shrink-0 fill-stone-200 dark:fill-neutral-500 group-hover/nav:!fill-white"
         :name="
           locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'
         "

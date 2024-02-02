@@ -20,7 +20,9 @@ import FieldTreeSelectInputDropdown from './FieldTreeSelectInputDropdown.vue'
 import useFlatSelectOptions from './useFlatSelectOptions.ts'
 
 interface Props {
-  context: TreeSelectContext
+  context: TreeSelectContext & {
+    alternativeBackground?: boolean
+  }
 }
 
 const props = defineProps<Props>()
@@ -204,13 +206,15 @@ setupMissingOrDisabledOptionHandling()
 <template>
   <div
     ref="input"
-    class="flex h-auto min-h-10 bg-blue-200 dark:bg-gray-700 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900 has-[output:focus,input:focus]:outline has-[output:focus,input:focus]:outline-1 has-[output:focus,input:focus]:outline-offset-1 has-[output:focus,input:focus]:outline-blue-800 dark:has-[output:focus,input:focus]:outline-blue-800"
+    class="flex h-auto min-h-10 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900 has-[output:focus,input:focus]:outline has-[output:focus,input:focus]:outline-1 has-[output:focus,input:focus]:outline-offset-1 has-[output:focus,input:focus]:outline-blue-800 dark:has-[output:focus,input:focus]:outline-blue-800"
     :class="[
       context.classes.input,
       {
         'rounded-lg': !select?.isOpen,
         'rounded-t-lg': select?.isOpen && !isBelowHalfScreen,
         'rounded-b-lg': select?.isOpen && isBelowHalfScreen,
+        'bg-blue-200 dark:bg-gray-700': !context.alternativeBackground,
+        'bg-white dark:bg-gray-500': context.alternativeBackground,
       },
     ]"
     data-test-id="field-treeselect"
@@ -242,14 +246,11 @@ setupMissingOrDisabledOptionHandling()
         ref="outputElement"
         role="combobox"
         :name="context.node.name"
-        class="px-2.5 py-2 flex grow gap-2.5 items-center text-black dark:text-white focus:outline-none formkit-disabled:pointer-events-none"
+        class="px-2.5 py-2 flex grow gap-2.5 items-center text-black dark:text-white focus:outline-none"
         :tabindex="context.disabled ? '-1' : '0'"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled ? 'true' : undefined"
-        v-bind="{
-          ...context.attrs,
-          onBlur: undefined,
-        }"
+        v-bind="context.attrs"
         :data-multiple="context.multiple"
         aria-autocomplete="none"
         aria-controls="field-tree-select-input-dropdown"
@@ -275,7 +276,12 @@ setupMissingOrDisabledOptionHandling()
             role="listitem"
           >
             <div
-              class="inline-flex items-center px-1.5 py-0.5 gap-1 rounded bg-white dark:bg-gray-200 text-black dark:text-white text-xs cursor-default"
+              class="inline-flex items-center px-1.5 py-0.5 gap-1 rounded text-black dark:text-white text-xs cursor-default"
+              :class="{
+                'bg-white dark:bg-gray-200': !context.alternativeBackground,
+                'bg-neutral-100 dark:bg-gray-200':
+                  context.alternativeBackground,
+              }"
             >
               <CommonIcon
                 v-if="getSelectedOptionIcon(selectedValue)"
@@ -313,6 +319,7 @@ setupMissingOrDisabledOptionHandling()
           ref="filterInput"
           v-model="filter"
           :suggestion="suggestedOptionLabel"
+          :alternative-background="context.alternativeBackground"
           @keypress.space.stop
         />
         <div v-else class="flex grow flex-wrap gap-1" role="list">

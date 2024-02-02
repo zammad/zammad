@@ -26,10 +26,11 @@ export const getCoreDesktopClasses: FormThemeExtension = (
 ) => {
   return {
     global: extendClasses(classes.global, {
-      wrapper: 'flex-grow',
+      wrapper:
+        'flex-grow formkit-disabled:opacity-50 formkit-disabled:pointer-events-none',
       block: 'flex items-end',
       label:
-        'block mb-1 text-sm text-gray-100 dark:text-neutral-400 formkit-disabled:pointer-events-none formkit-required:required formkit-invalid:text-red-500 formkit-errors:text-red-500',
+        'block mb-1 text-sm text-gray-100 dark:text-neutral-400 formkit-required:required formkit-invalid:text-red-500 formkit-errors:text-red-500',
       inner: 'rounded-lg text-sm',
       messages: 'mt-1 formkit-invalid:text-red-500 formkit-errors:text-red-500',
       help: 'text-stone-200 dark:text-neutral-500 mt-1',
@@ -52,12 +53,12 @@ export const getCoreDesktopClasses: FormThemeExtension = (
     checkbox: {
       outer: 'leading-none',
       wrapper: 'inline-flex items-center cursor-pointer select-none',
-      label: 'text-sm text-gray-100 dark:text-neutral-400',
+      label: 'mb-0 text-sm text-gray-100 dark:text-neutral-400',
       inner: 'w-5 h-5 flex justify-center items-center ltr:mr-1 rtl:ml-1',
       input:
         'peer appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
       decorator:
-        'w-3 h-3 relative border border-stone-200 dark:border-neutral-500 peer-hover:border-blue-600 dark:peer-hover:border-blue-900 peer-focus:border-blue-800 peer-focus:outline peer-focus:outline-1 peer-focus:outline-offset-1 peer-focus:outline-blue-800 rounded-sm bg-transparent text-stone-200 dark:text-neutral-500 peer-hover:text-blue-600 dark:peer-hover:text-blue-900 peer-focus:text-blue-800',
+        'w-3 h-3 relative border peer-hover:border-blue-600 dark:peer-hover:border-blue-900 peer-focus:border-blue-800 peer-focus:outline peer-focus:outline-1 peer-focus:outline-offset-1 peer-focus:outline-blue-800 rounded-sm bg-transparent peer-hover:text-blue-600 dark:peer-hover:text-blue-900 peer-focus:text-blue-800',
       decoratorIcon:
         'absolute invisible formkit-is-checked:visible -top-px ltr:-left-px rtl:-right-px',
     },
@@ -80,6 +81,10 @@ export const getCoreDesktopClasses: FormThemeExtension = (
       wrapper: 'h-10 flex flex-row-reverse items-center gap-1.5',
       label: '!mb-0 grow',
       inner: 'h-6',
+    }),
+    groupPermissions: extendClasses(classes.groupPermissions, {
+      inner:
+        'w-full bg-blue-200 dark:bg-gray-700 formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
     }),
   }
 }

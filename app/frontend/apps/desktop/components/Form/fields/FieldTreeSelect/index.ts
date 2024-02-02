@@ -24,6 +24,7 @@ declare module '@formkit/inputs' {
 const fieldDefinition = createInput(
   FieldTreeSelectInput,
   [
+    'alternativeBackground',
     'clearable',
     'historicalOptions',
     'multiple',

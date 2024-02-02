@@ -9,6 +9,7 @@ export interface CommonInputSearchProps {
   wrapperClass?: string
   placeholder?: string
   suggestion?: string
+  alternativeBackground?: boolean
 }
 
 export interface CommonInputSearchEmits {
@@ -83,7 +84,11 @@ export default {
           v-model="filter"
           v-bind="$attrs"
           :placeholder="i18n.t(placeholder)"
-          class="w-full min-w-16 bg-blue-200 dark:bg-gray-700 text-black dark:text-white outline-none"
+          class="w-full min-w-16 text-black dark:text-white outline-none"
+          :class="{
+            'bg-blue-200 dark:bg-gray-700': !alternativeBackground,
+            'bg-white dark:bg-gray-500': alternativeBackground,
+          }"
           type="text"
           role="searchbox"
           @keydown.right="maybeAcceptSuggestion"

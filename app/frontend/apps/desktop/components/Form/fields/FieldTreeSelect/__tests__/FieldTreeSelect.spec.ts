@@ -531,7 +531,7 @@ describe('Form - Field - TreeSelect - Options', () => {
     let selectOptions = getAllByRole(listbox, 'option')
 
     expect(selectOptions[1]).toHaveAttribute('aria-disabled', 'true')
-    expect(selectOptions[1]).toHaveClass('pointer-events-none')
+    expect(selectOptions[1].childNodes[2]).toHaveClass('pointer-events-none')
 
     expect(getByText(listbox, disabledOptions[1].label)).toHaveClasses([
       'text-stone-200',
@@ -1538,8 +1538,9 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Treeselect')).toHaveClass(
-      'formkit-disabled:pointer-events-none',
+    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute(
+      'aria-disabled',
+      'true',
     )
   })
 

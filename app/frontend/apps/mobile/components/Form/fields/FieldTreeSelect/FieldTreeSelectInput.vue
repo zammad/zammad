@@ -172,10 +172,7 @@ setupMissingOrDisabledOptionHandling()
       :tabindex="context.disabled ? '-1' : '0'"
       :aria-labelledby="`label-${context.id}`"
       :aria-disabled="context.disabled ? 'true' : undefined"
-      v-bind="{
-        ...context.attrs,
-        onBlur: undefined,
-      }"
+      v-bind="context.attrs"
       :data-multiple="context.multiple"
       aria-haspopup="dialog"
       aria-autocomplete="none"

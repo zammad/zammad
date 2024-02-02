@@ -98,6 +98,7 @@ const classMap = getToggleClasses()
     :aria-disabled="disabled"
     :aria-checked="localValue"
     :tabindex="context.disabled ? '-1' : '0'"
+    :v-bind="context.attrs"
     @click="updateLocalValue"
     @keydown.space="updateLocalValue"
   >

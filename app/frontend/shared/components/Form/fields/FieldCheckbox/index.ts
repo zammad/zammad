@@ -2,6 +2,8 @@
 
 import type { FormKitNode } from '@formkit/core'
 import { checkbox as checkboxDefinition } from '@formkit/inputs'
+import { has } from '@formkit/utils'
+import { useAppName } from '#shared/composables/useAppName.ts'
 import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
@@ -19,8 +21,42 @@ const addCheckedDataAttribute = (node: FormKitNode) => {
   })
 }
 
+const handleAlternativeBorder = (node: FormKitNode) => {
+  // The alternative border color below is specific to desktop field design only.
+  if (useAppName() !== 'desktop') return
+
+  const { props } = node
+
+  node.addProps(['alternativeBorder'])
+
+  const setClasses = (alternativeBorder: boolean) => {
+    if (alternativeBorder) {
+      props.decoratorClass =
+        'border-gray-300 dark:border-neutral-400 text-gray-300 dark:text-neutral-400'
+    } else {
+      props.decoratorClass =
+        'border-stone-200 dark:border-neutral-500 text-stone-200 dark:text-neutral-500'
+    }
+  }
+
+  node.on('created', () => {
+    if (!has(props, 'alternativeBorder')) props.alternativeBorder = false
+
+    setClasses(props.alternativeBorder)
+
+    node.on('prop:alternativeBorder', ({ payload }) => {
+      setClasses(payload)
+    })
+  })
+}
+
 initializeFieldDefinition(checkboxDefinition, {
-  features: [addCheckedDataAttribute, formUpdaterTrigger()],
+  props: ['alternativeBorder'],
+  features: [
+    addCheckedDataAttribute,
+    handleAlternativeBorder,
+    formUpdaterTrigger(),
+  ],
 })
 
 export default {

@@ -9,6 +9,7 @@
 - `assets/chevron-down.svg`
 - `assets/chevron-left.svg`
 - `assets/chevron-right.svg`
+- `assets/dash-circle.svg`
 - `assets/exclamation-triangle.svg`
 - `assets/eye-slash.svg`
 - `assets/eye.svg`
@@ -18,6 +19,7 @@
 - `assets/moon.svg`
 - `assets/person-add.svg`
 - `assets/phone.svg`
+- `assets/plus-circle.svg`
 - `assets/search.svg`
 - `assets/spinner.svg`
 - `assets/square.svg`

@@ -17,7 +17,9 @@ import type { SelectContext } from '#shared/components/Form/fields/FieldSelect/t
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 
 interface Props {
-  context: SelectContext
+  context: SelectContext & {
+    alternativeBackground?: boolean
+  }
 }
 
 const props = defineProps<Props>()
@@ -141,13 +143,15 @@ setupMissingOrDisabledOptionHandling()
 <template>
   <div
     ref="input"
-    class="flex h-auto min-h-10 bg-blue-200 dark:bg-gray-700 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900 has-[output:focus,input:focus]:outline has-[output:focus,input:focus]:outline-1 has-[output:focus,input:focus]:outline-offset-1 has-[output:focus,input:focus]:outline-blue-800 dark:has-[output:focus,input:focus]:outline-blue-800"
+    class="flex h-auto min-h-10 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900 has-[output:focus,input:focus]:outline has-[output:focus,input:focus]:outline-1 has-[output:focus,input:focus]:outline-offset-1 has-[output:focus,input:focus]:outline-blue-800 dark:has-[output:focus,input:focus]:outline-blue-800"
     :class="[
       context.classes.input,
       {
         'rounded-lg': !select?.isOpen,
         'rounded-t-lg': select?.isOpen && !isBelowHalfScreen,
         'rounded-b-lg': select?.isOpen && isBelowHalfScreen,
+        'bg-blue-200 dark:bg-gray-700': !context.alternativeBackground,
+        'bg-white dark:bg-gray-500': context.alternativeBackground,
       },
     ]"
     data-test-id="field-select"
@@ -182,10 +186,7 @@ setupMissingOrDisabledOptionHandling()
         :tabindex="
           context.disabled || (expanded && !context.noFiltering) ? '-1' : '0'
         "
-        v-bind="{
-          ...context.attrs,
-          onBlur: undefined,
-        }"
+        v-bind="context.attrs"
         @keydown.escape.prevent="closeDropdown()"
         @keypress.enter.prevent="openSelectDropdown()"
         @keydown.down.prevent="openOrMoveFocusToDropdown()"
@@ -205,7 +206,12 @@ setupMissingOrDisabledOptionHandling()
             role="listitem"
           >
             <div
-              class="inline-flex items-center px-1.5 py-0.5 gap-1 rounded bg-white dark:bg-gray-200 text-black dark:text-white text-xs"
+              class="inline-flex items-center px-1.5 py-0.5 gap-1 rounded text-black dark:text-white text-xs"
+              :class="{
+                'bg-white dark:bg-gray-200': !context.alternativeBackground,
+                'bg-neutral-100 dark:bg-gray-200':
+                  context.alternativeBackground,
+              }"
             >
               <CommonIcon
                 v-if="getSelectedOptionIcon(selectedValue)"
@@ -249,6 +255,7 @@ setupMissingOrDisabledOptionHandling()
           ref="filterInput"
           v-model="filter"
           :suggestion="suggestedOptionLabel"
+          :alternative-background="context.alternativeBackground"
           @keypress.space.stop
         />
         <div v-else class="flex grow flex-wrap gap-1" role="list">

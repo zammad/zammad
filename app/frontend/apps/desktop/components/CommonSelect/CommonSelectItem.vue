@@ -58,12 +58,14 @@ const label = computed(() => {
     <CommonIcon
       v-if="multiple"
       :class="{
+        'fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white':
+          !option.disabled,
         'fill-stone-200 dark:fill-neutral-500': option.disabled,
       }"
       size="xs"
       decorative
       :name="selected ? 'check-square' : 'square'"
-      class="shrink-0 fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0"
     />
     <CommonIcon
       v-if="option.icon"

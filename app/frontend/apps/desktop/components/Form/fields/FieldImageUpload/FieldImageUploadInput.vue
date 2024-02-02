@@ -4,6 +4,7 @@ import { computed, ref, toRef } from 'vue'
 import { useDropZone } from '@vueuse/core'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
+import useValue from '#shared/components/Form/composables/useValue.ts'
 import { i18n } from '#shared/i18n.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
@@ -17,12 +18,14 @@ const props = defineProps<Props>()
 
 const contextReactive = toRef(props, 'context')
 
+const { localValue } = useValue(contextReactive)
+
 const imageUpload = computed<string>({
   get() {
-    return contextReactive.value._value || ''
+    return localValue.value || ''
   },
   set(value) {
-    props.context.node.input(value)
+    localValue.value = value
   },
 })
 
@@ -137,13 +140,11 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
       :name="context.node.name"
       :disabled="context.disabled"
       class="hidden"
+      :class="context.classes.input"
       tabindex="-1"
       aria-hidden="true"
       accept="image/*"
-      v-bind="{
-        ...context.attrs,
-        onBlur: undefined,
-      }"
+      v-bind="context.attrs"
       @change="!context.disabled && onFileChanged($event)"
     />
   </div>
