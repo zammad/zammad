@@ -53,43 +53,18 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # check if system setup is already done
     return if setup_done_response
 
-    # check it auto wizard is enabled
-    if !AutoWizard.enabled?
-      render json: {
+    begin
+      auto_wizard_admin = Service::System::RunAutoWizard.new.execute(token: params[:token])
+    rescue Service::System::RunAutoWizard::AutoWizardNotEnabledError
+      return render json: {
         auto_wizard: false,
       }
-      return
-    end
-
-    # verify auto wizard file
-    auto_wizard_data = AutoWizard.data
-    if auto_wizard_data.blank?
-      render json: {
+    rescue Service::System::RunAutoWizard::AutoWizardExecutionError => e
+      return render json: {
         auto_wizard:         true,
         auto_wizard_success: false,
-        message:             __('Invalid auto wizard file.'),
+        message:             e.message,
       }
-      return
-    end
-
-    # verify auto wizard token
-    if auto_wizard_data['Token'] && auto_wizard_data['Token'] != params[:token]
-      render json: {
-        auto_wizard:         true,
-        auto_wizard_success: false,
-      }
-      return
-    end
-
-    # execute auto wizard
-    auto_wizard_admin = AutoWizard.setup
-    if !auto_wizard_admin
-      render json: {
-        auto_wizard:         true,
-        auto_wizard_success: false,
-        message:             __('Error during execution of auto wizard.'),
-      }
-      return
     end
 
     # set current session user

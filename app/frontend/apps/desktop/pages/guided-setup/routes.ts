@@ -23,6 +23,33 @@ const route: RouteRecordRaw[] = [
         },
       },
       {
+        path: 'automated/',
+        name: 'GuidedSetupAutomatedInfo',
+        component: () =>
+          import('./views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue'),
+        meta: {
+          title: __('Automated Setup'),
+          requiresAuth: false,
+          requiredPermission: null,
+          hasOwnLandmarks: true,
+          sidebar: false,
+        },
+      },
+      {
+        path: 'automated/run/:token?',
+        name: 'GuidedSetupAutomatedRun',
+        props: true,
+        component: () =>
+          import('./views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue'),
+        meta: {
+          title: __('Automated Setup'),
+          requiresAuth: false,
+          requiredPermission: null,
+          hasOwnLandmarks: true,
+          sidebar: false,
+        },
+      },
+      {
         path: 'manual',
         name: 'GuidedSetupManual',
         component: () =>

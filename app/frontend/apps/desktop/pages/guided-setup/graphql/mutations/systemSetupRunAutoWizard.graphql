@@ -1,0 +1,10 @@
+mutation systemSetupRunAutoWizard($token: String) {
+  systemSetupRunAutoWizard(token: $token) {
+    session {
+      ...session
+    }
+    errors {
+      ...errors
+    }
+  }
+}

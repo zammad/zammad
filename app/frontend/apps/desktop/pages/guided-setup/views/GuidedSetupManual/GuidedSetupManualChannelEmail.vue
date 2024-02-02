@@ -21,8 +21,8 @@ import type {
   EmailInboundMessagesData,
 } from '#desktop/entities/channel-email/types/email-inbound-outbound.ts'
 
-import GuidedSetupEmailConfigurationCheck from '../../components/GuidedSetupEmailConfigurationCheck.vue'
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
+import GuidedSetupStatusMessage from '../../components/GuidedSetupStatusMessage.vue'
 import { useSystemSetupManual } from '../../composables/useSystemSetupManual.ts'
 import { emailBeforeRouteEnterGuard } from '../../router/guards/emailBeforeRouteEnterGuard.ts'
 
@@ -185,7 +185,7 @@ const emailConfigurationCheck = computed(() => {
 </script>
 
 <template>
-  <GuidedSetupEmailConfigurationCheck
+  <GuidedSetupStatusMessage
     v-if="debouncedLoading"
     :message="emailConfigurationCheck"
   />

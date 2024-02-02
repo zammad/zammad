@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Mutations::User::AddFirstAdmin, :aggregate_failures, type: :request do
+RSpec.describe Gql::Mutations::User::AddFirstAdmin, :aggregate_failures, set_up: false, type: :request do
   context 'when adding the first admin user' do
     let(:query) do
       <<~QUERY

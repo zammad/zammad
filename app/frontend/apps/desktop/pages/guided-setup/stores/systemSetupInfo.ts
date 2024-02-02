@@ -56,7 +56,7 @@ export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
       return '/guided-setup'
 
     if (status === EnumSystemSetupInfoStatus.Automated) {
-      return '/guided-setup/automated' // TODO: use real route
+      return '/guided-setup/automated'
     }
 
     if (status === EnumSystemSetupInfoStatus.InProgress) {
@@ -88,9 +88,12 @@ export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
   })
 
   const redirectNeeded = (currentRoutePath: string) => {
-    if (currentRoutePath !== redirectPath.value) return true
+    // Allow sub-paths for auto wizard execution
+    if (systemSetupInfo.value.status === EnumSystemSetupInfoStatus.Automated) {
+      return !currentRoutePath.startsWith(redirectPath.value)
+    }
 
-    return false
+    return currentRoutePath !== redirectPath.value
   }
 
   const systemSetupDone = computed(() => {

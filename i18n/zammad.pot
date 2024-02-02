@@ -1162,6 +1162,10 @@ msgstr ""
 msgid "An unexpected error has occurred."
 msgstr ""
 
+#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
+msgid "An unexpected error occurred during system setup."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Analyzing entries with given configuration…"
@@ -1654,6 +1658,12 @@ msgstr ""
 
 #: lib/auto_wizard.rb
 msgid "AutoWizard is disabled"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
+msgid "Automated Setup"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5064,7 +5074,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: app/controllers/getting_started_controller.rb
+#: app/services/service/system/run_auto_wizard.rb
 msgid "Error during execution of auto wizard."
 msgstr ""
 
@@ -6651,7 +6661,7 @@ msgstr ""
 msgid "Invalid GitLab issue link format"
 msgstr ""
 
-#: app/controllers/getting_started_controller.rb
+#: app/services/service/system/run_auto_wizard.rb
 msgid "Invalid auto wizard file."
 msgstr ""
 
@@ -9191,6 +9201,10 @@ msgstr ""
 msgid "Please submit custom address before generating the snippet"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
+msgid "Please use the provided URL."
+msgstr ""
+
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
@@ -9553,6 +9567,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco
 msgid "Related Answers"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
+msgid "Relax, your system is being set up…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -12309,6 +12327,10 @@ msgstr ""
 msgid "The system setup is marked as done, but no admin user is existing. Please run the system setup again."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
+msgid "The system was configured successfully. You are being redirected."
+msgstr ""
+
 #: app/controllers/tickets_controller.rb
 msgid "The target ticket number could not be found."
 msgstr ""
@@ -12822,6 +12844,10 @@ msgstr ""
 
 #: app/services/service/user/add_first_admin.rb
 msgid "This system has already been configured and an administrator account exists."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
+msgid "This system is configured for automated setup."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
