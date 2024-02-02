@@ -29,9 +29,7 @@ class Controllers::MonitoringControllerPolicy < Controllers::ApplicationControll
   end
 
   def token_or_permission?
-    return monitoring_admin? if user.present?
-
-    valid_token_param?
+    monitoring_admin? || valid_token_param?
   end
 
   def valid_token_param?
@@ -39,6 +37,6 @@ class Controllers::MonitoringControllerPolicy < Controllers::ApplicationControll
   end
 
   def monitoring_admin?
-    user&.permissions?('admin.monitoring')
+    user.present? && user.permissions?('admin.monitoring')
   end
 end
