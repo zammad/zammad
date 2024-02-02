@@ -14,6 +14,7 @@ const props = defineProps<{
       true?: string
       false?: string
     }
+    size?: 'medium' | 'small'
   }>
 }>()
 
@@ -62,7 +63,7 @@ const disabled = computed(() => {
 
   const nextValueString = localValue.value ? 'false' : 'true'
 
-  // if ca't select next value, disable the toggle
+  // if can't select next value, disable the toggle
   return !(nextValueString in variants.value)
 })
 
@@ -78,6 +79,25 @@ const updateLocalValue = (e: Event) => {
   }
 }
 
+const buttonSizeClasses = computed(() => {
+  if (context.value.size === 'small') return 'w-8 h-5'
+
+  return 'w-10 h-6'
+})
+
+const knobSizeClasses = computed(() => {
+  if (context.value.size === 'small') return 'w-[18px] h-[18px]'
+
+  return 'w-[22px] h-[22px]'
+})
+
+const knobTranslateClasses = computed(() => {
+  if (context.value.size === 'small')
+    return 'ltr:translate-x-[13px] rtl:-translate-x-[13px]'
+
+  return 'ltr:translate-x-[17px] rtl:-translate-x-[17px]'
+})
+
 const classMap = getToggleClasses()
 </script>
 
@@ -86,10 +106,11 @@ const classMap = getToggleClasses()
     :id="context.id"
     type="button"
     role="switch"
-    class="relative inline-flex items-center h-6 w-10 flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out formkit-disabled:pointer-events-none"
+    class="relative inline-flex items-center flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out formkit-disabled:pointer-events-none"
     :class="[
       context.classes.input,
       classMap.track,
+      buttonSizeClasses,
       {
         [classMap.trackOn]: localValue,
       },
@@ -103,12 +124,13 @@ const classMap = getToggleClasses()
     @keydown.space="updateLocalValue"
   >
     <div
-      class="pointer-events-none inline-block h-[22px] w-[22px] transform rounded-full transition duration-200 ease-in-out"
+      class="pointer-events-none inline-block transform rounded-full transition duration-200 ease-in-out"
       :class="[
         classMap.knob,
+        knobSizeClasses,
         {
           'ltr:translate-x-px rtl:-translate-x-px': !localValue,
-          'ltr:translate-x-[17px] rtl:-translate-x-[17px]': localValue,
+          [knobTranslateClasses]: localValue,
         },
       ]"
     ></div>

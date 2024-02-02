@@ -80,7 +80,7 @@ export const getCoreDesktopClasses: FormThemeExtension = (
     toggle: extendClasses(classes.toggle, {
       wrapper: 'h-10 flex flex-row-reverse items-center gap-1.5',
       label: '!mb-0 grow',
-      inner: 'h-6',
+      inner: 'leading-[0]',
     }),
     groupPermissions: extendClasses(classes.groupPermissions, {
       inner:

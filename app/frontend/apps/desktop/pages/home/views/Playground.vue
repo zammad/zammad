@@ -7,6 +7,7 @@ import { reset } from '@formkit/core'
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import Form from '#shared/components/Form/Form.vue'
+import type { FormValues } from '#shared/components/Form/types.ts'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -202,7 +203,25 @@ const formSchema = [
       options: treeselectOptions,
     },
   },
+  {
+    type: 'toggleList',
+    name: 'roles',
+    label: 'Roles',
+    props: {
+      options: [
+        { value: 3, label: 'name only' },
+        { value: 1, label: 'Long name', description: 'Note here' },
+        {
+          value: 1111,
+          label: 'Another long name',
+          description: 'Note here again',
+        },
+      ],
+    },
+  },
 ]
+
+const formInitialValues: FormValues = { roles: [3, 1] }
 </script>
 
 <template>
@@ -311,6 +330,7 @@ const formSchema = [
       class="mb-96"
       form-class="mb-2.5 space-y-2.5"
       :schema="formSchema"
+      :initial-values="formInitialValues"
       @submit="console.debug($event)"
     >
       <template #after-fields>

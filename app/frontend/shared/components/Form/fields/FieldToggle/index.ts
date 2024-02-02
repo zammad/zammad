@@ -14,6 +14,7 @@ declare module '@formkit/inputs' {
         true?: string
         false?: string
       }
+      size?: 'medium' | 'small'
     }
   }
 
@@ -22,7 +23,7 @@ declare module '@formkit/inputs' {
   }
 }
 
-const fieldDefinition = createInput(FieldToggleInput, ['variants'], {
+const fieldDefinition = createInput(FieldToggleInput, ['variants', 'size'], {
   features: [addLink, formUpdaterTrigger()],
 })
 
