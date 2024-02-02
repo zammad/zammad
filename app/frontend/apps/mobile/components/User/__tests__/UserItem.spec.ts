@@ -1,18 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { renderComponent } from '#tests/support/components/index.ts'
+import UserItem from '../UserItem.vue'
 import type { UserItemData } from '../types.ts'
 
-const now = new Date(2022, 1, 1, 20, 0, 0, 0)
-vi.setSystemTime(now)
-
-const { default: UserItem } = await import('../UserItem.vue')
-const { renderComponent } = await import('#tests/support/components/index.ts')
+vi.hoisted(() => {
+  const now = new Date(2022, 1, 1, 20, 0, 0, 0)
+  vi.setSystemTime(now)
+})
 
 describe('user item display', () => {
-  afterEach(() => {
-    vi.useRealTimers()
-  })
-
   it('renders correctly', () => {
     const user: UserItemData = {
       id: '123',

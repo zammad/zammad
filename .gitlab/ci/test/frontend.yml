@@ -1,4 +1,4 @@
-frontend:vitest:
+.template_vitest_shard:
   stage: test
   extends:
     - .job_rules_default
@@ -6,11 +6,32 @@ frontend:vitest:
   before_script:
     - !reference [.scripts, yarn_install]
   script:
-    - yarn test
+    # Only run one worker to avoid load peaks affecting other jobs.
+    - yarn test --min-workers=1 --max-workers=1 --shard $VITEST_SHARD
+    # Stop here, except on the first shard.
+    - "[[ $VITEST_SHARD = 1/* ]] || exit 0"
     - echo "Also test eslint-plugin-zammad…"
     - cd .eslint-plugin-zammad
     - yarn install || yarn install || yarn install # retry on errors
     - yarn test
+
+frontend:vitest:1:
+  extends:
+    - .template_vitest_shard
+  variables:
+    VITEST_SHARD: 1/3
+
+frontend:vitest:2:
+  extends:
+    - .template_vitest_shard
+  variables:
+    VITEST_SHARD: 2/3
+
+frontend:vitest:3:
+  extends:
+    - .template_vitest_shard
+  variables:
+    VITEST_SHARD: 3/3
 
 frontend:cypress:
   stage: test

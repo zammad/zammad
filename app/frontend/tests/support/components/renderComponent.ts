@@ -32,11 +32,29 @@ import {
 import type { AppName } from '#shared/types/app.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 import type { FormFieldTypeImportModules } from '#shared/types/form.ts'
+import { provideIcons } from '#shared/components/CommonIcon/useIcons.ts'
+import mobileIconsAliases from '#mobile/initializer/mobileIconsAliasesMap.ts'
+import desktopIconsAliases from '#desktop/initializer/desktopIconsAliasesMap.ts'
 import buildIconsQueries from './iconQueries.ts'
 import buildLinksQueries from './linkQueries.ts'
 import { setTestState, waitForNextTick } from '../utils.ts'
 import { cleanupStores, initializeStore } from './initializeStore.ts'
 import { getTestAppName } from './app.ts'
+
+const appName = getTestAppName()
+
+const isMobile = appName !== 'desktop'
+const isDesktop = appName === 'desktop'
+
+// not eager because we don't actually want to import all those components, we only need their names
+const icons = isDesktop
+  ? import.meta.glob('../../../apps/desktop/initializer/assets/*.svg')
+  : import.meta.glob('../../../apps/mobile/initializer/assets/*.svg')
+
+provideIcons(
+  Object.keys(icons).map((icon) => [icon, { default: '' }]),
+  isDesktop ? desktopIconsAliases : mobileIconsAliases,
+)
 
 // internal Vitest variable, ideally should check expect.getState().testPath, but it's not populated in 0.34.6 (a bug)
 const { filepath } = (globalThis as any).__vitest_worker__ as any
@@ -44,11 +62,6 @@ const { filepath } = (globalThis as any).__vitest_worker__ as any
 let formFields: ImportGlobEagerOutput<FormFieldTypeImportModules>
 let ConformationComponent: unknown
 let initDefaultVisuals: () => void
-
-const appName = getTestAppName()
-
-const isMobile = appName !== 'desktop'
-const isDesktop = appName === 'desktop'
 
 // TODO: have a separate check for shared components
 if (isMobile) {

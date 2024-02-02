@@ -1,18 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { renderComponent } from '#tests/support/components/index.ts'
+import OrganizationItem from '../OrganizationItem.vue'
 import type { OrganizationItemData } from '../types.ts'
 
-const now = new Date(2022, 1, 1, 20, 0, 0, 0)
-vi.setSystemTime(now)
-
-const { default: OrganizationItem } = await import('../OrganizationItem.vue')
-const { renderComponent } = await import('#tests/support/components/index.ts')
+vi.hoisted(() => {
+  const now = new Date(2022, 1, 1, 20, 0, 0, 0)
+  vi.setSystemTime(now)
+})
 
 describe('ticket item display', () => {
-  afterEach(() => {
-    vi.useRealTimers()
-  })
-
   it('renders correctly', () => {
     const now = new Date(2022, 1, 1)
     vi.setSystemTime(now)

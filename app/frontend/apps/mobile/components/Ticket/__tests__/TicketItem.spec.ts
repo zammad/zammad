@@ -1,20 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { renderComponent } from '#tests/support/components/index.ts'
+import { TicketState } from '#shared/entities/ticket/types.ts'
+import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
+import TicketItem from '../TicketItem.vue'
 import type { TicketItemData } from '../types.ts'
 
-const now = new Date(2022, 1, 1, 20, 0, 0, 0)
-vi.setSystemTime(now)
-
-const { TicketState } = await import('#shared/entities/ticket/types.ts')
-const { EnumTicketStateColorCode } = await import('#shared/graphql/types.ts')
-const { default: TicketItem } = await import('../TicketItem.vue')
-const { renderComponent } = await import('#tests/support/components/index.ts')
+vi.hoisted(() => {
+  const now = new Date(2022, 1, 1, 20, 0, 0, 0)
+  vi.setSystemTime(now)
+})
 
 describe('ticket item display', () => {
-  afterEach(() => {
-    vi.useRealTimers()
-  })
-
   it('renders correctly', () => {
     const ticket: TicketItemData = {
       id: '54321',
