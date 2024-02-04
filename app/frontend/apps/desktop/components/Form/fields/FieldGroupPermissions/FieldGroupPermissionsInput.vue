@@ -6,6 +6,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type { TreeSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
+import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
 import useFlatSelectOptions from '../FieldTreeSelect/useFlatSelectOptions.ts'
 import type {
   GroupAccessLookup,
@@ -135,20 +136,16 @@ const hasNoMoreGroups = computed(
     ) === flatOptions.value.length,
 )
 
-const delegateFocus = () => {
-  requestAnimationFrame(() => {
-    const firstGroupSelection: HTMLOutputElement | null =
-      document.querySelector(`#${contextReactive.value.id}_first_element`)
-
-    if (firstGroupSelection) firstGroupSelection.focus()
-  })
-}
+const { delegateFocus } = useDelegateFocus(
+  contextReactive.value.id,
+  `${contextReactive.value.id}_first_element`,
+)
 </script>
 
 <template>
   <output
     :id="context.id"
-    class="w-full flex flex-col p-2 space-y-2"
+    class="w-full flex flex-col p-2 space-y-2 focus:outline-none"
     :class="context.classes.input"
     :name="context.node.name"
     role="list"
@@ -156,7 +153,6 @@ const delegateFocus = () => {
     :aria-disabled="context.disabled"
     v-bind="context.attrs"
     @focus="delegateFocus"
-    @blur="context.handlers.blur"
   >
     <div
       v-for="(groupPermission, index) in groupPermissions"
@@ -178,6 +174,7 @@ const delegateFocus = () => {
         :multiple="true"
         :disabled="context.disabled"
         :alternative-background="true"
+        @blur="index === 0 ? context.handlers.blur : undefined"
       />
       <FormKit
         v-for="groupAccess in context.groupAccesses"

@@ -4,6 +4,7 @@
 import { computed, toRef } from 'vue'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import { i18n } from '#shared/i18n.ts'
+import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { ToggleListOption, ToggleListOptionValue } from './types.ts'
 
@@ -40,22 +41,27 @@ const updateValue = (
     localValue.value = values.filter((value) => value !== key)
   }
 }
+
+const { delegateFocus } = useDelegateFocus(
+  context.value.id,
+  `toggle_list_toggle_${context.value.id}_${context.value.options[0]?.value}`,
+)
 </script>
 
 <template>
   <output
     :id="context.id"
-    class="block bg-blue-200 dark:bg-gray-700 rounded-lg"
+    class="block bg-blue-200 dark:bg-gray-700 rounded-lg focus:outline-none"
     role="list"
     :class="context.classes.input"
     :name="context.node.name"
     :aria-disabled="context.disabled"
     :tabindex="context.disabled ? '-1' : '0'"
     v-bind="context.attrs"
-    @blur="context.handlers.blur"
+    @focus="delegateFocus"
   >
     <div
-      v-for="option in context.options"
+      v-for="(option, index) in context.options"
       :key="`option-${option.value}`"
       class="flex gap-2.5 items-center px-3 py-2.5"
       role="option"
@@ -95,6 +101,7 @@ const updateValue = (
           },
         }"
         @update:model-value="updateValue(option.value, $event)"
+        @blur="index === 0 ? context.handlers.blur : undefined"
       />
     </div>
   </output>

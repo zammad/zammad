@@ -37,3 +37,13 @@ export const getFocusableElements = (
 export const getFirstFocusableElement = (container?: Maybe<HTMLElement>) => {
   return getFocusableElements(container)[0]
 }
+
+export const getPreviousFocusableElement = (
+  currentElement?: Maybe<HTMLElement>,
+) => {
+  if (!currentElement) return null
+
+  const focusableElements = getFocusableElements(document.body)
+
+  return focusableElements[focusableElements.indexOf(currentElement) - 1]
+}
