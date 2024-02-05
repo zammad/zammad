@@ -1,0 +1,19 @@
+#{config.product_name} prihlásenie z nového zariadenia
+
+<div>Ahoj #{user.firstname},</div>
+<br>
+<div>Zdá sa že ste sa prihlásili do svojho účtu <b>z nového zariadenia</b> na "#{user_device.created_at}":</div>
+<br>
+<div>
+Vaše zariadenie: #{user_device.name}<br>
+Vaša poloha (relatívna): #{user_device.location}<br>
+Vaša IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Vaše zariadenie bolo pridané do zoznamu známych zariadení, ktorý si viete pozrieť tu:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Ak ste to neboli vy, prosím, odstráňte toto zariadenie, zmente si svoje heslo a kontaktujte vášho administrátora. Mohlo dôjsť k neoprávnenému prístupu do vášho účtu</div>
+<br>
+<div>Váš #{config.product_name} Tím</div>
