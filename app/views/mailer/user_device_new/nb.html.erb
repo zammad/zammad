@@ -1,0 +1,19 @@
+#{config.product_name} innlogging fra en ny enhet
+
+<div>Hei #{user.firstname},</div>
+<br>
+<div>Det ser ut som du logget inn på kontoen din <b>ved å bruke en ny enhet</b> den "#{user_device.created_at}":</div>
+<br>
+<div>
+Din enhet: #{user_device.name}<br>
+Din lokasjon (relativ): #{user_device.location}<br>
+Din IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Enheten din har blitt lagt til i listen din over kjente enheter, som du kan se her:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Hvis dette ikke var deg, vennligst fjern enheten, endre passordet på kontoen din, og kontakt din administrator. Noen kan ha fått uautorisert tilgang til kontoen din.</div>
+<br>
+<div>Med vennlig hilsen #{config.product_name}-teamet</div>

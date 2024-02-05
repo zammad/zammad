@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Eskalert den #{ticket.escalation_at}_
+Sak (#{ticket.title}) fra "#{ticket.customer.longname}" har vært eskalert siden "#{ticket.escalation_at}"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
