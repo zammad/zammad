@@ -363,7 +363,7 @@ GEM
       net-protocol
     nio4r (2.5.9)
     nkf (0.1.3)
-    nokogiri (1.16.0)
+    nokogiri (1.16.2)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nori (2.6.0)
