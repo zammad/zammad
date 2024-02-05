@@ -189,6 +189,7 @@ Check if an index exists.
 =begin
 
 This function updates specifc attributes of an index based on a query.
+It should get used in batches to prevent performance issues on entities which have millions of objects in it.
 
   data = {
     organization: {
@@ -196,7 +197,9 @@ This function updates specifc attributes of an index based on a query.
     }
   }
   where = {
-    organization_id: 1
+    term: {
+      organization_id: 1
+    }
   }
   SearchIndexBackend.update_by_query('Ticket', data, where)
 
@@ -206,7 +209,12 @@ This function updates specifc attributes of an index based on a query.
     return if data.blank?
     return if where.blank?
 
-    url = build_url(type: type, action: '_update_by_query', with_pipeline: false, with_document_type: false, url_params: { conflicts: 'proceed' })
+    url_params = {
+      conflicts: 'proceed',
+      slices:    'auto',
+      max_docs:  1_000,
+    }
+    url = build_url(type: type, action: '_update_by_query', with_pipeline: false, with_document_type: false, url_params: url_params)
     return if url.blank?
 
     script_list = []
@@ -220,12 +228,24 @@ This function updates specifc attributes of an index based on a query.
         source: script_list.join(';'),
         params: data,
       },
-      query:  {
-        term: where,
+      query:  where,
+      sort:   {
+        id: 'desc',
       },
     }
 
-    make_request_and_validate(url, data: data, method: :post, read_timeout: 10.minutes)
+    response = make_request(url, data: data, method: :post, read_timeout: 10.minutes)
+    if !response.success?
+      Rails.logger.error humanized_error(
+        verb:     'GET',
+        url:      url,
+        payload:  data,
+        response: response,
+      )
+      return []
+    end
+
+    response.data
   end
 
 =begin

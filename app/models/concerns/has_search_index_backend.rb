@@ -63,11 +63,28 @@ update search index, if configured - will be executed automatically
   end
 
   def search_index_update_delta(index_class:, value:, attribute:)
+    raise "Attribute lookup data needs updated_at for delta updates (object: #{self.class}, #{id})" if value['updated_at'].blank?
+
     data = {
       attribute[:ref_name] => value,
     }
     where = {
-      attribute[:name] => id
+      bool: {
+        must: [
+          {
+            term: {
+              attribute[:name] => id,
+            },
+          },
+          {
+            range: {
+              "#{attribute[:ref_name]}.updated_at" => {
+                lt: value['updated_at'].strftime('%Y-%m-%dT%H:%M:%S.%LZ'),
+              },
+            },
+          },
+        ],
+      },
     }
     SearchIndexBackend.update_by_query(index_class.to_s, data, where)
   end
@@ -87,20 +104,16 @@ returns
 =end
 
   def search_index_update_associations
-
-    # start background job to transfer data to search index
-    return true if !SearchIndexBackend.enabled?
+    return if !SearchIndexBackend.enabled?
 
     new_search_index_value = search_index_attribute_lookup(include_references: false)
     return if new_search_index_value.blank?
 
-    search_index_indexable.each do |index_class|
+    search_index_indexable.each_with_object([]) do |index_class, result|
       search_index_indexable_attributes(index_class).each do |attribute|
-        search_index_update_delta(index_class: index_class, value: new_search_index_value, attribute: attribute)
+        result << search_index_update_delta(index_class: index_class, value: new_search_index_value, attribute: attribute)
       end
     end
-
-    true
   end
 
 =begin
