@@ -1304,6 +1304,7 @@ msgstr "适配器"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Add"
 msgstr "添加"
@@ -1767,6 +1768,18 @@ msgstr "发生错误：%s"
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "An open-source monitoring tool."
 msgstr "一个开源监控工具。"
+
+#: app/frontend/shared/components/Form/utils.ts
+#, fuzzy
+#| msgid "An error occurred: %s"
+msgid "An unexpected error has occurred."
+msgstr "发生错误：%s"
+
+#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
+#, fuzzy
+#| msgid "An error occurred: %s"
+msgid "An unexpected error occurred during system setup."
+msgstr "发生错误：%s"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2396,6 +2409,12 @@ msgstr "自动关闭状态"
 #| msgid "Auto Wizard"
 msgid "AutoWizard is disabled"
 msgstr "自动向导"
+
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
+msgid "Automated Setup"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
@@ -3567,6 +3586,9 @@ msgstr "连接"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email_pre_configured.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
 msgid "Connect Channels"
 msgstr "連接管道"
 
@@ -3596,6 +3618,12 @@ msgstr "连接Microsoft 365应用"
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 msgid "Connect Twitter App"
 msgstr "连接 Twitter APP"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
+#, fuzzy
+#| msgid "Saved conditions"
+msgid "Connect and Continue"
+msgstr "保存的条件"
 
 #: public/assets/chat/views/loader.eco
 msgid "Connecting"
@@ -3660,6 +3688,7 @@ msgstr "上下文"
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Continue"
 msgstr "继续"
@@ -5921,6 +5950,8 @@ msgstr "Email 電子郵件-主旨"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Email Account"
 msgstr "電子郵件帳號"
 
@@ -5934,11 +5965,19 @@ msgstr "邮件帐号"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts
 msgid "Email Address"
 msgstr "电子邮件"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
+#, fuzzy
+#| msgid "Channel"
+msgid "Email Channel"
+msgstr "渠道"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
 msgid "Email Inbound"
 msgstr "Email 電子郵件入站"
 
@@ -5956,6 +5995,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
 msgid "Email Outbound"
 msgstr "Email 電子郵件出站"
 
@@ -5977,8 +6017,15 @@ msgstr ""
 msgid "Email could not be verified. Please contact your administrator."
 msgstr "無法驗證電子郵件 請與您的管理員聯繫"
 
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+#, fuzzy
+#| msgid "Expert"
+msgid "Email import mode"
+msgstr "專家"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
 msgid ""
 "Email sending and receiving could not be verified. Please check your "
 "settings."
@@ -6425,7 +6472,7 @@ msgstr "请输入您的用户名或邮件地址"
 msgid "Error"
 msgstr ""
 
-#: app/controllers/getting_started_controller.rb
+#: app/services/service/system/run_auto_wizard.rb
 msgid "Error during execution of auto wizard."
 msgstr ""
 
@@ -6852,6 +6899,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid "Finish"
 msgstr "完成"
 
@@ -6912,6 +6960,7 @@ msgstr "扁平风格"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "Folder"
 msgstr "文件夹"
 
@@ -7121,6 +7170,7 @@ msgid "Full"
 msgstr "全名"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts
 msgid "Full Name"
 msgstr "全名"
 
@@ -7737,6 +7787,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 msgid "Host"
 msgstr "主机"
 
@@ -7966,6 +8018,7 @@ msgid ""
 msgstr "有些地方可能没有办法通过上面的方式翻译, 没关系, 它们就在下面."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid ""
 "If you want to use additional email addresses, you can configure them later."
 msgstr ""
@@ -8081,8 +8134,15 @@ msgstr ""
 msgid "Import User for requesting the Zendesk API"
 msgstr ""
 
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+#, fuzzy
+#| msgid "Import"
+msgid "Import as archive"
+msgstr "导入"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 #, fuzzy
 #| msgid ""
 #| "Import as regular: |Notifications are sent| and the |tickets are open| - "
@@ -8094,8 +8154,15 @@ msgid ""
 msgstr ""
 "常规导入：|发送通知| 并且|工单已打开| -您可以在工单概述中找到处理中的工单。"
 
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+#, fuzzy
+#| msgid "Import"
+msgid "Import as regular"
+msgstr "导入"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 msgid ""
 "Import as regular: |Notifications are sent| and the |tickets are open| - you "
 "can find the tickets in the overview of open tickets."
@@ -8351,7 +8418,7 @@ msgstr ""
 msgid "Invalid GitLab issue link format"
 msgstr "GitLab 问题链接格式无效"
 
-#: app/controllers/getting_started_controller.rb
+#: app/services/service/system/run_auto_wizard.rb
 msgid "Invalid auto wizard file."
 msgstr ""
 
@@ -8625,6 +8692,7 @@ msgstr "然后只需要在被标记的地方输入翻译的词语或句子. 尽�
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "Keep messages on server"
 msgstr "将邮件保留在服务器上"
 
@@ -10062,6 +10130,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "No SSL"
 msgstr ""
 
@@ -10380,6 +10449,7 @@ msgstr "注意"
 msgid "Notification"
 msgstr "通知"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 #: db/seeds/settings.rb
 msgid "Notification Sender"
 msgstr "通知寄件人"
@@ -10727,6 +10797,7 @@ msgstr "企业名称"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts
 msgid "Organization Support"
 msgstr "機構支持"
 
@@ -10951,6 +11022,9 @@ msgstr "父"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
@@ -11284,6 +11358,10 @@ msgstr "登录失败，无效的凭据！"
 msgid "Please submit custom address before generating the snippet"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
+msgid "Please use the provided URL."
+msgstr ""
+
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
@@ -11296,6 +11374,8 @@ msgstr "请等待…"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 msgid "Port"
 msgstr "端口"
 
@@ -11354,7 +11434,7 @@ msgstr "S/MIME 使您能够发送经过数字签名和加密的邮件。"
 msgid ""
 "Pretty Good Privacy (PGP) is an encryption program that can be used for "
 "signing, encrypting and decrypting messages and to increase the security of "
-"e-mail communication."
+"email communication."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -11703,6 +11783,10 @@ msgstr "注册成功！"
 msgid "Related Answers"
 msgstr "相关回答"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
+msgid "Relax, your system is being set up…"
+msgstr ""
+
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Reload application"
 msgstr "重新加載應用"
@@ -11740,6 +11824,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
 msgstr "删除"
@@ -12314,6 +12399,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #, fuzzy
 #| msgid "SLA"
 msgid "SSL"
@@ -12336,6 +12422,8 @@ msgstr "添加证书"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 msgid "SSL verification"
 msgstr ""
 
@@ -12343,6 +12431,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "SSL/STARTTLS"
 msgstr ""
 
@@ -12355,6 +12444,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "STARTTLS"
 msgstr ""
 
@@ -12407,6 +12497,7 @@ msgstr "安全"
 msgid "Save Draft"
 msgstr "草稿"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 #, fuzzy
@@ -12819,6 +12910,7 @@ msgstr "发送邮件"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 msgid "Send Mails via"
 msgstr "寄送郵件透由"
 
@@ -13042,6 +13134,7 @@ msgid "Set up a new system"
 msgstr "设置新系统"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
 msgid "Set up the communication channels you want to use with your Zammad."
 msgstr "設置您要與 Zammad一起使用的通信管道"
 
@@ -13093,6 +13186,8 @@ msgstr "设置"
 
 #: app/assets/javascripts/app/controllers/getting_started/finish.coffee
 #: app/assets/javascripts/app/views/getting_started/finish.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualFinish.vue
 msgid "Setup Finished"
 msgstr "設置完成"
 
@@ -13127,6 +13222,7 @@ msgstr "拍摄"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 msgid ""
 "Should the emails from this mailbox be imported as an archive or as regular "
 "emails?"
@@ -13600,6 +13696,12 @@ msgstr "已开始"
 
 #: app/assets/javascripts/app/views/getting_started/finish.jst.eco
 msgid "Starting Zammad"
+msgstr "啟動 Zammad"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualFinish.vue
+#, fuzzy
+#| msgid "Starting Zammad"
+msgid "Starting Zammad…"
 msgstr "啟動 Zammad"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
@@ -14686,6 +14788,10 @@ msgstr ""
 msgid "The provided credentials are invalid."
 msgstr ""
 
+#: lib/validations/email_account_uniqueness_validator.rb
+msgid "The provided email account is already in use."
+msgstr ""
+
 #: app/models/webhook.rb
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
@@ -14935,6 +15041,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
 msgid ""
 "The server settings could not be automatically detected. Please configure "
 "them manually."
@@ -15008,6 +15115,10 @@ msgstr ""
 msgid ""
 "The system setup is marked as done, but no admin user is existing. Please "
 "run the system setup again."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
+msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
@@ -15689,6 +15800,10 @@ msgstr ""
 #: app/services/service/user/add_first_admin.rb
 msgid ""
 "This system has already been configured and an administrator account exists."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
+msgid "This system is configured for automated setup."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
@@ -16655,6 +16770,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
+#: app/frontend/apps/desktop/form/composables/useSSLVerificationWarningHandler.ts
 #: db/seeds/settings.rb
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
@@ -16797,6 +16913,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "类型"
@@ -17277,6 +17394,8 @@ msgstr "适用在查看工单时"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 #: app/frontend/apps/mobile/pages/user/routes.ts
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "User"
@@ -17472,11 +17591,24 @@ msgstr "触发该通知的事件."
 msgid "Verify sending and receiving"
 msgstr "驗證寄送和接收"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Verifying and saving your configuration…"
+msgstr "阻止通知"
+
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Verifying key information…"
+msgstr "阻止通知"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Verifying your configuration…"
 msgstr "阻止通知"
 
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
@@ -17640,6 +17772,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 #, fuzzy
 #| msgid ""
 #| "We have already found %s email(s) in your mailbox. Zammad will move it "
@@ -18354,6 +18487,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid "Your Zammad has the following email address:"
 msgstr ""
 
@@ -19979,6 +20113,11 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#, fuzzy
+#~| msgid "Archive"
+#~ msgid "archive"
+#~ msgstr "封存"
 
 #, fuzzy
 #~| msgid "select"

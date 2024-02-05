@@ -1178,6 +1178,7 @@ msgstr "Adapter"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Add"
 msgstr "Dodaj"
@@ -1623,6 +1624,18 @@ msgstr "Wystąpił błąd: %s"
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "An open-source monitoring tool."
 msgstr "Narzędzie monitorujące typu open source."
+
+#: app/frontend/shared/components/Form/utils.ts
+#, fuzzy
+#| msgid "An error has occurred"
+msgid "An unexpected error has occurred."
+msgstr "Wystąpił błąd"
+
+#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
+#, fuzzy
+#| msgid "An error has occurred"
+msgid "An unexpected error occurred during system setup."
+msgstr "Wystąpił błąd"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2182,6 +2195,12 @@ msgstr "Stan automatycznego zamykania"
 #| msgid "Auto Wizard"
 msgid "AutoWizard is disabled"
 msgstr "Kreator automatyczny"
+
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
+msgid "Automated Setup"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
@@ -3317,6 +3336,9 @@ msgstr "Połącz"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email_pre_configured.coffee
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
 msgid "Connect Channels"
 msgstr "Połącz kanały"
 
@@ -3344,6 +3366,12 @@ msgstr "Połącz aplikację Microsoft 365"
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 msgid "Connect Twitter App"
 msgstr "Połacz z Twitterem"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
+#, fuzzy
+#| msgid "Saved conditions"
+msgid "Connect and Continue"
+msgstr "Zapisane warunki"
 
 #: public/assets/chat/views/loader.eco
 msgid "Connecting"
@@ -3402,6 +3430,7 @@ msgstr "Kontekst"
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Continue"
 msgstr "Kontynuuj"
@@ -5648,6 +5677,8 @@ msgstr "Email - pole tematu"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Email Account"
 msgstr "Konto e-mail"
 
@@ -5661,11 +5692,19 @@ msgstr "Konta e-mailowe"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts
 msgid "Email Address"
 msgstr "Adres e-mail"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
+#, fuzzy
+#| msgid "Channel"
+msgid "Email Channel"
+msgstr "Kanał"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
 msgid "Email Inbound"
 msgstr "E-mail przychodzący"
 
@@ -5683,6 +5722,7 @@ msgstr "Powiadomienia e-mail"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
 msgid "Email Outbound"
 msgstr "E-mail wychodzący"
 
@@ -5703,8 +5743,15 @@ msgid "Email could not be verified. Please contact your administrator."
 msgstr ""
 "Nie udało się zweryfikować adresu e-mail. Skontaktuj się z administratorem."
 
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+#, fuzzy
+#| msgid "Expert mode"
+msgid "Email import mode"
+msgstr "Tryb ekspercki"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
 msgid ""
 "Email sending and receiving could not be verified. Please check your "
 "settings."
@@ -6165,7 +6212,7 @@ msgstr "Wprowadź swoją nazwę użytkownika lub adres e-mail"
 msgid "Error"
 msgstr "Błąd"
 
-#: app/controllers/getting_started_controller.rb
+#: app/services/service/system/run_auto_wizard.rb
 msgid "Error during execution of auto wizard."
 msgstr "Błąd podczas wykonywania automatycznego kreatora."
 
@@ -6542,6 +6589,7 @@ msgstr "Odcisk palca"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid "Finish"
 msgstr "Koniec"
 
@@ -6600,6 +6648,7 @@ msgstr "płaski projekt"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "Folder"
 msgstr "Folder"
 
@@ -6787,6 +6836,7 @@ msgid "Full"
 msgstr "Pełny"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts
 msgid "Full Name"
 msgstr "Pełna nazwa"
 
@@ -7359,6 +7409,8 @@ msgstr "Dom"
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 msgid "Host"
 msgstr "Adres"
 
@@ -7587,6 +7639,7 @@ msgid ""
 msgstr "Jeśli wolisz użyć tabeli tłumaczeń, skorzystaj z niej poniżej."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid ""
 "If you want to use additional email addresses, you can configure them later."
 msgstr ""
@@ -7700,8 +7753,15 @@ msgstr "Importuj użytkownika w celu uzyskania interfejsu API Kayako"
 msgid "Import User for requesting the Zendesk API"
 msgstr "Importuj użytkownika, aby poprosić o Zendesk API"
 
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+#, fuzzy
+#| msgid "Import %s"
+msgid "Import as archive"
+msgstr "Importuj %s"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 msgid ""
 "Import as archive: |No notifications are sent|, the |tickets are closed|, "
 "and original timestamps are used. You can still find them in Zammad using "
@@ -7711,8 +7771,15 @@ msgstr ""
 "są zamknięte| i używane są oryginalne znaczniki czasu. Nadal możesz je "
 "znaleźć w Zammadzie, korzystając z wyszukiwarki."
 
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+#, fuzzy
+#| msgid "Import %s"
+msgid "Import as regular"
+msgstr "Importuj %s"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 msgid ""
 "Import as regular: |Notifications are sent| and the |tickets are open| - you "
 "can find the tickets in the overview of open tickets."
@@ -7953,7 +8020,7 @@ msgstr "Nieprawidłowy token GitLab GraphQL API"
 msgid "Invalid GitLab issue link format"
 msgstr "Nieprawidłowy format linku do problemu z GitLab"
 
-#: app/controllers/getting_started_controller.rb
+#: app/services/service/system/run_auto_wizard.rb
 msgid "Invalid auto wizard file."
 msgstr "Nieprawidłowy plik automatycznego kreatora."
 
@@ -8205,6 +8272,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "Keep messages on server"
 msgstr "Pozostaw wiadomości na serwerze"
 
@@ -9514,6 +9582,7 @@ msgstr "Brak proxy"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "No SSL"
 msgstr "Brak SSL"
 
@@ -9810,6 +9879,7 @@ msgstr "Uwaga:"
 msgid "Notification"
 msgstr "Powiadomienie"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 #: db/seeds/settings.rb
 msgid "Notification Sender"
 msgstr "Nadawca powiadomień"
@@ -10142,6 +10212,7 @@ msgstr "Nazwa organizacji"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts
 msgid "Organization Support"
 msgstr "Wsparcie organizacji"
 
@@ -10353,6 +10424,9 @@ msgstr "Grupa rodziców"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
@@ -10671,6 +10745,10 @@ msgstr ""
 msgid "Please submit custom address before generating the snippet"
 msgstr "Prześlij niestandardowy adres przed wygenerowaniem fragmentu"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
+msgid "Please use the provided URL."
+msgstr ""
+
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
@@ -10684,6 +10762,8 @@ msgstr "Proszę czekać…"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 msgid "Port"
 msgstr "Port"
 
@@ -10737,10 +10817,15 @@ msgstr ""
 "zaszyfrowanych wiadomości."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#, fuzzy
+#| msgid ""
+#| "Pretty Good Privacy (PGP) is an encryption program that can be used for "
+#| "signing, encrypting and decrypting messages and to increase the security "
+#| "of e-mail communication."
 msgid ""
 "Pretty Good Privacy (PGP) is an encryption program that can be used for "
 "signing, encrypting and decrypting messages and to increase the security of "
-"e-mail communication."
+"email communication."
 msgstr ""
 "Pretty Good Privacy (PGP) to program szyfrujący, który może być używany do "
 "podpisywania, szyfrowania i odszyfrowywania wiadomości oraz do zwiększania "
@@ -11062,6 +11147,10 @@ msgstr "Rejestracja udana!"
 msgid "Related Answers"
 msgstr "Powiązane odpowiedzi"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
+msgid "Relax, your system is being set up…"
+msgstr ""
+
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Reload application"
 msgstr "Załaduj ponownie aplikację"
@@ -11099,6 +11188,7 @@ msgstr "Zdalny"
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
 msgstr "Usuń"
@@ -11643,6 +11733,7 @@ msgstr "SMTP - skonfiguruj własne ustawienia wychodzącego SMTP"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "SSL"
 msgstr "SSL"
 
@@ -11661,6 +11752,8 @@ msgstr "Certyfikaty SSL"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 msgid "SSL verification"
 msgstr "Weryfikacja SSL"
 
@@ -11668,6 +11761,7 @@ msgstr "Weryfikacja SSL"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
@@ -11680,6 +11774,7 @@ msgstr "SSO"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "STARTTLS"
 msgstr "STARTTLS"
 
@@ -11728,6 +11823,7 @@ msgstr "Zapisz Kody"
 msgid "Save Draft"
 msgstr "Zapisz szkic"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 #, fuzzy
@@ -12110,6 +12206,7 @@ msgstr "Wyślij e-mail"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 msgid "Send Mails via"
 msgstr "Wyślij wiadomości przez"
 
@@ -12317,6 +12414,7 @@ msgid "Set up a new system"
 msgstr "Skonfiguruj nowy system"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
 msgid "Set up the communication channels you want to use with your Zammad."
 msgstr ""
 "Skonfiguruj kanały komunikacji, z których chcesz korzystać w Zammadzie."
@@ -12361,6 +12459,8 @@ msgstr "Ustawienia %s"
 
 #: app/assets/javascripts/app/controllers/getting_started/finish.coffee
 #: app/assets/javascripts/app/views/getting_started/finish.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualFinish.vue
 msgid "Setup Finished"
 msgstr "Konfiguracja ukończona"
 
@@ -12393,6 +12493,7 @@ msgstr "Strzel"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 msgid ""
 "Should the emails from this mailbox be imported as an archive or as regular "
 "emails?"
@@ -12825,6 +12926,12 @@ msgstr "Rozpoczęto"
 
 #: app/assets/javascripts/app/views/getting_started/finish.jst.eco
 msgid "Starting Zammad"
+msgstr "Uruchamianie Zammad"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualFinish.vue
+#, fuzzy
+#| msgid "Starting Zammad"
+msgid "Starting Zammad…"
 msgstr "Uruchamianie Zammad"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
@@ -13845,6 +13952,12 @@ msgstr "Podany adres URL jest nieprawidłowy."
 msgid "The provided credentials are invalid."
 msgstr "Podane poświadczenia są nieprawidłowe."
 
+#: lib/validations/email_account_uniqueness_validator.rb
+#, fuzzy
+#| msgid "The provided endpoint is invalid."
+msgid "The provided email account is already in use."
+msgstr "Podany punkt końcowy jest nieprawidłowy."
+
 #: app/models/webhook.rb
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr "Podany punkt końcowy jest nieprawidłowy, nie określono nazwy hosta."
@@ -14101,6 +14214,7 @@ msgstr "Wybrana data jest nieważna."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
 msgid ""
 "The server settings could not be automatically detected. Please configure "
 "them manually."
@@ -14168,6 +14282,10 @@ msgstr ""
 msgid ""
 "The system setup is marked as done, but no admin user is existing. Please "
 "run the system setup again."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
+msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
@@ -14790,6 +14908,10 @@ msgstr "Ten podpis jest nieaktywny, nie zostanie uwzględniony w odpowiedzi."
 #: app/services/service/user/add_first_admin.rb
 msgid ""
 "This system has already been configured and an administrator account exists."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
+msgid "This system is configured for automated setup."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
@@ -15626,6 +15748,7 @@ msgstr "Zmień czat na zgłoszenie"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco
+#: app/frontend/apps/desktop/form/composables/useSSLVerificationWarningHandler.ts
 #: db/seeds/settings.rb
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
@@ -15755,6 +15878,7 @@ msgstr "Pomyślnie skonfigurowano metodę uwierzytelniania dwuskładnikowego."
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "Typ"
@@ -16197,6 +16321,8 @@ msgstr "Używane podczas przeglądania zgłoszenia"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 #: app/frontend/apps/mobile/pages/user/routes.ts
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "User"
@@ -16386,9 +16512,22 @@ msgstr "Nie udało się wysłać e-maila weryfikacyjnego."
 msgid "Verify sending and receiving"
 msgstr "Sprawdź wysyłanie i odbieranie"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
+#, fuzzy
+#| msgid "Verifying key information…"
+msgid "Verifying and saving your configuration…"
+msgstr "Weryfikowanie informacji o kluczu…"
+
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 msgid "Verifying key information…"
+msgstr "Weryfikowanie informacji o kluczu…"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
+#, fuzzy
+#| msgid "Verifying key information…"
+msgid "Verifying your configuration…"
 msgstr "Weryfikowanie informacji o kluczu…"
 
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
@@ -16533,6 +16672,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 msgid ""
 "We have already found %s email(s) in your mailbox. We will move them all "
 "from your mailbox into Zammad."
@@ -17261,6 +17401,7 @@ msgstr ""
 "zapoznać się z dokumentacją %l, jak zaktualizować swoje konto."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid "Your Zammad has the following email address:"
 msgstr "Twój Zammad ma następujący adres e-mail:"
 
@@ -18782,6 +18923,11 @@ msgstr "...całego pola tekstowego"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ dzisiejszy czas oczekiwania"
+
+#, fuzzy
+#~| msgid "archived"
+#~ msgid "archive"
+#~ msgstr "zarchiwizowane"
 
 #, fuzzy
 #~| msgid "Select All"
