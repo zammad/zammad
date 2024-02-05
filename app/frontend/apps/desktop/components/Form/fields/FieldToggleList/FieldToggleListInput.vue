@@ -75,7 +75,7 @@ const { delegateFocus } = useDelegateFocus(
         :variants="{ true: 'True', false: 'False' }"
         :disabled="context.disabled"
         size="small"
-        :label="$t(option.label)"
+        :label="option.label"
         :sections-schema="{
           label: {
             attrs: {
