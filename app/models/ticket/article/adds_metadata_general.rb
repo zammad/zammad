@@ -63,11 +63,12 @@ module Ticket::Article::AddsMetadataGeneral
   def metadata_general_process_from
     type        = Ticket::Article::Type.lookup(id: type_id)
     is_customer = !author.permissions?('ticket.agent')
+    fullname    = author.fullname(email_fallback: false).presence
 
-    self.from = if %w[web phone].include?(type.name) && is_customer
-                  Channel::EmailBuild.recipient_line "#{author.firstname} #{author.lastname}", author.email
+    self.from = if %w[web phone].include?(type.name) && is_customer && author.email.present?
+                  Channel::EmailBuild.recipient_line fullname, author.email
                 else
-                  "#{author.firstname} #{author.lastname}"
+                  fullname
                 end
   end
 end

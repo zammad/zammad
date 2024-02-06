@@ -137,20 +137,13 @@ returns
 
 =end
 
-  def fullname
-    name = ''
-    if firstname.present?
-      name = firstname
+  def fullname(email_fallback: true)
+    name = "#{firstname} #{lastname}".strip
+
+    if name.blank? && email.present? && email_fallback
+      return email
     end
-    if lastname.present?
-      if name != ''
-        name += ' '
-      end
-      name += lastname
-    end
-    if name.blank? && email.present?
-      name = email
-    end
+
     name
   end
 

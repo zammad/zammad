@@ -4443,7 +4443,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal(%w[tag1 tag2], ticket1.tag_list)
 
-    assert_match('- ', article1.from)
+    assert_match('-', article1.from)
     assert_match('some_recipient@example.com', article1.to)
     assert_match('some subject', article1.subject)
     assert_match("some message <b>note</b>\nnew line", article1.body)
@@ -4514,14 +4514,14 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(3, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    assert_match('- ', article1.from)
+    assert_match('-', article1.from)
     assert_match('some_recipient@example.com', article1.to)
     assert_match('some subject', article1.subject)
     assert_match("some message <b>note</b>\nnew line", article1.body)
     assert_equal('text/plain', article1.content_type)
 
     article_note1 = ticket1.articles[1]
-    assert_match('- ', article_note1.from)
+    assert_match('-', article_note1.from)
     assert_nil(article_note1.to)
     assert_match("some subject! #{ticket1.id}", article_note1.subject)
     assert_match("I can integrate with 3rd party services at <a href=\"https://my.saas/foo/#{ticket1.id}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">https://my.saas/foo/#{ticket1.id}</a>", article_note1.body)

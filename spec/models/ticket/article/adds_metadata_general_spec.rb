@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Ticket::Article::AddsMetadataGeneral do
-  let(:agent) { create(:agent) }
-
   context 'when Agent creates Article' do
     shared_examples 'not including email in from' do |factory|
       subject(:article) { create(:ticket_article, factory, ticket: ticket, created_by_id: agent.id, updated_by_id: agent.id) }
@@ -23,8 +21,8 @@ RSpec.describe Ticket::Article::AddsMetadataGeneral do
     context 'when as Customer' do
       subject(:article) { create(:ticket_article, :inbound_phone, ticket: ticket) }
 
-      let(:customer) { agent }
-      let(:ticket) { create(:ticket, customer_id: customer.id) }
+      let(:agent)  { create(:agent) }
+      let(:ticket) { create(:ticket, customer_id: agent.id) }
 
       it 'includes email in from' do
         expect(article.from).not_to include agent.email
@@ -49,6 +47,27 @@ RSpec.describe Ticket::Article::AddsMetadataGeneral do
       article = create(:ticket_article, :inbound_web, ticket: ticket)
 
       expect(article.origin_by).to be_nil
+    end
+  end
+
+  context 'when Customer creates Article', current_user_id: -> { customer.id } do
+    let(:ticket)  { create(:ticket, customer:) }
+    let(:article) { create(:ticket_article, :inbound_web, ticket:) }
+
+    context 'when customer has email address' do
+      let(:customer) { create(:customer) }
+
+      it '#from is set correctly to customer full name and email' do
+        expect(article.from).to eq("#{customer.fullname} <#{customer.email}>")
+      end
+    end
+
+    context 'when customer has no email address' do
+      let(:customer) { create(:customer, email: nil) }
+
+      it '#from is set correctly to customer full name' do
+        expect(article.from).to eq(customer.fullname)
+      end
     end
   end
 end

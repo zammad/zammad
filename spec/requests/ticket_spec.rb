@@ -2578,7 +2578,7 @@ RSpec.describe 'Ticket', type: :request do
 
       expect(Ticket.last.articles.first).to have_attributes(
         origin_by_id: User.find_by(email: 'dummy@example.com').id,
-        from:         '  <dummy@example.com>',
+        from:         'dummy@example.com',
       )
     end
   end
