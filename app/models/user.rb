@@ -731,6 +731,16 @@ returns
     # to prevent any unexpected regressions.)
     User.find(user_id_of_duplicate_user)
 
+    # mentions can not merged easily because the new user could have mentioned
+    # the same ticket so we delete duplicates beforehand
+    Mention.where(user_id: user_id_of_duplicate_user).find_each do |mention|
+      if Mention.exists?(mentionable: mention.mentionable, user_id: id)
+        mention.destroy
+      else
+        mention.update(user_id: id)
+      end
+    end
+
     # merge missing attributes
     Models.merge('User', id, user_id_of_duplicate_user)
 
