@@ -63,7 +63,7 @@ module Ticket::Article::AddsMetadataGeneral
     type        = Ticket::Article::Type.lookup(id: type_id)
     is_customer = !author.permissions?('ticket.agent')
 
-    self.from = if %w[web phone].include?(type.name) && is_customer
+    self.from = if %w[web phone].include?(type.name) && is_customer && !author.email.empty?
                   Channel::EmailBuild.recipient_line "#{author.firstname} #{author.lastname}", author.email
                 else
                   "#{author.firstname} #{author.lastname}"
