@@ -9503,10 +9503,10 @@ tippy.js@^6.3.7:
   dependencies:
     "@popperjs/core" "^2.9.0"
 
-tiptap-text-direction@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/tiptap-text-direction/-/tiptap-text-direction-0.3.0.tgz#9195b7e2f5f256356ed9396f7fae3399df0bf245"
-  integrity sha512-n5PduD4RmjsorlImOmh/CHmjmIJHgprMmcPJDp6RwebjYgyvCCtgTFlF3Sbx2CI67MN/RKpyfY4/zv25SAf2pg==
+tiptap-text-direction@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/tiptap-text-direction/-/tiptap-text-direction-0.3.1.tgz#26ab22b55a892305275e5800677387cea52d66cd"
+  integrity sha512-h3WerSUqesMDVzKcMAinMz0FaBqUiNd0KoiU/LahJaeV+jT1jkw9EQ7ixCwM+pvcIJTHfmzry/4gA5P5p0Al1A==
 
 title-case@^3.0.3:
   version "3.0.3"
