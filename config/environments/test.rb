@@ -24,6 +24,9 @@ Rails.application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.compile = false
+
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 

@@ -405,7 +405,7 @@ RSpec.describe 'Api Auth', type: :request do
     it 'does session auth - admin' do
       admin = create(:admin)
 
-      get '/'
+      post '/api/v1/signshow', params: {}, as: :json
       token = response.headers['CSRF-TOKEN']
 
       post '/api/v1/signin', params: { username: admin.login, password: admin.password, fingerprint: '123456789' }, headers: { 'X-CSRF-Token' => token }
@@ -427,7 +427,7 @@ RSpec.describe 'Api Auth', type: :request do
       let!(:two_factor_pref)    { create(:user_two_factor_preference, :authenticator_app, user: admin) }
 
       before do
-        get '/'
+        post '/api/v1/signshow', params: {}, as: :json
         token = response.headers['CSRF-TOKEN']
         post '/api/v1/signin', params: { username: admin.login, password: admin.password, two_factor_method: two_factor_method, two_factor_payload: two_factor_payload, fingerprint: '123456789' }, headers: { 'X-CSRF-Token' => token }
       end

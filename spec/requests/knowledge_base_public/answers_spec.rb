@@ -5,6 +5,11 @@ require 'rails_helper'
 RSpec.describe 'KnowledgeBase public answers', type: :request do
   include_context 'basic Knowledge Base'
 
+  before do
+    # Skip asset generation.
+    allow_any_instance_of(ActionView::Base).to receive(:compute_asset_path).and_return('')
+  end
+
   describe '#show' do
     context 'when visitor is a guest' do
       it 'returns OK for published answer' do
