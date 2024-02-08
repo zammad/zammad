@@ -4,14 +4,15 @@ import type { MutationsAccountAvatarAddArgs } from '#shared/graphql/types.ts'
 import { faker } from '@faker-js/faker'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import UserError from '#shared/errors/UserError.ts'
+import { LoginDocument } from '#shared/graphql/mutations/login.api.ts'
 import { getGraphQLMockCalls, mockGraphQLResult } from '../mocks.ts'
 import { getMutationHandler, getQueryHandler } from './utils.ts'
 import {
   type TestAvatarMutation,
   TestAvatarActiveMutationDocument,
-  TestUserAutorizationsDocument,
-  type TestUserAuthorizationsMutation,
-  type TestUserAuthorizationsVariables,
+  TestUserUpdateDocument,
+  type TestUserUpdateMutation,
+  type TestUserUpdateVariables,
   TestUserDocument,
   type TestUserQuery,
   type TestUserQueryVariables,
@@ -48,12 +49,12 @@ describe('calling mutation without mocking document works correctly', () => {
   })
 
   it('mutation correctly processed data with arrays', async () => {
-    expect(getGraphQLMockCalls(TestUserAutorizationsDocument)).toHaveLength(0)
+    expect(getGraphQLMockCalls(TestUserUpdateDocument)).toHaveLength(0)
 
     const handler = getMutationHandler<
-      TestUserAuthorizationsMutation,
-      TestUserAuthorizationsVariables
-    >(TestUserAutorizationsDocument)
+      TestUserUpdateMutation,
+      TestUserUpdateVariables
+    >(TestUserUpdateDocument)
 
     const userId = convertToGraphQLId('User', 42)
 
@@ -100,9 +101,9 @@ describe('calling mutation without mocking document works correctly', () => {
     })
 
     const mutationHandler = getMutationHandler<
-      TestUserAuthorizationsMutation,
-      TestUserAuthorizationsVariables
-    >(TestUserAutorizationsDocument)
+      TestUserUpdateMutation,
+      TestUserUpdateVariables
+    >(TestUserUpdateDocument)
 
     const mutationData = await mutationHandler.send({
       userId,
@@ -213,5 +214,131 @@ describe('calling mutation with mocked return data correctly returns data', () =
     })
     expect(data?.userSignup.success).toBe(true)
     expect(data?.userSignup.errors).toBeNull()
+  })
+
+  describe('correctly validates variables', () => {
+    it('throws an error if field is required, but not defined', async () => {
+      const handler = getMutationHandler(TestUserSignupMutationDocument)
+
+      await expect(() =>
+        handler.send({}),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `[ApolloError: (Variables error for mutation userSignup) non-nullable field "input" is not defined]`,
+      )
+    })
+
+    it('throws an error if field is required inside the list, but not defined', async () => {
+      const mutationHandler = getMutationHandler(TestUserUpdateDocument)
+
+      await expect(() =>
+        mutationHandler.send({
+          userId: '1',
+          input: {
+            objectAttributeValues: [{}],
+          },
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `[ApolloError: (Variables error for mutation userUpdate) non-nullable field "name" is not defined]`,
+      )
+    })
+
+    it('throws an error if field is not defined on the inner type', async () => {
+      const handler = getMutationHandler(TestUserSignupMutationDocument)
+
+      await expect(() =>
+        handler.send({
+          input: { email: 'email', password: 'password', invalidField: true },
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `[ApolloError: (Variables error for mutation userSignup) field "invalidField" is not defined on UserSignupInput]`,
+      )
+    })
+
+    it('throws an error if field is not defined on the outer type', async () => {
+      const handler = getMutationHandler(TestUserSignupMutationDocument)
+
+      await expect(() =>
+        handler.send({
+          invalidField: true,
+          input: { email: 'email', password: 'password' },
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `[ApolloError: (Variables error for mutation userSignup) field "invalidField" is not defined on mutation userSignup]`,
+      )
+    })
+
+    it('throws an error if field is not defined on the type inside the list', async () => {
+      const mutationHandler = getMutationHandler(TestUserUpdateDocument)
+
+      await expect(() =>
+        mutationHandler.send({
+          userId: '1',
+          input: {
+            objectAttributeValues: [{ invalidField: true }],
+          },
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `[ApolloError: (Variables error for mutation userUpdate) field "invalidField" is not defined on ObjectAttributeValueInput]`,
+      )
+    })
+
+    it('throws an error if field is not the correct scalar type', async () => {
+      const handler = getMutationHandler(TestUserSignupMutationDocument)
+
+      await expect(() =>
+        handler.send({
+          input: { email: 123, password: 'password' },
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `[ApolloError: (Variables error for mutation userSignup) expected string for "email", got number]`,
+      )
+    })
+
+    it('throws an error if field is not the correct object type', async () => {
+      const handler = getMutationHandler(TestUserSignupMutationDocument)
+
+      await expect(() =>
+        handler.send({
+          input: 123,
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `[ApolloError: (Variables error for mutation userSignup) expected object for "input", got number]`,
+      )
+    })
+
+    it('throws an error if field is not the correct type inside the list', async () => {
+      const mutationHandler = getMutationHandler(TestUserUpdateDocument)
+
+      await expect(() =>
+        mutationHandler.send({
+          userId: '1',
+          input: {
+            objectAttributeValues: [{ name: 123 }],
+          },
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `[ApolloError: (Variables error for mutation userUpdate) expected string for "name", got number]`,
+      )
+    })
+
+    it('throws an error if field is not in enum', async () => {
+      const mutationHandler = getMutationHandler(LoginDocument)
+
+      await expect(() =>
+        mutationHandler.send({
+          input: {
+            login: 'login',
+            password: 'password',
+            rememberMe: true,
+            twoFactorAuthentication: {
+              twoFactorMethod: 'unknown_method_to_test_error',
+              twoFactorPayload: 'some_payload',
+            },
+          },
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `[ApolloError: (Variables error for mutation login) twoFactorMethod should be one of "authenticator_app", "security_keys", but instead got "unknown_method_to_test_error"]`,
+      )
+    })
   })
 })

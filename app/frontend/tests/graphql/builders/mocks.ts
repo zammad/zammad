@@ -36,6 +36,7 @@ import {
   getObjectDefinition,
   getOperationDefinition,
   mockOperation,
+  validateOperationVariables,
 } from './index.ts'
 
 interface MockCall<T = any> {
@@ -315,6 +316,17 @@ class MockLink extends ApolloLink {
     const queryKey = requestToKey(query)
     return new Observable((observer) => {
       const { operation } = definition
+
+      try {
+        validateOperationVariables(definition, variables)
+      } catch (err) {
+        if (operation === OperationTypeNode.QUERY) {
+          // queries eat the errors, but we want to see them
+          console.error(err)
+        }
+        throw err
+      }
+
       if (operation === OperationTypeNode.SUBSCRIPTION) {
         const handler: TestSubscriptionHandler = {
           async trigger(defaults) {

@@ -187,11 +187,18 @@ describe('calling queries with mocked data works correctly', () => {
   })
 
   it('query that references itself correctly returns data', async () => {
-    const handler = getQueryHandler<TestTicketArticlesMultipleQuery>(
-      TestTicketArticlesMultiple,
-    )
+    const handler = getQueryHandler<
+      TestTicketArticlesMultipleQuery,
+      {
+        ticketId: string
+      }
+    >(TestTicketArticlesMultiple)
 
-    const { data, error } = await handler.query()
+    const { data, error } = await handler.query({
+      variables: {
+        ticketId: convertToGraphQLId('Ticket', 42),
+      },
+    })
     const { data: mock } = handler.getMockedData()
 
     expect(error).toBeUndefined()

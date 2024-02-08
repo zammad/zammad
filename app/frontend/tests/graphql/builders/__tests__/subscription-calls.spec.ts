@@ -3,7 +3,11 @@
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { flushPromises } from '@vue/test-utils'
 import { TestUserDocument, TestUserUpdatesDocument } from './queries.ts'
-import type { TestUserQuery, TestUserUpdatesSubscription } from './queries.ts'
+import type {
+  TestUserQuery,
+  TestUserUpdatesSubscription,
+  TestUserUpdatesSubscriptionVariables,
+} from './queries.ts'
 import { getQueryHandler, getSubscriptionHandler } from './utils.ts'
 import { getGraphQLSubscriptionHandler } from '../mocks.ts'
 
@@ -72,8 +76,9 @@ describe('mocked subscription works correctly', () => {
     const queryHandler = getQueryHandler<TestUserQuery>(TestUserDocument, {
       userId,
     })
-    queryHandler.subscribeToMore<TestUserUpdatesSubscription>({
+    queryHandler.subscribeToMore<TestUserUpdatesSubscriptionVariables>({
       document: TestUserUpdatesDocument,
+      variables: { userId },
     })
 
     queryHandler.load()

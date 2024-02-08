@@ -54,6 +54,16 @@ const renderTwoFactor = async (twoFactor: TwoFactorPlugin) => {
   return view
 }
 
+const securitySuccess = () => {
+  return {
+    success: true,
+    payload: {
+      challenge: 'publicKey.challenge',
+      credential: 'publicKeyCredential',
+    },
+  }
+}
+
 describe('non-form two factor', () => {
   mockApplicationConfig({})
 
@@ -65,7 +75,7 @@ describe('non-form two factor', () => {
 
     const view = await renderTwoFactor({
       ...SecurityKeys,
-      setup: () => Promise.resolve({ success: true }),
+      setup: () => Promise.resolve(securitySuccess()),
     })
 
     await expect(view.findByText(error)).resolves.toBeInTheDocument()
@@ -76,7 +86,7 @@ describe('non-form two factor', () => {
 
     const view = await renderTwoFactor({
       ...SecurityKeys,
-      setup: () => Promise.resolve({ success: true }),
+      setup: () => Promise.resolve(securitySuccess()),
     })
 
     await expect(
@@ -94,7 +104,7 @@ describe('non-form two factor', () => {
 
     const view = await renderTwoFactor({
       ...SecurityKeys,
-      setup: () => Promise.resolve({ success: false, error }),
+      setup: () => Promise.resolve({ success: false, retry: false, error }),
     })
 
     await expect(view.findByText(error)).resolves.toBeInTheDocument()
@@ -112,7 +122,7 @@ describe('non-form two factor', () => {
     })
 
     await expect(view.findByRole('status')).resolves.toBeInTheDocument()
-    resolve({ success: true })
+    resolve(securitySuccess())
 
     await waitFor(() => {
       expect(view.queryByRole('status')).not.toBeInTheDocument()
@@ -153,7 +163,7 @@ describe('non-form two factor', () => {
 
     const view = await renderTwoFactor({
       ...SecurityKeys,
-      setup: () => Promise.resolve({ success: false, error }),
+      setup: () => Promise.resolve({ success: false, retry: true, error }),
     })
 
     await expect(view.findByText(error)).resolves.toBeInTheDocument()
@@ -168,7 +178,9 @@ describe('non-form two factor', () => {
       initiationData: { foo: 'bar' },
     })
 
-    const setup = vi.fn().mockResolvedValue({ success: false, error })
+    const setup = vi
+      .fn()
+      .mockResolvedValue({ success: false, retry: true, error })
 
     const view = await renderTwoFactor({
       ...SecurityKeys,
@@ -177,7 +189,11 @@ describe('non-form two factor', () => {
 
     await expect(view.findByText(error)).resolves.toBeInTheDocument()
 
-    setup.mockResolvedValueOnce({ success: false, error: 'New Error!' })
+    setup.mockResolvedValueOnce({
+      success: false,
+      retry: true,
+      error: 'New Error!',
+    })
 
     await view.events.click(view.getByRole('button', { name: 'Retry' }))
 

@@ -8,7 +8,15 @@ import {
   convertToGraphQLId,
   getIdFromGraphQLId,
 } from '#shared/graphql/utils.ts'
-import { Kind, type DocumentNode, OperationTypeNode } from 'graphql'
+import {
+  Kind,
+  type DocumentNode,
+  OperationTypeNode,
+  type OperationDefinitionNode,
+  type VariableDefinitionNode,
+  type TypeNode,
+  type NamedTypeNode,
+} from 'graphql'
 import { createRequire } from 'node:module'
 import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
 import { uniqBy } from 'lodash-es'
@@ -86,6 +94,10 @@ interface SchemaObjectScalarFieldType {
 interface SchemaObjectField {
   name: string
   type: SchemaType
+  args: SchemaObjectField[]
+  isDeprecated?: boolean
+  deprecatedReason?: string
+  defaultValue?: unknown
 }
 
 interface SchemaScalarType {
@@ -99,6 +111,13 @@ interface SchemaUnionType {
   name: string
 }
 
+interface SchemaInputObjectType {
+  kind: 'INPUT_OBJECT'
+  name: string
+  fields: null
+  inputFields: SchemaObjectField[]
+}
+
 type SchemaType =
   | SchemaObjectType
   | SchemaObjectFieldType
@@ -106,6 +125,7 @@ type SchemaType =
   | SchemaScalarType
   | SchemaObjectScalarFieldType
   | SchemaUnionType
+  | SchemaInputObjectType
 
 const schemaTypes = introspection.data.__schema.types as SchemaType[]
 
@@ -198,7 +218,8 @@ export const getFieldData = (definitionType: SchemaType): any => {
   if (
     definitionType.kind === 'SCALAR' ||
     definitionType.kind === 'OBJECT' ||
-    definitionType.kind === 'UNION'
+    definitionType.kind === 'UNION' ||
+    definitionType.kind === 'INPUT_OBJECT'
   )
     return definitionType
   if (definitionType.kind === 'ENUM')
@@ -469,6 +490,16 @@ const generateObject = (
   return value
 }
 
+export const getInputObjectDefinition = (name: string) => {
+  const definition = schemaTypes.find(
+    (type) => type.kind === 'INPUT_OBJECT' && type.name === name,
+  ) as SchemaInputObjectType
+  if (!definition) {
+    throw new Error(`Input object definition not found for ${name}`)
+  }
+  return definition
+}
+
 export const getObjectDefinition = (name: string) => {
   const definition = schemaTypes.find(
     (type) => type.kind === 'OBJECT' && type.name === name,
@@ -492,7 +523,7 @@ const getUnionDefinition = (name: string) => {
 const getEnumDefinition = (name: string) => {
   const definition = schemaTypes.find(
     (type) => type.kind === 'ENUM' && type.name === name,
-  ) as SchemaObjectType
+  ) as SchemaEnumType
   if (!definition) {
     throw new Error(`Enum definition not found for ${name}`)
   }
@@ -542,6 +573,231 @@ export const generateObjectData = <T>(
     variables: {},
     cached: false,
   }) as T
+}
+
+const getJsTypeFromScalar = (
+  scalar: string,
+): 'string' | 'number' | 'boolean' | null => {
+  switch (scalar) {
+    case 'Boolean':
+      return 'boolean'
+    case 'Int':
+    case 'Float':
+      return 'number'
+    case 'ID':
+    case 'BinaryString':
+    case 'NonEmptyString':
+    case 'FormId':
+    case 'String':
+    case 'ISO8601Date':
+    case 'ISO8601DateTime':
+      return 'string'
+    case 'JSON':
+    default:
+      return null
+  }
+}
+
+const createVariablesError = (
+  definition: OperationDefinitionNode,
+  message: string,
+) => {
+  return new Error(
+    `(Variables error for ${definition.operation} ${definition.name?.value}) ${message}`,
+  )
+}
+
+const validateSchemaValue = (
+  definition: OperationDefinitionNode,
+  data: SchemaObjectField,
+  value: any,
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+) => {
+  const required = data.type.kind === 'NON_NULL'
+  const { field, list } = getFieldInformation(data.type)
+  if (value == null) {
+    if (required && data.defaultValue == null) {
+      throw createVariablesError(
+        definition,
+        `non-nullable field "${data.name}" is not defined`,
+      )
+    }
+    return
+  }
+  if (list) {
+    if (!Array.isArray(value)) {
+      throw createVariablesError(
+        definition,
+        `expected array for "${data.name}", got ${typeof value}`,
+      )
+    }
+    for (const item of value) {
+      validateSchemaValue(definition, { ...data, type: field }, item)
+    }
+    return
+  }
+  if (field.kind === 'SCALAR') {
+    const type = getJsTypeFromScalar(field.name)
+    // eslint-disable-next-line valid-typeof
+    if (type && typeof value !== type) {
+      throw createVariablesError(
+        definition,
+        `expected ${type} for "${data.name}", got ${typeof value}`,
+      )
+    }
+  }
+  if (field.kind === 'ENUM') {
+    const enumDefinition = getEnumDefinition(field.name)
+    const enumValues = enumDefinition.enumValues.map(
+      (enumValue) => enumValue.name,
+    )
+    if (!enumValues.includes(value)) {
+      throw createVariablesError(
+        definition,
+        `${data.name} should be one of "${enumValues.join('", "')}", but instead got "${value}"`,
+      )
+    }
+  }
+  if (field.kind === 'INPUT_OBJECT') {
+    if (typeof value !== 'object' || value === null) {
+      throw createVariablesError(
+        definition,
+        `expected object for "${data.name}", got ${typeof value}`,
+      )
+    }
+
+    const object = getInputObjectDefinition(field.name)
+    const fields = new Set(object.inputFields.map((f) => f.name))
+    for (const key in value) {
+      if (!fields.has(key)) {
+        throw createVariablesError(
+          definition,
+          `field "${key}" is not defined on ${field.name}`,
+        )
+      }
+    }
+    for (const field of object.inputFields) {
+      const inputValue = value[field.name]
+      validateSchemaValue(definition, field, inputValue)
+    }
+  }
+}
+
+const isVariableDefinitionList = (definition: VariableDefinitionNode) => {
+  if (definition.type.kind === Kind.LIST_TYPE) return true
+  if (definition.type.kind === Kind.NON_NULL_TYPE) {
+    return definition.type.type.kind === Kind.LIST_TYPE
+  }
+  return false
+}
+
+const getVariableDefinitionField = (definition: TypeNode): NamedTypeNode => {
+  if (definition.kind === Kind.NAMED_TYPE) return definition
+  return getVariableDefinitionField(definition.type)
+}
+
+const buildFieldDefinitionFromVriablesDefinition = ({
+  list,
+  required,
+  field,
+}: {
+  list: boolean
+  required: boolean
+  field: any
+}) => {
+  if (list && required) {
+    return {
+      kind: 'NON_NULL',
+      ofType: {
+        kind: 'LIST',
+        ofType: field,
+      },
+    }
+  }
+  if (required) {
+    return {
+      kind: 'NON_NULL',
+      ofType: field,
+    }
+  }
+  if (list) {
+    return {
+      kind: 'LIST',
+      ofType: field,
+    }
+  }
+  return field
+}
+
+const validateQueryDefinitionVariables = (
+  definition: OperationDefinitionNode,
+  variableDefinition: VariableDefinitionNode,
+  variables: Record<string, any>,
+) => {
+  const required = variableDefinition.type.kind === Kind.NON_NULL_TYPE
+  const list = isVariableDefinitionList(variableDefinition)
+  const field = getVariableDefinitionField(variableDefinition.type)
+  const fieldDefinitions = schemaTypes.filter(
+    (type) => type.name === field.name.value,
+  )
+  if (fieldDefinitions.length === 0) {
+    throw createVariablesError(
+      definition,
+      `Cannot find definition for "${field.name.value}"`,
+    )
+  }
+  if (fieldDefinitions.length > 1) {
+    throw createVariablesError(
+      definition,
+      `Multiple definitions for "${field.name.value}": ${fieldDefinitions.map((type) => type.kind).join(', ')}`,
+    )
+  }
+  const name = variableDefinition.variable.name.value
+  const defaultValue = (() => {
+    const { defaultValue } = variableDefinition
+    if (typeof defaultValue === 'undefined') return undefined
+    if ('value' in defaultValue) return defaultValue.value
+    if (defaultValue.kind === Kind.LIST) return []
+    if (defaultValue.kind === Kind.NULL) return null
+    // we don't care for values inside the object
+    return {}
+  })()
+  validateSchemaValue(
+    definition,
+    {
+      name,
+      type: buildFieldDefinitionFromVriablesDefinition({
+        required,
+        list,
+        field: fieldDefinitions[0],
+      }),
+      args: [],
+      defaultValue,
+    },
+    variables[name],
+  )
+}
+
+export const validateOperationVariables = (
+  definition: OperationDefinitionNode,
+  variables: Record<string, any>,
+) => {
+  const name = definition.name?.value
+  if (!name || !definition.variableDefinitions) return
+  const variablesNames = definition.variableDefinitions.map(
+    (variableDefinition) => variableDefinition.variable.name.value,
+  )
+  for (const variable in variables) {
+    if (!variablesNames.includes(variable)) {
+      throw createVariablesError(
+        definition,
+        `field "${variable}" is not defined on ${definition.operation} ${name}`,
+      )
+    }
+  }
+  definition.variableDefinitions.forEach((variableDefinition) => {
+    validateQueryDefinitionVariables(definition, variableDefinition, variables)
+  })
 }
 
 export const mockOperation = (

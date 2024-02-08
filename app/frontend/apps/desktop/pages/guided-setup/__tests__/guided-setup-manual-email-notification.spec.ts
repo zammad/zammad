@@ -76,14 +76,6 @@ describe('guided setup manual email notification', () => {
     })
 
     it('can save and continue to channels step', async () => {
-      const view = await visitView('/guided-setup/manual/email-notification')
-
-      await flushPromises()
-      await getNode('email-notification-setup')?.settled
-
-      expect(view.getByText('Email Notification')).toBeInTheDocument()
-      expect(view.getByLabelText('Send Mails via')).toBeInTheDocument()
-
       mockChannelEmailValidateConfigurationOutboundMutation({
         channelEmailValidateConfigurationOutbound: {
           success: true,
@@ -96,6 +88,14 @@ describe('guided setup manual email notification', () => {
           success: true,
         },
       })
+
+      const view = await visitView('/guided-setup/manual/email-notification')
+
+      await flushPromises()
+      await getNode('email-notification-setup')?.settled
+
+      expect(view.getByText('Email Notification')).toBeInTheDocument()
+      expect(view.getByLabelText('Send Mails via')).toBeInTheDocument()
 
       const continueButton = view.getByRole('button', {
         name: 'Save and Continue',
@@ -191,6 +191,19 @@ describe('guided setup manual email notification', () => {
     })
 
     it('submits `false` value when SSL verification is disabled', async () => {
+      mockChannelEmailValidateConfigurationOutboundMutation({
+        channelEmailValidateConfigurationOutbound: {
+          success: true,
+          errors: null,
+        },
+      })
+
+      mockChannelEmailSetNotificationConfigurationMutation({
+        channelEmailSetNotificationConfiguration: {
+          success: true,
+        },
+      })
+
       const view = await visitView('/guided-setup/manual/email-notification')
 
       await flushPromises()
@@ -213,19 +226,6 @@ describe('guided setup manual email notification', () => {
       expect(
         getNode('email-notification-setup')?.find('sslVerify')?.value,
       ).toBe(true)
-
-      mockChannelEmailValidateConfigurationOutboundMutation({
-        channelEmailValidateConfigurationOutbound: {
-          success: true,
-          errors: null,
-        },
-      })
-
-      mockChannelEmailSetNotificationConfigurationMutation({
-        channelEmailSetNotificationConfiguration: {
-          success: true,
-        },
-      })
 
       await view.events.click(
         view.getByRole('button', {

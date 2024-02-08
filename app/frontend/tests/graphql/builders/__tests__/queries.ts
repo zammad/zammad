@@ -23,7 +23,7 @@ export interface TestUserQuery {
   }
 }
 
-export interface TestUserAuthorizationsMutation {
+export interface TestUserUpdateMutation {
   userUpdate: {
     user: {
       id: string
@@ -36,7 +36,7 @@ export interface TestUserAuthorizationsMutation {
   }
 }
 
-export interface TestUserAuthorizationsVariables {
+export interface TestUserUpdateVariables {
   userId: string
   input: UserInput
 }
@@ -122,7 +122,7 @@ export const TestUserDocument = gql`
   }
 `
 
-export const TestUserAutorizationsDocument = gql`
+export const TestUserUpdateDocument = gql`
   mutation userUpdate($userId: ID, $input: UserInput!) {
     userUpdate(id: $userId, input: $input) {
       user {
@@ -169,6 +169,10 @@ export interface TestUserUpdatesSubscription {
       fullname: string
     }
   }
+}
+
+export interface TestUserUpdatesSubscriptionVariables {
+  userId: string
 }
 
 export const TestUserUpdatesDocument = gql`
