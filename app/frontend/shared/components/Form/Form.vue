@@ -106,6 +106,8 @@ export interface Props {
   useObjectAttributes?: boolean
   objectAttributeSkippedFields?: string[]
 
+  clearValuesAfterSubmit?: boolean
+
   // Implement the submit in this way, because we need to react on async usage of the submit function.
   // Don't forget that to submit a form with "Enter" key, you need to add a button with type="submit" inside of the form.
   // Or to have a button outside of form with "form" attribite with the same value as the form id.
@@ -277,6 +279,8 @@ const onSubmitRaw = () => {
   }
 }
 
+// TODO: disable rule for now, because some code can be removed with FormKit-Update
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const onSubmit = (values: FormSubmitData) => {
   // Needs to be checked, because the 'onSubmit' function is not required.
   if (!props.onSubmit) return undefined
@@ -294,18 +298,24 @@ const onSubmit = (values: FormSubmitData) => {
       .then((afterReset) => {
         // it's possible to destroy Form before this is called and the reset should not run when errors exists.
         if (!formNode.value || formNode.value.context?.state.errors) return
-        formNode.value.reset(values)
-        // "dirty" check checks "_init" instead of "initial"
-        // "initial" is updated with resetValues in "reset" function, but "_init" is static
-        // TODO: keep an eye on https://github.com/formkit/formkit/issues/791
-        formNode.value.props._init = cloneAny(formNode.value.props.initial)
-        formNode.value.walk((node) => {
-          if (node.name in flatValues) {
-            node.props._init = cloneAny(flatValues[node.name])
-          } else if (node.name in values) {
-            node.props._init = cloneAny(values[node.name])
-          }
-        })
+
+        // TODO: maybe should do some similar thing like in the formReset function for the form updater
+        if (props.clearValuesAfterSubmit) {
+          formNode.value.reset()
+        } else {
+          formNode.value.reset(values)
+          // "dirty" check checks "_init" instead of "initial"
+          // "initial" is updated with resetValues in "reset" function, but "_init" is static
+          // TODO: keep an eye on https://github.com/formkit/formkit/issues/791
+          formNode.value.props._init = cloneAny(formNode.value.props.initial)
+          formNode.value.walk((node) => {
+            if (node.name in flatValues) {
+              node.props._init = cloneAny(flatValues[node.name])
+            } else if (node.name in values) {
+              node.props._init = cloneAny(values[node.name])
+            }
+          })
+        }
         afterReset?.()
       })
       .catch((errors: UserError) => {

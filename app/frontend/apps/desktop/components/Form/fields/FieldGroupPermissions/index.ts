@@ -3,10 +3,7 @@
 import createInput from '#shared/form/core/createInput.ts'
 import FieldGroupPermissionsInput from './FieldGroupPermissionsInput.vue'
 
-const fieldDefinition = createInput(FieldGroupPermissionsInput, [
-  'groups',
-  'groupAccesses',
-])
+const fieldDefinition = createInput(FieldGroupPermissionsInput, ['options'])
 
 export default {
   fieldType: 'groupPermissions',

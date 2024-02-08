@@ -123,7 +123,7 @@ const formSchema = [
     label: 'Group permissions',
     type: 'groupPermissions',
     props: {
-      groups: [
+      options: [
         {
           value: 1,
           label: 'Users',
@@ -137,28 +137,6 @@ const formSchema = [
               label: 'Nested group',
             },
           ],
-        },
-      ],
-      groupAccesses: [
-        {
-          access: 'read',
-          label: 'Read',
-        },
-        {
-          access: 'create',
-          label: 'Create',
-        },
-        {
-          access: 'change',
-          label: 'Change',
-        },
-        {
-          access: 'overview',
-          label: 'Overview',
-        },
-        {
-          access: 'full',
-          label: 'Full',
         },
       ],
     },

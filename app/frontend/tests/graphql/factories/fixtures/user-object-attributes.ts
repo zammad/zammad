@@ -43,7 +43,23 @@ export default (): ObjectManagerFrontendAttributesPayload => ({
         null: true,
         item_class: 'formGroup--halfSize',
       },
-      screens: {},
+      screens: {
+        signup: {
+          '-all-': {
+            null: false,
+          },
+        },
+        invite_agent: {
+          '-all-': {
+            null: false,
+          },
+        },
+        invite_customer: {
+          '-all-': {
+            null: false,
+          },
+        },
+      },
       __typename: 'ObjectManagerFrontendAttribute',
     },
     {
@@ -177,6 +193,45 @@ export default (): ObjectManagerFrontendAttributesPayload => ({
       screens: {},
       __typename: 'ObjectManagerFrontendAttribute',
     },
+    {
+      name: 'role_ids',
+      display: 'Roles',
+      dataType: 'user_permission',
+      isInternal: true,
+      dataOption: {
+        null: false,
+        item_class: 'checkbox',
+        permission: ['admin.user'],
+        relation: 'Role',
+      },
+      screens: {
+        invite_agent: {
+          '-all-': {
+            null: false,
+          },
+        },
+      },
+      __typename: 'ObjectManagerFrontendAttribute',
+    },
+    {
+      name: 'group_ids',
+      display: 'Group permissions',
+      dataType: 'group_permissions',
+      isInternal: true,
+      dataOption: {
+        null: true,
+        item_class: 'checkbox',
+        permission: ['admin.user'],
+      },
+      screens: {
+        invite_agent: {
+          '-all-': {
+            null: true,
+          },
+        },
+      },
+      __typename: 'ObjectManagerFrontendAttribute',
+    },
   ],
   screens: [
     {
@@ -212,6 +267,10 @@ export default (): ObjectManagerFrontendAttributesPayload => ({
         'address',
         'note',
       ],
+    },
+    {
+      name: 'invite_agent',
+      attributes: ['firstname', 'lastname', 'email', 'role_ids', 'group_ids'],
     },
   ],
 })

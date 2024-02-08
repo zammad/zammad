@@ -715,17 +715,17 @@ ObjectManager::Attribute.add(
   screens:     {
     signup:          {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
     invite_agent:    {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
     invite_customer: {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
     edit:            {
@@ -1380,6 +1380,7 @@ ObjectManager::Attribute.add(
   display:     __('Roles'),
   data_type:   'user_permission',
   data_option: {
+    relation:   'Role',
     null:       false,
     item_class: 'checkbox',
     permission: ['admin.user'],
@@ -1434,7 +1435,7 @@ ObjectManager::Attribute.add(
     signup:          {},
     invite_agent:    {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     invite_customer: {},

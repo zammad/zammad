@@ -10,6 +10,7 @@ import type {
 } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 import { initializeFormClasses } from '#shared/components/Form/initializeFormClasses.ts'
+import { initializeFormGroupClasses } from '#shared/components/Form/initializeFormGroupClasses.ts'
 import { initializeFieldLinkClasses } from '#shared/components/Form/initializeFieldLinkClasses.ts'
 import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
 import getCoreClasses from './theme/global/getCoreMobileClasses.ts'
@@ -36,6 +37,12 @@ export const initializeForm: InitializeAppForm = (app: App) => {
 export const initializeFormFields = () => {
   initializeFormClasses({
     loading: 'my-4',
+  })
+
+  initializeFormGroupClasses({
+    container: 'form-group overflow-hidden rounded-xl bg-gray-500',
+    help: 'text-xs text-gray-100 ltr:pl-3 rtl:pr-3',
+    dirtyMark: 'form-group-mark-dirty',
   })
 
   initializeFieldLinkClasses({

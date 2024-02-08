@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
+import { cloneDeep } from 'lodash-es'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
@@ -32,7 +33,7 @@ const updateValue = (
   key: ToggleListOptionValue,
   state: boolean | undefined,
 ) => {
-  const values: ToggleListOptionValue[] = localValue.value || []
+  const values: ToggleListOptionValue[] = cloneDeep(localValue.value) || []
 
   if (state === true && !values.includes(key)) {
     values.push(key)
@@ -44,14 +45,14 @@ const updateValue = (
 
 const { delegateFocus } = useDelegateFocus(
   context.value.id,
-  `toggle_list_toggle_${context.value.id}_${context.value.options[0]?.value}`,
+  `toggle_list_toggle_${context.value.id}_${context.value?.options && context.value?.options[0]?.value}`,
 )
 </script>
 
 <template>
   <output
     :id="context.id"
-    class="block bg-blue-200 dark:bg-gray-700 rounded-lg focus:outline-none"
+    class="block bg-blue-200 dark:bg-gray-700 rounded-lg focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800"
     role="list"
     :class="context.classes.input"
     :name="context.node.name"
@@ -71,6 +72,7 @@ const { delegateFocus } = useDelegateFocus(
         :model-value="valueLookup[option.value]"
         type="toggle"
         :name="`toggle_list_toggle_${context.id}_${option.value}`"
+        :ignore="true"
         wrapper-class="gap-2.5"
         :variants="{ true: 'True', false: 'False' }"
         :disabled="context.disabled"

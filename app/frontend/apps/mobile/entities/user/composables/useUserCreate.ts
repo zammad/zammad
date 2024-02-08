@@ -2,7 +2,7 @@
 
 import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import { useUserAddMutation } from '#mobile/pages/user/graphql/mutations/add.api.ts'
+import { useUserAddMutation } from '#shared/entities/user/graphql/mutations/add.api.ts'
 import type { User, UserAddPayload } from '#shared/graphql/types.ts'
 import {
   EnumFormUpdaterId,

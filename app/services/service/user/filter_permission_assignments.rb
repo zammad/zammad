@@ -6,6 +6,10 @@ class Service::User::FilterPermissionAssignments < Service::BaseWithCurrentUser
   MODELS = %w[Role Group].freeze
 
   def execute(user_data:)
+    return if current_user.permissions?('admin.user')
+
+    user_data.deep_stringify_keys! if user_data.is_a?(Hash)
+
     # Regular agents are not allowed to set Groups and Roles.
     MODELS.each do |model|
       SUFFIXES.each do |suffix|
@@ -14,11 +18,6 @@ class Service::User::FilterPermissionAssignments < Service::BaseWithCurrentUser
         user_data.delete(attribute) if !values.nil?
       end
     end
-
-    # Check for create requests and set signup roles if no other roles are given.
-    return true if user_data[:id].present? || user_data[:role_ids] || user_data[:roles]
-
-    user_data[:role_ids] = Role.signup_role_ids
   end
 
 end

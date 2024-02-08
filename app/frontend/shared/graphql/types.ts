@@ -554,7 +554,8 @@ export enum EnumFormUpdaterId {
   FormUpdaterUpdaterTicketCreate = 'FormUpdater__Updater__Ticket__Create',
   FormUpdaterUpdaterTicketEdit = 'FormUpdater__Updater__Ticket__Edit',
   FormUpdaterUpdaterUserCreate = 'FormUpdater__Updater__User__Create',
-  FormUpdaterUpdaterUserEdit = 'FormUpdater__Updater__User__Edit'
+  FormUpdaterUpdaterUserEdit = 'FormUpdater__Updater__User__Edit',
+  FormUpdaterUpdaterUserInvite = 'FormUpdater__Updater__User__Invite'
 }
 
 /** All backend managed objects */
@@ -572,6 +573,15 @@ export enum EnumOrderDirection {
   Ascending = 'ASCENDING',
   /** Sort with descending order */
   Descending = 'DESCENDING'
+}
+
+/** Different user access levels */
+export enum EnumPermissionAccess {
+  Change = 'change',
+  Create = 'create',
+  Full = 'full',
+  Overview = 'overview',
+  Read = 'read'
 }
 
 /** All available public links screens */
@@ -1412,6 +1422,7 @@ export type MutationsTwoFactorMethodInitiateAuthenticationArgs = {
 /** All available mutations */
 export type MutationsUserAddArgs = {
   input: UserInput;
+  sendInvite?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -2996,6 +3007,14 @@ export type UserError = {
   message: Scalars['String']['output'];
 };
 
+/** Represents a User <-> Group permission entry. */
+export type UserGroupPermissionEntry = {
+  /** Assigned access levels for the user in the group */
+  accessType: Array<EnumPermissionAccess>;
+  /** Internal ID of the group */
+  groupInternalId: Scalars['Int']['input'];
+};
+
 /** The user add/update fields. */
 export type UserInput = {
   /** The user active flag */
@@ -3006,6 +3025,8 @@ export type UserInput = {
   fax?: InputMaybe<Scalars['String']['input']>;
   /** The user first name */
   firstname?: InputMaybe<Scalars['String']['input']>;
+  /** User group access levels */
+  groupIds?: InputMaybe<Array<UserGroupPermissionEntry>>;
   /** The user last name */
   lastname?: InputMaybe<Scalars['String']['input']>;
   /** The user mobile */
@@ -3022,6 +3043,8 @@ export type UserInput = {
   password?: InputMaybe<Scalars['String']['input']>;
   /** The user phone */
   phone?: InputMaybe<Scalars['String']['input']>;
+  /** The roles (e.g. admin, agent, (e.g. Agent or Customer) this user has */
+  roleIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** The user vip flag */
   vip?: InputMaybe<Scalars['Boolean']['input']>;
   /** The user web */
@@ -3487,13 +3510,6 @@ export type TicketUpdatesSubscriptionVariables = Exact<{
 
 export type TicketUpdatesSubscription = { __typename?: 'Subscriptions', ticketUpdates: { __typename?: 'TicketUpdatesPayload', ticket?: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: string, escalationAt?: string | null, updatedAt: string, pendingTime?: string | null, tags?: Array<string> | null, timeUnit?: number | null, subscribed?: boolean | null, preferences?: any | null, stateColorCode: EnumTicketStateColorCode, firstResponseEscalationAt?: string | null, closeEscalationAt?: string | null, updateEscalationAt?: string | null, mentions?: { __typename?: 'MentionConnection', totalCount: number, edges: Array<{ __typename?: 'MentionEdge', cursor: string, node: { __typename?: 'Mention', user: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, vip?: boolean | null, outOfOffice?: boolean | null, active?: boolean | null, image?: string | null } } }> } | null, owner: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, phone?: string | null, image?: string | null, vip?: boolean | null, active?: boolean | null, outOfOffice?: boolean | null, email?: string | null, hasSecondaryOrganizations?: boolean | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null, policy: { __typename?: 'PolicyDefault', update: boolean } }, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, vip?: boolean | null, active?: boolean | null } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name?: string | null, emailAddress?: { __typename?: 'EmailAddressParsed', name?: string | null, emailAddress?: string | null } | null }, priority: { __typename?: 'TicketPriority', id: string, name: string, defaultCreate: boolean, uiColor?: string | null }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, policy: { __typename?: 'PolicyTicket', update: boolean, agentReadAccess: boolean }, timeUnitsPerType?: Array<{ __typename?: 'TicketTimeAccountingTypeSum', name: string, timeUnit: number }> | null } | null } };
 
-export type UserAddMutationVariables = Exact<{
-  input: UserInput;
-}>;
-
-
-export type UserAddMutation = { __typename?: 'Mutations', userAdd?: { __typename?: 'UserAddPayload', user?: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
-
 export type UserUpdateMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   input: UserInput;
@@ -3713,6 +3729,14 @@ export type TicketOverviewsQueryVariables = Exact<{
 
 
 export type TicketOverviewsQuery = { __typename?: 'Queries', ticketOverviews: { __typename?: 'OverviewConnection', edges: Array<{ __typename?: 'OverviewEdge', cursor: string, node: { __typename?: 'Overview', id: string, name: string, link: string, prio: number, orderBy: string, orderDirection: EnumOrderDirection, active: boolean, ticketCount?: number, viewColumns: Array<{ __typename?: 'KeyValue', key: string, value?: string | null }>, orderColumns: Array<{ __typename?: 'KeyValue', key: string, value?: string | null }> } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+
+export type UserAddMutationVariables = Exact<{
+  input: UserInput;
+  sendInvite?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type UserAddMutation = { __typename?: 'Mutations', userAdd?: { __typename?: 'UserAddPayload', user?: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type CurrentUserAttributesFragment = { __typename?: 'User', email?: string | null, id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, permissions?: { __typename?: 'UserPermission', names: Array<string> } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null };
 

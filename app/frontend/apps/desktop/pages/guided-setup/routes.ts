@@ -156,6 +156,21 @@ const route: RouteRecordRaw[] = [
               sidebar: false,
             },
           },
+          {
+            path: 'invite',
+            name: 'GuidedSetupManualInviteColleagues',
+            component: () =>
+              import(
+                './views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue'
+              ),
+            meta: {
+              title: __('Invite Colleagues'),
+              requiresAuth: true,
+              requiredPermission: 'admin.wizard',
+              hasOwnLandmarks: true,
+              sidebar: false,
+            },
+          },
         ],
       },
     ],

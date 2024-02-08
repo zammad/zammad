@@ -32,7 +32,7 @@ const renderGroupPermissionsInput = async (
 }
 
 const commonProps = {
-  groups: [
+  options: [
     {
       value: 1,
       label: 'Users',
@@ -46,28 +46,6 @@ const commonProps = {
           label: 'Nested group',
         },
       ],
-    },
-  ],
-  groupAccesses: [
-    {
-      access: 'read',
-      label: 'Read',
-    },
-    {
-      access: 'create',
-      label: 'Create',
-    },
-    {
-      access: 'change',
-      label: 'Change',
-    },
-    {
-      access: 'overview',
-      label: 'Overview',
-    },
-    {
-      access: 'full',
-      label: 'Full',
     },
   ],
 }
@@ -312,6 +290,98 @@ describe('Fields - FieldGroupPermissions', () => {
     expect(
       queryByRole(listbox, 'button', { name: 'Has submenu' }),
     ).toBeInTheDocument()
+  })
+
+  it('ensures either granular or full access is selected', async () => {
+    const view = await renderGroupPermissionsInput(commonProps)
+
+    await view.events.click(view.getByLabelText('Read'))
+
+    await waitFor(() => {
+      expect(getNode('groupPermissions')?.value).toEqual([
+        expect.objectContaining({
+          groupAccess: {
+            read: true,
+            create: false,
+            change: false,
+            overview: false,
+            full: false,
+          },
+        }),
+      ])
+    })
+
+    await view.events.click(view.getByLabelText('Full'))
+
+    await waitFor(() => {
+      expect(getNode('groupPermissions')?.value).toEqual([
+        expect.objectContaining({
+          groupAccess: {
+            read: false,
+            create: false,
+            change: false,
+            overview: false,
+            full: true,
+          },
+        }),
+      ])
+    })
+
+    await view.events.click(view.getByLabelText('Read'))
+    await view.events.click(view.getByLabelText('Create'))
+    await view.events.click(view.getByLabelText('Change'))
+    await view.events.click(view.getByLabelText('Overview'))
+
+    await waitFor(() => {
+      expect(getNode('groupPermissions')?.value).toEqual([
+        expect.objectContaining({
+          groupAccess: {
+            read: true,
+            create: true,
+            change: true,
+            overview: true,
+            full: false,
+          },
+        }),
+      ])
+    })
+
+    await view.events.click(view.getByLabelText('Full'))
+
+    await waitFor(() => {
+      expect(getNode('groupPermissions')?.value).toEqual([
+        expect.objectContaining({
+          groupAccess: {
+            read: false,
+            create: false,
+            change: false,
+            overview: false,
+            full: true,
+          },
+        }),
+      ])
+    })
+  })
+
+  it('does not translate group names', async () => {
+    const testOptions = [
+      {
+        value: 1,
+        label: 'Group name (%s)',
+        labelPlaceholder: ['translated'],
+      },
+    ]
+
+    const view = await renderGroupPermissionsInput({
+      options: testOptions,
+    })
+
+    await view.events.click(view.getByRole('combobox'))
+
+    const listbox = view.getByRole('listbox')
+    const options = getAllByRole(listbox, 'option')
+
+    expect(options[0]).toHaveTextContent(testOptions[0].label)
   })
 })
 

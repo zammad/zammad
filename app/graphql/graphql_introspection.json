@@ -3701,6 +3701,12 @@
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "FormUpdater__Updater__User__Invite",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "possibleTypes": null
@@ -3763,6 +3769,47 @@
             {
               "name": "DESCENDING",
               "description": "Sort with descending order",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
+          "name": "EnumPermissionAccess",
+          "description": "Different user access levels",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "read",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "create",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "change",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "overview",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "full",
+              "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -8318,6 +8365,16 @@
                       "name": "UserInput",
                       "ofType": null
                     }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "sendInvite",
+                  "description": "Wether invitation is sent to the new user",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
                   },
                   "defaultValue": null
                 }
@@ -18719,6 +18776,53 @@
         },
         {
           "kind": "INPUT_OBJECT",
+          "name": "UserGroupPermissionEntry",
+          "description": "Represents a User <-> Group permission entry.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "groupInternalId",
+              "description": "Internal ID of the group",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "accessType",
+              "description": "Assigned access levels for the user in the group",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "EnumPermissionAccess",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
           "name": "UserInput",
           "description": "The user add/update fields.",
           "fields": null,
@@ -18810,6 +18914,24 @@
               "defaultValue": null
             },
             {
+              "name": "roleIds",
+              "description": "The roles (e.g. admin, agent, (e.g. Agent or Customer) this user has",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            },
+            {
               "name": "web",
               "description": "The user web",
               "type": {
@@ -18876,6 +18998,24 @@
                 "kind": "SCALAR",
                 "name": "String",
                 "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "groupIds",
+              "description": "User group access levels",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "UserGroupPermissionEntry",
+                    "ofType": null
+                  }
+                }
               },
               "defaultValue": null
             }

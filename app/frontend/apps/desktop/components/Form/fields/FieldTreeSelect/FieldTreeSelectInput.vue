@@ -291,7 +291,7 @@ setupMissingOrDisabledOptionHandling()
                 decorative
               />
               <span
-                class="line-clamp-3"
+                class="line-clamp-3 whitespace-pre-wrap break-words"
                 :title="getSelectedOptionFullPath(selectedValue)"
               >
                 {{ getSelectedOptionFullPath(selectedValue) }}
@@ -336,7 +336,7 @@ setupMissingOrDisabledOptionHandling()
               decorative
             />
             <span
-              class="line-clamp-3"
+              class="line-clamp-3 whitespace-pre-wrap break-words"
               :title="getSelectedOptionFullPath(currentValue)"
             >
               {{ getSelectedOptionFullPath(currentValue) }}

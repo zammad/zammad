@@ -1,17 +1,17 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import { computed, onMounted, reactive, toRef, watch } from 'vue'
-import { cloneDeep } from 'lodash-es'
+import { computed, reactive, toRef, watch } from 'vue'
+import { cloneDeep, isEqual } from 'lodash-es'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type { TreeSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
 import useFlatSelectOptions from '../FieldTreeSelect/useFlatSelectOptions.ts'
-import type {
-  GroupAccessLookup,
-  GroupPermissionReactive,
-  GroupPermissionsContext,
+import {
+  GroupAccess,
+  type GroupPermissionReactive,
+  type GroupPermissionsContext,
 } from './types.ts'
 
 interface Props {
@@ -24,31 +24,40 @@ const contextReactive = toRef(props, 'context')
 
 const { localValue } = useValue(contextReactive)
 
-const { flatOptions } = useFlatSelectOptions(toRef(props.context, 'groups'))
+const { flatOptions } = useFlatSelectOptions(toRef(props.context, 'options'))
 
-const groupPermissions = computed<GroupPermissionReactive[]>({
-  get() {
-    return localValue.value || []
-  },
-
-  set(value) {
-    localValue.value = value
-  },
-})
-
+const groupPermissions = reactive<GroupPermissionReactive[]>([])
 const groupOptions = reactive<TreeSelectOption[][]>([])
 
+const groupAccesses = [
+  {
+    access: GroupAccess.Read,
+    label: __('Read'),
+  },
+  {
+    access: GroupAccess.Create,
+    label: __('Create'),
+  },
+  {
+    access: GroupAccess.Change,
+    label: __('Change'),
+  },
+  {
+    access: GroupAccess.Overview,
+    label: __('Overview'),
+  },
+  {
+    access: GroupAccess.Full,
+    label: __('Full'),
+  },
+]
+
 const getTakenGroups = (index: number): SelectValue[] =>
-  groupPermissions.value.reduce(
-    (takenGroups, groupPermission, currentIndex) => {
-      if (currentIndex !== index && groupPermission.groups)
-        takenGroups.push(
-          ...(groupPermission.groups as unknown as SelectValue[]),
-        )
-      return takenGroups
-    },
-    [] as SelectValue[],
-  )
+  groupPermissions.reduce((takenGroups, groupPermission, currentIndex) => {
+    if (currentIndex !== index && groupPermission.groups)
+      takenGroups.push(...(groupPermission.groups as unknown as SelectValue[]))
+    return takenGroups
+  }, [] as SelectValue[])
 
 const filterTreeSelectOptions = (options: TreeSelectOption[], index: number) =>
   options.filter((group) => {
@@ -72,63 +81,92 @@ const filterTreeSelectOptions = (options: TreeSelectOption[], index: number) =>
   })
 
 const filterGroupOptions = (index: number) =>
-  filterTreeSelectOptions(cloneDeep(contextReactive.value.groups), index)
+  filterTreeSelectOptions(cloneDeep(contextReactive.value.options || []), index)
 
-const getNewGroupPermission = () =>
-  reactive<GroupPermissionReactive>({
-    groups: [] as unknown as SelectValue,
-    groupAccess: contextReactive.value.groupAccesses.reduce(
-      (groupAccess, { access }) => {
-        groupAccess[access] = false
+const getNewGroupPermission = () => ({
+  groups: [] as unknown as SelectValue,
+  groupAccess: groupAccesses.reduce(
+    (groupAccess, { access }) => {
+      groupAccess[access] = false
 
-        return groupAccess
-      },
-      {} as GroupAccessLookup,
-    ),
-  })
+      return groupAccess
+    },
+    {} as Record<GroupAccess, boolean>,
+  ),
+})
 
 const addGroupPermission = (index: number) => {
   groupOptions[index] = filterGroupOptions(index)
-  groupPermissions.value.splice(index, 0, getNewGroupPermission())
+  groupPermissions.splice(index, 0, getNewGroupPermission())
 }
 
 const removeGroupPermission = (index: number) => {
-  groupPermissions.value.splice(index, 1)
+  groupPermissions.splice(index, 1)
   groupOptions.splice(index, 1)
 }
 
 watch(
-  () => groupPermissions.value,
-  () => {
-    groupPermissions.value.forEach((_groupPermission, index) => {
+  groupPermissions,
+  (newValue) => {
+    // Set external value to internal one, but only if they differ (loop protection).
+    if (isEqual(newValue, localValue.value)) return
+
+    newValue.forEach((_groupPermission, index) => {
       groupOptions[index] = filterGroupOptions(index)
     })
+
+    localValue.value = cloneDeep(newValue)
   },
   {
-    immediate: true,
     deep: true,
   },
 )
 
-onMounted(() => {
-  if (groupPermissions.value.length) return
+watch(
+  localValue,
+  (newValue) => {
+    if (!newValue || !newValue.length) {
+      groupOptions.splice(0, groupOptions.length, filterGroupOptions(0))
 
-  contextReactive.value.node.input([getNewGroupPermission()])
-})
+      groupPermissions.splice(
+        0,
+        groupPermissions.length,
+        getNewGroupPermission(),
+      )
 
-const hasLastGroupPermission = computed(
-  () => groupPermissions.value.length === 1,
+      return
+    }
+
+    // Set internal value to external one, but only if they differ (loop protection).
+    if (isEqual(newValue, groupPermissions)) return
+    ;(newValue as GroupPermissionReactive[]).forEach(
+      (_groupPermission, index) => {
+        groupOptions[index] = filterGroupOptions(index)
+      },
+    )
+
+    groupPermissions.splice(
+      0,
+      groupPermissions.length,
+      ...cloneDeep(newValue || []),
+    )
+  },
+  {
+    immediate: true,
+  },
 )
+
+const hasLastGroupPermission = computed(() => groupPermissions.length === 1)
 
 const hasNoMoreGroups = computed(
   () =>
     !flatOptions.value.length ||
-    groupPermissions.value.reduce((emptyGroups, groupPermission) => {
+    groupPermissions.reduce((emptyGroups, groupPermission) => {
       if (!((groupPermission.groups as unknown as SelectValue[]) || []).length)
         emptyGroups += 1
       return emptyGroups
     }, 0) > 0 ||
-    groupPermissions.value.reduce(
+    groupPermissions.reduce(
       (selectedGroupCount, groupPermission) =>
         selectedGroupCount +
         ((groupPermission.groups as unknown as SelectValue[]) || []).length,
@@ -140,12 +178,32 @@ const { delegateFocus } = useDelegateFocus(
   contextReactive.value.id,
   `${contextReactive.value.id}_first_element`,
 )
+
+const ensureGranularOrFullAccess = (
+  groupAccess: Record<GroupAccess, boolean>,
+  access: GroupAccess,
+  value: boolean,
+) => {
+  if (value === false) return
+
+  if (access === GroupAccess.Full && value === true) {
+    Object.entries(groupAccess).forEach(([key, state]) => {
+      if (key !== GroupAccess.Full && state === true) {
+        groupAccess[key as GroupAccess] = false
+      }
+    })
+  } else if (
+    access !== GroupAccess.Full &&
+    groupAccess[GroupAccess.Full] === true
+  )
+    groupAccess[GroupAccess.Full] = false
+}
 </script>
 
 <template>
   <output
     :id="context.id"
-    class="w-full flex flex-col p-2 space-y-2 focus:outline-none"
+    class="w-full flex flex-col p-2 space-y-2 rounded-lg focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800"
     :class="context.classes.input"
     :name="context.node.name"
     role="list"
@@ -156,12 +214,8 @@ const { delegateFocus } = useDelegateFocus(
   >
     <div
       v-for="(groupPermission, index) in groupPermissions"
-      :key="
-        ((groupPermission.groups as unknown as SelectValue[]) || []).length
-          ? `group-permission-groupId-${(groupPermission.groups as unknown as SelectValue[]).join('-')}`
-          : `group-permission-index-${index}`
-      "
-      class="w-full flex items-center gap-5"
+      :key="`group-permission-index-${index}`"
+      class="w-full flex items-center gap-3"
       role="listitem"
     >
       <FormKit
@@ -169,21 +223,31 @@ const { delegateFocus } = useDelegateFocus(
         v-model="groupPermission.groups"
         type="treeselect"
         outer-class="grow"
+        :ignore="true"
         :options="groupOptions[index]"
         :clearable="true"
         :multiple="true"
         :disabled="context.disabled"
         :alternative-background="true"
+        :no-options-label-translation="true"
         @blur="index === 0 ? context.handlers.blur : undefined"
       />
       <FormKit
-        v-for="groupAccess in context.groupAccesses"
+        v-for="groupAccess in groupAccesses"
         :key="groupAccess.access"
         v-model="groupPermission.groupAccess[groupAccess.access]"
         type="checkbox"
-        wrapper-class="w-full flex-col-reverse"
+        wrapper-class="shrink-0 flex-col-reverse"
+        :ignore="true"
         :disabled="context.disabled"
         :alternative-border="true"
+        @input="
+          ensureGranularOrFullAccess(
+            groupPermission.groupAccess,
+            groupAccess.access,
+            $event!,
+          )
+        "
       >
         <template #label>
           <CommonLabel class="uppercase text-gray-300" size="small">

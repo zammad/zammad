@@ -822,14 +822,19 @@ describe('Form.vue - Reset', () => {
   const renderForm = async ({
     formUpdaterId,
     onSubmit,
-  }: { formUpdaterId?: EnumFormUpdaterId; onSubmit?: () => unknown } = {}) => {
+    clearValuesAfterSubmit,
+  }: {
+    formUpdaterId?: EnumFormUpdaterId
+    onSubmit?: () => unknown
+    clearValuesAfterSubmit?: boolean
+  } = {}) => {
     return new Promise<{
       view: ExtendedRenderResult
       form: Ref<FormRef>
     }>((resolve) => {
       const view = renderComponent(
         {
-          template: `<div><Form ref="form" id="form-ticket-create" :schema="schema" :form-updater-id="formUpdaterId" @submit="onSubmit" /></div>`,
+          template: `<div><Form ref="form" id="form-ticket-create" :schema="schema" :form-updater-id="formUpdaterId" :clear-values-after-submit="clearValuesAfterSubmit" @submit="onSubmit" /></div>`,
           components: {
             Form,
           },
@@ -871,7 +876,13 @@ describe('Form.vue - Reset', () => {
                 resolve({ view, form: form as Ref<FormRef> })
               })
             })
-            return { schema, form, formUpdaterId, onSubmit }
+            return {
+              schema,
+              form,
+              formUpdaterId,
+              clearValuesAfterSubmit,
+              onSubmit,
+            }
           },
         } as any,
         {
@@ -1067,5 +1078,24 @@ describe('Form.vue - Reset', () => {
     assertNotDirty(input)
 
     expect(form.value.formNode.context?.state.dirty).toBe(false)
+  })
+
+  it('clear values after submit (instead of remembering existing values)', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(true)
+    const { view } = await renderForm({
+      onSubmit,
+      clearValuesAfterSubmit: true,
+    })
+
+    const input = view.getByLabelText('Title')
+    await view.events.type(input, 'New title')
+
+    assertDirty(input)
+
+    await view.events.click(view.getByRole('button', { name: 'Submit' }))
+
+    expect(onSubmit).toHaveBeenCalledTimes(1)
+
+    expect(input).toHaveValue('')
   })
 })

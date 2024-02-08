@@ -24,4 +24,14 @@ module UserInfo
   ensure
     UserInfo.current_user_id = nil if reset_current_user_id
   end
+
+  def self.with_user_id(user_id)
+    old_user_id = current_user_id
+
+    self.current_user_id = user_id
+
+    yield
+  ensure
+    self.current_user_id = old_user_id
+  end
 end

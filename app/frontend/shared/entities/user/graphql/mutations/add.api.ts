@@ -1,15 +1,15 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import { UserAttributesFragmentDoc } from '../../../../../../shared/graphql/fragments/userAttributes.api';
-import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
+import { UserAttributesFragmentDoc } from '../../../../graphql/fragments/userAttributes.api';
+import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserAddDocument = gql`
-    mutation userAdd($input: UserInput!) {
-  userAdd(input: $input) {
+    mutation userAdd($input: UserInput!, $sendInvite: Boolean) {
+  userAdd(input: $input, sendInvite: $sendInvite) {
     user {
       ...userAttributes
     }

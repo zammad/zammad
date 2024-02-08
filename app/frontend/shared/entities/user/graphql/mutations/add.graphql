@@ -1,0 +1,10 @@
+mutation userAdd($input: UserInput!, $sendInvite: Boolean) {
+  userAdd(input: $input, sendInvite: $sendInvite) {
+    user {
+      ...userAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

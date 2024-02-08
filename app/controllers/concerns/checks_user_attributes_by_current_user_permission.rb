@@ -8,9 +8,6 @@ module ChecksUserAttributesByCurrentUserPermission
   def check_attributes_by_current_user_permission(params)
     authorize!
 
-    # admins can do whatever they want
-    return true if current_user.permissions?('admin.user')
-
     Service::User::FilterPermissionAssignments.new(current_user: current_user).execute(user_data: params)
   end
 end

@@ -10,6 +10,7 @@ export interface Props {
   title?: string
   showLogo?: boolean
   boxSize?: BoxSizes
+  hideFooter?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -19,6 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
 const boxSizeMap: Record<BoxSizes, string> = {
   small: 'max-w-md',
   medium: 'max-w-lg',
+  large: 'max-w-2xl',
 }
 
 const boxSizeClass = computed(() => {
@@ -57,6 +59,7 @@ const hoverPoweredByLogo = ref(false)
         <slot name="bottomContent" />
       </section>
       <footer
+        v-if="!hideFooter"
         class="flex w-full items-center justify-center py-3 align-middle text-xs"
       >
         <span class="ltr:mr-1 rtl:ml-1">{{ $t('Powered by') }}</span>

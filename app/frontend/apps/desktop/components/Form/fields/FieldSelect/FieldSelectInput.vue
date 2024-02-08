@@ -221,7 +221,7 @@ setupMissingOrDisabledOptionHandling()
                 decorative
               />
               <span
-                class="line-clamp-3"
+                class="line-clamp-3 whitespace-pre-wrap break-words"
                 :title="
                   getSelectedOptionLabel(selectedValue) ||
                   i18n.t('%s (unknown)', selectedValue)
@@ -272,7 +272,7 @@ setupMissingOrDisabledOptionHandling()
               decorative
             />
             <span
-              class="line-clamp-3"
+              class="line-clamp-3 whitespace-pre-wrap break-words"
               :title="
                 getSelectedOptionLabel(currentValue) ||
                 i18n.t('%s (unknown)', currentValue)

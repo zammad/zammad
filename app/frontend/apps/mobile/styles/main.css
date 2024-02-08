@@ -144,6 +144,32 @@
   .required-indicator {
     @apply text-yellow;
   }
+
+  .form-group {
+    &.form-group-mark-dirty .formkit-outer[data-dirty]::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 0.25rem;
+      background: repeating-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.1) 5px,
+          transparent 5px,
+          transparent 9px
+        )
+        repeat center;
+      background-size: 11px 11px;
+    }
+
+    .formkit-outer:not(:last-child) {
+      > :last-child {
+        @apply border-b border-white/10;
+      }
+    }
+  }
 }
 
 @layer utilities {

@@ -4,14 +4,10 @@ import type { FieldResolverModule } from '#shared/entities/object-attributes/typ
 import FieldResolver from '../FieldResolver.ts'
 
 export class FieldResolverUserGroupPermissions extends FieldResolver {
-  fieldType = 'hidden' // TODO
+  fieldType = 'groupPermissions'
 
-  // TODO:
-  // eslint-disable-next-line class-methods-use-this
   public fieldTypeAttributes() {
-    return {
-      props: {},
-    }
+    return {}
   }
 }
 

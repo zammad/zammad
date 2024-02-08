@@ -10,6 +10,7 @@ import type {
 } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 import { initializeFormClasses } from '#shared/components/Form/initializeFormClasses.ts'
+import { initializeFormGroupClasses } from '#shared/components/Form/initializeFormGroupClasses.ts'
 import { initializeFieldLinkClasses } from '#shared/components/Form/initializeFieldLinkClasses.ts'
 import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
 import { getCoreDesktopClasses } from './theme/global/getCoreDesktopClasses.ts'
@@ -54,6 +55,12 @@ export const initializeFormFields = () => {
     container: 'formkit-link',
     base: 'ms-3 mb-2.5',
     link: 'hover:rounded-sm hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900',
+  })
+
+  initializeFormGroupClasses({
+    container: 'form-group grid grid-cols-2 gap-y-2.5 gap-x-3',
+    help: 'text-xs',
+    dirtyMark: 'form-group-mark-dirty',
   })
 
   initializeToggleClasses({

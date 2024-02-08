@@ -59,6 +59,17 @@ export default abstract class FieldResolver {
       resolvedAttributes.value = this.attributeConfig.default as FormFieldValue
     }
 
+    // TODO: Support half-sized/single column fields based on the information hard-coded in the object attribute
+    //   backend for now. Later we can make this a concern of the frontend only, and ignore the hard-coded values.
+    if (
+      this.attributeConfig.item_class &&
+      (this.attributeConfig.item_class as string).indexOf(
+        'formGroup--halfSize',
+      ) !== -1
+    ) {
+      resolvedAttributes.outerClass = 'form-group-single-column'
+    }
+
     return resolvedAttributes
   }
 

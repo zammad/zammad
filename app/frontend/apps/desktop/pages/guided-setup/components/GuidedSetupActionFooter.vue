@@ -17,13 +17,16 @@ import type {
 interface Props {
   form?: FormRef
   skipRoute?: RouteLocationRaw
+  continueRoute?: RouteLocationRaw
   goBackRoute?: RouteLocationRaw
   onSkip?: () => void
+  onContinue?: () => void
   onBack?: () => void
   onSubmit?: () => void
   submitButtonText?: string
   submitButtonVariant?: ButtonVariant
   submitButtonType?: ButtonType
+  continueButtonText?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -35,11 +38,16 @@ const emit = defineEmits<{
   (e: 'submit'): void
   (e: 'back'): void
   (e: 'skip'): void
+  (e: 'continue'): void
 }>()
 
 const router = useRouter()
 
 const { isDisabled, formNodeId } = useForm(toRef(props, 'form'))
+
+const localContinueButtonText = computed(() => {
+  return props.continueButtonText || __('Continue')
+})
 
 const localSubmitButtonText = computed(() => {
   return props.submitButtonText || __('Submit')
@@ -55,6 +63,12 @@ const skip = () => {
   if (props.onSkip) emit('skip')
 
   if (props.skipRoute) router.push(props.skipRoute)
+}
+
+const cont = () => {
+  if (props.onContinue) emit('continue')
+
+  if (props.continueRoute) router.push(props.continueRoute)
 }
 
 const submit = () => {
@@ -81,6 +95,15 @@ const submit = () => {
       @click="skip()"
     >
       {{ $t('Skip') }}
+    </CommonButton>
+    <CommonButton
+      v-if="continueRoute || onContinue"
+      variant="primary"
+      size="large"
+      :disabled="isDisabled"
+      @click="cont()"
+    >
+      {{ $t(localContinueButtonText) }}
     </CommonButton>
     <CommonButton
       v-if="form || onSubmit"

@@ -63,4 +63,47 @@ RSpec.describe UserInfo do
     end
 
   end
+
+  describe 'with_user_id' do
+
+    let(:return_value) { 'Hello World' }
+    let(:test_id)         { 666 }
+    let(:another_test_id) { 123 }
+
+    it 'uses given user ID in the given block' do
+      described_class.with_user_id(test_id) do
+        expect(described_class.current_user_id).to eq(test_id)
+      end
+    end
+
+    it 'resets to surrounding user ID' do
+      described_class.current_user_id = test_id
+
+      described_class.with_user_id(another_test_id) do
+        expect(described_class.current_user_id).not_to eq(test_id)
+      end
+
+      expect(described_class.current_user_id).to eq(test_id)
+    end
+
+    it 'resets current_user_id in case of an exception' do
+      begin
+        described_class.with_user_id(test_id) do
+          raise 'error'
+        end
+      rescue # rubocop:disable Lint/SuppressedException
+      end
+
+      expect(described_class.current_user_id).to be_nil
+    end
+
+    it 'passes return value of given block' do
+      received = described_class.with_user_id(test_id) do
+        return_value
+      end
+
+      expect(received).to eq(return_value)
+    end
+
+  end
 end

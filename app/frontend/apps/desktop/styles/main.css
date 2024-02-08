@@ -54,6 +54,21 @@
   .required-indicator {
     @apply text-yellow-600;
   }
+
+  /* Compatibility layer for object attributes and form columns. */
+  .form-group .formkit-outer {
+    @apply col-span-2;
+
+    &.form-group-single-column {
+      @apply col-span-1;
+    }
+  }
+
+  /*
+    TODO: Dirty mark styling within the field.
+
+    .form-group.form-group-mark-dirty .formkit-outer[data-dirty]::before {}
+  */
 }
 
 @layer utilities {

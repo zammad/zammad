@@ -265,5 +265,8 @@ export interface FormStep {
 export type FormClass = 'loading'
 export type FormClassMap = Record<FormClass, string>
 
+export type FormGroupClass = 'container' | 'help' | 'dirtyMark'
+export type FormGroupClassMap = Record<FormGroupClass, string>
+
 export type FieldLinkClass = 'container' | 'base' | 'link'
 export type FieldLinkClassMap = Record<FieldLinkClass, string>
