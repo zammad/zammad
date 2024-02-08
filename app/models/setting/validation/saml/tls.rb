@@ -28,7 +28,7 @@ class Setting::Validation::Saml::TLS < Setting::Validation
       }
     )
 
-    return nil if resp.error.empty? || !resp.error.starts_with?('#<OpenSSL::SSL::SSLError')
+    return nil if resp.error.nil? || !resp.error.starts_with?('#<OpenSSL::SSL::SSLError')
 
     __('The verification of the TLS connection failed. Please check the IDP certificate.')
   end
