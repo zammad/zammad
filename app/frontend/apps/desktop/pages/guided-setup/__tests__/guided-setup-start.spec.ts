@@ -45,6 +45,13 @@ describe('guided setup start', () => {
         },
       })
 
+      mockSystemSetupLockMutation({
+        systemSetupLock: {
+          resource: 'Zammad::System::Setup',
+          value: 'random-uuid',
+        },
+      })
+
       const view = await visitView('/guided-setup')
 
       const manualSetupButton = view.getByText('Set up a new system')
@@ -53,13 +60,6 @@ describe('guided setup start', () => {
       expect(
         view.getByText('Or migrate from another system'),
       ).toBeInTheDocument()
-
-      mockSystemSetupLockMutation({
-        systemSetupLock: {
-          resource: 'Zammad::System::Setup',
-          value: 'random-uuid',
-        },
-      })
 
       await view.events.click(manualSetupButton)
 
@@ -72,6 +72,50 @@ describe('guided setup start', () => {
 
       expect(view.getByRole('button', { name: 'Go Back' })).toBeInTheDocument()
       expect(view.getByText('Create Administrator Account')).toBeInTheDocument()
+    })
+
+    it('shows guided setup screen and opens import setup on click', async () => {
+      mockSystemSetupInfoQuery({
+        systemSetupInfo: {
+          status: EnumSystemSetupInfoStatus.New,
+          type: null,
+        },
+      })
+
+      mockSystemSetupLockMutation({
+        systemSetupLock: {
+          resource: 'Zammad::System::Setup',
+          value: 'random-uuid',
+        },
+      })
+
+      const view = await visitView('/guided-setup')
+
+      const importSetupButton = view.getByText('Or migrate from another system')
+      expect(importSetupButton).toBeInTheDocument()
+
+      await view.events.click(importSetupButton)
+
+      await vi.waitFor(() => {
+        expect(
+          view,
+          'correctly redirects to guided setup import',
+        ).toHaveCurrentUrl('/guided-setup/import')
+      })
+
+      expect(
+        view.getByRole('button', { name: 'Freshdesk Beta' }),
+      ).toBeInTheDocument()
+      expect(
+        view.getByRole('button', { name: 'Kayako Beta' }),
+      ).toBeInTheDocument()
+      expect(
+        view.getByRole('button', { name: 'OTRS Beta' }),
+      ).toBeInTheDocument()
+      expect(
+        view.getByRole('button', { name: 'Zendesk Beta' }),
+      ).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'Go Back' })).toBeInTheDocument()
     })
 
     it('shows guided setup manual screen when lock exists', async () => {

@@ -19,7 +19,7 @@ const router = useRouter()
 
 const systemSetupInfoStore = useSystemSetupInfoStore()
 
-const startSetup = (mode: string) => {
+const startSetup = (type: EnumSystemSetupInfoType) => {
   const lockMutation = new MutationHandler(useSystemSetupLockMutation())
 
   lockMutation
@@ -27,11 +27,11 @@ const startSetup = (mode: string) => {
     .then((data) => {
       systemSetupInfoStore.systemSetupInfo = {
         lockValue: data?.systemSetupLock?.value || '',
-        type: mode as EnumSystemSetupInfoType,
+        type,
         status: EnumSystemSetupInfoStatus.InProgress,
       }
 
-      router.push(`/guided-setup/${mode}`)
+      router.push(`/guided-setup/${type}`)
     })
     .catch(() => {})
 }
@@ -55,7 +55,7 @@ const startSetup = (mode: string) => {
           type="submit"
           variant="primary"
           size="large"
-          @click="startSetup('manual')"
+          @click="startSetup(EnumSystemSetupInfoType.Manual)"
         >
           {{ $t('Set up a new system') }}
         </CommonButton>
@@ -66,7 +66,7 @@ const startSetup = (mode: string) => {
           type="submit"
           variant="secondary"
           size="large"
-          @click="startSetup('import')"
+          @click="startSetup(EnumSystemSetupInfoType.Import)"
         >
           {{ $t('Or migrate from another system') }}
         </CommonButton>

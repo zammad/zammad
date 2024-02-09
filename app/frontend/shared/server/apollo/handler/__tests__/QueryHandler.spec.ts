@@ -30,7 +30,7 @@ const querySampleErrorResult = {
   errors: [
     {
       message: 'GraphQL Error',
-      extensions: { type: 'Exceptions::Unknown' },
+      extensions: { type: 'Exceptions::UnknownError' },
     },
   ],
 }
@@ -275,7 +275,7 @@ describe('QueryHandler', () => {
         await waitUntilSpyCalled(errorCallbackSpy)
 
         expect(errorCallbackSpy).toHaveBeenCalledWith({
-          type: 'Exceptions::Unknown',
+          type: 'Exceptions::UnknownError',
           message: 'GraphQL Error',
         })
       })

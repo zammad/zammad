@@ -17,7 +17,7 @@ describe('CommonLabel.vue', () => {
     expect(label).toHaveClass('text-sm')
   })
 
-  it('renders bigger text is size is given', () => {
+  it('renders bigger text if size is given', () => {
     const view = renderComponent(CommonLabel, {
       props: {
         size: 'large',

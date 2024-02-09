@@ -3,6 +3,10 @@
 import { useApolloClient } from '@vue/apollo-composable'
 import { random } from 'lodash-es'
 import type { RouteRecordRaw } from 'vue-router'
+
+// import authenticationGuard from '#shared/router/guards/before/authentication.ts'
+// import permissionGuard from '#shared/router/guards/before/permission.ts'
+
 import LayoutTest from './LayoutTest.vue'
 import mockApolloClient from '../mock-apollo-client.ts'
 import renderComponent, {
@@ -71,6 +75,14 @@ export const visitView = async (
     })
   }
 
+  // const routerBeforeGuards = [authenticationGuard, permissionGuard]
+  // if (isDesktop) {
+  //   const { default: systemSetupInfo } = await import(
+  //     '#desktop/router/guards/before/systemSetupInfo.ts'
+  //   )
+  //   routerBeforeGuards.push(systemSetupInfo)
+  // }
+
   const testKey = random()
 
   const view = renderComponent(
@@ -84,6 +96,8 @@ export const visitView = async (
       form: true,
       unmount: true,
       routerRoutes: routes,
+      // TODO: disable for now and handle in seperate change
+      // routerBeforeGuards,
       propsData: {
         testKey,
       },

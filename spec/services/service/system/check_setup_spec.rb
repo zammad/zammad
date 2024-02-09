@@ -205,8 +205,8 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
         end
 
         it 'returns done status' do
-          expect(service.status).to eq('done')
-          expect(service.type).to be_nil
+          expect(service.status).to eq('in_progress')
+          expect(service.type).to eq('import')
         end
       end
     end

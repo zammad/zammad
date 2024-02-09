@@ -1,0 +1,8 @@
+mutation systemImportConfiguration($configuration: SystemImportConfigurationInput!) {
+  systemImportConfiguration(configuration: $configuration) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

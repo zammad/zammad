@@ -15,6 +15,6 @@ defineProps<Props>()
     <CommonLabel v-if="message">
       {{ $t(message) }}
     </CommonLabel>
-    <CommonLoader class="mt-9 mb-3" loading />
+    <CommonLoader class="mt-5 mb-3" loading />
   </div>
 </template>

@@ -30,14 +30,14 @@ class Service::System::CheckSetup < Service::Base
   end
 
   def execute
-    if setup_done!
-      @status = 'done'
-      return
-    end
-
     if Setting.get('import_mode')
       @status = 'in_progress'
       @type = 'import'
+      return
+    end
+
+    if setup_done!
+      @status = 'done'
       return
     end
 

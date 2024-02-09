@@ -10,7 +10,7 @@ import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useEmailAddressesQuery } from '#desktop/entities/email-addresses/graphql/queries/emailAddresses.api.ts'
 
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
-import { useSystemSetupManual } from '../../composables/useSystemSetupManual.ts'
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 
 defineOptions({
   beforeRouteEnter() {
@@ -26,7 +26,7 @@ defineOptions({
 
 const router = useRouter()
 
-const { setTitle } = useSystemSetupManual()
+const { setTitle } = useSystemSetup()
 
 setTitle(__('Connect Channels'))
 

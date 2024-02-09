@@ -23,12 +23,12 @@ import {
   EnumFormUpdaterId,
   type UserInput,
 } from '#shared/graphql/types.ts'
-import { useSystemSetupManual } from '../../composables/useSystemSetupManual.ts'
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
 
-const { setBoxSize, setTitle } = useSystemSetupManual()
+const { setBoxSize, setTitle } = useSystemSetup()
 
-setBoxSize('large')
+setBoxSize?.('large')
 setTitle(__('Invite Colleagues'))
 
 const { form } = useForm()

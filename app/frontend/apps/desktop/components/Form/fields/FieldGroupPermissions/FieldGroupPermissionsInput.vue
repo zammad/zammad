@@ -250,7 +250,10 @@ const ensureGranularOrFullAccess = (
         "
       >
         <template #label>
-          <CommonLabel class="uppercase text-gray-300" size="small">
+          <CommonLabel
+            class="uppercase text-gray-300 dark:text-gray-300"
+            size="small"
+          >
             {{ $t(groupAccess.label) }}
           </CommonLabel>
         </template>

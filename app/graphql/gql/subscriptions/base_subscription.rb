@@ -35,8 +35,11 @@ module Gql::Subscriptions
     #     arguments: { 'filter' => arg },   # custom arguments
     #   )
     def self.trigger(object, arguments: {}, scope: nil)
+      return if Zammad::SafeMode.enabled?
 
-      return if Setting.get('import_mode') || Zammad::SafeMode.enabled?
+      # Do not trigger subscriptions in import mode,
+      #   except for configUpdates, otherwise it's not possible to finish the setup (e.g. an import).
+      return if Setting.get('import_mode') == true && graphql_field_name != :configUpdates
 
       ::Gql::ZammadSchema.subscriptions.trigger(
         graphql_field_name,

@@ -1,0 +1,9 @@
+query systemImportState {
+  systemImportState {
+    name
+    result
+    startedAt
+    finishedAt
+  }
+}
+

@@ -14,7 +14,7 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import { useLogoUrl } from '#shared/composables/useLogoUrl.ts'
 
 import type { SystemInformationData } from '../../types/setup-manual.ts'
-import { useSystemSetupManual } from '../../composables/useSystemSetupManual.ts'
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
 import { useGuidedSetupSetSystemInformationMutation } from '../../graphql/mutations/setSystemInformation.api.ts'
 
@@ -23,7 +23,7 @@ const application = useApplicationStore()
 
 const { logoUrl } = useLogoUrl()
 
-const { setTitle } = useSystemSetupManual()
+const { setTitle } = useSystemSetup()
 setTitle(__('System Information'))
 
 const systemInformationSchema = [

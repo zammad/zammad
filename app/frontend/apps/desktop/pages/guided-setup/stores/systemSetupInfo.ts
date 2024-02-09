@@ -47,6 +47,23 @@ export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
 
   const application = useApplicationStore()
 
+  const getImportPath = () => {
+    const pathPrefix = '/guided-setup/import'
+    let importBackend = application.config.import_backend
+
+    if (application.config.import_mode) {
+      return `${pathPrefix}/${importBackend}/status`
+    }
+
+    if (systemSetupInfo.value.importSource) {
+      importBackend = systemSetupInfo.value.importSource
+    }
+
+    const importBackendRoute = importBackend ? `/${importBackend}` : ''
+
+    return `${pathPrefix}${importBackendRoute}`
+  }
+
   const getSystemSetupInfoRedirectPath = (
     status?: string,
     type?: string,
@@ -66,15 +83,11 @@ export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
         if (lockValue && type === 'manual') {
           return '/guided-setup/manual'
         }
-
-        // TODO: show some message on the start page instead of selection?
         return '/guided-setup'
       }
 
       if (type === EnumSystemSetupInfoType.Import) {
-        // TODO: use real route
-        // TODO: check when "import_backend" is saved, maybe we need to have some fallback...
-        return `/guided-setup/import/${application.config.import_backend}`
+        return getImportPath()
       }
     }
 
@@ -88,8 +101,12 @@ export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
   })
 
   const redirectNeeded = (currentRoutePath: string) => {
-    // Allow sub-paths for auto wizard execution
-    if (systemSetupInfo.value.status === EnumSystemSetupInfoStatus.Automated) {
+    // Allow sub-paths for auto wizard execution + imports
+    if (
+      systemSetupInfo.value.status === EnumSystemSetupInfoStatus.Automated ||
+      (systemSetupInfo.value.type === EnumSystemSetupInfoType.Import &&
+        systemSetupInfo.value.importSource)
+    ) {
       return !currentRoutePath.startsWith(redirectPath.value)
     }
 

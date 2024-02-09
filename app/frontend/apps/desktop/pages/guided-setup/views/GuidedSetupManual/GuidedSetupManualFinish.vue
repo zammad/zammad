@@ -3,13 +3,15 @@
 <script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/shared'
 import { useRouter } from 'vue-router'
-import { useSystemSetupManual } from '../../composables/useSystemSetupManual.ts'
+
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 import GuidedSetupStatusMessage from '../../components/GuidedSetupStatusMessage.vue'
 
-const { setBoxSize, setHideFooter, setTitle } = useSystemSetupManual()
+const { setBoxSize, setHideFooter, setTitle } = useSystemSetup()
 
-setBoxSize('medium')
-setHideFooter(true)
+setBoxSize?.('medium')
+setHideFooter?.(true)
+
 setTitle(__('Setup Finished'))
 
 const router = useRouter()

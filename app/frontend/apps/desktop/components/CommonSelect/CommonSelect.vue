@@ -324,7 +324,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
               class="w-full px-2.5 py-1.5 flex justify-between gap-2"
             >
               <CommonLabel
-                class="ms-auto !text-blue-800 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+                class="ms-auto text-blue-800 dark:text-blue-800 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
                 prefix-icon="check-all"
                 role="button"
                 tabindex="1"

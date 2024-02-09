@@ -32,6 +32,7 @@ describe('systemGuard', () => {
     mockApplicationConfig({
       system_init_done: false,
       import_mode: true,
+      import_backend: 'otrs',
     })
 
     const to = {
@@ -45,7 +46,7 @@ describe('systemGuard', () => {
     systemGuard(to, from, next)
 
     expect(next).toHaveBeenCalledWith({
-      path: '/guided-setup/import',
+      path: '/guided-setup/import/otrs/status',
       replace: true,
     })
   })

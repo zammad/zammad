@@ -4,7 +4,7 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 import { initializePiniaStore } from './components/renderComponent.ts'
 
-export const mockApplicationConfig = (config: Partial<ConfigList>) => {
+export const mockApplicationConfig = async (config: Partial<ConfigList>) => {
   initializePiniaStore()
 
   const application = useApplicationStore()

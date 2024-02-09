@@ -13,12 +13,12 @@ import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
 import { useSignupForm } from '#desktop/composables/authentication/useSignupForm.ts'
 
-import { useSystemSetupManual } from '../../composables/useSystemSetupManual.ts'
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 import { useSystemSetupInfoStore } from '../../stores/systemSetupInfo.ts'
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
 import { useUserAddFirstAdminMutation } from '../../graphql/mutations/userAddFirstAdmin.api.ts'
 
-const { setTitle } = useSystemSetupManual()
+const { setTitle } = useSystemSetup()
 
 setTitle(__('Create Administrator Account'))
 

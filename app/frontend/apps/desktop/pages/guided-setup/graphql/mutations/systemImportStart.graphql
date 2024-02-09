@@ -1,0 +1,8 @@
+mutation systemImportStart {
+  systemImportStart {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

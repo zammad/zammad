@@ -25,7 +25,10 @@ const systemSetupInfo: NavigationGuard = (
 
   if (application.config.import_mode) {
     log.debug(`Route guard for '${to.path}': system setup - import mode.`)
-    next({ path: '/guided-setup/import', replace: true }) // TODO: add real route when exists
+    next({
+      path: `/guided-setup/import/${application.config.import_backend}/status`,
+      replace: true,
+    })
     return
   }
 

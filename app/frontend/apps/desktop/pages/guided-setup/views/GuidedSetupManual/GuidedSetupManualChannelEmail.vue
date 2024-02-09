@@ -23,7 +23,7 @@ import type {
 
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
 import GuidedSetupStatusMessage from '../../components/GuidedSetupStatusMessage.vue'
-import { useSystemSetupManual } from '../../composables/useSystemSetupManual.ts'
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 import { emailBeforeRouteEnterGuard } from '../../router/guards/emailBeforeRouteEnterGuard.ts'
 
 defineOptions({
@@ -32,7 +32,7 @@ defineOptions({
 
 const router = useRouter()
 
-const { setTitle } = useSystemSetupManual()
+const { setTitle } = useSystemSetup()
 
 const {
   formEmailAccount,

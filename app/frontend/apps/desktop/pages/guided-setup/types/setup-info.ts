@@ -9,4 +9,5 @@ export interface SystemSetupInfoStorage {
   type?: EnumSystemSetupInfoType | null
   status?: EnumSystemSetupInfoStatus
   lockValue?: string
+  importSource?: string
 }

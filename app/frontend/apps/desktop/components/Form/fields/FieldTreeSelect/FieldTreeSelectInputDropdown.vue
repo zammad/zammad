@@ -433,7 +433,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
             >
               <CommonLabel
                 v-if="currentPath.length"
-                class="!text-blue-800 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+                class="text-blue-800 dark:text-blue-800 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
                 :prefix-icon="
                   locale.localeData?.dir === 'rtl'
                     ? 'chevron-right'
@@ -450,7 +450,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
               </CommonLabel>
               <CommonLabel
                 v-if="multiple && hasMoreSelectableOptions"
-                class="ms-auto !text-blue-800 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+                class="ms-auto text-blue-800 dark:text-blue-800 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
                 prefix-icon="check-all"
                 role="button"
                 tabindex="2"

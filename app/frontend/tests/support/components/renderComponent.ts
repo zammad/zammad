@@ -5,7 +5,7 @@
 
 import type { Plugin, Ref } from 'vue'
 import { isRef, nextTick, ref, watchEffect, unref } from 'vue'
-import type { Router, RouteRecordRaw } from 'vue-router'
+import type { Router, RouteRecordRaw, NavigationGuard } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
 import type { ComponentMountingOptions } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -21,6 +21,7 @@ import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
 import { imageViewerOptions } from '#shared/composables/useImageViewer.ts'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '#shared/router/walker.ts'
@@ -93,6 +94,7 @@ export interface ExtendedMountingOptions<Props>
   extends ComponentMountingOptions<Props> {
   router?: boolean
   routerRoutes?: RouteRecordRaw[]
+  routerBeforeGuards?: NavigationGuard[]
   store?: boolean
   confirmation?: boolean
   form?: boolean
@@ -143,6 +145,7 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
       CommonLink,
       CommonDateTime,
       CommonLabel,
+      CommonBadge,
     },
     stubs: {},
     plugins,
@@ -175,7 +178,10 @@ const ensureRouterSpy = () => {
   routerMethods.forEach((name) => vi.spyOn(router, name))
 }
 
-const initializeRouter = (routes?: RouteRecordRaw[]) => {
+const initializeRouter = (
+  routes?: RouteRecordRaw[],
+  routerBeforeGuards?: NavigationGuard[],
+) => {
   if (routerInitialized) {
     ensureRouterSpy()
     return
@@ -214,6 +220,8 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
     history: createWebHistory(isDesktop ? '/desktop' : '/mobile'),
     routes: localRoutes,
   }) as MockedRouter
+
+  routerBeforeGuards?.forEach((guard) => router.beforeEach(guard))
 
   Object.defineProperty(globalThis, 'Router', {
     value: router,
@@ -394,7 +402,10 @@ const renderComponent = <Props>(
 ): ExtendedRenderResult => {
   // Store and Router needs only to be initalized once for a test suit.
   if (wrapperOptions?.router) {
-    initializeRouter(wrapperOptions?.routerRoutes)
+    initializeRouter(
+      wrapperOptions?.routerRoutes,
+      wrapperOptions?.routerBeforeGuards,
+    )
   }
   if (wrapperOptions?.store) {
     initializePiniaStore()

@@ -7,6 +7,7 @@ import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
 import type { RouterLink, RouterView } from 'vue-router'
 
 declare module '@vue/runtime-core' {
@@ -15,7 +16,7 @@ declare module '@vue/runtime-core' {
     CommonIcon: typeof CommonIcon
     CommonLink: typeof CommonLink
     CommonDateTime: typeof CommonDateTime
-    CommonLabel: typeof CommonLabel
+    CommonBadge: typeof CommonBadge
     FormKit: typeof FormKit
 
     RouterView: typeof RouterView
@@ -29,4 +30,5 @@ export default function initializeGlobalComponents(app: App): void {
   app.component('CommonLink', CommonLink)
   app.component('CommonDateTime', CommonDateTime)
   app.component('CommonLabel', CommonLabel)
+  app.component('CommonBadge', CommonBadge)
 }

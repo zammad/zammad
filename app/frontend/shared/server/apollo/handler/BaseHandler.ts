@@ -77,9 +77,14 @@ export default abstract class BaseHandler<
 
     if (graphQLErrors.length > 0) {
       const { message, extensions }: GraphQLErrorReport = graphQLErrors[0]
-      const type =
+      let type =
         (extensions?.type as GraphQLErrorTypes) ||
-        GraphQLErrorTypes.NetworkError
+        GraphQLErrorTypes.UnknownError
+
+      // When it's not a known type, use the unknown error type.
+      if (!Object.values(GraphQLErrorTypes).includes(type)) {
+        type = GraphQLErrorTypes.UnknownError
+      }
 
       errorHandler = {
         type,
@@ -113,7 +118,10 @@ export default abstract class BaseHandler<
       //   console.error(error)
       // }
       useNotifications().notify({
-        message: this.errorNotificationMessage(errorHandler.message),
+        message: this.errorNotificationMessage(
+          errorHandler.type,
+          errorHandler.message,
+        ),
         type: options.errorNotificationType,
       })
     }
@@ -129,15 +137,19 @@ export default abstract class BaseHandler<
     ) as CommonHandlerOptions<THandlerOptions>
   }
 
-  private errorNotificationMessage(errorMessage?: string): string {
+  private errorNotificationMessage(
+    errorType: GraphQLErrorTypes,
+    errorMessage?: string,
+  ): string {
     const defaultErrorNotificationMessage = __(
       'An error occured during the operation.',
     )
 
-    return (
-      this.handlerOptions.errorNotificationMessage ||
-      errorMessage ||
-      defaultErrorNotificationMessage
-    )
+    const fallbackErrorMessage =
+      errorType === GraphQLErrorTypes.UnknownError || !errorMessage
+        ? defaultErrorNotificationMessage
+        : errorMessage
+
+    return this.handlerOptions.errorNotificationMessage || fallbackErrorMessage
   }
 }

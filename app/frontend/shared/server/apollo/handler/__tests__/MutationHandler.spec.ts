@@ -24,13 +24,17 @@ let mutationSampleResult: Record<string, unknown> = {
   },
 }
 
-const mutationSampleErrorResult = {
-  errors: [
-    {
-      message: 'GraphQL Error',
-      extensions: { type: 'Exceptions::Unknown' },
-    },
-  ],
+let errorType = 'Exceptions::UnknownError'
+
+const getMutationSampleErrorResult = () => {
+  return {
+    errors: [
+      {
+        message: 'GraphQL Error',
+        extensions: { type: errorType },
+      },
+    ],
+  }
 }
 
 const mutationSampleNetworkErrorResult = new Error('GraphQL Network Error')
@@ -42,7 +46,7 @@ const mockClient = (error = false, errorType = 'GraphQL') => {
       handler: () => {
         if (error) {
           return errorType === 'GraphQL'
-            ? Promise.resolve(mutationSampleErrorResult)
+            ? Promise.resolve(getMutationSampleErrorResult())
             : Promise.reject(mutationSampleNetworkErrorResult)
         }
 
@@ -163,11 +167,9 @@ describe('MutationHandler', () => {
 
   describe('error handling', () => {
     describe('GraphQL errors', () => {
-      beforeEach(() => {
-        mockClient(true)
-      })
-
       it('notification is triggerd', async () => {
+        mockClient(true)
+
         expect.assertions(1)
         const mutationHandlerObject = new MutationHandler(sampleMutation())
 
@@ -181,6 +183,8 @@ describe('MutationHandler', () => {
       })
 
       it('use error callback', async () => {
+        mockClient(true)
+
         expect.assertions(1)
 
         const errorCallbackSpy = vi.fn()
@@ -196,7 +200,31 @@ describe('MutationHandler', () => {
         })
 
         expect(errorCallbackSpy).toHaveBeenCalledWith({
-          type: 'Exceptions::Unknown',
+          type: 'Exceptions::UnknownError',
+          message: 'GraphQL Error',
+        })
+      })
+
+      it('use error callback with known error type', async () => {
+        errorType = 'Exceptions::Forbidden'
+        mockClient(true)
+
+        expect.assertions(1)
+
+        const errorCallbackSpy = vi.fn()
+
+        const mutationHandlerObject = new MutationHandler(sampleMutation(), {
+          errorCallback: (error) => {
+            errorCallbackSpy(error)
+          },
+        })
+
+        await mutationHandlerObject.send().catch(() => {
+          return null
+        })
+
+        expect(errorCallbackSpy).toHaveBeenCalledWith({
+          type: 'Exceptions::Forbidden',
           message: 'GraphQL Error',
         })
       })

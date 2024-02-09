@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
-import { useSystemSetupManual } from '../../composables/useSystemSetupManual.ts'
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 import { emailBeforeRouteEnterGuard } from '../../router/guards/emailBeforeRouteEnterGuard.ts'
 
 defineOptions({
@@ -15,7 +15,7 @@ defineOptions({
 
 const router = useRouter()
 
-const { setTitle } = useSystemSetupManual()
+const { setTitle } = useSystemSetup()
 
 setTitle(__('Connect Channels'))
 
