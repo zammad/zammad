@@ -519,6 +519,33 @@ process unprocessable_mails (var/spool/unprocessable_mail/*.eml) again
 
 =begin
 
+process unprocessable articles provided by the HTMLSanitizer.
+
+  Channel::EmailParser.process_unprocessable_articles
+
+=end
+
+  def self.process_unprocessable_articles(_params = {})
+    articles = Ticket::Article.where(body: ::HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
+    articles.find_each do |article|
+      if !article.as_raw&.content
+        puts "No raw content for article id #{article.id}! Please verify manually via command: Ticket::Article.find(#{article.id}).as_raw" # rubocop:disable Rails/Output
+        next
+      end
+
+      puts "Fix article #{article.id}..." # rubocop:disable Rails/Output
+
+      ApplicationHandleInfo.use('email_parser.postmaster') do
+        parsed = Channel::EmailParser.new.parse(article.as_raw.content)
+        article.update!(body: parsed[:body], content_type: parsed[:content_type])
+      end
+    end
+
+    puts "#{articles.count} articles are affected." # rubocop:disable Rails/Output
+  end
+
+=begin
+
   process oversized emails by
   - Reply with a postmaster message to inform the sender
 
