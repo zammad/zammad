@@ -527,7 +527,7 @@ process unprocessable articles provided by the HTMLSanitizer.
 
   def self.process_unprocessable_articles(_params = {})
     articles = Ticket::Article.where(body: ::HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
-    articles.find_each do |article|
+    articles.reorder(id: :desc).as_batches do |article|
       if !article.as_raw&.content
         puts "No raw content for article id #{article.id}! Please verify manually via command: Ticket::Article.find(#{article.id}).as_raw" # rubocop:disable Rails/Output
         next
