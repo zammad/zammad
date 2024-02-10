@@ -3,6 +3,7 @@
 const formKitTailwind = require('@formkit/themes/tailwindcss')
 const path = require('path')
 const daisyTailwind = require('daisyui')
+const unimportantTailwind = require('tailwindcss-unimportant')
 
 const zammadTailwind = require('../../../build/zammadTailwindPlugin.js')
 
@@ -20,6 +21,7 @@ module.exports = {
     formKitTailwind,
     zammadTailwind,
     daisyTailwind,
+    unimportantTailwind,
     ({ addComponents, theme }) => {
       addComponents({
         // NB: Used by FieldDateTimeInput.vue component, within its style section.
