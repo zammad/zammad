@@ -59,7 +59,7 @@
     "jsdom": "^24.0.0",
     "minimatch": "^9.0.3",
     "mock-apollo-client": "^1.2.1",
-    "postcss": "^8.4.33",
+    "postcss": "^8.4.35",
     "postcss-html": "^1.6.0",
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
@@ -149,7 +149,7 @@
   },
   "resolutions": {
     "loader-utils": "^3.2.1",
-    "postcss": "^8.4.33",
+    "postcss": "^8.4.35",
     "stylelint-config-recommended": "^14.0.0"
   }
 }
