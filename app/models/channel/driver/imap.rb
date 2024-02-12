@@ -295,8 +295,7 @@ example
       msg = nil
       begin
         timeout(FETCH_MSG_TIMEOUT) do
-          # https://github.com/zammad/zammad/issues/4589
-          key = options['host'] == 'imap.mail.me.com' ? 'BODY[]' : 'RFC822'
+          key = fetch_message_body_key(options)
           msg = @imap.fetch(message_id, key)[0].attr[key]
         end
       rescue Timeout::Error => e
@@ -379,6 +378,11 @@ example
     @imap.sort(['DATE'], filter, 'US-ASCII')
   rescue
     @imap.search(filter)
+  end
+
+  def fetch_message_body_key(options)
+    # https://github.com/zammad/zammad/issues/4589
+    options['host'] == 'imap.mail.me.com' ? 'BODY[]' : 'RFC822'
   end
 
   def disconnect
