@@ -272,4 +272,24 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
     include_examples 'for #email attribute' if described_class.attribute_names.include?('email')
     include_examples 'for #locale attribute' if described_class.attribute_names.include?('locale')
   end
+
+  describe '.create_or_update_with_ref' do
+    before do
+      allow(described_class)
+        .to receive(:association_name_to_id_convert).and_return(converted_params)
+
+      allow(described_class)
+        .to receive(:create_or_update)
+    end
+
+    let(:given_params) { { given: 'attr' } }
+    let(:converted_params) { { converted: 'attr' } }
+
+    it 'calls create_or_update with given data', aggregate_failures: true do
+      described_class.create_or_update_with_ref(given_params)
+
+      expect(described_class).to have_received(:association_name_to_id_convert).with(given_params)
+      expect(described_class).to have_received(:create_or_update).with(converted_params)
+    end
+  end
 end

@@ -47,23 +47,6 @@ returns
 
 =begin
 
-Model.create_if_not_exists with ref lookups
-
-  result = Model.create_if_not_exists_with_ref(attributes)
-
-returns
-
-  result = model # with all attributes
-
-=end
-
-    def create_if_not_exists_with_ref(data)
-      data = association_name_to_id_convert(data)
-      create_or_update(data)
-    end
-
-=begin
-
 Model.create_or_update with ref lookups
 
   result = Model.create_or_update(attributes)

@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :token, aliases: %i[token_api api_token] do
     user
+    name { Faker::Lorem.unique.word }
     action { 'api' }
     persistent { true }
     preferences do
