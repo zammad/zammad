@@ -8,7 +8,7 @@ RSpec.describe OnlineNotification, type: :model do
 
   let(:ticket) { create(:ticket) }
 
-  it_behaves_like 'ApplicationModel'
+  it_behaves_like 'ApplicationModel', can_param: { sample_data_attribute: :seen }
 
   describe '#related_object' do
     it 'returns ticket' do

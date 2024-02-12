@@ -21,7 +21,7 @@ require 'models/ticket/sets_last_owner_update_time_examples'
 RSpec.describe Ticket, type: :model do
   subject(:ticket) { create(:ticket) }
 
-  it_behaves_like 'ApplicationModel'
+  it_behaves_like 'ApplicationModel', can_param: { sample_data_attribute: :title }
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanCsvImport'
   include_examples 'CanCsvImport - Ticket specific tests'

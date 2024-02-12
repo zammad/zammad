@@ -23,7 +23,9 @@ RSpec.describe User, type: :model do
   let(:agent)    { create(:agent) }
   let(:admin)    { create(:admin) }
 
-  it_behaves_like 'ApplicationModel', can_assets: { associations: :organization }
+  it_behaves_like 'ApplicationModel',
+                  can_assets: { associations: :organization },
+                  can_param:  { sample_data_attribute: :email }
   it_behaves_like 'HasGroups', group_access_factory: :agent
   it_behaves_like 'HasHistory'
   it_behaves_like 'HasRoles', group_access_factory: :agent
@@ -1555,6 +1557,24 @@ RSpec.describe User, type: :model do
               expect { future_agent.roles = [agent_role] }
                 .to raise_error(Exceptions::UnprocessableEntity)
                 .and not_change(current_agents, :count)
+            end
+          end
+
+          context 'when limit was exceeded but users where removed' do
+            let(:agent_1) { create(:agent) }
+            let(:agent_2) { create(:agent) }
+
+            before do
+              agent_1 && agent_2
+              Setting.set('system_agent_limit', current_agents.count)
+            end
+
+            it 'allows to create a new agent after destroying agents to be under the limit' do
+              agent_1.destroy!
+              agent_2.destroy!
+
+              expect { create(:agent) }
+                .not_to raise_error
             end
           end
         end

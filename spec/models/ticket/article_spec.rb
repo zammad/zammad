@@ -11,7 +11,7 @@ require 'models/ticket/article/has_ticket_contact_attributes_impact_examples'
 RSpec.describe Ticket::Article, type: :model do
   subject(:article) { create(:ticket_article) }
 
-  it_behaves_like 'ApplicationModel'
+  it_behaves_like 'ApplicationModel', can_param: { sample_data_attribute: :body }
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanCsvImport'
   it_behaves_like 'HasHistory'

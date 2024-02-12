@@ -97,7 +97,8 @@ returns
 
 =begin
 
-get reference list of a models
+This method counts how many time the given object was referenced.
+It returns the count partitioned by the class and attribute name.
 
   result = Models.references('User', 2)
 

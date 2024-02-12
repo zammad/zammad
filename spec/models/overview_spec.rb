@@ -4,7 +4,9 @@ require 'rails_helper'
 require 'models/application_model_examples'
 
 RSpec.describe Overview, type: :model do
-  it_behaves_like 'ApplicationModel', can_assets: { associations: :users, selectors: :condition }
+  it_behaves_like 'ApplicationModel',
+                  can_assets:        { associations: :users, selectors: :condition },
+                  can_create_update: { unique_name: false }
 
   context 'link generation' do
 

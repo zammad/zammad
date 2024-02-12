@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'models/application_model_examples'
 
 RSpec.describe PublicLink, type: :model do
-  it_behaves_like 'ApplicationModel'
+  it_behaves_like 'ApplicationModel', can_param: { sample_data_attribute: :title }
 
   context 'when validating URLs' do
     it 'raises no exception for a valid link' do
