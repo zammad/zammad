@@ -21,7 +21,7 @@
   },
   "packageManager": "yarn@1.22.21",
   "devDependencies": {
-    "@faker-js/faker": "^8.4.0",
+    "@faker-js/faker": "^8.4.1",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/introspection": "^4.0.2",
     "@graphql-codegen/near-operation-file-preset": "^3.0.0",
