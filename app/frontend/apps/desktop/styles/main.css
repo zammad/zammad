@@ -1,7 +1,5 @@
+@import '#shared/styles/main.css';
 @config './tailwind.desktop.js';
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   /* Override autofill styles in Firefox. */
@@ -53,8 +51,8 @@
     @apply text-stone-200 dark:text-neutral-500;
   }
 
-  .required::after {
-    @apply inline-block font-extrabold content-['•'] ltr:ml-1 rtl:mr-1 text-yellow-600;
+  .required-indicator {
+    @apply text-yellow-600;
   }
 
   /* Compatibility layer for object attributes and form columns. */
