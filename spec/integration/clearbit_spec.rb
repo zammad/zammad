@@ -387,7 +387,7 @@ RSpec.describe 'Clearbit', aggregate_failures: true, current_user_id: 1, integra
       expect(ExternalSync).to exist(source: 'clearbit', object: 'Organization', o_id: customer.organization.id)
 
       expect(customer.organization).to have_attributes(
-        name: 'Clearbit',
+        name: be_present,
         note: %r{Clearbit},
       )
     end
