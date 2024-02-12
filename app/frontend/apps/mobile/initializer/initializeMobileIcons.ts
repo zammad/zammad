@@ -7,7 +7,7 @@ import iconsAliases from './mobileIconsAliasesMap.ts'
 const iconsSymbolsList = Object.entries(
   import.meta.glob<{ default: string }>('./assets/*.svg', {
     eager: true,
-    as: 'symbol',
+    query: '?symbol',
   }),
 )
 
