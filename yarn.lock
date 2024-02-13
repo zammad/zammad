@@ -34,10 +34,10 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@apollo/client@^3.9.2":
-  version "3.9.2"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.9.2.tgz#96edf2c212f828bad1ef3d84234fa473c5a27ff8"
-  integrity sha512-Zw9WvXjqhpbgkvAvnj52vstOWwM0iedKWtn1hSq1cODQyoe1CF2uFwMYFI7l56BrAY9CzLi6MQA0AhxpgJgvxw==
+"@apollo/client@^3.9.4":
+  version "3.9.4"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.9.4.tgz#a0230ce42a4d0c26c9f75f2a10c0f330f3ef135c"
+  integrity sha512-Ip6dxjshDT2Dp6foLASTnKBW45Fytew/5JZutZwgc78hVrrGpO9UtZA9xteHXYdap0wIgCxCfeIQwbSu1ZdQpw==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     "@wry/caches" "^1.0.0"
@@ -47,7 +47,7 @@
     hoist-non-react-statics "^3.3.2"
     optimism "^0.18.0"
     prop-types "^15.7.2"
-    rehackt "0.0.3"
+    rehackt "0.0.4"
     response-iterator "^0.2.6"
     symbol-observable "^4.0.0"
     ts-invariant "^0.10.3"
@@ -8500,10 +8500,10 @@ regjsparser@^0.9.1:
   dependencies:
     jsesc "~0.5.0"
 
-rehackt@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/rehackt/-/rehackt-0.0.3.tgz#1ea454620d4641db8342e2db44595cf0e7ac6aa0"
-  integrity sha512-aBRHudKhOWwsTvCbSoinzq+Lej/7R8e8UoPvLZo5HirZIIBLGAgdG7SL9QpdcBoQ7+3QYPi3lRLknAzXBlhZ7g==
+rehackt@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/rehackt/-/rehackt-0.0.4.tgz#dca5498e1f6c81d3d610ff2abfb3c3feec6afce8"
+  integrity sha512-xFroSGCbMEK/cTJVhq+c8l/AzIeMeojVyLqtZmr2jmIAFvePjapkCSGg9MnrcNk68HPaMxGf+Ndqozotu78ITw==
 
 relay-runtime@12.0.0:
   version "12.0.0"
