@@ -1,7 +1,7 @@
 class App.ControllerSubContent extends App.Controller
   constructor: ->
-    if @requiredPermission
-      @permissionCheckRedirect(@requiredPermission)
+    if @constructor.requiredPermission
+      @permissionCheckRedirect(@constructor.requiredPermission)
 
     super
 

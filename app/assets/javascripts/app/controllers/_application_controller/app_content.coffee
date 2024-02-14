@@ -1,7 +1,7 @@
 class App.ControllerAppContent extends App.Controller
   constructor: (params) ->
-    if @requiredPermission
-      @permissionCheckRedirect(@requiredPermission)
+    if @constructor.requiredPermission
+      @permissionCheckRedirect(@constructor.requiredPermission)
 
     # hide tasks
     App.TaskManager.hideAll()

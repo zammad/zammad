@@ -7,9 +7,9 @@ class App.ControllerTabs extends App.Controller
     super(params)
 
     # check authentication
-    if @requiredPermission
-      if !@permissionCheckRedirect(@requiredPermission)
-        throw "No permission for #{@requiredPermission}"
+    if @constructor.requiredPermission
+      if !@permissionCheckRedirect(@constructor.requiredPermission)
+        throw "No permission for #{@constructor.requiredPermission}"
 
   show: =>
     return if !@controllerList
