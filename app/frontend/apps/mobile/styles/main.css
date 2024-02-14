@@ -1,68 +1,7 @@
-@import '#shared/styles/main.css';
 @config './tailwind.mobile.js';
-
-.Content,
-.ProseMirror {
-  [style*='color'] {
-    color: inherit !important;
-  }
-
-  div[data-signature-marker] {
-    display: none;
-  }
-
-  &:focus-visible {
-    outline: none;
-  }
-
-  blockquote {
-    @apply border-l-4 border-l-gray-200 px-3 py-2;
-  }
-
-  ol {
-    list-style: decimal;
-  }
-
-  ul {
-    list-style: disc;
-  }
-
-  ol,
-  ul {
-    @apply pb-2;
-
-    padding-inline-start: theme('spacing.2');
-    list-style-position: inside;
-
-    p {
-      display: inline;
-    }
-  }
-
-  h1 {
-    @apply mb-1 mt-2 text-2xl font-bold;
-  }
-
-  h2 {
-    @apply mb-1 mt-2 text-xl font-bold;
-  }
-
-  h3 {
-    @apply mb-1 mt-2 text-lg font-bold;
-  }
-
-  a {
-    @apply text-blue;
-  }
-
-  [dir='rtl'] {
-    text-align: right;
-  }
-
-  [dir='ltr'] {
-    text-align: left;
-  }
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   html {
@@ -141,8 +80,8 @@
     @apply translate-y-0 text-xs opacity-75;
   }
 
-  .required-indicator {
-    @apply text-yellow;
+  .required::after {
+    @apply inline-block font-extrabold content-['•'] ltr:ml-1 rtl:mr-1 text-yellow;
   }
 
   .form-group {
@@ -168,6 +107,69 @@
       > :last-child {
         @apply border-b border-white/10;
       }
+    }
+  }
+
+  .Content,
+  .ProseMirror {
+    [style*='color'] {
+      color: inherit !important;
+    }
+
+    div[data-signature-marker] {
+      display: none;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    blockquote {
+      @apply border-l-4 border-l-gray-200 px-3 py-2;
+    }
+
+    ol {
+      list-style: decimal;
+    }
+
+    ul {
+      list-style: disc;
+    }
+
+    ol,
+    ul {
+      @apply pb-2;
+
+      padding-inline-start: theme('spacing.2');
+      list-style-position: inside;
+
+      p {
+        display: inline;
+      }
+    }
+
+    h1 {
+      @apply mb-1 mt-2 text-2xl font-bold;
+    }
+
+    h2 {
+      @apply mb-1 mt-2 text-xl font-bold;
+    }
+
+    h3 {
+      @apply mb-1 mt-2 text-lg font-bold;
+    }
+
+    a {
+      @apply text-blue;
+    }
+
+    [dir='rtl'] {
+      text-align: right;
+    }
+
+    [dir='ltr'] {
+      text-align: left;
     }
   }
 }

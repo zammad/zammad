@@ -1,7 +1,5 @@
 .template_browser-core:
   stage: browser
-  dependencies:
-    - browser:build
   extends:
     - .job_rules_default
     - .tags_docker_low_concurrency
@@ -52,8 +50,6 @@
 
 .template_browser-core_capybara:
   stage: browser
-  dependencies:
-    - browser:build
   extends:
     - .job_rules_default
     - .tags_docker_low_concurrency

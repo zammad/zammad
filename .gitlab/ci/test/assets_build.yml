@@ -1,0 +1,41 @@
+assets:build:test:
+  stage: test
+  services:
+    - !reference [.services, postgresql]
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - public/assets/.sprockets-manifest*
+      - public/assets/application-*
+      - public/assets/knowledge_base*
+      - public/assets/print-*
+      - public/assets/frontend/vite
+  cache: !reference [.cache, read_only_full]
+  variables:
+    RAILS_ENV: 'production'
+    VITE_TEST_MODE: 1
+    ZAMMAD_SAFE_MODE: 1
+  script:
+    - !reference [.scripts, yarn_install]
+    - !reference [.scripts, zammad_db_unseeded]
+    - node -v
+    # Don't require Redis.
+    - bundle exec rake assets:precompile
+
+# The job below builds a production-ready app, but without the test mode flag enabled (VITE_TEST_MODE).
+#   This is needed in order to check PWA build, which is skipped in test mode due to stability concerns.
+#   The job will not produce any artifacts, as it is only checking for build errors.
+assets:build:production:
+  stage: test
+  services:
+    - !reference [.services, postgresql]
+  cache: !reference [.cache, read_only_full]
+  variables:
+    RAILS_ENV: 'production'
+    ZAMMAD_SAFE_MODE: 1
+  script:
+    - !reference [.scripts, yarn_install]
+    - !reference [.scripts, zammad_db_unseeded]
+    - node -v
+    # Don't require Redis.
+    - bundle exec rake assets:precompile

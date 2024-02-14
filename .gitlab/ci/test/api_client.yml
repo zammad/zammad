@@ -1,7 +1,5 @@
 .template_api_client:
   stage: test
-  dependencies:
-    - browser:build
   extends:
     - .job_rules_default
     - .tags_docker_low_concurrency
