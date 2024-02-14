@@ -1,5 +1,5 @@
 class App.ControllerPermanent extends App.Controller
   constructor: ->
-    if @requiredPermission
-      @permissionCheckRedirect(@requiredPermission, true)
+    if @constructor.requiredPermission
+      @permissionCheckRedirect(@constructor.requiredPermission, true)
     super

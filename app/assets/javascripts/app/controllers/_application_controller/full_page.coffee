@@ -1,7 +1,7 @@
 class App.ControllerFullPage extends App.Controller
   constructor: (params) ->
-    if @requiredPermission
-      @permissionCheckRedirect(@requiredPermission)
+    if @constructor.requiredPermission
+      @permissionCheckRedirect(@constructor.requiredPermission)
     super
 
   replaceWith: (localElement) =>

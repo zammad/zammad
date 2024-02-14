@@ -251,8 +251,10 @@ class App.Controller extends Spine.Controller
     if closeTab
       App.TaskManager.remove(@taskKey)
 
-    # redirect to login
-    @navigate '#login'
+    if App.Session.get()
+      @navigate '#profile'
+    else
+      @navigate '#login'
 
     throw "No permission for #{key}"
 
