@@ -22,7 +22,16 @@ class CustomerTicketCreate extends App.ControllerAppContent
     @form_id = App.ControllerForm.formId()
 
     @navupdate '#customer_ticket_new'
-    @render()
+
+    @ajax(
+      type: 'GET'
+      url:  "#{@apiPath}/ticket_create"
+      processData: true
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets(data.assets)
+        @formMeta = data.form_meta
+        @render()
+    )
 
   show: =>
 
@@ -60,6 +69,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
       model:                   App.Ticket
       screen:                  'create_middle'
       mixedAttributes:         Object.assign({}, pre_top, top, article_top, middle, bottom)
+      formMeta:                @formMeta
       params:                  defaults
       noFieldset:              true
       handlersConfig:          handlers
