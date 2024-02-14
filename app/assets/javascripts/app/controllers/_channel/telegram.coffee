@@ -122,7 +122,6 @@ class BotAdd extends App.ControllerModal
         relation:   'Group'
         nulloption: true
         value:      selected_id
-        class:      'form-control--small'
       )
 
     content.find('.js-select').on('click', (e) =>
@@ -177,7 +176,6 @@ class BotEdit extends App.ControllerModal
         relation:   'Group'
         nulloption: true
         value:      selected_id
-        class:      'form-control--small'
       )
 
     content.find('.js-messagesGroup').replaceWith createGroupSelection(@channel.group_id)
