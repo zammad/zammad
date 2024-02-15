@@ -30,19 +30,45 @@ RSpec.describe Import::OTRS::State do
   let(:start_import_test) { described_class.new(object_structure) }
 
   context 'closed' do
-
     let(:object_structure) { load_state_json('default') }
     let(:zammad_structure) do
       {
-        created_by_id: 1,
-        updated_by_id: 1,
-        active:        '1',
-        state_type_id: 5,
-        updated_at:    '2014-04-28 10:53:18',
-        created_at:    '2014-04-28 10:53:18',
-        name:          'closed successful',
-        id:            '2',
-        note:          'Ticket is closed successful.'
+        created_by_id:     1,
+        updated_by_id:     1,
+        active:            '1',
+        state_type_id:     5,
+        updated_at:        '2014-04-28 10:53:18',
+        created_at:        '2014-04-28 10:53:18',
+        name:              'closed successful',
+        id:                '2',
+        note:              'Ticket is closed successful.',
+        ignore_escalation: true
+      }
+    end
+
+    it 'creates' do
+      creates_with(zammad_structure)
+    end
+
+    it 'updates' do
+      updates_with(zammad_structure)
+    end
+  end
+
+  context 'open' do
+    let(:object_structure) { load_state_json('open') }
+    let(:zammad_structure) do
+      {
+        created_by_id:     1,
+        updated_by_id:     1,
+        active:            '1',
+        state_type_id:     2,
+        updated_at:        '2014-04-28 10:53:18',
+        created_at:        '2014-04-28 10:53:18',
+        name:              'open',
+        id:                '4',
+        note:              'Open tickets.',
+        ignore_escalation: false
       }
     end
 

@@ -60,11 +60,14 @@ module Import
       end
 
       def map(state)
+        mapped_state_type_id = state_type_id(state)
+
         {
-          created_by_id: 1,
-          updated_by_id: 1,
-          active:        active?(state),
-          state_type_id: state_type_id(state)
+          created_by_id:     1,
+          updated_by_id:     1,
+          active:            active?(state),
+          state_type_id:     mapped_state_type_id,
+          ignore_escalation: ignore_escalation?(mapped_state_type_id)
         }
           .merge(from_mapping(state))
       end
@@ -72,6 +75,10 @@ module Import
       def state_type_id(state)
         map_type(state)
         ::Ticket::StateType.lookup(name: state['TypeName']).id
+      end
+
+      def ignore_escalation?(state_type_id)
+        ::Ticket::StateType.names_in_category(:work_on).exclude?(::Ticket::StateType.lookup(id: state_type_id).name)
       end
 
       def map_type(state)
