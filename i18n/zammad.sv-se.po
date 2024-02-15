@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-01-23 11:37+0000\n"
+"PO-Revision-Date: 2024-02-10 14:00+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -941,8 +941,7 @@ msgstr "Åtkomst till Handläggare-ärenden baserat på gruppåtkomst"
 
 #: db/seeds/permissions.rb
 msgid "Access to Customer Tickets based on current_user and organization"
-msgstr ""
-"Åtkomst till ärenden är baserat på nuvarande användare och organisation"
+msgstr "Åtkomst till ärenden är baserat på nuvarande användare och organisation"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -975,7 +974,7 @@ msgstr "Kontot är ej verifierat"
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 msgid "Accounted Time"
-msgstr "REDOVISAD TID"
+msgstr "Redovisad tid"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -1078,7 +1077,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
-msgstr "Aktivera"
+msgstr "Aktiv"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco
@@ -1199,7 +1198,7 @@ msgstr "Lägg till anteckning"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Add a Personal Access Token"
-msgstr "Lägg till en Personlig åtkomst-token"
+msgstr "Lägg till en personlig åtkomst-token"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid "Add a data privacy deletion task"
