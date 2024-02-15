@@ -1,0 +1,34 @@
+{
+  "ID": "4",
+  "ChangeTime": "2014-09-12 09:31:58",
+  "InternalField": "0",
+  "ValidID": "1",
+  "CreateTime": "2014-05-29 20:11:41",
+  "Label": "Multitreeselect Example",
+  "FieldOrder": "4",
+  "Config": {
+    "TranslatableValues": "0",
+    "PossibleValues": {
+      "Level1": "Level 1",
+      "Level1::SubLevel1": "SubLevel 1",
+      "Level1::SubLevel2": "SubLevel 2",
+      "Level2": "Level 2",
+      "Level2::SubLevel1": "SubLevel 1",
+      "Level2::SubLevel2": "SubLevel 2",
+      "Support": "Support",
+      "Support::Level1": "Level 1",
+      "Support::Level2": "Level 2",
+      "Support::Level3": "Level 3",
+      "Finance": "Finance",
+      "Finance::Invoice": "Invoice",
+      "Finance::Invoice::Germany": "Germany",
+      "Finance::Invoice::Germany::Monthly": "Monthly"
+    },
+    "TreeView": "1",
+    "DefaultValue": "",
+    "PossibleNone": "0"
+  },
+  "FieldType": "Multiselect",
+  "Name": "MultitreeselectExample",
+  "ObjectType": "Ticket"
+}
