@@ -2,6 +2,8 @@ class Internal
   @action: (actions, ticket, article, ui) ->
     return actions if !ticket.editable()
     return actions if ticket.currentView() is 'customer'
+    # Even if above satisfied, still don't display the external/internal toggle if user doesn't have external or full access to group
+    return actions if (!ticket.userGroupAccess('external') or !ticket.userGroupAccess('full'))
 
     if article.internal is true
       actions.push {
