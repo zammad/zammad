@@ -263,7 +263,7 @@ GEM
     gli (2.21.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    graphql (2.2.8)
+    graphql (2.2.9)
     graphql-batch (0.5.4)
       graphql (>= 1.12.18, < 3)
       promise.rb (~> 0.7.2)
