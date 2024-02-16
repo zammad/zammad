@@ -398,6 +398,12 @@ msgstr "%s Atrybut"
 msgid "%s Group"
 msgstr "%s Grupa"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
+#, fuzzy
+#| msgid "Import %s"
+msgid "%s Import Status"
+msgstr "Importuj %s"
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -535,12 +541,20 @@ msgstr "%s obiekt(y) będą usunięte."
 msgid "%s object(s) will be updated."
 msgstr "%s obiekt(y) będą zaktualizowane."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
+#, fuzzy
+#| msgid "Image of %s"
+msgid "%s of %s"
+msgstr "Obraz %s"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s of my tickets are currently in process."
 msgstr "%s moich zgłoszeń jest teraz przetwarzana."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
-msgid "%s of my tickets escalated."
+#, fuzzy
+#| msgid "%s of my tickets escalated."
+msgid "%s of my tickets escalated"
 msgstr "%s moich zgłoszeń zostało eskalowanych."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco
@@ -962,6 +976,8 @@ msgstr "Dostęp do tokena API"
 #: app/assets/javascripts/app/views/integration/github.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 msgid "API token"
 msgstr "Token API"
 
@@ -1450,6 +1466,12 @@ msgid ""
 msgstr ""
 "Po zainstalowaniu, zaktualizowaniu lub odinstalowaniu pakietów na serwerze "
 "należy wykonać następujące polecenia:"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
+msgid ""
+"After the import is completed, the account associated with the API token "
+"will become your username, and the token itself will be your password."
+msgstr ""
 
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Age"
@@ -2328,6 +2350,7 @@ msgid "Base DN"
 msgstr "Base DN"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "Base Objects"
 msgstr "Obiekty podstawowe"
 
@@ -2345,10 +2368,20 @@ msgstr "Ustawienia podstawowe"
 msgid "Before you mention a user, please select a group."
 msgstr "Zanim wspomnisz o użytkowniku, wybierz grupę."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+msgid ""
+"Before you start, make sure to check the following points to ensure a smooth "
+"migration and usage of your Zammad instance:"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Begin forwarded message"
 msgstr "Początek przekazywanej wiadomości"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue
+msgid "Beta"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2718,6 +2751,7 @@ msgstr "Certyfikaty i klucze prywatne"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 msgid "Change"
 msgstr "Edycja"
 
@@ -3215,6 +3249,7 @@ msgstr "Konfiguracja uległa zmianie"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/controllers/first_steps_controller.rb
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "Configuration"
 msgstr "Konfiguracja"
 
@@ -3430,6 +3465,8 @@ msgstr "Kontekst"
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Continue"
@@ -3560,6 +3597,7 @@ msgstr "Kraj"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Utwórz"
@@ -5456,6 +5494,7 @@ msgid "Download %s"
 msgstr "Pobierz %s"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Download %s Migration Plugin"
 msgstr "Pobierz wtyczkę migracji %s"
 
@@ -5482,6 +5521,7 @@ msgid "Download all records"
 msgstr "Pobierz wszystkie rekordy"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Pobierz i zainstaluj wtyczkę %s Migration Plugin na instancji %s."
 
@@ -5529,6 +5569,27 @@ msgstr "Wykrywanie duplikatów"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
 msgstr "Czas trwania"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
+#, fuzzy
+#| msgid ""
+#| "We found a lot of dynamic fields which are not common in Zammad, as we "
+#| "take a different approach to ticket attributes. Zammad also uses tags in "
+#| "addition to custom fields to classify tickets. This difference can create "
+#| "a new philosophy of your ticket attributes / tags compared to your "
+#| "current use of dynamic fields in OTRS."
+msgid ""
+"Dynamic fields are not that common in Zammad, as we take a different "
+"approach to ticket attributes. Zammad also uses tags in addition to custom "
+"fields to classify tickets. This difference can create a new philosophy of "
+"your ticket attributes/tags compared to your current use of dynamic fields "
+"in OTRS."
+msgstr ""
+"Znaleźliśmy wiele pól dynamicznych, które nie są powszechne w Zammad, "
+"ponieważ mamy inne podejście do atrybutów zgłoszeń. Zammad używa również "
+"tagów oprócz pól niestandardowych do klasyfikowania zgłoszeń. Ta różnica "
+"może stworzyć nową filozofię atrybutów / tagów zgłoszenia w porównaniu do "
+"obecnego wykorzystania pól dynamicznych w OTRS."
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Easter holiday"
@@ -5649,6 +5710,8 @@ msgstr "Trzeba skonfigurować Elasticsearch!"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
@@ -6138,6 +6201,14 @@ msgstr "Wprowadź subdomenę Twojego systemu %s"
 msgid "Enter the URL of your %s system"
 msgstr "Wprowadź URL Twojego systemu %s"
 
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Enter the URL of your %s system."
+msgstr "Wprowadź URL Twojego systemu %s"
+
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
 #: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
 msgid "Enter the code from your two-factor authenticator app."
@@ -6147,6 +6218,18 @@ msgstr "Wymuś konfigurację uwierzytelniania dwuskładnikowego."
 msgid ""
 "Enter the link provided by the plugin at the end of the installation to link "
 "the two systems"
+msgstr ""
+"Wprowadź łącze dostarczone przez wtyczkę na końcu instalacji, aby połączyć "
+"oba systemy"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
+#, fuzzy
+#| msgid ""
+#| "Enter the link provided by the plugin at the end of the installation to "
+#| "link the two systems"
+msgid ""
+"Enter the link provided by the plugin at the end of the installation to link "
+"the two systems."
 msgstr ""
 "Wprowadź łącze dostarczone przez wtyczkę na końcu instalacji, aby połączyć "
 "oba systemy"
@@ -6178,6 +6261,23 @@ msgstr "Wprowadź swój token API %s uzyskany z ustawień profilu konta."
 msgid "Enter your %s App Keys"
 msgstr "Wprowadź klucze aplikacji %s"
 
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
+#, fuzzy
+#| msgid "Enter your %s API token gained from your account profile settings."
+msgid ""
+"Enter your Freshdesk API token gained from your account profile settings."
+msgstr "Wprowadź swój token API %s uzyskany z ustawień profilu konta."
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
+#, fuzzy
+#| msgid ""
+#| "Enter your email address and the %s API token gained from your admin "
+#| "interface."
+msgid "Enter your Zendesk API token gained from your admin interface."
+msgstr ""
+"Wprowadź swój adres e-mail oraz %s token API uzyskany z interfejsu "
+"administratora."
+
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Enter your current password, insert a new one and confirm it."
 msgstr "Wpisz swoje obecne hasło, podaj nowe i potwierdź je."
@@ -6197,6 +6297,30 @@ msgid ""
 msgstr ""
 "Wprowadź swój adres e-mail oraz %s token API uzyskany z interfejsu "
 "administratora."
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+#, fuzzy
+#| msgid ""
+#| "Enter your email address and password from your %s account which should "
+#| "be used for the import."
+msgid ""
+"Enter your email address from your Kayako account which should be used for "
+"the import."
+msgstr ""
+"Wprowadź swój adres e-mail i hasło z konta %s, które mają być użyte do "
+"importu."
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+#, fuzzy
+#| msgid ""
+#| "Enter your email address and password from your %s account which should "
+#| "be used for the import."
+msgid ""
+"Enter your password from your Kayako account which should be used for the "
+"import."
+msgstr ""
+"Wprowadź swój adres e-mail i hasło z konta %s, które mają być użyte do "
+"importu."
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/assets/javascripts/app/controllers/password_reset.coffee
@@ -6593,6 +6717,12 @@ msgstr "Odcisk palca"
 msgid "Finish"
 msgstr "Koniec"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
+#, fuzzy
+#| msgid "Finish"
+msgid "Finish Setup"
+msgstr "Koniec"
+
 #: lib/excel_sheet/ticket.rb
 msgid "First Response At"
 msgstr "Pierwsza odpowiedź o"
@@ -6686,6 +6816,10 @@ msgstr "Menu stopki"
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Footer Note"
 msgstr "Notatka w stopce"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+msgid "For additional support, consult our migration guide."
+msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "For example, recently changed tickets, users, or organizations."
@@ -6799,6 +6933,7 @@ msgid "Frequency"
 msgstr "Częstotliwość"
 
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
 msgid "Freshdesk"
 msgstr "Freshdesk"
 
@@ -6832,6 +6967,7 @@ msgid "Frontend"
 msgstr "Frontend"
 
 #: app/assets/javascripts/app/models/group.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 msgid "Full"
 msgstr "Pełny"
 
@@ -7021,6 +7157,12 @@ msgstr "Wstecz"
 msgid "Go home"
 msgstr "Idź do domu"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
+#, fuzzy
+#| msgid "Login"
+msgid "Go to Login"
+msgstr "Login"
+
 #: lib/secure_mailing/pgp/incoming.rb
 msgid "Good signature"
 msgstr "Prawidłowy podpis"
@@ -7165,6 +7307,9 @@ msgstr "Zmień kolejność"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
 #: db/seeds/permissions.rb
 msgid "Groups"
 msgstr "Grupy"
@@ -7694,6 +7839,7 @@ msgstr "Usługa wizerunkowa"
 #: app/assets/javascripts/app/controllers/widget/import.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Import"
 msgstr "Importuj"
 
@@ -7787,8 +7933,27 @@ msgstr ""
 "Importuj normalnie: | Powiadomienia są wysyłane | i | zgłoszenia są otwarte "
 "| - możesz znaleźć zgłoszenia w przeglądzie otwartych zgłoszeń."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
+#, fuzzy
+#| msgid "Password changed successfully!"
+msgid "Import finished successfully!"
+msgstr "Hasło zostało zmienione pomyślnie!"
+
 #: app/assets/javascripts/app/views/import/index.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue
 msgid "Import from"
+msgstr "Importuj z"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
+#, fuzzy
+#| msgid "Import from"
+msgid "Import from %s"
+msgstr "Importuj z"
+
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#, fuzzy
+#| msgid "Import from"
+msgid "Import from Source"
 msgstr "Importuj z"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
@@ -7905,6 +8070,13 @@ msgstr "Informacje: %s"
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Information"
 msgstr "Informacja"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+msgid ""
+"Initiate the import process to transfer your data into Zammad. Keep track of "
+"the migration progress on this page, and we'll notify you as soon as the "
+"import is successfully finished."
+msgstr ""
 
 #: app/models/store.rb
 msgid "Inline content could not be generated."
@@ -8118,6 +8290,7 @@ msgid "Invalid video URL"
 msgstr "Nieprawidłowy URL filmu"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
 msgid "Invitation sent!"
 msgstr "Zaproszenie wysłane!"
 
@@ -8170,6 +8343,8 @@ msgstr "Zaproś agentów"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps.coffee
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
 msgid "Invite Colleagues"
 msgstr "Zaproś kolegów"
 
@@ -8267,6 +8442,10 @@ msgid ""
 msgstr ""
 "Po prostu kliknij podświetlony obszar i od razu zaktualizuj słowa. "
 "Powodzenia!"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+msgid "Kayako"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -8500,6 +8679,7 @@ msgid "Link"
 msgstr "Łączenie"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Link %s"
 msgstr "Link %s"
 
@@ -8999,6 +9179,7 @@ msgid "Migrate now!"
 msgstr "Migruj teraz!"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRSDownloadButtons.vue
 msgid "Migration Plugin for %s"
 msgstr "Migruj wtyczkę dla %s"
 
@@ -9089,6 +9270,11 @@ msgstr "Miesiąc(e)"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "Mood"
 msgstr "Nastrój"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
+msgid "More information can be found here."
+msgstr ""
 
 #: app/models/user.rb
 msgid "More than 250 secondary organizations are not allowed."
@@ -9655,6 +9841,12 @@ msgstr "Nie skonfigurowano żadnego filtra."
 msgid "No folders were found for the given user credentials."
 msgstr "Nie znaleziono folderów dla podanych poświadczeń użytkownika."
 
+#: app/services/service/system/import/check_status.rb
+#, fuzzy
+#| msgid "My tickets in process"
+msgid "No import in progress."
+msgstr "Moje zgłoszenia w toku"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
 msgstr "Brak powiązanych problemów"
@@ -9951,8 +10143,21 @@ msgid "OK, I've saved my recovery codes"
 msgstr "OK, zapisałem kody przywracania"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "OTRS"
 msgstr "OTRS"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
+#, fuzzy
+#| msgid ""
+#| "We detected OTRS BPM processes that can't get imported into Zammad since "
+#| "we currently don't support this kind of workflows."
+msgid ""
+"OTRS BPM processes can't get imported into Zammad since we currently don't "
+"support this kind of workflows."
+msgstr ""
+"Wykryliśmy procesy OTRS BPM, których nie można zaimportować do Zammad, "
+"ponieważ obecnie nie obsługujemy tego rodzaju przepływów pracy."
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/job.coffee
@@ -10239,6 +10444,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 #: db/seeds/permissions.rb
 msgid "Organizations"
@@ -10315,6 +10523,7 @@ msgstr "Nieaktualna przeglądarka"
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 msgid "Overview"
 msgstr "Przegląd"
 
@@ -10429,6 +10638,7 @@ msgstr "Grupa rodziców"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10634,6 +10844,10 @@ msgstr ""
 "Jeśli nie widzisz wiadomości w skrzynce odbiorczej, sprawdź folder SPAM lub "
 "inne foldery."
 
+#: app/services/service/system/import/run.rb
+msgid "Please configure import source before running."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 msgid "Please contact your administrator."
 msgstr "Skontaktuj się z administratorem."
@@ -10678,6 +10892,10 @@ msgstr "Proszę wypełnić wszystkie pola"
 #: app/services/service/system/set_system_information.rb
 msgid "Please include a valid url."
 msgstr "Podaj prawidłowy adres URL."
+
+#: app/services/service/system/import/apply_otrs_configuration.rb
+msgid "Please install the OTRS migrator plugin and provide a valid URL."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -11041,6 +11259,7 @@ msgid "Raw"
 msgstr "Surowe"
 
 #: app/assets/javascripts/app/models/group.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 msgid "Read"
 msgstr "Odczyt"
 
@@ -11754,6 +11973,7 @@ msgstr "Certyfikaty SSL"
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "SSL verification"
 msgstr "Weryfikacja SSL"
 
@@ -11823,6 +12043,7 @@ msgstr "Zapisz Kody"
 msgid "Save Draft"
 msgstr "Zapisz szkic"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
@@ -12202,6 +12423,12 @@ msgstr "Wyślij"
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Send Email"
 msgstr "Wyślij e-mail"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
+#, fuzzy
+#| msgid "Shared organization"
+msgid "Send Invitation"
+msgstr "wspólna organizacja"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -12890,6 +13117,24 @@ msgstr "Standardowa grupa/pula zgłoszeń."
 msgid "Start Editing"
 msgstr "Rozpocznij edycję"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+#, fuzzy
+#| msgid "Import"
+msgid "Start Import"
+msgstr "Importuj"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+#, fuzzy
+#| msgid "Import from"
+msgid "Start Import from %s"
+msgstr "Importuj z"
+
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#, fuzzy
+#| msgid "Import from"
+msgid "Start Import from Source"
+msgstr "Importuj z"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Start modal dialog for form."
 msgstr "Uruchom okno modalne dla formularza."
@@ -12934,6 +13179,12 @@ msgstr "Uruchamianie Zammad"
 msgid "Starting Zammad…"
 msgstr "Uruchamianie Zammad"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
+#, fuzzy
+#| msgid "Starting Zammad"
+msgid "Starting import…"
+msgstr "Uruchamianie Zammad"
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
 "Starting with Zammad 5.1, translations can be contributed exclusively via "
@@ -12973,6 +13224,12 @@ msgstr "Status"
 #: app/assets/javascripts/app/views/generic/error/placeholder.jst.eco
 msgid "Status Code:"
 msgstr "Kod statusu:"
+
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#, fuzzy
+#| msgid "Status Type"
+msgid "Status Import"
+msgstr "Typ statusu"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Status Type"
@@ -13374,6 +13631,16 @@ msgstr "Baza wiedzy nie mogła zostać utworzona."
 msgid "The MIME type of the image is invalid."
 msgstr "Typ MIME obrazu jest nieprawidłowy."
 
+#: app/graphql/gql/queries/system/import/state.rb
+#, fuzzy
+#| msgid "The import failed."
+msgid "The OTRS import failed."
+msgstr "Import nie powiódł się."
+
+#: app/services/service/system/import/apply_otrs_configuration.rb
+msgid "The OTRS migrator plugin is not accessable. Please verify the API key."
+msgstr ""
+
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "The PGP email recipient is invalid."
 msgstr "Odbiorca wiadomości e-mail PGP jest nieprawidłowy."
@@ -13654,7 +13921,12 @@ msgstr "Połączenie z serwerem zostało utracone."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#: app/controllers/import_zendesk_controller.rb
+#: app/services/service/system/import/apply_freshdesk_configuration.rb
+#: app/services/service/system/import/apply_kayako_configuration.rb
+#: app/services/service/system/import/apply_otrs_configuration.rb
+#: app/services/service/system/import/apply_zendesk_configuration.rb
+#: lib/email_helper/probe.rb
 msgid "The connection was refused."
 msgstr "Połączenie zostało odrzucone."
 
@@ -13711,6 +13983,26 @@ msgid ""
 msgstr ""
 "Zaszyfrowana część tej wiadomości e-mail PGP ma nieprawidłowy typ MIME "
 "zgodnie z RFC 3156."
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
+#, fuzzy
+#| msgid ""
+#| "Attention: These will be your login and password after the import is "
+#| "completed."
+msgid ""
+"The entered email and API token will become your Zammad login credentials "
+"after the import is completed."
+msgstr "Uwaga: To będzie Twój login i hasło po zakończeniu importu."
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+#, fuzzy
+#| msgid ""
+#| "Attention: These will be your login and password after the import is "
+#| "completed."
+msgid ""
+"The entered email and password will become your Zammad login credentials "
+"after the import is completed."
+msgstr "Uwaga: To będzie Twój login i hasło po zakończeniu importu."
 
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 msgid ""
@@ -13772,7 +14064,12 @@ msgstr "Format dla tematu e-maila."
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#: app/controllers/import_zendesk_controller.rb
+#: app/services/service/system/import/apply_freshdesk_configuration.rb
+#: app/services/service/system/import/apply_kayako_configuration.rb
+#: app/services/service/system/import/apply_otrs_configuration.rb
+#: app/services/service/system/import/apply_zendesk_configuration.rb
+#: lib/email_helper/probe.rb
 msgid "The hostname could not be found."
 msgstr "Nie można znaleźć nazwy hosta."
 
@@ -13949,6 +14246,9 @@ msgstr "Podany adres URL jest nieprawidłowy."
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_zendesk_controller.rb
+#: app/services/service/system/import/apply_freshdesk_configuration.rb
+#: app/services/service/system/import/apply_kayako_configuration.rb
+#: app/services/service/system/import/apply_zendesk_configuration.rb
 msgid "The provided credentials are invalid."
 msgstr "Podane poświadczenia są nieprawidłowe."
 
@@ -14211,6 +14511,12 @@ msgstr "Ponowny proces zabezpieczeń nie powiódł się!"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "The selected date is invalid."
 msgstr "Wybrana data jest nieważna."
+
+#: app/services/service/system/import/apply_configuration_base.rb
+#, fuzzy
+#| msgid "The certificate could not be parsed."
+msgid "The server presented a certificate that could not be verified."
+msgstr "Nie można przeanalizować certyfikatu."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -14484,7 +14790,12 @@ msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#: app/controllers/import_zendesk_controller.rb
+#: app/services/service/system/import/apply_freshdesk_configuration.rb
+#: app/services/service/system/import/apply_kayako_configuration.rb
+#: app/services/service/system/import/apply_otrs_configuration.rb
+#: app/services/service/system/import/apply_zendesk_configuration.rb
+#: lib/email_helper/probe.rb
 msgid "There is no route to this host."
 msgstr "Nie ma trasy do tego hosta."
 
@@ -15326,6 +15637,10 @@ msgstr "Identyfikator zgłoszenia"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
@@ -15903,6 +16218,7 @@ msgstr "Nazwa atrybutu UID"
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "URL"
 msgstr "URL"
 
@@ -16423,6 +16739,10 @@ msgstr "Użytkownik dla połączenia proxy."
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
 #: app/frontend/apps/mobile/pages/search/plugins/user.ts db/seeds/groups.rb
 #: db/seeds/permissions.rb
 msgid "Users"
@@ -16517,6 +16837,12 @@ msgstr "Sprawdź wysyłanie i odbieranie"
 #, fuzzy
 #| msgid "Verifying key information…"
 msgid "Verifying and saving your configuration…"
+msgstr "Weryfikowanie informacji o kluczu…"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
+#, fuzzy
+#| msgid "Verifying key information…"
+msgid "Verifying and saving your import configuration…"
 msgstr "Weryfikowanie informacji o kluczu…"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
@@ -17225,6 +17551,7 @@ msgstr ""
 "zapisaniem sprawdź swoje warunki."
 
 #: app/controllers/import_freshdesk_controller.rb
+#: app/services/service/system/import/apply_freshdesk_configuration.rb
 msgid "You do not have administrator permission."
 msgstr "Nie masz uprawnień administratora."
 
@@ -17530,6 +17857,7 @@ msgstr ""
 "oczekujące przypomnienia lub stany zamknięte."
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
 msgid "Zendesk"
 msgstr "Zendesk"
 

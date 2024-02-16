@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-01-31 02:05+0000\n"
+"PO-Revision-Date: 2024-02-16 02:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -398,6 +398,10 @@ msgstr "%s атрибут"
 msgid "%s Group"
 msgstr "%s група"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
+msgid "%s Import Status"
+msgstr "Статус %s увоза"
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -531,13 +535,17 @@ msgstr "Биће обрисано %s објекат(а)."
 msgid "%s object(s) will be updated."
 msgstr "Биће измењено %s објекат(а)."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
+msgid "%s of %s"
+msgstr "%s од %s"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s of my tickets are currently in process."
 msgstr "%s мојих тикета се тренутно обрађује."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
-msgid "%s of my tickets escalated."
-msgstr "%s мојих тикета је ескалирано."
+msgid "%s of my tickets escalated"
+msgstr "%s мојих тикета је ескалирано"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco
 msgid "%s people"
@@ -944,6 +952,8 @@ msgstr "Приступ API путем кључа"
 #: app/assets/javascripts/app/views/integration/github.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 msgid "API token"
 msgstr "API кључ"
 
@@ -1410,6 +1420,14 @@ msgstr ""
 "Након инсталације, ажурирања или деинсталације пакета, неопходно је "
 "покренути следећу команду на серверу:"
 
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
+msgid ""
+"After the import is completed, the account associated with the API token "
+"will become your username, and the token itself will be your password."
+msgstr ""
+"По завршетку увоза, налог повезан са API кључем ће постати ваше корисничко "
+"име, а кључ ће представљати вашу лозинку."
+
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Age"
 msgstr "Старост"
@@ -1585,10 +1603,8 @@ msgid "An unexpected error has occurred."
 msgstr "Дошло је до неочекиване грешке."
 
 #: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
-#, fuzzy
-#| msgid "An unexpected error has occurred."
 msgid "An unexpected error occurred during system setup."
-msgstr "Дошло је до неочекиване грешке."
+msgstr "Дошло је до неочекиване грешке при поставци система."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2149,7 +2165,7 @@ msgstr "Аутоматски асистент је искључен"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
 msgid "Automated Setup"
-msgstr ""
+msgstr "Аутоматска поставка"
 
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
@@ -2277,6 +2293,7 @@ msgid "Base DN"
 msgstr "Основни DN"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "Base Objects"
 msgstr "Основни објекти"
 
@@ -2294,10 +2311,22 @@ msgstr "Основна подешавања"
 msgid "Before you mention a user, please select a group."
 msgstr "Пре него што поменете корисника, молимо изаберите групу."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+msgid ""
+"Before you start, make sure to check the following points to ensure a smooth "
+"migration and usage of your Zammad instance:"
+msgstr ""
+"Пре него што започнете увоз, обратите пажњу на следеће ставке ради "
+"омогућавања глатке миграције и интеграције ваше Zammad инстанце:"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Begin forwarded message"
 msgstr "Почетак прослеђене поруке"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue
+msgid "Beta"
+msgstr "Бета"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2658,6 +2687,7 @@ msgstr "Сертификати и тајни кључеви"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 msgid "Change"
 msgstr "Измена"
 
@@ -3149,6 +3179,7 @@ msgstr "Измењена конфигурација"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/controllers/first_steps_controller.rb
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "Configuration"
 msgstr "Конфигурација"
 
@@ -3344,6 +3375,8 @@ msgstr "Контекст"
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Continue"
@@ -3470,6 +3503,7 @@ msgstr "Земља"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Додавање"
@@ -5320,6 +5354,7 @@ msgid "Download %s"
 msgstr "Преузми %s"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Download %s Migration Plugin"
 msgstr "Преузми %s миграциони додатак"
 
@@ -5346,6 +5381,7 @@ msgid "Download all records"
 msgstr "Преузми све записе"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Преузми и инсталирај %s миграциони додатак на свом %s систему."
 
@@ -5389,6 +5425,20 @@ msgstr "Откривање дупликата"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
 msgstr "Трајање"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
+msgid ""
+"Dynamic fields are not that common in Zammad, as we take a different "
+"approach to ticket attributes. Zammad also uses tags in addition to custom "
+"fields to classify tickets. This difference can create a new philosophy of "
+"your ticket attributes/tags compared to your current use of dynamic fields "
+"in OTRS."
+msgstr ""
+"Динамичка поља нису честа појава у Zammad-у, јер користимо другачији приступ "
+"за атрибуте тикета. Zammad такође користи ознаке за класификацију тикета "
+"поред прилагођених поља. Ова разлика може представљати потпуно нову "
+"филозофију око ваших атрибута тикета/ознака у односу на ваш тренутни приступ "
+"са динамичким пољима у OTRS."
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Easter holiday"
@@ -5509,6 +5559,8 @@ msgstr "Неопходно је подесити Elasticsearch!"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
@@ -5990,6 +6042,12 @@ msgstr "Унеси поддомен твог %s система"
 msgid "Enter the URL of your %s system"
 msgstr "Унеси URL твог %s система"
 
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
+msgid "Enter the URL of your %s system."
+msgstr "Унеси URL твог %s система."
+
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
 #: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
 msgid "Enter the code from your two-factor authenticator app."
@@ -6001,6 +6059,14 @@ msgid ""
 "the two systems"
 msgstr ""
 "Унеси добијени линк од додатка на крају инсталације за повезивање два система"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
+msgid ""
+"Enter the link provided by the plugin at the end of the installation to link "
+"the two systems."
+msgstr ""
+"Унеси добијени линк од додатка на крају инсталације за повезивање два "
+"система."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Enter the security code generated by the authenticator app:"
@@ -6029,6 +6095,15 @@ msgstr "Унеси свој %s API кључ из профила налога."
 msgid "Enter your %s App Keys"
 msgstr "Унеси кључеве своје %s апликације"
 
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
+msgid ""
+"Enter your Freshdesk API token gained from your account profile settings."
+msgstr "Унеси свој %s API кључ из профила налога."
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
+msgid "Enter your Zendesk API token gained from your admin interface."
+msgstr "Унеси своју имејл адресу и %s API кључ из администраторског интерфејса."
+
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Enter your current password, insert a new one and confirm it."
 msgstr "Унеси своју важећу лозинку, затим нову па потврди."
@@ -6047,6 +6122,22 @@ msgid ""
 "interface."
 msgstr ""
 "Унеси своју имејл адресу и %s API кључ из администраторског интерфејса."
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+msgid ""
+"Enter your email address from your Kayako account which should be used for "
+"the import."
+msgstr ""
+"Унеси своју имејл адресу и лозинку твог %s налога који ће бити коришћен за "
+"увоз."
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+msgid ""
+"Enter your password from your Kayako account which should be used for the "
+"import."
+msgstr ""
+"Унеси своју имејл адресу и лозинку твог %s налога који ће бити коришћен за "
+"увоз."
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/assets/javascripts/app/controllers/password_reset.coffee
@@ -6441,6 +6532,10 @@ msgstr "Отисак"
 msgid "Finish"
 msgstr "Заврши"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
+msgid "Finish Setup"
+msgstr "Заврши поставку"
+
 #: lib/excel_sheet/ticket.rb
 msgid "First Response At"
 msgstr "Први одзив у"
@@ -6534,6 +6629,10 @@ msgstr "Мени при дну стране"
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Footer Note"
 msgstr "Напомена при дну стране"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+msgid "For additional support, consult our migration guide."
+msgstr "За додатну подршку, консултујте наш водич кроз миграцију."
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "For example, recently changed tickets, users, or organizations."
@@ -6646,6 +6745,7 @@ msgid "Frequency"
 msgstr "Учесталост"
 
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
 msgid "Freshdesk"
 msgstr "Freshdesk"
 
@@ -6679,6 +6779,7 @@ msgid "Frontend"
 msgstr "Интерфејс"
 
 #: app/assets/javascripts/app/models/group.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 msgid "Full"
 msgstr "Све"
 
@@ -6863,6 +6964,10 @@ msgstr "Иди назад"
 msgid "Go home"
 msgstr "Иди на почетну"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
+msgid "Go to Login"
+msgstr "Иди на пријаву"
+
 #: lib/secure_mailing/pgp/incoming.rb
 msgid "Good signature"
 msgstr "Добар потпис"
@@ -7007,6 +7112,9 @@ msgstr "Редослед груписања"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
 #: db/seeds/permissions.rb
 msgid "Groups"
 msgstr "Групе"
@@ -7533,6 +7641,7 @@ msgstr "Приказ слике"
 #: app/assets/javascripts/app/controllers/widget/import.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Import"
 msgstr "Увоз"
 
@@ -7622,9 +7731,22 @@ msgstr ""
 "Стандардни увоз: |Обавештења ће бити послата| и |тикети ће бити отворени| - "
 "моћи ћете да их нађете у прегледима отворених тикета."
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
+msgid "Import finished successfully!"
+msgstr "Успешно завршен увоз!"
+
 #: app/assets/javascripts/app/views/import/index.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue
 msgid "Import from"
 msgstr "Увези из"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
+msgid "Import from %s"
+msgstr "Увези из %s"
+
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+msgid "Import from Source"
+msgstr "Увези из извора"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid "Important"
@@ -7735,6 +7857,16 @@ msgstr "Информације: %s"
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Information"
 msgstr "Информације"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+msgid ""
+"Initiate the import process to transfer your data into Zammad. Keep track of "
+"the migration progress on this page, and we'll notify you as soon as the "
+"import is successfully finished."
+msgstr ""
+"Започните процез увоза за пребацивање ваших података у Zammad. Обратите "
+"пажњу на прогрес миграције на овој страни и обавестићемо вас чим увоз буде "
+"успешно завршен."
 
 #: app/models/store.rb
 msgid "Inline content could not be generated."
@@ -7948,6 +8080,7 @@ msgid "Invalid video URL"
 msgstr "Неисправан видео URL"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
 msgid "Invitation sent!"
 msgstr "Послата позивница!"
 
@@ -8000,6 +8133,8 @@ msgstr "Позови оператере"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps.coffee
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
 msgid "Invite Colleagues"
 msgstr "Позови колеге"
 
@@ -8093,6 +8228,10 @@ msgstr "јун"
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "Само кликните на означене површине и директно измените речи. Уживајте!"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+msgid "Kayako"
+msgstr "Kayako"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -8326,6 +8465,7 @@ msgid "Link"
 msgstr "Повежи"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Link %s"
 msgstr "Повежи %s"
 
@@ -8826,6 +8966,7 @@ msgid "Migrate now!"
 msgstr "Мигрирај одмах!"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRSDownloadButtons.vue
 msgid "Migration Plugin for %s"
 msgstr "Миграциони додатак за %s"
 
@@ -8916,6 +9057,11 @@ msgstr "Месец(и)"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "Mood"
 msgstr "Расположење"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
+msgid "More information can be found here."
+msgstr "Више информација можете пронаћи овде."
 
 #: app/models/user.rb
 msgid "More than 250 secondary organizations are not allowed."
@@ -9480,6 +9626,10 @@ msgstr "Није подешен филтер."
 msgid "No folders were found for the given user credentials."
 msgstr "Нису пронађени фолдери за датог корисника."
 
+#: app/services/service/system/import/check_status.rb
+msgid "No import in progress."
+msgstr "Тренутно нема увоза."
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
 msgstr "Нема повезаних извештаја"
@@ -9776,8 +9926,17 @@ msgid "OK, I've saved my recovery codes"
 msgstr "У реду, копирао сам своје шифре за опоравак"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "OTRS"
 msgstr "OTRS"
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
+msgid ""
+"OTRS BPM processes can't get imported into Zammad since we currently don't "
+"support this kind of workflows."
+msgstr ""
+"OTRS BPM процесе није могуће увести у Zammad јер тренутно не подржавамо ову "
+"врсту радних токова."
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/job.coffee
@@ -10053,6 +10212,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 #: db/seeds/permissions.rb
 msgid "Organizations"
@@ -10128,6 +10290,7 @@ msgstr "Застарео претраживач"
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 msgid "Overview"
 msgstr "Преглед"
 
@@ -10242,6 +10405,7 @@ msgstr "Надређена група"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -10444,6 +10608,10 @@ msgstr ""
 "поруку, проверите и друга места као што су фолдери нежељене поште, "
 "друштвених мрежа и сл."
 
+#: app/services/service/system/import/run.rb
+msgid "Please configure import source before running."
+msgstr "Молимо подесите извор увоза пре почетка."
+
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 msgid "Please contact your administrator."
 msgstr "Молимо контактирајте администратора."
@@ -10488,6 +10656,12 @@ msgstr "Молимо попуните сва поља"
 #: app/services/service/system/set_system_information.rb
 msgid "Please include a valid url."
 msgstr "Молимо унесите исправан URL."
+
+#: app/services/service/system/import/apply_otrs_configuration.rb
+msgid "Please install the OTRS migrator plugin and provide a valid URL."
+msgstr ""
+"Молимо инсталирајте OTRS апликативни додатак за миграцију и приложите "
+"исправан URL."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -10551,7 +10725,7 @@ msgstr "Молимо унесите прилагођену адресу пре �
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 msgid "Please use the provided URL."
-msgstr ""
+msgstr "Моилимо користите приложену URL адресу."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
@@ -10839,6 +11013,7 @@ msgid "Raw"
 msgstr "Сирово"
 
 #: app/assets/javascripts/app/models/group.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 msgid "Read"
 msgstr "Читање"
 
@@ -10944,7 +11119,7 @@ msgstr "Сродни чланци"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
 msgid "Relax, your system is being set up…"
-msgstr ""
+msgstr "Опустите се, поставка система је у току…"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Reload application"
@@ -11493,6 +11668,7 @@ msgstr "SSL сертификати"
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "SSL verification"
 msgstr "SSL провера"
 
@@ -11562,6 +11738,7 @@ msgstr "Сачувај шифре"
 msgid "Save Draft"
 msgstr "Сачувај нацрт"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
@@ -11939,6 +12116,10 @@ msgstr "Пошаљи"
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Send Email"
 msgstr "Пошаљи имејл поруку"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
+msgid "Send Invitation"
+msgstr "Пошаљи позивницу"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -12620,6 +12801,18 @@ msgstr "Основна група тикета."
 msgid "Start Editing"
 msgstr "Започни уређивање"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+msgid "Start Import"
+msgstr "Започни увоз"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+msgid "Start Import from %s"
+msgstr "Започни увоз из %s"
+
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+msgid "Start Import from Source"
+msgstr "Започни увоз из извора"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Start modal dialog for form."
 msgstr "Покрени модални дијалог за форму."
@@ -12662,6 +12855,10 @@ msgstr "Покретање Zammad"
 msgid "Starting Zammad…"
 msgstr "Покретање Zammad-а…"
 
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
+msgid "Starting import…"
+msgstr "Покретање увоза…"
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
 "Starting with Zammad 5.1, translations can be contributed exclusively via "
@@ -12701,6 +12898,10 @@ msgstr "Статус"
 #: app/assets/javascripts/app/views/generic/error/placeholder.jst.eco
 msgid "Status Code:"
 msgstr "Код статуса:"
+
+#: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+msgid "Status Import"
+msgstr "Статус увоза"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Status Type"
@@ -13098,6 +13299,16 @@ msgstr "Није било могуће додати чланак базе зна
 msgid "The MIME type of the image is invalid."
 msgstr "Неисправан MIME тип слике."
 
+#: app/graphql/gql/queries/system/import/state.rb
+msgid "The OTRS import failed."
+msgstr "OTRS увоз није успео."
+
+#: app/services/service/system/import/apply_otrs_configuration.rb
+msgid "The OTRS migrator plugin is not accessable. Please verify the API key."
+msgstr ""
+"OTRS апликативни додатак за миграцију није доступан. Молимо проверите API "
+"кључ."
+
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "The PGP email recipient is invalid."
 msgstr "PGP имејл прималац је неисправан."
@@ -13372,7 +13583,12 @@ msgstr "Изгубљена је веза са сервером."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#: app/controllers/import_zendesk_controller.rb
+#: app/services/service/system/import/apply_freshdesk_configuration.rb
+#: app/services/service/system/import/apply_kayako_configuration.rb
+#: app/services/service/system/import/apply_otrs_configuration.rb
+#: app/services/service/system/import/apply_zendesk_configuration.rb
+#: lib/email_helper/probe.rb
 msgid "The connection was refused."
 msgstr "Веза је одбијена."
 
@@ -13422,6 +13638,22 @@ msgid ""
 "RFC 3156."
 msgstr ""
 "Шифрован део ове PGP имејл поруке има неисправан MIME тип према RFC 3156."
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
+msgid ""
+"The entered email and API token will become your Zammad login credentials "
+"after the import is completed."
+msgstr ""
+"Унета имејл адреса и API кључ ће постати ваше корисничко име и лозинка након "
+"завршеног увоза."
+
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+msgid ""
+"The entered email and password will become your Zammad login credentials "
+"after the import is completed."
+msgstr ""
+"Унета имејл адреса и лозинка ће постати ваше Zammad корисничко име и лозинка "
+"након завршеног увоза."
 
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 msgid ""
@@ -13482,7 +13714,12 @@ msgstr "Формат предмета."
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#: app/controllers/import_zendesk_controller.rb
+#: app/services/service/system/import/apply_freshdesk_configuration.rb
+#: app/services/service/system/import/apply_kayako_configuration.rb
+#: app/services/service/system/import/apply_otrs_configuration.rb
+#: app/services/service/system/import/apply_zendesk_configuration.rb
+#: lib/email_helper/probe.rb
 msgid "The hostname could not be found."
 msgstr "Није пронађен сервер."
 
@@ -13656,6 +13893,9 @@ msgstr "Достављени URL је неисправан."
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_zendesk_controller.rb
+#: app/services/service/system/import/apply_freshdesk_configuration.rb
+#: app/services/service/system/import/apply_kayako_configuration.rb
+#: app/services/service/system/import/apply_zendesk_configuration.rb
 msgid "The provided credentials are invalid."
 msgstr "Дати креденцијали су неисправни."
 
@@ -13909,6 +14149,10 @@ msgstr "Неуспео поновни безбедносни процес!"
 msgid "The selected date is invalid."
 msgstr "Одабран датум је неважећи."
 
+#: app/services/service/system/import/apply_configuration_base.rb
+msgid "The server presented a certificate that could not be verified."
+msgstr "Сервер користи сертификат који није било могуће проверити."
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts
@@ -13987,7 +14231,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
 msgid "The system was configured successfully. You are being redirected."
-msgstr ""
+msgstr "Систем је успешно постављен. Преусмеравамо вас на почетну страницу."
 
 #: app/controllers/tickets_controller.rb
 msgid "The target ticket number could not be found."
@@ -14175,7 +14419,12 @@ msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#: app/controllers/import_zendesk_controller.rb
+#: app/services/service/system/import/apply_freshdesk_configuration.rb
+#: app/services/service/system/import/apply_kayako_configuration.rb
+#: app/services/service/system/import/apply_otrs_configuration.rb
+#: app/services/service/system/import/apply_zendesk_configuration.rb
+#: lib/email_helper/probe.rb
 msgid "There is no route to this host."
 msgstr "Не постоји рута до овог сервера."
 
@@ -14591,7 +14840,7 @@ msgstr "Овај систем је већ постављен и налог ад�
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 msgid "This system is configured for automated setup."
-msgstr ""
+msgstr "Овај систем је подешен за аутоматску поставку."
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -15003,6 +15252,10 @@ msgstr "TicketID"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
@@ -15572,6 +15825,7 @@ msgstr "UID атрибут назива"
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "URL"
 msgstr "URL"
 
@@ -16084,6 +16338,10 @@ msgstr "Корисничко име проксија за везу."
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
 #: app/frontend/apps/mobile/pages/search/plugins/user.ts db/seeds/groups.rb
 #: db/seeds/permissions.rb
 msgid "Users"
@@ -16177,6 +16435,10 @@ msgstr "Потврди слање и примање"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 msgid "Verifying and saving your configuration…"
 msgstr "Провера и снимање ваших подешавања…"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
+msgid "Verifying and saving your import configuration…"
+msgstr "Провера и снимање ваших подешавања увоза…"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
@@ -16874,6 +17136,7 @@ msgstr ""
 "своје услове пре снимања."
 
 #: app/controllers/import_freshdesk_controller.rb
+#: app/services/service/system/import/apply_freshdesk_configuration.rb
 msgid "You do not have administrator permission."
 msgstr "Немате администраторске дозволе."
 
@@ -17171,6 +17434,7 @@ msgstr ""
 "објеката за више детаља."
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
+#: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
 msgid "Zendesk"
 msgstr "Zendesk"
 
