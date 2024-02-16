@@ -4,13 +4,17 @@ module Import
   module OTRS
     class DynamicField
       class Dropdown < Import::OTRS::DynamicField
+        include Import::OTRS::DynamicField::Mixin::HasOptions
+
         def init_callback(dynamic_field)
+          tree_select = dynamic_field['Config']['TreeView'] == '1'
+
           @attribute_config.merge!(
-            data_type:   'select',
+            data_type:   tree_select ? 'tree_select' : 'select',
             data_option: {
               default:    '',
               multiple:   false,
-              options:    dynamic_field['Config']['PossibleValues'],
+              options:    option_list(dynamic_field['Config']['PossibleValues'], tree_select),
               nulloption: dynamic_field['Config']['PossibleNone'] == '1',
               null:       true,
               translate:  dynamic_field['Config']['TranslatableValues'] == '1',

@@ -1,0 +1,35 @@
+{
+  "ID": "40",
+  "ChangeTime": "2016-05-25 11:14:06",
+  "InternalField": "0",
+  "ValidID": "1",
+  "CreateTime": "2014-08-21 14:54:15",
+  "Label": "Treeselect Example",
+  "FieldOrder": "30",
+  "Config": {
+    "TranslatableValues": "0",
+    "PossibleValues": {
+      "Level1": "Level 1",
+      "Level1::SubLevel1": "SubLevel 1",
+      "Level1::SubLevel2": "SubLevel 2",
+      "Level2": "Level 2",
+      "Level2::SubLevel1": "SubLevel 1",
+      "Level2::SubLevel2": "SubLevel 2",
+      "Support": "Support",
+      "Support::Level1": "Level 1",
+      "Support::Level2": "Level 2",
+      "Support::Level3": "Level 3",
+      "Finance": "Finance",
+      "Finance::Invoice": "Invoice",
+      "Finance::Invoice::Germany": "Germany",
+      "Finance::Invoice::Germany::Monthly": "Monthly"
+    },
+    "TreeView": "1",
+    "DefaultValue": "",
+    "Link": "",
+    "PossibleNone": "1"
+  },
+  "FieldType": "Dropdown",
+  "Name": "TreeselectExample",
+  "ObjectType": "Ticket"
+}
