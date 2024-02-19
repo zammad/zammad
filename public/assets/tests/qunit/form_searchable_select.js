@@ -252,3 +252,71 @@ QUnit.test("searchable_select submenu and option list check", assert => {
     done()
   }, 300)
 });
+
+QUnit.test("searchable_select current selection indicator", assert => {
+
+  $('#forms').append('<hr><h1>searchable_select current selection indicator</h1><form id="form4"></form>')
+  var el = $('#form4')
+  var defaults = {
+    searchable_select5: 'bbb',
+    searchable_select6: ['bbb'],
+  }
+  var options = {
+    'aaa': 'aaa display',
+    'bbb': 'bbb display',
+    'ccc': 'ccc display',
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:    'searchable_select5',
+          display: 'SearchableSelect5',
+          tag:     'searchable_select',
+          options: options,
+          null:    true,
+          default: defaults['searchable_select5']
+        },
+        {
+          name:     'searchable_select6',
+          display:  'SearchableSelect6',
+          tag:      'searchable_select',
+          options:  options,
+          null:     true,
+          multiple: true,
+          default:  defaults['searchable_select6']
+        },
+      ]
+    },
+    autofocus: true
+  })
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    searchable_select5: 'bbb',
+    searchable_select6: ['bbb'],
+    searchable_select6_completion: '',
+  }
+  assert.deepEqual(params, test_params, 'form param check')
+
+  $('[name="searchable_select5"].js-shadow + .js-input').trigger('focus').val('').trigger('input')
+  var $element = $('[name="searchable_select5"]').closest('.searchableSelect').find('.js-optionsList')
+  assert.equal($element.find('li.is-selected').length, 1, 'selection indicator count')
+
+  $element.find('li:not(.is-hidden)').first().trigger('click')
+
+  assert.equal($element.find('li.is-selected').length, 1, 'selection indicator count')
+
+  $('[name="searchable_select6"].js-shadow + .js-input').trigger('focus').val('').trigger('input')
+  $element = $('[name="searchable_select6"]').closest('.searchableSelect').find('.js-optionsList')
+  assert.equal($element.find('li.is-selected').length, 1, 'selection indicator count')
+
+  $element.find('li:not(.is-hidden)').first().trigger('click')
+
+  assert.equal($element.find('li.is-selected').length, 2, 'selection indicator count')
+
+  $('[name="searchable_select6"]').closest('.searchableSelect').find('.js-remove').first().trigger('click')
+
+  assert.equal($element.find('li.is-selected').length, 1, 'selection indicator count')
+});
