@@ -139,7 +139,7 @@
     "uuid": "^9.0.1",
     "vue": "^3.3.13",
     "vue-advanced-cropper": "^2.8.8",
-    "vue-easy-lightbox": "1.17.0",
+    "vue-easy-lightbox": "1.18.0",
     "vue-router": "^4.2.5",
     "vue3-draggable-resizable": "^1.6.5",
     "vuedraggable": "^4.1.0",
