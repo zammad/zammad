@@ -174,6 +174,11 @@ class App.SearchableSelect extends Spine.Controller
         return displayName if displayName isnt undefined
     undefined
 
+  isOptionSelected: (option) =>
+    return true if @attribute.multiple and _.some(@attribute.value or [], (val) -> option.value?.toString() is val.value.toString())
+    return true if option.value?.toString() is @attribute.value?.toString()
+    false
+
   renderOptions: (options) =>
     html = ''
     for option in options
@@ -187,7 +192,7 @@ class App.SearchableSelect extends Spine.Controller
 
       html += App.view('generic/searchable_select_option')
         class:      classes
-        isSelected: option.value.toString() is @attribute.value?.toString()
+        isSelected: @isOptionSelected(option)
         option:     option
     html
 
@@ -202,7 +207,7 @@ class App.SearchableSelect extends Spine.Controller
         html += App.view('generic/searchable_select_option')(
           class:      className
           detail:     parentName
-          isSelected: option.value?.toString() is @attribute.value?.toString()
+          isSelected: @isOptionSelected(option)
           option:     option
         )
 
@@ -394,14 +399,23 @@ class App.SearchableSelect extends Spine.Controller
       @addValueToShadowInput(currentText, dataId)
     else
       @selectValue(dataId, currentText, displayName)
-      @markSelected(dataId)
       @toggleClear()
 
+    @markSelected(dataId)
+
   markSelected: (value) ->
-    @el.find('li')
-      .removeClass('is-selected')
+    if not @attribute.multiple
+      @el.find('li')
+        .removeClass('is-selected')
+
     @el.find("li[data-value='#{jQuery.escapeSelector(value)}']")
       .addClass('is-selected')
+
+  unmarkSelected: (value) ->
+    return if not @attribute.multiple
+
+    @el.find("li[data-value='#{jQuery.escapeSelector(value)}']")
+      .removeClass('is-selected')
 
   navigateIn: (event) ->
     event.stopPropagation()
@@ -541,9 +555,9 @@ class App.SearchableSelect extends Spine.Controller
         @addValueToShadowInput(valueName, value)
       else
         @selectValue(value, valueName, displayName)
-        @markSelected(value)
         @toggleClear()
 
+      @markSelected(value)
       @currentItem.removeClass('is-active')
       @currentItem.removeClass('is-highlighted') if @currentItem.hasClass('js-enter')
       @currentItem = null
@@ -617,9 +631,10 @@ class App.SearchableSelect extends Spine.Controller
       else
         token = which
 
-    id = jQuery.escapeSelector(token.data('value'))
-    @shadowInput.find("[value=\"#{id}\"]").remove()
+    id = token.data('value')
+    @shadowInput.find("[value=\"#{jQuery.escapeSelector(id)}\"]").remove()
     @shadowInput.trigger('change')
+    @unmarkSelected(id)
     token.remove()
 
   onInput: (event, doToggle = true) =>
