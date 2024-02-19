@@ -30,7 +30,7 @@ class UserAgentTestController < ApplicationController
 
   # GET test/redirect
   def redirect
-    redirect_to "#{request.protocol}#{request.host_with_port}/test/get/1?submitted=abc"
+    redirect_to "#{request.protocol}#{request.host_with_port}/test/get/1?submitted=abc", allow_other_host: true
   end
 
   private

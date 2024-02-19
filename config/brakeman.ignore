@@ -1,29 +1,6 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Redirect",
-      "warning_code": 18,
-      "fingerprint": "0af1d7942bf73ecd1eb5141ea3a80c32297d9e9f24e411eb2b346af686eef938",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/external_credentials_controller.rb",
-      "line": 44,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to(ExternalCredential.link_account(params[:provider].downcase, session[:request_token], link_params))",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ExternalCredentialsController",
-        "method": "callback"
-      },
-      "user_input": "ExternalCredential.link_account(params[:provider].downcase, session[:request_token], link_params)",
-      "confidence": "High",
-      "cwe_id": [
-        601
-      ],
-      "note": "https://brakemanscanner.org/docs/warning_types/redirect/"
-    },
-    {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
       "fingerprint": "0fcd117fd53301f531142fc075ee8d30219c1239affce9322f9939ac0572ba3b",
@@ -116,6 +93,29 @@
         470
       ],
       "note": "ObjectLookup.by_id works as designed"
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "2ebd9f5e35ae11122d5561fdbbef7432eeef6b34d7c61249365be7dc34cbfb82",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/external_credentials_controller.rb",
+      "line": 38,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(ExternalCredential.request_account_to_link(params[:provider].downcase, params)[:authorize_url], :allow_other_host => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExternalCredentialsController",
+        "method": "link_account"
+      },
+      "user_input": "ExternalCredential.request_account_to_link(params[:provider].downcase, params)[:authorize_url]",
+      "confidence": "Weak",
+      "cwe_id": [
+        601
+      ],
+      "note": ""
     },
     {
       "warning_type": "SQL Injection",
@@ -353,7 +353,7 @@
       "check_name": "SSLVerify",
       "message": "SSL certificate verification was bypassed",
       "file": "lib/user_agent.rb",
-      "line": 335,
+      "line": 363,
       "link": "https://brakemanscanner.org/docs/warning_types/ssl_verification_bypass/",
       "code": "(Net::HTTP.Proxy($1, $2, ((options[\"proxy_username\"] or Setting.get(\"proxy_username\")) or nil), ((options[\"proxy_password\"] or Setting.get(\"proxy_password\")) or nil)).new(uri.host, uri.port) or Net::HTTP.new(uri.host, uri.port)).verify_mode = OpenSSL::SSL::VERIFY_NONE",
       "render_path": null,
@@ -486,29 +486,6 @@
       "note": "SqlHelper does properly escape table and column names."
     },
     {
-      "warning_type": "Redirect",
-      "warning_code": 18,
-      "fingerprint": "a50e32b9e4436adca6c2f789c9fd6371f3e752366821d5b49480f8b004ce5ab7",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/external_credentials_controller.rb",
-      "line": 38,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to(ExternalCredential.request_account_to_link(params[:provider].downcase, params)[:authorize_url])",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ExternalCredentialsController",
-        "method": "link_account"
-      },
-      "user_input": "ExternalCredential.request_account_to_link(params[:provider].downcase, params)[:authorize_url]",
-      "confidence": "High",
-      "cwe_id": [
-        601
-      ],
-      "note": "https://brakemanscanner.org/docs/warning_types/redirect/"
-    },
-    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "a9e68e841f16226b94c736d272962dd57d02c2333ead2855f2494dfb2c994de7",
@@ -549,7 +526,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/object_manager/attribute.rb",
-      "line": 896,
+      "line": 921,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object_lookup_id).constantize",
       "render_path": null,
@@ -799,7 +776,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "lib/models.rb",
-      "line": 171,
+      "line": 172,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "model_class.where(\"#{reflection_value.name}_id\" => object_id)",
       "render_path": null,
@@ -822,7 +799,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "lib/models.rb",
-      "line": 184,
+      "line": 185,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "model_class.where(\"#{reflection_value.name}_id\" => object_id)",
       "render_path": null,
@@ -860,32 +837,8 @@
         77
       ],
       "note": "Mysql arguments are internal / from config."
-    },
-    {
-      "warning_type": "Denial of Service",
-      "warning_code": 76,
-      "fingerprint": "fe906d9ee6b37c92b7deec029d6a4cca47071006440817e4a50292b2ca956a30",
-      "check_name": "RegexDoS",
-      "message": "Model attribute used in regular expression",
-      "file": "app/models/ticket.rb",
-      "line": 1178,
-      "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
-      "code": "/#{Setting.get(\"send_no_auto_response_reg_exp\")}/i",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Ticket",
-        "method": "send_email_notification"
-      },
-      "user_input": "Setting.get(\"send_no_auto_response_reg_exp\")",
-      "confidence": "Medium",
-      "cwe_id": [
-        20,
-        185
-      ],
-      "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2023-10-31 23:59:53 +0200",
-  "brakeman_version": "6.0.1"
+  "updated": "2024-02-19 12:24:05 +0100",
+  "brakeman_version": "6.1.2"
 }

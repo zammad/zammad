@@ -24,7 +24,7 @@ class KnowledgeBasesController < KnowledgeBase::BaseController
              help_answer_path params[:locale], category_id, params[:id], preview_token: token
            end
 
-    redirect_to custom_path_if_needed(path, KnowledgeBase.first, full: true)
+    redirect_to custom_path_if_needed(path, KnowledgeBase.first, full: true), allow_other_host: true
   end
 
   private
