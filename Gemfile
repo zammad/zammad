@@ -78,7 +78,11 @@ group :assets do
   gem 'eco', require: false
 
   # asset handling - SASS
-  gem 'sassc-rails', require: false
+  # We cannot use sassc-rails, as it can lead to crashes on modern platforms like CentOS 9.
+  # See https://jcmaciel.com/apple-silicon-ruby-on-rails-crash-segfault-sassc/
+  #     https://github.com/sass/sassc-ruby/issues/197
+  # Pin to v5 which does not use sassc internally.
+  gem 'sass-rails', '~> 5', require: false
 
   # asset handling - pipeline
   gem 'sprockets', '~> 3.7.2', require: false
