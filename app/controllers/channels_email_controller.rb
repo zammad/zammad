@@ -137,7 +137,7 @@ class ChannelsEmailController < ApplicationController
       return
     end
 
-    ::Service::Channel::Email::Add.new.execute(
+    ::Service::Channel::Email::Create.new.execute(
       inbound_configuration:  params[:inbound].to_h,
       outbound_configuration: params[:outbound].to_h,
       group:                  ::Group.find(params[:group_id]),

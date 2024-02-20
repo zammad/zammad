@@ -1,0 +1,125 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/v19.0/<WHATSAPP_BUSINESS_ID>/phone_numbers?fields=id,is_official_business_account,display_phone_number,verified_name,account_mode,quality_rating,certificate,code_verification_status,eligibility_for_api_business_global_search,is_pin_enabled,name_status,new_name_status,status,search_visibility,messaging_limit_tier
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer <WHATSAPP_ACCESS_TOKEN>
+      User-Agent:
+      - Faraday v2.9.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"4442d4de193a1817408afdbab098ded8c4c4d280"'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Business-Use-Case-Usage:
+      - '{"<WHATSAPP_BUSINESS_ID>":[{"type":"whatsapp_business_management","call_count":1,"total_cputime":1,"total_time":1,"estimated_time_to_regain_access":0}]}'
+      Access-Control-Allow-Origin:
+      - "*"
+      Facebook-Api-Version:
+      - v19.0
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Request-Id:
+      - Au1jTCo4QE3YqaYz7P0Tfmk
+      X-Fb-Trace-Id:
+      - EjcO3N8MQip
+      X-Fb-Rev:
+      - '1011476710'
+      X-Fb-Debug:
+      - UcAljCmria84WismEn31bZr6Zus9sIYKuMhtteiif3gaHodjktDMMOfPvfBbwtptQ/pJiEvJ20ZnI7LCEfG+dw==
+      Date:
+      - Fri, 16 Feb 2024 20:08:48 GMT
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '702'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[{"id":"<WHATSAPP_PHONE_NUMBER_ID>","is_official_business_account":false,"display_phone_number":"<WHATSAPP_PHONE_NUMBER>","verified_name":"<WHATSAPP_PHONE_NUMBER_NAME>","account_mode":"LIVE","quality_rating":"GREEN","code_verification_status":"NOT_VERIFIED","eligibility_for_api_business_global_search":"NON_ELIGIBLE_UNDEFINED_COUNTRY","is_pin_enabled":true,"name_status":"APPROVED","new_name_status":"NONE","status":"CONNECTED","search_visibility":"NON_VISIBLE","messaging_limit_tier":"TIER_1K"}],"paging":{"cursors":{"before":"QVFIUmJ2Wkt0MFp4dEpWMFFkSWhhSDJtV3V1OHFqSDMzSkpBRVd0Ul91aDJLX2JXcW0wTE9WdEpoV2JvMVl0eV9wdmYZD","after":"QVFIUmJ2Wkt0MFp4dEpWMFFkSWhhSDJtV3V1OHFqSDMzSkpBRVd0Ul91aDJLX2JXcW0wTE9WdEpoV2JvMVl0eV9wdmYZD"}}}'
+  recorded_at: Fri, 16 Feb 2024 20:08:48 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/v19.0/<WHATSAPP_PHONE_NUMBER_ID>?fields=id,is_official_business_account,display_phone_number,verified_name,account_mode,quality_rating,certificate,code_verification_status,eligibility_for_api_business_global_search,is_pin_enabled,name_status,new_name_status,status,search_visibility,messaging_limit_tier
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer <WHATSAPP_ACCESS_TOKEN>
+      User-Agent:
+      - Faraday v2.9.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"ff3bc8cc7019dce0169ef8e5adf20e21ff51503e"'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Business-Use-Case-Usage:
+      - '{"<WHATSAPP_BUSINESS_ID>":[{"type":"whatsapp_business_management","call_count":1,"total_cputime":1,"total_time":1,"estimated_time_to_regain_access":0}]}'
+      Access-Control-Allow-Origin:
+      - "*"
+      Facebook-Api-Version:
+      - v19.0
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Request-Id:
+      - AvFqRUTuSAyUFuj-Apph7sl
+      X-Fb-Trace-Id:
+      - BRlwrebUpJ2
+      X-Fb-Rev:
+      - '1011476710'
+      X-Fb-Debug:
+      - lNbYnAlS3tRNLHX53+cpwNS2UBEzIpaGsSH0vfOjwrGTzIlVLzLYLbncAx88BLQFSiZZ6DnUzwdrHzyqWYEtsA==
+      Date:
+      - Fri, 16 Feb 2024 20:08:50 GMT
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '459'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"<WHATSAPP_PHONE_NUMBER_ID>","is_official_business_account":false,"display_phone_number":"<WHATSAPP_PHONE_NUMBER>","verified_name":"<WHATSAPP_PHONE_NUMBER_NAME>","account_mode":"LIVE","quality_rating":"GREEN","code_verification_status":"NOT_VERIFIED","eligibility_for_api_business_global_search":"NON_ELIGIBLE_UNDEFINED_COUNTRY","is_pin_enabled":true,"name_status":"APPROVED","new_name_status":"NONE","status":"CONNECTED","search_visibility":"NON_VISIBLE","messaging_limit_tier":"TIER_1K"}'
+  recorded_at: Fri, 16 Feb 2024 20:08:50 GMT
+recorded_with: VCR 6.2.0

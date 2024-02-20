@@ -9,7 +9,7 @@ module Gql::Mutations
     field :channel, Gql::Types::ChannelType, description: 'The new channel object'
 
     def resolve(input:)
-      channel = ::Service::Channel::Email::Add.new.execute(
+      channel = ::Service::Channel::Email::Create.new.execute(
         inbound_configuration:  map_type_to_config(input.inbound_configuration),
         outbound_configuration: map_type_to_config(input.outbound_configuration),
         group:                  input.group,

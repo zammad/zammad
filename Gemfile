@@ -120,6 +120,7 @@ gem 'rack-attack'
 gem 'koala'
 gem 'telegram-bot-ruby'
 gem 'twitter'
+gem 'whatsapp_sdk'
 
 # channels - email additions
 gem 'email_address'

@@ -1,0 +1,50 @@
+<div class="alert alert--danger hidden" role="alert"></div>
+<p>
+  <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'WhatsApp Business Account', 'https://admin-docs.zammad.org/en/latest/channels/whatsapp.html') %>
+</p>
+<fieldset>
+  <h2 id="name" for="name"><%- @T('Step 2 of 3: WhatsApp Business Phone Number') %></h2>
+
+  <input id="business_id" type="hidden" name="business_id" value="<%= @params?.business_id || @channel?.options?.business_id%>">
+  <input id="access_token" type="hidden" name="access_token" value="<%= @params?.access_token || @channel?.options?.access_token %>">
+  <input id="app_secret" type="hidden" name="app_secret" value="<%= @params?.app_secret || @channel?.options?.app_secret%>">
+
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for=""><%- @T('Phone number') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <div class="js-phoneNumbers"></div>
+    </div>
+  </div>
+
+  <h2><%- @T('Ticket Settings') %></h2>
+
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="welcome"><%- @T('Welcome message') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="welcome" type="text" name="welcome" value="<%= @params?.welcome || @channel?.options?.welcome %>" placeholder="<%- @Ti('How can we help?') %>" class="form-control" required autocomplete="off">
+    </div>
+  </div>
+
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="goodbye"><%- @T('Goodbye message') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="goodbye" type="text" name="goodbye" value="<%= @params?.goodbye || @channel?.options?.goodbye %>" placeholder="<%- @Ti('Have a nice day!') %>" class="form-control" required autocomplete="off">
+    </div>
+  </div>
+
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for=""><%- @T('Target Group') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <div class="js-messagesGroup"></div>
+      <p class="help-text"><%- @T('Choose the group to which messages will get added.') %></p>
+    </div>
+  </div>
+</fieldset>

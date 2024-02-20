@@ -146,6 +146,13 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name:        'admin.channel_whatsapp',
+  note:        __('Manage %s'),
+  preferences: {
+    translations: [__('Channel - WhatsApp')]
+  },
+)
+Permission.create_if_not_exists(
   name:        'admin.channel_google',
   note:        __('Manage %s'),
   preferences: {

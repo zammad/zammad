@@ -11,7 +11,8 @@ module Ticket::Article::AddsMetadataGeneral
     'twitter direct-message',
     'facebook feed post',
     'facebook feed comment',
-    'sms'
+    'sms',
+    'whatsapp message',
   ].freeze
 
   included do

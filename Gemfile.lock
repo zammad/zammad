@@ -616,6 +616,7 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
+    sorbet-runtime (0.5.11255)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -699,6 +700,11 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    whatsapp_sdk (0.11.0)
+      faraday (~> 2)
+      faraday-multipart (~> 1)
+      sorbet-runtime (~> 0.5)
+      zeitwerk (~> 2)
     write_xlsx (1.11.2)
       nkf
       rubyzip (>= 1.0.0)
@@ -838,6 +844,7 @@ DEPENDENCIES
   vite_rails
   webauthn
   webmock
+  whatsapp_sdk
   write_xlsx
   zendesk_api
 

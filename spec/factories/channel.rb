@@ -375,5 +375,39 @@ FactoryBot.define do
         callback_token { Faker::Alphanumeric.alphanumeric(number: 14) }
       end
     end
+
+    factory :whatsapp_channel do
+      area { 'WhatsApp::Business' }
+
+      group_id { Group.first.id }
+
+      options do
+        {
+          business_id:,
+          access_token:,
+          app_secret:,
+          phone_number_id:,
+          welcome:,
+          goodbye:,
+          name:,
+          phone_number:,
+          callback_url_uuid:,
+          verify_token:,
+        }
+      end
+
+      transient do
+        business_id       { Faker::Number.unique.number(digits: 15) }
+        access_token      { Faker::Omniauth.unique.facebook[:credentials][:token] }
+        app_secret        { Faker::Crypto.unique.md5 }
+        phone_number_id   { Faker::Number.unique.number(digits: 15) }
+        welcome           { Faker::Lorem.unique.sentence }
+        goodbye           { Faker::Lorem.unique.sentence }
+        name              { Faker::Name.unique.name }
+        phone_number      { Faker::PhoneNumber.unique.cell_phone_with_country_code }
+        callback_url_uuid { SecureRandom.uuid }
+        verify_token      { SecureRandom.urlsafe_base64(12) }
+      end
+    end
   end
 end

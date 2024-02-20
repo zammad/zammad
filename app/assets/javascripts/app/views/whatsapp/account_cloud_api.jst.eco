@@ -1,0 +1,34 @@
+<div class="alert alert--danger hidden" role="alert"></div>
+<p>
+  <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'WhatsApp Business Account', 'https://admin-docs.zammad.org/en/latest/channels/whatsapp.html') %>
+</p>
+<fieldset>
+  <h2><%- @T('Step 1 of 3: WhatsApp Business Cloud API') %></h2>
+
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="business_id"><%- @T('WhatsApp Business Account ID') %><% if !@channel: %> <span>*</span><% end %></label>
+    </div>
+    <div class="controls">
+      <input id="business_id" type="text" name="business_id" value="<%= @params?.business_id || @channel?.options?.business_id %>" class="form-control" <% if @channel: %>disabled<% else: %>required autocomplete="off"<% end %>>
+    </div>
+  </div>
+
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="access_token"><%- @T('Access token') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="access_token" type="text" name="access_token" value="<%= @params?.access_token || @channel?.options?.access_token %>" class="form-control" required autocomplete="off">
+    </div>
+  </div>
+
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="app_secret"><%- @T('App secret') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="app_secret" type="text" name="app_secret" value="<%= @params?.app_secret || @channel?.options?.app_secret %>" class="form-control" required autocomplete="off">
+    </div>
+  </div>
+</fieldset>

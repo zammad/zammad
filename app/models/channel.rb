@@ -2,11 +2,14 @@
 
 class Channel < ApplicationModel
   include Channel::Assets
+  include Channel::Area::Whatsapp
 
   belongs_to :group, optional: true
 
   store :options
   store :preferences
+
+  scope :in_area, ->(area) { where(area: area) }
 
   validates_with Validations::EmailAccountUniquenessValidator
 
@@ -171,7 +174,7 @@ stream all accounts
         if @@channel_stream[channel_id].blank? && @@channel_stream_started_till_at[channel_id].present?
           wait_in_seconds = @@channel_stream_started_till_at[channel_id] - (Time.zone.now - local_delay_before_reconnect.seconds)
           if wait_in_seconds.positive?
-            logger.info "skipp channel (#{channel_id}) for streaming, already tried to connect or connection was active within the last #{local_delay_before_reconnect} seconds - wait another #{wait_in_seconds} seconds"
+            logger.info "skip channel (#{channel_id}) for streaming, already tried to connect or connection was active within the last #{local_delay_before_reconnect} seconds - wait another #{wait_in_seconds} seconds"
             next
           end
         end

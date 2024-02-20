@@ -77,3 +77,7 @@
 - `assets/twitter.svg`
   - Author: Twitter
   - URL: https://about.twitter.com/en/who-we-are/brand-toolkit
+
+- `assets/whatsapp.svg`
+  - Author: Meta
+  - URL: https://about.meta.com/uk/brand/resources/whatsapp/whatsapp-brand/

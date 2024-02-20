@@ -1,0 +1,35 @@
+<div class="alert alert--danger hidden" role="alert"></div>
+<p>
+  <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'WhatsApp Business Account', 'https://admin-docs.zammad.org/en/latest/channels/whatsapp.html') %>
+</p>
+<fieldset>
+  <h2 id="name" for="name"><%- @T('Step 3 of 3: WhatsApp Business Webhook') %></h2>
+
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="callback_url"><%- @T('Callback URL') %></label>
+    </div>
+    <div class="controls controls--button ignore-readonly">
+      <input readonly id="callback_url" name="callback_url" name="callback_url" type="text" value="<%= @callback_url %>" class="form-control">
+      <div class="controls-button u-clickable js-copy" role="button" data-target-field="callback_url" aria-label="<%= @T('Copy to clipboard') %>">
+        <span class="controls-button-inner">
+          <%- @Icon('clipboard') %>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="verify_token"><%- @T('Verify Token') %></label>
+    </div>
+    <div class="controls controls--button ignore-readonly">
+      <input readonly id="verify_token" type="text" name="verify_token" value="<%= @channel?.options?.verify_token %>" class="form-control">
+      <div class="controls-button u-clickable js-copy" role="button" data-target-field="verify_token" aria-label="<%= @T('Copy to clipboard') %>">
+        <span class="controls-button-inner">
+          <%- @Icon('clipboard') %>
+        </span>
+      </div>
+    </div>
+  </div>
+</fieldset>

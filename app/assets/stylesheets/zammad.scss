@@ -3858,6 +3858,11 @@ ol.tabs li {
 
 .icon {
   fill: currentColor;
+
+  &--md {
+    width: 2rem;
+    height: 2rem;
+  }
 }
 
 [class*='icon-file-'] {
@@ -11721,6 +11726,10 @@ output {
 
     &.action-flow--row {
       flex-basis: 100%;
+    }
+
+    &.action-flow--vertically-centered {
+      align-items: center;
     }
   }
 

@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Channel::Email::Add < Service::Base
+class Service::Channel::Email::Create < Service::Base
 
   def execute(inbound_configuration:, outbound_configuration:, group:, email_address:, email_realname:)
 
