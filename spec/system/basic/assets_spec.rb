@@ -12,6 +12,12 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
   end
   let(:admin)        { create(:admin, groups: [Group.find_by(name: 'Users')], note: 'hello', last_login: Time.zone.now, login_failed: 1) }
   let(:ticket)       { create(:ticket, owner: agent, group: Group.find_by(name: 'Users'), customer: customer, created_by: admin) }
+  let(:agent_groups) { create_list(:group, 3) }
+
+  before do
+    agent_groups
+    Setting.set('customer_ticket_create_group_ids', [Group.first.id])
+  end
 
   context 'groups' do
     before do
@@ -114,6 +120,10 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
       page.execute_script("return App.User.find(#{customer.id}).note")
     end
 
+    def customer_available_group_count
+      page.execute_script('return App.Group.all().length')
+    end
+
     def owner_firstname
       page.execute_script("return App.User.find(#{agent.id}).firstname")
     end
@@ -154,6 +164,23 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
 
       it 'can access not owner owner accounts' do
         expect(owner_accounts).to be_nil
+      end
+
+      context 'when groups are restricted' do
+        it 'can not access agent groups' do
+          expect(customer_available_group_count).to eq(1)
+        end
+
+        context 'when there are old tickets for the customer', authenticated_as: :authenticate do
+          def authenticate
+            create(:ticket, group: agent_groups.first, customer: customer)
+            customer
+          end
+
+          it 'can access one of the agent groups' do
+            expect(customer_available_group_count).to eq(2)
+          end
+        end
       end
     end
 

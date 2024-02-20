@@ -22,6 +22,7 @@ returns
 =end
 
   def assets(data = {})
+    return data if !authorized_asset?
 
     app_model = self.class.to_app_model
 
@@ -45,6 +46,10 @@ returns
       data = user.assets(data)
     end
     data
+  end
+
+  def authorized_asset?
+    true
   end
 
 =begin
