@@ -67,7 +67,7 @@ module Import
       end
 
       def ignore_escalation?(state_type_id)
-        ::Ticket::State.by_category(:work_on).pluck(:id).exclude?(state_type_id)
+        ::Ticket::StateType.where(name: ::Ticket::State::TYPES[:work_on]).pluck(:id).exclude?(state_type_id)
       end
 
       def map_type(state)
