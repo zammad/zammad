@@ -5,7 +5,7 @@ class Chat < ApplicationModel
 
   has_many :sessions, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
   store     :preferences
 
   validates :note, length: { maximum: 250 }

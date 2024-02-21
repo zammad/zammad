@@ -38,7 +38,7 @@ class Organization < ApplicationModel
   core_workflow_screens 'create', 'edit'
   core_workflow_admin_screens 'create', 'edit'
 
-  validates :name,   presence: true
+  validates :name,   presence: true, uniqueness: { case_sensitive: false }
   validates :domain, presence: { message: 'required when Domain Based Assignment is enabled' }, if: :domain_assignment
 
   # secondary_members will break eager_load of attributes_with_association_ids because it mixes up with the members relation.

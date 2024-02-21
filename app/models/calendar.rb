@@ -8,6 +8,7 @@ class Calendar < ApplicationModel
   store :business_hours
   store :public_holidays
 
+  validates :name, uniqueness: { case_sensitive: false }
   validate :validate_hours
 
   before_save :ensure_public_holidays_details, :fetch_ical

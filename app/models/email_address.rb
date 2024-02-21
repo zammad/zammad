@@ -7,7 +7,7 @@ class EmailAddress < ApplicationModel
   has_many        :groups, after_add: :cache_update, after_remove: :cache_update
   belongs_to      :channel, optional: true
   validates       :name,    presence: true
-  validates       :email,   presence: true
+  validates       :email,   presence: true, uniqueness: { case_sensitive: true }
 
   before_validation :check_email
   before_create   :check_if_channel_exists_set_inactive

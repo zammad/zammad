@@ -21,7 +21,7 @@ returns
     def create_if_not_exists(data)
       identifier = [:id, :name, :login, :email, %i[source locale]].map { |a| data.slice(*a) }.find(&:any?) || {}
 
-      case_sensitive_find_by(**identifier) || create(data)
+      case_sensitive_find_by(**identifier) || create!(data)
     end
 
 =begin
@@ -42,7 +42,7 @@ returns
       raise ArgumentError, __('One of the required parameters must be provided, but none was found.') if attr.nil?
 
       record = case_sensitive_find_by(**data.slice(attr))
-      record.nil? ? create(data) : record.tap { |r| r.update(data) }
+      record.nil? ? create!(data) : record.tap { |r| r.update!(data) }
     end
 
 =begin

@@ -18,7 +18,7 @@ class Ticket::State < ApplicationModel
   after_destroy :update_object_manager_attribute
   after_save    :update_object_manager_attribute
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   validates :note, length: { maximum: 250 }
   sanitized_html :note

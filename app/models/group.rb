@@ -31,6 +31,7 @@ class Group < ApplicationModel
   before_save :update_path
   after_save :update_path_children
 
+  validates :name, uniqueness: { case_sensitive: false }
   validates :name_last, presence: true, format: { without: %r{::}, message: __('No double colons (::) allowed, reserved delimiter') }
   validates :note, length: { maximum: 250 }
   sanitized_html :note, no_images: true

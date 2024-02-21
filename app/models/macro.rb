@@ -8,7 +8,7 @@ class Macro < ApplicationModel
 
   store     :perform
   validates :perform,         'validations/verify_perform_rules': true
-  validates :name,            presence: true
+  validates :name,            presence: true, uniqueness: { case_sensitive: false }
   validates :ux_flow_next_up, inclusion: { in: %w[none next_task next_task_on_close next_from_overview] }
 
   has_and_belongs_to_many :groups, after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'

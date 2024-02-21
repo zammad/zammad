@@ -12,9 +12,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
       end
 
       it 'does not create a new record' do
-        allow(described_class).to receive(:create)
+        allow(described_class).to receive(:create!)
         described_class.create_if_not_exists(id: id)
-        expect(described_class).not_to have_received(:create).with(id: id)
+        expect(described_class).not_to have_received(:create!).with(id: id)
       end
     end
 
@@ -22,9 +22,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
       let(:id) { described_class.pluck(:id).max + 1 }
 
       it 'attempts to create a new record' do
-        allow(described_class).to receive(:create)
+        allow(described_class).to receive(:create!)
         described_class.create_if_not_exists(id: id)
-        expect(described_class).to have_received(:create).with(id: id)
+        expect(described_class).to have_received(:create!).with(id: id)
       end
     end
 
@@ -37,9 +37,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         end
 
         it 'does not create a new record for matching identifier' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_if_not_exists(name: name)
-          expect(described_class).not_to have_received(:create).with(name: name)
+          expect(described_class).not_to have_received(:create!).with(name: name)
         end
 
         if unique_name
@@ -48,7 +48,7 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
               .merge(name: record.name.swapcase)
 
             expect { described_class.create_if_not_exists(**swapcase_attibutes) }
-              .to raise_error { _1.is_a?(ActiveRecord::RecordNotUnique) || _1.is_a?(ActiveRecord::NotNullViolation) }
+              .to raise_error(ActiveRecord::RecordInvalid, %r{has already been taken})
           end
         end
       end
@@ -57,9 +57,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         let(:name) { "#{described_class.pluck(:name).max}foo" }
 
         it 'attempts to create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_if_not_exists(name: name)
-          expect(described_class).to have_received(:create).with(name: name)
+          expect(described_class).to have_received(:create!).with(name: name)
         end
       end
     end
@@ -73,9 +73,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         end
 
         it 'does not create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_if_not_exists(login: login)
-          expect(described_class).not_to have_received(:create).with(login: login)
+          expect(described_class).not_to have_received(:create!).with(login: login)
         end
       end
 
@@ -83,9 +83,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         let(:login) { "#{described_class.pluck(:login).max}foo" }
 
         it 'attempts to create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_if_not_exists(login: login)
-          expect(described_class).to have_received(:create).with(login: login)
+          expect(described_class).to have_received(:create!).with(login: login)
         end
       end
     end
@@ -99,9 +99,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         end
 
         it 'does not create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_if_not_exists(email: email)
-          expect(described_class).not_to have_received(:create).with(email: email)
+          expect(described_class).not_to have_received(:create!).with(email: email)
         end
       end
 
@@ -109,9 +109,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         let(:email) { "#{described_class.pluck(:email).max}foo" }
 
         it 'attempts to create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_if_not_exists(email: email)
-          expect(described_class).to have_received(:create).with(email: email)
+          expect(described_class).to have_received(:create!).with(email: email)
         end
       end
     end
@@ -126,9 +126,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         end
 
         it 'does not create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_if_not_exists(source: source, locale: locale)
-          expect(described_class).not_to have_received(:create).with(source: source, locale: locale)
+          expect(described_class).not_to have_received(:create!).with(source: source, locale: locale)
         end
       end
 
@@ -137,9 +137,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         let(:locale) { record.locale }
 
         it 'attempts to create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_if_not_exists(source: source, locale: locale)
-          expect(described_class).to have_received(:create).with(source: source, locale: locale)
+          expect(described_class).to have_received(:create!).with(source: source, locale: locale)
         end
       end
     end
@@ -167,9 +167,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
       let(:id) { described_class.pluck(:id).max + 1 }
 
       it 'attempts to create a new record' do
-        allow(described_class).to receive(:create)
+        allow(described_class).to receive(:create!)
         described_class.create_or_update(id: id)
-        expect(described_class).to have_received(:create).with(id: id)
+        expect(described_class).to have_received(:create!).with(id: id)
       end
     end
 
@@ -187,8 +187,8 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
             swapcase_attibutes = attributes_for(described_class.name.underscore)
               .merge(name: record.name.swapcase)
 
-            expect { described_class.create_if_not_exists(**swapcase_attibutes) }
-              .to raise_error { _1.is_a?(ActiveRecord::RecordNotUnique) || _1.is_a?(ActiveRecord::NotNullViolation) }
+            expect { described_class.create_or_update(**swapcase_attibutes) }
+              .to raise_error(ActiveRecord::RecordInvalid, %r{has already been taken})
           end
         end
       end
@@ -197,9 +197,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         let(:name) { "#{described_class.pluck(:name).max}foo" }
 
         it 'attempts to create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_or_update(name: name)
-          expect(described_class).to have_received(:create).with(name: name)
+          expect(described_class).to have_received(:create!).with(name: name)
         end
       end
     end
@@ -218,9 +218,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         let(:login) { "#{described_class.pluck(:login).max}foo" }
 
         it 'attempts to create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_or_update(login: login)
-          expect(described_class).to have_received(:create).with(login: login)
+          expect(described_class).to have_received(:create!).with(login: login)
         end
       end
     end
@@ -239,9 +239,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         let(:email) { "#{described_class.pluck(:email).max}foo" }
 
         it 'attempts to create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_or_update(email: email)
-          expect(described_class).to have_received(:create).with(email: email)
+          expect(described_class).to have_received(:create!).with(email: email)
         end
       end
     end
@@ -260,9 +260,9 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do |unique_name: 
         let(:locale) { record.locale }
 
         it 'attempts to create a new record' do
-          allow(described_class).to receive(:create)
+          allow(described_class).to receive(:create!)
           described_class.create_or_update(locale: locale)
-          expect(described_class).to have_received(:create).with(locale: locale)
+          expect(described_class).to have_received(:create!).with(locale: locale)
         end
       end
     end

@@ -9,7 +9,7 @@ class Ticket::Priority < ApplicationModel
   include HasSearchIndexBackend
 
   self.table_name = 'ticket_priorities'
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   after_create  :ensure_defaults
   after_update  :ensure_defaults

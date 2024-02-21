@@ -9,7 +9,7 @@ class Trigger < ApplicationModel
 
   store     :condition
   store     :perform
-  validates :name,    presence: true
+  validates :name,    presence: true, uniqueness: { case_sensitive: false }
   validates :perform, 'validations/verify_perform_rules': true
 
   validates :activator, presence: true, inclusion: { in: %w[action time] }

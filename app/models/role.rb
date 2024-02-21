@@ -18,7 +18,7 @@ class Role < ApplicationModel
                           after_add:     %i[cache_update cache_add_kb_permission],
                           before_remove: :last_admin_check_by_permission,
                           after_remove:  %i[cache_update cache_remove_kb_permission]
-  validates               :name, presence: true
+  validates               :name, presence: true, uniqueness: { case_sensitive: false }
   store                   :preferences
   has_many                :knowledge_base_permissions, class_name: 'KnowledgeBase::Permission', dependent: :destroy
 

@@ -31,7 +31,14 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       QUERY
     end
 
-    let(:custom_translations) { { "can't be blank" => 'darf nicht leer sein', 'This field %s' => 'Dieses Feld %{message}', 'This object already exists.' => 'Dieses Objekt existiert bereits.' } }
+    let(:custom_translations) do
+      {
+        "can't be blank"              => 'darf nicht leer sein',
+        'has already been taken'      => 'wird bereits verwendet.',
+        'This field %s'               => 'Dieses Feld %{message}',
+        'This object already exists.' => 'Dieses Objekt existiert bereits.'
+      }
+    end
 
     before do
       allow(Translation).to receive(:translate) { |_locale, string| custom_translations[string] || string }
@@ -59,7 +66,7 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       let(:other_org)     { create(:organization) }
 
       it 'returns a user error' do
-        expect(gql.result.data['errors'].first).to include('message' => 'Dieses Objekt existiert bereits.')
+        expect(gql.result.data['errors'].first).to include('field' => 'name', 'message' => 'Dieses Feld wird bereits verwendet.')
       end
     end
 

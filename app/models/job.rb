@@ -12,7 +12,7 @@ class Job < ApplicationModel
 
   store     :condition
   store     :perform
-  validates :name,    presence: true
+  validates :name,    presence: true, uniqueness: { case_sensitive: false }
   validates :object,  presence: true, inclusion: { in: %w[Ticket User Organization] }
   validates :perform, 'validations/verify_perform_rules': true
 

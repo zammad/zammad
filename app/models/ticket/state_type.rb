@@ -8,7 +8,7 @@ class Ticket::StateType < ApplicationModel
 
   has_many :states, class_name: 'Ticket::State', inverse_of: :state_type
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   validates :note, length: { maximum: 250 }
   sanitized_html :note

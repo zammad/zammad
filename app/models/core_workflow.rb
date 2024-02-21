@@ -17,7 +17,7 @@ class CoreWorkflow < ApplicationModel
   store :condition_selected
   store :perform
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def self.classes
     Models.all.keys.select { |m| m.included_modules.include?(ChecksCoreWorkflow) }
