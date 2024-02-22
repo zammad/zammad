@@ -57,11 +57,14 @@ module Gql::Types
     # field :create_article_sender_id, Integer
     # field :article_count, Integer, description: "Count of ticket articles that were not sent by 'System'."
     # field :type, String
-    field :time_unit, Float
-    field :time_units_per_type, [Gql::Types::Ticket::TimeAccountingTypeSumType]
     field :preferences, GraphQL::Types::JSON
 
     field :state_color_code, Gql::Types::Enum::TicketStateColorCodeType, null: false, description: 'Ticket color indicator state.'
+
+    scoped_fields do
+      field :time_unit, Float
+      field :time_units_per_type, [Gql::Types::Ticket::TimeAccountingTypeSumType]
+    end
 
     internal_fields do
       field :subscribed, Boolean, null: true

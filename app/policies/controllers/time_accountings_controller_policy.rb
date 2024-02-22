@@ -1,12 +1,14 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::TimeAccountingsControllerPolicy < Controllers::ApplicationControllerPolicy
+  default_permit!('admin.time_accounting')
+
   def index?
-    admin_access? || access?
+    admin_access? || agent_access?
   end
 
   def show?
-    admin_access? || access?
+    admin_access? || agent_access?
   end
 
   def create?
@@ -32,11 +34,9 @@ class Controllers::TimeAccountingsControllerPolicy < Controllers::ApplicationCon
     @ticket ||= Ticket.find(record.params[:ticket_id])
   end
 
-  def access?
+  def agent_access?
     return false if record.params[:ticket_id].blank?
 
-    TicketPolicy.new(user, ticket).update?
+    TicketPolicy.new(user, ticket).agent_update_access?
   end
-
-  default_permit!('admin.time_accounting')
 end

@@ -4,34 +4,24 @@ class TimeAccountingsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
   def index
-    model_index_render(ticket_time_accounting, params)
+    model_index_render(ticket_time_accounting_scope, params)
   end
 
   def show
-    model_show_render(ticket_time_accounting, params)
+    model_show_render(ticket_time_accounting_scope, params)
   end
 
   def create
-    model_create_render(ticket_time_accounting, params)
+    model_create_render(ticket_time_accounting_scope, params)
   end
 
   def update
-    model_update_render(ticket_time_accounting, params)
+    model_update_render(ticket_time_accounting_scope, params)
   end
 
   def destroy
     model_references_check(Ticket::TimeAccounting, params)
-    model_destroy_render(ticket_time_accounting, params)
-  end
-
-  def ticket_time_accounting
-    @ticket_time_accounting ||= begin
-      if params[:ticket_id]
-        Ticket::TimeAccounting.where(ticket_id: params[:ticket_id])
-      else
-        Ticket::TimeAccounting
-      end
-    end
+    model_destroy_render(ticket_time_accounting_scope, params)
   end
 
   def by_activity
@@ -384,5 +374,17 @@ class TimeAccountingsController < ApplicationController
 
     results = results.last(params[:limit].to_i) if params[:limit]
     render json: results
+  end
+
+  private
+
+  def ticket_time_accounting_scope
+    @ticket_time_accounting_scope ||= begin
+      if params[:ticket_id]
+        Ticket::TimeAccounting.where(ticket_id: params[:ticket_id])
+      else
+        Ticket::TimeAccounting
+      end
+    end
   end
 end

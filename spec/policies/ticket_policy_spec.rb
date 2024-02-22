@@ -257,7 +257,7 @@ describe TicketPolicy do
       let(:user)   { create(:customer) }
       let(:record) { create(:ticket, customer: user) }
 
-      it { is_expected.to forbid_actions(%i[agent_read_access agent_update_access]) }
+      it { is_expected.to forbid_actions(%i[agent_read_access agent_update_access agent_create_access]) }
     end
 
     context 'when user is agent with read access' do
@@ -268,20 +268,31 @@ describe TicketPolicy do
       end
 
       it { is_expected.to permit_actions(%i[agent_read_access]) }
-      it { is_expected.to forbid_actions(%i[agent_update_access]) }
+      it { is_expected.to forbid_actions(%i[agent_update_access agent_create_access]) }
     end
 
     context 'when user is agent with update access' do
+      let(:user) { create(:agent) }
+
+      before do
+        user.user_groups.create! group: record.group, access: 'change'
+      end
+
+      it { is_expected.to permit_actions(%i[agent_update_access]) }
+      it { is_expected.to forbid_actions(%i[agent_read_access agent_create_access]) }
+    end
+
+    context 'when user is agent with full access' do
       let(:user) { create(:agent, groups: [record.group]) }
 
-      it { is_expected.to permit_actions(%i[agent_read_access agent_update_access]) }
+      it { is_expected.to permit_actions(%i[agent_read_access agent_update_access agent_update_access]) }
     end
 
     context 'when user is agent-customer with customer access to ticket' do
       let(:user)   { create(:agent_and_customer) }
       let(:record) { create(:ticket, customer: user) }
 
-      it { is_expected.to forbid_actions(%i[agent_read_access agent_update_access]) }
+      it { is_expected.to forbid_actions(%i[agent_read_access agent_update_access agent_create_access]) }
     end
 
     context 'when user is agent-customer with agent read access to ticket' do
@@ -292,7 +303,7 @@ describe TicketPolicy do
       end
 
       it { is_expected.to permit_actions(%i[agent_read_access]) }
-      it { is_expected.to forbid_actions(%i[agent_update_access]) }
+      it { is_expected.to forbid_actions(%i[agent_update_access agent_create_access]) }
     end
 
     context 'when user is agent-customer with agent change access to ticket' do
@@ -302,14 +313,14 @@ describe TicketPolicy do
         user.user_groups.create! group: record.group, access: 'change'
       end
 
-      it { is_expected.to forbid_actions(%i[agent_read_access]) }
+      it { is_expected.to forbid_actions(%i[agent_read_access agent_create_access]) }
       it { is_expected.to permit_actions(%i[agent_update_access]) }
     end
 
-    context 'when user is agent-customer with agent update access to ticket' do
+    context 'when user is agent-customer with full agent access to ticket' do
       let(:user) { create(:agent_and_customer, groups: [record.group]) }
 
-      it { is_expected.to permit_actions(%i[agent_read_access agent_update_access]) }
+      it { is_expected.to permit_actions(%i[agent_read_access agent_update_access agent_create_access]) }
     end
   end
 
@@ -320,6 +331,49 @@ describe TicketPolicy do
       allow(policy).to receive(:agent_read_access?)
       policy.create_mentions?
       expect(policy).to have_received(:agent_read_access?)
+    end
+  end
+
+  describe 'fields restriction' do
+    context 'when user is agent' do
+      let(:user) { create(:agent, groups: [record.group]) }
+
+      it 'does not forbid time unit fields' do
+        expect(policy.show?).to permit_fields(%i[time_unit time_units_per_type])
+      end
+    end
+
+    context 'when user is customer' do
+      let(:user) { create(:customer) }
+
+      before { record.update!(customer: user) }
+
+      it 'forbids time unit fields' do
+        expect(policy.show?)
+          .to be_truthy
+          .and(forbid_fields(%i[time_unit time_units_per_type]))
+      end
+
+      it 'permits other fields' do
+        expect(policy.show?).to permit_fields(%i[id subject])
+      end
+    end
+
+    context 'when user is customer via shared organization' do
+      let(:organization) { create(:organization) }
+      let(:user)         { create(:customer, organization:) }
+      let(:customer)     { create(:customer, organization:) }
+      let(:record)       { create(:ticket, customer:) }
+
+      it 'forbids time unit fields' do
+        expect(policy.show?)
+          .to be_truthy
+          .and(forbid_fields(%i[time_unit time_units_per_type]))
+      end
+
+      it 'permits other fields' do
+        expect(policy.show?).to permit_fields(%i[id subject])
+      end
     end
   end
 end

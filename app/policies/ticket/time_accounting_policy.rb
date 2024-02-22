@@ -6,16 +6,14 @@ class Ticket::TimeAccountingPolicy < ApplicationPolicy
       return not_authorized __('Time Accounting is not enabled')
     end
 
-    ticket_create_access? || ticket_update_access?
+    agent_create_or_update_access?
   end
 
   private
 
-  def ticket_create_access?
-    TicketPolicy.new(user, record.ticket).create?
-  end
+  def agent_create_or_update_access?
+    policy = TicketPolicy.new(user, record.ticket)
 
-  def ticket_update_access?
-    TicketPolicy.new(user, record.ticket).update?
+    policy.agent_update_access? || policy.agent_create_access?
   end
 end

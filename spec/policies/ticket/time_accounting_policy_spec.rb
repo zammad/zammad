@@ -55,4 +55,12 @@ describe Ticket::TimeAccountingPolicy do
 
     it { is_expected.to permit_actions(:create) }
   end
+
+  context 'when user has access to the ticket by having customer access' do
+    let(:user) { create(:customer) }
+
+    before { ticket.update! customer: user }
+
+    it { is_expected.to forbid_actions(:create) }
+  end
 end

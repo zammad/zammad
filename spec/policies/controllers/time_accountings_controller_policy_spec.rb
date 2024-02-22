@@ -75,4 +75,14 @@ describe Controllers::TimeAccountingsControllerPolicy do
 
     it { is_expected.to permit_actions(:index, :show, :create, :update, :destroy) }
   end
+
+  context 'with customer who has access to ticket' do
+    let(:user) { create(:customer) }
+
+    before do
+      ticket.update! customer: user
+    end
+
+    it { is_expected.to forbid_actions(:index, :show, :create, :update, :destroy) }
+  end
 end

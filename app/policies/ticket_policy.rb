@@ -57,6 +57,10 @@ class TicketPolicy < ApplicationPolicy
     agent_access?('change')
   end
 
+  def agent_create_access?
+    agent_access?('create')
+  end
+
   def create_mentions?
     return true if agent_read_access?
 
@@ -95,7 +99,7 @@ class TicketPolicy < ApplicationPolicy
 
   def customer_access?
     return false if !user.permissions?('ticket.customer')
-    return true if customer?
+    return customer_field_scope if customer?
 
     shared_organization?
   end
@@ -108,7 +112,12 @@ class TicketPolicy < ApplicationPolicy
     return false if record.organization_id.blank?
     return false if user.organization_id.blank?
     return false if !user.organization_id?(record.organization_id)
+    return false if !record.organization.shared?
 
-    record.organization.shared?
+    customer_field_scope
+  end
+
+  def customer_field_scope
+    @customer_field_scope ||= ApplicationPolicy::FieldScope.new(deny: %i[time_unit time_units_per_type])
   end
 end
