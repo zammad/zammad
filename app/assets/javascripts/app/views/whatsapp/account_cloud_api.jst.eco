@@ -1,6 +1,6 @@
 <div class="alert alert--danger hidden" role="alert"></div>
 <p>
-  <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'WhatsApp Business Account', 'https://admin-docs.zammad.org/en/latest/channels/whatsapp.html') %>
+  <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'WhatsApp Business Account', 'https://admin-docs.zammad.org/en/latest/channels/whatsapp/index.html') %>
 </p>
 <fieldset>
   <h2><%- @T('Step 1 of 3: WhatsApp Business Cloud API') %></h2>
