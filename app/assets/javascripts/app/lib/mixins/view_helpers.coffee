@@ -212,14 +212,24 @@ App.ViewHelpers =
     _.values(_.pick(attachment?.preferences, types))[0]
 
   ContentTypeIcon: (contentType) ->
-    contentType = App.Utils.contentTypeCleanup(contentType)
+    cleanContentType = App.Utils.contentTypeCleanup(contentType)
     icons =
       # image
-      'image/jpeg': 'file-image'
-      'image/jpg': 'file-image'
-      'image/png': 'file-image'
-      'image/svg': 'file-image'
+      'image/jpeg': 'file-jpg'
+      'image/jpg': 'file-jpg'
+      'image/png': 'file-png'
+      'image/svg': 'file-svg'
       'image/gif': 'file-image'
+      'image/webp': 'file-image'
+      # audio
+      'audio/aac': 'file-audio'
+      'audio/mp4': 'file-audio'
+      'audio/mpeg': 'file-audio'
+      'audio/amr': 'file-audio'
+      'audio/ogg': 'file-audio'
+      # video
+      'video/mp4': 'file-video'
+      'video/3gp': 'file-video'
       # documents
       'application/pdf': 'file-pdf'
       'application/msword': 'file-word' # .doc, .dot
@@ -233,12 +243,10 @@ App.ViewHelpers =
       'application/vnd.ms-powerpoint': 'file-powerpoint' # .ppt
       'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'file-powerpoint' # .pptx
       'application/vnd.oasis.opendocument.presentation': 'file-powerpoint'
-      'text/plain': 'file-text'
+      # code
       'text/html': 'file-code'
       'application/json': 'file-code'
       'message/rfc822': 'file-email'
-      # code
-      'application/json': 'file-code'
       # text
       'text/plain': 'file-text'
       'text/rtf': 'file-text'
@@ -246,7 +254,7 @@ App.ViewHelpers =
       # archives
       'application/gzip': 'file-archive'
       'application/zip': 'file-archive'
-    return icons[contentType]
+    return icons[cleanContentType] or icons[contentType]
 
   canDownload: (contentType) ->
     contentType = App.Utils.contentTypeCleanup(contentType)
@@ -255,7 +263,7 @@ App.ViewHelpers =
 
   canPreview: (contentType) ->
     return false if _.isEmpty(contentType)
-    return true if contentType.match(/image\/(png|jpg|jpeg|gif)/i)
+    return true if contentType.match(/image\/(png|jpg|jpeg|gif|webp)/i)
     false
 
   unique_avatar: (seed, text, size = 40) ->

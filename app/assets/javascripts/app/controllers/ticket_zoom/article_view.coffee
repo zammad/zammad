@@ -209,7 +209,7 @@ class ArticleViewItem extends App.ControllerObserver
     @html App.view('ticket_zoom/article_view')(
       ticket:      @ticket
       article:     article
-      attachments: App.view('generic/attachments')(attachments: attachments)
+      attachments: App.view('generic/attachments')(attachments: attachments, has_body: !!article.html)
       links:       links
     )
 

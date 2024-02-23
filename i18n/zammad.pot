@@ -591,6 +591,10 @@ msgstr ""
 msgid "API Token Access"
 msgstr ""
 
+#: lib/whatsapp/webhook/payload.rb
+msgid "API error."
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
@@ -6752,6 +6756,10 @@ msgstr ""
 msgid "Integrations"
 msgstr ""
 
+#: lib/whatsapp/incoming/media.rb
+msgid "Integrity verification of the downloaded WhatsApp media failed."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
@@ -9888,6 +9896,7 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 msgid "Reply"
 msgstr ""
 
@@ -14047,6 +14056,10 @@ msgstr ""
 msgid "Unsupported subscription type."
 msgstr ""
 
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported webhook payload."
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid "Up to %s% of this language is already translated. Please help to make Zammad even better and complete the translation."
 msgstr ""
@@ -14807,6 +14820,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 msgid "WhatsApp Business Account ID"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid "Whatsapp"
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
@@ -16320,6 +16337,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "reply"
 msgstr ""
 

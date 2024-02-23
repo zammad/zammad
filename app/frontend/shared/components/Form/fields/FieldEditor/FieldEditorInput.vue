@@ -229,22 +229,51 @@ watch(
   },
 )
 
-// Set the new editor value, when it was changed from outside (e.G. form schema update).
-const updateValueKey = props.context.node.on('input', ({ payload: value }) => {
-  const currentValue =
-    contentType.value === 'text/plain'
-      ? editor.value?.getText()
-      : editor.value?.getHTML()
-  if (editor.value && value !== currentValue) {
-    editor.value.commands.setContent(
-      value && contentType.value === 'text/html' ? htmlCleanup(value) : value,
-      false,
-    )
-  }
-})
+const setEditorContent = (
+  content: string | undefined,
+  contentType: EditorContentType,
+  emitUpdate?: boolean,
+) => {
+  if (!editor.value || !content) return
+
+  editor.value.commands.setContent(
+    contentType === 'text/html' ? htmlCleanup(content) : content,
+    emitUpdate,
+  )
+}
+
+// Set the new editor content, when the value was changed from outside (e.g. form schema update).
+const updateValueKey = props.context.node.on(
+  'input',
+  ({ payload: newContent }) => {
+    const currentContent =
+      contentType.value === 'text/plain'
+        ? editor.value?.getText()
+        : editor.value?.getHTML()
+
+    // Skip the update if the value is identical.
+    if (newContent === currentContent) return
+
+    setEditorContent(newContent, contentType.value, true)
+  },
+)
+
+// Convert the current editor content, if the content type changed from outside (e.g. form schema update).
+const updateContentTypeKey = props.context.node.on(
+  'prop:contentType',
+  ({ payload: newContentType }) => {
+    const newContent =
+      newContentType === 'text/plain'
+        ? editor.value?.getText()
+        : editor.value?.getHTML()
+
+    setEditorContent(newContent, newContentType, true)
+  },
+)
 
 onUnmounted(() => {
   props.context.node.off(updateValueKey)
+  props.context.node.off(updateContentTypeKey)
 })
 
 const focusEditor = () => {

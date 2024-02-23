@@ -290,6 +290,87 @@ FactoryBot.define do
       end
     end
 
+    factory :whatsapp_article do
+      inbound
+
+      transient do
+        type_name { 'whatsapp message' }
+        channel { Channel.find(ticket.preferences[:channel_id]) }
+        from_phone_number { Faker::PhoneNumber.cell_phone_in_e164 }
+        from_name { Faker::Name.unique.name }
+      end
+
+      ticket factory: %i[whatsapp_ticket]
+      to { "#{channel.options[:name]} (#{channel.options[:phone_number]})" }
+      subject { nil }
+      body { Faker::Lorem.sentence }
+      content_type { 'text/plain' }
+
+      before(:create) do |_article, context|
+        next if context.sender_name == 'Agent' && context.ticket.preferences[:whatsapp].present?
+
+        context.ticket.preferences.tap do |p|
+          p['whatsapp'] = {
+            from:      {
+              phone_number: context.from_phone_number.delete('+'),
+              display_name: context.from_name,
+            },
+            timestamp: Time.zone.now.to_i.to_s,
+          }
+        end
+        context.ticket.title = "New WhatsApp message from #{context.from_name} (#{context.from_phone_number})"
+        context.ticket.save!
+      end
+
+      trait :inbound do
+        transient do
+          sender_name { 'Customer' }
+        end
+
+        message_id { "wamid.#{Faker::Number.unique.number}" }
+        from { "#{from_name} (#{from_phone_number})" }
+        created_by_id { ticket.customer_id } # NB: influences the value for the from field!
+
+        preferences do
+          {
+            whatsapp: {
+              entry_id:   channel[:options][:phone_number_id],
+              message_id: message_id,
+            }
+          }
+        end
+      end
+
+      trait :pending_delivery do
+        transient do
+          sender_name { 'Agent' }
+        end
+
+        preferences { {} }
+
+        created_by_id { create(:agent).id } # NB: influences the value for the from field!
+        in_reply_to { "wamid.#{Faker::Number.unique.number}" }
+      end
+
+      trait :outbound do
+        pending_delivery
+
+        message_id { "wamid.#{Faker::Number.unique.number}" }
+        preferences do
+          {
+            delivery_retry:          1,
+            whatsapp:                {
+              message_id:,
+            },
+            delivery_status_message: nil,
+            delivery_status:         'success',
+            delivery_status_date:    Time.current,
+          }
+        end
+      end
+
+    end
+
     factory :telegram_article do
       inbound
 

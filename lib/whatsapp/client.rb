@@ -13,4 +13,27 @@ class Whatsapp::Client
 
     @client = WhatsappSdk::Api::Client.new access_token
   end
+
+  def log_request(response: nil)
+    return if response.empty?
+
+    Rails.logger.error "WhatsApp Client: remote response: #{response}"
+  end
+
+  def handle_error(response:)
+    return if !response.error
+
+    log_request response: response.raw_response
+
+    raise CloudAPIError, response.error.message
+  end
+
+  class CloudAPIError < StandardError; end
+
+  protected
+
+  def with_tmpfile(prefix:, &)
+    Tempfile.create(prefix, &)
+  end
+
 end

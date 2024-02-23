@@ -9,6 +9,7 @@ class Channel < ApplicationModel
   store :options
   store :preferences
 
+  scope :active, -> { where(active: true) }
   scope :in_area, ->(area) { where(area: area) }
 
   validates_with Validations::EmailAccountUniquenessValidator

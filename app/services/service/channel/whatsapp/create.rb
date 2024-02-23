@@ -13,7 +13,7 @@ module Service::Channel::Whatsapp
         ::Channel.create!(
           area: area,
           **attributes_hash
-        ).tap { |channel| add_metadata(channel:, generate_callback: true) }
+        ).tap { |channel| add_metadata(channel:, initial: true) }
       end
     end
   end

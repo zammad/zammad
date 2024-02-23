@@ -4,10 +4,14 @@ class Whatsapp::Webhook::Message::Text < Whatsapp::Webhook::Message
   private
 
   def body
-    data[:entry].first[:changes].first[:value][:messages].first[:text][:body]
+    message[:body]
   end
 
   def content_type
     'text/plain'
+  end
+
+  def type
+    :text
   end
 end

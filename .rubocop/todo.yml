@@ -508,6 +508,7 @@ Style/OptionalBooleanParameter:
     - 'app/models/channel/driver/smtp.rb'
     - 'app/models/channel/driver/telegram.rb'
     - 'app/models/channel/driver/twitter.rb'
+    - 'app/models/channel/driver/whatsapp.rb'
     - 'app/models/channel/email_build.rb'
     - 'app/models/channel/email_parser.rb'
     - 'app/models/chat/session.rb'

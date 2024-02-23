@@ -158,6 +158,10 @@
         </g>
         <path d="M14 14v1h-2v-1h2Zm-2-1v1h-2v-1h2Zm2-1v1h-2v-1h2Zm-2-1v1h-2v-1h2Zm2-1v1h-2v-1h2Zm-2-1v1h-2V9h2Zm2-1v1h-2V8h2Zm-2-1v1h-2V7h2Zm2-1v1h-2V6h2Zm-2-1v1h-2V5h2Zm2-1v1h-2V4h2Zm-2-1v1h-2V3h2Zm2-1v1h-2V2h2Zm-2-1v1h-2V1h2Zm2-1v1h-2V0h2ZM14 15v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3h4Zm-1 2h-2v1h2v-1Z"/>
     </g>
+</symbol><symbol id="icon-file-audio" viewBox="0 0 24 31">
+    <path d="M2 0h20a2 2 0 0 1 2 2v27a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2Z"/>
+    <path d="M2 1a1 1 0 0 0-1 1v27a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2Z" fill="currentColor"/>
+    <path d="M10 22.5c.844 0 1.556-.296 2.133-.888.578-.592.867-1.32.867-2.185l1-8.195L17.5 13l.5-2.5L13 8l-1.333 8.866a2.434 2.434 0 0 0-.783-.393 3.135 3.135 0 0 0-.884-.12c-.844 0-1.556.297-2.133.888-.578.592-.867 1.32-.867 2.186 0 .865.289 1.593.867 2.185.577.592 1.289.888 2.133.888Z"/>
 </symbol><symbol id="icon-file-calendar" viewBox="0 0 24 31">
     <title>file-calendar</title>
     
@@ -206,6 +210,10 @@
         </g>
         <path fill="#08743B" d="m7 10 3.5 6L7 22h3l2-4.5 2 4.5h3l-3.5-6 3.5-6h-3l-2 4.5-2-4.5z"/>
     </g>
+</symbol><symbol id="icon-file-image" viewBox="0 0 24 31">
+    <path d="M2 0h20a2 2 0 0 1 2 2v27a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2Z"/>
+    <path d="M2 1a1 1 0 0 0-1 1v27a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2Z" fill="currentColor"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.806 11.8 19 20.2H5l2.754-5.476 2.867 2.738 4.185-5.662ZM9.2 9a1.4 1.4 0 1 1 0 2.8 1.4 1.4 0 0 1 0-2.8Z"/>
 </symbol><symbol id="icon-file-jpg" viewBox="0 0 24 31">
     <title>file-jpg</title>
     <g fill-rule="evenodd">
@@ -280,6 +288,10 @@
         </g>
         <path d="M12.025 8.916c2.79 0 4.168 1.413 4.168 3.073 0 2.897-3.161 2.791-3.161 4.575v.23h-3.11v-.336c0-3.109 2.615-2.967 2.615-4.133 0-.442-.318-.689-.9-.689-.619 0-1.255.336-1.838.954l-2.172-1.696c.989-1.165 2.367-1.978 4.398-1.978Zm-.53 9.361c1.007 0 1.82.83 1.82 1.82 0 .989-.813 1.819-1.82 1.819-1.007 0-1.82-.83-1.82-1.82 0-.988.813-1.819 1.82-1.819Z"/>
     </g>
+</symbol><symbol id="icon-file-video" viewBox="0 0 24 31">
+    <path d="M2 0h20a2 2 0 0 1 2 2v27a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2Z"/>
+    <path d="M2 1a1 1 0 0 0-1 1v27a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2Z" fill="currentColor"/>
+    <path d="M5 20h9.334v-3.6L19 20v-9l-4.667 3.6V11H5v9Z"/>
 </symbol><symbol id="icon-file-word" viewBox="0 0 24 31">
     <title>file-word</title>
     <g fill-rule="evenodd">

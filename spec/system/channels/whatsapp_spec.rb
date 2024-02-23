@@ -16,8 +16,8 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
   context 'when adding an account' do
     before do
       allow_any_instance_of(Service::Channel::Whatsapp::Create)
-        .to receive(:callback_params)
-        .and_return({ callback_url_uuid:, verify_token: })
+        .to receive(:initial_options)
+        .and_return({ adapter: 'whatsapp', callback_url_uuid:, verify_token: })
 
       visit '#channels/whatsapp'
     end

@@ -32,13 +32,13 @@ module Service::Channel::Whatsapp
       )
     end
 
-    def add_metadata(channel:, generate_callback: false)
+    def add_metadata(channel:, initial: false)
       phone_number_info = get_phone_number_info(channel)
 
       raise __('Could not fetch WhatsApp phone number details.') if phone_number_info.nil?
 
       channel.options.merge! phone_number_info
-      channel.options.merge! callback_params if generate_callback
+      channel.options.merge! initial_options if initial
 
       channel.save!
     end
@@ -49,8 +49,9 @@ module Service::Channel::Whatsapp
         .get(channel.options[:phone_number_id])
     end
 
-    def callback_params
+    def initial_options
       {
+        adapter:           'whatsapp',
         callback_url_uuid: SecureRandom.uuid,
         verify_token:      SecureRandom.urlsafe_base64(12),
       }

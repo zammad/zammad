@@ -67,7 +67,7 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
           attachments:  record.attachments,
           security:     record.preferences[:security],
         },
-        notification
+        notification,
       )
     rescue => e
       log_error(record, e.message, channel)

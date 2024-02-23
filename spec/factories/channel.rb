@@ -379,10 +379,9 @@ FactoryBot.define do
     factory :whatsapp_channel do
       area { 'WhatsApp::Business' }
 
-      group_id { Group.first.id }
-
       options do
         {
+          adapter:           'whatsapp',
           business_id:,
           access_token:,
           app_secret:,
@@ -403,7 +402,7 @@ FactoryBot.define do
         phone_number_id   { Faker::Number.unique.number(digits: 15) }
         welcome           { Faker::Lorem.unique.sentence }
         goodbye           { Faker::Lorem.unique.sentence }
-        name              { Faker::Name.unique.name }
+        name              { Faker::Company.name }
         phone_number      { Faker::PhoneNumber.unique.cell_phone_with_country_code }
         callback_url_uuid { SecureRandom.uuid }
         verify_token      { SecureRandom.urlsafe_base64(12) }

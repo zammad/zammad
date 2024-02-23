@@ -229,6 +229,11 @@
         "url": "",
         "license": "MIT"
     },
+    "file-audio.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
     "file-calendar.svg": {
         "author": "Felix Niklas",
         "url": "",
@@ -249,6 +254,11 @@
         "url": "",
         "license": "MIT"
     },
+    "file-image.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
     "file-pdf.svg": {
         "author": "Adobe",
         "url": "",
@@ -266,6 +276,11 @@
     },
     "file-unknown.svg": {
         "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
+    "file-video.svg": {
+        "author": "Zammad",
         "url": "",
         "license": "MIT"
     },

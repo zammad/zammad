@@ -18,6 +18,7 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::EnqueueCommunicateSmsJob
   include Ticket::Article::EnqueueCommunicateTelegramJob
   include Ticket::Article::EnqueueCommunicateTwitterJob
+  include Ticket::Article::EnqueueCommunicateWhatsappJob
   include Ticket::Article::HasTicketContactAttributesImpact
   include Ticket::Article::ResetsTicketState
   include Ticket::Article::TriggersSubscriptions
@@ -26,6 +27,7 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::AddsMetadataOriginById
   include Ticket::Article::AddsMetadataGeneral
   include Ticket::Article::AddsMetadataEmail
+  include Ticket::Article::AddsMetadataWhatsapp
 
   include HasTransactionDispatcher
 

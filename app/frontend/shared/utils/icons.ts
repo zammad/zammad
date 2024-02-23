@@ -5,13 +5,23 @@ export const getIconByContentType = (type?: Maybe<string>) => {
   const contentType = type.replace(/^(.+?\/.+?)(\b|\s).+?$/, '$1')
 
   const icons: Record<string, string> = {
-    //   #image
+    // image
     'image/jpeg': 'photos',
     'image/jpg': 'photos',
     'image/png': 'photos',
     'image/svg': 'photos',
     'image/gif': 'photos',
-    //   # documents
+    'image/webp': 'photos',
+    // audio
+    'audio/aac': 'audio',
+    'audio/mp4': 'audio',
+    'audio/mpeg': 'audio',
+    'audio/amr': 'audio',
+    'audio/ogg': 'audio',
+    // video
+    'video/mp4': 'video',
+    'video/3gp': 'video',
+    // documents
     'application/pdf': 'library',
     'application/msword': 'template', // .doc, .dot
     'application/vnd.ms-word': 'template',
@@ -27,13 +37,15 @@ export const getIconByContentType = (type?: Maybe<string>) => {
     'application/vnd.openxmlformats-officedocument.presentationml.presentation':
       'file', // .pptx
     'application/vnd.oasis.opendocument.presentation': 'file',
-    'text/plain': 'template',
+    // code
     'text/html': 'template',
     'application/json': 'template',
     'message/rfc822': 'mail-out',
+    // text
+    'text/plain': 'template',
     'text/rtf': 'template',
     'text/calendar': 'calendar',
-    //   # archives
+    // archives
     'application/gzip': 'attachment',
     'application/zip': 'attachment',
   }

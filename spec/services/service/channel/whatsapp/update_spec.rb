@@ -48,6 +48,7 @@ RSpec.describe Service::Channel::Whatsapp::Update, current_user_id: 1 do
           .and change { channel.options['goodbye'] }.to(params[:goodbye])
           .and change { channel.options['name'] }.to(phone_number_info[:name])
           .and change { channel.options['phone_number'] }.to(phone_number_info[:phone_number])
+          .and not_change { channel.options['adapter'] }
           .and not_change { channel.options['callback_url_uuid'] }
           .and not_change { channel.options['verify_token'] }
       end

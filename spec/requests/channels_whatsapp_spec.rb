@@ -43,7 +43,7 @@ RSpec.describe 'WhatsApp channel webhook endpoints', aggregate_failures: true, t
       }
     end
 
-    let(:raw) do
+    let(:json) do
       {
         object: 'whatsapp_business_account',
         entry:  [{
@@ -74,18 +74,18 @@ RSpec.describe 'WhatsApp channel webhook endpoints', aggregate_failures: true, t
             field: 'messages'
           }]
         }]
-      }
+      }.to_json
     end
 
     let(:signature) do
-      OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), channel.options[:app_secret], raw.to_json)
+      OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), channel.options[:app_secret], json)
     end
 
     context 'when payload validation fails' do
       let(:signature) { 'invalid' }
 
       it 'returns 422' do
-        post "/api/v1/channels_whatsapp_webhook/#{channel.options[:callback_url_uuid]}", headers: { 'X-Hub-Signature-256': "sha256=#{signature}" }, params: raw, as: :json
+        post "/api/v1/channels_whatsapp_webhook/#{channel.options[:callback_url_uuid]}", headers: { 'X-Hub-Signature-256': "sha256=#{signature}" }, params: json
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -93,7 +93,7 @@ RSpec.describe 'WhatsApp channel webhook endpoints', aggregate_failures: true, t
 
     context 'when everything is valid' do
       it 'returns 200' do
-        post "/api/v1/channels_whatsapp_webhook/#{channel.options[:callback_url_uuid]}", headers: { 'X-Hub-Signature-256': "sha256=#{signature}" }, params: raw, as: :json
+        post "/api/v1/channels_whatsapp_webhook/#{channel.options[:callback_url_uuid]}", headers: { 'X-Hub-Signature-256': "sha256=#{signature}" }, params: json
 
         expect(response).to have_http_status(:ok)
       end

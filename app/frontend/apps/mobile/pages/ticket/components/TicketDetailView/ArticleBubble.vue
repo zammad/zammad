@@ -85,14 +85,14 @@ const body = computed(() => {
 const colorsClasses = computed(() => {
   if (props.internal) {
     return {
-      top: 'border-t-[0.5px] border-t-white/50',
+      top: body.value.length ? 'border-t-[0.5px] border-t-white/50' : '',
       amount: 'text-white/60',
       file: 'border-white/40',
       icon: 'border-white/40',
     }
   }
   return {
-    top: 'border-t-[0.5px] border-black',
+    top: body.value.length ? 'border-t-[0.5px] border-black' : '',
     amount: 'text-black/60',
     file: 'border-black',
     icon: 'border-black',

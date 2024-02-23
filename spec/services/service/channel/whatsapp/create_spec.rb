@@ -34,8 +34,9 @@ RSpec.describe Service::Channel::Whatsapp::Create, :aggregate_failures, current_
         }
       end
 
-      let(:callback_params) do
+      let(:initial_options) do
         {
+          adapter:           'whatsapp',
           callback_url_uuid: SecureRandom.uuid,
           verify_token:      SecureRandom.urlsafe_base64(12),
         }
@@ -43,7 +44,7 @@ RSpec.describe Service::Channel::Whatsapp::Create, :aggregate_failures, current_
 
       before do
         allow_any_instance_of(Whatsapp::Account::PhoneNumbers).to receive(:get).and_return(phone_number_info)
-        allow_any_instance_of(described_class).to receive(:callback_params).and_return(callback_params)
+        allow_any_instance_of(described_class).to receive(:initial_options).and_return(initial_options)
       end
 
       it 'adds a new channel' do
@@ -53,7 +54,7 @@ RSpec.describe Service::Channel::Whatsapp::Create, :aggregate_failures, current_
           options:  {
             **params.except(:group_id).stringify_keys,
             **phone_number_info.stringify_keys,
-            **callback_params.stringify_keys,
+            **initial_options.stringify_keys,
           },
         )
       end

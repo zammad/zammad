@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://graph.facebook.com/v19.0/<WHATSAPP_PHONE_NUMBER_ID>/messages
+    body:
+      encoding: UTF-8
+      string: '{"messaging_product":"whatsapp","to":<WHATSAPP_RECIPIENT_NUMBER>,"recipient_type":"individual","type":"text","text":{"body":"Lorem
+        ipsum dolor sit amet, consectetur adipiscing elit.\n"}}'
+    headers:
+      Authorization:
+      - Bearer <WHATSAPP_ACCESS_TOKEN>
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      X-Business-Use-Case-Usage:
+      - '{"<WHATSAPP_BUSINESS_ID>":[{"type":"whatsapp","call_count":1,"total_cputime":1,"total_time":1,"estimated_time_to_regain_access":0}]}'
+      Access-Control-Allow-Origin:
+      - "*"
+      Facebook-Api-Version:
+      - v19.0
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Request-Id:
+      - A0NtOpEH_1SRSz6888M7-Tj
+      X-Fb-Trace-Id:
+      - Ae7cKCyL21u
+      X-Fb-Rev:
+      - '1011580533'
+      X-Fb-Debug:
+      - QIKi6AZRe4UWDhXVpPSLB8ODtr3DVIEi7dBddsfbY0A6PiaOTKR9PpzEiYahJkDpHhjFTkfllDUIpfonhR+EsQ==
+      Date:
+      - Thu, 22 Feb 2024 15:52:45 GMT
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '178'
+    body:
+      encoding: UTF-8
+      string: '{"messaging_product":"whatsapp","contacts":[{"input":"<WHATSAPP_RECIPIENT_NUMBER>","wa_id":"<WHATSAPP_RECIPIENT_NUMBER>"}],"messages":[{"id":"wamid.HBgMNDQ3Mzc3MTE0OTg5FQIAERgSNjA5ODU5MDREQTk0RjRCNjBDAA=="}]}'
+  recorded_at: Thu, 22 Feb 2024 15:52:45 GMT
+recorded_with: VCR 6.2.0

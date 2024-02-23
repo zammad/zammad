@@ -4,7 +4,8 @@ class ChannelsWhatsappController < ApplicationController
   skip_before_action :verify_csrf_token, only: %i[verify_webhook perform_webhook]
 
   def verify_webhook
-    challenge = Whatsapp::Webhook::Configuration.verify!(options: params)
+    configuration = Whatsapp::Webhook::Configuration.new(options: params)
+    challenge = configuration.verify!
 
     render plain: challenge, status: :ok
   rescue Whatsapp::Webhook::Configuration::VerificationError, Whatsapp::Webhook::NoChannelError => e
@@ -16,13 +17,12 @@ class ChannelsWhatsappController < ApplicationController
 
   def perform_webhook
     signature = request.headers['X-Hub-Signature-256'].sub('sha256=', '')
-    callback_url_uuid = params[:callback_url_uuid]
-    body = request.body.read
+    uuid      = params[:callback_url_uuid]
+    json      = request.body.read
 
     begin
-      Whatsapp::Webhook::Payload.validate!(raw: body, callback_url_uuid:, signature:)
-      data = JSON.parse(body)
-      Whatsapp::Webhook::Payload.process(data:, callback_url_uuid:)
+      payload = Whatsapp::Webhook::Payload.new(json:, uuid:, signature:)
+      payload.process
     rescue Whatsapp::Webhook::Payload::ValidationError => e
       Rails.logger.error e.message
       log_request

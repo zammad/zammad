@@ -7316,6 +7316,12 @@ a.list-group-item.active > .badge,
     margin-right: -10px;
     padding: 20px 15px 7px 30px;
   }
+
+  &.attachments--wo-body {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 12px;
+  }
 }
 
 .attachments.attachments--list .attachments-title {

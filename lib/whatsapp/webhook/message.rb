@@ -3,7 +3,7 @@
 class Whatsapp::Webhook::Message
   include Mixin::RequiredSubPaths
 
-  attr_reader :data, :channel
+  attr_reader :data, :channel, :user, :ticket, :article
 
   def initialize(data:, channel:)
     @data = data
@@ -11,14 +11,22 @@ class Whatsapp::Webhook::Message
   end
 
   def process
-    user = create_or_update_user
+    @user = create_or_update_user
 
     UserInfo.current_user_id = user.id
-    ticket = create_or_update_ticket(user:)
-    create_or_update_article(user:, ticket:)
+    @ticket = create_or_update_ticket
+    @article = create_or_update_article
   end
 
   private
+
+  def attachment?
+    false
+  end
+
+  def attachment
+    raise NotImplementedError
+  end
 
   def body
     raise NotImplementedError
@@ -29,45 +37,53 @@ class Whatsapp::Webhook::Message
   end
 
   def create_or_update_user
-    auth = Authorization.find_by(uid: user_info[:mobile], provider: 'whatsapp_business')
-    user = auth.present? ? update_user(auth:) : create_user
-    authorize_user(user:, auth:)
+    user = User.find_by(mobile: user_info[:mobile]) || User.find_by(mobile: user_info[:mobile].delete('+'))
+    return user if user.present?
 
-    user
+    create_user
   end
 
-  def create_or_update_ticket(user:)
-    ticket = find_ticket(user:)
-    return update_ticket(user:, ticket:) if ticket.present?
+  def create_or_update_ticket
+    ticket = find_ticket
+    return update_ticket(ticket:) if ticket.present?
 
-    create_ticket(user:)
+    create_ticket
   end
 
-  def create_ticket(user:)
-    title = Translation.translate(Setting.get('locale_default') || 'en-us', __('New WhatsApp message from %s'), "#{profile_name} (#{user.mobile})")
+  def create_ticket
+    title = Translation.translate(Setting.get('locale_default') || 'en-us', __('New WhatsApp message from %s'), "#{profile_name} (#{@user.mobile})")
 
     Ticket.create!(
       group_id:    @channel.group_id,
       title:,
       state_id:    Ticket::State.find_by(default_create: true).id,
       priority_id: Ticket::Priority.find_by(default_create: true).id,
-      customer_id: user.id,
+      customer_id: @user.id,
       preferences: {
         channel_id: @channel.id,
+        whatsapp:   ticket_preferences,
       },
     )
   end
 
-  def update_ticket(user:, ticket:)
+  def update_ticket(ticket:)
     new_state_id = ticket.state_id == default_create_ticket_state.id ? ticket.state_id : default_follow_up_ticket_state.id
-    ticket.update!(state_id: new_state_id)
+
+    preferences = ticket.preferences
+    preferences[:whatsapp] ||= {}
+    preferences[:whatsapp][:timestamp] = @data[:entry].first[:changes].first[:value][:messages].first[:timestamp]
+
+    ticket.update!(
+      preferences:,
+      state_id:    new_state_id,
+    )
 
     ticket
   end
 
-  def find_ticket(user:)
+  def find_ticket
     state_ids        = Ticket::State.where(name: %w[closed merged removed]).pluck(:id)
-    possible_tickets = Ticket.where(customer_id: user.id).where.not(state_id: state_ids).reorder(:updated_at)
+    possible_tickets = Ticket.where(customer_id: @user.id).where.not(state_id: state_ids).reorder(:updated_at)
 
     possible_tickets.find_each.find { |possible_ticket| possible_ticket.preferences[:channel_id] == @channel.id }
   end
@@ -80,27 +96,56 @@ class Whatsapp::Webhook::Message
     Ticket::State.find_by(default_follow_up: true)
   end
 
-  def create_or_update_article(user:, ticket:)
+  def create_or_update_article
     # Editing messages results in being an unsupported type in the Cloud API. Nothing to do here!
 
-    create_article(user:, ticket:)
+    create_article
   end
 
-  def create_article(user:, ticket:)
-    Ticket::Article.create!(
-      ticket_id:     ticket.id,
-      type_id:       Ticket::Article::Type.find_by(name: 'whatsapp message').id,
-      sender_id:     Ticket::Article::Sender.find_by(name: 'Customer').id,
-      from:          "#{profile_name} (#{user.mobile})",
-      to:            "#{@channel.options[:name]} (#{@channel.options[:phone_number]})",
-      message_id:    article_preferences[:message_id],
-      internal:      false,
-      body:          body,
-      content_type:  content_type,
-      created_by_id: user.id,
-      preferences:   {
+  def create_article
+    article = Ticket::Article.create!(
+      ticket_id:    @ticket.id,
+      type_id:      Ticket::Article::Type.lookup(name: 'whatsapp message').id,
+      sender_id:    Ticket::Article::Sender.lookup(name: 'Customer').id,
+      from:         "#{profile_name} (#{@user.mobile})",
+      to:           "#{@channel.options[:name]} (#{@channel.options[:phone_number]})",
+      message_id:   article_preferences[:message_id],
+      internal:     false,
+      body:         body,
+      content_type: content_type,
+      preferences:  {
         whatsapp: article_preferences,
       },
+    )
+
+    return article if !attachment?
+
+    create_attachment(article: article)
+
+    article
+  end
+
+  def create_attachment(article:)
+    data, filename, mime_type = attachment
+
+    Store.create!(
+      object:      'Ticket::Article',
+      o_id:        article.id,
+      data:        data,
+      filename:    filename,
+      preferences: {
+        'Mime-Type' => mime_type,
+      },
+    )
+  rescue Whatsapp::Client::CloudAPIError
+    preferences = article.preferences
+    preferences[:whatsapp] ||= {}
+    preferences[:whatsapp][:media_error] = true
+    article.update!(preferences:)
+  rescue Whatsapp::Incoming::Media::InvalidMediaTypeError => e
+    article.update!(
+      body:     e.message,
+      internal: true,
     )
   end
 
@@ -111,26 +156,6 @@ class Whatsapp::Webhook::Message
     user_data[:role_ids] = Role.signup_role_ids
 
     User.create(user_data)
-  end
-
-  def update_user(auth:)
-    user = User.find(auth.user_id)
-    user.update!(user_info)
-
-    user
-  end
-
-  def authorize_user(user:, auth: nil)
-    auth_data = {
-      uid:      user.mobile,
-      username: user.login,
-      user_id:  user.id,
-      provider: 'whatsapp_business'
-    }
-
-    return auth.update!(auth_data) if auth.present?
-
-    Authorization.create(auth_data)
   end
 
   def user_info
@@ -157,10 +182,32 @@ class Whatsapp::Webhook::Message
     data[:entry].first[:changes].first[:value][:messages].first[:from]
   end
 
+  def ticket_preferences
+    {
+      from:      {
+        phone_number: phone,
+        display_name: profile_name,
+      },
+      timestamp: @data[:entry].first[:changes].first[:value][:messages].first[:timestamp],
+    }
+  end
+
   def article_preferences
     {
       entry_id:   @data[:entry].first[:id],
       message_id: @data[:entry].first[:changes].first[:value][:messages].first[:id],
+      type:       @data[:entry].first[:changes].first[:value][:messages].first[:type],
     }
+  end
+
+  def type
+    raise NotImplementedError
+  end
+
+  def message
+    @message ||= @data[:entry]
+      .first[:changes]
+      .first[:value][:messages]
+      .first[type]
   end
 end

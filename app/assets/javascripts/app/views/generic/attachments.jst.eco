@@ -1,5 +1,5 @@
 <% if !_.isEmpty(@attachments): %>
-  <div class="attachments attachments--list">
+  <div class="attachments attachments--list <% if !@has_body: %>attachments--wo-body<% end %>">
     <%- @Icon('paperclip') %>
     <div class="attachments-title"><%- @attachments.length %> <%- @T('Attached Files') %></div>
     <% for attachment in @attachments: %>
