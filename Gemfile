@@ -18,7 +18,6 @@ gem 'parallel'
 gem 'puma', group: :puma
 
 # core - supported ORMs
-gem 'activerecord-nulldb-adapter', group: :nulldb
 gem 'mysql2', group: :mysql
 gem 'pg', '~> 1.5', '>= 1.5.4', group: :postgres
 
