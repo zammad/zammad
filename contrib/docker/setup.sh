@@ -17,10 +17,19 @@ if [ "$1" = 'builder' ]; then
   cd "${ZAMMAD_DIR}"
   bundle config set without 'test development mysql'
   bundle install
+
+  # Fake a database via nulldb, so that the Rails stack can run.
   sed -e 's#.*adapter: postgresql#  adapter: nulldb#g' -e 's#.*username:.*#  username: postgres#g' -e 's#.*password:.*#  password: \n  host: zammad-postgresql\n#g' < contrib/packager.io/database.yml.pkgr > config/database.yml
+  cp config/application.rb config/application.rb.orig
   sed -i "/require 'rails\/all'/a require\ 'nulldb'" config/application.rb
+
+  # Compile assets.
   touch db/schema.rb
   ZAMMAD_SAFE_MODE=1 bundle exec rake assets:precompile # Don't require Redis.
+
+  # Restore original state & clean up.
+  mv config/application.rb.orig config/application.rb
+  rm config/database.yml
   rm -r tmp/cache
   script/build/cleanup.sh
 fi
