@@ -77,6 +77,8 @@ module Zammad
     if !Rails.root.join('config/database.yml').exist? && ENV['DATABASE_URL'].blank?
       required_envs = %w[POSTGRESQL_USER POSTGRESQL_PASS POSTGRESQL_HOST POSTGRESQL_PORT POSTGRESQL_DB]
       if required_envs.all? { |key| ENV[key].present? }
+        require 'uri'
+
         encoded_postgresql_password = URI.encode_uri_component(ENV['POSTGRESQL_PASS'])
         ENV['DATABASE_URL'] = "postgres://#{ENV['POSTGRESQL_USER']}:#{encoded_postgresql_password}@#{ENV['POSTGRESQL_HOST']}:#{ENV['POSTGRESQL_PORT']}/#{ENV['POSTGRESQL_DB']}#{ENV['POSTGRESQL_OPTIONS']}"
       end
