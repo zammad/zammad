@@ -41,6 +41,7 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationInbound, typ
 
   before do
     allow(EmailHelper::Probe).to receive(:inbound).and_return(probe_full_response) if probe_full_response
+    allow_any_instance_of(Channel::Driver::Imap).to receive(:fetch).and_raise(Errno::EHOSTUNREACH)
     gql.execute(query, variables: variables)
   end
 
@@ -72,7 +73,7 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationInbound, typ
         {
           'success'      => false,
           'mailboxStats' => nil,
-          'errors'       => [{ 'field' => 'inbound.host', 'message' => 'The hostname could not be found.' }],
+          'errors'       => [{ 'field' => 'inbound.host', 'message' => 'There is no route to this host.' }],
         }
       end
 

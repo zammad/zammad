@@ -34,6 +34,7 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationOutbound, ty
 
   before do
     allow(EmailHelper::Probe).to receive(:outbound).and_return(probe_full_response) if probe_full_response
+    allow_any_instance_of(Channel::Driver::Smtp).to receive(:send).and_raise(Errno::EHOSTUNREACH)
     gql.execute(query, variables: variables)
   end
 
@@ -50,7 +51,7 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationOutbound, ty
 
     context 'with failed probe' do
       it 'returns error messages' do
-        expect(gql.result.data).to eq({ 'success' => false, 'errors' => [{ 'field' => 'outbound.host', 'message' => 'The hostname could not be found.' }] })
+        expect(gql.result.data).to eq({ 'success' => false, 'errors' => [{ 'field' => 'outbound.host', 'message' => 'There is no route to this host.' }] })
       end
     end
   end
