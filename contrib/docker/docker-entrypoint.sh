@@ -32,9 +32,6 @@ set -e
 : "${ZAMMAD_WEBSOCKET_PORT:=6042}"
 : "${ZAMMAD_WEB_CONCURRENCY:=0}"
 
-ESCAPED_POSTGRESQL_PASS=$(echo "$POSTGRESQL_PASS" | sed -e 's/[\/&]/\\&/g')
-export DATABASE_URL="postgres://${POSTGRESQL_USER}:${ESCAPED_POSTGRESQL_PASS}@${POSTGRESQL_HOST}:${POSTGRESQL_PORT}/${POSTGRESQL_DB}${POSTGRESQL_OPTIONS}"
-
 function check_zammad_ready {
   sleep 15
   until [ -f "${ZAMMAD_READY_FILE}" ]; do

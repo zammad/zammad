@@ -72,6 +72,16 @@ module Zammad
     # REST api path
     config.api_path = '/api/v1'
 
+    # If no database configuration file or URL is present, but all required database env vars exist,
+    #   e.g. in a containerized deployment, then construct a DATABASE_URL env var from it.
+    if !Rails.root.join('config/database.yml').exist? && ENV['DATABASE_URL'].blank?
+      required_envs = %w[POSTGRESQL_USER POSTGRESQL_PASS POSTGRESQL_HOST POSTGRESQL_PORT POSTGRESQL_DB]
+      if required_envs.all? { |key| ENV[key].present? }
+        encoded_postgresql_password = URI.encode_uri_component(ENV['POSTGRESQL_PASS'])
+        ENV['DATABASE_URL'] = "postgres://#{ENV['POSTGRESQL_USER']}:#{encoded_postgresql_password}@#{ENV['POSTGRESQL_HOST']}:#{ENV['POSTGRESQL_PORT']}/#{ENV['POSTGRESQL_DB']}#{ENV['POSTGRESQL_OPTIONS']}"
+      end
+    end
+
     # define cache store
     if ENV['MEMCACHE_SERVERS'].present? && !Zammad::SafeMode.enabled?
       require 'dalli' # Only load this gem when it is really used.
