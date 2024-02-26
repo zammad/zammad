@@ -874,22 +874,44 @@ class App.Utils
 
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
   @replaceTags: (template, objects, encodeLink = false) ->
+    displaySelectValue = (className, attributeName, key) ->
+      if className && App[className]
+        localClassRef = App[className]
+        if localClassRef?.attributesGet
+          attributes = localClassRef.attributesGet()
+          if attributes?[attributeName] && attributes[attributeName]['tag'] is 'select' && attributes[attributeName]['options'] && typeof attributes[attributeName]['options'] is 'object'
+            return attributes[attributeName]['options'][key] || undefined
+      return undefined
+
     template = template.replace( /#\{\s{0,2}(.+?)\s{0,2}\}/g, (index, key) ->
       key = key.replace(/<.+?>/g, '')
       levels  = key.split(/\./)
       dataRef = objects
       dataRefLast = undefined
+      levelLast = undefined
       for level in levels
         if typeof dataRef is 'object' && level of dataRef
+          levelLast = level
           dataRefLast = dataRef
           dataRef = dataRef[level]
+        # possibility to add the user avatar inside the signature
         else if typeof dataRef is 'object' && typeof level is 'string' && matches = level.match(/(?<functionName>\w+)\((?<params>.*?)\)/)
           dataRefLast = dataRef
-          { functionName, params } = matches.groups
-          parameters = params.split(',').map((param) -> param.trim())
-
           if 'replaceTagsFunctionCallback' of dataRefLast
+            { functionName, params } = matches.groups
+            parameters = params.split(',').map((param) -> param.trim())
             return dataRefLast.replaceTagsFunctionCallback(functionName, parameters) || ''
+          else
+            levelLast = level
+            dataRef = dataRef[level]
+        # if current level is value and dataRefLast is an object
+        else if typeof dataRef is 'string' && level == 'value' && levelLast isnt undefined
+          prevLevelLastIndex = levels.indexOf(levelLast) - 1
+          prevLevelLast = levels[prevLevelLastIndex < 0 ? 0 : prevLevelLastIndex]
+          className = dataRefLast?.constructor?.className || (prevLevelLast.charAt(0).toUpperCase() + prevLevelLast.slice(1))
+          newValue = displaySelectValue(className, levelLast, dataRef)
+          if newValue
+            dataRef = newValue
           else
             dataRef = ''
         else
