@@ -47,14 +47,14 @@ RSpec.describe Transaction::Notification, type: :model do
     end
 
     before do
-      allow(NotificationFactory::Mailer).to receive(:send)
+      allow(NotificationFactory::Mailer).to receive(:deliver)
     end
 
     it 'notification includes English footer' do
       run(ticket, user, 'reminder_reached')
 
       expect(NotificationFactory::Mailer)
-        .to have_received(:send)
+        .to have_received(:deliver)
         .with hash_including body: %r{#{reason_en}}
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Transaction::Notification, type: :model do
         run(ticket, user, 'reminder_reached')
 
         expect(NotificationFactory::Mailer)
-          .to have_received(:send)
+          .to have_received(:deliver)
           .with hash_including body: %r{#{reason_de}}
       end
     end

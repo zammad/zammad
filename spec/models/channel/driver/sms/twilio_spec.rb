@@ -10,7 +10,7 @@ RSpec.describe Channel::Driver::Sms::Twilio do
       .to_return(body: mocked_response_success)
 
     api = channel.driver_instance.new
-    expect(api.send(channel.options, { recipient: '+37060010000', message: message_body })).to be true
+    expect(api.deliver(channel.options, { recipient: '+37060010000', message: message_body })).to be true
   end
 
   it 'fails' do
@@ -21,7 +21,7 @@ RSpec.describe Channel::Driver::Sms::Twilio do
 
     api = channel.driver_instance.new
 
-    expect { api.send(channel.options, { recipient: 'asd', message: message_body }) }.to raise_exception(Twilio::REST::RestError)
+    expect { api.deliver(channel.options, { recipient: 'asd', message: message_body }) }.to raise_exception(Twilio::REST::RestError)
     expect(a_request(:post, url_to_mock)).to have_been_made
   end
 

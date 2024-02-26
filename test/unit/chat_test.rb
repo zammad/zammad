@@ -52,7 +52,7 @@ class ChatTest < ActiveSupport::TestCase
   test 'chat event db connection test' do
 
     class DummyWs # rubocop:disable Lint/ConstantDefinitionInBlock
-      def send(msg)
+      def send(msg) # rubocop:disable Zammad/ForbidDefSend
         Rails.logger.info "WS send: #{msg}"
       end
     end

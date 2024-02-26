@@ -3,7 +3,7 @@
 class Channel::Driver::Sendmail
   include Channel::EmailHelper
 
-  def send(_options, attr, notification = false)
+  def deliver(_options, attr, notification = false)
 
     # return if we run import mode
     return if Setting.get('import_mode')

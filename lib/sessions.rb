@@ -217,7 +217,7 @@ returns
 
 =end
 
-  def self.send(client_id, data)
+  def self.send(client_id, data) # rubocop:disable Zammad/ForbidDefSend
     @store.send_data(client_id, data)
   end
 

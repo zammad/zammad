@@ -441,7 +441,7 @@ RSpec.describe Ticket, type: :model do
         before do
           user
 
-          allow(NotificationFactory::Mailer).to receive(:send) do |**args|
+          allow(NotificationFactory::Mailer).to receive(:deliver) do |**args|
             log << args[:subject]
           end
 

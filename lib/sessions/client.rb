@@ -82,7 +82,7 @@ class Sessions::Client
   end
 
   # send update to browser
-  def send(data)
+  def send(data) # rubocop:disable Zammad/ForbidDefSend
     Sessions.send(@client_id, data)
   end
 

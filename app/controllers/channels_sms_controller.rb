@@ -45,7 +45,7 @@ class ChannelsSmsController < ApplicationController
     raise __("The required parameter 'options.adapter' is missing.") if params[:options][:adapter].blank?
 
     driver = Channel.driver_class(params[:options][:adapter])
-    resp   = driver.new.send(params[:options], test_options)
+    resp   = driver.new.deliver(params[:options], test_options)
 
     render json: { success: resp }
   rescue => e

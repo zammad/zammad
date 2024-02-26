@@ -56,7 +56,7 @@ RSpec.describe Gql::Mutations::AdminPasswordAuthSend, type: :graphql do
         it 'sends a valid login link' do
           message = nil
 
-          allow(NotificationFactory::Mailer).to receive(:send) do |params|
+          allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
             message = params[:body]
           end
 

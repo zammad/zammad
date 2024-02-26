@@ -61,7 +61,7 @@ RSpec.describe Gql::Mutations::User::PasswordReset::Update, type: :graphql do
       it 'sends an email notification to the user' do
         message = nil
 
-        allow(NotificationFactory::Mailer).to receive(:send) do |params|
+        allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
           message = params[:body]
         end
 

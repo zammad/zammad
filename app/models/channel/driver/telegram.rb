@@ -18,7 +18,7 @@ class Channel::Driver::Telegram
 
 =end
 
-  def send(options, article, _notification = false)
+  def deliver(options, article, _notification = false)
 
     # return if we run import mode
     return if Setting.get('import_mode')

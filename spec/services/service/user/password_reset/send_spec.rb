@@ -25,7 +25,7 @@ RSpec.describe Service::User::PasswordReset::Send do
     it 'sends a valid password reset link' do
       message = nil
 
-      allow(NotificationFactory::Mailer).to receive(:send) do |params|
+      allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
         message = params[:body]
       end
 

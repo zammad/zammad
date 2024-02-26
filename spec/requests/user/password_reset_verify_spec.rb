@@ -34,7 +34,7 @@ RSpec.describe 'User password reset verify endpoint', authenticated_as: false, t
     it 'sends an email notification to the user', if: with_password_change do
       message = nil
 
-      allow(NotificationFactory::Mailer).to receive(:send) do |params|
+      allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
         message = params[:body]
       end
 

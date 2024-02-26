@@ -5,7 +5,7 @@ require 'test_helper'
 class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
   test 'notifications send' do
-    result = NotificationFactory::Mailer.send(
+    result = NotificationFactory::Mailer.deliver(
       recipient:    User.find(2),
       subject:      'some subject',
       body:         'some body',
@@ -15,7 +15,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
     assert_match('text/plain', result.to_s)
     assert_no_match('text/html', result.to_s)
 
-    result = NotificationFactory::Mailer.send(
+    result = NotificationFactory::Mailer.deliver(
       recipient:    User.find(2),
       subject:      'some subject',
       body:         'some body',
@@ -25,7 +25,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
     assert_match('text/plain', result.to_s)
     assert_no_match('text/html', result.to_s)
 
-    result = NotificationFactory::Mailer.send(
+    result = NotificationFactory::Mailer.deliver(
       recipient:    User.find(2),
       subject:      'some subject',
       body:         'some <span>body</span>',
@@ -62,7 +62,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    result = NotificationFactory::Mailer.send(
+    result = NotificationFactory::Mailer.deliver(
       recipient:    User.find(2),
       subject:      'some subject',
       body:         'some <span>body</span><img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<br>',

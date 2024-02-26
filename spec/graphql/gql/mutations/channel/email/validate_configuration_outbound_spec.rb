@@ -34,7 +34,7 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationOutbound, ty
 
   before do
     allow(EmailHelper::Probe).to receive(:outbound).and_return(probe_full_response) if probe_full_response
-    allow_any_instance_of(Channel::Driver::Smtp).to receive(:send).and_raise(Errno::EHOSTUNREACH)
+    allow_any_instance_of(Channel::Driver::Smtp).to receive(:deliver).and_raise(Errno::EHOSTUNREACH)
     gql.execute(query, variables: variables)
   end
 

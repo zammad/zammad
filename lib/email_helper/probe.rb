@@ -223,7 +223,7 @@ class EmailHelper
       begin
         driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
         driver_instance = driver_class.new
-        driver_instance.send(
+        driver_instance.deliver(
           params[:options],
           mail,
         )

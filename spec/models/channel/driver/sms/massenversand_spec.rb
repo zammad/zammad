@@ -39,7 +39,7 @@ RSpec.describe Channel::Driver::Sms::Massenversand do
     end
 
     it 'passes' do
-      expect(instance.send(channel.options, { recipient: receiver_number, message: message_body })).to be true
+      expect(instance.deliver(channel.options, { recipient: receiver_number, message: message_body })).to be true
     end
   end
 
@@ -53,7 +53,7 @@ RSpec.describe Channel::Driver::Sms::Massenversand do
       let(:body) { 'blocked receiver ()' }
 
       it 'raises RuntimeError', :aggregate_failures do
-        expect { instance.send(channel.options, { recipient: receiver_number, message: message_body }) }.to raise_error { |error|
+        expect { instance.deliver(channel.options, { recipient: receiver_number, message: message_body }) }.to raise_error { |error|
           expect(error.message).not_to include(body)
         }
       end

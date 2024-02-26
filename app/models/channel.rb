@@ -260,7 +260,7 @@ send via account
 
     driver_class    = self.class.driver_class(adapter)
     driver_instance = driver_class.new
-    result = driver_instance.send(adapter_options, params, notification)
+    result = driver_instance.deliver(adapter_options, params, notification)
     self.status_out   = 'ok'
     self.last_log_out = ''
     save!

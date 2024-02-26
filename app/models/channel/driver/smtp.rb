@@ -27,7 +27,7 @@ class Channel::Driver::Smtp
 
 =end
 
-  def send(options, attr, notification = false)
+  def deliver(options, attr, notification = false)
 
     # return if we run import mode
     return if Setting.get('import_mode')

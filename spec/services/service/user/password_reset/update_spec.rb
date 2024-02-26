@@ -27,7 +27,7 @@ RSpec.describe Service::User::PasswordReset::Update do
     it 'sends an email notification' do
       message = nil
 
-      allow(NotificationFactory::Mailer).to receive(:send) do |params|
+      allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
         message = params[:body]
       end
 

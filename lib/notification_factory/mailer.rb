@@ -138,7 +138,7 @@ returns
 
 =begin
 
-  success = NotificationFactory::Mailer.send(
+  success = NotificationFactory::Mailer.deliver(
     recipient:    User.find(123),
     subject:      'some subject',
     body:         'some body',
@@ -150,7 +150,7 @@ returns
 
 =end
 
-  def self.send(data)
+  def self.deliver(data)
     raise Exceptions::UnprocessableEntity, "Unable to send mail to user with id #{data[:recipient][:id]} because there is no email available." if data[:recipient][:email].blank?
 
     sender = Setting.get('notification_sender')
@@ -222,7 +222,7 @@ returns
       result[:body] = HtmlSanitizer.dynamic_image_size(result[:body])
     end
 
-    NotificationFactory::Mailer.send(
+    NotificationFactory::Mailer.deliver(
       recipient:    data[:user],
       subject:      result[:subject],
       body:         result[:body],

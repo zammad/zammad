@@ -50,11 +50,11 @@ RSpec.describe User::UpdatesTicketOrganization, type: :model do
 
       # https://github.com/zammad/zammad/issues/3952
       it 'does not send notifications' do
-        allow(NotificationFactory::Mailer).to receive(:send)
+        allow(NotificationFactory::Mailer).to receive(:deliver)
 
         customer.update(organization: old_org)
 
-        expect(NotificationFactory::Mailer).not_to have_received(:send)
+        expect(NotificationFactory::Mailer).not_to have_received(:deliver)
       end
     end
 

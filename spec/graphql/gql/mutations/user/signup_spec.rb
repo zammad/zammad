@@ -48,7 +48,7 @@ RSpec.describe Gql::Mutations::User::Signup, type: :graphql do
       it 'creates a new user', :aggregate_failures do
         message = nil
 
-        allow(NotificationFactory::Mailer).to receive(:send) do |params|
+        allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
           message = params[:body]
         end
 
@@ -87,7 +87,7 @@ RSpec.describe Gql::Mutations::User::Signup, type: :graphql do
 
         it 'returns a silent success', :aggregate_failures do
           message = nil
-          allow(NotificationFactory::Mailer).to receive(:send) do |params|
+          allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
             message = params[:body]
           end
           gql.execute(query, variables: variables)

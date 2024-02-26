@@ -93,9 +93,9 @@ RSpec.describe NotificationFactory::Mailer do
     end
   end
 
-  describe '#send' do
+  describe '#deliver' do
     subject(:result) do
-      described_class.send(
+      described_class.deliver(
         recipient: user,
         subject:   'some subject',
         body:      'some body',

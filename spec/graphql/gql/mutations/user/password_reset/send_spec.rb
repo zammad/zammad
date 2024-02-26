@@ -40,7 +40,7 @@ RSpec.describe Gql::Mutations::User::PasswordReset::Send, type: :graphql do
       it 'sends a password reset link', :aggregate_failures do
         message = nil
 
-        allow(NotificationFactory::Mailer).to receive(:send) do |params|
+        allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
           message = params[:body]
         end
 

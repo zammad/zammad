@@ -35,7 +35,7 @@ RSpec.describe Service::User::Signup do
     it 'sends an email with the verification link', if: with_new_user || (!with_existing_user && with_resend) do
       message = nil
 
-      allow(NotificationFactory::Mailer).to receive(:send) do |params|
+      allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
         message = params[:body]
       end
 
@@ -47,7 +47,7 @@ RSpec.describe Service::User::Signup do
     it 'sends an email with the password reset link', if: with_existing_user && !with_resend do
       message = nil
 
-      allow(NotificationFactory::Mailer).to receive(:send) do |params|
+      allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
         message = params[:body]
       end
 
@@ -59,7 +59,7 @@ RSpec.describe Service::User::Signup do
     it 'sends no email', if: !with_new_user && with_existing_user && with_resend do
       message = nil
 
-      allow(NotificationFactory::Mailer).to receive(:send) do |params|
+      allow(NotificationFactory::Mailer).to receive(:deliver) do |params|
         message = params[:body]
       end
 

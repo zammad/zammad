@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Whatsapp
-  def send(options, attr, _notification = false)
+  def deliver(options, attr, _notification = false)
     return true if Setting.get('import_mode')
 
     message = "Whatsapp::Outgoing::Message::#{attr[:message_type].capitalize}".constantize.new(
