@@ -17,6 +17,8 @@ RSpec.describe Group, type: :model do
   it_behaves_like 'HasCollectionUpdate', collection_factory: :group
   it_behaves_like 'HasXssSanitizedNote', model_factory: :group
   it_behaves_like 'HasImageSanitizedNote', model_factory: :group
+  it_behaves_like 'Association clears cache', association: :users
+  it_behaves_like 'Association clears cache', association: :roles
 
   describe 'name compatibility layer' do
     context 'when creating a new group' do

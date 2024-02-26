@@ -15,6 +15,8 @@ RSpec.describe Role do
   it_behaves_like 'HasGroups', group_access_factory: :role
   it_behaves_like 'HasCollectionUpdate', collection_factory: :role
   it_behaves_like 'HasXssSanitizedNote', model_factory: :role
+  it_behaves_like 'Association clears cache', association: :permissions
+  it_behaves_like 'Association clears cache', association: :users
 
   describe 'Default state' do
     describe 'of whole table:' do

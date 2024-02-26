@@ -91,7 +91,8 @@ class Ticket < ApplicationModel
 
   belongs_to    :group, optional: true
   belongs_to    :organization, optional: true
-  has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update, dependent: :destroy, inverse_of: :ticket
+
+  has_many      :articles, -> { reorder(:created_at, :id) }, class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update, dependent: :destroy, inverse_of: :ticket
   has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy, inverse_of: :ticket
   has_many      :flags,                  class_name: 'Ticket::Flag', dependent: :destroy
   has_many      :mentions,               as: :mentionable, dependent: :destroy
@@ -578,22 +579,6 @@ result
       references.delete(item)
     end
     references
-  end
-
-=begin
-
-get all articles of a ticket in correct order (overwrite active record default method)
-
-  articles = ticket.articles
-
-result
-
-  [article1, article2]
-
-=end
-
-  def articles
-    Ticket::Article.where(ticket_id: id).reorder(:created_at, :id)
   end
 
   # Get whichever #last_contact_* was later

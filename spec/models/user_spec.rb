@@ -39,6 +39,8 @@ RSpec.describe User, type: :model do
   it_behaves_like 'CanLookupSearchIndexAttributes'
   it_behaves_like 'HasTaskbars'
   it_behaves_like 'UserPerformsGeoLookup'
+  it_behaves_like 'Association clears cache', association: :roles
+  it_behaves_like 'Association clears cache', association: :organizations
 
   describe 'Class methods:' do
     describe '.identify' do

@@ -7,6 +7,8 @@ RSpec.describe Overview, type: :model do
   it_behaves_like 'ApplicationModel',
                   can_assets:        { associations: :users, selectors: :condition },
                   can_create_update: { unique_name: false }
+  it_behaves_like 'Association clears cache', association: :roles
+  it_behaves_like 'Association clears cache', association: :users
 
   context 'link generation' do
 

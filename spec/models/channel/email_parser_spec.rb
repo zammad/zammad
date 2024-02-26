@@ -303,7 +303,7 @@ RSpec.describe Channel::EmailParser, type: :model do
           it 'sets reply-to as from value' do
             described_class.new.process({}, raw_mail)
 
-            expect(Ticket.last.articles.first.from).to eq('jane.doe@example.corp')
+            expect(Ticket.last.articles.reload.first.from).to eq('jane.doe@example.corp')
           end
 
           context 'with broken reply-to value' do
@@ -312,7 +312,7 @@ RSpec.describe Channel::EmailParser, type: :model do
             it 'ignores reply-to and keeps from' do
               described_class.new.process({}, raw_mail)
 
-              expect(Ticket.last.articles.first.from).to eq('foo@bar.com')
+              expect(Ticket.last.articles.reload.first.from).to eq('foo@bar.com')
             end
           end
         end
@@ -323,7 +323,7 @@ RSpec.describe Channel::EmailParser, type: :model do
           it 'sets article.sender to "Customer"' do
             described_class.new.process({}, raw_mail)
 
-            expect(Ticket.last.articles.first.sender.name).to eq('Customer')
+            expect(Ticket.last.articles.reload.first.sender.name).to eq('Customer')
           end
 
           it 'sets ticket.state to "new"' do
@@ -337,7 +337,7 @@ RSpec.describe Channel::EmailParser, type: :model do
           it 'sets article.sender to "Customer"' do
             described_class.new.process({}, raw_mail)
 
-            expect(Ticket.last.articles.first.sender.name).to eq('Customer')
+            expect(Ticket.last.articles.reload.first.sender.name).to eq('Customer')
           end
         end
       end
@@ -584,7 +584,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         shared_examples 'adds message to ticket' do
           it 'adds message to ticket' do
             expect { described_class.new.process({}, raw_mail) }
-              .to change { ticket.articles.length }.by(1)
+              .to change { ticket.articles.reload.length }.by(1)
           end
         end
 
@@ -592,7 +592,7 @@ RSpec.describe Channel::EmailParser, type: :model do
           it 'creates a new ticket' do
             expect { described_class.new.process({}, raw_mail) }
               .to change(Ticket, :count).by(1)
-              .and not_change { ticket.articles.length }
+              .and not_change { ticket.articles.reload.length }
           end
         end
 
@@ -957,8 +957,8 @@ RSpec.describe Channel::EmailParser, type: :model do
 
               it 'adds message to more recently created ticket' do
                 expect { described_class.new.process({}, raw_mail) }
-                  .to change { newer_ticket.articles.count }.by(1)
-                  .and not_change { ticket.articles.count }
+                  .to change { newer_ticket.articles.reload.count }.by(1)
+                  .and not_change { ticket.articles.reload.count }
               end
             end
 
@@ -1170,7 +1170,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
           expect { perform_enqueued_jobs }
             .to not_change { Ticket.last.customer.preferences[:signature_detection] }.from(nil)
-            .and not_change { Ticket.last.articles.first.preferences[:signature_detection] }.from(nil)
+            .and not_change { Ticket.last.articles.reload.first.preferences[:signature_detection] }.from(nil)
         end
       end
 
@@ -1194,7 +1194,7 @@ RSpec.describe Channel::EmailParser, type: :model do
           described_class.new.process({}, raw_mail)
 
           expect { perform_enqueued_jobs }
-            .to change { Ticket.last.articles.first.preferences[:signature_detection] }.to(20)
+            .to change { Ticket.last.articles.reload.first.preferences[:signature_detection] }.to(20)
         end
       end
     end
@@ -1327,7 +1327,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
 
         it 'adds Article to existing Ticket' do
-          expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+          expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.reload.count }
         end
 
         context 'key insensitive sender address' do
@@ -1335,7 +1335,7 @@ RSpec.describe Channel::EmailParser, type: :model do
           let(:raw_mail) { super().gsub('example@service-now.com', 'Example@Service-Now.com') }
 
           it 'adds Article to existing Ticket' do
-            expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+            expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.reload.count }
           end
         end
       end
@@ -1371,7 +1371,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
 
         it 'adds Article to existing Ticket' do
-          expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+          expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.reload.count }
         end
 
         context 'key insensitive sender address' do
@@ -1379,7 +1379,7 @@ RSpec.describe Channel::EmailParser, type: :model do
           let(:raw_mail) { super().gsub('example@service-now.com', 'Example@Service-Now.com') }
 
           it 'adds Article to existing Ticket' do
-            expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+            expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.reload.count }
           end
         end
       end
@@ -1447,7 +1447,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
           it 'finds the article referenced in the bounce message headers, then adds the bounce message to its ticket' do
             expect { described_class.new.process({}, raw_mail) }
-              .to change { ticket.articles.count }.by(1)
+              .to change { ticket.articles.reload.count }.by(1)
           end
 
           it 'does not re-open the ticket' do
@@ -1469,7 +1469,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
           it 'finds the article referenced in the bounce message headers, then adds the bounce message to its ticket' do
             expect { described_class.new.process({}, raw_mail) }
-              .to change { ticket.articles.count }.by(1)
+              .to change { ticket.articles.reload.count }.by(1)
           end
 
           it 'does not alter the ticket state' do
@@ -1489,7 +1489,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
           it 'finds the article referenced in the bounce message headers, then adds the bounce message to its ticket' do
             expect { described_class.new.process({}, raw_mail) }
-              .to change { ticket.articles.count }.by(1)
+              .to change { ticket.articles.reload.count }.by(1)
           end
 
           it 'does not alter the ticket state' do
@@ -1504,7 +1504,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
         it 'finds the article referenced in the bounce message headers, then adds the bounce message to its ticket' do
           expect { described_class.new.process({}, raw_mail) }
-            .to change { ticket.articles.count }.by(1)
+            .to change { ticket.articles.reload.count }.by(1)
         end
 
         it 'does not alter the ticket state' do

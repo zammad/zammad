@@ -37,6 +37,7 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'TicketResetsPendingTimeSeconds'
   it_behaves_like 'TicketSetsCloseTime'
   it_behaves_like 'TicketSetsLastOwnerUpdateTime'
+  it_behaves_like 'Association clears cache', association: :articles, factory: :ticket_article
 
   describe 'Class methods:' do
     describe '.selectors' do

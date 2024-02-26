@@ -2529,7 +2529,7 @@ RSpec.describe 'Ticket', type: :request do
       ticket = Ticket.last
 
       expect(ticket.customer_id).to eq(user.id)
-      expect(ticket.articles.first).to have_attributes(
+      expect(ticket.articles.reload.first).to have_attributes(
         sender: Ticket::Article::Sender.lookup(name: 'Customer'),
         from:   "#{user.fullname} <#{user.email}>",
       )

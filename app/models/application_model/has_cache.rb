@@ -4,7 +4,6 @@ module ApplicationModel::HasCache
   extend ActiveSupport::Concern
 
   included do
-    before_create :cache_delete
     after_commit :cache_delete
   end
 

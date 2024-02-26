@@ -428,7 +428,7 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
 
       it 'adds attachment to the new article' do
         object.perform_changes(performable, 'trigger', item, user)
-        article = object.articles.last
+        article = object.articles.reload.last
 
         expect(article.type.name).to eq('email')
         expect(article.sender.name).to eq('System')
@@ -443,7 +443,7 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
 
       it 'does not add attachment to the new article' do
         object.perform_changes(performable, 'trigger', item, user)
-        article = object.articles.last
+        article = object.articles.reload.last
 
         expect(article.type.name).to eq('email')
         expect(article.sender.name).to eq('System')
@@ -571,7 +571,7 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
     it 'adds the note' do
       object.perform_changes(performable, 'trigger', object, user.id)
 
-      expect(object.articles.last).to have_attributes(
+      expect(object.articles.reload.last).to have_attributes(
         subject:  'Test subject note',
         body:     'Test body note',
         internal: true,
