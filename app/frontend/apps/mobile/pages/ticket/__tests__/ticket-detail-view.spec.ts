@@ -188,7 +188,7 @@ describe('user avatars', () => {
 
   it('renders article user image when he is inactive', async () => {
     const articles = defaultArticles()
-    const { author } = articles.description.edges[0].node
+    const { author } = articles.description!.edges[0].node
     author.active = false
     author.image = 'avatar.png'
     author.firstname = 'Max'
@@ -214,7 +214,7 @@ describe('user avatars', () => {
 
   it('renders article user when he is out of office', async () => {
     const articles = defaultArticles()
-    const { author } = articles.description.edges[0].node
+    const { author } = articles.description!.edges[0].node
     author.outOfOffice = true
     author.active = true
     author.vip = true
@@ -325,7 +325,7 @@ test('change content on subscription', async () => {
 describe('calling API to retry encryption', () => {
   it('updates ticket description', async () => {
     const articlesQuery = defaultArticles()
-    const article = articlesQuery.description.edges[0].node
+    const article = articlesQuery.description!.edges[0].node
     article.securityState = {
       __typename: 'TicketArticleSecurityState',
       encryptionMessage: '',

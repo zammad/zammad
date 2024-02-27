@@ -23,7 +23,7 @@ describe('visuals for metadata', () => {
 
     const article: TicketArticle = {
       // default article has attachment that should be visible as a link
-      ...defaultArticles().description.edges[0].node,
+      ...defaultArticles().description!.edges[0].node,
       internalId: 1,
       from: getAddress(
         '"Test Admin Agent via Zammad Helpdesk" <zammad@localhost>',
@@ -105,7 +105,7 @@ describe('rendering security field', () => {
   const mockArticle = (
     security: TicketArticleSecurityState,
   ): TicketArticle => ({
-    ...defaultArticles().description.edges[0].node,
+    ...defaultArticles().description!.edges[0].node,
     internalId: 1,
     securityState: {
       __typename: 'TicketArticleSecurityState',
