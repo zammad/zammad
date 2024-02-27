@@ -62,7 +62,7 @@ class OmniAuth::Strategies::SamlDatabase < OmniAuth::Strategies::SAML
       }
     )
 
-    return if resp.error.empty? || !resp.error.starts_with?('#<OpenSSL::SSL::SSLError')
+    return if resp.error.blank? || !resp.error.starts_with?('#<OpenSSL::SSL::SSLError')
 
     Rails.logger.error { 'SAML: The verification of the TLS connection failed. Please check the IDP certificate.' }
   end
