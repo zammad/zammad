@@ -22,6 +22,7 @@ import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
+import { initializeAppName } from '#shared/composables/useAppName.ts'
 import { imageViewerOptions } from '#shared/composables/useImageViewer.ts'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '#shared/router/walker.ts'
@@ -400,6 +401,8 @@ const renderComponent = <Props>(
   component: any,
   wrapperOptions: ExtendedMountingOptions<Props> = {},
 ): ExtendedRenderResult => {
+  initializeAppName(appName)
+
   // Store and Router needs only to be initalized once for a test suit.
   if (wrapperOptions?.router) {
     initializeRouter(

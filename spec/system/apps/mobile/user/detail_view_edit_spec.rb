@@ -130,25 +130,29 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
     let(:organization) { create(:organization) }
 
-    it 'supports editing user data' do
-      within_form(form_updater_gql_number: 1) do
-        find_input('First name').type('Foo')
-        find_input('Last name').type('Bar')
-        find_input('Address').type('München')
-        find_autocomplete('Organization').search_for_option(organization.name)
+    shared_examples 'editing user data' do
+      it 'supports editing user data' do
+        within_form(form_updater_gql_number: 1) do
+          find_input('First name').type('Foo')
+          find_input('Last name').type('Bar')
+          find_input('Address').type('München')
+          find_autocomplete('Organization').search_for_option(organization.name)
+        end
+
+        click_on('Save')
+
+        wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
+
+        expect(find('[role="img"][aria-label="Avatar (Foo Bar)"]')).to have_text('FB')
+        expect(page).to have_text('Foo Bar')
+        expect(page).to have_css('a', text: organization.name)
+        expect(find('section', text: 'Address')).to have_text('München')
+
+        expect(user.reload).to have_attributes(firstname: 'Foo', lastname: 'Bar', address: 'München')
       end
-
-      click_on('Save')
-
-      wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
-
-      expect(find('[role="img"][aria-label="Avatar (Foo Bar)"]')).to have_text('FB')
-      expect(page).to have_text('Foo Bar')
-      expect(page).to have_css('a', text: organization.name)
-      expect(find('section', text: 'Address')).to have_text('München')
-
-      expect(user.reload).to have_attributes(firstname: 'Foo', lastname: 'Bar', address: 'München')
     end
+
+    it_behaves_like 'editing user data'
 
     it 'has an always enabled cancel button' do
       find_button('Cancel').click
@@ -182,6 +186,12 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
           expect(user.reload).to have_attributes(firstname: 'No Email')
         end
       end
+    end
+
+    context 'with admin privileges (#5066)' do
+      let(:agent) { create(:admin) }
+
+      it_behaves_like 'editing user data'
     end
   end
 
