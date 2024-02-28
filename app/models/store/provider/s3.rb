@@ -19,6 +19,8 @@ module Store::Provider::S3
     end
 
     def client
+      Certificate::ApplySSLCertificates.ensure_fresh_ssl_context
+
       @client.presence ||
         (Store::Provider::S3::Config.apply && @client = Aws::S3::Client.new)
     end

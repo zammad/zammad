@@ -8,6 +8,7 @@ RSpec.describe Store::Provider::S3, authenticated_as: false, integration: true d
     VCR.configure do |c|
       c.ignore_hosts 's3.eu-central-1.amazonaws.com'
       c.ignore_hosts 's3.eu-central-1.zammad.org'
+      c.ignore_hosts ENV['S3_ENDPOINT'] if ENV['S3_ENDPOINT'].present?
     end
     example.run
     described_class.reset

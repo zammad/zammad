@@ -18,8 +18,6 @@ module Store::Provider::S3::Config
     def apply
       return true if Aws.config.present?
 
-      Certificate::ApplySSLCertificates.ensure_fresh_ssl_context
-
       begin
         config = settings.deep_dup
         credentials = Aws::Credentials.new(config[:access_key_id], config[:secret_access_key])

@@ -70,7 +70,7 @@ module Zammad
 
           return config if config[:url].blank?
 
-          config.deep_merge(resolve_url(config(:url)))
+          config.deep_merge(resolve_url(config[:url]))
         end
 
         def env
@@ -85,14 +85,36 @@ module Zammad
           config = template(uri)
           query = uri.opaque.present? ? uri.opaque.split('?', 2) : uri.query
 
-          return config.compact_blank! if query.blank?
+          config.compact!
+          return config if query.blank?
 
           query.split('&').each do |option|
             key, value = option.split('=', 2)
-            config[key.to_sym] = URI::DEFAULT_PARSER.unescape(value)
+            value = URI::DEFAULT_PARSER.unescape(value)
+            value = boolean(value)
+            value = number(value)
+
+            config[key.to_sym] = value
           end
 
-          config.compact_blank!
+          config.compact!
+          config
+        end
+
+        def boolean(value)
+          return true if value == 'true'
+          return false if value == 'false'
+
+          value
+        end
+
+        def number(value)
+          number = Float(value)
+          return number if value.include?('.')
+
+          number.to_i
+        rescue
+          value
         end
 
         def template(uri)

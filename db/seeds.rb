@@ -32,7 +32,7 @@ end
 # set basic settings via environment variables
 Setting.set('http_type', ENV['ZAMMAD_HTTP_TYPE']) if ENV['ZAMMAD_HTTP_TYPE']
 Setting.set('fqdn',      ENV['ZAMMAD_FQDN'])      if ENV['ZAMMAD_FQDN']
-Setting.set('storage_provider', 'S3')             if ENV['S3_URL']
+Setting.set('storage_provider', 'S3')             if ENV['S3_URL'] && Rails.env.production?
 
 # reset primary key sequences
 DbHelper.import_post

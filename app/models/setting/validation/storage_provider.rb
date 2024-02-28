@@ -17,8 +17,10 @@ class Setting::Validation::StorageProvider < Setting::Validation
     return if !value.eql?('S3')
 
     begin
+      Store::Provider::S3.reset
       Store::Provider::S3.ping!
     rescue Store::Provider::S3::Error => e
+      Store::Provider::S3.reset
       return e.message
     end
 
