@@ -48,7 +48,7 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
     end
 
     describe '#update' do
-      let(:form_id) { 12_345 }
+      let(:form_id) { SecureRandom.uuid }
       let(:params) do
         {
           form_id:           form_id,
@@ -132,7 +132,7 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
 
     describe 'import_attachments' do
       let(:import_path) { "#{path}/import_attachments" }
-      let(:form_id)     { 456 }
+      let(:form_id)     { SecureRandom.uuid }
       let(:params) do
         {
           form_id: form_id,

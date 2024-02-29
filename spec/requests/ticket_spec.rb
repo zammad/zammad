@@ -1884,11 +1884,11 @@ RSpec.describe 'Ticket', type: :request do
              })
 
       authenticated_as(customer)
-      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
+      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=a464a40c-e84e-42d7-ab6e-5daea2bc1502", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
 
       authenticated_as(agent)
-      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
+      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=a464a40c-e84e-42d7-ab6e-5daea2bc1502", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response['assets']).to be_truthy
@@ -1898,7 +1898,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['attachments']).to be_truthy
       expect(json_response['attachments'].count).to eq(3)
 
-      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
+      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=a464a40c-e84e-42d7-ab6e-5daea2bc1502", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response['assets']).to be_truthy
@@ -1963,7 +1963,7 @@ RSpec.describe 'Ticket', type: :request do
              })
 
       authenticated_as(agent)
-      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
+      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=a464a40c-e84e-42d7-ab6e-5daea2bc1502", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response['assets']).to be_truthy
@@ -1973,7 +1973,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['attachments']).to be_truthy
       expect(json_response['attachments'].count).to eq(3)
 
-      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
+      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=a464a40c-e84e-42d7-ab6e-5daea2bc1502", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response['assets']).to be_truthy

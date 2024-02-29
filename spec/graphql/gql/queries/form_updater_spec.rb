@@ -13,7 +13,7 @@ RSpec.describe Gql::Queries::FormUpdater, authenticated_as: :agent, type: :graph
         }
       QUERY
     end
-    let(:variables) { { formUpdaterId: 'FormUpdater__Updater__Ticket__Create', meta: { formId: 12_345 }, data: {}, relationFields: relation_fields } }
+    let(:variables) { { formUpdaterId: 'FormUpdater__Updater__Ticket__Create', meta: { formId: '5570fac8-8868-40b7-89e7-1cdabbd954ba' }, data: {}, relationFields: relation_fields } }
     let(:relation_fields) do
       [
         {

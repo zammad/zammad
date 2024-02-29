@@ -59,7 +59,7 @@ returns
   def self.list(data)
     # search
     store_object_id = Store::Object.lookup(name: data[:object])
-    Store.where(store_object_id: store_object_id, o_id: data[:o_id].to_i)
+    Store.where(store_object_id: store_object_id, o_id: data[:o_id])
                   .reorder(created_at: :asc)
 
   end

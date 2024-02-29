@@ -3,14 +3,16 @@
 require 'rails_helper'
 
 RSpec.shared_examples 'Taskbar::HasAttachments' do
+  let(:form_id) { SecureRandom.uuid }
+
   describe '.with_form_id' do
     before do
       create(:taskbar)
-      create_list(:taskbar, 2, state: { form_id: 1337 })
+      create_list(:taskbar, 2, state: { form_id: form_id })
     end
 
     it 'get list of all form ids' do
-      expect(described_class.with_form_id.filter_map(&:persisted_form_id)).to eq([1337, 1337])
+      expect(described_class.with_form_id.filter_map(&:persisted_form_id)).to eq([form_id, form_id])
     end
   end
 
@@ -19,7 +21,7 @@ RSpec.shared_examples 'Taskbar::HasAttachments' do
 
     let(:taskbar) do
       taskbar = create(:taskbar, state: state)
-      UploadCache.new(1337).add(
+      UploadCache.new(form_id).add(
         data:        'Some Example',
         filename:    'another_example.txt',
         preferences: {
@@ -39,7 +41,7 @@ RSpec.shared_examples 'Taskbar::HasAttachments' do
 
     context 'when ticket create' do
       let(:state) do
-        { form_id: 1337 }
+        { form_id: form_id }
       end
 
       it 'delete attachments in upload cache after destroy' do
@@ -49,7 +51,7 @@ RSpec.shared_examples 'Taskbar::HasAttachments' do
 
     context 'when ticket zoom' do
       let(:state) do
-        { ticket: {}, article: { form_id: 1337 } }
+        { ticket: {}, article: { form_id: form_id } }
       end
 
       it 'delete attachments in upload cache after destroy' do

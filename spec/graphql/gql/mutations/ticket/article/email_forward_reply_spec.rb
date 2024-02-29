@@ -6,7 +6,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
   let(:article)  { create(:ticket_article, :inbound_email, :with_attachment, from: customer.email) }
   let(:agent)    { create(:agent, groups: [article.ticket.group]) }
   let(:customer) { create(:customer) }
-  let(:form_id)  { 12_345 }
+  let(:form_id)  { SecureRandom.uuid }
 
   let(:query) do
     <<~QUERY

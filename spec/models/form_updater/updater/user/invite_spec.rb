@@ -16,7 +16,7 @@ RSpec.describe FormUpdater::Updater::User::Invite do
 
   let(:user)                    { create(:admin) }
   let(:context)                 { { current_user: user } }
-  let(:meta)                    { { initial: true, form_id: 123 } }
+  let(:meta)                    { { initial: true, form_id: SecureRandom.uuid } }
   let(:data)                    { {} }
 
   describe '#resolve' do

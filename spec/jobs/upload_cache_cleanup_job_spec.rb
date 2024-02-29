@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe UploadCacheCleanupJob, type: :job do
   context 'when upload cache exists' do
-    let(:upload_cache) { UploadCache.new(1337) }
+    let(:upload_cache) { UploadCache.new(SecureRandom.uuid) }
 
     before do
       UserInfo.current_user_id = 1
@@ -20,8 +20,9 @@ RSpec.describe UploadCacheCleanupJob, type: :job do
       travel_to 1.month.ago
 
       # create one taskbar and related upload cache entry, which should not be deleted
-      create(:taskbar, state: { form_id: 9999 })
-      UploadCache.new(9999).add(
+      taskbar_form_id = SecureRandom.uuid
+      create(:taskbar, state: { form_id: taskbar_form_id })
+      UploadCache.new(taskbar_form_id).add(
         data:        'Some Example with related Taskbar',
         filename:    'another_example_with_taskbar.txt',
         preferences: {

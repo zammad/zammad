@@ -3,18 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe UploadCache do
+  subject(:upload_cache) { described_class.new(form_id) }
 
-  subject(:upload_cache) { described_class.new(1337) }
+  let(:form_id) { SecureRandom.uuid }
 
   # required for adding items to the Store
   before { UserInfo.current_user_id = 1 }
-
-  describe '#initialize' do
-
-    it 'converts given (form_)id to an Integer' do
-      expect(described_class.new('1337').id).to eq(1337)
-    end
-  end
 
   describe '#add' do
 
@@ -109,7 +103,7 @@ RSpec.describe UploadCache do
     end
 
     it 'fails for non existing UploadCache Store items' do
-      expect { upload_cache.remove_item(1337) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { upload_cache.remove_item(form_id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

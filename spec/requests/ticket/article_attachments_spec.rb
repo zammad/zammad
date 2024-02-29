@@ -153,7 +153,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
         email_raw_string = File.read(email_file_path)
         ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
-        get '/api/v1/ticket_split', params: { form_id: '1234-2', ticket_id: ticket_p.id, article_id: article_p.id }, as: :json
+        get '/api/v1/ticket_split', params: { form_id: '2d8d9799-b505-4f47-b9c3-1b219cf6ce98', ticket_id: ticket_p.id, article_id: article_p.id }, as: :json
         expect(response).to have_http_status(:ok)
         expect(json_response['assets']).to be_truthy
         expect(json_response['attachments']).to be_a(Array)
@@ -172,7 +172,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
         expect(json_response).to be_a(Hash)
         expect(json_response['error']).to eq("Need 'form_id' to add attachments to new form.")
 
-        post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-1' }, as: :json
+        post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '73cf9581-a265-4bc4-b8ce-874deda33136' }, as: :json
         expect(response).to have_http_status(:ok)
         expect(json_response['attachments']).to be_a(Array)
         expect(json_response['attachments']).to be_blank
@@ -181,13 +181,13 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
         email_raw_string = File.read(email_file_path)
         _ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
-        post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-2' }, as: :json
+        post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '2d8d9799-b505-4f47-b9c3-1b219cf6ce98' }, as: :json
         expect(response).to have_http_status(:ok)
         expect(json_response['attachments']).to be_a(Array)
         expect(json_response['attachments'].count).to eq(1)
         expect(json_response['attachments'][0]['filename']).to eq('rulesets-report.csv')
 
-        post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-2' }, as: :json
+        post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '2d8d9799-b505-4f47-b9c3-1b219cf6ce98' }, as: :json
         expect(response).to have_http_status(:ok)
         expect(json_response['attachments']).to be_a(Array)
         expect(json_response['attachments']).to be_blank

@@ -196,7 +196,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
 
         context 'with attachments' do
           let(:article_payload) do
-            form_id = 12_345
+            form_id = SecureRandom.uuid
 
             file_name    = 'file1.txt'
             file_type    = 'text/plain'
@@ -243,7 +243,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
           end
 
           let(:article_payload) do
-            form_id = 12_345
+            form_id = SecureRandom.uuid
 
             file_name    = 'file1.txt'
             file_type    = 'text/plain'

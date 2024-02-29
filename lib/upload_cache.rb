@@ -13,8 +13,7 @@ class UploadCache
   #
   # @return [UploadCache]
   def initialize(id)
-    # conversion to Integer is required for proper Store#o_id comparsion
-    @id = id.to_i
+    @id = id
   end
 
   # Adds a Store item with the given attributes for the form_id.

@@ -725,8 +725,10 @@ class App.ControllerForm extends App.Controller
     param
 
   @formId: ->
-    formId = new Date().getTime() + Math.floor( Math.random() * 99999 )
-    formId.toString().substr formId.toString().length-9, 9
+    try
+      return crypto.randomUUID()
+    catch e
+      return URL.createObjectURL(new Blob()).substr(-36)
 
   @findForm: (form) ->
     # check jquery event

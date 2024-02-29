@@ -17,7 +17,7 @@ RSpec.describe(FormUpdater::Updater::Organization::Edit) do
 
   let(:user)    { create(:agent) }
   let(:context) { { current_user: user } }
-  let(:meta)    { { initial: true, form_id: 12_345 } }
+  let(:meta)    { { initial: true, form_id: SecureRandom.uuid } }
   let(:data)    { {} }
   let(:relation_fields) do
     []

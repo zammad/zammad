@@ -4159,7 +4159,7 @@
         {
           "kind": "SCALAR",
           "name": "FormId",
-          "description": "BigInt to identify a form.",
+          "description": "UUID to identify a form.",
           "fields": null,
           "inputFields": null,
           "interfaces": null,

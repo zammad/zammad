@@ -404,7 +404,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
              })
 
       params = {
-        form_id: 'new_form_id123',
+        form_id: 'b47ea422-1b96-49db-8399-aeffaa0e3fc9',
       }
       authenticated_as(agent)
       post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: params, as: :json
@@ -473,7 +473,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
              })
 
       params = {
-        form_id: 'new_form_id123',
+        form_id: 'b47ea422-1b96-49db-8399-aeffaa0e3fc9',
       }
       authenticated_as(agent)
       post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: params, as: :json

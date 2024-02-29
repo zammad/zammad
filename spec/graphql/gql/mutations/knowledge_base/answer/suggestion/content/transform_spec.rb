@@ -37,14 +37,14 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Suggestion::Content::Trans
       MUTATION
     end
 
-    let(:variables) { { translationId: Gql::ZammadSchema.id_from_object(knowledge_base_answer_translation), formId: 12_345 } }
+    let(:variables) { { translationId: Gql::ZammadSchema.id_from_object(knowledge_base_answer_translation), formId: '5570fac8-8868-40b7-89e7-1cdabbd954ba' } }
 
     before do
       gql.execute(mutation, variables: variables)
     end
 
     context 'with authenticated session' do
-      let(:copied_attachments) { Store.list(object: 'UploadCache', o_id: 12_345) }
+      let(:copied_attachments) { Store.list(object: 'UploadCache', o_id: '5570fac8-8868-40b7-89e7-1cdabbd954ba') }
 
       it 'converts inline images to base64 data' do
         expect(gql.result.data['body']).to include('src="data:image/jpeg;base64,')
@@ -63,7 +63,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Suggestion::Content::Trans
       end
 
       context 'with not existing translation' do
-        let(:variables) { { translationId: Gql::ZammadSchema.id_from_object(knowledge_base_answer), formId: 12_345 } }
+        let(:variables) { { translationId: Gql::ZammadSchema.id_from_object(knowledge_base_answer), formId: '5570fac8-8868-40b7-89e7-1cdabbd954ba' } }
 
         it 'raises an error' do
           expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)

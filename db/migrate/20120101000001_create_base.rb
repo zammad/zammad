@@ -481,7 +481,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :stores do |t|
       t.references :store_object,               null: false
       t.references :store_file,                 null: false
-      t.integer :o_id,              limit: 8,   null: false
+      t.string :o_id,               limit: 255, null: false
       t.string :preferences,        limit: 2500, null: true
       t.string :size,               limit: 50,  null: true
       t.string :filename,           limit: 250, null: false

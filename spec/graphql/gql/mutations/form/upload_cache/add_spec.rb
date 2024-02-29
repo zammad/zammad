@@ -19,7 +19,7 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
         }
       QUERY
     end
-    let(:form_id)      { 12_345 }
+    let(:form_id)      { SecureRandom.uuid }
     let(:file_name)    { 'my_testfile.pdf' }
     let(:file_type)    { 'application/pdf' }
     let(:file_content) { 'some test content' }

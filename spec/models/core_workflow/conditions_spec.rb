@@ -755,7 +755,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
                            body:            'hello',
                            type:            'note',
                            internal:        true,
-                           form_id:         '210458899',
+                           form_id:         SecureRandom.uuid,
                            shared_draft_id: '',
                            subtype:         '',
                            in_reply_to:     '',

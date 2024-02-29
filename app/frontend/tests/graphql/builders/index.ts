@@ -20,6 +20,7 @@ import {
 import { createRequire } from 'node:module'
 import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
 import { uniqBy } from 'lodash-es'
+import getUuid from '#shared/utils/getUuid.ts'
 import { generateGraphqlMockId, hasNodeParent, setNodeParent } from './utils.ts'
 import logger from './logger.ts'
 
@@ -184,11 +185,8 @@ const getScalarValue = (
       return faker.number.float()
     case 'BinaryString':
       return faker.image.dataUri()
-    case 'FormId': {
-      const formId =
-        faker.date.recent() + Math.floor(Math.random() * 99999).toString()
-      return formId.substring(formId.length - 9, 9)
-    }
+    case 'FormId':
+      return getUuid()
     case 'ISO8601Date':
       return faker.date.recent().toISOString().substring(0, 10)
     case 'ISO8601DateTime':

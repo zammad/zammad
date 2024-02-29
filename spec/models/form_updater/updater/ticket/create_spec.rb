@@ -23,7 +23,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   let(:level2_group)  { create(:group, name: 'Depth 2-G1', parent: level1_group) }
   let(:user)          { create(:agent, groups: [group, group2, level1_group2, level2_group]) }
   let(:context)       { { current_user: user } }
-  let(:meta)          { { initial: true, form_id: 12_345 } }
+  let(:meta)          { { initial: true, form_id: SecureRandom.uuid } }
   let(:data)          { {} }
 
   let(:relation_fields) do

@@ -26,7 +26,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
   let(:other_agent) { create(:agent) }
   let(:customer)    { create(:customer) }
 
-  let(:form_id) { 12_345 }
+  let(:form_id) { SecureRandom.uuid }
 
   let(:base_params) do
     {

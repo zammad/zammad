@@ -7,7 +7,7 @@ RSpec.describe TemplateMigration, type: :db_migration do
     {
       'article.body'                  => 'twet 23123',
       'ticket.formSenderType'         => 'phone-in',
-      'article.form_id'               => '187440978',
+      'article.form_id'               => '19d8d2a2-8af3-4992-add0-353ee32bcb5f',
       'ticket.title'                  => 'aaa',
       'ticket.customer_id'            => '2',
       'ticket.customer_id_completion' => 'Nicole Braun <nicole.braun@example.com>',
@@ -35,7 +35,7 @@ RSpec.describe TemplateMigration, type: :db_migration do
                      {
                        'body'                   => 'twet 23123',
                        'formSenderType'         => 'phone-in',
-                       'form_id'                => '187440978',
+                       'form_id'                => '19d8d2a2-8af3-4992-add0-353ee32bcb5f',
                        'title'                  => 'aaa',
                        'customer_id'            => '2',
                        'customer_id_completion' => 'Nicole Braun <nicole.braun@example.com>',
