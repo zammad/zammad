@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-25 06:23+0000\n"
-"Last-Translator: \"Chang W. Lee\" <changlee99@gmail.com>\n"
+"PO-Revision-Date: 2024-02-29 06:42+0000\n"
+"Last-Translator: FoW <fow@netspheres.org>\n"
 "Language-Team: Korean <https://translations.zammad.org/projects/zammad/"
-"zammad-development/ko/>\n"
+"zammad-stable/ko/>\n"
 "Language: ko-kr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.0.2\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2661,12 +2661,12 @@ msgstr "알림 설정 관리"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
-msgstr "카테고리"
+msgstr "범주"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Category"
-msgstr "카테고리"
+msgstr "범주"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Category page layout"
@@ -2679,65 +2679,55 @@ msgid "Caution!"
 msgstr "지속"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "SMS Notification"
 msgid "Certificate (PEM)"
-msgstr "SMS 알림"
+msgstr "인증서 (PEM)"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
-msgstr ""
+msgstr "인증서 & 개인 키"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "Change"
-msgstr "변화"
+msgstr "바꾸기"
 
 #: db/seeds/permissions.rb
 msgid "Change %s"
-msgstr "%s 변경"
+msgstr "%s 바꾸기"
 
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 msgid "Change Customer"
-msgstr "변경 고객"
+msgstr "고객 바꾸기"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 msgid "Change Objects"
-msgstr "변경 개체"
+msgstr "오브젝트 바꾸기"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
-#, fuzzy
-#| msgid "Change your password"
 msgid "Change Your Password"
-msgstr "비밀번호 변경"
+msgstr "내 암호 바꾸기"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Change Customer"
 msgid "Change customer"
-msgstr "변경 고객"
+msgstr "고객 바꾸기"
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Change order"
 msgid "Change date"
-msgstr "주문 변경"
+msgstr "날짜 바꾸기"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
-msgstr "주문 변경"
+msgstr "주문 바꾸기"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#, fuzzy
-#| msgid "Changed"
 msgid "Changed:"
-msgstr "변경"
+msgstr "바꿈:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/views/mailer/ticket_update/fr.html.erb
@@ -2745,7 +2735,7 @@ msgstr "변경"
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
-msgstr "변경"
+msgstr "바꾸기"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
@@ -7280,10 +7270,8 @@ msgid "Hi! Which one of our products?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-#, fuzzy
-#| msgid "Authentication"
 msgid "Hide authenticator app secret"
-msgstr "인증"
+msgstr "인증기 앱 시크리 숨기기"
 
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
@@ -7314,7 +7302,7 @@ msgstr "휴일을 iCalendar 피드"
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Home"
-msgstr ""
+msgstr "홈"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -7323,7 +7311,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Host"
-msgstr "숙주"
+msgstr "호스트"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Host Notification"
@@ -10804,7 +10792,7 @@ msgstr "Ticket 에스컬레이션"
 
 #: db/seeds/settings.rb
 msgid "Product Name"
-msgstr "상품명"
+msgstr "공급 이름"
 
 #: app/assets/javascripts/app/controllers/profile.coffee
 msgid "Profile"
@@ -13022,7 +13010,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: db/seeds/permissions.rb db/seeds/ticket_article_senders.rb
 msgid "System"
-msgstr "체계"
+msgstr "시스템"
 
 #: db/seeds/settings.rb
 msgid "System Address Display Name"
@@ -13096,7 +13084,7 @@ msgstr "목표"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 msgid "Telegram"
-msgstr "전보"
+msgstr "Telegram"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Telegram Account"
@@ -17815,7 +17803,7 @@ msgstr "변경"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "here"
-msgstr "이리"
+msgstr "이곳"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "hide"
