@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-02-15 02:05+0000\n"
 "Last-Translator: Tomáš Kovařík <tomas.kovarik@cdv.cz>\n"
-"Language-Team: Czech <https://translations.zammad.org/projects/zammad/"
-"zammad-development/cs/>\n"
+"Language-Team: Czech <https://translations.zammad.org/projects/zammad/zammad-"
+"development/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -949,6 +949,12 @@ msgstr "API token"
 msgid "API Token Access"
 msgstr "API přístup s tokenem"
 
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "Sign out"
+msgid "API error."
+msgstr "Odhlásit"
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
@@ -976,6 +982,12 @@ msgstr "Přístup k ticketům řešitelů na základě Skupinového přístupu"
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
 "Přístup k zákazickým ticketům na základě aktuálního uživatele a organizace"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#, fuzzy
+#| msgid "Access to %s"
+msgid "Access token"
+msgstr "Přístup k %s"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -1022,6 +1034,7 @@ msgstr "Zúčtovaný čas"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Accounts"
 msgstr "Účty"
 
@@ -1181,6 +1194,7 @@ msgstr "Přidat"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Add Account"
 msgstr "Přidat účet"
 
@@ -1728,6 +1742,12 @@ msgstr "Přihlašovací údaje pro Facebook."
 msgid "App credentials for Twitter."
 msgstr "Přihlašovací údaje pro Twitter."
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#, fuzzy
+#| msgid "App Secret"
+msgid "App secret"
+msgstr "App Secret"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
@@ -1822,6 +1842,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
@@ -2561,6 +2582,7 @@ msgid "Call from %s for %s"
 msgstr "Hovor od %s pro %s"
 
 #: app/assets/javascripts/app/models/application.coffee
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 msgid "Callback URL"
 msgstr "Callback URL"
 
@@ -2834,6 +2856,12 @@ msgstr "Kanál - Twitter"
 msgid "Channel - Web"
 msgstr "Kanál - Web"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Channel - Chat"
+msgid "Channel - WhatsApp"
+msgstr "Kanál - Chat"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
 msgstr "Šíření kanály"
@@ -2951,6 +2979,7 @@ msgstr "Zvolte skupinu, do které budou přidány zmínky."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Choose the group to which messages will get added."
 msgstr "Zvolte skupinu, do které budou přidány zprávy."
 
@@ -3482,6 +3511,12 @@ msgstr "Kopírovat"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopírovat do schránky aktuální číslo objektu (např.  Ticket#) "
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+#, fuzzy
+#| msgid "Copy to clipboard: Ctrl+C, Enter"
+msgid "Copy to clipboard"
+msgstr "Kopírování do schránky: Ctrl+C, Enter"
+
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
 msgstr "Běžný pracovní postup"
@@ -3503,6 +3538,10 @@ msgstr ""
 "Běžné pracovní postupy jsou akce nebo omezení výběru ve fomulářích. V "
 "závislosti na akci je možné skrýt nebo omezit pole, nebo změnit povinnost "
 "jejich vyplňování."
+
+#: app/services/service/channel/whatsapp/base.rb
+msgid "Could not fetch WhatsApp phone number details."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #, fuzzy
@@ -5103,6 +5142,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -5331,6 +5371,7 @@ msgstr "Směr"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Disable"
 msgstr "Deaktivovat"
 
@@ -5572,6 +5613,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr "Velikonoční prázdniny"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -5587,6 +5629,7 @@ msgstr "Velikonoční prázdniny"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
@@ -5827,6 +5870,7 @@ msgstr "Prázdný"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Enable"
 msgstr "Aktivovat"
 
@@ -6696,6 +6740,7 @@ msgstr "Najděte, co hledáte, např. \"hledaná fráze\""
 msgid "Fingerprint"
 msgstr "Otisk prstu"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
@@ -7154,6 +7199,7 @@ msgstr "Správný podpis"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Goodbye message"
 msgstr "Zpráva na rozloučenou"
 
@@ -7212,6 +7258,7 @@ msgstr "Pozdrav"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -7379,6 +7426,12 @@ msgstr "Má otevřený ticket v záložkách, ale neprohlíží ticket aktivně.
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Hash"
 msgstr "Hash"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Have a nice day."
+msgid "Have a nice day!"
+msgstr "Pěkný zbytek dne."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -7587,6 +7640,10 @@ msgstr "Hodin(y)"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Jak Vám můžeme pomoci? Vyhledávejte odpovědi nebo témata…"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "How can we help?"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 msgid ""
@@ -8143,6 +8200,10 @@ msgstr "Pole celého čísla"
 #: db/seeds/permissions.rb
 msgid "Integrations"
 msgstr "Integrace"
+
+#: lib/whatsapp/incoming/media.rb
+msgid "Integrity verification of the downloaded WhatsApp media failed."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
@@ -9132,6 +9193,7 @@ msgid "Message for login page."
 msgstr "Zpráva pro přihlašovací stránku."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Messages"
 msgstr "Zprávy"
 
@@ -9236,6 +9298,10 @@ msgstr "Minut"
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Minutes"
 msgstr "Minut"
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Mismatching phone number id."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
@@ -9516,6 +9582,7 @@ msgstr "Síť"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -9641,6 +9708,12 @@ msgstr "Nová Verze"
 msgid "New Webhook"
 msgstr "Nový webhook"
 
+#: lib/whatsapp/webhook/message.rb
+#, fuzzy
+#| msgid "Test message from Zammad"
+msgid "New WhatsApp message from %s"
+msgstr "Zkušební zpráva ze Zammadu"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
 msgstr "Nový pracovní postup"
@@ -9723,6 +9796,7 @@ msgstr ""
 msgid "New user?"
 msgstr "Jste u nás nový?"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
@@ -10827,6 +10901,16 @@ msgstr "Telefon (odchozí)"
 msgid "Phone Extension to Agent Mapping"
 msgstr "Telefonní klapka pro spárování s řešitelem"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Phone (in)"
+msgid "Phone number"
+msgstr "Telefon (příchozí)"
+
+#: app/models/channel/area/whatsapp.rb
+msgid "Phone number is already in use by another WhatsApp account."
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Po zadání jména používané aplikace bude vygenerován unikátní token."
@@ -11540,6 +11624,7 @@ msgstr "Náhrada"
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 msgid "Reply"
 msgstr "Odpověď"
 
@@ -13328,6 +13413,18 @@ msgstr "Zůstat na záložce"
 msgid "Step %s is completed"
 msgstr "Krok %s byl dokončen"
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "Step 1 of 3: WhatsApp Business Cloud API"
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Step 2 of 3: WhatsApp Business Phone Number"
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Step 3 of 3: WhatsApp Business Webhook"
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr "Zastavit po shodě"
@@ -13540,6 +13637,12 @@ msgstr "Použít hlavičku Reply-To jako odesílatele/from e-mailu."
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
 msgstr "cíl"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Parent"
+msgid "Target Group"
+msgstr "Nadřazený"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -13829,6 +13932,34 @@ msgstr "URL odkaz na tuto instalaci Zammadu."
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr "URL odkaz na tuto instalaci Zammadu."
+
+#: lib/whatsapp/webhook/configuration.rb
+msgid "The WhatsApp channel webhook configuration could not be verified."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#, fuzzy
+#| msgid "The changes could not be saved."
+msgid "The WhatsApp connection could not be saved."
+msgstr "Změny se nepodařilo uložit."
+
+#: lib/whatsapp/webhook/concerns/has_channel.rb
+#, fuzzy
+#| msgid "The API token could not be found."
+msgid "The WhatsApp webhook channel could not be found."
+msgstr "API token se nepodařilo najít."
+
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "The uploaded image could not be processed."
+msgid "The WhatsApp webhook payload could not be processed."
+msgstr "Nahraný obrázek se nepodařilo zpracovat."
+
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "The raw logo could not be read."
+msgid "The WhatsApp webhook payload could not be validated."
+msgstr "Nezpracované logo se nepodařilo přečíst."
 
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
@@ -14488,6 +14619,12 @@ msgstr "Chybí požadovaný parametr \"code'."
 msgid "The required parameter \"payload\" is missing."
 msgstr "Chybí požadovaný parametr \"payload->screen'."
 
+#: lib/whatsapp/client.rb
+#, fuzzy
+#| msgid "The required parameter 'request_token' is missing."
+msgid "The required parameter 'access_token' is missing."
+msgstr "Chybí požadovaný parametr \"request_token'."
+
 #: lib/external_credential/facebook.rb
 msgid "The required parameter 'application_id' is missing."
 msgstr "Chybí požadovaný parametr \"application_id'."
@@ -14499,6 +14636,12 @@ msgstr "Chybí požadovaný parametr \"application_secret'."
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'area' is missing."
 msgstr "Chybí požadovaný parametr \"area'."
+
+#: lib/whatsapp/account/phone_numbers.rb
+#, fuzzy
+#| msgid "The required parameter 'for_user_id' is missing."
+msgid "The required parameter 'business_id' is missing."
+msgstr "Chybí požadovaný parametr \"for_user_id'."
 
 #: lib/external_credential/exchange.rb lib/external_credential/google.rb
 #: lib/external_credential/microsoft365.rb
@@ -15570,6 +15713,12 @@ msgstr "Priorita"
 msgid "Ticket Selector"
 msgstr "Podmínky výběru ticketů"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket Settings"
+msgstr "Titulek ticketu"
+
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 #, fuzzy
 #| msgid "Ticket title"
@@ -16483,6 +16632,18 @@ msgstr "Obnovit do základů"
 msgid "Unsubscribe"
 msgstr "Odhlásit odběr"
 
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported message type."
+msgstr ""
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported subscription type."
+msgstr ""
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported webhook payload."
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
 "Up to %s% of this language is already translated. Please help to make Zammad "
@@ -17031,6 +17192,12 @@ msgstr "Ověřovací e-mail nebyl ve schránce nalezen."
 msgid "Verification email could not be sent."
 msgstr "Ověřovací e-mail se nepodařilo odeslat."
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+#, fuzzy
+#| msgid "Generate Token"
+msgid "Verify Token"
+msgstr "Vygenerovat token"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Verify sending and receiving"
@@ -17354,6 +17521,7 @@ msgstr ""
 "Uvítací nadpis zobrazení na zavřeném chatu. Může obsahovat HTML elementy."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Welcome message"
 msgstr "Uvítací zpráva"
 
@@ -17391,6 +17559,29 @@ msgstr "Které hodnoty %s mají být synchronizovány s organizací."
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to users."
 msgstr "Které hodnoty %s mají být synchronizovány s uživateli."
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+#, fuzzy
+#| msgid "Chats"
+msgid "WhatsApp"
+msgstr "Chaty"
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#, fuzzy
+#| msgid "Add Account"
+msgid "WhatsApp Account"
+msgstr "Přidat účet"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "WhatsApp Business Account ID"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+#, fuzzy
+#| msgid "Chats"
+msgid "Whatsapp"
+msgstr "Chaty"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid ""
@@ -17606,6 +17797,10 @@ msgid ""
 msgstr ""
 "Zammad můžete s %s propojit. Nejprve ale budete muset Zammad propojit s %s."
 
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+msgid "You can connect WhatsApp Business Accounts with Zammad."
+msgstr ""
+
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
 "You can create **overviews** for your agents and your customers. These have "
@@ -17663,6 +17858,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
@@ -19126,6 +19324,7 @@ msgstr "odstranit možnost"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "reply"
 msgstr "odpověď"
 
@@ -19392,6 +19591,12 @@ msgstr "web"
 msgid "welcome message"
 msgstr "uvítací zpráva"
 
+#: db/seeds/ticket_article_types.rb
+#, fuzzy
+#| msgid "Add a message"
+msgid "whatsapp message"
+msgstr "Přidat zprávu"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
 msgstr "bude vytvořeno"
@@ -19485,9 +19690,6 @@ msgstr "dnešní ∅ čekací doby"
 #~| msgid "is invalid"
 #~ msgid "Invalid!"
 #~ msgstr "je neplatné"
-
-#~ msgid "The uploaded image could not be processed."
-#~ msgstr "Nahraný obrázek se nepodařilo zpracovat."
 
 #, fuzzy
 #~| msgid "A URL looks like this: https://zammad.example.com"
@@ -19695,9 +19897,6 @@ msgstr "dnešní ∅ čekací doby"
 #~ msgid "Invalid payload, need data:image in logo param"
 #~ msgstr "Neplatný obsah, požadováno data:image v parametru logo"
 
-#~ msgid "The raw logo could not be read."
-#~ msgstr "Nezpracované logo se nepodařilo přečíst."
-
 #~ msgid "skip"
 #~ msgstr "přeskočit"
 
@@ -19896,11 +20095,6 @@ msgstr "dnešní ∅ čekací doby"
 #~| msgid "Name"
 #~ msgid "me"
 #~ msgstr "Jméno"
-
-#, fuzzy
-#~| msgid "Copy to clipboard: Ctrl+C, Enter"
-#~ msgid "Copied to clipboard!"
-#~ msgstr "Kopírování do schránky: Ctrl+C, Enter"
 
 #~ msgid "Copy to clipboard: Ctrl+C, Enter"
 #~ msgstr "Kopírování do schránky: Ctrl+C, Enter"

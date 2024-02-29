@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-02-14 02:05+0000\n"
+"PO-Revision-Date: 2024-02-27 02:05+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -947,6 +947,10 @@ msgstr "API-token"
 msgid "API Token Access"
 msgstr "API-tokenåtkomst"
 
+#: lib/whatsapp/webhook/payload.rb
+msgid "API error."
+msgstr "API fel."
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
@@ -974,6 +978,10 @@ msgstr "Åtkomst till Handläggare-ärenden baserat på gruppåtkomst"
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
 "Åtkomst till ärenden är baserat på nuvarande användare och organisation"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "Access token"
+msgstr "Åtkomsttoken"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -1020,6 +1028,7 @@ msgstr "Redovisad tid"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Accounts"
 msgstr "Konton"
 
@@ -1178,6 +1187,7 @@ msgstr "Lägg till"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Add Account"
 msgstr "Lägg till konto"
 
@@ -1705,6 +1715,10 @@ msgstr "App-inloggningsuppgifter för Facebook."
 msgid "App credentials for Twitter."
 msgstr "App-inloggningsuppgifter för Twitter."
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "App secret"
+msgstr "App secret"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
@@ -1796,6 +1810,7 @@ msgstr "Vill du ta bort \"%s\" som standard?"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
@@ -2533,6 +2548,7 @@ msgid "Call from %s for %s"
 msgstr "Samtal från %s för %s"
 
 #: app/assets/javascripts/app/models/application.coffee
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 msgid "Callback URL"
 msgstr "Callback URL"
 
@@ -2800,6 +2816,10 @@ msgstr "Kanal - Twitter"
 msgid "Channel - Web"
 msgstr "Kanal - Webb"
 
+#: db/seeds/permissions.rb
+msgid "Channel - WhatsApp"
+msgstr "Kanal - WhatsApp"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
 msgstr "KANALDISTRUBITION"
@@ -2923,6 +2943,7 @@ msgstr "Välj den grupp som omnämningar ska läggas till i."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Choose the group to which messages will get added."
 msgstr "Välj den grupp som meddelanden ska läggas till i."
 
@@ -3428,6 +3449,10 @@ msgstr "Kopiera"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopiera aktuellt objektnummer (e. x. Ärende#) till urklipp"
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Copy to clipboard"
+msgstr "Kopiera till urklipp"
+
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
 msgstr "Grundläggande arbetsflöde"
@@ -3449,6 +3474,10 @@ msgstr ""
 "Grundläggande arbetsflöden är händelser eller begränsningar på urval i "
 "formulär. Beroende på vilken händelse, så kan de dölja eller begränsa fält "
 "eller växla krav på ifyllning av eller på."
+
+#: app/services/service/channel/whatsapp/base.rb
+msgid "Could not fetch WhatsApp phone number details."
+msgstr "Kunde inte hämta WhatsApp telefonnummerdetaljer."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid ""
@@ -5007,6 +5036,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -5231,6 +5261,7 @@ msgstr "Riktning"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Disable"
 msgstr "Inaktivera"
 
@@ -5457,6 +5488,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr "Påskledighet"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -5472,6 +5504,7 @@ msgstr "Påskledighet"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
@@ -5699,6 +5732,7 @@ msgstr "Tomt"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Enable"
 msgstr "Aktivera"
 
@@ -6542,6 +6576,7 @@ msgstr "Hitta vad du söker. T ex \"en sökfras\""
 msgid "Fingerprint"
 msgstr "Fingeravtryck"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
@@ -6990,6 +7025,7 @@ msgstr "Bra signatur"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Goodbye message"
 msgstr "Hejdå meddelande"
 
@@ -7046,6 +7082,7 @@ msgstr "Hälsning"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -7202,6 +7239,10 @@ msgstr "Har ärendet öppet i flikar, men tittar inte aktivt på ärendet."
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Hash"
 msgstr "Hash"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Have a nice day!"
+msgstr "Ha en trevlig dag!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -7407,6 +7448,10 @@ msgstr "Timmar"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Vad vill du ha hjälp med? Sök efter ett svar eller ett ämne…"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "How can we help?"
+msgstr "Hur kan vi hjälpa till?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 msgid ""
@@ -7945,6 +7990,10 @@ msgstr "Heltalsfält"
 #: db/seeds/permissions.rb
 msgid "Integrations"
 msgstr "Integrationer"
+
+#: lib/whatsapp/incoming/media.rb
+msgid "Integrity verification of the downloaded WhatsApp media failed."
+msgstr "Integritetsverifiering av det nedladdade WhatsApp-mediet misslyckades."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
@@ -8916,6 +8965,7 @@ msgid "Message for login page."
 msgstr "Meddelande för inloggningssida."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Messages"
 msgstr "Meddelanden"
 
@@ -9018,6 +9068,10 @@ msgstr "Minut(er)"
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Minutes"
 msgstr "minuter"
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Mismatching phone number id."
+msgstr "Felaktigt telefonnummerid."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
@@ -9297,6 +9351,7 @@ msgstr "Nätverk"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -9416,6 +9471,10 @@ msgstr "Ny version"
 msgid "New Webhook"
 msgstr "Ny webhook"
 
+#: lib/whatsapp/webhook/message.rb
+msgid "New WhatsApp message from %s"
+msgstr "Nytt WhatsApp-meddelande från %s"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
 msgstr "Nytt arbetsflöde"
@@ -9499,6 +9558,7 @@ msgstr ""
 msgid "New user?"
 msgstr "Ny användare?"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
@@ -10571,6 +10631,14 @@ msgstr "Telefon (ut)"
 msgid "Phone Extension to Agent Mapping"
 msgstr "Telefon anknytning till agent mappning"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Phone number"
+msgstr "Telefonnummer"
+
+#: app/models/channel/area/whatsapp.rb
+msgid "Phone number is already in use by another WhatsApp account."
+msgstr "Telefonnumret används redan av ett annat WhatsApp-konto."
+
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Välj ett namn för applikationen, så ger vi dig ett unikt token."
@@ -11260,6 +11328,7 @@ msgstr "Ersättning"
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 msgid "Reply"
 msgstr "Svara"
 
@@ -12933,6 +13002,18 @@ msgstr "Stanna på flik"
 msgid "Step %s is completed"
 msgstr "Steg %s är slutfört"
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "Step 1 of 3: WhatsApp Business Cloud API"
+msgstr "Steg 1 av 3: WhatsApp Business Cloud API"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Step 2 of 3: WhatsApp Business Phone Number"
+msgstr "Steg 2 av 3: WhatsApp telefonnummer för företag"
+
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Step 3 of 3: WhatsApp Business Webhook"
+msgstr "Steg 3 av 3: WhatsApp Business Webhook"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr "Stanna efter matchning"
@@ -13143,6 +13224,10 @@ msgstr "Använd Reply-To-rubriken som avsändare/från i e-postmeddelandet."
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
 msgstr "Mål"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Target Group"
+msgstr "Målgrupp"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -13399,6 +13484,26 @@ msgstr "URL-adress till denna installation av Zammad."
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr "URL-adressen till denna installation av Zammad."
+
+#: lib/whatsapp/webhook/configuration.rb
+msgid "The WhatsApp channel webhook configuration could not be verified."
+msgstr "Konfigurationen av WhatsApp-kanalens webhook kunde inte verifieras."
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+msgid "The WhatsApp connection could not be saved."
+msgstr "WhatsApp anslutningen kunde inte sparas."
+
+#: lib/whatsapp/webhook/concerns/has_channel.rb
+msgid "The WhatsApp webhook channel could not be found."
+msgstr "WhatsApp webhook kanalen kunde inte hittas."
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "The WhatsApp webhook payload could not be processed."
+msgstr "WhatsApp webhook payload kunde inte bearbetas."
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "The WhatsApp webhook payload could not be validated."
+msgstr "WhatsApp webhook payload kunde inte valideras."
 
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
@@ -14012,6 +14117,10 @@ msgstr "Den obligatoriska parametern 'method' saknas."
 msgid "The required parameter \"payload\" is missing."
 msgstr "Den nödvändiga parametern 'payload' saknas."
 
+#: lib/whatsapp/client.rb
+msgid "The required parameter 'access_token' is missing."
+msgstr "Den obligatoriska parametern 'access_token' saknas."
+
 #: lib/external_credential/facebook.rb
 msgid "The required parameter 'application_id' is missing."
 msgstr "Den obligatoriska parametern 'application_id' saknas."
@@ -14023,6 +14132,10 @@ msgstr "Den obligatoriska parametern 'application_secret' saknas."
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'area' is missing."
 msgstr "Den obligatoriska parametern 'area' saknas."
+
+#: lib/whatsapp/account/phone_numbers.rb
+msgid "The required parameter 'business_id' is missing."
+msgstr "Obligatorisk parameter 'business_id' saknas."
 
 #: lib/external_credential/exchange.rb lib/external_credential/google.rb
 #: lib/external_credential/microsoft365.rb
@@ -15040,6 +15153,10 @@ msgstr "Ärendeprioritet"
 msgid "Ticket Selector"
 msgstr "Ärendeväljare"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Ticket Settings"
+msgstr "Ärendeinställningar"
+
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 msgid "Ticket State"
 msgstr "Ärendestatus"
@@ -15913,6 +16030,18 @@ msgstr "Avaktivera standard"
 msgid "Unsubscribe"
 msgstr "Sluta följ"
 
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported message type."
+msgstr "Meddelandetyp stöds inte."
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported subscription type."
+msgstr "Prenumerationstyp stöds inte."
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported webhook payload."
+msgstr "Webhook payload stöds inte."
+
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
 "Up to %s% of this language is already translated. Please help to make Zammad "
@@ -16455,6 +16584,10 @@ msgstr "Verifiering E-post hittades inte i brevlådan."
 msgid "Verification email could not be sent."
 msgstr "Verifikationsmejl kunde inte skickas."
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Verify Token"
+msgstr "Verifiera token"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Verify sending and receiving"
@@ -16768,6 +16901,7 @@ msgid "Welcome Title shown on the closed chat. Can contain HTML."
 msgstr "Välkomst Titel som visas på den stängda chatten. Kan innehålla HTML."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Welcome message"
 msgstr "Välkomstmeddelande"
 
@@ -16805,6 +16939,23 @@ msgstr "Vilka värden på %s ska vi synkronisera med organisationen."
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to users."
 msgstr "Vilka värden på %s ska synkroniseras till användare."
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+msgid "WhatsApp Account"
+msgstr "WhatsApp konto"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "WhatsApp Business Account ID"
+msgstr "WhatsApp Business Konto ID"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid "Whatsapp"
+msgstr "Whatsapp"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid ""
@@ -17015,6 +17166,10 @@ msgid ""
 msgstr ""
 "Du kan ansluta %s med Zammad. Du måste dock ansluta ditt Zammad med %s först."
 
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+msgid "You can connect WhatsApp Business Accounts with Zammad."
+msgstr "Du kan ansluta WhatsApp Businesskonton till Zammad."
+
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
 "You can create **overviews** for your agents and your customers. These have "
@@ -17071,6 +17226,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
@@ -18514,6 +18672,7 @@ msgstr "raderingsalternativ"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "reply"
 msgstr "svara"
 
@@ -18774,6 +18933,10 @@ msgstr "webb"
 msgid "welcome message"
 msgstr "Välkomstmeddelande"
 
+#: db/seeds/ticket_article_types.rb
+msgid "whatsapp message"
+msgstr "Whatsappmeddelande"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
 msgstr "kommer att skapas"
@@ -18863,9 +19026,6 @@ msgstr "∅ Väntetid idag"
 
 #~ msgid "Invalid!"
 #~ msgstr "Ogiltig!"
-
-#~ msgid "The uploaded image could not be processed."
-#~ msgstr "Den uppladdade bilden kunde inte bearbetas."
 
 #~ msgid "should look like this: https://zammad.example.com"
 #~ msgstr "ska se ut på följande sätt: https://zammad.example.com"
@@ -19011,10 +19171,6 @@ msgstr "∅ Väntetid idag"
 #~| msgid "Discard your unsaved changes."
 #~ msgid "You have unsaved changes."
 #~ msgstr "Kasta dina osparade ändringar."
-
-#, fuzzy
-#~ msgid "The raw logo could not be read."
-#~ msgstr "%s Objekt har skapats."
 
 #~ msgid "skip"
 #~ msgstr "skippa"
@@ -19207,10 +19363,6 @@ msgstr "∅ Väntetid idag"
 #, fuzzy
 #~ msgid "me"
 #~ msgstr "Namn"
-
-#, fuzzy
-#~ msgid "Copied to clipboard!"
-#~ msgstr "Kopiera till urklipp: Ctrl+C, Enter"
 
 #~ msgid "Copy to clipboard: Ctrl+C, Enter"
 #~ msgstr "Kopiera till urklipp: Ctrl+C, Enter"

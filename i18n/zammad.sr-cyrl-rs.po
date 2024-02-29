@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-02-16 02:05+0000\n"
+"PO-Revision-Date: 2024-02-27 02:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -947,6 +947,10 @@ msgstr "API кључ"
 msgid "API Token Access"
 msgstr "Приступ API путем кључа"
 
+#: lib/whatsapp/webhook/payload.rb
+msgid "API error."
+msgstr "API грешка."
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
@@ -975,6 +979,10 @@ msgstr "Приступ тикетима оператера на основу г�
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
 "Приступ тикетима клијената на основу тренутног корисника и организације"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "Access token"
+msgstr "Приступни кључ"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -1021,6 +1029,7 @@ msgstr "Обрачунато време"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Accounts"
 msgstr "Налози"
 
@@ -1180,6 +1189,7 @@ msgstr "Додај"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Add Account"
 msgstr "Додај налог"
 
@@ -1705,6 +1715,10 @@ msgstr "Kреденцијали апликације за Facebook."
 msgid "App credentials for Twitter."
 msgstr "Kреденцијали апликације за Twitter."
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "App secret"
+msgstr "Шифра апликације"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
@@ -1798,6 +1812,7 @@ msgstr "Да ли сте сигурни да желите да уклоните 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
@@ -2533,6 +2548,7 @@ msgid "Call from %s for %s"
 msgstr "Позив од %s за %s"
 
 #: app/assets/javascripts/app/models/application.coffee
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 msgid "Callback URL"
 msgstr "URL за повратне позиве"
 
@@ -2800,6 +2816,10 @@ msgstr "Канал - Twitter"
 msgid "Channel - Web"
 msgstr "Канал - Веб"
 
+#: db/seeds/permissions.rb
+msgid "Channel - WhatsApp"
+msgstr "Канал - WhatsApp"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
 msgstr "Дистрибуција канала"
@@ -2923,6 +2943,7 @@ msgstr "Изабери групу којој ће бити додата поми
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Choose the group to which messages will get added."
 msgstr "Изабери групу којој ће бити додате поруке."
 
@@ -3428,6 +3449,10 @@ msgstr "Копирај"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Копирај број тренутног објекта (нпр. Ticket#) у привремену меморију"
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Copy to clipboard"
+msgstr "Копирај у привремену меморију"
+
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
 msgstr "Радни ток"
@@ -3449,6 +3474,10 @@ msgstr ""
 "Радни токови су радње или ограничења на селекције у формама. У зависности од "
 "радње, могуће је сакрити или ограничити поља или променити обавезу њиховог "
 "попуњавања."
+
+#: app/services/service/channel/whatsapp/base.rb
+msgid "Could not fetch WhatsApp phone number details."
+msgstr "Није било могуће учитати податке о WhatsApp броју телефона."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid ""
@@ -4992,6 +5021,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -5216,6 +5246,7 @@ msgstr "Правац"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Disable"
 msgstr "Искључи"
 
@@ -5444,6 +5475,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr "Ускршњи празници"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -5459,6 +5491,7 @@ msgstr "Ускршњи празници"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
@@ -5690,6 +5723,7 @@ msgstr "Празно"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Enable"
 msgstr "Укључи"
 
@@ -6102,7 +6136,8 @@ msgstr "Унеси свој %s API кључ из профила налога."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 msgid "Enter your Zendesk API token gained from your admin interface."
-msgstr "Унеси своју имејл адресу и %s API кључ из администраторског интерфејса."
+msgstr ""
+"Унеси своју имејл адресу и %s API кључ из администраторског интерфејса."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Enter your current password, insert a new one and confirm it."
@@ -6526,6 +6561,7 @@ msgstr "Пронађите шта тражите, нпр. „кључне реч
 msgid "Fingerprint"
 msgstr "Отисак"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
@@ -6974,6 +7010,7 @@ msgstr "Добар потпис"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Goodbye message"
 msgstr "Поздравна порука"
 
@@ -7030,6 +7067,7 @@ msgstr "Поздрав"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -7187,6 +7225,10 @@ msgstr "Има тикет отворен у прозорима, али није 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Hash"
 msgstr "Отисак"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Have a nice day!"
+msgstr "Желимо вам пријатан дан!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -7391,6 +7433,10 @@ msgstr "Сатима"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Како вам можемо помоћи? Потражите одговор или тему…"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "How can we help?"
+msgstr "Како вам можемо помоћи?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 msgid ""
@@ -7930,6 +7976,10 @@ msgstr "Целобројно поље"
 #: db/seeds/permissions.rb
 msgid "Integrations"
 msgstr "Интеграције"
+
+#: lib/whatsapp/incoming/media.rb
+msgid "Integrity verification of the downloaded WhatsApp media failed."
+msgstr "Неуспела провера интегритета преузетог WhatsApp медија."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
@@ -8899,6 +8949,7 @@ msgid "Message for login page."
 msgstr "Порука за страну пријављивања."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Messages"
 msgstr "Поруке"
 
@@ -9001,6 +9052,10 @@ msgstr "Минут(и)"
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Minutes"
 msgstr "Минутима"
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Mismatching phone number id."
+msgstr "Број телефона се не подудара."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
@@ -9280,6 +9335,7 @@ msgstr "Мрежа"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -9399,6 +9455,10 @@ msgstr "Нова верзија"
 msgid "New Webhook"
 msgstr "Нови повратни позив"
 
+#: lib/whatsapp/webhook/message.rb
+msgid "New WhatsApp message from %s"
+msgstr "Нова WhatsApp порука од %s"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
 msgstr "Нови радни ток"
@@ -9482,6 +9542,7 @@ msgstr ""
 msgid "New user?"
 msgstr "Нови корисник?"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
@@ -10552,6 +10613,14 @@ msgstr "Позив (одлазни)"
 msgid "Phone Extension to Agent Mapping"
 msgstr "Мапирање локала на оператере"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Phone number"
+msgstr "Број телефона"
+
+#: app/models/channel/area/whatsapp.rb
+msgid "Phone number is already in use by another WhatsApp account."
+msgstr "Одабрани број телефона се већ користи за други WhatsApp налог."
+
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Изаберите назив апликације, и добићете јединствени кључ."
@@ -11241,6 +11310,7 @@ msgstr "Замена"
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 msgid "Reply"
 msgstr "Одговори"
 
@@ -12921,6 +12991,18 @@ msgstr "Остани у прозору"
 msgid "Step %s is completed"
 msgstr "Комплетиран корак %s"
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "Step 1 of 3: WhatsApp Business Cloud API"
+msgstr "Корак 1 од 3: WhatsApp Business Cloud API"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Step 2 of 3: WhatsApp Business Phone Number"
+msgstr "Корак 2 од 3: WhatsApp Business број телефона"
+
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Step 3 of 3: WhatsApp Business Webhook"
+msgstr "Корак 3 од 3: WhatsApp Business повратни позив"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr "Заустави после поклапања"
@@ -13131,6 +13213,10 @@ msgstr "Преузми Reply-To заглавље као од/за поље им�
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
 msgstr "Циљ"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Target Group"
+msgstr "Циљна група"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -13388,6 +13474,26 @@ msgstr "URL путања ове инсталације Zammad-а."
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr "URL путања ове инсталације Zammad-а."
+
+#: lib/whatsapp/webhook/configuration.rb
+msgid "The WhatsApp channel webhook configuration could not be verified."
+msgstr "Није било могуће проверити WhatsApp конфигурацију повратног позива."
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+msgid "The WhatsApp connection could not be saved."
+msgstr "Није било могуће сачувати WhatsApp конфигурацију."
+
+#: lib/whatsapp/webhook/concerns/has_channel.rb
+msgid "The WhatsApp webhook channel could not be found."
+msgstr "Није било могуће пронаћи WhatsApp канал повратног позива."
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "The WhatsApp webhook payload could not be processed."
+msgstr "Није било могуће обрадити податке WhatsApp повратног позива."
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "The WhatsApp webhook payload could not be validated."
+msgstr "Није било могуће проверити податке WhatsApp повратног позива."
 
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
@@ -13998,6 +14104,10 @@ msgstr "Није пронађен обавезни параметар „method�
 msgid "The required parameter \"payload\" is missing."
 msgstr "Није пронађен обавезни параметар „payload”."
 
+#: lib/whatsapp/client.rb
+msgid "The required parameter 'access_token' is missing."
+msgstr "Није пронађен обавезни параметар ’access_token’."
+
 #: lib/external_credential/facebook.rb
 msgid "The required parameter 'application_id' is missing."
 msgstr "Није пронађен обавезни параметар ’application_id’."
@@ -14009,6 +14119,10 @@ msgstr "Није пронађен обавезни параметар ’applica
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'area' is missing."
 msgstr "Није пронађен обавезни параметар ’area’."
+
+#: lib/whatsapp/account/phone_numbers.rb
+msgid "The required parameter 'business_id' is missing."
+msgstr "Није пронађен обавезни параметар ’business_id’."
 
 #: lib/external_credential/exchange.rb lib/external_credential/google.rb
 #: lib/external_credential/microsoft365.rb
@@ -15015,6 +15129,10 @@ msgstr "Приоритет тикета"
 msgid "Ticket Selector"
 msgstr "Избор услова тикета"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Ticket Settings"
+msgstr "Подешавања тикета"
+
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 msgid "Ticket State"
 msgstr "Стање тикета"
@@ -15885,6 +16003,18 @@ msgstr "Поништи подразумевано"
 msgid "Unsubscribe"
 msgstr "Откажи претплату"
 
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported message type."
+msgstr "Тип поруке није подржан."
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported subscription type."
+msgstr "Тип претплате није подржан."
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported webhook payload."
+msgstr "Подаци повратног позива нису подржани."
+
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
 "Up to %s% of this language is already translated. Please help to make Zammad "
@@ -16426,6 +16556,10 @@ msgstr "Није пронађен имејл порука са потврдом 
 msgid "Verification email could not be sent."
 msgstr "Није било могуће послати имејл поруку са потврдом."
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Verify Token"
+msgstr "Верификациони кључ"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Verify sending and receiving"
@@ -16739,6 +16873,7 @@ msgstr ""
 "Наслов добродошлице приказан на затвореним ћаскањима. Може садржати HTML."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Welcome message"
 msgstr "Порука добродошлице"
 
@@ -16776,6 +16911,23 @@ msgstr "Које вредности %s се синхронизују са орг
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to users."
 msgstr "Које вредности %s се синхронизују са корисницима."
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+msgid "WhatsApp Account"
+msgstr "Додај WhatsApp налог"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "WhatsApp Business Account ID"
+msgstr "WhatsApp Business ID налога"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid "Whatsapp"
+msgstr "WhatsАpp"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid ""
@@ -16987,6 +17139,10 @@ msgstr ""
 "Можете повезати %s за Zammad-ом. Али прво, мораћете да повежете ваш Zammad "
 "са %s."
 
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+msgid "You can connect WhatsApp Business Accounts with Zammad."
+msgstr "Можете повезати WhatsApp Business налоге са Zammad-ом."
+
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
 "You can create **overviews** for your agents and your customers. These have "
@@ -17043,6 +17199,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
@@ -18485,6 +18644,7 @@ msgstr "уклони опцију"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "reply"
 msgstr "одговори"
 
@@ -18745,6 +18905,10 @@ msgstr "веб"
 msgid "welcome message"
 msgstr "порука добродошлице"
 
+#: db/seeds/ticket_article_types.rb
+msgid "whatsapp message"
+msgstr "whatsapp порука"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
 msgstr "биће додато"
@@ -18834,9 +18998,6 @@ msgstr "∅ Време чекања данас"
 
 #~ msgid "Invalid!"
 #~ msgstr "Неисправно!"
-
-#~ msgid "The uploaded image could not be processed."
-#~ msgstr "Није било могуће обрадити отпремљену слику."
 
 #~ msgid "should look like this: https://zammad.example.com"
 #~ msgstr "изгледа овако: https://zammad.example.com"
@@ -19037,9 +19198,6 @@ msgstr "∅ Време чекања данас"
 
 #~ msgid "Invalid payload, need data:image in logo param"
 #~ msgstr "Неисправни подаци, неопходан data:image у logo параметру"
-
-#~ msgid "The raw logo could not be read."
-#~ msgstr "Није било могуће ишчитати необрађени лого."
 
 #~ msgid "skip"
 #~ msgstr "прескочи"

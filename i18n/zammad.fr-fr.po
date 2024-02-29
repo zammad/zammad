@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-01-10 02:05+0000\n"
+"PO-Revision-Date: 2024-02-22 02:05+0000\n"
 "Last-Translator: Solenne Lefevre <solenne.lefevre@data-bene.io>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -540,20 +540,16 @@ msgid "%s object(s) will be updated."
 msgstr "%s objet(s) seront mis à jour."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
-#, fuzzy
-#| msgid "Image of %s"
 msgid "%s of %s"
-msgstr "Image de %s"
+msgstr "%s de %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s of my tickets are currently in process."
 msgstr "%s de mes tickets sont en cours."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
-#, fuzzy
-#| msgid "%s of my tickets escalated."
 msgid "%s of my tickets escalated"
-msgstr "% de mes tickets escaladés."
+msgstr "% de mes tickets escaladés"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco
 msgid "%s people"
@@ -875,7 +871,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Not allowed to access this task."
 msgid "A mentioned user has no agent access to this ticket"
-msgstr "n'a pas l'autorisation agent pour accéder à ce ticket"
+msgstr "Un utilisateur cité n'a pas d'accès agent à ce ticket"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -928,6 +924,9 @@ msgid ""
 "A ticket's priority is simply a ranking of how urgent or important it is. "
 "Different priorities allow you to see the importance of your tickets better."
 msgstr ""
+"La priorité d'un ticket est simplement un classement de son degré d'urgence "
+"ou d'importance. Avoir différentes priorités permet de mieux visualiser "
+"l'importance des tickets."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid ""
@@ -968,6 +967,12 @@ msgstr "Jeton API"
 msgid "API Token Access"
 msgstr "Jeton d'accès API"
 
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "Sign out"
+msgid "API error."
+msgstr "Déconnexion"
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
@@ -996,6 +1001,12 @@ msgstr "Accès aux tickets des Agents basé sur les accès groupe"
 #: db/seeds/permissions.rb
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr "Accès aux tickets Client basé sur current_user et organization"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#, fuzzy
+#| msgid "Access to %s"
+msgid "Access token"
+msgstr "Accès à/au %s"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -1042,6 +1053,7 @@ msgstr "Temps facturé"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Accounts"
 msgstr "Comptes"
 
@@ -1201,6 +1213,7 @@ msgstr "Ajouter"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Add Account"
 msgstr "Ajouter compte"
 
@@ -1769,6 +1782,12 @@ msgstr "Informations d'identification pour Facebook."
 msgid "App credentials for Twitter."
 msgstr "Informations d'identification pour Twitter."
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#, fuzzy
+#| msgid "App Secret"
+msgid "App secret"
+msgstr "App Secret"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
@@ -1862,6 +1881,7 @@ msgstr "Êtes-vous sûr(e) de ne plus vouloir mettre \"%s\" par défaut ?"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
@@ -2630,6 +2650,7 @@ msgid "Call from %s for %s"
 msgstr "Appel de %s pour %s"
 
 #: app/assets/javascripts/app/models/application.coffee
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 msgid "Callback URL"
 msgstr "URL rappelée"
 
@@ -2914,6 +2935,12 @@ msgstr "Canal - Twitter"
 msgid "Channel - Web"
 msgstr "Canal - Web"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Channel - Chat"
+msgid "Channel - WhatsApp"
+msgstr "Canal - Chat"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
 msgstr "Canal de Distribution"
@@ -3043,6 +3070,7 @@ msgstr "Choisissez le groupe auquel les mentions seront ajoutées."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Choose the group to which messages will get added."
 msgstr "Choisissez le groupe auquel les messages seront ajoutés."
 
@@ -3589,6 +3617,12 @@ msgstr ""
 "Copier le numéro de l'objet actuel (par exemple le numéro de ticket) dans le "
 "presse-papiers"
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+#, fuzzy
+#| msgid "Copy to clipboard: Ctrl+C, Enter"
+msgid "Copy to clipboard"
+msgstr "Copier dans le presse-papiers : Ctrl+C, Entrée"
+
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
 msgstr "Core Workflow"
@@ -3610,6 +3644,10 @@ msgstr ""
 "Les Core Workflows sont des actions ou contraintes dans les formulaires. En "
 "fonction de l'action, il est possible de cacher ou interdire certains "
 "champs, ou encore de changer l'obligation de les remplir."
+
+#: app/services/service/channel/whatsapp/base.rb
+msgid "Could not fetch WhatsApp phone number details."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #, fuzzy
@@ -5251,6 +5289,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -5483,6 +5522,7 @@ msgstr "Direction"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Disable"
 msgstr "Désactiver"
 
@@ -5731,6 +5771,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr "Vacance de pâques"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -5746,6 +5787,7 @@ msgstr "Vacance de pâques"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
@@ -5987,6 +6029,7 @@ msgstr "vide"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Enable"
 msgstr "Activer"
 
@@ -6887,6 +6930,7 @@ msgstr "Trouver ce que vous cherchez, exemple \"texte recherché\""
 msgid "Fingerprint"
 msgstr "Empreinte"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
@@ -7357,6 +7401,7 @@ msgstr "Signature"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Goodbye message"
 msgstr "Message d'au-revoir"
 
@@ -7416,6 +7461,7 @@ msgstr "Salutations"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -7588,6 +7634,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Hash"
 msgstr "Hash"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Have a nice day."
+msgid "Have a nice day!"
+msgstr "Passez une bonne journée."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -7804,6 +7856,10 @@ msgstr "Heures"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Comment pouvons nous vous aider ? Recherchez une réponse ou un sujet…"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "How can we help?"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 msgid ""
@@ -8369,6 +8425,10 @@ msgstr "Champ de nombre Entier"
 #: db/seeds/permissions.rb
 msgid "Integrations"
 msgstr "Intégrations"
+
+#: lib/whatsapp/incoming/media.rb
+msgid "Integrity verification of the downloaded WhatsApp media failed."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
@@ -9396,6 +9456,7 @@ msgid "Message for login page."
 msgstr "Message pour la page de connexion."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Messages"
 msgstr "Messages"
 
@@ -9508,6 +9569,10 @@ msgstr "Minute(s)"
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Minutes"
 msgstr "Minutes"
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Mismatching phone number id."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
@@ -9792,6 +9857,7 @@ msgstr "Réseau"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -9917,6 +9983,12 @@ msgstr "Nouvelle Version"
 msgid "New Webhook"
 msgstr "Nouveau webhook"
 
+#: lib/whatsapp/webhook/message.rb
+#, fuzzy
+#| msgid "Test message from Zammad"
+msgid "New WhatsApp message from %s"
+msgstr "Message de test de Zammad"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
 msgstr "Nouveau Workflow"
@@ -10000,6 +10072,7 @@ msgstr ""
 msgid "New user?"
 msgstr "Nouvel utilisateur ?"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
@@ -11132,6 +11205,16 @@ msgstr "Appel (sortant)"
 msgid "Phone Extension to Agent Mapping"
 msgstr "Correspondance Agent - Extension téléphonique"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Phone (in)"
+msgid "Phone number"
+msgstr "Appel (entrant)"
+
+#: app/models/channel/area/whatsapp.rb
+msgid "Phone number is already in use by another WhatsApp account."
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
@@ -11889,6 +11972,7 @@ msgstr "Remplacement"
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #, fuzzy
 #| msgid "reply"
 msgid "Reply"
@@ -13768,6 +13852,18 @@ msgstr "Rester sur l'onglet"
 msgid "Step %s is completed"
 msgstr "L'étape %s est terminée"
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "Step 1 of 3: WhatsApp Business Cloud API"
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Step 2 of 3: WhatsApp Business Phone Number"
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Step 3 of 3: WhatsApp Business Webhook"
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr "Arrêter à la première correspondance"
@@ -13982,6 +14078,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
 msgstr "Cible"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Parent"
+msgid "Target Group"
+msgstr "Parent"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -14274,6 +14376,34 @@ msgstr "L'URL pointant vers cette installation de Zammad."
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr "L'URL pointant vers cette installation de Zammad."
+
+#: lib/whatsapp/webhook/configuration.rb
+msgid "The WhatsApp channel webhook configuration could not be verified."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#, fuzzy
+#| msgid "The changes could not be saved."
+msgid "The WhatsApp connection could not be saved."
+msgstr "Les modifications n'ont pas pu être enregistrées."
+
+#: lib/whatsapp/webhook/concerns/has_channel.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The WhatsApp webhook channel could not be found."
+msgstr "%s objet(s) mis à jour."
+
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The WhatsApp webhook payload could not be processed."
+msgstr "%s objet(s) créé(s)."
+
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The WhatsApp webhook payload could not be validated."
+msgstr "%s objet(s) créé(s)."
 
 #: app/controllers/reports_controller.rb
 #, fuzzy
@@ -14980,6 +15110,12 @@ msgstr "Le paramètre obligatoire 'profile' est manquant."
 msgid "The required parameter \"payload\" is missing."
 msgstr "Le paramètre obligatoire 'profile' est manquant."
 
+#: lib/whatsapp/client.rb
+#, fuzzy
+#| msgid "The required parameter 'request_token' is missing."
+msgid "The required parameter 'access_token' is missing."
+msgstr "Le paramètre obligatoire 'request_token' est manquant."
+
 #: lib/external_credential/facebook.rb
 msgid "The required parameter 'application_id' is missing."
 msgstr "Le paramètre requis 'application_id' est manquant."
@@ -14991,6 +15127,12 @@ msgstr "Le paramètre requis 'application_secret' est manquant."
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'area' is missing."
 msgstr "Le paramètre requis 'area' est manquant."
+
+#: lib/whatsapp/account/phone_numbers.rb
+#, fuzzy
+#| msgid "The required parameter 'for_user_id' is missing."
+msgid "The required parameter 'business_id' is missing."
+msgstr "Le paramètre requis 'for_user_id' est manquant."
 
 #: lib/external_credential/exchange.rb lib/external_credential/google.rb
 #: lib/external_credential/microsoft365.rb
@@ -16132,6 +16274,12 @@ msgstr "Priorité"
 msgid "Ticket Selector"
 msgstr "Sélections du ticket"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket Settings"
+msgstr "Mettre a jour le ticket"
+
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 #, fuzzy
 #| msgid "Ticket update"
@@ -17083,6 +17231,18 @@ msgstr "Remettre à zéro"
 msgid "Unsubscribe"
 msgstr "Se désinscrire"
 
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported message type."
+msgstr ""
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported subscription type."
+msgstr ""
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported webhook payload."
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
 "Up to %s% of this language is already translated. Please help to make Zammad "
@@ -17636,6 +17796,12 @@ msgstr ""
 msgid "Verification email could not be sent."
 msgstr "L'email de vérification n'a pas pu être envoyé."
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+#, fuzzy
+#| msgid "Generate Token"
+msgid "Verify Token"
+msgstr "Générer un jeton"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Verify sending and receiving"
@@ -17986,6 +18152,7 @@ msgstr ""
 "Titre de bienvenue dans la fenêtre de chat fermée. Peut contenir du code HML."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Welcome message"
 msgstr "Message de bienvenue"
 
@@ -18024,6 +18191,29 @@ msgstr "Quelles valeurs de %s sont à synchroniser avec les organisations."
 msgid "What values of %s should be synced to users."
 msgstr ""
 "Quelles valeurs de %s doivent être synchronisées avec les utilisateurs."
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+#, fuzzy
+#| msgid "Chats"
+msgid "WhatsApp"
+msgstr "Chats"
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#, fuzzy
+#| msgid "Add Account"
+msgid "WhatsApp Account"
+msgstr "Ajouter compte"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "WhatsApp Business Account ID"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+#, fuzzy
+#| msgid "Chats"
+msgid "Whatsapp"
+msgstr "Chats"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid ""
@@ -18246,6 +18436,10 @@ msgstr ""
 "Vous pouvez connecter %s avec Zammad. Mais pour cela, vous devez d'abord "
 "connecter Zammad avec %s."
 
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+msgid "You can connect WhatsApp Business Accounts with Zammad."
+msgstr ""
+
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
 "You can create **overviews** for your agents and your customers. These have "
@@ -18304,6 +18498,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
@@ -19789,6 +19986,7 @@ msgstr "supprimer l'option"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "reply"
 msgstr "Répondre"
 
@@ -20062,6 +20260,12 @@ msgstr "web"
 msgid "welcome message"
 msgstr "message de bienvenue"
 
+#: db/seeds/ticket_article_types.rb
+#, fuzzy
+#| msgid "Add a message"
+msgid "whatsapp message"
+msgstr "Ajouter un message"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
 msgstr "sera créé"
@@ -20156,11 +20360,6 @@ msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
 #~| msgid "is invalid"
 #~ msgid "Invalid!"
 #~ msgstr "est invalide"
-
-#, fuzzy
-#~| msgid "%s Object(s) are created."
-#~ msgid "The uploaded image could not be processed."
-#~ msgstr "%s objet(s) créé(s)."
 
 #, fuzzy
 #~| msgid "A URL looks like this: https://zammad.example.com"
@@ -20352,11 +20551,6 @@ msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
 #~ msgid "Invalid payload, need data:image in logo param"
 #~ msgstr ""
 #~ "Charge utile invalide, besoin de données:image dans le paramètre logo"
-
-#, fuzzy
-#~| msgid "%s Object(s) are created."
-#~ msgid "The raw logo could not be read."
-#~ msgstr "%s objet(s) créé(s)."
 
 #~ msgid "skip"
 #~ msgstr "passer"
@@ -20617,11 +20811,6 @@ msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
 #~| msgid "m"
 #~ msgid "me"
 #~ msgstr "m"
-
-#, fuzzy
-#~| msgid "Copy to clipboard: Ctrl+C, Enter"
-#~ msgid "Copied to clipboard!"
-#~ msgstr "Copier dans le presse-papiers : Ctrl+C, Entrée"
 
 #~ msgid "Copy to clipboard: Ctrl+C, Enter"
 #~ msgstr "Copier dans le presse-papiers : Ctrl+C, Entrée"

@@ -955,6 +955,12 @@ msgstr "โทเค็น API"
 msgid "API Token Access"
 msgstr "เข้าถึงโทเค็น API"
 
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "Sign out"
+msgid "API error."
+msgstr "ออกจากระบบ"
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
@@ -981,6 +987,12 @@ msgstr "การเข้าถึง Tickets ของเจ้าหน้า
 #: db/seeds/permissions.rb
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr "การเข้าถึง Tickets ของลูกค้าตาม บน current_user และองค์กร"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#, fuzzy
+#| msgid "Access to %s"
+msgid "Access token"
+msgstr "เข้าถึง %s"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -1027,6 +1039,7 @@ msgstr "เวลาบัญชี"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Accounts"
 msgstr "บัญชี"
 
@@ -1186,6 +1199,7 @@ msgstr "เพิ่ม"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Add Account"
 msgstr "เพิ่มบัญชี"
 
@@ -1722,6 +1736,12 @@ msgstr "ข้อมูลประจำตัวแอปสำหรับ Fa
 msgid "App credentials for Twitter."
 msgstr "ข้อมูลรับรองแอพสำหรับ Twitter"
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#, fuzzy
+#| msgid "App Secret"
+msgid "App secret"
+msgstr "รหัส แอป"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
@@ -1817,6 +1837,7 @@ msgstr "คุณแน่ใจหรือไม่ว่า ไม่ต้�
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
@@ -2568,6 +2589,7 @@ msgid "Call from %s for %s"
 msgstr "โทรจาก %s สำหรับ %s"
 
 #: app/assets/javascripts/app/models/application.coffee
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 msgid "Callback URL"
 msgstr "Callback URL"
 
@@ -2843,6 +2865,12 @@ msgstr "ช่องทาง - ทวิสเตอร์"
 msgid "Channel - Web"
 msgstr "ช่องทาง - เวป"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Channel - Chat"
+msgid "Channel - WhatsApp"
+msgstr "ช่องทางสื่อสาร - แชต"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
 msgstr "ช่องทางการรับบริการ"
@@ -2964,6 +2992,7 @@ msgstr "เลือกกลุ่มที่จะเพิ่มการก
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Choose the group to which messages will get added."
 msgstr "เลือกกลุ่มที่จะเพิ่มข้อความ."
 
@@ -3479,6 +3508,12 @@ msgstr "คัดลอก"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "คัดลอกหมายเลขวัตถุปัจจุบัน (เช่น Ticket#) ไปยังคลิปบอร์ด"
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+#, fuzzy
+#| msgid "Copied to clipboard!"
+msgid "Copy to clipboard"
+msgstr "ว่างจากคลิปบอร์ด"
+
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
 msgstr "เวิร์กโฟลว์หลัก"
@@ -3499,6 +3534,10 @@ msgid ""
 msgstr ""
 "เวิร์กโฟลว์หลักคือการดำเนินการหรือข้อจำกัดเกี่ยวกับการเลือกในแบบฟอร์ม ขึ้นอยู่กับการดำเนินการ "
 "เป็นไปได้ที่จะซ่อนหรือจำกัดฟิลด์หรือเปลี่ยนภาระผูกพันในการกรอกข้อมูล"
+
+#: app/services/service/channel/whatsapp/base.rb
+msgid "Could not fetch WhatsApp phone number details."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #, fuzzy
@@ -5005,6 +5044,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -5237,6 +5277,7 @@ msgstr "ทิศทาง"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Disable"
 msgstr "ปิดใช้งาน"
 
@@ -5473,6 +5514,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr "วันหยุดอีสเตอร์"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -5488,6 +5530,7 @@ msgstr "วันหยุดอีสเตอร์"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
@@ -5728,6 +5771,7 @@ msgstr "ว่าง"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Enable"
 msgstr "เปิดใช้"
 
@@ -6558,6 +6602,7 @@ msgstr "ค้นหาสิ่งที่ต้องการ เช่น \
 msgid "Fingerprint"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
@@ -7026,6 +7071,7 @@ msgstr "ลายเซ็น"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Goodbye message"
 msgstr "ข้อความอำลา"
 
@@ -7090,6 +7136,7 @@ msgstr "การทักทาย"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -7261,6 +7308,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Hash"
 msgstr "Hash"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Have a nice day."
+msgid "Have a nice day!"
+msgstr "ขอให้เป็นวันที่ดี."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -7457,6 +7510,10 @@ msgstr "ชั่วโมง"
 
 #: app/views/layouts/knowledge_base.html.erb
 msgid "How can we help you? Search for an answer or a topic…"
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "How can we help?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
@@ -7984,6 +8041,10 @@ msgstr "ฟิลด์จำนวนเต็ม"
 #: db/seeds/permissions.rb
 msgid "Integrations"
 msgstr "การรวมตัวกัน"
+
+#: lib/whatsapp/incoming/media.rb
+msgid "Integrity verification of the downloaded WhatsApp media failed."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
@@ -8974,6 +9035,7 @@ msgid "Message for login page."
 msgstr "ข้อความสำหรับหน้าล็อกอิน"
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Messages"
 msgstr "ข้อความ"
 
@@ -9086,6 +9148,10 @@ msgstr "นาที(s)"
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Minutes"
 msgstr "นาที"
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Mismatching phone number id."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
@@ -9369,6 +9435,7 @@ msgstr "เครือข่าย"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -9496,6 +9563,10 @@ msgstr "เวอร์ชั่นใหม่"
 msgid "New Webhook"
 msgstr ""
 
+#: lib/whatsapp/webhook/message.rb
+msgid "New WhatsApp message from %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
 msgstr ""
@@ -9553,6 +9624,7 @@ msgstr ""
 msgid "New user?"
 msgstr "ผู้ใช้ใหม่?"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
@@ -10661,6 +10733,16 @@ msgstr "โทรศัพท์ (out)"
 msgid "Phone Extension to Agent Mapping"
 msgstr ""
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Phone (in)"
+msgid "Phone number"
+msgstr "โทรศัพท์ (in)"
+
+#: app/models/channel/area/whatsapp.rb
+msgid "Phone number is already in use by another WhatsApp account."
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "เลือกชื่อสำหรับแอปพลิเคชัน แล้วเราจะมอบโทเค็นพิเศษให้คุณ"
@@ -11373,6 +11455,7 @@ msgstr "ทดแทน"
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 msgid "Reply"
 msgstr "ตอบกลับ"
 
@@ -13159,6 +13242,18 @@ msgstr "อยู่บนแท็บ"
 msgid "Step %s is completed"
 msgstr ""
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "Step 1 of 3: WhatsApp Business Cloud API"
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Step 2 of 3: WhatsApp Business Phone Number"
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Step 3 of 3: WhatsApp Business Webhook"
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr ""
@@ -13371,6 +13466,12 @@ msgstr "ใช้ส่วนหัว Reply-To เป็นผู้ส่ง/�
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
 msgstr "แปล"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Parent"
+msgid "Target Group"
+msgstr "หลัก"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -13641,6 +13742,34 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr ""
+
+#: lib/whatsapp/webhook/configuration.rb
+msgid "The WhatsApp channel webhook configuration could not be verified."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#, fuzzy
+#| msgid "The changes could not be saved."
+msgid "The WhatsApp connection could not be saved."
+msgstr "ไม่สามารถบันทึกการเปลี่ยนแปลงได้."
+
+#: lib/whatsapp/webhook/concerns/has_channel.rb
+#, fuzzy
+#| msgid "Locale could not be found."
+msgid "The WhatsApp webhook channel could not be found."
+msgstr "ไม่พบตําแหน่งที่ตั้ง"
+
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "The uploaded image could not be processed."
+msgid "The WhatsApp webhook payload could not be processed."
+msgstr "ไม่สามารถประมวลผลภาพที่อัปโหลด"
+
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "The raw logo could not be read."
+msgid "The WhatsApp webhook payload could not be validated."
+msgstr "ไม่สามารถอ่าน โลโก้ RAW ไฟล์"
 
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
@@ -14301,6 +14430,12 @@ msgstr "ไม่มีพารามิเตอร์ที่จำเป็
 msgid "The required parameter \"payload\" is missing."
 msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
+#: lib/whatsapp/client.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required parameter 'access_token' is missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
+
 #: lib/external_credential/facebook.rb
 msgid "The required parameter 'application_id' is missing."
 msgstr ""
@@ -14312,6 +14447,12 @@ msgstr ""
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'area' is missing."
 msgstr ""
+
+#: lib/whatsapp/account/phone_numbers.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required parameter 'business_id' is missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
 #: lib/external_credential/exchange.rb lib/external_credential/google.rb
 #: lib/external_credential/microsoft365.rb
@@ -15386,6 +15527,12 @@ msgstr "ความสำคัญ"
 msgid "Ticket Selector"
 msgstr "Ticket ตัวเลือก"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket Settings"
+msgstr "Ticket อัปเดต"
+
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 #, fuzzy
 #| msgid "Ticket update"
@@ -16276,6 +16423,18 @@ msgstr "เรียกคืนค่าเริ่มต้น"
 msgid "Unsubscribe"
 msgstr "ยกเลิกการสมัคร"
 
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported message type."
+msgstr ""
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported subscription type."
+msgstr ""
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported webhook payload."
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
 "Up to %s% of this language is already translated. Please help to make Zammad "
@@ -16780,6 +16939,12 @@ msgstr "ไม่พบอีเมลยืนยันในกล่องจ
 msgid "Verification email could not be sent."
 msgstr "ไม่สามารถส่งอีเมลยืนยันได้"
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+#, fuzzy
+#| msgid "Generate Token"
+msgid "Verify Token"
+msgstr "สร้างโทเค็น"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Verify sending and receiving"
@@ -17101,6 +17266,7 @@ msgid "Welcome Title shown on the closed chat. Can contain HTML."
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Welcome message"
 msgstr ""
 
@@ -17136,6 +17302,29 @@ msgstr "ควรซิงค์ค่าของ %s ใดกับองค�
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to users."
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+#, fuzzy
+#| msgid "Chats"
+msgid "WhatsApp"
+msgstr "แชต"
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#, fuzzy
+#| msgid "Add Account"
+msgid "WhatsApp Account"
+msgstr "เพิ่มบัญชี"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "WhatsApp Business Account ID"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+#, fuzzy
+#| msgid "Chats"
+msgid "Whatsapp"
+msgstr "แชต"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid ""
@@ -17335,6 +17524,10 @@ msgid ""
 "Zammad with %s."
 msgstr "สามารถเชื่อมต่อ %s กับ Zammad ได้ แต่ก่อนอื่น คุณจะต้องเชื่อมต่อ Zammad ของคุณกับ %s"
 
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+msgid "You can connect WhatsApp Business Accounts with Zammad."
+msgstr ""
+
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
 "You can create **overviews** for your agents and your customers. These have "
@@ -17391,6 +17584,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
@@ -18859,6 +19055,7 @@ msgstr "ลบตัวเลือก"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "reply"
 msgstr "ตอบกลับ"
 
@@ -19131,6 +19328,12 @@ msgstr "เว็บ"
 msgid "welcome message"
 msgstr "ข้อความต้อนรับ"
 
+#: db/seeds/ticket_article_types.rb
+#, fuzzy
+#| msgid "Add a message"
+msgid "whatsapp message"
+msgstr "เพิ่มข้อความ"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
 msgstr "จะถูกสร้างขึ้น"
@@ -19229,9 +19432,6 @@ msgstr "∅ รอเวลาวันนี้"
 #~| msgid "is invalid"
 #~ msgid "Invalid!"
 #~ msgstr "ไม่ถูกต้อง"
-
-#~ msgid "The uploaded image could not be processed."
-#~ msgstr "ไม่สามารถประมวลผลภาพที่อัปโหลด"
 
 #, fuzzy
 #~| msgid "A URL looks like this: https://zammad.example.com"
@@ -19410,9 +19610,6 @@ msgstr "∅ รอเวลาวันนี้"
 
 #~ msgid "Defines the searchable models."
 #~ msgstr "กำหนดแบบจำลองที่สามารถค้นหาได้"
-
-#~ msgid "The raw logo could not be read."
-#~ msgstr "ไม่สามารถอ่าน โลโก้ RAW ไฟล์"
 
 #~ msgid "skip"
 #~ msgstr "ข้าม"
@@ -19619,9 +19816,6 @@ msgstr "∅ รอเวลาวันนี้"
 
 #~ msgid "me"
 #~ msgstr "me"
-
-#~ msgid "Copied to clipboard!"
-#~ msgstr "ว่างจากคลิปบอร์ด"
 
 #~ msgid "Copy to clipboard: Ctrl+C, Enter"
 #~ msgstr "คัดลอกไปยังคลิปบอร์ด: Ctrl+C, Enter"

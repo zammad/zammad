@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-25 06:23+0000\n"
-"Last-Translator: \"Chang W. Lee\" <changlee99@gmail.com>\n"
+"PO-Revision-Date: 2024-02-29 02:05+0000\n"
+"Last-Translator: FoW <fow@netspheres.org>\n"
 "Language-Team: Korean <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ko/>\n"
 "Language: ko-kr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.0.2\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -959,6 +959,12 @@ msgstr ""
 msgid "API Token Access"
 msgstr ""
 
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "Sign out"
+msgid "API error."
+msgstr "로그 아웃"
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
@@ -985,6 +991,12 @@ msgstr "그룹 액세스를 기반으로 에이전트 Ticket 액세스"
 #: db/seeds/permissions.rb
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#, fuzzy
+#| msgid "Access to %s"
+msgid "Access token"
+msgstr "%s에 액세스"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -1031,6 +1043,7 @@ msgstr "차지 시간"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Accounts"
 msgstr "계정"
 
@@ -1198,6 +1211,7 @@ msgstr "더하다"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Add Account"
 msgstr "계정 추가"
 
@@ -1719,6 +1733,12 @@ msgstr "페이스북 앱 인증"
 msgid "App credentials for Twitter."
 msgstr "트위터 앱 인증"
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#, fuzzy
+#| msgid "App Secret"
+msgid "App secret"
+msgstr "앱의 비밀"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
@@ -1820,6 +1840,7 @@ msgstr "이 개체를 삭제해야?"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
@@ -2596,6 +2617,7 @@ msgid "Call from %s for %s"
 msgstr ""
 
 #: app/assets/javascripts/app/models/application.coffee
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 msgid "Callback URL"
 msgstr "콜백 URL"
 
@@ -2731,12 +2753,12 @@ msgstr "알림 설정 관리"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
-msgstr "카테고리"
+msgstr "범주"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Category"
-msgstr "카테고리"
+msgstr "범주"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Category page layout"
@@ -2749,14 +2771,12 @@ msgid "Caution!"
 msgstr "지속"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "SMS Notification"
 msgid "Certificate (PEM)"
-msgstr "SMS 알림"
+msgstr "인증서 (PEM)"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
-msgstr ""
+msgstr "인증서 & 개인 키"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
@@ -2764,51 +2784,43 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 msgid "Change"
-msgstr "변화"
+msgstr "바꾸기"
 
 #: db/seeds/permissions.rb
 msgid "Change %s"
-msgstr "%s 변경"
+msgstr "%s 바꾸기"
 
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 msgid "Change Customer"
-msgstr "변경 고객"
+msgstr "고객 바꾸기"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 msgid "Change Objects"
-msgstr "변경 개체"
+msgstr "오브젝트 바꾸기"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
-#, fuzzy
-#| msgid "Change your password"
 msgid "Change Your Password"
-msgstr "비밀번호 변경"
+msgstr "내 암호 바꾸기"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Change Customer"
 msgid "Change customer"
-msgstr "변경 고객"
+msgstr "고객 바꾸기"
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Change order"
 msgid "Change date"
-msgstr "주문 변경"
+msgstr "날짜 바꾸기"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
-msgstr "주문 변경"
+msgstr "주문 바꾸기"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#, fuzzy
-#| msgid "Changed"
 msgid "Changed:"
-msgstr "변경"
+msgstr "바꿈:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/views/mailer/ticket_update/fr.html.erb
@@ -2816,7 +2828,7 @@ msgstr "변경"
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
-msgstr "변경"
+msgstr "바꾸기"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
@@ -2888,6 +2900,12 @@ msgstr ""
 #: db/seeds/permissions.rb
 msgid "Channel - Web"
 msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Channel"
+msgid "Channel - WhatsApp"
+msgstr "채널"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
@@ -3014,6 +3032,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Choose the group to which messages will get added."
 msgstr ""
 
@@ -3555,6 +3574,12 @@ msgstr ""
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "클립 보드에 현재의 개체 번호 (예 : Ticket #)을 복사합니다"
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+#, fuzzy
+#| msgid "Copy to clipboard: Ctrl+C, Enter"
+msgid "Copy to clipboard"
+msgstr "클립 보드에 복사 : Ctrl + C를 입력"
+
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
 msgstr ""
@@ -3572,6 +3597,10 @@ msgid ""
 "Core Workflows are actions or constraints on selections in forms. Depending "
 "on an action, it is possible to hide or restrict fields or to change the "
 "obligation to fill them in."
+msgstr ""
+
+#: app/services/service/channel/whatsapp/base.rb
+msgid "Could not fetch WhatsApp phone number details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
@@ -5082,6 +5111,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -5330,6 +5360,7 @@ msgstr "방향"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Disable"
 msgstr "해제"
 
@@ -5584,6 +5615,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -5599,6 +5631,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
@@ -5839,6 +5872,7 @@ msgstr "공백"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Enable"
 msgstr "사용"
 
@@ -6695,6 +6729,7 @@ msgstr "당신이 검색을 찾으십시오. E.의 g. \"검색 구문\""
 msgid "Fingerprint"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
@@ -7185,6 +7220,7 @@ msgstr "서명"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Goodbye message"
 msgstr ""
 
@@ -7247,6 +7283,7 @@ msgstr "환영"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -7427,6 +7464,10 @@ msgstr ""
 msgid "Hash"
 msgstr ""
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Have a nice day!"
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Have a nice day."
@@ -7550,16 +7591,12 @@ msgid "Hi! Which one of our products?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
-#, fuzzy
-#| msgid "Authentication"
 msgid "Hide authenticator app secret"
-msgstr "인증"
+msgstr "인증기 앱 시크리 숨기기"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
-#, fuzzy
-#| msgid "Priority"
 msgid "High priority"
-msgstr "우선 순위"
+msgstr "높은 우선순위"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid "Highlight color"
@@ -7599,7 +7636,7 @@ msgstr "휴일을 iCalendar 피드"
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Home"
-msgstr ""
+msgstr "홈"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -7610,7 +7647,7 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
 msgid "Host"
-msgstr "숙주"
+msgstr "호스트"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Host Notification"
@@ -7638,6 +7675,10 @@ msgstr "시간"
 
 #: app/views/layouts/knowledge_base.html.erb
 msgid "How can we help you? Search for an answer or a topic…"
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "How can we help?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
@@ -8186,6 +8227,10 @@ msgstr "정수"
 #: db/seeds/permissions.rb
 msgid "Integrations"
 msgstr "통합"
+
+#: lib/whatsapp/incoming/media.rb
+msgid "Integrity verification of the downloaded WhatsApp media failed."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
@@ -9188,6 +9233,7 @@ msgid "Message for login page."
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Messages"
 msgstr "메시지"
 
@@ -9306,6 +9352,10 @@ msgstr "의사록"
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Minutes"
 msgstr "분"
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Mismatching phone number id."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
@@ -9605,6 +9655,7 @@ msgstr "회로망"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -9736,6 +9787,10 @@ msgstr "새로운 버전"
 msgid "New Webhook"
 msgstr ""
 
+#: lib/whatsapp/webhook/message.rb
+msgid "New WhatsApp message from %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
 msgstr ""
@@ -9795,6 +9850,7 @@ msgstr ""
 msgid "New user?"
 msgstr "새로운 사용자"
 
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
@@ -10955,6 +11011,16 @@ msgstr ""
 msgid "Phone Extension to Agent Mapping"
 msgstr ""
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "November"
+msgid "Phone number"
+msgstr "11월"
+
+#: app/models/channel/area/whatsapp.rb
+msgid "Phone number is already in use by another WhatsApp account."
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
@@ -11304,7 +11370,7 @@ msgstr "Ticket 에스컬레이션"
 
 #: db/seeds/settings.rb
 msgid "Product Name"
-msgstr "상품명"
+msgstr "공급 이름"
 
 #: app/assets/javascripts/app/controllers/profile.coffee
 msgid "Profile"
@@ -11690,6 +11756,7 @@ msgstr "바꿔 놓음"
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #, fuzzy
 #| msgid "reply"
 msgid "Reply"
@@ -13489,6 +13556,18 @@ msgstr "탭에 그대로"
 msgid "Step %s is completed"
 msgstr ""
 
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "Step 1 of 3: WhatsApp Business Cloud API"
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "Step 2 of 3: WhatsApp Business Phone Number"
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Step 3 of 3: WhatsApp Business Webhook"
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr ""
@@ -13624,7 +13703,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: db/seeds/permissions.rb db/seeds/ticket_article_senders.rb
 msgid "System"
-msgstr "체계"
+msgstr "시스템"
 
 #: db/seeds/settings.rb
 msgid "System Address Display Name"
@@ -13702,11 +13781,17 @@ msgstr ""
 msgid "Target"
 msgstr "목표"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Parent"
+msgid "Target Group"
+msgstr "부모의"
+
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 msgid "Telegram"
-msgstr "전보"
+msgstr "Telegram"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Telegram Account"
@@ -13977,6 +14062,34 @@ msgstr "Zammad이 설치 URL입니다."
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr "Zammad이 설치 URL입니다."
+
+#: lib/whatsapp/webhook/configuration.rb
+msgid "The WhatsApp channel webhook configuration could not be verified."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The WhatsApp connection could not be saved."
+msgstr "%s 객체 (들)이 생성된다."
+
+#: lib/whatsapp/webhook/concerns/has_channel.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The WhatsApp webhook channel could not be found."
+msgstr "%s 객체 (들) 업데이트됩니다."
+
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The WhatsApp webhook payload could not be processed."
+msgstr "%s 객체 (들)이 생성된다."
+
+#: lib/whatsapp/webhook/payload.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The WhatsApp webhook payload could not be validated."
+msgstr "%s 객체 (들)이 생성된다."
 
 #: app/controllers/reports_controller.rb
 #, fuzzy
@@ -14644,6 +14757,10 @@ msgstr ""
 msgid "The required parameter \"payload\" is missing."
 msgstr ""
 
+#: lib/whatsapp/client.rb
+msgid "The required parameter 'access_token' is missing."
+msgstr ""
+
 #: lib/external_credential/facebook.rb
 msgid "The required parameter 'application_id' is missing."
 msgstr ""
@@ -14654,6 +14771,10 @@ msgstr ""
 
 #: app/controllers/channels_sms_controller.rb
 msgid "The required parameter 'area' is missing."
+msgstr ""
+
+#: lib/whatsapp/account/phone_numbers.rb
+msgid "The required parameter 'business_id' is missing."
 msgstr ""
 
 #: lib/external_credential/exchange.rb lib/external_credential/google.rb
@@ -15735,6 +15856,12 @@ msgstr "우선 순위"
 msgid "Ticket Selector"
 msgstr "Ticket 선택기"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket Settings"
+msgstr "Ticket 업데이트"
+
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 #, fuzzy
 #| msgid "Ticket update"
@@ -16637,6 +16764,18 @@ msgstr "기본값으로 복원"
 msgid "Unsubscribe"
 msgstr ""
 
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported message type."
+msgstr ""
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported subscription type."
+msgstr ""
+
+#: lib/whatsapp/webhook/payload.rb
+msgid "Unsupported webhook payload."
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
 "Up to %s% of this language is already translated. Please help to make Zammad "
@@ -17149,6 +17288,10 @@ msgstr ""
 msgid "Verification email could not be sent."
 msgstr "알림이 전송 될 때."
 
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
+msgid "Verify Token"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Verify sending and receiving"
@@ -17485,6 +17628,7 @@ msgstr ""
 "폐쇄 채팅에 표시 오신 것을 환영합니다 제목입니다. HTML을 포함 할 수 있습니다."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Welcome message"
 msgstr "환영 메세지"
 
@@ -17520,6 +17664,25 @@ msgstr "%s에 어떤 값이 조직에 동기화해야합니다."
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to users."
 msgstr "%s에 어떤 값은 사용자에 동기화해야합니다."
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+msgid "WhatsApp"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+#, fuzzy
+#| msgid "Add Account"
+msgid "WhatsApp Account"
+msgstr "계정 추가"
+
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+msgid "WhatsApp Business Account ID"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid "Whatsapp"
+msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid ""
@@ -17738,6 +17901,10 @@ msgstr ""
 "당신은 Zammad와 %s에 연결할 수 있습니다. 당신은 %s 첫째로 Zammad를 연결해야합"
 "니다."
 
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+msgid "You can connect WhatsApp Business Accounts with Zammad."
+msgstr ""
+
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
 "You can create **overviews** for your agents and your customers. These have "
@@ -17781,6 +17948,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
@@ -18716,7 +18886,7 @@ msgstr "변경"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "here"
-msgstr "이리"
+msgstr "이곳"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "hide"
@@ -19299,6 +19469,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/sms_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "reply"
 msgstr "댓글"
 
@@ -19573,6 +19744,12 @@ msgstr ""
 msgid "welcome message"
 msgstr ""
 
+#: db/seeds/ticket_article_types.rb
+#, fuzzy
+#| msgid "Add Tag"
+msgid "whatsapp message"
+msgstr "태그 추가"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
 msgstr ""
@@ -19670,11 +19847,6 @@ msgstr "∅ 오늘 대기 시간"
 #~ msgstr "저장"
 
 #, fuzzy
-#~| msgid "%s Object(s) are created."
-#~ msgid "The uploaded image could not be processed."
-#~ msgstr "%s 객체 (들)이 생성된다."
-
-#, fuzzy
 #~| msgid "Sign up"
 #~ msgid "Signup"
 #~ msgstr "가입"
@@ -19766,11 +19938,6 @@ msgstr "∅ 오늘 대기 시간"
 #~| msgid "Discard your unsaved changes."
 #~ msgid "You have unsaved changes."
 #~ msgstr "저장되지 않은 변경 사항을 무시."
-
-#, fuzzy
-#~| msgid "%s Object(s) are created."
-#~ msgid "The raw logo could not be read."
-#~ msgstr "%s 객체 (들)이 생성된다."
 
 #~ msgid "skip"
 #~ msgstr "버킷"
@@ -19968,11 +20135,6 @@ msgstr "∅ 오늘 대기 시간"
 #~| msgid "Name"
 #~ msgid "me"
 #~ msgstr "이름"
-
-#, fuzzy
-#~| msgid "Copy to clipboard: Ctrl+C, Enter"
-#~ msgid "Copied to clipboard!"
-#~ msgstr "클립 보드에 복사 : Ctrl + C를 입력"
 
 #~ msgid "Copy to clipboard: Ctrl+C, Enter"
 #~ msgstr "클립 보드에 복사 : Ctrl + C를 입력"
