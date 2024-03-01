@@ -1095,8 +1095,11 @@ RSpec.describe 'Ticket Create', type: :system do
           # Since front-end uses a JS-specific function to add a month value to the current date,
           #   calculating the value here with Ruby code may lead to unexpected values.
           #   Therefore, we use a reimplementation of the ECMAScript function instead.
-          if range == 'month'
+          case range
+          when 'month'
             frontend_relative_month(Time.current, value)
+          when 'year'
+            frontend_relative_month(Time.current, 0, year: value)
           else
             value.send(range).from_now
           end

@@ -21,7 +21,7 @@ module TimeHelperCache
 
   # Reimplementation of `setMonth(month[, date])` from the ECMAScript specification.
   #   https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date.prototype.setmonth
-  def frontend_relative_month(obj, month, date = nil)
+  def frontend_relative_month(obj, month, date = nil, year: nil)
     # 1. Let t be ? thisTimeValue(this value).
     t = obj
 
@@ -51,6 +51,9 @@ module TimeHelperCache
       new_year += 1
       new_month -= 12
     end
+
+    new_year += year if year
+
     Time.zone.local(new_year, new_month, dt, t.hour, t.min, t.sec)
 
     # Ignore the rest, as `Time#local` already handles it correctly:
