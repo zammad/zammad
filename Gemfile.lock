@@ -87,8 +87,6 @@ GEM
       activesupport (= 7.0.8.1)
     activerecord-import (1.5.1)
       activerecord (>= 4.2)
-    activerecord-nulldb-adapter (1.0.1)
-      activerecord (>= 5.2.0, < 7.2)
     activerecord-session_store (2.1.0)
       actionpack (>= 6.1)
       activerecord (>= 6.1)
@@ -730,7 +728,6 @@ DEPENDENCIES
   PoParser
   aasm
   activerecord-import
-  activerecord-nulldb-adapter
   activerecord-session_store
   acts_as_list
   argon2
