@@ -7,6 +7,7 @@ import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type { TreeSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 import useFlatSelectOptions from '../FieldTreeSelect/useFlatSelectOptions.ts'
 import {
   GroupAccess,
@@ -84,6 +85,7 @@ const filterGroupOptions = (index: number) =>
   filterTreeSelectOptions(cloneDeep(contextReactive.value.options || []), index)
 
 const getNewGroupPermission = () => ({
+  key: getUuid(),
   groups: [] as unknown as SelectValue,
   groupAccess: groupAccesses.reduce(
     (groupAccess, { access }) => {
@@ -139,17 +141,14 @@ watch(
 
     // Set internal value to external one, but only if they differ (loop protection).
     if (isEqual(newValue, groupPermissions)) return
-    ;(newValue as GroupPermissionReactive[]).forEach(
-      (_groupPermission, index) => {
-        groupOptions[index] = filterGroupOptions(index)
-      },
-    )
 
-    groupPermissions.splice(
-      0,
-      groupPermissions.length,
-      ...cloneDeep(newValue || []),
-    )
+    const newValues = cloneDeep(newValue || []) as GroupPermissionReactive[]
+    newValues.forEach((groupPermission, index) => {
+      groupPermission.key = getUuid()
+      groupOptions[index] = filterGroupOptions(index)
+    })
+
+    groupPermissions.splice(0, groupPermissions.length, ...newValues)
   },
   {
     immediate: true,
@@ -214,7 +213,7 @@ const ensureGranularOrFullAccess = (
   >
     <div
       v-for="(groupPermission, index) in groupPermissions"
-      :key="`group-permission-index-${index}`"
+      :key="groupPermission.key"
       class="w-full flex items-center gap-3"
       role="listitem"
     >

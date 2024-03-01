@@ -17,6 +17,7 @@ export type GroupPermissionsContext = FormFieldContext<{
 }>
 
 export interface GroupPermissionReactive {
+  key: string
   groups: SelectValue
   groupAccess: Record<GroupAccess, boolean>
 }

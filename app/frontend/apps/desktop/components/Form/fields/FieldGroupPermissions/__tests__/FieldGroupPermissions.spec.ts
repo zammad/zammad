@@ -145,22 +145,6 @@ describe('Fields - FieldGroupPermissions', () => {
     ).toBeInTheDocument()
 
     await view.events.click(options[0])
-
-    await waitFor(() => {
-      expect(getNode('groupPermissions')?.value).toEqual([
-        {
-          groups: [1],
-          groupAccess: {
-            change: false,
-            create: false,
-            full: false,
-            overview: false,
-            read: false,
-          },
-        },
-      ])
-    })
-
     await view.events.click(view.getByRole('button', { name: 'Add' }))
     await view.events.click(view.getAllByRole('combobox')[1])
 
@@ -174,32 +158,6 @@ describe('Fields - FieldGroupPermissions', () => {
     ).toBeInTheDocument()
 
     await view.events.click(options[0])
-
-    await waitFor(() => {
-      expect(getNode('groupPermissions')?.value).toEqual([
-        {
-          groups: [1],
-          groupAccess: {
-            change: false,
-            create: false,
-            full: false,
-            overview: false,
-            read: false,
-          },
-        },
-        {
-          groups: [2],
-          groupAccess: {
-            change: false,
-            create: false,
-            full: false,
-            overview: false,
-            read: false,
-          },
-        },
-      ])
-    })
-
     await view.events.click(view.getAllByRole('combobox')[1])
 
     listbox = view.getByRole('listbox')
@@ -212,7 +170,7 @@ describe('Fields - FieldGroupPermissions', () => {
 
     await waitFor(() => {
       expect(getNode('groupPermissions')?.value).toEqual([
-        {
+        expect.objectContaining({
           groups: [1],
           groupAccess: {
             change: false,
@@ -221,8 +179,8 @@ describe('Fields - FieldGroupPermissions', () => {
             overview: false,
             read: false,
           },
-        },
-        {
+        }),
+        expect.objectContaining({
           groups: [2, 3],
           groupAccess: {
             change: false,
@@ -231,7 +189,7 @@ describe('Fields - FieldGroupPermissions', () => {
             overview: false,
             read: false,
           },
-        },
+        }),
       ])
     })
 
@@ -257,7 +215,7 @@ describe('Fields - FieldGroupPermissions', () => {
 
     await waitFor(async () => {
       expect(getNode('groupPermissions')?.value).toEqual([
-        {
+        expect.objectContaining({
           groups: [1],
           groupAccess: {
             change: false,
@@ -266,8 +224,8 @@ describe('Fields - FieldGroupPermissions', () => {
             overview: false,
             read: false,
           },
-        },
-        {
+        }),
+        expect.objectContaining({
           groups: [2],
           groupAccess: {
             change: false,
@@ -276,7 +234,7 @@ describe('Fields - FieldGroupPermissions', () => {
             overview: false,
             read: false,
           },
-        },
+        }),
       ])
     })
 
@@ -296,21 +254,6 @@ describe('Fields - FieldGroupPermissions', () => {
     const view = await renderGroupPermissionsInput(commonProps)
 
     await view.events.click(view.getByLabelText('Read'))
-
-    await waitFor(() => {
-      expect(getNode('groupPermissions')?.value).toEqual([
-        expect.objectContaining({
-          groupAccess: {
-            read: true,
-            create: false,
-            change: false,
-            overview: false,
-            full: false,
-          },
-        }),
-      ])
-    })
-
     await view.events.click(view.getByLabelText('Full'))
 
     await waitFor(() => {
@@ -326,6 +269,8 @@ describe('Fields - FieldGroupPermissions', () => {
         }),
       ])
     })
+
+    expect(view.getByLabelText('Read')).not.toBeChecked()
 
     await view.events.click(view.getByLabelText('Read'))
     await view.events.click(view.getByLabelText('Create'))
@@ -346,6 +291,8 @@ describe('Fields - FieldGroupPermissions', () => {
       ])
     })
 
+    expect(view.getByLabelText('Full')).not.toBeChecked()
+
     await view.events.click(view.getByLabelText('Full'))
 
     await waitFor(() => {
@@ -361,6 +308,11 @@ describe('Fields - FieldGroupPermissions', () => {
         }),
       ])
     })
+
+    expect(view.getByLabelText('Read')).not.toBeChecked()
+    expect(view.getByLabelText('Create')).not.toBeChecked()
+    expect(view.getByLabelText('Change')).not.toBeChecked()
+    expect(view.getByLabelText('Overview')).not.toBeChecked()
   })
 
   it('does not translate group names', async () => {
@@ -382,6 +334,30 @@ describe('Fields - FieldGroupPermissions', () => {
     const options = getAllByRole(listbox, 'option')
 
     expect(options[0]).toHaveTextContent(testOptions[0].label)
+  })
+
+  it('preserves state when upper rows are removed', async () => {
+    const view = await renderGroupPermissionsInput(commonProps)
+
+    await view.events.click(view.getByRole('combobox'))
+
+    let listbox = view.getByRole('listbox')
+    let options = getAllByRole(listbox, 'option')
+
+    await view.events.click(options[0])
+    await view.events.click(view.getByRole('button', { name: 'Add' }))
+    await view.events.click(view.getAllByRole('combobox')[1])
+
+    listbox = view.getByRole('listbox')
+    options = getAllByRole(listbox, 'option')
+
+    const secondGroupSelection = options[0].textContent || ''
+
+    await view.events.click(options[0])
+    await view.events.click(view.getAllByLabelText('Read')[1])
+    await view.events.click(view.getAllByRole('button', { name: 'Remove' })[0])
+
+    expect(view.getByRole('combobox')).toHaveTextContent(secondGroupSelection)
   })
 })
 
@@ -433,9 +409,11 @@ describe('Fields - FieldGroupPermissions - Input Checklist', () => {
     await view.events.click(view.getByRole('combobox'))
     await view.events.click(view.getAllByRole('option')[0])
 
+    const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
+
     await waitFor(() => {
-      expect(getNode('groupPermissions')?.value).toEqual([
-        {
+      expect(emittedInput[1][0]).toEqual([
+        expect.objectContaining({
           groups: [1],
           groupAccess: {
             change: false,
@@ -444,15 +422,15 @@ describe('Fields - FieldGroupPermissions - Input Checklist', () => {
             overview: false,
             read: false,
           },
-        },
+        }),
       ])
     })
 
     await view.events.click(view.getByLabelText('Full'))
 
     await waitFor(() => {
-      expect(getNode('groupPermissions')?.value).toEqual([
-        {
+      expect(emittedInput[2][0]).toEqual([
+        expect.objectContaining({
           groups: [1],
           groupAccess: {
             change: false,
@@ -461,7 +439,7 @@ describe('Fields - FieldGroupPermissions - Input Checklist', () => {
             overview: false,
             read: false,
           },
-        },
+        }),
       ])
     })
   })
