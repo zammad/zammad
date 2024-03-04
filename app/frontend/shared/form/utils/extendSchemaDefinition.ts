@@ -34,7 +34,7 @@ const extendSchemaDefinition = (
       | FormKitSchemaCondition
       | Partial<FormKitSchemaNode>
 
-    const currentExtension = extensions[sectionKey]
+    const currentExtension = extensions[sectionKey] || {}
 
     if (extendType === FormSchemaExtendType.Merge) {
       // When current extenstions is a string, replace it.

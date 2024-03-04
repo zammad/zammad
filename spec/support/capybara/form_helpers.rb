@@ -36,7 +36,7 @@ module FormHelpers
   # Returns the outer container element of the form field radio via its ID.
   #   The returned object is always an instance of `Capybara::Node::Element``, with some added sugar on top.
   def find_radio(name, **find_options)
-    ZammadFormFieldCapybaraElementDelegator.new(first("[name=\"#{name}\"]", **find_options).ancestor('.formkit-outer'), @form_context)
+    ZammadFormFieldCapybaraElementDelegator.new(first("[name^=\"#{name}\"]", **find_options).ancestor('.formkit-outer'), @form_context)
   end
 
   # Provides a form context for stabilizing multiple field interactions.

@@ -42,7 +42,9 @@ const initializeFieldDefinition = (
   } = options
 
   const localDefinition = definition
-  localDefinition.props ||= []
+  localDefinition.props = Array.isArray(localDefinition.props)
+    ? localDefinition.props
+    : []
   localDefinition.features ||= []
 
   if (options.schema) {
@@ -71,11 +73,19 @@ const initializeFieldDefinition = (
     )
   }
 
-  const additionalProps = additionalDefinitionOptions.props || []
+  const additionalProps = Array.isArray(additionalDefinitionOptions.props)
+    ? additionalDefinitionOptions.props
+    : []
   if (addDefaultProps) {
+    const defaulfFieldDefinitionProps = Array.isArray(
+      defaulfFieldDefinition.props,
+    )
+      ? defaulfFieldDefinition.props
+      : []
+
     localDefinition.props = mergeArray(
       localDefinition.props,
-      defaulfFieldDefinition.props.concat(additionalProps),
+      defaulfFieldDefinitionProps.concat(additionalProps),
     )
   }
 

@@ -30,7 +30,7 @@ describe('initializeFieldDefinition', () => {
     initializeFieldDefinition(definition)
 
     expect(definition.props).toEqual([
-      ...(selectDefinition.props || []),
+      ...(Array.isArray(selectDefinition.props) ? selectDefinition.props : []),
       'formId',
       'labelSrOnly',
       'labelPlaceholder',

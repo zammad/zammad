@@ -90,10 +90,6 @@ const loadLocales = (): FormKitLocaleExtended => {
        */
       changeDate: () => i18n.t('Change date'),
       /**
-       * Shown when the date is invalid.
-       */
-      invalidDate: () => i18n.t('The selected date is invalid.'),
-      /**
        * Shown above error summaries when someone attempts to submit a form with
        * errors and the developer has implemented `<FormKitSummary />`.
        */
@@ -102,6 +98,10 @@ const loadLocales = (): FormKitLocaleExtended => {
        * Shown when there is something to close
        */
       close: () => i18n.t('Close'),
+      /**
+       * Shown when there is something to open.
+       */
+      open: () => i18n.t('Open'),
     },
 
     validation: {
@@ -550,6 +550,11 @@ const loadLocales = (): FormKitLocaleExtended => {
         return i18n.t('Please include a valid url.')
         /* </i18n> */
       },
+
+      /**
+       * Shown when the date is invalid.
+       */
+      invalidDate: () => i18n.t('The selected date is invalid.'),
     },
   }
 }

@@ -2,6 +2,7 @@
 
 import type { ComputedRef, ShallowRef } from 'vue'
 import { computed, reactive, watch } from 'vue'
+import { isEqualWith } from 'lodash-es'
 import type {
   FormValues,
   FormRef,
@@ -33,22 +34,32 @@ export const useTicketEdit = (
   const initialTicketValue = reactive<FormValues>({})
   const mutationUpdate = new MutationHandler(useTicketUpdateMutation({}))
 
-  watch(ticket, (ticket) => {
-    if (!ticket) {
+  watch(ticket, (newTicket, oldTicket) => {
+    if (!newTicket) {
       return
     }
-    const ticketId = initialTicketValue.id || ticket.id
-    const { internalId: ownerInternalId } = ticket.owner
-    initialTicketValue.id = ticket.id
+
+    // We need only to reset the form, when really something was changed (updatedAt is not relevant for the form).
+    if (
+      isEqualWith(newTicket, oldTicket, (value1, value2, key) => {
+        if (key === 'updatedAt') return true
+      })
+    ) {
+      return
+    }
+
+    const ticketId = initialTicketValue.id || newTicket.id
+    const { internalId: ownerInternalId } = newTicket.owner
+    initialTicketValue.id = newTicket.id
     // show Zammad user as empty
     initialTicketValue.owner_id = ownerInternalId === 1 ? null : ownerInternalId
 
-    form.value?.resetForm(initialTicketValue, ticket, {
+    form.value?.resetForm(initialTicketValue, newTicket, {
       // don't reset to new values, if user changes something
       // if ticket is different, it's probably navigation to another ticket,
       // so we can safely reset the form
-      // TODO: navigation to another ticket is currently always a re-render of the form, because of the component key(=ticket.id) or?
-      resetDirty: ticketId !== ticket.id,
+      // TODO: navigation to another ticket is currently always a re-render of the form, because of the component key(=newTicket.id) or?
+      resetDirty: ticketId !== newTicket.id,
     })
   })
 

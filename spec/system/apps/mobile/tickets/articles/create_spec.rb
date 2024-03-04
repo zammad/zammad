@@ -16,6 +16,8 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
 
   def save_article(number: 1)
     find_button('Done').click
+    wait_for_test_flag('ticket-article-reply.closed')
+
     find_button('Save').click
 
     wait_for_ticket_edit(number: number)
@@ -181,10 +183,13 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
       def create_article(article_body, number: 1)
         find_button('Add reply').click
 
+        wait_for_test_flag('ticket-article-reply.opened')
+
         within_form(form_updater_gql_number: number) do
           text = find_editor('Text')
           expect(text).to have_text_value('', exact: true)
           text.type(article_body)
+          expect(text).to have_text_value(article_body)
         end
 
         save_article(number: number)

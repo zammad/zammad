@@ -45,7 +45,9 @@ beforeEach(() => {
 })
 
 test('statics inside ticket zoom view', async () => {
-  const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
+  const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+    mockFrontendObjectAttributes: true,
+  })
 
   const view = await visitView('/tickets/1')
 
@@ -54,6 +56,9 @@ test('statics inside ticket zoom view', async () => {
   expect(view.getByTestId('loader-header')).toBeInTheDocument()
 
   await waitUntilTicketLoaded()
+
+  const form = getNode('form-ticket-edit')
+  await form?.settled
 
   const header = view.getByTestId('header-content')
 

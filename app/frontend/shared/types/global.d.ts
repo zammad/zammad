@@ -15,3 +15,6 @@ declare global {
 declare const Router: import('vue-router').Router
 declare function __(source: string): string
 declare function setLogLevel(level: LogLevel, persistent: boolean): void
+
+// TODO: Workaround for current problem with formkit version, remove when fixed
+declare module '@formkit/themes'

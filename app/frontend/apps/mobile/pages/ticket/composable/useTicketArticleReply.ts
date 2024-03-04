@@ -23,7 +23,7 @@ export const useTicketArticleReply = (
     if (!newTicketArticlePresent.value && !newTicketArticleRequested.value)
       return undefined
 
-    return form.value?.formNode?.at('article')
+    return form.value?.getNodeByName('article')
   })
 
   const isArticleFormGroupValid = computed(() => {

@@ -16,6 +16,8 @@ RSpec.shared_examples 'mobile app: create article' do |type_label, internal: fal
   def open_article_dialog
     visit "/tickets/#{ticket.id}"
     find_button('Add reply').click
+
+    wait_for_test_flag('ticket-article-reply.opened')
   end
 
   def save_article

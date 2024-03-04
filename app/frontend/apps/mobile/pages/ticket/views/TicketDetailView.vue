@@ -324,7 +324,7 @@ const showBottomBanner = computed(() => {
       />
     </CommonLoader>
   </Teleport>
-  <Teleport to="body">
+  <Teleport v-if="form?.formNode" to="body">
     <TicketDetailViewActions
       :form-invalid="canSubmit && !isFormValid"
       :new-replies-count="newArticlesIds.size"
