@@ -2,7 +2,10 @@
 
 require 'rails_helper'
 
+FIXTURES_FILES_PATH = Rails.root.join('spec/fixtures/files/pgp').freeze
+
 RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
+
   before do
     Setting.set('pgp_integration', true)
   end
@@ -31,8 +34,8 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
   end
 
   describe '#import' do
-    let(:key) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.pub.asc').read }
-    let(:private_key) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.asc').read }
+    let(:key) { FIXTURES_FILES_PATH.join('zammad@localhost.pub.asc').read }
+    let(:private_key) { FIXTURES_FILES_PATH.join('zammad@localhost.asc').read }
 
     let(:import) do
       instance.with_private_keyring do |t|
@@ -56,9 +59,9 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
   end
 
   describe '#passphrase' do
-    let(:private_key) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.asc').read }
-    let(:fingerprint) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.fingerprint').read }
-    let(:passphrase)  { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.passphrase').read }
+    let(:private_key) { FIXTURES_FILES_PATH.join('zammad@localhost.asc').read }
+    let(:fingerprint) { FIXTURES_FILES_PATH.join('zammad@localhost.fingerprint').read }
+    let(:passphrase)  { FIXTURES_FILES_PATH.join('zammad@localhost.passphrase').read }
 
     let(:passphrase_result) do
       instance.with_private_keyring do |t|
@@ -90,10 +93,10 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
   end
 
   describe '#info' do
-    let(:key)         { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.pub.asc').read }
-    let(:fingerprint) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.fingerprint').read }
-    let(:created_at)  { DateTime.parse(Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.created_at').read) }
-    let(:expires_at)  { DateTime.parse(Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.expires_at').read) }
+    let(:key)         { FIXTURES_FILES_PATH.join('zammad@localhost.pub.asc').read }
+    let(:fingerprint) { FIXTURES_FILES_PATH.join('zammad@localhost.fingerprint').read }
+    let(:created_at)  { DateTime.parse(FIXTURES_FILES_PATH.join('zammad@localhost.created_at').read) }
+    let(:expires_at)  { DateTime.parse(FIXTURES_FILES_PATH.join('zammad@localhost.expires_at').read) }
 
     let(:info) do
       instance.with_private_keyring { |t| t.info(key) }
@@ -110,10 +113,21 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
         expect { info }.to raise_error(SecureMailing::PGP::Tool::Error::NoData)
       end
     end
+
+    context 'with an key including a revoked subkey' do
+      let(:key)         { FIXTURES_FILES_PATH.join('zammad@localhost.revoker.pub.asc').read }
+      let(:fingerprint) { FIXTURES_FILES_PATH.join('zammad@localhost.revoker.fingerprint').read }
+      let(:created_at)  { DateTime.parse(FIXTURES_FILES_PATH.join('zammad@localhost.revoker.created_at').read) }
+      let(:expires_at)  { DateTime.parse(FIXTURES_FILES_PATH.join('zammad@localhost.revoker.expires_at').read) }
+
+      it 'returns information of a public key successfully' do
+        expect(info).to have_attributes(fingerprint: fingerprint, uids: ['zammad@localhost'], created_at: created_at, expires_at: expires_at, secret: false)
+      end
+    end
   end
 
   describe '#export' do
-    let(:fingerprint) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.fingerprint').read }
+    let(:fingerprint) { FIXTURES_FILES_PATH.join('zammad@localhost.fingerprint').read }
 
     let(:export) do
       instance.with_private_keyring do |t|
@@ -123,7 +137,7 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
     end
 
     context 'with public key' do
-      let(:key) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.pub.asc').read }
+      let(:key)        { FIXTURES_FILES_PATH.join('zammad@localhost.pub.asc').read }
       let(:passphrase) { nil }
       let(:secret)     { false }
 
@@ -142,8 +156,8 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
     end
 
     context 'with private key' do
-      let(:key)        { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.asc').read }
-      let(:passphrase) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.passphrase').read }
+      let(:key)        { FIXTURES_FILES_PATH.join('zammad@localhost.asc').read }
+      let(:passphrase) { FIXTURES_FILES_PATH.join('zammad@localhost.passphrase').read }
       let(:secret)     { true }
 
       let(:info) do
@@ -169,9 +183,9 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
   end
 
   describe '#sign' do
-    let(:key)         { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.asc').read }
-    let(:passphrase)  { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.passphrase').read }
-    let(:fingerprint) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.fingerprint').read }
+    let(:key)         { FIXTURES_FILES_PATH.join('zammad@localhost.asc').read }
+    let(:passphrase)  { FIXTURES_FILES_PATH.join('zammad@localhost.passphrase').read }
+    let(:fingerprint) { FIXTURES_FILES_PATH.join('zammad@localhost.fingerprint').read }
     let(:data)        { 'Hello, World.' }
 
     let(:sign) do
@@ -196,11 +210,11 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
   end
 
   describe '#verify' do
-    let(:key)         { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.asc').read }
-    let(:passphrase)  { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.passphrase').read }
-    let(:fingerprint) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.fingerprint').read }
-    let(:data)        { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.data').read }
-    let(:signature)   { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.data.sig.asc').read }
+    let(:key)         { FIXTURES_FILES_PATH.join('zammad@localhost.asc').read }
+    let(:passphrase)  { FIXTURES_FILES_PATH.join('zammad@localhost.passphrase').read }
+    let(:fingerprint) { FIXTURES_FILES_PATH.join('zammad@localhost.fingerprint').read }
+    let(:data)        { FIXTURES_FILES_PATH.join('zammad@localhost.data').read }
+    let(:signature)   { FIXTURES_FILES_PATH.join('zammad@localhost.data.sig.asc').read }
 
     let(:verify) do
       instance.with_private_keyring do |t|
@@ -240,9 +254,9 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
   end
 
   describe '#encrypt' do
-    let(:key)         { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.asc').read }
-    let(:passphrase)  { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.passphrase').read }
-    let(:fingerprint) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.fingerprint').read }
+    let(:key)         { FIXTURES_FILES_PATH.join('zammad@localhost.asc').read }
+    let(:passphrase)  { FIXTURES_FILES_PATH.join('zammad@localhost.passphrase').read }
+    let(:fingerprint) { FIXTURES_FILES_PATH.join('zammad@localhost.fingerprint').read }
     let(:data)        { 'Hello, World.' }
 
     let(:encrypt) do
@@ -267,10 +281,10 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
   end
 
   describe '#decrypt' do
-    let(:key)            { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.asc').read }
-    let(:passphrase)     { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.passphrase').read }
-    let(:fingerprint)    { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.fingerprint').read }
-    let(:encrypted_data) { Rails.root.join('spec/fixtures/files/pgp/zammad@localhost.data.enc.asc').read }
+    let(:key)            { FIXTURES_FILES_PATH.join('zammad@localhost.asc').read }
+    let(:passphrase)     { FIXTURES_FILES_PATH.join('zammad@localhost.passphrase').read }
+    let(:fingerprint)    { FIXTURES_FILES_PATH.join('zammad@localhost.fingerprint').read }
+    let(:encrypted_data) { FIXTURES_FILES_PATH.join('zammad@localhost.data.enc.asc').read }
 
     let(:decrypt) do
       instance.with_private_keyring do |t|

@@ -22,6 +22,7 @@ module SecureMailing::PGP::Tool::Parse
     private
 
     def parse_info(data)
+      # https://github.com/gpg/gnupg/blob/master/doc/DETAILS
       info = {
         fingerprint: nil,
         uids:        [],
@@ -30,45 +31,48 @@ module SecureMailing::PGP::Tool::Parse
         secret:      false
       }
 
-      data.split("\n").each_with_index do |chunk, idx|
+      data.split("\n").tap do |chunks|
         # We assume all relevant subkeys [SCE] have the same expiration date.
-        info[:expires_at]  = determine_expires_at(chunk) if idx.zero?
-        info[:created_at]  = determine_created_at(chunk) if idx.zero?
-        info[:secret]      = determine_secret(chunk) if idx.zero?
-        info[:fingerprint] = determine_fingerprint(chunk) if idx == 1
+        dates = chunks.find { |chunk| chunk.start_with?(%r{pub|sec}) }
+        info[:expires_at]  = expires_at(dates)
+        info[:created_at]  = created_at(dates)
 
-        next if !chunk.start_with?('uid')
+        info[:secret] = secret?(chunks)
 
-        info[:uids] << determine_uid(chunk)
+        fpr = chunks.find { |chunk| chunk.start_with?('fpr') }
+        info[:fingerprint] = fingerprint(fpr)
+
+        uids = chunks.select { |chunk| chunk.start_with?('uid') }
+        info[:uids] = uids.map { |uid| uid(uid) }
       end
 
       PGP_KEY_INFO.new(*info.values)
     end
 
-    def determine_expires_at(chunk)
-      timestamp = chunk.split(':').fetch(PGP_KEY_INFO_EXPIRES_AT_TIMESTAMP)
-      return nil if timestamp.blank? || timestamp == '0'
-
-      Time.zone.at(timestamp.to_i)
-    end
-
-    def determine_created_at(chunk)
+    def created_at(chunk)
       timestamp = chunk.split(':').fetch(PGP_KEY_INFO_CREATED_AT_TIMESTAMP)
       return nil if timestamp == '0'
 
       Time.zone.at(timestamp.to_i)
     end
 
-    def determine_fingerprint(chunk)
+    def expires_at(chunk)
+      timestamp = chunk.split(':').fetch(PGP_KEY_INFO_EXPIRES_AT_TIMESTAMP)
+      return nil if timestamp.blank? || timestamp == '0'
+
+      Time.zone.at(timestamp.to_i)
+    end
+
+    def fingerprint(chunk)
       chunk.split(':').last
     end
 
-    def determine_secret(chunk)
-      chunk.start_with?('sec')
+    def uid(chunk)
+      chunk.split(':').fetch(PGP_KEY_INFO_UID)
     end
 
-    def determine_uid(chunk)
-      chunk.split(':').fetch(PGP_KEY_INFO_UID)
+    def secret?(chunks)
+      chunks.any? { |chunk| chunk.start_with?('sec') }
     end
   end
 end
