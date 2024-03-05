@@ -59,9 +59,22 @@ RSpec.describe AutoWizard do
 
     let(:seed_data) { {} }
 
-    it 'removes "auto_wizard.json" file when complete' do
-      expect { described_class.setup }
-        .to change { Rails.root.join('auto_wizard.json').exist? }.to(false)
+    context 'with a writable file system' do
+      it 'removes "auto_wizard.json" file when complete' do
+        expect { described_class.setup }
+          .to change { Rails.root.join('auto_wizard.json').exist? }.to(false)
+      end
+    end
+
+    context 'with a read-only file system' do
+      before do
+        allow(FileUtils).to receive(:rm).and_raise(Errno::EPERM)
+      end
+
+      it 'cannot remove the auto wizard file, but also does not throw an error' do
+        expect { described_class.setup }
+          .not_to change { Rails.root.join('auto_wizard.json').exist? }
+      end
     end
 
     context 'when "auto_wizard.json" contains a set of User attributes and associations (Role names)' do
