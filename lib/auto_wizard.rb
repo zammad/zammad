@@ -154,7 +154,11 @@ returns
     DbHelper.import_post
 
     # remove auto wizard file
-    FileUtils.rm auto_wizard_file_location
+    begin
+      FileUtils.rm auto_wizard_file_location
+    rescue
+      # Tolerate deletion errors, e.g. on read-only file systems.
+    end
 
     admin_user
   end
