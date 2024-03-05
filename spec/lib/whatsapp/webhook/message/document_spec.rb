@@ -129,12 +129,8 @@ RSpec.describe Whatsapp::Webhook::Message::Document, :aggregate_failures, curren
       let(:media_file)     { Tempfile.create('lipsum.zip').tap { |f| File.write(f, media_content) } }
       let(:valid_checksum) { Digest::SHA2.new(256).hexdigest(media_content) }
 
-      let(:internal_response1) do
-        Struct.new(:data, :error).new(Struct.new(:url, :mime_type, :sha256).new(url, mime_type, valid_checksum), nil)
-      end
-
       before do
-        allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:media).and_return(internal_response1)
+        allow_any_instance_of(Whatsapp::Incoming::Media).to receive(:download).and_raise(Whatsapp::Incoming::Media::InvalidMediaTypeError, 'Invalid Media Type application/zip')
       end
 
       after do
