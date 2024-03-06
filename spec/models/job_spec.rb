@@ -644,4 +644,22 @@ RSpec.describe Job, type: :model do
       end
     end
   end
+
+  describe 'Adding article attachments to scheduler actions is ignored #5071' do
+    subject(:job) { create(:job, perform: { 'notification.email'=>{ 'body' => "<div>test</div><div><br></div><div>\#{article.body}</div>", 'internal' => 'false', 'recipient' => ['ticket_customer'], 'subject' => job_subject, 'include_attachments' => 'true' } }) }
+
+    let(:job_subject) { SecureRandom.uuid }
+    let(:ticket) do
+      ticket = create(:ticket)
+      create(:ticket_article, :outbound_email, :with_attachment, ticket: ticket)
+      ticket
+    end
+
+    it 'does send mails with attachments for the last article' do
+      ticket
+      job.run(true)
+      expect(Ticket::Article.last.subject).to eq(job_subject)
+      expect(Ticket::Article.last.attachments).to be_present
+    end
+  end
 end
