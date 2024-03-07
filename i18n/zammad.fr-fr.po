@@ -10692,6 +10692,12 @@ msgstr ""
 "Oups... Je suis désolé, mais vous n'avez pas les droits suffisants pour "
 "ouvrir ce %s."
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Open %s"
+msgid "Open"
+msgstr "Ouvert %s"
+
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Open %s"
 msgstr "Ouvert %s"

@@ -10533,6 +10533,12 @@ msgstr ""
 "Hoppá... Sajnálom, de nincs elegendő jogosultsága a következő megnyitásához: "
 "%s."
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Open %s"
+msgid "Open"
+msgstr "%s megnyitása"
+
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Open %s"
 msgstr "%s megnyitása"

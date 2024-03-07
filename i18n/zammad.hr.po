@@ -10281,6 +10281,12 @@ msgstr "Ups… Žao mi je, ali ne mogu naći %s."
 msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr "Ups… Žao mi je, ali nemate dovoljno ovlasti za otvaranje %s."
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Open %s"
+msgid "Open"
+msgstr "Otvori %s"
+
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Open %s"
 msgstr "Otvori %s"

@@ -9919,6 +9919,12 @@ msgstr ""
 msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr ""
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "in %s"
+msgid "Open"
+msgstr "dalam %s"
+
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 #, fuzzy
 #| msgid "in %s"

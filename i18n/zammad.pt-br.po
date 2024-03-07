@@ -10306,6 +10306,12 @@ msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr ""
 "Ops.. Desculpe, mas você não tem direitos suficientes para abrir este %s."
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Open %s"
+msgid "Open"
+msgstr "Aberto %s"
+
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Open %s"
 msgstr "Aberto %s"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-02-27 02:05+0000\n"
+"PO-Revision-Date: 2024-03-07 02:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -10123,6 +10123,10 @@ msgstr "Упс… Жао ми је, али не могу да нађем %s."
 #: app/assets/javascripts/app/views/generic/error/unauthorized.jst.eco
 msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr "Упс… Жао ми је, али немате дозволу да отворите %s."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Open"
+msgstr "Отвори"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Open %s"
