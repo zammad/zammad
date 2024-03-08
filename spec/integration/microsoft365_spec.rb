@@ -6,11 +6,6 @@ RSpec.describe 'Microsoft365 XOAUTH2', integration: true, required_envs: %w[MICR
     create(:microsoft365_channel).tap(&:refresh_xoauth2!)
   end
 
-  # TODO: Remove this once we have a better way for testing M365.
-  before do
-    skip 'This test example requires a valid account for M365.'
-  end
-
   context 'when probing inbound' do
     before do
       options = channel.options[:inbound][:options]
