@@ -755,6 +755,9 @@ to send no browser reload event, pass false
       execute_db_count += 1
     end
 
+    # Clear caches so new attribute defaults can be set (#5075)
+    Rails.cache.clear
+
     # sent maintenance message to clients
     if send_event
       if execute_db_count.nonzero?

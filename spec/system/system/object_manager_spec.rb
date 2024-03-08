@@ -848,4 +848,34 @@ RSpec.describe 'System > Objects', type: :system do
       it_behaves_like 'showing preview table below data options'
     end
   end
+
+  describe 'New created Boolean Ticket Attribute does not work is "No" is set as default #5075', authenticated_as: :agent, db_strategy: :reset do
+    let(:agent) { create(:agent, groups: Group.all) }
+    let(:attribute) do
+      attribute = create(:object_manager_attribute_boolean, :required_screen, name: SecureRandom.uuid)
+      ObjectManager::Attribute.migration_execute
+      attribute
+    end
+
+    it 'does show the ticket without unsaved changes if a new boolean field is created' do
+
+      # preload ticket to build up backend and frontend cache and close it afterwards
+      visit "#ticket/zoom/#{Ticket.first.id}"
+      ensure_websocket
+      expect(page).to have_text(Ticket.first.title)
+
+      # add attribute and reload app
+      attribute
+      refresh
+      await_empty_ajax_queue
+      expect(page).to have_no_css('.icon-loading')
+
+      # revisit ticket and watch out for unsaved changes
+      # we have trigger the form diff by entering something into the textarea
+      # for more stability
+      find('.js-textarea').send_keys('some note')
+      expect(page).to have_text('Discard your unsaved changes.')
+      expect(page).to have_no_css(".sidebar-content div[data-attribute-name='#{attribute.name}'].is-changed")
+    end
+  end
 end
