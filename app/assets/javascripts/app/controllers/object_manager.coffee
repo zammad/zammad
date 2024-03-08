@@ -50,6 +50,10 @@ setSelectDefaults = (el) ->
   data_type = el.find('select[name=data_type]').val()
   return if !/^((multi)?select|multi_tree_select)$/.test(data_type) && data_type isnt 'boolean'
 
+  # ensure default for boolean field
+  if data_type is 'boolean' && el.find("input[name='data_option::default']:checked").length < 1
+    el.find("input[name='data_option::default'][value='false']").prop('checked', true)
+
   el.find('.js-value, .js-valueTrue, .js-valueFalse').each(->
     element = $(@)
     return true if element.val()

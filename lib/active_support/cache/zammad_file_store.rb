@@ -14,6 +14,22 @@ module ActiveSupport
         Rails.logger.error "Can't write cache #{name}: #{e.inspect}"
         Rails.logger.error e
       end
+
+      alias clear_original clear
+
+      # Running systems can access the caches while clearing so it can
+      # lead to exceptions. The retry will help to stabilize this a bit.
+      def clear
+        retries = 0
+        begin
+          clear_original
+        rescue
+          sleep 0.5
+          retries += 1
+          retry if retries < 3
+          Rails.logger.error 'Rails.cache.clear failed 3 times to clear the zammad file store.'
+        end
+      end
     end
   end
 end

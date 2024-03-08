@@ -26,6 +26,9 @@ class Maintenance extends App.Controller
     else
       button = __('Close')
 
+    if message.reload
+      App.SessionStorage.clear()
+
     new App.SessionMessage(
       head:          message.head
       contentInline: message.message
@@ -45,6 +48,9 @@ class Maintenance extends App.Controller
   #App.Event.trigger('maintenance', {type:'restart_auto'})
   maintanaceRestartAuto: (data) =>
     return if @messageRestartAuto
+
+    App.SessionStorage.clear()
+
     @messageRestartAuto = new App.SessionMessage(
       head:         App.i18n.translateContent('Zammad is restarting…')
       message:      App.i18n.translateContent('Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again.')
@@ -61,6 +67,9 @@ class Maintenance extends App.Controller
   #App.Event.trigger('maintenance', {type:'restart_manual'})
   maintanaceRestartManual: (data) =>
     return if @messageRestartManual
+
+    App.SessionStorage.clear()
+
     @messageRestartManual = new App.SessionMessage(
       head:          App.i18n.translateInline('Zammad requires a restart!')
       contentInline: App.i18n.translateInline('Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP_RESTART_CMD="/path/to/your_app_script.sh restart".')
@@ -76,6 +85,9 @@ class Maintenance extends App.Controller
 
   maintanaceConfigChanged: (data) =>
     return if @messageConfigChanged
+
+    App.SessionStorage.clear()
+
     @messageConfigChanged = new App.SessionMessage(
       head:         App.i18n.translateContent('Config has changed')
       message:      App.i18n.translateContent('The configuration of Zammad has changed, please reload your browser.')
@@ -95,6 +107,9 @@ class Maintenance extends App.Controller
     @appVersion = data.app_version
     localAppVersion = @appVersion.split(':')
     return if localAppVersion[1] isnt 'true'
+
+    App.SessionStorage.clear()
+
     message = =>
       @messageAppVersion = new App.SessionMessage(
         head:         App.i18n.translateContent('New Version')
