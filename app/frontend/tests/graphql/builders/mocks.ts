@@ -105,6 +105,7 @@ const stripQueryData = (
   }
 
   const name = definition.name!.value
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   const processNode = (node: SelectionNode) => {
     if (node.kind === Kind.INLINE_FRAGMENT) {
       const condition = node.typeCondition
