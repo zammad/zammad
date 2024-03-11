@@ -337,6 +337,12 @@ class Selector::SearchIndex < Selector::Base
         t[:range][key_tmp][:gt] = (data[:value])
       end
       query_must.push t
+    elsif data[:operator] == 'today'
+      t[:range]                = {}
+      t[:range][key_tmp]       = {}
+      t[:range][key_tmp][:gte] = "#{Time.zone.today}T00:00:00Z"
+      t[:range][key_tmp][:lte] = "#{Time.zone.today}T23:59:59Z"
+      query_must.push t
     else
       raise "unknown operator '#{data[:operator]}' for #{key}"
     end

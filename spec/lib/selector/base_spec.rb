@@ -347,6 +347,31 @@ RSpec.describe Selector::Base, searchindex: true do
     expect(result[:count]).to eq(3)
   end
 
+  describe 'Report profile terminates with error if today is used as timestamp for condition #4901' do
+    before do
+      ticket_1.update(created_at: 1.day.ago)
+      searchindex_model_reload([Ticket])
+    end
+
+    it 'does support today operator', :aggregate_failures do
+      condition = {
+        operator:   'AND',
+        conditions: [
+          {
+            name:     'ticket.created_at',
+            operator: 'today',
+          },
+        ]
+      }
+
+      count, = Ticket.selectors(condition, { current_user: agent })
+      expect(count).to eq(2)
+
+      result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+      expect(result[:count]).to eq(2)
+    end
+  end
+
   describe 'Trigger do not allow "Multi-Tree-Select" Fields on Organization and User Level as If Condition #4504', db_strategy: :reset do
     let(:field_name) { SecureRandom.uuid }
     let(:organization) { create(:organization, field_name => ['Incident', 'Incident::Hardware']) }
