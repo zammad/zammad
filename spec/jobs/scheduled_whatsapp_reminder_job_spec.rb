@@ -48,14 +48,7 @@ RSpec.describe ScheduledWhatsappReminderJob, type: :job do
       let(:target) { "[translated] #{source}" }
 
       before do
-        Translation.create!({
-                              locale:                        'de-de',
-                              source:,
-                              target:,
-                              is_synchronized_from_codebase: false,
-                              created_by_id:                 1,
-                              updated_by_id:                 1,
-                            })
+        allow(Translation).to receive(:translate).with(locale, source).and_return(target)
       end
 
       it 'translates the reminder text' do
