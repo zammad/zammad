@@ -4,7 +4,7 @@ class Whatsapp::Webhook::Message::Location < Whatsapp::Webhook::Message
   private
 
   def body
-    "📍 <a href='https://www.google.com/maps/search/?api=1&query=#{message[:latitude]},#{message[:longitude]}' target='_blank'>#{message[:name]}</a>"
+    "📍 <a href='https://www.google.com/maps/search/?api=1&query=#{message[:latitude]},#{message[:longitude]}' target='_blank'>#{message[:name] || 'Location'}</a>"
   end
 
   def content_type

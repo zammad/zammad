@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Whatsapp::Webhook::Message::Location, :aggregate_failures, current_user_id: 1 do
   describe '#process' do
-    let(:channel) { create(:whatsapp_channel, welcome: 'Hey there!') }
+    let(:channel)       { create(:whatsapp_channel, welcome: 'Hey there!') }
+    let(:location_name) { 'Langenbach Arena' }
 
     let(:from) do
       {
@@ -38,7 +39,7 @@ RSpec.describe Whatsapp::Webhook::Message::Location, :aggregate_failures, curren
                 location:  {
                   latitude:  50.697254180908,
                   longitude: 7.9327116012573,
-                  name:      'Langenbach Arena',
+                  name:      location_name,
                   url:       'https://foursquare.com/v/4fddbd3ee4b06434e8dc7504'
                 },
                 type:      'location',
@@ -97,6 +98,17 @@ RSpec.describe Whatsapp::Webhook::Message::Location, :aggregate_failures, curren
           body:         'Hey there!',
           content_type: 'text/plain',
         )
+      end
+
+      context 'when location has no name set' do
+        let(:location_name) { nil }
+
+        it 'uses fallback text for the link' do
+          described_class.new(data:, channel:).process
+
+          expect(Ticket::Article.second_to_last.body).to include('Location')
+            .and include('target="_blank"')
+        end
       end
     end
   end
