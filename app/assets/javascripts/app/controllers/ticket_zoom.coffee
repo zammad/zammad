@@ -412,6 +412,8 @@ class App.TicketZoom extends App.Controller
       if alertHeight
         @scrollPageAlert.css('transform', 'translateY(0)')
         @main.css('paddingTop', "#{alertHeight}px")
+      else
+        @main.css('paddingTop', '0')
 
       return
 
@@ -428,6 +430,8 @@ class App.TicketZoom extends App.Controller
     if alertHeight
       @scrollPageAlert.css('transform', "translateY(#{scroll}px)")
       @main.css('paddingTop', "#{scroll + alertHeight}px")
+    else
+      @main.css('paddingTop', '0')
 
     @scrollHeaderPos = scroll
 
