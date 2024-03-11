@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures do
+RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures, current_user_id: 1 do
   let(:channel) { create(:whatsapp_channel) }
 
   let(:from) do
@@ -28,7 +28,7 @@ RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures do
     }
   end
 
-  let(:event) { 'messages' }
+  let(:event)     { 'messages' }
   let(:type)      { 'text' }
   let(:timestamp) { '1707921703' }
 
@@ -166,7 +166,7 @@ RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures do
       end
     end
 
-    context 'when everything is fine', current_user_id: 1 do
+    context 'when everything is fine' do
       it 'does not raise any error' do
         expect { described_class.new(json:, uuid:, signature:).process }.not_to raise_error
       end
@@ -206,13 +206,14 @@ RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures do
           described_class.new(json:, uuid:, signature:).process
 
           expect(Ticket.last.preferences).to include(
-            channel_id: channel.id,
-            whatsapp:   {
-              from:      {
+            channel_id:   channel.id,
+            channel_area: channel.area,
+            whatsapp:     {
+              from:               {
                 phone_number: from[:phone],
                 display_name: from[:name],
               },
-              timestamp: '1707921703',
+              timestamp_incoming: '1707921703',
             },
           )
         end
@@ -226,7 +227,7 @@ RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures do
           user = create(:user, user_data)
           create(:authorization, user: user, uid: user.mobile, provider: 'whatsapp_business')
 
-          create(:ticket, customer: user, group_id: channel.group_id, state_id: Ticket::State.find_by(name: ticket_state).id, preferences: { channel_id: channel.id, whatsapp: { from: { phone_number: from[:phone], display_name: from[:name] }, timestamp: '1707921703' } })
+          create(:ticket, customer: user, group_id: channel.group_id, state_id: Ticket::State.find_by(name: ticket_state).id, preferences: { channel_id: channel.id, channel_area: channel.area, whatsapp: { from: { phone_number: from[:phone], display_name: from[:name] }, timestamp_incoming: '1707921703' } })
         end
 
         before { setup }
@@ -240,13 +241,14 @@ RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures do
             described_class.new(json:, uuid:, signature:).process
 
             expect(Ticket.last.preferences).to include(
-              channel_id: channel.id,
-              whatsapp:   {
-                from:      {
+              channel_id:   channel.id,
+              channel_area: channel.area,
+              whatsapp:     {
+                from:               {
                   phone_number: from[:phone],
                   display_name: from[:name],
                 },
-                timestamp: '1707921803',
+                timestamp_incoming: '1707921803',
               },
             )
           end
@@ -259,6 +261,86 @@ RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures do
             expect { described_class.new(json:, uuid:, signature:).process }.to change(Ticket, :count).by(1)
           end
         end
+      end
+    end
+  end
+
+  describe '.process_status_message' do
+    let(:channel) { create(:whatsapp_channel) }
+
+    let(:from) do
+      {
+        phone: Faker::PhoneNumber.cell_phone_in_e164.delete('+'),
+        name:  Faker::Name.unique.name,
+      }
+    end
+
+    let(:json) do
+      {
+        object: 'whatsapp_business_account',
+        entry:  [
+          {
+            id:      '244742992051543',
+            changes: [
+              {
+                value: {
+                  messaging_product: 'whatsapp',
+                  metadata:          {
+                    display_phone_number: '15551340563',
+                    phone_number_id:      channel.options[:phone_number_id],
+                  },
+                  statuses:          [
+                    {
+                      id:           message_id,
+                      status:       'failed',
+                      timestamp:    '1708603746',
+                      recipient_id: '15551340563',
+                      errors:       [
+                        {
+                          code:       131_047,
+                          title:      'Re-engagement message',
+                          message:    'Re-engagement message',
+                          error_data: {
+                            details: 'Message failed to send because more than 24 hours have passed since the customer last replied to this number.'
+                          },
+                          href:       'https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes/'
+                        }
+                      ]
+                    }
+                  ]
+                },
+                field: 'messages'
+              }
+            ]
+          }
+        ]
+      }.to_json
+    end
+
+    let(:article) { create(:whatsapp_article, :inbound, ticket: ticket) }
+    let(:ticket)  { create(:whatsapp_ticket, channel: channel) }
+
+    let(:message_id) { article.message_id }
+
+    let(:uuid) { channel.options[:callback_url_uuid] }
+
+    let(:signature) do
+      OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), channel.options[:app_secret], json)
+    end
+
+    context 'when all data is valid' do
+      it 'creates a new record in the HttpLog' do
+        described_class.new(json:, uuid:, signature:).process
+
+        expect(HttpLog.last).to have_attributes(
+          direction: 'in',
+          facility:  'WhatsApp::Business',
+          url:       "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#{Rails.configuration.api_path}/channels_whatsapp_webhook/#{channel.options[:callback_url_uuid]}",
+          status:    '200',
+          request:   { content: JSON.parse(json).deep_symbolize_keys },
+          response:  { content: {} },
+          method:    'POST',
+        )
       end
     end
   end

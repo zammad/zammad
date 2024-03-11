@@ -69,7 +69,7 @@ describe('Fields - FieldFile', () => {
   })
 
   it('renders interactive file input', async () => {
-    const view = renderFileInput()
+    const view = renderFileInput({ multiple: true })
 
     const fileButton = view.getByRole('button', { name: 'Attach files' })
     expect(fileButton).toBeInTheDocument()

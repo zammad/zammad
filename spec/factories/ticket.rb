@@ -24,7 +24,8 @@ FactoryBot.define do
 
       preferences do
         {
-          channel_id: channel.id,
+          channel_id:   channel.id,
+          channel_area: channel.area,
         }
       end
     end

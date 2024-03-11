@@ -6891,6 +6891,23 @@ a.list-group-item.active > .badge,
   @include bidi-style(padding-left, 20px, padding-right, 0);
 }
 
+.scrollPageAlert {
+  @extend .zIndex-5;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(0);
+  border-bottom: 1px solid var(--border);
+
+  & > .alert {
+    margin-bottom: 0;
+    border-radius: 0;
+    text-align: center;
+  }
+}
+
 .ticket-article,
 .article-new {
   max-width: 1080px;
@@ -7173,6 +7190,14 @@ a.list-group-item.active > .badge,
   margin: 0 -12px -28px;
   padding: 6px 12px;
   border-radius: 0 0 4px 4px;
+}
+
+.textBubble-footer:has(+ .attachments .attachment) {
+  margin-bottom: -10px;
+}
+
+.textBubble-footer:not(.is-open .textBubble-footer) {
+  visibility: hidden;
 }
 
 .textBubble-control {
@@ -7819,6 +7844,11 @@ a.list-group-item.active > .badge,
   pointer-events: auto;
 
   @extend .u-highlight;
+
+  &:has(input[type='file'][disabled]) {
+    color: var(--text-muted-alt);
+    pointer-events: none;
+  }
 }
 
 .attachmentUpload {

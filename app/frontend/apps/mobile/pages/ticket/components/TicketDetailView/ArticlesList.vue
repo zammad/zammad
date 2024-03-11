@@ -66,6 +66,7 @@ const markSeen = (id: string) => {
         :internal="row.article.internal"
         :content-type="row.article.contentType"
         :position="row.article.sender?.name !== 'Customer' ? 'left' : 'right'"
+        :media-error="row.article.mediaErrorState?.error"
         :security="row.article.securityState"
         :ticket-internal-id="ticket.internalId"
         :article-id="row.article.id"

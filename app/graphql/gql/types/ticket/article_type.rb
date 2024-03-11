@@ -31,6 +31,7 @@ module Gql::Types::Ticket
 
     field :preferences, ::GraphQL::Types::JSON
     field :security_state, Gql::Types::Ticket::Article::SecurityStateType
+    field :media_error_state, Gql::Types::Ticket::Article::MediaErrorStateType
 
     field :attachments, [Gql::Types::StoredFileType, { null: false }], null: false, description: 'All attached files as stored in the database.'
     field :attachments_without_inline, [Gql::Types::StoredFileType, { null: false }], null: false, description: 'Attachments for display, with inline images filtered out.'
@@ -54,6 +55,10 @@ module Gql::Types::Ticket
 
     def security_state
       @object.preferences['security']
+    end
+
+    def media_error_state
+      @object.preferences&.dig('whatsapp')
     end
 
     private

@@ -2,9 +2,10 @@ class App.TicketZoom extends App.Controller
   @include App.TicketNavigable
 
   elements:
-    '.main':               'main'
-    '.ticketZoom':         'ticketZoom'
-    '.scrollPageHeader':   'scrollPageHeader'
+    '.main':             'main'
+    '.ticketZoom':       'ticketZoom'
+    '.scrollPageHeader': 'scrollPageHeader'
+    '.scrollPageAlert':  'scrollPageAlert'
 
   events:
     'click .js-submit':                                          'submit'
@@ -304,6 +305,10 @@ class App.TicketZoom extends App.Controller
     offset = element.offset()
     if offset
       position = offset.top
+
+      # Subtract possible top padding of the parent container.
+      position -= parseInt(element.parent().css('paddingTop') or 0, 10)
+
     Math.abs(position)
 
   hide: =>
@@ -394,14 +399,20 @@ class App.TicketZoom extends App.Controller
 
   positionPageHeaderUpdate: =>
     headerHeight     = @scrollPageHeader.outerHeight()
-    mainScrollHeigth = @main.prop('scrollHeight')
-    mainHeigth       = @main.height()
+    alertHeight      = if @isPageAlertVisible() then @scrollPageAlert.outerHeight() else 0
+    mainScrollHeight = @main.prop('scrollHeight')
+    mainHeight       = @main.height()
 
     scroll = @main.scrollTop()
 
-    # if page header is not possible to use - mainScrollHeigth to low - hide page header
-    if not mainScrollHeigth > mainHeigth + headerHeight
+    # if page header is not possible to use - mainScrollHeight to low - hide page header
+    if not mainScrollHeight > mainHeight + headerHeight
       @scrollPageHeader.css('transform', "translateY(#{-headerHeight}px)")
+
+      if alertHeight
+        @scrollPageAlert.css('transform', 'translateY(0)')
+        @main.css('paddingTop', "#{alertHeight}px")
+
       return
 
     if scroll > headerHeight
@@ -414,7 +425,14 @@ class App.TicketZoom extends App.Controller
     # translateY: headerHeight .. 0
     @scrollPageHeader.css('transform', "translateY(#{scroll - headerHeight}px)")
 
+    if alertHeight
+      @scrollPageAlert.css('transform', "translateY(#{scroll}px)")
+      @main.css('paddingTop', "#{scroll + alertHeight}px")
+
     @scrollHeaderPos = scroll
+
+  isPageAlertVisible: =>
+    not @scrollPageAlert.hasClass('hide')
 
   pendingTimeReminderReached: =>
     App.TaskManager.touch(@taskKey)
@@ -501,6 +519,14 @@ class App.TicketZoom extends App.Controller
           ticket:    @ticket
           ticket_id: @ticket_id
         )
+
+        # Check if the alert should be shown.
+        #   Normally, this is a concern of the associated channel, so we only render it if it's known.
+        if @ticket.preferences?.channel_id
+          new App.TicketZoomAlert(
+            el:        elLocal.find('.js-ticketAlertContainer')
+            object_id: @ticket_id
+          )
 
       new App.TicketZoomSetting(
         el:        elLocal.find('.js-settingContainer')
@@ -898,7 +924,9 @@ class App.TicketZoom extends App.Controller
       @autosaveStart()
       return
 
-    if articleParams && articleParams.body
+    # New article body required.
+    # But WhatsApp messages with some attachments go without adjacent text.
+    if articleParams && (articleParams.body || @articleNew?.checkBodyAllowEmpty())
       article = new App.TicketArticle
       article.load(articleParams)
       errors = article.validate()

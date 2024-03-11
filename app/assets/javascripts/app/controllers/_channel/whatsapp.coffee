@@ -32,6 +32,11 @@ class ChannelWhatsapp extends App.ControllerSubContent
       channels: channels
     )
 
+    new App.HttpLog(
+      el: @$('.js-log')
+      facility: 'WhatsApp::Business'
+    )
+
   new: (e) =>
     e.preventDefault()
 
@@ -166,6 +171,14 @@ class WhatsappAccountPhoneNumberModal extends App.ControllerModal
 
     preselected_group_id = if @channel then @channel.group_id else 1
 
+    content.find('.js-reminderActive').replaceWith App.UiElement.switch.render(
+      name: 'reminder_active'
+      null: false
+      default: true
+      display: __('Automatic reminders')
+      value: if _.isUndefined(@channel?.options?.reminder_active) then true else @channel.options.reminder_active
+    )
+
     content.find('.js-messagesGroup').replaceWith App.UiElement.tree_select.render(
       name: 'group_id'
       multiple: false
@@ -181,6 +194,7 @@ class WhatsappAccountPhoneNumberModal extends App.ControllerModal
       multiple: false
       value: @channel?.options?.phone_number_id || @params.available_phone_numbers?[0]?.value
       options: @params.available_phone_numbers?.map (elem) -> { name: elem.label, value: elem.value }
+      rejectNonExistentValues: true
     )
 
     content

@@ -118,6 +118,47 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe '.by_mobile' do
+      let!(:user)        { create(:customer, mobile: saved_mobile) }
+      let(:saved_mobile) { '+4912341234' }
+
+      context 'with a number saved with prefixed +' do
+        context 'searching for the same mobile number' do
+          it 'finds the user (by direct lookup)' do
+            expect(described_class.by_mobile(number: saved_mobile)).to eq(user)
+          end
+        end
+
+        context 'searching for the E.164 number without prefixed +' do
+          it 'finds the user (through CTI lookup)' do
+            expect(described_class.by_mobile(number: '4912341234')).to eq(user)
+          end
+        end
+      end
+
+      context 'with a number saved without prefixed +' do
+        let(:saved_mobile) { '4912341234' }
+
+        context 'searching for the same mobile number' do
+          it 'finds the user (by direct lookup)' do
+            expect(described_class.by_mobile(number: saved_mobile)).to eq(user)
+          end
+        end
+
+        context 'searching for the number prefixed with +' do
+          it 'finds the user (through CTI lookup)' do
+            expect(described_class.by_mobile(number: '+4912341234')).to eq(user)
+          end
+        end
+      end
+
+      context 'with a non-matching number' do
+        it 'does not find the user' do
+          expect(described_class.by_mobile(number: '99999999999')).to be_nil
+        end
+      end
+    end
   end
 
   describe 'Instance methods:' do

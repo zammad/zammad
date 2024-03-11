@@ -267,13 +267,26 @@ send via account
 
     result
   rescue => e
-    error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
-    logger.error error
-    logger.error e
-    self.status_out = 'error'
-    self.last_log_out = error
+    handle_delivery_error!(e, adapter)
+  end
+
+  def handle_delivery_error!(error, adapter)
+    message = "Can't use Channel::Driver::#{adapter.to_classname}: #{error.inspect}"
+
+    if error.respond_to?(:retryable?) && !error.retryable?
+      self.status_out = 'ok'
+      self.last_log_out = ''
+    else
+      logger.error message
+      logger.error error
+
+      self.status_out = 'error'
+      self.last_log_out = error
+    end
+
     save!
-    raise error
+
+    raise DeliveryError.new(message, error)
   end
 
 =begin
@@ -362,4 +375,19 @@ get instance of channel driver
     EmailAddress.channel_cleanup
   end
 
+  class DeliveryError < StandardError
+    attr_reader :original_error
+
+    def initialize(message, original_error)
+      super(message)
+
+      @original_error = original_error
+    end
+
+    def retryable?
+      return true if !original_error.respond_to?(:retryable?)
+
+      original_error.retryable?
+    end
+  end
 end

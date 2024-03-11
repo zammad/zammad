@@ -74,7 +74,7 @@
     </div>
   </div>
 </div>
-<% if encryptionSuccess || signSuccess || encryptionWarning || signWarning: %>
+<% if encryptionSuccess || signSuccess || encryptionWarning || signWarning || @article.preferences?.whatsapp?.media_error: %>
   <div class="article-meta-permanent">
     <% if encryptionWarning || signWarning: %>
       <div class="alert alert--warning">
@@ -97,6 +97,13 @@
         <% end %>
       </div>
     <% end %>
+
+  <% if @article.preferences?.whatsapp?.media_error: %>
+    <div class="alert alert--warning">
+      <div class="btn btn--action btn--small js-retryWhatsAppAttachmentDownload"><%- @T('Retry attachment download') %>
+      </div>
+    </div>
+  <% end %>
   </div>
 <% end %>
 <div class="article-content">

@@ -1,17 +1,8 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Sms::Base
-  def user_by_cti(mobile)
-    _from_comment, preferences = Cti::CallerId.get_comment_preferences(mobile, 'from')
-    user = nil
-    if preferences && preferences['from'] && preferences['from'][0] && preferences['from'][0]['level'] == 'known' && preferences['from'][0]['object'] == 'User'
-      user = User.find_by(id: preferences['from'][0]['o_id'])
-    end
-    user
-  end
-
   def user_by_mobile(mobile)
-    User.where(mobile: mobile).reorder(:updated_at).first || user_by_cti(mobile) || User.create!(
+    User.by_mobile(number: mobile) || User.create!(
       firstname: mobile,
       mobile:    mobile,
     )

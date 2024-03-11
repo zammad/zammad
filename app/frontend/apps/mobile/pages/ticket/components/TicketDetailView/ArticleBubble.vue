@@ -25,6 +25,7 @@ import { isStandalone } from '#shared/utils/pwa.ts'
 import { useArticleToggleMore } from '../../composable/useArticleToggleMore.ts'
 import { useArticleAttachments } from '../../composable/useArticleAttachments.ts'
 import ArticleSecurityBadge from './ArticleSecurityBadge.vue'
+import ArticleWhatsappMediaBadge from './ArticleWhatsappMediaBadge.vue'
 import { useArticleSeen } from '../../composable/useArticleSeen.ts'
 
 interface Props {
@@ -37,6 +38,7 @@ interface Props {
   ticketInternalId: number
   articleId: string
   attachments: TicketArticleAttachment[]
+  mediaError?: boolean | null
 }
 
 const props = defineProps<Props>()
@@ -310,6 +312,11 @@ const onContextClick = () => {
               : 'ltr:right-10 rtl:left-10',
           ]"
         >
+          <ArticleWhatsappMediaBadge
+            v-if="props.mediaError"
+            :article-id="articleId"
+            :media-error="props.mediaError"
+          />
           <ArticleSecurityBadge
             v-if="security"
             :article-id="articleId"

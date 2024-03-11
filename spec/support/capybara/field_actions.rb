@@ -235,6 +235,29 @@ module FieldActions # rubocop:disable Metrics/ModuleLength
     wait.until { find_all("input[name='#{name}'] ~ .token").length == token_count }
   end
 
+  # Check the field value of a form switch field.
+  #
+  # @example
+  #  check_switch_field_value('switch_field_name', true)
+  #
+  def check_switch_field_value(name, value, **find_options)
+    switch_field = find("input[name='#{name}']", visible: :all, **find_options)
+
+    if value
+      expect(switch_field).to be_checked
+    else
+      expect(switch_field).not_to be_checked
+    end
+  end
+
+  # Set the field value of a form switch field.
+  #
+  # @example
+  #  set_switch_field_value('switch_field_name', false)
+  #
+  def set_switch_field_value(name, value, **find_options)
+    find("input[name='#{name}']", visible: :all, **find_options).set(value)
+  end
 end
 
 RSpec.configure do |config|

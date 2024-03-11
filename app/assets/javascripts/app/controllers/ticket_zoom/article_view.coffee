@@ -91,6 +91,7 @@ class ArticleViewItem extends App.ControllerObserver
     'click .attachments img':         'imageView'
     'click .file-calendar .js-preview':  'calendarView'
     'click .js-securityRetryProcess': 'retrySecurityProcess'
+    'click .js-retryWhatsAppAttachmentDownload': 'retryWhatsAppAttachmentDownload'
 
   constructor: ->
     super
@@ -345,6 +346,29 @@ class ArticleViewItem extends App.ControllerObserver
         @notify
           type: 'error'
           msg:  App.i18n.translateContent('The retried security process failed!')
+    )
+
+  retryWhatsAppAttachmentDownload: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    article_id = $(e.target).closest('.ticket-article-item').data('id')
+
+    @ajax(
+      id:   'retryWhatsAppAttachmentDownload'
+      type: 'POST'
+      url:  "#{@apiPath}/ticket_articles/#{article_id}/retry_whatsapp_attachment_download"
+      processData: true
+      success: (data, status, xhr) =>
+        @notify
+          type: 'success'
+          msg:  App.i18n.translateContent('Downloading attachments…')
+
+      error: (data, status, xhr) =>
+        details = data.responseJSON || {}
+        @notify
+          type: 'error'
+          msg:  App.i18n.translateContent(details.error)
     )
 
   stopPropagation: (e) ->

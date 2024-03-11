@@ -1,17 +1,18 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { toRef, computed, ref } from 'vue'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { convertFileList } from '#shared/utils/files.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useImageViewer } from '#shared/composables/useImageViewer.ts'
-import { convertFileList } from '#shared/utils/files.ts'
-import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
+import useInstantValidation from '#mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts'
+import type { FieldFileProps } from './types.ts'
 import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/add.api.ts'
 import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api.ts'
-import type { FieldFileProps } from './types.ts'
 
 export interface Props {
   context: FormFieldContext<FieldFileProps>
@@ -48,7 +49,6 @@ const canInteract = computed(
 )
 
 const fileInput = ref<HTMLInputElement>()
-
 const reset = () => {
   loadingFiles.value = []
   const input = fileInput.value
@@ -56,6 +56,8 @@ const reset = () => {
   input.value = ''
   input.files = null
 }
+
+const { validate } = useInstantValidation()
 
 const loadFiles = async (files: FileList | File[]) => {
   loadingFiles.value = Array.from(files || []).map((file) => ({
@@ -98,7 +100,16 @@ Object.assign(props.context, {
 const onFileChanged = async ($event: Event) => {
   const input = $event.target as HTMLInputElement
   const { files } = input
-  if (files) await loadFiles(files)
+
+  if (!files) return
+  // Extra validation for file size and type if specified in the rules
+  const isValid = validate(
+    files,
+    props.context.parsedRules as Array<Record<'name', string>>,
+  )
+  if (!isValid) return
+
+  await loadFiles(files)
 }
 
 const removeFile = async (file: FileUploaded) => {
@@ -132,10 +143,17 @@ const removeFile = async (file: FileUploaded) => {
 }
 
 const uploadTitle = computed(() => {
+  if (!props.context.multiple) {
+    return __('Attach file')
+  }
   if (uploadFiles.value.length === 0) {
     return __('Attach files')
   }
   return __('Attach another file')
+})
+
+const reachedUploadLimit = computed(() => {
+  return !props.context.multiple && uploadFiles.value.length >= 1
 })
 
 const bottomGradientOpacity = ref('1')
@@ -173,6 +191,7 @@ useTraverseOptions(filesContainer, {
     class="max-h-48 overflow-auto px-4 pt-4"
     :class="{
       'opacity-60': !canInteract,
+      'pb-4': reachedUploadLimit,
     }"
     @scroll.passive="onFilesScroll"
   >
@@ -200,10 +219,13 @@ useTraverseOptions(filesContainer, {
     ></div>
   </div>
   <button
+    v-if="!reachedUploadLimit"
     class="flex w-full items-center justify-center gap-1 p-4 text-blue"
     type="button"
     tabindex="0"
-    :class="{ 'text-blue/60': !canInteract }"
+    :class="{
+      'text-blue/60': !canInteract,
+    }"
     :disabled="!canInteract"
     @click="canInteract && fileInput?.click()"
   >

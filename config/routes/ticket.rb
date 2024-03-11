@@ -58,14 +58,15 @@ Zammad::Application.routes.draw do
   match api_path + '/ticket_states/:id',                             to: 'ticket_states#destroy',     via: :delete
 
   # ticket articles
-  match api_path + '/ticket_articles',                               to: 'ticket_articles#index',           via: :get
-  match api_path + '/ticket_articles/:id',                           to: 'ticket_articles#show',            via: :get
-  match api_path + '/ticket_articles/by_ticket/:id',                 to: 'ticket_articles#index_by_ticket', via: :get
-  match api_path + '/ticket_articles',                               to: 'ticket_articles#create',          via: :post
-  match api_path + '/ticket_articles/:id',                           to: 'ticket_articles#update',          via: :put
-  match api_path + '/ticket_articles/:id',                           to: 'ticket_articles#destroy',     via: :delete
-  match api_path + '/ticket_attachment/:ticket_id/:article_id/:id',  to: 'ticket_articles#attachment',      via: :get
-  match api_path + '/ticket_attachment_upload_clone_by_article/:article_id', to: 'ticket_articles#ticket_attachment_upload_clone_by_article', via: :post
-  match api_path + '/ticket_article_plain/:id',                      to: 'ticket_articles#article_plain',   via: :get
-  match api_path + '/ticket_articles/:id/retry_security_process',    to: 'ticket_articles#retry_security_process', via: :post
+  match api_path + '/ticket_articles',                                        to: 'ticket_articles#index',                                     via: :get
+  match api_path + '/ticket_articles/:id',                                    to: 'ticket_articles#show',                                      via: :get
+  match api_path + '/ticket_articles/by_ticket/:id',                          to: 'ticket_articles#index_by_ticket',                           via: :get
+  match api_path + '/ticket_articles',                                        to: 'ticket_articles#create',                                    via: :post
+  match api_path + '/ticket_articles/:id',                                    to: 'ticket_articles#update',                                    via: :put
+  match api_path + '/ticket_articles/:id',                                    to: 'ticket_articles#destroy',                                   via: :delete
+  match api_path + '/ticket_attachment/:ticket_id/:article_id/:id',           to: 'ticket_articles#attachment',                                via: :get
+  match api_path + '/ticket_attachment_upload_clone_by_article/:article_id',  to: 'ticket_articles#ticket_attachment_upload_clone_by_article', via: :post
+  match api_path + '/ticket_article_plain/:id',                               to: 'ticket_articles#article_plain',                             via: :get
+  match api_path + '/ticket_articles/:id/retry_security_process',             to: 'ticket_articles#retry_security_process',                    via: :post
+  match api_path + '/ticket_articles/:id/retry_whatsapp_attachment_download', to: 'ticket_articles#retry_whatsapp_attachment_download',        via: :post
 end

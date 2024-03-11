@@ -27,8 +27,7 @@ module Service::Channel::Whatsapp
 
     def options
       params.slice(
-        :business_id, :access_token, :app_secret, :phone_number_id,
-        :welcome, :goodbye
+        :business_id, :access_token, :app_secret, :phone_number_id, :welcome, :reminder_active
       )
     end
 

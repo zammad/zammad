@@ -1,0 +1,3 @@
+<div class="alert alert--<%= @alert.type %>" role="alert">
+  <%- @T(@alert.text, @alert.textPlaceholder) %>
+</div>

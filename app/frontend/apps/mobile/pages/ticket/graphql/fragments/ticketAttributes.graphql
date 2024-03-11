@@ -86,4 +86,5 @@ fragment ticketAttributes on Ticket {
   firstResponseEscalationAt
   closeEscalationAt
   updateEscalationAt
+  initialChannel
 }

@@ -294,10 +294,11 @@ FactoryBot.define do
       inbound
 
       transient do
-        type_name { 'whatsapp message' }
-        channel { Channel.find(ticket.preferences[:channel_id]) }
-        from_phone_number { Faker::PhoneNumber.cell_phone_in_e164 }
-        from_name { Faker::Name.unique.name }
+        type_name          { 'whatsapp message' }
+        channel            { Channel.find(ticket.preferences[:channel_id]) }
+        from_phone_number  { Faker::PhoneNumber.cell_phone_in_e164 }
+        from_name          { Faker::Name.unique.name }
+        timestamp_incoming { Time.zone.now.to_i.to_s }
       end
 
       ticket factory: %i[whatsapp_ticket]
@@ -311,11 +312,11 @@ FactoryBot.define do
 
         context.ticket.preferences.tap do |p|
           p['whatsapp'] = {
-            from:      {
+            from:               {
               phone_number: context.from_phone_number.delete('+'),
               display_name: context.from_name,
             },
-            timestamp: Time.zone.now.to_i.to_s,
+            timestamp_incoming: context.timestamp_incoming,
           }
         end
         context.ticket.title = "New WhatsApp message from #{context.from_name} (#{context.from_phone_number})"
@@ -356,6 +357,7 @@ FactoryBot.define do
         pending_delivery
 
         message_id { "wamid.#{Faker::Number.unique.number}" }
+
         preferences do
           {
             delivery_retry:          1,
@@ -369,6 +371,26 @@ FactoryBot.define do
         end
       end
 
+      trait :with_attachment_media_document do
+        after(:create) do |article, _context|
+          create(:store,
+                 object:      article.class.name,
+                 o_id:        article.id,
+                 data:        Faker::Lorem.unique.sentence,
+                 filename:    'test.txt',
+                 preferences: { 'Content-Type' => 'text/plain' })
+
+          article.preferences.tap do |prefs|
+            prefs['whatsapp'] = {
+              entry_id:   Faker::Number.unique.number.to_s,
+              message_id: "wamid.#{Faker::Number.unique.number}",
+              type:       'document',
+              media_id:   Faker::Number.unique.number.to_s
+            }
+          end
+          article.save!
+        end
+      end
     end
 
     factory :telegram_article do
@@ -537,6 +559,30 @@ FactoryBot.define do
                data:        context.attachment.read,
                filename:    File.basename(context.attachment.path),
                preferences: {})
+      end
+    end
+
+    trait :with_prepended_attachment do
+      transient do
+        attachment            { File.open('spec/fixtures/files/upload/hello_world.txt') }
+        override_content_type { nil }
+        attachments_count     { 1 }
+      end
+
+      after(:build) do |article, context|
+        filename     = File.basename(context.attachment.path)
+        content_type = context.override_content_type || MIME::Types.type_for(filename).first&.content_type
+
+        attachments = []
+
+        context.attachments_count.times do
+          attachments << create(:store,
+                                data:        context.attachment.read,
+                                filename:    filename,
+                                preferences: { 'Content-Type' => content_type })
+        end
+
+        article.attachments = attachments
       end
     end
 

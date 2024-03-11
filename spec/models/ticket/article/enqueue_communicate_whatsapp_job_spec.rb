@@ -14,7 +14,7 @@ RSpec.describe Ticket::Article::EnqueueCommunicateWhatsappJob, performs_jobs: tr
   end
 
   shared_examples 'for success' do
-    it 'enqueues the Facebook background job' do
+    it 'enqueues the WhatsApp background job' do
       expect { article }.to have_enqueued_job(CommunicateWhatsappJob)
     end
   end

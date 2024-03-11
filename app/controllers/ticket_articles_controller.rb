@@ -266,6 +266,19 @@ class TicketArticlesController < ApplicationController
     render json: result
   end
 
+  def retry_whatsapp_attachment_download
+    article = Ticket::Article.find(params[:id])
+    authorize!(article, :update?)
+
+    retry_media = Whatsapp::Retry::Media.new(article:)
+    retry_media.process
+
+    render json: {}, status: :ok
+  rescue => e
+    logger.error e
+    render json: { error: __('The retried attachment download failed.') }, status: :unprocessable_entity
+  end
+
   private
 
   def render_calendar_preview

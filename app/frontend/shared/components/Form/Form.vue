@@ -28,6 +28,7 @@ import type {
 import { getNode, createMessage } from '@formkit/core'
 import type { Except, SetRequired } from 'type-fest'
 import { refDebounced, watchOnce } from '@vueuse/shared'
+import { cloneAny } from '@formkit/utils'
 
 import { I18N, i18n } from '#shared/i18n.ts'
 import getUuid from '#shared/utils/getUuid.ts'
@@ -298,6 +299,17 @@ const onSubmit = (values: FormSubmitData) => {
           formNode.value.reset()
         } else {
           formNode.value.reset(values)
+          // "dirty" check checks "_init" instead of "initial"
+          // "initial" is updated with resetValues in "reset" function, but "_init" is static
+          // TODO: keep an eye on https://github.com/formkit/formkit/issues/791
+          formNode.value.props._init = cloneAny(formNode.value.props.initial)
+          formNode.value.walk((node) => {
+            if (node.name in flatValues) {
+              node.props._init = cloneAny(flatValues[node.name])
+            } else if (node.name in values) {
+              node.props._init = cloneAny(values[node.name])
+            }
+          })
         }
         afterReset?.()
       })

@@ -46,9 +46,10 @@ class AttachmentsController < ApplicationController
     render json: {
       success: true,
       data:    {
-        id:       store.id,
-        filename: file.original_filename,
-        size:     store.size,
+        id:          store.id,
+        filename:    file.original_filename,
+        size:        store.size,
+        contentType: store.preferences['Content-Type']
       }
     }
   end

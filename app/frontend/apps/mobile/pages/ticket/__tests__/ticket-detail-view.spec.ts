@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import {
+  EnumChannelArea,
   EnumSecurityStateType,
   type TicketArticleRetrySecurityProcessMutation,
 } from '#shared/graphql/types.ts'
 import { getNode } from '@formkit/core'
 import { ApolloError } from '@apollo/client/errors'
+import { TicketState } from '#shared/entities/ticket/types.ts'
 import { TicketArticleRetrySecurityProcessDocument } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { getAllByTestId, getByLabelText, getByRole } from '@testing-library/vue'
@@ -988,4 +990,148 @@ it("scrolls to the bottom the first time, but doesn't trigger rescroll on subseq
   )
 
   expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(1)
+})
+
+describe('with ticket on a whatsapp channel', () => {
+  it('shows reply link in the article context when the service window is open', async () => {
+    const testDate = new Date()
+
+    const articles = defaultArticles()
+    articles.description!.edges[0].node.type!.name = 'whatsapp message'
+
+    const ticket = defaultTicket(
+      {},
+      {
+        whatsapp: {
+          timestamp_incoming: testDate.getTime(),
+        },
+      },
+    )
+
+    ticket.ticket.initialChannel = EnumChannelArea.WhatsAppBusiness
+
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      ticket,
+      articles,
+    })
+
+    const view = await visitView('/tickets/1', {
+      global: {
+        stubs: {
+          transition: false,
+        },
+      },
+    })
+
+    await waitUntilTicketLoaded()
+
+    vi.useRealTimers()
+
+    const contextTriggers = view.getAllByRole('button', {
+      name: 'Article actions',
+    })
+
+    expect(contextTriggers).toHaveLength(3)
+
+    await view.events.click(contextTriggers[0])
+
+    expect(view.getByText('Reply')).toBeInTheDocument()
+  })
+
+  it('hides reply link in the article context when the service window is closed', async () => {
+    const testDate = new Date()
+
+    const articles = defaultArticles()
+    articles.description!.edges[0].node.type!.name = 'whatsapp message'
+
+    const ticket = defaultTicket(
+      {},
+      {
+        whatsapp: {
+          timestamp_incoming:
+            testDate.setHours(testDate.getHours() - 25).valueOf() / 1000,
+        },
+      },
+    )
+
+    ticket.ticket.initialChannel = EnumChannelArea.WhatsAppBusiness
+
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      ticket,
+      articles,
+    })
+
+    const view = await visitView('/tickets/1', {
+      global: {
+        stubs: {
+          transition: false,
+        },
+      },
+    })
+
+    await waitUntilTicketLoaded()
+
+    vi.useRealTimers()
+
+    const contextTriggers = view.getAllByRole('button', {
+      name: 'Article actions',
+    })
+
+    expect(contextTriggers).toHaveLength(3)
+
+    await view.events.click(contextTriggers[0])
+
+    expect(view.queryByText('Reply')).not.toBeInTheDocument()
+  })
+
+  it('hides reply link in the article context when the ticket is closed', async () => {
+    const testDate = new Date()
+
+    const articles = defaultArticles()
+    articles.description!.edges[0].node.type!.name = 'whatsapp message'
+
+    const ticket = defaultTicket(
+      {},
+      {
+        whatsapp: {
+          timestamp_incoming: testDate.getTime(),
+        },
+      },
+      {
+        name: 'closed',
+        stateType: {
+          name: TicketState.Closed,
+        },
+      },
+    )
+
+    ticket.ticket.initialChannel = EnumChannelArea.WhatsAppBusiness
+
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      ticket,
+      articles,
+    })
+
+    const view = await visitView('/tickets/1', {
+      global: {
+        stubs: {
+          transition: false,
+        },
+      },
+    })
+
+    await waitUntilTicketLoaded()
+
+    vi.useRealTimers()
+
+    const contextTriggers = view.getAllByRole('button', {
+      name: 'Article actions',
+    })
+
+    expect(contextTriggers).toHaveLength(3)
+
+    await view.events.click(contextTriggers[0])
+
+    expect(view.queryByText('Reply')).not.toBeInTheDocument()
+  })
 })

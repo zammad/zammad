@@ -515,6 +515,15 @@ returns
     User.joins(:roles_users).where("(#{condition}) AND users.active = ?", *total_role_ids, true).distinct.reorder(:id)
   end
 
+  # Find a user by mobile number, either directly or by number variants stored in the Cti::CallerIds.
+  def self.by_mobile(number:)
+    direct_lookup = User.where(mobile: number).reorder(:updated_at).first
+    return direct_lookup if direct_lookup
+
+    cti_lookup = Cti::CallerId.lookup(number.delete('+')).find { |id| id.level == 'known' && id.object == 'User' }
+    User.find_by(id: cti_lookup.o_id) if cti_lookup
+  end
+
 =begin
 
 generate new token for reset password
@@ -1286,8 +1295,8 @@ raise 'At least one user need to have admin permissions'
   # to adopt/orphan matching Cti::Logs accordingly
   # (see https://github.com/zammad/zammad/issues/2057)
   def update_caller_id
-    # skip if "phone" does not change, or changes like [nil, ""]
-    return if persisted? && !previous_changes[:phone]&.any?(&:present?) # rubocop:disable Style/InverseMethods
+    # skip if "phone/mobile" does not change, or changes like [nil, ""]
+    return if persisted? && previous_changes.slice(:phone, :mobile).values.flatten.none?(&:present?)
     return if destroyed? && phone.blank?
 
     Cti::CallerId.build(self)

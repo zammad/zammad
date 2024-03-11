@@ -49,6 +49,8 @@ class Ticket::Article < ApplicationModel
   validates :type_id, presence: true
   validates :sender_id, presence: true
 
+  validates_with Validations::TicketArticleValidator
+
   sanitized_html :body
 
   activity_stream_permission 'ticket.agent'

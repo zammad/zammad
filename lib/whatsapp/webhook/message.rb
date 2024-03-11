@@ -16,6 +16,8 @@ class Whatsapp::Webhook::Message
     UserInfo.current_user_id = user.id
     @ticket = create_or_update_ticket
     @article = create_or_update_article
+
+    schedule_reminder_job
   end
 
   private
@@ -37,10 +39,7 @@ class Whatsapp::Webhook::Message
   end
 
   def create_or_update_user
-    user = User.find_by(mobile: user_info[:mobile]) || User.find_by(mobile: user_info[:mobile].delete('+'))
-    return user if user.present?
-
-    create_user
+    User.by_mobile(number: user_info[:mobile]) || create_user
   end
 
   def create_or_update_ticket
@@ -60,8 +59,9 @@ class Whatsapp::Webhook::Message
       priority_id: Ticket::Priority.find_by(default_create: true).id,
       customer_id: @user.id,
       preferences: {
-        channel_id: @channel.id,
-        whatsapp:   ticket_preferences,
+        channel_id:   @channel.id,
+        channel_area: @channel.area,
+        whatsapp:     ticket_preferences,
       },
     )
   end
@@ -71,7 +71,7 @@ class Whatsapp::Webhook::Message
 
     preferences = ticket.preferences
     preferences[:whatsapp] ||= {}
-    preferences[:whatsapp][:timestamp] = @data[:entry].first[:changes].first[:value][:messages].first[:timestamp]
+    preferences[:whatsapp][:timestamp_incoming] = @data[:entry].first[:changes].first[:value][:messages].first[:timestamp]
 
     ticket.update!(
       preferences:,
@@ -103,6 +103,8 @@ class Whatsapp::Webhook::Message
   end
 
   def create_article
+    is_first_article = @ticket.articles.count.zero?
+
     article = Ticket::Article.create!(
       ticket_id:    @ticket.id,
       type_id:      Ticket::Article::Type.lookup(name: 'whatsapp message').id,
@@ -118,9 +120,9 @@ class Whatsapp::Webhook::Message
       },
     )
 
-    return article if !attachment?
+    create_attachment(article: article) if attachment?
 
-    create_attachment(article: article)
+    create_welcome_article if is_first_article
 
     article
   end
@@ -149,6 +151,25 @@ class Whatsapp::Webhook::Message
     )
   end
 
+  def create_welcome_article
+
+    return if @channel.options[:welcome].blank?
+
+    translated_welcome_message = Translation.translate(user_locale, @channel.options[:welcome])
+
+    Ticket::Article.create!(
+      ticket_id:    @ticket.id,
+      type_id:      Ticket::Article::Type.lookup(name: 'whatsapp message').id,
+      sender_id:    Ticket::Article::Sender.lookup(name: 'System').id,
+      from:         "#{@channel.options[:name]} (#{@channel.options[:phone_number]})",
+      to:           "#{profile_name} (#{@user.mobile})",
+      subject:      translated_welcome_message.truncate(100, omission: '…'),
+      internal:     false,
+      body:         translated_welcome_message,
+      content_type: 'text/plain',
+    )
+  end
+
   def create_user
     user_data = user_info
 
@@ -174,6 +195,10 @@ class Whatsapp::Webhook::Message
     }
   end
 
+  def user_locale
+    @user.preferences[:locale] || Locale.default
+  end
+
   def profile_name
     data[:entry].first[:changes].first[:value][:contacts].first[:profile][:name]
   end
@@ -184,11 +209,11 @@ class Whatsapp::Webhook::Message
 
   def ticket_preferences
     {
-      from:      {
+      from:               {
         phone_number: phone,
         display_name: profile_name,
       },
-      timestamp: @data[:entry].first[:changes].first[:value][:messages].first[:timestamp],
+      timestamp_incoming: @data[:entry].first[:changes].first[:value][:messages].first[:timestamp],
     }
   end
 
@@ -209,5 +234,36 @@ class Whatsapp::Webhook::Message
       .first[:changes]
       .first[:value][:messages]
       .first[type]
+  end
+
+  def schedule_reminder_job
+    # Automatic reminders are an optional feature.
+    return if !@channel.options[:reminder_active]
+
+    # Do not schedule the job in case the service window has not been opened yet.
+    timestamp_incoming = @ticket.preferences.dig(:whatsapp, :timestamp_incoming)
+    return if timestamp_incoming.nil?
+
+    cleanup_last_reminder_job
+
+    # Calculate the end of the service window, based on the message timestamp.
+    end_service_time = Time.zone.at(timestamp_incoming.to_i) + 24.hours
+    return if end_service_time <= Time.zone.now
+
+    # Set the reminder time to 1 hour before the service window closes and schedule a delayed job.
+    reminder_time = end_service_time - 1.hour
+    job = ScheduledWhatsappReminderJob.perform_at(reminder_time, @ticket, user_locale)
+
+    # Remember reminder job information for subsequent runs.
+    preferences = @ticket.preferences
+    preferences[:whatsapp][:last_reminder_job_id] = job.provider_job_id
+    ticket.update!(preferences:)
+  end
+
+  def cleanup_last_reminder_job
+    last_job_id = @ticket.preferences.dig(:whatsapp, :last_reminder_job_id)
+    return if last_job_id.nil?
+
+    ::Delayed::Job.find(last_job_id).destroy!
   end
 end

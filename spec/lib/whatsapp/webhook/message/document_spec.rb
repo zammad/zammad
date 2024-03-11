@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Whatsapp::Webhook::Message::Document, :aggregate_failures, current_user_id: 1 do
   describe '#process' do
-    let(:channel) { create(:whatsapp_channel) }
+    let(:channel) { create(:whatsapp_channel, welcome: 'Hey there!') }
 
     let(:from) do
       {
@@ -90,34 +90,42 @@ RSpec.describe Whatsapp::Webhook::Message::Document, :aggregate_failures, curren
           group_id: channel.group_id,
         )
         expect(Ticket.last.preferences).to include(
-          channel_id: channel.id,
-          whatsapp:   {
-            from:      {
+          channel_id:   channel.id,
+          channel_area: channel.area,
+          whatsapp:     {
+            from:               {
               phone_number: from[:phone],
               display_name: from[:name],
             },
-            timestamp: '1707921703',
+            timestamp_incoming: '1707921703',
           },
         )
 
-        expect(Ticket::Article.last).to have_attributes(
+        expect(Ticket::Article.second_to_last).to have_attributes(
           body: '',
         )
-        expect(Ticket::Article.last.preferences).to include(
+        expect(Ticket::Article.second_to_last.preferences).to include(
           whatsapp: {
             entry_id:   '222259550976437',
             media_id:   '1870770316696531',
             message_id: 'wamid.HBgNNDkxNTE1NjA4MDY5OBUCABIYFjNFQjBDMUM4M0I5NDRFNThBMUQyMjYA',
             type:       'document',
+            filename:   'lorem-ipsum.pdf',
           }
         )
 
         expect(Store.last).to have_attributes(
-          filename: "#{Ticket.last.number}-1870770316696531.pdf",
+          filename: 'lorem-ipsum.pdf',
           size:     media_file.size.to_s,
         )
         expect(Store.last.preferences).to include(
           'Mime-Type' => 'application/pdf',
+        )
+
+        # Welcome article
+        expect(Ticket::Article.last).to have_attributes(
+          body:         'Hey there!',
+          content_type: 'text/plain',
         )
       end
     end
@@ -140,8 +148,8 @@ RSpec.describe Whatsapp::Webhook::Message::Document, :aggregate_failures, curren
       it 'creates an article with error information' do
         described_class.new(data:, channel:).process
 
-        expect(Ticket::Article.last.body).to include('Invalid Media Type application/zip')
-        expect(Ticket::Article.last.internal).to be_truthy
+        expect(Ticket::Article.second_to_last.body).to include('Invalid Media Type application/zip')
+        expect(Ticket::Article.second_to_last.internal).to be_truthy
       end
     end
   end

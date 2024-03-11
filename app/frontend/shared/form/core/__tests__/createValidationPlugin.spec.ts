@@ -13,11 +13,14 @@ describe('createValidationPlugin', () => {
 })
 
 describe('getValidationRuleMessages', () => {
-  // TODO: At the moment the rule messages are empty, because no custom rules exists, needs to be improved,
-  // when we have our first custom rules.
   it('get validation messages from custom rules', () => {
     const validationRuleMessages = getValidationRuleMessages()
 
-    expect(validationRuleMessages).toEqual({})
+    expect(validationRuleMessages).toEqual({
+      file_types: expect.any(Function),
+      file_sizes: expect.any(Function),
+      caption_length: expect.any(Function),
+      content_required: expect.any(Function),
+    })
   })
 })

@@ -271,9 +271,9 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
         build(:trigger,
               perform: {
                 'notification.email' => {
-                  body:      '',
+                  body:      'Sample notification',
                   recipient: 'ticket_customer',
-                  subject:   ''
+                  subject:   'Sample subject'
                 }
               })
       end

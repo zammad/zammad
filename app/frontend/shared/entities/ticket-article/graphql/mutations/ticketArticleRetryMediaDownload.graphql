@@ -1,0 +1,8 @@
+mutation ticketArticleRetryMediaDownload($articleId: ID!) {
+  ticketArticleRetryMediaDownload(articleId: $articleId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

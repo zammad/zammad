@@ -45,5 +45,6 @@
         </div>
       </div>
     <% end %>
+    <div class="js-log"></div>
   <% end %>
 </div>

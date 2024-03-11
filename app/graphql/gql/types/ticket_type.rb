@@ -53,6 +53,7 @@ module Gql::Types
     field :last_owner_update_at, GraphQL::Types::ISO8601DateTime
     field :escalation_at, GraphQL::Types::ISO8601DateTime
     field :pending_time, GraphQL::Types::ISO8601DateTime
+    field :initial_channel, Gql::Types::Enum::Channel::AreaType, description: 'The initial channel of the ticket.'
 
     # field :create_article_sender_id, Integer
     # field :article_count, Integer, description: "Count of ticket articles that were not sent by 'System'."
@@ -69,6 +70,12 @@ module Gql::Types
     internal_fields do
       field :subscribed, Boolean, null: true
       field :mentions, Gql::Types::MentionType.connection_type, null: true
+    end
+
+    def initial_channel
+      return nil if !@object.preferences['channel_area']
+
+      @object.preferences['channel_area']
     end
 
     def subscribed

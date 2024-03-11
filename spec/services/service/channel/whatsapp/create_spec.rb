@@ -22,7 +22,6 @@ RSpec.describe Service::Channel::Whatsapp::Create, :aggregate_failures, current_
         app_secret:      Faker::Crypto.unique.md5,
         phone_number_id:,
         welcome:         Faker::Lorem.unique.sentence,
-        goodbye:         Faker::Lorem.unique.sentence,
       }
     end
 

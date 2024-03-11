@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Whatsapp::Webhook::Message::Location, :aggregate_failures, current_user_id: 1 do
   describe '#process' do
-    let(:channel) { create(:whatsapp_channel) }
+    let(:channel) { create(:whatsapp_channel, welcome: 'Hey there!') }
 
     let(:from) do
       {
@@ -65,30 +65,37 @@ RSpec.describe Whatsapp::Webhook::Message::Location, :aggregate_failures, curren
           group_id: channel.group_id,
         )
         expect(Ticket.last.preferences).to include(
-          channel_id: channel.id,
-          whatsapp:   {
-            from:      {
+          channel_id:   channel.id,
+          channel_area: channel.area,
+          whatsapp:     {
+            from:               {
               phone_number: from[:phone],
               display_name: from[:name],
             },
-            timestamp: '1707921703',
+            timestamp_incoming: '1707921703',
           },
         )
 
-        expect(Ticket::Article.last.body).to include('Langenbach Arena')
+        expect(Ticket::Article.second_to_last.body).to include('Langenbach Arena')
           .and include('https://www.google.com/maps')
           .and include('50.697254180908')
           .and include('7.9327116012573')
 
-        expect(Ticket::Article.last).to have_attributes(
+        expect(Ticket::Article.second_to_last).to have_attributes(
           content_type: 'text/html',
         )
-        expect(Ticket::Article.last.preferences).to include(
+        expect(Ticket::Article.second_to_last.preferences).to include(
           whatsapp: {
             entry_id:   '222259550976437',
             message_id: 'wamid.HBgNNDkxNTE1NjA4MDY5OBUCABIYFjNFQjBDMUM4M0I5NDRFNThBMUQyMjYA',
             type:       'location',
           }
+        )
+
+        # Welcome article
+        expect(Ticket::Article.last).to have_attributes(
+          body:         'Hey there!',
+          content_type: 'text/plain',
         )
       end
     end

@@ -81,4 +81,7 @@ fragment ticketArticleAttributes on TicketArticle {
     signingSuccess
     type
   }
+  mediaErrorState {
+    error
+  }
 }

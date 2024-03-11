@@ -15,10 +15,10 @@
         <td><%= @record.status %>
       <tr>
         <td><%- @T('Request') %>
-        <td><%- App.Utils.text2html(JSON.stringify(@record.request.content)) %>
+        <td><%- App.Utils.text2html(JSON.stringify(@record.request.content, null, 2)) %>
       <tr>
         <td><%- @T('Response') %>
-        <td><%- App.Utils.text2html(JSON.stringify(@record.response.content)) %>
+        <td><%- App.Utils.text2html(JSON.stringify(@record.response.content, null, 2)) %>
       <tr>
         <td><%- @T('Created at') %>
         <td><%- @datetime(@record.created_at) %>

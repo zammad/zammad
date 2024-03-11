@@ -2,12 +2,12 @@
 
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import { createArticleTypes } from '#shared/entities/ticket-article/action/plugins/index.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import { computed, shallowRef } from 'vue'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
-import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
-import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import type { ComputedRef, Ref } from 'vue'
-import { computed, shallowRef } from 'vue'
 import type {
   ChangedField,
   ReactiveFormSchemData,
@@ -26,7 +26,6 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
   const recipientContact = computed(
     () => currentArticleType.value?.options?.recipientContact,
   )
-
   const editorType = computed(() => currentArticleType.value?.contentType)
 
   const editorMeta = computed(() => {
@@ -54,13 +53,13 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
     (
       acc: Record<
         string,
-        ComputedRef<
-          undefined | string | Array<[rule: string, ...args: unknown[]]>
-        >
+        ComputedRef<null | string | Array<[rule: string, ...args: unknown[]]>>
       >,
       field,
     ) => {
-      acc[field] = computed(() => currentArticleType.value?.validation?.[field])
+      acc[field] = computed(
+        () => currentArticleType.value?.validation?.[field] || null,
+      )
       return acc
     },
     {},
@@ -198,7 +197,12 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         name: 'attachments',
         validation: validations.attachments,
         props: {
-          multiple: true,
+          multiple: computed((): boolean =>
+            typeof currentArticleType.value?.options?.multipleUploads ===
+            'boolean'
+              ? currentArticleType.value?.options?.multipleUploads
+              : true,
+          ),
         },
       },
     ],
@@ -237,14 +241,10 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
       changedField?: ChangedField,
     ) => {
       if (!schemaData.fields.articleType) return false
-      if (
+      return !(
         execution === FormHandlerExecution.FieldChange &&
         (!changedField || changedField.name !== 'articleType')
-      ) {
-        return false
-      }
-
-      return true
+      )
     }
 
     const handleArticleType: FormHandlerFunction = (
@@ -273,7 +273,6 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
       const newType = ticketArticleTypes.value.find(
         (type) => type.value === changedField?.newValue,
       )
-
       if (!newType) return
 
       if (!formNode.context?._open) {

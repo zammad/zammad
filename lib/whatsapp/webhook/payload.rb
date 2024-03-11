@@ -45,7 +45,14 @@ module Whatsapp::Webhook
     end
 
     def process_status_message
-      # noop
+      status = @data[:entry].first[:changes].first[:value][:statuses].first[:status]
+      klass = "Whatsapp::Webhook::Message::Status::#{status.capitalize}"
+
+      log_status_message
+
+      return if Whatsapp::Webhook::Message::Status.descendants.map(&:to_s).exclude?(klass)
+
+      klass.constantize.new(data: @data, channel: @channel).process
     end
 
     def phone_number_id?
@@ -70,6 +77,23 @@ module Whatsapp::Webhook
 
     def status_message?
       @data[:entry].first[:changes].first[:value].key?(:statuses)
+    end
+
+    def failed_status_message?
+      @data[:entry].first[:changes].first[:value][:statuses].first[:status] == 'failed'
+    end
+
+    def log_status_message
+      HttpLog.create(
+        direction: 'in',
+        facility:  'WhatsApp::Business',
+        url:       "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#{Rails.configuration.api_path}/channels_whatsapp_webhook/#{@channel.options[:callback_url_uuid]}",
+        ip:        @channel.options[:phone_number],
+        status:    200,
+        request:   { content: @data },
+        response:  { content: {} },
+        method:    'POST',
+      )
     end
 
     class ValidationError < StandardError

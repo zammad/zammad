@@ -48,6 +48,10 @@ module Gql::Mutations
       schema.field graphql_field_name, mutation: self
     end
 
+    # Generate a response with user errors
+    #
+    #   error_response({ message: 'Helpful error message.', field: 'error_field' }, ...)
+    #
     def error_response(*errors)
       { errors: errors }
     end

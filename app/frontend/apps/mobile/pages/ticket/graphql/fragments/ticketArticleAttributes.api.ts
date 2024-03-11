@@ -85,5 +85,8 @@ export const TicketArticleAttributesFragmentDoc = gql`
     signingSuccess
     type
   }
+  mediaErrorState {
+    error
+  }
 }
     `;

@@ -14,6 +14,7 @@ class App.TicketZoomArticleNew extends App.Controller
     '.js-percentage':                     'progressText'
     '.js-cancel':                         'cancelContainer'
     '.textBubble':                        'textBubble'
+    '.textBubble-footer':                 'textBubbleFooter'
     '.editControls-item':                 'editControlItem'
     '.js-letterCount':                    'letterCount'
     '.js-signature':                      'signature'
@@ -220,6 +221,7 @@ class App.TicketZoomArticleNew extends App.Controller
       dropContainer:          @$('.article-add')
       cancelContainer:        @cancelContainer
       inputField:             @$('.article-attachment input')
+      canUploadFiles:         @canUploadFiles
 
       onFileStartCallback: =>
         @richTextUploadStartCallback?()
@@ -269,7 +271,10 @@ class App.TicketZoomArticleNew extends App.Controller
   params: =>
     params = @formParam( @$('.article-add') )
 
-    if params.body
+    needsNoCaption  = @checkBodyEnsureNoCaption()
+    allowsNoCaption = @checkBodyAllowNoCaption()
+
+    if params.body || needsNoCaption || allowsNoCaption
       params.from         = @Session.get().displayName()
       params.ticket_id    = @ticket_id
       params.form_id      = @form_id
@@ -313,14 +318,22 @@ class App.TicketZoomArticleNew extends App.Controller
       params.preferences ||= {}
       params.preferences.security = @paramsSecurity()
 
+    if needsNoCaption
+      params.body = ''
+    else if allowsNoCaption
+      params.body ||= ''
+
     params
 
   validate: =>
     params = @params()
 
+    return false if !@validateBodyLimit(params.body)
+    return false if !@validateAttachmentsLimit()
+    return false if !@validateAttachmentsSize()
+
     # check if attachment exists but no body
-    attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
-    if !params.body && attachmentCount > 0
+    if !@validateBodyPresence(params.body)
       new App.ControllerModal(
         head: __('Text missing')
         buttonCancel: __('Cancel')
@@ -333,6 +346,7 @@ class App.TicketZoomArticleNew extends App.Controller
       )
       return false
 
+    attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
     # check attachment
     if params.body && attachmentCount < 1
       matchingWord = App.Utils.checkAttachmentReference(params.body)
@@ -346,6 +360,24 @@ class App.TicketZoomArticleNew extends App.Controller
         return false if !config.validation(params.type, params, @)
 
     true
+
+  validateBodyPresence: (body) =>
+    body || @checkBodyAllowEmpty() || @attachments.length == 0
+
+  validateBodyLimit: (body) =>
+    return true if !@maxTextLength
+
+    App.Utils.textLengthWithUrl(body) <= @maxTextLength
+
+  validateAttachmentsLimit: =>
+    return true if !@attachmentsLimit
+
+    @attachments.length <= @attachmentsLimit
+
+  validateAttachmentsSize: =>
+    return true if !@attachmentsSize
+
+    !@errorExistingAttachmentsSize()
 
   changeType: (e) ->
     $(e.target).addClass('active').siblings('.active').removeClass('active')
@@ -432,8 +464,13 @@ class App.TicketZoomArticleNew extends App.Controller
         @setArticleInternal(false)
 
     # show/hide attributes/features
-    @maxTextLength = undefined
-    @warningTextLength = undefined
+    @maxTextLength       = undefined
+    @warningTextLength   = undefined
+    @attachmentsLimit    = undefined
+    @attachmentsSize     = undefined
+    @bodyEnsureNoCaption = undefined
+    @bodyAllowNoCaption  = undefined
+
     for articleType in @articleTypes
       if articleType.name is type
         @$('.form-group').addClass('hide')
@@ -441,26 +478,35 @@ class App.TicketZoomArticleNew extends App.Controller
           @$("[name=#{name}]").closest('.form-group').removeClass('hide')
         @$('.article-attachment, .attachments, .js-textSizeLimit').addClass('hide')
         for name in articleType.features
-          if name is 'attachment'
-            @$('.article-attachment, .attachments').removeClass('hide')
-          if name is 'body:initials'
-            @updateInitials()
-          if name is 'body:limit'
-            @maxTextLength = articleType.maxTextLength
-            @warningTextLength = articleType.warningTextLength
-            @delay(@updateLetterCount, 600)
-            @$('.js-textSizeLimit').removeClass('hide')
-          if name is 'security'
-            if @securityEnabled()
-              @securityOptionsShow()
+          switch name
+            when 'attachment'
+              @$('.article-attachment, .attachments').removeClass('hide')
+            when 'body:initials'
+              @updateInitials()
+            when 'body:limit'
+              @maxTextLength = articleType.maxTextLength
+              @warningTextLength = articleType.warningTextLength
+              @delay(@updateLetterCount, 600)
+              @$('.js-textSizeLimit').removeClass('hide')
+            when 'security'
+              if @securityEnabled()
+                @securityOptionsShow()
 
-              # add observer to change options
-              @$('.js-to, .js-cc').on('change', =>
+                # add observer to change options
+                @$('.js-to, .js-cc').on('change', =>
+                  @updateSecurityOptions()
+                )
+
+                @updateSecurityType()
                 @updateSecurityOptions()
-              )
-
-              @updateSecurityType()
-              @updateSecurityOptions()
+            when 'attachments:limit'
+              @attachmentsLimit = articleType.attachmentsLimit
+            when 'attachments:size'
+              @attachmentsSize = articleType.attachmentsSize
+            when 'body:ensureNoCaption'
+              @bodyEnsureNoCaption = articleType.bodyEnsureNoCaption
+            when 'body:allowNoCaption'
+              @bodyAllowNoCaption = articleType.bodyAllowNoCaption
 
     # convert remote src images to data uri
     @$('[data-name=body] img').each( (i,image) ->
@@ -491,6 +537,8 @@ class App.TicketZoomArticleNew extends App.Controller
     for localConfig in @actions()
       if localConfig && localConfig.setArticleTypePost
         localConfig.setArticleTypePost(@type, @ticket, @, signaturePosition)
+
+    @evaluateAttachmentsList()
 
   isScrolledToBottom: ->
     return @el.scrollParent().scrollTop() + @el.scrollParent().height() is @el.scrollParent().prop('scrollHeight')
@@ -619,6 +667,14 @@ class App.TicketZoomArticleNew extends App.Controller
           duration: 300
           easing: 'easeOutQuad'
 
+      @textBubbleFooter.velocity
+        properties:
+          opacity: 0
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
+          complete: => @textBubbleFooter.css(opacity: 1)
+
       @attachmentPlaceholder.velocity
         properties:
           translateX: 0
@@ -667,6 +723,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
   renderAttachment: (file) =>
     @attachmentsHolder.append(App.view('generic/attachment_item')(file))
+    @evaluateAttachmentsList()
 
   bindAttachmentDelete: =>
     @attachmentsHolder.on('click', '.js-delete', (e) =>
@@ -692,6 +749,7 @@ class App.TicketZoomArticleNew extends App.Controller
         element.empty()
 
       @richTextUploadDeleteCallback?(@attachments)
+      @evaluateAttachmentsList()
     )
 
   importDraftAttachments: (options) =>
@@ -743,3 +801,127 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @toggleButton(event)
     @updateSecurityOptions(true)
+
+  canUploadFiles: (files) =>
+    if @errorAttachmentsLimit(files)
+      new App.ErrorModal(
+        head: __('Cannot upload file')
+        contentInline: @errorAttachmentsLimitMessage()
+        container: @el.closest('.content')
+      )
+
+      return false
+
+    if file = @errorNewAttachmentsSize(files)
+      new App.ErrorModal(
+        head: __('Cannot upload file')
+        contentInline: @errorAttachmentsSizeMessage(file)
+        container: @el.closest('.content')
+      )
+
+      return false
+
+    true
+
+  errorAttachmentsLimit: (newFiles = []) =>
+    return false if !@attachmentsLimit
+
+    futureFilesCount = @attachments.length + newFiles.length
+
+    @attachmentsLimit < futureFilesCount
+
+  errorAttachmentsLimitMessage: =>
+    App.i18n.translateContent(__('Only %s attachment allowed.'), @attachmentsLimit)
+
+  errorNewAttachmentsSize: (files) =>
+    return false if !@attachmentsSize
+
+    Array.from(files).find (file) =>
+      config = @attachmentSizeByFile(file)
+
+      return true if !config
+
+      config && file.size > config.size
+
+  errorExistingAttachmentsSize: =>
+    return false if !@attachmentsSize
+
+    @attachments.find (file) =>
+      config   = @attachmentSizeByFile(file)
+
+      return true if !config
+
+      fileSize = parseInt(file.size)
+
+      config && fileSize > config.size
+
+  errorAttachmentsSizeMessage: (file) =>
+    sizeConfig = @attachmentSizeByFile(file)
+
+    if !sizeConfig
+      return App.i18n.translateContent(
+        __('File format is not allowed: %s'),
+        @attachmentContentType(file)
+      )
+
+
+    App.i18n.translateContent(
+      __('File is too big. %s has to be %s or smaller.'),
+      App.i18n.translateContent(sizeConfig?.label),
+      App.Utils.humanFileSize(sizeConfig?.size)
+    )
+
+  attachmentSizeByFile: (file) =>
+    contentType         = @attachmentContentType(file)
+
+    @attachmentsSize.find (elem) -> elem.content_types.includes(contentType)
+
+  attachmentContentType: (file) ->
+    file.type || file.contentType || file.preferences?['Content-Type'] || file.preferences?['Mime-Type']
+
+  checkBodyEnsureNoCaption: =>
+    @bodyEnsureNoCaption?(@attachments.map (file) => @attachmentContentType(file))
+
+  checkBodyAllowNoCaption: =>
+    @bodyAllowNoCaption?(@attachments)
+
+  checkBodyAllowEmpty: =>
+    !!@checkBodyEnsureNoCaption() || @checkBodyAllowNoCaption()
+
+  evaluateAttachmentsList: =>
+    @toggleBodyEnsureNoCaption @checkBodyEnsureNoCaption()
+
+    @attachmentsHolder.find('.alert--danger').remove()
+
+    @attachmentInputHolder
+      .find('input')
+      .attr('disabled', @attachmentsLimit == @attachments.length)
+      .attr('multiple', @attachmentsLimit != 1)
+
+    if @errorAttachmentsLimit()
+      $('<div class="alert alert--danger js-alert-attachments-limit"></div>')
+        .text(@errorAttachmentsLimitMessage())
+        .prependTo(@attachmentsHolder)
+
+      return
+
+    tooBigFile = @errorExistingAttachmentsSize()
+
+    return if !tooBigFile
+
+    $('<div class="alert alert--danger js-alert-attachments-size"></div>')
+      .text(@errorAttachmentsSizeMessage(tooBigFile))
+      .prependTo(@attachmentsHolder)
+
+  toggleBodyEnsureNoCaption: (noCaption) =>
+    @textarea
+      .attr('contenteditable', !noCaption)
+      .toggleClass('text-muted', noCaption)
+
+    @attachmentsHolder.find('.alert--warning').remove()
+
+    return if !noCaption
+
+    $('<div class="alert alert--warning js-warning-body-presence"></div>')
+      .text(noCaption)
+      .prependTo(@attachmentsHolder)

@@ -91,5 +91,6 @@ export const TicketAttributesFragmentDoc = gql`
   firstResponseEscalationAt
   closeEscalationAt
   updateEscalationAt
+  initialChannel
 }
     ${ObjectAttributeValuesFragmentDoc}`;

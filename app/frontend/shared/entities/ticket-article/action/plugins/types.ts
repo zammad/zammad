@@ -39,7 +39,9 @@ export interface TicketArticleFormValues {
 export interface TicketArticlePerformOptions {
   selection?: SelectionData
   formId: string
+
   openReplyDialog(values?: MaybeRecord<TicketArticleFormValues>): Promise<void>
+
   getNewArticleBody(type: EditorContentType): string
 }
 
@@ -50,6 +52,7 @@ export interface CommonTicketAddOptions {
 
 export interface TicketActionAddOptions extends CommonTicketAddOptions {
   recalculate(): void
+
   onDispose(callback: () => unknown): void
 }
 
@@ -90,14 +93,18 @@ export interface AppSpecificTicketArticleType {
   options?: Record<string, unknown>
   contentType?: FieldEditorProps['contentType']
   editorMeta?: FieldEditorProps['meta']
+
   // when clicked on type, and type is not selected, or when dialog is opened with this type
   onOpened?(ticket: TicketById, options: TicketArticleSelectionOptions): void
+
   onSelected?(ticket: TicketById, options: TicketArticleSelectionOptions): void
+
   // when clicked on other type, but this one is selected
   onDeselected?(
     ticket: TicketById,
     options: TicketArticleSelectionOptions,
   ): void
+
   // TODO use actual type instead of FormValues
   updateForm?(formValues: FormSubmitData): FormSubmitData
 }
@@ -117,6 +124,7 @@ export interface TicketArticleActionPlugin {
     article: TicketArticle,
     options: TicketActionAddOptions,
   ): TicketArticleAction[]
+
   addTypes?(
     ticket: TicketById,
     options: TicketTypeAddOptions,

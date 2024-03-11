@@ -12,6 +12,7 @@
         var self = this;
         self.dropContainer = options.dropContainer;
         self.inputField = options.inputField;
+        self.canUploadFiles = options.canUploadFiles;
         self.cancelContainer = options.cancelContainer;
         self.uploadsQueue = [];
         self._xhrs = [];
@@ -157,6 +158,10 @@
                 file,
                 upload,
                 i;
+
+            if(this.canUploadFiles && !this.canUploadFiles(files)) {
+              return false;
+            }
 
             for (i = 0; i < len; i += 1) {
                 file = files[i];

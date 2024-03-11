@@ -23,7 +23,6 @@ RSpec.describe Service::Channel::Whatsapp::Update, current_user_id: 1 do
         app_secret:      Faker::Crypto.unique.md5,
         phone_number_id:,
         welcome:         Faker::Lorem.unique.sentence,
-        goodbye:         Faker::Lorem.unique.sentence,
       }
     end
 
@@ -45,7 +44,6 @@ RSpec.describe Service::Channel::Whatsapp::Update, current_user_id: 1 do
           .and change { channel.options['access_token'] }.to(params[:access_token])
           .and change { channel.options['app_secret'] }.to(params[:app_secret])
           .and change { channel.options['welcome'] }.to(params[:welcome])
-          .and change { channel.options['goodbye'] }.to(params[:goodbye])
           .and change { channel.options['name'] }.to(phone_number_info[:name])
           .and change { channel.options['phone_number'] }.to(phone_number_info[:phone_number])
           .and not_change { channel.options['adapter'] }

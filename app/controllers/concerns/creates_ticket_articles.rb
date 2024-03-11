@@ -12,7 +12,7 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
     subtype = params.delete(:subtype)
 
     # check min. params
-    raise Exceptions::UnprocessableEntity, __("Need at least an 'article body' field.") if params[:body].blank?
+    raise Exceptions::UnprocessableEntity, __("Need at least an 'article body' field.") if params[:body].nil?
 
     # fill default values
     if params[:type_id].blank? && params[:type].blank?

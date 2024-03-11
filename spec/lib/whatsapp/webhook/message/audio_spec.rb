@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Whatsapp::Webhook::Message::Audio, :aggregate_failures, current_user_id: 1 do
   describe '#process' do
-    let(:channel) { create(:whatsapp_channel) }
+    let(:channel) { create(:whatsapp_channel, welcome: 'Hey there!') }
 
     let(:from) do
       {
@@ -89,20 +89,21 @@ RSpec.describe Whatsapp::Webhook::Message::Audio, :aggregate_failures, current_u
           group_id: channel.group_id,
         )
         expect(Ticket.last.preferences).to include(
-          channel_id: channel.id,
-          whatsapp:   {
-            from:      {
+          channel_id:   channel.id,
+          channel_area: channel.area,
+          whatsapp:     {
+            from:               {
               phone_number: from[:phone],
               display_name: from[:name],
             },
-            timestamp: '1707921703',
+            timestamp_incoming: '1707921703',
           },
         )
 
-        expect(Ticket::Article.last).to have_attributes(
+        expect(Ticket::Article.second_to_last).to have_attributes(
           body: '',
         )
-        expect(Ticket::Article.last.preferences).to include(
+        expect(Ticket::Article.second_to_last.preferences).to include(
           whatsapp: {
             entry_id:   '222259550976437',
             media_id:   '1870770316696531',
@@ -117,6 +118,12 @@ RSpec.describe Whatsapp::Webhook::Message::Audio, :aggregate_failures, current_u
         )
         expect(Store.last.preferences).to include(
           'Mime-Type' => 'audio/mpeg',
+        )
+
+        # Welcome article
+        expect(Ticket::Article.last).to have_attributes(
+          body:         'Hey there!',
+          content_type: 'text/plain',
         )
       end
     end

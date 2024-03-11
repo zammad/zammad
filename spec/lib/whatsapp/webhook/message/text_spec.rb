@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Whatsapp::Webhook::Message::Text, :aggregate_failures, current_user_id: 1 do
   describe '#process' do
-    let(:channel) { create(:whatsapp_channel) }
+    let(:channel) { create(:whatsapp_channel, welcome: 'W' * 120) }
 
     let(:from) do
       {
@@ -62,26 +62,35 @@ RSpec.describe Whatsapp::Webhook::Message::Text, :aggregate_failures, current_us
           group_id: channel.group_id,
         )
         expect(Ticket.last.preferences).to include(
-          channel_id: channel.id,
-          whatsapp:   {
-            from:      {
+          channel_id:   channel.id,
+          channel_area: channel.area,
+          whatsapp:     {
+            from:               {
               phone_number: from[:phone],
               display_name: from[:name],
             },
-            timestamp: '1707921703',
+            timestamp_incoming: '1707921703',
           },
         )
 
-        expect(Ticket::Article.last).to have_attributes(
+        expect(Ticket::Article.second_to_last).to have_attributes(
           body:         'Hello, world!',
           content_type: 'text/plain',
         )
-        expect(Ticket::Article.last.preferences).to include(
+        expect(Ticket::Article.second_to_last.preferences).to include(
           whatsapp: {
             entry_id:   '222259550976437',
             message_id: 'wamid.HBgNNDkxNTE1NjA4MDY5OBUCABIYFjNFQjBDMUM4M0I5NDRFNThBMUQyMjYA',
             type:       'text',
           }
+        )
+
+        # Welcome article
+        expect(Ticket::Article.last).to have_attributes(
+          # truncated subject
+          subject:      "#{'W' * 99}…",
+          body:         'W' * 120,
+          content_type: 'text/plain',
         )
       end
     end

@@ -20,12 +20,12 @@ RSpec.describe 'Ticket Zoom > Whatsapp reply', :use_vcr, authenticated_as: :user
 
   before do
     article
+
+    visit "#ticket/zoom/#{ticket.id}"
   end
 
   context 'when replying to a whatsapp message' do
     it 'allows to reply via whatsapp' do
-      visit "#ticket/zoom/#{ticket.id}"
-
       within(:active_content) do
         click_on 'reply'
         find(:richtext).send_keys(sample_text)
@@ -42,6 +42,120 @@ RSpec.describe 'Ticket Zoom > Whatsapp reply', :use_vcr, authenticated_as: :user
           delivery_status: 'success',
         ),
       )
+    end
+  end
+
+  describe 'attachments limit' do
+    it 'shows error message when switching from another type with multiple attachments' do
+      within(:active_content) do
+        find(:richtext).send_keys(sample_text)
+
+        2.times do |i|
+          find('input#fileUpload_1', visible: :all).set(Rails.root.join("spec/fixtures/files/image/squares#{i > 1 ? i.to_s : ''}.png"))
+          expect(page).to have_text("squares#{i > 1 ? i.to_s : ''}.png")
+        end
+
+        click '.js-selectableTypes'
+        click '.js-articleTypeItem[data-value="whatsapp message"]'
+
+        expect(page).to have_text('Only 1 attachment allowed')
+
+        within first('.attachment--row') do |elem|
+          elem.execute_script('$(".attachment-delete", this).trigger("click")')
+        end
+      end
+    end
+
+    it 'does not allow to upload over the limit' do
+      within(:active_content) do
+        click_on 'reply'
+
+        find('input#fileUpload_1', visible: :all).set(Rails.root.join('spec/fixtures/files/image/squares.png'))
+        expect(page).to have_text('squares.png')
+
+        # This click tests if file upload by button is disabled successfully.
+        # If button is not disabled, it will crash with a file dialog being opened.
+        expect { find('.fileUpload').click(wait: 0) }
+          .to raise_error(Selenium::WebDriver::Error::ElementClickInterceptedError)
+
+        # This upload attempt simulates drag&drop which could work even with the button disabled.
+        find('input#fileUpload_1', visible: :all).set(Rails.root.join('spec/fixtures/files/image/squares2.png'))
+
+        in_modal do
+          expect(page).to have_text('Only 1 attachment allowed')
+        end
+      end
+    end
+  end
+
+  describe 'with the customer service window information' do
+    let(:article) do
+      create(:whatsapp_article,
+             from_phone_number:  ENV['WHATSAPP_RECIPIENT_NUMBER'],
+             ticket:             ticket,
+             timestamp_incoming: last_whatsapp_timestamp)
+    end
+
+    context 'when the window is open' do
+      let(:last_whatsapp_timestamp) { 30.minutes.ago.to_i.to_s }
+
+      it 'shows a warning alert with the text and humanized time' do
+        within(:active_content) do
+          expect(find('.scrollPageAlert')).to have_no_css('.hide')
+            .and have_css('.alert--warning')
+            .and have_text('You have a 24 hour window to send WhatsApp messages in this conversation. The customer service window closes in 23 hours.')
+        end
+      end
+    end
+
+    context 'when the window is closed' do
+      let(:last_whatsapp_timestamp) { 24.hours.ago.to_i.to_s }
+
+      it 'shows a danger alert with the text' do
+        within(:active_content) do
+          expect(find('.scrollPageAlert')).to have_no_css('.hide')
+            .and have_css('.alert--danger')
+            .and have_text('The 24 hour customer service window is now closed, no further WhatsApp messages can be sent.')
+        end
+      end
+    end
+
+    context 'when the timestamp is missing' do
+      let(:last_whatsapp_timestamp) { nil }
+
+      it 'keeps the alert container hidden' do
+        within(:active_content) do
+          expect(find('.scrollPageAlert', visible: :hide)).to be_present
+        end
+      end
+    end
+
+    context 'when the ticket is closed' do
+      let(:ticket)                  { create(:whatsapp_ticket, channel: channel, state: Ticket::State.lookup(name: 'closed')) }
+      let(:last_whatsapp_timestamp) { 30.minutes.ago.to_i.to_s }
+
+      it 'keeps the alert container hidden' do
+        within(:active_content) do
+          expect(find('.scrollPageAlert', visible: :hide)).to be_present
+        end
+      end
+    end
+  end
+
+  describe 'when connection errors occur', authenticated_as: :authenticate do
+    let(:article) { create(:whatsapp_article, :with_attachment_media_document, from_phone_number: ENV['WHATSAPP_RECIPIENT_NUMBER'], ticket: ticket) }
+
+    def authenticate
+      allow_any_instance_of(Whatsapp::Retry::Media).to receive(:download_media).and_return(true)
+      article.preferences['whatsapp']['media_error'] = true
+      article.save!
+      create(:agent, groups: Group.all)
+    end
+
+    it 'does retry the article attachments' do
+      expect(page).to have_text('RETRY ATTACHMENT DOWNLOAD')
+      click '.js-retryWhatsAppAttachmentDownload'
+      expect(page).to have_no_text('RETRY ATTACHMENT DOWNLOAD')
     end
   end
 end

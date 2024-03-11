@@ -100,6 +100,9 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
         `),
       }),
     ),
+    file: {
+      messages: 'px-4',
+    },
   }
 }
 

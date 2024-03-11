@@ -26,6 +26,7 @@ class App.Html5Upload extends App.Controller
       key:                    @key
       data:                   @data
       onFileAdded:            @onFileAdded
+      canUploadFiles:         @canUploadFiles
     )
     @inputField.attr('data-initialized', true)
 

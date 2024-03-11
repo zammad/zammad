@@ -122,7 +122,6 @@ const saveTicketForm = async (formData: FormSubmitData) => {
   if (updateFormData) {
     formData = updateFormData(formData)
   }
-
   try {
     const result = await editTicket(formData)
 
@@ -132,7 +131,7 @@ const saveTicketForm = async (formData: FormSubmitData) => {
         message: __('Ticket updated successfully.'),
       })
 
-      // Reset article form after ticket update and reseted form.
+      // Reset article form after ticket update and reset form.
       return () => {
         newTicketArticlePresent.value = false
         closeArticleReplyDialog().then(() => {
@@ -269,7 +268,7 @@ const showReplyButton = computed(() => {
   return canUpdateTicket.value
 })
 
-const showSrollDown = computed(() => {
+const showScrollDown = computed(() => {
   if (articleReplyDialog.isOpened.value) return false
 
   return scrollDownState.value
@@ -289,7 +288,7 @@ const showBottomBanner = computed(() => {
   return (
     (canUpdateTicket.value && isDirty.value) ||
     showReplyButton.value ||
-    showSrollDown.value
+    showScrollDown.value
   )
 })
 </script>
@@ -331,7 +330,7 @@ const showBottomBanner = computed(() => {
       :new-article-present="newTicketArticlePresent"
       :can-reply="showReplyButton"
       :can-save="canUpdateTicket && isDirty"
-      :can-scroll-down="showSrollDown"
+      :can-scroll-down="showScrollDown"
       :hidden="!showBottomBanner"
       @reply="showArticleReplyDialog"
       @save="submitForm"

@@ -21,8 +21,7 @@ class Service::Ticket::Article::Type::BaseDeliver < Service::Base
     begin
       @result = channel.deliver(deliver_arguments)
     rescue => e
-      error_and_retry!(message: e.message)
-      return
+      raise_and_maybe_retry!(e)
     end
 
     handle_deliver_result
@@ -69,15 +68,23 @@ class Service::Ticket::Article::Type::BaseDeliver < Service::Base
     article.preferences['delivery_retry'] += 1
   end
 
-  def error_and_retry!(message:)
+  def raise_and_maybe_retry!(error)
+    message = error.message
+
     save_article_preference_delivery(
       message:,
       status:  'fail'
     )
     Rails.logger.error message
 
+    if !error.retryable?
+      create_delivery_failed_article(message:)
+
+      raise Service::Ticket::Article::Type::PermanentDeliveryError, message
+    end
+
     if article.preferences['delivery_retry'] > 3
-      create_delivery_faild_article(message:)
+      create_delivery_failed_article(message:)
     end
 
     raise Service::Ticket::Article::Type::TemporaryDeliveryError, message
@@ -90,7 +97,7 @@ class Service::Ticket::Article::Type::BaseDeliver < Service::Base
     )
     Rails.logger.error message
 
-    create_delivery_faild_article(message:)
+    create_delivery_failed_article(message:)
 
     raise Service::Ticket::Article::Type::PermanentDeliveryError, message
   end
@@ -103,7 +110,7 @@ class Service::Ticket::Article::Type::BaseDeliver < Service::Base
     article.save!
   end
 
-  def create_delivery_faild_article(message:)
+  def create_delivery_failed_article(message:)
     Ticket::Article.create(
       ticket_id:     ticket.id,
       content_type:  'text/plain',

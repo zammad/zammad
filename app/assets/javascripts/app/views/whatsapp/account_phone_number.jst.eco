@@ -22,20 +22,24 @@
 
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for="welcome"><%- @T('Welcome message') %> <span>*</span></label>
+      <label for="welcome"><%- @T('Welcome message') %></label>
     </div>
     <div class="controls">
-      <input id="welcome" type="text" name="welcome" value="<%= @params?.welcome || @channel?.options?.welcome %>" placeholder="<%- @Ti('How can we help?') %>" class="form-control" required autocomplete="off">
+      <textarea id="welcome" name="welcome" rows="3" maxlength="4096" placeholder="<%- @Ti('How can we help?') %>" class="form-control" autocomplete="off"><%= @params?.welcome || @channel?.options?.welcome %></textarea>
     </div>
+    <p class="help-text">
+      <%- @T('This text will be sent as an immediate reply to new incoming WhatsApp messages.') %>
+    </p>
   </div>
 
   <div class="input form-group">
-    <div class="formGroup-label">
-      <label for="goodbye"><%- @T('Goodbye message') %> <span>*</span></label>
-    </div>
     <div class="controls">
-      <input id="goodbye" type="text" name="goodbye" value="<%= @params?.goodbye || @channel?.options?.goodbye %>" placeholder="<%- @Ti('Have a nice day!') %>" class="form-control" required autocomplete="off">
+      <div class="js-reminderActive"></div>
     </div>
+    <p class="help-text">
+      <%- @T('Send out automatic reminders to customers asking them for reply if the 24-hour window is about to expire.') %>
+      <%- @T('To find out more about the 24-hour customer service window see %l.', 'https://admin-docs.zammad.org/en/latest/channels/whatsapp/index.html#limitations') %>
+    </p>
   </div>
 
   <div class="input form-group">

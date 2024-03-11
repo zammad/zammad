@@ -37,7 +37,11 @@ import { TicketUpdatesDocument } from '../../graphql/subscriptions/ticketUpdates
 
 const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
 
-export const defaultTicket = (policies: Partial<PolicyTicket> = {}) => {
+export const defaultTicket = (
+  policies: Partial<PolicyTicket> = {},
+  preferences: Partial<any | null> = {},
+  state: Partial<any> = {},
+) => {
   initializeStore()
 
   return nullableMock<TicketQuery>({
@@ -99,6 +103,7 @@ export const defaultTicket = (policies: Partial<PolicyTicket> = {}) => {
           __typename: 'TicketStateType',
           name: TicketState.Open,
         },
+        ...state,
       },
       group: {
         __typename: 'Group',
@@ -119,6 +124,7 @@ export const defaultTicket = (policies: Partial<PolicyTicket> = {}) => {
       },
       objectAttributeValues: [],
       stateColorCode: EnumTicketStateColorCode.Open,
+      preferences,
     },
   })
 }

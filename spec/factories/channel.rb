@@ -363,8 +363,8 @@ FactoryBot.define do
           callback_token: callback_token,
           callback_url:   "http://localhost:3000/api/v1/channels_telegram_webhook/#{callback_token}?bid=#{bid}",
           api_token:      "#{bid}:#{external_credential.credentials['api_token']}",
-          welcome:        Faker::Lorem.sentence,
-          goodbye:        Faker::Lorem.sentence,
+          welcome:        Faker::Lorem.unique.sentence,
+          goodbye:        Faker::Lorem.unique.sentence,
         }.deep_merge(custom_options)
       end
 
@@ -387,9 +387,9 @@ FactoryBot.define do
           app_secret:,
           phone_number_id:,
           welcome:,
-          goodbye:,
           name:,
           phone_number:,
+          reminder_active:,
           callback_url_uuid:,
           verify_token:,
         }
@@ -401,9 +401,9 @@ FactoryBot.define do
         app_secret        { Faker::Crypto.unique.md5 }
         phone_number_id   { Faker::Number.unique.number(digits: 15) }
         welcome           { Faker::Lorem.unique.sentence }
-        goodbye           { Faker::Lorem.unique.sentence }
         name              { Faker::Company.name }
         phone_number      { Faker::PhoneNumber.unique.cell_phone_with_country_code }
+        reminder_active   { true }
         callback_url_uuid { SecureRandom.uuid }
         verify_token      { SecureRandom.urlsafe_base64(12) }
       end

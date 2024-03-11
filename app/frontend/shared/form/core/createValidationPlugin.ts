@@ -24,7 +24,7 @@ const createValidationPlugin = (): FormKitPlugin => {
   Object.values(ruleModules).forEach(
     (module: ImportGlobEagerDefault<FormValidationRuleType>) => {
       const validationRule = module.default
-
+      if (!validationRule?.ruleType) return
       rules[validationRule.ruleType] = validationRule.rule
     },
   )
@@ -43,7 +43,7 @@ export const getValidationRuleMessages = (): FormKitValidationMessages => {
   Object.values(ruleModules).forEach(
     (module: ImportGlobEagerDefault<FormValidationRuleType>) => {
       const validationRule = module.default
-
+      if (!validationRule?.ruleType) return
       ruleLocaleMessages[validationRule.ruleType] = validationRule.localeMessage
     },
   )

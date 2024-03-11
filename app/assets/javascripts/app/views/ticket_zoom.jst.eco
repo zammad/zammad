@@ -10,6 +10,7 @@
     <div class="js-highlighterContainer highlighter"></div>
     <div class="js-overviewNavigatorContainer overview-navigator"></div>
   </div>
+  <div class="scrollPageAlert tabsSidebar-sidebarSpacer js-ticketAlertContainer hide" style="<%- if @dir is 'rtl' then 'left' else 'right' %>: <%- @scrollbarWidth %>px"></div>
   <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
     <div class="ticketZoom">
       <div class="ticketZoom-controls">

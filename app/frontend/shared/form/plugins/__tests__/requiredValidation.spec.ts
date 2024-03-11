@@ -52,6 +52,23 @@ describe('requiredValidation', () => {
     expect(inputNode.props.validation).toBe('number|required')
   })
 
+  it('change initial validation prop value', () => {
+    const inputNode = createInput({
+      required: true,
+      validation: 'number',
+    })
+
+    requiredValidation(inputNode)
+
+    expect(inputNode.props.validation).toBe('number|required')
+
+    // Change prop value
+
+    inputNode.props.validation = 'email'
+
+    expect(inputNode.props.validation).toBe('email|required')
+  })
+
   it('appends validation rule to array', () => {
     const inputNode = createInput({
       required: true,
@@ -71,7 +88,7 @@ describe('requiredValidation', () => {
 
     requiredValidation(inputNode)
 
-    inputNode.emit('prop:required', false)
+    inputNode.props.required = false
 
     expect(inputNode.props.validation).toEqual([['number']])
   })
@@ -84,7 +101,7 @@ describe('requiredValidation', () => {
 
     requiredValidation(inputNode)
 
-    inputNode.emit('prop:required', false)
+    inputNode.props.required = false
 
     expect(inputNode.props.validation).toBe('number')
   })

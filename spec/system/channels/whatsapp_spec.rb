@@ -37,7 +37,8 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
         check_select_field_value('phone_number_id', phone_number_id)
 
         fill_in 'welcome', with: Faker::Lorem.unique.sentence
-        fill_in 'goodbye', with: Faker::Lorem.unique.sentence
+
+        check_switch_field_value('reminder_active', true)
 
         click_on 'Submit'
       end
@@ -63,6 +64,7 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
              access_token:      access_token,
              phone_number_id:   phone_number_id,
              phone_number:      phone_number,
+             reminder_active:   false,
              name:              phone_number_name,
              app_secret:        app_secret,
              callback_url_uuid: callback_url_uuid,
@@ -79,7 +81,10 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
       find('div.btn', text: 'Edit').click
 
       in_modal do
-        expect(page).to have_field('business_id', disabled: true)
+        expect(page)
+          .to have_field('business_id', with: channel.options[:business_id])
+          .and have_field('access_token', with: channel.options[:access_token])
+          .and have_field('app_secret', with: channel.options[:app_secret])
 
         click_on 'Next'
       end
@@ -88,7 +93,8 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
         check_select_field_value('phone_number_id', phone_number_id)
 
         fill_in 'welcome', with: Faker::Lorem.unique.sentence
-        fill_in 'goodbye', with: Faker::Lorem.unique.sentence
+
+        check_switch_field_value('reminder_active', false)
 
         click_on 'Submit'
       end

@@ -2,40 +2,59 @@
 
 import type { FormKitNode, FormKitProps } from '@formkit/core'
 
-const addRequired = (props: Partial<FormKitProps>) => {
-  const { validation } = props
+const addRequired = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  validation: string | Array<[rule: string, ...args: any]>,
+) => {
   if (Array.isArray(validation)) {
-    validation.push(['required'])
-    return
+    if (!validation.includes(['required'])) validation.push(['required'])
+
+    return validation
   }
 
   if (!validation) {
-    props.validation = 'required'
-    return
+    return 'required'
   }
 
   if (!validation.includes('required')) {
-    props.validation = `${validation}|required`
+    return `${validation}|required`
   }
+
+  return validation
 }
 
-const removeRequired = (props: Partial<FormKitProps>) => {
-  const { validation } = props
-
-  if (!validation) return
+const removeRequired = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  validation: string | Array<[rule: string, ...args: any]>,
+) => {
+  if (!validation) return validation
 
   if (Array.isArray(validation)) {
-    props.validation = validation.filter(([rule]) => rule !== 'required')
-    return
+    return validation.filter(([rule]) => rule !== 'required')
   }
 
   if (validation.includes('required')) {
-    props.validation = validation
+    return validation
       .split('|')
       .filter((rule: string) => !rule.includes('required'))
       .join('|')
   }
+
+  return validation
 }
+
+const addRequiredToValidationProp = (props: Partial<FormKitProps>) => {
+  const { validation } = props
+
+  props.validation = addRequired(validation)
+}
+
+const removeRequiredFromValidationProp = (props: Partial<FormKitProps>) => {
+  const { validation } = props
+
+  props.validation = removeRequired(validation)
+}
+
 const addRequiredValidation = (node: FormKitNode) => {
   const { props, context } = node
 
@@ -44,14 +63,26 @@ const addRequiredValidation = (node: FormKitNode) => {
   node.addProps(['required'])
 
   if (props.required) {
-    addRequired(props)
+    addRequiredToValidationProp(props)
   }
+
+  node.hook.prop(({ prop, value }, next) => {
+    if (prop === 'validation') {
+      if (props.required) {
+        value = addRequired(value)
+      } else {
+        value = removeRequired(value)
+      }
+    }
+
+    return next({ prop, value })
+  })
 
   node.on('prop:required', ({ payload }) => {
     if (payload) {
-      addRequired(props)
+      addRequiredToValidationProp(props)
     } else {
-      removeRequired(props)
+      removeRequiredFromValidationProp(props)
     }
   })
 }
