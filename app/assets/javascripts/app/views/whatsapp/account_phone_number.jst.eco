@@ -44,7 +44,7 @@
 
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for=""><%- @T('Target Group') %> <span>*</span></label>
+      <label for=""><%- @T('Group') %> <span>*</span></label>
     </div>
     <div class="controls">
       <div class="js-messagesGroup"></div>

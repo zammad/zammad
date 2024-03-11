@@ -21,7 +21,7 @@ RSpec.describe 'Desktop > Admin Password Auth', app: :desktop_view, authenticate
     fill_in 'login', with: 'admin@example.com'
     click_on 'Submit'
 
-    expect(page).to have_text "We've sent admin password login instructions to your email address."
+    expect(page).to have_text 'Admin password login instructions were sent'
 
     token = Token.last
     visit "/login?token=#{token.token}"

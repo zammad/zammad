@@ -2,7 +2,7 @@
   <div>
     <h1><%- @T('Not configured') %></h1>
     <p><%- @T('Sorry, there is currently no CTI backend enabled.') %></p>
-    <p><%- @T('We support:') %></p>
+    <p><%- @T('These are supported:') %></p>
     <div class="btn-group-vertical" role="group">
     <% for backend in @backends: %>
       <% if @isAdmin: %><a class="btn" href="<%- backend.url %>"><% end %><%= backend.name %><% if @isAdmin: %></a><% end %>

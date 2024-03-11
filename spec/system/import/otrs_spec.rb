@@ -21,7 +21,7 @@ RSpec.describe 'Import from OTRS', authenticated_as: false, db_strategy: :reset,
     expect(page).to have_no_text('Invalid API Key')
 
     click '.js-migration-check'
-    expect(page).to have_text('We found a lot of dynamic fields')
+    expect(page).to have_text('Many dynamic fields were found')
 
     click '.js-migration-start'
     await_empty_ajax_queue

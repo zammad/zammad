@@ -29,7 +29,7 @@ RSpec.describe 'Password Reset', type: :system do
       let(:username) { 'nonexisting' }
 
       it 'pretends to proceed' do
-        expect(page).to have_text 'sent password reset instructions'
+        expect(page).to have_text 'Password reset instructions were sent'
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe 'Password Reset', type: :system do
       let(:generated_tokens) { Token.where(action: 'PasswordReset', user_id: user.id) }
 
       it 'proceeds' do
-        expect(page).to have_text 'sent password reset instructions'
+        expect(page).to have_text 'Password reset instructions were sent'
       end
 
       it 'creates a token' do
@@ -57,7 +57,7 @@ RSpec.describe 'Password Reset', type: :system do
         end
 
         it 'proceeds' do
-          expect(page).to have_text 'sent password reset instructions'
+          expect(page).to have_text 'Password reset instructions were sent'
         end
 
         it 'discards the previous token' do

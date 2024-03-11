@@ -14,7 +14,7 @@ interface ErrorOptions {
 
 const defaultOptions: ErrorOptions = {
   title: __('Not Found'),
-  message: __("We're sorry, but this page doesn't exist."),
+  message: __("This page doesn't exist."),
   messagePlaceholder: [],
   statusCode: ErrorStatusCodes.NotFound,
 }

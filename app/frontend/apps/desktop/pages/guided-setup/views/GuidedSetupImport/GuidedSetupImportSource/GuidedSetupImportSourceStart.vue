@@ -65,7 +65,7 @@ const startImport = () => {
     <CommonLabel
       >{{
         $t(
-          "Initiate the import process to transfer your data into Zammad. Keep track of the migration progress on this page, and we'll notify you as soon as the import is successfully finished.",
+          'Initiate the import process to transfer your data into Zammad. Keep track of the migration progress on this page to be notified as soon as the import is successfully finished.',
         )
       }}
     </CommonLabel>

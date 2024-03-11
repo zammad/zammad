@@ -26,7 +26,7 @@ export const useEmailInboundMessagesForm = (
           isLayout: true,
           component: 'CommonLabel',
           children:
-            '$t("We have already found %s email(s) in your mailbox. We will move them all from your mailbox into Zammad.", $metaInformationInbound.contentMessages)',
+            '$t("%s email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.", $metaInformationInbound.contentMessages)',
         },
         {
           if: '$metaInformationInbound.archivePossible === true',

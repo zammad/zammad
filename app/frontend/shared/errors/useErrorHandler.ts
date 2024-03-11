@@ -31,8 +31,8 @@ export const useErrorHandler = () => {
       } else if (errorHandler.type !== GraphQLErrorTypes.NotAuthorized) {
         title = __('Internal Error')
         message = errorHandler.message
-          ? __("We're sorry, but something went wrong. Received message: %s")
-          : __("We're sorry, but something went wrong.")
+          ? __('Something went wrong. Received message: %s')
+          : __('Something went wrong.')
         messagePlaceholder = errorHandler.message ? [errorHandler.message] : []
         statusCode = ErrorStatusCodes.InternalError
       } else {

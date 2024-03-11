@@ -34,7 +34,7 @@ RSpec.describe 'Admin password auth', type: :system do
       let(:username) { 'nonexisting' }
 
       it 'pretends to proceed' do
-        expect(page).to have_text 'sent admin password login instructions'
+        expect(page).to have_text 'Admin password login instructions were sent'
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe 'Admin password auth', type: :system do
       let(:generated_tokens) { Token.where(action: 'AdminAuth', user_id: user.id) }
 
       it 'login is possible' do
-        expect(page).to have_text 'sent admin password login instructions'
+        expect(page).to have_text 'Admin password login instructions were sent'
         expect(generated_tokens.count).to eq 1
         expect(generated_tokens.first.persistent).to be false
 

@@ -1,7 +1,7 @@
 <div class="request_admin_password_auth fullscreen">
   <div class="fullscreen-center">
     <div class="hero-unit fullscreen-body">
-      <h2><%- @T('We\'ve sent admin password login instructions to your email address.') %><small></small></h2>
+      <h2><%- @T('Admin password login instructions were sent to your email address.') %><small></small></h2>
       <p><%- @T('If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try resending your request.') %></p>
       <div class="form-controls">
         <a class="btn btn--text btn--subtle js-cancel" href="#login"><%- @T('Cancel & Go Back') %></a>

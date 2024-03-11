@@ -39,7 +39,7 @@ describe('requesting a token for the admin password auth', () => {
 
     expect(
       await view.findByText(
-        "We've sent admin password login instructions to your email address.",
+        'Admin password login instructions were sent to your email address.',
       ),
     ).toBeInTheDocument()
 

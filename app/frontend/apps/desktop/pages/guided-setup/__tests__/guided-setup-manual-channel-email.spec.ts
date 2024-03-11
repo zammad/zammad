@@ -417,7 +417,7 @@ describe('guided setup manual channel email', () => {
       expect(inboundMessagesForm).toBeVisible()
 
       expect(inboundMessagesForm).toHaveTextContent(
-        'We have already found 3 email(s) in your mailbox. We will move them all from your mailbox into Zammad.',
+        '3 email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.',
       )
 
       expect(inboundMessagesForm).toHaveTextContent(

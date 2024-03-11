@@ -97,9 +97,7 @@ const goToLogin = () => {
     />
     <section v-else>
       <CommonLabel class="text-center mb-5">
-        {{
-          $t("We've sent password reset instructions to your email address.")
-        }}
+        {{ $t('Password reset instructions were sent to your email address.') }}
       </CommonLabel>
       <CommonLabel class="text-center">
         {{

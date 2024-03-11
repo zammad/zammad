@@ -53,7 +53,7 @@ const adminPasswordAuthError = ref('')
 const pageTitle = computed(() => {
   if (requestSent.value) {
     return __(
-      "We've sent admin password login instructions to your email address.",
+      'Admin password login instructions were sent to your email address.',
     )
   }
 

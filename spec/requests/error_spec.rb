@@ -68,6 +68,7 @@ RSpec.describe 'Error handling', type: :request do
   context 'request is not authenticated' do
 
     before do
+      stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
       authenticated_as(create(:agent), password: 'wrongpw')
       get '/api/v1/organizations', as: as
     end
@@ -155,7 +156,7 @@ RSpec.describe 'Error handling', type: :request do
       include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404: Requested resource was not found'
       include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
       include_examples 'masks exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
-      include_examples 'masks exception', StandardError, :internal_server_error, '500: Something went wrong', "500: We're sorry, but something went wrong."
+      include_examples 'masks exception', StandardError, :internal_server_error, '500: An unknown error occurred', '500: An unknown error occurred.'
     end
 
     context 'with admin user' do
@@ -168,7 +169,7 @@ RSpec.describe 'Error handling', type: :request do
       include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404: Requested resource was not found'
       include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
       include_examples 'handles exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
-      include_examples 'handles exception', StandardError, :internal_server_error, '500: Something went wrong', "500: We're sorry, but something went wrong."
+      include_examples 'handles exception', StandardError, :internal_server_error, '500: An unknown error occurred', '500: An unknown error occurred.'
     end
 
     context 'with mobile controller' do
@@ -185,7 +186,7 @@ RSpec.describe 'Error handling', type: :request do
         include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404'
         include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422'
         include_examples 'masks exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422'
-        include_examples 'masks exception', StandardError, :internal_server_error, '500: Something went wrong', '500'
+        include_examples 'masks exception', StandardError, :internal_server_error, '500: An unknown error occurred', '500'
       end
 
       context 'with admin user' do
@@ -198,7 +199,7 @@ RSpec.describe 'Error handling', type: :request do
         include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404'
         include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422'
         include_examples 'handles exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422'
-        include_examples 'handles exception', StandardError, :internal_server_error, '500: Something went wrong', '500'
+        include_examples 'handles exception', StandardError, :internal_server_error, '500: An unknown error occurred', '500'
       end
     end
   end

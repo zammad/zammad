@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html class="dark">
 <meta charset="utf-8">
-<title>500: Something went wrong</title>
+<title>500: An unknown error occurred</title>
 <link rel="stylesheet" href="/assets/error/style.css">
 <body <% if @traceback %>class="error-message"<% end %>>
-<h1>500: We're sorry, but something went wrong.</h1>
+<h1>500: An unknown error occurred.</h1>
 <% if !@traceback %>
   <div class="error-image" style="background-image: url(/assets/error/error-2.svg)"></div>
-  <p>We're sorry, but something went wrong.</p>
+  <p>Something went wrong.</p>
 <% else %>
   <div><%= @exception.message %></div>
   <% if @exception.backtrace %>

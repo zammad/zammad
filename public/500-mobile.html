@@ -2,7 +2,7 @@
 <html class="dark">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
-<title>500: Something went wrong</title>
+<title>500: An unknown error occurred</title>
 <link rel="stylesheet" href="/assets/error/style-mobile.css">
 <body <% if @traceback %>class="error-message"<% end %>>
   <div class="h-full min-w-full bg-black font-sans text-sm text-white antialiased">
@@ -22,8 +22,8 @@
         <h1 class="mb-9 text-8xl font-extrabold">500</h1>
         <% if !@traceback %>
           <img alt="Error" src="/assets/error/error-mobile-500.svg">
-          <h2 class="mt-9 max-w-prose text-center text-xl font-semibold">Something went wrong</h2>
-          <p class="mt-4 min-h-[4rem] max-w-prose text-center text-gray">We're sorry, but something went wrong.</p>
+          <h2 class="mt-9 max-w-prose text-center text-xl font-semibold">An unknown error occurred</h2>
+          <p class="mt-4 min-h-[4rem] max-w-prose text-center text-gray">Something went wrong.</p>
         <% else %>
           <pre class="traceback">
 <%= @exception.message %>
