@@ -166,7 +166,7 @@ class TicketsController < ApplicationController
 
       # create tags if given
       if params[:tags].present?
-        tags = params[:tags].split(',')
+        tags = params[:tags].split(',').map(&:strip)
         tags.each do |tag|
           next if !::Tag.tag_allowed?(name: tag, user_id: UserInfo.current_user_id)
 
