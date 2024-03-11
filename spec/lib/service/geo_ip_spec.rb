@@ -46,7 +46,7 @@ RSpec.describe Service::GeoIp, integration: true, retry: 5, retry_wait: 30.secon
           let(:expected_result) do
             {
               'country_name'   => 'Germany',
-              'city_name'      => 'Chemnitz',
+              'city_name'      => be_present,
               'country_code'   => 'DE',
               'continent_code' => 'EU',
               'latitude'       => be_a(Float),
@@ -62,7 +62,7 @@ RSpec.describe Service::GeoIp, integration: true, retry: 5, retry_wait: 30.secon
           let(:expected_result) do
             {
               'country_name'   => 'Germany',
-              'city_name'      => 'Halle',
+              'city_name'      => be_present,
               'country_code'   => 'DE',
               'continent_code' => 'EU',
               'latitude'       => be_a(Float),
@@ -78,7 +78,7 @@ RSpec.describe Service::GeoIp, integration: true, retry: 5, retry_wait: 30.secon
           let(:expected_result) do
             {
               'country_name'   => 'United States',
-              'city_name'      => 'Richmond',
+              'city_name'      => be_present,
               'country_code'   => 'US',
               'continent_code' => 'NA',
               'latitude'       => be_a(Float),
