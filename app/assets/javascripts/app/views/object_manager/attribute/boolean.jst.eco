@@ -5,7 +5,7 @@
         <tr>
           <th><%- @T('Key') %>
           <th><%- @T('Display') %>
-          <th style="width: 30px"><%- @T('Default') %> *
+          <th style="width: 85px"><%- @T('Default') %> *
       </thead>
       <tbody>
         <tr>
