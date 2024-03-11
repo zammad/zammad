@@ -23,6 +23,7 @@ class App.Ticket extends App.Model
       { name: 'last_contact_customer_at', display: __('Last contact (customer)'), tag: 'datetime', null: true, readonly: 1, width: '110px' },
       { name: 'first_response_at',        display: __('First response'),          tag: 'datetime', null: true, readonly: 1, width: '110px' },
       { name: 'close_at',                 display: __('Closing time'),              tag: 'datetime', null: true, readonly: 1, width: '110px' },
+      { name: 'last_close_at',            display: __('Last closing time'),         tag: 'datetime', null: true, readonly: 1, width: '110px' },
       { name: 'created_by_id',            display: __('Created by'),   relation: 'User', readonly: 1 },
       { name: 'created_at',               display: __('Created at'),   tag: 'datetime', width: '110px', readonly: 1 },
       { name: 'updated_by_id',            display: __('Updated by'),   relation: 'User', readonly: 1 },

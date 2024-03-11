@@ -6832,6 +6832,10 @@ msgstr ""
 msgid "Last changed"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket.coffee
+msgid "Last closing time"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
