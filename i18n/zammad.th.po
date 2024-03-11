@@ -519,6 +519,10 @@ msgstr "%s ชัวโมงที่แล้ว"
 msgid "%s is inactive, please select an active one."
 msgstr "%s ไม่ทำงาน, โปรดเลือกรายการที่ใช้งานอยู่."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+msgid "%s is sent without text caption"
+msgstr ""
+
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
 msgstr "%s นาทีก่อน"
@@ -2014,6 +2018,12 @@ msgid "Attach another file"
 msgstr "แนบไฟล์อื่น"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
+#, fuzzy
+#| msgid "Attach files"
+msgid "Attach file"
+msgstr "ไฟล์แนบ"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
 msgstr "ไฟล์แนบ"
 
@@ -2102,6 +2112,11 @@ msgstr "แอตทริบิวต์"
 #| msgid "Attributes"
 msgid "Attributes to compare"
 msgstr "แอตทริบิวต์"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+msgid "Audio file"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2239,6 +2254,10 @@ msgstr "ลิงค์บัญชีอัตโนมัติเมื่อ
 #| msgid "Automatic account link on initial logon"
 msgid "Automatic account linking notification"
 msgstr "ลิงค์บัญชีอัตโนมัติเมื่อเข้าสู่ระบบครั้งแรก"
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+msgid "Automatic reminders"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2718,6 +2737,18 @@ msgstr ""
 #| msgid "Delete old online notification entries."
 msgid "Cannot set online notifications as seen"
 msgstr "ลบรายการแจ้งเตือนออนไลน์เก่า"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Cannot upload file"
+msgstr "ยกเลิกอัพโหลดไฟล์"
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Caption for %s is not allowed. Please clear text!"
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Caption for %s length is too long. Maximum allowed characters are %s"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -5381,6 +5412,11 @@ msgstr "คุณต้องการลบอวาตาร์ปัจจุ
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "คุณต้องการตั้งค่าการเปิดเผยบทความนี้เป็น \"สาธารณะ\" หรือไม่?"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+msgid "Document file"
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr "โดเมน"
@@ -5455,6 +5491,12 @@ msgstr "ดาวน์โหลด %s บันทึก"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "ดาวน์โหลดและติดตั้ง %s Migration Plugin บนอินสแตนซ์ %s ของคุณ"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#, fuzzy
+#| msgid "select attachment…"
+msgid "Downloading attachments…"
+msgstr "เลือกไฟล์แนบ…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -6567,11 +6609,34 @@ msgstr "แบบฟอร์มคำติชม"
 msgid "File '%s' is uploading"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "No file formats allowed."
+msgid "File format is not allowed: %s"
+msgstr "ไม่อนุญาตให้ใช้รูปแบบไฟล์"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
+#: app/frontend/shared/form/validation/rules/fileSizes.ts
+msgid "File is too big. %s file has to be %s or smaller."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "File too big, max. %s MB allowed."
+msgid "File is too big. %s has to be %s or smaller."
+msgstr "ไฟล์ใหญ่เกินไป สูงสุด อนุญาต %s MB"
+
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "ไฟล์ใหญ่เกินไป สูงสุด อนุญาต %s MB"
+
+#: app/frontend/shared/form/validation/rules/fileSizes.ts
+msgid "Files are too big. %s"
+msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -7071,7 +7136,6 @@ msgstr "ลายเซ็น"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Goodbye message"
 msgstr "ข้อความอำลา"
 
@@ -7309,12 +7373,6 @@ msgstr ""
 msgid "Hash"
 msgstr "Hash"
 
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
-#, fuzzy
-#| msgid "Have a nice day."
-msgid "Have a nice day!"
-msgstr "ขอให้เป็นวันที่ดี."
-
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Have a nice day."
@@ -7359,6 +7417,12 @@ msgstr "สวัสดี! ฉันต้องการความช่ว�
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Hello, my name is %s, what can I do for you?"
 msgstr "สวัสดี ฉันชื่อ %s มีอะไรให้ช่วยไหม?"
+
+#: app/jobs/scheduled_whatsapp_reminder_job.rb
+msgid ""
+"Hello, the customer service window for this conversation is about to expire, "
+"please reply to keep it open."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -7725,6 +7789,13 @@ msgstr "ภาพ"
 #: db/seeds/settings.rb
 msgid "Image Service"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Zammad Image Service"
+msgid "Image file"
+msgstr "Zammad Image Service"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
@@ -8098,6 +8169,10 @@ msgstr ""
 
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Invalid arguments for caption validation"
 msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb
@@ -8986,6 +9061,22 @@ msgstr "พฤษภาคม"
 msgid "Me"
 msgstr "เรา"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Download %s record(s)"
+msgid "Media Download Error"
+msgstr "ดาวน์โหลด %s บันทึก"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+msgid "Media download failed. Please try again later."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Decryption was successful."
+msgid "Media download was successful."
+msgstr "ถอดรหัสสำเร็จ"
+
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
@@ -9400,6 +9491,7 @@ msgid "Need 'form_id' to add attachments to new form."
 msgstr "ต้องการ 'form_id' เพื่อเพิ่มไฟล์แนบในแบบฟอร์มใหม่"
 
 #: app/controllers/concerns/creates_ticket_articles.rb
+#: lib/validations/ticket_article_validator/default.rb
 msgid "Need at least an 'article body' field."
 msgstr ""
 
@@ -9809,6 +9901,10 @@ msgstr ""
 msgid "No record found!"
 msgstr "‎ไม่พบเรกคอร์ด !"
 
+#: lib/whatsapp/webhook/message/status.rb
+msgid "No related article found to process the status message on."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
@@ -10156,6 +10252,16 @@ msgstr "แบบฟอร์มออนไลน์"
 #: db/seeds/settings.rb
 msgid "Online Service"
 msgstr "บริการออนไลน์"
+
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "%s attached files"
+msgid "Only %s attachment allowed"
+msgstr "%s ไฟล์แนบ"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Only %s attachment allowed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
@@ -11471,6 +11577,12 @@ msgstr "ตอบกลับ"
 msgid "Reply All"
 msgstr "ตอบกลับ"
 
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Conditions for shown Tickets"
+msgid "Reply allowed only for open tickets"
+msgstr "เงื่อนไขการแสดง Tickets"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
 msgstr ""
@@ -11758,8 +11870,18 @@ msgid "Retry"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#, fuzzy
+#| msgid "Add attachment option to upload."
+msgid "Retry attachment download"
+msgstr "เพิ่มตัวเลือกไฟล์แนบเพื่ออัปโหลด"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
 msgstr "ลองกระบวนการรักษาความปลอดภัยอีกครั้ง"
+
+#: lib/whatsapp/retry/media.rb
+msgid "Retrying to download the sent media via WhatsApp failed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -12428,6 +12550,12 @@ msgstr "ส่งเมลผ่าน"
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Send a message to all logged in users."
 msgstr "ส่งข้อความถึงผู้ใช้ที่เข้าสู่ระบบทั้งหมด"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid ""
+"Send out automatic reminders to customers asking them for reply if the 24-"
+"hour window is about to expire."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
@@ -13260,6 +13388,19 @@ msgstr ""
 msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr ""
 
+#: app/frontend/shared/utils/files.ts
+#, fuzzy
+#| msgid "ticket"
+msgid "Sticker"
+msgstr "ticket"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Sticker file"
+msgstr "Ticket อัปเดต"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr ""
@@ -13603,6 +13744,18 @@ msgstr "โมดูลข้อความ…"
 msgid "Text needed"
 msgstr ""
 
+#: app/frontend/shared/form/validation/rules/contentRequired.ts
+#, fuzzy
+#| msgid "At least one letter is required"
+msgid "Text or Attachment is required."
+msgstr "ต้องมีตัวอักษรอย่างน้อยหนึ่งตัว"
+
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "At least one letter is required"
+msgid "Text or attachment is required"
+msgstr "ต้องมีตัวอักษรอย่างน้อยหนึ่งตัว"
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr ""
@@ -13630,6 +13783,13 @@ msgstr "ขอบคุณที่เข้าร่วม ส่งอีเ�
 #| msgid "The tickets could not be merged."
 msgid "The 'gpg-agent' process could not be stopped."
 msgstr "ไม่สามารถรวม tickets ได้"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts
+msgid ""
+"The 24 hour customer service window is now closed, no further WhatsApp "
+"messages can be sent."
+msgstr ""
 
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
@@ -14114,6 +14274,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "The format of the subject."
 msgstr ""
+
+#: lib/whatsapp/retry/media.rb
+#, fuzzy
+#| msgid "This page is invisible to the public."
+msgid "The given article is not a media article."
+msgstr "หน้านี้ไม่ปรากฏต่อสาธารณะ"
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -14601,6 +14767,12 @@ msgstr "ไม่มีค่าที่ต้องการ 'group_id'"
 msgid "The required value external_credential could not be found in the cache."
 msgstr ""
 
+#: app/controllers/ticket_articles_controller.rb
+#, fuzzy
+#| msgid "The retried security process failed!"
+msgid "The retried attachment download failed."
+msgstr "กระบวนการรักษาความปลอดภัยที่ลองใหม่ล้มเหลว!"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
@@ -15039,6 +15211,12 @@ msgstr "ไม่ได้เปิดใช้งานคุณสมบัต
 msgid "This field %s"
 msgstr "ต้องการ User!."
 
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts
+#, fuzzy
+#| msgid "This field can only contain alphabetical characters."
+msgid "This field allows only one file."
+msgstr "ช่องนี้มีได้เฉพาะตัวอักษรเท่านั้น"
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
 msgstr "ช่องนี้มีได้เฉพาะตัวอักษรเท่านั้น"
@@ -15357,6 +15535,12 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 msgid "This system is configured for automated setup."
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid ""
+"This text will be sent as an immediate reply to new incoming WhatsApp "
+"messages."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
@@ -15971,6 +16155,10 @@ msgid ""
 "designated \"notification rule\" in %s."
 msgstr ""
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "To find out more about the 24-hour customer service window see %l."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid ""
 "To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
@@ -16137,6 +16325,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
 #, fuzzy
 #| msgid "try again"
 msgid "Try again"
@@ -16340,6 +16529,10 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "ชนิด"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
+msgid "Type %s is not supported."
+msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "Type:"
@@ -17004,6 +17197,13 @@ msgstr "เวอร์ชั่น"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 msgid "Video"
+msgstr "วิดีโอ"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Video"
+msgid "Video file"
 msgstr "วิดีโอ"
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -17697,6 +17897,13 @@ msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "You don't have the necessary permissions to access this page."
 msgstr "ไม่มีสิทธิ์ที่จำเป็นในการเข้าถึงหน้านี้"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts
+msgid ""
+"You have a 24 hour window to send WhatsApp messages in this conversation. "
+"The customer service window closes %s."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 msgid "You have exceeded the character limit by %s"
@@ -19422,6 +19629,11 @@ msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
 
 #, fuzzy
+#~| msgid "Have a nice day."
+#~ msgid "Have a nice day!"
+#~ msgstr "ขอให้เป็นวันที่ดี."
+
+#, fuzzy
 #~| msgid "archived"
 #~ msgid "archive"
 #~ msgstr "เก็บถาวร"
@@ -19833,9 +20045,6 @@ msgstr "∅ รอเวลาวันนี้"
 
 #~ msgid "This service enables Zammad to connect with your LDAP server."
 #~ msgstr "บริการนี้ทำให้ Zammad สามารถเชื่อมต่อกับเซิร์ฟเวอร์ LDAP ของคุณ"
-
-#~ msgid "Cannot upload file"
-#~ msgstr "ยกเลิกอัพโหลดไฟล์"
 
 #~ msgid "to"
 #~ msgstr "ถึง"

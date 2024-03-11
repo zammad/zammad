@@ -513,6 +513,10 @@ msgstr "%s saat önce"
 msgid "%s is inactive, please select an active one."
 msgstr "%s etkin değil, lütfen etkin bir tane seçin."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+msgid "%s is sent without text caption"
+msgstr ""
+
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
 msgstr "%s dakika önce"
@@ -2032,6 +2036,12 @@ msgid "Attach another file"
 msgstr "Başka bir dosya ekle"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
+#, fuzzy
+#| msgid "Attach files"
+msgid "Attach file"
+msgstr "Dosyaları ekle"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
 msgstr "Dosyaları ekle"
 
@@ -2126,6 +2136,13 @@ msgstr "Öznitelikler"
 #: db/seeds/settings.rb
 msgid "Attributes to compare"
 msgstr "Karşılaştırılacak öznitelikler"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "No filter."
+msgid "Audio file"
+msgstr "Filtre yok."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2247,6 +2264,10 @@ msgstr "İlk oturum açmada otomatik hesap bağlantısı"
 #: db/seeds/settings.rb
 msgid "Automatic account linking notification"
 msgstr "Otomatik hesap bağlama bildirimi"
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+msgid "Automatic reminders"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2734,6 +2755,18 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
 msgstr "Çevrimiçi bildirimler görüldü olarak ayarlanamıyor"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Cannot upload file"
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Caption for %s is not allowed. Please clear text!"
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Caption for %s length is too long. Maximum allowed characters are %s"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -5512,6 +5545,11 @@ msgstr "Sure to delete this object?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Sure to delete this object?"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+msgid "Document file"
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr "Domain"
@@ -5591,6 +5629,12 @@ msgstr "True"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Download and install the %s Migration Plugin on your %s instance."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#, fuzzy
+#| msgid "select attachment..."
+msgid "Downloading attachments…"
+msgstr "dosya yükleyin..."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -6796,12 +6840,33 @@ msgstr "Feedback Form"
 msgid "File '%s' is uploading"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+msgid "File format is not allowed: %s"
+msgstr "True"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
+#: app/frontend/shared/form/validation/rules/fileSizes.ts
+msgid "File is too big. %s file has to be %s or smaller."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+msgid "File is too big. %s has to be %s or smaller."
+msgstr "True"
+
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 #, fuzzy
 msgid "File too big, max. %s MB allowed."
 msgstr "True"
+
+#: app/frontend/shared/form/validation/rules/fileSizes.ts
+msgid "Files are too big. %s"
+msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -7357,7 +7422,6 @@ msgstr "İmza"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 #, fuzzy
 msgid "Goodbye message"
 msgstr "True"
@@ -7605,11 +7669,6 @@ msgstr "True"
 msgid "Hash"
 msgstr "True"
 
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
-#, fuzzy
-msgid "Have a nice day!"
-msgstr "True"
-
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 #, fuzzy
@@ -7662,6 +7721,12 @@ msgstr "Merhaba! Ürününüzle ilgili yardıma ihtiyacım var."
 #, fuzzy
 msgid "Hello, my name is %s, what can I do for you?"
 msgstr "True"
+
+#: app/jobs/scheduled_whatsapp_reminder_job.rb
+msgid ""
+"Hello, the customer service window for this conversation is about to expire, "
+"please reply to keep it open."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 #, fuzzy
@@ -8107,6 +8172,13 @@ msgstr "True"
 msgid "Image Service"
 msgstr "Image Service"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Image Service"
+msgid "Image file"
+msgstr "Image Service"
+
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 #, fuzzy
 #| msgid "Manage %s"
@@ -8519,6 +8591,10 @@ msgstr "True"
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
 msgstr "Geçersiz GitHub issue bağlantı formatı"
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Invalid arguments for caption validation"
+msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb
 #, fuzzy
@@ -9470,6 +9546,21 @@ msgstr "May"
 msgid "Me"
 msgstr "Mode"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+msgid "Media Download Error"
+msgstr "True"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+msgid "Media download failed. Please try again later."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Decryption was successful."
+msgid "Media download was successful."
+msgstr "Şifre çözme başarılı oldu."
+
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
@@ -9920,6 +10011,7 @@ msgid "Need 'form_id' to add attachments to new form."
 msgstr "True"
 
 #: app/controllers/concerns/creates_ticket_articles.rb
+#: lib/validations/ticket_article_validator/default.rb
 #, fuzzy
 msgid "Need at least an 'article body' field."
 msgstr "True"
@@ -10361,6 +10453,10 @@ msgstr "No proxy for the following hosts."
 msgid "No record found!"
 msgstr "True"
 
+#: lib/whatsapp/webhook/message/status.rb
+msgid "No related article found to process the status message on."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
@@ -10748,6 +10844,16 @@ msgstr "Online Forms"
 #, fuzzy
 msgid "Online Service"
 msgstr "True"
+
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "%s attached files"
+msgid "Only %s attachment allowed"
+msgstr "%s dosya ekte"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Only %s attachment allowed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 #, fuzzy
@@ -12197,6 +12303,12 @@ msgstr "Yanıtla"
 msgid "Reply All"
 msgstr "Yanıtla"
 
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Conditions for shown tickets"
+msgid "Reply allowed only for open tickets"
+msgstr "Gösterilen destek talepleri için koşullar"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
 msgstr "Reply to last article"
@@ -12425,8 +12537,18 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #, fuzzy
+#| msgid "Add attachment option to upload."
+msgid "Retry attachment download"
+msgstr "Yüklemek için ek seçeneği ekleyin."
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#, fuzzy
 msgid "Retry security process"
 msgstr "True"
+
+#: lib/whatsapp/retry/media.rb
+msgid "Retrying to download the sent media via WhatsApp failed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -13145,6 +13267,12 @@ msgstr "Send Mails via"
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Send a message to all logged in users."
 msgstr "Send a message to all logged in users."
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid ""
+"Send out automatic reminders to customers asking them for reply if the 24-"
+"hour window is about to expire."
+msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -14080,6 +14208,18 @@ msgstr ""
 msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr ""
 
+#: app/frontend/shared/utils/files.ts
+#, fuzzy
+msgid "Sticker"
+msgstr "True"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Sticker file"
+msgstr "Konu güncellenmesi"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr "Eşleşince durdur"
@@ -14446,6 +14586,18 @@ msgstr "Text modules"
 msgid "Text needed"
 msgstr "True"
 
+#: app/frontend/shared/form/validation/rules/contentRequired.ts
+#, fuzzy
+#| msgid "At least one letter is required"
+msgid "Text or Attachment is required."
+msgstr "En az bir harf gereklidir"
+
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "At least one letter is required"
+msgid "Text or attachment is required"
+msgstr "En az bir harf gereklidir"
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr "Text with disabled inline translations looks like"
@@ -14475,6 +14627,13 @@ msgstr "Katıldığınız için teşekkürler. E-posta \"%s\" adresine gönderil
 #, fuzzy
 msgid "The 'gpg-agent' process could not be stopped."
 msgstr "True"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts
+msgid ""
+"The 24 hour customer service window is now closed, no further WhatsApp "
+"messages can be sent."
+msgstr ""
 
 #: app/controllers/user_access_token_controller.rb
 #, fuzzy
@@ -15000,6 +15159,11 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "The format of the subject."
 
+#: lib/whatsapp/retry/media.rb
+#, fuzzy
+msgid "The given article is not a media article."
+msgstr "True"
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -15514,6 +15678,11 @@ msgstr "True"
 msgid "The required value external_credential could not be found in the cache."
 msgstr "True"
 
+#: app/controllers/ticket_articles_controller.rb
+#, fuzzy
+msgid "The retried attachment download failed."
+msgstr "True"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
@@ -15986,6 +16155,11 @@ msgstr "True"
 msgid "This field %s"
 msgstr "Kullanıcı gerekli!"
 
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts
+#, fuzzy
+msgid "This field allows only one file."
+msgstr "True"
+
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
 msgid "This field can only contain alphabetical characters."
@@ -16340,6 +16514,12 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 msgid "This system is configured for automated setup."
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid ""
+"This text will be sent as an immediate reply to new incoming WhatsApp "
+"messages."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
@@ -16979,6 +17159,10 @@ msgstr ""
 "To enable %s for sending http requests to %s, you need create a own "
 "\"notification rule\" in %s."
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "To find out more about the 24-hour customer service window see %l."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #, fuzzy
 msgid ""
@@ -17162,6 +17346,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
 #, fuzzy
 #| msgid "again"
 msgid "Try again"
@@ -17357,6 +17542,10 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "Tip"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
+msgid "Type %s is not supported."
+msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #, fuzzy
@@ -18075,6 +18264,12 @@ msgstr "Sürüm"
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 #, fuzzy
 msgid "Video"
+msgstr "True"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+msgid "Video file"
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -18844,6 +19039,13 @@ msgstr "True"
 #, fuzzy
 msgid "You don't have the necessary permissions to access this page."
 msgstr "True"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts
+msgid ""
+"You have a 24 hour window to send WhatsApp messages in this conversation. "
+"The customer service window closes %s."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 #, fuzzy
@@ -20751,6 +20953,10 @@ msgid "∅ Waiting time today"
 msgstr "Bugünkü bekleme süresi"
 
 #, fuzzy
+#~ msgid "Have a nice day!"
+#~ msgstr "True"
+
+#, fuzzy
 #~ msgid "archive"
 #~ msgstr "True"
 
@@ -21227,9 +21433,6 @@ msgstr "Bugünkü bekleme süresi"
 
 #~ msgid "Order by Direction"
 #~ msgstr "Yöne Göre Sırala"
-
-#~ msgid "No filter."
-#~ msgstr "Filtre yok."
 
 #~ msgid "to"
 #~ msgstr "şuna:"

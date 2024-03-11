@@ -518,6 +518,10 @@ msgstr "%s órával ezelőtt"
 msgid "%s is inactive, please select an active one."
 msgstr "%s inaktív, kérjük, válasszon egy aktívat."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+msgid "%s is sent without text caption"
+msgstr ""
+
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
 msgstr "%s perccel ezelőtt"
@@ -2042,6 +2046,12 @@ msgid "Attach another file"
 msgstr "Egy másik fájl csatolása"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
+#, fuzzy
+#| msgid "Attach files"
+msgid "Attach file"
+msgstr "Fájlok csatolása"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
 msgstr "Fájlok csatolása"
 
@@ -2136,6 +2146,13 @@ msgstr "Tulajdonságok"
 #: db/seeds/settings.rb
 msgid "Attributes to compare"
 msgstr "Összehasonlítandó tulajdonságok"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "No filter."
+msgid "Audio file"
+msgstr "Nincs szűrő."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2259,6 +2276,10 @@ msgstr "Automatikus fiókkapcsolat az első bejelentkezéskor"
 #: db/seeds/settings.rb
 msgid "Automatic account linking notification"
 msgstr "Automatikus fiókösszekapcsolási értesítés"
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+msgid "Automatic reminders"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2749,6 +2770,18 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
 msgstr "Az online értesítéseket a látottak szerint nem lehet beállítani"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Cannot upload file"
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Caption for %s is not allowed. Please clear text!"
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Caption for %s length is too long. Maximum allowed characters are %s"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -5567,6 +5600,11 @@ msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr ""
 "Tényleg \"nyilvános\"-ra szeretné állítani ennek a cikknek a láthatóságát?"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+msgid "Document file"
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr "Tartomány"
@@ -5640,6 +5678,12 @@ msgstr "Az összes bejegyzés letöltése"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Töltse le és telepítse a %s migrációs bővítményt a %s példányára."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#, fuzzy
+#| msgid "select attachment…"
+msgid "Downloading attachments…"
+msgstr "válasszon ki csatolmányt…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -6825,11 +6869,34 @@ msgstr "Visszajelzés űrlap"
 msgid "File '%s' is uploading"
 msgstr "A következő fájl feltöltése folyamatban van: '%s'"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "No file formats allowed."
+msgid "File format is not allowed: %s"
+msgstr "Nem engedélyezett fájlformátum."
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
+#: app/frontend/shared/form/validation/rules/fileSizes.ts
+msgid "File is too big. %s file has to be %s or smaller."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "File too big, max. %s MB allowed."
+msgid "File is too big. %s has to be %s or smaller."
+msgstr "A fájl túl nagy, max. %s MB engedélyezett."
+
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "A fájl túl nagy, max. %s MB engedélyezett."
+
+#: app/frontend/shared/form/validation/rules/fileSizes.ts
+msgid "Files are too big. %s"
+msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -7319,7 +7386,6 @@ msgstr "Aláírás"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Goodbye message"
 msgstr "Elköszönő üzenet"
 
@@ -7545,12 +7611,6 @@ msgstr "Van nyitott jegy a lapokon, de nem nézik aktívan a jegyet."
 msgid "Hash"
 msgstr "Hash"
 
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
-#, fuzzy
-#| msgid "Have a nice day."
-msgid "Have a nice day!"
-msgstr "További szép napot."
-
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Have a nice day."
@@ -7595,6 +7655,12 @@ msgstr "Üdvözlöm! Segítségre van szükségem a termékkel kapcsolatban."
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Hello, my name is %s, what can I do for you?"
 msgstr "Üdvözlöm, a nevem %s, mit tehetek Önért?"
+
+#: app/jobs/scheduled_whatsapp_reminder_job.rb
+msgid ""
+"Hello, the customer service window for this conversation is about to expire, "
+"please reply to keep it open."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -8006,6 +8072,13 @@ msgstr "Kép"
 msgid "Image Service"
 msgstr "Kép szolgáltatás"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Image Service"
+msgid "Image file"
+msgstr "Kép szolgáltatás"
+
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
 msgstr "%s képe"
@@ -8386,6 +8459,10 @@ msgstr "Érvénytelen GitLab GraphQL API token"
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
 msgstr "Érvénytelen GitLab probléma link formátum"
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Invalid arguments for caption validation"
+msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb
 msgid "Invalid auto wizard file."
@@ -9277,6 +9354,24 @@ msgstr "május"
 msgid "Me"
 msgstr "Én"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Download all records"
+msgid "Media Download Error"
+msgstr "Az összes bejegyzés letöltése"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Loading failed, please try again later."
+msgid "Media download failed. Please try again later."
+msgstr "A betöltés nem sikerült, kérjük, próbálja meg később újra."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Decryption was successful."
+msgid "Media download was successful."
+msgstr "A dekódolás sikeres volt."
+
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
@@ -9675,6 +9770,7 @@ msgid "Need 'form_id' to add attachments to new form."
 msgstr "A 'form_id' szükséges a mellékletek új űrlaphoz való hozzáadásához."
 
 #: app/controllers/concerns/creates_ticket_articles.rb
+#: lib/validations/ticket_article_validator/default.rb
 msgid "Need at least an 'article body' field."
 msgstr "Szükség van legalább egy 'article body' mezőre."
 
@@ -10106,6 +10202,10 @@ msgstr "Nincs proxy a következő gazdagépek számára."
 msgid "No record found!"
 msgstr "Nem található bejegyzés!"
 
+#: lib/whatsapp/webhook/message/status.rb
+msgid "No related article found to process the status message on."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
@@ -10458,6 +10558,16 @@ msgstr "Online űrlapok"
 #: db/seeds/settings.rb
 msgid "Online Service"
 msgstr "Online szolgáltatás"
+
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "%s attached files"
+msgid "Only %s attachment allowed"
+msgstr "%s csatolt fájl"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Only %s attachment allowed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
@@ -11776,6 +11886,12 @@ msgstr "Válasz"
 msgid "Reply All"
 msgstr "Válasz mindenkinek"
 
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Conditions for shown tickets"
+msgid "Reply allowed only for open tickets"
+msgstr "A megjelenített jegyek feltételei"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
 msgstr "Válasz az utolsó cikkre"
@@ -12071,8 +12187,18 @@ msgid "Retry"
 msgstr "Újrapróbálkozás"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#, fuzzy
+#| msgid "Add attachment option to upload."
+msgid "Retry attachment download"
+msgstr "Feltölthető csatolmány lehetőség hozzáadása."
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
 msgstr "Biztonsági folyamat megismétlése"
+
+#: lib/whatsapp/retry/media.rb
+msgid "Retrying to download the sent media via WhatsApp failed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -12730,6 +12856,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Send a message to all logged in users."
 msgstr "Üzenet küldése az összes bejelentkezett felhasználónak."
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid ""
+"Send out automatic reminders to customers asking them for reply if the 24-"
+"hour window is about to expire."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
@@ -13557,6 +13689,19 @@ msgstr ""
 msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr ""
 
+#: app/frontend/shared/utils/files.ts
+#, fuzzy
+#| msgid "ticket"
+msgid "Sticker"
+msgstr "jegy"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Sticker file"
+msgstr "Jegy címe"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr "Megállítás egyezés után"
@@ -13904,6 +14049,18 @@ msgstr "A szövegmodulok …"
 msgid "Text needed"
 msgstr "Szöveg szükséges"
 
+#: app/frontend/shared/form/validation/rules/contentRequired.ts
+#, fuzzy
+#| msgid "at least one letter is required"
+msgid "Text or Attachment is required."
+msgstr "legalább egy betű szükséges"
+
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "at least one letter is required"
+msgid "Text or attachment is required"
+msgstr "legalább egy betű szükséges"
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr "A szöveg kikapcsolt beépített fordításokkal így néz ki"
@@ -13934,6 +14091,13 @@ msgstr ""
 #| msgid "The entry could not be created."
 msgid "The 'gpg-agent' process could not be stopped."
 msgstr "A bejegyzést nem sikerült létrehozni."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts
+msgid ""
+"The 24 hour customer service window is now closed, no further WhatsApp "
+"messages can be sent."
+msgstr ""
 
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
@@ -14461,6 +14625,12 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "A tárgy formátuma."
 
+#: lib/whatsapp/retry/media.rb
+#, fuzzy
+#| msgid "The article does not belong to the specified ticket."
+msgid "The given article is not a media article."
+msgstr "A cikk nem tartozik a megadott jegyhez."
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -14934,6 +15104,12 @@ msgstr "A kötelező 'group_id' érték hiányzik."
 msgid "The required value external_credential could not be found in the cache."
 msgstr "A kért external_credential érték nem található a gyorsítótárban."
 
+#: app/controllers/ticket_articles_controller.rb
+#, fuzzy
+#| msgid "The retried security process failed!"
+msgid "The retried attachment download failed."
+msgstr "Az ismételten megkísérelt biztonsági folyamat sikertelen volt!"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
@@ -15382,6 +15558,12 @@ msgstr "A funkció nincs engedélyezve!"
 msgid "This field %s"
 msgstr "Ez a mező %s"
 
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts
+#, fuzzy
+#| msgid "This field can only contain lowercase letters."
+msgid "This field allows only one file."
+msgstr "Ez a mező csak kisbetűket tartalmazhat."
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
 msgstr "Ez a mező csak ábécés karaktereket tartalmazhat."
@@ -15695,6 +15877,12 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 msgid "This system is configured for automated setup."
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid ""
+"This text will be sent as an immediate reply to new incoming WhatsApp "
+"messages."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
@@ -16322,6 +16510,10 @@ msgstr ""
 "Ahhoz, hogy a %s engedélyezze a HTTP-kérelmek küldését a %s címre, létre "
 "kell hoznia egy kijelölt \"értesítési szabályt\" a következőben: %s."
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "To find out more about the 24-hour customer service window see %l."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid ""
 "To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
@@ -16503,6 +16695,7 @@ msgstr "Próbáljon meg egy másik módszert"
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
 msgid "Try again"
 msgstr "Próbálja újra"
 
@@ -16678,6 +16871,10 @@ msgstr "A kétfaktoros hitelesítési módszer beállítása sikeresen megtört�
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "Típus"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
+msgid "Type %s is not supported."
+msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "Type:"
@@ -17383,6 +17580,13 @@ msgstr "Verzió"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 msgid "Video"
+msgstr "Videó"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Video"
+msgid "Video file"
 msgstr "Videó"
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -18099,6 +18303,13 @@ msgstr "Nincs rendszergazdai jogosultsága."
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "You don't have the necessary permissions to access this page."
 msgstr "Nincs meg a szükséges jogosultsága az oldal eléréséhez."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts
+msgid ""
+"You have a 24 hour window to send WhatsApp messages in this conversation. "
+"The customer service window closes %s."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 msgid "You have exceeded the character limit by %s"
@@ -19809,6 +20020,11 @@ msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
 
 #, fuzzy
+#~| msgid "Have a nice day."
+#~ msgid "Have a nice day!"
+#~ msgstr "További szép napot."
+
+#, fuzzy
 #~| msgid "archived"
 #~ msgid "archive"
 #~ msgstr "archivált"
@@ -20183,9 +20399,6 @@ msgstr "Várakozási idő ma"
 #~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "Kiválasztás"
-
-#~ msgid "No filter."
-#~ msgstr "Nincs szűrő."
 
 #~ msgid "to"
 #~ msgstr "eddig"

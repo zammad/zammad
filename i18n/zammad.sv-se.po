@@ -501,6 +501,10 @@ msgstr "%s timmar sedan"
 msgid "%s is inactive, please select an active one."
 msgstr "%s är inaktiv, välj en aktiv."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+msgid "%s is sent without text caption"
+msgstr ""
+
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
 msgstr "%s minuter sedan"
@@ -1979,6 +1983,12 @@ msgid "Attach another file"
 msgstr "Bifoga ytterligare filer"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
+#, fuzzy
+#| msgid "Attach files"
+msgid "Attach file"
+msgstr "Bifoga filer"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
 msgstr "Bifoga filer"
 
@@ -2073,6 +2083,13 @@ msgstr "Attribut"
 #: db/seeds/settings.rb
 msgid "Attributes to compare"
 msgstr "Attributer att jämföra"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "No filter."
+msgid "Audio file"
+msgstr "Inga filter."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2190,6 +2207,10 @@ msgstr "Automatisk kontolänkning vid första inloggning"
 #: db/seeds/settings.rb
 msgid "Automatic account linking notification"
 msgstr "Automatisk kontolänkningsnotifiering"
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+msgid "Automatic reminders"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2673,6 +2694,18 @@ msgstr "Kan inte processera extern datakälla %s. %s"
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
 msgstr "Kunde inte sätta online-notiser som lästa"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Cannot upload file"
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Caption for %s is not allowed. Please clear text!"
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Caption for %s length is too long. Maximum allowed characters are %s"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -5359,6 +5392,11 @@ msgstr "Vill du ta bort den nuvarande avataren?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Vill du sätta synligheten till \"publik\" för artikeln?"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+msgid "Document file"
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr "Domän"
@@ -5428,6 +5466,12 @@ msgstr "Ladda ner samtliga poster"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Hämta och installera %s Migrationsplugin på din %s instans."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#, fuzzy
+#| msgid "select attachment…"
+msgid "Downloading attachments…"
+msgstr "Välj bilagor …"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -6543,11 +6587,34 @@ msgstr "Återkopplingsformulär"
 msgid "File '%s' is uploading"
 msgstr "Filen '%s' håller på att laddas upp"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "No file formats allowed."
+msgid "File format is not allowed: %s"
+msgstr "Inga filformat tillåtna."
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
+#: app/frontend/shared/form/validation/rules/fileSizes.ts
+msgid "File is too big. %s file has to be %s or smaller."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "File too big, max. %s MB allowed."
+msgid "File is too big. %s has to be %s or smaller."
+msgstr "Filen är för stor, max. %s MB tillåtet."
+
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "Filen är för stor, max. %s MB tillåtet."
+
+#: app/frontend/shared/form/validation/rules/fileSizes.ts
+msgid "Files are too big. %s"
+msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -7025,7 +7092,6 @@ msgstr "Bra signatur"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Goodbye message"
 msgstr "Hejdå meddelande"
 
@@ -7240,10 +7306,6 @@ msgstr "Har ärendet öppet i flikar, men tittar inte aktivt på ärendet."
 msgid "Hash"
 msgstr "Hash"
 
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
-msgid "Have a nice day!"
-msgstr "Ha en trevlig dag!"
-
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Have a nice day."
@@ -7286,6 +7348,12 @@ msgstr "Hej! Jag behöver hjälp med din produkt."
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Hello, my name is %s, what can I do for you?"
 msgstr "Hej, mitt namn är %s, vad kan jag hjälpa till med?"
+
+#: app/jobs/scheduled_whatsapp_reminder_job.rb
+msgid ""
+"Hello, the customer service window for this conversation is about to expire, "
+"please reply to keep it open."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -7685,6 +7753,13 @@ msgstr "Bild"
 msgid "Image Service"
 msgstr "Bildtjänst"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Image Service"
+msgid "Image file"
+msgstr "Bildtjänst"
+
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
 msgstr "Bild av %s"
@@ -8046,6 +8121,10 @@ msgstr "Ogiltig GitHub GraphQL API-token"
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
 msgstr "Ogiltigt format för GitLab-problemlänk"
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Invalid arguments for caption validation"
+msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb
 msgid "Invalid auto wizard file."
@@ -8918,6 +8997,24 @@ msgstr "maj"
 msgid "Me"
 msgstr "Jag"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Download all records"
+msgid "Media Download Error"
+msgstr "Ladda ner samtliga poster"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Loading failed, please try again later."
+msgid "Media download failed. Please try again later."
+msgstr "Laddningen misslyckades, försök igen senare."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Decryption was successful."
+msgid "Media download was successful."
+msgstr "Avkrypteringen lyckades."
+
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
@@ -9314,6 +9411,7 @@ msgid "Need 'form_id' to add attachments to new form."
 msgstr "Behöver 'form_id' för att lägga till bilagor till ny mall."
 
 #: app/controllers/concerns/creates_ticket_articles.rb
+#: lib/validations/ticket_article_validator/default.rb
 msgid "Need at least an 'article body' field."
 msgstr "Behöver minst ett 'article body' fält."
 
@@ -9731,6 +9829,10 @@ msgstr "Ingen proxy för följande värdar."
 msgid "No record found!"
 msgstr "Inga uppgifter har hittats!"
 
+#: lib/whatsapp/webhook/message/status.rb
+msgid "No related article found to process the status message on."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
@@ -10076,6 +10178,16 @@ msgstr "Onlineformulär"
 #: db/seeds/settings.rb
 msgid "Online Service"
 msgstr "Online tjänster"
+
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "%s attached files"
+msgid "Only %s attachment allowed"
+msgstr "%s bifogade filer"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Only %s attachment allowed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
@@ -11340,6 +11452,12 @@ msgstr "Svara"
 msgid "Reply All"
 msgstr "Svara Alla"
 
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Conditions for shown tickets"
+msgid "Reply allowed only for open tickets"
+msgstr "Villkor för visade ärenden"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
 msgstr "Svara på den senaste artikeln"
@@ -11580,8 +11698,18 @@ msgid "Retry"
 msgstr "Försök igen"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#, fuzzy
+#| msgid "Add attachment option to upload."
+msgid "Retry attachment download"
+msgstr "Lägg till bifogningsalternativ till uppladdning."
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
 msgstr "Prova säkerhetsprocessen igen"
+
+#: lib/whatsapp/retry/media.rb
+msgid "Retrying to download the sent media via WhatsApp failed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -12222,6 +12350,12 @@ msgstr "Skicka e-post via"
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Send a message to all logged in users."
 msgstr "Skicka meddelande till alla inloggade användare."
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid ""
+"Send out automatic reminders to customers asking them for reply if the 24-"
+"hour window is about to expire."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
@@ -13018,6 +13152,19 @@ msgstr "Steg 2 av 3: WhatsApp telefonnummer för företag"
 msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr "Steg 3 av 3: WhatsApp Business Webhook"
 
+#: app/frontend/shared/utils/files.ts
+#, fuzzy
+#| msgid "ticket"
+msgid "Sticker"
+msgstr "ärende"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Sticker file"
+msgstr "Ärendetitel"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr "Stanna efter matchning"
@@ -13363,6 +13510,18 @@ msgstr "Textmoduler är …"
 msgid "Text needed"
 msgstr "Text saknas"
 
+#: app/frontend/shared/form/validation/rules/contentRequired.ts
+#, fuzzy
+#| msgid "at least one letter is required"
+msgid "Text or Attachment is required."
+msgstr "åtminstone en bokstav krävs"
+
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "at least one letter is required"
+msgid "Text or attachment is required"
+msgstr "åtminstone en bokstav krävs"
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr "Text med avaktiverad inline-översättning ser ut så här "
@@ -13388,6 +13547,13 @@ msgstr "Tack för att du gick med. E-post skickas till \"%s\"."
 #: lib/secure_mailing/pgp/tool/exec/agent.rb
 msgid "The 'gpg-agent' process could not be stopped."
 msgstr "Processen 'gpg-agent' kunde inte stoppas."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts
+msgid ""
+"The 24 hour customer service window is now closed, no further WhatsApp "
+"messages can be sent."
+msgstr ""
 
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
@@ -13833,6 +13999,12 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "Formatet för ämnet."
 
+#: lib/whatsapp/retry/media.rb
+#, fuzzy
+#| msgid "This article is not part of the ticket."
+msgid "The given article is not a media article."
+msgstr "Denna artikel är inte en del av ärendet."
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -14273,6 +14445,12 @@ msgid "The required value external_credential could not be found in the cache."
 msgstr ""
 "Det obligatoriska värdet 'external_credential' kunde inte hittas i cache."
 
+#: app/controllers/ticket_articles_controller.rb
+#, fuzzy
+#| msgid "The retried security process failed!"
+msgid "The retried attachment download failed."
+msgstr "Den återupptagna säkerhetsprocessen misslyckades!"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
@@ -14677,6 +14855,12 @@ msgstr "Den här funktionen är inte aktiverad."
 msgid "This field %s"
 msgstr "Det här fältet %s"
 
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts
+#, fuzzy
+#| msgid "This field can only contain lowercase letters."
+msgid "This field allows only one file."
+msgstr "Fältet får innehålla gemener."
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
 msgstr "Detta fält kan endast innehålla alfabetiska tecken."
@@ -14983,6 +15167,12 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 msgid "This system is configured for automated setup."
 msgstr "Detta system är konfigurerat för automatiserad installation."
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid ""
+"This text will be sent as an immediate reply to new incoming WhatsApp "
+"messages."
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -15602,6 +15792,10 @@ msgstr ""
 "För att aktivera %s att skicka HTTP-förfrågningar till %s behöver du skapa "
 "en egen \"notifieringsregel\" i %s."
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "To find out more about the 24-hour customer service window see %l."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid ""
 "To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
@@ -15776,6 +15970,7 @@ msgstr "Prova en annan metod"
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
 msgid "Try again"
 msgstr "Försök igen"
 
@@ -15952,6 +16147,10 @@ msgstr "Konfiguration av tvåfaktorsautentiseringsmetoden lyckades."
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "Typ"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
+msgid "Type %s is not supported."
+msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "Type:"
@@ -16635,6 +16834,13 @@ msgstr "Version"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 msgid "Video"
+msgstr "Video"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Video"
+msgid "Video file"
 msgstr "Video"
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -17332,6 +17538,13 @@ msgstr "Du har inte administratörsbehörighet."
 msgid "You don't have the necessary permissions to access this page."
 msgstr ""
 "Du har inte de nödvändiga behörigheterna för att komma åt den här sidan."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts
+msgid ""
+"You have a 24 hour window to send WhatsApp messages in this conversation. "
+"The customer service window closes %s."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 msgid "You have exceeded the character limit by %s"
@@ -19016,6 +19229,9 @@ msgstr "... av hela textfältet"
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
 
+#~ msgid "Have a nice day!"
+#~ msgstr "Ha en trevlig dag!"
+
 #~ msgid "archive"
 #~ msgstr "arkiv"
 
@@ -19400,9 +19616,6 @@ msgstr "∅ Väntetid idag"
 
 #~ msgid "Order by Direction"
 #~ msgstr "Sortera efter ordning"
-
-#~ msgid "No filter."
-#~ msgstr "Inga filter."
 
 #~ msgid "to"
 #~ msgstr "till"

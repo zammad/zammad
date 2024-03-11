@@ -508,6 +508,10 @@ msgstr "před %s hodinami"
 msgid "%s is inactive, please select an active one."
 msgstr "%s je neaktivní, prosím zvolte aktivní."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+msgid "%s is sent without text caption"
+msgstr ""
+
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
 msgstr "před %s minutami"
@@ -2010,6 +2014,12 @@ msgid "Attach another file"
 msgstr "Přiložit další soubor"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
+#, fuzzy
+#| msgid "Attach files"
+msgid "Attach file"
+msgstr "Přiložit soubory"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
 msgstr "Přiložit soubory"
 
@@ -2103,6 +2113,13 @@ msgstr "Atributy"
 #: db/seeds/settings.rb
 msgid "Attributes to compare"
 msgstr "Atributy k porovnání"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "No filter."
+msgid "Audio file"
+msgstr "Žádný filtr."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2224,6 +2241,10 @@ msgstr "Automatické párování účtu při prvotním přihlášení"
 #: db/seeds/settings.rb
 msgid "Automatic account linking notification"
 msgstr "Notifikace automatického spárování účtů"
+
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
+msgid "Automatic reminders"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2711,6 +2732,18 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
 msgstr "Nebylo možné označit online oznámení jako zobrazené"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Cannot upload file"
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Caption for %s is not allowed. Please clear text!"
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Caption for %s length is too long. Maximum allowed characters are %s"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -5471,6 +5504,11 @@ msgstr "Opravdu si přejete smazat váš současný avatar?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Opravdu si přejete nastavit viditelnost tohoto článku na \"veřejný\"?"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+msgid "Document file"
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr "Doména"
@@ -5542,6 +5580,12 @@ msgstr "Stáhnout %s záznamů"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Stáhněte a nainstalujte %s Migration Plugin do vaší instance %s."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#, fuzzy
+#| msgid "select attachment…"
+msgid "Downloading attachments…"
+msgstr "zvolte přílohu…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -6707,11 +6751,34 @@ msgstr "Formulář odezvy"
 msgid "File '%s' is uploading"
 msgstr "Soubor '%s' se nahrává"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "No file formats allowed."
+msgid "File format is not allowed: %s"
+msgstr "Nejsou povoleny žádné formáty souborů."
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
+#: app/frontend/shared/form/validation/rules/fileSizes.ts
+msgid "File is too big. %s file has to be %s or smaller."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "File too big, max. %s MB allowed."
+msgid "File is too big. %s has to be %s or smaller."
+msgstr "Soubor je příliš velký, povoleno max. %s MB."
+
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "Soubor je příliš velký, povoleno max. %s MB."
+
+#: app/frontend/shared/form/validation/rules/fileSizes.ts
+msgid "Files are too big. %s"
+msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -7199,7 +7266,6 @@ msgstr "Správný podpis"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Goodbye message"
 msgstr "Zpráva na rozloučenou"
 
@@ -7427,12 +7493,6 @@ msgstr "Má otevřený ticket v záložkách, ale neprohlíží ticket aktivně.
 msgid "Hash"
 msgstr "Hash"
 
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
-#, fuzzy
-#| msgid "Have a nice day."
-msgid "Have a nice day!"
-msgstr "Pěkný zbytek dne."
-
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Have a nice day."
@@ -7475,6 +7535,12 @@ msgstr "Dobrý den! Potřebuji pomoci s vaším produktem."
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Hello, my name is %s, what can I do for you?"
 msgstr "Dobrý den, jmenuji se %s, jak Vám mohu pomoci?"
+
+#: app/jobs/scheduled_whatsapp_reminder_job.rb
+msgid ""
+"Hello, the customer service window for this conversation is about to expire, "
+"please reply to keep it open."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -7879,6 +7945,13 @@ msgstr "Obrázek"
 msgid "Image Service"
 msgstr "Služba snímků"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Image Service"
+msgid "Image file"
+msgstr "Služba snímků"
+
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
 msgstr "Obrázek %s"
@@ -8256,6 +8329,10 @@ msgstr "Neplatný API token GitLab GraphQL"
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
 msgstr "Neplatný formát událostního odkazu GitLabu"
+
+#: app/frontend/shared/form/validation/rules/captionLength.ts
+msgid "Invalid arguments for caption validation"
+msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb
 msgid "Invalid auto wizard file."
@@ -9146,6 +9223,24 @@ msgstr "Kvě"
 msgid "Me"
 msgstr "Já"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Download %s record(s)"
+msgid "Media Download Error"
+msgstr "Stáhnout %s záznamů"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Loading failed, please try again later."
+msgid "Media download failed. Please try again later."
+msgstr "Načítání selhalo, prosím zkuste načtení znovu později."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
+#, fuzzy
+#| msgid "Decryption was successful."
+msgid "Media download was successful."
+msgstr "Dešifrování bylo úspěšné."
+
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
@@ -9546,6 +9641,7 @@ msgid "Need 'form_id' to add attachments to new form."
 msgstr "Pro přidání příloh do formuláře je požadováno 'form_id'."
 
 #: app/controllers/concerns/creates_ticket_articles.rb
+#: lib/validations/ticket_article_validator/default.rb
 msgid "Need at least an 'article body' field."
 msgstr "Je vyžadováno alespoň pole 'tělo článku'."
 
@@ -9979,6 +10075,10 @@ msgstr "Žádná proxy pro následující hostitele."
 msgid "No record found!"
 msgstr "Nenalezen žádný záznam!"
 
+#: lib/whatsapp/webhook/message/status.rb
+msgid "No related article found to process the status message on."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
@@ -10331,6 +10431,16 @@ msgstr "Online formulář"
 #: db/seeds/settings.rb
 msgid "Online Service"
 msgstr "Online služba"
+
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "%s attached files"
+msgid "Only %s attachment allowed"
+msgstr "%s přiložených souborů"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Only %s attachment allowed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
@@ -11638,6 +11748,12 @@ msgstr "Odpověď"
 msgid "Reply All"
 msgstr "Odpovědět všem"
 
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Conditions for shown tickets"
+msgid "Reply allowed only for open tickets"
+msgstr "Podmínky pro zobrazení tiketů"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
 msgstr "Odpověď na poslední položku"
@@ -11929,8 +12045,18 @@ msgid "Retry"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#, fuzzy
+#| msgid "Add attachment option to upload."
+msgid "Retry attachment download"
+msgstr "Přidat možnost nahrávání příloh."
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
 msgstr "Opakovat bezpečnostní proces"
+
+#: lib/whatsapp/retry/media.rb
+msgid "Retrying to download the sent media via WhatsApp failed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -12600,6 +12726,12 @@ msgstr "Odeslat Emaily přes"
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Send a message to all logged in users."
 msgstr "Odeslat zprávu všem přihlášeným uživatelům."
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid ""
+"Send out automatic reminders to customers asking them for reply if the 24-"
+"hour window is about to expire."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
@@ -13431,6 +13563,19 @@ msgstr ""
 msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr ""
 
+#: app/frontend/shared/utils/files.ts
+#, fuzzy
+#| msgid "ticket"
+msgid "Sticker"
+msgstr "ticket"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Sticker file"
+msgstr "Titulek ticketu"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr "Zastavit po shodě"
@@ -13780,6 +13925,18 @@ msgstr "Textové moduly jsou …"
 msgid "Text needed"
 msgstr "Je požadován text"
 
+#: app/frontend/shared/form/validation/rules/contentRequired.ts
+#, fuzzy
+#| msgid "at least one letter is required"
+msgid "Text or Attachment is required."
+msgstr "je vyžadováno nejméně jedno písmeno"
+
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "at least one letter is required"
+msgid "Text or attachment is required"
+msgstr "je vyžadováno nejméně jedno písmeno"
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr "Text s vypnutým inline překladem vypadá takto"
@@ -13808,6 +13965,13 @@ msgstr "Děkujeme, že jste se připojili. E-mail byl odeslán na \"%s\"."
 #| msgid "The entry could not be created."
 msgid "The 'gpg-agent' process could not be stopped."
 msgstr "Položku se nepodařilo vytvořit."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts
+msgid ""
+"The 24 hour customer service window is now closed, no further WhatsApp "
+"messages can be sent."
+msgstr ""
 
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
@@ -14319,6 +14483,12 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "Formát předmětu."
 
+#: lib/whatsapp/retry/media.rb
+#, fuzzy
+#| msgid "The article does not belong to the specified ticket."
+msgid "The given article is not a media article."
+msgstr "Článek nepatří uvedenému ticketu."
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -14787,6 +14957,12 @@ msgid "The required value external_credential could not be found in the cache."
 msgstr ""
 "Požadovaná hodnota external_credential nebyla ve vyrovnávací paměti nalezena."
 
+#: app/controllers/ticket_articles_controller.rb
+#, fuzzy
+#| msgid "The retried security process failed!"
+msgid "The retried attachment download failed."
+msgstr "Opakovaný bezpečnostní proces se nezdařil!"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
@@ -15228,6 +15404,12 @@ msgstr "Funkce není povolena!"
 msgid "This field %s"
 msgstr "Toto pole %s"
 
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts
+#, fuzzy
+#| msgid "This field can only contain lowercase letters."
+msgid "This field allows only one file."
+msgstr "Toto pole může obsahovat pouze malá písmena."
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
 msgstr "Toto pole může obsahovat pouze znaky abecedy."
@@ -15530,6 +15712,12 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 msgid "This system is configured for automated setup."
+msgstr ""
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid ""
+"This text will be sent as an immediate reply to new incoming WhatsApp "
+"messages."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
@@ -16183,6 +16371,10 @@ msgstr ""
 "Abyste povolili %s pro zasílání HTTP požadavků na %s, musíte vytvořit určené "
 "\"pravidlo oznámení\" v %s."
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+msgid "To find out more about the 24-hour customer service window see %l."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid ""
 "To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
@@ -16360,6 +16552,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
 msgid "Try again"
 msgstr "Zkusit znovu"
 
@@ -16554,6 +16747,10 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "Typ"
+
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
+msgid "Type %s is not supported."
+msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "Type:"
@@ -17257,6 +17454,13 @@ msgstr "Verze"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 msgid "Video"
+msgstr "Video"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
+#| msgid "Video"
+msgid "Video file"
 msgstr "Video"
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -17969,6 +18173,13 @@ msgstr "Nemáte oprávnění správce."
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "You don't have the necessary permissions to access this page."
 msgstr "Pro přístup k této stránce nemáte potřebná oprávnění."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee
+#: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts
+msgid ""
+"You have a 24 hour window to send WhatsApp messages in this conversation. "
+"The customer service window closes %s."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 msgid "You have exceeded the character limit by %s"
@@ -19680,6 +19891,11 @@ msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
 
 #, fuzzy
+#~| msgid "Have a nice day."
+#~ msgid "Have a nice day!"
+#~ msgstr "Pěkný zbytek dne."
+
+#, fuzzy
 #~| msgid "archived"
 #~ msgid "archive"
 #~ msgstr "archivovaný"
@@ -20125,9 +20341,6 @@ msgstr "dnešní ∅ čekací doby"
 #~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "Vybrat"
-
-#~ msgid "No filter."
-#~ msgstr "Žádný filtr."
 
 #~ msgid "to"
 #~ msgstr "komu"
