@@ -87,7 +87,7 @@
     "vue-tsc": "^2.0.6"
   },
   "dependencies": {
-    "@apollo/client": "^3.9.5",
+    "@apollo/client": "^3.9.6",
     "@formkit/core": "^1.5.9",
     "@formkit/dev": "^1.5.9",
     "@formkit/i18n": "^1.5.9",
