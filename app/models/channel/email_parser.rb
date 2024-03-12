@@ -537,6 +537,11 @@ process unprocessable articles provided by the HTMLSanitizer.
 
       ApplicationHandleInfo.use('email_parser.postmaster') do
         parsed = Channel::EmailParser.new.parse(article.as_raw.content)
+        if parsed[:body] == ::HtmlSanitizer::UNPROCESSABLE_HTML_MSG
+          puts "ERROR: Failed to reprocess the article, please verify the content of the article and if needed increase the timeout (see: Setting.get('html_sanitizer_processing_timeout'))." # rubocop:disable Rails/Output
+          next
+        end
+
         article.update!(body: parsed[:body], content_type: parsed[:content_type])
       end
     end
