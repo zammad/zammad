@@ -10,6 +10,8 @@ module SecureMailing::PGP::Tool::Parse
   PGP_KEY_INFO_EXPIRES_AT_TIMESTAMP = 6
   PGP_KEY_INFO_CREATED_AT_TIMESTAMP = 5
   PGP_KEY_INFO_UID = 9
+  PGP_KEY_INFO_UID_VALIDITY = 1
+  PGP_KEY_INFO_UID_INVALID_STATE = %w[i d r n].freeze
 
   included do # rubocop:disable Metrics/BlockLength
 
@@ -43,7 +45,8 @@ module SecureMailing::PGP::Tool::Parse
         info[:fingerprint] = fingerprint(fpr)
 
         uids = chunks.select { |chunk| chunk.start_with?('uid') }
-        info[:uids] = uids.map { |uid| uid(uid) }
+        uids = uids.map { |uid| uid(uid) }
+        info[:uids] = uids.compact
       end
 
       PGP_KEY_INFO.new(*info.values)
@@ -68,7 +71,10 @@ module SecureMailing::PGP::Tool::Parse
     end
 
     def uid(chunk)
-      chunk.split(':').fetch(PGP_KEY_INFO_UID)
+      hunks = chunk.split(':')
+      return nil if PGP_KEY_INFO_UID_INVALID_STATE.include?(hunks.fetch(PGP_KEY_INFO_UID_VALIDITY))
+
+      hunks.fetch(PGP_KEY_INFO_UID)
     end
 
     def secret?(chunks)

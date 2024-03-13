@@ -157,7 +157,7 @@ class SecureMailing::PGP::Outgoing < SecureMailing::Backend::HandlerOutgoing
   def encrypted_body(data)
     SecureMailing::PGP::Tool.new.with_private_keyring do |pgp_tool|
       keys.each { |key| pgp_tool.import(key.key) }
-      encrypted_result = pgp_tool.encrypt(data, keys.map(&:email_addresses).flatten)
+      encrypted_result = pgp_tool.encrypt(data, keys.map(&:fingerprint))
 
       encrypted_result[:stdout]
     end
