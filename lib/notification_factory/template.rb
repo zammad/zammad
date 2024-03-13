@@ -33,6 +33,8 @@ examples how to use
         %(<%= t "#{sanitize_text($1)}", #{@escape} %>)
       when %r{\At\((.+?)\)\z}m
         %(<%= t d"#{sanitize_object_name($1)}", #{@escape} %>)
+      when %r{\Adt\((.+?)\)\z}m
+        %(<%= dt "#{sanitize_text($1)}" %>)
       when %r{\Aconfig\.(.+?)\z}m
         %(<%= c "#{sanitize_object_name($1)}", #{@escape} %>)
       else

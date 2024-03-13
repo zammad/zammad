@@ -49,7 +49,7 @@ examples how to use
 
   # d - data of object
   # d('user.firstname', htmlEscape)
-  def d(key, escape = nil)
+  def d(key, escape = nil, escaping: true)
 
     # do validation, ignore some methods
     return "\#{#{key} / not allowed}" if !data_key_valid?(key)
@@ -180,6 +180,8 @@ examples how to use
     end
     placeholder = value || object_refs
 
+    return placeholder if !escaping
+
     escaping(convert_to_timezone(placeholder), escape)
   end
 
@@ -203,6 +205,29 @@ examples how to use
     return value if !value
 
     CGI.escapeHTML(convert_to_timezone(value).to_s)
+  end
+
+  def dt(params_string)
+    datetime_object, format_string, timezone = params_string.scan(%r{(?:['"].*?["']|[^,])+}).map do |param|
+      param.strip.sub(%r{^["']}, '').sub(%r{["']$}, '')
+    end
+    return debug("\#{datetime object missing / invalid parameter}") if datetime_object.blank?
+
+    value = d(datetime_object, escaping: false)
+
+    allowed_classes = %w[ActiveSupport::TimeWithZone Date Time DateTime].freeze
+    return debug("\#{#{datetime_object} / invalid parameter}") if allowed_classes.exclude?(value.class.to_s)
+
+    format_string = format_string.presence || '%Y-%m-%d %H:%M:%S'
+    timezone      = timezone.presence || @timezone
+
+    begin
+      result = value.in_time_zone(timezone).strftime(format_string)
+    rescue
+      return debug("\#{#{timezone} / invalid parameter}")
+    end
+
+    result
   end
 
   private
