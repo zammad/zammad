@@ -3,6 +3,10 @@
 class HtmlSanitizer
   module Scrubber
     class Wipe < Base
+      def initialize # rubocop:disable Lint/MissingSuper
+        @direction = :bottom_up
+      end
+
       def scrub(node)
         return STOP if clear_tags_allowlist(node)
         return STOP if remove_unsafe_src(node)
@@ -143,7 +147,8 @@ class HtmlSanitizer
       def clear_tags_allowlist(node)
         return if tags_allowlist.include?(node.name)
 
-        node.replace node.children.to_s
+        node.before(node.children)
+        node.remove
         true
       end
 

@@ -23,7 +23,14 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
 
     context 'when has not allowed tag in not allowed' do
       let(:input)  { '<not-allowed><not-allowed>asd</not-allowed></not-allowed>' }
-      let(:target) { '<not-allowed>asd</not-allowed>' }
+      let(:target) { 'asd' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when has not allowed tag inside of an allowed tag' do
+      let(:input)  { '<div><not-allowed></not-allowed></div>' }
+      let(:target) { '<div></div>' }
 
       it { is_expected.to eq target }
     end
