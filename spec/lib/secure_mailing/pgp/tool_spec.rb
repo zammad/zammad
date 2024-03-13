@@ -114,13 +114,26 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
       end
     end
 
-    context 'with an key including a revoked subkey' do
+    context 'with an key including a revoke subkey' do
       let(:key)         { FIXTURES_FILES_PATH.join('zammad@localhost.revoker.pub.asc').read }
       let(:fingerprint) { FIXTURES_FILES_PATH.join('zammad@localhost.revoker.fingerprint').read }
       let(:created_at)  { DateTime.parse(FIXTURES_FILES_PATH.join('zammad@localhost.revoker.created_at').read) }
       let(:expires_at)  { DateTime.parse(FIXTURES_FILES_PATH.join('zammad@localhost.revoker.expires_at').read) }
 
       it 'returns information of a public key successfully' do
+        expect(info).to have_attributes(fingerprint: fingerprint, uids: ['zammad@localhost'], created_at: created_at, expires_at: expires_at, secret: false)
+      end
+    end
+
+    context 'with an key including a revoked uid' do
+      let(:key)         { FIXTURES_FILES_PATH.join('zammad@localhost.revuid.pub.asc').read }
+      let(:fingerprint) { FIXTURES_FILES_PATH.join('zammad@localhost.revuid.fingerprint').read }
+      let(:created_at)  { DateTime.parse(FIXTURES_FILES_PATH.join('zammad@localhost.revuid.created_at').read) }
+      let(:expires_at)  { nil }
+      let(:revuid)      { FIXTURES_FILES_PATH.join('zammad@localhost.revuid.uid').read }
+
+      it 'returns information of a public key successfully' do
+        expect(info.uids.exclude?(revuid)).to be true
         expect(info).to have_attributes(fingerprint: fingerprint, uids: ['zammad@localhost'], created_at: created_at, expires_at: expires_at, secret: false)
       end
     end
