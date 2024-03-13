@@ -10,6 +10,10 @@ module KnowledgeBaseHelper
   def custom_path_if_needed(path, knowledge_base, full: false)
     return path if !knowledge_base.custom_address_matches?(request)
 
+    custom_path(path, knowledge_base, full:)
+  end
+
+  def custom_path(path, knowledge_base, full: false)
     custom_address = knowledge_base.custom_address_uri
     return path if !custom_address
 
