@@ -6,8 +6,6 @@ class OmniAuth::Strategies::SamlDatabase < OmniAuth::Strategies::SAML
   def self.setup
     auth_saml_credentials = Setting.get('auth_saml_credentials') || {}
 
-    verify_tls(auth_saml_credentials)
-
     http_type = Setting.get('http_type')
     fqdn      = Setting.get('fqdn')
 
@@ -45,26 +43,6 @@ class OmniAuth::Strategies::SamlDatabase < OmniAuth::Strategies::SAML
     args[0] = self.class.setup
 
     super
-  end
-
-  def self.verify_tls(settings)
-    return if !settings[:ssl_verify]
-
-    url = settings[:idp_sso_target_url]
-    return if !url.starts_with?('https://')
-
-    resp = UserAgent.get(
-      url,
-      {},
-      {
-        verify_ssl: true,
-        log:        { facility: 'SAML' }
-      }
-    )
-
-    return if resp.error.blank? || !resp.error.starts_with?('#<OpenSSL::SSL::SSLError')
-
-    Rails.logger.error { 'SAML: The verification of the TLS connection failed. Please check the IDP certificate.' }
   end
 
   def self.apply_security_settings(settings)
@@ -135,7 +113,6 @@ class OmniAuth::Strategies::SamlDatabase < OmniAuth::Strategies::SAML
     apply_security_default_settings
     apply_encrypt_only_settings
     apply_sign_only_settings
-    verify_tls
   ].freeze
 
   private
