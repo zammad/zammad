@@ -118,7 +118,7 @@ gem 'rack-attack'
 # channels
 gem 'koala'
 gem 'telegram-bot-ruby'
-gem 'twitter'
+gem 'twitter', '~> 7'
 gem 'whatsapp_sdk'
 
 # channels - email additions
