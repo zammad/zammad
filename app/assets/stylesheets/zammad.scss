@@ -536,7 +536,9 @@ ul {
 
 /* close commented backslash hack */
 
-[contenteditable] {
+/* Avoid too broad selectors, since they can affect unintended elements in third-party extensions (#5073). */
+[contenteditable='true'],
+.richtext-content[contenteditable] {
   display: block;
   outline-style: none;
   border-radius: 3px;
@@ -544,27 +546,27 @@ ul {
   /* needed to make empty tags editable, otherwise no focus can be set */
   min-height: 10px;
   min-width: 20px;
-}
 
-[contenteditable]:hover,
-[contenteditable]:focus {
-  background: var(--background-primary);
-}
+  &:hover,
+  &:focus {
+    background: var(--background-primary);
+  }
 
-[contenteditable]:focus {
-  text-overflow: clip !important;
-}
+  &:focus {
+    text-overflow: clip !important;
+  }
 
-[contenteditable].invalid {
-  background: #f92;
-}
+  &.invalid {
+    background: #f92;
+  }
 
-[contenteditable] > .placeholder {
-  color: var(--text-muted);
-}
+  & > .placeholder {
+    color: var(--text-muted);
+  }
 
-[contenteditable] p {
-  margin: 0;
+  p {
+    margin: 0;
+  }
 }
 
 /* fix for placeholder */
