@@ -90,7 +90,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
   context 'when a customer call is answered' do
     let(:second_params) { params.merge(event: 'answer', answeringNumber: agent_phone) }
 
-    context 'without active tickets' do
+    context 'with known customer and without active tickets' do
       before do
         travel(-2.months)
         create(:ticket, customer: customer)
@@ -104,11 +104,31 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
       it 'opens a new ticket after phone call inbound' do
         within(:active_content) do
           expect(page).to have_text('New Ticket')
+          expect(page).to have_css('input[name="title"][value="Call from 0190333"]', visible: :all)
+          expect(page).to have_css('.tabsSidebar-tab[data-tab="customer"]', visible: :all)
         end
       end
     end
 
-    context 'with active tickets' do
+    context 'without known customer and without active tickets' do
+      let(:first_params) { params.merge(event: 'newCall', direction: 'out', from: '001', to: '002') }
+      let(:second_params) { params.merge(event: 'answer', answeringNumber: agent_phone) }
+
+      before do
+        visit 'cti'
+        place_call
+      end
+
+      it 'opens a new ticket after phone call inbound' do
+        within(:active_content) do
+          expect(page).to have_text('New Ticket')
+          expect(page).to have_css("input[name='title'][value='Call from 0190333']", visible: :all)
+          expect(page).to have_no_css('.tabsSidebar-tab[data-tab="customer"]')
+        end
+      end
+    end
+
+    context 'with known customer and with active tickets' do
       before do
         create(:ticket, customer: customer)
 

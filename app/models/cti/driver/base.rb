@@ -157,12 +157,14 @@ class Cti::Driver::Base
     end
 
     id = SecureRandom.uuid
+    title = Translation.translate(user.locale, __('Call from %s'), @params[:from])
+
     PushMessages.send_to(user.id, {
                            event: 'remote_task',
                            data:  {
                              key:        "TicketCreateScreen-#{id}",
                              controller: 'TicketCreate',
-                             params:     { customer_id: customer_id.to_s, title: 'Call', id: id },
+                             params:     { customer_id: customer_id.to_s, title: title, id: id },
                              show:       true,
                              url:        "ticket/create/id/#{id}"
                            },
