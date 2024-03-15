@@ -302,9 +302,15 @@ class App.TicketCreate extends App.Controller
   buildScreen: (params) =>
 
     if _.isEmpty(params.ticket_id) && _.isEmpty(params.article_id)
-      if !_.isEmpty(params.customer_id)
-        @renderQueue(options: _.omit(params, 'id'))
+
+      # remove not form relevant options
+      localOptions = _.omit(params, 'id', 'query', 'shown', 'taskKey', 'ticket_id', 'article_id', 'appEl', 'el', 'type')
+      localOptions = _.omit(localOptions, _.isUndefined)
+
+      if !_.isEmpty(localOptions)
+        @renderQueue(options: localOptions)
         return
+
       @renderQueue()
       return
 

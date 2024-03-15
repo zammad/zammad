@@ -2053,6 +2053,10 @@ msgstr ""
 msgid "Call Settings"
 msgstr ""
 
+#: app/models/cti/driver/base.rb
+msgid "Call from %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr ""
