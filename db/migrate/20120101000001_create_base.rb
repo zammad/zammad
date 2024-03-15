@@ -115,7 +115,13 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :groups do |t|
       t.references :signature,                      null: true
       t.references :email_address,                  null: true
-      t.string :name,   limit: (160 * 6) + (2 * 5), null: false # max depth of 6 and 5 delimiters inbetween
+
+      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
+        t.string :name, limit: (160 * 6) + (2 * 5), null: false # max depth of 6 and 5 delimiters in between
+      else
+        t.string :name, limit: (160 * 10) + (2 * 9), null: false # max depth of 10 and 9 delimiters in between
+      end
+
       t.string :name_last,              limit: 160, null: false
       t.integer :parent_id,                         null: true
       t.integer :assignment_timeout,                null: true

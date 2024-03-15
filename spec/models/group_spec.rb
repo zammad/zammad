@@ -152,7 +152,7 @@ RSpec.describe Group, type: :model do
       end
     end
 
-    describe '#check_max_depth' do
+    describe '#check_max_depth (mysql)', db_adapter: :mysql do
       let(:group_1_1)  { create(:group, name: 'tree_group_1_1') }
       let(:group_1_2)  { create(:group, name: 'tree_group_1_2', parent: group_1_1) }
       let(:group_1_3)  { create(:group, name: 'tree_group_1_3', parent: group_1_2) }
@@ -183,6 +183,44 @@ RSpec.describe Group, type: :model do
           group_2_4
         end.not_to raise_error
         expect { group_2_1.update(parent: group_1_6) }.to raise_error(Exceptions::UnprocessableEntity, 'This group or its children exceed the allowed nesting depth.')
+      end
+    end
+
+    describe '#check_max_depth (psql)', db_adapter: :postgresql do
+      def groups_with_depth(depth)
+        groups = []
+
+        groups << create(:group)
+        groups += create_list(:group, depth - 1)
+
+        groups.each_with_index do |group, idx|
+          next if idx.zero?
+
+          group.update!(parent: groups[idx - 1])
+        end
+
+        groups
+      end
+
+      let(:groups_1) { groups_with_depth(10) }
+      let(:groups_2) { groups_with_depth(4) }
+
+      let(:group_1_11) { create(:group, parent: groups_1.last) }
+      let(:group_2_5)  { create(:group, parent: groups_2.last) }
+
+      it 'does check depth on creation', :aggregate_failures do
+        expect { groups_1 }.not_to raise_error
+        expect { group_1_11 }.to raise_error(Exceptions::UnprocessableEntity, 'This group or its children exceed the allowed nesting depth.')
+        expect { group_2_5 }.not_to raise_error
+      end
+
+      it 'does check depth on tree merge', :aggregate_failures do
+        expect do
+          groups_1.last
+          groups_2.last
+        end.not_to raise_error
+
+        expect { groups_2.last.update!(parent: groups_1.last) }.to raise_error(Exceptions::UnprocessableEntity, 'This group or its children exceed the allowed nesting depth.')
       end
     end
   end
