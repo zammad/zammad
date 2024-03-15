@@ -3,7 +3,7 @@
 module Ticket::CanSelector
   extend ActiveSupport::Concern
 
-  include CanSelector
+  include ::CanSelector
 
   class_methods do
 =begin

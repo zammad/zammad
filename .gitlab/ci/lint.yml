@@ -65,6 +65,8 @@
     - gem install bundler-audit
     - bundle-audit update
     - bundle-audit
+    - echo "Checking if yard can generate documentation…"
+    - bundle exec yard --no-output --no-progress
     - echo "Checking if chat assets need a rebuild…"
     - echo "Please see public/assets/chat/README.md for build instructions."
     - cp public/assets/chat/chat.js tmp/chat.js

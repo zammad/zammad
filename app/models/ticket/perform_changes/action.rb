@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-class Ticket::PerformChanges::Action < PerformChanges::Action
+# Rubocop does not like :: prefix, but Yard throws an error parsing without it
+class Ticket::PerformChanges::Action < ::PerformChanges::Action # rubocop:disable Style/RedundantConstantBase
   attr_accessor :article
 
   def initialize(record, execution_data, perform_changes_data)

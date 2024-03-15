@@ -31,5 +31,9 @@ rm .overcommit.*
 # misc
 rm .codeclimate.yml
 
+# Yard
+rm .yardopts
+rm -rf .yard
+
 # developer manual
 rm -rf doc/developer_manual
