@@ -85,7 +85,7 @@ GEM
     activerecord (7.0.8.1)
       activemodel (= 7.0.8.1)
       activesupport (= 7.0.8.1)
-    activerecord-import (1.5.1)
+    activerecord-import (1.6.0)
       activerecord (>= 4.2)
     activerecord-session_store (2.1.0)
       actionpack (>= 6.1)
