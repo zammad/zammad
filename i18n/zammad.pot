@@ -7450,6 +7450,8 @@ msgstr ""
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr ""
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
 #: db/seeds/settings.rb
 msgid "Locale"
 msgstr ""
@@ -11761,6 +11763,11 @@ msgstr ""
 msgid "System URL"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/language.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
+msgid "System default"
+msgstr ""
+
 #: app/models/knowledge_base.rb
 msgid "System supports only one locale for knowledge base. Upgrade your plan to use more locales."
 msgstr ""
@@ -13784,6 +13791,8 @@ msgstr ""
 msgid "Timeframe for the first response."
 msgstr ""
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
 #: db/seeds/settings.rb
 #: lib/excel_sheet.rb
 msgid "Timezone"

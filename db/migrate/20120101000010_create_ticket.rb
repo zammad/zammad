@@ -313,6 +313,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :condition,                :text, limit: 500.kilobytes + 1, null: false
       t.column :perform,                  :text, limit: 500.kilobytes + 1, null: false
       t.column :disable_notification,     :boolean,               null: false, default: true
+      t.column :localization,             :string, limit: 20,     null: true # thx to ApplicationModel::CanCreatesAndUpdates ...
+      t.column :timezone,                 :string, limit: 250,    null: true
       t.column :note,                     :string, limit: 250,    null: true
       t.column :activator,                :string, limit: 50,     null: false, default: 'action'
       t.column :execution_condition_mode, :string, limit: 50,     null: false, default: 'selective'

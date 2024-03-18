@@ -17,12 +17,16 @@ class Ticket::PerformChanges::Action::ArticleNote < Ticket::PerformChanges::Acti
       templateInline: note[:subject],
       objects:        notification_factory_template_objects,
       quote:          true,
+      locale:         locale,
+      timezone:       timezone,
     )
 
     rendered_body = NotificationFactory::Mailer.template(
       templateInline: note[:body],
       objects:        notification_factory_template_objects,
       quote:          true,
+      locale:         locale,
+      timezone:       timezone,
     )
 
     article = Ticket::Article.new(

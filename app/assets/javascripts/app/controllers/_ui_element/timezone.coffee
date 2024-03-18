@@ -8,12 +8,19 @@ class App.UiElement.timezone extends App.UiElement.ApplicationUiElement
 
     # build list based on config
     for timezone_value, timezone_diff of timezones
-      if timezone_diff > 0
-        timezone_diff = '+' + timezone_diff
+      if !timezone_diff.toString().match(/(\+|\-)/)
+        timezone_diff = "+#{timezone_diff}"
       item =
         name:  "#{timezone_value} (GMT#{timezone_diff})"
         value: timezone_value
       attribute.options.push item
+
+    if attribute.show_system_default_option
+      timezone_default_name = _.find(attribute.options, (option) -> option.value == App.Config.get('timezone_default_sanitized')).name
+      attribute.options.unshift({ name: __('System default') + " (#{timezone_default_name})", value: 'system' })
+
+    # set default value
+    attribute.default = if attribute.show_system_default_option then 'system' else App.Config.get('timezone_default_sanitized')
 
     # add null selection if needed
     @addNullOption(attribute, params)

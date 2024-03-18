@@ -105,6 +105,8 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
       templateInline: execution_data['subject'],
       objects:        notification_factory_template_objects,
       quote:          false,
+      locale:         locale,
+      timezone:       timezone,
     )
   end
 
@@ -113,6 +115,8 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
       templateInline: execution_data['body'],
       objects:        notification_factory_template_objects,
       quote:          true,
+      locale:         locale,
+      timezone:       timezone,
     )
 
     HtmlSanitizer.replace_inline_images(body, id)

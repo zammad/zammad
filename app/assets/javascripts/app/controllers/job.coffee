@@ -4,6 +4,8 @@ class Job extends App.ControllerSubContent
   constructor: ->
     super
 
+    @fetchTimezones()
+
     @genericController = new App.ControllerGenericIndex(
       el: @el
       id: @id
@@ -34,5 +36,14 @@ class Job extends App.ControllerSubContent
         @[key] = value
 
     @genericController.paginate( @page || 1 )
+
+  fetchTimezones: =>
+    @ajax(
+      id:    'calendar_timezones'
+      type:  'GET'
+      url:   "#{@apiPath}/calendars/timezones"
+      success: (data) ->
+        App.Config.set('timezones', data.timezones)
+    )
 
 App.Config.set('Job', { prio: 3400, name: __('Scheduler'), parent: '#manage', target: '#manage/job', controller: Job, permission: ['admin.scheduler'] }, 'NavBarAdmin')

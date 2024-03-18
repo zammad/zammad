@@ -5,6 +5,8 @@ class Trigger extends App.ControllerSubContent
   constructor: ->
     super
 
+    @fetchTimezones()
+
     @genericController = new Index(
       el: @el
       id: @id
@@ -32,6 +34,15 @@ class Trigger extends App.ControllerSubContent
         @[key] = value
 
     @genericController.paginate( @page || 1 )
+
+  fetchTimezones: =>
+    @ajax(
+      id:    'calendar_timezones'
+      type:  'GET'
+      url:   "#{@apiPath}/calendars/timezones"
+      success: (data) ->
+        App.Config.set('timezones', data.timezones)
+    )
 
 class Index extends App.ControllerGenericIndex
   newControllerClass: -> New

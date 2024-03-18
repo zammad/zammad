@@ -1,5 +1,5 @@
 class App.Job extends App.Model
-  @configure 'Job', 'name', 'object', 'timeplan', 'condition', 'perform', 'disable_notification', 'note', 'active'
+  @configure 'Job', 'name', 'object', 'timeplan', 'condition', 'perform', 'disable_notification', 'note', 'active', 'localization', 'timezone'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/jobs'
   @configure_attributes = [
@@ -9,6 +9,8 @@ class App.Job extends App.Model
     { name: 'condition',            display: __('Conditions for affected objects'), tag: 'object_selector', null: true, executionTime: true, noCurrentUser: true },
     { name: 'perform',              display: __('Execute changes on objects'),      tag: 'object_perform_action', null: true, notification: true, ticket_delete: true, data_privacy_deletion_task: true },
     { name: 'disable_notification', display: __('Disable Notifications'),           tag: 'boolean', default: true },
+    { name: 'localization',         display: __('Locale'),                          tag: 'language', null: false, class: 'input', show_system_default_option: true },
+    { name: 'timezone',             display: __('Timezone'),                        tag: 'timezone', null: false, class: 'input', show_system_default_option: true },
     { name: 'note',                 display: __('Note'),                            tag: 'textarea', note: __('Notes are visible to agents only, never to customers.'), limit: 250, null: true },
     { name: 'active',               display: __('Active'),                          tag: 'active', default: true },
     { name: 'matching',             display: __('Will process'),                    readonly: 1 },

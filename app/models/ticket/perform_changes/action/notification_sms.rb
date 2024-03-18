@@ -53,7 +53,9 @@ class Ticket::PerformChanges::Action::NotificationSms < Ticket::PerformChanges::
     NotificationFactory::Renderer.new(
       objects:  notification_factory_template_objects,
       template: execution_data['body'],
-      escape:   false
+      escape:   false,
+      locale:   locale,
+      timezone: timezone,
     ).render.html2text.tr(' ', ' ') # convert non-breaking space to simple space
   end
 

@@ -812,6 +812,8 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.column :processed,            :integer,                null: false, default: 0
       t.column :matching,             :integer,                null: false
       t.column :pid,                  :string,  limit: 250,    null: true
+      t.column :localization,         :string,  limit: 20,     null: true # thx to ApplicationModel::CanCreatesAndUpdates ...
+      t.column :timezone,             :string,  limit: 250,    null: true
       t.column :note,                 :string,  limit: 250,    null: true
       t.column :active,               :boolean,                null: false, default: false
       t.column :updated_by_id,        :integer,                null: false

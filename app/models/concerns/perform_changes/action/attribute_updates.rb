@@ -121,6 +121,8 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
       templateInline: value['value'],
       objects:        notification_factory_template_objects,
       quote:          true,
+      locale:         locale,
+      timezone:       timezone,
     )
 
     true
