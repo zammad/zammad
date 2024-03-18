@@ -62,8 +62,6 @@
 /tmp/pids/*
 !/tmp/pids/.keep
 /storage/fs
-/var/*
-!/var/README.md
 
 # doorkeeper (OAuth 2)
 /public/assets/doorkeeper

@@ -174,7 +174,7 @@ function backup_files () {
       ZAMMAD_STORAGE_DIR="${ZAMMAD_DIR#/}/storage/"
     fi
 
-    tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_STORAGE_DIR} ${ZAMMAD_DIR#/}/var/
+    tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_STORAGE_DIR}
 
     state=$?
   fi

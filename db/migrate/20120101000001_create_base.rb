@@ -924,5 +924,13 @@ class CreateBase < ActiveRecord::Migration[4.2]
 
       t.timestamps limit: 3, null: false
     end
+
+    create_table :failed_emails do |t|
+      t.binary  :data,         null: false
+      t.integer :retries,      null: false, default: 1
+      t.text    :parsing_error
+
+      t.timestamps limit: 3, null: false
+    end
   end
 end

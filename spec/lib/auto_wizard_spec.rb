@@ -26,14 +26,14 @@ RSpec.describe AutoWizard do
 
     context 'with "auto_wizard.json" file in custom directory' do
       before do
-        allow(ENV).to receive(:[]).with('AUTOWIZARD_RELATIVE_PATH').and_return('var/auto_wizard.json')
+        allow(ENV).to receive(:[]).with('AUTOWIZARD_RELATIVE_PATH').and_return('tmp/auto_wizard.json')
       end
 
       context 'with file present' do
         around do |example|
-          FileUtils.touch(Rails.root.join('var/auto_wizard.json'))
+          FileUtils.touch(Rails.root.join('tmp/auto_wizard.json'))
           example.run
-          FileUtils.rm(Rails.root.join('var/auto_wizard.json'))
+          FileUtils.rm(Rails.root.join('tmp/auto_wizard.json'))
         end
 
         it 'returns true' do

@@ -5,14 +5,12 @@
 class Channel::EmailParser
   include Channel::EmailHelper
 
-  PROZESS_TIME_MAX = 180
+  PROCESS_TIME_MAX = 180
   EMAIL_REGEX = %r{.+@.+}
   RECIPIENT_FIELDS = %w[to cc delivered-to x-original-to envelope-to].freeze
   SENDER_FIELDS = %w[from reply-to return-path sender].freeze
   EXCESSIVE_LINKS_MSG = __('This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it.').freeze
   MESSAGE_STRUCT = Struct.new(:from_display_name, :subject, :msg_size).freeze
-
-  UNPROCESSABLE_MAIL_DIRECTORY = Rails.root.join('var/spool/unprocessable_mail')
 
 =begin
 
@@ -120,24 +118,29 @@ returns
 =end
 
   def process(channel, msg, exception = true)
-
-    Timeout.timeout(PROZESS_TIME_MAX) do
-      _process(channel, msg)
-    end
+    process_with_timeout(channel, msg)
   rescue => e
-    # store unprocessable email for bug reporting
-    filename = archive_mail(UNPROCESSABLE_MAIL_DIRECTORY, msg)
+    failed_email = ::FailedEmail.create(data: msg, parsing_error: e)
 
-    message = "Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
+    message = <<~MESSAGE.chomp
+      Can't process email. Run the following command to get the message for issue report at https://github.com/zammad/zammad/issues:
+        zammad run rails r "puts FailedEmail.find(#{failed_email.id}).data"
+    MESSAGE
 
-    p "ERROR: #{message}" # rubocop:disable Rails/Output
-    p "ERROR: #{e.inspect}" # rubocop:disable Rails/Output
+    puts "ERROR: #{message}" # rubocop:disable Rails/Output
+    puts "ERROR: #{e.inspect}" # rubocop:disable Rails/Output
     Rails.logger.error message
     Rails.logger.error e
 
     return false if exception == false
 
-    raise %(#{e.inspect}\n#{e.backtrace.join("\n")})
+    raise failed_email.parsing_error
+  end
+
+  def process_with_timeout(channel, msg)
+    Timeout.timeout(PROCESS_TIME_MAX) do
+      _process(channel, msg)
+    end
   end
 
   def _process(channel, msg)
@@ -497,35 +500,7 @@ returns
     end
   end
 
-=begin
-
-process unprocessable_mails (var/spool/unprocessable_mail/*.eml) again
-
-  Channel::EmailParser.process_unprocessable_mails
-
-=end
-
-  def self.process_unprocessable_mails(params = {})
-    files = []
-    Dir.glob("#{UNPROCESSABLE_MAIL_DIRECTORY}/*.eml") do |entry|
-      ticket, _article, _user, _mail = Channel::EmailParser.new.process(params, File.binread(entry))
-      next if ticket.blank?
-
-      files.push entry
-      File.delete(entry)
-    end
-    files
-  end
-
-=begin
-
-process unprocessable articles provided by the HTMLSanitizer.
-
-  Channel::EmailParser.process_unprocessable_articles
-
-=end
-
-  def self.process_unprocessable_articles(_params = {})
+  def self.reprocess_failed_articles
     articles = Ticket::Article.where(body: ::HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
     articles.reorder(id: :desc).as_batches do |article|
       if !article.as_raw&.content
@@ -938,15 +913,6 @@ process unprocessable articles provided by the HTMLSanitizer.
     }
 
     [attach]
-  end
-
-  # Archive the given message as tmp/folder/md5.eml
-  def archive_mail(path, msg)
-    FileUtils.mkpath path
-
-    path.join("#{Digest::MD5.hexdigest(msg)}.eml").tap do |file_path|
-      File.binwrite(file_path, msg)
-    end
   end
 
   # Auto reply as the postmaster to oversized emails with:

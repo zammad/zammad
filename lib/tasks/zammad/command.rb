@@ -52,6 +52,17 @@ module Tasks
         # Rake will try to run additional arguments as tasks, so make sure nothing happens for these.
         args[1..].each { |a| Rake::Task.define_task(a.to_sym => :environment) {} } # rubocop:disable Lint/EmptyBlock
       end
+
+      # Rake switches the current working directory to the Rails root.
+      # Make sure that relative pathnames still get resolved correctly.
+      # Note: This works only when invoked via 'rake', not 'rails'!
+      def self.resolve_filepath(path)
+        given_path = Pathname.new(path)
+
+        return given_path if given_path.absolute?
+
+        Pathname.new(Rake.original_dir).join(path)
+      end
     end
   end
 end

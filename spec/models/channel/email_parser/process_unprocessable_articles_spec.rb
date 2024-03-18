@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Channel::EmailParser#process_unprocessable_articles', aggregate_failures: true, type: :model do
+RSpec.describe 'Channel::EmailParser#reprocess_failed_articles', aggregate_failures: true, type: :model do
   context 'when receiving unprocessable article' do
     before do
       allow_any_instance_of(HtmlSanitizer::Strict).to receive(:run_sanitization).and_raise(Timeout::Error, HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
@@ -17,7 +17,7 @@ RSpec.describe 'Channel::EmailParser#process_unprocessable_articles', aggregate_
     it 'does reprocess the unprocessable article' do
       expect(Ticket::Article.last.body).to eq(HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
       allow_any_instance_of(HtmlSanitizer::Strict).to receive(:run_sanitization).and_call_original
-      Channel::EmailParser.process_unprocessable_articles
+      Channel::EmailParser.reprocess_failed_articles
       expect(Ticket::Article.last.body).not_to eq(HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
     end
   end

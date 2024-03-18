@@ -14235,6 +14235,10 @@ msgstr ""
 msgid "Unknown error"
 msgstr ""
 
+#: app/models/failed_email.rb
+msgid "Unknown error: Could not create a ticket from this email."
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Unless you already have it, install one of the following authenticator apps on your mobile device:"
 msgstr ""
