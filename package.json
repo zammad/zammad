@@ -42,7 +42,7 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
-    "@vue/test-utils": "^2.4.4",
+    "@vue/test-utils": "^2.4.5",
     "autoprefixer": "^10.4.18",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
