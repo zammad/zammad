@@ -35,7 +35,7 @@ ESCAPED_POSTGRESQL_PASS=$(echo "$POSTGRESQL_PASS" | sed -e 's/[\/&]/\\&/g')
 export DATABASE_URL="postgres://${POSTGRESQL_USER}:${ESCAPED_POSTGRESQL_PASS}@${POSTGRESQL_HOST}:${POSTGRESQL_PORT}/${POSTGRESQL_DB}${POSTGRESQL_OPTIONS}"
 
 function check_zammad_ready {
-  until RAILS_CHECK_PENDING_MIGRATIONS=1 bundle exec rails r true &> /dev/null; do
+  until bundle exec rails r ActiveRecord::Migration.check_pending! &> /dev/null; do
     echo "waiting for init container to finish install or update..."
     sleep 5
   done
