@@ -3,7 +3,7 @@
 set -e
 
 : "${AUTOWIZARD_JSON:=''}"
-: "${AUTOWIZARD_RELATIVE_PATH:='var/auto_wizard.json'}"
+: "${AUTOWIZARD_RELATIVE_PATH:='tmp/auto_wizard.json'}"
 : "${ELASTICSEARCH_ENABLED:=true}"
 : "${ELASTICSEARCH_HOST:=zammad-elasticsearch}"
 : "${ELASTICSEARCH_PORT:=9200}"
@@ -27,7 +27,6 @@ set -e
 : "${ZAMMAD_DIR:=/opt/zammad}"
 : "${ZAMMAD_RAILSSERVER_HOST:=zammad-railsserver}"
 : "${ZAMMAD_RAILSSERVER_PORT:=3000}"
-: "${ZAMMAD_READY_FILE:=${ZAMMAD_DIR}/var/zammad.ready}"
 : "${ZAMMAD_WEBSOCKET_HOST:=zammad-websocket}"
 : "${ZAMMAD_WEBSOCKET_PORT:=6042}"
 : "${ZAMMAD_WEB_CONCURRENCY:=0}"
@@ -36,18 +35,15 @@ ESCAPED_POSTGRESQL_PASS=$(echo "$POSTGRESQL_PASS" | sed -e 's/[\/&]/\\&/g')
 export DATABASE_URL="postgres://${POSTGRESQL_USER}:${ESCAPED_POSTGRESQL_PASS}@${POSTGRESQL_HOST}:${POSTGRESQL_PORT}/${POSTGRESQL_DB}${POSTGRESQL_OPTIONS}"
 
 function check_zammad_ready {
-  sleep 15
-  until [ -f "${ZAMMAD_READY_FILE}" ]; do
+  until bundle exec rails r ActiveRecord::Migration.check_pending! &> /dev/null; do
     echo "waiting for init container to finish install or update..."
-    sleep 10
+    sleep 5
   done
 }
 
 # zammad init
 if [ "$1" = 'zammad-init' ]; then
   # install / update zammad
-  test -f "${ZAMMAD_READY_FILE}" && rm "${ZAMMAD_READY_FILE}"
-
   until (echo > /dev/tcp/"${POSTGRESQL_HOST}"/"${POSTGRESQL_PORT}") &> /dev/null; do
     echo "waiting for postgresql server to be ready..."
     sleep 5
@@ -113,12 +109,6 @@ if [ "$1" = 'zammad-init' ]; then
       fi
     fi
   fi
-
-  # create install ready file
-  echo 'zammad-init' > "${ZAMMAD_READY_FILE}"
-
-  # chown var
-  chown -R zammad:zammad "${ZAMMAD_DIR}/var"
 
 # zammad nginx
 elif [ "$1" = 'zammad-nginx' ]; then
