@@ -119,3 +119,4 @@ services:
   - redis
 before_install: contrib/packager.io/preinstall.sh
 after_install: contrib/packager.io/postinstall.sh
+buildpack: https://github.com/pkgr/heroku-buildpack-ruby.git#v267-1
