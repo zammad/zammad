@@ -5,6 +5,31 @@ require 'ostruct'
 
 RSpec.describe NotificationFactory::Mailer do
   describe '#template' do
+
+    context 'with application template' do
+      let(:result) { described_class.template(template: 'test_ticket', locale: locale, objects: {}) }
+
+      context 'with English locale' do
+        let(:locale) { 'en' }
+
+        it 'renders correctly' do
+          expect(result[:subject]).to eq('Test Ticket!')
+          expect(result[:body]).to include('Your Zammad Helpdesk Team')
+          expect(result[:body]).to include('Manage your notification settings')
+        end
+      end
+
+      context 'with German locale' do
+        let(:locale) { 'de-de' }
+
+        it 'renders correctly' do
+          expect(result[:subject]).to eq('Test Ticket!')
+          expect(result[:body]).to include('Ihr Zammad Helpdesk-Team')
+          expect(result[:body]).to include('Benachrichtigungs-Einstellungen verwalten')
+        end
+      end
+    end
+
     context 'for postmaster oversized mail' do
       let(:raw_incoming_mail) { Rails.root.join('test/data/mail/mail010.box').read }
 
@@ -55,7 +80,7 @@ RSpec.describe NotificationFactory::Mailer do
 
       context 'English locale (en)' do
         include_examples 'plaintext mail templating' do
-          let(:locale) { 'en' }
+          let(:locale)           { 'en' }
           let(:expected_subject) { en_expected_subject }
           let(:expected_body)    { en_expected_body }
         end
