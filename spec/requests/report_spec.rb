@@ -118,7 +118,7 @@ RSpec.describe 'Report', searchindex: true, type: :request do
       expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
       # 2019-03 - month interval
-      Setting.set('timezone_default', '')
+      Setting.set('timezone_default', 'UTC')
       params = {
         metric:    'count',
         year:      today.year,
@@ -157,7 +157,7 @@ RSpec.describe 'Report', searchindex: true, type: :request do
       expect(json_response['data']['count::backlog']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
       # 2019-02 - month interval
-      Setting.set('timezone_default', '')
+      Setting.set('timezone_default', 'UTC')
       params = {
         metric:    'count',
         year:      today.year,
@@ -195,7 +195,7 @@ RSpec.describe 'Report', searchindex: true, type: :request do
       expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
       # 2019-04 - month interval
-      Setting.set('timezone_default', '')
+      Setting.set('timezone_default', 'UTC')
       params = {
         metric:    'count',
         year:      today.year,
@@ -233,7 +233,7 @@ RSpec.describe 'Report', searchindex: true, type: :request do
       expect(json_response['data']['count::backlog']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
       # 2019 - year interval
-      Setting.set('timezone_default', '')
+      Setting.set('timezone_default', 'UTC')
       params = {
         metric:    'count',
         year:      today.year,

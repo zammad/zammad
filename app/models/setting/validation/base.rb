@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-class Setting::Validation
+class Setting::Validation::Base
   attr_reader :record, :value
 
   def initialize(record)

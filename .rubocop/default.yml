@@ -472,7 +472,3 @@ Zammad/ExistsDbStrategy:
     - "spec/**/*.rb"
   Exclude:
     - "spec/support/capybara/*.rb"
-
-Zammad/TimezoneDefault:
-  Exclude:
-    - "spec/**/*.rb"

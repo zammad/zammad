@@ -300,8 +300,6 @@ class SessionsController < ApplicationController
       config[setting.name] = value
     end
 
-    Setting::Processed.process_frontend_settings! config
-
     # NB: Explicitly include SAML display name config
     #   This is needed because the setting is not frontend related,
     #   but we still to display one of the options

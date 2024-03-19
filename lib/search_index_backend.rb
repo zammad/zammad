@@ -346,7 +346,7 @@ remove whole data from index
     condition = {
       'query_string' => {
         'query'            => append_wildcard_to_simple_query(query),
-        'time_zone'        => Setting.get('timezone_default_sanitized'),
+        'time_zone'        => Setting.get('timezone_default'),
         'default_operator' => 'AND',
         'analyze_wildcard' => true,
       }

@@ -75,7 +75,7 @@ RSpec.describe Selector::Sql do
       it 'calculates proper time interval when today operator is used', :aggregate_failures do
         _, bind_params = Ticket.selector2sql({ 'ticket.created_at' => { 'operator' => 'today' } })
 
-        Time.use_zone(Setting.get('timezone_default_sanitized').presence) do
+        Time.use_zone(Setting.get('timezone_default')) do
           expect(bind_params[0].to_s).to eq('2022-10-10 22:00:00 UTC')
           expect(bind_params[1].to_s).to eq('2022-10-11 21:59:59 UTC')
         end

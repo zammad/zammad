@@ -7,7 +7,7 @@ class CalendarSubscriptions
   def initialize(user)
     @user        = user
     @preferences = {}
-    @time_zone   = Setting.get('timezone_default_sanitized')
+    @time_zone   = Setting.get('timezone_default')
 
     default_preferences = Setting.where(area: 'Defaults::CalendarSubscriptions')
     default_preferences.each do |calendar_subscription|

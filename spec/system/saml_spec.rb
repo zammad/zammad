@@ -59,9 +59,9 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
 
     # Disable setting validation. We have an explicit test for this.
     setting = Setting.find_by(name: 'auth_saml_credentials')
-    setting.update!(preferences: {})
+    setting.state_current = { value: auth_saml_credentials }
+    setting.save!(validate: false)
 
-    Setting.set('auth_saml_credentials', auth_saml_credentials)
     Setting.set('auth_saml', true)
   end
 

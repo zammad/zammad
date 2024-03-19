@@ -33,7 +33,7 @@ class ObjectManager
 
         return if !diff
 
-        Time.use_zone(Setting.get('timezone_default_sanitized')) do
+        Time.use_zone(Setting.get('timezone_default')) do
           diff
             .days
             .from_now
@@ -46,7 +46,7 @@ class ObjectManager
 
         return if !diff
 
-        Time.use_zone(Setting.get('timezone_default_sanitized')) do
+        Time.use_zone(Setting.get('timezone_default')) do
           diff
             .hours
             .from_now

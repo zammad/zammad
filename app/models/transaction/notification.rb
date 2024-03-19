@@ -127,7 +127,7 @@ class Transaction::Notification
           identifier = user.login
         end
 
-        already_notified_cutoff = Time.use_zone(Setting.get('timezone_default_sanitized')) { Time.current.beginning_of_day }
+        already_notified_cutoff = Time.use_zone(Setting.get('timezone_default')) { Time.current.beginning_of_day }
 
         already_notified = History.where(
           history_type_id:   History.type_lookup('notification').id,

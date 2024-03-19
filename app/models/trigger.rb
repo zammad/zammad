@@ -30,7 +30,7 @@ class Trigger < ApplicationModel
   def performable_on?(object, activator_type:)
     return if !time_based?
 
-    already_notified_cutoff = Time.use_zone(Setting.get('timezone_default_sanitized')) { Time.current.beginning_of_day }
+    already_notified_cutoff = Time.use_zone(Setting.get('timezone_default')) { Time.current.beginning_of_day }
 
     !history_scope(object, activator_type:).exists?(['created_at > ?', already_notified_cutoff])
   end

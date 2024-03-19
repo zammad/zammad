@@ -32,7 +32,7 @@ examples how to use
   def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false)
     @objects  = objects
     @locale   = locale || Locale.default
-    @timezone = timezone || Setting.get('timezone_default_sanitized')
+    @timezone = timezone || Setting.get('timezone_default')
     @template = NotificationFactory::Template.new(template, escape || url_encode, trusted)
     @escape = escape
     @url_encode = url_encode

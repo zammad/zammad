@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-class Setting::Validation::Saml::RequiredAttributes < Setting::Validation
+class Setting::Validation::Saml::RequiredAttributes < Setting::Validation::Base
 
   REQUIRED_ATTRIBUTES = %i[idp_sso_target_url idp_slo_service_url idp_cert name_identifier_format].freeze
 

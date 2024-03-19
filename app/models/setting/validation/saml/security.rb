@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-class Setting::Validation::Saml::Security < Setting::Validation
+class Setting::Validation::Saml::Security < Setting::Validation::Base
 
   def run
     return result_success if value.blank? || disabled_security?

@@ -198,8 +198,8 @@ class App extends Spine.Controller
         title = timestamp
         timezone = ''
         if attributeConfig.include_timezone
-          timezone = " timezone=\"#{App.Config.get('timezone_default_sanitized')}\""
-          title += ' ' + App.Config.get('timezone_default_sanitized')
+          timezone = " timezone=\"#{App.Config.get('timezone_default')}\""
+          title += ' ' + App.Config.get('timezone_default')
 
         resultLocal = "<time class=\"humanTimeFromNow #{cssClass}\" datetime=\"#{resultLocal}\" title=\"#{title}\"#{timezone}>#{humanTime}</time>"
 

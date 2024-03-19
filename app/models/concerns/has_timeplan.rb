@@ -14,7 +14,7 @@ module HasTimeplan
   private
 
   def timeplan_calculation
-    timezone = Setting.get('timezone_default_sanitized')
+    timezone = Setting.get('timezone_default')
 
     TimeplanCalculation.new(timeplan, timezone)
   end

@@ -11,7 +11,7 @@ class ExcelSheet
     @title           = title
     @header          = header
     @records         = records
-    @timezone        = timezone.presence || Setting.get('timezone_default_sanitized')
+    @timezone        = timezone.presence || Setting.get('timezone_default')
     @locale          = locale || Locale.default
     @tempfile        = Tempfile.new('excel-export.xlsx')
     @workbook        = WriteXLSX.new(@tempfile)

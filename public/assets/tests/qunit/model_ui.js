@@ -97,7 +97,7 @@ window.onload = function() {
     assert.equal( App.viewPrint( ticket, 'multiselect' ), 'One, Two, Three', 'multiselect test 1')
 
     let stub = sinon.stub(App.Config, 'get')
-    stub.withArgs('timezone_default_sanitized').returns('Example/Timezone')
+    stub.withArgs('timezone_default').returns('Example/Timezone')
     let attr = App.Ticket.configure_attributes.find(e => { return e.name == 'updated_at' })
     attr.include_timezone = true
 

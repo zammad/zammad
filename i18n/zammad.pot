@@ -5952,6 +5952,10 @@ msgstr ""
 msgid "Given object does not support selector"
 msgstr ""
 
+#: app/models/setting/validation/time_zone.rb
+msgid "Given time zone is not valid."
+msgstr ""
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -13786,6 +13790,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Time zone"
+msgstr ""
+
+#: app/models/setting/validation/time_zone.rb
+msgid "Time zone is required."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco

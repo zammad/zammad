@@ -45,7 +45,7 @@ class TriggerWebhookJob::CustomPayload::Track::Notification < TriggerWebhookJob:
       NotificationFactory::Messaging.template(
         template: "ticket_#{type}",
         locale:   Setting.get('locale_default') || 'en-us',
-        timezone: Setting.get('timezone_default_sanitized'),
+        timezone: Setting.get('timezone_default'),
         objects:  {
           ticket:       tracks.fetch(:ticket, nil),
           article:      tracks.fetch(:article, nil),

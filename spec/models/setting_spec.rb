@@ -12,12 +12,6 @@ RSpec.describe Setting, type: :model do
           .to change { described_class.get(setting.name) }.to('foo')
       end
     end
-
-    context 'when given a processed setting key' do
-      it 'returns processed value' do
-        expect(described_class.get('timezone_default_sanitized')).to be_present
-      end
-    end
   end
 
   describe '.set' do

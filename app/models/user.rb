@@ -212,7 +212,7 @@ returns
     return false if out_of_office_start_at.blank?
     return false if out_of_office_end_at.blank?
 
-    Time.use_zone(Setting.get('timezone_default_sanitized')) do
+    Time.use_zone(Setting.get('timezone_default')) do
       start  = out_of_office_start_at.beginning_of_day
       finish = out_of_office_end_at.end_of_day
 

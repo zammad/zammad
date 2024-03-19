@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-class Setting::Validation::StorageProvider < Setting::Validation
+class Setting::Validation::StorageProvider < Setting::Validation::Base
 
   def run
     return result_success if value.blank?

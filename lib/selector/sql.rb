@@ -546,7 +546,7 @@ class Selector::Sql < Selector::Base
         query << sql_helper.array_contains_one(attribute_name, block_condition[:value], negated: true)
       end
     elsif block_condition[:operator] == 'today'
-      Time.use_zone(Setting.get('timezone_default_sanitized').presence) do
+      Time.use_zone(Setting.get('timezone_default')) do
         day_start = Time.zone.now.beginning_of_day.utc
         day_end   = Time.zone.now.end_of_day.utc
 

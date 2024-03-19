@@ -16,11 +16,11 @@ class App.UiElement.timezone extends App.UiElement.ApplicationUiElement
       attribute.options.push item
 
     if attribute.show_system_default_option
-      timezone_default_name = _.find(attribute.options, (option) -> option.value == App.Config.get('timezone_default_sanitized')).name
+      timezone_default_name = _.find(attribute.options, (option) -> option.value == App.Config.get('timezone_default')).name
       attribute.options.unshift({ name: __('System default') + " (#{timezone_default_name})", value: 'system' })
 
     # set default value
-    attribute.default = if attribute.show_system_default_option then 'system' else App.Config.get('timezone_default_sanitized')
+    attribute.default = if attribute.show_system_default_option then 'system' else App.Config.get('timezone_default')
 
     # add null selection if needed
     @addNullOption(attribute, params)

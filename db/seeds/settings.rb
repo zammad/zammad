@@ -191,11 +191,12 @@ Setting.create_if_not_exists(
       }
     ],
   },
-  state:       '',
+  state:       'UTC',
   preferences: {
-    prio:       9,
-    controller: 'SettingsAreaItemDefaultTimezone',
-    permission: ['admin.system'],
+    prio:        9,
+    controller:  'SettingsAreaItemDefaultTimezone',
+    permission:  ['admin.system'],
+    validations: ['Setting::Validation::TimeZone'],
   },
   frontend:    true
 )
