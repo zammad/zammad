@@ -23,7 +23,7 @@ module Translation::SynchronizesFromPo
         # Ignore strings that come only from the chat, form and view_template extractors.
         # We tried avoiding this by using gettext flags in the pot file, but they don't propagate
         #   correctly to the translation files.
-        ref.to_s.start_with?(%r{public/assets/(?:chat|form)/|app/views/(?:mailer|messaging)/})
+        ref.to_s.start_with?(%r{public/assets/(?:chat|form)/|app/views/(?:mailer|messaging)/[^/]+/})
       end
       new(source: source, translation: translation, translation_file: file, skip_sync: skip_sync)
     end
