@@ -495,7 +495,7 @@ RSpec.describe Channel::EmailBuild, type: :model do
       end
 
       it 'adds an html tag' do
-        expect(generated_html).to match '<html>'
+        expect(generated_html).to match '<html dir="auto">'
       end
 
       it 'adds the original element' do
