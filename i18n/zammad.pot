@@ -16724,10 +16724,6 @@ msgstr ""
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid "to"
-msgstr ""
-
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "to go to the homepage."
 msgstr ""

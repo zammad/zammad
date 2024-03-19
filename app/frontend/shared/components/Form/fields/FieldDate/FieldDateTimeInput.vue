@@ -91,7 +91,7 @@ const locale: flatpickr.CustomLocale = {
       i18n.t('December'),
     ],
   },
-  rangeSeparator: ` ${i18n.t('to')} `,
+  rangeSeparator: ' - ',
   weekAbbreviation: i18n.t('CW'),
 }
 
