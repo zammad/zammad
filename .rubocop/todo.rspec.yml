@@ -162,7 +162,6 @@ RSpec/ContextWording:
     - 'spec/system/system/integration/slack_spec.rb'
     - 'spec/system/system/integration/smime_spec.rb'
     - 'spec/system/system/object_manager_spec.rb'
-    - 'spec/system/system/translations_spec.rb'
     - 'spec/system/ticket/create_spec.rb'
     - 'spec/system/ticket/shared_draft_start_spec.rb'
     - 'spec/system/ticket/shared_draft_zoom_spec.rb'
@@ -322,7 +321,6 @@ RSpec/MessageSpies:
     - 'spec/models/ticket/number_spec.rb'
     - 'spec/models/ticket_spec.rb'
     - 'spec/models/user_spec.rb'
-    - 'spec/system/system/translations_spec.rb'
 
 RSpec/MultipleExpectations:
   Exclude:

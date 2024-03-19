@@ -1,0 +1,14 @@
+<p><%- @T('Here you can override any translation string for a more customized look and feel. Both recognized system and custom strings are supported, simply add a new translation in order to identify the source string and provide its new translation for the target language.') %></p>
+
+<div>
+  <h2><%- @T('Contributing Translations') %></h2>
+  <p><%- @T('System translations can be contributed and shared with the community on our public platform %l. It sports a very convenient user interface based on Weblate, give it a try!', 'https://translations.zammad.org') %></p>
+</div>
+
+<div>
+  <h2><%- @T('On-screen Translation') %></h2>
+  <p><%- @T('To make translations easier you can enable and disable the inline translation feature by pressing "%s" at any time.', @inlineTranslationKey ) %></p>
+  <p><%- @T('Text with disabled inline translations looks like') %> <button class="btn btn-primary u-unclickable"><%- @Ti('Some Text') %></button></p>
+  <p><%- @T('Text with enabled inline translations looks like') %> <button class="btn btn-primary u-unclickable"><span class="translation"><%- @Ti('Some Text') %></button></span></p>
+  <p><%- @T('Just click into the highlighted area and update the words right there. Enjoy!') %></p>
+</div>

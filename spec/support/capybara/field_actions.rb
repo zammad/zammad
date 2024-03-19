@@ -258,6 +258,25 @@ module FieldActions # rubocop:disable Metrics/ModuleLength
   def set_switch_field_value(name, value, **find_options)
     find("input[name='#{name}']", visible: :all, **find_options).set(value)
   end
+
+  # Check the field value of a form textarea field.
+  #
+  # @example
+  #  check_textarea_field_value('textarea_field_name', 'text', visible: :all)
+  #
+  def check_textarea_field_value(name, value, **find_options)
+    textarea_field = find("textarea[name='#{name}']", **find_options)
+    expect(textarea_field.value).to eq(value)
+  end
+
+  # Set the field value of a form textarea field.
+  #
+  # @example
+  #  set_textarea_field_value('textarea_field_name', 'text', visible: :all)
+  #
+  def set_textarea_field_value(name, value, **find_options)
+    find("textarea[name='#{name}']", **find_options).fill_in with: value
+  end
 end
 
 RSpec.configure do |config|

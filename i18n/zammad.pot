@@ -42,10 +42,6 @@ msgstr "mm/dd/yyyy"
 msgid "FORMAT_DATETIME"
 msgstr "mm/dd/yyyy l:MM P"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid " to "
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "\"Database\" stores all attachments in the database (not recommended for storing large amounts of data). \"Filesystem\" stores the data in the filesystem. \"Simple Storage (S3)\" stores the data in a remote S3 compatible object filesystem. You can switch between the modules even on a system that is already in production without any loss of data."
 msgstr ""
@@ -713,8 +709,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Action"
 msgstr ""
@@ -1389,6 +1383,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Are you sure?"
 msgstr ""
@@ -2587,6 +2582,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
@@ -2912,7 +2908,7 @@ msgstr ""
 msgid "Continue to mobile"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Contributing Translations"
 msgstr ""
 
@@ -3005,7 +3001,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -3260,6 +3255,10 @@ msgstr ""
 msgid "Custom Payload"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Custom Translation"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Custom URL"
@@ -3363,10 +3362,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Date"
-msgstr ""
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Date & Time"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -4296,6 +4291,7 @@ msgid "Department"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -4309,6 +4305,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Description"
 msgstr ""
 
@@ -4368,6 +4365,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 msgid "Dialog window with selections"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Did you know that system translations can be contributed and shared with the community on our public platform %l? It sports a very convenient user interface based on Weblate, give it a try!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
@@ -4626,6 +4627,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -5538,6 +5540,10 @@ msgstr ""
 msgid "Find a ticket"
 msgstr ""
 
+#: app/assets/javascripts/app/views/translation/form.jst.eco
+msgid "Find translation suggestion"
+msgstr ""
+
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr ""
@@ -6268,6 +6274,10 @@ msgstr ""
 msgid "Here you can create one."
 msgstr ""
 
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid "Here you can override any translation string for a more customized look and feel. Both recognized system and custom strings are supported, simply add a new translation in order to identify the source string and provide its new translation for the target language."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid "Here you can search for tickets, customers, and organizations. Use the asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
@@ -6522,10 +6532,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "If you want to open the chat by clicking a button, set the option §show§ to §false§ and add the class §open-zammad-chat§ to the button."
-msgstr ""
-
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "If you want to translate it via the translation table, just go ahead below."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
@@ -6784,10 +6790,6 @@ msgstr ""
 
 #: app/models/store.rb
 msgid "Inline content could not be generated."
-msgstr ""
-
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Inline translation"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
@@ -7094,7 +7096,7 @@ msgstr ""
 msgid "June"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr ""
 
@@ -7590,6 +7592,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Management"
 msgstr ""
@@ -8158,6 +8161,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
@@ -8253,6 +8257,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 msgid "New Ticket State"
+msgstr ""
+
+#: app/assets/javascripts/app/views/translation/index.jst.eco
+msgid "New Translation"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
@@ -8810,6 +8818,10 @@ msgstr ""
 msgid "On %s, %s wrote:"
 msgstr ""
 
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid "On-screen Translation"
+msgstr ""
+
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
 msgstr ""
@@ -9061,13 +9073,13 @@ msgstr ""
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Original"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Original Translation"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -9927,6 +9939,7 @@ msgstr ""
 msgid "Remote"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
@@ -10123,12 +10136,12 @@ msgstr ""
 msgid "Resend verification email"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
 msgstr ""
 
@@ -10139,11 +10152,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password failed!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Reset changes"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
@@ -10172,10 +10180,6 @@ msgstr ""
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup_taken_reset/en.html.erb
 msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>You or someone else tried to sign up with this email address. However, this email is already being used.</div>\n<br>\n<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>\n<br>\n<div><a href=\"#{url}\">#{url}</a></div>\n<br>\n<div>This link takes you to a page where you can change your password.</div>\n<br>\n<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "Resetting changes…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -10639,6 +10643,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
@@ -11399,7 +11404,7 @@ msgstr ""
 msgid "Solution Time"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Some Text"
 msgstr ""
 
@@ -11446,8 +11451,6 @@ msgid "Sounds"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Source"
 msgstr ""
 
@@ -11527,10 +11530,6 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
 msgid "Starting import…"
-msgstr ""
-
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Starting with Zammad 5.1, translations can be contributed exclusively via \"translations.zammad.org\" %l."
 msgstr ""
 
 #: app/assets/javascripts/app/models/chat_sessions.coffee
@@ -11772,6 +11771,10 @@ msgstr ""
 msgid "System supports only one locale for knowledge base. Upgrade your plan to use more locales."
 msgstr ""
 
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid "System translations can be contributed and shared with the community on our public platform %l. It sports a very convenient user interface based on Weblate, give it a try!"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "SystemID"
 msgstr ""
@@ -11814,9 +11817,11 @@ msgid "Take Reply-To header as sender/from of email."
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Target Language"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
@@ -11937,11 +11942,11 @@ msgstr ""
 msgid "Text or attachment is required"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with enabled inline translations looks like"
 msgstr ""
 
@@ -12391,6 +12396,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "The limit of displayable suggestions was reached, please narrow down your search."
 msgstr ""
 
 #: app/services/service/auth/verify_admin_token.rb
@@ -13866,8 +13875,8 @@ msgstr ""
 msgid "To install %s as an app, press the %s \"Share\" button and then the %s \"Add to Home Screen\" button."
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "To make translations easier you can enable and disable the inline translation feature by pressing \"%s\"."
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid "To make translations easier you can enable and disable the inline translation feature by pressing \"%s\" at any time."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
@@ -13876,6 +13885,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "To revert back to the default payload, simply turn off the \"Custom Payload\" switch above."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "To see the updated translation, please reload your browser."
 msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -13981,6 +13994,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Translate field contents"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Translation"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Translation Source"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -14168,6 +14189,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
@@ -14178,7 +14200,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
@@ -15034,10 +15055,6 @@ msgstr ""
 msgid "Where to append the chat to."
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "While it will be no longer possible to directly push changed translations from Zammad, they can be contributed in a very convenient user interface based on Weblate."
-msgstr ""
-
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Why doesn't the chat show up?"
 msgstr ""
@@ -15104,14 +15121,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "Woo hoo! Your password has been changed!"
-msgstr ""
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Words"
-msgstr ""
-
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "Words:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -15734,6 +15743,10 @@ msgstr ""
 msgid "current user organization"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "custom"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "custom unit"
 msgstr ""
@@ -16188,10 +16201,6 @@ msgstr ""
 msgid "is smaller than the allowed minimum value of %{min_value}"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "is the same"
-msgstr ""
-
 msgid "is the wrong length (should be %{count} characters)"
 msgstr ""
 
@@ -16245,6 +16254,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 msgid "matches found"
 msgstr ""
 
@@ -16407,10 +16417,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "not set (not defined)"
-msgstr ""
-
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "not translated"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/note.coffee
@@ -16673,6 +16679,10 @@ msgstr ""
 msgid "support@example.com"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "system"
+msgstr ""
+
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
 msgstr ""
@@ -16712,6 +16722,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+msgid "to"
 msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb

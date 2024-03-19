@@ -1,30 +1,16 @@
-<div class="page-header">
-  <div class="page-header-title">
-    <h1><%- @T('Translations') %> <small><%= @currentLanguage %></small></h1>
-  </div>
-  <div class="page-header-meta">
-    <a class="btn btn--danger hidden js-changes js-resetChanges"><%- @T('Reset changes') %></a>
-  </div>
-</div>
-<div class="page-content">
+<div>
+  <div class="page-header">
+    <div class="page-header-title">
+      <h1><%- @T('Translations') %> <small><%- @T('Management') %></small></h1>
+    </div>
 
-  <div class="box box--message">
-    <h2><%- @T('Contributing Translations') %></h2>
-    <p><%- @T('Starting with Zammad 5.1, translations can be contributed exclusively via "translations.zammad.org" %l.', 'https://translations.zammad.org') %></p>
-    <p>
-      <%- @T('While it will be no longer possible to directly push changed translations from Zammad, they can be contributed in a very convenient user interface based on Weblate.') %>
-      </p>
+    <div class="page-header-meta">
+    <% if @hasDescriptionButton: %>
+      <button class="btn js-description"><%- @T('Description') %></button>
+    <% end %>
+      <button class="btn btn--success js-new-translation"><%- @T('New Translation') %></button>
+    </div>
   </div>
 
-  <div class="box box--message">
-    <h2><%- @T('Inline translation') %></h2>
-    <p><%- @T('To make translations easier you can enable and disable the inline translation feature by pressing "%s".', @inlineTranslationKey ) %></p>
-    <p><%- @T('Text with disabled inline translations looks like') %> <button class="btn btn-primary"><%- @Ti('Some Text') %></button></p>
-    <p><%- @T('Text with enabled inline translations looks like') %> <button class="btn btn-primary"><span class="translation" contenteditable="true"><%- @Ti('Some Text') %></button></span></p>
-    <p><%- @T('Just click into the highlighted area and update the words right there. Enjoy!') %></p>
-    <p><%- @T('If you want to translate it via the translation table, just go ahead below.') %></p>
-  </div>
-
-  <div class="js-ToDo"></div>
-  <div class="js-List"></div>
+  <div class="page-content js-content-container"></div>
 </div>

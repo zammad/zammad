@@ -1457,6 +1457,19 @@ table {
   table-layout: fixed;
 }
 
+.scroll-table-container {
+  overflow: hidden;
+  overflow-y: scroll;
+  max-height: 244px;
+
+  table > thead > tr > th {
+    @extend .zIndex-2;
+
+    top: 0;
+    position: sticky;
+  }
+}
+
 .table {
   display: table;
 

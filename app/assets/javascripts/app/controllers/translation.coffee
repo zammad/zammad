@@ -1,88 +1,131 @@
 class Translation extends App.ControllerSubContent
   @requiredPermission: 'admin.translation'
   header: __('Translations')
+
   events:
-    'click .js-resetChanges': 'resetChanges'
-  initialRenderingDone: false
+    'click .js-description': 'showDescriptionModal'
+    'click .js-new-translation': 'showNewTranslationModal'
 
   constructor: ->
     super
-    @locale = App.i18n.get()
-    @render()
-    @controllerBind('i18n:translation_update_todo', =>
-      @load('i18n:translation_update_todo')
-    )
-    @controllerBind('i18n:translation_update_list', =>
-      @load('i18n:translation_update_list')
-    )
-    @controllerBind('i18n:translation_update', =>
-      @load()
-    )
 
-  render: =>
-    locales = App.Locale.all()
-    currentLanguage = @locale
-    for locale in locales
-      if locale.locale is @locale
-        currentLanguage = locale.name
-    @html App.view('translation/index')(
-      currentLanguage: currentLanguage
-      inlineTranslationKey: App.Browser.hotkeys().split('+').reverse().join('+') + '+t'
-    )
-    @load('render')
+    @load()
+    @controllerBind('i18n:translation_update_todo', @load)
+    @controllerBind('i18n:translation_update_list', @load)
+    @controllerBind('i18n:translation_update', @load)
 
-  load: (event) =>
+  load: =>
+    @startLoading()
+
     @ajax(
-      id:    'translations_admin'
-      type:  'GET'
-      url:   "#{@apiPath}/translations/admin/lang/#{@locale}"
+      id: 'translation_index'
+      type: 'GET'
+      url: "#{@apiPath}/translations/customized"
       processData: true
-      success: (data, status, xhr) =>
-        @initialRenderingDone = true
-        @times                = []
-        @stringsNotTranslated = []
-        @stringsTranslated    = []
-        for item in data.list
-          if item[1] is 'FORMAT_DATE' or item[1] is 'FORMAT_DATETIME'
-            @times.push item
-          else
-            if item[2] is ''
-              @stringsNotTranslated.push item
-            else
-              @stringsTranslated.push item
-
-        if !@translationToDo || event is 'render'
-          @translationToDo = new TranslationToDo(
-            el:             @$('.js-ToDo')
-            locale:         @locale
-            updateOnServer: @updateOnServer
-            getAttributes:  @getAttributes
-          )
-        if !event || event is 'i18n:translation_update_todo'|| event is 'render'
-          @translationToDo.update(
-            stringsNotTranslated: @stringsNotTranslated
-            stringsTranslated:    @stringsTranslated
-            times:                @times
-          )
-        if !@translationList || event is 'render'
-          @translationList = new TranslationList(
-            el:             @$('.js-List')
-            locale:         @locale
-            updateOnServer: @updateOnServer
-            getAttributes:  @getAttributes
-          )
-        if !event || event is 'i18n:translation_update_list'|| event is 'render'
-          @translationList.update(
-            stringsNotTranslated: @stringsNotTranslated
-            stringsTranslated:    @stringsTranslated
-            times:                @times
-          )
-        @toggleAction()
+      success: (data) =>
+        @stopLoading()
+        @render(data)
     )
 
-  show: =>
-    return if @initialRenderingDone is false
-    @render()
+  getLocaleString: (value) ->
+    App.Locale.findByAttribute('locale', value)?.name or value
+
+  removeTranslation: (id) =>
+    new App.ControllerConfirm(
+      message: __('Are you sure?')
+      buttonClass: 'btn--danger'
+      callback: =>
+        @startLoading(@$('.js-table-translations-container'))
+        @ajax(
+          id: 'translation_remove'
+          type: 'DELETE'
+          url: "#{@apiPath}/translations/#{id}"
+          success: =>
+            @stopLoading()
+            @hasModifiedTranslations = true
+            @load()
+        )
+      container: @el.closest('.content')
+    )
+
+  resetTranslation: (id) =>
+    new App.ControllerConfirm(
+      message: __('Are you sure?')
+      buttonClass: 'btn--danger'
+      callback: =>
+        @startLoading(@$('.js-table-translations-container'))
+        @ajax(
+          id: 'translation_reset'
+          type: 'PUT'
+          url: "#{@apiPath}/translations/reset/#{id}"
+          success: =>
+            @stopLoading()
+            @hasModifiedTranslations = true
+            @load()
+        )
+      container: @el.closest('.content')
+    )
+
+  editTranslation: (data, id) =>
+    translationData = _.find(data, (translationData) -> translationData.id is id)
+    @showEditTranslationModal(translationData)
+
+  renderTable: (customTranslationData, el) =>
+    new App.ControllerTable(
+      el: el
+      overviewAttributes: ['source', 'target_initial', 'target', 'locale']
+      attribute_list: [
+        { name: 'source', display: __('Translation Source'), unsortable: true },
+        { name: 'target_initial', display: __('Original Translation'), unsortable: true },
+        { name: 'target', display: __('Custom Translation'), unsortable: true },
+        { name: 'locale', display: __('Target Language'), unsortable: true },
+      ]
+      objects: customTranslationData
+      bindRow:
+        events:
+          'click': (id) => @editTranslation(customTranslationData, id)
+      customActions: [
+        {
+          name: 'edit',
+          display: __('Edit')
+          icon: 'pen'
+          class: 'js-edit'
+          callback: (id) => @editTranslation(customTranslationData, id)
+        },
+        {
+          name: 'reset',
+          display: __('Reset')
+          icon: 'reload'
+          class: 'btn--danger js-reset'
+          callback: @resetTranslation
+          available: (translationData) ->
+            translationData.is_synchronized_from_codebase
+        },
+        {
+          name: 'remove',
+          display: __('Remove')
+          icon: 'trash'
+          class: 'btn--danger js-remove'
+          callback: @removeTranslation
+          available: (translationData) ->
+            not translationData.is_synchronized_from_codebase
+        },
+      ]
+      callbackAttributes:
+        locale: [@getLocaleString]
+    )
+
+  render: (customTranslationData) =>
+    content = $(App.view('translation/index')(
+      hasDescriptionButton: customTranslationData.length > 0,
+    ))
+
+    if customTranslationData.length > 0
+      @renderTable(customTranslationData, content.find('.js-content-container'))
+    else
+      content.find('.js-content-container').html(@description())
+
+    @html content
 
   hide: =>
     @rerender()
@@ -91,189 +134,221 @@ class Translation extends App.ControllerSubContent
     @rerender()
 
   rerender: =>
-    rerender = ->
+    return if not @hasModifiedTranslations
+
+    App.Delay.set(->
       App.Event.trigger('ui:rerender')
-    if @translationList && @translationList.changes()
-      App.Delay.set(rerender, 400)
+    , 400)
 
-  showAction: =>
-    @$('.js-changes').removeClass('hidden')
+  description: ->
+    $(App.view('translation/description')(
+      inlineTranslationKey: App.Browser.hotkeys().split('+').reverse().join('+') + '+t'
+    ))
 
-  hideAction: =>
-    @el.closest('.content').find('.js-changes').addClass('hidden')
+  showDescriptionModal: =>
+    new TranslationDescriptionModal
+      contentInline: @description()
+      container: $('.content')
 
-  toggleAction: =>
-    if @$('.js-Reset:visible').length > 0
-      @showAction()
-    else
-      @hideAction()
+  showNewTranslationModal: ->
+    new TranslationModal
+      headPrefix: __('New')
+      container: $('.content')
+      successCallback: =>
+        @hasModifiedTranslations = true
+        @load()
 
-  resetChanges: =>
-    @loader = new App.ControllerModalLoading(
-      head:      __('Reset changes')
-      message:   __('Resetting changes…')
-      container: @el.closest('.content')
-    )
-    @ajax(
-      id:          'translations'
-      type:        'POST'
-      url:         "#{@apiPath}/translations/reset"
-      data:        JSON.stringify(locale: @locale)
-      processData: false
-      success: (data, status, xhr) =>
-        App.Event.trigger('i18n:translation_update')
-        @hideAction()
-        @loader.hide()
-      error: =>
-        @loader.hide()
-    )
+  showEditTranslationModal: (translationData) ->
+    new TranslationModal
+      headPrefix: __('Edit')
+      data: translationData
+      container: $('.content')
+      successCallback: =>
+        @hasModifiedTranslations = true
+        @load()
 
-  updateOnServer: (params, event) =>
+class TranslationDescriptionModal extends App.ControllerModal
+  head: __('Description')
+  buttonSubmit: __('Close')
+  shown: true
 
-    # update runtime if same language is used
-    if App.i18n.get() is params.locale
-      App.i18n.setMap(params.source, params.target)
+  onSubmit: =>
+    @close()
 
-    # remove not needed attributes
-    delete params.field
+class TranslationModal extends App.ControllerModal
+  head: __('Translation')
+  shown: true
+  buttonSubmit: true
+  buttonCancel: true
+  large: true
 
-    if params.id
-      if params.target is ''
-        method = 'DELETE'
-        url    = "#{@apiPath}/translations/#{params.id}"
-      else
-        method = 'PUT'
-        url    = "#{@apiPath}/translations/#{params.id}"
-    else
-      method = 'POST'
-      url    = "#{@apiPath}/translations"
-
-    @ajax(
-      id:          'translations'
-      type:        method
-      url:         url
-      data:        JSON.stringify(params)
-      processData: false
-      success: (data, status, xhr) =>
-        if event
-          App.Event.trigger(event)
-        @toggleAction()
-    )
-
-  getAttributes: (e) =>
-    field  = $(e.target).closest('tr').find('.js-Item')
-    params =
-      id:      field.data('id')
-      source:  field.data('source')
-      initial: field.data('initial') || ''
-      target:  field.val()
-      locale:  @locale
-      field:   field
-
-class TranslationToDo extends App.Controller
-  events:
-    'click .js-create':  'create'
-    'click .js-theSame': 'same'
-
-  constructor: ->
-    super
-
-  update: (data) =>
-    for key, value of data
-      @[key] = value
-    @render()
+  content: ->
+    false
 
   render: =>
+    super
 
-    if _.isEmpty(@stringsNotTranslated)
-      @html ''
+    # If data is present, it means we are editing an existing translation.
+    isEditingTranslation = Boolean(@data)
+
+    content = $(App.view('translation/form')(isEditingTranslation: isEditingTranslation))
+
+    # Always default to current user's language.
+    locale = App.Locale.findByAttribute('locale', App.i18n.get())
+
+    defaults =
+      locale: locale.locale
+
+    # Prepare locale options for the target language field.
+    locale_options = _.reduce(App.Locale.all(), (acc, locale) ->
+      acc[locale.locale] = locale.name
+      acc
+    , {})
+
+    @form = new App.ControllerForm(
+      el: content.find('.js-form')
+      model:
+        name: 'translation'
+        configure_attributes: [
+          { name: 'source', display: __('Translation Source'), tag: 'textarea', rows: 3, null: false, disabled: isEditingTranslation, item_class: 'formG^p--halfSize' },
+          { name: 'target', display: __('Custom Translation'), tag: 'textarea', rows: 3, null: false, item_class: 'formGroup--halfSize' },
+          { name: 'locale', display: __('Target Language'),    tag: 'searchable_select', options: locale_options, null: true, disabled: isEditingTranslation },
+        ]
+      params: @data || defaults
+    )
+
+    callback = (data) =>
+      @objects = data.items
+      table = @suggestionsTable()
+      @el.find('.js-suggestionsTable').html(table.el)
+      return if data.items.length >= data.total_count
+      translatedMessageText = App.i18n.translateContent('The limit of displayable suggestions was reached, please narrow down your search.')
+      $('<div />')
+        .addClass('centered text-small text-muted')
+        .text(translatedMessageText)
+        .appendTo(@el.find('.js-suggestionsTable'))
+
+    # Set up change handler on the locale selection and trigger refresh of suggestions.
+    content.find('[name="locale"]')
+      .off('change.loadSuggestions')
+      .on('change.loadSuggestions', (e) =>
+        console.debug('change.loadSuggestions', e.target)
+        @loadSuggestions($(e.target).val(), $('.js-suggestionsSearchInput').val(), callback)
+      )
+
+    debouncedLoadSuggestions = _.debounce(@loadSuggestions, 300)
+
+    # Set up input handler on the search input and trigger refresh of suggestions.
+    content.find('.js-suggestionsSearchInput')
+      .off('input.loadSuggestions')
+      .on('input.loadSuggestions', (e) -> debouncedLoadSuggestions($('[name="locale"]').val(), $(e.target).val(), callback))
+
+    @el.find('.modal-body').html(content)
+
+    if isEditingTranslation is false
+      @loadSuggestions(locale.locale, '', callback)
+
+  loadSuggestions: (locale, query, callback) =>
+    @el.find('.js-suggestionsLoader').removeClass('hide')
+
+    @ajax(
+      id: 'translation_suggestions'
+      type: 'GET'
+      url: "#{@apiPath}/translations/search/#{locale}?query=#{encodeURIComponent(query)}"
+      processData: true
+      success: (data) =>
+        @el.find('.js-suggestionsCounter').text(data.total_count)
+        @el.find('.js-suggestionsCounterContainer').removeClass('hide')
+        @el.find('.js-suggestionsLoader').addClass('hide')
+        callback(data)
+    )
+
+  suggestionsTable: =>
+    typeCallback = (value, object, attribute, attributes) ->
+      return App.i18n.translateContent('system') if object.is_synchronized_from_codebase
+      App.i18n.translateContent('custom')
+
+    new App.ControllerTable(
+      class: 'table-hover-in-modal'
+      overviewAttributes: ['source', 'target_initial', 'type']
+      attribute_list: [
+        { name: 'source', display: __('Translation Source') },
+        { name: 'target_initial', display: __('Original Translation') },
+        { name: 'type', display: __('Type'), width: '50px' },
+      ]
+      objects: @objects
+      radio: true
+      bindRow:
+        events:
+          'click': @suggestionRowClick
+      callbackAttributes:
+        type: [typeCallback]
+    )
+
+  suggestionRowClick: (id, e) =>
+    $(e.target).parents('tr').find('input[name="radio"]').prop('checked', true)
+    object = _.find(@objects, (object) -> object.id is id)
+    @acceptSuggestion(object)
+
+  acceptSuggestion: (object) =>
+    $('[name="source"]').val(object.source)
+    $('[name="target"]').prop('placeholder', object.target_initial).val('').focus()
+
+    @handleContributionAlert(object.is_synchronized_from_codebase)
+
+  handleContributionAlert: (display = false) =>
+    alert = @el.find('.js-contribution-alert')
+
+    if not display
+      alert.remove()
       return
 
-    @html App.view('translation/todo')(
-      list: @stringsNotTranslated
-    )
+    return if alert.length
 
-  create: (e) =>
-    e.preventDefault()
-    params = @getAttributes(e)
-    return if !params.target
+    $('<div />')
+      .attr('role', 'alert')
+      .addClass('alert')
+      .addClass('alert--warning')
+      .addClass('js-contribution-alert')
+      .html(App.i18n.translateContent('Did you know that system translations can be contributed and shared with the community on our public platform %l? It sports a very convenient user interface based on Weblate, give it a try!', 'https://translations.zammad.org'))
+      .appendTo(@el.find('.modal-alerts-container'))
 
-    # remove from not translated list
-    $(e.target).closest('tr').remove()
+  onSubmit: (e) =>
+    params = @formParam(e.target)
+    error = @form.validate(params)
 
-    # remote update
-    params.target_initial = ''
-    @updateOnServer(params, 'i18n:translation_update_list')
+    if error
+      @formValidate(form: e.target, errors: error)
+      return false
 
-  same: (e) =>
-    e.preventDefault()
-    @hasChanges = true
-    params = @getAttributes(e)
+    @formDisable(e)
 
-    # remove from not translated list
-    $(e.target).closest('tr').remove()
+    @ajax({
+      id: 'translation_upsert',
+      type: 'POST',
+      url: "#{@apiPath}/translations/upsert",
+      data: JSON.stringify(params),
+      processData: true,
+      success: =>
+        @close()
+        @successCallback()
 
-    # remote update
-    params.target_initial = ''
-    params.target = params.source
-    @updateOnServer(params, 'i18n:translation_update_list')
+        # Show toast if neeeded (means that in string inside the current user language was changed).
+        # Later we should add real subscription handling for this situation in the new tech stack.
+        currentLocale = App.i18n.get()
+        if params.locale == currentLocale
+          @notify(
+            type: 'success'
+            msg:  App.i18n.translateContent('To see the updated translation, please reload your browser.')
+          )
 
-class TranslationList extends App.Controller
-  hasChanges: false
-  events:
-    'blur .js-translated input':      'updateItem'
-    'click .js-translated .js-Reset': 'resetItem'
+    })
 
-  constructor: ->
-    super
-
-  update: (data) =>
-    for key, value of data
-      @[key] = value
-    @render()
-
-  render: =>
-    return if _.isEmpty(@stringsTranslated) && _.isEmpty(@times)
-    @html App.view('translation/list')(
-      times:                @times
-      strings:              @stringsTranslated
-    )
-
-  changes: =>
-    @hasChanges
-
-  resetItem: (e) ->
-    e.preventDefault()
-    @hasChanges = true
-    params = @getAttributes(e)
-
-    # remote reset
-    params.target = params.initial
-    @updateOnServer(params, 'i18n:translation_update')
-
-  updateItem: (e) ->
-    e.preventDefault()
-    @hasChanges = true
-    params = @getAttributes(e)
-    return if !params.target
-
-    # local update
-    @updateRow(params.id)
-
-    # remote update
-    @updateOnServer(params)
-
-  updateRow: (id) =>
-    field   = @$("[data-id=#{id}]")
-    current = field.val()
-    initial = field.data('initial')
-    reset   = field.closest('tr').find('.js-Reset')
-    if current isnt initial
-      @changesAvailable = true
-      reset.removeClass('hidden')
-      reset.closest('tr').addClass('warning')
-    else
-      reset.addClass('hidden')
-      reset.closest('tr').removeClass('warning')
-
-App.Config.set('Translation', { prio: 1800, parent: '#system', name: __('Translations'), target: '#system/translation', controller: Translation, permission: ['admin.translation'] }, 'NavBarAdmin' )
+App.Config.set('Translation', {
+  prio: 1800,
+  parent: '#system',
+  name: __('Translations'),
+  target: '#system/translation',
+  controller: Translation,
+  permission: ['admin.translation']
+}, 'NavBarAdmin')

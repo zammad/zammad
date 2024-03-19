@@ -1,0 +1,12 @@
+<div>
+  <div class="js-form"></div>
+    <% if @isEditingTranslation is false: %>
+      <div class="js-suggestions">
+        <h3><%- @T('Find translation suggestion') %><span class="subtitle js-suggestionsCounterContainer hide"> (<span class="js-suggestionsCounter">?</span> <%- @T('matches found') %>)</span> <span class="tiny loading icon js-suggestionsLoader hide" style="margin-left: 3px;"></span></h3>
+          <div class="form-group">
+            <input class="form-control js-suggestionsSearchInput" type="text" placeholder="<%= @T('Search…') %>">
+          </div>
+          <div class="scroll-table-container js-suggestionsTable"></div>
+      </div>
+    <% end %>
+</div>

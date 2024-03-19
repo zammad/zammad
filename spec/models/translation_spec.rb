@@ -265,4 +265,79 @@ RSpec.describe Translation do
 
   end
 
+  describe 'scope -> customized' do
+    context 'when no customized translations exist' do
+      it 'returns an empty array' do
+        expect(described_class.customized).to eq([])
+      end
+    end
+
+    context 'when customized translations exist' do
+      before do
+        described_class.find_by(locale: 'de-de', source: 'New').update!(target: 'Neu!')
+      end
+
+      it 'returns the customized translation' do
+        expect(described_class.customized[0].source).to eq('New')
+      end
+    end
+
+    context 'when only a new customized translation exists' do
+      before do
+        create(:translation, locale: 'de-de', source: 'A example', target: 'Ein Beispiel')
+      end
+
+      it 'returns the customized translation' do
+        expect(described_class.customized[0].source).to eq('A example')
+      end
+    end
+  end
+
+  describe 'scope -> not_customized', :aggregate_failures do
+    let(:translation_item) { described_class.find_by(locale: 'de-de', source: 'New') }
+
+    context 'when customized items exists' do
+      before do
+        translation_item.update!(target: 'Neu!')
+        create(:translation, locale: 'de-de', source: 'A example', target: 'Ein Beispiel')
+      end
+
+      it 'list without customized translations' do
+        not_customized = described_class.not_customized.where(locale: 'de-de')
+
+        expect(not_customized).to be_none { |item| item.source == translation_item.source }
+        expect(not_customized).to be_none { |item| item.source == 'A example' }
+      end
+    end
+  end
+
+  describe 'reset' do
+    context 'when record is not synced from codebase' do
+      subject(:translation) { create(:translation, locale: 'de-de', source: 'A example', target: 'Ein Beispiel') }
+
+      it 'no changes for record' do
+        expect { translation.reset }.to not_change { translation.reload }
+      end
+    end
+
+    context 'when record is synced from codebase' do
+      subject(:translation) { described_class.find_by(locale: 'de-de', source: 'New') }
+
+      context 'when translation was not customized' do
+        it 'no changes for record' do
+          expect { translation.reset }.to not_change { translation.reload }
+        end
+      end
+
+      context 'when translation was customized' do
+        before do
+          translation.update!(target: 'Neu!')
+        end
+
+        it 'resets target to initial' do
+          expect { translation.reset }.to change { translation.reload.target }.to(translation.target_initial)
+        end
+      end
+    end
+  end
 end
