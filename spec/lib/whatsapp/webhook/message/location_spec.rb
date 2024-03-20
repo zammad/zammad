@@ -78,7 +78,7 @@ RSpec.describe Whatsapp::Webhook::Message::Location, :aggregate_failures, curren
         )
 
         expect(Ticket::Article.second_to_last.body).to include('Langenbach Arena')
-          .and include('https://www.google.com/maps')
+          .and include('https://www.openstreetmap.org')
           .and include('50.697254180908')
           .and include('7.9327116012573')
 

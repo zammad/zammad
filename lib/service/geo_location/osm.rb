@@ -1,9 +1,11 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::GeoLocation::Gmaps
+class Service::GeoLocation::Osm
+  OSM_SEARCH_URL = 'https://nominatim.openstreetmap.org/search?q=%s&format=jsonv2'.freeze
+  OSM_REVERSE_URL = 'https://nominatim.openstreetmap.org/reverse?lat=%s&lon=%s&format=jsonv2'.freeze
 
   def self.geocode(address)
-    url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape address}&sensor=true"
+    url = format(OSM_SEARCH_URL, CGI.escape(address))
     response = UserAgent.get(
       url,
       {},
@@ -18,17 +20,16 @@ class Service::GeoLocation::Gmaps
 
     result = JSON.parse(response.body)
 
-    return if !result
-    return if !result['results']
-    return if !result['results'].first
+    return if !result || !result.first
 
-    lat = result['results'].first['geometry']['location']['lat']
-    lng = result['results'].first['geometry']['location']['lng']
+    lat = result.first['lat'].to_f
+    lng = result.first['lon'].to_f
+
     [lat, lng]
   end
 
   def self.reverse_geocode(lat, lng)
-    url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{lat},#{lng}&sensor=true"
+    url = format(OSM_REVERSE_URL, lat, lng)
     response = UserAgent.get(
       url,
       {},
@@ -44,7 +45,8 @@ class Service::GeoLocation::Gmaps
 
     result = JSON.parse(response.body)
 
-    result['results'].first['address_components'].first['long_name']
+    return if !result
 
+    result['display_name']
   end
 end

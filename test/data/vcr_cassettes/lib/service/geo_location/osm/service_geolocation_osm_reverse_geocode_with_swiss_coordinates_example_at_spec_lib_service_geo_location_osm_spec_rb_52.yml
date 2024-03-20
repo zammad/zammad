@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=47.43664765&lon=9.409934047751209
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - nominatim.openstreetmap.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 20 Mar 2024 11:46:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '765'
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=20
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJwbGFjZV9pZCI6NjA1OTA3MTEsImxpY2VuY2UiOiJEYXRhIMKpIE9wZW5TdHJlZXRNYXAgY29udHJpYnV0b3JzLCBPRGJMIDEuMC4gaHR0cDovL29zbS5vcmcvY29weXJpZ2h0Iiwib3NtX3R5cGUiOiJ3YXkiLCJvc21faWQiOjMwODIzMTE0MiwibGF0IjoiNDcuNDM2NjQ3NjUiLCJsb24iOiI5LjQwOTkzNDA0Nzc1MTIwOSIsImNhdGVnb3J5IjoiYnVpbGRpbmciLCJ0eXBlIjoieWVzIiwicGxhY2VfcmFuayI6MzAsImltcG9ydGFuY2UiOjkuOTk5OTk5OTk5OTU0NDllLTA2LCJhZGRyZXNzdHlwZSI6ImJ1aWxkaW5nIiwibmFtZSI6IiIsImRpc3BsYXlfbmFtZSI6IjM1LCBNYXJ0aW5zYnJ1Z2dzdHJhc3NlLCBOZXVkb3JmLCBTdC4gR2FsbGVuLCBXYWhsa3JlaXMgU3QuIEdhbGxlbiwgU3QuIEdhbGxlbiwgOTAxNiwgU2Nod2Vpei9TdWlzc2UvU3ZpenplcmEvU3ZpenJhIiwiYWRkcmVzcyI6eyJob3VzZV9udW1iZXIiOiIzNSIsInJvYWQiOiJNYXJ0aW5zYnJ1Z2dzdHJhc3NlIiwic3VidXJiIjoiTmV1ZG9yZiIsInRvd24iOiJTdC4gR2FsbGVuIiwiY291bnR5IjoiV2FobGtyZWlzIFN0LiBHYWxsZW4iLCJzdGF0ZSI6IlN0LiBHYWxsZW4iLCJJU08zMTY2LTItbHZsNCI6IkNILVNHIiwicG9zdGNvZGUiOiI5MDE2IiwiY291bnRyeSI6IlNjaHdlaXovU3Vpc3NlL1N2aXp6ZXJhL1N2aXpyYSIsImNvdW50cnlfY29kZSI6ImNoIn0sImJvdW5kaW5nYm94IjpbIjQ3LjQzNjU5MjkiLCI0Ny40MzY3MDI1IiwiOS40MDk4NTQwIiwiOS40MTAwMTQxIl19
+  recorded_at: Wed, 20 Mar 2024 11:46:42 GMT
+recorded_with: VCR 6.2.0

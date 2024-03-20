@@ -2,121 +2,59 @@
 
 require 'rails_helper'
 
-RSpec.describe Service::GeoLocation, integration: true, retry: 5, retry_wait: 30.seconds do
+RSpec.describe Service::GeoLocation do
   describe '#geocode' do
-    subject(:lookup_result) { described_class.geocode(address) }
+    subject(:geocode) { described_class.geocode(address) }
 
     context 'when checking simple results' do
-      let(:expected_result) { [ latitude, longitude ] }
-      let(:request_url)     { "http://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(address)}&sensor=true" }
-      let(:response_payload) do
-        {
-          'results' => [
-            {
-              'geometry' => {
-                'location' => {
-                  'lat' => latitude,
-                  'lng' => longitude,
-                },
-              },
-            },
-          ],
-        }
-      end
+      let(:address)   { 'Marienstrasse 13, 10117 Berlin' }
+      let(:latitude)  { 52.5220514 }
+      let(:longitude) { 13.3832091 }
+      let(:result)    { [latitude, longitude] }
 
       before do
-        stub_request(:get, request_url).to_return(status: 200, body: response_payload.to_json, headers: {})
+        allow(Service::GeoLocation::Osm).to receive(:geocode).and_return(result)
       end
 
-      context 'with German addresses' do
-        let(:address) { 'Marienstrasse 13, 10117 Berlin' }
-        let(:latitude)  { 52.5219143 }
-        let(:longitude) { 13.3832647 }
+      it { is_expected.to eq(result) }
 
-        it { is_expected.to eq(expected_result) }
+      context 'when address field in user preferences is filled' do
+        let(:user) { create(:user, address: address) }
 
-        context 'without separator between street and zipcode + city' do
-          let(:address) { 'Marienstrasse 13 10117 Berlin' }
-
-          it { is_expected.to eq(expected_result) }
-        end
-
-        context 'when address field in user preferences is filled' do
-          let(:user) { create(:user, address: address) }
-
-          it 'stores correct values for latitude + longitude' do
-            expect(user.preferences).to include({ 'lat' => latitude, 'lng' => longitude })
-          end
-        end
-
-        context 'when street, city and zip fields in user preferences are filled' do
-          let(:address) { 'Marienstrasse 13, 10117, Berlin' }
-          let(:address_parts) { address.split(%r{\.?\s+}, 4) }
-          let(:street)        { "#{address_parts.first} #{address_parts[1].chop}" }
-          let(:zip)           { address_parts[2].chop }
-          let(:city)          { address_parts.last }
-
-          let(:user) { create(:user, street: street, zip: zip, city: city) }
-
-          it 'stores correct values for latitude + longitude' do
-            expect(user.preferences).to include({ 'lat' => latitude, 'lng' => longitude })
-          end
+        it 'stores correct values for latitude + longitude' do
+          expect(user.preferences).to include({ 'lat' => latitude, 'lng' => longitude })
         end
       end
 
-      context 'with Swiss addresses' do
-        let(:address)   { 'Martinsbruggstrasse 35, 9016 St. Gallen' }
-        let(:latitude)  { 47.4366557 }
-        let(:longitude) { 9.4098904 }
+      context 'when street, city and zip fields in user preferences are filled' do
+        let(:address)       { 'Marienstrasse 13, 10117, Berlin' }
+        let(:address_parts) { address.split(%r{\.?\s+}, 4) }
+        let(:street)        { "#{address_parts.first} #{address_parts[1].chop}" }
+        let(:zip)           { address_parts[2].chop }
+        let(:city)          { address_parts.last }
 
-        it { is_expected.to eq(expected_result) }
+        let(:user) { create(:user, street: street, zip: zip, city: city) }
 
-        context 'without separator between street and zipcode + city' do
-          let(:address) { 'Martinsbruggstrasse 35 9016 St. Gallen' }
-
-          it { is_expected.to eq(expected_result) }
+        it 'stores correct values for latitude + longitude' do
+          expect(user.preferences).to include({ 'lat' => latitude, 'lng' => longitude })
         end
       end
     end
   end
 
   describe '#reverse_geocode' do
-    subject(:lookup_result) { described_class.reverse_geocode(latitude, longitude) }
+    subject(:reverse_geocode) { described_class.reverse_geocode(latitude, longitude) }
 
     context 'when checking simple results' do
-      let(:expected_result) { address }
-      let(:request_url)     { "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{latitude},#{longitude}&sensor=true" }
-      let(:response_payload) do
-        {
-          'results' => [
-            {
-              'address_components' => [
-                'long_name' => address,
-              ],
-            },
-          ],
-        }
-      end
+      let(:latitude)        { 52.5220514 }
+      let(:longitude)       { 13.3832091 }
+      let(:result)          { '13, Marienstraße, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland' }
 
       before do
-        stub_request(:get, request_url).to_return(status: 200, body: response_payload.to_json, headers: {})
+        allow(Service::GeoLocation::Osm).to receive(:reverse_geocode).and_return(result)
       end
 
-      context 'with German addresses' do
-        let(:address) { 'Marienstrasse 13, 10117 Berlin' }
-        let(:latitude)  { 52.5219143 }
-        let(:longitude) { 13.3832647 }
-
-        it { is_expected.to eq(expected_result) }
-      end
-
-      context 'with Swiss addresses' do
-        let(:address) { 'Martinsbruggstrasse 35, 9016 St. Gallen' }
-        let(:latitude)  { 47.4366557 }
-        let(:longitude) { 9.4098904 }
-
-        it { is_expected.to eq(expected_result) }
-      end
+      it { is_expected.to eq(result) }
     end
   end
 end

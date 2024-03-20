@@ -6040,10 +6040,6 @@ msgstr ""
 msgid "Google Client Secret"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Google Maps"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
 msgstr ""
@@ -8960,6 +8956,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "OpenStreetMap (ODbL 1.0, http://osm.org/copyright)"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue

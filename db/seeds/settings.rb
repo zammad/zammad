@@ -435,13 +435,13 @@ Setting.create_if_not_exists(
         name:    'geo_location_backend',
         tag:     'select',
         options: {
-          ''                            => '-',
-          'Service::GeoLocation::Gmaps' => __('Google Maps'),
+          ''                          => '-',
+          'Service::GeoLocation::Osm' => __('OpenStreetMap (ODbL 1.0, http://osm.org/copyright)'),
         },
       },
     ],
   },
-  state:       'Service::GeoLocation::Gmaps',
+  state:       'Service::GeoLocation::Osm',
   preferences: {
     prio:       3,
     permission: ['admin.system'],
