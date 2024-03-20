@@ -33,17 +33,6 @@ module Tasks
 
             puts 'Done.'
           end
-
-          def self.target_path
-            given_path = Pathname.new(ArgvHelper.argv[1])
-
-            return given_path if given_path.absolute?
-
-            Pathname
-              .new(Rake.original_dir)
-              .join(ArgvHelper.argv[1])
-          end
-
         end
       end
     end

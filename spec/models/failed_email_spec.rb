@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FailedEmail, type: :model do
+RSpec.describe FailedEmail, :aggregate_failures, type: :model do
   subject(:instance) { create(:failed_email) }
 
   describe '#parsing_error' do
@@ -75,8 +75,8 @@ RSpec.describe FailedEmail, type: :model do
   end
 
   describe '.reprocess_all' do
-    let!(:failed_email) { create(:failed_email, data: 'not a mail') }
-    let!(:failed_but_correct_email) { create(:failed_email, data: "From: me\nTo: you\nSubject: Hi\n\ntest") }
+    let!(:failed_email)             { create(:failed_email, :invalid) }
+    let!(:failed_but_correct_email) { create(:failed_email) }
 
     before do
       failed_email
@@ -132,37 +132,49 @@ RSpec.describe FailedEmail, type: :model do
   end
 
   describe '.import' do
-    let(:path)        { described_class.generate_path }
-    let(:file_path)   { instance.export(path) }
-    let(:sample_text) { Faker::Lorem.sentence }
+    let(:path) { described_class.generate_path }
+    let!(:file_path)    { instance.export(path) }
+    let(:sample_text)   { "#{instance.data}\n" }
+    let(:import_result) { described_class.import(path.join("#{instance.id}.eml")) }
 
-    context 'with changed content' do
-      before { File.binwrite(file_path, sample_text) }
+    after do
+      file_path.unlink if file_path.exist?
+    end
 
-      it 'returns file path for imported file' do
-        expect(described_class.import(path.join("#{instance.id}.eml")))
-          .to eq(file_path)
+    context 'with unprocessable content' do
+      subject(:instance) { create(:failed_email, data: Faker::Lorem.sentence) }
+
+      it 'fails on reimporting' do
+        expect(import_result).to be_nil
+        expect(instance.reload.retries).to eq(2)
       end
 
-      it 'updates record with content of the file' do
-        described_class.import(path.join("#{instance.id}.eml"))
+      it 'keeps the file' do
+        expect(file_path).to exist
+      end
 
-        expect(instance.reload).to have_attributes(
-          data:          sample_text,
-          parsing_error: be_nil
-        )
+      context 'with changed valid file content' do
+        before { File.binwrite(file_path, create(:failed_email).data) }
+
+        it 'reimports correctly' do
+          expect { import_result }.to change(Ticket, :count).by(1)
+          expect(import_result).to eq(file_path)
+          expect(file_path).not_to exist
+        end
+      end
+
+      context 'with changed invalid file content' do
+        before { File.binwrite(file_path, Faker::Lorem.sentence) }
+
+        it 'fails to import again' do
+          expect(import_result).to be_nil
+          expect(instance.reload.retries).to eq(2)
+        end
       end
     end
 
     it 'returns nil if database row does not exist' do
-      expect(described_class.import('tmp/1337.eml')).to be_nil
-    end
-
-    it 'returns nil if database content matches file content' do
-      file_path
-
-      expect(described_class.import(path.join("#{instance.id}.eml")))
-        .to be_nil
+      expect(described_class.import(Pathname.new('tmp/1337.eml'))).to be_nil
     end
   end
 end

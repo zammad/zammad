@@ -87,18 +87,20 @@ class FailedEmail < ApplicationModel
 
   def self.import(filepath)
     failed_email = FailedEmail.by_filepath(filepath.basename)
+    return if !failed_email
 
     new_data = File.binread filepath
 
-    return if new_data == failed_email.data
+    if new_data != failed_email.data
+      failed_email.data = new_data
+      failed_email.parsing_error = nil
+      failed_email.save!
+    end
 
-    failed_email.data = new_data
-    failed_email.parsing_error = nil
-    failed_email.save!
+    return if !failed_email.reprocess
+
+    filepath.unlink
 
     filepath
-  rescue => e
-    Rails.logger.error e
-    nil
   end
 end

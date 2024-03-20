@@ -16,13 +16,13 @@ module Tasks
           end
 
           def self.description
-            'Import locally modified failed emails back to the database.'
+            'Import and reprocess locally modified failed email files. Files will be deleted on success.'
           end
 
           ARGUMENT_COUNT = 1
 
           def self.task_handler
-            file_or_folder = resolve_filepath(Pathname.new(ArgvHelper.argv[1]))
+            file_or_folder = resolve_filepath(ArgvHelper.argv[1])
 
             if file_or_folder.directory?
               import_dir(file_or_folder)
@@ -37,11 +37,11 @@ module Tasks
             imported = ::FailedEmail.import_all(path)
 
             if imported.blank?
-              puts 'No changed email files could be imported.'
+              puts 'No email files could be imported and reprocessed successfully.'
               return
             end
 
-            puts "#{imported.count} file(s) imported:"
+            puts "#{imported.count} file(s) imported and successfully reprocessed:"
             imported.each { |f| puts "  #{f}" }
           end
 
@@ -51,9 +51,9 @@ module Tasks
             end
 
             if ::FailedEmail.import(path)
-              puts "#{path} was imported."
+              puts "#{path} was imported and successfully reprocessed."
             else
-              puts "#{path} was not changed."
+              puts "#{path} was not imported and reprocessed successfully."
             end
           end
         end
