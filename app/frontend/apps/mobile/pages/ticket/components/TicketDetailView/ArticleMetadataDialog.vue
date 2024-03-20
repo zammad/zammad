@@ -24,6 +24,24 @@ const channelIcon = computed(() => {
   return undefined
 })
 
+const articleDeliveryStatus = computed(() => {
+  const { article } = props
+
+  if (article.preferences?.whatsapp?.timestamp_read) {
+    return { message: __('read by the customer'), icon: 'check-double-circle' }
+  }
+
+  if (article.preferences?.whatsapp?.timestamp_delivered) {
+    return { message: __('delivered to the customer'), icon: 'check-double' }
+  }
+
+  if (article.preferences?.whatsapp?.timestamp_sent) {
+    return { message: __('sent to the customer'), icon: 'check' }
+  }
+
+  return undefined
+})
+
 const links = computed(() => {
   const { article } = props
   // Example for usage: https://github.com/zammad/zammad/blob/develop/app/jobs/communicate_twitter_job.rb#L65
@@ -109,7 +127,18 @@ const hasSecurityAttribute = computed(
           </CommonLink>
         </div>
       </CommonSectionMenuItem>
-      <CommonSectionMenuItem :label="__('Sent')">
+      <CommonSectionMenuItem
+        v-if="articleDeliveryStatus"
+        :label="__('Message Status')"
+      >
+        <CommonIcon
+          :name="articleDeliveryStatus.icon"
+          size="tiny"
+          class="inline"
+        />
+        {{ $t(articleDeliveryStatus.message) }}
+      </CommonSectionMenuItem>
+      <CommonSectionMenuItem :label="__('Created')">
         <CommonDateTime :date-time="article.createdAt" type="absolute" />
       </CommonSectionMenuItem>
       <CommonSectionMenuItem

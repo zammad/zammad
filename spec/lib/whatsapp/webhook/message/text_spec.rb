@@ -58,7 +58,7 @@ RSpec.describe Whatsapp::Webhook::Message::Text, :aggregate_failures, current_us
         described_class.new(data:, channel:).process
 
         expect(Ticket.last).to have_attributes(
-          title:    "New WhatsApp message from #{from[:name]} (+#{from[:phone]})",
+          title:    "#{from[:name]} (+#{from[:phone]}) via WhatsApp",
           group_id: channel.group_id,
         )
         expect(Ticket.last.preferences).to include(

@@ -34,7 +34,7 @@ describe('actions inside article context', () => {
     await view.events.click(view.getByText('Show meta data'))
 
     expect(view.getByText('Meta Data')).toBeInTheDocument()
-    expect(view.getByRole('region', { name: 'Sent' })).toHaveTextContent(
+    expect(view.getByRole('region', { name: 'Created' })).toHaveTextContent(
       /2022-01-29 00:00/,
     )
 

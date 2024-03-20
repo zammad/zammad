@@ -9,6 +9,7 @@
 .icon-checkbox-checked { width: 11px; height: 11px; }
 .icon-checkbox-indeterminate { width: 11px; height: 11px; }
 .icon-checkbox { width: 11px; height: 11px; }
+.icon-checkmark-outline { width: 16px; height: 14px; }
 .icon-checkmark { width: 16px; height: 14px; }
 .icon-clipboard { width: 16px; height: 16px; }
 .icon-clock { width: 16px; height: 16px; }
@@ -22,6 +23,8 @@
 .icon-document { width: 16px; height: 16px; }
 .icon-double-arrow-left { width: 12.2px; height: 13px; }
 .icon-double-arrow-right { width: 12.2px; height: 13px; }
+.icon-double-checkmark-outline { width: 23px; height: 14px; }
+.icon-double-checkmark { width: 23px; height: 14px; }
 .icon-download { width: 14px; height: 13px; }
 .icon-draft-modifier { width: 9px; height: 9px; }
 .icon-draggable { width: 16px; height: 16px; }

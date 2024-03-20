@@ -6,6 +6,7 @@
 - `assets/check-circle-outline.svg`
 - `assets/check-square.svg`
 - `assets/check2.svg`
+- `assets/check2-all.svg`
 - `assets/chevron-down.svg`
 - `assets/chevron-left.svg`
 - `assets/chevron-right.svg`

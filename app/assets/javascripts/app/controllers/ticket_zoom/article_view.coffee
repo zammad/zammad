@@ -207,6 +207,23 @@ class ArticleViewItem extends App.ControllerObserver
         links:       links
       )
       return
+
+    if article.preferences?.whatsapp
+      icon = null
+      msg  = null
+      if article.preferences?.whatsapp?.timestamp_read
+        icon = 'double-checkmark'
+        msg  = __('read by the customer')
+      else if article.preferences?.whatsapp?.timestamp_delivered
+        icon = 'double-checkmark-outline'
+        msg  = __('delivered to the customer')
+      else if article.preferences?.whatsapp?.timestamp_sent
+        icon = 'checkmark-outline'
+        msg  = __('sent to the customer')
+
+      article['delivery_status_icon']    = icon
+      article['delivery_status_message'] = msg
+
     @html App.view('ticket_zoom/article_view')(
       ticket:      @ticket
       article:     article

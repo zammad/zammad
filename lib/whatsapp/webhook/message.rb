@@ -50,7 +50,7 @@ class Whatsapp::Webhook::Message
   end
 
   def create_ticket
-    title = Translation.translate(Setting.get('locale_default') || 'en-us', __('New WhatsApp message from %s'), "#{profile_name} (#{@user.mobile})")
+    title = Translation.translate(Setting.get('locale_default') || 'en-us', __('%s via WhatsApp'), "#{profile_name} (#{@user.mobile})")
 
     Ticket.create!(
       group_id:    @channel.group_id,
