@@ -82,33 +82,7 @@ module Channel::Filter::Database # rubocop:disable Metrics/ModuleLength
 
       Rails.logger.debug { "  perform '#{key.downcase}' = '#{meta.inspect}'" }
 
-      if key.casecmp('x-zammad-ticket-tags').zero? && meta['value'].present? && meta['operator'].present?
-        mail[ 'x-zammad-ticket-tags'.downcase.to_sym ] ||= []
-        tags = meta['value'].split(',')
-
-        case meta['operator']
-        when 'add'
-          tags.each do |tag|
-            next if tag.blank?
-
-            tag.strip!
-            next if mail[ 'x-zammad-ticket-tags'.downcase.to_sym ].include?(tag)
-
-            mail[ 'x-zammad-ticket-tags'.downcase.to_sym ].push tag
-            mail[:'x-zammad-ticket-tags-source'] = filter
-          end
-        when 'remove'
-          tags.each do |tag|
-            next if tag.blank?
-
-            tag.strip!
-            mail[ 'x-zammad-ticket-tags'.downcase.to_sym ] -= [tag]
-            mail[:'x-zammad-ticket-tags-source'] = filter
-          end
-        end
-        next
-      end
-
+      next if perform_filter_changes_tags(mail: mail, filter: filter, key: key, meta: meta)
       next if perform_filter_changes_date(mail: mail, filter: filter, key: key, meta: meta)
 
       mail[ key.downcase.to_sym ] = meta['value']
@@ -116,8 +90,33 @@ module Channel::Filter::Database # rubocop:disable Metrics/ModuleLength
     end
   end
 
+  def self.perform_filter_changes_tags(mail:, filter:, key:, meta:)
+    return if %w[x-zammad-ticket-tags x-zammad-ticket-followup-tags].exclude?(key.downcase)
+
+    mail_header_key         = key.downcase.to_sym
+    mail[mail_header_key] ||= []
+    tags                    = meta['value'].split(',').map(&:strip).select(&:present?)
+
+    case meta['operator']
+    when 'add'
+      tags.each do |tag|
+        next if mail[mail_header_key].include?(tag)
+
+        mail[mail_header_key].push tag
+        mail[:"#{key.downcase}-source"] = filter
+      end
+    when 'remove'
+      tags.each do |tag|
+        mail[mail_header_key] -= [tag]
+        mail[:"#{key.downcase}-source"] = filter
+      end
+    end
+
+    true
+  end
+
   def self.perform_filter_changes_date(mail:, filter:, key:, meta:)
-    return if key !~ %r{x-zammad-ticket-(.*)}
+    return if key !~ %r{x-zammad-ticket-(?:followup-)?(.*)}
 
     object_attribute = ObjectManager::Attribute.for_object('Ticket').find_by(name: $1, data_type: %w[datetime date])
     return if object_attribute.blank?

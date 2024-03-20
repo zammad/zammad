@@ -5,7 +5,10 @@ class App.UiElement.postmaster_set extends App.UiElement.ApplicationAction
 
     groups =
       ticket:
-        name: __('Ticket')
+        name: __('Ticket creation')
+        model: 'Ticket'
+      'ticket-followup':
+        name: __('Ticket update')
         model: 'Ticket'
       article:
         name: 'Article'
@@ -45,4 +48,5 @@ class App.UiElement.postmaster_set extends App.UiElement.ApplicationAction
 
   @elementKeyGroup: (elementKey) ->
     return 'expert' if elementKey is 'x-zammad-ignore'
+    return 'ticket-followup' if elementKey.startsWith('x-zammad-ticket-followup')
     elementKey.replace('x-zammad-', '').split(/-/)[0]

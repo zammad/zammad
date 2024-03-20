@@ -225,6 +225,13 @@ returns
             ticket.save!
           end
         end
+
+        # apply tags to ticket
+        if mail[:'x-zammad-ticket-followup-tags'].present?
+          mail[:'x-zammad-ticket-followup-tags'].each do |tag|
+            ticket.tag_add(tag, sourceable: mail[:'x-zammad-ticket-followup-tags-source'])
+          end
+        end
       end
 
       # create new ticket
@@ -267,12 +274,11 @@ returns
         # create ticket
         ticket.save!
 
-      end
-
-      # apply tags to ticket
-      if mail[:'x-zammad-ticket-tags'].present?
-        mail[:'x-zammad-ticket-tags'].each do |tag|
-          ticket.tag_add(tag, sourceable: mail[:'x-zammad-ticket-tags-source'])
+        # apply tags to ticket
+        if mail[:'x-zammad-ticket-tags'].present?
+          mail[:'x-zammad-ticket-tags'].each do |tag|
+            ticket.tag_add(tag, sourceable: mail[:'x-zammad-ticket-tags-source'])
+          end
         end
       end
 
