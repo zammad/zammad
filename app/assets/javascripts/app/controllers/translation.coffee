@@ -210,7 +210,7 @@ class TranslationModal extends App.ControllerModal
       model:
         name: 'translation'
         configure_attributes: [
-          { name: 'source', display: __('Translation Source'), tag: 'textarea', rows: 3, null: false, disabled: isEditingTranslation, item_class: 'formG^p--halfSize' },
+          { name: 'source', display: __('Translation Source'), tag: 'textarea', rows: 3, null: false, disabled: isEditingTranslation, item_class: 'formGroup--halfSize' },
           { name: 'target', display: __('Custom Translation'), tag: 'textarea', rows: 3, null: false, item_class: 'formGroup--halfSize' },
           { name: 'locale', display: __('Target Language'),    tag: 'searchable_select', options: locale_options, null: true, disabled: isEditingTranslation },
         ]
