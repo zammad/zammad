@@ -627,7 +627,7 @@ msgid "Access to Agent Tickets based on Group Access"
 msgstr ""
 
 #: db/seeds/permissions.rb
-msgid "Access to Customer Tickets based on current_user and organization"
+msgid "Access to customer tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
@@ -982,6 +982,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 msgid "Additional information and links"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Additional notes for ticket create types."
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -5079,7 +5083,7 @@ msgid "Endpoint Settings"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Enforce the set up of the two-factor authentication"
+msgid "Enforce the setup of the two-factor authentication"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7693,6 +7697,10 @@ msgid "Maximum Email Size"
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Maximum Recursive Ticket Triggers Depth"
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum failed logins"
 msgstr ""
 
@@ -9894,10 +9902,6 @@ msgid "Recursive Ticket Triggers"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Recursive Ticket Triggers Loop Max."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
@@ -10130,7 +10134,7 @@ msgid "Requirements"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Requires the set up of the two-factor authentication for certain user roles."
+msgid "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
@@ -11005,14 +11009,6 @@ msgstr ""
 msgid "Set default for new tickets"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types by selecting type."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types."
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
@@ -11131,6 +11127,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Show additional notes for ticket creation depending on the selected type."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
@@ -11621,7 +11621,7 @@ msgid "Storage"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Storage Mechanism"
+msgid "Storage Method"
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco

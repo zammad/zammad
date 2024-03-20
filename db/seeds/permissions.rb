@@ -434,7 +434,7 @@ Permission.create_if_not_exists(
 )
 Permission.create_if_not_exists(
   name:         'ticket.customer',
-  note:         __('Access to Customer Tickets based on current_user and organization'),
+  note:         __('Access to customer tickets'),
   preferences:  {},
   allow_signup: true,
 )
@@ -478,27 +478,22 @@ Permission.create_if_not_exists(
 
 Permission.create_if_not_exists(
   name:        'knowledge_base',
-  note:        __('Manage %s'),
+  note:        __('Knowledge Base'),
   preferences: {
-    translations: [__('Knowledge Base')],
-    disabled:     true,
+    disabled: true,
   }
 )
 
 Permission.create_if_not_exists(
   name:        'knowledge_base.editor',
-  note:        __('Manage %s'),
-  preferences: {
-    translations: [__('Knowledge Base Editor')]
-  }
+  note:        __('Knowledge Base Editor'),
+  preferences: {}
 )
 
 Permission.create_if_not_exists(
   name:         'knowledge_base.reader',
-  note:         __('Manage %s'),
-  preferences:  {
-    translations: [__('Knowledge Base Reader')]
-  },
+  note:         __('Knowledge Base Reader'),
+  preferences:  {},
   allow_signup: true,
 )
 
