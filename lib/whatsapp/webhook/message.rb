@@ -264,6 +264,6 @@ class Whatsapp::Webhook::Message
     last_job_id = @ticket.preferences.dig(:whatsapp, :last_reminder_job_id)
     return if last_job_id.nil?
 
-    ::Delayed::Job.find(last_job_id).destroy!
+    ::Delayed::Job.find_by(id: last_job_id)&.destroy!
   end
 end
