@@ -1,37 +1,53 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-require_dependency 'tasks/zammad/command.rb'
+require_dependency 'tasks/zammad/email_parser/failed_email/base.rb'
 
 module Tasks
   module Zammad
     module EmailParser
       module FailedEmail
-        class Delete < Tasks::Zammad::Command
+        class Delete < Base
+          def self.task_handler
+            process_given_dir_or_file
+          end
 
           def self.usage
-            "#{super} /folder_with_downloaded_emails/spam_email.eml"
+            <<~USAGE
+              Usage: bundle exec rails #{task_name} /folder_with_downloaded_emails  # Deletes all found .eml files
+                 or: bundle exec rails #{task_name} /folder_with_downloaded_emails/single_file.eml
+            USAGE
           end
 
           def self.description
-            'Remove a failed email from to the database.'
+            'Remove failed emails from to the database.'
           end
 
-          ARGUMENT_COUNT = 1
+          def self.process_file(file)
+            failed_email = ::FailedEmail.by_filepath(file)
+            raise "No database record could be found for #{file}.\n" if !failed_email
 
-          def self.task_handler
-            email_file = resolve_filepath(ArgvHelper.argv[1])
-            failed_email = ::FailedEmail.by_filepath(email_file)
-            raise "No database record could be found for #{email_file}.\n" if !failed_email
-
-            failed_email.destroy
             puts "Deleting failed email record #{failed_email.id}."
+            failed_email.destroy!
 
-            if email_file.exist?
-              puts "Deleting file #{email_file}."
-              email_file.unlink
+            return if !file.exist?
+
+            delete_file(file)
+          end
+
+          def self.delete_file(file)
+            puts "Deleting file #{file}."
+            file.unlink
+          rescue => e
+            puts "Could not delete #{file}."
+            puts e.inspect
+          end
+
+          def self.process_dir(path)
+            path.each_child do |filename|
+              next if filename.extname != '.eml'
+
+              process_file path.join(filename)
             end
-
-            puts 'Done.'
           end
         end
       end
