@@ -382,7 +382,7 @@ Setting.create_if_not_exists(
         tag:     'select',
         options: {
           ''                       => '-',
-          'Service::Image::Zammad' => __('Zammad Image Service'),
+          'Service::Image::Zammad' => 'Zammad Image Service', # rubocop:disable Zammad/DetectTranslatableString
         },
       },
     ],
@@ -409,7 +409,7 @@ Setting.create_if_not_exists(
         tag:     'select',
         options: {
           ''                       => '-',
-          'Service::GeoIp::Zammad' => __('Zammad GeoIP Service'),
+          'Service::GeoIp::Zammad' => 'Zammad GeoIP Service', # rubocop:disable Zammad/DetectTranslatableString
         },
       },
     ],
@@ -436,7 +436,7 @@ Setting.create_if_not_exists(
         tag:     'select',
         options: {
           ''                          => '-',
-          'Service::GeoLocation::Osm' => __('OpenStreetMap (ODbL 1.0, http://osm.org/copyright)'),
+          'Service::GeoLocation::Osm' => 'OpenStreetMap (ODbL 1.0, http://osm.org/copyright)', # rubocop:disable Zammad/DetectTranslatableString
         },
       },
     ],
@@ -463,7 +463,7 @@ Setting.create_if_not_exists(
         tag:     'select',
         options: {
           ''                             => '-',
-          'Service::GeoCalendar::Zammad' => __('Zammad GeoCalendar Service'),
+          'Service::GeoCalendar::Zammad' => 'Zammad GeoCalendar Service', # rubocop:disable Zammad/DetectTranslatableString
         },
       },
     ],

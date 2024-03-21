@@ -8958,10 +8958,6 @@ msgstr ""
 msgid "Open your authenticator app and scan the QR code below:"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "OpenStreetMap (ODbL 1.0, http://osm.org/copyright)"
-msgstr ""
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
 msgstr ""
@@ -15482,19 +15478,7 @@ msgid "Zammad Foundation"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Zammad GeoCalendar Service"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Zammad GeoIP Service"
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Zammad Helpdesk"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Zammad Image Service"
 msgstr ""
 
 #: lib/user_agent.rb
