@@ -2,8 +2,12 @@
 
 require 'rails_helper'
 
+# Without `export TZ="Europe/London"` in the environment, the tests will fail. :(
+
 RSpec.describe Calendar, type: :model do
   subject(:calendar) { create(:calendar) }
+
+  let(:feed) { Digest::MD5.hexdigest(calendar.ical_url) }
 
   describe 'attributes' do
     describe '#default' do
@@ -69,10 +73,10 @@ RSpec.describe Calendar, type: :model do
       context 'on creation' do
         it 'is computed from iCal event data (implicitly via #sync), from one year before to three years after' do
           expect(calendar.public_holidays).to eq(
-            '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-            '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-            '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-            '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
+            '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+            '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+            '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+            '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
           )
         end
 
@@ -83,16 +87,16 @@ RSpec.describe Calendar, type: :model do
 
           it 'accurately computes/imports events' do
             expect(calendar.public_holidays).to eq(
-              '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2016-12-26' => { 'active' => true, 'summary' => 'day3', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2016-12-28' => { 'active' => true, 'summary' => 'day5', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2017-01-26' => { 'active' => true, 'summary' => 'day3', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2017-02-26' => { 'active' => true, 'summary' => 'day3', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2017-03-26' => { 'active' => true, 'summary' => 'day3', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2017-04-25' => { 'active' => true, 'summary' => 'day3', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
+              '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+              '2016-12-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
+              '2016-12-28' => { 'active' => true, 'summary' => 'day5', 'feed' => feed },
+              '2017-01-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
+              '2017-02-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
+              '2017-03-26' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
+              '2017-04-25' => { 'active' => true, 'summary' => 'day3', 'feed' => feed },
+              '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+              '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+              '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
             )
           end
         end
@@ -155,11 +159,11 @@ RSpec.describe Calendar, type: :model do
 
         it 'appends newly computed event data to #public_holidays' do
           expect { calendar.sync }.to change(calendar, :public_holidays).to(
-            '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-            '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-            '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-            '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-            '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
+            '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+            '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+            '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+            '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+            '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
           )
         end
 
@@ -174,15 +178,29 @@ RSpec.describe Calendar, type: :model do
         it 'replaces #public_holidays with event data computed from new iCal URL' do
           expect { calendar.save }
             .to change(calendar, :public_holidays).to(
-              '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2016-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2017-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2018-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
-              '2019-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
+              '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+              '2016-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
+              '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+              '2017-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
+              '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+              '2018-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
+              '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
+              '2019-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => feed },
             )
+        end
+      end
+
+      context 'when verifying that no duplicate events are synced' do
+        before do
+          calendar.assign_attributes(ical_url: Rails.root.join('test/data/calendar/calendar_duplicate_check.ics'))
+          calendar.sync
+        end
+
+        it 'does not create duplicate events' do
+          expect(calendar.public_holidays).to eq(
+            '2019-01-01' => { 'active' => true, 'feed' => feed, 'summary' => 'Neujahrstag' },
+            '2019-04-22' => { 'active' => true, 'feed' => feed, 'summary' => 'Ostermontag' },
+          )
         end
       end
     end
