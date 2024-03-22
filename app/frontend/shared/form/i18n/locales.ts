@@ -5,6 +5,7 @@ import { createMessageName } from '@formkit/validation'
 import type { FormKitLocale } from '@formkit/i18n'
 import { i18n } from '#shared/i18n.ts'
 import { commaSeparatedList, order } from '#shared/utils/formatter.ts'
+import type { ComputedRef } from 'vue'
 
 interface FormKitLocaleExtended extends FormKitLocale {
   validation: FormKitValidationMessages
@@ -520,11 +521,18 @@ const loadLocales = (): FormKitLocaleExtended => {
             }
             return false
           })
-          .filter((name) => !!name)
-        labels.unshift(name)
+          .filter((name) => !!name) as unknown as ComputedRef<string>[]
+        labels.unshift(name as unknown as ComputedRef<string>)
 
         /* <i18n case="Shown when the user-provided has not provided a value for at least one of the required fields."> */
-        return `${labels.join(' or ')} is required.`
+        // return `${labels.join(' or ')} is required.`
+        const translatedSeparator = i18n.t('or')
+        return i18n.t(
+          '%s is required.',
+          labels
+            .map((label: ComputedRef<string>) => label.value)
+            .join(` ${translatedSeparator} `),
+        )
         /* </i18n> */
       },
 

@@ -1,6 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import type { ComputedRef } from 'vue'
+
+import type { FormRef, FormSubmitData } from '#shared/components/Form/types.ts'
 import type {
   EditorContentType,
   FieldEditorContext,
@@ -17,6 +19,7 @@ import type { SelectionData } from '#shared/utils/selection.ts'
 import type { SecurityValue } from '#shared/components/Form/fields/FieldSecurity/types.ts'
 import type { MaybeRecord } from '#shared/types/utils.ts'
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
+import type { AllowedFile } from '#shared/utils/files.ts'
 
 export interface TicketArticleSelectionOptions {
   body: FieldEditorContext
@@ -79,25 +82,65 @@ export interface TicketArticleAction {
   ): void
 }
 
+export interface TicketArticleTypeReactiveFieldProps {
+  validation: ComputedRef<
+    null | string | Array<[rule: string, ...args: unknown[]]>
+  >
+  required: ComputedRef<boolean>
+}
+
+export interface TicketArticleTypeProps {
+  validation?: string | Array<[rule: string, ...args: unknown[]]>
+  required?: boolean
+  accept?: string
+  multiple?: boolean
+  allowedFiles?: AllowedFile[]
+  [index: string]: unknown
+}
+
+export interface TicketFieldsType {
+  to: TicketArticleTypeProps
+  cc: TicketArticleTypeProps
+  subject: TicketArticleTypeProps
+  body: TicketArticleTypeProps
+  attachments: TicketArticleTypeProps
+  security: TicketArticleTypeProps
+  subtype: TicketArticleTypeProps
+}
+
+export interface TicketArticleTypeFields {
+  to: TicketArticleTypeReactiveFieldProps
+  cc: TicketArticleTypeReactiveFieldProps
+  subject: TicketArticleTypeReactiveFieldProps
+  body: TicketArticleTypeReactiveFieldProps
+  attachments: TicketArticleTypeReactiveFieldProps
+  security: TicketArticleTypeReactiveFieldProps
+}
+
 export interface AppSpecificTicketArticleType {
   value: string
   icon: string
   label: string
-  attributes: string[]
   internal: boolean
   view: TicketViewPolicyMap
-  validation?: Record<
-    string,
-    string | Array<[rule: string, ...args: unknown[]]>
-  >
+  fields: Partial<Record<keyof TicketArticleTypeFields, TicketArticleTypeProps>>
+  required?: Record<string, boolean>
   options?: Record<string, unknown>
   contentType?: FieldEditorProps['contentType']
   editorMeta?: FieldEditorProps['meta']
 
   // when clicked on type, and type is not selected, or when dialog is opened with this type
-  onOpened?(ticket: TicketById, options: TicketArticleSelectionOptions): void
+  onOpened?(
+    ticket: TicketById,
+    options: TicketArticleSelectionOptions,
+    form: FormRef | undefined,
+  ): void
 
-  onSelected?(ticket: TicketById, options: TicketArticleSelectionOptions): void
+  onSelected?(
+    ticket: TicketById,
+    options: TicketArticleSelectionOptions,
+    form: FormRef | undefined,
+  ): void
 
   // when clicked on other type, but this one is selected
   onDeselected?(

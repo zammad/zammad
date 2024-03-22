@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { getNode } from '@formkit/core'
+import { createNode, getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -10,6 +10,9 @@ import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageV
 import { waitUntil } from '#tests/support/utils.ts'
 import { createDeferred } from '#shared/utils/helpers.ts'
 import type { FormUploadCacheAddMutation } from '#shared/graphql/types.ts'
+import { expect } from 'vitest'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import type { FieldFileProps } from '#mobile/components/Form/fields/FieldFile/types.ts'
 import { FormUploadCacheAddDocument } from '../graphql/mutations/uploadCache/add.api.ts'
 import { FormUploadCacheRemoveDocument } from '../graphql/mutations/uploadCache/remove.api.ts'
 
@@ -30,7 +33,13 @@ const renderFileInput = (props: Record<string, unknown> = {}) => {
   })
 }
 
-const uploadFiles = async (files: File[]) => {
+const uploadFiles = async (
+  files: File[],
+  props?: Partial<FormFieldContext<FieldFileProps>>,
+  options?: {
+    skipWait: boolean
+  },
+) => {
   const filesSrc = files.map((file) => `data:${file.type};base64,`)
   const mockAdd = mockGraphQLApi(FormUploadCacheAddDocument).willResolve({
     formUploadCacheAdd: {
@@ -44,11 +53,14 @@ const uploadFiles = async (files: File[]) => {
   })
   const view = renderFileInput({
     multiple: true,
+    ...props,
   })
   const fileInput = view.getByTestId('fileInput')
 
   await view.events.upload(fileInput, files)
-  await waitUntil(() => mockAdd.calls.resolve)
+  if (!options?.skipWait) {
+    await waitUntil(() => mockAdd.calls.resolve)
+  }
   return {
     view,
     filesSrc,
@@ -219,7 +231,7 @@ describe('Fields - FieldFile', () => {
     ).not.toBeInTheDocument()
   })
 
-  test("can delete file that doesn' have an id", async () => {
+  test("can delete file that doesn't have an id", async () => {
     const file = new File([], 'foo.png', { type: 'image/png' })
     const mockRemove = mockGraphQLApi(FormUploadCacheRemoveDocument)
     const view = renderFileInput({
@@ -290,6 +302,52 @@ describe('Fields - FieldFile', () => {
     resolve({ data: uploadedFileQuery })
     expect(
       await view.findByRole('link', { name: 'Preview foo.png' }),
+    ).toBeInTheDocument()
+  })
+
+  it('hide upload button, if file got uploaded and multiple is false', async () => {
+    const file = new File([], 'foo.png', { type: 'image/png' })
+    Object.defineProperty(file, 'size', { value: 300 })
+    const view = renderFileInput({
+      multiple: false,
+      value: [
+        {
+          name: file.name,
+          size: file.size,
+          type: file.type,
+        },
+      ],
+    })
+    // Should be not in the "dom" if a file got uploaded
+    expect(
+      view.queryByRole('button', { name: 'Attach file' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('omits upload if file exceeds allowed size', async () => {
+    const file = new File([], 'foo.png', { type: 'image/png' })
+    Object.defineProperty(file, 'size', { value: 6 * 1024 * 1024 })
+    const allowedFiles = [
+      {
+        label: __('Image file'),
+        types: ['image/jpeg', 'image/png'],
+        size: 5 * 1024 * 1024,
+      },
+    ]
+    const props = {
+      node: createNode({
+        type: 'input',
+        name: 'input-test',
+      }),
+      allowedFiles,
+    }
+
+    const { view } = await uploadFiles([file], props, { skipWait: true })
+
+    expect(
+      view.getByText(
+        'File is too big. Image file has to be 5120 KB or smaller.',
+      ),
     ).toBeInTheDocument()
   })
 })

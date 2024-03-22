@@ -123,7 +123,12 @@ const actionPlugin: TicketArticleActionPlugin = {
       view: {
         agent: ['change'],
       },
-      attributes: [],
+      fields: {
+        body: {
+          required: true,
+        },
+        to: {},
+      },
       internal: false,
       contentType: 'text/plain',
       updateForm(values) {
@@ -136,22 +141,18 @@ const actionPlugin: TicketArticleActionPlugin = {
       },
     }
 
-    let footer: ConfidentTake<FieldEditorProps, 'meta.footer'>
+    let footer: ConfidentTake<FieldEditorProps, 'meta.footer'> = {}
 
-    if (descriptionType === 'twitter status') {
-      type.validation = {
-        body: 'length:1,280',
-      }
+    if (descriptionType === 'twitter status' && type.fields.body) {
+      type.fields.body.validation = 'length:1,280'
       footer = {
         maxlength: 280,
         warningLength: 30,
       }
-    } else {
-      type.attributes = ['to']
-      type.validation = {
-        to: 'required',
-        body: 'length:1,10000',
-      }
+    } else if (type.fields.to && type.fields.body) {
+      type.fields.to.required = true
+      type.fields.body.validation = 'length:1,10000'
+
       footer = {
         maxlength: 10000,
         warningLength: 500,

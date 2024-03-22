@@ -48,11 +48,14 @@ const actionPlugin: TicketArticleActionPlugin = {
       view: {
         agent: ['change'],
       },
-      attributes: ['attachments'],
       internal: false,
       contentType: 'text/plain',
-      validation: {
-        body: 'length:1,10000',
+      fields: {
+        body: {
+          required: true,
+          validation: 'length:1,10000',
+        },
+        attachments: {},
       },
       editorMeta: {
         footer: {

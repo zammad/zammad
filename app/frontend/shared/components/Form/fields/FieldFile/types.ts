@@ -13,6 +13,7 @@ export type FileUploaded = Pick<StoredFile, 'name' | 'size' | 'type'> & {
   id?: Maybe<string>
   content?: string
   preview?: string
+  isProcessing?: boolean
 }
 
 export interface FieldFileContext {

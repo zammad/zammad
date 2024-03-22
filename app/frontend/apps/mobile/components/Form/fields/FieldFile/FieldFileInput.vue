@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { toRef, computed, ref } from 'vue'
+import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
 import { convertFileList } from '#shared/utils/files.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useImageViewer } from '#shared/composables/useImageViewer.ts'
@@ -8,8 +9,7 @@ import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { waitForConfirmation } from '#shared/utils/confirmation.ts'
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
-import useInstantValidation from '#mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts'
+import { useFileValidation } from '#mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts'
 import type { FieldFileProps } from './types.ts'
 import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/add.api.ts'
 import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api.ts'
@@ -21,6 +21,8 @@ export interface Props {
 const props = defineProps<Props>()
 
 const contextReactive = toRef(props, 'context')
+
+const { validateFileSize } = useFileValidation()
 
 const uploadFiles = computed<FileUploaded[]>({
   get() {
@@ -56,8 +58,6 @@ const reset = () => {
   input.value = ''
   input.files = null
 }
-
-const { validate } = useInstantValidation()
 
 const loadFiles = async (files: FileList | File[]) => {
   loadingFiles.value = Array.from(files || []).map((file) => ({
@@ -99,22 +99,22 @@ Object.assign(props.context, {
 
 const onFileChanged = async ($event: Event) => {
   const input = $event.target as HTMLInputElement
-  const { files } = input
 
+  const { files } = input
+  if (
+    props.context.allowedFiles &&
+    files &&
+    !validateFileSize(props.context.node, files, props.context.allowedFiles)
+  ) {
+    return
+  }
   if (!files) return
-  // Extra validation for file size and type if specified in the rules
-  const isValid = validate(
-    files,
-    props.context.parsedRules as Array<Record<'name', string>>,
-  )
-  if (!isValid) return
 
   await loadFiles(files)
 }
 
 const removeFile = async (file: FileUploaded) => {
   const fileId = file.id
-
   const confirmed = await waitForConfirmation(
     __('Are you sure you want to delete "%s"?'),
     {
@@ -129,6 +129,11 @@ const removeFile = async (file: FileUploaded) => {
   if (!fileId) {
     uploadFiles.value = uploadFiles.value.filter((elem) => elem !== file)
     return
+  }
+
+  const toBeDeletedFile = uploadFiles.value.find((file) => file.id === fileId)
+  if (toBeDeletedFile) {
+    toBeDeletedFile.isProcessing = true
   }
 
   removeFileMutation
@@ -188,6 +193,7 @@ useTraverseOptions(filesContainer, {
   <div
     v-if="uploadFiles.length || loadingFiles.length"
     ref="filesContainer"
+    role="list"
     class="max-h-48 overflow-auto px-4 pt-4"
     :class="{
       'opacity-60': !canInteract,
@@ -199,6 +205,10 @@ useTraverseOptions(filesContainer, {
       v-for="(uploadFile, idx) of uploadFiles"
       :key="uploadFile.id || `${uploadFile.name}${idx}`"
       :file="uploadFile"
+      role="listitem"
+      :class="{ 'pointer-events-none opacity-75': uploadFile.isProcessing }"
+      :no-remove="uploadFile.isProcessing"
+      :loading="uploadFile.isProcessing"
       :preview-url="uploadFile.preview || uploadFile.content"
       :download-url="uploadFile.content"
       @preview="canInteract && showImage(uploadFile)"
@@ -207,6 +217,7 @@ useTraverseOptions(filesContainer, {
     <CommonFilePreview
       v-for="(uploadFile, idx) of loadingFiles"
       :key="uploadFile.id || `${uploadFile.name}${idx}`"
+      role="listitem"
       :file="uploadFile"
       loading
       no-remove

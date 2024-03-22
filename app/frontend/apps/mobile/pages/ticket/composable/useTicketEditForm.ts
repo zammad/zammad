@@ -1,22 +1,30 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { computed, shallowRef } from 'vue'
+import type { Ref } from 'vue'
+import type { FormKitNode } from '@formkit/core'
+
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import { createArticleTypes } from '#shared/entities/ticket-article/action/plugins/index.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
-import { computed, shallowRef } from 'vue'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
-import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-article/action/plugins/types.ts'
+import type {
+  AppSpecificTicketArticleType,
+  TicketArticleTypeFields,
+} from '#shared/entities/ticket-article/action/plugins/types.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
-import type { ComputedRef, Ref } from 'vue'
 import type {
   ChangedField,
   ReactiveFormSchemData,
   FormHandlerFunction,
+  FormRef,
 } from '#shared/components/Form/types.ts'
 import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
-import type { FormKitNode } from '@formkit/core'
 
-export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
+export const useTicketEditForm = (
+  ticket: Ref<TicketById | undefined>,
+  form: Ref<FormRef | undefined>,
+) => {
   const ticketArticleTypes = computed(() => {
     return ticket.value ? createArticleTypes(ticket.value, 'mobile') : []
   })
@@ -40,30 +48,27 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
     }
   })
 
-  const validationFields = [
+  const articleTypeFields = [
     'to',
     'cc',
     'subject',
     'body',
     'attachments',
     'security',
-  ]
+  ] as const
 
-  const validations = validationFields.reduce(
-    (
-      acc: Record<
-        string,
-        ComputedRef<null | string | Array<[rule: string, ...args: unknown[]]>>
-      >,
-      field,
-    ) => {
-      acc[field] = computed(
-        () => currentArticleType.value?.validation?.[field] || null,
-      )
-      return acc
-    },
-    {},
-  )
+  const articleTypeFieldProps = articleTypeFields.reduce((acc, field) => {
+    acc[field] = {
+      validation: computed(
+        () => currentArticleType.value?.fields?.[field]?.validation || null,
+      ),
+      required: computed(
+        () => currentArticleType.value?.fields?.[field]?.required || false,
+      ),
+    }
+
+    return acc
+  }, {} as TicketArticleTypeFields)
 
   const { isTicketCustomer } = useTicketView(ticket)
 
@@ -100,7 +105,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         name: 'inReplyTo',
       },
       {
-        if: '$fns.includes($currentArticleType.attributes, "subtype")',
+        if: '$currentArticleType.fields.subtype',
         type: 'hidden',
         name: 'subtype',
       },
@@ -137,73 +142,88 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         triggerFormUpdater: false,
       },
       {
-        if: '$fns.includes($currentArticleType.attributes, "to")',
+        if: '$currentArticleType.fields.to)',
         name: 'to',
         label: __('To'),
         type: 'recipient',
-        validation: validations.to,
+        validation: articleTypeFieldProps.to.validation,
         props: {
           contact: recipientContact,
           multiple: true,
         },
+        required: articleTypeFieldProps.to.required,
       },
       {
-        if: '$fns.includes($currentArticleType.attributes, "cc")',
+        if: '$currentArticleType.fields.cc',
         name: 'cc',
         label: __('CC'),
         type: 'recipient',
-        validation: validations.сс,
+        validation: articleTypeFieldProps.cc.validation,
         props: {
           contact: recipientContact,
           multiple: true,
         },
       },
       {
-        if: '$fns.includes($currentArticleType.attributes, "subject")',
+        if: '$currentArticleType.fields.subject',
         name: 'subject',
         label: __('Subject'),
         type: 'text',
-        validation: validations.subject,
+        validation: articleTypeFieldProps.subject.validation,
         props: {
           maxlength: 200,
         },
         triggerFormUpdater: false,
+        required: articleTypeFieldProps.subject.required,
       },
       {
-        if: '$securityIntegration === true && $fns.includes($currentArticleType.attributes, "security")',
+        if: '$securityIntegration === true && $currentArticleType.fields.security',
         name: 'security',
         label: __('Security'),
         type: 'security',
-        validation: validations.security,
+        validation: articleTypeFieldProps.security.validation,
         triggerFormUpdater: false,
       },
       {
         name: 'body',
         screen: 'edit',
         object: EnumObjectManagerObjects.TicketArticle,
-        validation: validations.body,
+        validation: articleTypeFieldProps.body.validation,
         props: {
           ticketId: computed(() => ticket.value?.internalId),
           customerId: computed(() => ticket.value?.customer.internalId),
           contentType: editorType,
           meta: editorMeta,
         },
+        required: articleTypeFieldProps.body.required,
         triggerFormUpdater: true,
-        required: true,
       },
       {
-        if: '$fns.includes($currentArticleType.attributes, "attachments")',
+        if: '$currentArticleType.fields.attachments)',
         type: 'file',
         name: 'attachments',
-        validation: validations.attachments,
+        label: __('Attachment'),
+        labelSrOnly: true,
+        validation: articleTypeFieldProps.attachments.validation,
         props: {
-          multiple: computed((): boolean =>
-            typeof currentArticleType.value?.options?.multipleUploads ===
-            'boolean'
-              ? currentArticleType.value?.options?.multipleUploads
-              : true,
+          multiple: computed(() =>
+            Boolean(
+              typeof currentArticleType.value?.fields?.attachments?.multiple ===
+                'boolean'
+                ? currentArticleType.value?.fields?.attachments?.multiple
+                : true,
+            ),
+          ),
+          allowedFiles: computed(
+            () =>
+              currentArticleType.value?.fields?.attachments?.allowedFiles ||
+              null,
+          ),
+          accept: computed(
+            () => currentArticleType.value?.fields?.attachments?.accept || null,
           ),
         },
+        required: articleTypeFieldProps.attachments.required,
       },
     ],
   }
@@ -276,7 +296,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
       if (!newType) return
 
       if (!formNode.context?._open) {
-        newType.onSelected?.(ticket.value, context)
+        newType.onSelected?.(ticket.value, context, form.value)
       }
       currentArticleType.value = newType
 
@@ -305,7 +325,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
       const context = {
         body: body.context as unknown as FieldEditorContext,
       }
-      articleType.onOpened?.(ticket.value, context)
+      articleType.onOpened?.(ticket.value, context, form.value)
     })
   }
 

@@ -3,8 +3,11 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, ref } from 'vue'
 import type { StoredFile } from '#shared/graphql/types.ts'
-import { canDownloadFile, canPreviewFile } from '#shared/utils/files.ts'
-import { humanizeFileSize } from '#shared/utils/helpers.ts'
+import {
+  canDownloadFile,
+  canPreviewFile,
+  humanizeFileSize,
+} from '#shared/utils/files.ts'
 import { getIconByContentType } from '#shared/utils/icons.ts'
 import { i18n } from '#shared/i18n.ts'
 

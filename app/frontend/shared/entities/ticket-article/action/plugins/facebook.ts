@@ -50,7 +50,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       view: {
         agent: ['change'],
       },
-      attributes: [],
+      fields: {},
       internal: false,
       contentType: 'text/plain',
     }

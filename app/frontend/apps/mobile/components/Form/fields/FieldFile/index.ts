@@ -3,12 +3,14 @@
 import createInput from '#shared/form/core/createInput.ts'
 import FieldFileInput from '#mobile/components/Form/fields/FieldFile/FieldFileInput.vue'
 import { multipleFilesError } from './features/multipleFilesError.ts'
+import { filesSizeError } from './features/filesSizeError.ts'
+import { filesTypeError } from './features/filesTypeError.ts'
 
 const fieldDefinition = createInput(
   FieldFileInput,
-  ['multiple', 'capture', 'accept'],
+  ['multiple', 'capture', 'accept', 'allowedFiles'],
   {
-    features: [multipleFilesError],
+    features: [multipleFilesError, filesSizeError, filesTypeError],
   },
 )
 

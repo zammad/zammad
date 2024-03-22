@@ -56,16 +56,6 @@ export const textToHtml = (text: string) => {
   return text.replace(/<div><\/div>/g, '<div><br></div>')
 }
 
-export const humanizeFileSize = (size: number) => {
-  if (size > 1024 * 1024) {
-    return `${Math.round((size * 10) / (1024 * 1024)) / 10} MB`
-  }
-  if (size > 1024) {
-    return `${Math.round(size / 1024)} KB`
-  }
-  return `${size} Bytes`
-}
-
 export const debouncedQuery = <A extends unknown[], R>(
   fn: (...args: A) => Promise<R>,
   defaultValue: R,

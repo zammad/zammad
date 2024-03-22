@@ -111,7 +111,7 @@ const {
   ticketEditSchema,
   articleTypeHandler,
   articleTypeSelectHandler,
-} = useTicketEditForm(ticket)
+} = useTicketEditForm(ticket, form)
 
 const { isTicketAgent } = useTicketView(ticket)
 

@@ -14,7 +14,9 @@ const actionPlugin: TicketArticleActionPlugin = {
       view: {
         customer: ['change'],
       },
-      attributes: ['attachments'],
+      fields: {
+        attachments: {},
+      },
       internal: false,
     }
     return [type]

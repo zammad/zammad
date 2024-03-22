@@ -11,10 +11,15 @@ const actionPlugin: TicketArticleActionPlugin = {
       value: 'note',
       label: __('Note'),
       icon: 'note',
+      fields: {
+        attachments: {},
+        body: {
+          required: true,
+        },
+      },
       view: {
         agent: ['change'],
       },
-      attributes: ['attachments'],
       internal: !!config.ui_ticket_zoom_article_note_new_internal,
     }
     return [type]

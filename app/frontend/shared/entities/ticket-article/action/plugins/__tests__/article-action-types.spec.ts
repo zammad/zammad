@@ -11,7 +11,9 @@ describe('article action plugins - types', () => {
     expect(types).toHaveLength(1)
     expect(types[0]).toMatchObject({
       value: 'web',
-      attributes: ['attachments'],
+      fields: {
+        attachments: {},
+      },
     })
   })
 })

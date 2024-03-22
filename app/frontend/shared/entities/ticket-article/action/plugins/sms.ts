@@ -45,11 +45,14 @@ const actionPlugin: TicketArticleActionPlugin = {
       view: {
         agent: ['change'],
       },
-      attributes: ['to'],
       internal: false,
       contentType: 'text/plain',
-      validation: {
-        body: 'length:1,160',
+      fields: {
+        body: {
+          required: true,
+          validation: 'length:1,160',
+        },
+        to: {},
       },
       options: {
         recipientContact: 'phone',

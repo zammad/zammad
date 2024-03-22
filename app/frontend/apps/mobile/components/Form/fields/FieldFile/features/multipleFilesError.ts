@@ -2,6 +2,7 @@
 
 import { createMessage, type FormKitNode } from '@formkit/core'
 
+import { FormValidationVisibility } from '#shared/components/Form/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
 export const multipleFilesError = (node: FormKitNode) => {
@@ -20,16 +21,21 @@ export const multipleFilesError = (node: FormKitNode) => {
           }),
         )
 
-        // TODO we would need to switch validationVisible to true
+        node.emit('prop:validationVisibility', FormValidationVisibility.Live)
 
         commitEventListener = node.on('commit', ({ payload: newValue }) => {
           if (Array.isArray(newValue) && newValue.length === 1) {
             node.store.remove('multipleFilesError')
+            node.emit(
+              'prop:validationVisibility',
+              FormValidationVisibility.Submit,
+            )
           }
         })
       } else if (payload && commitEventListener) {
         node.off(commitEventListener)
         node.store.remove('multipleFilesError')
+        node.emit('prop:validationVisibility', FormValidationVisibility.Submit)
       }
     })
   })

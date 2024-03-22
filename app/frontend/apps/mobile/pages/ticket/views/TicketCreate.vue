@@ -311,6 +311,8 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
         {
           type: 'file',
           name: 'attachments',
+          label: __('Attachment'),
+          labelSrOnly: true,
           props: {
             multiple: true,
           },

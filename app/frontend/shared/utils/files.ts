@@ -26,9 +26,15 @@ interface CompressOptions {
 
 interface ValidatedFile {
   file: File
-  invalid: boolean
-  maxSize: number | null
+  label: string
+  maxSize: number
   allowedTypes: string[]
+}
+
+export interface AllowedFile {
+  label: string
+  types: string[]
+  size: number
 }
 
 const allowCompressMime = ['image/jpeg', 'image/png']
@@ -241,72 +247,44 @@ export const validateFileSizeLimit = (file: File, allowedSize: number) => {
   return file.size <= allowedSize
 }
 
-export const validateFiles = (
+export const validateFileSizes = (
   files: File[],
-  fileRules: Array<{
-    size: number
-    type: string
-    mimeTypes: Set<string>
-  }>,
-  options: { validationType: 'size' | 'mimetype' } = { validationType: 'size' },
+  allowedFiles: AllowedFile[],
 ) => {
-  const failedFiles: ValidatedFile[] = []
-  files.forEach((file: File) => {
-    const rule = fileRules.find((rule) => {
-      if (file.type.includes('image/webp') && rule.type === 'sticker') {
-        // Sticker
-        return rule
-      }
-      if (file.type.includes('image/webp') && rule.type === 'image') {
-        return false // Skip to avoid sticker getting validated as image
-      }
-      return file.type.includes(rule.type)
+  const failedFiles: Omit<ValidatedFile, 'allowedTypes'>[] = []
+  files.forEach((file) => {
+    allowedFiles.forEach((allowedFile) => {
+      if (!allowedFile.types.includes(file.type)) return
+      if (!validateFileSizeLimit(file, allowedFile.size))
+        failedFiles.push({
+          file,
+          label: allowedFile.label,
+          maxSize: allowedFile.size,
+        })
     })
-
-    if (!rule) {
-      console.warn('No rule found for file type', file.type)
-      return
-    }
-
-    const validatedFile: ValidatedFile = {
-      file,
-      invalid: false,
-      maxSize: null,
-      allowedTypes: [],
-    }
-    // Validation for mime types
-    if (
-      options.validationType === 'mimetype' &&
-      !rule.mimeTypes.has(file.type)
-    ) {
-      const arr = Array.from(rule.mimeTypes)
-      const isTypeWildcardUsed = arr.some((type) => {
-        const [generalType] = file.type.split('/')
-        return type.includes('*') && type.includes(generalType)
-      })
-      if (isTypeWildcardUsed) return
-      validatedFile.allowedTypes = arr
-      validatedFile.invalid = true
-    }
-
-    // Validation for file sizes
-    if (
-      options.validationType === 'size' &&
-      !validateFileSizeLimit(file, rule.size)
-    ) {
-      validatedFile.maxSize = rule.size
-      validatedFile.invalid = true
-    }
-
-    if (validatedFile.invalid) failedFiles.push(validatedFile)
   })
-
-  return { failedFiles }
+  return failedFiles
 }
+
+/**
+ * @return {string} - A string of acceptable file types for input element.
+ * * */
+export const getAcceptableFileTypesString = (
+  allowedFiles: AllowedFile[],
+): string => {
+  const result: Set<string> = new Set([])
+  allowedFiles.forEach((file) => {
+    file.types.forEach((type) => {
+      result.add(type)
+    })
+  })
+  return Array.from(result).join(', ')
+}
+
 /**
  * @param size file size in bytes
  ** */
-export const humanFileSize = (size: number) => {
+export const humanizeFileSize = (size: number) => {
   if (size > 1024 * 1024 * 1024) {
     return `${Math.round((size * 10) / (1024 * 1024)) / 10} MB`
   }
@@ -314,78 +292,4 @@ export const humanFileSize = (size: number) => {
     return `${Math.round(size / 1024)} KB`
   }
   return `${size} Bytes`
-}
-
-/**
- * @param validation - array of mimeTypes and sizes Formkit custom validation rule
- * @example ['image','image/png', '1000000', 'application/pdf', '1000000']
- * @return [{size: 1000000, type: 'image', mimeTypes: Set{'image/jpeg', 'image/png'}}, {size: 1000000, type: 'application', mimeTypes: Set{'application/pdf'}}]
- * * */
-export const mapValidationTypesAndSizes = (
-  validation: string[],
-): Array<{ size: number; type: string; mimeTypes: Set<string> }> => {
-  const result: { size: number; type: string; mimeTypes: Set<string> }[] = []
-  let currentType = ''
-  let currentMimeTypes: Set<string> = new Set()
-
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < validation.length; i++) {
-    if (Number.isNaN(Number(validation[i]))) {
-      let [type] = validation[i].split('/')
-      // if it's a webp image, we treat it as a sticker
-      if (validation[i] === 'image/webp') {
-        type = 'sticker'
-      }
-      if (type !== currentType && currentType !== '') {
-        result.push({
-          size: Number(validation[i - 1]),
-          type: currentType,
-          mimeTypes: currentMimeTypes,
-        })
-        currentMimeTypes = new Set()
-      }
-      currentType = type
-      currentMimeTypes.add(validation[i])
-    }
-  }
-
-  if (currentMimeTypes.size > 0) {
-    result.push({
-      size: Number(validation[validation.length - 1]),
-      type: currentType,
-      mimeTypes: currentMimeTypes,
-    })
-  }
-  return result
-}
-
-export const evaluateFiles = (
-  files: FileList,
-  fileRules: Array<{ size: number; type: string; mimeTypes: Set<string> }>,
-  options: { validationType: 'size' | 'mimetype' } = { validationType: 'size' },
-) => {
-  const fileArray = Array.from(files || [])
-  const { failedFiles } = validateFiles(fileArray, fileRules, options)
-
-  return {
-    errors: {
-      size: failedFiles.some((file) => file.maxSize),
-      type: failedFiles.some((file) => file.allowedTypes.length),
-    },
-    failedFiles,
-  }
-}
-
-export const getTranslatableFileTypeName = (
-  mimeType: string,
-  useSpecificType?: boolean,
-) => {
-  // eslint-disable-next-line prefer-const
-  let [generalType, specificType] = mimeType.split('/')
-  if (mimeType === 'image/webp') return __('Sticker')
-  if (useSpecificType) {
-    return `${specificType[0].toUpperCase()}${specificType.slice(1)}`
-  }
-  if (generalType === 'application') generalType = 'document'
-  return `${generalType[0].toUpperCase()}${generalType.slice(1)}`
 }

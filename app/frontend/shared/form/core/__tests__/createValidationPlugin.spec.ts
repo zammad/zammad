@@ -16,11 +16,6 @@ describe('getValidationRuleMessages', () => {
   it('get validation messages from custom rules', () => {
     const validationRuleMessages = getValidationRuleMessages()
 
-    expect(validationRuleMessages).toEqual({
-      file_types: expect.any(Function),
-      file_sizes: expect.any(Function),
-      caption_length: expect.any(Function),
-      content_required: expect.any(Function),
-    })
+    expect(validationRuleMessages).toEqual({})
   })
 })

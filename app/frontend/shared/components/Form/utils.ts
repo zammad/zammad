@@ -4,8 +4,12 @@ import UserError from '#shared/errors/UserError.ts'
 import { getNode, type FormKitNode } from '@formkit/core'
 import type { MutationSendError } from '../../types/error.ts'
 
+export const getNodeId = (formId: string, selector: string) => {
+  return `${selector}-${formId}`
+}
+
 export const getNodeByName = (formId: string, selector: string) => {
-  return getNode(`${selector}-${formId}`)
+  return getNode(getNodeId(formId, selector))
 }
 
 export const setErrors = (node: FormKitNode, errors: MutationSendError) => {

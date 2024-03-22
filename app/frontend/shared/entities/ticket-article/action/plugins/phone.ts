@@ -11,10 +11,15 @@ const actionPlugin: TicketArticleActionPlugin = {
       value: 'phone',
       label: __('Phone'),
       icon: 'phone',
+      fields: {
+        attachments: {},
+        body: {
+          required: true,
+        },
+      },
       view: {
         agent: ['change'],
       },
-      attributes: ['attachments'],
       internal: false,
     }
     return [type]

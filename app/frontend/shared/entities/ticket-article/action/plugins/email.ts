@@ -11,6 +11,7 @@ import { uniq } from 'lodash-es'
 import { forwardEmail } from './email/forward.ts'
 import { replyToEmail } from './email/reply.ts'
 import type {
+  TicketFieldsType,
   TicketArticleAction,
   TicketArticleActionPlugin,
   TicketArticleSelectionOptions,
@@ -106,28 +107,27 @@ const actionPlugin: TicketArticleActionPlugin = {
   addTypes(ticket, { config }) {
     if (!ticket.group.emailAddress) return []
 
-    const attributes = new Set([
-      'to',
-      'cc',
-      'subject',
-      'subtype',
-      'attachments',
-      'security',
-    ])
+    const fields: Partial<TicketFieldsType> = {
+      to: { required: true },
+      cc: {},
+      subject: {},
+      body: {
+        required: true,
+      },
+      subtype: {},
+      attachments: {},
+      security: {},
+    }
 
-    if (!config.ui_ticket_zoom_article_email_subject)
-      attributes.delete('subject')
+    if (!config.ui_ticket_zoom_article_email_subject) delete fields.subject
 
     const type: TicketArticleType = {
       value: 'email',
       label: __('Email'),
       apps: ['mobile'],
       icon: 'mail',
-      attributes: Array.from(attributes),
       view: { agent: ['change'] },
-      validation: {
-        to: 'required',
-      },
+      fields,
       onDeselected(_, { body }) {
         getTicketSignatureQuery().cancel()
         body.removeSignature()

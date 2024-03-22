@@ -860,7 +860,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     if !sizeConfig
       return App.i18n.translateContent(
-        __('File format is not allowed: %s'),
+        __('The file type %s is not allowed.'),
         @attachmentContentType(file)
       )
 

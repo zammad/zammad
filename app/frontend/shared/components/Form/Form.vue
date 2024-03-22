@@ -911,6 +911,12 @@ const buildStaticSchema = () => {
   ): FormKitSchemaComponent => {
     const fieldId = field.id || `${field.name}-${formId}`
 
+    const plugins = [changedInputValueHandling]
+
+    if (field.plugins) {
+      plugins.push(...field.plugins)
+    }
+
     return {
       $cmp: 'FormKit',
       if: field.if ? field.if : `$fields.${field.name}.show`,
@@ -921,7 +927,7 @@ const buildStaticSchema = () => {
         name: field.name,
         id: fieldId,
         formId,
-        plugins: [changedInputValueHandling],
+        plugins,
         triggerFormUpdater: field.triggerFormUpdater ?? !!props.formUpdaterId,
       },
     }

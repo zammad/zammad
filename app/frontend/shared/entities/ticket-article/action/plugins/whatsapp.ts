@@ -1,19 +1,63 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { useFormKitNodeById } from '@formkit/vue'
+import { createMessage, type FormKitNode } from '@formkit/core'
+
 import { getTicketChannelPlugin } from '#shared/entities/ticket/channel/plugins/index.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { getNodeId } from '#shared/components/Form/utils.ts'
+import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
+import {
+  FormValidationVisibility,
+  type FormRef,
+} from '#shared/components/Form/types.ts'
+import { i18n } from '#shared/i18n.ts'
 
+import { getAcceptableFileTypesString } from '#shared/utils/files.ts'
 import type {
   TicketArticleAction,
   TicketArticleActionPlugin,
   TicketArticleType,
 } from './types.ts'
 
-// TODO: Maybe add a more readable object which builds the string for the validation rule.
-const WHATSAPP_ALLOWED_FILE_SIZES = `audio,${16 * 1024 * 1024},application,${100 * 1024 * 1024},image,${5 * 1024 * 1024},video,${16 * 1024 * 1024},sticker,${500 * 1024}`
-const WHATSAPP_ALLOWED_FILE_TYPES = `audio/aac,audio/mp4,audio/amr,audio/mpeg,audio/ogg,application/*,image/jpeg,image/png,video/mp4,video/3gpp,image/webp`
-const WHATSAPP_CAPTIONS = `audio,${0},image/webp,${0}`
+const allowedFiles = [
+  {
+    label: __('Audio file'),
+    types: ['audio/aac', 'audio/mp4', 'audio/amr', 'audio/mpeg', 'audio/ogg'],
+    size: 16 * 1024 * 1024,
+  },
+  {
+    label: __('Sticker file'),
+    types: ['image/webp'],
+    size: 500 * 1024,
+  },
+  {
+    label: __('Image file'),
+    types: ['image/jpeg', 'image/png'],
+    size: 5 * 1024 * 1024,
+  },
+  {
+    label: __('Video file'),
+    types: ['video/mp4', 'video/3gpp'],
+    size: 16 * 1024 * 1024,
+  },
+  {
+    label: __('Document file'),
+    types: [
+      'text/plain',
+      'application/pdf',
+      'application/vnd.ms-powerpoint',
+      'application/msword',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ],
+    size: 100 * 1024 * 1024,
+  },
+]
 
+const acceptableFileTypes = getAcceptableFileTypesString(allowedFiles)
 const canUseWhatsapp = (ticket: TicketById) => {
   const channelPlugin = getTicketChannelPlugin(ticket.initialChannel)
   const channelAlert = channelPlugin?.channelAlert(ticket)
@@ -57,6 +101,94 @@ const actionPlugin: TicketArticleActionPlugin = {
     if (descriptionType !== 'whatsapp message') return []
     if (!canUseWhatsapp(ticket)) return []
 
+    let attachmentsFieldNode: FormKitNode
+    let attachmentsCommitEvent: string
+    let bodyCommitEventNode: FormKitNode
+    let bodyCommitEventListener: string
+
+    const setBodyNotAllowedMessage = (body: FormKitNode) => {
+      body.emit('prop:validationVisibility', FormValidationVisibility.Live)
+
+      body.store.set(
+        createMessage({
+          key: 'bodyNotAllowedForMediaType',
+          blocking: true,
+          value: i18n.t(
+            'The given media type does not support any text to be sent in parallel. Please remove the entered text.',
+          ),
+          type: 'validation',
+          visible: true,
+        }),
+      )
+    }
+
+    const removeBodyNotAllowedMessage = (body: FormKitNode) => {
+      body.emit('prop:validationVisibility', FormValidationVisibility.Submit)
+      body.store.remove('bodyNotAllowedForMediaType')
+    }
+
+    const deRegisterListeners = () => {
+      if (attachmentsFieldNode) {
+        attachmentsFieldNode.off(attachmentsCommitEvent)
+      }
+
+      if (bodyCommitEventNode) {
+        bodyCommitEventNode.off(bodyCommitEventListener)
+        removeBodyNotAllowedMessage(bodyCommitEventNode)
+      }
+    }
+
+    const handleAllowedBody = (form?: FormRef) => {
+      if (!form) return
+
+      const checkAllowedForFileType = (currentFiles: FileUploaded[]) => {
+        const body = form.getNodeByName('body')
+
+        if (!body) return
+
+        bodyCommitEventNode = body
+
+        if (
+          currentFiles &&
+          currentFiles.length > 0 &&
+          currentFiles[0].type &&
+          (currentFiles[0].type === 'image/webp' ||
+            currentFiles[0].type.startsWith('audio'))
+        ) {
+          bodyCommitEventListener = bodyCommitEventNode.on(
+            'commit',
+            ({ payload: newValue }) => {
+              if (newValue) {
+                setBodyNotAllowedMessage(bodyCommitEventNode)
+              } else {
+                removeBodyNotAllowedMessage(bodyCommitEventNode)
+              }
+            },
+          )
+
+          if (bodyCommitEventNode.value) {
+            setBodyNotAllowedMessage(bodyCommitEventNode)
+          }
+        } else {
+          removeBodyNotAllowedMessage(bodyCommitEventNode)
+          bodyCommitEventNode.off(bodyCommitEventListener)
+        }
+      }
+
+      useFormKitNodeById(getNodeId(form.formId, 'attachments'), (node) => {
+        attachmentsFieldNode = node
+
+        // Check if the attachments are already present (e.g. after article type switch).
+        if (attachmentsFieldNode.value) {
+          checkAllowedForFileType(attachmentsFieldNode.value as FileUploaded[])
+        }
+
+        attachmentsCommitEvent = node.on('commit', ({ payload: newValue }) => {
+          checkAllowedForFileType(newValue)
+        })
+      })
+    }
+
     const type: TicketArticleType = {
       apps: ['mobile'],
       value: 'whatsapp message',
@@ -65,19 +197,25 @@ const actionPlugin: TicketArticleActionPlugin = {
       view: {
         agent: ['change'],
       },
-      attributes: ['attachments'],
+      fields: {
+        body: {
+          required: false,
+          validation: 'require_one:attachments|length:1,4096',
+        },
+        attachments: {
+          validation: 'require_one:body',
+          accept: acceptableFileTypes,
+          multiple: false,
+          allowedFiles,
+        },
+      },
       internal: false,
       contentType: 'text/plain',
-      validation: {
-        // TODO: add plugin layer for handling of body for the attachments where it's not needed.
-        // TODO: use require_one instead of own "content_required" rule (remove validation rule again from code base).
-        body: `+content_required:attachments|+caption_length:${WHATSAPP_CAPTIONS}|length:1,4096`,
-        attachments: `*file_sizes:${WHATSAPP_ALLOWED_FILE_SIZES}|*file_types:${WHATSAPP_ALLOWED_FILE_TYPES}`,
+      onDeselected: () => {
+        deRegisterListeners()
       },
-      options: {
-        multipleUploads: false,
-      },
-      // TODO add better possibility to change props for different fields inside this layer
+      onSelected: (ticket, context, form) => handleAllowedBody(form),
+      onOpened: (ticket, context, form) => handleAllowedBody(form),
     }
     return [type]
   },
