@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-23 02:05+0000\n"
+"PO-Revision-Date: 2024-03-25 12:04+0000\n"
 "Last-Translator: Benjamin Scharf <bs@zammad.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/es/>\n"
@@ -668,10 +668,8 @@ msgid "%s user to %s user"
 msgstr "usuario %s a usuario%"
 
 #: lib/whatsapp/webhook/message.rb
-#, fuzzy
-#| msgid "Chats"
 msgid "%s via WhatsApp"
-msgstr "Chats"
+msgstr "%s via WhatsApp"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s weeks ago"
@@ -1043,10 +1041,8 @@ msgid "Access to customer tickets"
 msgstr "Tickets de clientes, recientes"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
-#, fuzzy
-#| msgid "Access to %s"
 msgid "Access token"
-msgstr "Acceso a %s"
+msgstr "token de acceso"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -1202,17 +1198,13 @@ msgstr "Flujo de Actividad"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#, fuzzy
-#| msgid "Activity"
 msgid "Activity Type"
-msgstr "Actividad"
+msgstr "Tipo de Actividad"
 
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "Activity Types"
-msgstr "Actividad"
+msgstr "Tipos de Actividades"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
@@ -1411,10 +1403,8 @@ msgid "Additional information"
 msgstr "Más información"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
-#, fuzzy
-#| msgid "Additional information"
 msgid "Additional information and links"
-msgstr "Más información"
+msgstr "Información adicional y enlaces"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -2122,10 +2112,8 @@ msgid "Attach another file"
 msgstr "Adjuntar otro archivo"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Attach files"
 msgid "Attach file"
-msgstr "Adjuntar ficheros"
+msgstr "Adjuntar archivo"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
@@ -2293,10 +2281,8 @@ msgid "Authenticator app secret"
 msgstr "Clave de la aplicación de autenticación"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
-#, fuzzy
-#| msgid "Authy"
 msgid "Author"
-msgstr "Authy"
+msgstr "Autor"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2774,10 +2760,6 @@ msgstr "No se puede encontrar el Usuario para el Token"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-#, fuzzy
-#| msgid ""
-#| "Can't update password, your entered passwords do not match. Please try "
-#| "again!"
 msgid ""
 "Can't update password, your entered passwords do not match. Please try again."
 msgstr ""
@@ -3147,10 +3129,8 @@ msgid "Choose your language."
 msgstr "Escoge tu idioma."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#, fuzzy
-#| msgid "Choose your new password."
 msgid "Choose your new password"
-msgstr "Escoja su nuevo Password."
+msgstr "Elija su nueva contraseña"
 
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 msgid "Choose your new password."
@@ -3442,8 +3422,6 @@ msgstr "Confirmar fusión"
 
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#, fuzzy
-#| msgid "Confirm Password"
 msgid "Confirm password"
 msgstr "Confirmar contraseña"
 
@@ -3554,10 +3532,8 @@ msgid "Connect Twitter App"
 msgstr "Conectar a Twitter"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "Connect and Continue"
-msgstr "Condiciones guardadas"
+msgstr "Conectar y Continuar"
 
 #: public/assets/chat/views/loader.eco
 msgid "Connecting"
@@ -3672,10 +3648,8 @@ msgstr ""
 "Copia el número de objeto actual (por ejemplo, Ticket#) en el portapapeles"
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
-#, fuzzy
-#| msgid "Copy to clipboard: Ctrl+C, Enter"
 msgid "Copy to clipboard"
-msgstr "Copiar al portapapeles: Ctrl+C, Enter"
+msgstr "Copiar al portapapeles"
 
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
@@ -3701,7 +3675,7 @@ msgstr ""
 
 #: app/services/service/channel/whatsapp/base.rb
 msgid "Could not fetch WhatsApp phone number details."
-msgstr ""
+msgstr "No se pueden obtener los detalles del número de teléfono de WhatsApp."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid ""
@@ -3768,10 +3742,8 @@ msgstr "Crear Administrador"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Create Administrator Account"
-msgstr "Cuenta Administrador"
+msgstr "Crear Cuenta de Administrador"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
@@ -3858,10 +3830,8 @@ msgid "Create a translation"
 msgstr "Crear un traducción"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
-#, fuzzy
-#| msgid "Create my account"
 msgid "Create account"
-msgstr "Crear mi cuenta"
+msgstr "Crear una cuenta"
 
 #: db/seeds/permissions.rb
 msgid "Create and set up %s"
@@ -3877,10 +3847,8 @@ msgid "Create new Customer"
 msgstr "Crear nuevo Cliente"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "Create new customer"
-msgstr "Crear nuevo Cliente"
+msgstr "Crear un nuevo cliente"
 
 #: app/assets/javascripts/app/lib/app_post/_object_organization_autocompletion.coffee
 msgid "Create new object"
@@ -4067,10 +4035,8 @@ msgid "Custom Payload"
 msgstr "Contenido personalizado"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Translations"
 msgid "Custom Translation"
-msgstr "Traducciones"
+msgstr "Traducción personalizada"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -10237,6 +10203,11 @@ msgstr "Sin SSL"
 msgid "No Thanks!"
 msgstr "¡No, gracias!"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid ""
+"No additional text can be sent with this media type. Please remove the text."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
 msgstr "Sin respuestas"
@@ -14775,12 +14746,6 @@ msgstr "El formato del tema."
 msgid "The given article is not a media article."
 msgstr "El artículo no pertenece al ticket especificado."
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
-msgid ""
-"The given media type does not support any text to be sent in parallel. "
-"Please remove the entered text."
-msgstr ""
-
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -17840,14 +17805,11 @@ msgstr "Ver"
 msgid "View from user's perspective"
 msgstr "Vista desde la perspectiva del usuario"
 
-#: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
@@ -17856,7 +17818,6 @@ msgstr "Vista desde la perspectiva del usuario"
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
-#: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
 msgid "View this in Zammad"
 msgstr "Ver en Zammad"

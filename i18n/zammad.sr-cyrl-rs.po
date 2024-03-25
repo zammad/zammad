@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-21 10:07+0000\n"
+"PO-Revision-Date: 2024-03-25 12:04+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -512,10 +512,8 @@ msgid "%s is inactive, please select an active one."
 msgstr "%s је искључен, молимо изаберите укључен."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "is required"
 msgid "%s is required."
-msgstr "је обавезно"
+msgstr "%s је обавезно."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
@@ -9778,6 +9776,11 @@ msgstr "Без SSL"
 msgid "No Thanks!"
 msgstr "Не, хвала!"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid ""
+"No additional text can be sent with this media type. Please remove the text."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
 msgstr "Нема чланака"
@@ -14013,10 +14016,8 @@ msgstr "Датотека не припада наведеном чланку."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
-#, fuzzy
-#| msgid "Type %s is not supported."
 msgid "The file type %s is not allowed."
-msgstr "Тип %s није подржан."
+msgstr "Тип датотеке %s није дозвољен."
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -14049,12 +14050,6 @@ msgstr "Формат предмета."
 #: lib/whatsapp/retry/media.rb
 msgid "The given article is not a media article."
 msgstr "Задат чланак не садржи медијски прилог."
-
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
-msgid ""
-"The given media type does not support any text to be sent in parallel. "
-"Please remove the entered text."
-msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -16923,14 +16918,11 @@ msgstr "Преглед"
 msgid "View from user's perspective"
 msgstr "Погледај из перспективе корисника"
 
-#: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
@@ -16939,7 +16931,6 @@ msgstr "Погледај из перспективе корисника"
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
-#: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
 msgid "View this in Zammad"
 msgstr "Погледај у Zammad"
@@ -19219,6 +19210,13 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid ""
+#~ "The given media type does not support any text to be sent in parallel. "
+#~ "Please remove the entered text."
+#~ msgstr ""
+#~ "Дат тип датотеке медија не подржава слање текста уз њега. Молимо уклоните "
+#~ "унети текст."
 
 #~ msgid "Caption for %s is not allowed. Please clear text!"
 #~ msgstr "Наслов за %s није дозвољен. Молимо уклоните текст!"

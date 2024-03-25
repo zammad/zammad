@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-23 02:05+0000\n"
+"PO-Revision-Date: 2024-03-25 12:04+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/lt/>\n"
@@ -349,7 +349,7 @@ msgstr "%s prisijungimai"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s days ago"
-msgstr "prieš %s dienų"
+msgstr "prieš %s dienų(-ą)"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -364,12 +364,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
-msgstr "%s baigė persijungimą į |%s|!"
+msgstr "%s baigė prisijungimą kaip |%s|!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr "%s aplankai"
+msgstr "%s aplankai(-as)"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
@@ -405,7 +405,7 @@ msgstr "prieš %s minučių"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s months ago"
-msgstr "prieš %s mėnesių"
+msgstr "prieš %s mėnesių(-į)"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -467,7 +467,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
-msgstr "%s privalomas!"
+msgstr "%s būtinas!"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
@@ -569,11 +569,11 @@ msgstr "prieš %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
-msgstr "%s% progresas"
+msgstr "%s% šiuo metu apdorojami"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "%s% have been reopened"
-msgstr "%s% iš naujo atidarytas"
+msgstr "%s% vėl atidaryti"
 
 #: app/models/concerns/has_group_relation_definition.rb
 msgid "%{model} can have full or granular access to group"
@@ -701,7 +701,7 @@ msgstr "2 mažosios ir 2 didžiosios raidės"
 
 #: db/seeds/ticket_priorities.rb
 msgid "2 normal"
-msgstr "2 įprastinis"
+msgstr "2 įprastas"
 
 #: db/seeds/settings.rb
 msgid "2 weeks"
@@ -745,7 +745,7 @@ msgstr "Bilieto užaštrinimas"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "<strong>Chat</strong> with us!"
-msgstr ""
+msgstr "<strong>Kalbėkitės</strong> su mumis!"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
@@ -906,7 +906,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/controllers/channels_email_controller.rb
 msgid "Account already exists!"
-msgstr "Tokia paskyra jau sukurta!"
+msgstr "Ši paskyra jau pridėta!"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid "Account not verified"
@@ -1027,7 +1027,7 @@ msgstr "Aktyvus"
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco
 msgid "Active Agents"
-msgstr "Aktyvūs Agentai"
+msgstr "Aktyvūs agentai"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco
 #, fuzzy
@@ -1037,7 +1037,7 @@ msgstr "Aktyvus"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Activity Stream"
-msgstr "Aktyvūno srautas"
+msgstr "Veiksmų srautas"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
@@ -1137,7 +1137,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
 msgid "Add Tag"
-msgstr "Pridėti tagą"
+msgstr "Pridėti žymą"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Add Telegram Bot"
@@ -1160,10 +1160,8 @@ msgid "Add a data privacy deletion task"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add a message"
-msgstr "Pridėti tagą"
+msgstr "Pridėti žinutę"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add agreement text before submit."
@@ -1197,10 +1195,8 @@ msgid "Add first level heading"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
-msgstr "Pridėti tagą"
+msgstr "Pridėti paveiksliuką"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
@@ -1279,7 +1275,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
 #: db/seeds/roles.rb
 msgid "Admin"
-msgstr "Admin"
+msgstr "Administratorius"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Admin Consent"
@@ -1389,7 +1385,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "All Tickets"
-msgstr "Visi Bilietai"
+msgstr "Visos triktys"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid ""
@@ -1420,12 +1416,13 @@ msgstr "Visi agentai"
 
 #: public/assets/chat/views/waiting.eco
 msgid "All colleagues are busy."
-msgstr ""
+msgstr "Visi kolegos užimti."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
-"Čia rodomi visi kompiuteriai ir naršyklės kurie turi priejimą prie Zammad."
+"Čia rodomi visi kompiuteriai ir naršyklės kurie turi prieigą prie jūsų "
+"Zammad paskyros."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #, fuzzy
@@ -1457,7 +1454,7 @@ msgstr "Leisti naudotojams pridėti naujas žymas."
 
 #: db/seeds/settings.rb
 msgid "Allow users to create new tags."
-msgstr ""
+msgstr "Leisti naudotojams pridėti naujas žymas."
 
 #: db/seeds/settings.rb
 msgid "Allow using one email address for multiple users."
@@ -1483,7 +1480,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Alternative name"
-msgstr "Alternatyvus vardas"
+msgstr "Alternatyvus pavadinimas"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Alternatively, you can use the Zammad API to import data."
@@ -1505,7 +1502,7 @@ msgstr ""
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
 msgid "An error occured during the operation."
-msgstr "Vykdant operaciją įvyko klaida"
+msgstr "Vykdant operaciją įvyko klaida."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
@@ -1909,7 +1906,7 @@ msgstr "Priedai"
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
 msgid "Attached Files"
-msgstr "Prikabinti priedai"
+msgstr "Prisegtukai"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
@@ -1926,7 +1923,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
 #: public/assets/form/form.js
 msgid "Attachments"
-msgstr "Priedai"
+msgstr "Prisegtukai"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in a Simple Storage Service."
@@ -2001,7 +1998,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Aug"
-msgstr "Rug"
+msgstr "Rgp"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
@@ -2181,7 +2178,7 @@ msgstr "Vidutiniškai: %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "Average: %s minutes"
-msgstr "Vidutiniškai: %s min"
+msgstr "Vidutiniškai: %s minučių"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
@@ -2439,7 +2436,7 @@ msgstr "CTI konfigūracija"
 
 #: db/seeds/settings.rb
 msgid "CTI customer last activity"
-msgstr "CTI kliento paskutinė veikla"
+msgstr "CTI kliento paskutinis veiksmas"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -2665,11 +2662,11 @@ msgstr "Pakeisti %s"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 msgid "Change Customer"
-msgstr "Pakeisti Klientą"
+msgstr "Pakeisti klientą"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 msgid "Change Objects"
-msgstr "Pakeisti Objektus"
+msgstr "Pakeisti objektus"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #, fuzzy
@@ -2693,7 +2690,7 @@ msgstr "Pakeisti tvarką"
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
-msgstr "Pakeisti tvarką"
+msgstr "Pakeisti eiliškumą"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
@@ -2817,7 +2814,7 @@ msgstr ""
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Chat closed by %s"
-msgstr ""
+msgstr "%s uždarė pokalbį"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid "Chat not answered, automatically set to offline."
@@ -2871,7 +2868,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee
 msgid "Child"
-msgstr "Vaikinis?"
+msgstr "Vaikas"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
@@ -3056,7 +3053,7 @@ msgstr "Klonas"
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Close"
-msgstr "Užverti"
+msgstr "Uždaryti"
 
 #: db/seeds/macros.rb
 msgid "Close & Tag as Spam"
@@ -3086,13 +3083,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
 msgid "Close tab"
-msgstr "Uždaryti langą"
+msgstr "Uždaryti skirtuką"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
 msgid "Close tab on ticket close"
-msgstr "Uždaryti langą kai triktis bus uždaryta"
+msgstr "Uždaryti skirtuką uždarant triktį"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
@@ -3146,10 +3143,8 @@ msgid "Completed Tasks"
 msgstr ""
 
 #: public/assets/chat/views/chat.eco
-#, fuzzy
-#| msgid "Change your language."
 msgid "Compose your message…"
-msgstr "Pasikeisti savo kalbą."
+msgstr "Rašykite žinutę…"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_settings.coffee
@@ -3177,7 +3172,7 @@ msgstr "Konfigūracija atnaujinta"
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "Configuration"
-msgstr "Konfiguracija"
+msgstr "Konfigūracija"
 
 #: app/assets/javascripts/app/views/knowledge_base/server_snippet.jst.eco
 msgid "Configuration for %s"
@@ -3210,11 +3205,11 @@ msgstr "Patvirtinkite slaptažodį"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
-msgstr "Patvirtinimo dialogas"
+msgstr "Patvirtinimas"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Confirm merge"
-msgstr "Patvirtinkite trikčių sujungimą"
+msgstr "Patvirtinkite sujungimą"
 
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
@@ -3242,7 +3237,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
-msgstr "Patvirtinti arba sutikti su dialogu"
+msgstr "Patvirtinti arba sutikti su dialogo langeliu"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
@@ -3263,7 +3258,7 @@ msgstr "Nepavyko patvirtinti."
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Connect"
-msgstr "Prisijungti"
+msgstr "Prijungti"
 
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email_pre_configured.coffee
@@ -3376,7 +3371,7 @@ msgstr "Tęsti"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Continue anyway"
-msgstr "Pratęsti"
+msgstr "Vistiek tęsti"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
@@ -3420,7 +3415,7 @@ msgstr "Kopijuoti"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
-msgstr "Kopijuoti atidaryto objekto numerį (pvz. trikties) į iškarpinę"
+msgstr "Kopijuoti atidaryto objekto numerį (pvz. trikties numerį) į iškarpinę"
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 msgid "Copy to clipboard"
@@ -3432,7 +3427,7 @@ msgstr "Darbo eiga"
 
 #: db/seeds/settings.rb
 msgid "Core Workflow Ajax Mode"
-msgstr "Darbo eiga AJax režimu"
+msgstr "Darbo eiga Ajax režimu"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Core Workflows"
@@ -3489,7 +3484,7 @@ msgstr "Kiekis"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Counting entries. This may take a while."
-msgstr "Skaičiuojami įrašai. Tai gali užtrukti."
+msgstr "Skaičiuojami įrašai. Gali užtrukti."
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Country"
@@ -3606,7 +3601,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 msgid "Create new Customer"
-msgstr "Sukurti naują abonentą"
+msgstr "Sukurti naują klientą"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue
 #, fuzzy
@@ -3620,7 +3615,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Create new records"
-msgstr "Sukurti naują įrašą"
+msgstr "Sukurti naujus įrašus"
 
 #: app/frontend/apps/mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue
 #, fuzzy
@@ -3648,10 +3643,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
-#, fuzzy
-#| msgid "Created at"
 msgid "Create tag"
-msgstr "Sukurta"
+msgstr "Sukurti žymą"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #, fuzzy
@@ -3661,7 +3654,7 @@ msgstr "Sukurkite pirmą užklausą"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
-msgstr "Sukurkite pirmą užklausą"
+msgstr "Sukurkite pirmąją triktį"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
@@ -3693,7 +3686,7 @@ msgstr "Sukurti"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
-msgstr "Sukurtas"
+msgstr "Sukurta"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 #, fuzzy
@@ -3793,7 +3786,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Current password"
-msgstr "Esamas slaptažodis"
+msgstr "Dabartinis slaptažodis"
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -3962,7 +3955,7 @@ msgstr "Dienos"
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Dec"
-msgstr "Gruo"
+msgstr "Grd"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
@@ -5034,7 +5027,7 @@ msgstr "Aprašymas"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Description (shown as title tag for screen readers)"
-msgstr ""
+msgstr "Aprašymas (rodoma kaip nuorodos pavadinimas ekrano skaitytuvams)"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -5367,6 +5360,10 @@ msgid ""
 "your ticket attributes/tags compared to your current use of dynamic fields "
 "in OTRS."
 msgstr ""
+"Dinaminiai laukeliai nėra dažnai naudojami Zammad. Zammad naudoja kitokią "
+"trikčių klasifikavimo filosofiją - žymas ir individualius laukelius. Dėl šio "
+"skirtumo jums gali tekti pakeisti trikčių tvarkymo įpročius palyginus su "
+"OTRS dinaminiais laukeliais."
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Easter holiday"
@@ -8662,7 +8659,7 @@ msgstr "Tvarkyti %s nustatymus"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
-msgstr "Tvarkyti tagus"
+msgstr "Tvarkyti žymas"
 
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
@@ -9387,7 +9384,7 @@ msgstr "Šaltinis"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco db/seeds/settings.rb
 msgid "New Tags"
-msgstr "Nauji tagai"
+msgstr "Naujos žymos"
 
 #: app/assets/javascripts/app/controllers/template.coffee
 #, fuzzy
@@ -9581,6 +9578,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "No Thanks!"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid ""
+"No additional text can be sent with this media type. Please remove the text."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
@@ -10014,7 +10016,7 @@ msgstr "Spalis"
 
 #: public/assets/chat/chat.coffee
 msgid "Offline"
-msgstr ""
+msgstr "Atsijungęs"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
@@ -10042,7 +10044,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: public/assets/chat/chat.coffee
 msgid "Online"
-msgstr ""
+msgstr "Prisijungęs"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Online Forms"
@@ -11952,7 +11954,7 @@ msgstr "Yra %s nauji atsakymai. Slinkite žemyn"
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Scroll down to see new messages"
-msgstr "Slinkite žemyn, kad pamatytumėte naujas žinutes"
+msgstr "Naujos žinutės žemiau"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -13061,7 +13063,7 @@ msgstr ""
 #: public/assets/chat/views/customer_timeout.eco
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid "Start new conversation"
-msgstr ""
+msgstr "Pradėti naują pokalbį"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Start typing to find the ticket to merge into."
@@ -13382,7 +13384,7 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Tags"
-msgstr "Tagai"
+msgstr "Žymos"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -14055,12 +14057,6 @@ msgstr ""
 #| msgid "%s% have been reopened"
 msgid "The given article is not a media article."
 msgstr "%s% iš naujo atidarytas"
-
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
-msgid ""
-"The given media type does not support any text to be sent in parallel. "
-"Please remove the entered text."
-msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -15584,16 +15580,12 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Ticket tags could not be updated."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko atnaujinti trikties žymų."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket tags updated successfully."
-msgstr "Bilieto atnaujinimas"
+msgstr "Trikties žymos atnaujintos."
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #, fuzzy
@@ -15948,7 +15940,7 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
-msgstr ""
+msgstr "Šiandien"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
@@ -16948,14 +16940,11 @@ msgstr ""
 msgid "View from user's perspective"
 msgstr "Rodyti kaip naudotojui"
 
-#: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
@@ -16964,7 +16953,6 @@ msgstr "Rodyti kaip naudotojui"
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
-#: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
 msgid "View this in Zammad"
 msgstr "Rodyti tai Zammad"
@@ -17018,10 +17006,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Warning message"
-msgstr "Pridėti tagą"
+msgstr "Įspėjimo žinutė"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
@@ -17033,6 +17019,8 @@ msgid ""
 "We are sorry, it is taking longer than expected to get a slot. Please try "
 "again later or send us an email. Thank you!"
 msgstr ""
+"Atsiprašome, kad tenka laukti atskymo. Bandykite vėliau arba rašykite el. "
+"paštu. Ačiū!"
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
@@ -17336,7 +17324,7 @@ msgstr ""
 
 #: public/assets/chat/views/waiting.eco
 msgid "You are on waiting list position <strong>%s</strong>."
-msgstr ""
+msgstr "Esate <strong>%s</strong> eilėje."
 
 #: app/models/transaction/notification.rb
 msgid ""
@@ -17614,10 +17602,8 @@ msgid "Your API key."
 msgstr ""
 
 #: public/assets/form/form.js
-#, fuzzy
-#| msgid "Email"
 msgid "Your Email"
-msgstr "El. paštas"
+msgstr "Jūsų el. paštas"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
@@ -17629,16 +17615,12 @@ msgid "Your Logo"
 msgstr ""
 
 #: public/assets/form/form.js
-#, fuzzy
-#| msgid "Message"
 msgid "Your Message…"
-msgstr "Žinutė"
+msgstr "Jūsų žinutė…"
 
 #: public/assets/form/form.js
-#, fuzzy
-#| msgid "Full Name"
 msgid "Your Name"
-msgstr "Pilnas Vardas"
+msgstr "Jūsų vardas"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
@@ -19139,10 +19121,8 @@ msgid "welcome message"
 msgstr ""
 
 #: db/seeds/ticket_article_types.rb
-#, fuzzy
-#| msgid "Add Tag"
 msgid "whatsapp message"
-msgstr "Pridėti tagą"
+msgstr "Whatsapp žinutė"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"

@@ -9667,6 +9667,11 @@ msgstr ""
 msgid "No Thanks!"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid ""
+"No additional text can be sent with this media type. Please remove the text."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
 msgstr ""
@@ -14170,12 +14175,6 @@ msgstr "विषय का स्वरूप।"
 msgid "The given article is not a media article."
 msgstr "ऑनलाइन कोई एजेंट नहीं है।"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
-msgid ""
-"The given media type does not support any text to be sent in parallel. "
-"Please remove the entered text."
-msgstr ""
-
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -17167,14 +17166,11 @@ msgstr ""
 msgid "View from user's perspective"
 msgstr "उपयोगकर्ता के दृष्टिकोण से देखें"
 
-#: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
@@ -17183,7 +17179,6 @@ msgstr "उपयोगकर्ता के दृष्टिकोण से
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
-#: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
 msgid "View this in Zammad"
 msgstr "ज़माद में इसे देखें"
