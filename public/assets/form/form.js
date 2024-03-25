@@ -178,6 +178,15 @@ $(function() {
         'Your Message…': 'Il tuo messaggio…',
         'Your Name': 'Il tuo nome',
       },
+      'lt': {
+        'Attachments': 'Prisegtukai',
+        'Email': 'El. paštas',
+        'Message': 'Žinutė',
+        'Name': 'Vardas',
+        'Your Email': 'Jūsų el. paštas',
+        'Your Message…': 'Jūsų žinutė…',
+        'Your Name': 'Jūsų vardas',
+      },
       'nl': {
         'Attachments': 'Bijlagen',
         'Email': 'E-mail',
