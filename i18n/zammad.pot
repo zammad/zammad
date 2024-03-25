@@ -8402,6 +8402,10 @@ msgstr ""
 msgid "No Thanks!"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid "No additional text can be sent with this media type. Please remove the text."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
 msgstr ""
@@ -12328,10 +12332,6 @@ msgstr ""
 
 #: lib/whatsapp/retry/media.rb
 msgid "The given article is not a media article."
-msgstr ""
-
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
-msgid "The given media type does not support any text to be sent in parallel. Please remove the entered text."
 msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb

@@ -114,7 +114,7 @@ const actionPlugin: TicketArticleActionPlugin = {
           key: 'bodyNotAllowedForMediaType',
           blocking: true,
           value: i18n.t(
-            'The given media type does not support any text to be sent in parallel. Please remove the entered text.',
+            'No additional text can be sent with this media type. Please remove the text.',
           ),
           type: 'validation',
           visible: true,
