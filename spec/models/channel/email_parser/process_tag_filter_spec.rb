@@ -181,6 +181,10 @@ RSpec.describe 'Channel::EmailParser process tag filter', type: :model do
       ]
     end
 
+    before do
+      travel_to DateTime.parse('2024-01-08 09:30:00 UTC')
+    end
+
     it 'does set tags for new tickets', :aggregate_failures do
       tags = Tag.tag_list(object: 'Ticket', o_id: ticket.id)
       expect(tags).to include(*%w[new1 new2 new3])
