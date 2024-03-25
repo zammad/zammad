@@ -15,7 +15,8 @@ class Service::Translation::Upsert < Service::Base
     translation = Translation.find_source(locale, source)
 
     if translation
-      return translation.update!(target: target)
+      translation.update!(target: target)
+      return translation
     end
 
     Translation.create!(locale: locale, source: source, target: target, is_synchronized_from_codebase: false)

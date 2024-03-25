@@ -329,18 +329,14 @@ class TranslationModal extends App.ControllerModal
       url: "#{@apiPath}/translations/upsert",
       data: JSON.stringify(params),
       processData: true,
-      success: =>
+      success: (data) =>
         @close()
         @successCallback()
 
-        # Show toast if neeeded (means that in string inside the current user language was changed).
         # Later we should add real subscription handling for this situation in the new tech stack.
         currentLocale = App.i18n.get()
         if params.locale == currentLocale
-          @notify(
-            type: 'success'
-            msg:  App.i18n.translateContent('To see the updated translation, please reload your browser.')
-          )
+          App.i18n.setMap(data.source, data.target)
 
     })
 
