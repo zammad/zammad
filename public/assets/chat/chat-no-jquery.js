@@ -1132,6 +1132,25 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Siamo spiacenti, ci vuole più tempo del previsto per ottenere uno spazio libero. Riprova più tardi o inviaci un\'e-mail. Grazie!',
         'You are on waiting list position <strong>%s</strong>.': 'Sei alla posizione <strong>%s</strong> della lista di attesa.'
       },
+      'lt': {
+        '<strong>Chat</strong> with us!': '<strong>Kalbėkitės</strong> su mumis!',
+        'All colleagues are busy.': 'Visi kolegos užimti.',
+        'Chat closed by %s': '%s uždarė pokalbį',
+        'Compose your message…': 'Rašykite žinutę…',
+        'Connecting': 'Jungiamasi',
+        'Connection lost': 'Dingo ryšys',
+        'Connection re-established': 'Ryšys atnaujintas',
+        'Offline': 'Atsijungęs',
+        'Online': 'Prisijungęs',
+        'Scroll down to see new messages': 'Naujos žinutės žemiau',
+        'Send': 'Siųsti',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Jūsų pokalbis buvo uždarytas, nes nieko neatsakėte per %s minučių.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Jūsų pokalbis su <strong>%s</strong> buvo uždarytas, nes nieko neatsakėte per %s minučių.',
+        'Start new conversation': 'Pradėti naują pokalbį',
+        'Today': 'Šiandien',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Atsiprašome, kad tenka laukti atskymo. Bandykite vėliau arba rašykite el. paštu. Ačiū!',
+        'You are on waiting list position <strong>%s</strong>.': 'Esate <strong>%s</strong> eilėje.'
+      },
       'nl': {
         '<strong>Chat</strong> with us!': '<strong>Chat</strong> met ons!',
         'All colleagues are busy.': 'Alle collega\'s zijn bezet.',
