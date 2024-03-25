@@ -148,21 +148,21 @@ class Translation extends App.ControllerSubContent
   showDescriptionModal: =>
     new TranslationDescriptionModal
       contentInline: @description()
-      container: $('.content')
+      container: @el.closest('.content')
 
-  showNewTranslationModal: ->
+  showNewTranslationModal: =>
     new TranslationModal
       headPrefix: __('New')
-      container: $('.content')
+      container: @el.closest('.content')
       successCallback: =>
         @hasModifiedTranslations = true
         @load()
 
-  showEditTranslationModal: (translationData) ->
+  showEditTranslationModal: (translationData) =>
     new TranslationModal
       headPrefix: __('Edit')
       data: translationData
-      container: $('.content')
+      container: @el.closest('.content')
       successCallback: =>
         @hasModifiedTranslations = true
         @load()
