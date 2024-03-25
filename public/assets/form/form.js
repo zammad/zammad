@@ -147,7 +147,7 @@ $(function() {
         'Email': 'E-mail',
         'Message': 'Message',
         'Name': 'Nom',
-        'Your Email': 'Votre Email',
+        'Your Email': 'Votre email',
         'Your Message…': 'Votre message…',
         'Your Name': 'Votre nom',
       },

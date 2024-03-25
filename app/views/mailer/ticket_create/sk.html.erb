@@ -1,0 +1,24 @@
+Nový tiket (#{ticket.title})
+
+<div>Pani/Pán #{recipient.firstname},</div>
+<br>
+<div>Bol vytvorený nový tiket (#{ticket.title}) od "<b>#{current_user.longname}</b>".</div>
+<br>
+<div>
+Skupina: #{ticket.group.name}<br>
+Vlastník: #{ticket.owner.fullname}<br>
+Stav: #{t(ticket.state.name)}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Text:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Pozrieť online v #{config.product_name}</a>
+</div>
