@@ -15,7 +15,7 @@ module Tasks
             if file_or_folder.directory?
               process_dir(file_or_folder)
 
-              delete_empty_enclosing_dir(path)
+              delete_empty_enclosing_dir(file_or_folder)
             elsif file_or_folder.file?
               process_file(file_or_folder)
 
