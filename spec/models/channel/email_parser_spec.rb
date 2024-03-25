@@ -206,6 +206,22 @@ RSpec.describe Channel::EmailParser, type: :model do
           end
         end
       end
+
+      describe 'handle database failures' do
+        subject(:instance) { described_class.new }
+
+        let(:mail_data)    { attributes_for(:failed_email)[:data] }
+
+        before do
+          allow(instance).to receive(:process_with_timeout).and_raise('error')
+          allow_any_instance_of(FailedEmail).to receive(:valid?).and_return(false)
+        end
+
+        it 'raises error even if exception is false' do
+          expect { instance.process({}, mail_data, false) }
+            .to raise_error(ActiveRecord::ActiveRecordError)
+        end
+      end
     end
 
     describe 'creating new tickets' do
