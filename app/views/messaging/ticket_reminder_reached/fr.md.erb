@@ -1,6 +1,6 @@
 # #{ticket.title}
 _<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}> : Rappel atteint !_
-Un ticket a besoin d'attention : rappel atteint pour (#{ticket.title}) avec client "*#{ticket.customer.longname}*".
+Un ticket a besoin d'attention : rappel atteint pour (#{ticket.title}) avec le client "*#{ticket.customer.longname}*".
 
 <% if @objects[:article] %>
 #{article.body_as_text}

@@ -1,0 +1,19 @@
+#{config.product_name} login fra en ny enhed
+
+<div>Hej #{user.firstname},</div>
+<br>
+<div>Det ser ud til, at du loggede ind på din konto <b>ved hjælp af en ny enhed</b> på "#{user_device.created_at}":</div>
+<br>
+<div>
+Din enhed: #{user_device.name}<br>
+Din placering (relativ): #{user_device.location}<br>
+Din IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Din enhed er blevet tilføjet til din liste over kendte enheder, som du kan se her:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Hvis dette ikke var dig, bedes du fjerne enheden, ændre din kontoadgangskode og kontakte din administrator. Nogen kan have fået uautoriseret adgang til din konto.</div>
+<br>
+<div>Dit #{config.product_name} Team</div>
