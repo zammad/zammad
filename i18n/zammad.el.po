@@ -45,10 +45,6 @@ msgstr "dd.mm.yyyy"
 msgid "FORMAT_DATETIME"
 msgstr "dd.mm.yyyy HH:MM"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid " to "
-msgstr " προς "
-
 #: db/seeds/settings.rb
 #, fuzzy
 #| msgid ""
@@ -494,6 +490,16 @@ msgstr "%s πιστοποιητικά"
 msgid "%s days ago"
 msgstr "%s ημέρες πριν"
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+msgid ""
+"%s email(s) were found in your mailbox. They will all be moved from your "
+"mailbox into Zammad."
+msgstr ""
+
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
@@ -519,6 +525,12 @@ msgstr "%s ώρες πριν"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
 msgstr "Το %s είναι ανενεργό, παρακαλώ επιλέξτε ένα ενεργό."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "%s required!"
+msgid "%s is required."
+msgstr "%s required!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
@@ -665,6 +677,12 @@ msgstr "%s ενημερώθηκε ο Χρήστης |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
 msgstr "%s user to %s user"
+
+#: lib/whatsapp/webhook/message.rb
+#, fuzzy
+#| msgid "Channel"
+msgid "%s via WhatsApp"
+msgstr "Καναλι"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s weeks ago"
@@ -1019,9 +1037,10 @@ msgid "Access to Agent Tickets based on Group Access"
 msgstr "Access to Agent Tickets based on Group Access"
 
 #: db/seeds/permissions.rb
-msgid "Access to Customer Tickets based on current_user and organization"
-msgstr ""
-"Πρόσβαση στα αιτήματα πελατών με βάση τον τρέχοντα χρήστη και τον οργανισμό."
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to customer tickets"
+msgstr "Πρόσφατα αιτήματα πελατών"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 #, fuzzy
@@ -1104,8 +1123,6 @@ msgstr "Λογαριασμοί"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Action"
 msgstr "Ενέργεια"
@@ -1414,6 +1431,10 @@ msgstr "Αποκλεισμός ειδοποιήσεων"
 msgid "Additional information and links"
 msgstr "Αποκλεισμός ειδοποιήσεων"
 
+#: db/seeds/settings.rb
+msgid "Additional notes for ticket create types."
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
 msgstr "Διεύθυνση"
@@ -1441,6 +1462,11 @@ msgstr ""
 #| msgid "Bind Password"
 msgid "Admin Password Login"
 msgstr "Δεσμευμένος κωδικός πρόσβασης"
+
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+msgid "Admin password login instructions were sent to your email address."
+msgstr ""
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1635,6 +1661,12 @@ msgstr "Alternatively, you can use the Zammad API to import data."
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
+msgid ""
+"An email was sent to _%s_. Click the link in the email to verify your "
+"account."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
@@ -1885,6 +1917,7 @@ msgstr "Ειστε σιγουρος για την διαγραφη του αντ
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Are you sure?"
 msgstr "Είστε σίγουρος/η;"
@@ -2071,6 +2104,8 @@ msgid "Attached Files"
 msgstr "Attached Files"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #, fuzzy
 #| msgid "Attachments"
 msgid "Attachment"
@@ -2157,6 +2192,7 @@ msgid "Attributes to compare"
 msgstr "Attributes"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "No filter."
@@ -2674,6 +2710,12 @@ msgstr "Ημερολόγια"
 msgid "Call Settings"
 msgstr "Ρυθμισεις"
 
+#: app/models/cti/driver/base.rb
+#, fuzzy
+#| msgid "Import from"
+msgid "Call from %s"
+msgstr "Εισαγωγή από"
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr ""
@@ -2816,14 +2858,6 @@ msgstr "Διαχειριστείτε τις ρυθμίσεις ειδοποιή�
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Caption for %s is not allowed. Please clear text!"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Caption for %s length is too long. Maximum allowed characters are %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
@@ -3274,6 +3308,7 @@ msgstr "Αντιγραφο"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
@@ -3642,7 +3677,7 @@ msgstr "Συνέχεια συνεδρίας"
 msgid "Continue to mobile"
 msgstr "Συνέχεια συνεδρίας"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Contributing Translations"
 msgstr ""
 
@@ -3756,7 +3791,6 @@ msgstr "Χώρα"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -3944,6 +3978,7 @@ msgstr "Δημιουργία"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
 msgstr "Δημιουργηθηκε"
@@ -4070,6 +4105,12 @@ msgstr ""
 msgid "Custom Payload"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Custom Translation"
+msgstr "Μεταφράσεις"
+
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Custom URL"
@@ -4187,10 +4228,6 @@ msgstr "Απαιτείται ενημέρωση της βάσης δεδομέν
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Date"
 msgstr "Ημερομηνία"
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Date & Time"
-msgstr "Ημερομηνία και ώρα"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -5377,6 +5414,7 @@ msgid "Department"
 msgstr "Τμήμα"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -5390,6 +5428,7 @@ msgstr "Τμήμα"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Description"
 msgstr "Περιγραφή"
 
@@ -5455,6 +5494,13 @@ msgstr "Συσκευές"
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 msgid "Dialog window with selections"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid ""
+"Did you know that system translations can be contributed and shared with the "
+"community on our public platform %l? It sports a very convenient user "
+"interface based on Weblate, give it a try!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
@@ -5609,6 +5655,7 @@ msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Ειστε σιγουρος για την διαγραφη του αντικειμένου;"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Document file"
 msgstr ""
@@ -5752,6 +5799,7 @@ msgstr "Διακοπές πάσχα"
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -6299,8 +6347,10 @@ msgid "Endpoint Settings"
 msgstr "Ρυθμίσεις ειδικού"
 
 #: db/seeds/settings.rb
-msgid "Enforce the set up of the two-factor authentication"
-msgstr ""
+#, fuzzy
+#| msgid "Authentication"
+msgid "Enforce the setup of the two-factor authentication"
+msgstr "Authentication"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -6846,17 +6896,12 @@ msgstr "Φόρμα ανατροφοδότησης"
 msgid "File '%s' is uploading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "File format is not allowed: %s"
 msgstr ""
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
-#: app/frontend/shared/form/validation/rules/fileSizes.ts
-msgid "File is too big. %s file has to be %s or smaller."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "File is too big. %s has to be %s or smaller."
 msgstr ""
@@ -6865,10 +6910,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/fileSizes.ts
-msgid "Files are too big. %s"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
@@ -6889,6 +6930,12 @@ msgstr "Φίλτρο"
 #| msgid "assign tickets"
 msgid "Find a ticket"
 msgstr "assign tickets"
+
+#: app/assets/javascripts/app/views/translation/form.jst.eco
+#, fuzzy
+#| msgid "Inline translation"
+msgid "Find translation suggestion"
+msgstr "Ενσωματωμένη μετάφραση"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 #, fuzzy
@@ -7346,6 +7393,10 @@ msgstr ""
 msgid "Given object does not support selector"
 msgstr ""
 
+#: app/models/setting/validation/time_zone.rb
+msgid "Given time zone is not valid."
+msgstr ""
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -7431,10 +7482,6 @@ msgstr ""
 msgid "Google Client Secret"
 msgstr "Μυστικό πελάτη"
 
-#: db/seeds/settings.rb
-msgid "Google Maps"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
 msgstr "Πράσινο"
@@ -7457,6 +7504,7 @@ msgstr " Χαιρετισμός"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
@@ -7710,6 +7758,14 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "Here you can create one."
 msgstr "Εδώ μπορείτε να δημιουργήσετε ένα."
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid ""
+"Here you can override any translation string for a more customized look and "
+"feel. Both recognized system and custom strings are supported, simply add a "
+"new translation in order to identify the source string and provide its new "
+"translation for the target language."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
@@ -8081,13 +8137,6 @@ msgstr ""
 "επιλογή §show§ σε §false§ και προσθέστε την τάξη §open-zammad-chat§ στο "
 "κουμπί. "
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"If you want to translate it via the translation table, just go ahead below."
-msgstr ""
-"Εάν θέλετ να το μεταφράσετε μέσω του πίνακα μεταφράσεων, απλά προχωρήστε "
-"παρακάτω. "
-
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid ""
@@ -8125,6 +8174,7 @@ msgid "Image Service"
 msgstr "Υπηρεσία εικόνας"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "Image Service"
@@ -8394,8 +8444,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
 msgid ""
 "Initiate the import process to transfer your data into Zammad. Keep track of "
-"the migration progress on this page, and we'll notify you as soon as the "
-"import is successfully finished."
+"the migration progress on this page to be notified as soon as the import is "
+"successfully finished."
 msgstr ""
 
 #: app/models/store.rb
@@ -8403,10 +8453,6 @@ msgstr ""
 #| msgid "%s Object(s) are created."
 msgid "Inline content could not be generated."
 msgstr "%s Object(s) are created."
-
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Inline translation"
-msgstr "Ενσωματωμένη μετάφραση"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
@@ -8532,10 +8578,6 @@ msgstr ""
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
 msgstr "Μη έγκυρη μορφή συνδέσμου ζητήματος GitLab"
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Invalid arguments for caption validation"
-msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb
 msgid "Invalid auto wizard file."
@@ -8775,7 +8817,7 @@ msgstr "Ιουν"
 msgid "June"
 msgstr "Ιούνιος"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 #, fuzzy
 #| msgid ""
 #| "Just click into the marker and update the words just in place. Enjoy!"
@@ -8939,6 +8981,12 @@ msgstr ""
 #| msgid "Lastname"
 msgid "Last changed"
 msgstr "Επώνυμο"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+#, fuzzy
+#| msgid "Closing time"
+msgid "Last closing time"
+msgstr "Ωρα κλεισίματος"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -9159,7 +9207,8 @@ msgstr "Φόρτωση"
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr ""
 
-#: db/seeds/settings.rb
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
 msgid "Locale"
 msgstr "Locale"
 
@@ -9327,6 +9376,7 @@ msgstr "Διαχειριστείτε τις ρυθμίσεις ειδοποιή�
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Management"
 msgstr "Διαχείριση"
@@ -9334,6 +9384,15 @@ msgstr "Διαχείριση"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Manually open chat"
 msgstr "Άνοιγμα συνομιλίας χειροκίνητα"
+
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+msgid ""
+"Many dynamic fields were found. This is not a common pattern in Zammad, "
+"which takes a different approach to ticket attributes. Zammad also uses tags "
+"in addition to custom fields to classify tickets. This difference can create "
+"a new philosophy of your ticket attributes / tags compared to your current "
+"use of dynamic fields in OTRS."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -9427,6 +9486,10 @@ msgid "Maximum Email Size"
 msgstr "Μέγιστο μέγεθος ηλεκτονικού ταχυδρομείου"
 
 #: db/seeds/settings.rb
+msgid "Maximum Recursive Ticket Triggers Depth"
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum failed logins"
 msgstr "μέγιστες αποτυχημένες συνδέσεις"
 
@@ -9510,6 +9573,13 @@ msgstr "Συγχώνευση στο αίτημα#"
 #: public/assets/form/form.js
 msgid "Message"
 msgstr "μήνυμα"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Messages"
+msgid "Message Status"
+msgstr "Μηνύματα"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Message after sending form"
@@ -9945,6 +10015,7 @@ msgstr "Δίκτυο"
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
@@ -10053,6 +10124,12 @@ msgstr "Νέο Δελτίο"
 msgid "New Ticket State"
 msgstr "Νέο Δελτίο"
 
+#: app/assets/javascripts/app/views/translation/index.jst.eco
+#, fuzzy
+#| msgid "Translations"
+msgid "New Translation"
+msgstr "Μεταφράσεις"
+
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
 msgstr "New Trigger"
@@ -10073,10 +10150,6 @@ msgstr "Νέα έκδοση"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "New Webhook"
-msgstr ""
-
-#: lib/whatsapp/webhook/message.rb
-msgid "New WhatsApp message from %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -10636,6 +10709,12 @@ msgid ""
 "support this kind of workflows."
 msgstr ""
 
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+msgid ""
+"OTRS BPM processes were found. They cannot be imported into Zammad as these "
+"kind of workflows are currently not supported."
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
@@ -10676,6 +10755,12 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts
 msgid "On %s, %s wrote:"
 msgstr "Στο %s, ο %s έγραψε:"
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+#, fuzzy
+#| msgid "Create a translation"
+msgid "On-screen Translation"
+msgstr "Δημιουργήστε μια μετάφραση"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #, fuzzy
@@ -10970,13 +11055,15 @@ msgstr "Οργανισμός"
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Original"
-msgstr "Πρωτότυπο"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
+msgstr "Πρωτότυπη μορφοποίηση"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Original Formatting"
+msgid "Original Translation"
 msgstr "Πρωτότυπη μορφοποίηση"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -11214,6 +11301,11 @@ msgid "Password needs to have at least a minimal number of characters."
 msgstr ""
 "Ο κωδικός πρόσβασης πρέπει να έχει τουλάχιστον έναν ελάχιστο αριθμό "
 "χαρακτήρων."
+
+#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+msgid "Password reset instructions were sent to your email address."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -11903,10 +11995,6 @@ msgid "Recursive Ticket Triggers"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Recursive Ticket Triggers Loop Max."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
@@ -11955,6 +12043,7 @@ msgstr "Να με θυμάσε"
 msgid "Remote"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
@@ -12165,9 +12254,15 @@ msgid "Requirements"
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Login failed. Have you double-checked your credentials and completed the "
+#| "email verification step?"
 msgid ""
-"Requires the set up of the two-factor authentication for certain user roles."
+"Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
+"Η σύνδεση απέτυχε. Διπλοτσεκάρατε τα διαπιστευτήριά σας και ολοκληρώσατε το "
+"βήμα επαλήθευσης ηλεκτρονικού ταχυδρομείου;"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -12176,12 +12271,12 @@ msgstr ""
 msgid "Resend verification email"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
 msgstr "Αρχικοποίηση"
 
@@ -12192,11 +12287,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password failed!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Reset changes"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
@@ -12271,10 +12361,6 @@ msgid ""
 "Your password will not be reset.</div>\n"
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "Resetting changes…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -12786,6 +12872,7 @@ msgstr "Ηχος Ειδοποίησης"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
@@ -13065,10 +13152,6 @@ msgstr ""
 msgid "Sending…"
 msgstr "σε αναμονή"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-msgid "Sent"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
 msgstr ""
@@ -13189,14 +13272,6 @@ msgstr ""
 #| msgid "Create your first ticket"
 msgid "Set default for new tickets"
 msgstr "ΔΗμιουργήστε το πρώτο σας αίτημα"
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types by selecting type."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types."
-msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -13341,6 +13416,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Show additional notes for ticket creation depending on the selected type."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
@@ -13675,7 +13755,7 @@ msgstr "SMS"
 msgid "Solution Time"
 msgstr "Solution Time"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Some Text"
 msgstr "Some Text"
 
@@ -13692,8 +13772,16 @@ msgid ""
 "APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "Something went wrong."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Something went wrong. Please contact your administrator."
+msgstr ""
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "Something went wrong. Received message: %s"
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -13723,8 +13811,6 @@ msgid "Sounds"
 msgstr "Ηχοι"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Source"
 msgstr "Πηγή"
 
@@ -13820,12 +13906,6 @@ msgstr "Starting Zammad"
 msgid "Starting import…"
 msgstr "Starting Zammad"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"Starting with Zammad 5.1, translations can be contributed exclusively via "
-"\"translations.zammad.org\" %l."
-msgstr ""
-
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -13898,13 +13978,8 @@ msgstr ""
 msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr ""
 
-#: app/frontend/shared/utils/files.ts
-#, fuzzy
-#| msgid "Create a Test Ticket"
-msgid "Sticker"
-msgstr "Δημιουργία Δοκιμαστικού Δελτίου"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "Ticket update"
@@ -13920,7 +13995,9 @@ msgid "Storage"
 msgstr "Αποθηκευτικός Χώρος"
 
 #: db/seeds/settings.rb
-msgid "Storage Mechanism"
+#, fuzzy
+#| msgid "Storage Mechanism"
+msgid "Storage Method"
 msgstr "Storage Mechanism"
 
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -14068,10 +14145,24 @@ msgstr ""
 msgid "System URL"
 msgstr "System URL"
 
+#: app/assets/javascripts/app/controllers/_ui_element/language.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
+#, fuzzy
+#| msgid "set to internal"
+msgid "System default"
+msgstr "ορισμός σε εσωτερικό"
+
 #: app/models/knowledge_base.rb
 msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
 "more locales."
+msgstr ""
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid ""
+"System translations can be contributed and shared with the community on our "
+"public platform %l. It sports a very convenient user interface based on "
+"Weblate, give it a try!"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -14119,16 +14210,14 @@ msgid "Take Reply-To header as sender/from of email."
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
 msgstr "Target"
 
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#: app/assets/javascripts/app/controllers/translation.coffee
 #, fuzzy
-#| msgid "Parent"
-msgid "Target Group"
-msgstr "Γονέας"
+#| msgid "Language"
+msgid "Target Language"
+msgstr "Γλώσσα"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -14258,19 +14347,15 @@ msgstr "Text modules"
 msgid "Text needed"
 msgstr ""
 
-#: app/frontend/shared/form/validation/rules/contentRequired.ts
-msgid "Text or Attachment is required."
-msgstr ""
-
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Text or attachment is required"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr "Text with disabled inline translations looks like"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with enabled inline translations looks like"
 msgstr "Text with enabled inline translations looks like"
 
@@ -14762,6 +14847,13 @@ msgstr "%s Object(s) are created."
 msgid "The file does not belong to the specified article."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "The file type %s is not allowed."
+msgstr "`Time Accounting"
+
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
 "The first part of this PGP email is not a valid version part as mandated by "
@@ -14791,6 +14883,12 @@ msgstr ""
 #| msgid "Defines the state of auto closed tickets."
 msgid "The given article is not a media article."
 msgstr "Καθορίζει την κατάσταση των κλειστών αιτημάτων."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid ""
+"The given media type does not support any text to be sent in parallel. "
+"Please remove the entered text."
+msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -14860,6 +14958,12 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid ""
+"The limit of displayable suggestions was reached, please narrow down your "
+"search."
 msgstr ""
 
 #: app/services/service/auth/verify_admin_token.rb
@@ -15640,6 +15744,10 @@ msgstr "Ηχος Ειδοποίησης"
 msgid "There were errors in your form."
 msgstr ""
 
+#: app/assets/javascripts/app/views/cti/not_configured.jst.eco
+msgid "These are supported:"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
 msgstr ""
@@ -15950,6 +16058,12 @@ msgid ""
 "completed yet."
 msgstr ""
 
+#: app/frontend/shared/router/error.ts
+#, fuzzy
+#| msgid "not exist"
+msgid "This page doesn't exist."
+msgstr "δεν υπάρχει"
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr ""
@@ -16061,7 +16175,6 @@ msgstr "Πέμπτη"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/signature.coffee
@@ -16266,6 +16379,12 @@ msgstr "Article Count"
 msgid "Ticket could not be created."
 msgstr "%s Object(s) are created."
 
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
+#, fuzzy
+#| msgid "Article Count"
+msgid "Ticket creation"
+msgstr "Article Count"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #, fuzzy
 #| msgid "Update successful!"
@@ -16361,6 +16480,7 @@ msgstr "Ενημέρωση Αιτήματος"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 msgid "Ticket update"
 msgstr "Ενημέρωση Αιτήματος"
 
@@ -16567,6 +16687,12 @@ msgstr ""
 msgid "Time zone"
 msgstr ""
 
+#: app/models/setting/validation/time_zone.rb
+#, fuzzy
+#| msgid "Digit required"
+msgid "Time zone is required."
+msgstr "Απαιτείται ψηφίο"
+
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Timeframe between agent updates or for an agent to respond."
 msgstr ""
@@ -16579,7 +16705,9 @@ msgstr ""
 msgid "Timeframe for the first response."
 msgstr ""
 
-#: db/seeds/settings.rb lib/excel_sheet.rb
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
+#: lib/excel_sheet.rb
 msgid "Timezone"
 msgstr ""
 
@@ -16659,10 +16787,10 @@ msgid ""
 "to Home Screen\" button."
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid ""
 "To make translations easier you can enable and disable the inline "
-"translation feature by pressing \"%s\"."
+"translation feature by pressing \"%s\" at any time."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
@@ -16675,6 +16803,14 @@ msgid ""
 "To revert back to the default payload, simply turn off the \"Custom "
 "Payload\" switch above."
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "A new version of Zammad is available, please reload your browser."
+msgid "To see the updated translation, please reload your browser."
+msgstr ""
+"Μια νέα έκδοση του Zammad είναι διαθέσιμη, παρακαλώ ανανεώστε το πρόγραμμα "
+"περιήγησής σας."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -16784,6 +16920,18 @@ msgstr ""
 #, fuzzy
 #| msgid "Translations"
 msgid "Translate field contents"
+msgstr "Μεταφράσεις"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation"
+msgstr "Μεταφράσεις"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation Source"
 msgstr "Μεταφράσεις"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -16996,6 +17144,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
@@ -17006,15 +17155,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "Τυπος"
-
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
-msgid "Type %s is not supported."
-msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #, fuzzy
@@ -17066,6 +17210,10 @@ msgstr ""
 
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
+msgstr ""
+
+#: app/models/failed_email.rb
+msgid "Unknown error: Could not create a ticket from this email."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
@@ -17686,6 +17834,7 @@ msgid "Video"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "No filter."
@@ -17796,63 +17945,6 @@ msgstr ""
 "Λυπούμαστε που χρειάζεται περισσότερος χρόνος από τον αναμενόμενο για να "
 "βρεθεί μία κενή θέση. Παρακαλούμε δοκιμάστε ξανά αργότερα ή στείλτε μας ένα "
 "email. Ευχαριστούμε!"
-
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid ""
-"We detected OTRS BPM processes that can't get imported into Zammad since we "
-"currently don't support this kind of workflows."
-msgstr ""
-
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid ""
-"We found a lot of dynamic fields which are not common in Zammad, as we take "
-"a different approach to ticket attributes. Zammad also uses tags in addition "
-"to custom fields to classify tickets. This difference can create a new "
-"philosophy of your ticket attributes / tags compared to your current use of "
-"dynamic fields in OTRS."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
-#: app/assets/javascripts/app/views/getting_started/email.jst.eco
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-msgid ""
-"We have already found %s email(s) in your mailbox. We will move them all "
-"from your mailbox into Zammad."
-msgstr ""
-
-#: app/assets/javascripts/app/views/cti/not_configured.jst.eco
-msgid "We support:"
-msgstr ""
-
-#: app/frontend/shared/errors/useErrorHandler.ts
-msgid "We're sorry, but something went wrong."
-msgstr ""
-
-#: app/frontend/shared/errors/useErrorHandler.ts
-msgid "We're sorry, but something went wrong. Received message: %s"
-msgstr ""
-
-#: app/frontend/shared/router/error.ts
-msgid "We're sorry, but this page doesn't exist."
-msgstr ""
-
-#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-msgid "We've sent admin password login instructions to your email address."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-msgid ""
-"We've sent an email to _%s_. Click the link in the email to verify your "
-"account."
-msgstr ""
-
-#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-msgid "We've sent password reset instructions to your email address."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
@@ -18042,13 +18134,6 @@ msgstr ""
 msgid "Where to append the chat to."
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"While it will be no longer possible to directly push changed translations "
-"from Zammad, they can be contributed in a very convenient user interface "
-"based on Weblate."
-msgstr ""
-
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Why doesn't the chat show up?"
 msgstr ""
@@ -18124,14 +18209,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "Woo hoo! Your password has been changed!"
-msgstr ""
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Words"
-msgstr ""
-
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "Words:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -18558,19 +18635,7 @@ msgid "Zammad Foundation"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Zammad GeoCalendar Service"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Zammad GeoIP Service"
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Zammad Helpdesk"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Zammad Image Service"
 msgstr ""
 
 #: lib/user_agent.rb
@@ -18867,6 +18932,12 @@ msgstr ""
 msgid "current user organization"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Customer"
+msgid "custom"
+msgstr "Πελάτης"
+
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "custom unit"
 msgstr ""
@@ -18910,6 +18981,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "delete"
 msgstr "Διαγραφή"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Delete Customer"
+msgid "delivered to the customer"
+msgstr "Διαγραφή Πελάτη"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -19361,10 +19439,6 @@ msgstr ""
 msgid "is smaller than the allowed minimum value of %{min_value}"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "is the same"
-msgstr ""
-
 msgid "is the wrong length (should be %{count} characters)"
 msgstr ""
 
@@ -19420,6 +19494,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 msgid "matches found"
 msgstr ""
 
@@ -19588,10 +19663,6 @@ msgstr ""
 msgid "not set (not defined)"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "not translated"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/note.coffee
 #: db/seeds/ticket_article_types.rb
 msgid "note"
@@ -19627,6 +19698,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "or"
 msgstr "ή"
 
@@ -19673,6 +19745,13 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "read by the customer"
+msgstr "Δημιουργία νέου πελάτη"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -19763,6 +19842,13 @@ msgstr "επιλογή συνημένου"
 #| msgid "reply"
 msgid "select visible options"
 msgstr "απαντηση"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "sent to the customer"
+msgstr "Δημιουργία νέου πελάτη"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19873,6 +19959,12 @@ msgstr "Εκκίνηση νεου"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@example.com"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "System"
+msgid "system"
+msgstr "Σύστημα"
 
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
@@ -20070,6 +20162,40 @@ msgstr "... ολόκληρης της περιοχής κειμένου"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
+
+#, fuzzy
+#~| msgid "Create a Test Ticket"
+#~ msgid "Sticker"
+#~ msgstr "Δημιουργία Δοκιμαστικού Δελτίου"
+
+#~ msgid "Access to Customer Tickets based on current_user and organization"
+#~ msgstr ""
+#~ "Πρόσβαση στα αιτήματα πελατών με βάση τον τρέχοντα χρήστη και τον "
+#~ "οργανισμό."
+
+#~ msgid "to"
+#~ msgstr "πρός"
+
+#~ msgid " to "
+#~ msgstr " προς "
+
+#~ msgid "Date & Time"
+#~ msgstr "Ημερομηνία και ώρα"
+
+#~ msgid ""
+#~ "If you want to translate it via the translation table, just go ahead "
+#~ "below."
+#~ msgstr ""
+#~ "Εάν θέλετ να το μεταφράσετε μέσω του πίνακα μεταφράσεων, απλά προχωρήστε "
+#~ "παρακάτω. "
+
+#~ msgid "Original"
+#~ msgstr "Πρωτότυπο"
+
+#, fuzzy
+#~| msgid "Parent"
+#~ msgid "Target Group"
+#~ msgstr "Γονέας"
 
 #, fuzzy
 #~| msgid "Archive"
@@ -20318,9 +20444,6 @@ msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
 
 #~ msgid "Order by Direction"
 #~ msgstr "Παραγγελία κατά κατεύθυνση"
-
-#~ msgid "to"
-#~ msgstr "πρός"
 
 #~ msgid "Configure Base"
 #~ msgstr "Διαμορφώστε τη βάση"

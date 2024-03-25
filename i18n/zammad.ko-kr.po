@@ -45,10 +45,6 @@ msgstr "yyyy-mm-dd"
 msgid "FORMAT_DATETIME"
 msgstr "yyyy-mm-dd HH:MM"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid " to "
-msgstr " 에게 "
-
 #: db/seeds/settings.rb
 #, fuzzy
 #| msgid ""
@@ -479,6 +475,22 @@ msgstr "%s 자격 증명"
 msgid "%s days ago"
 msgstr "%s 이전"
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+#, fuzzy
+#| msgid ""
+#| "We have already found %s email(s) in your mailbox. Zammad will move it "
+#| "all from your mailbox into Zammad."
+msgid ""
+"%s email(s) were found in your mailbox. They will all be moved from your "
+"mailbox into Zammad."
+msgstr ""
+"우리는 이미 사서함 %s 이메일 (들)을 발견했다. Zammad는 Zammad에 사서함에서 모"
+"든 이동합니다."
+
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
@@ -504,6 +516,12 @@ msgstr "%s 시간 전"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
 msgstr "%s 가 비활성 상태입니다. 활성 항목을 선택하십시오."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "%s required!"
+msgid "%s is required."
+msgstr "%S가 필요합니다!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
@@ -652,6 +670,12 @@ msgstr "%s에 업데이트 된 사용자 |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
 msgstr "%s 사용자의 사용자 %"
+
+#: lib/whatsapp/webhook/message.rb
+#, fuzzy
+#| msgid "Channel"
+msgid "%s via WhatsApp"
+msgstr "채널"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
@@ -993,8 +1017,10 @@ msgid "Access to Agent Tickets based on Group Access"
 msgstr "그룹 액세스를 기반으로 에이전트 Ticket 액세스"
 
 #: db/seeds/permissions.rb
-msgid "Access to Customer Tickets based on current_user and organization"
-msgstr ""
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to customer tickets"
+msgstr "최근 고객 Ticket"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 #, fuzzy
@@ -1077,8 +1103,6 @@ msgstr "계정"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Action"
 msgstr "활동"
@@ -1384,6 +1408,10 @@ msgstr "블록 알림"
 msgid "Additional information and links"
 msgstr "블록 알림"
 
+#: db/seeds/settings.rb
+msgid "Additional notes for ticket create types."
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
 msgstr "주소"
@@ -1411,6 +1439,13 @@ msgstr ""
 #| msgid "Bind Password"
 msgid "Admin Password Login"
 msgstr "바인드 비밀번호"
+
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#, fuzzy
+#| msgid "We've sent password reset instructions to your email address."
+msgid "Admin password login instructions were sent to your email address."
+msgstr "우리는 당신의 이메일 주소로 비밀번호 재설정 안내를 보내 드렸습니다."
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1604,6 +1639,12 @@ msgstr "다른 방법으로는 데이터를 가져올 Zammad API를 사용할 �
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
+msgid ""
+"An email was sent to _%s_. Click the link in the email to verify your "
+"account."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
@@ -1854,6 +1895,7 @@ msgstr "이 개체를 삭제해야?"
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Are you sure?"
 msgstr "확실한가요?"
@@ -2038,6 +2080,8 @@ msgid "Attached Files"
 msgstr "첨부 파일"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #, fuzzy
 #| msgid "Attachments"
 msgid "Attachment"
@@ -2122,6 +2166,7 @@ msgid "Attributes to compare"
 msgstr "속성"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "No filter."
@@ -2633,6 +2678,12 @@ msgstr "달력"
 msgid "Call Settings"
 msgstr "설정"
 
+#: app/models/cti/driver/base.rb
+#, fuzzy
+#| msgid "Import from"
+msgid "Call from %s"
+msgstr "에서 가져 오기"
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr ""
@@ -2774,14 +2825,6 @@ msgstr "알림 설정 관리"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Caption for %s is not allowed. Please clear text!"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Caption for %s length is too long. Maximum allowed characters are %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
@@ -3214,6 +3257,7 @@ msgstr "복제"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
@@ -3582,7 +3626,7 @@ msgstr "세션을 계속"
 msgid "Continue to mobile"
 msgstr "세션을 계속"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Contributing Translations"
 msgstr ""
 
@@ -3683,7 +3727,6 @@ msgstr "국가"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -3872,6 +3915,7 @@ msgstr "생성"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
 msgstr "생성완료"
@@ -3998,6 +4042,12 @@ msgstr ""
 msgid "Custom Payload"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Custom Translation"
+msgstr "번역"
+
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Custom URL"
@@ -4110,10 +4160,6 @@ msgstr "데이터베이스 업데이트가 필요합니다"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Date"
 msgstr "날짜"
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Date & Time"
-msgstr "날짜 시간"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -5279,6 +5325,7 @@ msgid "Department"
 msgstr "부서"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -5292,6 +5339,7 @@ msgstr "부서"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Description"
 msgstr "상세"
 
@@ -5357,6 +5405,13 @@ msgstr "장치"
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 msgid "Dialog window with selections"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid ""
+"Did you know that system translations can be contributed and shared with the "
+"community on our public platform %l? It sports a very convenient user "
+"interface based on Weblate, give it a try!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
@@ -5510,6 +5565,7 @@ msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "이 개체를 삭제해야?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Document file"
 msgstr ""
@@ -5662,6 +5718,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -6199,8 +6256,10 @@ msgid "Endpoint Settings"
 msgstr "고급 설정"
 
 #: db/seeds/settings.rb
-msgid "Enforce the set up of the two-factor authentication"
-msgstr ""
+#, fuzzy
+#| msgid "Authentication"
+msgid "Enforce the setup of the two-factor authentication"
+msgstr "인증"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -6736,17 +6795,12 @@ msgstr "피드백 폼"
 msgid "File '%s' is uploading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "File format is not allowed: %s"
 msgstr ""
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
-#: app/frontend/shared/form/validation/rules/fileSizes.ts
-msgid "File is too big. %s file has to be %s or smaller."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "File is too big. %s has to be %s or smaller."
 msgstr ""
@@ -6755,10 +6809,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/fileSizes.ts
-msgid "Files are too big. %s"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
@@ -6779,6 +6829,12 @@ msgstr "필터"
 #| msgid "assign tickets"
 msgid "Find a ticket"
 msgstr "Ticket을 할당"
+
+#: app/assets/javascripts/app/views/translation/form.jst.eco
+#, fuzzy
+#| msgid "Inline translation"
+msgid "Find translation suggestion"
+msgstr "인라인 번역"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 #, fuzzy
@@ -7234,6 +7290,10 @@ msgstr ""
 msgid "Given object does not support selector"
 msgstr ""
 
+#: app/models/setting/validation/time_zone.rb
+msgid "Given time zone is not valid."
+msgstr ""
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -7319,10 +7379,6 @@ msgstr ""
 msgid "Google Client Secret"
 msgstr "클라이언트의 비밀"
 
-#: db/seeds/settings.rb
-msgid "Google Maps"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
 msgstr "녹색"
@@ -7345,6 +7401,7 @@ msgstr "환영"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
@@ -7600,6 +7657,14 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "Here you can create one."
 msgstr "여기에 하나를 만들 수 있습니다."
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid ""
+"Here you can override any translation string for a more customized look and "
+"feel. Both recognized system and custom strings are supported, simply add a "
+"new translation in order to identify the source string and provide its new "
+"translation for the target language."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
@@ -7927,11 +7992,6 @@ msgid ""
 "§false§ and add the class §open-zammad-chat§ to the button."
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"If you want to translate it via the translation table, just go ahead below."
-msgstr "당신은 변환 테이블을 통해 번역하고 싶다면, 그냥 앞서 아래 이동합니다."
-
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid ""
@@ -7969,6 +8029,7 @@ msgid "Image Service"
 msgstr "이미지 서비스"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "Image Service"
@@ -8221,8 +8282,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
 msgid ""
 "Initiate the import process to transfer your data into Zammad. Keep track of "
-"the migration progress on this page, and we'll notify you as soon as the "
-"import is successfully finished."
+"the migration progress on this page to be notified as soon as the import is "
+"successfully finished."
 msgstr ""
 
 #: app/models/store.rb
@@ -8230,10 +8291,6 @@ msgstr ""
 #| msgid "%s Object(s) are created."
 msgid "Inline content could not be generated."
 msgstr "%s 객체 (들)이 생성된다."
-
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Inline translation"
-msgstr "인라인 번역"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
@@ -8355,10 +8412,6 @@ msgstr ""
 
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Invalid arguments for caption validation"
 msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb
@@ -8590,7 +8643,7 @@ msgstr "6월"
 msgid "June"
 msgstr "6월"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 #, fuzzy
 #| msgid ""
 #| "Just click into the marker and update the words just in place. Enjoy!"
@@ -8752,6 +8805,12 @@ msgstr ""
 #| msgid "has changed"
 msgid "Last changed"
 msgstr "변경"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+#, fuzzy
+#| msgid "Closing time"
+msgid "Last closing time"
+msgstr "마감 시간"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -8972,7 +9031,8 @@ msgstr "로드 중 ..."
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr ""
 
-#: db/seeds/settings.rb
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
 msgid "Locale"
 msgstr "장소"
 
@@ -9129,6 +9189,7 @@ msgstr "알림 설정 관리"
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Management"
 msgstr "조치"
@@ -9136,6 +9197,26 @@ msgstr "조치"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Manually open chat"
 msgstr "수동으로 열려있는 채팅"
+
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+#, fuzzy
+#| msgid ""
+#| "We found a lot of dynamic fields which are not common in Zammad, as we "
+#| "follow a different approach to ticket attributes. Zammad uses also tags "
+#| "in addition to custom fields to classify tickets. This difference can "
+#| "create a new philosophy of your ticket attributes / tags compared to your "
+#| "current use of dynamic fields in OTRS."
+msgid ""
+"Many dynamic fields were found. This is not a common pattern in Zammad, "
+"which takes a different approach to ticket attributes. Zammad also uses tags "
+"in addition to custom fields to classify tickets. This difference can create "
+"a new philosophy of your ticket attributes / tags compared to your current "
+"use of dynamic fields in OTRS."
+msgstr ""
+"우리는 우리가 Ticket 속성에 대한 다른 접근 방식을 따를 때, Zammad에서 일반적"
+"없는 동적 필드를 많이 발견했다. Zammad도 사용 Ticket을 분류하는 사용자 정의 "
+"필드에 추가 태그. 이러한 차이는 OTRS 동적 필드의 현재 사용에 비해 Ticket 속"
+"성 / 태그의 새로운 철학을 만들 수 있습니다."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -9229,6 +9310,10 @@ msgid "Maximum Email Size"
 msgstr "최대 이메일 크기"
 
 #: db/seeds/settings.rb
+msgid "Maximum Recursive Ticket Triggers Depth"
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum failed logins"
 msgstr "최대 로그인 실패"
 
@@ -9311,6 +9396,13 @@ msgstr "Ticket #에 병합"
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: public/assets/form/form.js
 msgid "Message"
+msgstr "메시지"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Messages"
+msgid "Message Status"
 msgstr "메시지"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -9747,6 +9839,7 @@ msgstr "회로망"
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
@@ -9855,6 +9948,12 @@ msgstr "새로운 Ticket"
 msgid "New Ticket State"
 msgstr "새로운 Ticket"
 
+#: app/assets/javascripts/app/views/translation/index.jst.eco
+#, fuzzy
+#| msgid "Translations"
+msgid "New Translation"
+msgstr "번역"
+
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
 msgstr "새 트리거"
@@ -9875,10 +9974,6 @@ msgstr "새로운 버전"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "New Webhook"
-msgstr ""
-
-#: lib/whatsapp/webhook/message.rb
-msgid "New WhatsApp message from %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -10439,6 +10534,18 @@ msgstr ""
 "우리는 우리가 현재 워크 플로우의 이러한 종류를 지원하지 않기 때문에, Zammad"
 "로 가져받을 수 없습니다 OTRS BPM 프로세스를 감지했습니다."
 
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+#, fuzzy
+#| msgid ""
+#| "We detected OTRS BPM processes which can't get imported into Zammad, "
+#| "since we currently don't support these kind of workflows."
+msgid ""
+"OTRS BPM processes were found. They cannot be imported into Zammad as these "
+"kind of workflows are currently not supported."
+msgstr ""
+"우리는 우리가 현재 워크 플로우의 이러한 종류를 지원하지 않기 때문에, Zammad"
+"로 가져받을 수 없습니다 OTRS BPM 프로세스를 감지했습니다."
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
@@ -10481,6 +10588,12 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts
 msgid "On %s, %s wrote:"
 msgstr "%s에서 %s 님이 작성 :"
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+#, fuzzy
+#| msgid "Create a translation"
+msgid "On-screen Translation"
+msgstr "번역 생성"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
@@ -10777,13 +10890,15 @@ msgstr "조직"
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Original"
-msgstr "기발한"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
+msgstr "원래 서식"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Original Formatting"
+msgid "Original Translation"
 msgstr "원래 서식"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -11014,6 +11129,13 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "암호 문자의 적어도 최소한의를 가질 필요가있다."
+
+#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#, fuzzy
+#| msgid "We've sent password reset instructions to your email address."
+msgid "Password reset instructions were sent to your email address."
+msgstr "우리는 당신의 이메일 주소로 비밀번호 재설정 안내를 보내 드렸습니다."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -11690,10 +11812,6 @@ msgid "Recursive Ticket Triggers"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Recursive Ticket Triggers Loop Max."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
@@ -11742,6 +11860,7 @@ msgstr "날 기억해"
 msgid "Remote"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
@@ -11956,9 +12075,11 @@ msgid "Requirements"
 msgstr "요구 사항"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Authentication"
 msgid ""
-"Requires the set up of the two-factor authentication for certain user roles."
-msgstr ""
+"Requires the setup of the two-factor authentication for certain user roles."
+msgstr "인증"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -11967,12 +12088,12 @@ msgstr ""
 msgid "Resend verification email"
 msgstr "확인 이메일을 다시 보내"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
 msgstr "다시 놓기"
 
@@ -11984,11 +12105,6 @@ msgstr "암호를 재설정"
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password failed!"
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Reset changes"
-msgstr "변경 재설정"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #, fuzzy
@@ -12063,12 +12179,6 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Reset changes"
-msgid "Resetting changes…"
-msgstr "변경 재설정"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
@@ -12577,6 +12687,7 @@ msgstr "알림 소리"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
@@ -12860,10 +12971,6 @@ msgstr "마지막 기사에 회신"
 msgid "Sending…"
 msgstr "대기"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-msgid "Sent"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
 msgstr ""
@@ -12983,14 +13090,6 @@ msgstr ""
 #| msgid "Create your first ticket"
 msgid "Set default for new tickets"
 msgstr "첫 번째 표를 작성"
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types by selecting type."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types."
-msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -13145,6 +13244,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
 msgstr "표시 상세 검색"
+
+#: db/seeds/settings.rb
+msgid ""
+"Show additional notes for ticket creation depending on the selected type."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
@@ -13471,7 +13575,7 @@ msgstr "SMS"
 msgid "Solution Time"
 msgstr "해결 시간"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Some Text"
 msgstr "일부 텍스트"
 
@@ -13488,8 +13592,16 @@ msgid ""
 "APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "Something went wrong."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Something went wrong. Please contact your administrator."
+msgstr ""
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "Something went wrong. Received message: %s"
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -13519,8 +13631,6 @@ msgid "Sounds"
 msgstr "사운드"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Source"
 msgstr "출처"
 
@@ -13622,12 +13732,6 @@ msgstr "Zammad 시작"
 msgid "Starting import…"
 msgstr "Zammad 시작"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"Starting with Zammad 5.1, translations can be contributed exclusively via "
-"\"translations.zammad.org\" %l."
-msgstr ""
-
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -13700,13 +13804,8 @@ msgstr ""
 msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr ""
 
-#: app/frontend/shared/utils/files.ts
-#, fuzzy
-#| msgid "Create a Test Ticket"
-msgid "Sticker"
-msgstr "테스트 Ticket 만들기"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "Ticket update"
@@ -13722,7 +13821,9 @@ msgid "Storage"
 msgstr "저장"
 
 #: db/seeds/settings.rb
-msgid "Storage Mechanism"
+#, fuzzy
+#| msgid "Storage Mechanism"
+msgid "Storage Method"
 msgstr "저장 메커니즘"
 
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -13870,10 +13971,24 @@ msgstr ""
 msgid "System URL"
 msgstr "시스템 URL"
 
+#: app/assets/javascripts/app/controllers/_ui_element/language.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
+#, fuzzy
+#| msgid "Restore Defaults"
+msgid "System default"
+msgstr "기본값으로 복원"
+
 #: app/models/knowledge_base.rb
 msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
 "more locales."
+msgstr ""
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid ""
+"System translations can be contributed and shared with the community on our "
+"public platform %l. It sports a very convenient user interface based on "
+"Weblate, give it a try!"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -13921,16 +14036,14 @@ msgid "Take Reply-To header as sender/from of email."
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
 msgstr "목표"
 
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#: app/assets/javascripts/app/controllers/translation.coffee
 #, fuzzy
-#| msgid "Parent"
-msgid "Target Group"
-msgstr "부모의"
+#| msgid "Language"
+msgid "Target Language"
+msgstr "언어"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -14060,19 +14173,15 @@ msgstr "텍스트 모듈"
 msgid "Text needed"
 msgstr ""
 
-#: app/frontend/shared/form/validation/rules/contentRequired.ts
-msgid "Text or Attachment is required."
-msgstr ""
-
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Text or attachment is required"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr "장애인 인라인 번역과 텍스트처럼 보인다"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with enabled inline translations looks like"
 msgstr "활성화 인라인 번역과 텍스트처럼 보인다"
 
@@ -14577,6 +14686,13 @@ msgstr "%s 객체 (들)이 생성된다."
 msgid "The file does not belong to the specified article."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "The file type %s is not allowed."
+msgstr "시간 회계"
+
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
 "The first part of this PGP email is not a valid version part as mandated by "
@@ -14609,6 +14725,12 @@ msgstr "피사체의 형식입니다."
 #| msgid "Defines the state of auto closed tickets."
 msgid "The given article is not a media article."
 msgstr "자동차의 상태가 Ticket을 폐쇄 정의합니다."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid ""
+"The given media type does not support any text to be sent in parallel. "
+"Please remove the entered text."
+msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -14680,6 +14802,12 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid ""
+"The limit of displayable suggestions was reached, please narrow down your "
+"search."
 msgstr ""
 
 #: app/services/service/auth/verify_admin_token.rb
@@ -15464,6 +15592,10 @@ msgstr "알림이 전송 될 때."
 msgid "There were errors in your form."
 msgstr ""
 
+#: app/assets/javascripts/app/views/cti/not_configured.jst.eco
+msgid "These are supported:"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
 msgstr "타사 응용 프로그램"
@@ -15769,6 +15901,12 @@ msgid ""
 "completed yet."
 msgstr ""
 
+#: app/frontend/shared/router/error.ts
+#, fuzzy
+#| msgid "not exist"
+msgid "This page doesn't exist."
+msgstr "존재하지"
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr ""
@@ -15888,7 +16026,6 @@ msgstr "목요일"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/signature.coffee
@@ -16093,6 +16230,12 @@ msgstr "Ticket 에스컬레이션"
 msgid "Ticket could not be created."
 msgstr "%s 객체 (들)이 생성된다."
 
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "Ticket creation"
+msgstr "Ticket 에스컬레이션"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #, fuzzy
 #| msgid "The test run was successful."
@@ -16192,6 +16335,7 @@ msgstr "Ticket 업데이트"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 msgid "Ticket update"
 msgstr "Ticket 업데이트"
 
@@ -16400,6 +16544,12 @@ msgstr "시간 단위"
 msgid "Time zone"
 msgstr "시간대"
 
+#: app/models/setting/validation/time_zone.rb
+#, fuzzy
+#| msgid "Digit required"
+msgid "Time zone is required."
+msgstr "자리가 필요"
+
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Timeframe between agent updates or for an agent to respond."
 msgstr ""
@@ -16412,7 +16562,9 @@ msgstr "이 문제를 해결하기위한 기간."
 msgid "Timeframe for the first response."
 msgstr "첫 번째 응답 기간."
 
-#: db/seeds/settings.rb lib/excel_sheet.rb
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
+#: lib/excel_sheet.rb
 msgid "Timezone"
 msgstr "시간대"
 
@@ -16498,10 +16650,14 @@ msgid ""
 "to Home Screen\" button."
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+#, fuzzy
+#| msgid ""
+#| "To make translations easier you can enable and disable the inline "
+#| "translation feature by pressing \"%s\"."
 msgid ""
 "To make translations easier you can enable and disable the inline "
-"translation feature by pressing \"%s\"."
+"translation feature by pressing \"%s\" at any time."
 msgstr ""
 "번역이 쉽게 활성화하고 '%s'을 (를) 눌러 인라인 번역 기능을 해제 할 수 있도록"
 "합니다."
@@ -16516,6 +16672,12 @@ msgid ""
 "To revert back to the default payload, simply turn off the \"Custom "
 "Payload\" switch above."
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "A new version of Zammad is available, please reload your browser."
+msgid "To see the updated translation, please reload your browser."
+msgstr "Zammad의 새 버전을 사용할 수, 브라우저를 다시로드하십시오."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -16633,6 +16795,18 @@ msgstr ""
 #, fuzzy
 #| msgid "Translations"
 msgid "Translate field contents"
+msgstr "번역"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation"
+msgstr "번역"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation Source"
 msgstr "번역"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -16845,6 +17019,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
@@ -16855,15 +17030,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "유형"
-
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
-msgid "Type %s is not supported."
-msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #, fuzzy
@@ -16915,6 +17085,10 @@ msgstr ""
 
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
+msgstr ""
+
+#: app/models/failed_email.rb
+msgid "Unknown error: Could not create a ticket from this email."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
@@ -17541,6 +17715,7 @@ msgid "Video"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "No filter."
@@ -17642,88 +17817,6 @@ msgid ""
 "We are sorry, it is taking longer than expected to get a slot. Please try "
 "again later or send us an email. Thank you!"
 msgstr ""
-
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
-#, fuzzy
-#| msgid ""
-#| "We detected OTRS BPM processes which can't get imported into Zammad, "
-#| "since we currently don't support these kind of workflows."
-msgid ""
-"We detected OTRS BPM processes that can't get imported into Zammad since we "
-"currently don't support this kind of workflows."
-msgstr ""
-"우리는 우리가 현재 워크 플로우의 이러한 종류를 지원하지 않기 때문에, Zammad"
-"로 가져받을 수 없습니다 OTRS BPM 프로세스를 감지했습니다."
-
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
-#, fuzzy
-#| msgid ""
-#| "We found a lot of dynamic fields which are not common in Zammad, as we "
-#| "follow a different approach to ticket attributes. Zammad uses also tags "
-#| "in addition to custom fields to classify tickets. This difference can "
-#| "create a new philosophy of your ticket attributes / tags compared to your "
-#| "current use of dynamic fields in OTRS."
-msgid ""
-"We found a lot of dynamic fields which are not common in Zammad, as we take "
-"a different approach to ticket attributes. Zammad also uses tags in addition "
-"to custom fields to classify tickets. This difference can create a new "
-"philosophy of your ticket attributes / tags compared to your current use of "
-"dynamic fields in OTRS."
-msgstr ""
-"우리는 우리가 Ticket 속성에 대한 다른 접근 방식을 따를 때, Zammad에서 일반적"
-"없는 동적 필드를 많이 발견했다. Zammad도 사용 Ticket을 분류하는 사용자 정의 "
-"필드에 추가 태그. 이러한 차이는 OTRS 동적 필드의 현재 사용에 비해 Ticket 속"
-"성 / 태그의 새로운 철학을 만들 수 있습니다."
-
-#: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
-#: app/assets/javascripts/app/views/getting_started/email.jst.eco
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-#, fuzzy
-#| msgid ""
-#| "We have already found %s email(s) in your mailbox. Zammad will move it "
-#| "all from your mailbox into Zammad."
-msgid ""
-"We have already found %s email(s) in your mailbox. We will move them all "
-"from your mailbox into Zammad."
-msgstr ""
-"우리는 이미 사서함 %s 이메일 (들)을 발견했다. Zammad는 Zammad에 사서함에서 모"
-"든 이동합니다."
-
-#: app/assets/javascripts/app/views/cti/not_configured.jst.eco
-msgid "We support:"
-msgstr ""
-
-#: app/frontend/shared/errors/useErrorHandler.ts
-msgid "We're sorry, but something went wrong."
-msgstr ""
-
-#: app/frontend/shared/errors/useErrorHandler.ts
-msgid "We're sorry, but something went wrong. Received message: %s"
-msgstr ""
-
-#: app/frontend/shared/router/error.ts
-msgid "We're sorry, but this page doesn't exist."
-msgstr ""
-
-#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-#, fuzzy
-#| msgid "We've sent password reset instructions to your email address."
-msgid "We've sent admin password login instructions to your email address."
-msgstr "우리는 당신의 이메일 주소로 비밀번호 재설정 안내를 보내 드렸습니다."
-
-#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-msgid ""
-"We've sent an email to _%s_. Click the link in the email to verify your "
-"account."
-msgstr ""
-
-#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-msgid "We've sent password reset instructions to your email address."
-msgstr "우리는 당신의 이메일 주소로 비밀번호 재설정 안내를 보내 드렸습니다."
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
@@ -17914,13 +18007,6 @@ msgstr "어디에"
 msgid "Where to append the chat to."
 msgstr "어디로 채팅을 추가합니다."
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"While it will be no longer possible to directly push changed translations "
-"from Zammad, they can be contributed in a very convenient user interface "
-"based on Weblate."
-msgstr ""
-
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Why doesn't the chat show up?"
 msgstr "왜 채팅이 표시되지 않습니다?"
@@ -18016,16 +18102,6 @@ msgstr "~이 우! 귀하의 이메일 주소가 확인되었습니다!"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "Woo hoo! Your password has been changed!"
 msgstr "당신의 비밀번호가 변경되었습니다!"
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Words"
-msgstr "말"
-
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-#, fuzzy
-#| msgid "Words"
-msgid "Words:"
-msgstr "말"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Workflow"
@@ -18501,19 +18577,7 @@ msgid "Zammad Foundation"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Zammad GeoCalendar Service"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Zammad GeoIP Service"
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Zammad Helpdesk"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Zammad Image Service"
 msgstr ""
 
 #: lib/user_agent.rb
@@ -18816,6 +18880,12 @@ msgstr "현재 사용자"
 msgid "current user organization"
 msgstr "현재 사용자 조직"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "customer"
+msgid "custom"
+msgstr "고객"
+
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 #, fuzzy
 #| msgid "customer"
@@ -18861,6 +18931,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "delete"
 msgstr "지우다"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Delete Customer"
+msgid "delivered to the customer"
+msgstr "고객 삭제"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -19322,10 +19399,6 @@ msgstr ""
 msgid "is smaller than the allowed minimum value of %{min_value}"
 msgstr ""
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "is the same"
-msgstr "똑같다"
-
 msgid "is the wrong length (should be %{count} characters)"
 msgstr ""
 
@@ -19381,6 +19454,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 #, fuzzy
 #| msgid "matches"
 msgid "matches found"
@@ -19555,10 +19629,6 @@ msgstr ""
 msgid "not set (not defined)"
 msgstr "설정하지 (정의 생략)"
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "not translated"
-msgstr "번역되지"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/note.coffee
 #: db/seeds/ticket_article_types.rb
 msgid "note"
@@ -19594,6 +19664,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "or"
 msgstr "또는"
 
@@ -19640,6 +19711,13 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "도달"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "read by the customer"
+msgstr "새로운 고객을 만들기"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -19730,6 +19808,13 @@ msgstr "선택 첨부 ..."
 #| msgid "reply"
 msgid "select visible options"
 msgstr "댓글"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "sent to the customer"
+msgstr "새로운 고객을 만들기"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19838,6 +19923,12 @@ msgstr "새로운 시작"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@example.com"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "System"
+msgid "system"
+msgstr "시스템"
 
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
@@ -20045,6 +20136,86 @@ msgstr "... 전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#, fuzzy
+#~| msgid "Create a Test Ticket"
+#~ msgid "Sticker"
+#~ msgstr "테스트 Ticket 만들기"
+
+#~ msgid "to"
+#~ msgstr "에"
+
+#~ msgid " to "
+#~ msgstr " 에게 "
+
+#~ msgid "Date & Time"
+#~ msgstr "날짜 시간"
+
+#~ msgid ""
+#~ "If you want to translate it via the translation table, just go ahead "
+#~ "below."
+#~ msgstr ""
+#~ "당신은 변환 테이블을 통해 번역하고 싶다면, 그냥 앞서 아래 이동합니다."
+
+#~ msgid "Original"
+#~ msgstr "기발한"
+
+#~ msgid "Reset changes"
+#~ msgstr "변경 재설정"
+
+#, fuzzy
+#~| msgid "Reset changes"
+#~ msgid "Resetting changes…"
+#~ msgstr "변경 재설정"
+
+#~ msgid "Words"
+#~ msgstr "말"
+
+#, fuzzy
+#~| msgid "Words"
+#~ msgid "Words:"
+#~ msgstr "말"
+
+#~ msgid "is the same"
+#~ msgstr "똑같다"
+
+#~ msgid "not translated"
+#~ msgstr "번역되지"
+
+#, fuzzy
+#~| msgid "Parent"
+#~ msgid "Target Group"
+#~ msgstr "부모의"
+
+#, fuzzy
+#~| msgid ""
+#~| "We detected OTRS BPM processes which can't get imported into Zammad, "
+#~| "since we currently don't support these kind of workflows."
+#~ msgid ""
+#~ "We detected OTRS BPM processes that can't get imported into Zammad since "
+#~ "we currently don't support this kind of workflows."
+#~ msgstr ""
+#~ "우리는 우리가 현재 워크 플로우의 이러한 종류를 지원하지 않기 때문에, "
+#~ "Zammad로 가져받을 수 없습니다 OTRS BPM 프로세스를 감지했습니다."
+
+#, fuzzy
+#~| msgid ""
+#~| "We found a lot of dynamic fields which are not common in Zammad, as we "
+#~| "follow a different approach to ticket attributes. Zammad uses also tags "
+#~| "in addition to custom fields to classify tickets. This difference can "
+#~| "create a new philosophy of your ticket attributes / tags compared to "
+#~| "your current use of dynamic fields in OTRS."
+#~ msgid ""
+#~ "We found a lot of dynamic fields which are not common in Zammad, as we "
+#~ "take a different approach to ticket attributes. Zammad also uses tags in "
+#~ "addition to custom fields to classify tickets. This difference can create "
+#~ "a new philosophy of your ticket attributes / tags compared to your "
+#~ "current use of dynamic fields in OTRS."
+#~ msgstr ""
+#~ "우리는 우리가 Ticket 속성에 대한 다른 접근 방식을 따를 때, Zammad에서 일반"
+#~ "적없는 동적 필드를 많이 발견했다. Zammad도 사용 Ticket을 분류하는 사용자 "
+#~ "정의 필드에 추가 태그. 이러한 차이는 OTRS 동적 필드의 현재 사용에 비해 "
+#~ "Ticket 속성 / 태그의 새로운 철학을 만들 수 있습니다."
 
 #, fuzzy
 #~| msgid "Archive"
@@ -20364,9 +20535,6 @@ msgstr "∅ 오늘 대기 시간"
 #~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "고르다"
-
-#~ msgid "to"
-#~ msgstr "에"
 
 #~ msgid "Configure Base"
 #~ msgstr "구성 자료"

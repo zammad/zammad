@@ -45,10 +45,6 @@ msgstr "dd.mm.yyyy"
 msgid "FORMAT_DATETIME"
 msgstr "dd.mm.yyyy HH:MM"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid " to "
-msgstr " do "
-
 #: db/seeds/settings.rb
 #, fuzzy
 #| msgid ""
@@ -482,6 +478,22 @@ msgstr "%s přihlašovací údaje"
 msgid "%s days ago"
 msgstr "před %s dny"
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+#, fuzzy
+#| msgid ""
+#| "We have already found %s email(s) in your mailbox. We will move them all "
+#| "from your mailbox into Zammad."
+msgid ""
+"%s email(s) were found in your mailbox. They will all be moved from your "
+"mailbox into Zammad."
+msgstr ""
+"Nalezli jsme již %s e-mailů ve vaší schránce. Všechny je přesuneme z vaší "
+"schránky do Zammadu."
+
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
@@ -507,6 +519,12 @@ msgstr "před %s hodinami"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
 msgstr "%s je neaktivní, prosím zvolte aktivní."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "is required"
+msgid "%s is required."
+msgstr "je povinné"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
@@ -641,6 +659,12 @@ msgstr "%s aktualizoval uživatele |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
 msgstr "Od %s uživatele k %s uživateli"
+
+#: lib/whatsapp/webhook/message.rb
+#, fuzzy
+#| msgid "Chats"
+msgid "%s via WhatsApp"
+msgstr "Chaty"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s weeks ago"
@@ -983,9 +1007,10 @@ msgid "Access to Agent Tickets based on Group Access"
 msgstr "Přístup k ticketům řešitelů na základě Skupinového přístupu"
 
 #: db/seeds/permissions.rb
-msgid "Access to Customer Tickets based on current_user and organization"
-msgstr ""
-"Přístup k zákazickým ticketům na základě aktuálního uživatele a organizace"
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to customer tickets"
+msgstr "Nedávné zákaznické tickety"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 #, fuzzy
@@ -1068,8 +1093,6 @@ msgstr "Účty"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Action"
 msgstr "Akce"
@@ -1353,6 +1376,12 @@ msgstr "Další informace"
 msgid "Additional information and links"
 msgstr "Další informace"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Set notes for ticket create types."
+msgid "Additional notes for ticket create types."
+msgstr "Nastavte poznámku pro typy vytvářených ticketů."
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
 msgstr "Adresa"
@@ -1378,6 +1407,15 @@ msgstr "Rozhraní administrátora"
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Admin Password Login"
 msgstr "Přihlášení správce heslem"
+
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+#, fuzzy
+#| msgid "We've sent admin password login instructions to your email address."
+msgid "Admin password login instructions were sent to your email address."
+msgstr ""
+"Na vaši e-mailovou adresu jsme zaslali instrukce k přihlášení heslem "
+"administrátora."
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1613,6 +1651,18 @@ msgstr "Pro import dat můžete dodatečně použít Zammad API."
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
 msgstr "Vždy"
+
+#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
+#, fuzzy
+#| msgid ""
+#| "We've sent an email to _%s_. Click the link in the email to verify your "
+#| "account."
+msgid ""
+"An email was sent to _%s_. Click the link in the email to verify your "
+"account."
+msgstr ""
+"Poslali jsme e-mail na adresu _%s_. Pro ověření vašeho účtu klikněte na "
+"odkaz v e-mailu."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1856,6 +1906,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Are you sure?"
 msgstr "Jste si jisti?"
@@ -2033,6 +2084,8 @@ msgid "Attached Files"
 msgstr "Přiložené soubory"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Attachment"
 msgstr "Příloha"
 
@@ -2115,6 +2168,7 @@ msgid "Attributes to compare"
 msgstr "Atributy k porovnání"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "No filter."
@@ -2598,6 +2652,12 @@ msgstr "Kalendáře"
 msgid "Call Settings"
 msgstr "Nastavení hovorů"
 
+#: app/models/cti/driver/base.rb
+#, fuzzy
+#| msgid "Call from %s for %s"
+msgid "Call from %s"
+msgstr "Hovor od %s pro %s"
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr "Hovor od %s pro %s"
@@ -2735,14 +2795,6 @@ msgstr "Nebylo možné označit online oznámení jako zobrazené"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Caption for %s is not allowed. Please clear text!"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Caption for %s length is too long. Maximum allowed characters are %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
@@ -3150,6 +3202,7 @@ msgstr "Naklonovat"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
@@ -3519,7 +3572,7 @@ msgstr "Pokračovat do desktopové aplikace"
 msgid "Continue to mobile"
 msgstr "Pokračovat do mobilní aplikace"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Contributing Translations"
 msgstr "Přispívání překladem"
 
@@ -3641,7 +3694,6 @@ msgstr "Země"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -3834,6 +3886,7 @@ msgstr "Vytvořit:"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
 msgstr "Vytvořeno"
@@ -3950,6 +4003,12 @@ msgstr "Vlastní"
 msgid "Custom Payload"
 msgstr "Uživatelský obsah"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Custom Translation"
+msgstr "Překlady"
+
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Custom URL"
@@ -4058,10 +4117,6 @@ msgstr "Vyžaduje se aktualizace databáze"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Date"
 msgstr "Datum"
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Date & Time"
-msgstr "Date & Time"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Date & time field"
@@ -5296,6 +5351,7 @@ msgid "Department"
 msgstr "Oddělení"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -5309,6 +5365,7 @@ msgstr "Oddělení"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Description"
 msgstr "Popis"
 
@@ -5369,6 +5426,13 @@ msgstr "Zařízení"
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 msgid "Dialog window with selections"
 msgstr "Okno dialogu s výběry"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid ""
+"Did you know that system translations can be contributed and shared with the "
+"community on our public platform %l? It sports a very convenient user "
+"interface based on Weblate, give it a try!"
+msgstr ""
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -5505,6 +5569,7 @@ msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Opravdu si přejete nastavit viditelnost tohoto článku na \"veřejný\"?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Document file"
 msgstr ""
@@ -5660,6 +5725,7 @@ msgstr "Velikonoční prázdniny"
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -6197,7 +6263,9 @@ msgid "Endpoint Settings"
 msgstr "Nastavení koncového bodu"
 
 #: db/seeds/settings.rb
-msgid "Enforce the set up of the two-factor authentication"
+#, fuzzy
+#| msgid "Enforce the set up of the two-factor authentication"
+msgid "Enforce the setup of the two-factor authentication"
 msgstr "Vynutit nastavení dvou faktorové autentizace"
 
 #: db/seeds/settings.rb
@@ -6751,19 +6819,14 @@ msgstr "Formulář odezvy"
 msgid "File '%s' is uploading"
 msgstr "Soubor '%s' se nahrává"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "No file formats allowed."
 msgid "File format is not allowed: %s"
 msgstr "Nejsou povoleny žádné formáty souborů."
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
-#: app/frontend/shared/form/validation/rules/fileSizes.ts
-msgid "File is too big. %s file has to be %s or smaller."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "File too big, max. %s MB allowed."
@@ -6775,10 +6838,6 @@ msgstr "Soubor je příliš velký, povoleno max. %s MB."
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "Soubor je příliš velký, povoleno max. %s MB."
-
-#: app/frontend/shared/form/validation/rules/fileSizes.ts
-msgid "Files are too big. %s"
-msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -6796,6 +6855,12 @@ msgstr "Filtr"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Find a ticket"
 msgstr "Najít ticket"
+
+#: app/assets/javascripts/app/views/translation/form.jst.eco
+#, fuzzy
+#| msgid "Inline translation"
+msgid "Find translation suggestion"
+msgstr "Inline překlad"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
@@ -7219,6 +7284,12 @@ msgstr ""
 msgid "Given object does not support selector"
 msgstr ""
 
+#: app/models/setting/validation/time_zone.rb
+#, fuzzy
+#| msgid "The image is invalid."
+msgid "Given time zone is not valid."
+msgstr "Obrázek je neplatný."
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -7298,10 +7369,6 @@ msgstr "ID klienta Google"
 msgid "Google Client Secret"
 msgstr "Klientské pověření Googlu"
 
-#: db/seeds/settings.rb
-msgid "Google Maps"
-msgstr "Google Mapy"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
 msgstr "Zelená"
@@ -7324,6 +7391,7 @@ msgstr "Pozdrav"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
@@ -7565,6 +7633,14 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "Here you can create one."
 msgstr "Zde si můžete takový vytvořit."
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid ""
+"Here you can override any translation string for a more customized look and "
+"feel. Both recognized system and custom strings are supported, simply add a "
+"new translation in order to identify the source string and provide its new "
+"translation for the target language."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
@@ -7901,13 +7977,6 @@ msgstr ""
 "Pokud chcete otevírat chat kliknutím na tlačítko, nastavte možnost "
 "§zobrazovat§ na §vypnuto§ a tlačítku přiřaďte třídu §open-zammad-chat§."
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"If you want to translate it via the translation table, just go ahead below."
-msgstr ""
-"Také můžete překládat přes níže umístěnou tabulku všech přeložitelných "
-"výrazů."
-
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid ""
@@ -7946,6 +8015,7 @@ msgid "Image Service"
 msgstr "Služba snímků"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "Image Service"
@@ -8207,17 +8277,13 @@ msgstr "Informace"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
 msgid ""
 "Initiate the import process to transfer your data into Zammad. Keep track of "
-"the migration progress on this page, and we'll notify you as soon as the "
-"import is successfully finished."
+"the migration progress on this page to be notified as soon as the import is "
+"successfully finished."
 msgstr ""
 
 #: app/models/store.rb
 msgid "Inline content could not be generated."
 msgstr "Vnořený obsah se nepodařilo vygenerovat."
-
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Inline translation"
-msgstr "Inline překlad"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Insert text from Knowledge Base article"
@@ -8329,10 +8395,6 @@ msgstr "Neplatný API token GitLab GraphQL"
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
 msgstr "Neplatný formát událostního odkazu GitLabu"
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Invalid arguments for caption validation"
-msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb
 msgid "Invalid auto wizard file."
@@ -8582,7 +8644,7 @@ msgstr "Čer"
 msgid "June"
 msgstr "Červen"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr ""
@@ -8736,6 +8798,12 @@ msgstr "Poslední změna %s %s uživatelem %s"
 #| msgid "has changed"
 msgid "Last changed"
 msgstr "byl změněn"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+#, fuzzy
+#| msgid "Closing time"
+msgid "Last closing time"
+msgstr "Zavírací doba"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -8942,7 +9010,8 @@ msgstr "Načítám…"
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr "Místní MTA (Sendmail/Postfix/Exim/...) - použít nastavení serveru"
 
-#: db/seeds/settings.rb
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
 msgid "Locale"
 msgstr "Lokalizace"
 
@@ -9105,6 +9174,7 @@ msgstr "Upravte své nastavení oznámení"
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Management"
 msgstr "Správa"
@@ -9112,6 +9182,27 @@ msgstr "Správa"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Manually open chat"
 msgstr "Ručně otevřít chat"
+
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+#, fuzzy
+#| msgid ""
+#| "We found a lot of dynamic fields which are not common in Zammad, as we "
+#| "take a different approach to ticket attributes. Zammad also uses tags in "
+#| "addition to custom fields to classify tickets. This difference can create "
+#| "a new philosophy of your ticket attributes / tags compared to your "
+#| "current use of dynamic fields in OTRS."
+msgid ""
+"Many dynamic fields were found. This is not a common pattern in Zammad, "
+"which takes a different approach to ticket attributes. Zammad also uses tags "
+"in addition to custom fields to classify tickets. This difference can create "
+"a new philosophy of your ticket attributes / tags compared to your current "
+"use of dynamic fields in OTRS."
+msgstr ""
+"Nalezli jsme velké množství dynamických polí, která nejsou v Zammadu běžná, "
+"jelikož máme odlišný přístup k atributům ticketu. Zammad používá pro "
+"klasifikaci ticketů kromě vlastních polí také štítky. Tento rozdíl může "
+"vytvořit novou filozofii atributů / štítků u vašich ticketů s porovnáním k "
+"současnému použití dynamických polí v OTRS."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -9197,6 +9288,12 @@ msgid "Maximum Email Size"
 msgstr "Maximální velikost emailu"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Recursive Ticket Triggers"
+msgid "Maximum Recursive Ticket Triggers Depth"
+msgstr "Rekurzivní spouštěče ticketů"
+
+#: db/seeds/settings.rb
 msgid "Maximum failed logins"
 msgstr "Maximální počet neúspěšných přihlášení"
 
@@ -9278,6 +9375,13 @@ msgstr "Sloučit s Ticket#"
 #: public/assets/form/form.js
 msgid "Message"
 msgstr "Zpráva"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Messages"
+msgid "Message Status"
+msgstr "Zprávy"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Message after sending form"
@@ -9680,6 +9784,7 @@ msgstr "Síť"
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
@@ -9782,6 +9887,12 @@ msgstr "Nový ticket"
 msgid "New Ticket State"
 msgstr "Nový ticket"
 
+#: app/assets/javascripts/app/views/translation/index.jst.eco
+#, fuzzy
+#| msgid "Translations"
+msgid "New Translation"
+msgstr "Překlady"
+
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
 msgstr "Nový Spouštěč"
@@ -9803,12 +9914,6 @@ msgstr "Nová Verze"
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "New Webhook"
 msgstr "Nový webhook"
-
-#: lib/whatsapp/webhook/message.rb
-#, fuzzy
-#| msgid "Test message from Zammad"
-msgid "New WhatsApp message from %s"
-msgstr "Zkušební zpráva ze Zammadu"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
@@ -10369,6 +10474,18 @@ msgstr ""
 "Zjistili jsme OTRS BPM procesy, které nemohou být importovány do Zammadu, "
 "neboť aktuálně nepodporujeme tento typ pracovních postupů."
 
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+#, fuzzy
+#| msgid ""
+#| "We detected OTRS BPM processes that can't get imported into Zammad since "
+#| "we currently don't support this kind of workflows."
+msgid ""
+"OTRS BPM processes were found. They cannot be imported into Zammad as these "
+"kind of workflows are currently not supported."
+msgstr ""
+"Zjistili jsme OTRS BPM procesy, které nemohou být importovány do Zammadu, "
+"neboť aktuálně nepodporujeme tento typ pracovních postupů."
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
@@ -10409,6 +10526,12 @@ msgstr "Ok"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts
 msgid "On %s, %s wrote:"
 msgstr "%s, %s napsal:"
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+#, fuzzy
+#| msgid "Create a translation"
+msgid "On-screen Translation"
+msgstr "Vytvořit překlad"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
@@ -10686,13 +10809,15 @@ msgstr "Organizátor"
 msgid "Origin By"
 msgstr "Původně od"
 
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Original"
-msgstr "Originál"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
+msgstr "Původní formátování"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Original Formatting"
+msgid "Original Translation"
 msgstr "Původní formátování"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -10914,6 +11039,13 @@ msgstr "Heslo musí obsahovat nejméně jeden speciální znak."
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "Heslo musí obsahovat alespoň minimální počet znaků."
+
+#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#, fuzzy
+#| msgid "We've sent password reset instructions to your email address."
+msgid "Password reset instructions were sent to your email address."
+msgstr "Byly vým zaskány instrukce pro obnovení / vytvoření hesla na E-mail."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -11574,10 +11706,6 @@ msgid "Recursive Ticket Triggers"
 msgstr "Rekurzivní spouštěče ticketů"
 
 #: db/seeds/settings.rb
-msgid "Recursive Ticket Triggers Loop Max."
-msgstr "Max. cyklů rekurzivních spouštěčů ticketů"
-
-#: db/seeds/settings.rb
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
@@ -11628,6 +11756,7 @@ msgstr "Zapamatovat si mne"
 msgid "Remote"
 msgstr "Vzdálený"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
@@ -11824,9 +11953,11 @@ msgid "Requirements"
 msgstr "Požadavky"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enforce the set up of the two-factor authentication"
 msgid ""
-"Requires the set up of the two-factor authentication for certain user roles."
-msgstr ""
+"Requires the setup of the two-factor authentication for certain user roles."
+msgstr "Vynutit nastavení dvou faktorové autentizace"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -11835,12 +11966,12 @@ msgstr ""
 msgid "Resend verification email"
 msgstr "Znovu poslat ověřovací email"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
 msgstr "Vyresetovat"
 
@@ -11852,11 +11983,6 @@ msgstr "Resetovat Heslo"
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password failed!"
 msgstr "Obnovení hesla se nezdařilo!"
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Reset changes"
-msgstr "Resetovat změny"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Reset overview order"
@@ -12011,10 +12137,6 @@ msgstr ""
 "heslo nebude obnoveno.</div>\n"
 "<br>\n"
 "<div>Tým aplikace #{config.product_name}</div>\n"
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "Resetting changes…"
-msgstr "Resetování změn…"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
@@ -12512,6 +12634,7 @@ msgstr "Stránka nebyla nalezena"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
@@ -12781,10 +12904,6 @@ msgstr "Odesílatel posledního článku"
 msgid "Sending…"
 msgstr "Odesílání…"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-msgid "Sent"
-msgstr "Odesláno"
-
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
 msgstr "Úspěšně odesláno!"
@@ -12899,14 +13018,6 @@ msgstr ""
 #| msgid "Default type for a new ticket"
 msgid "Set default for new tickets"
 msgstr "Výchozí typ nového ticketu"
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types by selecting type."
-msgstr "Nastavte poznámku pro typy vytvářených ticketů zvolením typu."
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types."
-msgstr "Nastavte poznámku pro typy vytvářených ticketů."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -13043,6 +13154,13 @@ msgstr "Zobrazit ikonku zásoby (feedu)"
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
 msgstr "Zobrazit detaily vyhledávání"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Set notes for ticket create types by selecting type."
+msgid ""
+"Show additional notes for ticket creation depending on the selected type."
+msgstr "Nastavte poznámku pro typy vytvářených ticketů zvolením typu."
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
@@ -13343,7 +13461,7 @@ msgstr "SMS"
 msgid "Solution Time"
 msgstr "Čas Řešení"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Some Text"
 msgstr "Nějaký text"
 
@@ -13365,9 +13483,21 @@ msgstr ""
 "Zammadu! Pokud si přejete, aby se tak dělo automaticky, nastavte proměnnou "
 "prostředí APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 
+#: app/frontend/shared/errors/useErrorHandler.ts
+#, fuzzy
+#| msgid "We're sorry, but something went wrong."
+msgid "Something went wrong."
+msgstr "Omlouváme se, ale něco se pokazilo."
+
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Something went wrong. Please contact your administrator."
 msgstr "Něco se nepovedlo. Kontaktujte prosím vašeho správce."
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+#, fuzzy
+#| msgid "We're sorry, but something went wrong. Received message: %s"
+msgid "Something went wrong. Received message: %s"
+msgstr "Omlouváme se, ale něco se pokazilo. Doručená zpráva: %s"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
@@ -13392,8 +13522,6 @@ msgid "Sounds"
 msgstr "Zvuky"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Source"
 msgstr "zdroj"
 
@@ -13487,14 +13615,6 @@ msgstr "Spouštím Zammad"
 msgid "Starting import…"
 msgstr "Spouštím Zammad"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"Starting with Zammad 5.1, translations can be contributed exclusively via "
-"\"translations.zammad.org\" %l."
-msgstr ""
-"Od verze Zammadu 5.1, svými překlady můžete přispívat výhradně na adrese "
-"\"translations.zammad.org\" %l."
-
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -13563,13 +13683,8 @@ msgstr ""
 msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr ""
 
-#: app/frontend/shared/utils/files.ts
-#, fuzzy
-#| msgid "ticket"
-msgid "Sticker"
-msgstr "ticket"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "Ticket title"
@@ -13585,7 +13700,9 @@ msgid "Storage"
 msgstr "Úložiště"
 
 #: db/seeds/settings.rb
-msgid "Storage Mechanism"
+#, fuzzy
+#| msgid "Storage Mechanism"
+msgid "Storage Method"
 msgstr "Ukládácí mechanismus"
 
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -13731,6 +13848,13 @@ msgstr "Inicializace systému dokončena"
 msgid "System URL"
 msgstr "Systémové URL"
 
+#: app/assets/javascripts/app/controllers/_ui_element/language.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
+#, fuzzy
+#| msgid "Restore Defaults"
+msgid "System default"
+msgstr "Obnovit do základů"
+
 #: app/models/knowledge_base.rb
 msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
@@ -13738,6 +13862,13 @@ msgid ""
 msgstr ""
 "Systém podporuje pouze jedno národní prostředí Znalostní báze. Pro možnost "
 "více národních prostředí upgradujte svůj plán."
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid ""
+"System translations can be contributed and shared with the community on our "
+"public platform %l. It sports a very convenient user interface based on "
+"Weblate, give it a try!"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "SystemID"
@@ -13784,16 +13915,14 @@ msgid "Take Reply-To header as sender/from of email."
 msgstr "Použít hlavičku Reply-To jako odesílatele/from e-mailu."
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
 msgstr "cíl"
 
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
+#: app/assets/javascripts/app/controllers/translation.coffee
 #, fuzzy
-#| msgid "Parent"
-msgid "Target Group"
-msgstr "Nadřazený"
+#| msgid "Language"
+msgid "Target Language"
+msgstr "Jazyk"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -13925,23 +14054,17 @@ msgstr "Textové moduly jsou …"
 msgid "Text needed"
 msgstr "Je požadován text"
 
-#: app/frontend/shared/form/validation/rules/contentRequired.ts
-#, fuzzy
-#| msgid "at least one letter is required"
-msgid "Text or Attachment is required."
-msgstr "je vyžadováno nejméně jedno písmeno"
-
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "at least one letter is required"
 msgid "Text or attachment is required"
 msgstr "je vyžadováno nejméně jedno písmeno"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr "Text s vypnutým inline překladem vypadá takto"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with enabled inline translations looks like"
 msgstr "Text se zapnutým inline překladem vypadá takto"
 
@@ -14458,6 +14581,13 @@ msgstr "Soubor se nepodařilo nahrát."
 msgid "The file does not belong to the specified article."
 msgstr "Soubor nepatří k uvedenému článku."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
+#, fuzzy
+#| msgid "Feature not enabled!"
+msgid "The file type %s is not allowed."
+msgstr "Funkce není povolena!"
+
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
 "The first part of this PGP email is not a valid version part as mandated by "
@@ -14488,6 +14618,12 @@ msgstr "Formát předmětu."
 #| msgid "The article does not belong to the specified ticket."
 msgid "The given article is not a media article."
 msgstr "Článek nepatří uvedenému ticketu."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid ""
+"The given media type does not support any text to be sent in parallel. "
+"Please remove the entered text."
+msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -14554,6 +14690,14 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
+msgstr "Dosáhli jste limitu %s zobrazovaných ticketů (zbývá %s)"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "The limit of %s displayable tickets was reached (%s remaining)"
+msgid ""
+"The limit of displayable suggestions was reached, please narrow down your "
+"search."
 msgstr "Dosáhli jste limitu %s zobrazovaných ticketů (zbývá %s)"
 
 #: app/services/service/auth/verify_admin_token.rb
@@ -15349,6 +15493,12 @@ msgstr "Certifikáty nalezeny pro %s, ale vypršely."
 msgid "There were errors in your form."
 msgstr "Není nakonfigurována pracovní doba."
 
+#: app/assets/javascripts/app/views/cti/not_configured.jst.eco
+#, fuzzy
+#| msgid "We support:"
+msgid "These are supported:"
+msgstr "Podporujeme:"
+
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
 msgstr "Aplikace třetích stran"
@@ -15631,6 +15781,12 @@ msgid ""
 "completed yet."
 msgstr ""
 
+#: app/frontend/shared/router/error.ts
+#, fuzzy
+#| msgid "We're sorry, but this page doesn't exist."
+msgid "This page doesn't exist."
+msgstr "Omlouváme se, ale tato stránka neexistuje."
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr "Tato stránka je pro veřejnost neviditelná."
@@ -15750,7 +15906,6 @@ msgstr "Čtvrtek"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/signature.coffee
@@ -15958,6 +16113,12 @@ msgstr "Akce ticketu"
 msgid "Ticket could not be created."
 msgstr "Ticket nemůže být vytvořen."
 
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
+#, fuzzy
+#| msgid "Ticket actions"
+msgid "Ticket creation"
+msgstr "Akce ticketu"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Ticket customer updated successfully."
 msgstr "Úprava zákazníka v ticketu proběhla úspěšně."
@@ -16062,6 +16223,7 @@ msgstr "Titulek ticketu"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 msgid "Ticket update"
 msgstr "Aktualizace ticketu"
 
@@ -16282,6 +16444,12 @@ msgstr "Časová událost"
 msgid "Time zone"
 msgstr "Časová zóna"
 
+#: app/models/setting/validation/time_zone.rb
+#, fuzzy
+#| msgid "This field is required."
+msgid "Time zone is required."
+msgstr "Toto pole je vyžadováno."
+
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Timeframe between agent updates or for an agent to respond."
 msgstr "Časový rámec mezi aktualizacemi řešitele nebo pro reakci řešitele."
@@ -16294,7 +16462,9 @@ msgstr "Časový rámec pro vyřešení problému."
 msgid "Timeframe for the first response."
 msgstr "Časový rámec pro první reakci."
 
-#: db/seeds/settings.rb lib/excel_sheet.rb
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
+#: lib/excel_sheet.rb
 msgid "Timezone"
 msgstr "Časová zóna"
 
@@ -16383,10 +16553,14 @@ msgstr ""
 "Pro instalaci %s jako aplikace, stiskněte tlačítko %s \"Sdílet\" a pak "
 "tlačítko %s \"Přidat na domovskou obrazovku\"."
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+#, fuzzy
+#| msgid ""
+#| "To make translations easier you can enable and disable the inline "
+#| "translation feature by pressing \"%s\"."
 msgid ""
 "To make translations easier you can enable and disable the inline "
-"translation feature by pressing \"%s\"."
+"translation feature by pressing \"%s\" at any time."
 msgstr ""
 "Pro snadnější překlad můžete zapnout a vypnout inline překládání zmáčknutím "
 "klávesové zkratky \"%s\"."
@@ -16403,6 +16577,14 @@ msgid ""
 msgstr ""
 "K navrácení základní přílohy, jednoduše vypněte přepínač \"Vlastní příloha\" "
 "nahoře."
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "The configuration of Zammad has changed, please reload your browser."
+msgid "To see the updated translation, please reload your browser."
+msgstr ""
+"Konfigurace systému Zammad byla změněna, prosím obnovte si tuto stránku v "
+"prohlížeči."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -16516,6 +16698,18 @@ msgstr "Přesunout konverzaci do jiného chatu:"
 #, fuzzy
 #| msgid "Translations"
 msgid "Translate field contents"
+msgstr "Překlady"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation"
+msgstr "Překlady"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation Source"
 msgstr "Překlady"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -16732,6 +16926,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
@@ -16742,15 +16937,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "Typ"
-
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
-msgid "Type %s is not supported."
-msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "Type:"
@@ -16798,6 +16988,10 @@ msgstr ""
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
 msgstr "Neznámá chyba"
+
+#: app/models/failed_email.rb
+msgid "Unknown error: Could not create a ticket from this email."
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid ""
@@ -17457,6 +17651,7 @@ msgid "Video"
 msgstr "Video"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 #, fuzzy
 #| msgid "Video"
@@ -17554,76 +17749,6 @@ msgid ""
 msgstr ""
 "Omlouváme se, že musíte čekat déle, než je vhodné pro získání slotu. Prosím, "
 "zkuste to později, případně nám napište e-mail. Děkujeme!"
-
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid ""
-"We detected OTRS BPM processes that can't get imported into Zammad since we "
-"currently don't support this kind of workflows."
-msgstr ""
-"Zjistili jsme OTRS BPM procesy, které nemohou být importovány do Zammadu, "
-"neboť aktuálně nepodporujeme tento typ pracovních postupů."
-
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid ""
-"We found a lot of dynamic fields which are not common in Zammad, as we take "
-"a different approach to ticket attributes. Zammad also uses tags in addition "
-"to custom fields to classify tickets. This difference can create a new "
-"philosophy of your ticket attributes / tags compared to your current use of "
-"dynamic fields in OTRS."
-msgstr ""
-"Nalezli jsme velké množství dynamických polí, která nejsou v Zammadu běžná, "
-"jelikož máme odlišný přístup k atributům ticketu. Zammad používá pro "
-"klasifikaci ticketů kromě vlastních polí také štítky. Tento rozdíl může "
-"vytvořit novou filozofii atributů / štítků u vašich ticketů s porovnáním k "
-"současnému použití dynamických polí v OTRS."
-
-#: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
-#: app/assets/javascripts/app/views/getting_started/email.jst.eco
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-msgid ""
-"We have already found %s email(s) in your mailbox. We will move them all "
-"from your mailbox into Zammad."
-msgstr ""
-"Nalezli jsme již %s e-mailů ve vaší schránce. Všechny je přesuneme z vaší "
-"schránky do Zammadu."
-
-#: app/assets/javascripts/app/views/cti/not_configured.jst.eco
-msgid "We support:"
-msgstr "Podporujeme:"
-
-#: app/frontend/shared/errors/useErrorHandler.ts
-msgid "We're sorry, but something went wrong."
-msgstr "Omlouváme se, ale něco se pokazilo."
-
-#: app/frontend/shared/errors/useErrorHandler.ts
-msgid "We're sorry, but something went wrong. Received message: %s"
-msgstr "Omlouváme se, ale něco se pokazilo. Doručená zpráva: %s"
-
-#: app/frontend/shared/router/error.ts
-msgid "We're sorry, but this page doesn't exist."
-msgstr "Omlouváme se, ale tato stránka neexistuje."
-
-#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-msgid "We've sent admin password login instructions to your email address."
-msgstr ""
-"Na vaši e-mailovou adresu jsme zaslali instrukce k přihlášení heslem "
-"administrátora."
-
-#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-msgid ""
-"We've sent an email to _%s_. Click the link in the email to verify your "
-"account."
-msgstr ""
-"Poslali jsme e-mail na adresu _%s_. Pro ověření vašeho účtu klikněte na "
-"odkaz v e-mailu."
-
-#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-msgid "We've sent password reset instructions to your email address."
-msgstr "Byly vým zaskány instrukce pro obnovení / vytvoření hesla na E-mail."
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
@@ -17829,16 +17954,6 @@ msgstr "Kde"
 msgid "Where to append the chat to."
 msgstr "Ke kterému elementu chat připnout."
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"While it will be no longer possible to directly push changed translations "
-"from Zammad, they can be contributed in a very convenient user interface "
-"based on Weblate."
-msgstr ""
-"Přestože již nebude možné zasílat změny v překladech přímo ze Zammadu, stále "
-"jimi můžete přispívat prostřednictvím velmi pohodlného uživatelského "
-"rozhraní, založeného na Weblate."
-
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Why doesn't the chat show up?"
 msgstr "Proč se chat nezobrazuje?"
@@ -17929,14 +18044,6 @@ msgstr "Jupí! Vaše emailová adresa byla ověřena!"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "Woo hoo! Your password has been changed!"
 msgstr "Jupí! Vaše heslo bylo změněno!"
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Words"
-msgstr "Slova"
-
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "Words:"
-msgstr "Slova:"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Workflow"
@@ -18419,20 +18526,8 @@ msgid "Zammad Foundation"
 msgstr "Zammad Foundation"
 
 #: db/seeds/settings.rb
-msgid "Zammad GeoCalendar Service"
-msgstr "Služba Zammad GeoCalendar"
-
-#: db/seeds/settings.rb
-msgid "Zammad GeoIP Service"
-msgstr "Služba Zammad GeoIP"
-
-#: db/seeds/settings.rb
 msgid "Zammad Helpdesk"
 msgstr "Zammad Helpdesk"
-
-#: db/seeds/settings.rb
-msgid "Zammad Image Service"
-msgstr "Služba Zammad Image"
 
 #: lib/user_agent.rb
 msgid "Zammad User Agent"
@@ -18737,6 +18832,12 @@ msgstr "stávající uživatel"
 msgid "current user organization"
 msgstr "organizace stávajícího uživatele"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "customer"
+msgid "custom"
+msgstr "zákazník"
+
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 #, fuzzy
 #| msgid "customer"
@@ -18782,6 +18883,13 @@ msgstr "výchozí"
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "delete"
 msgstr "smazat"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Delete Customer"
+msgid "delivered to the customer"
+msgstr "Smazat zákazníka"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -19202,10 +19310,6 @@ msgstr "je nastaveno"
 msgid "is smaller than the allowed minimum value of %{min_value}"
 msgstr "je menší než nejnižší dovolená hodnota %{min_value}"
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "is the same"
-msgstr "je stejný"
-
 msgid "is the wrong length (should be %{count} characters)"
 msgstr "nemá správnou délku (mělo by být %{count} znaků)"
 
@@ -19259,6 +19363,7 @@ msgstr "vyhovuje jednomu modulu"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 msgid "matches found"
 msgstr "shod nalezeno"
 
@@ -19429,10 +19534,6 @@ msgstr "nenastaveno"
 msgid "not set (not defined)"
 msgstr "nenastaveno (nedefinováno)"
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "not translated"
-msgstr "nepřeložená"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/note.coffee
 #: db/seeds/ticket_article_types.rb
 msgid "note"
@@ -19464,6 +19565,7 @@ msgstr "volitelné"
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "or"
 msgstr "nebo"
 
@@ -19508,6 +19610,13 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "dosažen"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "read by the customer"
+msgstr "Vytvořit nového Zákazníka"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -19591,6 +19700,13 @@ msgstr "zvolte přílohu…"
 #| msgid "Select All"
 msgid "select visible options"
 msgstr "Vybrat vše"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "sent to the customer"
+msgstr "Vytvořit nového Zákazníka"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19697,6 +19813,12 @@ msgstr "začíná jedním z"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "podpora@prikad.cz"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+#, fuzzy
+#| msgid "System"
+msgid "system"
+msgstr "Systém"
 
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
@@ -19889,6 +20011,121 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#, fuzzy
+#~| msgid "ticket"
+#~ msgid "Sticker"
+#~ msgstr "ticket"
+
+#, fuzzy
+#~| msgid "at least one letter is required"
+#~ msgid "Text or Attachment is required."
+#~ msgstr "je vyžadováno nejméně jedno písmeno"
+
+#~ msgid "Zammad GeoCalendar Service"
+#~ msgstr "Služba Zammad GeoCalendar"
+
+#~ msgid "Zammad GeoIP Service"
+#~ msgstr "Služba Zammad GeoIP"
+
+#~ msgid "Zammad Image Service"
+#~ msgstr "Služba Zammad Image"
+
+#~ msgid "Google Maps"
+#~ msgstr "Google Mapy"
+
+#, fuzzy
+#~| msgid "Test message from Zammad"
+#~ msgid "New WhatsApp message from %s"
+#~ msgstr "Zkušební zpráva ze Zammadu"
+
+#~ msgid "Sent"
+#~ msgstr "Odesláno"
+
+#~ msgid "Access to Customer Tickets based on current_user and organization"
+#~ msgstr ""
+#~ "Přístup k zákazickým ticketům na základě aktuálního uživatele a organizace"
+
+#~ msgid "Recursive Ticket Triggers Loop Max."
+#~ msgstr "Max. cyklů rekurzivních spouštěčů ticketů"
+
+#~ msgid "to"
+#~ msgstr "komu"
+
+#~ msgid " to "
+#~ msgstr " do "
+
+#~ msgid "Date & Time"
+#~ msgstr "Date & Time"
+
+#~ msgid ""
+#~ "If you want to translate it via the translation table, just go ahead "
+#~ "below."
+#~ msgstr ""
+#~ "Také můžete překládat přes níže umístěnou tabulku všech přeložitelných "
+#~ "výrazů."
+
+#~ msgid "Original"
+#~ msgstr "Originál"
+
+#~ msgid "Reset changes"
+#~ msgstr "Resetovat změny"
+
+#~ msgid "Resetting changes…"
+#~ msgstr "Resetování změn…"
+
+#~ msgid ""
+#~ "Starting with Zammad 5.1, translations can be contributed exclusively via "
+#~ "\"translations.zammad.org\" %l."
+#~ msgstr ""
+#~ "Od verze Zammadu 5.1, svými překlady můžete přispívat výhradně na adrese "
+#~ "\"translations.zammad.org\" %l."
+
+#~ msgid ""
+#~ "While it will be no longer possible to directly push changed translations "
+#~ "from Zammad, they can be contributed in a very convenient user interface "
+#~ "based on Weblate."
+#~ msgstr ""
+#~ "Přestože již nebude možné zasílat změny v překladech přímo ze Zammadu, "
+#~ "stále jimi můžete přispívat prostřednictvím velmi pohodlného "
+#~ "uživatelského rozhraní, založeného na Weblate."
+
+#~ msgid "Words"
+#~ msgstr "Slova"
+
+#~ msgid "Words:"
+#~ msgstr "Slova:"
+
+#~ msgid "is the same"
+#~ msgstr "je stejný"
+
+#~ msgid "not translated"
+#~ msgstr "nepřeložená"
+
+#, fuzzy
+#~| msgid "Parent"
+#~ msgid "Target Group"
+#~ msgstr "Nadřazený"
+
+#~ msgid ""
+#~ "We detected OTRS BPM processes that can't get imported into Zammad since "
+#~ "we currently don't support this kind of workflows."
+#~ msgstr ""
+#~ "Zjistili jsme OTRS BPM procesy, které nemohou být importovány do Zammadu, "
+#~ "neboť aktuálně nepodporujeme tento typ pracovních postupů."
+
+#~ msgid ""
+#~ "We found a lot of dynamic fields which are not common in Zammad, as we "
+#~ "take a different approach to ticket attributes. Zammad also uses tags in "
+#~ "addition to custom fields to classify tickets. This difference can create "
+#~ "a new philosophy of your ticket attributes / tags compared to your "
+#~ "current use of dynamic fields in OTRS."
+#~ msgstr ""
+#~ "Nalezli jsme velké množství dynamických polí, která nejsou v Zammadu "
+#~ "běžná, jelikož máme odlišný přístup k atributům ticketu. Zammad používá "
+#~ "pro klasifikaci ticketů kromě vlastních polí také štítky. Tento rozdíl "
+#~ "může vytvořit novou filozofii atributů / štítků u vašich ticketů s "
+#~ "porovnáním k současnému použití dynamických polí v OTRS."
 
 #, fuzzy
 #~| msgid "Have a nice day."
@@ -20341,9 +20578,6 @@ msgstr "dnešní ∅ čekací doby"
 #~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "Vybrat"
-
-#~ msgid "to"
-#~ msgstr "komu"
 
 #~ msgid "Client storage"
 #~ msgstr "Klientské úložiště"

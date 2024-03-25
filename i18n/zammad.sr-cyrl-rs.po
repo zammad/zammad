@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-07 02:05+0000\n"
+"PO-Revision-Date: 2024-03-21 10:07+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.4.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -45,10 +45,6 @@ msgstr "d.m.yyyy."
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATETIME"
 msgstr "d.m.yyyy. HH:MM"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid " to "
-msgstr " до "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -477,6 +473,18 @@ msgstr "%s креденцијали"
 msgid "%s days ago"
 msgstr "пре %s дан(а)"
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+msgid ""
+"%s email(s) were found in your mailbox. They will all be moved from your "
+"mailbox into Zammad."
+msgstr ""
+"Пронађено је %s имејл порука у вашем сандучету. Све ће бити пребачене из "
+"вашег сандучета у Zammad."
+
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
@@ -503,9 +511,15 @@ msgstr "пре %s сат/а/и"
 msgid "%s is inactive, please select an active one."
 msgstr "%s је искључен, молимо изаберите укључен."
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "is required"
+msgid "%s is required."
+msgstr "је обавезно"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
-msgstr ""
+msgstr "%s се шаље без наслова"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
@@ -632,6 +646,10 @@ msgstr "Измењен корисник од стране %s: |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
 msgstr "%s корисник ка %s кориснику"
+
+#: lib/whatsapp/webhook/message.rb
+msgid "%s via WhatsApp"
+msgstr "%s преко WhatsApp"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s weeks ago"
@@ -980,9 +998,8 @@ msgid "Access to Agent Tickets based on Group Access"
 msgstr "Приступ тикетима оператера на основу групе"
 
 #: db/seeds/permissions.rb
-msgid "Access to Customer Tickets based on current_user and organization"
-msgstr ""
-"Приступ тикетима клијената на основу тренутног корисника и организације"
+msgid "Access to customer tickets"
+msgstr "Приступ клијент тикетима"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 msgid "Access token"
@@ -1063,8 +1080,6 @@ msgstr "Налози"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Action"
 msgstr "Радња"
@@ -1344,6 +1359,10 @@ msgstr "Информације тикета"
 msgid "Additional information and links"
 msgstr "Додатне информације и линкови"
 
+#: db/seeds/settings.rb
+msgid "Additional notes for ticket create types."
+msgstr "Додатне напомене за типове тикета приликом отварања."
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
 msgstr "Адреса"
@@ -1369,6 +1388,13 @@ msgstr "Интерфејс администратора"
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Admin Password Login"
 msgstr "Пријава администратора путем привремене лозинке"
+
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+msgid "Admin password login instructions were sent to your email address."
+msgstr ""
+"Упутство за пријављивање привременом лозинком администратора послато је на "
+"вашу имејл адресу."
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1590,6 +1616,14 @@ msgstr "Алтернативно, можете користити Zammad API з�
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
 msgstr "Увек"
+
+#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
+msgid ""
+"An email was sent to _%s_. Click the link in the email to verify your "
+"account."
+msgstr ""
+"Имејл порука је послата на _%s_. Кликните на линк из имејла да бисте "
+"потврдили ваш налог."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1826,6 +1860,7 @@ msgstr "Да ли сте сигурни да желите да уклоните 
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Are you sure?"
 msgstr "Да ли сте сигурни?"
@@ -1984,10 +2019,8 @@ msgid "Attach another file"
 msgstr "Приложи још једну датотеку"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Attach files"
 msgid "Attach file"
-msgstr "Приложи датотеке"
+msgstr "Приложи датотеку"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
@@ -2003,6 +2036,8 @@ msgid "Attached Files"
 msgstr "Attached Files"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Attachment"
 msgstr "Прилог"
 
@@ -2084,9 +2119,10 @@ msgid "Attributes to compare"
 msgstr "Атрибути за поређење"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Audio file"
-msgstr ""
+msgstr "Аудио датотека"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2207,7 +2243,7 @@ msgstr "Обавештавање о аутоматском повезивању 
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 msgid "Automatic reminders"
-msgstr ""
+msgstr "Аутоматски подсетници"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2562,6 +2598,10 @@ msgstr "Календари"
 msgid "Call Settings"
 msgstr "Подешавање позива"
 
+#: app/models/cti/driver/base.rb
+msgid "Call from %s"
+msgstr "Позив од %s"
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr "Позив од %s за %s"
@@ -2695,15 +2735,7 @@ msgstr "Није било могуће означити обавештења к�
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Caption for %s is not allowed. Please clear text!"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Caption for %s length is too long. Maximum allowed characters are %s"
-msgstr ""
+msgstr "Није било могуће отпремити датотеку"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -3109,6 +3141,7 @@ msgstr "Клонирај"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
@@ -3455,7 +3488,7 @@ msgstr "Настави на основни приказ"
 msgid "Continue to mobile"
 msgstr "Настави на мобилни приказ"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Contributing Translations"
 msgstr "Допринос преводима"
 
@@ -3561,7 +3594,6 @@ msgstr "Земља"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -3748,6 +3780,7 @@ msgstr "Додај:"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
 msgstr "Додато"
@@ -3864,6 +3897,10 @@ msgstr "Прилагођено"
 msgid "Custom Payload"
 msgstr "Прилагођени подаци"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Custom Translation"
+msgstr "Прилагођени превод"
+
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Custom URL"
@@ -3970,10 +4007,6 @@ msgstr "Неопходно ажурирање базе података"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Date"
 msgstr "Датум"
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Date & Time"
-msgstr "Датум и време"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Date & time field"
@@ -5169,6 +5202,7 @@ msgid "Department"
 msgstr "Одељење"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -5182,6 +5216,7 @@ msgstr "Одељење"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Description"
 msgstr "Опис"
 
@@ -5242,6 +5277,16 @@ msgstr "Уређаји"
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 msgid "Dialog window with selections"
 msgstr "Прозор дијалога са избором"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid ""
+"Did you know that system translations can be contributed and shared with the "
+"community on our public platform %l? It sports a very convenient user "
+"interface based on Weblate, give it a try!"
+msgstr ""
+"Да ли сте знали да системске преводе можете да поделите са заједницом на "
+"нашој јавној платформи %l? Поседује веома удобан кориснички интерфејс "
+"базиран на Weblate-у, пробајте га!"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -5377,9 +5422,10 @@ msgstr ""
 "Да ли сте сигурни да желите да поставите видљивост овог чланка на „јавно”?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Document file"
-msgstr ""
+msgstr "Документ датотека"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
@@ -5453,10 +5499,8 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Преузми и инсталирај %s миграциони додатак на свом %s систему."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#, fuzzy
-#| msgid "select attachment…"
 msgid "Downloading attachments…"
-msgstr "изабери прилог…"
+msgstr "Преузимање прилога…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -5520,6 +5564,7 @@ msgstr "Ускршњи празници"
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -6050,7 +6095,7 @@ msgid "Endpoint Settings"
 msgstr "Подешавања путање"
 
 #: db/seeds/settings.rb
-msgid "Enforce the set up of the two-factor authentication"
+msgid "Enforce the setup of the two-factor authentication"
 msgstr "Захтевај поставку двофакторске аутентификације"
 
 #: db/seeds/settings.rb
@@ -6570,34 +6615,21 @@ msgstr "Форма повратних информација"
 msgid "File '%s' is uploading"
 msgstr "Датотека ’%s’ се отпрема"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "No file formats allowed."
 msgid "File format is not allowed: %s"
-msgstr "Нема дозвољених формата датотека."
-
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
-#: app/frontend/shared/form/validation/rules/fileSizes.ts
-msgid "File is too big. %s file has to be %s or smaller."
-msgstr ""
+msgstr "Недозвољен формат датотеке: %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "File too big, max. %s MB allowed."
 msgid "File is too big. %s has to be %s or smaller."
-msgstr "Датотека је превелика, највише дозвољено %s MB."
+msgstr "Датотека је превелика. %s мора бити %s или мања."
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "Датотека је превелика, највише дозвољено %s MB."
-
-#: app/frontend/shared/form/validation/rules/fileSizes.ts
-msgid "Files are too big. %s"
-msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -6615,6 +6647,10 @@ msgstr "Филтер"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Find a ticket"
 msgstr "Пронађи тикет"
+
+#: app/assets/javascripts/app/views/translation/form.jst.eco
+msgid "Find translation suggestion"
+msgstr "Пронађи предлог превода"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
@@ -7030,6 +7066,10 @@ msgstr "Неуспео GitLab захтев! Молимо проверите да
 msgid "Given object does not support selector"
 msgstr "Дат објекат не подржава услов"
 
+#: app/models/setting/validation/time_zone.rb
+msgid "Given time zone is not valid."
+msgstr "Дата временска зона је неисправна."
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -7105,10 +7145,6 @@ msgstr "Google клијент ID"
 msgid "Google Client Secret"
 msgstr "Google клијентска шифра"
 
-#: db/seeds/settings.rb
-msgid "Google Maps"
-msgstr "Google Maps"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
 msgstr "Зелена"
@@ -7131,6 +7167,7 @@ msgstr "Поздрав"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
@@ -7338,6 +7375,8 @@ msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
 "please reply to keep it open."
 msgstr ""
+"Поздрав, време за разговор ускоро истиче, молимо одговорите да бисте га "
+"продужили."
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -7362,6 +7401,18 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "Here you can create one."
 msgstr "Овде можете отворити један."
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid ""
+"Here you can override any translation string for a more customized look and "
+"feel. Both recognized system and custom strings are supported, simply add a "
+"new translation in order to identify the source string and provide its new "
+"translation for the target language."
+msgstr ""
+"Овде можете прилагодити било који текст превода за прилагођен изглед и "
+"осећај. Подржани су системски и прилагођени текстови, једноставно додајте "
+"нови превод да бисте идентификовали изворни текст и обезбедите нови превод "
+"за циљни језик."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
@@ -7692,13 +7743,6 @@ msgstr ""
 "Уколико желите да отворите ћаскање кликом на дугме, подесите опцију §show§ "
 "на §false§ и додајте класу §open-zammad-chat§ дугмету."
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"If you want to translate it via the translation table, just go ahead below."
-msgstr ""
-"Уколико желите да убаците преводе преко табеле, то можете учинити одмах "
-"испод."
-
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid ""
@@ -7736,11 +7780,10 @@ msgid "Image Service"
 msgstr "Сервис за слике"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Image Service"
 msgid "Image file"
-msgstr "Сервис за слике"
+msgstr "Датотека слике"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
@@ -7980,20 +8023,16 @@ msgstr "Информације"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
 msgid ""
 "Initiate the import process to transfer your data into Zammad. Keep track of "
-"the migration progress on this page, and we'll notify you as soon as the "
-"import is successfully finished."
+"the migration progress on this page to be notified as soon as the import is "
+"successfully finished."
 msgstr ""
 "Започните процез увоза за пребацивање ваших података у Zammad. Обратите "
-"пажњу на прогрес миграције на овој страни и обавестићемо вас чим увоз буде "
+"пажњу на прогрес миграције на овој страни и бићете обавештени чим увоз буде "
 "успешно завршен."
 
 #: app/models/store.rb
 msgid "Inline content could not be generated."
 msgstr "Није било могуће генерисати непосредни садржај."
-
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Inline translation"
-msgstr "Непосредни превод"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Insert text from Knowledge Base article"
@@ -8052,7 +8091,7 @@ msgstr "Интеграције"
 
 #: lib/whatsapp/incoming/media.rb
 msgid "Integrity verification of the downloaded WhatsApp media failed."
-msgstr "Неуспела провера интегритета преузетог WhatsApp медија."
+msgstr "Неуспела провера интегритета преузетог WhatsApp медијског прилога."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
@@ -8105,10 +8144,6 @@ msgstr "Неисправан GitLab GraphQL API кључ"
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
 msgstr "Неисправан формат GitLab извештаја"
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Invalid arguments for caption validation"
-msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb
 msgid "Invalid auto wizard file."
@@ -8351,7 +8386,7 @@ msgstr "јун"
 msgid "June"
 msgstr "јун"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "Само кликните на означене површине и директно измените речи. Уживајте!"
@@ -8500,6 +8535,10 @@ msgstr "Последња промена %s %s од стране %s"
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 msgid "Last changed"
 msgstr "Последњи пут измењено"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+msgid "Last closing time"
+msgstr "Време последњег затварања"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -8702,7 +8741,8 @@ msgstr "Учитавање…"
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr "Локални MTA (Sendmail/Postfix/Exim/…) - користи серверска подешавања"
 
-#: db/seeds/settings.rb
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
 msgid "Locale"
 msgstr "Локал"
 
@@ -8861,6 +8901,7 @@ msgstr "Управљајте вашим подешавањима обавешт�
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Management"
 msgstr "Управљање"
@@ -8868,6 +8909,20 @@ msgstr "Управљање"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Manually open chat"
 msgstr "Отвори ћаскање"
+
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+msgid ""
+"Many dynamic fields were found. This is not a common pattern in Zammad, "
+"which takes a different approach to ticket attributes. Zammad also uses tags "
+"in addition to custom fields to classify tickets. This difference can create "
+"a new philosophy of your ticket attributes / tags compared to your current "
+"use of dynamic fields in OTRS."
+msgstr ""
+"Пронађена су многа динамичка поља. Она нису честа појава у Zammad-у, јер "
+"користимо другачији приступ за атрибуте тикета. Zammad такође користи ознаке "
+"за класификацију тикета поред прилагођених поља. Ова разлика може "
+"представљати потпуно нову филозофију за ваше атрибуте тикета/ознаке у односу "
+"на ваш тренутни приступ са динамичким пољима у OTRS."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -8953,6 +9008,10 @@ msgid "Maximum Email Size"
 msgstr "Максимална величина имејл поруке"
 
 #: db/seeds/settings.rb
+msgid "Maximum Recursive Ticket Triggers Depth"
+msgstr "Максимална дубина рекурзивних окидача тикета"
+
+#: db/seeds/settings.rb
 msgid "Maximum failed logins"
 msgstr "Максимални број неуспешних пријава"
 
@@ -8980,22 +9039,17 @@ msgid "Me"
 msgstr "Ја"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
-#, fuzzy
-#| msgid "Download all records"
 msgid "Media Download Error"
-msgstr "Преузми све записе"
+msgstr "Грешка при преузимању медијског прилога"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
-#, fuzzy
-#| msgid "Loading failed, please try again later."
 msgid "Media download failed. Please try again later."
-msgstr "Неуспешно учитавање, молимо покушајте поново касније."
+msgstr ""
+"Неуспешно преузимање медијског прилога. Молимо покушајте поново касније."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
-#, fuzzy
-#| msgid "Decryption was successful."
 msgid "Media download was successful."
-msgstr "Успешно дешифровање."
+msgstr "Успешно преузимање медијског прилога."
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
@@ -9034,6 +9088,11 @@ msgstr "Споји са Ticket#"
 #: public/assets/form/form.js
 msgid "Message"
 msgstr "Порука"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "Message Status"
+msgstr "Статус поруке"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Message after sending form"
@@ -9433,6 +9492,7 @@ msgstr "Мрежа"
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
@@ -9529,6 +9589,10 @@ msgstr "Нови тикет"
 msgid "New Ticket State"
 msgstr "Ново стање тикета"
 
+#: app/assets/javascripts/app/views/translation/index.jst.eco
+msgid "New Translation"
+msgstr "Нови превод"
+
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
 msgstr "Нови окидач"
@@ -9550,10 +9614,6 @@ msgstr "Нова верзија"
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "New Webhook"
 msgstr "Нови повратни позив"
-
-#: lib/whatsapp/webhook/message.rb
-msgid "New WhatsApp message from %s"
-msgstr "Нова WhatsApp порука од %s"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
@@ -9813,7 +9873,7 @@ msgstr "Нису пронађени записи!"
 
 #: lib/whatsapp/webhook/message/status.rb
 msgid "No related article found to process the status message on."
-msgstr ""
+msgstr "Нису пронађен повезани чланак за обраду поруке статуса."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
@@ -10099,6 +10159,14 @@ msgstr ""
 "OTRS BPM процесе није могуће увести у Zammad јер тренутно не подржавамо ову "
 "врсту радних токова."
 
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+msgid ""
+"OTRS BPM processes were found. They cannot be imported into Zammad as these "
+"kind of workflows are currently not supported."
+msgstr ""
+"Пронађени су OTRS BPM процеси. Њих није могуће увести у Zammad јер тренутно "
+"нису подржане овакве врсте радних токова."
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
@@ -10140,6 +10208,10 @@ msgstr "У реду"
 msgid "On %s, %s wrote:"
 msgstr "У %s, %s је написао/ла:"
 
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid "On-screen Translation"
+msgstr "Непосредни превод на екрану"
+
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
 msgstr "Када се заврши…"
@@ -10162,14 +10234,12 @@ msgid "Online Service"
 msgstr "Онлајн сервис"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "%s attached files"
 msgid "Only %s attachment allowed"
-msgstr "%s прилог(а)"
+msgstr "Дозвољен(о) само %s прилог(а)"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Only %s attachment allowed."
-msgstr ""
+msgstr "Дозвољен(о) само %s прилог(а)."
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
@@ -10407,14 +10477,14 @@ msgstr "Организатор"
 msgid "Origin By"
 msgstr "Потиче од"
 
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Original"
-msgstr "Оригиналан"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Оригиналан формат"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Original Translation"
+msgstr "Оригиналан превод"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -10626,6 +10696,11 @@ msgstr "Лозинка мора садржати најмање један сп�
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "Лозинка мора садржати минимално дозвољени број знакова."
+
+#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+msgid "Password reset instructions were sent to your email address."
+msgstr "Упутство за поништавање лозинке је послато на вашу имејл адресу."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -11269,10 +11344,6 @@ msgid "Recursive Ticket Triggers"
 msgstr "Рекурзивни окидачи тикета"
 
 #: db/seeds/settings.rb
-msgid "Recursive Ticket Triggers Loop Max."
-msgstr "Максималан број петљи рекурзивних окидача тикета."
-
-#: db/seeds/settings.rb
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
@@ -11320,6 +11391,7 @@ msgstr "Запамти ме"
 msgid "Remote"
 msgstr "Удаљено"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
@@ -11433,10 +11505,8 @@ msgid "Reply All"
 msgstr "Oдговори свима"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Conditions for shown tickets"
 msgid "Reply allowed only for open tickets"
-msgstr "Услови за приказане тикете"
+msgstr "Одговор је могућ само у отвореним тикетима"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
@@ -11509,7 +11579,7 @@ msgstr "Услови"
 
 #: db/seeds/settings.rb
 msgid ""
-"Requires the set up of the two-factor authentication for certain user roles."
+"Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
 "Захтева поставку двофакторске аутентификације за одређене корисничке улоге."
 
@@ -11520,12 +11590,12 @@ msgstr ""
 msgid "Resend verification email"
 msgstr "Пошаљи поново имејл поруку за потврду"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
 msgstr "Поништи"
 
@@ -11537,11 +11607,6 @@ msgstr "Поништи лозинку"
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password failed!"
 msgstr "Поништавање лозинке није успело!"
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Reset changes"
-msgstr "Поништи промене"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Reset overview order"
@@ -11645,10 +11710,6 @@ msgstr ""
 "<br>\n"
 "<div>Ваш #{config.product_name} тим</div>\n"
 
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "Resetting changes…"
-msgstr "Поништавање измена…"
-
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
 msgstr "Одговор"
@@ -11678,10 +11739,8 @@ msgid "Retry"
 msgstr "Покушај поново"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#, fuzzy
-#| msgid "Add attachment option to upload."
 msgid "Retry attachment download"
-msgstr "Додај опцију прилога за отпремање."
+msgstr "Покушај поново преузимање прилога"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
@@ -11689,7 +11748,7 @@ msgstr "Понови безбедносни процес"
 
 #: lib/whatsapp/retry/media.rb
 msgid "Retrying to download the sent media via WhatsApp failed."
-msgstr ""
+msgstr "Неуспешно поновљено преззимање послатих медијских прилога са WhatsApp."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -12130,6 +12189,7 @@ msgstr "Кључ вредности резулата претраге „%s” �
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
@@ -12337,6 +12397,8 @@ msgid ""
 "Send out automatic reminders to customers asking them for reply if the 24-"
 "hour window is about to expire."
 msgstr ""
+"Слање аутоматских подсетника клијентима са молбом да одговоре уколико је 24-"
+"часовни временски оквир истиче ускоро."
 
 #: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
@@ -12384,10 +12446,6 @@ msgstr "Пошиљалац последњег чланка"
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "Sending…"
 msgstr "Слање…"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-msgid "Sent"
-msgstr "Послато"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
@@ -12498,14 +12556,6 @@ msgstr "Постави као подразумевано за наставке"
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 msgid "Set default for new tickets"
 msgstr "Постави као подразумевано за нове тикете"
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types by selecting type."
-msgstr "Подеси напомене типова отворених тикета на основу одабраног типа."
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types."
-msgstr "Подеси напомене типова отворених тикета."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -12640,6 +12690,12 @@ msgstr "Прикажи иконицу извора"
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
 msgstr "Прикажи детаље претраге"
+
+#: db/seeds/settings.rb
+msgid ""
+"Show additional notes for ticket creation depending on the selected type."
+msgstr ""
+"Приказује додатне напомене тикета при отварању на основу одабраног типа."
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
@@ -12933,7 +12989,7 @@ msgstr "SMS"
 msgid "Solution Time"
 msgstr "Време решења"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Some Text"
 msgstr "Неки текст"
 
@@ -12955,9 +13011,17 @@ msgstr ""
 "процесе! Уколико желите да се ово деси аутоматски, подесите променљиву "
 "окружења APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "Something went wrong."
+msgstr "Нешто је пошло наопако."
+
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Something went wrong. Please contact your administrator."
 msgstr "Нешто је кренуло наопако. Молимо контактирајте администратора."
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "Something went wrong. Received message: %s"
+msgstr "Нешто је пошло наопако. Порука грешке: %s"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
@@ -12982,8 +13046,6 @@ msgid "Sounds"
 msgstr "Звукови"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Source"
 msgstr "Извор"
 
@@ -13065,14 +13127,6 @@ msgstr "Покретање Zammad-а…"
 msgid "Starting import…"
 msgstr "Покретање увоза…"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"Starting with Zammad 5.1, translations can be contributed exclusively via "
-"\"translations.zammad.org\" %l."
-msgstr ""
-"Почевши од Zammad 5.1, преводи се могу допринети искључиво преко "
-"„translations.zammad.org” %l."
-
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -13139,18 +13193,11 @@ msgstr "Корак 2 од 3: WhatsApp Business број телефона"
 msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr "Корак 3 од 3: WhatsApp Business повратни позив"
 
-#: app/frontend/shared/utils/files.ts
-#, fuzzy
-#| msgid "ticket"
-msgid "Sticker"
-msgstr "тикет"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Ticket title"
 msgid "Sticker file"
-msgstr "Наслов тикета"
+msgstr "Стикер датотека"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -13161,8 +13208,8 @@ msgid "Storage"
 msgstr "Складиште"
 
 #: db/seeds/settings.rb
-msgid "Storage Mechanism"
-msgstr "Механизам за складиштење"
+msgid "Storage Method"
+msgstr "Метод складиштења"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Store"
@@ -13305,6 +13352,11 @@ msgstr "Завршена иницијализација система"
 msgid "System URL"
 msgstr "URL система"
 
+#: app/assets/javascripts/app/controllers/_ui_element/language.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
+msgid "System default"
+msgstr "Системска вредност"
+
 #: app/models/knowledge_base.rb
 msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
@@ -13312,6 +13364,16 @@ msgid ""
 msgstr ""
 "Систем подржава само један локал у бази знања. Унапредите ваш план за више "
 "локала."
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid ""
+"System translations can be contributed and shared with the community on our "
+"public platform %l. It sports a very convenient user interface based on "
+"Weblate, give it a try!"
+msgstr ""
+"Системске преводе можете поделити са заједницом на нашој јавној платформи "
+"%l. Поседује веома удобан кориснички интерфејс базиран на Weblate-у, "
+"пробајте га!"
 
 #: db/seeds/settings.rb
 msgid "SystemID"
@@ -13358,14 +13420,12 @@ msgid "Take Reply-To header as sender/from of email."
 msgstr "Преузми Reply-To заглавље као од/за поље имејл поруке."
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
 msgstr "Циљ"
 
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
-msgid "Target Group"
-msgstr "Циљна група"
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Target Language"
+msgstr "Циљни језик"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -13496,23 +13556,15 @@ msgstr "Текстуални исечци су …"
 msgid "Text needed"
 msgstr "Неопходан текст"
 
-#: app/frontend/shared/form/validation/rules/contentRequired.ts
-#, fuzzy
-#| msgid "at least one letter is required"
-msgid "Text or Attachment is required."
-msgstr "неопходно је бар једно слово"
-
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "at least one letter is required"
 msgid "Text or attachment is required"
-msgstr "неопходно је бар једно слово"
+msgstr "Неопходни су текст или прилог"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr "Текст са неомогућеним непосредним преводима игледаће као"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with enabled inline translations looks like"
 msgstr "Текст са омогућеним непосредним преводима игледаће као"
 
@@ -13540,6 +13592,8 @@ msgid ""
 "The 24 hour customer service window is now closed, no further WhatsApp "
 "messages can be sent."
 msgstr ""
+"24-часовни временски оквир за комуникацију са клијентом је истекао, више "
+"није могуће послати WhatsApp поруке."
 
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
@@ -13957,6 +14011,13 @@ msgstr "Није било могуће отпремити датотеку."
 msgid "The file does not belong to the specified article."
 msgstr "Датотека не припада наведеном чланку."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
+#, fuzzy
+#| msgid "Type %s is not supported."
+msgid "The file type %s is not allowed."
+msgstr "Тип %s није подржан."
+
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
 "The first part of this PGP email is not a valid version part as mandated by "
@@ -13986,10 +14047,14 @@ msgid "The format of the subject."
 msgstr "Формат предмета."
 
 #: lib/whatsapp/retry/media.rb
-#, fuzzy
-#| msgid "This article is not part of the ticket."
 msgid "The given article is not a media article."
-msgstr "Задат чланак тикета не припада овом тикету."
+msgstr "Задат чланак не садржи медијски прилог."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid ""
+"The given media type does not support any text to be sent in parallel. "
+"Please remove the entered text."
+msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -14058,6 +14123,14 @@ msgstr "Тајни кључ је прекратке дужине."
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Достигнуто је ограничење од %s тикет(а) за приказ (преостало је %s)"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid ""
+"The limit of displayable suggestions was reached, please narrow down your "
+"search."
+msgstr ""
+"Достигнуто је ограничење од %s предлог(а) за приказ, молимо сузите вашу "
+"претрагу."
 
 #: app/services/service/auth/verify_admin_token.rb
 msgid "The login is not possible."
@@ -14429,15 +14502,13 @@ msgid "The required value external_credential could not be found in the cache."
 msgstr "Није пронађена обавезна вредност external_credential у кешу."
 
 #: app/controllers/ticket_articles_controller.rb
-#, fuzzy
-#| msgid "The retried security process failed!"
 msgid "The retried attachment download failed."
-msgstr "Неуспео поновни безбедносни процес!"
+msgstr "Неуспешно поновно преузимање прилога."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
-msgstr "Неуспео поновни безбедносни процес!"
+msgstr "Неуспешан поновљени безбедносни процес!"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "The selected date is invalid."
@@ -14784,6 +14855,10 @@ msgstr ""
 msgid "There were errors in your form."
 msgstr "Има грешака у вашој форми."
 
+#: app/assets/javascripts/app/views/cti/not_configured.jst.eco
+msgid "These are supported:"
+msgstr "Подржане су:"
+
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
 msgstr "Апликације трећег лица"
@@ -14838,10 +14913,8 @@ msgid "This field %s"
 msgstr "Ово поље %s"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts
-#, fuzzy
-#| msgid "This field can only contain lowercase letters."
 msgid "This field allows only one file."
-msgstr "Ово поље може садржати само мала слова."
+msgstr "Ово поље дозвољава само једну датотеку."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
@@ -15062,6 +15135,10 @@ msgid ""
 msgstr ""
 "Није било могуће наставити операцију зато што поставка система није завршена."
 
+#: app/frontend/shared/router/error.ts
+msgid "This page doesn't exist."
+msgstr "Ова страница не постоји."
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr "Ова страна није јавно видљива."
@@ -15147,6 +15224,8 @@ msgid ""
 "This text will be sent as an immediate reply to new incoming WhatsApp "
 "messages."
 msgstr ""
+"Овај текст биће послат као одговор на све примљене WhatsApp поруке које "
+"отварају нове тикете."
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -15178,7 +15257,6 @@ msgstr "четвртак"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/signature.coffee
@@ -15366,6 +15444,10 @@ msgstr "Радње тикета"
 msgid "Ticket could not be created."
 msgstr "Није било могуће отворити тикет."
 
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
+msgid "Ticket creation"
+msgstr "Отварање тикета"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Ticket customer updated successfully."
 msgstr "Клијент тикета је успешно освежен."
@@ -15469,6 +15551,7 @@ msgstr "Наслов тикета"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 msgid "Ticket update"
 msgstr "Освежавање тикета"
 
@@ -15675,6 +15758,10 @@ msgstr "Временски догађај"
 msgid "Time zone"
 msgstr "Временска зона"
 
+#: app/models/setting/validation/time_zone.rb
+msgid "Time zone is required."
+msgstr "Временска зона је обавезна."
+
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Timeframe between agent updates or for an agent to respond."
 msgstr "Временски оквир између радњи оператера или одговора оператера."
@@ -15687,7 +15774,9 @@ msgstr "Временски оквир постизања решења пробл
 msgid "Timeframe for the first response."
 msgstr "Временски оквир постизања првог одзива."
 
-#: db/seeds/settings.rb lib/excel_sheet.rb
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
+#: lib/excel_sheet.rb
 msgid "Timezone"
 msgstr "Временска зона"
 
@@ -15766,6 +15855,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "To find out more about the 24-hour customer service window see %l."
 msgstr ""
+"Да бисте сазнали више о 24-часовном временском оквиру за комуникацију са "
+"клијентом погледајте %l."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid ""
@@ -15775,13 +15866,13 @@ msgstr ""
 "За инсталацију %s апликације, кликни на %s „Подели” а затим на дугме %s "
 "„Додај на почетни екран”."
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid ""
 "To make translations easier you can enable and disable the inline "
-"translation feature by pressing \"%s\"."
+"translation feature by pressing \"%s\" at any time."
 msgstr ""
 "Да бисте олакшали превођење можете укључити или искључити функцију "
-"непосредног превода притиском на „%s”."
+"непосредног превода притиском на „%s” у било ком тренутку."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
 msgid ""
@@ -15797,6 +15888,10 @@ msgid ""
 msgstr ""
 "За повратак на подразумеване податке, једноставно искључите дугме "
 "„Прилагођени подаци” изнад."
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "To see the updated translation, please reload your browser."
+msgstr "Да бисте видели нови превод, молимо освежите ваш претраживач."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -15907,6 +16002,14 @@ msgstr "Пренеси разговор у друго ћаскање:"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Translate field contents"
 msgstr "Преведи садржај поља"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Translation"
+msgstr "Превод"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Translation Source"
+msgstr "Изворни превод"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -16104,6 +16207,7 @@ msgstr "Метод двофакторске аутентификације је 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
@@ -16114,15 +16218,10 @@ msgstr "Метод двофакторске аутентификације је 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "Тип"
-
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
-msgid "Type %s is not supported."
-msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "Type:"
@@ -16169,6 +16268,10 @@ msgstr "Јединица"
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
 msgstr "Непозната грешка"
+
+#: app/models/failed_email.rb
+msgid "Unknown error: Could not create a ticket from this email."
+msgstr "Непозната грешка: није било могуће отворити тикет од ове имејл поруке."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid ""
@@ -16807,11 +16910,10 @@ msgid "Video"
 msgstr "Видео"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Video"
 msgid "Video file"
-msgstr "Видео"
+msgstr "Видео датотека"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "View"
@@ -16904,76 +17006,6 @@ msgid ""
 msgstr ""
 "Жао нам је, добијање празног термина траје дуже од очекиваног. Молимо "
 "покушајте поново касније или нам пошаљите имејл поруку. Хвала вам!"
-
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid ""
-"We detected OTRS BPM processes that can't get imported into Zammad since we "
-"currently don't support this kind of workflows."
-msgstr ""
-"Детектовали смо OTRS BPM процесе које није могуће увести у Zammad јер "
-"тренутно не подржавамо ову врсту радних токова."
-
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid ""
-"We found a lot of dynamic fields which are not common in Zammad, as we take "
-"a different approach to ticket attributes. Zammad also uses tags in addition "
-"to custom fields to classify tickets. This difference can create a new "
-"philosophy of your ticket attributes / tags compared to your current use of "
-"dynamic fields in OTRS."
-msgstr ""
-"Пронађен је велики број динамичких поља која нису подржана у Zammad-у, јер "
-"користимо другачији приступ за атрибуте тикета. Zammad такође користи ознаке "
-"за класификацију тикета поред прилагођених поља. Ова разлика може "
-"представљати потпуно нову филозофију око ваших атрибута тикета / ознака у "
-"односу на ваш тренутни приступ са динамичким пољима у OTRS."
-
-#: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
-#: app/assets/javascripts/app/views/getting_started/email.jst.eco
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-msgid ""
-"We have already found %s email(s) in your mailbox. We will move them all "
-"from your mailbox into Zammad."
-msgstr ""
-"Већ смо пронашли %s имејл порука у вашем сандучету. Пребацићемо их све из "
-"вашег сандучета у Zammad."
-
-#: app/assets/javascripts/app/views/cti/not_configured.jst.eco
-msgid "We support:"
-msgstr "Подржавамо:"
-
-#: app/frontend/shared/errors/useErrorHandler.ts
-msgid "We're sorry, but something went wrong."
-msgstr "Жао нам је, али нешто је пошло наопако."
-
-#: app/frontend/shared/errors/useErrorHandler.ts
-msgid "We're sorry, but something went wrong. Received message: %s"
-msgstr "Жао нам је, али нешто је пошло наопако. Порука грешке: %s"
-
-#: app/frontend/shared/router/error.ts
-msgid "We're sorry, but this page doesn't exist."
-msgstr "Жао нам је, али ова страна не постоји."
-
-#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-msgid "We've sent admin password login instructions to your email address."
-msgstr ""
-"Послали смо упутство за пријављивање привременом лозинком администратора на "
-"вашу имејл адресу."
-
-#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-msgid ""
-"We've sent an email to _%s_. Click the link in the email to verify your "
-"account."
-msgstr ""
-"Послали смо имејл поруку на _%s_. Кликните на линк из имејл поруке да бисте "
-"потврдили ваш налог."
-
-#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-msgid "We've sent password reset instructions to your email address."
-msgstr "Послали смо упутство за поништавање лозинке на вашу имејл адресу."
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
@@ -17173,16 +17205,6 @@ msgstr "Где"
 msgid "Where to append the chat to."
 msgstr "Где додати разговор из ћаскања."
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"While it will be no longer possible to directly push changed translations "
-"from Zammad, they can be contributed in a very convenient user interface "
-"based on Weblate."
-msgstr ""
-"Иако више није могуће директно послати измењене преводе из Zammad, она се и "
-"даље могу допринети преко врло згодног корисничког интерфејса који је "
-"базиран на Weblate."
-
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Why doesn't the chat show up?"
 msgstr "Зашто се ћаскање не приказује?"
@@ -17268,14 +17290,6 @@ msgstr "Јуху! Ваша имејл адреса је потврђена!"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "Woo hoo! Your password has been changed!"
 msgstr "Јуху! Ваша лозинка је промењена!"
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Words"
-msgstr "Речи"
-
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "Words:"
-msgstr "Речи:"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Workflow"
@@ -17517,6 +17531,8 @@ msgid ""
 "You have a 24 hour window to send WhatsApp messages in this conversation. "
 "The customer service window closes %s."
 msgstr ""
+"Имате 24-часовни временски оквир за слање WhatsApp порука у овом разговору. "
+"Време истиче %s."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 msgid "You have exceeded the character limit by %s"
@@ -17753,20 +17769,8 @@ msgid "Zammad Foundation"
 msgstr "Zammad фондација"
 
 #: db/seeds/settings.rb
-msgid "Zammad GeoCalendar Service"
-msgstr "Zammad GeoCalendar сервис"
-
-#: db/seeds/settings.rb
-msgid "Zammad GeoIP Service"
-msgstr "Zammad GeoIP сервис"
-
-#: db/seeds/settings.rb
 msgid "Zammad Helpdesk"
 msgstr "Zammad Helpdesk"
-
-#: db/seeds/settings.rb
-msgid "Zammad Image Service"
-msgstr "Zammad сервис за слике"
 
 #: lib/user_agent.rb
 msgid "Zammad User Agent"
@@ -18072,6 +18076,10 @@ msgstr "тренутни корисник"
 msgid "current user organization"
 msgstr "организација тренутног корисника"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "custom"
+msgstr "прилагођен"
+
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "custom unit"
 msgstr "прилагођена јединица"
@@ -18115,6 +18123,11 @@ msgstr "подразумевано"
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "delete"
 msgstr "избриши"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "delivered to the customer"
+msgstr "испоручено клијенту"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -18529,10 +18542,6 @@ msgstr "је постављено"
 msgid "is smaller than the allowed minimum value of %{min_value}"
 msgstr "је мање од дозвољене вредности од %{min_value}"
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "is the same"
-msgstr "је истоветно"
-
 msgid "is the wrong length (should be %{count} characters)"
 msgstr "је погрешне дужине (мора бити %{count} знак/а)"
 
@@ -18586,8 +18595,9 @@ msgstr "да се један модул подудара"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 msgid "matches found"
-msgstr "пронађени резултати"
+msgstr "пронађен(a/их) резултат(а)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -18748,10 +18758,6 @@ msgstr "није постављено"
 msgid "not set (not defined)"
 msgstr "није постављено (није одређено)"
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "not translated"
-msgstr "није преведено"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/note.coffee
 #: db/seeds/ticket_article_types.rb
 msgid "note"
@@ -18783,6 +18789,7 @@ msgstr "необавезно"
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "or"
 msgstr "или"
 
@@ -18827,6 +18834,11 @@ msgstr "четврт сат(а)"
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "достигнуто"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "read by the customer"
+msgstr "прочитано од стране клијента"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -18905,6 +18917,11 @@ msgstr "изабери прилог…"
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 msgid "select visible options"
 msgstr "изабери видљиве опције"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "sent to the customer"
+msgstr "послато клијенту"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19009,6 +19026,10 @@ msgstr "почиње са једним од"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@example.com"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "system"
+msgstr "системски"
 
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
@@ -19198,6 +19219,130 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Caption for %s is not allowed. Please clear text!"
+#~ msgstr "Наслов за %s није дозвољен. Молимо уклоните текст!"
+
+#~ msgid "Caption for %s length is too long. Maximum allowed characters are %s"
+#~ msgstr "Наслов за %s је предугачак. Најдужи дозвољени број карактера је %s"
+
+#~ msgid "File is too big. %s file has to be %s or smaller."
+#~ msgstr "Датотека је превелика. %s датотека мора бити %s или мања."
+
+#~ msgid "Files are too big. %s"
+#~ msgstr "Датотеке су превелике. %s"
+
+#~ msgid "Invalid arguments for caption validation"
+#~ msgstr "Неисправни аргументи за валидацију наслова"
+
+#~ msgid "Sticker"
+#~ msgstr "Стикер"
+
+#~ msgid "Text or Attachment is required."
+#~ msgstr "Неопходни су текст или прилог."
+
+#~ msgid "OpenStreetMap (ODbL 1.0, http://osm.org/copyright)"
+#~ msgstr "OpenStreetMap (ODbL 1.0, http://osm.org/copyright)"
+
+#~ msgid "Zammad GeoCalendar Service"
+#~ msgstr "Zammad GeoCalendar сервис"
+
+#~ msgid "Zammad GeoIP Service"
+#~ msgstr "Zammad GeoIP сервис"
+
+#~ msgid "Zammad Image Service"
+#~ msgstr "Zammad сервис за слике"
+
+#~ msgid "Google Maps"
+#~ msgstr "Google Maps"
+
+#~ msgid "New WhatsApp message from %s"
+#~ msgstr "Нова WhatsApp порука од %s"
+
+#~ msgid "Sent"
+#~ msgstr "Послато"
+
+#~ msgid "Access to Customer Tickets based on current_user and organization"
+#~ msgstr ""
+#~ "Приступ тикетима клијената на основу тренутног корисника и организације"
+
+#~ msgid "Recursive Ticket Triggers Loop Max."
+#~ msgstr "Максималан број петљи рекурзивних окидача тикета."
+
+#, fuzzy
+#~| msgid " to "
+#~ msgid "to"
+#~ msgstr " до "
+
+#~ msgid "Date & Time"
+#~ msgstr "Датум и време"
+
+#~ msgid ""
+#~ "If you want to translate it via the translation table, just go ahead "
+#~ "below."
+#~ msgstr ""
+#~ "Уколико желите да убаците преводе преко табеле, то можете учинити одмах "
+#~ "испод."
+
+#~ msgid "Original"
+#~ msgstr "Оригиналан"
+
+#~ msgid "Reset changes"
+#~ msgstr "Поништи промене"
+
+#~ msgid "Resetting changes…"
+#~ msgstr "Поништавање измена…"
+
+#~ msgid ""
+#~ "Starting with Zammad 5.1, translations can be contributed exclusively via "
+#~ "\"translations.zammad.org\" %l."
+#~ msgstr ""
+#~ "Почевши од Zammad 5.1, преводи се могу допринети искључиво преко "
+#~ "„translations.zammad.org” %l."
+
+#~ msgid ""
+#~ "While it will be no longer possible to directly push changed translations "
+#~ "from Zammad, they can be contributed in a very convenient user interface "
+#~ "based on Weblate."
+#~ msgstr ""
+#~ "Иако више није могуће директно послати измењене преводе из Zammad, она се "
+#~ "и даље могу допринети преко врло згодног корисничког интерфејса који је "
+#~ "базиран на Weblate."
+
+#~ msgid "Words"
+#~ msgstr "Речи"
+
+#~ msgid "Words:"
+#~ msgstr "Речи:"
+
+#~ msgid "is the same"
+#~ msgstr "је истоветно"
+
+#~ msgid "not translated"
+#~ msgstr "није преведено"
+
+#~ msgid "Target Group"
+#~ msgstr "Циљна група"
+
+#~ msgid ""
+#~ "We detected OTRS BPM processes that can't get imported into Zammad since "
+#~ "we currently don't support this kind of workflows."
+#~ msgstr ""
+#~ "Детектовали смо OTRS BPM процесе које није могуће увести у Zammad јер "
+#~ "тренутно не подржавамо ову врсту радних токова."
+
+#~ msgid ""
+#~ "We found a lot of dynamic fields which are not common in Zammad, as we "
+#~ "take a different approach to ticket attributes. Zammad also uses tags in "
+#~ "addition to custom fields to classify tickets. This difference can create "
+#~ "a new philosophy of your ticket attributes / tags compared to your "
+#~ "current use of dynamic fields in OTRS."
+#~ msgstr ""
+#~ "Пронађен је велики број динамичких поља која нису подржана у Zammad-у, "
+#~ "јер користимо другачији приступ за атрибуте тикета. Zammad такође користи "
+#~ "ознаке за класификацију тикета поред прилагођених поља. Ова разлика може "
+#~ "представљати потпуно нову филозофију око ваших атрибута тикета / ознака у "
+#~ "односу на ваш тренутни приступ са динамичким пољима у OTRS."
 
 #~ msgid "Have a nice day!"
 #~ msgstr "Желимо вам пријатан дан!"

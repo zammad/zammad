@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-07 02:05+0000\n"
+"PO-Revision-Date: 2024-03-23 02:05+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.4.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -44,10 +44,6 @@ msgstr "yyyy-mm-dd"
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATETIME"
 msgstr "yyyy-mm-dd HH.MM"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid " to "
-msgstr " till "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -475,6 +471,18 @@ msgstr "%s inloggningsuppgifter"
 msgid "%s days ago"
 msgstr "%s dagar sedan"
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
+msgid ""
+"%s email(s) were found in your mailbox. They will all be moved from your "
+"mailbox into Zammad."
+msgstr ""
+"%s e-postmeddelande(n) hittades i din e-postlåda. De kommer alla att flyttas "
+"från din e-postlåda till Zammad."
+
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
@@ -501,9 +509,15 @@ msgstr "%s timmar sedan"
 msgid "%s is inactive, please select an active one."
 msgstr "%s är inaktiv, välj en aktiv."
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "is required"
+msgid "%s is required."
+msgstr "obligatorisk"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
-msgstr ""
+msgstr "%s skickas utan rubrik"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
@@ -630,6 +644,10 @@ msgstr "%s uppdaterade användare |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
 msgstr "%s användare till %s användare"
+
+#: lib/whatsapp/webhook/message.rb
+msgid "%s via WhatsApp"
+msgstr "%s via WhatsApp"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s weeks ago"
@@ -778,7 +796,7 @@ msgstr "1 år sedan"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "1. Ticket Create"
-msgstr "1. Ärende Skapa"
+msgstr "1. Skapa ärende"
 
 #: db/seeds/settings.rb
 msgid "2 hours"
@@ -822,7 +840,7 @@ msgstr "4. Ärende-eskalering"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "5. Ticket Escalation Warning"
-msgstr "5. Ärende-eskaleringsvarning"
+msgstr "5. Varning ärende-eskalering"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "<strong>Chat</strong> with us!"
@@ -979,9 +997,8 @@ msgid "Access to Agent Tickets based on Group Access"
 msgstr "Åtkomst till Handläggare-ärenden baserat på gruppåtkomst"
 
 #: db/seeds/permissions.rb
-msgid "Access to Customer Tickets based on current_user and organization"
-msgstr ""
-"Åtkomst till ärenden är baserat på nuvarande användare och organisation"
+msgid "Access to customer tickets"
+msgstr "Åtkomst till kundärenden"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 msgid "Access token"
@@ -1062,8 +1079,6 @@ msgstr "Konton"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/tag/table.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Action"
 msgstr "Åtgärd"
@@ -1342,6 +1357,10 @@ msgstr "Ytterlig information"
 msgid "Additional information and links"
 msgstr "Ytterlig information och länkar"
 
+#: db/seeds/settings.rb
+msgid "Additional notes for ticket create types."
+msgstr "Ytterligare noteringar för ärendeskapningstyper."
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
 msgstr "Adress"
@@ -1367,6 +1386,13 @@ msgstr "Admin-gränssnitt"
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Admin Password Login"
 msgstr "Admin-lösenord"
+
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
+msgid "Admin password login instructions were sent to your email address."
+msgstr ""
+"Instruktioner för inloggning med administratörslösenord skickades till din e-"
+"postadress."
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1590,6 +1616,14 @@ msgstr "Alternativt, kan du använda Zammad API för att importera data."
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
 msgstr "Alltid"
+
+#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
+msgid ""
+"An email was sent to _%s_. Click the link in the email to verify your "
+"account."
+msgstr ""
+"Ett e-postmeddelande skickades till _%s_. Klicka på länken i e-"
+"postmeddelandet för att verifiera ditt konto."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1824,6 +1858,7 @@ msgstr "Vill du ta bort \"%s\" som standard?"
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Are you sure?"
 msgstr "Är du säker?"
@@ -1983,10 +2018,8 @@ msgid "Attach another file"
 msgstr "Bifoga ytterligare filer"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Attach files"
 msgid "Attach file"
-msgstr "Bifoga filer"
+msgstr "Bifoga fil"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
@@ -2002,6 +2035,8 @@ msgid "Attached Files"
 msgstr "Bifogade filer"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Attachment"
 msgstr "Bifogad fil"
 
@@ -2085,11 +2120,10 @@ msgid "Attributes to compare"
 msgstr "Attributer att jämföra"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "No filter."
 msgid "Audio file"
-msgstr "Inga filter."
+msgstr "Ljudfil"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2210,7 +2244,7 @@ msgstr "Automatisk kontolänkningsnotifiering"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 msgid "Automatic reminders"
-msgstr ""
+msgstr "Automatiska påminnelser"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2564,6 +2598,10 @@ msgstr "Kalendrar"
 msgid "Call Settings"
 msgstr "Samtals-inställningar"
 
+#: app/models/cti/driver/base.rb
+msgid "Call from %s"
+msgstr "Samtal från %s"
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr "Samtal från %s för %s"
@@ -2697,15 +2735,7 @@ msgstr "Kunde inte sätta online-notiser som lästa"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Caption for %s is not allowed. Please clear text!"
-msgstr ""
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Caption for %s length is too long. Maximum allowed characters are %s"
-msgstr ""
+msgstr "Kan inte ladda upp fil"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -3112,6 +3142,7 @@ msgstr "Klona"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
@@ -3457,7 +3488,7 @@ msgstr "Gå till desktopversion"
 msgid "Continue to mobile"
 msgstr "Gå till mobilversion"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Contributing Translations"
 msgstr "Bidrag till översättningar"
 
@@ -3560,7 +3591,6 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -3747,6 +3777,7 @@ msgstr "Skapa:"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
 msgstr "Skapat"
@@ -3865,6 +3896,10 @@ msgstr "Anpassad"
 msgid "Custom Payload"
 msgstr "Anpassad Payload"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Custom Translation"
+msgstr "Översättning"
+
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Custom URL"
@@ -3970,10 +4005,6 @@ msgstr "Databasuppdatering krävs"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Date"
 msgstr "Datum"
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Date & Time"
-msgstr "Dag & Tid"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Date & time field"
@@ -5186,6 +5217,7 @@ msgid "Department"
 msgstr "Avdelning"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -5199,6 +5231,7 @@ msgstr "Avdelning"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Description"
 msgstr "Beskrivning"
 
@@ -5259,6 +5292,16 @@ msgstr "Enheter"
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 msgid "Dialog window with selections"
 msgstr "Dialogfönster med val"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid ""
+"Did you know that system translations can be contributed and shared with the "
+"community on our public platform %l? It sports a very convenient user "
+"interface based on Weblate, give it a try!"
+msgstr ""
+"Vet du att du kan bidra till och dela med dig av systemöversättningar via "
+"vår plattform %l? Den har ett mycket enkelt användargränssnitt baserat på "
+"Weblate, prova det!"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -5393,9 +5436,10 @@ msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Vill du sätta synligheten till \"publik\" för artikeln?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Document file"
-msgstr ""
+msgstr "Dokumentfil"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
@@ -5468,10 +5512,8 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Hämta och installera %s Migrationsplugin på din %s instans."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#, fuzzy
-#| msgid "select attachment…"
 msgid "Downloading attachments…"
-msgstr "Välj bilagor …"
+msgstr "Laddar ner bilagor…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -5535,6 +5577,7 @@ msgstr "Påskledighet"
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -6062,7 +6105,7 @@ msgid "Endpoint Settings"
 msgstr "Slutpunktsinställningar"
 
 #: db/seeds/settings.rb
-msgid "Enforce the set up of the two-factor authentication"
+msgid "Enforce the setup of the two-factor authentication"
 msgstr "Tvinga konfiguration av två-faktorautentisering"
 
 #: db/seeds/settings.rb
@@ -6587,34 +6630,21 @@ msgstr "Återkopplingsformulär"
 msgid "File '%s' is uploading"
 msgstr "Filen '%s' håller på att laddas upp"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "No file formats allowed."
 msgid "File format is not allowed: %s"
-msgstr "Inga filformat tillåtna."
-
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
-#: app/frontend/shared/form/validation/rules/fileSizes.ts
-msgid "File is too big. %s file has to be %s or smaller."
-msgstr ""
+msgstr "Filformatet är inte tillåtet: %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "File too big, max. %s MB allowed."
 msgid "File is too big. %s has to be %s or smaller."
-msgstr "Filen är för stor, max. %s MB tillåtet."
+msgstr "Filen är för stor. %s måste vara %s eller mindre."
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "Filen är för stor, max. %s MB tillåtet."
-
-#: app/frontend/shared/form/validation/rules/fileSizes.ts
-msgid "Files are too big. %s"
-msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -6632,6 +6662,10 @@ msgstr "Filter"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Find a ticket"
 msgstr "Hitta ett ärende"
+
+#: app/assets/javascripts/app/views/translation/form.jst.eco
+msgid "Find translation suggestion"
+msgstr "Hitta översättningsförslag"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
@@ -7047,6 +7081,10 @@ msgstr ""
 msgid "Given object does not support selector"
 msgstr "Det givna objektet stöder inte väljaren"
 
+#: app/models/setting/validation/time_zone.rb
+msgid "Given time zone is not valid."
+msgstr "Den angivna tidszonen är inte giltig."
+
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
@@ -7122,10 +7160,6 @@ msgstr "Google Client ID"
 msgid "Google Client Secret"
 msgstr "Google-klienthemlighet"
 
-#: db/seeds/settings.rb
-msgid "Google Maps"
-msgstr "Google Maps"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
 msgstr "Grön"
@@ -7148,6 +7182,7 @@ msgstr "Hälsning"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/fr.html.erb
@@ -7354,6 +7389,8 @@ msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
 "please reply to keep it open."
 msgstr ""
+"Hej, Denna konversation är på väg att stängas, ange ett svar för att behålla "
+"det öppet."
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -7378,6 +7415,18 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 msgid "Here you can create one."
 msgstr "Här kan du skapa en."
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid ""
+"Here you can override any translation string for a more customized look and "
+"feel. Both recognized system and custom strings are supported, simply add a "
+"new translation in order to identify the source string and provide its new "
+"translation for the target language."
+msgstr ""
+"Här kan du anpassa översättningen för ett mer anpassat utseende. "
+"Översättningar av system och anpassade strängar stöds, lägg helt enkelt till "
+"en ny översättning för att identifiera källsträngen och ange den nya "
+"översättningen för målspråket."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
@@ -7534,7 +7583,7 @@ msgid ""
 "How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you "
 "have too many…)"
 msgstr ""
-"Hur många eskalerade biljetter har du öppna? (Mr. Bubbles blir grinig om du "
+"Hur många eskalerade ärenden har du öppna? (Mr. Bubbles blir grinig om du "
 "har för många ...)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee
@@ -7549,7 +7598,7 @@ msgstr ""
 msgid ""
 "How many of your tickets have been re-opened after being marked “closed”?"
 msgstr ""
-"Hur många av dina biljetter har öppnats igen efter att ha markerats som "
+"Hur många av dina ärenden har öppnats igen efter att ha markerats som "
 "”stängda”?"
 
 #: app/controllers/first_steps_controller.rb
@@ -7712,12 +7761,6 @@ msgstr ""
 "Om du vill öppna chatten med en knapptryckning ställer du in alternativet "
 "§show§ till §false§ och lägger till klassen §open-zammad-chat§ på knappen."
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"If you want to translate it via the translation table, just go ahead below."
-msgstr ""
-"Om du vill översätta via översättingstabellen så finns den här nedanför."
-
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid ""
@@ -7754,11 +7797,10 @@ msgid "Image Service"
 msgstr "Bildtjänst"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Image Service"
 msgid "Image file"
-msgstr "Bildtjänst"
+msgstr "Image fil"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
@@ -7997,20 +8039,16 @@ msgstr "Information"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
 msgid ""
 "Initiate the import process to transfer your data into Zammad. Keep track of "
-"the migration progress on this page, and we'll notify you as soon as the "
-"import is successfully finished."
+"the migration progress on this page to be notified as soon as the import is "
+"successfully finished."
 msgstr ""
 "Starta importprocessen för att överföra din data till Zammad. Håll koll på "
-"hur överföringen fortskrider på den här sidan, så meddelar vi dig så snart "
+"hur överföringen fortskrider på den här sidan, för att bli meddelad när "
 "importen är klar."
 
 #: app/models/store.rb
 msgid "Inline content could not be generated."
 msgstr "Inline innehåll kunden inte genereras."
-
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Inline translation"
-msgstr "Inline-översättning"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Insert text from Knowledge Base article"
@@ -8121,10 +8159,6 @@ msgstr "Ogiltig GitHub GraphQL API-token"
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
 msgstr "Ogiltigt format för GitLab-problemlänk"
-
-#: app/frontend/shared/form/validation/rules/captionLength.ts
-msgid "Invalid arguments for caption validation"
-msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb
 msgid "Invalid auto wizard file."
@@ -8370,7 +8404,7 @@ msgstr "jun"
 msgid "June"
 msgstr "Juni"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "Klicka bara på det markerade området och uppdatera texten direkt."
@@ -8519,6 +8553,10 @@ msgstr "Senaste ändring %s %s av %s"
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 msgid "Last changed"
 msgstr "Senast ändrad"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+msgid "Last closing time"
+msgstr "Senaste stängningstid"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -8721,7 +8759,8 @@ msgstr "Läser in …"
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr "Lokal MTA (Sendmail/Postfix/Exim/...) - använd serverinstallation"
 
-#: db/seeds/settings.rb
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
 msgid "Locale"
 msgstr "Lokalisering"
 
@@ -8879,6 +8918,7 @@ msgstr "Administrera dina notifieringsinställningar"
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/assets/javascripts/app/views/translation/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Management"
 msgstr "Hantering"
@@ -8886,6 +8926,20 @@ msgstr "Hantering"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Manually open chat"
 msgstr "Öppna en chatt manuellt"
+
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+msgid ""
+"Many dynamic fields were found. This is not a common pattern in Zammad, "
+"which takes a different approach to ticket attributes. Zammad also uses tags "
+"in addition to custom fields to classify tickets. This difference can create "
+"a new philosophy of your ticket attributes / tags compared to your current "
+"use of dynamic fields in OTRS."
+msgstr ""
+"Många dynamiska fält hittades. Detta är inte ett vanligt mönster i Zammad, "
+"som har en annan inställning till ärendeattribut. Zammad använder också "
+"taggar utöver anpassade fält för att klassificera ärenden. Denna skillnad "
+"kan skapa en ny filosofi för dina ärendeattribut/taggar jämfört med din "
+"nuvarande användning av dynamiska fält i OTRS."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -8971,6 +9025,10 @@ msgid "Maximum Email Size"
 msgstr "Maximal e-poststorlek"
 
 #: db/seeds/settings.rb
+msgid "Maximum Recursive Ticket Triggers Depth"
+msgstr "Maximalt Rekursiva Ärendetriggersdjup"
+
+#: db/seeds/settings.rb
 msgid "Maximum failed logins"
 msgstr "Maximalt antal misslyckade inloggningar"
 
@@ -8998,22 +9056,16 @@ msgid "Me"
 msgstr "Jag"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
-#, fuzzy
-#| msgid "Download all records"
 msgid "Media Download Error"
-msgstr "Ladda ner samtliga poster"
+msgstr "Fel vid nedladdning av media"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
-#, fuzzy
-#| msgid "Loading failed, please try again later."
 msgid "Media download failed. Please try again later."
-msgstr "Laddningen misslyckades, försök igen senare."
+msgstr "Nedladdning av media misslyckades. Vänligen försök igen senare."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
-#, fuzzy
-#| msgid "Decryption was successful."
 msgid "Media download was successful."
-msgstr "Avkrypteringen lyckades."
+msgstr "Nedladdningen av media lyckades."
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
@@ -9052,6 +9104,11 @@ msgstr "Slå ihop Ärende#"
 #: public/assets/form/form.js
 msgid "Message"
 msgstr "Meddelande"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "Message Status"
+msgstr "Meddelandestatus"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Message after sending form"
@@ -9451,6 +9508,7 @@ msgstr "Nätverk"
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
@@ -9547,6 +9605,10 @@ msgstr "Nytt ärende"
 msgid "New Ticket State"
 msgstr "Ny ärendestatus"
 
+#: app/assets/javascripts/app/views/translation/index.jst.eco
+msgid "New Translation"
+msgstr "Ny översättning"
+
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
 msgstr "Ny Trigger"
@@ -9568,10 +9630,6 @@ msgstr "Ny version"
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "New Webhook"
 msgstr "Ny webhook"
-
-#: lib/whatsapp/webhook/message.rb
-msgid "New WhatsApp message from %s"
-msgstr "Nytt WhatsApp-meddelande från %s"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
@@ -9832,6 +9890,7 @@ msgstr "Inga uppgifter har hittats!"
 #: lib/whatsapp/webhook/message/status.rb
 msgid "No related article found to process the status message on."
 msgstr ""
+"Ingen relaterad artikel hittades för att bearbeta statusmeddelandet på."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
@@ -10117,6 +10176,14 @@ msgstr ""
 "OTRS BPM-processer kan inte importeras till Zammad eftersom vi för "
 "närvarande inte stöder denna typ av arbetsflöden."
 
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+msgid ""
+"OTRS BPM processes were found. They cannot be imported into Zammad as these "
+"kind of workflows are currently not supported."
+msgstr ""
+"OTRS BPM-processer kan inte importeras till Zammad eftersom vi för "
+"närvarande inte stöder denna typ av arbetsflöden."
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
@@ -10158,6 +10225,10 @@ msgstr "Ok"
 msgid "On %s, %s wrote:"
 msgstr "%s skrev %s:"
 
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid "On-screen Translation"
+msgstr "On-screen översättning"
+
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
 msgstr "När den är klar …"
@@ -10180,14 +10251,12 @@ msgid "Online Service"
 msgstr "Online tjänster"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "%s attached files"
 msgid "Only %s attachment allowed"
-msgstr "%s bifogade filer"
+msgstr "Endast %s bilagor är tillåtna"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Only %s attachment allowed."
-msgstr ""
+msgstr "Endast %s bilagor är tillåtna."
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
@@ -10428,14 +10497,14 @@ msgstr "Organisatör"
 msgid "Origin By"
 msgstr "Ursprung av"
 
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Original"
-msgstr "Original"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Ursprunglig Formattering"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Original Translation"
+msgstr "Ursprunglig översättning"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -10646,6 +10715,13 @@ msgstr "Lösenordet måste innehålla minst ett specialtecken."
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "Lösenord måste ha minst ett minimalt antal tecken."
+
+#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+msgid "Password reset instructions were sent to your email address."
+msgstr ""
+"Instruktioner för återställning av lösenord har skickats till din e-"
+"postadress."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -11288,10 +11364,6 @@ msgid "Recursive Ticket Triggers"
 msgstr "Rekursiva ärendetriggers"
 
 #: db/seeds/settings.rb
-msgid "Recursive Ticket Triggers Loop Max."
-msgstr "Max antal nivåer för rekursiv ärende-trigger."
-
-#: db/seeds/settings.rb
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
@@ -11340,6 +11412,7 @@ msgstr "Kom ihåg mig"
 msgid "Remote"
 msgstr "Fjärråtkomst"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
@@ -11453,10 +11526,8 @@ msgid "Reply All"
 msgstr "Svara Alla"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Conditions for shown tickets"
 msgid "Reply allowed only for open tickets"
-msgstr "Villkor för visade ärenden"
+msgstr "Svar tillåtet endast för öppna ärenden"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
@@ -11529,7 +11600,7 @@ msgstr "Krav"
 
 #: db/seeds/settings.rb
 msgid ""
-"Requires the set up of the two-factor authentication for certain user roles."
+"Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
 "Kräver uppsättning av två-faktorautentisering för vissa användarroller."
 
@@ -11540,12 +11611,12 @@ msgstr ""
 msgid "Resend verification email"
 msgstr "Skicka bekräftelsemail igen"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
 msgstr "Nollställ"
 
@@ -11557,11 +11628,6 @@ msgstr "Återställ lösenord"
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password failed!"
 msgstr "Återställning av lösenord misslyckades!"
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Reset changes"
-msgstr "Återställ ändringar"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Reset overview order"
@@ -11665,10 +11731,6 @@ msgstr ""
 "<br>\n"
 "<div>Ditt #{config.product_name} Team</div>\n"
 
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "Resetting changes…"
-msgstr "Återställ ändringar …"
-
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
 msgstr "Svar"
@@ -11698,10 +11760,8 @@ msgid "Retry"
 msgstr "Försök igen"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#, fuzzy
-#| msgid "Add attachment option to upload."
 msgid "Retry attachment download"
-msgstr "Lägg till bifogningsalternativ till uppladdning."
+msgstr "Försök igen att ladda ner bilaga"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
@@ -11709,7 +11769,7 @@ msgstr "Prova säkerhetsprocessen igen"
 
 #: lib/whatsapp/retry/media.rb
 msgid "Retrying to download the sent media via WhatsApp failed."
-msgstr ""
+msgstr "Försöket att ladda ner det skickade mediet via WhatsApp misslyckades."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -12148,6 +12208,7 @@ msgstr "Sökresultat värdenyckel \"%s\" hittades inte."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
@@ -12356,6 +12417,8 @@ msgid ""
 "Send out automatic reminders to customers asking them for reply if the 24-"
 "hour window is about to expire."
 msgstr ""
+"Skicka ut automatiska påminnelser till kunderna och be dem svara om 24-"
+"timmarsfönstret är på väg att löpa ut."
 
 #: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
@@ -12402,10 +12465,6 @@ msgstr "Avsändare för senaste artikeln"
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "Sending…"
 msgstr "Skickar …"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-msgid "Sent"
-msgstr "Skickat"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
@@ -12517,14 +12576,6 @@ msgstr "Sätt standard för uppföljningar"
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 msgid "Set default for new tickets"
 msgstr "Standardtyp för nya ärenden"
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types by selecting type."
-msgstr "Sätt noteringar för ärendeskapningstyper genom att välja typ."
-
-#: db/seeds/settings.rb
-msgid "Set notes for ticket create types."
-msgstr "Sätt noteringar för ärendeskapningstyper."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -12659,6 +12710,12 @@ msgstr "Visa Feed ikon"
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
 msgstr "Visa Sökdetaljer"
+
+#: db/seeds/settings.rb
+msgid ""
+"Show additional notes for ticket creation depending on the selected type."
+msgstr ""
+"Visa ytterligare noteringar för skapande av ärenden beroende på vald typ."
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
@@ -12946,7 +13003,7 @@ msgstr "Sms"
 msgid "Solution Time"
 msgstr "Lösningstid"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Some Text"
 msgstr "Någon text"
 
@@ -12968,9 +13025,17 @@ msgstr ""
 "processer! Om du vill att detta ska göras automatiskt, ange miljövariabeln "
 "APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "Something went wrong."
+msgstr "Något gick fel."
+
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Something went wrong. Please contact your administrator."
 msgstr "Något gick fel. Kontakta din administratör."
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "Something went wrong. Received message: %s"
+msgstr "Något gick fel. Mottaget meddelande: %s"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
@@ -12995,8 +13060,6 @@ msgid "Sounds"
 msgstr "Ljud"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Source"
 msgstr "Ursprung"
 
@@ -13078,14 +13141,6 @@ msgstr "Startar Zammad…"
 msgid "Starting import…"
 msgstr "Startar import…"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"Starting with Zammad 5.1, translations can be contributed exclusively via "
-"\"translations.zammad.org\" %l."
-msgstr ""
-"Från och med Zammad 5.1 kan översättningar endast göras via \"translations."
-"zammad.org\" %l."
-
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -13152,18 +13207,11 @@ msgstr "Steg 2 av 3: WhatsApp telefonnummer för företag"
 msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr "Steg 3 av 3: WhatsApp Business Webhook"
 
-#: app/frontend/shared/utils/files.ts
-#, fuzzy
-#| msgid "ticket"
-msgid "Sticker"
-msgstr "ärende"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Ticket title"
 msgid "Sticker file"
-msgstr "Ärendetitel"
+msgstr "Fil med klistermärken"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -13174,8 +13222,8 @@ msgid "Storage"
 msgstr "Lagring"
 
 #: db/seeds/settings.rb
-msgid "Storage Mechanism"
-msgstr "Lagringsmekanism"
+msgid "Storage Method"
+msgstr "Lagringsmetod"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Store"
@@ -13318,6 +13366,11 @@ msgstr "Systeminit klar"
 msgid "System URL"
 msgstr "System URL"
 
+#: app/assets/javascripts/app/controllers/_ui_element/language.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
+msgid "System default"
+msgstr "Systemstandard"
+
 #: app/models/knowledge_base.rb
 msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
@@ -13325,6 +13378,16 @@ msgid ""
 msgstr ""
 "Systemet stöder endast ett språk för kunskapsbanken. Uppgradera din prisplan "
 "för att använda fler språk."
+
+#: app/assets/javascripts/app/views/translation/description.jst.eco
+msgid ""
+"System translations can be contributed and shared with the community on our "
+"public platform %l. It sports a very convenient user interface based on "
+"Weblate, give it a try!"
+msgstr ""
+"Systemöversättningar kan bidra till och delas med community på vår plattform "
+"%l. Det har ett mycket enkelt användargränssnitt baserat på Weblate, prova "
+"det!"
 
 #: db/seeds/settings.rb
 msgid "SystemID"
@@ -13371,14 +13434,12 @@ msgid "Take Reply-To header as sender/from of email."
 msgstr "Använd Reply-To-rubriken som avsändare/från i e-postmeddelandet."
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Target"
 msgstr "Mål"
 
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
-msgid "Target Group"
-msgstr "Målgrupp"
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Target Language"
+msgstr "Målspråk"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -13428,7 +13489,7 @@ msgstr "Testa SMS leverantör"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps.coffee
 msgid "Test Ticket"
-msgstr "Testbiljett"
+msgstr "Testärende"
 
 #. This is the template file app/views/mailer/test_ticket/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -13510,23 +13571,15 @@ msgstr "Textmoduler är …"
 msgid "Text needed"
 msgstr "Text saknas"
 
-#: app/frontend/shared/form/validation/rules/contentRequired.ts
-#, fuzzy
-#| msgid "at least one letter is required"
-msgid "Text or Attachment is required."
-msgstr "åtminstone en bokstav krävs"
-
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "at least one letter is required"
 msgid "Text or attachment is required"
-msgstr "åtminstone en bokstav krävs"
+msgstr "Text eller bifogad fil krävs"
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with disabled inline translations looks like"
 msgstr "Text med avaktiverad inline-översättning ser ut så här "
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with enabled inline translations looks like"
 msgstr "Text med aktiverade inline-översättningar ser ut som"
 
@@ -13554,6 +13607,7 @@ msgid ""
 "The 24 hour customer service window is now closed, no further WhatsApp "
 "messages can be sent."
 msgstr ""
+"24-timmarsfönstret är nu stängt, inga fler WhatsApp meddelanden kan skickas."
 
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
@@ -13971,6 +14025,13 @@ msgstr "Filen kunde inte laddas upp."
 msgid "The file does not belong to the specified article."
 msgstr "Filen tillhör inte den angivna artikeln."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
+#, fuzzy
+#| msgid "Type %s is not supported."
+msgid "The file type %s is not allowed."
+msgstr "Typ %s stöds inte."
+
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
 "The first part of this PGP email is not a valid version part as mandated by "
@@ -14000,10 +14061,14 @@ msgid "The format of the subject."
 msgstr "Formatet för ämnet."
 
 #: lib/whatsapp/retry/media.rb
-#, fuzzy
-#| msgid "This article is not part of the ticket."
 msgid "The given article is not a media article."
-msgstr "Denna artikel är inte en del av ärendet."
+msgstr "Den angivna artikeln är inte en medieartikel."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
+msgid ""
+"The given media type does not support any text to be sent in parallel. "
+"Please remove the entered text."
+msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -14073,6 +14138,14 @@ msgstr "Längden på den privata nyckeln är för kort."
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Gränsen för %s visningsbara ärenden har nåtts (%s återstår)"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid ""
+"The limit of displayable suggestions was reached, please narrow down your "
+"search."
+msgstr ""
+"Gränsen för hur många förslag som kan visas har nåtts, vänligen begränsa din "
+"sökning."
 
 #: app/services/service/auth/verify_admin_token.rb
 msgid "The login is not possible."
@@ -14446,10 +14519,8 @@ msgstr ""
 "Det obligatoriska värdet 'external_credential' kunde inte hittas i cache."
 
 #: app/controllers/ticket_articles_controller.rb
-#, fuzzy
-#| msgid "The retried security process failed!"
 msgid "The retried attachment download failed."
-msgstr "Den återupptagna säkerhetsprocessen misslyckades!"
+msgstr "Nedladdningen av bilagan misslyckades."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -14800,6 +14871,10 @@ msgstr ""
 msgid "There were errors in your form."
 msgstr "Det finns fel i ditt formulär."
 
+#: app/assets/javascripts/app/views/cti/not_configured.jst.eco
+msgid "These are supported:"
+msgstr "Dessa stöds:"
+
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
 msgstr "Tredjepartstillägg"
@@ -14856,10 +14931,8 @@ msgid "This field %s"
 msgstr "Det här fältet %s"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts
-#, fuzzy
-#| msgid "This field can only contain lowercase letters."
 msgid "This field allows only one file."
-msgstr "Fältet får innehålla gemener."
+msgstr "Detta fält tillåter endast en fil."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
@@ -15083,6 +15156,10 @@ msgstr ""
 "Denna åtgärd kan inte fortsätta, eftersom systeminstallationen inte har "
 "slutförts ännu."
 
+#: app/frontend/shared/router/error.ts
+msgid "This page doesn't exist."
+msgstr "Denna sida existerar inte."
+
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr "Denna sida är osynlig för allmänheten."
@@ -15173,6 +15250,8 @@ msgid ""
 "This text will be sent as an immediate reply to new incoming WhatsApp "
 "messages."
 msgstr ""
+"Denna text kommer att skickas som ett omedelbart svar på nya inkommande "
+"WhatsApp-meddelanden."
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -15204,7 +15283,6 @@ msgstr "Torsdag"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/signature.coffee
@@ -15392,6 +15470,10 @@ msgstr "Ärendeåtgärder"
 msgid "Ticket could not be created."
 msgstr "Ärende kunde inte skapas."
 
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
+msgid "Ticket creation"
+msgstr "Skapa ärende"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Ticket customer updated successfully."
 msgstr "Kundärende har uppdaterats."
@@ -15403,7 +15485,7 @@ msgstr "Ärende-eskalering"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Ticket failed to save: %s"
-msgstr "Ärendet sparades inte: %s"
+msgstr "Ärenden sparades inte: %s"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Ticket has %s viewers"
@@ -15495,6 +15577,7 @@ msgstr "Ärendetitel"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 msgid "Ticket update"
 msgstr "Ärendeuppdatering"
 
@@ -15703,6 +15786,10 @@ msgstr "TID"
 msgid "Time zone"
 msgstr "Tidszon"
 
+#: app/models/setting/validation/time_zone.rb
+msgid "Time zone is required."
+msgstr "Tidszon krävs."
+
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Timeframe between agent updates or for an agent to respond."
 msgstr "Tidsperiod mellan uppdatering av agent eller för en agent att svara."
@@ -15715,7 +15802,9 @@ msgstr "Tidsram för att lösa problemet."
 msgid "Timeframe for the first response."
 msgstr "Tidsram för det första svaret."
 
-#: db/seeds/settings.rb lib/excel_sheet.rb
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
+#: lib/excel_sheet.rb
 msgid "Timezone"
 msgstr "Tidszon"
 
@@ -15794,7 +15883,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "To find out more about the 24-hour customer service window see %l."
-msgstr ""
+msgstr "För mer information om 24-timmars servicefönster, se %l."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid ""
@@ -15804,13 +15893,13 @@ msgstr ""
 "Om du vill installera %s som en app trycker du på knappen %s \"Dela\" och "
 "sedan på knappen %s \"Lägg till på startskärmen\"."
 
-#: app/assets/javascripts/app/views/translation/index.jst.eco
+#: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid ""
 "To make translations easier you can enable and disable the inline "
-"translation feature by pressing \"%s\"."
+"translation feature by pressing \"%s\" at any time."
 msgstr ""
-"För att göra översättningarna enklare kan du aktivera och inaktivera inline "
-"translation-funktionen genom att trycka på \"%s\"."
+"För att göra översättningarna enklare kan du när som helst aktivera och "
+"inaktivera inline translation-funktionen genom att trycka på \"%s\"."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
 msgid ""
@@ -15826,6 +15915,10 @@ msgid ""
 msgstr ""
 "Om du vill återgå till standardpayload stänger du av \"Anpassad payload\" "
 "ovan."
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "To see the updated translation, please reload your browser."
+msgstr "För att se den uppdaterade översättningen, ladda om din webbläsare."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -15935,6 +16028,14 @@ msgstr "Överför konversation till en annan chatt:"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Translate field contents"
 msgstr "Översätt fältinnehåll"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Translation"
+msgstr "Översättning"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "Translation Source"
+msgstr "Källa för översättning"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -16132,6 +16233,7 @@ msgstr "Konfiguration av tvåfaktorsautentiseringsmetoden lyckades."
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
@@ -16142,15 +16244,10 @@ msgstr "Konfiguration av tvåfaktorsautentiseringsmetoden lyckades."
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
 msgstr "Typ"
-
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composables/useInstantValidation.ts
-msgid "Type %s is not supported."
-msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "Type:"
@@ -16198,6 +16295,11 @@ msgstr "Enhet"
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
 msgstr "Okänt fel"
+
+#: app/models/failed_email.rb
+msgid "Unknown error: Could not create a ticket from this email."
+msgstr ""
+"Okänt fel: Det gick inte att skapa ett ärende från det här e-postmeddelandet."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid ""
@@ -16837,11 +16939,10 @@ msgid "Video"
 msgstr "Video"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Video"
 msgid "Video file"
-msgstr "Video"
+msgstr "Video-fil"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "View"
@@ -16934,77 +17035,6 @@ msgid ""
 msgstr ""
 "Det tar tyvärr längre tid än förväntat att få en ledig plats. Försök igen "
 "senare eller skicka ett mejl till oss. Tack!"
-
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid ""
-"We detected OTRS BPM processes that can't get imported into Zammad since we "
-"currently don't support this kind of workflows."
-msgstr ""
-"Vi upptäckte BPM-processer från OTRS som inte kan importeras till Zammad. Vi "
-"har för närvarande inget stöd för den typen av arbetsflöde."
-
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid ""
-"We found a lot of dynamic fields which are not common in Zammad, as we take "
-"a different approach to ticket attributes. Zammad also uses tags in addition "
-"to custom fields to classify tickets. This difference can create a new "
-"philosophy of your ticket attributes / tags compared to your current use of "
-"dynamic fields in OTRS."
-msgstr ""
-"Vi hittade många dynamiska fält som inte är vanliga i Zammad på grund av "
-"Zammads annorlunda förhållningssätt till ärende-attribut. Zammad använder "
-"också etiketter förutom anpassade fält för att klassificera ärenden. Det kan "
-"innebära en övergång till användning av ärendeattribut/etiketter jämfört med "
-"din nuvarande användning av dynamiska fält i OTRS."
-
-#: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
-#: app/assets/javascripts/app/views/getting_started/email.jst.eco
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-msgid ""
-"We have already found %s email(s) in your mailbox. We will move them all "
-"from your mailbox into Zammad."
-msgstr ""
-"Vi hittade %s mejl i din mejl-låda. Dessa mejl flyttas från din mejl-låda "
-"till Zammad."
-
-#: app/assets/javascripts/app/views/cti/not_configured.jst.eco
-msgid "We support:"
-msgstr "Vi stöder:"
-
-#: app/frontend/shared/errors/useErrorHandler.ts
-msgid "We're sorry, but something went wrong."
-msgstr "Vi beklagar, men något gick fel."
-
-#: app/frontend/shared/errors/useErrorHandler.ts
-msgid "We're sorry, but something went wrong. Received message: %s"
-msgstr "Vi beklagar, men något gick fel. Mottaget meddelande: %s"
-
-#: app/frontend/shared/router/error.ts
-msgid "We're sorry, but this page doesn't exist."
-msgstr "Vi beklagar, men den här sidan finns inte."
-
-#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-msgid "We've sent admin password login instructions to your email address."
-msgstr ""
-"Vi har skickat instruktioner för adminlösenordsinloggning till din mejl."
-
-#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-msgid ""
-"We've sent an email to _%s_. Click the link in the email to verify your "
-"account."
-msgstr ""
-"Vi har skickat ett e-postmeddelande till _%s_. Klicka på länken i e-"
-"postmeddelandet för att verifiera ditt konto."
-
-#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
-#: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-msgid "We've sent password reset instructions to your email address."
-msgstr ""
-"Vi har skickat instruktioner för återställning av lösenord till din e-"
-"postadress."
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
@@ -17139,7 +17169,7 @@ msgid ""
 "What percentage of your tickets have you responded to, updated, or modified "
 "in some way today?"
 msgstr ""
-"Vilken procentandel av dina biljetter har du svarat på, uppdaterat eller "
+"Vilken procentandel av dina ärenden har du svarat på, uppdaterat eller "
 "modifierat på något sätt idag?"
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
@@ -17202,16 +17232,6 @@ msgstr "Var"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Where to append the chat to."
 msgstr "Var du vill lägga till chatten."
-
-#: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid ""
-"While it will be no longer possible to directly push changed translations "
-"from Zammad, they can be contributed in a very convenient user interface "
-"based on Weblate."
-msgstr ""
-"Även om det inte längre är möjligt att skicka ändrade översättningar direkt "
-"från Zammad, så kan man ändå bidra via ett användarvänligt gränssnitt "
-"baserat på Weblate."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Why doesn't the chat show up?"
@@ -17298,14 +17318,6 @@ msgstr "Woo hoo! Din e-postadress har verifierats!"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "Woo hoo! Your password has been changed!"
 msgstr "Woo hoo! Ditt lösenord har ändrats!"
-
-#: app/assets/javascripts/app/views/translation/list.jst.eco
-msgid "Words"
-msgstr "Ord"
-
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "Words:"
-msgstr "Ord:"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Workflow"
@@ -17545,6 +17557,8 @@ msgid ""
 "You have a 24 hour window to send WhatsApp messages in this conversation. "
 "The customer service window closes %s."
 msgstr ""
+"Du har 24 timmar på dig att skicka WhatsApp-meddelanden i den här "
+"konversationen. Kundtjänstfönstret stänger %s."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 msgid "You have exceeded the character limit by %s"
@@ -17780,20 +17794,8 @@ msgid "Zammad Foundation"
 msgstr "Zammad Foundation"
 
 #: db/seeds/settings.rb
-msgid "Zammad GeoCalendar Service"
-msgstr "Zammad GeoCalendar Service"
-
-#: db/seeds/settings.rb
-msgid "Zammad GeoIP Service"
-msgstr "Zammad GeoIP Service"
-
-#: db/seeds/settings.rb
 msgid "Zammad Helpdesk"
 msgstr "Zammad Helpdesk"
-
-#: db/seeds/settings.rb
-msgid "Zammad Image Service"
-msgstr "Zammad Image Service"
 
 #: lib/user_agent.rb
 msgid "Zammad User Agent"
@@ -18099,6 +18101,10 @@ msgstr "nuvarande användare"
 msgid "current user organization"
 msgstr "nuvarande användares organisation"
 
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "custom"
+msgstr "anpassad"
+
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "custom unit"
 msgstr "Anpassad enhet"
@@ -18142,6 +18148,11 @@ msgstr "standard"
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "delete"
 msgstr "radera"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "delivered to the customer"
+msgstr "Levererat till kunden"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -18556,10 +18567,6 @@ msgstr "satt"
 msgid "is smaller than the allowed minimum value of %{min_value}"
 msgstr "är mindre än det tillåtna minimivärdet för %{min_value}"
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "is the same"
-msgstr "är samma"
-
 msgid "is the wrong length (should be %{count} characters)"
 msgstr "har fel längd (ska vara %{antal} tecken)"
 
@@ -18613,6 +18620,7 @@ msgstr "matcha en modul"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#: app/assets/javascripts/app/views/translation/form.jst.eco
 msgid "matches found"
 msgstr "matchningar hittades"
 
@@ -18776,10 +18784,6 @@ msgstr "ej satt"
 msgid "not set (not defined)"
 msgstr "inte angivet (ej definierad)"
 
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
-msgid "not translated"
-msgstr "ej översatta"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/note.coffee
 #: db/seeds/ticket_article_types.rb
 msgid "note"
@@ -18811,6 +18815,7 @@ msgstr "valfri"
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "or"
 msgstr "eller"
 
@@ -18855,6 +18860,11 @@ msgstr "kvart/kvartar"
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "reached"
 msgstr "uppnådd"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "read by the customer"
+msgstr "Läst av kunden"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -18935,6 +18945,11 @@ msgstr "Välj bilagor …"
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 msgid "select visible options"
 msgstr "Välj synliga alternativ"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "sent to the customer"
+msgstr "Skickat till kunden"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19039,6 +19054,10 @@ msgstr "startar med en av"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@exempel.se"
+
+#: app/assets/javascripts/app/controllers/translation.coffee
+msgid "system"
+msgstr "system"
 
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
@@ -19228,6 +19247,130 @@ msgstr "... av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "Caption for %s is not allowed. Please clear text!"
+#~ msgstr "Rubrik för %s är inte tillåten. Vänligen rensa text!"
+
+#~ msgid "Caption for %s length is too long. Maximum allowed characters are %s"
+#~ msgstr "Rubriken för %s är för lång. Maximalt tillåtna tecken är %s"
+
+#~ msgid "File is too big. %s file has to be %s or smaller."
+#~ msgstr "Filen är för stor. %s-filen måste vara %s eller mindre."
+
+#~ msgid "Files are too big. %s"
+#~ msgstr "Filerna är för stora. %s"
+
+#~ msgid "Invalid arguments for caption validation"
+#~ msgstr "Ogiltiga argument för validering av rubrik"
+
+#~ msgid "Sticker"
+#~ msgstr "Klistermärke"
+
+#~ msgid "Text or Attachment is required."
+#~ msgstr "Text eller bifogad fil krävs."
+
+#~ msgid "OpenStreetMap (ODbL 1.0, http://osm.org/copyright)"
+#~ msgstr "OpenStreetMap (ODbL 1.0, http://osm.org/copyright)"
+
+#~ msgid "Zammad GeoCalendar Service"
+#~ msgstr "Zammad GeoCalendar Service"
+
+#~ msgid "Zammad GeoIP Service"
+#~ msgstr "Zammad GeoIP Service"
+
+#~ msgid "Zammad Image Service"
+#~ msgstr "Zammad Image Service"
+
+#~ msgid "Google Maps"
+#~ msgstr "Google Maps"
+
+#~ msgid "New WhatsApp message from %s"
+#~ msgstr "Nytt WhatsApp-meddelande från %s"
+
+#~ msgid "Sent"
+#~ msgstr "Skickat"
+
+#~ msgid "Access to Customer Tickets based on current_user and organization"
+#~ msgstr ""
+#~ "Åtkomst till ärenden är baserat på nuvarande användare och organisation"
+
+#~ msgid "Recursive Ticket Triggers Loop Max."
+#~ msgstr "Max antal nivåer för rekursiv ärende-trigger."
+
+#~ msgid "to"
+#~ msgstr "till"
+
+#~ msgid " to "
+#~ msgstr " till "
+
+#~ msgid "Date & Time"
+#~ msgstr "Dag & Tid"
+
+#~ msgid ""
+#~ "If you want to translate it via the translation table, just go ahead "
+#~ "below."
+#~ msgstr ""
+#~ "Om du vill översätta via översättingstabellen så finns den här nedanför."
+
+#~ msgid "Original"
+#~ msgstr "Original"
+
+#~ msgid "Reset changes"
+#~ msgstr "Återställ ändringar"
+
+#~ msgid "Resetting changes…"
+#~ msgstr "Återställ ändringar …"
+
+#~ msgid ""
+#~ "Starting with Zammad 5.1, translations can be contributed exclusively via "
+#~ "\"translations.zammad.org\" %l."
+#~ msgstr ""
+#~ "Från och med Zammad 5.1 kan översättningar endast göras via "
+#~ "\"translations.zammad.org\" %l."
+
+#~ msgid ""
+#~ "While it will be no longer possible to directly push changed translations "
+#~ "from Zammad, they can be contributed in a very convenient user interface "
+#~ "based on Weblate."
+#~ msgstr ""
+#~ "Även om det inte längre är möjligt att skicka ändrade översättningar "
+#~ "direkt från Zammad, så kan man ändå bidra via ett användarvänligt "
+#~ "gränssnitt baserat på Weblate."
+
+#~ msgid "Words"
+#~ msgstr "Ord"
+
+#~ msgid "Words:"
+#~ msgstr "Ord:"
+
+#~ msgid "is the same"
+#~ msgstr "är samma"
+
+#~ msgid "not translated"
+#~ msgstr "ej översatta"
+
+#~ msgid "Target Group"
+#~ msgstr "Målgrupp"
+
+#~ msgid ""
+#~ "We detected OTRS BPM processes that can't get imported into Zammad since "
+#~ "we currently don't support this kind of workflows."
+#~ msgstr ""
+#~ "Vi upptäckte BPM-processer från OTRS som inte kan importeras till Zammad. "
+#~ "Vi har för närvarande inget stöd för den typen av arbetsflöde."
+
+#~ msgid ""
+#~ "We found a lot of dynamic fields which are not common in Zammad, as we "
+#~ "take a different approach to ticket attributes. Zammad also uses tags in "
+#~ "addition to custom fields to classify tickets. This difference can create "
+#~ "a new philosophy of your ticket attributes / tags compared to your "
+#~ "current use of dynamic fields in OTRS."
+#~ msgstr ""
+#~ "Vi hittade många dynamiska fält som inte är vanliga i Zammad på grund av "
+#~ "Zammads annorlunda förhållningssätt till ärende-attribut. Zammad använder "
+#~ "också etiketter förutom anpassade fält för att klassificera ärenden. Det "
+#~ "kan innebära en övergång till användning av ärendeattribut/etiketter "
+#~ "jämfört med din nuvarande användning av dynamiska fält i OTRS."
 
 #~ msgid "Have a nice day!"
 #~ msgstr "Ha en trevlig dag!"
@@ -19616,9 +19759,6 @@ msgstr "∅ Väntetid idag"
 
 #~ msgid "Order by Direction"
 #~ msgstr "Sortera efter ordning"
-
-#~ msgid "to"
-#~ msgstr "till"
 
 #~ msgid "Configure Base"
 #~ msgstr "Konfigurera Bas"
