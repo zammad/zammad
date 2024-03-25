@@ -2474,6 +2474,12 @@ msgstr "ปฏิทิน"
 msgid "Call Settings"
 msgstr "ตั้งค่าโทร"
 
+#: app/models/cti/driver/base.rb
+#, fuzzy
+#| msgid "Call from %s for %s"
+msgid "Call from %s"
+msgstr "โทรจาก %s สำหรับ %s"
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr "โทรจาก %s สำหรับ %s"
@@ -8030,6 +8036,12 @@ msgstr ""
 #| msgid "has changed"
 msgid "Last changed"
 msgstr "มีการเปลี่ยนแปลง"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+#, fuzzy
+#| msgid "Closing time"
+msgid "Last closing time"
+msgstr "เวลาปิด"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee

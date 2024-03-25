@@ -2224,6 +2224,10 @@ msgstr ""
 msgid "Call Settings"
 msgstr ""
 
+#: app/models/cti/driver/base.rb
+msgid "Call from %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr ""
@@ -7429,6 +7433,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 msgid "Last changed"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket.coffee
+msgid "Last closing time"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee

@@ -2459,6 +2459,10 @@ msgstr "Calendrier"
 msgid "Call Settings"
 msgstr "Paramètres"
 
+#: app/models/cti/driver/base.rb
+msgid "Call from %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr ""
@@ -8236,6 +8240,12 @@ msgstr ""
 #| msgid "has changed"
 msgid "Last changed"
 msgstr "a changé"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+#, fuzzy
+#| msgid "Closing time"
+msgid "Last closing time"
+msgstr "Heure de fermeture"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee

@@ -2246,6 +2246,10 @@ msgstr "Kalendrid"
 msgid "Call Settings"
 msgstr "Kõne Seaded"
 
+#: app/models/cti/driver/base.rb
+msgid "Call from %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr ""
@@ -7573,6 +7577,12 @@ msgstr ""
 #| msgid "Lastname"
 msgid "Last changed"
 msgstr "Perekonnanimi"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+#, fuzzy
+#| msgid "Closing time"
+msgid "Last closing time"
+msgstr "Sulgemise aeg"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee

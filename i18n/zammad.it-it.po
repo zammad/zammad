@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-10-21 01:05+0000\n"
-"Last-Translator: Marco Badan <info@marcobadan.com>\n"
+"PO-Revision-Date: 2024-03-15 02:05+0000\n"
+"Last-Translator: Antonio Nardella <info@antonionardella.it>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/it/>\n"
+"zammad-stable/it/>\n"
 "Language: it-it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.2\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -50,12 +50,6 @@ msgid " to "
 msgstr " a "
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "\"Database\" stores all attachments in the database (not recommended for "
-#| "storing large amounts of data). \"Filesystem\" stores the data in the "
-#| "filesystem. You can switch between the modules even on a system that is "
-#| "already in production without any loss of data."
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
 "storing large amounts of data). \"Filesystem\" stores the data in the "
@@ -64,9 +58,10 @@ msgid ""
 "system that is already in production without any loss of data."
 msgstr ""
 "\"Database\" memorizza gli allegati nel database (sconsigliato per "
-"memorizzare molti dati). \"Filesystem\" memorizza i file su disco. Puoi "
-"passare da una modalità all'altra anche su sistemi già in uso senza perdita "
-"di dati."
+"memorizzare molti dati). \"Filesystem\" memorizza i file su disco. \"Simple "
+"Storage (S3)\" memorizza i dati in un'archiviazione basata su oggetti remoto "
+"compatibile con S3. Puoi passare da una modalità all'altra anche su sistemi "
+"già in uso senza perdita di dati."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -374,7 +369,7 @@ msgstr "%s (conferma)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (metodo)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "%s (option)"
@@ -673,6 +668,14 @@ msgid ""
 "activity type will be rendered for an entry in the **Activity** table under "
 "the **Accounted Time** tab."
 msgstr ""
+"I **Tipi di attività** possono essere utilizzati per raggruppare le diverse "
+"voci di contabilità del tempo dei ticket. Ad esempio, le voci relative a un "
+"tipo di \"Fatturazione\".\n"
+"\n"
+"Quando si abilita la registrazione del tipo di attività, gli utenti potranno "
+"selezionare un tipo da questo elenco. Inoltre, una colonna con un tipo di "
+"attività associata verrà resa per una voce nella tabella **Attività** sotto "
+"la scheda **Tempo contabilizzato**."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -1115,17 +1118,13 @@ msgstr "Storico delle Attività"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#, fuzzy
-#| msgid "Activity"
 msgid "Activity Type"
-msgstr "Attività"
+msgstr "Tipo Attività"
 
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
-#, fuzzy
-#| msgid "Activity"
 msgid "Activity Types"
-msgstr "Attività"
+msgstr "Tipi Attività"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
@@ -1181,10 +1180,8 @@ msgid "Add Certificate"
 msgstr "Aggiungi certificato"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco
-#, fuzzy
-#| msgid "Add reply"
 msgid "Add Key"
-msgstr "Aggiungi risposta"
+msgstr "Aggiungi chiave"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
@@ -1196,16 +1193,12 @@ msgid "Add Private Key"
 msgstr "Aggiungi chiave privata"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-#, fuzzy
-#| msgid "Add Private Key"
 msgid "Add Public or Private Key"
-msgstr "Aggiungi chiave privata"
+msgstr "Aggiungi chiave pubblica o privata"
 
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco
-#, fuzzy
-#| msgid "Add Certificate"
 msgid "Add SSL Certificate"
-msgstr "Aggiungi certificato"
+msgstr "Aggiungi certificato SSL"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -1229,10 +1222,8 @@ msgid "Add a Personal Access Token"
 msgstr "Aggiungi un token di accesso personale"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
-#, fuzzy
-#| msgid "Handle data privacy tasks."
 msgid "Add a data privacy deletion task"
-msgstr "Gestire le attività di privacy dei dati."
+msgstr "Aggiuni un'attività di cancellazione dei dati privacy."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Add a message"
@@ -1470,10 +1461,14 @@ msgid "All Tickets"
 msgstr "Tutti i ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#, fuzzy
 msgid ""
 "All affected tickets will be deleted immediately when this job is run, "
 "without a history entry. There is no rollback of this deletion possible."
 msgstr ""
+"Tutti i ticket interessati verranno eliminati immediatamente all'esecuzione "
+"di questo lavoro, senza alcuna registrazione nella cronologia. Non è "
+"possibile eseguire il rollback di questa eliminazione."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid ""
@@ -1481,6 +1476,10 @@ msgid ""
 "Once the data privacy task is executed, tickets will be deleted and a "
 "history entry preserved. There is no rollback of this deletion possible."
 msgstr ""
+"Tutti i ticket interessati saranno pianificati per l'eliminazione quando "
+"viene eseguito questo lavoro. Una volta eseguita l'attività sui dati "
+"privacy , i ticket verranno eliminati e verrà conservata una voce della "
+"cronologia. Non è possibile eseguire il rollback di questa eliminazione."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid ""
@@ -1489,6 +1488,11 @@ msgid ""
 "tickets will be deleted and a history entry preserved. There is no rollback "
 "of this deletion possible."
 msgstr ""
+"Tutti gli utenti interessati e i relativi ticket dei clienti saranno "
+"pianificati per l'eliminazione quando viene eseguito questo lavoro. Una "
+"volta eseguita l'attività sui dati privacy, gli utenti e i ticket verranno "
+"eliminati e verrà conservata una voce della cronologia. Non è possibile "
+"eseguire il rollback di questa eliminazione."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "All agents"
@@ -2501,6 +2505,12 @@ msgstr "Calendari"
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Call Settings"
 msgstr "Impostazioni Chiamata"
+
+#: app/models/cti/driver/base.rb
+#, fuzzy
+#| msgid "Call from %s for %s"
+msgid "Call from %s"
+msgstr "Chiamata da %s per %s"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
@@ -8221,6 +8231,12 @@ msgstr "Ultima modifica di %s %s da %s"
 #| msgid "has changed"
 msgid "Last changed"
 msgstr "è cambiato"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+#, fuzzy
+#| msgid "Closing time"
+msgid "Last closing time"
+msgstr "Orario di chiusura"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee

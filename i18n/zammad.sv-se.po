@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-02-29 06:42+0000\n"
-"Last-Translator: chrand818 <can@telenabler.com>\n"
+"PO-Revision-Date: 2024-03-23 02:10+0000\n"
+"Last-Translator: Louise Forsen <louise.forsen@entryevent.se>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
 "Language: sv-se\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.4.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -762,7 +762,7 @@ msgstr "1 år sedan"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "1. Ticket Create"
-msgstr "1. Ärende Skapa"
+msgstr "1. Skapa ärende"
 
 #: db/seeds/settings.rb
 msgid "2 hours"
@@ -806,7 +806,7 @@ msgstr "4. Ärende-eskalering"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "5. Ticket Escalation Warning"
-msgstr "5. Ärende-eskaleringsvarning"
+msgstr "5. Varning ärende-eskalering"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "<strong>Chat</strong> with us!"
@@ -941,7 +941,8 @@ msgstr "Åtkomst till Handläggare-ärenden baserat på gruppåtkomst"
 
 #: db/seeds/permissions.rb
 msgid "Access to Customer Tickets based on current_user and organization"
-msgstr "Åtkomst till ärenden är baserat på nuvarande användare och organisation"
+msgstr ""
+"Åtkomst till ärenden är baserat på nuvarande användare och organisation"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -2464,6 +2465,10 @@ msgstr "Kalendrar"
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Call Settings"
 msgstr "Samtals-inställningar"
+
+#: app/models/cti/driver/base.rb
+msgid "Call from %s"
+msgstr "Samtal från %s"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
@@ -7176,7 +7181,7 @@ msgid ""
 "How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you "
 "have too many…)"
 msgstr ""
-"Hur många eskalerade biljetter har du öppna? (Mr. Bubbles blir grinig om du "
+"Hur många eskalerade ärenden har du öppna? (Mr. Bubbles blir grinig om du "
 "har för många ...)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee
@@ -7191,7 +7196,7 @@ msgstr ""
 msgid ""
 "How many of your tickets have been re-opened after being marked “closed”?"
 msgstr ""
-"Hur många av dina biljetter har öppnats igen efter att ha markerats som "
+"Hur många av dina ärenden har öppnats igen efter att ha markerats som "
 "”stängda”?"
 
 #: app/controllers/first_steps_controller.rb
@@ -8053,6 +8058,10 @@ msgstr "Senaste ändring %s %s av %s"
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 msgid "Last changed"
 msgstr "Senast ändrad"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+msgid "Last closing time"
+msgstr "Senaste stängningstid"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -12674,7 +12683,7 @@ msgstr "Testa SMS leverantör"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps.coffee
 msgid "Test Ticket"
-msgstr "Testbiljett"
+msgstr "Testärende"
 
 #. This is the template file app/views/mailer/test_ticket/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -14379,7 +14388,7 @@ msgstr "Ärende-eskalering"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Ticket failed to save: %s"
-msgstr "Ärendet sparades inte: %s"
+msgstr "Ärenden sparades inte: %s"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Ticket has %s viewers"
@@ -16038,7 +16047,7 @@ msgid ""
 "What percentage of your tickets have you responded to, updated, or modified "
 "in some way today?"
 msgstr ""
-"Vilken procentandel av dina biljetter har du svarat på, uppdaterat eller "
+"Vilken procentandel av dina ärenden har du svarat på, uppdaterat eller "
 "modifierat på något sätt idag?"
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco

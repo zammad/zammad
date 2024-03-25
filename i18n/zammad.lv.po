@@ -2,13 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2024-03-16 02:05+0000\n"
+"Last-Translator: Aivars Miška <allefm@gmail.com>\n"
+"Language-Team: Latvian <https://translations.zammad.org/projects/zammad/"
+"zammad-stable/lv/>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= "
+"19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2);\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -588,53 +592,47 @@ msgstr "Jūsu Logo"
 
 #: db/seeds/ticket_priorities.rb
 msgid "1 low"
-msgstr "1 mazs"
+msgstr "1 zems"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
-msgstr "minūte"
+msgstr "pirms 1 minūtes"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
-msgstr ""
+msgstr "pirms 1 mēneša"
 
 #: db/seeds/settings.rb
 msgid "1 week"
-msgstr ""
+msgstr "1 nedēļa"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 week ago"
-msgstr ""
+msgstr "pirms 1 nedēļas"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 year ago"
-msgstr ""
+msgstr "pirms 1 gada"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid "Overviews"
 msgid "1. Ticket Create"
-msgstr "Pārskati"
+msgstr "1. Pieteikumu izveidošana"
 
 #: db/seeds/settings.rb
 msgid "2 hours"
-msgstr ""
+msgstr "2 stundas"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
-msgstr "2 mazie un 2 lielie simboli"
+msgstr "2 mazos un 2 lielos burtus"
 
 #: db/seeds/ticket_priorities.rb
 msgid "2 normal"
-msgstr "2 normāls"
+msgstr "2 normāla"
 
 #: db/seeds/settings.rb
 msgid "2 weeks"
-msgstr ""
+msgstr "2 nedēļas"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #, fuzzy
@@ -1017,7 +1015,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
-msgstr ""
+msgstr "Pievienot saiti"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
@@ -1035,7 +1033,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
 msgid "Add Tag"
-msgstr ""
+msgstr "Pievienot tagu"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Add Telegram Bot"
@@ -1046,7 +1044,7 @@ msgstr "Pievienot Telegram botu"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "Add a Note"
-msgstr ""
+msgstr "Pievienot piebildi"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -2248,6 +2246,10 @@ msgstr ""
 #| msgid "Settings"
 msgid "Call Settings"
 msgstr "Iestatījumi"
+
+#: app/models/cti/driver/base.rb
+msgid "Call from %s"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
@@ -7553,6 +7555,12 @@ msgstr ""
 #| msgid "Lastname"
 msgid "Last changed"
 msgstr "Uzvārds"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+#, fuzzy
+#| msgid "Login"
+msgid "Last closing time"
+msgstr "Pieteikties"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -16915,7 +16923,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "not set"
-msgstr ""
+msgstr "nav uzdots"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee

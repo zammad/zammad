@@ -1633,7 +1633,8 @@ msgstr "所有工单"
 msgid ""
 "All affected tickets will be deleted immediately when this job is run, "
 "without a history entry. There is no rollback of this deletion possible."
-msgstr "运行此作业后，所有受影响的工单都将立即被删除，且不会留下历史记录条目。此删除"
+msgstr ""
+"运行此作业后，所有受影响的工单都将立即被删除，且不会留下历史记录条目。此删除"
 "操作无法回滚。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
@@ -2725,6 +2726,12 @@ msgstr "日程"
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Call Settings"
 msgstr "来电设置"
+
+#: app/models/cti/driver/base.rb
+#, fuzzy
+#| msgid "Call from %s for %s"
+msgid "Call from %s"
+msgstr "从 %s 关于 %s 的来电"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
@@ -8605,6 +8612,12 @@ msgstr ""
 #| msgid "has changed"
 msgid "Last changed"
 msgstr "已更改"
+
+#: app/assets/javascripts/app/models/ticket.coffee
+#, fuzzy
+#| msgid "Closing time"
+msgid "Last closing time"
+msgstr "关闭时间"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
