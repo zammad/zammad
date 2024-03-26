@@ -13887,10 +13887,6 @@ msgstr ""
 msgid "To revert back to the default payload, simply turn off the \"Custom Payload\" switch above."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "To see the updated translation, please reload your browser."
-msgstr ""
-
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
 msgstr ""
