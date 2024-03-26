@@ -10,7 +10,7 @@ class App.UiElement.language extends App.UiElement.ApplicationUiElement
 
     if attribute.show_system_default_option
       locale_default_name = App.Locale.findByAttribute('locale', App.Config.get('locale_default')).name
-      attribute.options.unshift({ name: __('System default') + " (#{locale_default_name})", value: 'system' })
+      attribute.options.unshift({ name: App.i18n.translatePlain('System default - %s', locale_default_name), value: 'system' })
 
     # set default value
     attribute.default = if attribute.show_system_default_option then 'system' else App.Config.get('locale_default')

@@ -3324,6 +3324,11 @@ msgstr ""
 msgid "Customers in the organization can view each other's items."
 msgstr ""
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Customize the default locale and timezone during replacement of template variables."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
 msgstr ""
@@ -7465,6 +7470,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
+msgstr ""
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Localization of execution changes"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -11759,7 +11769,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/language.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-msgid "System default"
+msgid "System default - %s"
 msgstr ""
 
 #: app/models/knowledge_base.rb

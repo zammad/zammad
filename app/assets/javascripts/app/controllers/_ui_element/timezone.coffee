@@ -17,7 +17,7 @@ class App.UiElement.timezone extends App.UiElement.ApplicationUiElement
 
     if attribute.show_system_default_option
       timezone_default_name = _.find(attribute.options, (option) -> option.value == App.Config.get('timezone_default')).name
-      attribute.options.unshift({ name: __('System default') + " (#{timezone_default_name})", value: 'system' })
+      attribute.options.unshift({ name: App.i18n.translatePlain('System default - %s', timezone_default_name), value: 'system' })
 
     # set default value
     attribute.default = if attribute.show_system_default_option then 'system' else App.Config.get('timezone_default')
