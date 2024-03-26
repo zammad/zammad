@@ -1218,6 +1218,10 @@ msgstr ""
 msgid "An unexpected error occurred during system setup."
 msgstr ""
 
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Analyzing entries with given configuration…"
