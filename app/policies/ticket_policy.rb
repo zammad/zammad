@@ -16,6 +16,10 @@ class TicketPolicy < ApplicationPolicy
     access?('change')
   end
 
+  def external?
+    access?('external')
+  end
+  
   def destroy?
     return true if user.permissions?('admin')
 

@@ -114,6 +114,10 @@ class TicketArticlesController < ApplicationController
                                                        }
                                                      ))
     end
+    # Do not allow changing status to external if you don't have external or full group access
+    if clean_params[:internal] == false
+      authorize!(article, :external?) # TODO: This might stop those with 'full' access from posting, check it doesn't
+    end
 
     article.update!(clean_params)
 

@@ -51,6 +51,11 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
       clean_params[:internal] = false
     end
 
+    # Do not allow creation if you don't have external or full group access
+    if clean_params[:internal] == false
+      authorize!(ticket, :external?) # TODO: This might stop those with 'full' access from posting, check it doesn't
+    end
+
     article = Ticket::Article.new(clean_params)
     article.ticket_id = ticket.id
     article.check_mentions_raises_error = true
