@@ -45,8 +45,6 @@ const props = defineProps<Props>()
 const reactiveContext = toRef(props, 'context')
 const { currentValue } = useValue(reactiveContext)
 
-// TODO: add maybe something to extract the props from the context, instead of using context.XYZ (or props.context.XYZ)
-
 const disabledPlugins = Object.entries(props.context.meta || {})
   .filter(([, value]) => value.disabled)
   .map(([key]) => key as EditorCustomPlugins)
