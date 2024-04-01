@@ -57,7 +57,7 @@
     "eslint-plugin-vue": "^9.24.0",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
     "jsdom": "^24.0.0",
-    "minimatch": "^9.0.3",
+    "minimatch": "^9.0.4",
     "mock-apollo-client": "^1.2.1",
     "postcss": "^8.4.36",
     "postcss-html": "^1.6.0",
