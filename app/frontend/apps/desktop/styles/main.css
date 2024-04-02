@@ -1,3 +1,4 @@
+@import './transitions.css';
 @config './tailwind.desktop.js';
 @tailwind base;
 @tailwind components;

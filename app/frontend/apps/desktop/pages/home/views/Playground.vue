@@ -3,7 +3,10 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { reset } from '@formkit/core'
+
+import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import Form from '#shared/components/Form/Form.vue'
@@ -13,6 +16,11 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#desktop/components/CommonButtonGroup/CommonButtonGroup.vue'
 import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgressBar.vue'
 import type { CommonButtonItem } from '#desktop/components/CommonButtonGroup/types.ts'
+import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
+import CommonPopoverMenu from '#desktop/components/CommonPopover/CommonPopoverMenu.vue'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
+import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -248,6 +256,13 @@ watch(progressBarValue, (newValue) => {
     progressBarValue.value = 0
   }, 1000)
 })
+
+const session = useSessionStore()
+const { user } = storeToRefs(session)
+
+const { popover, popoverTarget, toggle } = usePopover()
+
+const appearance = ref('auto')
 </script>
 
 <template>
@@ -413,6 +428,65 @@ watch(progressBarValue, (newValue) => {
         />
       </div>
     </div>
+  </div>
+
+  <div class="ltr:ml-2 rtl:mr-2">
+    <h2 class="text-lg">Popover</h2>
+
+    <template v-if="user">
+      <CommonPopover
+        ref="popover"
+        :owner="popoverTarget"
+        arrow-placement="start"
+        orientation="autoVertical"
+      >
+        <CommonPopoverMenu
+          header-label="Erika Mustermann"
+          :items="[
+            {
+              key: 'appearance',
+              label: __('Appearance'),
+              icon: 'brightness-alt-high',
+            },
+            {
+              key: 'keyboard-shortcuts',
+              label: __('Keyboard shortcuts'),
+              onClick: () => {
+                console.log('OPEN KEYBOARD SHORTCUTS DIALOG')
+              },
+              icon: 'keyboard',
+            },
+            {
+              key: 'profile-settings',
+              label: __('Profile settings'),
+              link: '/profile',
+              icon: 'person-gear',
+            },
+            {
+              key: 'sign-out',
+              label: __('Sign out'),
+              link: '/logout',
+              icon: 'box-arrow-in-right',
+              seperatorTop: true,
+            },
+          ]"
+        >
+          <template #itemRight="{ key }">
+            <div v-if="key === 'appearance'" class="px-2 flex items-center">
+              <ThemeSwitch v-model="appearance" size="small" />
+            </div>
+          </template>
+        </CommonPopoverMenu>
+      </CommonPopover>
+      <button ref="popoverTarget" @click="toggle">
+        <CommonUserAvatar
+          :entity="user"
+          size="large"
+          personal
+          class="bg-red-300"
+        />
+      </button>
+    </template>
   </div>
 
   <div class="w-1/2 ltr:ml-2 rtl:mr-2">

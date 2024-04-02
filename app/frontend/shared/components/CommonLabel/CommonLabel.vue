@@ -5,6 +5,7 @@ import type { Sizes } from './types.ts'
 
 export interface Props {
   size?: Sizes
+  iconColor?: string
   prefixIcon?: string
   suffixIcon?: string
 }
@@ -14,10 +15,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const fontSizeClassMap = {
-  small: 'text-xs',
-  medium: 'text-sm',
-  large: 'text-base',
-  xl: 'text-xl',
+  small: 'text-xs leading-3',
+  medium: 'text-sm leading-4',
+  large: 'text-base leading-5',
+  xl: 'text-xl leading-6',
 }
 
 const iconClassMap = {
@@ -30,7 +31,7 @@ const iconClassMap = {
 
 <template>
   <span
-    class="inline-flex justify-start items-center gap-1 -:text-gray-100 -:dark:text-neutral-400"
+    class="inline-flex justify-start items-center -:gap-1 -:text-gray-100 -:dark:text-neutral-400"
     :class="fontSizeClassMap[props.size]"
     data-test-id="common-label"
   >
@@ -38,6 +39,7 @@ const iconClassMap = {
       v-if="prefixIcon"
       :size="iconClassMap[props.size]"
       :name="prefixIcon"
+      :class="iconColor"
       decorative
     />
 
@@ -47,6 +49,7 @@ const iconClassMap = {
       v-if="suffixIcon"
       :size="iconClassMap[props.size]"
       :name="suffixIcon"
+      :class="iconColor"
       decorative
     />
   </span>

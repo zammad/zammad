@@ -1,12 +1,14 @@
 # Third Party Icons (`desktop`)
 
 - `assets/backspace.svg`
+- `assets/box-arrow-in-right.svg`
 - `assets/box-arrow-up-right.svg`
+- `assets/brightness-alt-high.svg`
 - `assets/check-all.svg`
 - `assets/check-circle-outline.svg`
 - `assets/check-square.svg`
-- `assets/check2.svg`
 - `assets/check2-all.svg`
+- `assets/check2.svg`
 - `assets/chevron-down.svg`
 - `assets/chevron-left.svg`
 - `assets/chevron-right.svg`
@@ -18,8 +20,10 @@
 - `assets/image.svg`
 - `assets/info-circle.svg`
 - `assets/key.svg`
+- `assets/keyboard.svg`
 - `assets/moon.svg`
 - `assets/person-add.svg`
+- `assets/person-gear.svg`
 - `assets/phone.svg`
 - `assets/plus-circle.svg`
 - `assets/search.svg`
@@ -33,6 +37,10 @@
   - Author: The Bootstrap Authors
   - License: MIT
   - URL: https://github.com/twbs/icons
+
+- `assets/crown.svg`
+  - Author: Felix Niklas
+  - License: MIT
 
 - `assets/github.svg`
 
@@ -76,6 +84,7 @@
   - URL: https://weibo.com
 
 - `assets/twitter.svg`
+
   - Author: Twitter
   - URL: https://about.twitter.com/en/who-we-are/brand-toolkit
 

@@ -1298,6 +1298,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr ""
@@ -3334,6 +3335,7 @@ msgid "Dark"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
+#: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue
 msgid "Dark Mode"
 msgstr ""
 
@@ -7131,6 +7133,10 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+msgid "Keyboard shortcuts"
+msgstr ""
+
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Keywords"
 msgstr ""
@@ -9737,6 +9743,10 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+msgid "Profile settings"
+msgstr ""
+
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
 msgstr ""
@@ -11265,6 +11275,7 @@ msgid "Sign in using"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr ""

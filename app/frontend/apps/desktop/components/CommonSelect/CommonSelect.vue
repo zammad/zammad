@@ -111,6 +111,8 @@ const closeDropdown = () => {
   deactivateTabTrap()
   showDropdown.value = false
   emit('close')
+
+  // TODO: move to existing nextTick.
   if (!props.noRefocus) {
     nextTick(() => lastFocusableOutsideElement?.focus())
   }
@@ -127,7 +129,7 @@ const openDropdown = (
   inputElementBounds = bounds
   windowHeight = toRef(height)
   instances.value.forEach((instance) => {
-    if (instance.isOpen) instance.closeDropdown()
+    if (instance.isOpen.value) instance.closeDropdown()
   })
   showDropdown.value = true
   lastFocusableOutsideElement = getActiveElement()
