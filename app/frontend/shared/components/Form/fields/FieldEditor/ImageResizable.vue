@@ -10,6 +10,8 @@ import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
 import testFlags from '#shared/utils/testFlags.ts'
 
 const props = defineProps(nodeViewProps)
+const initialHeight = props.node.attrs.height
+const initialWidth = props.node.attrs.width
 
 const needBase64Convert = (src: string) => {
   return !(src.startsWith('data:') || src.startsWith('cid:'))
@@ -59,8 +61,9 @@ const onLoadImage = (e: Event) => {
 
   const img = e.target as HTMLImageElement
   const { naturalWidth, naturalHeight } = img
-  dimensions.width = naturalWidth
-  dimensions.height = naturalHeight
+
+  dimensions.width = initialWidth !== '100%' ? initialWidth : naturalWidth
+  dimensions.height = initialHeight !== 'auto' ? initialHeight : naturalWidth
   dimensions.maxHeight = naturalHeight
   dimensions.maxWidth = naturalWidth
   imageLoaded.value = true
@@ -100,6 +103,8 @@ const wrapperStyle = computed(() => {
       :style="style"
       :src="src"
       :alt="node.attrs.alt"
+      :width="node.attrs.width"
+      :height="node.attrs.height"
       :title="node.attrs.title"
       :draggable="isDraggable"
       @load="onLoadImage"
