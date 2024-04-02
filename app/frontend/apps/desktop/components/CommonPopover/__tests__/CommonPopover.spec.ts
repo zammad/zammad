@@ -32,6 +32,9 @@ const renderPopover = () => {
 describe('CommonPopover.vue', () => {
   it('does not render when popover is not open', () => {
     const view = renderComponent(CommonPopover, {
+      props: {
+        owner: null,
+      },
       slots: {
         default: 'Example Content',
       },
