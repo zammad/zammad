@@ -633,7 +633,7 @@ GEM
       faraday-multipart (~> 1.0)
       zeitwerk (~> 2.6)
     telephone_number (1.4.21)
-    terser (1.2.1)
+    terser (1.2.2)
       execjs (>= 0.3.0, < 3)
     test-unit (3.6.2)
       power_assert
