@@ -4,6 +4,8 @@
 - `assets/box-arrow-in-right.svg`
 - `assets/box-arrow-up-right.svg`
 - `assets/brightness-alt-high.svg`
+- `assets/buildings-slash.svg`
+- `assets/buildings.svg`
 - `assets/check-all.svg`
 - `assets/check-circle-outline.svg`
 - `assets/check-square.svg`
@@ -12,6 +14,8 @@
 - `assets/chevron-down.svg`
 - `assets/chevron-left.svg`
 - `assets/chevron-right.svg`
+- `assets/crown-right.svg`
+- `assets/crown-silver.svg`
 - `assets/dash-circle.svg`
 - `assets/download.svg`
 - `assets/exclamation-triangle.svg`
@@ -39,6 +43,7 @@
   - URL: https://github.com/twbs/icons
 
 - `assets/crown.svg`
+
   - Author: Felix Niklas
   - License: MIT
 

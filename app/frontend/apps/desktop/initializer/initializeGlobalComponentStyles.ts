@@ -1,6 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { initializeAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
+import { initializeAvatarClasses } from '#shared/initializer/initializeAvatarClasses.ts'
+import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
+import { initializeOrganizationAvatarClasses } from '#shared/initializer/initializeOrganizationAvatarClasses.ts'
 import { initializeBadgeClasses } from '#shared/initializer/initializeBadgeClasses.ts'
 import { initializeLinkClasses } from '#shared/initializer/initializeLinkClasses.ts'
 import { initializeNotificationClasses } from '#shared/initializer/initializeNotificationClasses.ts'
@@ -27,6 +30,28 @@ export const initializeGlobalComponentStyles = () => {
     warning: 'alert-warning bg-yellow-50 dark:bg-yellow-900 text-yellow-600',
     danger: 'alert-error bg-pink-100 dark:bg-red-900 text-red-500',
     link: 'hover:underline',
+  })
+
+  // TODO: check correct classes
+  initializeAvatarClasses({
+    vipOrganization: 'text-neutral-400',
+    vipUser: 'text-yellow-300',
+  })
+
+  initializeUserAvatarClasses({
+    backgroundColors: [
+      'bg-neutral-500',
+      'bg-red-500',
+      'bg-yellow-300',
+      'bg-blue-800',
+      'bg-green-500',
+      'bg-pink-300',
+      'bg-yellow-600',
+    ],
+  })
+
+  initializeOrganizationAvatarClasses({
+    backgroundColor: 'bg-green-100 dark:bg-gray-200',
   })
 
   initializeLinkClasses({

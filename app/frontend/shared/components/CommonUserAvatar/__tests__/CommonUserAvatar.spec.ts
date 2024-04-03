@@ -2,10 +2,24 @@
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { SYSTEM_USER_ID } from '#shared/utils/constants.ts'
+import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import CommonUserAvatar, { type Props } from '../CommonUserAvatar.vue'
 
 const USER_ID = convertToGraphQLId('User', '123')
+
+initializeUserAvatarClasses({
+  backgroundColors: [
+    'bg-gray',
+    'bg-red-bright',
+    'bg-yellow',
+    'bg-blue',
+    'bg-green',
+    'bg-pink',
+    'bg-orange',
+  ],
+})
 
 describe('CommonUserAvatar', () => {
   it('renders user avatar', async () => {

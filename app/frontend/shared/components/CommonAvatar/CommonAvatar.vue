@@ -1,8 +1,11 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { i18n } from '#shared/i18n.ts'
 import { computed } from 'vue'
+
+import { i18n } from '#shared/i18n.ts'
+import { getAvatarClasses } from '#shared/initializer/initializeAvatarClasses.ts'
+
 import type { AvatarSize } from './types.ts'
 
 export interface Props {
@@ -40,6 +43,8 @@ const avatarLabel = computed(() => {
   if (props.decorative) return undefined
   return props.ariaLabel || i18n.t('Avatar with initials %s', props.initials)
 })
+
+const classMap = getAvatarClasses()
 </script>
 
 <template>
@@ -62,7 +67,11 @@ const avatarLabel = computed(() => {
       v-if="vipIcon"
       size="xl"
       class="vip pointer-events-none absolute -top-[48px] w-10 ltr:left-1/2 ltr:-ml-5 rtl:right-1/2 rtl:-mr-5"
-      :class="vipIcon === 'vip-organization' ? 'text-gray-100' : 'text-yellow'"
+      :class="
+        vipIcon === 'vip-organization'
+          ? classMap.vipOrganization
+          : classMap.vipUser
+      "
       :name="vipIcon"
       decorative
     />

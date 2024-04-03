@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { getInitials } from '#shared/utils/formatter.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -10,6 +11,8 @@ import {
   SYSTEM_USER_INTERNAL_ID,
 } from '#shared/utils/constants.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
+import { getUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
+
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 import type { AvatarSize } from '../CommonAvatar/index.ts'
 import type { AvatarUser } from './types.ts'
@@ -30,15 +33,7 @@ const initials = computed(() => {
   return getInitials(firstname, lastname, email)
 })
 
-const colors = [
-  'bg-gray',
-  'bg-red-bright',
-  'bg-yellow',
-  'bg-blue',
-  'bg-green',
-  'bg-pink',
-  'bg-orange',
-]
+const { backgroundColors } = getUserAvatarClasses()
 
 const fullName = computed(() => {
   const { lastname, firstname } = props.entity
@@ -55,7 +50,7 @@ const colorClass = computed(() => {
 
   // get color based on mod of the fullname length
   // so it stays consistent between different interfaces and logins
-  return colors[internalId % (colors.length - 1)]
+  return backgroundColors[internalId % (backgroundColors.length - 1)]
 })
 
 const sources = ['facebook', 'twitter']

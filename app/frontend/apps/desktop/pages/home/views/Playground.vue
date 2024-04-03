@@ -6,9 +6,11 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { reset } from '@formkit/core'
 
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
-
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import Form from '#shared/components/Form/Form.vue'
 import type { FormValues } from '#shared/components/Form/types.ts'
 
@@ -18,7 +20,6 @@ import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgr
 import type { CommonButtonItem } from '#desktop/components/CommonButtonGroup/types.ts'
 import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import CommonPopoverMenu from '#desktop/components/CommonPopover/CommonPopoverMenu.vue'
-import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 
@@ -515,5 +516,48 @@ const appearance = ref('auto')
         </div>
       </template>
     </Form>
+  </div>
+
+  <div class="flex flex-col gap-4 w-1/2 ltr:ml-2 rtl:mr-2">
+    <h2 class="text-lg">Avatars</h2>
+
+    <CommonUserAvatar
+      :entity="{
+        firstname: 'John',
+        lastname: 'Doe',
+        fullname: 'John Doe',
+        id: convertToGraphQLId('User', '123'),
+      }"
+    />
+    <CommonUserAvatar
+      :entity="{
+        firstname: 'Max',
+        lastname: 'Mustermann',
+        fullname: 'Max Mustermann',
+        vip: true,
+        id: convertToGraphQLId('User', '323'),
+      }"
+    />
+    <CommonOrganizationAvatar
+      :entity="{
+        name: 'Example AG',
+        active: true,
+        vip: true,
+      }"
+      size="large"
+    />
+    <CommonOrganizationAvatar
+      :entity="{
+        name: 'Example AG',
+        active: true,
+        vip: true,
+      }"
+    />
+    <CommonOrganizationAvatar
+      :entity="{
+        name: 'Example AG',
+        active: false,
+      }"
+    />
   </div>
 </template>

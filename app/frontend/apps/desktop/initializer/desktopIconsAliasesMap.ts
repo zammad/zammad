@@ -3,6 +3,8 @@
 export default {
   'vip-user': 'crown',
   'vip-organization': 'crown-silver',
+  organization: 'buildings',
+  'inactive-organization': 'buildings-slash',
   'input-cancel': 'close-small',
   facebook: 'facebook',
   github: 'github',

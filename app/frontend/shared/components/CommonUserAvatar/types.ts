@@ -12,3 +12,7 @@ export interface AvatarUser {
   id: string
   source?: string
 }
+
+export interface UserAvatarClassMap {
+  backgroundColors: string[]
+}
