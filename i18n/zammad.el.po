@@ -1704,6 +1704,10 @@ msgstr ""
 msgid "An unexpected error occurred during system setup."
 msgstr "Unable to verify email. Please contact your administrator."
 
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #, fuzzy
@@ -4168,6 +4172,13 @@ msgstr ""
 msgid "Customers in the organization can view each other's items."
 msgstr ""
 "Oι πελάτες στον οργανισμό μπορούν να δουν ο ένας τα αντικείμενα του άλλου."
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
@@ -9222,6 +9233,13 @@ msgstr "%s Object(s) are updated."
 msgid "Locale not found"
 msgstr ""
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Localization of execution changes"
+msgstr "Εκτελέστηκε μαζική ενέργεια!"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -14154,7 +14172,7 @@ msgstr "System URL"
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
 #| msgid "set to internal"
-msgid "System default"
+msgid "System default - %s"
 msgstr "ορισμός σε εσωτερικό"
 
 #: app/models/knowledge_base.rb
@@ -16802,14 +16820,6 @@ msgid ""
 "To revert back to the default payload, simply turn off the \"Custom "
 "Payload\" switch above."
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
-msgid "To see the updated translation, please reload your browser."
-msgstr ""
-"Μια νέα έκδοση του Zammad είναι διαθέσιμη, παρακαλώ ανανεώστε το πρόγραμμα "
-"περιήγησής σας."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -20157,6 +20167,13 @@ msgstr "... ολόκληρης της περιοχής κειμένου"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
+
+#, fuzzy
+#~| msgid "A new version of Zammad is available, please reload your browser."
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr ""
+#~ "Μια νέα έκδοση του Zammad είναι διαθέσιμη, παρακαλώ ανανεώστε το "
+#~ "πρόγραμμα περιήγησής σας."
 
 #, fuzzy
 #~| msgid "Create a Test Ticket"

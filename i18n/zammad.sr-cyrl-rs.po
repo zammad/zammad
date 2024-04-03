@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-25 12:04+0000\n"
+"PO-Revision-Date: 2024-03-29 17:00+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
-"zammad/zammad-development/sr_Cyrl/>\n"
+"zammad/zammad-stable/sr_Cyrl/>\n"
 "Language: sr-cyrl-rs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1651,6 +1651,10 @@ msgstr "Дошло је до неочекиване грешке."
 #: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
 msgid "An unexpected error occurred during system setup."
 msgstr "Дошло је до неочекиване грешке при поставци система."
+
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr "Дат је непознат назив метода."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -3952,6 +3956,15 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb
 msgid "Customers in the organization can view each other's items."
 msgstr "Клијенти у организацији могу да виде ставке једни других."
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
+"Прилагођавање подразумеваног језика и временске зоне приликом замене "
+"вредности променљивих."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
@@ -8752,6 +8765,11 @@ msgstr "Локал није пронађен."
 msgid "Locale not found"
 msgstr "Није пронађен локал"
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Localization of execution changes"
+msgstr "Локализација при извршавању радње"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -9780,6 +9798,8 @@ msgstr "Не, хвала!"
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
+"Није могуће послати додатан текст уз овај тип медија датотеке. Молимо "
+"уклоните текст."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
@@ -13357,8 +13377,8 @@ msgstr "URL система"
 
 #: app/assets/javascripts/app/controllers/_ui_element/language.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-msgid "System default"
-msgstr "Системска вредност"
+msgid "System default - %s"
+msgstr "Системска вредност - %s"
 
 #: app/models/knowledge_base.rb
 msgid ""
@@ -15883,10 +15903,6 @@ msgid ""
 msgstr ""
 "За повратак на подразумеване податке, једноставно искључите дугме "
 "„Прилагођени подаци” изнад."
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "To see the updated translation, please reload your browser."
-msgstr "Да бисте видели нови превод, молимо освежите ваш претраживач."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -19210,6 +19226,9 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr "Да бисте видели нови превод, молимо освежите ваш претраживач."
 
 #~ msgid ""
 #~ "The given media type does not support any text to be sent in parallel. "

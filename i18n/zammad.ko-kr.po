@@ -1682,6 +1682,10 @@ msgstr ""
 msgid "An unexpected error occurred during system setup."
 msgstr "이메일을 확인할 수 없습니다. 관리자에게 문의하시기 바랍니다."
 
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #, fuzzy
@@ -4102,6 +4106,13 @@ msgstr ""
 #| msgid "Customers in the organization can view each other items."
 msgid "Customers in the organization can view each other's items."
 msgstr "조직의 고객은 각각 다른 항목을 볼 수 있습니다."
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
@@ -9046,6 +9057,13 @@ msgstr "%s 객체 (들) 업데이트됩니다."
 msgid "Locale not found"
 msgstr ""
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Localization of execution changes"
+msgstr "대량 작업 실행!"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -13980,7 +13998,7 @@ msgstr "시스템 URL"
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
 #| msgid "Restore Defaults"
-msgid "System default"
+msgid "System default - %s"
 msgstr "기본값으로 복원"
 
 #: app/models/knowledge_base.rb
@@ -16671,12 +16689,6 @@ msgid ""
 "To revert back to the default payload, simply turn off the \"Custom "
 "Payload\" switch above."
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
-msgid "To see the updated translation, please reload your browser."
-msgstr "Zammad의 새 버전을 사용할 수, 브라우저를 다시로드하십시오."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -20131,6 +20143,11 @@ msgstr "... 전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#, fuzzy
+#~| msgid "A new version of Zammad is available, please reload your browser."
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr "Zammad의 새 버전을 사용할 수, 브라우저를 다시로드하십시오."
 
 #, fuzzy
 #~| msgid "Create a Test Ticket"

@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-21 11:42+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-03-29 17:00+0000\n"
+"Last-Translator: YosefAdPro <yosef@adpronet.com>\n"
 "Language-Team: Hebrew (Israel) <https://translations.zammad.org/projects/"
-"zammad/zammad-development/he_IL/>\n"
+"zammad/zammad-stable/he_IL/>\n"
 "Language: he-il\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 5.4.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -231,10 +231,8 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
-#, fuzzy
-#| msgid "Confirm"
 msgid "%s (confirm)"
-msgstr "אישור"
+msgstr "%s (אישור)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "%s (method)"
@@ -255,7 +253,7 @@ msgstr "add option"
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/composables/useSelectOptions.ts
 msgid "%s (unknown)"
-msgstr ""
+msgstr "%s לא ידוע"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -271,7 +269,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "%s קבוצה"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
 #, fuzzy
@@ -288,7 +286,7 @@ msgstr "%s הגירת"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
+msgstr "%s תפקיד"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -301,10 +299,8 @@ msgid "%s ago"
 msgstr "לפני %s"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Attached Files"
 msgid "%s attached files"
-msgstr "קבצים מצורפים"
+msgstr "%s קבצים מצורפים"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
@@ -362,13 +358,11 @@ msgstr "%s יצר משתמש |%s|"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s credentials"
-msgstr "%s אישורי"
+msgstr "%s אישורים"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
-msgstr "לפני %s"
+msgstr "לפני %s ימים"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -1587,6 +1581,10 @@ msgstr ""
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "An unexpected error occurred during system setup."
 msgstr "לא מצליח לאמת את המייל. נא ליצור קשר עם מנהל הIT שלך."
+
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -4008,6 +4006,13 @@ msgstr ""
 #| msgid "Customers in the organization can view each other items."
 msgid "Customers in the organization can view each other's items."
 msgstr "לקוחות בארגון יכולים להציג את הפריטים אחד של השני."
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
@@ -8910,6 +8915,13 @@ msgstr "%s% נפתחו מחדש"
 msgid "Locale not found"
 msgstr ""
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Localization of execution changes"
+msgstr "הפעולה הגורפת הוצאה לפועל!"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -10967,13 +10979,11 @@ msgstr "סיסמא"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Password changed successfully!"
-msgstr ""
+msgstr "סיסמא שונתה בהצלחה!"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
-#, fuzzy
-#| msgid "Password for proxy connection."
 msgid "Password for proxy connection"
-msgstr "סיסמה לחיבור פרוקסי."
+msgstr "סיסמה לחיבור פרוקסי-"
 
 #: db/seeds/settings.rb
 msgid "Password for proxy connection."
@@ -10991,7 +11001,7 @@ msgstr "הסיסמה צריכה להכיל לפחות ספרה אחת."
 
 #: db/seeds/settings.rb
 msgid "Password needs to contain at least one special character."
-msgstr ""
+msgstr "סיסמא חייבת להכיל לפחות סימן מיוחד אחד."
 
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
@@ -10999,51 +11009,45 @@ msgstr "הסיסמה צריכה להיות בת מספר מינימלי של ת�
 
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-#, fuzzy
-#| msgid "We've sent password reset instructions to your email address."
 msgid "Password reset instructions were sent to your email address."
-msgstr "שלחנו הוראות איפוס סיסמא אל תיבת הדואר שלך"
+msgstr "הוראות לאיפוס סיסמא נשלחו אל תיבת הדואר שלך."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
-msgstr ""
+msgstr "הדבק"
 
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco
 msgid "Paste Certificate"
-msgstr ""
+msgstr "הדבק סרטיפיקט"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Paste Private Key"
-msgstr ""
+msgstr "הדבק מפתח פרטי"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Paste from clipboard"
-msgstr ""
+msgstr "הדבק מלוח השעם"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Paste from clipboard (plain text)"
-msgstr ""
+msgstr "הדבק מלוח השעם (טקסט פשוט)"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Paste in CSV data"
-msgstr ""
+msgstr "הדבק בתצורת CSV"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 msgid "Paste key"
-msgstr ""
+msgstr "הדבק מפתח"
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "Pending Reached Tickets"
-msgstr "הכרטטיסים הממתינים שלי שהגיע מועדם"
+msgstr "הכרטיסים הממתינים שלי שהגיע מועדם"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
-#, fuzzy
-#| msgid "Pending reminder reached for Ticket |%s|"
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "תזכורת לכרטיס בהמתנה הגיעה לכרטיס |%s|"
 
@@ -11054,17 +11058,15 @@ msgstr "בהמתנה עד"
 
 #: db/seeds/roles.rb
 msgid "People who create Tickets ask for help."
-msgstr ""
+msgstr "אנשים שיוצרים כרטיסים מבקשים עזרה."
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
-#, fuzzy
-#| msgid "Ticket escalation"
 msgid "Perform actions"
-msgstr "הסלמת כרטיס"
+msgstr "בצע פעולות"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
-msgstr ""
+msgstr "מחק מאמר מידע לצמיתות"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
@@ -11221,7 +11223,7 @@ msgstr "אנא בצע שינויים במסד הנתונים רק בזמן חל�
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form_item.coffee
 msgid "Please fill in all fields"
-msgstr ""
+msgstr "נא למלא את כל השדות"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #: app/services/service/system/set_system_information.rb
@@ -11264,11 +11266,11 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Please select a ticket to merge into."
-msgstr ""
+msgstr "נא לבחור כרטיס למיזוג לתוכו."
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
-msgstr ""
+msgstr "נא לבחור לפחות תיקיה אחת."
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Please select at least one ticket overview"
@@ -13840,7 +13842,7 @@ msgstr "כתובת URL של המערכת"
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
 #| msgid "Restore Defaults"
-msgid "System default"
+msgid "System default - %s"
 msgstr "שחזר ברירות מחדל"
 
 #: app/models/knowledge_base.rb
@@ -16493,12 +16495,6 @@ msgid ""
 "Payload\" switch above."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
-msgid "To see the updated translation, please reload your browser."
-msgstr "גרסא חדשה של Zammad זמינה, אנא רענן את הדפדפן שלך."
-
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
 msgstr "כדי לבחור מצייני מיקום מתוך רשימה, פשוט הזן \"::\"."
@@ -18702,15 +18698,15 @@ msgstr "לקוח"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "d"
-msgstr ""
+msgstr "d"
 
 #: app/models/concerns/can_be_published.rb
 msgid "date must be no earlier than internal date"
-msgstr ""
+msgstr "על התאריך להיות מאוחר מהתאריך הפנימי"
 
 #: app/models/concerns/can_be_published.rb
 msgid "date must be no earlier than published date"
-msgstr ""
+msgstr "על התאריך להיות מאוחר מהתאריך המפורסם"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "day"
@@ -18727,7 +18723,7 @@ msgstr "נוטרל"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco db/seeds/signatures.rb
 msgid "default"
-msgstr ""
+msgstr "ברירת מחדל"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -18764,20 +18760,20 @@ msgstr "נתק"
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "do not reopen ticket after certain time but create new ticket"
-msgstr ""
+msgstr "אל תפתח מחדש טיקט לאחר פרק זמן מסויים אבל צור טיקט חדש"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "do not reopen ticket but create new ticket"
-msgstr ""
+msgstr "אל תפתח מחדש טיקט אבל צור טיקט חדש"
 
 #: lib/validations/object_manager/attribute_validator/future_past.rb
 msgid "does not allow future dates"
-msgstr ""
+msgstr "תאריכים עתידיים לא מורשים"
 
 #: lib/validations/object_manager/attribute_validator/future_past.rb
 msgid "does not allow past dates"
-msgstr ""
+msgstr "תאריכים היסטוריים לא מורשים"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #, fuzzy
@@ -18823,15 +18819,15 @@ msgstr "למשל"
 
 #: app/assets/javascripts/app/views/generic/drox.jst.eco
 msgid "edit"
-msgstr ""
+msgstr "עריכה"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s"
-msgstr ""
+msgstr "%s נערך"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s by %s"
-msgstr ""
+msgstr "%s נערך על ידי %s"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s by me"
@@ -19800,7 +19796,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 msgid "try again"
-msgstr ""
+msgstr "נסו שנית"
 
 #: db/seeds/ticket_article_types.rb
 msgid "twitter direct-message"
@@ -19812,18 +19808,18 @@ msgstr "מצב טויטר"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "unassign user"
-msgstr ""
+msgstr "בטל הקצאת משתמש"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "unset readonly"
-msgstr ""
+msgstr "בטל קריאה בלבד"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "untouched"
-msgstr "לא נגענו"
+msgstr "לא שונה"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -19836,25 +19832,23 @@ msgstr "עודכן"
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"
-msgstr ""
+msgstr "ווב"
 
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "welcome message"
-msgstr ""
+msgstr "הודעת ברוכים הבאים"
 
 #: db/seeds/ticket_article_types.rb
-#, fuzzy
-#| msgid "Add Tag"
 msgid "whatsapp message"
-msgstr "הוספת תג"
+msgstr "הודעת ווטסאפ"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
-msgstr ""
+msgstr "יווצר"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be deleted"
-msgstr ""
+msgstr "ימחק"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -19938,6 +19932,11 @@ msgstr "... של כל איזור הטקסט"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ זמן המתנה היום"
+
+#, fuzzy
+#~| msgid "A new version of Zammad is available, please reload your browser."
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr "גרסא חדשה של Zammad זמינה, אנא רענן את הדפדפן שלך."
 
 #, fuzzy
 #~| msgid "Create a Test Ticket"

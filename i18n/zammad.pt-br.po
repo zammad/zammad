@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-19 02:05+0000\n"
+"PO-Revision-Date: 2024-04-01 21:00+0000\n"
 "Last-Translator: \"Decio E. Silva\" <decio@verinatec.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
-"zammad/zammad-development/pt_BR/>\n"
+"zammad/zammad-stable/pt_BR/>\n"
 "Language: pt-br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -515,10 +515,8 @@ msgid "%s is inactive, please select an active one."
 msgstr "%s está inativo, por favor, selecione um ativo."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "is required"
 msgid "%s is required."
-msgstr "é obrigatório"
+msgstr "%s é obrigatório."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
@@ -653,10 +651,8 @@ msgid "%s user to %s user"
 msgstr "%s usuário para %s usuário"
 
 #: lib/whatsapp/webhook/message.rb
-#, fuzzy
-#| msgid "WhatsApp"
 msgid "%s via WhatsApp"
-msgstr "WhatsApp"
+msgstr "%s via WhatsApp"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s weeks ago"
@@ -1018,10 +1014,8 @@ msgid "Access to Agent Tickets based on Group Access"
 msgstr "Access to Agent Tickets based on Group Access"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Recent Customer Tickets"
 msgid "Access to customer tickets"
-msgstr "CHAMADOS DE CLIENTES RECENTES"
+msgstr "Acesso a chamados de clientes"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 msgid "Access token"
@@ -1382,10 +1376,8 @@ msgid "Additional information and links"
 msgstr "Informações adicionais e links"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Set notes for ticket create types."
 msgid "Additional notes for ticket create types."
-msgstr "Defina notas para os tipos de criação de ticket."
+msgstr "Notas adicionais para tipos de criação de chamados."
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
@@ -1681,6 +1673,10 @@ msgstr "Ocorreu um erro inesperado."
 #: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
 msgid "An unexpected error occurred during system setup."
 msgstr "Ocorreu um erro inesperado durante a configuração do sistema."
+
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr "Um nome de método desconhecido foi solicitado."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -3935,10 +3931,8 @@ msgid "Custom Payload"
 msgstr "Carga Personalizada"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Translations"
 msgid "Custom Translation"
-msgstr "Traduções"
+msgstr "Tradução Personalizada"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -3994,6 +3988,15 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb
 msgid "Customers in the organization can view each other's items."
 msgstr "Os usuários da organização podem visualizar os itens uns dos outros."
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
+"Personalize o local padrão e o fuso horário durante a substituição de "
+"variáveis de template."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
@@ -5355,6 +5358,9 @@ msgid ""
 "community on our public platform %l? It sports a very convenient user "
 "interface based on Weblate, give it a try!"
 msgstr ""
+"Você sabia que as traduções do sistema podem ser contribuídas e "
+"compartilhadas com a comunidade em nossa plataforma pública %l? Ela oferece "
+"uma interface de usuário muito conveniente baseada no Weblate, experimente!"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -6165,10 +6171,8 @@ msgid "Endpoint Settings"
 msgstr "Configurações de Endpoint"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enforce the set up of the two-factor authentication"
 msgid "Enforce the setup of the two-factor authentication"
-msgstr "Forçar a configuração da autenticação em duas etapas"
+msgstr "Exigir a configuração da autenticação de dois fatores"
 
 #: db/seeds/settings.rb
 msgid "Enforced for user roles"
@@ -6724,10 +6728,8 @@ msgid "Find a ticket"
 msgstr "Encontrar um ticket"
 
 #: app/assets/javascripts/app/views/translation/form.jst.eco
-#, fuzzy
-#| msgid "Inline translation"
 msgid "Find translation suggestion"
-msgstr "Tradução direta"
+msgstr "Encontrar sugestão de tradução"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
@@ -7151,10 +7153,8 @@ msgid "Given object does not support selector"
 msgstr "O objeto fornecido não suporta o seletor"
 
 #: app/models/setting/validation/time_zone.rb
-#, fuzzy
-#| msgid "The image is invalid."
 msgid "Given time zone is not valid."
-msgstr "A imagem é inválida."
+msgstr "O fuso horário fornecido não é válido."
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -7496,6 +7496,11 @@ msgid ""
 "new translation in order to identify the source string and provide its new "
 "translation for the target language."
 msgstr ""
+"Aqui você pode substituir qualquer cadeia de tradução para uma aparência e "
+"sensação mais personalizadas. Tanto cadeias de sistema reconhecidas quanto "
+"personalizadas são suportadas, basta adicionar uma nova tradução para "
+"identificar a cadeia de origem e fornecer sua nova tradução para o idioma "
+"alvo."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
@@ -8851,6 +8856,11 @@ msgstr "A localidade não pôde ser encontrada."
 msgid "Locale not found"
 msgstr "Localidade não encontrada"
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Localization of execution changes"
+msgstr "Localização das alterações de execução"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -9106,10 +9116,8 @@ msgid "Maximum Email Size"
 msgstr "Tamanho máximo do email"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Recursive Ticket Triggers"
 msgid "Maximum Recursive Ticket Triggers Depth"
-msgstr "Acionadores de tíquetes recursivos"
+msgstr "Profundidade Máxima de Gatilhos Recursivos de Chamados"
 
 #: db/seeds/settings.rb
 msgid "Maximum failed logins"
@@ -9190,10 +9198,8 @@ msgstr "Mensagem"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Messages"
 msgid "Message Status"
-msgstr "Mensagens"
+msgstr "Status da Mensagem"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Message after sending form"
@@ -9691,10 +9697,8 @@ msgid "New Ticket State"
 msgstr "Novo Estado de Ticket"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
-#, fuzzy
-#| msgid "Translations"
 msgid "New Translation"
-msgstr "Traduções"
+msgstr "Nova Tradução"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
@@ -9885,6 +9889,8 @@ msgstr "Não, obrigado!"
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
+"Nenhum texto adicional pode ser enviado com este tipo de mídia. Por favor, "
+"remova o texto."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
@@ -10320,10 +10326,8 @@ msgid "On %s, %s wrote:"
 msgstr "Em %s, %s escreva:"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco
-#, fuzzy
-#| msgid "Create a translation"
 msgid "On-screen Translation"
-msgstr "Crie uma tradução"
+msgstr "Tradução na Tela"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
@@ -10602,10 +10606,8 @@ msgid "Original Formatting"
 msgstr "Formato Original"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Original Formatting"
 msgid "Original Translation"
-msgstr "Formato Original"
+msgstr "Tradução Original"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -11708,15 +11710,11 @@ msgid "Requirements"
 msgstr "Requisitos"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Requires the set up of the two-factor authentication for certain user "
-#| "roles."
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
-"Requer a configuração da autenticação de dois fatores para determinados "
-"papéis de usuário."
+"Exige a configuração da autenticação de dois fatores para certos papéis de "
+"usuário."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -12831,11 +12829,11 @@ msgid "Show Search Details"
 msgstr "Mostrar Detalhes da Pesquisa"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Set notes for ticket create types by selecting type."
 msgid ""
 "Show additional notes for ticket creation depending on the selected type."
-msgstr "Defina notas para tipos de criação de tickets selecionando o tipo."
+msgstr ""
+"Mostrar notas adicionais para a criação de chamados dependendo do tipo "
+"selecionado."
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
@@ -13349,10 +13347,8 @@ msgid "Storage"
 msgstr "Armazenamento"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Storage Mechanism"
 msgid "Storage Method"
-msgstr "Mecanismo de Armazenamento"
+msgstr "Método de Armazenamento"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Store"
@@ -13497,10 +13493,8 @@ msgstr "URL de Sistema"
 
 #: app/assets/javascripts/app/controllers/_ui_element/language.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-#, fuzzy
-#| msgid "Unset default"
-msgid "System default"
-msgstr "Remover padrão"
+msgid "System default - %s"
+msgstr "Padrão do sistema - %s"
 
 #: app/models/knowledge_base.rb
 msgid ""
@@ -13516,6 +13510,9 @@ msgid ""
 "public platform %l. It sports a very convenient user interface based on "
 "Weblate, give it a try!"
 msgstr ""
+"As traduções do sistema podem ser contribuídas e compartilhadas com a "
+"comunidade em nossa plataforma pública %l. Ela oferece uma interface de "
+"usuário muito conveniente baseada no Weblate, experimente!"
 
 #: db/seeds/settings.rb
 msgid "SystemID"
@@ -13566,10 +13563,8 @@ msgid "Target"
 msgstr "Destino"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Language"
 msgid "Target Language"
-msgstr "Idioma"
+msgstr "Idioma Alvo"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -14168,10 +14163,8 @@ msgstr "O arquivo não pertence ao artigo especificado."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
-#, fuzzy
-#| msgid "Type %s is not supported."
 msgid "The file type %s is not allowed."
-msgstr "O tipo %s não é suportado."
+msgstr "O tipo de arquivo %s não é permitido."
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -14274,12 +14267,11 @@ msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "O limite de %s de tickets exibíveis foi atingido (%s restantes)"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgid ""
 "The limit of displayable suggestions was reached, please narrow down your "
 "search."
-msgstr "O limite de %s de tickets exibíveis foi atingido (%s restantes)"
+msgstr ""
+"O limite de sugestões exibíveis foi atingido, por favor, refine sua pesquisa."
 
 #: app/services/service/auth/verify_admin_token.rb
 msgid "The login is not possible."
@@ -15619,10 +15611,8 @@ msgid "Ticket could not be created."
 msgstr "Não foi possível criar o ticket."
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
-#, fuzzy
-#| msgid "Ticket actions"
 msgid "Ticket creation"
-msgstr "Ações de ticket"
+msgstr "Criação de chamado"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Ticket customer updated successfully."
@@ -15942,10 +15932,8 @@ msgid "Time zone"
 msgstr "fuso"
 
 #: app/models/setting/validation/time_zone.rb
-#, fuzzy
-#| msgid "This field is required."
 msgid "Time zone is required."
-msgstr "Este campo é obrigatório."
+msgstr "Fuso horário é obrigatório."
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Timeframe between agent updates or for an agent to respond."
@@ -16060,16 +16048,12 @@ msgstr ""
 "e, em seguida, o botão %s \"Adicionar à tela inicial\"."
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco
-#, fuzzy
-#| msgid ""
-#| "To make translations easier you can enable and disable the inline "
-#| "translation feature by pressing \"%s\"."
 msgid ""
 "To make translations easier you can enable and disable the inline "
 "translation feature by pressing \"%s\" at any time."
 msgstr ""
-"Para facilitar a tradução você pode habilitar ou desabilitar a tradução "
-"\"direta\" apertando \"%s\"."
+"Para facilitar as traduções, você pode ativar e desativar o recurso de "
+"tradução inline pressionando \"%s\" a qualquer momento."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
 msgid ""
@@ -16085,12 +16069,6 @@ msgid ""
 msgstr ""
 "Para retornar à carga útil padrão, basta desligar o interruptor \"Carga Útil "
 "Personalizada\" acima."
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "The configuration of Zammad has changed, please reload your browser."
-msgid "To see the updated translation, please reload your browser."
-msgstr "A configuração do Zammad mudou, por favor recarregue seu navegador."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -16205,16 +16183,12 @@ msgid "Translate field contents"
 msgstr "Traduzir conteúdo do campo"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Translations"
 msgid "Translation"
-msgstr "Traduções"
+msgstr "Tradução"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Translations"
 msgid "Translation Source"
-msgstr "Traduções"
+msgstr "Fonte da Tradução"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -16480,6 +16454,7 @@ msgstr "Erro desconhecido"
 #: app/models/failed_email.rb
 msgid "Unknown error: Could not create a ticket from this email."
 msgstr ""
+"Erro desconhecido: Não foi possível criar um chamado a partir deste e-mail."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid ""
@@ -18291,10 +18266,8 @@ msgid "current user organization"
 msgstr "usuário atual da organização"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "customer"
 msgid "custom"
-msgstr "Cliente"
+msgstr "personalizado"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "custom unit"
@@ -18342,10 +18315,8 @@ msgstr "excluir"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Delete Customer"
 msgid "delivered to the customer"
-msgstr "Deletar Cliente"
+msgstr "entregue ao cliente"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -19056,10 +19027,8 @@ msgstr "encontrado"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Create new customer"
 msgid "read by the customer"
-msgstr "Criar um novo cliente"
+msgstr "lido pelo cliente"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -19141,10 +19110,8 @@ msgstr "selecionar opções visíveis"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Create new customer"
 msgid "sent to the customer"
-msgstr "Criar um novo cliente"
+msgstr "enviado ao cliente"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19251,10 +19218,8 @@ msgid "support@example.com"
 msgstr "suporte@exemplo.com"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "System"
 msgid "system"
-msgstr "Sistema"
+msgstr "sistema"
 
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
@@ -19444,6 +19409,12 @@ msgstr "...da area de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ tempo de espera hoje"
+
+#, fuzzy
+#~| msgid ""
+#~| "The configuration of Zammad has changed, please reload your browser."
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr "A configuração do Zammad mudou, por favor recarregue seu navegador."
 
 #~ msgid "Caption for %s is not allowed. Please clear text!"
 #~ msgstr "Legenda para %s não é permitida. Por favor, limpe o texto!"

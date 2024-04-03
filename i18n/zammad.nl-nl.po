@@ -1670,6 +1670,10 @@ msgstr "Er is een fout opgetreden"
 msgid "An unexpected error occurred during system setup."
 msgstr "Er is een fout opgetreden"
 
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Analyzing entries with given configuration…"
@@ -4026,6 +4030,13 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb
 msgid "Customers in the organization can view each other's items."
 msgstr "Klanten in de organisatie kunnen elkaars items bekijken."
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
@@ -9011,6 +9022,13 @@ msgstr "Locale kon niet worden gevonden."
 msgid "Locale not found"
 msgstr "Landinstelling niet gevonden"
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Action execution"
+msgid "Localization of execution changes"
+msgstr "Uitvoering van acties"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -13827,7 +13845,7 @@ msgstr "Systeem URL"
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
 #| msgid "Reset to default"
-msgid "System default"
+msgid "System default - %s"
 msgstr "Herstel naar standaard"
 
 #: app/models/knowledge_base.rb
@@ -16554,13 +16572,6 @@ msgid ""
 msgstr ""
 "Om terug te keren naar de standaard-payload, schakel je de schakelaar "
 "\"Aangepaste payload\" hierboven uit."
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "The configuration of Zammad has changed, please reload your browser."
-msgid "To see the updated translation, please reload your browser."
-msgstr ""
-"De configuratie van Zammad is gewijzigd, ververs de pagina in de browser."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -19982,6 +19993,13 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#, fuzzy
+#~| msgid ""
+#~| "The configuration of Zammad has changed, please reload your browser."
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr ""
+#~ "De configuratie van Zammad is gewijzigd, ververs de pagina in de browser."
 
 #, fuzzy
 #~| msgid "ticket"

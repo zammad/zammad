@@ -1574,6 +1574,10 @@ msgstr ""
 msgid "An unexpected error occurred during system setup."
 msgstr "ईमेल सत्यापित करने में असमर्थ। कृपया अपने व्यवस्थापक से संपर्क करें।"
 
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #, fuzzy
@@ -3912,6 +3916,13 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Customers in the organization can view each other's items."
+msgstr ""
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
@@ -8612,6 +8623,11 @@ msgstr "% s ऑब्जेक्ट (एस) अपडेट किए गए �
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
+msgstr ""
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Localization of execution changes"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -13430,7 +13446,7 @@ msgstr "सिस्टम URL"
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
 #| msgid "Restore Defaults"
-msgid "System default"
+msgid "System default - %s"
 msgstr "डिफॉल्ट्स का पुनःस्थापन"
 
 #: app/models/knowledge_base.rb
@@ -16110,12 +16126,6 @@ msgid ""
 "To revert back to the default payload, simply turn off the \"Custom "
 "Payload\" switch above."
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
-msgid "To see the updated translation, please reload your browser."
-msgstr "Zammad का एक नया संस्करण उपलब्ध है, कृपया अपना ब्राउज़र पुनः लोड करें।"
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -19553,6 +19563,11 @@ msgstr " ... पूरे टेक्सारिया के"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Iting आज समय की प्रतीक्षा है"
+
+#, fuzzy
+#~| msgid "A new version of Zammad is available, please reload your browser."
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr "Zammad का एक नया संस्करण उपलब्ध है, कृपया अपना ब्राउज़र पुनः लोड करें।"
 
 #, fuzzy
 #~| msgid "Create"

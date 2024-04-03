@@ -1584,6 +1584,10 @@ msgstr ""
 msgid "An unexpected error occurred during system setup."
 msgstr ""
 
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Analyzing entries with given configuration…"
@@ -3886,6 +3890,13 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Customers in the organization can view each other's items."
+msgstr ""
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
@@ -8523,6 +8534,11 @@ msgstr "%s Обект(и) са обновени."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
+msgstr ""
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Localization of execution changes"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -13178,7 +13194,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
 #| msgid "set to internal"
-msgid "System default"
+msgid "System default - %s"
 msgstr "задай като вътрешен"
 
 #: app/models/knowledge_base.rb
@@ -15719,10 +15735,6 @@ msgstr ""
 msgid ""
 "To revert back to the default payload, simply turn off the \"Custom "
 "Payload\" switch above."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "To see the updated translation, please reload your browser."
 msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee
