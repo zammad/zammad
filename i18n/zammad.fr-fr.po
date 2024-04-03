@@ -1788,6 +1788,7 @@ msgstr "App secret"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "Affichage"
@@ -4023,6 +4024,13 @@ msgstr ""
 msgid "Customers in the organization can view each other's items."
 msgstr "Les clients de l'organisation peuvent voir les éléments des autres."
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
 msgstr "Couper"
@@ -4032,6 +4040,7 @@ msgid "Dark"
 msgstr "Sombre"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
+#: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue
 msgid "Dark Mode"
 msgstr "Mode sombre"
 
@@ -8592,6 +8601,12 @@ msgstr "ID de clé"
 msgid "Keyboard Shortcuts"
 msgstr "Raccourcis clavier"
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Keyboard Shortcuts"
+msgid "Keyboard shortcuts"
+msgstr "Raccourcis clavier"
+
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Keywords"
 msgstr "Mots clés"
@@ -8926,6 +8941,13 @@ msgstr "La langue n'a pas été trouvée."
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
 msgstr "Langue non trouvée"
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Action execution"
+msgid "Localization of execution changes"
+msgstr "Exécution de l'action"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -11367,6 +11389,12 @@ msgstr "Nom du produit"
 msgid "Profile"
 msgstr "Profil"
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Proxy Settings"
+msgid "Profile settings"
+msgstr "Paramètres du proxy"
+
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
 msgstr "Profils"
@@ -13064,6 +13092,7 @@ msgid "Sign in using"
 msgstr "Se connecter en utilisant"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Se déconnecter"
@@ -13586,7 +13615,9 @@ msgstr "URL du système"
 
 #: app/assets/javascripts/app/controllers/_ui_element/language.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-msgid "System default"
+#, fuzzy
+#| msgid "System default"
+msgid "System default - %s"
 msgstr "Valeur par défaut du système"
 
 #: app/models/knowledge_base.rb
@@ -16185,11 +16216,6 @@ msgid ""
 msgstr ""
 "Pour revenir à la charge utile (payload) par défaut, désactiver simplement "
 "le bouton ci-dessus \"Charge utile (payload) personnalisée\"."
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "To see the updated translation, please reload your browser."
-msgstr ""
-"Pour voir la traduction mise à jour, veuillez actualiser votre navigateur."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -19555,6 +19581,10 @@ msgstr "... de toute la zone de texte"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Temps d'attente aujourd'hui"
+
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr ""
+#~ "Pour voir la traduction mise à jour, veuillez actualiser votre navigateur."
 
 #~ msgid "Caption for %s is not allowed. Please clear text!"
 #~ msgstr "La légende pour %s n'est pas autorisée. Merci d'effacer le texte !"

@@ -1818,6 +1818,7 @@ msgstr "App Secret"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "Aparência"
@@ -4191,6 +4192,13 @@ msgstr ""
 msgid "Customers in the organization can view each other's items."
 msgstr "Os clientes da organização podem ver os outros itens."
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
 msgstr ""
@@ -4200,6 +4208,7 @@ msgid "Dark"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
+#: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue
 #, fuzzy
 #| msgid "Mode"
 msgid "Dark Mode"
@@ -8877,6 +8886,12 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr "atalhos de teclado"
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Keyboard Shortcuts"
+msgid "Keyboard shortcuts"
+msgstr "atalhos de teclado"
+
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Keywords"
 msgstr "Palavras-chave"
@@ -9244,6 +9259,13 @@ msgstr "%s Objetos foram atualizados"
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
 msgstr ""
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Localization of execution changes"
+msgstr "Ação em massa executada!"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -11847,6 +11869,12 @@ msgstr "Nome do Produto"
 msgid "Profile"
 msgstr "Perfil"
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Proxy Settings"
+msgid "Profile settings"
+msgstr "Configurações de Proxy"
+
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
 msgstr "perfis"
@@ -13741,6 +13769,7 @@ msgid "Sign in using"
 msgstr "Ou entre usando"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Sign out"
@@ -14312,7 +14341,7 @@ msgstr "System URL"
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
 #| msgid "Restore Defaults"
-msgid "System default"
+msgid "System default - %s"
 msgstr "Restaurar padrões"
 
 #: app/models/knowledge_base.rb
@@ -17037,14 +17066,6 @@ msgid ""
 "To revert back to the default payload, simply turn off the \"Custom "
 "Payload\" switch above."
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
-msgid "To see the updated translation, please reload your browser."
-msgstr ""
-"Um nova versão do Zammad está disponível, por favor recarregue o seu "
-"navegador."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -20545,6 +20566,13 @@ msgstr "... de toda a area de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tempo de Espera Hoje"
+
+#, fuzzy
+#~| msgid "A new version of Zammad is available, please reload your browser."
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr ""
+#~ "Um nova versão do Zammad está disponível, por favor recarregue o seu "
+#~ "navegador."
 
 #, fuzzy
 #~| msgid "Create a Test Ticket"

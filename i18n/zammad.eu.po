@@ -1662,6 +1662,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr ""
@@ -3763,6 +3764,13 @@ msgstr ""
 msgid "Customers in the organization can view each other's items."
 msgstr ""
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
 msgstr ""
@@ -3772,6 +3780,7 @@ msgid "Dark"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
+#: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue
 msgid "Dark Mode"
 msgstr ""
 
@@ -7895,6 +7904,10 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+msgid "Keyboard shortcuts"
+msgstr ""
+
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Keywords"
 msgstr ""
@@ -8227,6 +8240,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
+msgstr ""
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Localization of execution changes"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -10564,6 +10582,10 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+msgid "Profile settings"
+msgstr ""
+
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
 msgstr ""
@@ -12159,6 +12181,7 @@ msgid "Sign in using"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr ""
@@ -12666,7 +12689,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/language.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-msgid "System default"
+msgid "System default - %s"
 msgstr ""
 
 #: app/models/knowledge_base.rb
@@ -15017,10 +15040,6 @@ msgstr ""
 msgid ""
 "To revert back to the default payload, simply turn off the \"Custom "
 "Payload\" switch above."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "To see the updated translation, please reload your browser."
 msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee

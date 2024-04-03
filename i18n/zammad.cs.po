@@ -1805,6 +1805,7 @@ msgstr "App Secret"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "Vzhled"
@@ -4064,6 +4065,13 @@ msgstr ""
 msgid "Customers in the organization can view each other's items."
 msgstr "Zákazníci v této organizaci mohou vzájemně zobrazit své položky."
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
 msgstr "Vyjmout"
@@ -4073,6 +4081,7 @@ msgid "Dark"
 msgstr "Tmavý"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
+#: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue
 msgid "Dark Mode"
 msgstr "Tmavý režim"
 
@@ -8679,6 +8688,12 @@ msgstr "Klíč ID"
 msgid "Keyboard Shortcuts"
 msgstr "Klávesové Zkratky"
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Keyboard Shortcuts"
+msgid "Keyboard shortcuts"
+msgstr "Klávesové Zkratky"
+
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Keywords"
 msgstr "Klíčová slova"
@@ -9022,6 +9037,13 @@ msgstr "Národní prostředí se nepodařilo najít."
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
 msgstr "Národní prostředí nenalezeno"
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Action execution"
+msgid "Localization of execution changes"
+msgstr "Hromadná akce"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -11519,6 +11541,12 @@ msgstr "Jméno produktu"
 msgid "Profile"
 msgstr "Profil"
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Proxy Settings"
+msgid "Profile settings"
+msgstr "Nastavení proxy"
+
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
 msgstr "Profily"
@@ -13309,6 +13337,7 @@ msgid "Sign in using"
 msgstr "Přihlaste se pomocí"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Odhlásit"
@@ -13857,7 +13886,7 @@ msgstr "Systémové URL"
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
 #| msgid "Restore Defaults"
-msgid "System default"
+msgid "System default - %s"
 msgstr "Obnovit do základů"
 
 #: app/models/knowledge_base.rb
@@ -16576,14 +16605,6 @@ msgid ""
 msgstr ""
 "K navrácení základní přílohy, jednoduše vypněte přepínač \"Vlastní příloha\" "
 "nahoře."
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "The configuration of Zammad has changed, please reload your browser."
-msgid "To see the updated translation, please reload your browser."
-msgstr ""
-"Konfigurace systému Zammad byla změněna, prosím obnovte si tuto stránku v "
-"prohlížeči."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -20006,6 +20027,14 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#, fuzzy
+#~| msgid ""
+#~| "The configuration of Zammad has changed, please reload your browser."
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr ""
+#~ "Konfigurace systému Zammad byla změněna, prosím obnovte si tuto stránku v "
+#~ "prohlížeči."
 
 #, fuzzy
 #~| msgid "ticket"

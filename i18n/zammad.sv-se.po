@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-25 12:04+0000\n"
+"PO-Revision-Date: 2024-04-02 08:42+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -1758,6 +1758,7 @@ msgstr "App secret"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "Utseende"
@@ -3951,6 +3952,13 @@ msgstr "Kundärenden från användaren kommer att tas bort."
 msgid "Customers in the organization can view each other's items."
 msgstr "Kunder i organisationen kan se varandras objekt."
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr "Anpassa standard plats och tidszon vid ersättning av mallvariabler."
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
 msgstr "Klipp"
@@ -3960,6 +3968,7 @@ msgid "Dark"
 msgstr "Mörk"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
+#: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue
 msgid "Dark Mode"
 msgstr "Mörkt tema"
 
@@ -8436,6 +8445,12 @@ msgstr "Key ID"
 msgid "Keyboard Shortcuts"
 msgstr "Tangentbordsgenvägar"
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Keyboard Shortcuts"
+msgid "Keyboard shortcuts"
+msgstr "Tangentbordsgenvägar"
+
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Keywords"
 msgstr "Nyckelord"
@@ -8769,6 +8784,11 @@ msgstr "Platsinställningar kunde inte hittas."
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
 msgstr "Platsinställning hittades inte"
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Localization of execution changes"
+msgstr "Lokalisering av åtgärdsändringar"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -9796,6 +9816,8 @@ msgstr "Nej tack!"
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
+"Ingen ytterligare text kan skickas med denna medietyp. Vänligen ta bort "
+"texten."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
@@ -11182,6 +11204,12 @@ msgstr "Produktnamn"
 #: app/assets/javascripts/app/controllers/profile.coffee
 msgid "Profile"
 msgstr "Profil"
+
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Proxy Settings"
+msgid "Profile settings"
+msgstr "Proxyinställningar"
 
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
@@ -12856,6 +12884,7 @@ msgid "Sign in using"
 msgstr "Logga in med"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Logga ut"
@@ -13371,8 +13400,8 @@ msgstr "System URL"
 
 #: app/assets/javascripts/app/controllers/_ui_element/language.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-msgid "System default"
-msgstr "Systemstandard"
+msgid "System default - %s"
+msgstr "Systemstandard - %s"
 
 #: app/models/knowledge_base.rb
 msgid ""
@@ -15910,10 +15939,6 @@ msgid ""
 msgstr ""
 "Om du vill återgå till standardpayload stänger du av \"Anpassad payload\" "
 "ovan."
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "To see the updated translation, please reload your browser."
-msgstr "För att se den uppdaterade översättningen, ladda om din webbläsare."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -19238,6 +19263,9 @@ msgstr "... av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr "För att se den uppdaterade översättningen, ladda om din webbläsare."
 
 #~ msgid ""
 #~ "The given media type does not support any text to be sent in parallel. "

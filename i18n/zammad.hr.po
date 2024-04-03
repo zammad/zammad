@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-25 06:04+0000\n"
+"PO-Revision-Date: 2024-04-01 06:00+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hr/>\n"
@@ -1465,6 +1465,8 @@ msgid ""
 "After the import is completed, the account associated with the API token "
 "will become your username, and the token itself will be your password."
 msgstr ""
+"Nakon završetka uvoza, račun povezan s API tokenom će postati Vaše "
+"korisničko ime, a sam token vaša lozinka."
 
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Age"
@@ -1615,15 +1617,11 @@ msgid "Always"
 msgstr "Uvijek"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-#, fuzzy
-#| msgid ""
-#| "We've sent an email to _%s_. Click the link in the email to verify your "
-#| "account."
 msgid ""
 "An email was sent to _%s_. Click the link in the email to verify your "
 "account."
 msgstr ""
-"Poslali smo e-mail na _%s_. Kliknite na vezu u e-mailu da biste potvrdili "
+"Poslan je e-mail na _%s_. Kliknite na vezu u e-mailu kako biste potvrdili "
 "svoj račun."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
@@ -1648,16 +1646,12 @@ msgid "An open-source monitoring tool."
 msgstr "Alat za nadgledanje sustava otvorenog koda."
 
 #: app/frontend/shared/components/Form/utils.ts
-#, fuzzy
-#| msgid "An error has occurred"
 msgid "An unexpected error has occurred."
-msgstr "Došlo je do pogreške"
+msgstr "Došlo je do neočekivane pogreške."
 
 #: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
-#, fuzzy
-#| msgid "An error has occurred"
 msgid "An unexpected error occurred during system setup."
-msgstr "Došlo je do pogreške"
+msgstr "Došlo je do neočekivane pogreške prilikom postavljanja sustava."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -1759,14 +1753,13 @@ msgid "App credentials for Twitter."
 msgstr "Prijavni podaci Twitter aplikacije."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
-#, fuzzy
-#| msgid "App Secret"
 msgid "App secret"
 msgstr "App tajna"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "Izgled"
@@ -2028,10 +2021,8 @@ msgid "Attach another file"
 msgstr "Priloži druge datoteke"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Attach files"
 msgid "Attach file"
-msgstr "Priloži datoteke"
+msgstr "Priloži datoteku"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
@@ -2135,7 +2126,7 @@ msgstr "Atributi za usporedbu"
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Audio file"
-msgstr ""
+msgstr "Audio datoteka"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2237,16 +2228,14 @@ msgid "Auto-close state"
 msgstr "Status automatskog zatvaranja"
 
 #: lib/auto_wizard.rb
-#, fuzzy
-#| msgid "Auto Wizard"
 msgid "AutoWizard is disabled"
-msgstr "Automatski asistent"
+msgstr "Automatski asistent je deaktiviran"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
 msgid "Automated Setup"
-msgstr ""
+msgstr "Automatsko postavljanje"
 
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
@@ -2258,7 +2247,7 @@ msgstr "Automatska obavijest prilikom povezivanja računa"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 msgid "Automatic reminders"
-msgstr ""
+msgstr "Automatski podsjetnici"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2400,6 +2389,8 @@ msgid ""
 "Before you start, make sure to check the following points to ensure a smooth "
 "migration and usage of your Zammad instance:"
 msgstr ""
+"Prije nego što počnete, svakako provjerite sljedeće točke kako biste "
+"osigurali glatku migraciju i korištenje Vaše Zammad instance:"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
@@ -2408,7 +2399,7 @@ msgstr "Početak proslijeđene poruke"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue
 msgid "Beta"
-msgstr ""
+msgstr "Beta"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2610,10 +2601,8 @@ msgid "Call Settings"
 msgstr "Postavke poziva"
 
 #: app/models/cti/driver/base.rb
-#, fuzzy
-#| msgid "Call from %s for %s"
 msgid "Call from %s"
-msgstr "Poziv od %s za %s"
+msgstr "Poziv od %s"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
@@ -2668,15 +2657,11 @@ msgstr "Nije moguće pronaći korisnika za token"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-#, fuzzy
-#| msgid ""
-#| "Can't update password, your entered passwords do not match. Please try "
-#| "again!"
 msgid ""
 "Can't update password, your entered passwords do not match. Please try again."
 msgstr ""
-"Nije moguće ažurirati lozinku, unesene lozinke se ne podudaraju. Pokušajte "
-"ponovno!"
+"Nije moguće ažurirati lozinku, Vaše unesene lozinke se ne podudaraju. "
+"Pokušajte ponovno."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
@@ -2754,7 +2739,7 @@ msgstr "Nije moguće označiti obavijesti kao pročitane"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
-msgstr ""
+msgstr "Nije moguće prenijeti datoteku"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -2899,10 +2884,8 @@ msgid "Channel - Web"
 msgstr "Kanal - Web"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel - Chat"
 msgid "Channel - WhatsApp"
-msgstr "Kanal - chat"
+msgstr "Kanal - WhatsApp"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
@@ -3041,10 +3024,8 @@ msgid "Choose your language."
 msgstr "Odaberi željeni jezik."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#, fuzzy
-#| msgid "Choose your new password."
 msgid "Choose your new password"
-msgstr "Unesite novu lozinku."
+msgstr "Unesite novu lozinku"
 
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 msgid "Choose your new password."
@@ -3333,29 +3314,12 @@ msgstr "Potvrdite spajanje"
 
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#, fuzzy
-#| msgid "Confirm Password"
 msgid "Confirm password"
 msgstr "Potvrdite lozinku"
 
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Confirm your #{config.product_name} account, #{user.firstname} #{user."
-#| "lastname}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>Confirm your email address to complete your #{config.product_name} "
-#| "account. It's easy, just click the link below.</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-#| "token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}"
-#| "</a></div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Confirm your #{config.product_name} account, #{user.firstname} #{user."
 "lastname}\n"
@@ -3369,17 +3333,15 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"#{user.firstname} #{user.lastname}, potvrdite svoj #{config.product_name} "
-"račun\n"
+"Potvrdite svoj #{config.product_name} račun, #{user.firstname} #{user."
+"lastname}\n"
 "\n"
 "<div>Bok #{user.firstname},</div>\n"
 "<br>\n"
-"<div>potvrdite svoju mail adresu za otvaranje #{config.product_name}računa. "
-"Vrlo je jednostavno, samo kliknite na link ispod.</div>\n"
+"<div>potvrdite svoju mail adresu za dovršavanje #{config.product_name} "
+"računa. Vrlo je jednostavno, samo kliknite na link ispod.</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
-"a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Vaš #{config.product_name} tim</div>\n"
 
@@ -3444,10 +3406,8 @@ msgid "Connect Twitter App"
 msgstr "Poveži Twitter aplikaciju"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "Connect and Continue"
-msgstr "Spremljeni uvjeti"
+msgstr "Spoji i nastavi"
 
 #: public/assets/chat/views/loader.eco
 msgid "Connecting"
@@ -3560,10 +3520,8 @@ msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopiraj trenutni broj objekta (npr. Ticket#) u međuspremnik"
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
-#, fuzzy
-#| msgid "Copy to clipboard: Ctrl+C, Enter"
 msgid "Copy to clipboard"
-msgstr "Kopiraj u međuspremnik: Ctrl+C, Enter"
+msgstr "Kopiraj u međuspremnik"
 
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
@@ -3589,7 +3547,7 @@ msgstr ""
 
 #: app/services/service/channel/whatsapp/base.rb
 msgid "Could not fetch WhatsApp phone number details."
-msgstr ""
+msgstr "Nije moguće dohvatiti pojedinosti telefonskog broja za WhatsApp."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid ""
@@ -3655,10 +3613,8 @@ msgstr "Kreiraj administratora"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Create Administrator Account"
-msgstr "Administratorski račun"
+msgstr "Postavi administratorski račun"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
@@ -3745,10 +3701,8 @@ msgid "Create a translation"
 msgstr "Kreiraj prijevod"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
-#, fuzzy
-#| msgid "Create my account"
 msgid "Create account"
-msgstr "Kreiraj moj račun"
+msgstr "Kreiraj račun"
 
 #: db/seeds/permissions.rb
 msgid "Create and set up %s"
@@ -3952,10 +3906,8 @@ msgid "Custom Payload"
 msgstr "Prilagođeni payload"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Translations"
 msgid "Custom Translation"
-msgstr "Prijevodi"
+msgstr "Prilagođeni prijevod"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -4012,6 +3964,15 @@ msgstr ""
 msgid "Customers in the organization can view each other's items."
 msgstr "Klijenti u organizaciji mogu međusobno pregledavati svoje stavke."
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
+"Prilagodite zadanu lokalizaciju i vremensku zonu tijekom mijenjanja "
+"varijabli predložaka."
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
 msgstr "Izrezati"
@@ -4021,6 +3982,7 @@ msgid "Dark"
 msgstr "Tamno"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
+#: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue
 msgid "Dark Mode"
 msgstr "Tamni način rada"
 
@@ -4038,11 +4000,9 @@ msgid "Data Privacy"
 msgstr "Privatnost podataka"
 
 #: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "%s created data privacy task to delete user ID |%s|"
 msgid "Data privacy task allows to delete a user or a ticket only."
 msgstr ""
-"%s stvorenih zadataka zaštite podataka za brisanje korisničkog ID-a %s|"
+"Zadatak zaštite podataka omogućuje brisanje samo korisnika ili ticketa."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
@@ -4163,14 +4123,12 @@ msgstr "Zadani broj za odlazne pozive."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid "Default for follow-ups"
-msgstr ""
+msgstr "Zadano kod naknadnih upita"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
-#, fuzzy
-#| msgid "Default type for a new ticket"
 msgid "Default for new tickets"
-msgstr "Zadana vrsta novog ticketa"
+msgstr "Zadano za nove tickete"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
@@ -4360,6 +4318,9 @@ msgid ""
 "priority will be rendered in an indian red, while low priority in a baby "
 "blue color."
 msgstr ""
+"Definira neobaveznu boju isticanja ovog prioriteta u tablicama ticketa. "
+"Visoki prioritet biti će prikazan indijskom crvenom bojom, dok će nizak "
+"prioritet biti prikazan u svijetlo plavoj boji."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid ""
@@ -4367,6 +4328,9 @@ msgid ""
 "be rendered with an exclamation point, while low priority with a downwards "
 "arrow."
 msgstr ""
+"Definira neobaveznu ikonu ovog prioriteta u tablicama ticketa. Važno će biti "
+"prikazano sa uskličnikom, dok će niskoprioritetno biti prikazano strelicom "
+"prema dolje."
 
 #: db/seeds/settings.rb
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
@@ -5347,6 +5311,9 @@ msgid ""
 "community on our public platform %l? It sports a very convenient user "
 "interface based on Weblate, give it a try!"
 msgstr ""
+"Jeste li znali da se prijevodi sustava mogu podijeliti sa zajednicom na "
+"našoj javnoj platformi %l? Ima vrlo praktično korisničko sučelje temeljeno "
+"na Weblate-u, tako da ga slobodno možete isprobati!"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -5484,7 +5451,7 @@ msgstr "Želite li zaista postaviti vidljivost ovog članka na \"javno\"?"
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Document file"
-msgstr ""
+msgstr "Datoteka dokumenta"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
@@ -5557,10 +5524,8 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Preuzmite i instalirajte dodatak za migraciju %s u instanci %s."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#, fuzzy
-#| msgid "select attachment…"
 msgid "Downloading attachments…"
-msgstr "odaberi privitak…"
+msgstr "Preuzimanje privitaka…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -5582,10 +5547,8 @@ msgid "Drop files here"
 msgstr "Ovdje ispustite datoteke"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
-#, fuzzy
-#| msgid "Drop files here"
 msgid "Drop image file here"
-msgstr "Ovdje ispustite datoteke"
+msgstr "Ovdje odložite datoteku slike"
 
 #: app/assets/javascripts/app/controllers/login.coffee
 msgid "Due to inactivity, you have been automatically logged out."
@@ -5606,13 +5569,6 @@ msgid "Duration"
 msgstr "Trajanje"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
-#, fuzzy
-#| msgid ""
-#| "We found a lot of dynamic fields which are not common in Zammad, as we "
-#| "take a different approach to ticket attributes. Zammad also uses tags in "
-#| "addition to custom fields to classify tickets. This difference can create "
-#| "a new philosophy of your ticket attributes / tags compared to your "
-#| "current use of dynamic fields in OTRS."
 msgid ""
 "Dynamic fields are not that common in Zammad, as we take a different "
 "approach to ticket attributes. Zammad also uses tags in addition to custom "
@@ -5620,11 +5576,11 @@ msgid ""
 "your ticket attributes/tags compared to your current use of dynamic fields "
 "in OTRS."
 msgstr ""
-"Pronašli smo mnogo dinamičkih polja koja nisu uobičajena u Zammadu, jer "
-"zauzimamo drugačiji pristup atributima ticketa. Zammad također koristi "
-"oznake uz prilagođena polja za klasificiranje ticketa. Ova razlika može "
-"stvoriti novu filozofiju vaših atributa ticketa / oznaka u usporedbi s vašom "
-"trenutnom upotrebom dinamičkih polja u OTRS-u."
+"Dinamička polja nisu baš uobičajena u Zammadu, budući da imamo drugačiji "
+"pristup atributima ticketa. Zammad također koristi oznake uz prilagođena "
+"polja za klasificiranje ticketa. Ova razlika može stvoriti novu filozofiju "
+"Vaših atributa ticketa/oznaka u usporedbi s Vašom trenutnom upotrebom "
+"dinamičkih polja u OTRS-u."
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Easter holiday"
@@ -5798,10 +5754,8 @@ msgid "Email Address"
 msgstr "Adresa e-pošte"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
-#, fuzzy
-#| msgid "Channel"
 msgid "Email Channel"
-msgstr "Kanal"
+msgstr "E-mail kanal"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -5829,10 +5783,8 @@ msgstr "E-pošta (odlazna)"
 
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
-#, fuzzy
-#| msgid "Email Notification"
 msgid "Email Verification"
-msgstr "Obavijest e-poštom"
+msgstr "Obavijest e-mailom"
 
 #: app/models/user.rb
 msgid "Email address '%{email}' is already used for another user."
@@ -5844,10 +5796,8 @@ msgid "Email could not be verified. Please contact your administrator."
 msgstr "Nije moguće potvrditi mail. Obratite se svojem administratoru."
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-#, fuzzy
-#| msgid "Expert mode"
 msgid "Email import mode"
-msgstr "Napredni način rada"
+msgstr "Način uvoza e-maila"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -6164,10 +6114,8 @@ msgid "Endpoint Settings"
 msgstr "Endpoint postavke"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enforce the set up of the two-factor authentication"
 msgid "Enforce the setup of the two-factor authentication"
-msgstr "Postavi kao obavezno dvofaktorsku autentifikaciju"
+msgstr "Nametnite obaveznu postavku dvofaktorske provjere autentičnosti"
 
 #: db/seeds/settings.rb
 msgid "Enforced for user roles"
@@ -6236,10 +6184,8 @@ msgstr "Unesite URL Vašeg %s sustava"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
-#, fuzzy
-#| msgid "Enter the URL of your %s system"
 msgid "Enter the URL of your %s system."
-msgstr "Unesite URL Vašeg %s sustava"
+msgstr "Unesite URL Vašeg %s sustava."
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
 #: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
@@ -6255,16 +6201,12 @@ msgstr ""
 "povezali dva sustava"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
-#, fuzzy
-#| msgid ""
-#| "Enter the link provided by the plugin at the end of the installation to "
-#| "link the two systems"
 msgid ""
 "Enter the link provided by the plugin at the end of the installation to link "
 "the two systems."
 msgstr ""
 "Unesite link dodatka koji se pojavljuje na kraju instalacije da biste "
-"povezali dva sustava"
+"povezali dva sustava."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Enter the security code generated by the authenticator app:"
@@ -6293,21 +6235,17 @@ msgid "Enter your %s App Keys"
 msgstr "Unesite svoje %s ključeve aplikacije"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
-#, fuzzy
-#| msgid "Enter your %s API token gained from your account profile settings."
 msgid ""
 "Enter your Freshdesk API token gained from your account profile settings."
-msgstr "Unesite svoj %s API token iz postavki profila korisničkog računa."
+msgstr ""
+"Unesite svoj Freshdesk API token iz postavki profila Vašeg korisničkog "
+"računa."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
-#, fuzzy
-#| msgid ""
-#| "Enter your email address and the %s API token gained from your admin "
-#| "interface."
 msgid "Enter your Zendesk API token gained from your admin interface."
 msgstr ""
-"Unesite svoju e-mail adresu i %s API token, kojeg možete kreirati u "
-"administratorskom sučelju."
+"Unesite svoj Zendesk API token, kojeg možete kreirati u administratorskom "
+"sučelju."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Enter your current password, insert a new one and confirm it."
@@ -6329,26 +6267,17 @@ msgstr ""
 "administratorskom sučelju."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
-#, fuzzy
-#| msgid ""
-#| "Enter your email address and password from your %s account which should "
-#| "be used for the import."
 msgid ""
 "Enter your email address from your Kayako account which should be used for "
 "the import."
 msgstr ""
-"Unesite adresu e-pošte i lozinku računa %s koji će se koristiti za uvoz."
+"Unesite e-mail adresu Vašeg Kayako računa koji će se koristiti za uvoz."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
-#, fuzzy
-#| msgid ""
-#| "Enter your email address and password from your %s account which should "
-#| "be used for the import."
 msgid ""
 "Enter your password from your Kayako account which should be used for the "
 "import."
-msgstr ""
-"Unesite adresu e-pošte i lozinku računa %s koji će se koristiti za uvoz."
+msgstr "Unesite lozinku Vašeg Kayako računa koji će se koristiti za uvoz."
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/assets/javascripts/app/controllers/password_reset.coffee
@@ -6703,18 +6632,14 @@ msgid "File '%s' is uploading"
 msgstr "Datoteka '%s' se učitava"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "No file formats allowed."
 msgid "File format is not allowed: %s"
-msgstr "Nema dozvoljenih formata datoteka."
+msgstr "Format datoteke nije dopušten: %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "File too big, max. %s MB allowed."
 msgid "File is too big. %s has to be %s or smaller."
-msgstr "Datoteka je prevelika, dopušteno je najviše %s MB."
+msgstr "Datoteka je prevelika. %s mora biti %s ili manja."
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
@@ -6740,10 +6665,8 @@ msgid "Find a ticket"
 msgstr "Pronađi ticket"
 
 #: app/assets/javascripts/app/views/translation/form.jst.eco
-#, fuzzy
-#| msgid "Inline translation"
 msgid "Find translation suggestion"
-msgstr "Neposredni prijevod"
+msgstr "Pronađi prijedlog prijevoda"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
@@ -6763,10 +6686,8 @@ msgid "Finish"
 msgstr "Završi"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
-#, fuzzy
-#| msgid "Finish"
 msgid "Finish Setup"
-msgstr "Završi"
+msgstr "Završi postavljanje"
 
 #: lib/excel_sheet/ticket.rb
 msgid "First Response At"
@@ -6864,7 +6785,7 @@ msgstr "Bilješka podnožja"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
 msgid "For additional support, consult our migration guide."
-msgstr ""
+msgstr "Za dodatnu podršku, pogledajte naš vodič za migraciju."
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "For example, recently changed tickets, users, or organizations."
@@ -7164,10 +7085,8 @@ msgid "Given object does not support selector"
 msgstr "Navedeni objekt ne podržava odabir"
 
 #: app/models/setting/validation/time_zone.rb
-#, fuzzy
-#| msgid "The image is invalid."
 msgid "Given time zone is not valid."
-msgstr "Slika nije valjana."
+msgstr "Unesena vremenska zona nije valjana."
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -7205,10 +7124,8 @@ msgid "Go home"
 msgstr "Na početnu stranicu"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
-#, fuzzy
-#| msgid "Login"
 msgid "Go to Login"
-msgstr "Prijava za rad"
+msgstr "Idi na Prijava"
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid "Good signature"
@@ -7476,6 +7393,8 @@ msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
 "please reply to keep it open."
 msgstr ""
+"Pozdrav, rok za korisničku podršku ovog razgovora će isteći, odgovorite kako "
+"bi ostao otvoren."
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -7508,6 +7427,10 @@ msgid ""
 "new translation in order to identify the source string and provide its new "
 "translation for the target language."
 msgstr ""
+"Ovdje možete promijeniti bilo koji prijevodni niz za prilagođeniji izgled i "
+"dojam. Podržani su i prepoznati sistemski i prilagođeni nizovi, jednostavno "
+"dodajte novi prijevod kako biste identificirali izvorni niz i osigurali "
+"njegov novi prijevod za ciljani jezik."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
@@ -7565,18 +7488,16 @@ msgid "Hide authenticator app secret"
 msgstr "Sakrij tajnu autentifikacijske aplikacije"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
-#, fuzzy
-#| msgid "Priority"
 msgid "High priority"
-msgstr "Prioritet"
+msgstr "Visoki prioritet"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid "Highlight color"
-msgstr ""
+msgstr "Boja oznake"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid "Highlight icon"
-msgstr ""
+msgstr "Simbol oznake"
 
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
@@ -7651,7 +7572,7 @@ msgstr "Kako Vam možemo pomoći? Potražite odgovor ili temu…"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "How can we help?"
-msgstr ""
+msgstr "Kako Vam možemo pomoći?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 msgid ""
@@ -7852,10 +7773,8 @@ msgstr ""
 "Ako želite koristiti dodatne adrese e-pošte, možete ih konfigurirati kasnije."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
-#, fuzzy
-#| msgid "escalation"
 msgid "Ignore Escalation"
-msgstr "eskalacija"
+msgstr "Ignoriraj eskalaciju"
 
 #: db/seeds/settings.rb
 msgid "Ignore Escalation/SLA Information"
@@ -7884,20 +7803,16 @@ msgstr "Image Service"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Image Service"
 msgid "Image file"
-msgstr "Image Service"
+msgstr "Datoteka slike"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
 msgstr "Slika %s"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
-#, fuzzy
-#| msgid "Image Service"
 msgid "Image preview"
-msgstr "Image Service"
+msgstr "Pretpregled slike"
 
 #: app/assets/javascripts/app/controllers/import.coffee
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
@@ -7970,10 +7885,8 @@ msgid "Import User for requesting the Zendesk API"
 msgstr "Korisničko ime za uvoz putem Zendesk API-ja"
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-#, fuzzy
-#| msgid "Import %s"
 msgid "Import as archive"
-msgstr "Uvoz %s"
+msgstr "Uvezi kao arhivu"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -7988,10 +7901,8 @@ msgstr ""
 "putem pretrage."
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
-#, fuzzy
-#| msgid "Import %s"
 msgid "Import as regular"
-msgstr "Uvoz %s"
+msgstr "Uvezi kao obično"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -8004,10 +7915,8 @@ msgstr ""
 "možete pronaći u pregledu otvorenih ticketa."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
-#, fuzzy
-#| msgid "Password changed successfully!"
 msgid "Import finished successfully!"
-msgstr "Lozinka je uspješno promijenjena!"
+msgstr "Uvoz je uspješno završen!"
 
 #: app/assets/javascripts/app/views/import/index.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue
@@ -8015,22 +7924,16 @@ msgid "Import from"
 msgstr "Uvezi iz"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
-#, fuzzy
-#| msgid "Import from"
 msgid "Import from %s"
-msgstr "Uvezi iz"
+msgstr "Uvezi iz %s"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
-#, fuzzy
-#| msgid "Import from"
 msgid "Import from Source"
-msgstr "Uvezi iz"
+msgstr "Uvoz iz izvora"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
-#, fuzzy
-#| msgid "Import"
 msgid "Important"
-msgstr "Uvoz"
+msgstr "Važno"
 
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 msgid "Imported"
@@ -8056,16 +7959,12 @@ msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr "Da bi Zammad mogao pristupiti %s, %s API token se mora unijeti ovdje:"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#, fuzzy
-#| msgid ""
-#| "In order to be able to influence the desired behaviour in this regard, "
-#| "you can influence the order of the LDAP sources via drag & drop."
 msgid ""
 "In order to be able to influence the desired behavior in this regard, you "
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 "Da biste postigli željeno ponašanje u tom pogledu, možete utjecati na "
-"redoslijed LDAP izvora putem povlačenja i ispuštanja."
+"redoslijed LDAP izvora putem povlačenja i spuštanja."
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -8147,6 +8046,9 @@ msgid ""
 "the migration progress on this page to be notified as soon as the import is "
 "successfully finished."
 msgstr ""
+"Pokrenite postupak uvoza za prijenos Vaših podataka u Zammad. Pratite "
+"napredak migracije na ovoj stranici kako biste bili obaviješteni čim uvoz "
+"uspješno završi."
 
 #: app/models/store.rb
 msgid "Inline content could not be generated."
@@ -8210,6 +8112,7 @@ msgstr "Integracije"
 #: lib/whatsapp/incoming/media.rb
 msgid "Integrity verification of the downloaded WhatsApp media failed."
 msgstr ""
+"Provjera cjelovitosti preuzete WhatsApp multimedijske datoteke nije uspjela."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
@@ -8322,22 +8225,24 @@ msgid "Invalid permissions, do not lock yourself out."
 msgstr "Neispravne dozvole, budite pažljivi da se ne zaključate."
 
 #: lib/knowledge_base/permissions_update.rb
-#, fuzzy
-#| msgid "Invalid video URL"
 msgid "Invalid permissions."
-msgstr "Neispravna video poveznica"
+msgstr "Nedovoljna dopuštenja."
 
 #: lib/knowledge_base/permissions_update.rb
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
 msgstr ""
+"Nedovoljna dopuštenja. Ova uloga nema pristup ovoj kategoriji jer nadređena "
+"kategorija nije vidljiva za nju."
 
 #: lib/knowledge_base/permissions_update.rb
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
 msgstr ""
+"Nedovoljna dopuštenja. Ova uloga ima uređivački pristup nadređenoj "
+"kategoriji. Ograničavanje pristupa nije učinkovito."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
@@ -8433,20 +8338,16 @@ msgid "Ionicons"
 msgstr "Ionicons"
 
 #: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "At least one user needs to have admin permissions."
 msgid "It is not possible to delete the last account with admin permissions."
-msgstr "Barem jedan agent mora imati administratorske dozvole."
+msgstr "Nije moguće izbrisati zadnji račun s administratorskim ovlastima."
 
 #: lib/validations/data_privacy_task_validator.rb
 msgid "It is not possible to delete the system user."
-msgstr ""
+msgstr "Nije moguće obrisati sustavskog korisnika."
 
 #: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "Do you really want to delete your current avatar?"
 msgid "It is not possible to delete your current account."
-msgstr "Jeste li sigurni da želite obrisati svoj trenutni avatar?"
+msgstr "Jeste li sigurni da želite obrisati svoj trenutni račun?"
 
 #: app/models/ticket.rb
 msgid "It is not possible to merge into an already merged ticket."
@@ -8514,7 +8415,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
 msgid "Kayako"
-msgstr ""
+msgstr "Kayako"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -8539,6 +8440,12 @@ msgstr "Key ID"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee
 msgid "Keyboard Shortcuts"
+msgstr "Prečice na tipkovnici"
+
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Keyboard Shortcuts"
+msgid "Keyboard shortcuts"
 msgstr "Prečice na tipkovnici"
 
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -8658,10 +8565,8 @@ msgid "Last changed"
 msgstr "Zadnja promjena"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "Closing time"
 msgid "Last closing time"
-msgstr "Vrijeme zatvaranja"
+msgstr "Zadnje vrijeme zatvaranja"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -8877,6 +8782,11 @@ msgstr "Lokalna verzija nije pronađena."
 msgid "Locale not found"
 msgstr "Jezik nije pronađen"
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Localization of execution changes"
+msgstr "Lokalizacija promjena izvršenja"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -8936,10 +8846,8 @@ msgid "Lost network connection!"
 msgstr "Izgubljena internetska veza!"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
-#, fuzzy
-#| msgid "Priority"
 msgid "Low priority"
-msgstr "Prioritet"
+msgstr "Nizak prioritet"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
@@ -9036,13 +8944,6 @@ msgid "Manually open chat"
 msgstr "Ručno otvaranje chata"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-#, fuzzy
-#| msgid ""
-#| "We found a lot of dynamic fields which are not common in Zammad, as we "
-#| "take a different approach to ticket attributes. Zammad also uses tags in "
-#| "addition to custom fields to classify tickets. This difference can create "
-#| "a new philosophy of your ticket attributes / tags compared to your "
-#| "current use of dynamic fields in OTRS."
 msgid ""
 "Many dynamic fields were found. This is not a common pattern in Zammad, "
 "which takes a different approach to ticket attributes. Zammad also uses tags "
@@ -9050,11 +8951,11 @@ msgid ""
 "a new philosophy of your ticket attributes / tags compared to your current "
 "use of dynamic fields in OTRS."
 msgstr ""
-"Pronašli smo mnogo dinamičkih polja koja nisu uobičajena u Zammadu, jer "
-"zauzimamo drugačiji pristup atributima ticketa. Zammad također koristi "
+"Mnoga dinamičkih polja su pronađena. Ovo nije uobičajen obrazac u Zammadu, "
+"jer zauzimamo drugačiji pristup atributima ticketa. Zammad također koristi "
 "oznake uz prilagođena polja za klasificiranje ticketa. Ova razlika može "
-"stvoriti novu filozofiju vaših atributa ticketa / oznaka u usporedbi s vašom "
-"trenutnom upotrebom dinamičkih polja u OTRS-u."
+"stvoriti novu filozofiju vaših atributa ticketa / oznaka u usporedbi s Vašom "
+"trenutnom uporabom dinamičkih polja u OTRS-u."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -9140,10 +9041,8 @@ msgid "Maximum Email Size"
 msgstr "Maksimalna veličina e-maila"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Recursive Ticket Triggers"
 msgid "Maximum Recursive Ticket Triggers Depth"
-msgstr "Rekurzivni triggeri ticketa"
+msgstr "Maksimalna dubina rekurzivnih triggera ticketa"
 
 #: db/seeds/settings.rb
 msgid "Maximum failed logins"
@@ -9173,22 +9072,17 @@ msgid "Me"
 msgstr "Ja"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
-#, fuzzy
-#| msgid "Download all records"
 msgid "Media Download Error"
-msgstr "Preuzimanje svih zapisa"
+msgstr "Greška pri preuzimanju multimedijske datoteke"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
-#, fuzzy
-#| msgid "Loading failed, please try again later."
 msgid "Media download failed. Please try again later."
-msgstr "Učitavanje nije uspjelo, pokušajte ponovno kasnije."
+msgstr ""
+"Preuzimanje multimedije nije uspjelo. Molimo, pokušajte ponovno kasnije."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
-#, fuzzy
-#| msgid "Decryption was successful."
 msgid "Media download was successful."
-msgstr "Dešifriranje je bilo uspješno."
+msgstr "Preuzimanje multimedije je bilo uspješno."
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
@@ -9230,10 +9124,8 @@ msgstr "Poruka"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Messages"
 msgid "Message Status"
-msgstr "Poruke"
+msgstr "Status poruke"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Message after sending form"
@@ -9350,7 +9242,7 @@ msgstr "Minute"
 
 #: lib/whatsapp/webhook/payload.rb
 msgid "Mismatching phone number id."
-msgstr ""
+msgstr "ID telefonskog broja se ne podudara."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
@@ -9411,7 +9303,7 @@ msgstr "Raspoloženje"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 msgid "More information can be found here."
-msgstr ""
+msgstr "Više informacija možete pronaći ovdje."
 
 #: app/models/user.rb
 msgid "More than 250 secondary organizations are not allowed."
@@ -9680,10 +9572,8 @@ msgid "New Overview"
 msgstr "Novi pregled"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
-#, fuzzy
-#| msgid "Priority"
 msgid "New Priority"
-msgstr "Prioritet"
+msgstr "Novi prioritet"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
@@ -9729,16 +9619,12 @@ msgid "New Ticket"
 msgstr "Nova kartica"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
-#, fuzzy
-#| msgid "New Ticket"
 msgid "New Ticket State"
-msgstr "Nova kartica"
+msgstr "Novi status ticketa"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
-#, fuzzy
-#| msgid "Translations"
 msgid "New Translation"
-msgstr "Prijevodi"
+msgstr "Novi prijevod"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
@@ -9857,10 +9743,8 @@ msgid "Next"
 msgstr "Sljedeće"
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
-#, fuzzy
-#| msgid "Get Started"
 msgid "Next State"
-msgstr "Prvi koraci"
+msgstr "Idući status"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
@@ -9931,6 +9815,8 @@ msgstr "Ne, hvala!"
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
+"Nikakav dodatni tekst se ne može poslati sa ovom vrstom multimedije. Molimo, "
+"uklonite tekst."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
@@ -9998,10 +9884,8 @@ msgid "No folders were found for the given user credentials."
 msgstr "Nisu pronađene mape za unesene prijavne podatke."
 
 #: app/services/service/system/import/check_status.rb
-#, fuzzy
-#| msgid "My tickets in process"
 msgid "No import in progress."
-msgstr "Moji ticketi u obradi"
+msgstr "Nema uvoza u tijeku."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
@@ -10029,7 +9913,7 @@ msgstr "Nema pronađenih zapisa!"
 
 #: lib/whatsapp/webhook/message/status.rb
 msgid "No related article found to process the status message on."
-msgstr ""
+msgstr "Nije pronađen nijedan povezani članak za obradu statusne poruke."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
@@ -10308,28 +10192,20 @@ msgid "OTRS"
 msgstr "OTRS"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
-#, fuzzy
-#| msgid ""
-#| "We detected OTRS BPM processes that can't get imported into Zammad since "
-#| "we currently don't support this kind of workflows."
 msgid ""
 "OTRS BPM processes can't get imported into Zammad since we currently don't "
 "support this kind of workflows."
 msgstr ""
-"Identificirali smo OTRS BPM procese koji se ne mogu uvesti u Zammad jer "
-"trenutno ne podržavamo takve tijekove rada."
+"OTRS BPM procesi se ne mogu uvesti u Zammad jer trenutno ne podržavamo takve "
+"tijekove rada."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-#, fuzzy
-#| msgid ""
-#| "We detected OTRS BPM processes that can't get imported into Zammad since "
-#| "we currently don't support this kind of workflows."
 msgid ""
 "OTRS BPM processes were found. They cannot be imported into Zammad as these "
 "kind of workflows are currently not supported."
 msgstr ""
-"Identificirali smo OTRS BPM procese koji se ne mogu uvesti u Zammad jer "
-"trenutno ne podržavamo takve tijekove rada."
+"OTRS BPM procesi su pronađeni. Oni se ne mogu uvesti u Zammad jer trenutno "
+"ne podržavamo takve tijekove rada."
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/job.coffee
@@ -10373,10 +10249,8 @@ msgid "On %s, %s wrote:"
 msgstr "U %s, %s je napisao/la:"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco
-#, fuzzy
-#| msgid "Create a translation"
 msgid "On-screen Translation"
-msgstr "Kreiraj prijevod"
+msgstr "Prijevod na ekranu"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
@@ -10401,14 +10275,12 @@ msgid "Online Service"
 msgstr "Internetska usluga"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "%s attached files"
 msgid "Only %s attachment allowed"
-msgstr "%s privitak(a)"
+msgstr "Dopušten samo %s prilog"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Only %s attachment allowed."
-msgstr ""
+msgstr "Samo %s prilog dopušten."
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
@@ -10474,10 +10346,8 @@ msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr "Ups… Žao mi je, ali nemate dovoljno ovlasti za otvaranje %s."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "Open %s"
 msgid "Open"
-msgstr "Otvori %s"
+msgstr "Otvori"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Open %s"
@@ -10533,10 +10403,8 @@ msgid "Options"
 msgstr "Opcije"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
-#, fuzzy
-#| msgid "Or migrate from another system."
 msgid "Or migrate from another system"
-msgstr "Ili migrirajte sa drugog sustava."
+msgstr "Ili migrirajte sa drugog sustava"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Or migrate from another system."
@@ -10594,10 +10462,8 @@ msgid "Organization & Department Name"
 msgstr "Organizacija & Naziv odjela"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
-#, fuzzy
-#| msgid "Organization"
 msgid "Organization Logo"
-msgstr "Organizacija"
+msgstr "Logo organizacije"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
@@ -10659,10 +10525,8 @@ msgid "Original Formatting"
 msgstr "Izvorno oblikovanje"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Original Formatting"
 msgid "Original Translation"
-msgstr "Izvorno oblikovanje"
+msgstr "Izvorni prijevod"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -10878,10 +10742,8 @@ msgstr "Lozinka mora imati barem minimalan broj znakova."
 
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-#, fuzzy
-#| msgid "We've sent password reset instructions to your email address."
 msgid "Password reset instructions were sent to your email address."
-msgstr "Poslali smo Vam upute za resetiranje lozinke na Vašu e-mail adresu."
+msgstr "Upute za resetiranje lozinke su poslane na Vašu e-mail adresu."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -10984,14 +10846,12 @@ msgid "Phone Extension to Agent Mapping"
 msgstr "Mapiranje telefonskog proširenja na agente"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
-#, fuzzy
-#| msgid "Phone (in)"
 msgid "Phone number"
-msgstr "Poziv (dolazni)"
+msgstr "Telefonski broj"
 
 #: app/models/channel/area/whatsapp.rb
 msgid "Phone number is already in use by another WhatsApp account."
-msgstr ""
+msgstr "Telefonski broj se već koristi u drugom WhatsApp računu."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
@@ -11041,21 +10901,18 @@ msgid "Please click on the link in the verification email."
 msgstr "Molimo, kliknite na vezu u e-mailu za potvrdu."
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-#, fuzzy
-#| msgid ""
-#| "If you don't see the email, check other places it might be, like your "
-#| "junk, spam, social, or other folders."
 msgid ""
 "Please click on the link in the verification email. If you don't see the "
 "email, check other places it might be, like your junk, spam, social, or "
 "other folders."
 msgstr ""
-"Ako ne vidite mail, provjerite druga mjesta na kojima bi se mogao nalaziti, "
-"kao što su neželjena pošta, društvene mreže ili druge mape."
+"Molimo, kliknite na vezu u e-mailu za potvrdu. Ako ne vidite mail, "
+"provjerite druga mjesta na kojima bi se mogao nalaziti, kao što su neželjena "
+"pošta, društvene mreže ili drugi pretinci."
 
 #: app/services/service/system/import/run.rb
 msgid "Please configure import source before running."
-msgstr ""
+msgstr "Prije pokretanja, molimo konfigurirajte izvor uvoza."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 msgid "Please contact your administrator."
@@ -11104,7 +10961,7 @@ msgstr "Molimo, unesite ispravan URL."
 
 #: app/services/service/system/import/apply_otrs_configuration.rb
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
-msgstr ""
+msgstr "Molimo instalirajte OTRS dodatak za migraciju i dodajte ispravan URL."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -11119,18 +10976,14 @@ msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Molimo, navedite primatelja u \"Za\" ili \"CC\"."
 
 #: app/controllers/users_controller.rb
-#, fuzzy
-#| msgid "Please supply your new password!"
 msgid "Please provide your current password."
-msgstr "Molimo, unesite novu lozinku!"
+msgstr "Unesite svoju trenutnu lozinku."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 #: app/controllers/users_controller.rb
-#, fuzzy
-#| msgid "Please supply your new password!"
 msgid "Please provide your new password."
-msgstr "Molimo, unesite novu lozinku!"
+msgstr "Unesite svoju trenutnu lozinku."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
 msgid ""
@@ -11172,7 +11025,7 @@ msgstr "Molimo, unesite vlastiti URL prije generiranja isječka"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 msgid "Please use the provided URL."
-msgstr ""
+msgstr "Molimo koristite navedeni URL."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
@@ -11241,19 +11094,14 @@ msgstr ""
 "šifriranih poruka."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
-#, fuzzy
-#| msgid ""
-#| "Pretty Good Privacy (PGP) is an encryption program that can be used for "
-#| "signing, encrypting and decrypting messages and to increase the security "
-#| "of e-mail communication."
 msgid ""
 "Pretty Good Privacy (PGP) is an encryption program that can be used for "
 "signing, encrypting and decrypting messages and to increase the security of "
 "email communication."
 msgstr ""
 "Pretty Good Privacy (PGP) je program za šifriranje koji se može koristiti za "
-"potpisivanje, šifriranje i dešifriranje poruka te za povećanje sigurnosti "
-"komunikacije e-mailom."
+"potpisivanje, šifriranje i dešifriranje poruka te za povećanje sigurnosti e-"
+"mail komunikacije."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -11354,6 +11202,12 @@ msgstr "Naziv proizvoda"
 #: app/assets/javascripts/app/controllers/profile.coffee
 msgid "Profile"
 msgstr "Profil"
+
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Proxy Settings"
+msgid "Profile settings"
+msgstr "Proxy postavke"
 
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
@@ -11568,7 +11422,7 @@ msgstr "Povezani odgovori"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
 msgid "Relax, your system is being set up…"
-msgstr ""
+msgstr "Opustite se, Vaš sustav se postavlja…"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Reload application"
@@ -11638,10 +11492,8 @@ msgid "Remove formatting"
 msgstr "Ukloni oblikovanje"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
-#, fuzzy
-#| msgid "Remove all"
 msgid "Remove image"
-msgstr "Ukloni sve"
+msgstr "Ukloni sliku"
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 msgid "Remove method"
@@ -11702,10 +11554,8 @@ msgid "Reply All"
 msgstr "Odgovori svima"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Conditions for shown tickets"
 msgid "Reply allowed only for open tickets"
-msgstr "Uvjeti za prikazane tickete"
+msgstr "Odgovoranje dopušteno samo za otvorene tickete"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
@@ -11777,10 +11627,6 @@ msgid "Requirements"
 msgstr "Zahtjevi"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Requires the set up of the two-factor authentication for certain user "
-#| "roles."
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
@@ -11831,29 +11677,6 @@ msgstr "Vrati početne postavke"
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_reset/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Reset your #{config.product_name} password\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>We received a request to reset the password for your #{config."
-#| "product_name} account <b>#{user.login}</b>.</div>\n"
-#| "<br>\n"
-#| "<div>If you want to reset your password, click on the link below (or copy "
-#| "and paste the URL into your browser):</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.token}\">#{config.http_type}://#{config."
-#| "fqdn}/#password_reset_verify/#{token.token}</a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can change your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to reset your password, please ignore this "
-#| "message. Your password will not be reset.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Reset your #{config.product_name} password\n"
 "\n"
@@ -11885,9 +11708,7 @@ msgstr ""
 "<div>Ukoliko želite ponovno postaviti Vašu lozinku, kliknite na link ispod "
 "(ili iskopirajte URL u vaš preglednik):</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Ovaj link Vas vodi na stranicu gdje možete promijeniti Vašu lozinku.</"
 "div>\n"
@@ -11900,29 +11721,6 @@ msgstr ""
 #. This is the template file app/views/mailer/signup_taken_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup_taken_reset/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Reset your #{config.product_name} password\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>You or someone else tried to sign up with this email address. "
-#| "However, this email is already being used.</div>\n"
-#| "<br>\n"
-#| "<div>If you want to reset your password, click on the link below (or copy "
-#| "and paste the URL into your browser):</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/"
-#| "#password_reset_verify/#{token.token}\">#{config.http_type}://#{config."
-#| "fqdn}/#password_reset_verify/#{token.token}</a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can change your password.</"
-#| "div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to reset your password, please ignore this "
-#| "message. Your password will not be reset.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Reset your #{config.product_name} password\n"
 "\n"
@@ -11954,9 +11752,7 @@ msgstr ""
 "<div>Ukoliko želite resetirati Vašu lozinku, kliknite na link ispod (ili "
 "iskopirajte URL u vaš preglednik):</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.token}</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
 "<div>Ovaj link Vas vodi na stranicu gdje možete resetirati Vašu lozinku.</"
 "div>\n"
@@ -11995,10 +11791,8 @@ msgid "Retry"
 msgstr "Pokušajte ponovno"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#, fuzzy
-#| msgid "Add attachment option to upload."
 msgid "Retry attachment download"
-msgstr "Dodaj opciju privitka za upload."
+msgstr "Ponovi preuzimanje privitka"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
@@ -12007,6 +11801,7 @@ msgstr "Ponovi sigurnosni postupak"
 #: lib/whatsapp/retry/media.rb
 msgid "Retrying to download the sent media via WhatsApp failed."
 msgstr ""
+"Ponovni pokušaj preuzimanja poslanog medija putem WhatsAppa nije uspio."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -12258,10 +12053,8 @@ msgstr "Spremi skicu"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "Save and Continue"
-msgstr "Spremljeni uvjeti"
+msgstr "Spremi i nastavi"
 
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
@@ -12598,7 +12391,7 @@ msgstr "Odabrani uvjeti"
 
 #: lib/validations/data_privacy_task_validator.rb
 msgid "Selected object is already queued for deletion."
-msgstr ""
+msgstr "Odabrani objekt je već predviđen za brisanje."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee
 msgid "Selected tickets do not match any macros."
@@ -12637,10 +12430,8 @@ msgid "Send Email"
 msgstr "Pošalji e-mail"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
-#, fuzzy
-#| msgid "Shared organization"
 msgid "Send Invitation"
-msgstr "Zajednička organizacija"
+msgstr "Pošalji pozivnicu"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -12658,6 +12449,8 @@ msgid ""
 "Send out automatic reminders to customers asking them for reply if the 24-"
 "hour window is about to expire."
 msgstr ""
+"Pošaljite automatske podsjetnike klijentima tražeći od njih odgovor, ako je "
+"rok od 24 sata blizu isteka."
 
 #: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
@@ -12809,14 +12602,12 @@ msgstr "Postavite ID pozivatelja izlaznih poziva na temelju ID-a primatelja."
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 msgid "Set default for follow-ups"
-msgstr ""
+msgstr "Postavi kao zadano za naknadne upite"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
-#, fuzzy
-#| msgid "Default type for a new ticket"
 msgid "Set default for new tickets"
-msgstr "Zadana vrsta novog ticketa"
+msgstr "Postavi zadano za nove tickete"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -12954,11 +12745,9 @@ msgid "Show Search Details"
 msgstr "Pokaži detalje pretraživanja"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Set notes for ticket create types by selecting type."
 msgid ""
 "Show additional notes for ticket creation depending on the selected type."
-msgstr "Postavite bilješke za stvorene tickete odabirom vrste ticketa."
+msgstr "Pokaži dodatne bilješke za kreiranje ticketa, ovisno o odabranom tipu."
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
@@ -13050,7 +12839,7 @@ msgstr "Pokazuje se kada je chat zatvoren."
 
 #: app/frontend/apps/desktop/AppDesktop.vue
 msgid "Sidebar"
-msgstr ""
+msgstr "Bočna traka"
 
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
@@ -13099,6 +12888,7 @@ msgid "Sign in using"
 msgstr "Prijavite se putem"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Odjavi se"
@@ -13274,8 +13064,6 @@ msgstr ""
 "varijablu okruženja: APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 
 #: app/frontend/shared/errors/useErrorHandler.ts
-#, fuzzy
-#| msgid "We're sorry, but something went wrong."
 msgid "Something went wrong."
 msgstr "Žao nam je, ali nešto je pošlo po zlu."
 
@@ -13284,8 +13072,6 @@ msgid "Something went wrong. Please contact your administrator."
 msgstr "Nešto je pošlo po zlu. Molimo, obratite se administratoru."
 
 #: app/frontend/shared/errors/useErrorHandler.ts
-#, fuzzy
-#| msgid "We're sorry, but something went wrong. Received message: %s"
 msgid "Something went wrong. Received message: %s"
 msgstr "Žao nam je, ali nešto je pošlo po zlu. Primljena poruka: %s"
 
@@ -13336,22 +13122,16 @@ msgid "Start Editing"
 msgstr "Započni uređivanje"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
-#, fuzzy
-#| msgid "Import"
 msgid "Start Import"
-msgstr "Uvoz"
+msgstr "Pokreni uvoz"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
-#, fuzzy
-#| msgid "Import from"
 msgid "Start Import from %s"
-msgstr "Uvezi iz"
+msgstr "Pokreni uvoz iz %s"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
-#, fuzzy
-#| msgid "Import from"
 msgid "Start Import from Source"
-msgstr "Uvezi iz"
+msgstr "Pokreni uvoz iz izvora"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Start modal dialog for form."
@@ -13392,16 +13172,12 @@ msgid "Starting Zammad"
 msgstr "Pokretanje Zammad-a"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualFinish.vue
-#, fuzzy
-#| msgid "Starting Zammad"
 msgid "Starting Zammad…"
-msgstr "Pokretanje Zammad-a"
+msgstr "Pokretanje Zammad-a…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
-#, fuzzy
-#| msgid "Starting Zammad"
 msgid "Starting import…"
-msgstr "Pokretanje Zammad-a"
+msgstr "Pokretanje uvoza…"
 
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
@@ -13436,10 +13212,8 @@ msgid "Status Code:"
 msgstr "Kod statusa:"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
-#, fuzzy
-#| msgid "Status Type"
 msgid "Status Import"
-msgstr "Vrsta statusa"
+msgstr "Status uvoza"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Status Type"
@@ -13461,23 +13235,21 @@ msgstr "Korak %s je dovršen"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 msgid "Step 1 of 3: WhatsApp Business Cloud API"
-msgstr ""
+msgstr "Korak 1 od 3: WhatsApp Business Cloud API"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Step 2 of 3: WhatsApp Business Phone Number"
-msgstr ""
+msgstr "Korak 2 od 3: WhatsApp Business telefonski broj"
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
 msgid "Step 3 of 3: WhatsApp Business Webhook"
-msgstr ""
+msgstr "Korak 3 od 3: WhatsApp Business Webhook"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Ticket title"
 msgid "Sticker file"
-msgstr "Naslov ticketa"
+msgstr "Sticker datoteka"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -13488,10 +13260,8 @@ msgid "Storage"
 msgstr "Spremanje"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Storage Mechanism"
 msgid "Storage Method"
-msgstr "Mehanizam spremanja"
+msgstr "Metoda spremanja"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Store"
@@ -13622,10 +13392,8 @@ msgstr "Naziv sustavske adrese"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
-#, fuzzy
-#| msgid "Information"
 msgid "System Information"
-msgstr "Informacija"
+msgstr "Informacije o sustavu"
 
 #: db/seeds/settings.rb
 msgid "System Init Done"
@@ -13638,10 +13406,8 @@ msgstr "URL sustava"
 
 #: app/assets/javascripts/app/controllers/_ui_element/language.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-#, fuzzy
-#| msgid "Unset default"
-msgid "System default"
-msgstr "Ukloni zadanu vrijednost"
+msgid "System default - %s"
+msgstr "Zadana vrijednost sustava - %s"
 
 #: app/models/knowledge_base.rb
 msgid ""
@@ -13657,6 +13423,9 @@ msgid ""
 "public platform %l. It sports a very convenient user interface based on "
 "Weblate, give it a try!"
 msgstr ""
+"Prijevodi sustava mogu se dopuniti i podijeliti sa zajednicom na našoj "
+"javnoj platformi %l. Ima vrlo praktično korisničko sučelje temeljeno na "
+"Weblate-u, isprobajte!"
 
 #: db/seeds/settings.rb
 msgid "SystemID"
@@ -13707,10 +13476,8 @@ msgid "Target"
 msgstr "Cilj"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Language"
 msgid "Target Language"
-msgstr "Jezik"
+msgstr "Ciljani jezik"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -13842,10 +13609,8 @@ msgid "Text needed"
 msgstr "Potreban je tekst"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "at least one letter is required"
 msgid "Text or attachment is required"
-msgstr "Potrebno je barem jedno slovo"
+msgstr "Potreban je tekst ili privitak"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Text with disabled inline translations looks like"
@@ -13879,6 +13644,8 @@ msgid ""
 "The 24 hour customer service window is now closed, no further WhatsApp "
 "messages can be sent."
 msgstr ""
+"24-satni prozor korisničke podrške je zatvoren, daljnje WhatsApp poruke se "
+"više ne mogu slati."
 
 #: app/controllers/user_access_token_controller.rb
 msgid "The API token could not be found."
@@ -13893,14 +13660,12 @@ msgid "The MIME type of the image is invalid."
 msgstr "MIME vrsta slike nije valjana."
 
 #: app/graphql/gql/queries/system/import/state.rb
-#, fuzzy
-#| msgid "The import failed."
 msgid "The OTRS import failed."
-msgstr "Uvoz nije uspio."
+msgstr "OTRS uvoz nije uspio."
 
 #: app/services/service/system/import/apply_otrs_configuration.rb
 msgid "The OTRS migrator plugin is not accessable. Please verify the API key."
-msgstr ""
+msgstr "OTRS dodatak za migraciju nije dostupan. Molimo, provjerite API ključ."
 
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "The PGP email recipient is invalid."
@@ -13975,10 +13740,8 @@ msgstr ""
 "HTTPS protokol."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
-#, fuzzy
-#| msgid "The URL to this installation of Zammad."
 msgid "The URL of this installation of Zammad."
-msgstr "URL Vašeg Zammad sustava."
+msgstr "URL ove instalacije Zammada."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
@@ -13986,31 +13749,23 @@ msgstr "URL Vašeg Zammad sustava."
 
 #: lib/whatsapp/webhook/configuration.rb
 msgid "The WhatsApp channel webhook configuration could not be verified."
-msgstr ""
+msgstr "Konfiguracija web-hooka WhatsApp kanala nije mogla biti potvrđena."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
-#, fuzzy
-#| msgid "The changes could not be saved."
 msgid "The WhatsApp connection could not be saved."
-msgstr "Promjene nije moguće spremiti."
+msgstr "WhatsApp vezu nije moguće spremiti."
 
 #: lib/whatsapp/webhook/concerns/has_channel.rb
-#, fuzzy
-#| msgid "The API token could not be found."
 msgid "The WhatsApp webhook channel could not be found."
-msgstr "API token nije moguće pronaći."
+msgstr "Nije moguće pronaći WhatsApp webhook kanal."
 
 #: lib/whatsapp/webhook/payload.rb
-#, fuzzy
-#| msgid "The uploaded image could not be processed."
 msgid "The WhatsApp webhook payload could not be processed."
-msgstr "Prenesenu sliku nije moguće obraditi."
+msgstr "Payload WhatsApp webhooka nije moguće obraditi."
 
 #: lib/whatsapp/webhook/payload.rb
-#, fuzzy
-#| msgid "The raw logo could not be read."
 msgid "The WhatsApp webhook payload could not be validated."
-msgstr "Neobrađeni logotip nije moguće pročitati."
+msgstr "Nije moguće potvrditi payload WhatsApp webhooka."
 
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
@@ -14022,10 +13777,8 @@ msgid "The admin consent request was sent to your administrator."
 msgstr "Zahtjev za pristanak je poslan Vašem administratoru."
 
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
-#, fuzzy
-#| msgid "Verification email could not be sent."
 msgid "The admin password auth email could not be sent."
-msgstr "Nije moguće poslati potvrdni e-mail."
+msgstr "Nije moguće poslati e-mail za autorizaciju lozinke administratora."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
@@ -14221,10 +13974,8 @@ msgstr "Veza je odbijena."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
-#, fuzzy
-#| msgid "The username or password is incorrect."
 msgid "The current password you provided is incorrect."
-msgstr "Korisničko ime ili lozinka nisu točni."
+msgstr "Unesena lozinka nije ispravna."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
@@ -14259,10 +14010,8 @@ msgstr "Razdjelnik između TicketHook-a i broja ticketa. Npr. ’: ’."
 #: app/services/service/auth/send_admin_token.rb
 #: app/services/service/user/password_reset/send.rb
 #: app/services/service/user/password_reset/update.rb
-#, fuzzy
-#| msgid "The article could not be set to internal."
 msgid "The email could not be sent to the user."
-msgstr "Članak nije mogao biti postavljen na interno."
+msgstr "E-mail nije mogao biti poslan korisniku."
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -14271,28 +14020,20 @@ msgid ""
 msgstr "Šifrirani dio ove PGP e-pošte ima netočan MIME tip prema RFC 3156."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
-#, fuzzy
-#| msgid ""
-#| "Attention: These will be your login and password after the import is "
-#| "completed."
 msgid ""
 "The entered email and API token will become your Zammad login credentials "
 "after the import is completed."
 msgstr ""
-"Pažnja: To će također biti Vaše korisničko ime i lozinka nakon dovršetka "
-"uvoza."
+"Unesena e-mail adresa i API token će postati Vaši prijavni podaci za Zammad "
+"nakon dovršetka uvoza."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
-#, fuzzy
-#| msgid ""
-#| "Attention: These will be your login and password after the import is "
-#| "completed."
 msgid ""
 "The entered email and password will become your Zammad login credentials "
 "after the import is completed."
 msgstr ""
-"Pažnja: To će također biti Vaše korisničko ime i lozinka nakon dovršetka "
-"uvoza."
+"Unesena e-mail adresa i lozinka će postati Vaši prijavni podaci za Zammad "
+"nakon dovršetka uvoza."
 
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
 msgid ""
@@ -14324,10 +14065,8 @@ msgstr "Datoteka ne pripada navedenom članku."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
-#, fuzzy
-#| msgid "Feature not enabled!"
 msgid "The file type %s is not allowed."
-msgstr "Funkcija nije aktivirana!"
+msgstr "Vrsta datoteke %s nije dopuštena."
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -14356,10 +14095,8 @@ msgid "The format of the subject."
 msgstr "Oblik predmeta."
 
 #: lib/whatsapp/retry/media.rb
-#, fuzzy
-#| msgid "This article is not part of the ticket."
 msgid "The given article is not a media article."
-msgstr "Ovaj članak ne pripada ticketu."
+msgstr "Navedeni članak nije medijski članak."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -14429,18 +14166,16 @@ msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Dosegnuto je ograničenje od %s prikazanih ticketa (%s preostalih)"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgid ""
 "The limit of displayable suggestions was reached, please narrow down your "
 "search."
-msgstr "Dosegnuto je ograničenje od %s prikazanih ticketa (%s preostalih)"
+msgstr ""
+"Dosegnuto je ograničenje prijedloga koji se mogu prikazati, molimo, suzite "
+"Vaše pretraživanje."
 
 #: app/services/service/auth/verify_admin_token.rb
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "The login is not possible."
-msgstr "Praćenje vremena"
+msgstr "Prijava nije moguća."
 
 #: app/models/ticket/number.rb
 msgid "The new ticket number could not be generated."
@@ -14500,10 +14235,8 @@ msgid "The password could not be set. Please contact your administrator."
 msgstr "Lozinku nije moguće postaviti. Obratite se administratoru."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
-#, fuzzy
-#| msgid "Password changed successfully!"
 msgid "The password reset request was successful."
-msgstr "Lozinka je uspješno promijenjena!"
+msgstr "Zahtjev za ponovno postavljanje lozinke je bio uspješan."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
@@ -14559,10 +14292,8 @@ msgid "The provided credentials are invalid."
 msgstr "Navedeni pristupni podaci nisu valjani."
 
 #: lib/validations/email_account_uniqueness_validator.rb
-#, fuzzy
-#| msgid "The provided endpoint is invalid."
 msgid "The provided email account is already in use."
-msgstr "Navedena putanja nije valjana."
+msgstr "Navedena e-mail adresa se već koristi."
 
 #: app/models/webhook.rb
 msgid "The provided endpoint is invalid, no hostname was specified."
@@ -14608,7 +14339,7 @@ msgstr "Nije moguće obraditi zahtjev."
 
 #: lib/operations_rate_limiter.rb
 msgid "The request limit for this operation was exceeded."
-msgstr ""
+msgstr "Ograničenje zahtjeva za ovu operaciju je premašeno."
 
 #: lib/validations/verify_perform_rules_validator.rb
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
@@ -14624,16 +14355,12 @@ msgstr "Nedostaje potrebna PGP pristupna fraza."
 
 #: app/controllers/users_controller.rb
 #: app/services/service/user/add_first_admin.rb
-#, fuzzy
-#| msgid "The required parameter 'area' is missing."
 msgid "The required attribute 'email' is missing."
-msgstr "Obavezni parametar ’area’ nije pronađen."
+msgstr "Obavezni parametar ’email’ nije pronađen."
 
 #: app/services/service/system/set_system_information.rb
-#, fuzzy
-#| msgid "The required parameter 'area' is missing."
 msgid "The required attribute 'organization' is missing."
-msgstr "Obavezni parametar ’area’ nije pronađen."
+msgstr "Obavezni parametar ’organization’ nije pronađen."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
 msgid "The required event field 'execution' is missing."
@@ -14664,10 +14391,8 @@ msgid "The required parameter \"payload\" is missing."
 msgstr "Obavezni parametar \"payload\" nije pronađen."
 
 #: lib/whatsapp/client.rb
-#, fuzzy
-#| msgid "The required parameter 'request_token' is missing."
 msgid "The required parameter 'access_token' is missing."
-msgstr "Obavezni parametar 'request_token' nije pronađen."
+msgstr "Obavezni parametar 'access_token' nije pronađen."
 
 #: lib/external_credential/facebook.rb
 msgid "The required parameter 'application_id' is missing."
@@ -14682,10 +14407,8 @@ msgid "The required parameter 'area' is missing."
 msgstr "Obavezni parametar ’area’ nije pronađen."
 
 #: lib/whatsapp/account/phone_numbers.rb
-#, fuzzy
-#| msgid "The required parameter 'user_id' is missing."
 msgid "The required parameter 'business_id' is missing."
-msgstr "Obavezni parametar 'user_id' nije pronađen."
+msgstr "Obavezni parametar 'business_id' nije pronađen."
 
 #: lib/external_credential/exchange.rb lib/external_credential/google.rb
 #: lib/external_credential/microsoft365.rb
@@ -14819,10 +14542,8 @@ msgstr ""
 "Potrebnu vrijednost external_credential nije moguće pronaći u predmemoriji."
 
 #: app/controllers/ticket_articles_controller.rb
-#, fuzzy
-#| msgid "The retried security process failed!"
 msgid "The retried attachment download failed."
-msgstr "Ponovljeni sigurnosni proces nije uspio!"
+msgstr "Ponovljeno preuzimanje privitka nije uspjelo."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -14834,10 +14555,8 @@ msgid "The selected date is invalid."
 msgstr "Odabrani datum nije ispravan."
 
 #: app/services/service/system/import/apply_configuration_base.rb
-#, fuzzy
-#| msgid "The certificate could not be parsed."
 msgid "The server presented a certificate that could not be verified."
-msgstr "Certifikat nije moguće raščlaniti."
+msgstr "Server je ispostavio certifikat koji se nije mogao provjeriti."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -14871,7 +14590,7 @@ msgstr "Postavku nije moguće ažurirati."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "The setup has already been started. Please wait until it is finished."
-msgstr ""
+msgstr "Postavljanje je već započelo. Molimo, pričekajte dok ne završi."
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
@@ -14903,16 +14622,20 @@ msgid ""
 "The system setup cannot be started, because there is another one running or "
 "it was completed before."
 msgstr ""
+"Postavljanje sustava se ne može pokrenuti jer postoji drugi proces u tijeku "
+"ili je prethodno dovršen."
 
 #: app/services/service/system/check_setup.rb
 msgid ""
 "The system setup is marked as done, but no admin user is existing. Please "
 "run the system setup again."
 msgstr ""
+"Postavljanje sustava je označeno kao gotovo, ali ne postoji nijedan "
+"administratorski korisnik. Molimo, ponovno pokrenite postavljanje sustava."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
 msgid "The system was configured successfully. You are being redirected."
-msgstr ""
+msgstr "Sustav je uspješno konfiguriran. Biti ćete preusmjereni."
 
 #: app/controllers/tickets_controller.rb
 msgid "The target ticket number could not be found."
@@ -14938,16 +14661,13 @@ msgid "The tickets could not be merged."
 msgstr "Tickete nije moguće spojiti."
 
 #: app/services/service/user/signup.rb
-#, fuzzy
-#| msgid "The report could not be generated"
 msgid "The token could not be generated."
-msgstr "Nije moguće generirati izvještaj"
+msgstr "Nije moguće generirati token."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#, fuzzy
-#| msgid "Email could not be verified. Please contact your administrator."
 msgid "The token could not be verified. Please contact your administrator."
-msgstr "Nije moguće potvrditi mail. Obratite se svojem administratoru."
+msgstr ""
+"Nije moguće potvrditi token. Molimo, obratite se svojem administratoru."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts
@@ -14956,7 +14676,7 @@ msgstr "Token za prijavu preko administratorske lozinke nije valjan."
 
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts
 msgid "The token is valid. You are now able to login via password once."
-msgstr ""
+msgstr "Token je ispravan. Sada se možete jednokratno prijaviti putem lozinke."
 
 #: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
@@ -14987,10 +14707,8 @@ msgstr ""
 "ili logo_resize."
 
 #: app/services/service/auth/send_admin_token.rb
-#, fuzzy
-#| msgid "The report could not be generated"
 msgid "The user token could not be generated."
-msgstr "Nije moguće generirati izvještaj"
+msgstr "Nije moguće generirati korisnički token."
 
 #: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -15002,10 +14720,8 @@ msgid "The username or password is incorrect."
 msgstr "Korisničko ime ili lozinka nisu točni."
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-#, fuzzy
-#| msgid "Verification email could not be sent."
 msgid "The verification email could not be resent."
-msgstr "Nije moguće poslati potvrdni e-mail."
+msgstr "Nije moguće ponovno poslati potvrdni e-mail."
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
@@ -15176,10 +14892,8 @@ msgid "There were errors in your form."
 msgstr "Vaš obrazac sadrži greške."
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
-#, fuzzy
-#| msgid "We support:"
 msgid "These are supported:"
-msgstr "Podržavamo:"
+msgstr "Trenutno podržano:"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -15228,20 +14942,16 @@ msgid "This entry already exists!"
 msgstr "Ovaj unos već postoji!"
 
 #: app/services/service/check_feature_enabled.rb
-#, fuzzy
-#| msgid "Feature not enabled!"
 msgid "This feature is not enabled."
-msgstr "Funkcija nije aktivirana!"
+msgstr "Ova funkcija nije aktivirana!"
 
 #: config/initializers/activemodel_error.rb
 msgid "This field %s"
 msgstr "Ovo polje %s"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts
-#, fuzzy
-#| msgid "This field can only contain lowercase letters."
 msgid "This field allows only one file."
-msgstr "Ovo polje može sadržavati samo mala slova."
+msgstr "Ovo polje može sadržavati samo jednu datoteku."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
@@ -15388,10 +15098,8 @@ msgid "This field was configured incorrectly and can't be submitted."
 msgstr "Ovo polje nije ispravno konfigurirano i ne može se poslati."
 
 #: app/models/group.rb
-#, fuzzy
-#| msgid "Group or children exceeded max depth!"
 msgid "This group or its children exceed the allowed nesting depth."
-msgstr "Grupe ili podstavke su prekoračile maksimalnu dubinu!"
+msgstr "Ova grupa ili njene podgrupe su prekoračile maksimalnu dubinu!"
 
 #: lib/email_helper/probe.rb
 msgid "This host cannot be reached."
@@ -15464,12 +15172,12 @@ msgid ""
 "This operation cannot be continued, because the system set-up was not "
 "completed yet."
 msgstr ""
+"Ova se operacija ne može nastaviti jer postavljanje sustava još nije "
+"dovršeno."
 
 #: app/frontend/shared/router/error.ts
-#, fuzzy
-#| msgid "We're sorry, but this page doesn't exist."
 msgid "This page doesn't exist."
-msgstr "Žao nam je, ali ova stranica ne postoji."
+msgstr "Ova stranica ne postoji."
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
@@ -15486,7 +15194,7 @@ msgstr ""
 msgid ""
 "This resource cannot be locked, because it has already been locked by "
 "another process."
-msgstr ""
+msgstr "Ovaj se element ne može blokirati jer ga je već blokirao drugi proces."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
@@ -15528,16 +15236,12 @@ msgid ""
 msgstr "Ova usluga prikazuje dolazne i odlazne pozive u stvarnom vremenu."
 
 #: app/services/service/concerns/handles_setting.rb
-#, fuzzy
-#| msgid "Feature not enabled!"
 msgid "This setting is not disabled."
-msgstr "Funkcija nije aktivirana!"
+msgstr "Ova funkcija nije deaktivirana."
 
 #: app/services/service/concerns/handles_setting.rb
-#, fuzzy
-#| msgid "Feature not enabled!"
 msgid "This setting is not enabled."
-msgstr "Funkcija nije aktivirana!"
+msgstr "Ova postavka nije aktivirana!"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "This signature is inactive, it won't be included in the reply."
@@ -15546,17 +15250,19 @@ msgstr "Ovaj potpis nije aktivan, neće biti dodan u odgovor."
 #: app/services/service/user/add_first_admin.rb
 msgid ""
 "This system has already been configured and an administrator account exists."
-msgstr ""
+msgstr "Ovaj sustav je već konfiguriran i postoji administratorski račun."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 msgid "This system is configured for automated setup."
-msgstr ""
+msgstr "Ovaj sustav je konfiguriran za automatsko postavljanje."
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid ""
 "This text will be sent as an immediate reply to new incoming WhatsApp "
 "messages."
 msgstr ""
+"Ovaj tekst će biti poslan kao trenutni odgovor na nove dolazne WhatsApp "
+"poruke."
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -15718,39 +15424,29 @@ msgstr "Vlasnik ticketa"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket Priorities"
-msgstr "Ažuriranje ticketa"
+msgstr "Prioriteti ticketa"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
-#, fuzzy
-#| msgid "Priority"
 msgid "Ticket Priority"
-msgstr "Prioritet"
+msgstr "Prioritet ticketa"
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
 msgstr "Odabir ticketa"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket Settings"
-msgstr "Ažuriranje ticketa"
+msgstr "Postavke ticketa"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket State"
-msgstr "Ažuriranje ticketa"
+msgstr "Status ticketa"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket States"
-msgstr "Ažuriranje ticketa"
+msgstr "Statusi ticketa"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Forward"
@@ -15785,10 +15481,8 @@ msgid "Ticket could not be created."
 msgstr "Ticket nije moguće stvoriti."
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
-#, fuzzy
-#| msgid "Ticket actions"
 msgid "Ticket creation"
-msgstr "Radnje u ticketu"
+msgstr "Kreiranje ticketa"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Ticket customer updated successfully."
@@ -16104,10 +15798,8 @@ msgid "Time zone"
 msgstr "Vremenska zona"
 
 #: app/models/setting/validation/time_zone.rb
-#, fuzzy
-#| msgid "This field is required."
 msgid "Time zone is required."
-msgstr "Ovo polje je obavezno."
+msgstr "Vremenska zona je obavezna."
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Timeframe between agent updates or for an agent to respond."
@@ -16204,6 +15896,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "To find out more about the 24-hour customer service window see %l."
 msgstr ""
+"Kako biste saznali više o 24-satnom roku korisničke podrške, pogledajte %l."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid ""
@@ -16214,16 +15907,12 @@ msgstr ""
 "zatim gumb %s \"Dodaj na početni zaslon\"."
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco
-#, fuzzy
-#| msgid ""
-#| "To make translations easier you can enable and disable the inline "
-#| "translation feature by pressing \"%s\"."
 msgid ""
 "To make translations easier you can enable and disable the inline "
 "translation feature by pressing \"%s\" at any time."
 msgstr ""
-"Da biste olakšali održavanje prijevoda, umetnuti prijevod može se omogućiti "
-"i onemogućiti pomoću tipki \"%s\"."
+"Da biste olakšali prevođenje, umetnuti prijevod se može omogućiti i "
+"onemogućiti pomoću tipki \"%s\" u bilo kojem trenutku."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
 msgid ""
@@ -16239,13 +15928,6 @@ msgid ""
 msgstr ""
 "Da biste se vratili na zadani payload, jednostavno maknite kvačicu kod "
 "\"Custom Payloada\" gore."
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "The configuration of Zammad has changed, please reload your browser."
-msgid "To see the updated translation, please reload your browser."
-msgstr ""
-"Konfiguracija Zammada se promijenila, ponovno učitajte svoj preglednik."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -16359,16 +16041,12 @@ msgid "Translate field contents"
 msgstr "Prevedi sadržaj polja"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Translations"
 msgid "Translation"
-msgstr "Prijevodi"
+msgstr "Prijevod"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Translations"
 msgid "Translation Source"
-msgstr "Prijevodi"
+msgstr "Izvor prijevoda"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -16631,7 +16309,7 @@ msgstr "Nepoznata greška"
 
 #: app/models/failed_email.rb
 msgid "Unknown error: Could not create a ticket from this email."
-msgstr ""
+msgstr "Nepoznata greška: nije moguće kreirati ticket iz ovog e-maila."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid ""
@@ -16655,10 +16333,8 @@ msgstr "Nepročitane obavijesti"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
-#, fuzzy
-#| msgid "set optional"
 msgid "Unselect Option"
-msgstr "postavi kao neobavezno"
+msgstr "Poništi odabir opcije"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 msgid "Unset default"
@@ -16671,15 +16347,15 @@ msgstr "Otkaži pretplatu"
 
 #: lib/whatsapp/webhook/payload.rb
 msgid "Unsupported message type."
-msgstr ""
+msgstr "Nepodržana vrsta poruke."
 
 #: lib/whatsapp/webhook/payload.rb
 msgid "Unsupported subscription type."
-msgstr ""
+msgstr "Nepodržana vrsta pretplate."
 
 #: lib/whatsapp/webhook/payload.rb
 msgid "Unsupported webhook payload."
-msgstr ""
+msgstr "Nepodržan webhook payload."
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
@@ -16913,10 +16589,8 @@ msgid "Upload Private Key"
 msgstr "Prenesi privatni ključ"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
-#, fuzzy
-#| msgid "Uploading"
 msgid "Upload image"
-msgstr "Prenosim"
+msgstr "Učitaj sliku"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 msgid "Upload key"
@@ -17224,10 +16898,8 @@ msgid "Verification email could not be sent."
 msgstr "Nije moguće poslati potvrdni e-mail."
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
-#, fuzzy
-#| msgid "Generate Token"
 msgid "Verify Token"
-msgstr "Generirajte token"
+msgstr "Potvrdi token"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -17236,16 +16908,12 @@ msgstr "Potvrdi slanje i primanje"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
-#, fuzzy
-#| msgid "Verifying key information…"
 msgid "Verifying and saving your configuration…"
-msgstr "Provjera ključnih informacija…"
+msgstr "Provjera i spremanje Vaše konfiguracije…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
-#, fuzzy
-#| msgid "Verifying key information…"
 msgid "Verifying and saving your import configuration…"
-msgstr "Provjera ključnih informacija…"
+msgstr "Provjera i spremanje Vaše uvozne konfiguracije…"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
@@ -17253,16 +16921,12 @@ msgid "Verifying key information…"
 msgstr "Provjera ključnih informacija…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
-#, fuzzy
-#| msgid "Verifying key information…"
 msgid "Verifying your configuration…"
-msgstr "Provjera ključnih informacija…"
+msgstr "Provjera Vaše konfiguracije…"
 
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
-#, fuzzy
-#| msgid "Ticket information"
 msgid "Verifying your email…"
-msgstr "Informacije ticketa"
+msgstr "Provjera Vašeg e-maila"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
@@ -17285,10 +16949,8 @@ msgstr "Video"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "Video"
 msgid "Video file"
-msgstr "Video"
+msgstr "Video datoteka"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "View"
@@ -17525,26 +17187,20 @@ msgstr "Koje vrijednosti %s treba sinkronizirati s korisnicima."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
-#, fuzzy
-#| msgid "Chats"
 msgid "WhatsApp"
-msgstr "Chatovi"
+msgstr "WhatsApp"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
-#, fuzzy
-#| msgid "Add Account"
 msgid "WhatsApp Account"
-msgstr "Dodaj račun"
+msgstr "WhatsApp račun"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 msgid "WhatsApp Business Account ID"
-msgstr ""
+msgstr "WhatsApp Business račun ID"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
-#, fuzzy
-#| msgid "Chats"
 msgid "Whatsapp"
-msgstr "Chatovi"
+msgstr "WhatsApp"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid ""
@@ -17636,12 +17292,9 @@ msgstr ""
 "generira ticket za Vas."
 
 #: app/assets/javascripts/app/models/template.coffee
-#, fuzzy
-#| msgid ""
-#| "With templates it is possible to fill pre-filled tickets quickly and "
-#| "easily."
 msgid "With templates it is possible to pre-fill tickets quickly and easily."
-msgstr "Pomoću predložaka se atributi ticketa mogu lako unaprijed popuniti."
+msgstr ""
+"Pomoću predložaka se atributi ticketa mogu lako i brzo unaprijed popuniti."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "With templates you can pre-fill ticket attributes."
@@ -17744,7 +17397,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "You can connect WhatsApp Business Accounts with Zammad."
-msgstr ""
+msgstr "Možete povezati WhatsApp Business (poslovne) račune sa Zammadom."
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
@@ -17865,10 +17518,8 @@ msgid "You can request your password"
 msgstr "Kako zatražiti novu lozinku"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
-#, fuzzy
-#| msgid "You can request your password"
 msgid "You can request your password here."
-msgstr "Kako zatražiti novu lozinku"
+msgstr "Ovdje možete zatražiti svoju lozinku."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
@@ -17911,16 +17562,16 @@ msgid ""
 "You have a 24 hour window to send WhatsApp messages in this conversation. "
 "The customer service window closes %s."
 msgstr ""
+"Imate 24 sata za slanje WhatsApp poruka u ovom razgovoru. Rok korisničke "
+"podrške se zatvara u %s."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 msgid "You have exceeded the character limit by %s"
 msgstr "Prekoračili ste ograničenje broja znakova za %s"
 
 #: app/policies/ticket_policy.rb
-#, fuzzy
-#| msgid "Sorry, but you have insufficient rights to open this page."
 msgid "You have insufficient permissions to mention other users."
-msgstr "Žao nam je, ali nemate dovoljno ovlasti za pristup ovoj stranici."
+msgstr "Nemate dovoljno ovlasti za spominjanje drugih korisnika."
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
 msgid "You have insufficient rights to view this organization."
@@ -18184,6 +17835,10 @@ msgid ""
 "or closed states. Take a look at our system object documentation for more "
 "information."
 msgstr ""
+"Zammad koristi tipove statusa kako bi znao što treba učiniti sa Vašim "
+"statusom. To Vam omogućuje različite vrste poput aktivnosti na čekanju, "
+"podsjetnika na čekanju ili zatvorenih ticketa. Za više informacija "
+"pogledajte našu dokumentaciju o objektima sustava."
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
@@ -18452,10 +18107,8 @@ msgid "current user organization"
 msgstr "Organizacija trenutnog korisnika"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "customer"
 msgid "custom"
-msgstr "klijent"
+msgstr "prilagođeno"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "custom unit"
@@ -18503,10 +18156,8 @@ msgstr "obriši"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Delete Customer"
 msgid "delivered to the customer"
-msgstr "Obriši klijenta"
+msgstr "dostavljeno klijentu"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -19216,10 +18867,8 @@ msgstr "dostignuto"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Create new customer"
 msgid "read by the customer"
-msgstr "Stvori novog klijenta"
+msgstr "pročitano od klijenta"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -19287,10 +18936,8 @@ msgstr "izaberi"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
-#, fuzzy
-#| msgid "set optional"
 msgid "select all options"
-msgstr "postavi kao neobavezno"
+msgstr "označi sve opcije"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -19298,17 +18945,13 @@ msgid "select attachment…"
 msgstr "odaberi privitak…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
-#, fuzzy
-#| msgid "Select All"
 msgid "select visible options"
-msgstr "Odaberi sve"
+msgstr "odaberi vidljive opcije"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Create new customer"
 msgid "sent to the customer"
-msgstr "Stvori novog klijenta"
+msgstr "poslano klijentu"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19415,10 +19058,8 @@ msgid "support@example.com"
 msgstr "support@example.com"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "System"
 msgid "system"
-msgstr "Sustav"
+msgstr "sustav"
 
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
@@ -19531,10 +19172,8 @@ msgid "welcome message"
 msgstr "poruka dobrodošlice"
 
 #: db/seeds/ticket_article_types.rb
-#, fuzzy
-#| msgid "Add a message"
 msgid "whatsapp message"
-msgstr "Dodaj poruku"
+msgstr "WhatsApp poruka"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
@@ -19610,6 +19249,13 @@ msgstr "... cijelog tekstnog polja"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ vrijeme čekanja danas"
+
+#, fuzzy
+#~| msgid ""
+#~| "The configuration of Zammad has changed, please reload your browser."
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr ""
+#~ "Konfiguracija Zammada se promijenila, ponovno učitajte svoj preglednik."
 
 #, fuzzy
 #~| msgid "ticket"

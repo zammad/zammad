@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-22 02:05+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-04-03 01:05+0000\n"
+"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -514,10 +514,8 @@ msgid "%s is inactive, please select an active one."
 msgstr "%s ist inaktiv, bitte wählen Sie einen aktiven."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "is required"
 msgid "%s is required."
-msgstr "ist erforderlich"
+msgstr "%s ist erforderlich."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
@@ -1786,6 +1784,7 @@ msgstr "App-Secret"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "Aussehen"
@@ -4014,6 +4013,14 @@ msgid "Customers in the organization can view each other's items."
 msgstr ""
 "Kunden in einer Organisation können ihre Einträge untereinander einsehen."
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
+"Passen Sie die Sprache und die Zeitzone beim Ersetzen von Variablen an."
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
 msgstr "Ausschneiden"
@@ -4023,6 +4030,7 @@ msgid "Dark"
 msgstr "Dunkel"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
+#: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue
 msgid "Dark Mode"
 msgstr "Dunkler Modus"
 
@@ -8589,6 +8597,12 @@ msgstr "Key-ID"
 msgid "Keyboard Shortcuts"
 msgstr "Tastaturkürzel"
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Keyboard Shortcuts"
+msgid "Keyboard shortcuts"
+msgstr "Tastaturkürzel"
+
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Keywords"
 msgstr "Schlüsselwörter"
@@ -8922,6 +8936,11 @@ msgstr "Gebietsschema konnte nicht gefunden werden."
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
 msgstr "Sprache nicht gefunden"
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Localization of execution changes"
+msgstr "Sprache für ausgeführte Aktionen"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -9951,6 +9970,8 @@ msgstr "Nein danke!"
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
+"Mit diesem Medientyp kann kein zusätzlicher Text gesendet werden. Bitte "
+"entfernen Sie den Text."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
@@ -11359,6 +11380,12 @@ msgstr "Produktname"
 #: app/assets/javascripts/app/controllers/profile.coffee
 msgid "Profile"
 msgstr "Profil"
+
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Proxy Settings"
+msgid "Profile settings"
+msgstr "Proxy-Einstellungen"
 
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
@@ -13058,6 +13085,7 @@ msgid "Sign in using"
 msgstr "Anmelden über"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Abmelden"
@@ -13577,8 +13605,8 @@ msgstr "System-URL"
 
 #: app/assets/javascripts/app/controllers/_ui_element/language.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-msgid "System default"
-msgstr "Standardwert"
+msgid "System default - %s"
+msgstr "Systemvoreinstellung - %s"
 
 #: app/models/knowledge_base.rb
 msgid ""
@@ -14256,10 +14284,8 @@ msgstr "Die Datei gehört nicht zu dem angegebenen Artikel."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
-#, fuzzy
-#| msgid "Type %s is not supported."
 msgid "The file type %s is not allowed."
-msgstr "Der Typ %s wird nicht unterstützt."
+msgstr "Der Dateityp %s ist nicht erlaubt."
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
@@ -16181,12 +16207,6 @@ msgid ""
 msgstr ""
 "Um zur Standardnutzlast zurückzukehren, schalten Sie den Schalter \"Eigene "
 "Nutzlast\" oben aus."
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-msgid "To see the updated translation, please reload your browser."
-msgstr ""
-"Um die aktualisierte Übersetzung zu sehen, laden Sie bitte Ihr "
-"Browserfenster neu."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -19550,6 +19570,11 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr ""
+#~ "Um die aktualisierte Übersetzung zu sehen, laden Sie bitte Ihr "
+#~ "Browserfenster neu."
 
 #~ msgid "Caption for %s is not allowed. Please clear text!"
 #~ msgstr "Ein Text für %s ist nicht erlaubt. Bitte Text löschen!"

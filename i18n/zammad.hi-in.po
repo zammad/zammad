@@ -1677,6 +1677,7 @@ msgstr " कोई% s कॉन्फ़िगर नहीं किया ग�
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr ""
@@ -3914,6 +3915,13 @@ msgstr ""
 msgid "Customers in the organization can view each other's items."
 msgstr ""
 
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Customize the default locale and timezone during replacement of template "
+"variables."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
 msgstr ""
@@ -3923,6 +3931,7 @@ msgid "Dark"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
+#: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue
 msgid "Dark Mode"
 msgstr ""
 
@@ -8254,6 +8263,10 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+msgid "Keyboard shortcuts"
+msgstr ""
+
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Keywords"
 msgstr ""
@@ -8612,6 +8625,11 @@ msgstr "% s ऑब्जेक्ट (एस) अपडेट किए गए �
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
+msgstr ""
+
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Localization of execution changes"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -11146,6 +11164,12 @@ msgstr " उत्पाद का नाम"
 msgid "Profile"
 msgstr "वर्णन"
 
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#, fuzzy
+#| msgid "Proxy Settings"
+msgid "Profile settings"
+msgstr " प्रॉक्सी सेटिंग"
+
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
 msgstr " प्रोफाइल"
@@ -12875,6 +12899,7 @@ msgid "Sign in using"
 msgstr "या उपयोग में साइन इन करें"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/desktop/pages/home/views/Playground.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr ""
@@ -13430,7 +13455,7 @@ msgstr "सिस्टम URL"
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
 #| msgid "Restore Defaults"
-msgid "System default"
+msgid "System default - %s"
 msgstr "डिफॉल्ट्स का पुनःस्थापन"
 
 #: app/models/knowledge_base.rb
@@ -16110,12 +16135,6 @@ msgid ""
 "To revert back to the default payload, simply turn off the \"Custom "
 "Payload\" switch above."
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
-msgid "To see the updated translation, please reload your browser."
-msgstr "Zammad का एक नया संस्करण उपलब्ध है, कृपया अपना ब्राउज़र पुनः लोड करें।"
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -19553,6 +19572,11 @@ msgstr " ... पूरे टेक्सारिया के"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Iting आज समय की प्रतीक्षा है"
+
+#, fuzzy
+#~| msgid "A new version of Zammad is available, please reload your browser."
+#~ msgid "To see the updated translation, please reload your browser."
+#~ msgstr "Zammad का एक नया संस्करण उपलब्ध है, कृपया अपना ब्राउज़र पुनः लोड करें।"
 
 #, fuzzy
 #~| msgid "Create"
