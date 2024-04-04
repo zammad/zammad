@@ -54,7 +54,7 @@ const onClickItem = (event: MouseEvent, item: MenuItem) => {
 </script>
 
 <template>
-  <section class="flex flex-col gap-0.5 min-w-58">
+  <section class="min-w-58 flex flex-col gap-0.5">
     <div v-if="showHeaderLabel" role="heading" class="p-2 leading-3">
       <slot name="header"
         ><CommonLabel
@@ -71,7 +71,7 @@ const onClickItem = (event: MouseEvent, item: MenuItem) => {
           <template v-for="item in availableItems" :key="item.key">
             <li
               role="menuitem"
-              class="group flex items-center justify-between hover:bg-blue-600 dark:hover:bg-blue-900 last:rounded-b-[10px] focus-within:bg-blue-800 dark:hover:focus-within:bg-blue-800 hover:focus-within:bg-blue-800 focus-within:text-white"
+              class="group flex items-center justify-between last:rounded-b-[10px] focus-within:bg-blue-800 focus-within:text-white hover:bg-blue-600 hover:focus-within:bg-blue-800 dark:hover:bg-blue-900 dark:hover:focus-within:bg-blue-800"
               :class="{
                 'first:rounded-t-[10px]': !showHeaderLabel,
                 'border-t border-neutral-100 dark:border-gray-900':
@@ -81,7 +81,7 @@ const onClickItem = (event: MouseEvent, item: MenuItem) => {
               <slot :name="`item-${item.key}`" v-bind="item">
                 <component
                   :is="item.component || CommonPopoverMenuItem"
-                  class="grow flex p-2.5"
+                  class="flex grow p-2.5"
                   :label="item.label"
                   :link="item.link"
                   :icon="item.icon"

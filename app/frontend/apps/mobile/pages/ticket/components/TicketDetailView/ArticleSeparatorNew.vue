@@ -2,7 +2,7 @@
 
 <template>
   <div class="line-new select-none text-center">
-    <span class="bg-black px-2 text-blue">{{ $t('new') }}</span>
+    <span class="text-blue bg-black px-2">{{ $t('new') }}</span>
   </div>
 </template>
 

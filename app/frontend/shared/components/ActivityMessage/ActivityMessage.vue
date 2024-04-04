@@ -64,7 +64,7 @@ defineEmits<{
 
     <div class="flex flex-col">
       <div class="text-lg leading-5" v-html="markup(message)" />
-      <div class="mt-1 flex text-gray">
+      <div class="text-gray mt-1 flex">
         <CommonDateTime :date-time="createdAt" type="relative" />
       </div>
     </div>

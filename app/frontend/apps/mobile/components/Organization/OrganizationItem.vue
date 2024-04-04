@@ -66,7 +66,7 @@ const users = computed(() => {
       <div
         v-if="stringUpdated"
         data-test-id="stringUpdated"
-        class="truncate text-gray"
+        class="text-gray truncate"
       >
         {{ stringUpdated }}
       </div>

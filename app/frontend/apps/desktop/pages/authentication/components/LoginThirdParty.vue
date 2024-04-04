@@ -18,8 +18,8 @@ const { fingerprint } = useFingerprint()
 </script>
 
 <template>
-  <section class="w-full mt-2.5" data-test-id="loginThirdParty">
-    <div class="flex justify-center mb-2.5">
+  <section class="mt-2.5 w-full" data-test-id="loginThirdParty">
+    <div class="mb-2.5 flex justify-center">
       <CommonLabel>
         {{
           $c.user_show_password_login

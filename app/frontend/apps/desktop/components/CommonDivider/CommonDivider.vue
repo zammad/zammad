@@ -23,10 +23,10 @@ const props = withDefaults(defineProps<Props>(), {
     }"
   >
     <hr
-      class="bg-neutral-100 dark:bg-gray-900 border-0"
+      class="border-0 bg-neutral-100 dark:bg-gray-900"
       :class="{
-        'w-full h-px': props.orientation === 'horizontal',
-        'w-px h-full': props.orientation === 'vertical',
+        'h-px w-full': props.orientation === 'horizontal',
+        'h-full w-px': props.orientation === 'vertical',
       }"
     />
   </div>

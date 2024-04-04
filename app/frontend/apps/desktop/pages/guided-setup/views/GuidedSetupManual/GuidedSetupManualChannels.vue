@@ -25,7 +25,7 @@ const setupEmailChannel = () => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-5 mb-2.5">
+  <div class="mb-2.5 flex flex-col items-center justify-center gap-5">
     <CommonLabel class="text-center">
       {{
         $t(

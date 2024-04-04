@@ -41,7 +41,7 @@ const dismissed = ref(false)
   <div
     v-if="!dismissed"
     :id="props.id"
-    class="-:rounded-lg gap-1.5 p-2 border-transparent"
+    class="-:rounded-lg gap-1.5 border-transparent p-2"
     :class="[classMap.base, classMap[props.variant]]"
     role="alert"
     data-test-id="common-alert"
@@ -56,7 +56,7 @@ const dismissed = ref(false)
     >
       <CommonLink
         v-if="props.link"
-        class="ltr:mr-2 rtl:ml-2 text-ellipsis"
+        class="text-ellipsis ltr:mr-2 rtl:ml-2"
         :class="classMap.link"
         :link="props.link"
         open-in-new-tab
@@ -69,7 +69,7 @@ const dismissed = ref(false)
         size="small"
         decorative
         name="common-alert-dismiss"
-        class="ltr:mr-2 rtl:ml-2 cursor-pointer"
+        class="cursor-pointer ltr:mr-2 rtl:ml-2"
         @click="dismissed = true"
       />
     </div>

@@ -43,9 +43,9 @@ watchEffect(() => {
 <template>
   <div
     ref="containerNode"
-    class="flex items-center gap-2 transition-colors h-10 rounded-lg mb-2"
+    class="mb-2 flex h-10 items-center gap-2 rounded-lg transition-colors"
     :class="{
-      'px-2 bg-blue-200 dark:bg-gray-700 has-[input:hover]:outline has-[input:hover]:outline-1 has-[input:hover]:outline-offset-1 has-[input:hover]:outline-blue-600 dark:has-[input:hover]:outline-blue-900 has-[input:focus]:outline has-[input:focus]:outline-1 has-[input:focus]:outline-offset-1 has-[input:focus]:outline-blue-800 has-[input:hover]:has-[input:focus]:outline-blue-800 dark:has-[input:hover]:has-[input:focus]:outline-blue-800':
+      'bg-blue-200 px-2 has-[input:focus]:outline has-[input:hover]:outline has-[input:focus]:outline-1 has-[input:hover]:outline-1 has-[input:focus]:outline-offset-1 has-[input:hover]:outline-offset-1 has-[input:focus]:outline-blue-800 has-[input:hover]:has-[input:focus]:outline-blue-800 has-[input:hover]:outline-blue-600 dark:bg-gray-700 dark:has-[input:hover]:has-[input:focus]:outline-blue-800 dark:has-[input:hover]:outline-blue-900':
         filterFieldOpen,
     }"
   >
@@ -58,7 +58,7 @@ watchEffect(() => {
     />
     <CommonButton
       v-else
-      class="rtl:mr-auto ltr:ml-auto"
+      class="ltr:ml-auto rtl:mr-auto"
       prefix-icon="filter"
       @click="openFilterField"
     >
@@ -69,7 +69,7 @@ watchEffect(() => {
       ref="searchTextField"
       v-model.trim="searchText"
       :placeholder="$t('Apply filter…')"
-      class="w-0 duration-200 transition-[width] focus:outline-none bg-transparent text-sm text-black dark:text-white"
+      class="w-0 bg-transparent text-sm text-black transition-[width] duration-200 focus:outline-none dark:text-white"
       :class="{ 'w-full': filterFieldOpen }"
       type="text"
       role="searchbox"
@@ -79,7 +79,7 @@ watchEffect(() => {
         v-if="filterFieldOpen"
         icon="x-lg"
         variant="neutral"
-        class="hover:outline-none hover:outline-transparent hover:text-black hover:dark:text-white"
+        class="hover:text-black hover:outline-none hover:outline-transparent hover:dark:text-white"
         :aria-label="i18n.t('Clear filter')"
         @click="closeFilterField"
       />

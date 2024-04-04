@@ -14,8 +14,8 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <div class="flex flex-col max-h-screen">
-    <LayoutMain class="grow flex flex-col gap-3">
+  <div class="flex max-h-screen flex-col">
+    <LayoutMain class="flex grow flex-col gap-3">
       <CommonBreadcrumb :items="props.breadcrumbItems" />
       <slot />
     </LayoutMain>

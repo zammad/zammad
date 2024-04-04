@@ -115,7 +115,7 @@ useFormBlock(contextReactive, onInputClick)
       :id="context.id"
       role="combobox"
       :name="context.node.name"
-      class="flex grow items-center focus:outline-none formkit-disabled:pointer-events-none"
+      class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-none"
       :aria-disabled="context.disabled ? 'true' : undefined"
       :aria-labelledby="`label-${context.id}`"
       aria-haspopup="dialog"
@@ -151,7 +151,7 @@ useFormBlock(contextReactive, onInputClick)
       <CommonIcon
         v-if="context.clearable && hasValue && !context.disabled"
         :aria-label="i18n.t('Clear Selection')"
-        class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
+        class="text-gray absolute -mt-5 shrink-0 ltr:right-2 rtl:left-2"
         name="close-small"
         size="base"
         role="button"

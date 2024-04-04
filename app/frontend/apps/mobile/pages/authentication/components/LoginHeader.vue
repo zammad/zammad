@@ -16,7 +16,7 @@ defineProps<{
     {{ $t(title) }}
   </h1>
   <template v-if="$c.maintenance_mode">
-    <div class="my-1 flex items-center rounded-xl bg-red px-4 py-2 text-white">
+    <div class="bg-red my-1 flex items-center rounded-xl px-4 py-2 text-white">
       {{
         $t(
           'Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.',
@@ -27,7 +27,7 @@ defineProps<{
   <template v-if="$c.maintenance_login && $c.maintenance_login_message">
     <!-- eslint-disable vue/no-v-html -->
     <div
-      class="my-1 flex items-center rounded-xl bg-green px-4 py-2 text-white"
+      class="bg-green my-1 flex items-center rounded-xl px-4 py-2 text-white"
       v-html="$c.maintenance_login_message"
     ></div>
   </template>

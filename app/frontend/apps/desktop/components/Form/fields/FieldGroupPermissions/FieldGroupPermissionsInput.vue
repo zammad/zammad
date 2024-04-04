@@ -202,7 +202,7 @@ const ensureGranularOrFullAccess = (
 <template>
   <output
     :id="context.id"
-    class="w-full flex flex-col p-2 space-y-2 rounded-lg focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800"
+    class="flex w-full flex-col space-y-2 rounded-lg p-2 focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800"
     :class="context.classes.input"
     :name="context.node.name"
     role="list"
@@ -214,7 +214,7 @@ const ensureGranularOrFullAccess = (
     <div
       v-for="(groupPermission, index) in groupPermissions"
       :key="groupPermission.key"
-      class="w-full flex items-center gap-3"
+      class="flex w-full items-center gap-3"
       role="listitem"
     >
       <FormKit

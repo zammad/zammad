@@ -305,7 +305,7 @@ const appearance = ref('auto')
       <h2 class="text-xl">Buttons</h2>
 
       <h3>Text only</h3>
-      <div class="space-x-3 py-2 flex">
+      <div class="flex space-x-3 py-2">
         <CommonButton variant="primary" />
         <CommonButton variant="secondary" />
         <CommonButton variant="tertiary" />
@@ -316,7 +316,7 @@ const appearance = ref('auto')
       </div>
 
       <h3>With icon</h3>
-      <div class="space-x-3 py-2 flex">
+      <div class="flex space-x-3 py-2">
         <CommonButton variant="primary" prefix-icon="logo-flat" />
         <CommonButton variant="secondary" prefix-icon="logo-flat" />
         <CommonButton variant="tertiary" prefix-icon="logo-flat" />
@@ -327,7 +327,7 @@ const appearance = ref('auto')
       </div>
 
       <h3>Icon only</h3>
-      <div class="space-x-3 py-2 flex items-center">
+      <div class="flex items-center space-x-3 py-2">
         <CommonButton variant="primary" icon="logo-flat" />
         <CommonButton variant="secondary" icon="logo-flat" />
         <CommonButton variant="tertiary" icon="logo-flat" />
@@ -352,7 +352,7 @@ const appearance = ref('auto')
       </div>
 
       <h3>Misc</h3>
-      <div class="space-x-3 space-y-2 py-2 flex-wrap">
+      <div class="flex-wrap space-x-3 space-y-2 py-2">
         <CommonButton variant="submit" block>Block</CommonButton>
         <CommonButton variant="primary" disabled>Disabled</CommonButton>
         <CommonButton variant="secondary" disabled>Disabled</CommonButton>
@@ -438,7 +438,7 @@ const appearance = ref('auto')
       >
 
       <CommonBadge
-        class="ltr:mr-2 rtl:ml-2 dark:bg-pink-300 bg-pink-300 text-white"
+        class="bg-pink-300 text-white ltr:mr-2 rtl:ml-2 dark:bg-pink-300"
         variant="custom"
         >Custom
       </CommonBadge>
@@ -454,7 +454,7 @@ const appearance = ref('auto')
         </div>
 
         <div class="flex items-end gap-2">
-          <div class="mb-1 grow flex flex-col gap-1">
+          <div class="mb-1 flex grow flex-col gap-1">
             <div class="flex justify-between">
               <CommonLabel size="small">Organizations</CommonLabel>
               <CommonLabel
@@ -484,7 +484,7 @@ const appearance = ref('auto')
 
       <div class="flex gap-4">
         <CommonUserAvatar
-          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
           tabindex="0"
           :entity="{
             id: 'gid://zammad/User/1',
@@ -492,7 +492,7 @@ const appearance = ref('auto')
           size="medium"
         />
         <CommonUserAvatar
-          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
           tabindex="0"
           :entity="{
             id: 'gid://zammad/User/2',
@@ -502,7 +502,7 @@ const appearance = ref('auto')
           size="medium"
         />
         <CommonUserAvatar
-          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
           tabindex="0"
           :entity="{
             id: 'gid://zammad/User/3',
@@ -512,7 +512,7 @@ const appearance = ref('auto')
           size="medium"
         />
         <CommonUserAvatar
-          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
           tabindex="0"
           :entity="{
             id: 'gid://zammad/User/4',
@@ -522,7 +522,7 @@ const appearance = ref('auto')
           size="medium"
         />
         <CommonUserAvatar
-          class="outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          class="cursor-pointer outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
           tabindex="0"
           :entity="{
             id: 'gid://zammad/User/5',
@@ -532,7 +532,7 @@ const appearance = ref('auto')
           size="medium"
         />
         <CommonUserAvatar
-          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
           tabindex="0"
           :entity="{
             id: 'gid://zammad/User/6',
@@ -542,7 +542,7 @@ const appearance = ref('auto')
           size="medium"
         />
         <CommonUserAvatar
-          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
           tabindex="0"
           :entity="{
             id: 'gid://zammad/User/7',
@@ -599,7 +599,7 @@ const appearance = ref('auto')
             ]"
           >
             <template #itemRight-appearance>
-              <div class="px-2 flex items-center">
+              <div class="flex items-center px-2">
                 <ThemeSwitch
                   ref="themeSwitch"
                   v-model="appearance"
@@ -634,7 +634,7 @@ const appearance = ref('auto')
         @submit="console.debug($event)"
       >
         <template #after-fields>
-          <div class="mt-5 flex justify-end items-center gap-2">
+          <div class="mt-5 flex items-center justify-end gap-2">
             <CommonButton
               variant="secondary"
               size="medium"

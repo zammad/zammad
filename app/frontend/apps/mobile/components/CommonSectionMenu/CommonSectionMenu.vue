@@ -58,7 +58,7 @@ const showLabel = computed(() => {
       :is="actionLink ? 'CommonLink' : 'div'"
       v-if="actionLabel"
       :link="actionLink"
-      class="cursor-pointer text-blue ltr:pr-4 rtl:pl-4"
+      class="text-blue cursor-pointer ltr:pr-4 rtl:pl-4"
       @click="clickOnAction"
     >
       {{ i18n.t(actionLabel) }}
@@ -66,7 +66,7 @@ const showLabel = computed(() => {
   </div>
   <div
     v-if="itemsWithPermission || $slots.default || $slots['before-items']"
-    class="flex w-full flex-col rounded-xl bg-gray-500 overflow-hidden text-base text-white"
+    class="flex w-full flex-col overflow-hidden rounded-xl bg-gray-500 text-base text-white"
     :class="{ 'mb-6': !hasHelp }"
     v-bind="$attrs"
   >

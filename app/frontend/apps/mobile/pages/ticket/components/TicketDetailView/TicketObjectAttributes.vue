@@ -77,7 +77,7 @@ const shownUnits = computed(() => {
           v-for="({ name, timeUnit }, index) of shownUnits"
           :key="index"
         >
-          <div class="text-white/80 truncate rtl:ml-2 ltr:mr-2 col-[1]">
+          <div class="col-[1] truncate text-white/80 ltr:mr-2 rtl:ml-2">
             {{ capitalize($t(name)) }}
           </div>
           <div>{{ timeUnit }} {{ $t(timeAccountingDisplayUnit) }}</div>

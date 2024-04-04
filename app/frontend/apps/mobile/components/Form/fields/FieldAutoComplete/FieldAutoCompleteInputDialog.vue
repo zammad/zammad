@@ -312,7 +312,7 @@ useTraverseOptions(autocompleteList)
         :aria-posinset="options.findIndex((o) => o.value === option.value) + 1"
         :tabindex="option.disabled ? '-1' : '0'"
         :aria-selected="isCurrentValue(option.value)"
-        class="relative flex h-[58px] cursor-pointer items-center self-stretch px-6 py-5 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-none"
+        class="focus:bg-blue-highlight relative flex h-[58px] cursor-pointer items-center self-stretch px-6 py-5 text-base leading-[19px] text-white focus:outline-none"
         role="option"
         @click="select(option as AutoCompleteOption)"
         @keyup.space="select(option as AutoCompleteOption)"

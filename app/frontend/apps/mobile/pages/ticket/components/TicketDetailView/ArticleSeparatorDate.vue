@@ -9,7 +9,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div class="text-center text-gray">
+  <div class="text-gray text-center">
     <CommonDateTime :date-time="date" type="absolute" absolute-format="date" />
   </div>
 </template>

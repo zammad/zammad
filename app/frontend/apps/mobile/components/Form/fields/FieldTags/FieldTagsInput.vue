@@ -59,7 +59,7 @@ useFormBlock(reactiveContext, onInputClick)
       :id="context.id"
       :name="context.node.name"
       role="combobox"
-      class="flex grow items-center focus:outline-none formkit-disabled:pointer-events-none"
+      class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-none"
       :aria-disabled="context.disabled ? 'true' : undefined"
       :tabindex="context.disabled ? '-1' : '0'"
       v-bind="context.attrs"
@@ -81,7 +81,7 @@ useFormBlock(reactiveContext, onInputClick)
         <div
           v-for="tag of selectedTagsList"
           :key="tag"
-          class="rounded-sm bg-gray/20 px-[4px] py-[2px] text-base uppercase leading-4 text-gray"
+          class="bg-gray/20 text-gray rounded-sm px-[4px] py-[2px] text-base uppercase leading-4"
           role="listitem"
         >
           {{ tag }}

@@ -218,7 +218,7 @@ export default {
         />
         <CommonLink
           link="/"
-          class="flex items-center justify-center text-base text-blue ltr:pl-3 rtl:pr-3"
+          class="text-blue flex items-center justify-center text-base ltr:pl-3 rtl:pr-3"
         >
           {{ $t('Cancel') }}
         </CommonLink>

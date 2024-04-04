@@ -21,7 +21,7 @@ useArticleSeen(articleElement, emit)
 </script>
 
 <template>
-  <div ref="articleElement" class="text-center text-gray">
+  <div ref="articleElement" class="text-gray text-center">
     "{{ subject }}" -&gt; "{{ to }}"
   </div>
 </template>

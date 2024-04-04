@@ -23,7 +23,7 @@ export default {
   <div
     v-if="loading"
     v-bind="$attrs"
-    class="flex justify-center items-center"
+    class="flex items-center justify-center"
     role="status"
   >
     <CommonIcon

@@ -52,7 +52,7 @@ const { delegateFocus } = useDelegateFocus(
 <template>
   <output
     :id="context.id"
-    class="block bg-blue-200 dark:bg-gray-700 rounded-lg focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800"
+    class="block rounded-lg bg-blue-200 focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800 dark:bg-gray-700"
     role="list"
     :class="context.classes.input"
     :name="context.node.name"
@@ -64,7 +64,7 @@ const { delegateFocus } = useDelegateFocus(
     <div
       v-for="(option, index) in context.options"
       :key="`option-${option.value}`"
-      class="flex gap-2.5 items-center px-3 py-2.5"
+      class="flex items-center gap-2.5 px-3 py-2.5"
       role="listitem"
     >
       <FormKit

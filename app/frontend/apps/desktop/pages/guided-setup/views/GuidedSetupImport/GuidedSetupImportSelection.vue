@@ -48,7 +48,7 @@ const unlockCallback = () => {
         {{ $t(label) }}
       </span>
       <CommonBadge
-        class="dark:bg-pink-300 bg-pink-300 text-white"
+        class="bg-pink-300 text-white dark:bg-pink-300"
         variant="custom"
         >{{ $t('Beta') }}</CommonBadge
       >

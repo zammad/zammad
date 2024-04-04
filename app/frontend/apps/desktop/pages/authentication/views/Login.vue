@@ -159,7 +159,7 @@ const showPasswordLogin = computed(
   <LayoutPublicPage box-size="small" :title="loginPageTitle" show-logo>
     <div
       v-if="$c.maintenance_mode"
-      class="my-1 flex items-center rounded-xl bg-red px-4 py-2 text-white"
+      class="bg-red my-1 flex items-center rounded-xl px-4 py-2 text-white"
     >
       {{
         $t(
@@ -170,7 +170,7 @@ const showPasswordLogin = computed(
     <!-- eslint-disable vue/no-v-html -->
     <div
       v-if="$c.maintenance_login && $c.maintenance_login_message"
-      class="my-1 flex items-center rounded-xl bg-green px-4 py-2 text-white"
+      class="bg-green my-1 flex items-center rounded-xl px-4 py-2 text-white"
       v-html="$c.maintenance_login_message"
     ></div>
 
@@ -270,9 +270,9 @@ const showPasswordLogin = computed(
     <template #bottomContent>
       <div
         v-if="!showPasswordLogin"
-        class="p-2 inline-flex items-center justify-center flex-wrap text-sm"
+        class="inline-flex flex-wrap items-center justify-center p-2 text-sm"
       >
-        <CommonLabel class="text-stone-200 dark:text-neutral-500 text-center">
+        <CommonLabel class="text-center text-stone-200 dark:text-neutral-500">
           {{
             $t(
               'If you have problems with the third-party login you can request a one-time password login as an admin.',
@@ -286,7 +286,7 @@ const showPasswordLogin = computed(
 
       <CommonLabel
         v-if="loginFlow.state === '2fa-select'"
-        class="text-stone-200 dark:text-neutral-500 mt-3 mb-3"
+        class="mb-3 mt-3 text-stone-200 dark:text-neutral-500"
       >
         {{
           $t('Contact the administrator if you have any problems logging in.')

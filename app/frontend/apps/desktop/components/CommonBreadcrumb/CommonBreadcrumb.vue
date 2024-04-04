@@ -38,7 +38,7 @@ const locale = useLocaleStore()
             locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'
           "
           size="xs"
-          class="inline-flex mx-1"
+          class="mx-1 inline-flex"
         />
       </li>
     </ul>

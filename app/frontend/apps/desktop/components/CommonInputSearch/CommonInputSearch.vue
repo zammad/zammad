@@ -68,7 +68,7 @@ export default {
 
 <template>
   <div
-    class="grow inline-flex justify-start items-center gap-1"
+    class="inline-flex grow items-center justify-start gap-1"
     :class="wrapperClass"
   >
     <CommonIcon
@@ -77,14 +77,14 @@ export default {
       name="search"
       decorative
     />
-    <div class="relative grow inline-flex overflow-clip">
+    <div class="relative inline-flex grow overflow-clip">
       <div class="grow">
         <input
           ref="filterInput"
           v-model="filter"
           v-bind="$attrs"
           :placeholder="i18n.t(placeholder)"
-          class="w-full min-w-16 text-black dark:text-white outline-none"
+          class="w-full min-w-16 text-black outline-none dark:text-white"
           :class="{
             'bg-blue-200 dark:bg-gray-700': !alternativeBackground,
             'bg-white dark:bg-gray-500': alternativeBackground,
@@ -98,7 +98,7 @@ export default {
       </div>
       <div
         v-if="suggestionVisiblePart?.length"
-        class="absolute top-0 flex whitespace-pre pointer-events-none"
+        class="pointer-events-none absolute top-0 flex whitespace-pre"
         data-test-id="suggestion"
       >
         <span class="invisible">{{ filter }}</span>
@@ -110,7 +110,7 @@ export default {
     <div class="flex shrink-0 items-center gap-1">
       <slot name="controls" />
       <CommonIcon
-        class="fill-stone-200 dark:fill-neutral-500 hover:fill-black dark:hover:fill-white focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+        class="fill-stone-200 hover:fill-black focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
         :class="{
           invisible: !filter?.length,
         }"

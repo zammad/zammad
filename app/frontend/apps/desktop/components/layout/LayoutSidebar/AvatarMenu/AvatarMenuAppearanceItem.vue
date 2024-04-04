@@ -26,11 +26,11 @@ const { currentTheme } = useThemeUpdate()
     v-bind="{ ...$props, ...$attrs }"
     @click="cycleThemeSwitchValue"
   />
-  <div class="px-2 flex items-center">
+  <div class="flex items-center px-2">
     <ThemeSwitch
       ref="themeSwitch"
       v-model="currentTheme"
-      class="hover:outline-blue-300 dark:hover:outline-blue-950 focus:outline-blue-600 hover:focus:outline-blue-600 dark:focus:outline-blue-900 dark:hover:focus:outline-blue-900"
+      class="hover:outline-blue-300 focus:outline-blue-600 hover:focus:outline-blue-600 dark:hover:outline-blue-950 dark:focus:outline-blue-900 dark:hover:focus:outline-blue-900"
       size="small"
     />
   </div>

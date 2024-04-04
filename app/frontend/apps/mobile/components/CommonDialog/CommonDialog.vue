@@ -112,7 +112,7 @@ export default {
       :class="{ 'transition-all duration-200 ease-linear': !isSwiping }"
       :style="{ transform: `translateY(${top})` }"
     >
-      <div class="mx-4 h-2.5 shrink-0 rounded-t-xl bg-gray-150/40" />
+      <div class="bg-gray-150/40 mx-4 h-2.5 shrink-0 rounded-t-xl" />
       <div
         class="relative flex h-16 shrink-0 select-none items-center justify-center rounded-t-xl bg-gray-600/80"
       >

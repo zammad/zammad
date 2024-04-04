@@ -10,7 +10,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div class="border-b border-gray-300 last:border-0 px-3 first:pt-1 last:pb-1">
+  <div class="border-b border-gray-300 px-3 first:pt-1 last:border-0 last:pb-1">
     <section :aria-label="$t(label)" class="min-h-[54px] py-2">
       <div class="text-xs text-white/80">{{ $t(label) }}</div>
       <slot>{{ body }}</slot>

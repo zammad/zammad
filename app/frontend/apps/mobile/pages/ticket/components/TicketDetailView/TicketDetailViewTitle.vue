@@ -55,7 +55,7 @@ const customer = computed(() => {
         </div>
         <div
           class="overflow-hidden ltr:mr-1 rtl:ml-1"
-          :class="{ 'rtl:-mr-1 ltr:-ml-1': ticket.organization }"
+          :class="{ 'ltr:-ml-1 rtl:-mr-1': ticket.organization }"
         >
           <div class="flex text-sm leading-4 text-gray-100">
             <div

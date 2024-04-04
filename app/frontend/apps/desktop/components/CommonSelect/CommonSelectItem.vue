@@ -48,7 +48,7 @@ const label = computed(() => {
     :tabindex="option.disabled ? '-1' : '0'"
     :aria-selected="selected"
     :aria-disabled="option.disabled ? 'true' : undefined"
-    class="group h-9 px-2.5 flex cursor-pointer items-center self-stretch gap-1.5 text-sm text-black dark:text-white outline-none hover:bg-blue-600 dark:hover:bg-blue-900 focus:bg-blue-800 hover:focus:focus:bg-blue-800 focus:text-white"
+    class="group flex h-9 cursor-pointer items-center gap-1.5 self-stretch px-2.5 text-sm text-black outline-none hover:bg-blue-600 focus:bg-blue-800 focus:text-white hover:focus:focus:bg-blue-800 dark:text-white dark:hover:bg-blue-900"
     role="option"
     :data-value="option.value"
     @click="select(option)"
@@ -58,7 +58,7 @@ const label = computed(() => {
     <CommonIcon
       v-if="multiple"
       :class="{
-        'fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white':
+        'fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white':
           !option.disabled,
         'fill-stone-200 dark:fill-neutral-500': option.disabled,
       }"
@@ -75,7 +75,7 @@ const label = computed(() => {
         'fill-stone-200 dark:fill-neutral-500': option.disabled,
       }"
       decorative
-      class="shrink-0 fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0 fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white"
     />
     <span
       v-if="filter"
@@ -98,7 +98,7 @@ const label = computed(() => {
     </span>
     <CommonIcon
       v-if="!multiple"
-      class="shrink-0 fill-stone-200 dark:fill-neutral-500 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0 fill-stone-200 group-hover:fill-black group-focus:fill-white dark:fill-neutral-500 dark:group-hover:fill-white"
       :class="{
         invisible: !selected,
         'fill-gray-100 dark:fill-neutral-400': option.disabled,

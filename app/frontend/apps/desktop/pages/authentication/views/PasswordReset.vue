@@ -96,7 +96,7 @@ const goToLogin = () => {
       @submit="resetPassword($event as FormSubmitData<FormValues>)"
     />
     <section v-else>
-      <CommonLabel class="text-center mb-5">
+      <CommonLabel class="mb-5 text-center">
         {{ $t('Password reset instructions were sent to your email address.') }}
       </CommonLabel>
       <CommonLabel class="text-center">

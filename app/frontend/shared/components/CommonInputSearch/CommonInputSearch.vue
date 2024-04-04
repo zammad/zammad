@@ -52,7 +52,7 @@ export default {
     :class="wrapperClass"
   >
     <CommonIcon
-      class="absolute shrink-0 text-gray ltr:left-2 rtl:right-2"
+      class="text-gray absolute shrink-0 ltr:left-2 rtl:right-2"
       size="base"
       name="search"
       decorative
@@ -62,7 +62,7 @@ export default {
       v-model="filter"
       v-bind="$attrs"
       :placeholder="i18n.t(placeholder)"
-      class="h-12 w-full grow rounded-xl bg-gray-500 px-9 text-base placeholder:text-gray focus:shadow-none focus:outline-none focus:ring-0"
+      class="placeholder:text-gray h-12 w-full grow rounded-xl bg-gray-500 px-9 text-base focus:shadow-none focus:outline-none focus:ring-0"
       :class="{
         'focus:border-white focus:ring-0': !noBorder,
         'focus:border-transparent': noBorder,

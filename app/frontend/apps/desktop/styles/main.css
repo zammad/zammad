@@ -60,7 +60,7 @@
   }
 
   .required::after {
-    @apply inline-block font-extrabold content-['•'] ltr:ml-1 rtl:mr-1 text-yellow-600;
+    @apply inline-block font-extrabold text-yellow-600 content-['•'] ltr:ml-1 rtl:mr-1;
   }
 
   /* Compatibility layer for object attributes and form columns. */
@@ -81,6 +81,6 @@
 
 @layer utilities {
   .group-block {
-    @apply p-5 bg-white dark:bg-gray-500 text-black dark:text-white rounded-3xl;
+    @apply rounded-3xl bg-white p-5 text-black dark:bg-gray-500 dark:text-white;
   }
 }

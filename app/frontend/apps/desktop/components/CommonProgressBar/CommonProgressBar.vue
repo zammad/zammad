@@ -15,10 +15,10 @@ const props = defineProps<Props>()
 
 <style scoped>
 .progress {
-  @apply rounded-box bg-blue-200 dark:bg-gray-700 h-2;
+  @apply rounded-box h-2 bg-blue-200 dark:bg-gray-700;
 
   &::-moz-progress-bar {
-    @apply bg-blue-800 rounded-none;
+    @apply rounded-none bg-blue-800;
   }
 
   &::-webkit-progress-bar {
@@ -26,7 +26,7 @@ const props = defineProps<Props>()
   }
 
   &::-webkit-progress-value {
-    @apply bg-blue-800 rounded-none;
+    @apply rounded-none bg-blue-800;
 
     transition: width 1s;
   }

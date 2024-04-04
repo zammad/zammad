@@ -291,14 +291,14 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
         :id="id"
         ref="popoverElement"
         role="region"
-        class="popover fixed z-50 min-h-9 flex antialiased rounded-xl border border-neutral-100 dark:border-gray-900 bg-white dark:bg-gray-500"
+        class="popover fixed z-50 flex min-h-9 rounded-xl border border-neutral-100 bg-white antialiased dark:border-gray-900 dark:bg-gray-500"
         :style="popoverStyle"
         :aria-labelledby="owner?.id"
       >
         <div class="overflow-y-auto"><slot /></div>
         <div
           v-if="!hideArrow"
-          class="absolute -z-10 w-[22px] h-[22px] -rotate-45 bg-white dark:bg-gray-500 transform border border-neutral-100 dark:border-gray-900"
+          class="absolute -z-10 h-[22px] w-[22px] -rotate-45 transform border border-neutral-100 bg-white dark:border-gray-900 dark:bg-gray-500"
           :class="arrowPlacementClasses"
         />
       </div>

@@ -133,7 +133,7 @@ const popupItems = computed(() =>
     v-if="hasError"
     v-bind="$attrs"
     type="button"
-    class="inline-flex h-7 grow items-center gap-1 rounded-lg bg-yellow px-2 py-1 text-xs font-bold text-black"
+    class="bg-yellow inline-flex h-7 grow items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold text-black"
     @click.prevent="showPopup = !showPopup"
     @keydown.space.prevent="showPopup = !showPopup"
   >
@@ -170,7 +170,7 @@ const popupItems = computed(() =>
       >
         <div
           v-if="hasError"
-          class="flex w-full items-center justify-center gap-1 text-yellow"
+          class="text-yellow flex w-full items-center justify-center gap-1"
         >
           <CommonIcon :name="securityIcon" size="tiny" />
           {{ $t('Security Error') }}

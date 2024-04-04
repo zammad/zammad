@@ -55,13 +55,13 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
 <template>
   <div
     :class="{
-      'hover:bg-blue-600 dark:hover:bg-blue-900 focus:bg-blue-800 dark:hover:focus:bg-blue-800 focus:text-white cursor-pointer':
+      'cursor-pointer hover:bg-blue-600 focus:bg-blue-800 focus:text-white dark:hover:bg-blue-900 dark:hover:focus:bg-blue-800':
         !option.disabled,
     }"
     :tabindex="option.disabled ? '-1' : '0'"
     :aria-selected="selected"
     :aria-disabled="option.disabled ? 'true' : undefined"
-    class="group h-9 px-2.5 flex items-center self-stretch gap-1.5 text-sm text-black dark:text-white outline-none"
+    class="group flex h-9 items-center gap-1.5 self-stretch px-2.5 text-sm text-black outline-none dark:text-white"
     role="option"
     :data-value="option.value"
     @click="select(option)"
@@ -71,7 +71,7 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     <CommonIcon
       v-if="multiple"
       :class="{
-        'fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white':
+        'fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white':
           !option.disabled,
         'fill-stone-200 dark:fill-neutral-500': option.disabled,
       }"
@@ -88,12 +88,12 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
         'fill-stone-200 dark:fill-neutral-500': option.disabled,
       }"
       decorative
-      class="shrink-0 fill-gray-100 dark:fill-neutral-400 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0 fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white"
     />
     <span
       v-if="filter"
       :class="{
-        'text-stone-200 dark:text-neutral-500 pointer-events-none':
+        'pointer-events-none text-stone-200 dark:text-neutral-500':
           option.disabled,
       }"
       class="grow truncate"
@@ -103,7 +103,7 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     <span
       v-else
       :class="{
-        'text-stone-200 dark:text-neutral-500 pointer-events-none':
+        'pointer-events-none text-stone-200 dark:text-neutral-500':
           option.disabled,
       }"
       :title="label"
@@ -113,7 +113,7 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     </span>
     <CommonIcon
       v-if="!multiple"
-      class="shrink-0 fill-stone-200 dark:fill-neutral-500 group-hover:fill-black dark:group-hover:fill-white group-focus:fill-white"
+      class="shrink-0 fill-stone-200 group-hover:fill-black group-focus:fill-white dark:fill-neutral-500 dark:group-hover:fill-white"
       :class="{
         invisible: !selected,
         'fill-gray-100 dark:fill-neutral-400': option.disabled,
@@ -124,7 +124,7 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     />
     <div
       v-if="option.hasChildren && !filter"
-      class="group/nav shrink-0 p-2.5 -me-2 flex-nowrap items-center justify-center gap-x-2.5 rounded-[5px] hover:bg-blue-800 group-focus:hover:bg-blue-600 dark:group-focus:hover:bg-blue-900"
+      class="group/nav -me-2 shrink-0 flex-nowrap items-center justify-center gap-x-2.5 rounded-[5px] p-2.5 hover:bg-blue-800 group-focus:hover:bg-blue-600 dark:group-focus:hover:bg-blue-900"
       :aria-label="$t('Has submenu')"
       role="button"
       tabindex="-1"
@@ -134,10 +134,10 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     >
       <CommonIcon
         :class="{
-          'group-hover:fill-black dark:group-hover:fill-white group-focus:group-hover/nav:!fill-black dark:group-focus:group-hover/nav:!fill-white group-focus:fill-white':
+          'group-hover:fill-black group-focus:fill-white group-focus:group-hover/nav:!fill-black dark:group-hover:fill-white dark:group-focus:group-hover/nav:!fill-white':
             !option.disabled,
         }"
-        class="shrink-0 fill-stone-200 dark:fill-neutral-500 group-hover/nav:!fill-white"
+        class="shrink-0 fill-stone-200 group-hover/nav:!fill-white dark:fill-neutral-500"
         :name="
           locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'
         "

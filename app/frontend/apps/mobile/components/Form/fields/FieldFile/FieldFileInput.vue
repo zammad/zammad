@@ -231,7 +231,7 @@ useTraverseOptions(filesContainer, {
   </div>
   <button
     v-if="!reachedUploadLimit"
-    class="flex w-full items-center justify-center gap-1 p-4 text-blue"
+    class="text-blue flex w-full items-center justify-center gap-1 p-4"
     type="button"
     tabindex="0"
     :class="{

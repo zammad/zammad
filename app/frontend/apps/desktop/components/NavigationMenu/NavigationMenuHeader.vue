@@ -21,12 +21,12 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <header
-    class="flex cursor-default group/heading justify-between px-0 text-base font-normal leading-5 text-stone-200 dark:text-neutral-500 active:text-stone-200 dark:active:text-neutral-500"
+    class="group/heading flex cursor-default justify-between px-0 text-base font-normal leading-5 text-stone-200 active:text-stone-200 dark:text-neutral-500 dark:active:text-neutral-500"
     :class="{ 'cursor-pointer': collapsible }"
     @click="collapsible && $emit('toggle-collapsed', title)"
   >
     <slot name="title">
-      <h4 class="grow text-base rtl:ml-auto ltr:mr-auto">
+      <h4 class="grow text-base ltr:mr-auto rtl:ml-auto">
         {{ $t(title) }}
       </h4>
     </slot>
@@ -35,7 +35,7 @@ withDefaults(defineProps<Props>(), {
       :is-collapsed="collapsed"
       :owner-id="id"
       group="heading"
-      class="rtl:order-1 mt-0.5"
+      class="mt-0.5 rtl:order-1"
       orientation="vertical"
     />
   </header>

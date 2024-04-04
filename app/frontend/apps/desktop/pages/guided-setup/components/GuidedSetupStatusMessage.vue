@@ -11,10 +11,10 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div class="text-center mt-1">
+  <div class="mt-1 text-center">
     <CommonLabel v-if="message">
       {{ $t(message) }}
     </CommonLabel>
-    <CommonLoader class="mt-5 mb-3" loading />
+    <CommonLoader class="mb-3 mt-5" loading />
   </div>
 </template>

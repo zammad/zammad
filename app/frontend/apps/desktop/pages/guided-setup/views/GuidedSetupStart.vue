@@ -50,7 +50,7 @@ const startSetup = (type: EnumSystemSetupInfoType) => {
     >
 
     <template v-if="!systemSetupInfoStore.systemSetupAlreadyStarted">
-      <div class="text-center mb-14 mt-10">
+      <div class="mb-14 mt-10 text-center">
         <CommonButton
           type="submit"
           variant="primary"

@@ -81,7 +81,7 @@ const ariaChecked = computed(() => {
   <button
     type="button"
     role="checkbox"
-    class="relative inline-flex items-center flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out -:bg-stone-200 dark:-:bg-gray-500 ring-1 ring-neutral-100 dark:ring-gray-900 hover:outline hover:outline-1 hover:outline-offset-2 hover:-:outline-blue-600 dark:hover:-:outline-blue-900 focus:outline focus:outline-1 focus:outline-offset-2 focus:-:outline-blue-800 hover:focus:-:outline-blue-800 dark:hover:focus:-:outline-blue-800"
+    class="-:bg-stone-200 dark:-:bg-gray-500 hover:-:outline-blue-600 dark:hover:-:outline-blue-900 focus:-:outline-blue-800 hover:focus:-:outline-blue-800 dark:hover:focus:-:outline-blue-800 relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full ring-1 ring-neutral-100 transition-colors duration-200 ease-in-out hover:outline hover:outline-1 hover:outline-offset-2 focus:outline focus:outline-1 focus:outline-offset-2 dark:ring-gray-900"
     :class="[
       trackSizeClasses,
       {
@@ -96,7 +96,7 @@ const ariaChecked = computed(() => {
     @keydown.space="updateLocalValue"
   >
     <div
-      class="flex items-center justify-center -:bg-white -:text-black pointer-events-none transform rounded-full transition duration-200 ease-in-out"
+      class="-:bg-white -:text-black pointer-events-none flex transform items-center justify-center rounded-full transition duration-200 ease-in-out"
       :class="[
         knobSizeClasses,
         knobTranslateClasses,

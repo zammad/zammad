@@ -48,7 +48,7 @@ const icon = computed(() => {
       v-if="draggable"
       name="change-order"
       size="small"
-      class="handler shrink-0 cursor-move text-gray ltr:mr-4 rtl:ml-4"
+      class="handler text-gray shrink-0 cursor-move ltr:mr-4 rtl:ml-4"
     />
   </div>
 </template>

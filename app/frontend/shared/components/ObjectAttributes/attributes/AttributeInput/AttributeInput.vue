@@ -38,7 +38,7 @@ const link = computed(() => {
   <span v-if="!link">{{ title }}</span>
   <CommonLink
     v-else
-    class="cursor-pointer text-blue"
+    class="text-blue cursor-pointer"
     :external="attribute.dataOption.type !== 'url'"
     open-in-new-tab
     :link="link"

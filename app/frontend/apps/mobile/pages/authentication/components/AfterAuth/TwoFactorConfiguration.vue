@@ -14,7 +14,7 @@ const { forceDesktop } = useForceDesktop()
 </script>
 
 <template>
-  <div class="my-1 rounded-xl bg-red px-4 py-2 text-center text-white">
+  <div class="bg-red my-1 rounded-xl px-4 py-2 text-center text-white">
     <p>{{ $t('The two-factor authentication is not configured yet.') }}</p>
     <CommonLink link="/#" class="text-white underline" @click="forceDesktop">
       {{ $t('Click here to set up a two-factor authentication method.') }}

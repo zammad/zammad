@@ -81,7 +81,7 @@
   }
 
   .required::after {
-    @apply inline-block font-extrabold content-['•'] ltr:ml-1 rtl:mr-1 text-yellow;
+    @apply text-yellow inline-block font-extrabold content-['•'] ltr:ml-1 rtl:mr-1;
   }
 
   .form-group {

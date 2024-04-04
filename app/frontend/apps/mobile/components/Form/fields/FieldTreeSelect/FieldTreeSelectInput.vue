@@ -168,7 +168,7 @@ setupMissingOrDisabledOptionHandling()
       ref="outputElement"
       role="combobox"
       :name="context.node.name"
-      class="flex grow items-center focus:outline-none formkit-disabled:pointer-events-none"
+      class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-none"
       :tabindex="context.disabled ? '-1' : '0'"
       :aria-labelledby="`label-${context.id}`"
       :aria-disabled="context.disabled ? 'true' : undefined"
@@ -216,7 +216,7 @@ setupMissingOrDisabledOptionHandling()
       <CommonIcon
         v-if="context.clearable && hasValue && !context.disabled"
         :label="__('Clear Selection')"
-        class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
+        class="text-gray absolute -mt-5 shrink-0 ltr:right-2 rtl:left-2"
         name="close-small"
         size="base"
         role="button"

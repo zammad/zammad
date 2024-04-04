@@ -42,7 +42,7 @@ const emit = defineEmits<{
     </div>
   </section>
 
-  <div class="mt-8 text-sm text-center">
+  <div class="mt-8 text-center text-sm">
     <CommonLink
       v-if="recoveryCodesAvailable"
       link="#"

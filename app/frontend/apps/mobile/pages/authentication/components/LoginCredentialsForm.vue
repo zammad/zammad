@@ -139,7 +139,7 @@ const sendCredentials = (formData: FormSubmitData<LoginCredentials>) => {
         <span class="ltr:mr-1 rtl:ml-1">{{ $t('New user?') }}</span>
         <CommonLink
           link="/#signup"
-          class="cursor-pointer select-none !text-yellow underline"
+          class="!text-yellow cursor-pointer select-none underline"
           @click="forceDesktop"
         >
           {{ $t('Register') }}

@@ -79,7 +79,7 @@ const onFileClick = (event: Event) => {
 
 <template>
   <div
-    class="mb-2 flex w-full items-center gap-2 rounded-2xl border-[0.5px] p-3 outline-none last:mb-0 focus-within:bg-blue-highlight"
+    class="focus-within:bg-blue-highlight mb-2 flex w-full items-center gap-2 rounded-2xl border-[0.5px] p-3 outline-none last:mb-0"
     :class="wrapperClass"
   >
     <Component

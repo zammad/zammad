@@ -37,7 +37,7 @@ const selectOption = (option: RadioListOption, event?: Event) => {
 <template>
   <output
     :id="context.id"
-    class="flex flex-col items-start bg-blue-200 dark:bg-gray-700 rounded-lg focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800"
+    class="flex flex-col items-start rounded-lg bg-blue-200 focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800 dark:bg-gray-700"
     role="list"
     :class="context.classes.input"
     :name="context.node.name"
@@ -49,7 +49,7 @@ const selectOption = (option: RadioListOption, event?: Event) => {
     <div
       v-for="option in context.options"
       :key="`option-${option.value}`"
-      class="cursor-pointer group inline-flex gap-2.5 px-3 py-2.5"
+      class="group inline-flex cursor-pointer gap-2.5 px-3 py-2.5"
       role="option"
       :aria-disabled="context.disabled"
       :aria-checked="option.value == localValue"
@@ -59,7 +59,7 @@ const selectOption = (option: RadioListOption, event?: Event) => {
       <CommonIcon
         :id="`radio_list_radio_${context.id}_${option.value}`"
         size="small"
-        class="shrink-0 self-start rounded-full group-hover:outline group-hover:outline-1 group-hover:-outline-offset-1 group-hover:outline-blue-600 dark:group-hover:outline-blue-900 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-blue-800 group-hover:focus:outline-blue-800 dark:group-hover:focus:outline-blue-800 formkit-disabled:pointer-events-none formkit-invalid:outline-red-500 dark:hover:formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 dark:hover:formkit-errors:outline-red-500"
+        class="formkit-disabled:pointer-events-none formkit-invalid:outline-red-500 dark:hover:formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 dark:hover:formkit-errors:outline-red-500 shrink-0 self-start rounded-full focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-blue-800 group-hover:outline group-hover:outline-1 group-hover:-outline-offset-1 group-hover:outline-blue-600 group-hover:focus:outline-blue-800 dark:group-hover:outline-blue-900 dark:group-hover:focus:outline-blue-800"
         :tabindex="context.disabled ? '-1' : '0'"
         :name="option.value == localValue ? 'radio-yes' : 'radio-no'"
         @keydown.space.prevent="selectOption(option)"

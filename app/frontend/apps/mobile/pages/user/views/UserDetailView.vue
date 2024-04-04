@@ -109,7 +109,7 @@ const secondaryOrganizations = computed(() =>
         v-if="user.organization"
         data-test-id="organization-link"
         :link="`/organizations/${user.organization.internalId}`"
-        class="text-center text-base text-blue"
+        class="text-blue text-center text-base"
       >
         {{ user.organization.name }}
       </CommonLink>

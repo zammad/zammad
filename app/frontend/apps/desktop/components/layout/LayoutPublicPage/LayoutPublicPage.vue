@@ -32,16 +32,16 @@ const hoverPoweredByLogo = ref(false)
 
 <template>
   <div
-    class="min-h-screen flex flex-col items-center bg-neutral-950 text-stone-200 dark:text-neutral-500"
+    class="flex min-h-screen flex-col items-center bg-neutral-950 text-stone-200 dark:text-neutral-500"
   >
-    <div :class="boxSizeClass" class="w-full m-auto">
+    <div :class="boxSizeClass" class="m-auto w-full">
       <main
-        class="flex flex-col gap-2.5 p-5 bg-white dark:bg-gray-500 text-black dark:text-white rounded-3xl"
+        class="flex flex-col gap-2.5 rounded-3xl bg-white p-5 text-black dark:bg-gray-500 dark:text-white"
       >
         <div v-if="showLogo" class="flex justify-center">
           <CommonLogo />
         </div>
-        <h1 v-if="title" class="mb-5 text-xl text-center">
+        <h1 v-if="title" class="mb-5 text-center text-xl">
           {{ $t(title) }}
         </h1>
         <slot />
@@ -54,7 +54,7 @@ const hoverPoweredByLogo = ref(false)
       <section
         v-if="$slots.bottomContent"
         :aria-label="$t('Additional information and links')"
-        class="flex flex-col space-y-3 w-full items-center justify-center py-3 align-middle text-xs"
+        class="flex w-full flex-col items-center justify-center space-y-3 py-3 align-middle text-xs"
       >
         <slot name="bottomContent" />
       </section>
@@ -67,7 +67,7 @@ const hoverPoweredByLogo = ref(false)
           link="https://zammad.org"
           open-in-new-tab
           external
-          class="text-neutral-500 flex items-center gap-1"
+          class="flex items-center gap-1 text-neutral-500"
           @mouseover="hoverPoweredByLogo = true"
           @mouseleave="hoverPoweredByLogo = false"
         >

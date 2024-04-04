@@ -160,9 +160,9 @@ const goToLogin = () => {
 
     <template #bottomContent>
       <div
-        class="p-2 inline-flex items-center justify-center flex-wrap text-sm"
+        class="inline-flex flex-wrap items-center justify-center p-2 text-sm"
       >
-        <CommonLabel class="text-stone-200 dark:text-neutral-500 text-center">
+        <CommonLabel class="text-center text-stone-200 dark:text-neutral-500">
           {{
             $t(
               "You're already registered with your email address if you've been in touch with our Support team.",

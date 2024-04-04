@@ -21,7 +21,7 @@ const router = useRouter()
   <div class="py-2 pt-14">
     <CommonLabel
       v-if="!iconOnly"
-      class="px-2 mb-2 text-neutral-500"
+      class="mb-2 px-2 text-neutral-500"
       size="small"
     >
       {{ $t('Navigation') }}
@@ -47,7 +47,7 @@ const router = useRouter()
           />
           <CommonLink
             v-else
-            class="px-2 py-3 grow hover:no-underline flex gap-2 text-neutral-400 hover:text-white hover:bg-blue-900 rounded-md"
+            class="flex grow gap-2 rounded-md px-2 py-3 text-neutral-400 hover:bg-blue-900 hover:text-white hover:no-underline"
             :link="route.path"
             exact-active-class="!bg-blue-800 w-full !text-white"
             internal

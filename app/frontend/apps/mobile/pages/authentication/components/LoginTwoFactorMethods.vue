@@ -29,7 +29,7 @@ const emit = defineEmits<{
   </CommonSectionMenu>
   <button
     v-if="recoveryCodesAvailable"
-    class="mb-6 w-full max-w-md text-center font-semibold text-gray"
+    class="text-gray mb-6 w-full max-w-md text-center font-semibold"
     @click="emit('use-recovery-code')"
   >
     {{ $t('Or use one of your recovery codes.') }}

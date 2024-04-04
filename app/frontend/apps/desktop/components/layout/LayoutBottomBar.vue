@@ -4,7 +4,7 @@
 
 <template>
   <footer
-    class="bg-white dark:bg-gray-500 border-t border-t-neutral-100 dark:border-t-gray-900 sticky w-full h-14 p-5 flex flex-row gap-4 items-center place-content-end"
+    class="sticky flex h-14 w-full flex-row place-content-end items-center gap-4 border-t border-t-neutral-100 bg-white p-5 dark:border-t-gray-900 dark:bg-gray-500"
   >
     <slot />
   </footer>

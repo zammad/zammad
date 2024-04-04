@@ -11,6 +11,6 @@ const session = useSessionStore()
   <LayoutMain>
     Hello, {{ session.user?.fullname }}!
     <!-- TODO: content -->
-    <div class="h-20 bg-test">TEST</div>
+    <div class="bg-test h-20">TEST</div>
   </LayoutMain>
 </template>

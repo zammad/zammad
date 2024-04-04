@@ -407,7 +407,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
         v-if="showDropdown"
         id="field-tree-select-input-dropdown"
         ref="dropdownElement"
-        class="fixed z-10 min-h-9 flex antialiased"
+        class="fixed z-10 flex min-h-9 antialiased"
         :style="dropdownStyle"
       >
         <div
@@ -419,7 +419,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
           }"
         >
           <div
-            class="h-full flex flex-col items-start bg-white dark:bg-gray-500 border-x border-neutral-100 dark:border-gray-900"
+            class="flex h-full flex-col items-start border-x border-neutral-100 bg-white dark:border-gray-900 dark:bg-gray-500"
             :class="{
               'rounded-t-lg border-t': hasDirectionUp,
               'rounded-b-lg border-b': !hasDirectionUp,
@@ -429,11 +429,11 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
               v-if="
                 currentPath.length || (multiple && hasMoreSelectableOptions)
               "
-              class="w-full px-2.5 py-1.5 flex justify-between gap-2"
+              class="flex w-full justify-between gap-2 px-2.5 py-1.5"
             >
               <CommonLabel
                 v-if="currentPath.length"
-                class="text-blue-800 dark:text-blue-800 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+                class="text-blue-800 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800"
                 :prefix-icon="
                   locale.localeData?.dir === 'rtl'
                     ? 'chevron-right'
@@ -450,7 +450,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
               </CommonLabel>
               <CommonLabel
                 v-if="multiple && hasMoreSelectableOptions"
-                class="ms-auto text-blue-800 dark:text-blue-800 focus-visible:outline focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+                class="ms-auto text-blue-800 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800"
                 prefix-icon="check-all"
                 role="button"
                 tabindex="2"

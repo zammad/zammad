@@ -85,20 +85,20 @@ const allFilteredEntries = computed<NavigationMenuEntry[]>(() => {
   />
   <CommonLabel
     v-else-if="allFilteredEntries.length == 0"
-    class="text-stone-200 dark:text-neutral-500 px-2 py-1"
+    class="px-2 py-1 text-stone-200 dark:text-neutral-500"
     >{{ __('No results found') }}</CommonLabel
   >
   <ul v-else>
     <li
       v-for="category in categories"
       :key="category.label"
-      class="mb-4 bg-neutral-00 relative z-0"
+      class="bg-neutral-00 relative z-0 mb-4"
       :class="{ 'overflow-clip': collapsedCategories.has(category.label) }"
     >
       <template v-if="permittedEntries[category.label].length > 0">
         <NavigationMenuHeader
           :id="category.id"
-          class="px-2 mb-1"
+          class="mb-1 px-2"
           :collapsed="collapsedCategories.has(category.label)"
           :title="category.label"
           :icon="category.icon"

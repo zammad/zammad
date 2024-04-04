@@ -55,7 +55,7 @@ const parentGroupClass = computed(() => {
   <div>
     <CommonButton
       :class="[
-        { 'transition-opacity opacity-0': !isTouchDevice && parentGroupClass },
+        { 'opacity-0 transition-opacity': !isTouchDevice && parentGroupClass },
         'focus:opacity-100',
         parentGroupClass,
       ]"

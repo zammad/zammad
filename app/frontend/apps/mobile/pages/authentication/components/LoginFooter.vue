@@ -8,7 +8,7 @@ const application = useApplicationStore()
 
 <template>
   <footer
-    class="mt-8 flex w-full max-w-md items-center justify-center border-t border-gray-600 py-2.5 align-middle font-medium leading-4 text-gray"
+    class="text-gray mt-8 flex w-full max-w-md items-center justify-center border-t border-gray-600 py-2.5 align-middle font-medium leading-4"
   >
     <CommonLink
       v-if="application.hasCustomProductBranding"

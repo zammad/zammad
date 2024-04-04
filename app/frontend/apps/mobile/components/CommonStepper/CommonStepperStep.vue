@@ -32,7 +32,7 @@ const classes = computed(() => {
       role="status"
       :aria-label="$t('Invalid values in step %s', label)"
       aria-live="assertive"
-      class="absolute mb-3 h-4 min-w-[1rem] rounded-full bg-red px-1 text-center text-xs text-black ltr:ml-6 rtl:mr-6"
+      class="bg-red absolute mb-3 h-4 min-w-[1rem] rounded-full px-1 text-center text-xs text-black ltr:ml-6 rtl:mr-6"
     >
       {{ errorCount }}
     </div>

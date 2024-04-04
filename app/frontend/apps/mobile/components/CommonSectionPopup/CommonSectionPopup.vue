@@ -125,7 +125,7 @@ const getClassesByType = (type: PopupItemDescriptor['type']) => {
       <!-- empty @click is needed for https://stackoverflow.com/a/39712411 -->
       <div
         v-if="localState"
-        class="window fixed bottom-0 top-0 flex w-screen flex-col justify-end px-4 text-white pb-safe-4 ltr:left-0 rtl:right-0"
+        class="window pb-safe-4 fixed bottom-0 top-0 flex w-screen flex-col justify-end px-4 text-white ltr:left-0 rtl:right-0"
         :class="{ 'z-20': !zIndex }"
         :style="{ zIndex }"
         data-test-id="popupWindow"

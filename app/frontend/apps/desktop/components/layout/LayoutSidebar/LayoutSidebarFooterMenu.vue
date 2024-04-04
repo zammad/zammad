@@ -26,7 +26,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
 </script>
 
 <template>
-  <section class="flex flex-row justify-between items-center">
+  <section class="flex flex-row items-center justify-between">
     <CommonPopover
       id="user-menu-popover"
       ref="popover"

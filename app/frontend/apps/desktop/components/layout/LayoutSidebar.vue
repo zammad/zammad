@@ -40,7 +40,7 @@ const { startResizing } = useResizeWidthHandle(emit, resizeHandle)
 <template>
   <aside
     :id="props.id"
-    class="group/sidebar p-3 relative h-full flex flex-col -:bg-neutral-950 border-e border-neutral-100 dark:border-gray-900"
+    class="group/sidebar -:bg-neutral-950 relative flex h-full flex-col border-e border-neutral-100 p-3 dark:border-gray-900"
     :class="{
       'px-2': isCollapsed,
     }"
@@ -50,13 +50,13 @@ const { startResizing } = useResizeWidthHandle(emit, resizeHandle)
       :is-collapsed="isCollapsed"
       :owner-id="id"
       group="sidebar"
-      class="absolute top-[49px] rtl:left-0 ltr:right-0 rtl:-translate-x-1/2 ltr:translate-x-1/2 z-10"
+      class="absolute top-[49px] z-10 ltr:right-0 ltr:translate-x-1/2 rtl:left-0 rtl:-translate-x-1/2"
       @toggle-collapse="toggleCollapse"
     />
     <ResizeHandle
       v-if="resizable && !isCollapsed"
       ref="resizeHandle"
-      class="absolute rtl:left-0 ltr:right-0 top-1/2 -translate-y-1/2"
+      class="absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0"
       :aria-label="$t('resize sidebar')"
       @mousedown="startResizing"
       @touchstart="startResizing"

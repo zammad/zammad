@@ -79,7 +79,7 @@ defineExpose({
         </div>
         <div
           v-if="item.keywords"
-          class="rounded border border-solid border-gray-150 px-1 text-sm"
+          class="border-gray-150 rounded border border-solid px-1 text-sm"
         >
           {{ item.keywords }}
         </div>

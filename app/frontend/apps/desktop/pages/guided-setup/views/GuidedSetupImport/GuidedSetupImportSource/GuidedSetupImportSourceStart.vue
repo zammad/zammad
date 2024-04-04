@@ -61,7 +61,7 @@ const startImport = () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 mb-2.5">
+  <div class="mb-2.5 flex flex-col gap-3">
     <CommonLabel
       >{{
         $t(
@@ -91,7 +91,7 @@ const startImport = () => {
       </CommonLabel>
 
       <ul
-        class="text-sm dark:text-neutral-400 text-gray-100 flex flex-col gap-1.5 list-disc ltr:ml-5 rtl:mr-5"
+        class="flex list-disc flex-col gap-1.5 text-sm text-gray-100 ltr:ml-5 rtl:mr-5 dark:text-neutral-400"
       >
         <li v-for="hint in sourcePlugin.preStartHints" :key="hint">
           {{ $t(hint) }}

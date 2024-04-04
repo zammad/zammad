@@ -220,7 +220,7 @@ const goToLogin = () => {
       :key="item.entity"
       class="flex items-end gap-2"
     >
-      <div class="mb-1 grow flex flex-col gap-1">
+      <div class="mb-1 flex grow flex-col gap-1">
         <div class="flex justify-between gap-2">
           <CommonLabel :id="`progress-${item.entity}`">
             {{ $t(item.entityLabel) }}
