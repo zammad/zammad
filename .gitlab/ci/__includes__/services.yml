@@ -101,7 +101,7 @@
     alias: ci-service-proxy
 
   auth:
-    name: $CI_REGISTRY/docker/zammad-auth:develop
+    name: $CI_REGISTRY/docker/zammad-auth:stable
     alias: ci-service-auth
 
   mattermost:
