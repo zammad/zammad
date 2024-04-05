@@ -12,7 +12,7 @@ class Channel < ApplicationModel
   scope :active, -> { where(active: true) }
   scope :in_area, ->(area) { where(area: area) }
 
-  validates_with Validations::EmailAccountUniquenessValidator
+  validates_with Validations::ChannelEmailAccountUniquenessValidator
 
   after_create   :email_address_check
   after_update   :email_address_check

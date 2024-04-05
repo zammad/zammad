@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Validations::EmailAccountUniquenessValidator do
+RSpec.describe Validations::ChannelEmailAccountUniquenessValidator do
   subject(:validator) { described_class.new }
 
   before { Channel.destroy_all }
@@ -53,6 +53,33 @@ RSpec.describe Validations::EmailAccountUniquenessValidator do
         validator.validate(another_channel)
 
         expect(another_channel.errors).to be_blank
+      end
+    end
+
+    # https://github.com/zammad/zammad/issues/5111
+    context 'with multiple identical channels' do
+      let(:duplicate_channel) { create(:google_channel, gmail_user: 'email@example.com') }
+      let(:editable_channel) do
+        build(:google_channel, gmail_user: 'email@example.com')
+          .tap { _1.save!(validate: false) }
+      end
+
+      let(:new_token) { 'new_xoauth2_token' }
+
+      before do
+        duplicate_channel
+
+        allow(ExternalCredential)
+          .to receive(:refresh_token).and_return(access_token: new_token)
+      end
+
+      it 'allows to edit XOauth2 token if identical channel exists' do
+        editable_channel.refresh_xoauth2!(force: true)
+
+        expect(editable_channel.options).to include(
+          inbound:  include(options: include(password: new_token)),
+          outbound: include(options: include(password: new_token)),
+        )
       end
     end
   end
