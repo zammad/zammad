@@ -126,7 +126,7 @@ RSpec.describe Channel, type: :model do
 
   describe 'validations' do
     it 'validates email account uniqueness' do
-      expect_any_instance_of(Validations::EmailAccountUniquenessValidator)
+      expect_any_instance_of(Validations::ChannelEmailAccountUniquenessValidator)
         .to receive(:validate).once
 
       create(:email_channel)

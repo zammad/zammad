@@ -244,6 +244,10 @@ FactoryBot.define do
     end
 
     factory :google_channel do
+      transient do
+        gmail_user { ENV['GMAIL_USER'] }
+      end
+
       area { 'Google::Account' }
       options do
         {
@@ -253,7 +257,7 @@ FactoryBot.define do
               'auth_type'      => 'XOAUTH2',
               'host'           => 'imap.gmail.com',
               'ssl'            => 'ssl',
-              'user'           => ENV['GMAIL_USER'],
+              'user'           => gmail_user,
               'folder'         => '',
               'keep_on_server' => false,
             }
@@ -264,7 +268,7 @@ FactoryBot.define do
               'host'           => 'smtp.gmail.com',
               'port'           => 465,
               'ssl'            => true,
-              'user'           => ENV['GMAIL_USER'],
+              'user'           => gmail_user,
               'authentication' => 'xoauth2',
             }
           },
