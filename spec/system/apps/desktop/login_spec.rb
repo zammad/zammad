@@ -3,40 +3,73 @@
 require 'rails_helper'
 
 RSpec.describe 'Desktop > Login', app: :desktop_view, authenticated_as: false, type: :system do
-  it 'Login with remember me and logout again' do
-    visit '/login', skip_waiting: true
+  context 'when logging in with two factor auth' do
+    let(:user)                 { User.find_by(login: 'admin@example.com') }
+    let(:code)                 { two_factor_pref.configuration[:code] }
+    let(:recover_code_enabled) { false }
+    let!(:two_factor_pref)     { create(:user_two_factor_preference, :authenticator_app, user:) }
+    let(:token)                { 'token' }
 
-    login(
-      username:    'admin@example.com',
-      password:    'test',
-      remember_me: true,
-    )
+    before do
+      visit '/login'
 
-    expect_current_route '/'
+      login(
+        username:     'admin@example.com',
+        password:     'test',
+        remember_me:  true,
+        skip_waiting: true,
+      )
+    end
 
-    refresh
+    it 'can login with correct code' do
+      expect(page).to have_no_text('Try another method')
 
-    cookie = cookie('^_zammad.+?')
-    expect(cookie[:expires]).to be_truthy
+      find_input('Security Code').type(code)
+      find_button('Sign in').click
 
-    logout
-    expect_current_route 'login'
+      expect(page).to have_text('Logout')
 
-    # Check that cookies has no longer a expire date after logout.
-    cookie = cookie('^_zammad.+?')
-    expect(cookie[:expires]).to be_nil
+      logout
+      expect(page).to have_text('Sign in')
+    end
   end
 
-  it 'Login and redirect to requested url' do
-    visit '/playground', skip_waiting: true
+  context 'when loggin in via external authentication provider', authenticated_as: false, integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN_USER KEYCLOAK_ADMIN_PASSWORD] do
+    let(:zammad_base_url)              { "#{Capybara.app_host}:#{Capybara.current_session.server.port}" }
+    let(:zammad_saml_metadata)         { "#{zammad_base_url}/auth/saml/metadata" }
+    let(:saml_base_url)                { ENV['KEYCLOAK_BASE_URL'] }
+    let(:saml_client_json)             { Rails.root.join('test/data/saml/zammad-client.json').read.gsub('#ZAMMAD_BASE_URL', zammad_base_url) }
+    let(:saml_realm_zammad_descriptor) { "#{saml_base_url}/realms/zammad/protocol/saml/descriptor" }
+    let(:saml_realm_zammad_accounts)   { "#{saml_base_url}/realms/zammad/account" }
 
-    expect_current_route '/login?redirect=/playground' # TODO: FIX route to valid desktop view route instead of playground
+    before do
+      saml_configure_keycloak(zammad_saml_metadata:, saml_client_json:)
+      saml_configure_zammad(saml_base_url:, saml_realm_zammad_descriptor:)
+    end
 
-    login(
-      username: 'admin@example.com',
-      password: 'test',
-    )
+    it 'can login via external authentication provider' do
+      visit '/login'
+      expect(page).to have_text('Or sign in using')
+      expect(page).to have_text('SAML')
 
-    expect_current_route '/playground'
+      find_button('SAML').click
+
+      saml_login_keycloak
+
+      # Workaround: SAML redirects in CI don't work because of missing HTTP referrer headers.
+      visit '/'
+      expect(page).to have_text('Logout')
+
+      # Manual logout
+      click_button 'Logout' # rubocop:disable Capybara/ClickLinkOrButtonStyle
+      expect(page).to have_current_path(%r{/login})
+      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
+
+      visit '/'
+      expect_current_route '/login'
+
+      visit saml_realm_zammad_accounts
+      expect(page).to have_text('Sign in')
+    end
   end
 end

@@ -373,7 +373,7 @@ RSpec/DescribeMethod:
 RSpec/NestedGroups:
   Max: 6
 
-RSpec/Rails/AvoidSetupHook:
+RSpecRails/AvoidSetupHook:
   Exclude:
     - "test/**/*"
 
@@ -388,7 +388,7 @@ RSpec/AnyInstance:
 RSpec/SubjectStub:
   Enabled: false
 
-RSpec/Rails/InferredSpecType:
+RSpecRails/InferredSpecType:
   Description: 'Identifies redundant spec type.'
   Enabled: false  # We use types to add DSL to rspec.
 
