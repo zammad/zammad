@@ -24,7 +24,7 @@ git remote add github "$GITHUB_DEST"
 if [ "$CI_COMMIT_TAG" ]
 then
   # Tag
-  git push github --tags
+  git push github --tags -f
 else
   # Commit
   git checkout "$CI_COMMIT_REF_NAME"

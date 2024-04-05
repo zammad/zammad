@@ -138,6 +138,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ matrix.target.image }}
+          # Don't automatically generate a 'latest' tag for the default branch.
+          #   https://github.com/docker/metadata-action?tab=readme-ov-file#flavor-input
+          flavor: |
+            latest=false
           tags: |
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
             type=raw,value=${{ env.ZAMMAD_VERSION }},enable=${{ github.ref == format('refs/heads/{0}', 'stable') }}
