@@ -2,10 +2,8 @@
 
 <script setup lang="ts">
 import useFormKitConfig from '#shared/composables/form/useFormKitConfig.ts'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonNotifications from '#shared/components/CommonNotifications/CommonNotifications.vue'
 import useAppMaintenanceCheck from '#shared/composables/useAppMaintenanceCheck.ts'
-import { useAppTheme } from '#shared/stores/theme.ts'
 import useAuthenticationChanges from '#shared/composables/authentication/useAuthenticationUpdates.ts'
 import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 import usePushMessages from '#shared/composables/usePushMessages.ts'
@@ -15,8 +13,6 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 import emitter from '#shared/utils/emitter.ts'
 import { onBeforeMount, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
-
-import LayoutSidebar from './components/layout/LayoutSidebar.vue'
 
 const router = useRouter()
 
@@ -72,35 +68,11 @@ emitter.on('sessionInvalid', async () => {
 onBeforeUnmount(() => {
   emitter.off('sessionInvalid')
 })
-
-const appTheme = useAppTheme()
 </script>
 
 <template>
   <template v-if="application.loaded">
     <CommonNotifications />
-    <CommonButton
-      class="fixed top-2 ltr:right-2 rtl:left-2"
-      size="medium"
-      aria-label="Change theme"
-      :icon="appTheme.theme === 'light' ? 'sun' : 'moon'"
-      @click="appTheme.toggleTheme(false)"
-    />
   </template>
-  <!-- TODO: styles are placeholders -->
-  <div v-if="application.loaded" class="flex h-full">
-    <aside
-      v-if="$route.meta.sidebar !== false"
-      class="w-1/5"
-      :aria-label="__('Sidebar')"
-    >
-      <LayoutSidebar />
-    </aside>
-
-    <article
-      class="w-full h-full antialiased bg-white dark:bg-gray-500 text-gray-100 dark:text-neutral-400 overflow-hidden"
-    >
-      <RouterView />
-    </article>
-  </div>
+  <RouterView v-if="application.loaded" />
 </template>

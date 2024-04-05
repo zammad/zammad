@@ -62,6 +62,24 @@ const variantClasses = computed(() => {
         'dark:hover:bg-red-600',
         'text-white',
       ]
+    case 'subtle':
+      return [
+        'btn-ghost',
+        'bg-blue-600',
+        'dark:bg-blue-900',
+        'hover:bg-blue-600',
+        'dark:hover:bg-blue-900',
+        'text-black',
+        'dark:text-white',
+      ]
+    case 'neutral':
+      return [
+        'btn-secondary',
+        'bg-transparent',
+        'hover:bg-transparent',
+        'text-gray-100',
+        'dark:text-neutral-400',
+      ]
     case 'secondary':
     default:
       return [

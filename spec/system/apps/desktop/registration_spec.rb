@@ -31,6 +31,7 @@ RSpec.describe 'Desktop > Registration', app: :desktop_view, authenticated_as: f
     visit notification_url.sub(%r{.*/desktop/}, '')
 
     expect_current_route '/'
-    expect(page).to have_text('Logout')
+
+    wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded')
   end
 end

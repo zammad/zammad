@@ -6,25 +6,28 @@ import { onClickOutside, type UseElementBoundingReturn } from '@vueuse/core'
 import { onKeyUp, useElementBounding, useWindowSize } from '@vueuse/core'
 
 import stopEvent from '#shared/utils/events.ts'
-import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import testFlags from '#shared/utils/testFlags.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import { EnumTextDirection } from '#shared/graphql/types.ts'
 
 import { usePopoverInstances } from './usePopoverInstances.ts'
 import type {
-  ArrowPlacement,
+  Placement,
   CommonPopoverInternalInstance,
-  Oritentation,
+  Orientation,
 } from './types'
 
 export interface Props {
   owner: HTMLElement | undefined
-  orientation?: Oritentation
-  arrowPlacement?: ArrowPlacement
+  orientation?: Orientation
+  placement?: Placement
+  hideArrow?: boolean
+  id?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  arrowPlacement: 'start',
+  placement: 'start',
   orientation: 'autoVertical',
 })
 
@@ -51,6 +54,8 @@ const hasDirectionRight = computed(() => {
   return targetElementBounds.x.value < windowSize.width.value / 2
 })
 
+const locale = useLocaleStore()
+
 const autoOrientation = computed(() => {
   if (props.orientation === 'autoVertical') {
     return hasDirectionUp.value ? 'top' : 'bottom'
@@ -60,6 +65,11 @@ const autoOrientation = computed(() => {
     return hasDirectionRight.value ? 'right' : 'left'
   }
 
+  if (locale.localeData?.dir === EnumTextDirection.Rtl) {
+    if (props.orientation === 'left') return 'right'
+    if (props.orientation === 'right') return 'left'
+  }
+
   return props.orientation
 })
 
@@ -67,20 +77,23 @@ const verticalOrientation = computed(() => {
   return autoOrientation.value === 'top' || autoOrientation.value === 'bottom'
 })
 
-const currentArrowPlacement = computed(() => {
+const currentPlacement = computed(() => {
   if (verticalOrientation.value) {
-    return props.arrowPlacement
+    if (locale.localeData?.dir === EnumTextDirection.Rtl) {
+      if (props.placement === 'start') return 'end'
+      return 'start'
+    }
+    return props.placement
   }
-
-  if (hasDirectionUp.value) {
-    return 'end'
-  }
-
+  if (hasDirectionUp.value) return 'end'
   return 'start'
 })
 
-const OUTSIDE_DISTANCE_ARROW = 28
-const ARROW_HEIGHT = 16
+const BORDER_OFFSET = 2
+const PLACEMENT_OFFSET_WO_ARROW = 16
+const PLACEMENT_OFFSET_WITH_ARROW = 30
+const ORIENTATION_OFFSET_WO_ARROW = 6
+const ORIENTATION_OFFSET_WITH_ARROW = 16
 
 const popoverStyle = computed(() => {
   if (!targetElementBounds) return { top: 0, left: 0, maxHeight: 0 }
@@ -93,44 +106,42 @@ const popoverStyle = computed(() => {
     maxHeight: `${verticalOrientation.value ? maxHeight - 24 : maxHeight + 34}px`,
   }
 
-  const targetElementBoundsOutside =
-    targetElementBounds.width.value / 2 - OUTSIDE_DISTANCE_ARROW
+  const arrowOffset = props.hideArrow
+    ? PLACEMENT_OFFSET_WO_ARROW
+    : PLACEMENT_OFFSET_WITH_ARROW
 
-  if (verticalOrientation.value && currentArrowPlacement.value === 'end') {
-    style.right = `${windowSize.width.value - targetElementBounds.right.value + 10}px`
-  } else if (
-    verticalOrientation.value &&
-    currentArrowPlacement.value === 'start'
-  ) {
-    style.left = `${targetElementBounds.left.value + targetElementBoundsOutside}px`
-  } else if (
-    !verticalOrientation.value &&
-    currentArrowPlacement.value === 'start'
-  ) {
-    style.top = `${targetElementBounds.top.value + targetElementBoundsOutside}px`
-  } else if (
-    !verticalOrientation.value &&
-    currentArrowPlacement.value === 'end'
-  ) {
-    style.bottom = `${windowSize.height.value - targetElementBounds.bottom.value + 10}px`
+  const placementOffset = targetElementBounds.width.value / 2 - arrowOffset
+
+  if (verticalOrientation.value && currentPlacement.value === 'end') {
+    style.right = `${windowSize.width.value - targetElementBounds.right.value + placementOffset - BORDER_OFFSET}px`
+  } else if (verticalOrientation.value && currentPlacement.value === 'start') {
+    style.left = `${targetElementBounds.left.value + placementOffset + BORDER_OFFSET}px`
+  } else if (!verticalOrientation.value && currentPlacement.value === 'start') {
+    style.top = `${targetElementBounds.top.value + placementOffset + BORDER_OFFSET}px`
+  } else if (!verticalOrientation.value && currentPlacement.value === 'end') {
+    style.bottom = `${windowSize.height.value - targetElementBounds.bottom.value + placementOffset - BORDER_OFFSET}px`
   }
+
+  const orientationOffset = props.hideArrow
+    ? ORIENTATION_OFFSET_WO_ARROW
+    : ORIENTATION_OFFSET_WITH_ARROW
 
   switch (autoOrientation.value) {
     case 'top':
-      style.bottom = `${windowSize.height.value - targetElementBounds.top.value + ARROW_HEIGHT}px`
+      style.bottom = `${windowSize.height.value - targetElementBounds.top.value + orientationOffset}px`
       break
     case 'bottom':
       style.top = `${
         targetElementBounds.top.value +
         targetElementBounds.height.value +
-        ARROW_HEIGHT
+        orientationOffset
       }px`
       break
     case 'left':
-      style.right = `${windowSize.width.value - targetElementBounds.left.value + ARROW_HEIGHT}px`
+      style.right = `${windowSize.width.value - targetElementBounds.left.value + orientationOffset}px`
       break
     case 'right':
-      style.left = `${targetElementBounds.right.value + ARROW_HEIGHT}px`
+      style.left = `${targetElementBounds.right.value + orientationOffset}px`
       break
     default:
   }
@@ -175,42 +186,41 @@ const arrowPlacementClasses = computed(() => {
     default:
   }
 
-  if (verticalOrientation.value && currentArrowPlacement.value === 'end') {
+  if (verticalOrientation.value && currentPlacement.value === 'end') {
     // eslint-disable-next-line zammad/zammad-tailwind-ltr
     classes['right-2'] = true
-  } else if (
-    verticalOrientation.value &&
-    currentArrowPlacement.value === 'start'
-  ) {
+  } else if (verticalOrientation.value && currentPlacement.value === 'start') {
     // eslint-disable-next-line zammad/zammad-tailwind-ltr
     classes['left-7'] = true
-  } else if (
-    !verticalOrientation.value &&
-    currentArrowPlacement.value === 'start'
-  ) {
+  } else if (!verticalOrientation.value && currentPlacement.value === 'start') {
     classes['top-7'] = true
-  } else if (
-    !verticalOrientation.value &&
-    currentArrowPlacement.value === 'end'
-  ) {
+  } else if (!verticalOrientation.value && currentPlacement.value === 'end') {
     classes['bottom-2'] = true
   }
 
   return classes
 })
 
-useTrapTab(popoverElement)
+const { moveNextFocusToTrap } = useTrapTab(popoverElement)
 
 const { instances } = usePopoverInstances()
 
-const closePopover = () => {
+const updateOwnerAriaExpandedState = () => {
+  const element = props.owner
+  if (!element) return
+
+  element.ariaExpanded = showPopover.value ? 'true' : 'false'
+}
+
+const closePopover = (isInteractive = false) => {
   if (!showPopover.value) return
 
   showPopover.value = false
   emit('close')
 
   nextTick(() => {
-    props.owner?.focus()
+    if (!isInteractive) props.owner?.focus()
+    updateOwnerAriaExpandedState()
     testFlags.set('common-select.closed')
   })
 }
@@ -227,23 +237,22 @@ const openPopover = () => {
   showPopover.value = true
   emit('open')
 
-  onClickOutside(popoverElement, closePopover, {
+  onClickOutside(popoverElement, () => closePopover(true), {
     ignore: [props.owner],
   })
 
   requestAnimationFrame(() => {
     nextTick(() => {
-      const firstFocusable = getFirstFocusableElement(popoverElement.value)
-      firstFocusable?.focus()
-      firstFocusable?.scrollIntoView({ block: 'nearest' })
+      moveNextFocusToTrap()
+      updateOwnerAriaExpandedState()
       testFlags.set('common-popover.opened')
     })
   })
 }
 
-const togglePopover = () => {
+const togglePopover = (isInteractive = false) => {
   if (showPopover.value) {
-    closePopover()
+    closePopover(isInteractive)
   } else {
     openPopover()
   }
@@ -279,6 +288,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
     <Transition name="fade" :duration="duration">
       <div
         v-if="showPopover"
+        :id="id"
         ref="popoverElement"
         role="region"
         class="popover fixed z-50 min-h-9 flex antialiased rounded-xl border border-neutral-100 dark:border-gray-900 bg-white dark:bg-gray-500"
@@ -287,9 +297,10 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
       >
         <div class="overflow-y-auto"><slot /></div>
         <div
+          v-if="!hideArrow"
           class="absolute -z-10 w-[22px] h-[22px] -rotate-45 bg-white dark:bg-gray-500 transform border border-neutral-100 dark:border-gray-900"
           :class="arrowPlacementClasses"
-        ></div>
+        />
       </div>
     </Transition>
   </Teleport>

@@ -29,9 +29,15 @@ const nextValue = () => {
   return 'dark'
 }
 
+const cycleValue = () => {
+  localValue.value = nextValue()
+}
+
+defineExpose({ cycleValue })
+
 const updateLocalValue = (e: Event) => {
   stopEvent(e)
-  localValue.value = nextValue()
+  cycleValue()
 }
 
 const isSmall = computed(() => props.size === 'small')
@@ -75,7 +81,7 @@ const ariaChecked = computed(() => {
   <button
     type="button"
     role="checkbox"
-    class="relative inline-flex items-center flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out -:bg-stone-200 dark:-:bg-gray-500 ring-1 ring-neutral-100 dark:ring-gray-900 hover:outline hover:outline-1 hover:outline-offset-2 hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline focus:outline-1 focus:outline-offset-2 focus:outline-blue-800 hover:focus:outline-blue-800 dark:hover:focus:outline-blue-800"
+    class="relative inline-flex items-center flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out -:bg-stone-200 dark:-:bg-gray-500 ring-1 ring-neutral-100 dark:ring-gray-900 hover:outline hover:outline-1 hover:outline-offset-2 hover:-:outline-blue-600 dark:hover:-:outline-blue-900 focus:outline focus:outline-1 focus:outline-offset-2 focus:-:outline-blue-800 hover:focus:-:outline-blue-800 dark:hover:focus:-:outline-blue-800"
     :class="[
       trackSizeClasses,
       {

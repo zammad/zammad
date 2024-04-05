@@ -52,8 +52,22 @@ export const useTrapTab = (
     { target: container as Ref<EventTarget> },
   )
 
+  const moveNextFocusToTrap = () => {
+    if (!container.value) return
+
+    const dummyElement = document.createElement('div')
+    dummyElement.tabIndex = 0
+
+    requestAnimationFrame(() => {
+      container.value?.prepend(dummyElement)
+      dummyElement.focus()
+      dummyElement.remove()
+    })
+  }
+
   return {
     activateTabTrap,
     deactivateTabTrap,
+    moveNextFocusToTrap,
   }
 }

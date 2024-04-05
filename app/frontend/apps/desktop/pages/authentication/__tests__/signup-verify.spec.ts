@@ -58,7 +58,7 @@ describe('signup verify view', () => {
     ).toBeInTheDocument()
   })
 
-  it('redirects to home screen when the verification was successful', async () => {
+  it('redirects to dashboard screen when the verification was successful', async () => {
     vi.useFakeTimers()
 
     await visitView('/signup/verify/123')
@@ -69,7 +69,7 @@ describe('signup verify view', () => {
     await vi.waitFor(() => {
       const router = getTestRouter()
       const route = router.currentRoute.value
-      expect(route.name).toBe('Home')
+      expect(route.name).toBe('Dashboard')
     })
   })
 })

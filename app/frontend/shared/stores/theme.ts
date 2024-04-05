@@ -28,6 +28,8 @@ const saveDOMTheme = (theme: AppThemeName) => {
   getRoot().dataset.theme = theme
 }
 
+// TODO: check what is still needed here after real appearance implementation
+// or if we need in general to align the appearance handling in some way.
 export const useAppTheme = defineStore('theme', () => {
   const session = useSessionStore()
 

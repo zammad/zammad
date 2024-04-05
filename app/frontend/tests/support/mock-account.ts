@@ -6,8 +6,8 @@ import { initializePiniaStore } from './components/renderComponent.ts'
 
 export const mockAccount = (mockUser: Partial<UserData>) => {
   initializePiniaStore()
-  const user = useSessionStore()
-  user.user = {
+  const session = useSessionStore()
+  session.user = {
     id: '123',
     internalId: 1,
     objectAttributeValues: [],

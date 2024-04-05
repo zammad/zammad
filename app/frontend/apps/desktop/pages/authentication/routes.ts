@@ -15,7 +15,6 @@ const route: RouteRecordRaw[] = [
       requiredPermission: null,
       redirectToDefaultRoute: true,
       hasOwnLandmarks: true,
-      sidebar: false,
     },
   },
   {
@@ -28,7 +27,6 @@ const route: RouteRecordRaw[] = [
       requiredPermission: null,
       redirectToDefaultRoute: true,
       hasOwnLandmarks: true,
-      sidebar: false,
     },
   },
   {
@@ -39,7 +37,6 @@ const route: RouteRecordRaw[] = [
       requiresAuth: true,
       requiredPermission: null,
       hasOwnLandmarks: true,
-      sidebar: false,
     },
   },
   {
@@ -51,7 +48,6 @@ const route: RouteRecordRaw[] = [
       requiredPermission: null,
       redirectToDefaultRoute: true,
       hasOwnLandmarks: true,
-      sidebar: false,
     },
   },
   {
@@ -64,7 +60,6 @@ const route: RouteRecordRaw[] = [
       requiredPermission: null,
       redirectToDefaultRoute: true,
       hasOwnLandmarks: true,
-      sidebar: false,
     },
   },
   {
@@ -107,7 +102,6 @@ const route: RouteRecordRaw[] = [
       requiredPermission: null,
       redirectToDefaultRoute: true,
       hasOwnLandmarks: true,
-      sidebar: false,
     },
   },
   {
@@ -121,7 +115,6 @@ const route: RouteRecordRaw[] = [
       requiredPermission: null,
       redirectToDefaultRoute: true,
       hasOwnLandmarks: true,
-      sidebar: false,
     },
   },
 ]

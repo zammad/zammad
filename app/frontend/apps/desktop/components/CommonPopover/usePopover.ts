@@ -21,8 +21,8 @@ export const usePopover = (
     popover.value?.closePopover()
   }
 
-  const toggle = () => {
-    popover.value?.togglePopover()
+  const toggle = (isInteractive = false) => {
+    popover.value?.togglePopover(isInteractive)
   }
 
   return {

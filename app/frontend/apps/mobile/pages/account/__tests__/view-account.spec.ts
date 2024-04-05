@@ -12,7 +12,7 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
-import { AccountLocaleDocument } from '../graphql/mutations/locale.api.ts'
+import { AccountLocaleDocument } from '#shared/entities/account/graphql/mutations/locale.api.ts'
 
 const locales: Record<string, LocalesQuery['locales'][number]> = {
   de: {

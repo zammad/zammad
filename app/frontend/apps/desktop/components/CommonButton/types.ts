@@ -7,6 +7,8 @@ export type ButtonVariant =
   | 'submit'
   | 'danger'
   | 'remove'
+  | 'subtle'
+  | 'neutral'
 
 export type ButtonType = 'button' | 'reset' | 'submit'
 export type ButtonSize = 'small' | 'medium' | 'large'

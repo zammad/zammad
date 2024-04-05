@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ref } from 'vue'
+import type { Ref, Component } from 'vue'
 
 import type { RequiredPermission } from '#shared/types/permission.ts'
 
@@ -8,8 +8,8 @@ import { type Props as ItemProps } from './CommonPopoverMenuItem.vue'
 
 export interface CommonPopoverInstance {
   openPopover(): void
-  closePopover(): void
-  togglePopover(): void
+  closePopover(isInteractive?: boolean): void
+  togglePopover(isInteractive?: boolean): void
   isOpen: boolean
 }
 
@@ -18,7 +18,7 @@ export interface CommonPopoverInternalInstance
   isOpen: Ref<boolean>
 }
 
-export type Oritentation =
+export type Orientation =
   | 'top'
   | 'bottom'
   | 'left'
@@ -26,11 +26,14 @@ export type Oritentation =
   | 'autoVertical'
   | 'autoHorizontal'
 
-export type ArrowPlacement = 'start' | 'end'
+export type Placement = 'start' | 'end'
 
 export interface MenuItem extends ItemProps {
   key: string
   permission?: RequiredPermission
-  seperatorTop?: boolean
+  show?: () => boolean
+  separatorTop?: boolean
   onClick?(event: MouseEvent): void
+  noCloseOnClick?: boolean
+  component?: Component
 }

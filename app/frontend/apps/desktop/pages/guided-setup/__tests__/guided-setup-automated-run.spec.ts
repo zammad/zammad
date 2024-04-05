@@ -37,12 +37,6 @@ describe('guided setup automated run', () => {
       expect(view.getByIconName('spinner')).toBeInTheDocument()
 
       expect(
-        view.getByText('Relax, your system is being set up…'),
-      ).toBeInTheDocument()
-
-      await flushPromises()
-
-      expect(
         view.getByText(
           'The system was configured successfully. You are being redirected.',
         ),

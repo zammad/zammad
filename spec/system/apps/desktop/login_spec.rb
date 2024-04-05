@@ -27,9 +27,11 @@ RSpec.describe 'Desktop > Login', app: :desktop_view, authenticated_as: false, t
       find_input('Security Code').type(code)
       find_button('Sign in').click
 
-      expect(page).to have_text('Logout')
+      expect(page).to have_css('[aria-label="User menu"]')
 
-      logout
+      find('[aria-label="User menu"]').click
+      click_on('Sign out')
+
       expect(page).to have_text('Sign in')
     end
   end
@@ -58,10 +60,11 @@ RSpec.describe 'Desktop > Login', app: :desktop_view, authenticated_as: false, t
 
       # Workaround: SAML redirects in CI don't work because of missing HTTP referrer headers.
       visit '/'
-      expect(page).to have_text('Logout')
+      expect(page).to have_css('[aria-label="User menu"]')
 
-      # Manual logout
-      click_button 'Logout' # rubocop:disable Capybara/ClickLinkOrButtonStyle
+      find('[aria-label="User menu"]').click
+      click_on('Sign out')
+
       expect(page).to have_current_path(%r{/login})
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
 

@@ -9,3 +9,42 @@
     opacity: 0;
   }
 }
+
+.fade-move {
+  &-enter-active,
+  &-move,
+  &-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  &-leave-active {
+    position: absolute;
+    top: -100%; /*  Add overflow clip on parent to hide elements */
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+}
+
+.slide {
+  &-enter-active,
+  &-leave-active {
+    transition:
+      transform 0.2s ease,
+      max-height 0.2s ease-out;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    transform: translateY(-5px);
+    max-height: 0; /* Set start value otherwise transition is not working */
+  }
+
+  &-enter-to,
+  &-leave-from {
+    transform: translateY(0);
+    max-height: 100px; /* We need a fix value here to work maybe custom property or via JS */
+  }
+}

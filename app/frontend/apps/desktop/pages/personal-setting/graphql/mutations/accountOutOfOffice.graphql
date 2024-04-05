@@ -1,0 +1,8 @@
+mutation accountOutOfOffice($settings: OutOfOfficeInput!) {
+  accountOutOfOffice(settings: $settings) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

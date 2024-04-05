@@ -79,6 +79,8 @@ const updateLocalValue = (e: Event) => {
   }
 }
 
+const ariaChecked = computed(() => (localValue.value ? 'true' : 'false'))
+
 const buttonSizeClasses = computed(() => {
   if (context.value.size === 'small') return 'w-8 h-5'
 
@@ -117,7 +119,7 @@ const classMap = getToggleClasses()
     ]"
     :aria-labelledby="`label-${context.id}`"
     :aria-disabled="disabled"
-    :aria-checked="localValue"
+    :aria-checked="ariaChecked"
     :tabindex="context.disabled ? '-1' : '0'"
     :v-bind="context.attrs"
     @click="updateLocalValue"

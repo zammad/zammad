@@ -53,8 +53,7 @@ export const routes: Array<RouteRecordRaw> = [
   ...mainRoutes,
   {
     path: '/',
-    name: 'Main',
-    props: true,
+    name: 'LayoutPage',
     component: () => import('#desktop/components/layout/LayoutPage.vue'),
     children: childRoutes,
   },

@@ -19,7 +19,7 @@ RSpec.describe 'Mobile > App Account Page', app: :mobile, type: :system do
         expect(locale).to have_selected_option('English (United States)')
 
         locale.select_option('Dansk')
-        wait_for_gql('apps/mobile/pages/account/graphql/mutations/locale.graphql')
+        wait_for_gql('shared/entities/account/graphql/mutations/locale.graphql')
         agent.reload
         expect(agent.preferences[:locale]).to eq('da')
       end

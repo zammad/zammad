@@ -1,5 +1,10 @@
 # Third Party Icons (`desktop`)
 
+- `assets/speedometer2.svg`
+- `assets/arrow-bar-left.svg`
+- `assets/arrow-bar-right.svg`
+- `assets/arrows-collapse.svg`
+- `assets/arrows-expand.svg`
 - `assets/backspace.svg`
 - `assets/box-arrow-in-right.svg`
 - `assets/box-arrow-up-right.svg`
@@ -21,15 +26,17 @@
 - `assets/exclamation-triangle.svg`
 - `assets/eye-slash.svg`
 - `assets/eye.svg`
+- `assets/filter.svg`
 - `assets/image.svg`
 - `assets/info-circle.svg`
 - `assets/key.svg`
 - `assets/keyboard.svg`
-- `assets/moon.svg`
 - `assets/person-add.svg`
 - `assets/person-gear.svg`
 - `assets/phone.svg`
 - `assets/plus-circle.svg`
+- `assets/radio-no.svg`
+- `assets/radio-yes.svg`
 - `assets/search.svg`
 - `assets/spinner.svg`
 - `assets/square.svg`

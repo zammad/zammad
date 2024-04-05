@@ -7,7 +7,9 @@ import type { RouteRecordRaw } from 'vue-router'
 // import authenticationGuard from '#shared/router/guards/before/authentication.ts'
 // import permissionGuard from '#shared/router/guards/before/permission.ts'
 
-import LayoutTest from './LayoutTest.vue'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import LayoutTestMobileView from './LayoutTestMobileView.vue'
+import LayoutTestDesktopView from './LayoutTestDesktopView.vue'
 import mockApolloClient from '../mock-apollo-client.ts'
 import renderComponent, {
   getTestRouter,
@@ -46,11 +48,10 @@ interface VisitViewOptions extends ExtendedMountingOptions<unknown> {
 
 const isDesktop = getTestAppName() === 'desktop'
 
-// TODO: for desktop app `LayoutTest` should have an abstract header component instead of mobile one
 export const visitView = async (
   href: string,
   // rely on new way to mock apollo in desktop by default
-  options: VisitViewOptions = { mockApollo: !isDesktop },
+  options: VisitViewOptions = { mockApollo: !isDesktop, setLocale: isDesktop },
 ) => {
   const { routes } = isDesktop
     ? await import('#desktop/router/index.ts')
@@ -87,8 +88,13 @@ export const visitView = async (
 
   const view = renderComponent(
     {
-      template: html`<LayoutTest />`,
-      components: { LayoutTest },
+      template: html` <LayoutTest${isDesktop
+        ? 'DesktopView'
+        : 'MobileView'} />`,
+      components: {
+        LayoutTestDesktopView,
+        LayoutTestMobileView,
+      },
     },
     {
       store: true,
@@ -111,6 +117,10 @@ export const visitView = async (
   const router = getTestRouter()
 
   await router.replace(href)
+
+  if (options.setLocale) {
+    await useLocaleStore().setLocale()
+  }
 
   return view
 }

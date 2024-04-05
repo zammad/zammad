@@ -3,6 +3,8 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash-es'
+import type { JsonValue } from 'type-fest'
+
 import { useSessionLazyQuery } from '#shared/graphql/queries/session.api.ts'
 import { useCurrentUserLazyQuery } from '#shared/graphql/queries/currentUser.api.ts'
 import {
@@ -25,6 +27,7 @@ import type {
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 import log from '#shared/utils/log.ts'
+
 import { useLocaleStore } from './locale.ts'
 
 let sessionQuery: QueryHandler<SessionQuery, SessionQueryVariables>
@@ -161,6 +164,14 @@ export const useSessionStore = defineStore(
     //   Use with care.
     const userId = computed(() => user.value?.id || '')
 
+    const setUserPreference = async (key: string, value: JsonValue) => {
+      if (!user.value) return
+
+      user.value.preferences[key] = value
+
+      return user.value
+    }
+
     return {
       id,
       afterAuth,
@@ -171,6 +182,7 @@ export const useSessionStore = defineStore(
       getCurrentUser,
       resetCurrentSession,
       hasPermission: userHasPermission,
+      setUserPreference,
     }
   },
   {

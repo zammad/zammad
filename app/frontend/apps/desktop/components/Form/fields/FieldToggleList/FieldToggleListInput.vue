@@ -65,7 +65,7 @@ const { delegateFocus } = useDelegateFocus(
       v-for="(option, index) in context.options"
       :key="`option-${option.value}`"
       class="flex gap-2.5 items-center px-3 py-2.5"
-      role="option"
+      role="listitem"
     >
       <FormKit
         :id="`toggle_list_toggle_${context.id}_${option.value}`"
@@ -81,8 +81,9 @@ const { delegateFocus } = useDelegateFocus(
         :sections-schema="{
           label: {
             attrs: {
-              class: 'flex flex-col',
+              class: 'flex flex-col cursor-pointer',
               for: `toggle_list_toggle_${context.id}_${option.value}`,
+              tabindex: '-1',
             },
             children: [
               {

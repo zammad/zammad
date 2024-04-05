@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, computed, useSlots } from 'vue'
+import { computed, useSlots } from 'vue'
 
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -9,22 +9,25 @@ import type { CommonPopoverInstance, MenuItem } from './types'
 import CommonPopoverMenuItem from './CommonPopoverMenuItem.vue'
 
 export interface Props {
+  popover: CommonPopoverInstance | undefined
   headerLabel?: string
   items?: MenuItem[]
 }
 
 const props = defineProps<Props>()
 
-const popover = ref<CommonPopoverInstance>()
-
 const session = useSessionStore()
 
-const itemsWithPermission = computed(() => {
+const availableItems = computed(() => {
   if (!props.items || !props.items.length) return null
 
   return props.items.filter((item) => {
     if (item.permission) {
       return session.hasPermission(item.permission)
+    }
+
+    if (item.show) {
+      return item.show()
     }
 
     return true
@@ -34,14 +37,20 @@ const itemsWithPermission = computed(() => {
 const slots = useSlots()
 
 const showHeaderLabel = computed(() => {
-  if (!itemsWithPermission.value && !slots.default) return false
+  if (!availableItems.value && !slots.default) return false
 
   return slots.header || props.headerLabel
 })
 
-defineExpose({
-  popover,
-})
+const onClickItem = (event: MouseEvent, item: MenuItem) => {
+  if (item.onClick) {
+    item.onClick(event)
+  }
+
+  if (!item.noCloseOnClick) {
+    props.popover?.closePopover()
+  }
+}
 </script>
 
 <template>
@@ -56,28 +65,31 @@ defineExpose({
       >
     </div>
 
-    <template v-if="itemsWithPermission || $slots.default">
+    <template v-if="availableItems || $slots.default">
       <slot>
         <ul role="menu" v-bind="$attrs" class="flex w-full flex-col">
-          <template v-for="item in itemsWithPermission" :key="item.key">
+          <template v-for="item in availableItems" :key="item.key">
             <li
               role="menuitem"
-              class="group flex items-center justify-between hover:bg-blue-600 dark:hover:bg-blue-900 last:hover:rounded-b-[10px]"
+              class="group flex items-center justify-between hover:bg-blue-600 dark:hover:bg-blue-900 last:rounded-b-[10px] focus-within:bg-blue-800 dark:hover:focus-within:bg-blue-800 hover:focus-within:bg-blue-800 focus-within:text-white"
               :class="{
-                'first:hover:rounded-t-[10px]': !showHeaderLabel,
+                'first:rounded-t-[10px]': !showHeaderLabel,
                 'border-t border-neutral-100 dark:border-gray-900':
-                  item.seperatorTop,
+                  item.separatorTop,
               }"
             >
-              <CommonPopoverMenuItem
-                class="grow flex p-2"
-                :label="item.label"
-                :link="item.link"
-                :icon="item.icon"
-                :label-placeholder="item.labelPlaceholder"
-                @click="item.onClick?.($event)"
-              />
-              <slot name="itemRight" v-bind="item" />
+              <slot :name="`item-${item.key}`" v-bind="item">
+                <component
+                  :is="item.component || CommonPopoverMenuItem"
+                  class="grow flex p-2.5"
+                  :label="item.label"
+                  :link="item.link"
+                  :icon="item.icon"
+                  :label-placeholder="item.labelPlaceholder"
+                  @click="onClickItem($event, item)"
+                />
+                <slot :name="`itemRight-${item.key}`" v-bind="item" />
+              </slot>
             </li>
           </template>
         </ul>

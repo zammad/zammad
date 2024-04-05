@@ -88,6 +88,14 @@ describe('CommonButton.vue', () => {
       variant: 'remove',
       classes: ['btn-info'],
     },
+    {
+      variant: 'subtle',
+      classes: ['btn-ghost'],
+    },
+    {
+      variant: 'neutral',
+      classes: ['btn-secondary'],
+    },
   ])('supports $variant variant', async ({ variant, classes }) => {
     const view = renderComponent(CommonButton, {
       props: {
