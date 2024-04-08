@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-29 02:05+0000\n"
+"PO-Revision-Date: 2024-04-08 08:32+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -868,6 +868,14 @@ msgstr ""
 "\n"
 "Уколико имате клијенте са различитим радним временом, можете додати више "
 "календара. Тикети су повезани са календарима путем **SLA**."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+msgid "A color scheme that uses dark-colored elements on a light background."
+msgstr "Изглед који користи елементе тамне боје на светлој позадини."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+msgid "A color scheme that uses light-colored elements on a dark background."
+msgstr "Изглед који користи елементе светле боје на тамној позадини."
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
@@ -1758,7 +1766,9 @@ msgstr "Шифра апликације"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
-#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "Изглед"
@@ -3091,6 +3101,10 @@ msgstr "Очисти претрагу"
 msgid "Clear Selection"
 msgstr "Очисти избор"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+msgid "Clear filter"
+msgstr "Уклони филтер"
+
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "Clearbit"
@@ -3207,6 +3221,10 @@ msgstr "Време затварања"
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Боја индикатора отвореног тикета у траци са стране."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "Coming soon..."
+msgstr "Ускоро..."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
@@ -3968,6 +3986,7 @@ msgid "Cut"
 msgstr "Исеци"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "Dark"
 msgstr "Тамни"
 
@@ -3980,6 +3999,7 @@ msgstr "Тамни изглед"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/dashboard.coffee
 #: app/assets/javascripts/app/controllers/package.coffee
+#: app/frontend/apps/desktop/pages/dashboard/routes.ts
 msgid "Dashboard"
 msgstr "Контролна табла"
 
@@ -5279,6 +5299,8 @@ msgstr "Уређај"
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 #: db/seeds/permissions.rb
 msgid "Devices"
 msgstr "Уређаји"
@@ -5297,8 +5319,12 @@ msgstr ""
 "нашој јавној платформи %l? Поседује веома удобан кориснички интерфејс "
 "базиран на Weblate-у, пробајте га!"
 
-#: app/assets/javascripts/app/views/profile/language.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+msgid "Did you know?"
+msgstr "Да ли сте знали?"
+
+#: app/assets/javascripts/app/views/profile/language.jst.eco
 msgid "Did you know? You can help translating %s at:"
 msgstr "Да ли сте знали? Овде можете помоћи са преводом на %s:"
 
@@ -6653,6 +6679,10 @@ msgstr "Систем датотека"
 msgid "Filter"
 msgstr "Филтер"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+msgid "Filter settings…"
+msgstr "Филтрирање подешавања…"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Find a ticket"
 msgstr "Пронађи тикет"
@@ -7513,7 +7543,6 @@ msgstr "Празници"
 msgid "Holidays iCalendar Feed"
 msgstr "iCalendar извор празника"
 
-#: app/frontend/apps/desktop/pages/home/routes.ts
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -8429,9 +8458,7 @@ msgstr "ID кључа"
 msgid "Keyboard Shortcuts"
 msgstr "Пречице на тастатури"
 
-#: app/frontend/apps/desktop/pages/home/views/Playground.vue
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts
 msgid "Keyboard shortcuts"
 msgstr "Пречице на тастатури"
 
@@ -8509,6 +8536,8 @@ msgstr "Изглед почетне стране"
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/profile/language.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Language"
@@ -8617,6 +8646,7 @@ msgid "Library"
 msgstr "Библиотека"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "Light"
 msgstr "Светло"
 
@@ -9464,6 +9494,7 @@ msgid "Navigate to %s"
 msgstr "Иди у %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue
 msgid "Navigation"
 msgstr "Навигација"
 
@@ -9905,6 +9936,7 @@ msgstr "Нису пронађен повезани чланак за обрад�
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
@@ -11062,6 +11094,10 @@ msgstr "Повратни позив по шаблону"
 msgid "Pre-defined webhook for %s."
 msgstr "Повратни позив по шаблону за %s."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+msgid "Prefer color scheme as indicated by the operating system."
+msgstr "Користи изглед који одређује оперативни систем."
+
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Press the button below to finish the setup."
 msgstr "Кликните на дугме испод за довршавање поставке."
@@ -11185,14 +11221,16 @@ msgid "Product Name"
 msgstr "Назив производа"
 
 #: app/assets/javascripts/app/controllers/profile.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
+#: app/frontend/apps/desktop/pages/personal-setting/routes.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 msgid "Profile"
 msgstr "Профил"
 
-#: app/frontend/apps/desktop/pages/home/views/Playground.vue
-#, fuzzy
-#| msgid "Proxy Settings"
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
 msgid "Profile settings"
-msgstr "Прокси подешавања"
+msgstr "Подешавања профила"
 
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
@@ -12246,6 +12284,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -12818,10 +12857,6 @@ msgstr "Приказани записи евиденције позива."
 msgid "Shown when the chat is closed."
 msgstr "Приказује се када је ћаскање затворено."
 
-#: app/frontend/apps/desktop/AppDesktop.vue
-msgid "Sidebar"
-msgstr "Трака са стране"
-
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr "Трака са стране прилога"
@@ -12870,7 +12905,7 @@ msgid "Sign in using"
 msgstr "Пријави се користећи"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
-#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/logout.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Одјави се"
@@ -13357,6 +13392,7 @@ msgid "Sync calendars with iCal feeds."
 msgstr "Синхронизуј календаре са iCal изворима."
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "Sync with computer"
 msgstr "Синхронизуј са рачунаром"
 
@@ -13765,6 +13801,10 @@ msgid "The admin password auth email could not be sent."
 msgstr ""
 "Није било могуће послати имејл поруку са привременом лозинком администратора."
 
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+msgid "The appearance could not be updated."
+msgstr "Није било могуће освежити изглед."
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
@@ -14138,7 +14178,7 @@ msgstr ""
 msgid "The issue could not be saved."
 msgstr "Није било могуће сачувати извештај."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/shared/composables/useLocaleUpdate.ts
 msgid "The language could not be updated."
 msgstr "Није било могуће освежити језик."
 
@@ -14278,7 +14318,7 @@ msgstr "Достављени URL је неисправан."
 msgid "The provided credentials are invalid."
 msgstr "Дати креденцијали су неисправни."
 
-#: lib/validations/email_account_uniqueness_validator.rb
+#: lib/validations/channel_email_account_uniqueness_validator.rb
 msgid "The provided email account is already in use."
 msgstr "Унети имејл налог се већ користи."
 
@@ -14734,6 +14774,7 @@ msgstr "Њихови тикети"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "Theme"
 msgstr "Тема"
 
@@ -16752,6 +16793,10 @@ msgstr ""
 "Није било могуће учитати информаиције о кориснику, молимо проверите дозволе "
 "вашег корисника за повезивање."
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue
+msgid "User menu"
+msgstr "Кориснички мени"
+
 #: app/assets/javascripts/app/controllers/user.coffee
 msgid "User successfully unlocked!"
 msgstr "Успешно откључавање корисника!"
@@ -17465,6 +17510,11 @@ msgstr ""
 "Можете генерисати лични кључ приступа за сваку апликацију коју користите а "
 "којој је неопходан приступ Zammad API."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+msgid "You can help translating Zammad."
+msgstr "Можете помоћи око Zammad превода."
+
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "You can no longer see the data privacy task."
 msgstr "Више немате приступ захтеву приватности података."
@@ -17747,6 +17797,10 @@ msgstr ""
 msgid "Your connection is not private"
 msgstr "Ваша веза није приватна"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
+msgid "Your language"
+msgstr "Ваш језик"
+
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
@@ -18028,6 +18082,10 @@ msgstr "затвори"
 msgid "closed"
 msgstr "затворено"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "collapse"
+msgstr "скупи"
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "connected"
 msgstr "повезано"
@@ -18276,6 +18334,10 @@ msgstr "ескалација %s"
 msgid "example macro"
 msgstr "пример макроа"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "expand"
+msgstr "прошири"
+
 #: db/seeds/ticket_article_types.rb
 msgid "facebook direct-message"
 msgstr "директна facebook порука"
@@ -18306,6 +18368,10 @@ msgstr "попуни"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr "попуни празно"
+
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+msgid "filter"
+msgstr "филтер"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -18901,6 +18967,10 @@ msgstr "одговори свима"
 msgid "required"
 msgstr "обавезно"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
+msgid "resize sidebar"
+msgstr "промени ширину бочне траке"
+
 #: db/seeds/settings.rb
 msgid "right"
 msgstr "десно"
@@ -18940,6 +19010,10 @@ msgstr "изабери видљиве опције"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "sent to the customer"
 msgstr "послато клијенту"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+msgid "session,sessions,computer,computers,browser,browsers,access"
+msgstr "сесија,сесије,компјутер,компјутери,претраживач,претраживачи,приступ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19053,6 +19127,10 @@ msgstr "системски"
 msgid "telegram personal-message"
 msgstr "лична telegram порука"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+msgid "theme,color,style,dark mode,night mode,light mode"
+msgstr "изглед,боја,стил,тамни изглед,ноћни изглед,светли изглед"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "this ticket was merged into ticket %s"
 msgstr "овај тикет је спојен са тикетом %s"
@@ -19102,6 +19180,10 @@ msgstr "за повратак на почетну страну."
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "today"
 msgstr "данас"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+msgid "translation,locale,localization"
+msgstr "превод,језици,локализација"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "trigger '%s' was performed because pending reminder was reached"
@@ -19237,6 +19319,9 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Sidebar"
+#~ msgstr "Трака са стране"
 
 #~ msgid "To see the updated translation, please reload your browser."
 #~ msgstr "Да бисте видели нови превод, молимо освежите ваш претраживач."

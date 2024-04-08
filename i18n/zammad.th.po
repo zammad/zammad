@@ -891,6 +891,14 @@ msgstr ""
 "หากคุณมีลูกค้าที่มีเวลาทำการต่างกัน คุณสามารถสร้างปฏิทินได้หลายปฏิทิน Tickets "
 "เชื่อมโยงกับปฏิทินโดยใช้ **SLA**"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+msgid "A color scheme that uses dark-colored elements on a light background."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+msgid "A color scheme that uses light-colored elements on a dark background."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "รายการแบ็กเอนด์นำเข้าที่ใช้งานอยู่ซึ่งได้รับการกำหนดเวลาโดยอัตโนมัติ"
@@ -1795,7 +1803,9 @@ msgstr "รหัส แอป"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
-#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 #: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "ลักษณะ"
@@ -3164,6 +3174,12 @@ msgstr "ล้างการค้นหา"
 msgid "Clear Selection"
 msgstr "ล้างการเลือก"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "User filter"
+msgid "Clear filter"
+msgstr "ตัวกรองผู้ใช้"
+
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "Clearbit"
@@ -3280,6 +3296,10 @@ msgstr "เวลาปิด"
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "การแสดงสีของตัวระบุ ticket ที่เปิดในแถบด้านข้าง"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "Coming soon..."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
@@ -4069,6 +4089,7 @@ msgid "Cut"
 msgstr "ตัด"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "Dark"
 msgstr "มืด"
 
@@ -4081,6 +4102,7 @@ msgstr "โหมดมืด"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/dashboard.coffee
 #: app/assets/javascripts/app/controllers/package.coffee
+#: app/frontend/apps/desktop/pages/dashboard/routes.ts
 msgid "Dashboard"
 msgstr "หน้าหลัก"
 
@@ -5328,6 +5350,8 @@ msgstr "อุปกรณ์"
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 #: db/seeds/permissions.rb
 msgid "Devices"
 msgstr "อุปกรณ์"
@@ -5343,8 +5367,12 @@ msgid ""
 "interface based on Weblate, give it a try!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/profile/language.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+msgid "Did you know?"
+msgstr ""
+
+#: app/assets/javascripts/app/views/profile/language.jst.eco
 msgid "Did you know? You can help translating %s at:"
 msgstr "เธอรู้รึเปล่า? คุณสามารถช่วยแปล %s ได้ที่:"
 
@@ -6715,6 +6743,12 @@ msgstr "ระบบแฟ้ม"
 msgid "Filter"
 msgstr "ตัวกรอง"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Proxy Settings"
+msgid "Filter settings…"
+msgstr "ค่าตั้งพร็อกซี"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy
 #| msgid "Editing ticket"
@@ -7611,7 +7645,6 @@ msgstr "วันหยุด"
 msgid "Holidays iCalendar Feed"
 msgstr "วันหยุด iCalendar Feed"
 
-#: app/frontend/apps/desktop/pages/home/routes.ts
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -8521,7 +8554,7 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr "ปุ่มลัด"
 
-#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts
 #, fuzzy
 #| msgid "Keyboard Shortcuts"
 msgid "Keyboard shortcuts"
@@ -8605,6 +8638,8 @@ msgstr "Landing page layout"
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/profile/language.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Language"
@@ -8721,6 +8756,7 @@ msgid "Library"
 msgstr "Library"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "Light"
 msgstr "แสง"
 
@@ -9595,6 +9631,7 @@ msgid "Navigate to %s"
 msgstr "ตัวนำทาง"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue
 msgid "Navigation"
 msgstr "ตัวนำทาง"
 
@@ -10028,6 +10065,7 @@ msgstr ""
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
@@ -11223,6 +11261,10 @@ msgstr ""
 msgid "Pre-defined webhook for %s."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+msgid "Prefer color scheme as indicated by the operating system."
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Press the button below to finish the setup."
 msgstr ""
@@ -11347,10 +11389,14 @@ msgid "Product Name"
 msgstr "ชื่อผลิตภัณฑ์"
 
 #: app/assets/javascripts/app/controllers/profile.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
+#: app/frontend/apps/desktop/pages/personal-setting/routes.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 msgid "Profile"
 msgstr "โพรไฟล์"
 
-#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -12498,6 +12544,7 @@ msgstr "องค์กรรองจะได้รับอนุญาตก
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -13090,10 +13137,6 @@ msgstr "แสดงบันทึก ในบันทึกการโท�
 msgid "Shown when the chat is closed."
 msgstr "แสดงเมื่อแชทถูกปิด"
 
-#: app/frontend/apps/desktop/AppDesktop.vue
-msgid "Sidebar"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr "ไฟล์แนบแถบด้านข้าง"
@@ -13143,7 +13186,7 @@ msgid "Sign in using"
 msgstr "เข้าสู่ระบบโดยใช้"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
-#: app/frontend/apps/desktop/pages/home/views/Playground.vue
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/logout.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "ออกจากระบบ"
@@ -13660,6 +13703,7 @@ msgid "Sync calendars with iCal feeds."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "Sync with computer"
 msgstr ""
 
@@ -14093,6 +14137,12 @@ msgstr "ไม่สามารถตั้งรหัสผ่านได้
 msgid "The admin password auth email could not be sent."
 msgstr "ไม่สามารถส่งอีเมลยืนยันได้"
 
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The appearance could not be updated."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
@@ -14483,7 +14533,7 @@ msgstr ""
 msgid "The issue could not be saved."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/shared/composables/useLocaleUpdate.ts
 #, fuzzy
 #| msgid "The file could not be uploaded."
 msgid "The language could not be updated."
@@ -14635,7 +14685,7 @@ msgstr ""
 msgid "The provided credentials are invalid."
 msgstr "ข้อมูลประจำตัวที่ระบุไม่ถูกต้อง"
 
-#: lib/validations/email_account_uniqueness_validator.rb
+#: lib/validations/channel_email_account_uniqueness_validator.rb
 #, fuzzy
 #| msgid "The provided endpoint is invalid."
 msgid "The provided email account is already in use."
@@ -15145,6 +15195,7 @@ msgstr "Tickets"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "Theme"
 msgstr "Theme"
 
@@ -17205,6 +17256,12 @@ msgid ""
 "permissions."
 msgstr "ไม่สามารถเรียกข้อมูลผู้ใช้ได้ โปรดตรวจสอบการอนุญาตการผูกผู้ใช้ของคุณ"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue
+#, fuzzy
+#| msgid "Username"
+msgid "User menu"
+msgstr "บัญชีผู้ใช้"
+
 #: app/assets/javascripts/app/controllers/user.coffee
 msgid "User successfully unlocked!"
 msgstr "ปลดล็อกผู้ใช้สำเร็จแล้ว!"
@@ -17926,6 +17983,13 @@ msgid ""
 "needs access to the Zammad API."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "Did you know? You can help translating %s at:"
+msgid "You can help translating Zammad."
+msgstr "เธอรู้รึเปล่า? คุณสามารถช่วยแปล %s ได้ที่:"
+
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 #, fuzzy
 #| msgid "Handle data privacy tasks."
@@ -18210,6 +18274,12 @@ msgstr "การเปลี่ยนแปลงของคุณอาจแ
 msgid "Your connection is not private"
 msgstr "การเชื่อมต่อของคุณไม่เป็นส่วนตัว"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
+#, fuzzy
+#| msgid "Choose your language."
+msgid "Your language"
+msgstr "เลือกภาษาของคุณ."
+
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
@@ -18472,6 +18542,10 @@ msgstr "ปิด"
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "ปิด"
+
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "collapse"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "connected"
@@ -18737,6 +18811,10 @@ msgstr "การยกระดับ"
 msgid "example macro"
 msgstr "ตัวอย่างมาโคร"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "expand"
+msgstr ""
+
 #: db/seeds/ticket_article_types.rb
 msgid "facebook direct-message"
 msgstr "เฟสบุ๊คไดเร็คเมสเสจ"
@@ -18767,6 +18845,12 @@ msgstr "กรอก"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr "เติมในช่องว่าง"
+
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Filter"
+msgid "filter"
+msgstr "ตัวกรอง"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -19398,6 +19482,10 @@ msgstr "ตอบกลับ"
 msgid "required"
 msgstr "%s จำเป็น"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
+msgid "resize sidebar"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "right"
 msgstr "ขวา"
@@ -19443,6 +19531,10 @@ msgstr "เลือกทั้งหมด"
 #| msgid "Create new Customer"
 msgid "sent to the customer"
 msgstr "สร้างลูกค้าใหม่"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+msgid "session,sessions,computer,computers,browser,browsers,access"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19562,6 +19654,10 @@ msgstr "ระบบ"
 msgid "telegram personal-message"
 msgstr "telegram personal-message"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+msgid "theme,color,style,dark mode,night mode,light mode"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "this ticket was merged into ticket %s"
 msgstr "ticket อีกใบถูกรวมเข้าเป็น ticket |%s|"
@@ -19611,6 +19707,10 @@ msgstr "เพื่อไปที่หน้าแรก"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "today"
 msgstr "วันนี้"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+msgid "translation,locale,localization"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "trigger '%s' was performed because pending reminder was reached"
