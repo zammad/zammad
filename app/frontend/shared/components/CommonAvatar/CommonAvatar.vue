@@ -49,15 +49,12 @@ const classMap = getAvatarClasses()
 
 <template>
   <span
+    class="relative inline-flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-full bg-cover bg-center"
+    :class="[`size-${size}`, classMap.base]"
     :style="{
       backgroundImage: image ? `url(${image})` : undefined,
       backgroundRepeat: image ? 'no-repeat' : undefined,
     }"
-    :class="[
-      'relative inline-flex h-10 w-10 shrink-0 select-none text-black',
-      'items-center justify-center rounded-full bg-cover bg-center',
-      `size-${size}`,
-    ]"
     role="img"
     :aria-label="avatarLabel"
     :aria-hidden="decorative ? 'true' : undefined"

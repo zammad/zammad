@@ -288,7 +288,7 @@ watch(progressBarValue, (newValue) => {
 const session = useSessionStore()
 const { user } = storeToRefs(session)
 
-const { popover, popoverTarget, toggle } = usePopover()
+const { isOpen: popoverIsOpen, popover, popoverTarget, toggle } = usePopover()
 
 const themeSwitch = ref<ThemeSwitchInstance>()
 
@@ -479,6 +479,81 @@ const appearance = ref('auto')
       </div>
     </div>
 
+    <div class="w-1/2">
+      <h2 class="text-lg">Avatar</h2>
+
+      <div class="flex gap-4">
+        <CommonUserAvatar
+          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          tabindex="0"
+          :entity="{
+            id: 'gid://zammad/User/1',
+          }"
+          size="medium"
+        />
+        <CommonUserAvatar
+          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          tabindex="0"
+          :entity="{
+            id: 'gid://zammad/User/2',
+            firstname: 'Alfa',
+            lastname: 'Bravo',
+          }"
+          size="medium"
+        />
+        <CommonUserAvatar
+          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          tabindex="0"
+          :entity="{
+            id: 'gid://zammad/User/3',
+            firstname: 'Charlie',
+            lastname: 'Delta',
+          }"
+          size="medium"
+        />
+        <CommonUserAvatar
+          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          tabindex="0"
+          :entity="{
+            id: 'gid://zammad/User/4',
+            firstname: 'Echo',
+            lastname: 'Foxtrot',
+          }"
+          size="medium"
+        />
+        <CommonUserAvatar
+          class="outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          tabindex="0"
+          :entity="{
+            id: 'gid://zammad/User/5',
+            firstname: 'Golf',
+            lastname: 'Hotel',
+          }"
+          size="medium"
+        />
+        <CommonUserAvatar
+          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          tabindex="0"
+          :entity="{
+            id: 'gid://zammad/User/6',
+            firstname: 'India',
+            lastname: 'Juliett',
+          }"
+          size="medium"
+        />
+        <CommonUserAvatar
+          class="border border-neutral-100 dark:border-gray-900 outline outline-2 outline-transparent hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline-blue-800 dark:hover:focus:outline-blue-800 cursor-pointer"
+          tabindex="0"
+          :entity="{
+            id: 'gid://zammad/User/7',
+            firstname: 'Kilo',
+            lastname: 'Lima',
+          }"
+          size="medium"
+        />
+      </div>
+    </div>
+
     <div>
       <h2 class="text-lg">Popover</h2>
 
@@ -523,8 +598,8 @@ const appearance = ref('auto')
               },
             ]"
           >
-            <template #itemRight="{ key }">
-              <div v-if="key === 'appearance'" class="px-2 flex items-center">
+            <template #itemRight-appearance>
+              <div class="px-2 flex items-center">
                 <ThemeSwitch
                   ref="themeSwitch"
                   v-model="appearance"
@@ -534,13 +609,15 @@ const appearance = ref('auto')
             </template>
           </CommonPopoverMenu>
         </CommonPopover>
-        <button ref="popoverTarget" @click="toggle(true)">
-          <CommonUserAvatar
-            :entity="user"
-            size="large"
-            personal
-            class="bg-red-300"
-          />
+        <button
+          ref="popoverTarget"
+          class="-:outline-transparent hover:-:outline-blue-900 rounded-full outline outline-2 focus:outline-blue-800 hover:focus:outline-blue-800"
+          :class="{
+            'outline-blue-800 hover:outline-blue-800': popoverIsOpen,
+          }"
+          @click="toggle(true)"
+        >
+          <CommonUserAvatar :entity="user" size="large" personal />
         </button>
       </template>
     </div>

@@ -22,6 +22,7 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializeAvatarClasses({
+    base: 'text-black',
     vipUser: 'text-yellow',
     vipOrganization: 'text-gray-100',
   })
