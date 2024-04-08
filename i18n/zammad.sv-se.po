@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-02 08:42+0000\n"
+"PO-Revision-Date: 2024-04-06 01:11+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -10467,7 +10467,7 @@ msgstr "Organisation Logga"
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Organization Name"
-msgstr "Bolags namn"
+msgstr "Organisationsnamn"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -10504,7 +10504,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 #: db/seeds/permissions.rb
 msgid "Organizations"
-msgstr "Bolag"
+msgstr "Organisationer"
 
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 msgid "Organizations with \"%s\""
@@ -14279,7 +14279,7 @@ msgstr "Den angivna URL:en är ogiltig."
 msgid "The provided credentials are invalid."
 msgstr "De angivna autentiseringsuppgifterna är ogiltiga."
 
-#: lib/validations/email_account_uniqueness_validator.rb
+#: lib/validations/channel_email_account_uniqueness_validator.rb
 msgid "The provided email account is already in use."
 msgstr "Den angivna e-postkontot används redan."
 

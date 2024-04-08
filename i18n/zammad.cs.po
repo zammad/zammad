@@ -14842,7 +14842,7 @@ msgstr "Poskytnutá URL je neplatná."
 msgid "The provided credentials are invalid."
 msgstr "Poskytnuté pověření je neplatné."
 
-#: lib/validations/email_account_uniqueness_validator.rb
+#: lib/validations/channel_email_account_uniqueness_validator.rb
 #, fuzzy
 #| msgid "The provided endpoint is invalid."
 msgid "The provided email account is already in use."

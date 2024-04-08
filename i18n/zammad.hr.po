@@ -11695,13 +11695,13 @@ msgstr ""
 "<div>primili smo zahtjev za ponovno postavljanje lozinke Vašeg #{config."
 "product_name} računa <b>#{user.login}</b>.</div>\n"
 "<br>\n"
-"<div>Ukoliko želite ponovno postaviti Vašu lozinku, kliknite na link ispod ("
-"ili iskopirajte URL u vaš preglednik):</div>\n"
+"<div>Ukoliko želite ponovno postaviti Vašu lozinku, kliknite na link ispod "
+"(ili iskopirajte URL u vaš preglednik):</div>\n"
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Ovaj link Vas vodi na stranicu gdje možete promijeniti Vašu "
-"lozinku.</div>\n"
+"<div>Ovaj link Vas vodi na stranicu gdje možete promijeniti Vašu lozinku.</"
+"div>\n"
 "<br>\n"
 "<div>Ukoliko to ne želite, molimo Vas da ignorirate ovu poruku. Vaša lozinka "
 "neće biti resetirana.</div>\n"
@@ -11744,8 +11744,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Ovaj link Vas vodi na stranicu gdje možete resetirati Vašu "
-"lozinku.</div>\n"
+"<div>Ovaj link Vas vodi na stranicu gdje možete resetirati Vašu lozinku.</"
+"div>\n"
 "<br>\n"
 "<div>Ukoliko to ne želite, molimo, ignorirajte ovu poruku. Vaša lozinka neće "
 "biti resetirana.</div>\n"
@@ -11790,7 +11790,8 @@ msgstr "Ponovi sigurnosni postupak"
 
 #: lib/whatsapp/retry/media.rb
 msgid "Retrying to download the sent media via WhatsApp failed."
-msgstr "Ponovni pokušaj preuzimanja poslanog medija putem WhatsAppa nije uspio."
+msgstr ""
+"Ponovni pokušaj preuzimanja poslanog medija putem WhatsAppa nije uspio."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -14279,7 +14280,7 @@ msgstr "Navedeni URL nije valjan."
 msgid "The provided credentials are invalid."
 msgstr "Navedeni pristupni podaci nisu valjani."
 
-#: lib/validations/email_account_uniqueness_validator.rb
+#: lib/validations/channel_email_account_uniqueness_validator.rb
 msgid "The provided email account is already in use."
 msgstr "Navedena e-mail adresa se već koristi."
 
@@ -14654,7 +14655,8 @@ msgstr "Nije moguće generirati token."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 msgid "The token could not be verified. Please contact your administrator."
-msgstr "Nije moguće potvrditi token. Molimo, obratite se svojem administratoru."
+msgstr ""
+"Nije moguće potvrditi token. Molimo, obratite se svojem administratoru."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts

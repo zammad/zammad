@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-03 01:09+0000\n"
-"Last-Translator: SamolJacek <samol.jacek@gmail.com>\n"
+"PO-Revision-Date: 2024-04-06 01:11+0000\n"
+"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
 "Language: pl\n"
@@ -9121,7 +9121,7 @@ msgstr "Maksymalny rozmiar wiadomości e-mail"
 
 #: db/seeds/settings.rb
 msgid "Maximum Recursive Ticket Triggers Depth"
-msgstr "Maksymalna głębokość rekurencyjnych wyzwalaczy zgłoszeń."
+msgstr "Maksymalna głębokość rekurencyjnych wyzwalaczy zgłoszeń"
 
 #: db/seeds/settings.rb
 msgid "Maximum failed logins"
@@ -11795,8 +11795,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Link przeniesie Cię na witrynę, na której możliwa jest zmiana "
-"hasła.</div>\n"
+"<div>Link przeniesie Cię na witrynę, na której możliwa jest zmiana hasła.</"
+"div>\n"
 "<br>\n"
 "<div>Jeżeli nie chcesz zmieniać swego hasła, zignoruj ten e-mail. Twoje "
 "hasło nie zostanie zmienione.</div>\n"
@@ -11839,8 +11839,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Ten link prowadzi do strony, na której możesz zmienić swoje hasło.</div>"
-"\n"
+"<div>Ten link prowadzi do strony, na której możesz zmienić swoje hasło.</"
+"div>\n"
 "<br>\n"
 "<div>Jeśli nie chcesz resetować hasła, zignoruj tę wiadomość. Twoje hasło "
 "nie zostanie zresetowane.</div>\n"
@@ -14198,8 +14198,6 @@ msgid "The format of the subject."
 msgstr "Format dla tematu e-maila."
 
 #: lib/whatsapp/retry/media.rb
-#, fuzzy
-#| msgid "This article is not part of the ticket."
 msgid "The given article is not a media article."
 msgstr "Podany artykuł nie jest artykułem medialnym."
 
@@ -14397,7 +14395,7 @@ msgstr "Podany adres URL jest nieprawidłowy."
 msgid "The provided credentials are invalid."
 msgstr "Podane poświadczenia są nieprawidłowe."
 
-#: lib/validations/email_account_uniqueness_validator.rb
+#: lib/validations/channel_email_account_uniqueness_validator.rb
 msgid "The provided email account is already in use."
 msgstr "Podane konto e-mail jest już używane."
 

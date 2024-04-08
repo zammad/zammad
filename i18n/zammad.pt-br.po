@@ -14393,7 +14393,7 @@ msgstr "A URL fornecida é inválida."
 msgid "The provided credentials are invalid."
 msgstr "As credenciais fornecidas são inválidas."
 
-#: lib/validations/email_account_uniqueness_validator.rb
+#: lib/validations/channel_email_account_uniqueness_validator.rb
 msgid "The provided email account is already in use."
 msgstr "A conta de e-mail fornecida já está em uso."
 

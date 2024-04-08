@@ -15310,7 +15310,7 @@ msgstr "La URL proporcionada no es válida."
 msgid "The provided credentials are invalid."
 msgstr "Las credenciales proporcionadas no son válidas."
 
-#: lib/validations/email_account_uniqueness_validator.rb
+#: lib/validations/channel_email_account_uniqueness_validator.rb
 #, fuzzy
 #| msgid "The provided endpoint is invalid."
 msgid "The provided email account is already in use."

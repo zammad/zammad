@@ -14293,7 +14293,7 @@ msgstr ""
 msgid "The provided credentials are invalid."
 msgstr ""
 
-#: lib/validations/email_account_uniqueness_validator.rb
+#: lib/validations/channel_email_account_uniqueness_validator.rb
 msgid "The provided email account is already in use."
 msgstr "Zadaný emailový účet je už použitý."
 
