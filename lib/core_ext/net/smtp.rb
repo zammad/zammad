@@ -1,12 +1,10 @@
 # rubocop:disable all
 module Net
   class SMTP
-
     def do_start(helo_domain, user, secret, authtype)
       raise IOError, 'SMTP session already started' if @started
-      if user or secret
-        check_auth_method(authtype || DEFAULT_AUTH_TYPE)
-        check_auth_args user, secret
+      if user || secret || authtype
+        check_auth_args authtype, user, secret
       end
       s = Timeout.timeout(@open_timeout, Net::OpenTimeout) do
         tcp_socket(@address, @port)
@@ -17,8 +15,7 @@ module Net
       do_helo helo_domain
       if ! tls? and (starttls_always? or (capable_starttls? and starttls_auto?))
         unless capable_starttls?
-          raise SMTPUnsupportedCommand,
-              "STARTTLS is not supported on this server"
+          raise SMTPUnsupportedCommand, "STARTTLS is not supported on this server"
         end
         starttls
         @socket = new_internet_message_io(tlsconnect(s, @ssl_context_starttls))
