@@ -11,11 +11,11 @@ You're going to love Zammad!
 
 ## Status
 
-- Toolchain: ![docker-release](https://github.com/zammad/zammad/workflows/docker-release/badge.svg) ![build-docker-image](https://github.com/zammad/zammad/workflows/build-docker-image/badge.svg) [![Code Climate](https://codeclimate.com/github/zammad/zammad/badges/gpa.svg)](https://codeclimate.com/github/zammad/zammad) [![Documentation Status](https://readthedocs.org/projects/zammad/badge/)](https://docs.zammad.org)
-- Issues: [![Percentage of issues still open](https://isitmaintained.com/badge/open/zammad/zammad.svg)](https://github.com/zammad/zammad/issues "Percentage of issues still open") [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/zammad/zammad.svg)](https://github.com/zammad/zammad/issues?q=is%3Aissue+is%3Aclosed "Average time to resolve an issue")
-- Download DEB/RPM: [![](https://img.shields.io/badge/Branch-stable-blue.svg)](https://packager.io/gh/zammad/zammad#stable) [![](https://img.shields.io/badge/Branch-develop-lightgrey.svg)](https://packager.io/gh/zammad/zammad#develop)
-- Docker container images: [![](https://img.shields.io/badge/version-stable-blue.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose) [![](https://img.shields.io/badge/version-develop-lightgrey.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose)
-- License: [![](https://img.shields.io/badge/License-AGPL%203.0-brightgreen.svg)](https://github.com/zammad/zammad/blob/develop/LICENSE)
+- Toolchain: ![docker-release workflow](https://github.com/zammad/zammad/workflows/docker-release/badge.svg) ![build-docker-image workflow](https://github.com/zammad/zammad/workflows/build-docker-image/badge.svg) [![documentation status](https://readthedocs.org/projects/zammad/badge/)](https://docs.zammad.org)
+- Download DEB/RPM: [![binary packages for Zammad stable](https://img.shields.io/badge/Branch-stable-blue.svg)](https://packager.io/gh/zammad/zammad/refs/stable) [![binary packages for Zammad develop](https://img.shields.io/badge/Branch-develop-lightgrey.svg)](https://packager.io/gh/zammad/zammad/refs/develop)
+- Docker container images: [![Docker images for Zammad](https://img.shields.io/badge/version-stable-blue.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose)
+- Helm chart for Kubernetes: [![Zammad Helm chart for Kubernetes](https://img.shields.io/badge/version-stable-blue.svg)](https://artifacthub.io/packages/helm/zammad/zammad)
+- License: [![AGPL license](https://img.shields.io/badge/License-AGPL%203.0-brightgreen.svg)](https://github.com/zammad/zammad/blob/develop/LICENSE)
 
 ## Installing & Getting Started
 
