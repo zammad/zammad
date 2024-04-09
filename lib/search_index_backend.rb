@@ -512,10 +512,7 @@ example for aggregations within one year
     Rails.logger.debug { response.data.to_json }
 
     if aggs_interval.blank? || aggs_interval[:interval].blank?
-      object_ids = []
-      response.data['hits']['hits'].each do |item|
-        object_ids.push item['_id']
-      end
+      object_ids = response.data['hits']['hits'].pluck('_id')
 
       # in lower ES 6 versions, we get total count directly, in higher
       # versions we need to pick it from total has

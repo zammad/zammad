@@ -74,9 +74,8 @@ class Selector::Sql < Selector::Base
   end
 
   def run_block(block, level)
-    block_query = []
-    block[:conditions].each do |sub_block|
-      block_query << run(sub_block, level + 1)
+    block_query = block[:conditions].map do |sub_block|
+      run(sub_block, level + 1)
     end
 
     block_query = block_query.compact

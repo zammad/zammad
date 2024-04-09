@@ -20,10 +20,7 @@ class TicketsController < ApplicationController
                                      .limit(pagination.limit)
 
     if response_expand?
-      list = []
-      tickets.each do |ticket|
-        list.push ticket.attributes_with_association_names
-      end
+      list = tickets.map(&:attributes_with_association_names)
       render json: list, status: :ok
       return
     end
@@ -484,10 +481,7 @@ class TicketsController < ApplicationController
     )
 
     if response_expand?
-      list = []
-      tickets.each do |ticket|
-        list.push ticket.attributes_with_association_names
-      end
+      list = tickets.map(&:attributes_with_association_names)
       render json: list, status: :ok
       return
     end

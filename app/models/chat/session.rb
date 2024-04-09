@@ -95,11 +95,10 @@ class Chat::Session < ApplicationModel
     chat_session = Chat::Session.find_by(session_id: session_id)
     return if !chat_session
 
-    session_attributes = []
-    Chat::Message.where(chat_session_id: chat_session.id).reorder(created_at: :asc).each do |message|
-      session_attributes.push message.attributes
-    end
-    session_attributes
+    chat_session
+      .messages
+      .reorder(created_at: :asc)
+      .map(&:attributes)
   end
 
   def self.active_chats_by_user_id(user_id)

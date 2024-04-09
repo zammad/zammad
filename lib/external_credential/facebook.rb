@@ -53,13 +53,12 @@ class ExternalCredential::Facebook
     client = Koala::Facebook::API.new(access_token)
     user = client.get_object('me')
     # p client.get_connections('me', 'accounts').inspect
-    pages = []
-    client.get_connections('me', 'accounts').each do |page|
-      pages.push(
+    pages = client.get_connections('me', 'accounts').map do |page|
+      {
         id:           page['id'],
         name:         page['name'],
-        access_token: page['access_token'],
-      )
+        access_token: page['access_token']
+      }
     end
 
     # check if account already exists

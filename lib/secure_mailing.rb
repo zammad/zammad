@@ -10,11 +10,9 @@ class SecureMailing
   end
 
   def self.retry(article)
-    result = []
-    active_backends.each do |backend|
-      result << "#{backend}::Retry".constantize.process(article)
+    active_backends.map do |backend|
+      "#{backend}::Retry".constantize.process(article)
     end
-    result
   end
 
   def self.outgoing(mail, security)
@@ -24,11 +22,9 @@ class SecureMailing
   end
 
   def self.security_options(ticket:, article:)
-    result = []
-    active_backends.each do |backend|
-      result << "#{backend}::SecurityOptions".constantize.process(ticket:, article:)
+    active_backends.map do |backend|
+      "#{backend}::SecurityOptions".constantize.process(ticket:, article:)
     end
-    result
   end
 
   def self.active_backends

@@ -317,30 +317,23 @@ returns
   end
 
   def self.waiting_chat_count_by_chat(chat_ids)
-    list = {}
-    Chat.where(active: true, id: chat_ids).pluck(:id).each do |chat_id|
-      list[chat_id] = Chat::Session.where(chat_id: chat_id, state: ['waiting']).count
-    end
-    list
+    where(active: true, id: chat_ids)
+      .pluck(:id)
+      .index_with { |chat_id| waiting_chat_count(chat_id) }
   end
 
   def self.waiting_chat_session_list(chat_ids)
-    sessions = []
-    Chat::Session.where(state: ['waiting'], chat_id: chat_ids).each do |session|
-      sessions.push session.attributes
-    end
-    sessions
+    Chat::Session
+      .where(state: ['waiting'], chat_id: chat_ids)
+      .map(&:attributes)
   end
 
   def self.waiting_chat_session_list_by_chat(chat_ids)
-    sessions = {}
-    Chat.where(active: true, id: chat_ids).pluck(:id).each do |chat_id|
-      Chat::Session.where(chat_id: chat_id, state: ['waiting']).each do |session|
-        sessions[chat_id] ||= []
-        sessions[chat_id].push session.attributes
-      end
-    end
-    sessions
+    active_chats = Chat.where(active: true, id: chat_ids).pluck(:id)
+
+    Chat::Session
+      .where(chat_id: active_chats, state: ['waiting'])
+      .group_by(&:chat_id)
   end
 
 =begin
@@ -356,15 +349,15 @@ returns
 =end
 
   def self.running_chat_count(chat_ids)
-    Chat::Session.where(state: ['running'], chat_id: chat_ids).count
+    Chat::Session
+      .where(state: ['running'], chat_id: chat_ids)
+      .count
   end
 
   def self.running_chat_session_list(chat_ids)
-    sessions = []
-    Chat::Session.where(state: ['running'], chat_id: chat_ids).each do |session|
-      sessions.push session.attributes
-    end
-    sessions
+    Chat::Session
+      .where(state: ['running'], chat_id: chat_ids)
+      .map(&:attributes)
   end
 
 =begin

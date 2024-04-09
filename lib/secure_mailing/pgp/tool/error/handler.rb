@@ -26,7 +26,7 @@ module SecureMailing::PGP::Tool::Error::Handler
     def error!(stderr)
       stderr.each_line do |line|
         next if !line.start_with?('[GNUPG:]')
-        next if !exception = SecureMailing::PGP::Tool::Error.exception(line.split.second)
+        next if !(exception = SecureMailing::PGP::Tool::Error.exception(line.split.second))
 
         raise exception, nil, [sanitize_stderr(stderr)]
       end

@@ -200,10 +200,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     organization_all = Organization.search(query_params)
 
     if response_expand?
-      list = []
-      organization_all.each do |organization|
-        list.push organization.attributes_with_association_names
-      end
+      list = organization_all.map(&:attributes_with_association_names)
       render json: list, status: :ok
       return
     end
@@ -237,10 +234,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
       return
     end
 
-    list = []
-    organization_all.each do |organization|
-      list.push organization.attributes_with_association_ids
-    end
+    list = organization_all.map(&:attributes_with_association_ids)
     render json: list, status: :ok
   end
 

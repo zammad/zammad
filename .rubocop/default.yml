@@ -10,6 +10,7 @@ require:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
   - ../config/initializers/inflections.rb
   - ./rubocop_zammad.rb
 

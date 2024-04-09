@@ -121,10 +121,7 @@ module ApplicationController::RendersModels
     generic_objects = object.reorder(Arel.sql(order_sql)).offset(pagination.offset).limit(pagination.limit)
 
     if response_expand?
-      list = []
-      generic_objects.each do |generic_object|
-        list.push generic_object.attributes_with_association_names
-      end
+      list = generic_objects.map(&:attributes_with_association_names)
       render json: list, status: :ok
       return
     end
@@ -144,10 +141,7 @@ module ApplicationController::RendersModels
       return
     end
 
-    generic_objects_with_associations = []
-    generic_objects.each do |item|
-      generic_objects_with_associations.push item.attributes_with_association_ids
-    end
+    generic_objects_with_associations = generic_objects.map(&:attributes_with_association_ids)
     model_index_render_result(generic_objects_with_associations)
   end
 

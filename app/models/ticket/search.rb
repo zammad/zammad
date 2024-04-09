@@ -176,12 +176,9 @@ returns
                                                            sort_by:         sort_by,
                                                            order_by:        order_by)
         if !full
-          ids = []
-          items.each do |item|
-            ids.push item[:id]
-          end
-          return ids
+          return items.pluck(:id)
         end
+
         tickets = []
         items.each do |item|
           ticket = Ticket.lookup(id: item[:id])

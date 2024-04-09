@@ -21,10 +21,7 @@ class UsersController < ApplicationController
     users = policy_scope(User).reorder(id: :asc).offset(pagination.offset).limit(pagination.limit)
 
     if response_expand?
-      list = []
-      users.each do |user|
-        list.push user.attributes_with_association_names
-      end
+      list = users.map(&:attributes_with_association_names)
       render json: list, status: :ok
       return
     end
@@ -43,9 +40,8 @@ class UsersController < ApplicationController
       return
     end
 
-    users_all = []
-    users.each do |user|
-      users_all.push User.lookup(id: user.id).attributes_with_association_ids
+    users_all = users.map do |user|
+      User.lookup(id: user.id).attributes_with_association_ids
     end
     render json: users_all, status: :ok
   end
@@ -250,10 +246,7 @@ class UsersController < ApplicationController
     user_all = User.search(query_params)
 
     if response_expand?
-      list = []
-      user_all.each do |user|
-        list.push user.attributes_with_association_names
-      end
+      list = user_all.map(&:attributes_with_association_names)
       render json: list, status: :ok
       return
     end
@@ -295,10 +288,7 @@ class UsersController < ApplicationController
       return
     end
 
-    list = []
-    user_all.each do |user|
-      list.push user.attributes_with_association_ids
-    end
+    list = user_all.map(&:attributes_with_association_ids)
     render json: list, status: :ok
   end
 

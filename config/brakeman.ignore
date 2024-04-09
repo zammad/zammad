@@ -346,29 +346,6 @@
       "note": "Setting.where(area: 'Transaction::Backend::Sync').order(:name) returns defined Transaction backend class names"
     },
     {
-      "warning_type": "Dangerous Send",
-      "warning_code": 23,
-      "fingerprint": "73f7454b7fdc88e0fb9cfc849b74006956a7a031836897a0b61d8d13dde94340",
-      "check_name": "Send",
-      "message": "User controlled method execution",
-      "file": "app/controllers/channels_sms_controller.rb",
-      "line": 48,
-      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
-      "code": "Channel.driver_class(params[:options][:adapter]).new.send(params[:options], test_options)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ChannelsSmsController",
-        "method": "test"
-      },
-      "user_input": "params[:options]",
-      "confidence": "High",
-      "cwe_id": [
-        77
-      ],
-      "note": "Channel#send is a custom implementation"
-    },
-    {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
       "fingerprint": "7541faf8d3249dc4ac24f9c354024614ae79b0d6cd4c057f034ea88be1154bf7",
@@ -756,7 +733,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/channel/email_parser.rb",
-      "line": 159,
+      "line": 162,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Setting.get(setting.name).constantize",
       "render_path": null,
@@ -779,7 +756,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/channel/email_parser.rb",
-      "line": 324,
+      "line": 333,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Setting.get(setting.name).constantize",
       "render_path": null,
@@ -954,6 +931,6 @@
       "note": "Mysql arguments are internal / from config."
     }
   ],
-  "updated": "2024-03-15 20:16:59 +0100",
+  "updated": "2024-04-09 13:31:02 +0200",
   "brakeman_version": "6.1.2"
 }

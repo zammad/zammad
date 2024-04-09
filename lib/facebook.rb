@@ -59,15 +59,13 @@ result
 =end
 
   def pages
-    pages = []
-    @client.get_connections('me', 'accounts').each do |page|
-      pages.push(
+    @client.get_connections('me', 'accounts').map do |page|
+      {
         id:           page['id'],
         name:         page['name'],
-        access_token: page['access_token'],
-      )
+        access_token: page['access_token']
+      }
     end
-    pages
   end
 
 =begin

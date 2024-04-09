@@ -364,9 +364,8 @@ itself was removed in the meantime.
 
       dispatcher_pid = Process.pid
       node_count     = ENV['ZAMMAD_SESSION_JOBS_CONCURRENT'].to_i
-      node_pids      = []
-      (1..node_count).each do |worker_node_id|
-        node_pids << fork do
+      node_pids = (1..node_count).map do |worker_node_id|
+        fork do
           title         = "Zammad Session Jobs Node ##{worker_node_id}: dispatch_pid:#{dispatcher_pid} -> worker_pid:#{Process.pid}"
           $PROGRAM_NAME = title
 

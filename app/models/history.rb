@@ -153,9 +153,8 @@ returns
     )
 
     if related_history_object.present?
-      object_ids = []
-      Array(related_history_object).each do |object|
-        object_ids << object_lookup(object).id
+      object_ids = Array(related_history_object).map do |object|
+        object_lookup(object).id
       end
 
       histories = histories.or(

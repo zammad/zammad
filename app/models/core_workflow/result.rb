@@ -137,11 +137,12 @@ class CoreWorkflow::Result
   end
 
   def run_backend(field, perform_config, skip_rerun: false, skip_mark_restricted: false)
-    result = []
-    Array(perform_config['operator']).each do |backend|
-      result << "CoreWorkflow::Result::#{backend.classify}".constantize.new(result_object: self, field: field, perform_config: perform_config, skip_rerun: skip_rerun, skip_mark_restricted: skip_mark_restricted).run
+    Array(perform_config['operator']).map do |backend|
+      "CoreWorkflow::Result::#{backend.classify}"
+        .constantize
+        .new(result_object: self, field: field, perform_config: perform_config, skip_rerun: skip_rerun, skip_mark_restricted: skip_mark_restricted)
+        .run
     end
-    result
   end
 
   def run_backend_value(backend, field, value, skip_rerun: false, skip_mark_restricted: false)

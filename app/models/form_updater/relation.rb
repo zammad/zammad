@@ -11,13 +11,9 @@ class FormUpdater::Relation
   end
 
   def options
-    options = []
-
-    items.each do |item|
-      options.push({ value: item.id, label: display_name(item) })
+    items.map do |item|
+      { value: item.id, label: display_name(item) }
     end
-
-    options
   end
 
   private

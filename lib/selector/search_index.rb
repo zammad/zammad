@@ -93,9 +93,8 @@ class Selector::SearchIndex < Selector::Base
 
   def run(block, level)
     if block.key?(:conditions)
-      block_query = []
-      block[:conditions].each do |sub_block|
-        block_query << run(sub_block, level + 1)
+      block_query = block[:conditions].map do |sub_block|
+        run(sub_block, level + 1)
       end
 
       block_query = block_query.compact

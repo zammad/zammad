@@ -54,10 +54,7 @@ curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password}
     online_notifications = OnlineNotification.list(current_user)
 
     if response_expand?
-      list = []
-      online_notifications.each do |item|
-        list.push item.attributes_with_association_names
-      end
+      list = online_notifications.map(&:attributes_with_association_names)
       render json: list, status: :ok
       return
     end
@@ -76,10 +73,7 @@ curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password}
       return
     end
 
-    all = []
-    online_notifications.each do |item|
-      all.push item.attributes_with_association_ids
-    end
+    all = online_notifications.map(&:attributes_with_association_ids)
     render json: all, status: :ok
   end
 

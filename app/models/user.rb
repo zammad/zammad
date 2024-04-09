@@ -479,33 +479,35 @@ returns
     if keys.class != Array
       keys = [keys]
     end
-    total_role_ids = []
     permission_ids = []
-    keys.each do |key|
-      role_ids = []
-      ::Permission.with_parents(key).each do |local_key|
-        permission = ::Permission.lookup(name: local_key)
-        next if !permission
 
-        permission_ids.push permission.id
-      end
-      next if permission_ids.blank?
+    total_role_ids = keys
+      .filter_map do |key|
+        ::Permission.with_parents(key).each do |local_key|
+          permission = ::Permission.lookup(name: local_key)
+          next if !permission
 
-      Role.joins(:permissions_roles).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct.pluck(:id).each do |role_id|
-        role_ids.push role_id
+          permission_ids.push permission.id
+        end
+        next if permission_ids.blank?
+
+        Role
+          .joins(:permissions_roles)
+          .joins(:permissions)
+          .where(permissions_roles: { permission_id: permission_ids }, roles: { active: true }, permissions: { active: true })
+          .distinct
+          .pluck(:id)
       end
-      total_role_ids.push role_ids
-    end
+      .flatten
+
     return [] if total_role_ids.blank?
 
-    condition = ''
-    total_role_ids.each do |_role_ids|
-      if condition != ''
-        condition += ' OR '
-      end
-      condition += 'roles_users.role_id IN (?)'
-    end
-    User.joins(:roles_users).where("(#{condition}) AND users.active = ?", *total_role_ids, true).distinct.reorder(:id)
+    User
+      .joins(:roles_users)
+      .where(users: { active: true })
+      .where(roles_users: { role_id: total_role_ids })
+      .distinct
+      .reorder(:id)
   end
 
   # Find a user by mobile number, either directly or by number variants stored in the Cti::CallerIds.

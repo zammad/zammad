@@ -22,10 +22,7 @@ curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-
     recent_viewed = RecentView.list(current_user, 10)
 
     if response_expand?
-      list = []
-      recent_viewed.each do |item|
-        list.push item.attributes_with_association_names
-      end
+      list = recent_viewed.map(&:attributes_with_association_names)
       render json: list, status: :ok
       return
     end
@@ -44,10 +41,7 @@ curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-
       return
     end
 
-    all = []
-    recent_viewed.each do |item|
-      all.push item.attributes_with_association_ids
-    end
+    all = recent_viewed.map(&:attributes_with_association_ids)
     render json: all, status: :ok
   end
 

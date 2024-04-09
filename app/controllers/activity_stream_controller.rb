@@ -8,10 +8,7 @@ class ActivityStreamController < ApplicationController
     activity_stream = current_user.activity_stream(params[:limit])
 
     if response_expand?
-      list = []
-      activity_stream.each do |item|
-        list.push item.attributes_with_association_names
-      end
+      list = activity_stream.map(&:attributes_with_association_names)
       render json: list, status: :ok
       return
     end
@@ -30,10 +27,7 @@ class ActivityStreamController < ApplicationController
       return
     end
 
-    all = []
-    activity_stream.each do |item|
-      all.push item.attributes_with_association_ids
-    end
+    all = activity_stream.map(&:attributes_with_association_ids)
     render json: all, status: :ok
   end
 end

@@ -50,15 +50,16 @@ get list of translations
     locale = locale.downcase
 
     Rails.cache.fetch("#{self}/#{latest_change}/lang/#{locale}") do
-      list = []
-      translations = Translation.where(locale: locale).where.not(target: '').reorder(:source)
-      translations.each do |item|
-        list.push [
-          item.id,
-          item.source,
-          item.target,
-        ]
-      end
+      list = Translation
+        .where(locale: locale).where.not(target: '')
+        .reorder(:source)
+        .map do |item|
+          [
+            item.id,
+            item.source,
+            item.target,
+          ]
+        end
 
       {
         'total' => Translation.where(locale: locale).count,
