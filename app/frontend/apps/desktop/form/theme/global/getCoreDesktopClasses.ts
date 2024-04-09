@@ -30,7 +30,7 @@ export const getCoreDesktopClasses: FormThemeExtension = (
         'flex-grow formkit-disabled:opacity-50 formkit-disabled:pointer-events-none',
       block: 'flex items-end',
       label:
-        'block mb-1 text-sm text-gray-100 dark:text-neutral-400 formkit-required:required formkit-invalid:text-red-500 formkit-errors:text-red-500',
+        'block -:mb-1 text-sm text-gray-100 dark:text-neutral-400 formkit-required:required formkit-invalid:text-red-500 formkit-errors:text-red-500',
       inner: 'rounded-lg text-sm',
       messages: 'mt-1 formkit-invalid:text-red-500 formkit-errors:text-red-500',
       help: 'text-stone-200 dark:text-neutral-500 mt-1',
