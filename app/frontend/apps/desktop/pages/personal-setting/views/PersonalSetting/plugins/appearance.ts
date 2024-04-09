@@ -6,6 +6,7 @@ export default <PersonalSettingPlugin>{
   label: __('Appearance'),
   category: {
     label: __('Profile'),
+    id: 'category-profile',
     order: 1000,
   },
   route: {

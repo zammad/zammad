@@ -6,6 +6,7 @@ export default <PersonalSettingPlugin>{
   label: __('Devices'),
   category: {
     label: __('Security'),
+    id: 'category-security',
     order: 9000,
   },
   route: {

@@ -6,6 +6,7 @@ export default <PersonalSettingPlugin>{
   label: __('Language'),
   category: {
     label: __('Profile'),
+    id: 'category-profile',
     order: 1000,
   },
   route: {

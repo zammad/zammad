@@ -12,10 +12,12 @@ const renderMenu = () => {
       categories: [
         {
           label: 'Personal',
+          id: 'category-personal',
           order: 10,
         },
         {
           label: 'Security',
+          id: 'category-security',
           order: 20,
         },
       ],
@@ -63,17 +65,20 @@ describe('menu', () => {
 
   it('supports collapsing sections', async () => {
     const view = renderMenu()
-    const collapseButton = view.queryAllByLabelText('collapse').at(0)
+    const collapseButton = view.getAllByLabelText('Collapse this element').at(0)
+
     expect(view.queryByText('Personal')).toBeInTheDocument()
+
     await view.events.click(collapseButton as HTMLElement)
-    expect(view.queryByText('Downloads')).not.toBeInTheDocument()
-    expect(view.queryByText('Calls')).not.toBeInTheDocument()
+
+    expect(view.queryByText('Downloads')).not.toBeVisible()
+    expect(view.queryByText('Calls')).not.toBeVisible()
   })
 })
 
 describe('menu filtering', () => {
   const filterBy = async (view: ExtendedRenderResult, input: string) => {
-    view.getByText('filter').click()
+    view.getByText('apply filter').click()
     await waitForNextTick()
     await view.events.type(view.getByRole('searchbox'), input)
     await waitForNextTick()
@@ -140,14 +145,14 @@ describe('menu filtering', () => {
 
     await filterBy(view, 'nonexistantkeyword')
 
-    expect(view.queryByText('filter')).not.toBeInTheDocument()
+    expect(view.queryByText('apply filter')).not.toBeInTheDocument()
     expect(view.queryByText('Personal')).not.toBeInTheDocument()
 
     view.getByLabelText('Clear filter').click()
 
     await waitForNextTick()
 
-    expect(view.queryByText('filter')).toBeInTheDocument()
+    expect(view.queryByText('apply filter')).toBeInTheDocument()
     expect(view.queryByText('Personal')).toBeInTheDocument()
   })
 })

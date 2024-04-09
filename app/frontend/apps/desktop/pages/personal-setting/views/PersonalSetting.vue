@@ -20,6 +20,7 @@ const { gridColumns, collapseSidebar, expandSidebar } =
     :style="gridColumns"
   >
     <LayoutSidebar
+      id="personal-settings-sidebar"
       :name="storageKeyId"
       collapsible
       class="bg-blue-50 dark:bg-gray-800"

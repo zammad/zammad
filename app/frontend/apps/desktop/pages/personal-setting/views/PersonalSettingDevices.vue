@@ -11,7 +11,7 @@ const { breadcrumbItems } = useBreadcrumb(__('Devices'))
 <template>
   <LayoutContent provide-default :breadcrumb-items="breadcrumbItems">
     <div class="max-w-[600px] mb-4">
-      <CommonLabel>{{ __('Coming soon...') }}</CommonLabel>
+      <CommonLabel>{{ 'Coming soon…' }}</CommonLabel>
     </div>
   </LayoutContent>
 </template>

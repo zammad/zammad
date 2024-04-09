@@ -32,6 +32,7 @@ describe('CollapseButton', () => {
     async ({ isCollapsed, orientation, icon }) => {
       const wrapper = renderComponent(CollapseButton, {
         props: {
+          ownerId: 'test',
           isCollapsed,
           orientation,
         },
@@ -73,6 +74,7 @@ describe('CollapseButton', () => {
 
       const wrapper = renderComponent(CollapseButton, {
         props: {
+          ownerId: 'test',
           isCollapsed,
           orientation,
         },
@@ -85,6 +87,7 @@ describe('CollapseButton', () => {
   it('emits toggle-collapse event on click', async () => {
     const wrapper = renderComponent(CollapseButton, {
       props: {
+        ownerId: 'test',
         isCollapsed: true,
       },
     })
@@ -95,7 +98,11 @@ describe('CollapseButton', () => {
   })
 
   it('renders the button by default', () => {
-    const wrapper = renderComponent(CollapseButton)
+    const wrapper = renderComponent(CollapseButton, {
+      props: {
+        ownerId: 'test',
+      },
+    })
 
     expect(wrapper.getByRole('button')).toBeInTheDocument()
   })
@@ -103,6 +110,7 @@ describe('CollapseButton', () => {
   it('shows only on hover for non-touch devices', () => {
     const wrapper = renderComponent(CollapseButton, {
       props: {
+        ownerId: 'test',
         group: 'sidebar',
       },
     })
@@ -124,6 +132,7 @@ describe('CollapseButton', () => {
 
     const wrapper = renderComponent(CollapseButton, {
       props: {
+        ownerId: 'test',
         group: 'test',
       },
     })

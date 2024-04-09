@@ -7,6 +7,8 @@ class Translation < ApplicationModel
 
   validates :locale, presence: true
 
+  scope :sources, -> { where(locale: 'en-us', is_synchronized_from_codebase: true) }
+
   scope :details, -> { select(:id, :locale, :source, :target, :target_initial, :is_synchronized_from_codebase) }
 
   scope :customized, -> { where('target_initial != target OR is_synchronized_from_codebase = false').reorder(locale: :asc, source: :asc) }
@@ -185,18 +187,6 @@ or
     record.sub!('yyyy', date.year.to_s)
     record.sub!('yy', date.year.to_s.last(2))
     record
-  end
-
-  def self.remote_translation_need_update?(raw, translations)
-    translations.each do |row|
-      next if row[1] != raw['locale']
-      next if row[2] != raw['source']
-      return false if row[3] == raw['target'] # no update if target is still the same
-      return false if row[3] != row[4] # no update if translation has already changed
-
-      return [true, Translation.find(row[0])]
-    end
-    [true, nil]
   end
 
   def reset

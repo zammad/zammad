@@ -9,7 +9,6 @@ import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.
 import { useSessionStore } from '#shared/stores/session.ts'
 
 const noTransition = ref(false)
-
 const { userId } = useSessionStore()
 const storageKeyId = `${userId}-left`
 const {
@@ -27,7 +26,9 @@ const {
     :class="{ 'transition-none': noTransition }"
     :style="gridColumns"
   >
+    <!-- :TODO fix est-lint ltr/rtl right rule to avoid complaining about left id    -->
     <LayoutSidebar
+      id="main-sidebar"
       :name="storageKeyId"
       collapsible
       resizable

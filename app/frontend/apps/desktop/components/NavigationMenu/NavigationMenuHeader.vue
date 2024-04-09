@@ -6,6 +6,7 @@ import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vu
 interface Props {
   collapsed?: boolean
   title: string
+  id: string
   collapsible?: boolean
 }
 
@@ -32,6 +33,7 @@ withDefaults(defineProps<Props>(), {
     <CollapseButton
       v-if="collapsible"
       :is-collapsed="collapsed"
+      :owner-id="id"
       group="heading"
       class="rtl:order-1 mt-0.5"
       orientation="vertical"

@@ -52,7 +52,9 @@ describe('Left sidebar', () => {
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
-      const collapseButton = getByRole(aside, 'button', { name: 'collapse' })
+      const collapseButton = getByRole(aside, 'button', {
+        name: 'Collapse this element',
+      })
 
       await view.events.click(collapseButton)
 
@@ -60,7 +62,9 @@ describe('Left sidebar', () => {
         gridTemplateColumns: '48px 1fr',
       })
 
-      const expandButton = getByRole(aside, 'button', { name: 'expand' })
+      const expandButton = getByRole(aside, 'button', {
+        name: 'Expand this element',
+      })
 
       await view.events.click(expandButton)
 

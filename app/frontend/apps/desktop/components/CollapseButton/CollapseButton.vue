@@ -10,8 +10,9 @@ import { EnumTextDirection } from '#shared/graphql/types.ts'
 const { isTouchDevice } = useTouchDevice()
 
 interface Props {
+  ownerId: string
   isCollapsed?: boolean
-  group?: string
+  group?: 'heading' | 'sidebar'
   orientation?: 'horizontal' | 'vertical'
 }
 
@@ -60,7 +61,13 @@ const parentGroupClass = computed(() => {
       ]"
       class="collapse-button"
       :icon="collapseButtonIcon"
-      :aria-label="props.isCollapsed ? $t('expand') : $t('collapse')"
+      :aria-expanded="!props.isCollapsed"
+      :aria-controls="ownerId"
+      :aria-label="
+        props.isCollapsed
+          ? $t('Expand this element')
+          : $t('Collapse this element')
+      "
       size="small"
       variant="subtle"
       @click="$emit('toggle-collapse', $event)"

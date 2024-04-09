@@ -14,6 +14,7 @@ interface Props {
   collapsible?: boolean
   iconCollapsed?: string
   resizable?: boolean
+  id: string
 }
 
 const props = defineProps<Props>()
@@ -38,6 +39,7 @@ const { startResizing } = useResizeWidthHandle(emit, resizeHandle)
 
 <template>
   <aside
+    :id="props.id"
     class="group/sidebar p-3 relative h-full flex flex-col -:bg-neutral-950 border-e border-neutral-100 dark:border-gray-900"
     :class="{
       'px-2': isCollapsed,
@@ -46,6 +48,7 @@ const { startResizing } = useResizeWidthHandle(emit, resizeHandle)
     <CollapseButton
       v-if="collapsible"
       :is-collapsed="isCollapsed"
+      :owner-id="id"
       group="sidebar"
       class="absolute top-[49px] rtl:left-0 ltr:right-0 rtl:-translate-x-1/2 ltr:translate-x-1/2 z-10"
       @toggle-collapse="toggleCollapse"

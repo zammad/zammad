@@ -97,6 +97,7 @@ const allFilteredEntries = computed<NavigationMenuEntry[]>(() => {
     >
       <template v-if="permittedEntries[category.label].length > 0">
         <NavigationMenuHeader
+          :id="category.id"
           class="px-2 mb-1"
           :collapsed="collapsedCategories.has(category.label)"
           :title="category.label"
@@ -107,10 +108,11 @@ const allFilteredEntries = computed<NavigationMenuEntry[]>(() => {
 
         <Transition name="slide" mode="out-in">
           <NavigationMenuList
-            v-if="
+            v-show="
               permittedEntries[category.label] &&
               !collapsedCategories.has(category.label)
             "
+            :id="category.id"
             :items="permittedEntries[category.label]"
           />
         </Transition>

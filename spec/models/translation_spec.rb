@@ -134,74 +134,6 @@ RSpec.describe Translation do
 
   end
 
-  context 'remote_translation_need_update? tests' do
-
-    it 'translation is still the same' do
-      translation = described_class.where(locale: 'de-de').last
-      translations = described_class.where(locale: 'de-de').pluck(:id, :locale, :source, :target, :target_initial).to_a
-      expect(
-        described_class.remote_translation_need_update?(
-          {
-            'source'         => translation.source,
-            'locale'         => translation.locale,
-            'target'         => translation.target,
-            'target_initial' => translation.target_initial,
-          }, translations
-        )
-      ).to be false
-    end
-
-    it 'translation target has locally changed' do
-      translation = described_class.where(locale: 'de-de').last
-      translation.target = 'some new translation'
-      translation.save!
-      translations = described_class.where(locale: 'de-de').pluck(:id, :locale, :source, :target, :target_initial).to_a
-      expect(
-        described_class.remote_translation_need_update?(
-          {
-            'source'         => translation.source,
-            'locale'         => translation.locale,
-            'target'         => translation.target,
-            'target_initial' => translation.target_initial,
-          }, translations
-        )
-      ).to be false
-    end
-
-    it 'translation target has remotely changed' do
-      translation = described_class.where(locale: 'de-de').last
-      translations = described_class.where(locale: 'de-de').pluck(:id, :locale, :source, :target, :target_initial).to_a
-      (result, translation_result) = described_class.remote_translation_need_update?(
-        {
-          'source'         => translation.source,
-          'locale'         => translation.locale,
-          'target'         => 'some new translation by remote',
-          'target_initial' => 'some new translation by remote',
-        }, translations
-      )
-      expect(result).to be true
-      expect(translation_result.attributes).to eq translation.attributes
-    end
-
-    it 'translation target has remotely and locally changed' do
-      translation = described_class.where(locale: 'de-de').last
-      translation.target = 'some new translation'
-      translation.save!
-      translations = described_class.where(locale: 'de-de').pluck(:id, :locale, :source, :target, :target_initial).to_a
-      expect(
-        described_class.remote_translation_need_update?(
-          {
-            'source'         => translation.source,
-            'locale'         => translation.locale,
-            'target'         => 'some new translation by remote',
-            'target_initial' => 'some new translation by remote',
-          }, translations
-        )
-      ).to be false
-    end
-
-  end
-
   context 'custom translation tests' do
 
     it 'cycle of change and reload translation' do
@@ -265,6 +197,12 @@ RSpec.describe Translation do
 
   end
 
+  describe 'scope -> sources' do
+    it 'returns an source strings' do
+      expect(described_class.sources.count).to be_positive
+    end
+  end
+
   describe 'scope -> customized' do
     context 'when no customized translations exist' do
       it 'returns an empty array' do
@@ -311,7 +249,7 @@ RSpec.describe Translation do
     end
   end
 
-  describe 'reset' do
+  describe '#reset' do
     context 'when record is not synced from codebase' do
       subject(:translation) { create(:translation, locale: 'de-de', source: 'A example', target: 'Ein Beispiel') }
 
@@ -338,6 +276,12 @@ RSpec.describe Translation do
           expect { translation.reset }.to change { translation.reload.target }.to(translation.target_initial)
         end
       end
+    end
+  end
+
+  describe 'source string quality' do
+    it 'strings use the unicode ellipsis sign (…) rather than three dots (...)' do
+      expect(described_class.sources.where("source LIKE '%...%'").pluck(:source)).to eq([])
     end
   end
 end

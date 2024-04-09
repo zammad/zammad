@@ -14,27 +14,32 @@ describe('LayoutSidebar', () => {
       view = renderComponent(LayoutSidebar, {
         props: {
           name: 'testBar-collapsible',
+          id: 'sidebar-test',
           collapsible: true,
           resizable: false,
         },
       })
     })
     it('shows CollapseButton in expanded state when collapsible is true', async () => {
-      expect(view.queryByLabelText('expand')).not.toBeInTheDocument()
+      expect(
+        view.queryByLabelText('Expand this element'),
+      ).not.toBeInTheDocument()
       // By default, is expanded and aria label shows collapse action
-      expect(view.queryByLabelText('collapse')).toBeInTheDocument()
+      expect(view.queryByLabelText('Collapse this element')).toBeInTheDocument()
     })
     it('does not show CollapseButton when collapsible is false', async () => {
       await view.rerender({ collapsible: false })
-      expect(view.queryByLabelText('collapse')).not.toBeInTheDocument()
-      expect(view.queryByLabelText('expand')).not.toBeInTheDocument()
+      expect(
+        view.queryByLabelText('collapse this item'),
+      ).not.toBeInTheDocument()
+      expect(view.queryByLabelText('expand this item')).not.toBeInTheDocument()
     })
     it('hides action Button when no iconCollapsed is provided', async () => {
       expect(view.queryByTestId('action-button')).not.toBeInTheDocument()
     })
     it('shows an action Button when iconCollapsed is provided and sidebar is collapsed', async () => {
       await view.rerender({ iconCollapsed: 'person-gear' })
-      const collapseButton = await view.findByLabelText('collapse')
+      const collapseButton = await view.findByLabelText('Collapse this element')
       await view.events.click(collapseButton)
       expect(view.queryByTestId('action-button')).toBeInTheDocument()
     })
@@ -45,6 +50,7 @@ describe('LayoutSidebar', () => {
       view = renderComponent(LayoutSidebar, {
         props: {
           name: 'testBar-resize',
+          id: 'sidebar-test',
           collapsible: false,
           resizable: true,
         },
@@ -85,7 +91,7 @@ describe('LayoutSidebar', () => {
     })
     it('hides ResizeHandle when sidebar is collapsed', async () => {
       await view.rerender({ collapsible: true })
-      const collapseButton = await view.findByLabelText('collapse')
+      const collapseButton = await view.findByLabelText('Collapse this element')
       await view.events.click(collapseButton)
       expect(view.queryByLabelText('resize sidebar')).not.toBeInTheDocument()
     })

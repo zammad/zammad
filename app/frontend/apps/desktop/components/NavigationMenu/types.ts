@@ -5,6 +5,7 @@ import type { RouteRecordRaw } from 'vue-router'
 export type NavigationMenuCategory = {
   label: string
   icon?: string
+  id: string
   order: number
   collapsed?: boolean
 }

@@ -62,13 +62,13 @@ watchEffect(() => {
       prefix-icon="filter"
       @click="openFilterField"
     >
-      {{ $t('filter') }}
+      {{ $t('apply filter') }}
     </CommonButton>
 
     <input
       ref="searchTextField"
       v-model.trim="searchText"
-      :placeholder="$t('Filter settings…')"
+      :placeholder="$t('Apply filter…')"
       class="w-0 duration-200 transition-[width] focus:outline-none bg-transparent text-sm text-black dark:text-white"
       :class="{ 'w-full': filterFieldOpen }"
       type="text"
