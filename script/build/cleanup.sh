@@ -28,9 +28,6 @@ rm coffeelint.json
 rm -rf .coffeelint
 rm .overcommit.*
 
-# misc
-rm .codeclimate.yml
-
 # Yard
 rm .yardopts
 rm -rf .yard

@@ -32,11 +32,6 @@
   extends:
     - .template_lint_rails
   cache: !reference [.cache, read_only_full]
-  artifacts:
-    expire_in: 1 week
-    paths:
-      - tmp/brakeman-report.html
-    when: on_failure
   script:
     - !reference [.scripts, yarn_install]
     - echo "Checking .po file syntax…"
@@ -45,8 +40,6 @@
     - bundle exec rails generate zammad:translation_catalog --check
     - echo "Checking consistency of Settings types file…"
     - bundle exec rails generate zammad:setting_types --check
-    - echo "Brakeman security check…"
-    - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
     - echo "Rails zeitwerk:check autoloader check…"
     - bundle exec rails zeitwerk:check
     - .gitlab/check_graphql_api_consistency.sh
@@ -57,6 +50,12 @@
   before_script:
     - !reference [.scripts, source_rvm]
     - !reference [.scripts, bundle_install]
+  after_script: []
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - tmp/brakeman-report.html
+    when: on_failure
   script:
     - echo "Rubocop check…"
     - bundle exec .rubocop/validate_todos.rb
@@ -65,18 +64,12 @@
     - gem install bundler-audit
     - bundle-audit update
     - bundle-audit
+    - echo "Brakeman security check…"
+    - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
     - echo "Checking if yard can generate documentation…"
     - bundle exec yard --no-output --no-progress
-    - echo "Checking if chat assets need a rebuild…"
-    - echo "Please see public/assets/chat/README.md for build instructions."
-    - cp public/assets/chat/chat.js tmp/chat.js
-    - yarn install --cwd public/assets/chat
-    - (cd public/assets/chat && npx gulp build)
-    - echo "First characters of public/assets/chat/chat.js"
-    - head -c300 public/assets/chat/chat.js; echo # Insert newline after chat content
-    - echo "First characters of tmp/chat.js"
-    - head -c300 tmp/chat.js; echo # Insert newline after chat content
-    - cmp public/assets/chat/chat.js tmp/chat.js
+    - echo "Finally, ensure cleanup.sh passes…"
+    - script/build/cleanup.sh
 
 'lint: coffee & css':
   extends:
@@ -89,6 +82,12 @@
     - coffeelint --rules ./.coffeelint/rules/* app/
     - echo "Stylelint check…"
     - yarn lint:css
+    - echo "Checking if chat assets need a rebuild…"
+    - echo "Please see public/assets/chat/README.md for build instructions."
+    - cp public/assets/chat/chat.js tmp/chat.js
+    - yarn install --cwd public/assets/chat
+    - (cd public/assets/chat && npx gulp build)
+    - cmp public/assets/chat/chat.js tmp/chat.js
 
 'lint: js':
   extends:
