@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-08 08:32+0000\n"
+"PO-Revision-Date: 2024-04-10 01:05+0000\n"
 "Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -1829,6 +1829,10 @@ msgstr "Gemeinsamen Entwurf übernehmen"
 msgid "Apply current defaults to all agents"
 msgstr "Standardwerte für alle Agenten setzen"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+msgid "Apply filter…"
+msgstr "Filter anwenden…"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
@@ -3272,13 +3276,13 @@ msgstr "Geschlossene Tickets"
 msgid "Closing time"
 msgstr "Schließzeit"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Collapse this element"
+msgstr "Dieses Element zuklappen"
+
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Farbdarstellung des offenen Tickets in der Sidebar."
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
-msgid "Coming soon..."
-msgstr "Coming soon..."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
@@ -6651,6 +6655,10 @@ msgstr "Vorhandene Tickets"
 msgid "Existing tickets (open)"
 msgstr "Vorhandene Tickets (offen)"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Expand this element"
+msgstr "Dieses Element aufklappen"
+
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Expert"
 msgstr "Experte"
@@ -6816,10 +6824,6 @@ msgstr "Dateisystem"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "Filter"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-msgid "Filter settings…"
-msgstr "Filtereinstellungen…"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Find a ticket"
@@ -18301,6 +18305,10 @@ msgstr "erneut"
 msgid "and"
 msgstr "und"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+msgid "apply filter"
+msgstr "Filter anwenden"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
 msgstr "archiviert"
@@ -18413,10 +18421,6 @@ msgstr "schließen"
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "geschlossen"
-
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "collapse"
-msgstr "einklappen"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "connected"
@@ -18668,10 +18672,6 @@ msgstr "Eskalation %s"
 msgid "example macro"
 msgstr "Beispiel-Makro"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "expand"
-msgstr "ausklappen"
-
 #: db/seeds/ticket_article_types.rb
 msgid "facebook direct-message"
 msgstr "Facebook Direkt-Nachricht"
@@ -18702,10 +18702,6 @@ msgstr "befüllen mit"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr "befüllen mit (wenn leer)"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-msgid "filter"
-msgstr "Filter"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -19347,7 +19343,7 @@ msgstr "an den Kunden gesendet"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 msgid "session,sessions,computer,computers,browser,browsers,access"
-msgstr "Sitzung, Sitzungen, Computer, Computer, Browser, Browser, Zugriff"
+msgstr "Sitzung,Sitzungen,Computer,Computer,Browser,Zugriff"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19463,7 +19459,7 @@ msgstr "persönliche Telegram-Nachricht"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
 msgid "theme,color,style,dark mode,night mode,light mode"
-msgstr "Farbschema, Farbe, Stil, dunkler Modus, Nachtmodus, heller Modus"
+msgstr "Farbschema,Farbe,Stil,dunkler Modus,Nachtmodus,heller Modus"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "this ticket was merged into ticket %s"
@@ -19517,7 +19513,7 @@ msgstr "heute"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 msgid "translation,locale,localization"
-msgstr "Übersetzung, Region, Lokalisierung"
+msgstr "Übersetzung,Region,Lokalisierung"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "trigger '%s' was performed because pending reminder was reached"
@@ -19654,6 +19650,21 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "Coming soon..."
+#~ msgstr "Coming soon..."
+
+#~ msgid "Filter settings…"
+#~ msgstr "Filtereinstellungen…"
+
+#~ msgid "collapse"
+#~ msgstr "einklappen"
+
+#~ msgid "expand"
+#~ msgstr "ausklappen"
+
+#~ msgid "filter"
+#~ msgstr "Filter"
 
 #~ msgid "Sidebar"
 #~ msgstr "Seitenleiste"

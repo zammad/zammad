@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-25 06:04+0000\n"
-"Last-Translator: JPB <jeffreypeerboom@eijsden-margraten.nl>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
-"development/nl/>\n"
+"PO-Revision-Date: 2024-04-10 13:23+0000\n"
+"Last-Translator: Rowdy van der Veen <rowdy@rowdyengeesje.nl>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
+"zammad-development/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -878,10 +878,14 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "A color scheme that uses dark-colored elements on a light background."
 msgstr ""
+"Een kleurenschema dat gebruik maakt van donkere elementen op een lichte "
+"achtergrond."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "A color scheme that uses light-colored elements on a dark background."
 msgstr ""
+"Een kleurenschema dat gebruikmaakt van lichte elementen op een donkere "
+"achtergrond."
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
@@ -1553,6 +1557,10 @@ msgid ""
 "tickets will be deleted and a history entry preserved. There is no rollback "
 "of this deletion possible."
 msgstr ""
+"Alle betrokken gebruikers en hun tickets worden verwijderd als deze taak "
+"wordt uitgevoerd. Als de privacy-taak is uitgevoerd, worden gebruikers en "
+"tickets verwijderd. Het feit dat deze gegevens verwijderd zijn, wordt "
+"gelogd. Het is niet mogelijk om deze verwijderactie ongedaan te maken."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "All agents"
@@ -1820,6 +1828,12 @@ msgstr "Gedeeld concept accepteren"
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Apply current defaults to all agents"
 msgstr "Huidige standaardwaarden toepassen op alle behandelaren"
+
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Apply Draft"
+msgid "Apply filter…"
+msgstr "Concept accepteren"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2090,15 +2104,15 @@ msgstr "Bijlagen"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in a Simple Storage Service."
-msgstr ""
+msgstr "Bijlagen worden opgeslagen in een Simple Storage Service (S3)."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the database."
-msgstr ""
+msgstr "Bijlagen worden opgeslagen in de database."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the filesystem."
-msgstr ""
+msgstr "Bijlagen worden opgeslagen in het bestandssysteem."
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
@@ -2110,6 +2124,8 @@ msgid ""
 "Attention! Changing the organization will update the user's most recent "
 "tickets to the new organization."
 msgstr ""
+"Let op! Als je de organisatie wijzigt, worden de recentste tickets van deze "
+"gebruiker ook overzet naar de nieuwe organisatie."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -2271,7 +2287,7 @@ msgstr "Mobiele frontend is uitgeschakeld."
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
 msgid "Automated Setup"
-msgstr ""
+msgstr "Automatische Setup"
 
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
@@ -2283,7 +2299,7 @@ msgstr "Automatische account-koppeling notificatie"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 msgid "Automatic reminders"
-msgstr ""
+msgstr "Automatische herinneringen"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2425,6 +2441,8 @@ msgid ""
 "Before you start, make sure to check the following points to ensure a smooth "
 "migration and usage of your Zammad instance:"
 msgstr ""
+"Voordat je begint: controleer de volgende punten zodat de migratie soepel "
+"verloopt en Zammad daarna goed werkt:"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
@@ -2433,7 +2451,7 @@ msgstr "Start doorgestuurd bericht"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue
 msgid "Beta"
-msgstr ""
+msgstr "Beta"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2557,7 +2575,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "CA"
-msgstr ""
+msgstr "CA"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -2778,7 +2796,7 @@ msgstr "Kan niet zowel reactietijd als updatetijd hebben."
 
 #: lib/external_data_source/errors.rb
 msgid "Cannot process external data source %s. %s"
-msgstr ""
+msgstr "Externe databron %s kan niet verwerkt worden. %s"
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
@@ -3263,13 +3281,13 @@ msgstr "Gesloten tickets"
 msgid "Closing time"
 msgstr "Afhandeltijd"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Collapse this element"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Kleurweergave van de open ticket-indicator in de zijbalk."
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
-msgid "Coming soon..."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
@@ -5676,13 +5694,11 @@ msgstr "Sleep om te herbestellen"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Drop files here"
-msgstr "Verwijder hier bestanden"
+msgstr "Sleep bestanden hierheen"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
-#, fuzzy
-#| msgid "Drop files here"
 msgid "Drop image file here"
-msgstr "Verwijder hier bestanden"
+msgstr "Sleep afbeeldingen hierheen"
 
 #: app/assets/javascripts/app/controllers/login.coffee
 msgid "Due to inactivity, you have been automatically logged out."
@@ -6696,6 +6712,10 @@ msgstr "Bekijkt ticket"
 msgid "Existing tickets (open)"
 msgstr "%s tickets gevonden"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Expand this element"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Expert"
 msgstr "Expert"
@@ -6866,12 +6886,6 @@ msgstr "Bestandssysteem"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "Filter"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Proxy Settings"
-msgid "Filter settings…"
-msgstr "Proxy instellingen"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Find a ticket"
@@ -18712,6 +18726,12 @@ msgstr "nogmaals"
 msgid "and"
 msgstr "en"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "User filter"
+msgid "apply filter"
+msgstr "Gebruikersfilter"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
 msgstr "gearchiveerd"
@@ -18824,10 +18844,6 @@ msgstr "sluiten"
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "gesloten"
-
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "collapse"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "connected"
@@ -19086,10 +19102,6 @@ msgstr "escalatie %s"
 msgid "example macro"
 msgstr "voorbeeld macro"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "expand"
-msgstr ""
-
 #: db/seeds/ticket_article_types.rb
 msgid "facebook direct-message"
 msgstr "facebook direct bericht"
@@ -19120,12 +19132,6 @@ msgstr "voer in"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr "vullen met (wanneer leeg)"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Filter"
-msgid "filter"
-msgstr "Filter"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -20104,6 +20110,16 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#, fuzzy
+#~| msgid "Proxy Settings"
+#~ msgid "Filter settings…"
+#~ msgstr "Proxy instellingen"
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "filter"
+#~ msgstr "Filter"
 
 #, fuzzy
 #~| msgid ""

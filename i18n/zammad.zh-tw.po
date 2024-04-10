@@ -2104,6 +2104,12 @@ msgstr ""
 msgid "Apply current defaults to all agents"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Apply"
+msgid "Apply filter…"
+msgstr "套用"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
@@ -3625,12 +3631,12 @@ msgstr "已關閉的工單"
 msgid "Closing time"
 msgstr "關閉時間"
 
-#: db/seeds/settings.rb
-msgid "Color representation of the open ticket indicator in the sidebar."
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Collapse this element"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
-msgid "Coming soon..."
+#: db/seeds/settings.rb
+msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
@@ -7041,6 +7047,10 @@ msgstr "新的工單"
 msgid "Existing tickets (open)"
 msgstr "指派工單"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Expand this element"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Expert"
 msgstr "專家"
@@ -7218,12 +7228,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "過濾器"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Proxy Settings"
-msgid "Filter settings…"
-msgstr "代理服務器設定"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy
@@ -19621,6 +19625,12 @@ msgstr "再一次"
 msgid "and"
 msgstr "和"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Clearbit"
+msgid "apply filter"
+msgstr "Clearbit"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
 msgstr ""
@@ -19741,10 +19751,6 @@ msgstr "關閉"
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "已關閉"
-
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "collapse"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "connected"
@@ -20016,10 +20022,6 @@ msgstr "提升層級"
 msgid "example macro"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "expand"
-msgstr ""
-
 #: db/seeds/ticket_article_types.rb
 #, fuzzy
 msgid "facebook direct-message"
@@ -20051,12 +20053,6 @@ msgstr "填寫"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr "填空"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Filter"
-msgid "filter"
-msgstr "過濾器"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -21106,6 +21102,16 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#, fuzzy
+#~| msgid "Proxy Settings"
+#~ msgid "Filter settings…"
+#~ msgstr "代理服務器設定"
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "filter"
+#~ msgstr "過濾器"
 
 #, fuzzy
 #~| msgid "A new version of Zammad is available, please reload your browser."

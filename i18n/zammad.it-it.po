@@ -1838,6 +1838,12 @@ msgstr "Applica bozza condivisa"
 msgid "Apply current defaults to all agents"
 msgstr "Applica gli attuali valori predefiniti a tutti gli operatori"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Apply Draft"
+msgid "Apply filter…"
+msgstr "Applica bozza"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
@@ -3288,15 +3294,15 @@ msgstr "Ticket Chiusi"
 msgid "Closing time"
 msgstr "Orario di chiusura"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Collapse this element"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 "Rappresentazione dei colori dell'indicatore dei ticket aperti nella barra "
 "laterale."
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
-msgid "Coming soon..."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
@@ -6749,6 +6755,10 @@ msgstr "Visualizzazione ticket"
 msgid "Existing tickets (open)"
 msgstr "%s ticket trovati"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Expand this element"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Expert"
 msgstr "Esperto"
@@ -6920,12 +6930,6 @@ msgstr "File system"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "Filtro"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Proxy Settings"
-msgid "Filter settings…"
-msgstr "Impostazioni Proxy"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Find a ticket"
@@ -18787,6 +18791,12 @@ msgstr "di nuovo"
 msgid "and"
 msgstr "e"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "User filter"
+msgid "apply filter"
+msgstr "Filtro utente"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
 msgstr "archiviato"
@@ -18899,10 +18909,6 @@ msgstr "chiudi"
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "chiuso"
-
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "collapse"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "connected"
@@ -19160,10 +19166,6 @@ msgstr "escalation %s"
 msgid "example macro"
 msgstr "Esempio di macro"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "expand"
-msgstr ""
-
 #: db/seeds/ticket_article_types.rb
 msgid "facebook direct-message"
 msgstr "messaggio diretto di facebook"
@@ -19194,12 +19196,6 @@ msgstr "riempi"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr "riempi elementi in bianco"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Filter"
-msgid "filter"
-msgstr "Filtro"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -20179,6 +20175,16 @@ msgstr "…dell'intera area di testo"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
+
+#, fuzzy
+#~| msgid "Proxy Settings"
+#~ msgid "Filter settings…"
+#~ msgstr "Impostazioni Proxy"
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "filter"
+#~ msgstr "Filtro"
 
 #, fuzzy
 #~| msgid ""

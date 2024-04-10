@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-08 08:38+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-04-09 08:23+0000\n"
+"Last-Translator: Benjamin Scharf <bs@zammad.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/es/>\n"
 "Language: es-es\n"
@@ -53,8 +53,8 @@ msgid ""
 "compatible object filesystem. You can switch between the modules even on a "
 "system that is already in production without any loss of data."
 msgstr ""
-"\"Base de datos\" almacena todos los archivos adjuntos en la base de datos ("
-"no se recomienda para almacenar grandes cantidades de datos). \"Sistema de "
+"\"Base de datos\" almacena todos los archivos adjuntos en la base de datos "
+"(no se recomienda para almacenar grandes cantidades de datos). \"Sistema de "
 "archivos\" almacena los datos en el sistema de archivos. \"Almacenamiento "
 "simple (S3)\" almacena los datos en un sistema de archivos de objetos remoto "
 "compatible con S3. Puede cambiar entre los módulos incluso en un sistema que "
@@ -1828,6 +1828,12 @@ msgstr "Aplicar borrador compartido"
 msgid "Apply current defaults to all agents"
 msgstr "Aplicar los valores por defecto actuales a todos los agentes"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Apply Draft"
+msgid "Apply filter…"
+msgstr "Aplicar borrador"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
@@ -3262,13 +3268,13 @@ msgstr "Cerrar Tickets"
 msgid "Closing time"
 msgstr "Tiempo de cierre"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Collapse this element"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Color de muestra para los tickets abiertos en la barra lateral."
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
-msgid "Coming soon..."
-msgstr "Próximamente..."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
@@ -3387,8 +3393,8 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"Confirma tu cuenta #{config.product_name}, #{user.firstname} #{user.lastname}"
-"\n"
+"Confirma tu cuenta #{config.product_name}, #{user.firstname} #{user."
+"lastname}\n"
 "\n"
 "<div>Hola, #{user.firstname}:</div>\n"
 "<br>\n"
@@ -6641,6 +6647,10 @@ msgstr "Tickets existentes"
 msgid "Existing tickets (open)"
 msgstr "Tickets existentes (abiertos)"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Expand this element"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Expert"
 msgstr "Experto"
@@ -6806,10 +6816,6 @@ msgstr "Sistema de archivos"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "Filtro"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-msgid "Filter settings…"
-msgstr "Ajustes del filtro…"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Find a ticket"
@@ -11959,8 +11965,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Este enlace le llevará a una página donde podrá cambiar la "
-"contraseña.</div>\n"
+"<div>Este enlace le llevará a una página donde podrá cambiar la contraseña.</"
+"div>\n"
 "<br>\n"
 "<div>Si no desea cambiar su contraseña, ignore este mensaje. Su contraseña "
 "no será restablecida.</div>\n"
@@ -12409,7 +12415,8 @@ msgstr "Clave de la lista de resultados"
 
 #: lib/external_data_source/errors.rb
 msgid "Search result list key \"%s\" is not an array."
-msgstr "La clave de la lista de resultados de búsqueda \"%s\" no es una matriz."
+msgstr ""
+"La clave de la lista de resultados de búsqueda \"%s\" no es una matriz."
 
 #: lib/external_data_source/errors.rb
 msgid "Search result list key \"%s\" was not found."
@@ -15365,7 +15372,8 @@ msgstr "Este campo está mal configurado y no puede enviarse."
 
 #: app/models/group.rb
 msgid "This group or its children exceed the allowed nesting depth."
-msgstr "Este grupo o sus hijos superan la profundidad de anidamiento permitida."
+msgstr ""
+"Este grupo o sus hijos superan la profundidad de anidamiento permitida."
 
 #: lib/email_helper/probe.rb
 msgid "This host cannot be reached."
@@ -16909,8 +16917,8 @@ msgid ""
 "Use 'with_private_keyring' to create a private keyring or set @gnupg_home "
 "before calling gpg."
 msgstr ""
-"Usa 'with_private_keyring' para crear un llavero privado o establece @"
-"gnupg_home antes de llamar a gpg."
+"Usa 'with_private_keyring' para crear un llavero privado o establece "
+"@gnupg_home antes de llamar a gpg."
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -18165,6 +18173,10 @@ msgid ""
 "or closed states. Take a look at our system object documentation for more "
 "information."
 msgstr ""
+"Zammad utiliza tipos de estado para saber qué debe hacer con tu estado. Esto "
+"te permite tener diferentes tipos como acciones pendientes, recordatorios "
+"pendientes o estados cerrados. Echa un vistazo a nuestra documentación de "
+"objetos de sistema para más información."
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
@@ -18252,6 +18264,12 @@ msgstr "Denuevo"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 msgid "and"
 msgstr "y"
+
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Clear filter"
+msgid "apply filter"
+msgstr "Borrar filtro"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
@@ -18365,10 +18383,6 @@ msgstr "cerrar"
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "cerrado"
-
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "collapse"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "connected"
@@ -18619,10 +18633,6 @@ msgstr "escalada %s"
 msgid "example macro"
 msgstr "macro de ejemplo"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "expand"
-msgstr ""
-
 #: db/seeds/ticket_article_types.rb
 msgid "facebook direct-message"
 msgstr "mensaje directo de facebook"
@@ -18653,12 +18663,6 @@ msgstr "llenar"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr "Rellenar vacío"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Filter"
-msgid "filter"
-msgstr "Filtro"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -19214,7 +19218,7 @@ msgstr "leído por el cliente"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "received merge"
-msgstr ""
+msgstr "fusión recibida"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "recovery codes"
@@ -19256,7 +19260,7 @@ msgstr "requerido"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
 msgid "resize sidebar"
-msgstr ""
+msgstr "redimensionar la barra lateral"
 
 #: db/seeds/settings.rb
 msgid "right"
@@ -19281,10 +19285,8 @@ msgstr "seleccione"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
-#, fuzzy
-#| msgid "set optional"
 msgid "select all options"
-msgstr "establecer opcional"
+msgstr "seleccionar todas las opciones"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -19292,21 +19294,17 @@ msgid "select attachment…"
 msgstr "seleccionar adjunto…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
-#, fuzzy
-#| msgid "Select All"
 msgid "select visible options"
-msgstr "Seleccionar todo"
+msgstr "seleccionar opciones visibles"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "sent to the customer"
-msgstr "Crear nuevo Cliente"
+msgstr "enviado al cliente"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 msgid "session,sessions,computer,computers,browser,browsers,access"
-msgstr ""
+msgstr "sesión,sesiones,ordenador,ordenadores,navegador,navegadores,acceso"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -19399,28 +19397,22 @@ msgid "split"
 msgstr "dividir"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#, fuzzy
-#| msgid "Users with \"%s\""
 msgid "starts with"
-msgstr "Usuarios con \"%s\""
+msgstr "empieza con"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
-#, fuzzy
-#| msgid "Users with \"%s\""
 msgid "starts with one of"
-msgstr "Usuarios con \"%s\""
+msgstr "comienza con una de"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "soporte@ejemplo.com"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "System"
 msgid "system"
-msgstr "Sistema"
+msgstr "sistema"
 
 #: db/seeds/ticket_article_types.rb
 msgid "telegram personal-message"
@@ -19428,7 +19420,7 @@ msgstr "mensaje personal de telegram"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
 msgid "theme,color,style,dark mode,night mode,light mode"
-msgstr ""
+msgstr "tema,color,estilo,modo oscuro,modo nocturno,modo claro"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "this ticket was merged into ticket %s"
@@ -19482,7 +19474,7 @@ msgstr "hoy"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 msgid "translation,locale,localization"
-msgstr ""
+msgstr "traducción,locale,localización"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "trigger '%s' was performed because pending reminder was reached"
@@ -19541,10 +19533,8 @@ msgid "welcome message"
 msgstr "mensaje de bienvenida"
 
 #: db/seeds/ticket_article_types.rb
-#, fuzzy
-#| msgid "Add a message"
 msgid "whatsapp message"
-msgstr "Añadir un mensaje"
+msgstr "mensaje de whatsapp"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
@@ -19621,6 +19611,21 @@ msgstr "...de toda la zona de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ tiempo de espera de hoy"
+
+#~ msgid "Coming soon..."
+#~ msgstr "Próximamente..."
+
+#~ msgid "Filter settings…"
+#~ msgstr "Ajustes del filtro…"
+
+#~ msgid "collapse"
+#~ msgstr "colapsar"
+
+#~ msgid "expand"
+#~ msgstr "ampliar"
+
+#~ msgid "filter"
+#~ msgstr "filtro"
 
 #, fuzzy
 #~| msgid ""

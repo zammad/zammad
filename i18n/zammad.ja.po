@@ -1739,6 +1739,12 @@ msgstr ""
 msgid "Apply current defaults to all agents"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Apply"
+msgid "Apply filter…"
+msgstr "適用"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
@@ -3260,12 +3266,12 @@ msgstr "完了チケット"
 msgid "Closing time"
 msgstr "閉店時間"
 
-#: db/seeds/settings.rb
-msgid "Color representation of the open ticket indicator in the sidebar."
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Collapse this element"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
-msgid "Coming soon..."
+#: db/seeds/settings.rb
+msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
@@ -6613,6 +6619,10 @@ msgstr "新規チケット"
 msgid "Existing tickets (open)"
 msgstr "チケット割り当て"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Expand this element"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Expert"
 msgstr "エキスパート"
@@ -6790,12 +6800,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "フィルタ"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Proxy Settings"
-msgid "Filter settings…"
-msgstr "プロキシ設定"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy
@@ -18682,6 +18686,12 @@ msgstr "再度"
 msgid "and"
 msgstr "-"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Caller log"
+msgid "apply filter"
+msgstr "電話履歴"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
 msgstr ""
@@ -18800,10 +18810,6 @@ msgstr "閉じる"
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "完了"
-
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "collapse"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "connected"
@@ -19075,10 +19081,6 @@ msgstr "エスカレーション"
 msgid "example macro"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "expand"
-msgstr ""
-
 #: db/seeds/ticket_article_types.rb
 #, fuzzy
 msgid "facebook direct-message"
@@ -19110,12 +19112,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr ""
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Filter"
-msgid "filter"
-msgstr "フィルタ"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -20157,6 +20153,16 @@ msgstr "... テキストエリア全体の"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Waiting time today"
+
+#, fuzzy
+#~| msgid "Proxy Settings"
+#~ msgid "Filter settings…"
+#~ msgstr "プロキシ設定"
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "filter"
+#~ msgstr "フィルタ"
 
 #, fuzzy
 #~| msgid "A new version of Zammad is available, please reload your browser."

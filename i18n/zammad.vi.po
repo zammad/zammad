@@ -1734,6 +1734,12 @@ msgstr ""
 msgid "Apply current defaults to all agents"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Apply"
+msgid "Apply filter…"
+msgstr "Áp dụng"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
@@ -3193,12 +3199,12 @@ msgstr "Ticket đã đóng"
 msgid "Closing time"
 msgstr "Thời gian đóng"
 
-#: db/seeds/settings.rb
-msgid "Color representation of the open ticket indicator in the sidebar."
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Collapse this element"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
-msgid "Coming soon..."
+#: db/seeds/settings.rb
+msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
@@ -6372,6 +6378,10 @@ msgstr "Thẻ mới"
 msgid "Existing tickets (open)"
 msgstr "cấp phát ticket"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Expand this element"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Expert"
 msgstr ""
@@ -6549,12 +6559,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "Lọc"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Personal Settings"
-msgid "Filter settings…"
-msgstr "Thiết lập cá nhân"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 #, fuzzy
@@ -18032,6 +18036,12 @@ msgstr "lần nữa"
 msgid "and"
 msgstr "và"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Clearbit"
+msgid "apply filter"
+msgstr "Clearbit"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
 msgstr ""
@@ -18149,10 +18159,6 @@ msgstr "đóng"
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "đóng"
-
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "collapse"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "connected"
@@ -18422,10 +18428,6 @@ msgstr "Phiếu tăng tốc"
 msgid "example macro"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "expand"
-msgstr ""
-
 #: db/seeds/ticket_article_types.rb
 msgid "facebook direct-message"
 msgstr ""
@@ -18456,12 +18458,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr ""
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Filter"
-msgid "filter"
-msgstr "Lọc"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -19467,6 +19463,16 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Thời gian chờ hôm nay"
+
+#, fuzzy
+#~| msgid "Personal Settings"
+#~ msgid "Filter settings…"
+#~ msgstr "Thiết lập cá nhân"
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "filter"
+#~ msgstr "Lọc"
 
 #, fuzzy
 #~| msgid "Create a Test Ticket"

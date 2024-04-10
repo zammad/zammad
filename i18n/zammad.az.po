@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-08 08:38+0000\n"
+"PO-Revision-Date: 2024-04-10 01:05+0000\n"
 "Last-Translator: IT SMBDA <it@smb.gov.az>\n"
 "Language-Team: Azerbaijani <https://translations.zammad.org/projects/zammad/"
 "zammad-development/az/>\n"
@@ -1679,6 +1679,12 @@ msgstr "Ümumi qaralama tətbiq et"
 msgid "Apply current defaults to all agents"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Apply Draft"
+msgid "Apply filter…"
+msgstr "Qaralama tətbiq et"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
@@ -3131,13 +3137,13 @@ msgstr "Qapalı Biletlər"
 msgid "Closing time"
 msgstr "Bağlanma vaxtı"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Collapse this element"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Yan paneldəki açıq tətbiq göstəricisinin rəng görünüşü."
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
-msgid "Coming soon..."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
@@ -6514,6 +6520,10 @@ msgstr "Mövcud biletlər"
 msgid "Existing tickets (open)"
 msgstr "Mövcud Biletlər (açıq)"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Expand this element"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Expert"
 msgstr "Ekspert"
@@ -6683,12 +6693,6 @@ msgstr "Fayl sistemi"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "Filter"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Configure Basic Settings"
-msgid "Filter settings…"
-msgstr "Əsas parametrlərin qurulması"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Find a ticket"
@@ -7667,25 +7671,28 @@ msgid ""
 "How many of your tickets are coming from email, phone, Twitter, or Facebook? "
 "(Shows percentages for both inbound and outbound tickets.)"
 msgstr ""
-"Biletlərinizin neçəsi e-poçt, telefon, Twitter və ya Facebook-dan gəlir? ("
-"Gələn və gedən sorğuların faiz dərəcəsini göstərir.)"
+"Biletlərinizin neçəsi e-poçt, telefon, Twitter və ya Facebook-dan gəlir? "
+"(Gələn və gedən sorğuların faiz dərəcəsini göstərir.)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee
 msgid ""
 "How many of your tickets have been re-opened after being marked “closed”?"
-msgstr ""
+msgstr "Biletlərinizdən neçəsi “qapalı” qeyd edildikdən sonra yenidən açılıb?"
 
 #: app/controllers/first_steps_controller.rb
+#, fuzzy
 msgid "How to use it"
-msgstr ""
+msgstr "Necə istifadə etməli"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
+#, fuzzy
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
+#, fuzzy
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #: db/seeds/settings.rb
 msgid "IDP SSO target URL"
@@ -7697,43 +7704,47 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "IDP certificate"
-msgstr ""
+msgstr "IDP sertifikatı"
 
 #: db/seeds/settings.rb
 msgid "IDP certificate fingerprint"
-msgstr ""
+msgstr "IDP sertifikatında barmaq izi"
 
 #: lib/email_helper.rb
+#, fuzzy
 msgid "IMAP"
-msgstr ""
+msgstr "IMAP"
 
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
+#, fuzzy
 msgid "Icinga"
-msgstr ""
+msgstr "Icinga"
 
 #: db/seeds/settings.rb
 msgid "Icinga integration"
-msgstr ""
+msgstr "Icinga inteqrasiyası"
 
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
+#, fuzzy
 msgid "Icon"
-msgstr ""
+msgstr "Icon"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Icon & Link Color"
-msgstr ""
+msgstr "İkon & link rəngi"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Icon Set"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
 msgid "Icon URL"
-msgstr ""
+msgstr "Icon URL"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Identifier of the chat topic."
-msgstr ""
+msgstr "Chat mövzu identifikatoru."
 
 #: db/seeds/settings.rb
 msgid "Idle timeout in seconds until agent is set offline automatically."
@@ -7744,6 +7755,8 @@ msgid ""
 "If a user is found in two (or more) configured LDAP sources, the last "
 "synchronisation will win."
 msgstr ""
+"İstifadəçi iki (və ya daha çox) xüsusi LDAP mənbəsində tapılarsa, son "
+"sinxronizasiyaya üstünlük veriləcək."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid ""
@@ -7751,6 +7764,9 @@ msgid ""
 "detection reads out the host from the <script> tag. If you don't include it "
 "via a <script> tag you need to specify the host."
 msgstr ""
+"Bu sahəni boş qoyduqda, host avtomatik olaraq aşkarlanacaq- bu halda % s. "
+"Avtomatik aşkarlama hostu <script> teqindən oxuyur. Əgər <script >teqi "
+"vasitəsilə aktivləşdirmirsinizsə, hostu göstərməlisiniz."
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
@@ -7760,102 +7776,129 @@ msgid ""
 "If the host and service have recovered, the ticket can be closed "
 "automatically."
 msgstr ""
+"Əgər host və xidmət bərpa olunarsa, tələb avtomatik olaraq bağlanıla bilər."
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
 msgstr ""
+"Əgər göndərən agentdirsə, alıcılar siyahısındakı ilk istifadəçini müştəri "
+"kimi təyin edin."
 
 #: db/seeds/settings.rb
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
+"Əgər bu regex uyğun gəlsə, göndərən tərəfindən heç bir bildiriş "
+"göndərilməyəcək."
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
+#, fuzzy
 msgid ""
 "If you don't receive instructions within a minute or two, check your email's "
 "spam and junk filters, or try resending your request."
 msgstr ""
+"Bir və ya iki dəqiqə ərzində təlimat alınmadıqda , elektron poçtunuzdakı "
+"\"Spam\" qovluğunu və lazımsız fayıl filtrlərini yoxlayın və ya sorğunuzu "
+"yenidən göndərməyə çalışın."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#, fuzzy
 msgid ""
 "If you don't see the email, check other places it might be, like your junk, "
 "spam, social, or other folders."
 msgstr ""
+"E-poçtu görmürsünüzsə, lazımsız poçt , spam, sosial və ya digər "
+"qovluqlarınız kimi digər yerləri yoxlayın."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue
+#, fuzzy
 msgid ""
 "If you have problems with the third-party login you can request a one-time "
 "password login as an admin."
 msgstr ""
+"Üçüncü tərəfə məxsus girişlə bağlı problemləriniz varsa, sistemə "
+"administrator kimi daxil olmaq üçün bir dəfəlik şifrə tələb edə bilərsiniz."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid ""
 "If you lose your recovery codes it's possible to generate new ones. This "
 "action is going to invalidate previous recovery codes."
 msgstr ""
+"Bərpa kodlarınızı itirilibsə, yenilərini yaratmaq mümkündür. Bu zaman "
+"əvvəlki bərpa kodları keçərsiz olacaq."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
 "If you want to move already stored attachments from one backend to another, "
 "you need to execute the following via console."
 msgstr ""
+"Əgər artıq yadda saxlanmış əlavələri bir server hissəsindən digərinə "
+"köçürmək istəyirsinizsə, bunu konsol vasitəsi ile aşağıdakıları yerinə "
+"yetirərək edə bilərsiz."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid ""
 "If you want to open the chat by clicking a button, set the option §show§ to "
 "§false§ and add the class §open-zammad-chat§ to the button."
 msgstr ""
+"Əgər düymə basaraq söhbəti açmaq istəyirsinizsə, §show§ üçün §false§ "
+"dəyərini təyin edin və düyməyə §open-zammad-chat§ sinifini əlavə edin."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid ""
 "If you want to use additional email addresses, you can configure them later."
 msgstr ""
+"Əlavə e-poçt ünvanlarından istifadə etmək istəyirsinizsə, onları daha sonra "
+"konfiqurasiya edə bilərsiniz."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid "Ignore Escalation"
-msgstr ""
+msgstr "Eskalasiyaya diqqət yetirmə"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Ignore Escalation/SLA Information"
-msgstr ""
+msgstr "Escalation/SLA Information diqqət yetirmə"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 msgid "Ignore Message"
-msgstr ""
+msgstr "Mesaja diqqət yetirmə"
 
 #: db/seeds/settings.rb
 msgid "Ignore escalation/SLA information for import."
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Ignore system_id"
-msgstr ""
+msgstr "system_id  diqqət yetirmə"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/insert_image_button.coffee
 msgid "Image"
-msgstr ""
+msgstr "Şəkil"
 
 #: db/seeds/settings.rb
 msgid "Image Service"
-msgstr ""
+msgstr "Şəkil xidməti"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Image file"
-msgstr ""
+msgstr "Şəkil faylı"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
-msgstr ""
+msgstr "Şəkil %s"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "Image preview"
@@ -7872,68 +7915,76 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#, fuzzy
 msgid "Import"
-msgstr ""
+msgstr "İdxal"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
 msgid "Import %s"
-msgstr ""
+msgstr "İdxal %s"
 
 #: app/controllers/import_otrs_controller.rb
+#, fuzzy
 msgid "Import API key could not be extracted from URL."
-msgstr ""
+msgstr "URL ünvanından idxal üçün API açarı çıxarılması mümkün olmadı."
 
 #: db/seeds/settings.rb
 msgid "Import API key for requesting the Freshdesk API"
-msgstr ""
+msgstr "Freshdesk API-ına sorğular üzərindən idxal üçün API açar"
 
 #: db/seeds/settings.rb
 msgid "Import API key for requesting the Zendesk API"
-msgstr ""
+msgstr "Zendesk API-ına sorğular üzərindən idxal üçün API açar"
 
 #: db/seeds/settings.rb
 msgid "Import Backend"
-msgstr ""
+msgstr "Backend idxal"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Import Backends"
-msgstr ""
+msgstr "Backend idxal"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Import Endpoint"
-msgstr ""
+msgstr "İdxal son nöqtəsi"
 
 #: db/seeds/settings.rb
 msgid "Import Key"
-msgstr ""
+msgstr "İdxal açarı"
 
 #: db/seeds/settings.rb
 msgid "Import Mode"
-msgstr ""
+msgstr "İdxal rejimi"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Import Password for HTTP basic authentication"
-msgstr ""
+msgstr "Əsas HTTP identifikasiyası üçün idxal şifrəsi"
 
 #: db/seeds/settings.rb
 msgid "Import Password for requesting the Kayako API"
-msgstr ""
+msgstr "Kayako API sorğusu üçün idxal şifrəsi"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Import User for HTTP basic authentication"
-msgstr ""
+msgstr "Əsas HTTP identifikasiyası üçün idxal istifadəçisi"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Import User for requesting the Kayako API"
-msgstr ""
+msgstr "Kayako API sorğusu üçün idxal istifadəçi"
 
 #: db/seeds/settings.rb
 msgid "Import User for requesting the Zendesk API"
-msgstr ""
+msgstr "Zendesk API tələb etmək üçün istifadəçini idxal edin"
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 msgid "Import as archive"
-msgstr ""
+msgstr "Arxiv kimi idxal et"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -7943,6 +7994,9 @@ msgid ""
 "and original timestamps are used. You can still find them in Zammad using "
 "the search."
 msgstr ""
+"Arxiv şəklində idxal: |Bildirişlər göndərilmir|, |biletlər bağlıdır| və "
+"orijinal vaxt damğalarından istifadə olunur. Axtarışdan istifadə edərək "
+"onları Zammad-da tapa bilərsiniz."
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 msgid "Import as regular"
@@ -7955,31 +8009,34 @@ msgid ""
 "Import as regular: |Notifications are sent| and the |tickets are open| - you "
 "can find the tickets in the overview of open tickets."
 msgstr ""
+"Həmişə olduğu kimi idxal edin: |Bildirişlər göndərildi| və |biletlər "
+"açıqdır| - açıq biletləri baxış bölməsində tapa bilərsiniz."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue
 msgid "Import finished successfully!"
-msgstr ""
+msgstr "İdxal uğurla başa çatdı!"
 
 #: app/assets/javascripts/app/views/import/index.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue
 msgid "Import from"
-msgstr ""
+msgstr "İdxal"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
 msgid "Import from %s"
-msgstr ""
+msgstr "İdxal %s"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
+#, fuzzy
 msgid "Import from Source"
-msgstr ""
+msgstr "Mənbədən idxal"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid "Important"
-msgstr ""
+msgstr "Əhəmiyyətli"
 
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
 msgid "Imported"
-msgstr ""
+msgstr "İdxal edilib"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -7991,16 +8048,24 @@ msgid ""
 "notifications are sent and the tickets have the status \"closed\". However, "
 "you can find them in Zammad anytime using the search function."
 msgstr ""
+"Bundan əlavə, poçt qutunuzda %s həftədən köhnə e-poçtlar tapıldı.Bu cür e-"
+"poçtları \"arxiv\" olaraq idxal edə bilərsiniz, bu da bildirişlərin "
+"göndərilmədiyi və biletlərin \"bağlanmış\" statusa malik olduğu deməkdir. "
+"Bununla belə, axtarış funksiyasından istifadə edərək onları Zammad -da "
+"istənilən vaxt tapa bilərsiniz."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
-msgstr ""
+msgstr "Zammad -ın %s əlavə edilməsi üçün burada %s API açarı saxlanmalıdır:"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+#, fuzzy
 msgid ""
 "In order to be able to influence the desired behavior in this regard, you "
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
+"Bu əlaqədəki davranışı təsir etmək üçün LDAP  mənbələrinin sırasını "
+"dəyişdirmək üçün onları"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -8017,7 +8082,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "Inbound Call"
-msgstr ""
+msgstr "Gələn zəng"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Inbound:"
@@ -8025,15 +8090,15 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Incident"
-msgstr ""
+msgstr "Hadisə"
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 msgid "Include attachments of the article?"
-msgstr ""
+msgstr "Məqaləyə qoşulmalar daxil edilsin?"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Included ticket overviews"
-msgstr ""
+msgstr "Daxil edilmiş bilet rəyləri"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -8044,16 +8109,16 @@ msgstr ""
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_zendesk_controller.rb
 msgid "Incomplete credentials"
-msgstr ""
+msgstr "Natamam hesab məlumatları"
 
 #: db/seeds/settings.rb
 msgid "Increment (SystemID.Counter)"
-msgstr ""
+msgstr "Artım (SystemID.Counter)"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Info: %s"
-msgstr ""
+msgstr "Məlumat: % s"
 
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -8074,26 +8139,30 @@ msgstr ""
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Information"
-msgstr ""
+msgstr "Məlumat"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue
+#, fuzzy
 msgid ""
 "Initiate the import process to transfer your data into Zammad. Keep track of "
 "the migration progress on this page to be notified as soon as the import is "
 "successfully finished."
 msgstr ""
+"Məlumatlarınızı Zammad-a köçürmək üçün idxal prosesinə başlayın.İdxal uğurla "
+"başa çatdıqdan sonra bildirişlər almaq üçün bu səhifədəki köçürmənin "
+"gedişini izləyin."
 
 #: app/models/store.rb
 msgid "Inline content could not be generated."
-msgstr ""
+msgstr "Daxili məzmun yaradıla bilmədi."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Insert text from Knowledge Base article"
-msgstr ""
+msgstr "Məlumat bazası məqaləsindən mətni yerləşdirin"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Insert text from text module"
-msgstr ""
+msgstr "Mətn modulundan mətn daxil edin"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid ""
@@ -17431,6 +17500,11 @@ msgstr ""
 msgid "and"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+msgid "apply filter"
+msgstr "Clearbit"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
 msgstr ""
@@ -17540,10 +17614,6 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "collapse"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
@@ -17794,10 +17864,6 @@ msgstr ""
 msgid "example macro"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "expand"
-msgstr ""
-
 #: db/seeds/ticket_article_types.rb
 msgid "facebook direct-message"
 msgstr ""
@@ -17828,12 +17894,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr ""
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Filter"
-msgid "filter"
-msgstr "Filter"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -18779,6 +18839,16 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Configure Basic Settings"
+#~ msgid "Filter settings…"
+#~ msgstr "Əsas parametrlərin qurulması"
+
+#, fuzzy
+#~| msgid "Filter"
+#~ msgid "filter"
+#~ msgstr "Filter"
 
 #, fuzzy
 #~| msgid "A new version of Zammad is available, please reload your browser."

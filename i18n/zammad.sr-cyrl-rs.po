@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-08 08:32+0000\n"
+"PO-Revision-Date: 2024-04-10 01:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -1801,6 +1801,10 @@ msgstr "Примени заједнички нацрт"
 msgid "Apply current defaults to all agents"
 msgstr "Примени подешавања свим оператерима"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+msgid "Apply filter…"
+msgstr "Примени филтер…"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
@@ -3218,13 +3222,13 @@ msgstr "Затворени тикети"
 msgid "Closing time"
 msgstr "Време затварања"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Collapse this element"
+msgstr "Скупи овај елемент"
+
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Боја индикатора отвореног тикета у траци са стране."
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
-msgid "Coming soon..."
-msgstr "Ускоро..."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
@@ -6516,6 +6520,10 @@ msgstr "Постојећи тикети"
 msgid "Existing tickets (open)"
 msgstr "Постојећи тикети (отворени)"
 
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
+msgid "Expand this element"
+msgstr "Прошири овај елемент"
+
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Expert"
 msgstr "Стручњак"
@@ -6678,10 +6686,6 @@ msgstr "Систем датотека"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "Филтер"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-msgid "Filter settings…"
-msgstr "Филтрирање подешавања…"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Find a ticket"
@@ -17969,6 +17973,10 @@ msgstr "поново"
 msgid "and"
 msgstr "и"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+msgid "apply filter"
+msgstr "примени филтер"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
 msgstr "архивирано"
@@ -18081,10 +18089,6 @@ msgstr "затвори"
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "затворено"
-
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "collapse"
-msgstr "скупи"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "connected"
@@ -18334,10 +18338,6 @@ msgstr "ескалација %s"
 msgid "example macro"
 msgstr "пример макроа"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue
-msgid "expand"
-msgstr "прошири"
-
 #: db/seeds/ticket_article_types.rb
 msgid "facebook direct-message"
 msgstr "директна facebook порука"
@@ -18368,10 +18368,6 @@ msgstr "попуни"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
 msgstr "попуни празно"
-
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-msgid "filter"
-msgstr "филтер"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -19319,6 +19315,21 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Coming soon..."
+#~ msgstr "Ускоро..."
+
+#~ msgid "Filter settings…"
+#~ msgstr "Филтрирање подешавања…"
+
+#~ msgid "collapse"
+#~ msgstr "скупи"
+
+#~ msgid "expand"
+#~ msgstr "прошири"
+
+#~ msgid "filter"
+#~ msgstr "филтер"
 
 #~ msgid "Sidebar"
 #~ msgstr "Трака са стране"
