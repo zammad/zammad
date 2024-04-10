@@ -13,6 +13,7 @@ PreCommit:
   RuboCop:
     enabled: true
     on_warn: fail
+    command: ['bundle', 'exec', 'rubocop']
   CoffeeLint:
     required_executable: 'coffeelint'
     install_command: 'npm install -g @coffeelint/cli'
