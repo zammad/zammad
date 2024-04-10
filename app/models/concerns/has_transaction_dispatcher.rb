@@ -4,8 +4,8 @@ module HasTransactionDispatcher
   extend ActiveSupport::Concern
 
   included do
-    after_create  TransactionDispatcher
-    before_update TransactionDispatcher
+    after_create TransactionDispatcher
+    after_update TransactionDispatcher
   end
 
 end

@@ -6,7 +6,7 @@ RSpec.describe 'HasTransactionDispatcher', db_strategy: :reset, type: :model do
   let(:ticket) { create(:ticket) }
   let(:agent)  { create(:agent, groups: [ticket.group]) }
 
-  describe '#before_update' do
+  describe '#after_update' do
     context 'when ticket is updated without sending required values' do
       before do
         UserInfo.current_user_id = agent.id
@@ -15,11 +15,11 @@ RSpec.describe 'HasTransactionDispatcher', db_strategy: :reset, type: :model do
         ObjectManager::Attribute.migration_execute
       end
 
-      it 'does not call the TransactionDispatcher before_update hook', :aggregate_failures do
-        allow(TransactionDispatcher).to receive(:before_update)
+      it 'does not call the TransactionDispatcher after_update hook', :aggregate_failures do
+        allow(TransactionDispatcher).to receive(:after_update)
 
         expect { ticket.update(title: 'New title', screen: 'edit') }.to raise_error(Exceptions::ApplicationModel)
-        expect(TransactionDispatcher).not_to have_received(:before_update)
+        expect(TransactionDispatcher).not_to have_received(:after_update)
       end
     end
   end
