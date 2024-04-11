@@ -63,6 +63,8 @@ RSpec.describe 'Ticket Zoom > Whatsapp reply', :use_vcr, authenticated_as: :user
         within first('.attachment--row') do |elem|
           elem.execute_script('$(".attachment-delete", this).trigger("click")')
         end
+
+        expect(page).to have_no_text('Only 1 attachment allowed')
       end
     end
 
@@ -84,6 +86,41 @@ RSpec.describe 'Ticket Zoom > Whatsapp reply', :use_vcr, authenticated_as: :user
         in_modal do
           expect(page).to have_text('Only 1 attachment allowed')
         end
+      end
+    end
+  end
+
+  describe 'caption disabling' do
+    let(:audio_file) do
+      # Tempfile does not work, because it appends auto-generated extension and breaks mimetype check
+      tmp_file_path = Rails.root.join('tmp', "#{SecureRandom.uuid}.mp3")
+
+      file = File.new(tmp_file_path, 'w')
+      file.write(sample_text)
+      file.close
+
+      file
+    end
+
+    after { File.unlink audio_file.path }
+
+    it 'disables caption when specific Whatsapp attachment is present' do
+      within(:active_content) do
+        find(:richtext).send_keys(sample_text)
+        expect(find(:richtext)).to not_match_css('.text-muted')
+
+        find('input#fileUpload_1', visible: :all).set(audio_file.path)
+
+        click '.js-selectableTypes'
+        click '.js-articleTypeItem[data-value="whatsapp message"]'
+
+        expect(find(:richtext)).to match_css('.text-muted')
+
+        within first('.attachment--row') do |elem|
+          elem.execute_script('$(".attachment-delete", this).trigger("click")')
+        end
+
+        expect(find(:richtext)).to not_match_css('.text-muted')
       end
     end
   end
