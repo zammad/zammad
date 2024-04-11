@@ -6,16 +6,16 @@
     - bundle config set --local deployment 'true'
     - bundle install -j $(nproc)
     - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
-  yarn_install:
-    - echo -e "\\e[0Ksection_start:`date +%s`:yarn_install[collapsed=true]\\r\\e[0Kyarn install"
-    - yarn install
-    - echo -e "\\e[0Ksection_end:`date +%s`:yarn_install\\r\\e[0K"
-  yarn_install_all:
+  pnpm_install:
+    - pnpm config set store-dir .pnpm-store
+    - pnpm install
+  pnpm_install_all:
     # retry on errors
-    - yarn install || yarn install || yarn install
-    - yarn cypress:install || yarn cypress:install || yarn cypress:install
-    - yarn --cwd .eslint-plugin-zammad install || yarn --cwd .eslint-plugin-zammad install || yarn --cwd .eslint-plugin-zammad install
-    - yarn --cwd public/assets/chat install || yarn --cwd public/assets/chat install || yarn --cwd public/assets/chat install
+    - pnpm config set store-dir .pnpm-store
+    - pnpm install || pnpm install || pnpm install
+    - pnpm cypress:install || pnpm cypress:install || pnpm cypress:install
+    - pnpm --dir .eslint-plugin-zammad install || pnpm --dir .eslint-plugin-zammad install || pnpm --dir .eslint-plugin-zammad install
+    - pnpm --dir public/assets/chat install || pnpm --dir public/assets/chat install || pnpm --dir public/assets/chat install
   configure_environment:
     - bundle exec ruby .gitlab/configure_environment.rb
     - source .gitlab/environment.env

@@ -59,7 +59,7 @@ rvm install ruby-3.2.4
 rvm --default use 3.2.4
 ```
 
-## NVM, Node.js and Yarn
+## NVM, Node.js and pnpm
 
 We're using [NVM](https://github.com/nvm-sh/nvm) to manage all Node.js versions which are in use with Zammad.
 
@@ -70,11 +70,11 @@ For Linux and macOS:
 ```screen
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
 nvm install node
-npm install -g yarn
+npm install -g pnpm
 
 # Then, in the zammad directory, install required modules:
 cd </path/to/zammad-develop>
-yarn install
+pnpm install
 ```
 
 ## Linting tools
@@ -159,7 +159,7 @@ Zammad uses the gem `localhost` to automatically generate self-signed certificat
 ```sh
 $ VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -f Procfile.dev-https
 # or
-$ yarn dev:https
+$ pnpm dev:https
 ```
 
 The application will be listening on [https://localhost:3000](https://localhost:3000).
@@ -208,4 +208,4 @@ Next, add an A DNS record for your subdomain that points to your local IP. You c
 
 For example, if your local IP is `192.168.0.39` and your subdomain is `localhost.example.com`, add an A DNS record with the name of `localhost` and point it to `192.168.0.39`. This will allow you to access the app from within your local network only by using the proper FQDN: perfect for testing the app on mobile devices.
 
-Finally, start the development server with `yarn dev:https` command. You can now access the app via [https://localhost.example.com:3000](https://localhost.example.com:3000) and it should show up as a trusted site.
+Finally, start the development server with `pnpm dev:https` command. You can now access the app via [https://localhost.example.com:3000](https://localhost.example.com:3000) and it should show up as a trusted site.

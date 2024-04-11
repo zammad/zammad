@@ -29,8 +29,8 @@ PreCommit:
     exclude: 'public/assets/chat/**/*'
   Stylelint:
     enabled: true
-    required_executable: 'yarn'
-    command: ['yarn', '--silent', 'lint:css']
+    required_executable: 'pnpm'
+    command: ['pnpm', '--silent', 'lint:css']
   TranslationCatalogCheck:
     required_executable: 'rails'
     enabled: true
@@ -53,9 +53,9 @@ PreCommit:
       - 'app/graphql/**/*'
       - 'app/frontend/**/*.graphql'
   TypeCheck:
-    required_executable: 'yarn'
+    required_executable: 'pnpm'
     enabled: true
-    command: ['yarn', 'lint:ts']
+    command: ['pnpm', 'lint:ts']
     exclude:
      - 'node_modules'
      - 'public'
@@ -67,9 +67,9 @@ PreCommit:
       - './vite.config.*'
       - './vitest.setup.ts'
   EsLint:
-    required_executable: 'yarn'
+    required_executable: 'pnpm'
     enabled: true
-    command: ['yarn', 'lint:js']
+    command: ['pnpm', 'lint:js']
     exclude:
       - 'app/assets/**/*'
       - 'public/assets/chat/**/*'

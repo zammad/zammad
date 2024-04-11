@@ -4,16 +4,16 @@
     - .job_rules_default
   cache: !reference [.cache, read_only_nodejs]
   before_script:
-    - !reference [.scripts, yarn_install]
+    - !reference [.scripts, pnpm_install]
   script:
     # Only run one worker to avoid load peaks affecting other jobs.
-    - yarn test --min-workers=1 --max-workers=1 --shard $VITEST_SHARD
+    - pnpm test -- --min-workers=1 --max-workers=1 --shard $VITEST_SHARD
     # Stop here, except on the first shard.
     - "[[ $VITEST_SHARD = 1/* ]] || exit 0"
     - echo "Also test eslint-plugin-zammad…"
     - cd .eslint-plugin-zammad
-    - yarn install || yarn install || yarn install # retry on errors
-    - yarn test
+    - pnpm install || pnpm install || pnpm install # retry on errors
+    - pnpm test
 
 frontend:vitest:1:
   extends:
@@ -40,11 +40,11 @@ frontend:cypress:
     - .tags_docker_low_concurrency
   cache: !reference [.cache, read_only_nodejs]
   before_script:
-    - !reference [.scripts, yarn_install]
-    - yarn cypress:install
+    - !reference [.scripts, pnpm_install]
+    - pnpm cypress:install
   script:
     - sysctl -w fs.inotify.max_user_watches=524288 # see https://github.com/cypress-io/cypress/issues/6960
-    - yarn test:ci:ct
+    - pnpm test:ci:ct
   artifacts:
     expire_in: 1 week
     when: on_failure

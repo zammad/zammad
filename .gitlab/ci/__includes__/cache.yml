@@ -12,15 +12,15 @@
   key:
     prefix: nodejs
     files:
-      - yarn.lock
+      - pnpm-lock.yaml
   paths:
-    - .yarn/cache
+    - .pnpm-store
 
 .cache_eslint: &cache_eslint
   key:
     prefix: eslint
     files:
-      - yarn.lock
+      - pnpm-lock.yaml
       - .eslintrc.js
   paths:
     - tmp/eslintcache.js

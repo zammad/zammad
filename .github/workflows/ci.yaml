@@ -32,17 +32,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Cache node modules
-        id: cache-npm
-        uses: actions/cache@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
         with:
-          path: .yarn/cache
-          key: ${{ runner.os }}-cache-npm-${{ hashFiles('yarn.lock') }}
+          node-version: 20
+          cache: 'pnpm'
       - name: Cache Rubygems
         id: cache-bundler
         uses: actions/cache@v4
         with:
-          path: vendor/ruby
+          path: vendor/bundle
           key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
       - name: Pre
         run: .github/workflows/ci/pre.sh

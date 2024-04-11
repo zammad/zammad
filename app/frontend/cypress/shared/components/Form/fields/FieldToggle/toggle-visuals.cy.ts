@@ -4,7 +4,7 @@ import { checkFormMatchesSnapshot, mountFormField } from '#cy/utils.ts'
 
 import { FormValidationVisibility } from '#shared/components/Form/types.ts'
 
-// To update snapshots, run `yarn cypress:snapshots`
+// To update snapshots, run `pnpm cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
 
 const variants = {

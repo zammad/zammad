@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-yarn install --frozen-lockfile --ignore-scripts
-yarn cypress:install --frozen-lockfile
-yarn test:ci:ct --env pluginVisualRegressionUpdateImages=$CYPRESS_UPDATE_SNAPSHOTS --spec '../**/*-visuals.cy.*'
+pnpm install --frozen-lockfile --ignore-scripts
+pnpm cypress:install --frozen-lockfile
+pnpm test:ci:ct --env pluginVisualRegressionUpdateImages=$CYPRESS_UPDATE_SNAPSHOTS --spec '../**/*-visuals.cy.*'
