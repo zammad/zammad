@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-03 07:40+0000\n"
-"Last-Translator: Ambroise Arbey <ambroise.arbey@gmail.com>\n"
+"PO-Revision-Date: 2024-04-12 05:27+0000\n"
+"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -4033,6 +4033,8 @@ msgid ""
 "Customize the default locale and timezone during replacement of template "
 "variables."
 msgstr ""
+"Personnalisez les paramètres régionaux et le fuseau horaire par défaut lors "
+"du remplacement des variables du modèle."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
@@ -8940,10 +8942,8 @@ msgstr "Langue non trouvée"
 
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Action execution"
 msgid "Localization of execution changes"
-msgstr "Exécution de l'action"
+msgstr "Localisation des modifications d'exécution"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -9977,6 +9977,8 @@ msgstr "Non merci !"
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
+"Aucun texte supplémentaire ne peut être envoyé avec ce type de média. "
+"Veuillez supprimer le texte."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
@@ -13604,10 +13606,8 @@ msgstr "URL du système"
 
 #: app/assets/javascripts/app/controllers/_ui_element/language.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-#, fuzzy
-#| msgid "System default"
 msgid "System default - %s"
-msgstr "Valeur par défaut du système"
+msgstr "Valeur par défaut du système - %s"
 
 #: app/models/knowledge_base.rb
 msgid ""
@@ -14287,10 +14287,8 @@ msgstr "Le fichier n'appartient pas à l'article renseigné."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts
-#, fuzzy
-#| msgid "Type %s is not supported."
 msgid "The file type %s is not allowed."
-msgstr "Le type %s n'est pas pris en charge."
+msgstr "Le type de fichier %s n'est pas autorisé."
 
 #: lib/secure_mailing/pgp/incoming.rb
 msgid ""
