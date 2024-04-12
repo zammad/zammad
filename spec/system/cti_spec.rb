@@ -23,6 +23,11 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
   let(:first_params) { params.merge(event: 'newCall')  }
   let(:second_params) { params.merge(event: 'hangup')  }
 
+  let(:visit_cti) do
+    visit 'cti'
+    ensure_websocket
+  end
+
   let(:place_call) do
     post "#{Capybara.app_host}/api/v1/cti/#{cti_token}", params: first_params
     post "#{Capybara.app_host}/api/v1/cti/#{cti_token}", params: second_params
@@ -39,6 +44,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
   context 'when cti integration is on' do
     it 'shows the phone menu in nav bar' do
       visit '/'
+      ensure_websocket
 
       within '#navigation .menu' do
         place_call
@@ -96,8 +102,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
         create(:ticket, customer: customer)
         travel_back
 
-        visit 'cti'
-
+        visit_cti
         place_call
       end
 
@@ -106,6 +111,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
           expect(page).to have_text('New Ticket')
           expect(page).to have_css('input[name="title"][value="Call from 0190333"]', visible: :all)
           expect(page).to have_css('.tabsSidebar-tab[data-tab="customer"]', visible: :all)
+          expect(page).to have_css("input[name=customer_id][value='#{customer.id}']", visible: :hide)
         end
       end
     end
@@ -115,7 +121,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
       let(:second_params) { params.merge(event: 'answer', answeringNumber: agent_phone) }
 
       before do
-        visit 'cti'
+        visit_cti
         place_call
       end
 
@@ -131,9 +137,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
     context 'with known customer and with active tickets' do
       before do
         create(:ticket, customer: customer)
-
-        visit 'cti'
-
+        visit_cti
         place_call
       end
 
@@ -143,11 +147,36 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
         end
       end
     end
+
+    context 'with phone number only known customer and without active tickets' do
+      let(:customer_phone) { '0190444' }
+      let(:customer)       { create(:customer, phone: customer_phone, email: nil, firstname: nil, lastname: nil) }
+
+      before do
+        travel(-2.months)
+        create(:ticket, customer: customer)
+        travel_back
+
+        visit_cti
+        place_call
+      end
+
+      it 'opens a new ticket after phone call inbound' do
+        within(:active_content) do
+          expect(page).to have_text('New Ticket')
+          expect(page).to have_css('input[name="title"][value="Call from 0190444"]', visible: :all)
+          expect(page).to have_css('.tabsSidebar-tab[data-tab="customer"]', visible: :all)
+          expect(page).to have_css("input[name=customer_id][value='#{customer.id}']", visible: :hide)
+          expect(find('[name=customer_id_completion]').value).to eq '0190444'
+        end
+      end
+    end
+
   end
 
   context 'with incoming call' do
     before do
-      visit 'cti'
+      visit_cti
       place_call
     end
 
@@ -161,7 +190,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
 
   context 'when incoming call is checked' do
     before do
-      visit 'cti'
+      visit_cti
       place_call
     end
 
@@ -179,7 +208,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
   # Regression test for #2018
   context 'phone numbers format' do
     before do
-      visit 'cti'
+      visit_cti
       place_call
     end
 
@@ -220,7 +249,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
   # Regression test for #2096
   context 'with inactive user' do
     before do
-      visit 'cti'
+      visit_cti
       place_call
     end
 
@@ -242,7 +271,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
   # Regression test for #2075
   context 'when user is with organization name' do
     before do
-      visit 'cti'
+      visit_cti
       place_call
     end
 

@@ -616,6 +616,11 @@ class App.TicketCreate extends App.Controller
     # to replace in text modules properly
     params.customer = App.User.find(params.customer_id) || {}
 
+    # show selected user display name in customer attribute in UI
+    if _.isEmpty(@el.find('input[name=customer_id_completion]').val())
+      if params.customer && params.customer.displayName
+        @el.find('input[name=customer_id_completion]').val(params.customer.displayName())
+
     @sidebarWidget.render(params)
     @textModule.reload(
       config: App.Config.all()
