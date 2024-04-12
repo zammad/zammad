@@ -37,12 +37,14 @@ describe('i18n', () => {
     i18n.setTranslationMap(new Map())
   })
 
-  it('starts with empty state', () => {
-    expect(i18n.t('unknown string')).toBe('unknown string')
-    expect(i18n.t('yes')).toBe('yes')
+  describe('in empty state', () => {
+    it('translates to source value', () => {
+      expect(i18n.t('unknown string')).toBe('unknown string')
+      expect(i18n.t('yes')).toBe('yes')
+    })
   })
 
-  describe('i18n populated', () => {
+  describe('with translation data', () => {
     beforeEach(() => {
       populateTranslationMap()
     })
@@ -52,9 +54,8 @@ describe('i18n', () => {
     })
 
     it('handles placeholders correctly', () => {
-      // No arguments.
-      expect(i18n.t('String with 3 placeholders: %s %s %s')).toBe(
-        'Zeichenkette mit 3 Platzhaltern: %s %s %s',
+      expect(i18n.t('String with 3 placeholders: %s %s %s', 1, 2)).toBe(
+        'Zeichenkette mit 3 Platzhaltern: 1 2 %s',
       )
     })
 
@@ -62,6 +63,12 @@ describe('i18n', () => {
       expect(i18n.date('2021-04-09T10:11:12Z')).toBe('09/04/2021')
       expect(i18n.dateTime('2021-04-09T10:11:12Z')).toBe('09/04/2021 10:11:12')
       expect(i18n.relativeDateTime(new Date().toISOString())).toBe('just now')
+    })
+
+    it('returns date/time format information', () => {
+      expect(i18n.getTimeFormatType()).toBe('24hour')
+      expect(i18n.getDateFormat()).toBe('dd/mm/yyyy')
+      expect(i18n.getDateTimeFormat()).toBe('dd/mm/yyyy HH:MM:SS')
     })
 
     it('updates (reactive) translations automatically', async () => {

@@ -10,7 +10,9 @@ export class FieldResolverDateTime extends FieldResolver {
   // eslint-disable-next-line class-methods-use-this
   public fieldTypeAttributes() {
     return {
-      props: {},
+      props: {
+        clearable: this.attributeConfig.null || false,
+      },
     }
   }
 }

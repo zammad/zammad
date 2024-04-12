@@ -83,17 +83,14 @@ const linkSchemaRaw = [
     },
   },
   {
-    type: 'date',
+    type: 'datetime',
     name: 'some_input_date',
     label: 'Date',
     props: {
       link: '/',
+      clearable: true,
     },
-  },
-  {
-    type: 'date',
-    name: 'some_input_2',
-    label: 'Date 2',
+    required: true,
   },
   {
     type: 'tags',
@@ -454,7 +451,7 @@ const logSubmit = console.log
 
     <button @click="openCreateUserDialog()">Create user</button>
 
-    <Form id="form" :schema="editorSchema" @submit="logSubmit" />
+    <Form :schema="editorSchema" @submit="logSubmit" />
 
     <CommonButtonGroup
       class="py-4"
@@ -467,7 +464,7 @@ const logSubmit = console.log
       ]"
     />
 
-    <Form :schema="linkSchemas" />
+    <Form id="form" :schema="linkSchemas" />
     <Form :schema="schema" />
 
     <FormKit

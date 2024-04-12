@@ -1,6 +1,5 @@
 # Third Party Icons (`desktop`)
 
-- `assets/speedometer2.svg`
 - `assets/arrow-bar-left.svg`
 - `assets/arrow-bar-right.svg`
 - `assets/arrows-collapse.svg`
@@ -11,6 +10,9 @@
 - `assets/brightness-alt-high.svg`
 - `assets/buildings-slash.svg`
 - `assets/buildings.svg`
+- `assets/calendar-event.svg`
+- `assets/calendar-range.svg`
+- `assets/calendar.svg`
 - `assets/check-all.svg`
 - `assets/check-circle-outline.svg`
 - `assets/check-square.svg`
@@ -19,6 +21,8 @@
 - `assets/chevron-down.svg`
 - `assets/chevron-left.svg`
 - `assets/chevron-right.svg`
+- `assets/chevron-up.svg`
+- `assets/clock.svg`
 - `assets/crown-right.svg`
 - `assets/crown-silver.svg`
 - `assets/dash-circle.svg`
@@ -38,6 +42,7 @@
 - `assets/radio-no.svg`
 - `assets/radio-yes.svg`
 - `assets/search.svg`
+- `assets/speedometer2.svg`
 - `assets/spinner.svg`
 - `assets/square.svg`
 - `assets/sun.svg`

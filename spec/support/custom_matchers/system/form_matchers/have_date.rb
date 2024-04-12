@@ -35,7 +35,7 @@ module FormMatchers
       end
 
       # TODO: Support locales other than `en`, depending on the language of the current user.
-      datetime.strftime('%m/%d/%Y %l:%M %P')
+      datetime.strftime('%m/%d/%Y %-l:%M %P')
     end
   end
 

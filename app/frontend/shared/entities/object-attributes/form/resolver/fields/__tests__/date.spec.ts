@@ -25,7 +25,9 @@ describe('FieldResolverDate', () => {
       label: 'Date',
       name: 'date',
       required: false,
-      props: {},
+      props: {
+        clearable: true,
+      },
       type: 'date',
       internal: true,
     })

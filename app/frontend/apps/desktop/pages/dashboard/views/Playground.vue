@@ -167,6 +167,32 @@ const formSchema = [
     ],
   },
   {
+    name: 'date_0',
+    label: 'Date',
+    type: 'date',
+    props: {
+      clearable: true,
+    },
+  },
+  {
+    name: 'date_1',
+    label: 'Date range',
+    type: 'date',
+    props: {
+      clearable: true,
+      range: true,
+    },
+  },
+  {
+    name: 'datetime_0',
+    label: 'Date/Time',
+    type: 'datetime',
+    props: {
+      clearable: true,
+    },
+    required: true,
+  },
+  {
     name: 'group_permission_0',
     label: 'Group permissions',
     type: 'groupPermissions',
@@ -265,7 +291,10 @@ const formSchema = [
   },
 ]
 
-const formInitialValues: FormValues = { roles: [3, 1] }
+const formInitialValues: FormValues = {
+  roles: [3, 1],
+  // date_0: [new Date(), new Date(new Date().setDate(new Date().getDate() + 7))],
+}
 
 const progressBarValue = ref(0)
 

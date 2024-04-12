@@ -35,12 +35,6 @@ export class I18N {
     return dates.absoluteDateTime(dateTimeString, template)
   }
 
-  timeFormat() {
-    const datetimeFormat = dates.getDateTimeFormat(this.translator)
-    const time24hour = !datetimeFormat.includes('P') // P means AM/PM
-    return time24hour ? '24hour' : '12hour'
-  }
-
   relativeDateTime(dateTimeString: string, baseDate?: Date): string {
     return dates.relativeDateTime(
       dateTimeString,
@@ -51,6 +45,19 @@ export class I18N {
 
   setTranslationMap(map: TranslationMap): void {
     this.translator.setTranslationMap(map)
+  }
+
+  getDateFormat(): string {
+    return dates.getDateFormat(this.translator)
+  }
+
+  getDateTimeFormat(): string {
+    return dates.getDateTimeFormat(this.translator)
+  }
+
+  getTimeFormatType() {
+    const time24hour = !this.getDateTimeFormat().includes('P') // P means AM/PM
+    return time24hour ? '24hour' : '12hour'
   }
 }
 
