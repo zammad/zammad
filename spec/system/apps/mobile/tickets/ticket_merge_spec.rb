@@ -15,10 +15,9 @@ RSpec.describe 'Mobile > Ticket > Merge tickets', app: :mobile, authenticated_as
   context 'when merging tickets', searchindex: true do
     it 'can merge two tickets' do
       visit "/tickets/#{source_ticket.id}"
-
+      wait_for_form_to_settle('form-ticket-edit')
       find_button('Show ticket actions').click
       find_button('Merge tickets').click
-
       search_input = find('[role="searchbox"]')
       search_input.fill_in(with: target_ticket.title)
 

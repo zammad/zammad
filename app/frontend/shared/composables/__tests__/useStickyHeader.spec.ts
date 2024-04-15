@@ -14,10 +14,11 @@ const fixedHeaderStyle = {
   zIndex: 9,
 }
 
-test('can pass down custom element', () => {
-  const element = ref()
+test('can pass down custom html element', () => {
+  const header = document.createElement('header')
+  const element = ref(header)
   const { headerElement } = useStickyHeader([], element)
-  expect(headerElement).toBe(element)
+  expect(headerElement.value).toBe(header)
 })
 
 test('reevaluates styles when dependencies change', async () => {

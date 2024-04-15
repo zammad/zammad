@@ -3,17 +3,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { startCase } from 'lodash-es'
-import type { ButtonVariant } from '#shared/components/Form/fields/FieldButton/types.ts'
+import type { CommonButtonProps } from '#mobile/components/CommonButton/types.ts'
 
-interface Props {
-  form?: string
-  type?: 'button' | 'reset' | 'submit'
-  disabled?: boolean
-  variant?: ButtonVariant
-  transparentBackground?: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<CommonButtonProps>(), {
   type: 'button',
   variant: 'secondary',
 })

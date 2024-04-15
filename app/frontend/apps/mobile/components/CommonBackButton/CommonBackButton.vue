@@ -21,9 +21,7 @@ const props = defineProps<Props>()
 const walker = useWalker()
 
 const isHomeButton = computed(() => {
-  if (props.avoidHomeButton || walker.getBackUrl(props.fallback) !== '/')
-    return false
-  return true
+  return !(props.avoidHomeButton || walker.getBackUrl(props.fallback) !== '/')
 })
 
 const locale = useLocaleStore()

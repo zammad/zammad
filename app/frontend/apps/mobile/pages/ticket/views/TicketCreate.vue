@@ -7,6 +7,7 @@ import { useEventListener } from '@vueuse/core'
 import type { ApolloError } from '@apollo/client'
 
 import Form from '#shared/components/Form/Form.vue'
+import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
@@ -36,7 +37,6 @@ import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
-import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
 import { errorOptions } from '#shared/router/error.ts'
 import {
   useTicketDuplicateDetectionHandler,
@@ -563,35 +563,25 @@ export default {
 </script>
 
 <template>
-  <header
+  <LayoutHeader
     ref="headerElement"
+    class="!h-16"
     :style="stickyStyles.header"
-    class="border-b-[0.5px] border-white/10 bg-black px-4"
+    back-url="/"
+    :title="__('Create Ticket')"
   >
-    <div class="grid h-16 grid-cols-[75px_auto_75px]">
-      <div
-        class="flex cursor-pointer items-center justify-self-start text-base"
+    <template #after>
+      <CommonButton
+        variant="submit"
+        form="ticket-create"
+        type="submit"
+        :disabled="submitButtonDisabled"
+        transparent-background
       >
-        <CommonBackButton fallback="/" />
-      </div>
-      <h1
-        class="flex flex-1 items-center justify-center text-center text-lg font-bold"
-      >
-        {{ $t('Create Ticket') }}
-      </h1>
-      <div class="flex items-center justify-self-end text-base">
-        <CommonButton
-          variant="submit"
-          form="ticket-create"
-          type="submit"
-          :disabled="submitButtonDisabled"
-          transparent-background
-        >
-          {{ $t('Create') }}
-        </CommonButton>
-      </div>
-    </div>
-  </header>
+        {{ $t('Create') }}
+      </CommonButton>
+    </template>
+  </LayoutHeader>
   <div
     ref="bodyElement"
     :style="stickyStyles.body"

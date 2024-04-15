@@ -7,6 +7,8 @@ const props = defineProps<{
   refetch: boolean
 }>()
 
+defineOptions({ inheritAttrs: false })
+
 const refetching = ref(false)
 
 let timeout: number
@@ -35,6 +37,7 @@ watch(
   >
     <div
       v-if="refetching"
+      v-bind="$attrs"
       class="absolute items-center justify-center"
       role="status"
     >

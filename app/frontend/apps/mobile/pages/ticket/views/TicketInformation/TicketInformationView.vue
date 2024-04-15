@@ -6,11 +6,10 @@ import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/ty
 import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { useSessionStore } from '#shared/stores/session.ts'
-import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
 import { useDialog } from '#mobile/composables/useDialog.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
-import CommonRefetch from '#mobile/components/CommonRefetch/CommonRefetch.vue'
 import { useRoute, useRouter } from 'vue-router'
+import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
 import { ticketInformationPlugins } from './plugins/index.ts'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 
@@ -61,26 +60,15 @@ const router = useRouter()
 </script>
 
 <template>
-  <header
+  <LayoutHeader
     ref="headerElement"
-    class="grid h-[64px] shrink-0 grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-black px-4"
+    :refetch="refetchingStatus"
+    :back-title="`#${internalId}`"
+    :title="$t('Ticket information')"
+    :back-url="`/tickets/${internalId}`"
     :style="stickyStyles.header"
   >
-    <CommonBackButton
-      class="justify-self-start"
-      :label="`#${internalId}`"
-      :fallback="`/tickets/${internalId}`"
-    />
-    <div class="flex flex-1 items-center justify-center">
-      <CommonRefetch :refetch="refetchingStatus">
-        <h1
-          class="flex items-center justify-center text-center text-lg font-bold"
-        >
-          {{ $t('Ticket information') }}
-        </h1>
-      </CommonRefetch>
-    </div>
-    <div class="flex items-center justify-end">
+    <template #after>
       <button
         v-if="hasPermission('ticket.agent')"
         type="button"
@@ -89,8 +77,8 @@ const router = useRouter()
       >
         <CommonIcon name="more" size="base" decorative />
       </button>
-    </div>
-  </header>
+    </template>
+  </LayoutHeader>
   <div class="flex p-4" :style="stickyStyles.body">
     <h1
       class="line-clamp-3 flex flex-1 items-center break-words text-xl font-bold leading-7"

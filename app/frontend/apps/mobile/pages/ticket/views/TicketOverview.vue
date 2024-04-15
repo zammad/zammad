@@ -10,12 +10,11 @@ import { EnumOrderDirection } from '#shared/graphql/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
-import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import CommonSelectPill from '#mobile/components/CommonSelectPill/CommonSelectPill.vue'
 import CommonTicketCreateLink from '#mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue'
 import { useTicketOverviews } from '#mobile/entities/ticket/composables/useTicketOverviews.ts'
-import CommonRefetch from '#mobile/components/CommonRefetch/CommonRefetch.vue'
+import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
 import TicketList from '../components/TicketList/TicketList.vue'
 import TicketOrderBySelector from '../components/TicketList/TicketOrderBySelector.vue'
 
@@ -162,23 +161,18 @@ const showRefetch = ref(false)
       class="border-b-[0.5px] border-white/10 bg-black px-4"
       :style="stickyStyles.header"
     >
-      <div class="grid h-16 grid-cols-[75px_auto_75px]">
-        <div
-          class="flex cursor-pointer items-center justify-self-start text-base"
-        >
-          <CommonBackButton fallback="/" avoid-home-button />
-        </div>
-        <div class="flex flex-1 items-center justify-center">
-          <CommonRefetch :refetch="showRefetch">
-            <h1
-              class="flex items-center justify-center text-center text-lg font-bold"
-            >
-              {{ $t('Tickets') }}
-            </h1>
-          </CommonRefetch>
-        </div>
-        <CommonTicketCreateLink class="justify-self-end text-base" />
-      </div>
+      <LayoutHeader
+        back-url="/"
+        container-tag="div"
+        class="h-16 border-none first:px-0"
+        back-avoid-home-button
+        :refetch="showRefetch"
+        :title="__('Tickets')"
+      >
+        <template #after>
+          <CommonTicketCreateLink class="justify-self-end text-base" />
+        </template>
+      </LayoutHeader>
       <div
         v-if="optionsOverviews.length"
         class="mb-3 flex items-center justify-between gap-2"

@@ -9,6 +9,7 @@ RSpec.describe 'Mobile > Ticket > Update Customer', app: :mobile, authenticated_
 
   before do
     visit "/tickets/#{ticket.id}"
+
     click_on 'Show ticket actions'
     click_on 'Change customer'
   end

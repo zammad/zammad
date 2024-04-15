@@ -1,17 +1,18 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { toRef } from 'vue'
+import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+
+import { toRef } from 'vue'
 import { useDialog } from '#mobile/composables/useDialog.ts'
-import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
 import { useSessionStore } from '#shared/stores/session.ts'
-import CommonRefetch from '#mobile/components/CommonRefetch/CommonRefetch.vue'
+
 import type {
   TicketById,
   TicketLiveAppUser,
 } from '#shared/entities/ticket/types.ts'
+import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 
 interface Props {
   ticket?: TicketById
@@ -51,30 +52,28 @@ const showActions = () => {
 </script>
 
 <template>
-  <header
-    class="grid h-[64px] shrink-0 grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-4"
+  <LayoutHeader
+    class="bg-gray-600/90"
+    :refetch="refetchingTicket || loadingTicket"
+    :back-ignore="[`/tickets/${ticket?.internalId}/information`]"
+    back-url="/"
   >
-    <CommonBackButton
-      class="justify-self-start"
-      fallback="/"
-      :ignore="[`/tickets/${ticket?.internalId}/information`]"
-    />
-    <CommonLoader data-test-id="loader-header" :loading="loadingTicket">
-      <div
-        class="flex flex-1 flex-col items-center justify-center text-center text-sm leading-4"
-        data-test-id="header-content"
-      >
-        <CommonRefetch :refetch="refetchingTicket">
-          <div class="font-bold">{{ ticket && `#${ticket.number}` }}</div>
-          <div class="text-gray">
-            {{
-              ticket &&
-              $t('created %s', i18n.relativeDateTime(ticket.createdAt))
-            }}
-          </div>
-        </CommonRefetch>
+    <div
+      class="flex flex-1 flex-col items-center justify-center text-center text-sm leading-4"
+      data-test-id="header-content"
+    >
+      <div class="font-bold">
+        {{ ticket && `#${ticket.number}` }}
       </div>
-      <div class="flex items-center justify-self-end">
+      <div class="text-gray">
+        {{
+          ticket && $t('created %s', i18n.relativeDateTime(ticket.createdAt))
+        }}
+      </div>
+    </div>
+
+    <template #after>
+      <CommonLoader data-test-id="loader-header" :loading="loadingTicket">
         <button
           v-if="liveUserList?.length"
           class="flex ltr:mr-0.5 rtl:ml-0.5"
@@ -106,7 +105,7 @@ const showActions = () => {
         >
           <CommonIcon name="more" size="base" decorative />
         </button>
-      </div>
-    </CommonLoader>
-  </header>
+      </CommonLoader>
+    </template>
+  </LayoutHeader>
 </template>

@@ -12,6 +12,7 @@ import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButton
 import { useUserCreate } from '#mobile/entities/user/composables/useUserCreate.ts'
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import { EnumSecurityStateType } from '#shared/components/Form/fields/FieldSecurity/types.ts'
+import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
 
 const linkSchemaRaw = [
   {
@@ -400,6 +401,14 @@ const logSubmit = console.log
 
 <template>
   <div class="p-4">
+    <LayoutHeader title="Playground">
+      <template #before>1 / 3</template>
+      <template #after>
+        <CommonButton class="flex-1 px-4 py-2" variant="secondary"
+          >Click
+        </CommonButton>
+      </template>
+    </LayoutHeader>
     <h2 class="text-xl font-bold">Buttons</h2>
     <div class="mt-2 flex gap-3">
       <CommonButton class="flex-1 py-2" variant="primary" />

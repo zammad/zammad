@@ -2,6 +2,7 @@
 
 import { i18n } from '#shared/i18n.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { expect } from 'vitest'
 import LayoutHeader from '../LayoutHeader.vue'
 
 describe('mobile app header', () => {
@@ -11,32 +12,34 @@ describe('mobile app header', () => {
     expect(view.queryByTestId('appHeader')).not.toBeInTheDocument()
   })
 
-  it('renders title, if specified', async () => {
-    const view = renderComponent(LayoutHeader, {
-      props: { title: 'Test' },
-      router: true,
+  describe('title prop tests', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let view: ReturnType<typeof renderComponent>
+
+    beforeEach(() => {
+      view = renderComponent(LayoutHeader, {
+        props: { title: 'Test' },
+        router: true,
+      })
     })
+    it('renders translated title, if specified', async () => {
+      expect(view.getByTestId('appHeader')).toBeInTheDocument()
+      expect(view.getByText('Test')).toBeInTheDocument()
 
-    expect(view.getByTestId('appHeader')).toBeInTheDocument()
-    expect(view.getByText('Test')).toBeInTheDocument()
-
-    i18n.setTranslationMap(new Map([['Test2', 'Translated']]))
-
-    await view.rerender({ title: 'Test2' })
-
-    expect(view.getByText('Translated')).toBeInTheDocument()
-  })
-
-  it('can add custom class to title', () => {
-    const view = renderComponent(LayoutHeader, {
-      props: {
+      i18n.setTranslationMap(new Map([['Test2', 'Translated']]))
+      await view.rerender({ title: 'Test2' })
+      expect(view.getByText('Translated')).toBeInTheDocument()
+    })
+    it('should be by default a h1', () => {
+      expect(view.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    })
+    it('can add custom class to title', async () => {
+      await view.rerender({
         title: 'Test',
         titleClass: 'test-class',
-      },
-      router: true,
+      })
+      expect(view.getByText('Test')).toHaveClass('test-class')
     })
-
-    expect(view.getByText('Test')).toHaveClass('test-class')
   })
 
   it('renders back button, if specified', async () => {
@@ -98,5 +101,34 @@ describe('mobile app header', () => {
     })
 
     expect(view.queryByText('Action')).not.toBeInTheDocument()
+  })
+
+  describe('slots test', () => {
+    it('display all slots', () => {
+      const view = renderComponent(LayoutHeader, {
+        slots: {
+          before: `<span>Step 1</span>`,
+          default: `<h2>Test Heading</h2>`,
+          after: `Action`,
+        },
+        router: true,
+      })
+      expect(view.getByText('Step 1')).toBeInTheDocument()
+      expect(view.getByRole('heading', { level: 2 })).toBeInTheDocument()
+      expect(view.getByText('Action')).toBeInTheDocument()
+    })
+    it('shows fallback if partial slots are used', () => {
+      const view = renderComponent(LayoutHeader, {
+        title: 'Test',
+        slots: {
+          before: `<span>Step 1</span>`,
+          after: `Action`,
+        },
+        router: true,
+      })
+      expect(view.getByText('Step 1')).toBeInTheDocument()
+      expect(view.getByRole('heading', { level: 1 })).toBeInTheDocument()
+      expect(view.getByText('Action')).toBeInTheDocument()
+    })
   })
 })

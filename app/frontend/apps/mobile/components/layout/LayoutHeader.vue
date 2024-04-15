@@ -1,22 +1,27 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
+import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
+import CommonRefetch from '#mobile/components/CommonRefetch/CommonRefetch.vue'
+import { computed, ref, useSlots } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
-import CommonButton from '../CommonButton/CommonButton.vue'
-import CommonBackButton from '../CommonBackButton/CommonBackButton.vue'
-import CommonRefetch from '../CommonRefetch/CommonRefetch.vue'
+import type { CommonButtonProps } from '#mobile/components/CommonButton/types.ts'
 
 export interface Props {
+  containerTag?: 'header' | 'div'
   title?: string
   titleClass?: string
   backTitle?: string
   backIgnore?: string[]
   backUrl?: RouteLocationRaw
   backAvoidHomeButton?: boolean
+  defaultAttrs?: Record<string, unknown>
   refetch?: boolean
   actionTitle?: string
   actionHidden?: boolean
+  actionBtnProps?: CommonButtonProps
+
   onAction?(): void
 }
 
@@ -28,7 +33,11 @@ defineExpose({
 
 const props = withDefaults(defineProps<Props>(), {
   refetch: false,
+  containerTag: 'header',
 })
+const slots = useSlots()
+
+const hasSlots = computed(() => Object.keys(slots).length > 0)
 
 const headerClass = computed(() => {
   return [
@@ -39,37 +48,52 @@ const headerClass = computed(() => {
 </script>
 
 <template>
-  <header
-    v-if="title || backUrl || (onAction && actionTitle)"
+  <component
+    :is="containerTag"
+    v-if="title || backUrl || (onAction && actionTitle) || hasSlots"
     ref="headerElement"
     class="grid h-[64px] shrink-0 grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-black px-4"
     data-test-id="appHeader"
   >
     <div class="flex items-center justify-self-start text-base">
-      <CommonBackButton
-        v-if="backUrl"
-        :fallback="backUrl"
-        :label="backTitle"
-        :ignore="backIgnore"
-        :avoid-home-button="backAvoidHomeButton"
-      />
+      <slot
+        name="before"
+        :data="{ backUrl, backTitle, backIgnore, backAvoidHomeButton }"
+      >
+        <CommonBackButton
+          v-if="backUrl"
+          :fallback="backUrl"
+          :label="backTitle"
+          :ignore="backIgnore"
+          :avoid-home-button="backAvoidHomeButton"
+        />
+      </slot>
     </div>
     <div class="flex flex-1 items-center justify-center">
-      <CommonRefetch :refetch="refetch">
-        <h1 :class="headerClass">
-          {{ $t(title) }}
-        </h1>
+      <CommonRefetch v-bind="defaultAttrs" :refetch="refetch">
+        <slot :data="{ defaultAttrs, refetch }">
+          <h1 :class="headerClass">
+            {{ $t(title) }}
+          </h1>
+        </slot>
       </CommonRefetch>
     </div>
-    <div class="flex cursor-pointer items-center justify-self-end text-base">
-      <CommonButton
-        v-if="onAction && actionTitle && !actionHidden"
-        variant="primary"
-        transparent-background
-        @click="onAction?.()"
-      >
-        {{ $t(actionTitle) }}
-      </CommonButton>
+    <div
+      v-if="((onAction || actionTitle) && !actionHidden) || slots.after"
+      class="flex items-center justify-self-end text-base"
+    >
+      <slot name="after" :data="{ actionBtnProps }">
+        <CommonButton
+          v-bind="{
+            variant: 'primary',
+            transparentBackground: true,
+            ...actionBtnProps,
+          }"
+          @click="onAction?.()"
+        >
+          {{ $t(actionTitle) }}
+        </CommonButton>
+      </slot>
     </div>
-  </header>
+  </component>
 </template>
