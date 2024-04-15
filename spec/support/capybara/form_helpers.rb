@@ -323,9 +323,9 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     date = Date.parse(date) if !date.is_a?(Date) && !date.is_a?(DateTime) && !date.is_a?(Time)
 
-    element.find('[aria-label="Open years overlay"]').click
+    element.find('[aria-label="Open the years overlay"]').click
     element.find('.dp__overlay_col', text: date.year).click
-    element.find('[aria-label="Open months overlay"]').click
+    element.find('[aria-label="Open the months overlay"]').click
     element.find('.dp__overlay_col', text: date.strftime('%b')).click
 
     id = date.strftime('%Y-%m-%d')
@@ -354,15 +354,15 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     datetime = DateTime.parse(datetime) if !datetime.is_a?(DateTime) && !datetime.is_a?(Time)
 
     select_date(datetime) do
-      element.find('[aria-label="Open time picker"]').click
+      element.find('[aria-label="Open the time picker"]').click
 
-      element.find('[aria-label="Open hours overlay"]').click
+      element.find('[aria-label="Open the hours overlay"]').click
       element.find('.dp__overlay_col', text: format('%02d', datetime.hour)).click
 
-      element.find('[aria-label="Open minutes overlay"]').click
+      element.find('[aria-label="Open the minutes overlay"]').click
       element.find('.dp__overlay_col', text: format('%02d', datetime.min)).click
 
-      meridian_indicator = element.find('[aria-label="Switch AM/PM mode"]')
+      meridian_indicator = element.find('[aria-label="Toggle AM/PM mode"]')
       meridian_indicator.click if meridian_indicator.text != datetime.strftime('%p')
     end
   end

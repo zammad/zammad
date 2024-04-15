@@ -42,49 +42,49 @@ export const useDateTime = (context: Ref<DateTimeContext>) => {
   const is24 = computed(() => i18n.getTimeFormatType() === '24hour')
 
   const ariaLabels = computed(() => ({
-    toggleOverlay: i18n.t('Toggle overlay'),
+    toggleOverlay: i18n.t('Toggle the overlay'),
     menu: i18n.t('Datepicker menu'),
-    input: i18n.t('Datepicker input'),
-    calendarWrap: i18n.t('Calendar wrapper'),
-    calendarDays: i18n.t('Calendar days'),
-    openTimePicker: i18n.t('Open time picker'),
-    closeTimePicker: i18n.t('Close time picker'),
+    input: i18n.t('Datepicker input field'),
+    calendarWrap: i18n.t('Area for calendar month display'),
+    calendarDays: i18n.t('Area for calendar days display'),
+    openTimePicker: i18n.t('Open the time picker'),
+    closeTimePicker: i18n.t('Close the time picker'),
     incrementValue: (type: string) => {
       switch (type) {
         case 'hours':
-          return i18n.t('Increment hours')
+          return i18n.t('Increment hours value')
         case 'minutes':
-          return i18n.t('Increment minutes')
+          return i18n.t('Increment minutes value')
         case 'seconds':
         default:
-          return i18n.t('Increment seconds')
+          return i18n.t('Increment seconds value')
       }
     },
     decrementValue: (type: string) => {
       switch (type) {
         case 'hours':
-          return i18n.t('Decrement hours')
+          return i18n.t('Decrement hours value')
         case 'minutes':
-          return i18n.t('Decrement minutes')
+          return i18n.t('Decrement minutes value')
         case 'seconds':
         default:
-          return i18n.t('Decrement seconds')
+          return i18n.t('Decrement seconds value')
       }
     },
     openTpOverlay: (type: string) => {
       switch (type) {
         case 'hours':
-          return i18n.t('Open hours overlay')
+          return i18n.t('Open the hours overlay')
         case 'minutes':
-          return i18n.t('Open minutes overlay')
+          return i18n.t('Open the minutes overlay')
         case 'seconds':
         default:
-          return i18n.t('Open seconds overlay')
+          return i18n.t('Open the seconds overlay')
       }
     },
-    amPmButton: i18n.t('Switch AM/PM mode'),
-    openYearsOverlay: i18n.t('Open years overlay'),
-    openMonthsOverlay: i18n.t('Open months overlay'),
+    amPmButton: i18n.t('Toggle AM/PM mode'),
+    openYearsOverlay: i18n.t('Open the years overlay'),
+    openMonthsOverlay: i18n.t('Open the months overlay'),
     nextMonth: i18n.t('Next month'),
     prevMonth: i18n.t('Previous month'),
     nextYear: i18n.t('Next year'),
