@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "eslint": "^8.57.0",
-    "eslint-plugin-eslint-plugin": "^5.5.0",
+    "eslint-plugin-eslint-plugin": "^5.5.1",
     "eslint-plugin-n": "^14.0.0",
     "mocha": "^10.4.0"
   },
