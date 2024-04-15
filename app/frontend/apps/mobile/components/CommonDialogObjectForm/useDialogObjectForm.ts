@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormFieldValue } from '#shared/components/Form/types.ts'
-import { useDialog } from '#shared/composables/useDialog.ts'
+import { useDialog } from '#mobile/composables/useDialog.ts'
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import type { Props } from './CommonDialogObjectForm.vue'
 

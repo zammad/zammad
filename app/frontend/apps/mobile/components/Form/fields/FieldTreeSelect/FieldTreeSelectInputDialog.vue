@@ -4,7 +4,7 @@
 import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
-import { closeDialog } from '#shared/composables/useDialog.ts'
+import { closeDialog } from '#mobile/composables/useDialog.ts'
 import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { escapeRegExp } from 'lodash-es'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'

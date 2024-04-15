@@ -10,17 +10,14 @@ import {
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
-interface Emits {
-  (event: 'resize-horizontal', arg: number): void
-  (event: 'resize-horizontal-start'): void
-  (event: 'resize-horizontal-end'): void
-}
-
 export const useResizeWidthHandle = (
-  emit: Emits,
+  resizeCallback: (positionX: number) => void,
   handleRef: MaybeComputedElementRef<MaybeElement>,
+  options?: {
+    calculateFromRight?: boolean
+  },
 ) => {
-  const isResizing = ref(false)
+  const isResizingHorizontal = ref(false)
 
   const locale = useLocaleStore()
   const { width } = useElementBounding(handleRef)
@@ -37,17 +34,26 @@ export const useResizeWidthHandle = (
     }
 
     // In case of RTL locale, subtract the reported position from the current screen width.
-    if (locale.localeData?.dir === EnumTextDirection.Rtl)
+    if (
+      locale.localeData?.dir === EnumTextDirection.Rtl &&
+      !options?.calculateFromRight // If the option is set, do not calculate from the right.
+    )
       positionX = screenWidth.value - positionX
 
-    emit('resize-horizontal', positionX)
+    // In case of LTR locale and resizer is used from right side of the window, subtract the reported position from the current screen width.
+    if (
+      locale.localeData?.dir === EnumTextDirection.Ltr &&
+      options?.calculateFromRight
+    )
+      positionX = screenWidth.value - positionX
+
+    resizeCallback(positionX)
   }
 
   const endResizing = () => {
     // eslint-disable-next-line no-use-before-define
     removeListeners()
-    isResizing.value = false
-    emit('resize-horizontal-end')
+    isResizingHorizontal.value = false
   }
 
   const removeListeners = () => {
@@ -69,8 +75,7 @@ export const useResizeWidthHandle = (
 
     e.preventDefault()
 
-    isResizing.value = true
-    emit('resize-horizontal-start')
+    isResizingHorizontal.value = true
     addEventListeners()
   }
 
@@ -79,7 +84,7 @@ export const useResizeWidthHandle = (
   })
 
   return {
-    isResizing,
+    isResizingHorizontal,
     startResizing,
   }
 }

@@ -5,7 +5,7 @@ import {
   useNotifications,
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
-import { useDialog } from '#shared/composables/useDialog.ts'
+import { useDialog } from '#mobile/composables/useDialog.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { Ref } from 'vue'
@@ -15,7 +15,7 @@ import { useTicketMergeMutation } from '#shared/entities/ticket/graphql/mutation
 import type { AutocompleteSearchMergeTicketEntry } from '#shared/graphql/types.ts'
 import { keyBy } from 'lodash-es'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
-import { waitForConfirmation } from '#shared/utils/confirmation.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { AutocompleteSearchMergeTicketDocument } from '../graphql/queries/autocompleteSearchMergeTicket.api.ts'
 import TicketMergeStatus from '../components/TicketDetailView/TicketMergeStatus.vue'
 
@@ -40,6 +40,8 @@ export const useTicketsMerge = (
 
   let localOptions: Record<string, AutocompleteSearchMergeTicketEntry> = {}
 
+  const { waitForConfirmation } = useConfirmation()
+
   const mergeTickets = async () => {
     const context = autocompleteRef.value?.node.context
     if (!context || mergeHandler.loading().value) return false
@@ -59,7 +61,7 @@ export const useTicketsMerge = (
     const confirmed = await waitForConfirmation(
       __('Are you sure you want to merge this ticket (#%s) into #%s?'),
       {
-        headingPlaceholder: [sourceTicket.value.number, targetTicket.number],
+        textPlaceholder: [sourceTicket.value.number, targetTicket.number],
       },
     )
 

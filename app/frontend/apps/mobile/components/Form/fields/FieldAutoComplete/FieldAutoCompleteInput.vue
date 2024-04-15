@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { markRaw, ref, toRef, watch } from 'vue'
 import { i18n } from '#shared/i18n.ts'
-import { useDialog } from '#shared/composables/useDialog.ts'
+import { useDialog } from '#mobile/composables/useDialog.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { useFormBlock } from '#shared/form/useFormBlock.ts'

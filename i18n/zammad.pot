@@ -2166,6 +2166,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
@@ -2637,6 +2639,14 @@ msgstr ""
 msgid "Close current tab"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue
+msgid "Close dialog"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Close panel"
+msgstr ""
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
@@ -2799,6 +2809,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Confirmation"
 msgstr ""
 
@@ -8834,6 +8845,8 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "OK"
 msgstr ""
@@ -9314,6 +9327,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Panel"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Panel footer"
 msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
@@ -10300,6 +10321,10 @@ msgstr ""
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup_taken_reset/en.html.erb
 msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>You or someone else tried to sign up with this email address. However, this email is already being used.</div>\n<br>\n<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>\n<br>\n<div><a href=\"#{url}\">#{url}</a></div>\n<br>\n<div>This link takes you to a page where you can change your password.</div>\n<br>\n<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Resize panel"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -14428,6 +14453,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
 msgid "Update"
 msgstr ""
 

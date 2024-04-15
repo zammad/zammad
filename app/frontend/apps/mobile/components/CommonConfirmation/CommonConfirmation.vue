@@ -2,11 +2,17 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
-import { confirmationOptions } from '#shared/utils/confirmation.ts'
+
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { i18n } from '#shared/i18n.ts'
+
+import CommonSectionPopup from '../CommonSectionPopup/CommonSectionPopup.vue'
+import type { PopupItemDescriptor } from '../CommonSectionPopup/types.ts'
+
+const { confirmationOptions, showConfirmation } = useConfirmation()
 
 const localState = computed({
-  get: () => !!confirmationOptions.value,
+  get: () => showConfirmation.value,
   set: (value) => {
     if (!value) confirmationOptions.value = undefined
   },
@@ -15,8 +21,9 @@ const localState = computed({
 const item = computed(() => {
   return {
     type: 'button' as const,
-    label: confirmationOptions.value?.buttonTitle || __('OK'),
-    buttonVariant: confirmationOptions.value?.buttonVariant,
+    label: confirmationOptions.value?.buttonLabel || __('OK'),
+    buttonVariant: confirmationOptions.value
+      ?.buttonVariant as PopupItemDescriptor['buttonVariant'],
     onAction: confirmationOptions.value?.confirmCallback,
   }
 })
@@ -28,13 +35,20 @@ const callCancelCallback = (isCancel: boolean) => {
     confirmationOptions.value.cancelCallback()
   }
 }
+
+const heading = computed(() => {
+  return i18n.t(
+    confirmationOptions.value?.headerTitle || __('Confirm dialog'),
+    ...(confirmationOptions.value?.headerTitlePlaceholder || []),
+  )
+})
 </script>
 
 <template>
   <CommonSectionPopup
     v-model:state="localState"
     :messages="[item]"
-    :heading="__('Confirm dialog')"
+    :heading="heading"
     @close="callCancelCallback"
   >
     <template #header>
@@ -43,8 +57,8 @@ const callCancelCallback = (isCancel: boolean) => {
       >
         {{
           $t(
-            confirmationOptions?.heading,
-            ...(confirmationOptions?.headingPlaceholder || []),
+            confirmationOptions?.text,
+            ...(confirmationOptions?.textPlaceholder || []),
           )
         }}
       </div>

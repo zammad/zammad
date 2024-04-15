@@ -1,13 +1,15 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { nextTick, onMounted, ref, type Events } from 'vue'
+import { onKeyUp, usePointerSwipe } from '@vueuse/core'
+
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import type { EventHandlers } from '#shared/types/utils.ts'
 import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
-import { onKeyUp, usePointerSwipe } from '@vueuse/core'
-import { nextTick, onMounted, ref, type Events } from 'vue'
-import { closeDialog } from '#shared/composables/useDialog.ts'
 import stopEvent from '#shared/utils/events.ts'
+
+import { closeDialog } from '#mobile/composables/useDialog.ts'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 
 const props = defineProps<{

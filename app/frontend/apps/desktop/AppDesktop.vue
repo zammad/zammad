@@ -13,6 +13,8 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 import emitter from '#shared/utils/emitter.ts'
 import { onBeforeMount, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
+import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
+import { initializeConfirmationDialog } from '#desktop/components/CommonConfirmationDialog/initializeConfirmationDialog.ts'
 
 const router = useRouter()
 
@@ -53,6 +55,8 @@ emitter.on('sessionInvalid', async () => {
   }
 })
 
+initializeConfirmationDialog()
+
 // Initialize the ticket overview store after a valid session is present on
 // the app level, so that the query keeps alive.
 // watch(
@@ -65,6 +69,17 @@ emitter.on('sessionInvalid', async () => {
 //   { immediate: true },
 // )
 
+const transition = VITE_TEST_MODE
+  ? undefined
+  : {
+      enterActiveClass: 'duration-300 ease-out',
+      enterFromClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
+      enterToClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
+      leaveActiveClass: 'duration-200 ease-in',
+      leaveFromClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
+      leaveToClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
+    }
+
 onBeforeUnmount(() => {
   emitter.off('sessionInvalid')
 })
@@ -73,6 +88,8 @@ onBeforeUnmount(() => {
 <template>
   <template v-if="application.loaded">
     <CommonNotifications />
+    <RouterView />
   </template>
-  <RouterView v-if="application.loaded" />
+  <DynamicInitializer name="dialog" :transition="transition" />
+  <DynamicInitializer name="flyout" :transition="transition" />
 </template>

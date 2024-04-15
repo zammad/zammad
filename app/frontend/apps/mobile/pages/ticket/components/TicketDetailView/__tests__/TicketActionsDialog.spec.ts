@@ -6,7 +6,7 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { useDialog } from '#shared/composables/useDialog.ts'
+import { useDialog } from '#mobile/composables/useDialog.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'

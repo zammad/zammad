@@ -41,10 +41,11 @@ const {
     >
       <template #default="{ isCollapsed }">
         <PageNavigation :icon-only="isCollapsed" />
-
         <LayoutSidebarFooterMenu :collapsed="isCollapsed" class="mt-auto" />
       </template>
     </LayoutSidebar>
-    <RouterView />
+    <div id="page-main-content" class="relative">
+      <RouterView />
+    </div>
   </div>
 </template>

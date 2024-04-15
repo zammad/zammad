@@ -8,7 +8,7 @@ import type { AutoCompleteProps } from '#shared/components/Form/fields/FieldAuto
 import type { AutoCompleteCustomerOption } from '#shared/components/Form/fields/FieldCustomer/types.ts'
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
-import { closeDialog } from '#shared/composables/useDialog.ts'
+import { closeDialog } from '#mobile/composables/useDialog.ts'
 import type { User } from '#shared/graphql/types.ts'
 import FieldCustomerOptionIcon from './FieldCustomerOptionIcon.vue'
 

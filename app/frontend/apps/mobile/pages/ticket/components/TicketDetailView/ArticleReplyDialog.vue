@@ -7,10 +7,10 @@ import { cloneDeep, isEqual } from 'lodash-es'
 import { computed, onMounted, onUnmounted } from 'vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import { closeDialog } from '#shared/composables/useDialog.ts'
+import { closeDialog } from '#mobile/composables/useDialog.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type { FormRef } from '#shared/components/Form/types.ts'
-import { waitForConfirmation } from '#shared/utils/confirmation.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 
 interface Props {
   name: string
@@ -53,12 +53,14 @@ const dialogFormIsDirty = computed(() => {
   )
 })
 
+const { waitForConfirmation } = useConfirmation()
+
 const cancelDialog = async () => {
   if (dialogFormIsDirty.value) {
     const confirmed = await waitForConfirmation(
       __('Are you sure? You have changes that will get lost.'),
       {
-        buttonTitle: __('Discard changes'),
+        buttonLabel: __('Discard changes'),
         buttonVariant: 'danger',
       },
     )
@@ -80,7 +82,7 @@ const discardDialog = async () => {
   const confirmed = await waitForConfirmation(
     __('Are you sure? The prepared article will be removed.'),
     {
-      buttonTitle: __('Discard article'),
+      buttonLabel: __('Discard article'),
       buttonVariant: 'danger',
     },
   )

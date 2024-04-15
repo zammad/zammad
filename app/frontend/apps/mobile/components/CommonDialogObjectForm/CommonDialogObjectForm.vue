@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import type { ObjectLike } from '#shared/types/utils.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { closeDialog } from '#shared/composables/useDialog.ts'
+import { closeDialog } from '#mobile/composables/useDialog.ts'
 import type {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
@@ -22,7 +22,7 @@ import { useObjectAttributes } from '#shared/entities/object-attributes/composab
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import { waitForConfirmation } from '#shared/utils/confirmation.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 
 export interface Props {
   name: string
@@ -70,12 +70,15 @@ const initialFlatObject = {
 const { attributesLookup: objectAttributesLookup } = useObjectAttributes(
   props.type,
 )
+
+const { waitForConfirmation } = useConfirmation()
+
 const cancelDialog = async () => {
   if (isDirty.value) {
     const confirmed = await waitForConfirmation(
       __('Are you sure? You have unsaved changes that will get lost.'),
       {
-        buttonTitle: __('Discard changes'),
+        buttonLabel: __('Discard changes'),
         buttonVariant: 'danger',
       },
     )

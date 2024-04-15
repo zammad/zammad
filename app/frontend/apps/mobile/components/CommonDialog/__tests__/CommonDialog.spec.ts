@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { getDialogMeta, openDialog } from '#shared/composables/useDialog.ts'
+import { getDialogMeta, openDialog } from '#mobile/composables/useDialog.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { flushPromises } from '@vue/test-utils'
 import CommonDialog from '../CommonDialog.vue'

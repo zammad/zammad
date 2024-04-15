@@ -2,7 +2,7 @@
 <!-- eslint-disable zammad/zammad-detect-translatable-string -->
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, h, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { reset } from '@formkit/core'
 
@@ -10,7 +10,10 @@ import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import Form from '#shared/components/Form/Form.vue'
-import type { FormValues } from '#shared/components/Form/types.ts'
+import type {
+  FormSchemaNode,
+  FormValues,
+} from '#shared/components/Form/types.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#desktop/components/CommonButtonGroup/CommonButtonGroup.vue'
@@ -21,8 +24,13 @@ import CommonPopoverMenu from '#desktop/components/CommonPopover/CommonPopoverMe
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
-import LayoutMain from '#desktop/components/layout/LayoutMain.vue'
 import type { ThemeSwitchInstance } from '#desktop/components/ThemeSwitch/types.ts'
+import CommonDialog from '#desktop/components/CommonDialog/CommonDialog.vue'
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
+import { useDialog } from '#desktop/components/CommonDialog/useDialog.ts'
+import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -138,6 +146,7 @@ const formSchema = [
           maxLength: 150,
           options: [...alphabetOptions.value, ...[longOption.value]],
           clearable: true,
+          help: 'Testing',
         },
       },
       {
@@ -326,10 +335,103 @@ const cycleThemeSwitchValue = () => {
 }
 
 const appearance = ref('auto')
+
+const schema: FormSchemaNode[] = [
+  {
+    type: 'text',
+    name: 'code',
+    label: 'Test',
+    required: true,
+    props: {
+      help: 'Enter here something',
+    },
+  },
+]
+
+const flyout = useFlyout({
+  name: 'playground',
+  component: () =>
+    new Promise((resolve) => {
+      return resolve(
+        h(
+          CommonFlyout,
+          {
+            onClose: () => {
+              console.log(
+                '%c %s',
+                'color: red; font-size: 16px',
+                'Flyout closed!',
+              )
+            },
+            onAction: () => {
+              console.log(
+                '%c %s',
+                'color: green; font-size: 16px',
+                'Flyout action!',
+              )
+            },
+            name: 'playground',
+            headerTitle: 'Hello Playground',
+            persistWidth: true,
+            headerIcon: 'buildings',
+            footerActionOptions: {
+              actionLabel: 'Submit test',
+              cancelLabel: 'Adios',
+              actionButton: {
+                type: 'submit',
+                variant: 'primary',
+                prefixIcon: 'check2',
+              },
+            },
+          },
+          {
+            default: () => [
+              h('div', { class: 'py-1' }, [
+                h('input'),
+                h(Form, { ref: 'flyoutForm', schema }),
+                h('div', { class: 'w-[400px]', innerHTML: 'Hello world!' }),
+                h(
+                  'p',
+                  '    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab laborum magnam omnis qui, ratione similique velit voluptatem. Cumque esse et, expedita inventore, iusto laboriosam magnam minus necessitatibus numquam odio odit optio quaerat, quidem quo quos reiciendis rem similique ut veniam vero. Aperiam at blanditiis dignissimos est et, ex harum id in itaque magni natus neque officia omnis perferendis quaerat, quasi ratione reiciendis sunt vitae voluptatum. At id obcaecati odio rerum sed! Accusamus aliquid assumenda cupiditate deleniti distinctio dolore dolores ea earum enim eos error esse ex expedita hic id incidunt iste laudantium molestias nisi obcaecati omnis placeat quam quibusdam quis, quod ratione rem repellendus reprehenderit sed sint soluta velit vitae voluptas voluptate voluptatem voluptates voluptatum. Delectus facilis nostrum praesentium quos sed. Ad assumenda atque cum cumque distinctio dolorem dolores excepturi explicabo harum impedit iusto labore, laboriosam laudantium libero minima nam pariatur quasi quisquam rem repellat reprehenderit saepe sapiente, tempora ut voluptates! Assumenda distinctio impedit veniam vitae voluptates! Aperiam, at commodi dignissimos ex exercitationem inventore quibusdam sequi veniam! A ab accusamus aperiam architecto atque beatae blanditiis commodi consequatur, deleniti deserunt dolor ducimus eaque ex excepturi illum incidunt ipsum laboriosam magni minus molestiae nam nesciunt nulla odit perferendis perspiciatis possimus quod quos similique sint suscipit temporibus unde veritatis voluptatibus? Ab ad, adipisci animi beatae ea eaque eligendi explicabo id impedit itaque magni mollitia nihil numquam obcaecati odit officia omnis perferendis porro quaerat quasi quod repellendus sint sunt suscipit, tenetur vel veniam. Ad animi architecto, aspernatur at blanditiis cumque delectus deleniti dolorem dolorum eos eum eveniet facilis fuga fugiat hic ipsam iure laboriosam maiores natus nisi nobis nulla officiis optio perferendis porro quaerat quam qui quo, repellat sed similique sint suscipit tenetur ullam veritatis vitae voluptates. A ad illo minima nisi nobis vitae voluptatem? Autem deleniti error maiores minus pariatur porro quidem suscipit!',
+                ),
+              ]),
+            ],
+          },
+        ),
+      )
+    }),
+})
+
+const dialog = useDialog({
+  name: 'playground',
+  component: () =>
+    new Promise((resolve) => {
+      return resolve(
+        h(CommonDialog, {
+          name: 'playground',
+          headerTitle: 'Confirmation',
+          content: 'Do you want to continue?',
+        }),
+      )
+    }),
+})
+
+const { waitForConfirmation } = useConfirmation()
+const deleteTest = async () => {
+  const confirmed = await waitForConfirmation(
+    'Do you really want to delete this item?',
+  )
+
+  if (confirmed) {
+    console.log('Item deleted!')
+  } else {
+    console.log('Item not deleted!')
+  }
+}
 </script>
 
 <template>
-  <LayoutMain>
+  <LayoutContent :breadcrumb-items="[]">
     <div class="w-1/2">
       <h2 class="text-xl">Buttons</h2>
 
@@ -422,49 +524,49 @@ const appearance = ref('auto')
 
     <div>
       <h2>Labels</h2>
-      <CommonLabel size="small" prefix-icon="logo" suffix-icon="logo-flat"
-        >Small
+      <CommonLabel size="small" prefix-icon="logo" suffix-icon="logo-flat">
+        Small
       </CommonLabel>
 
       <br />
 
-      <CommonLabel size="medium" prefix-icon="logo" suffix-icon="logo-flat"
-        >Medium
+      <CommonLabel size="medium" prefix-icon="logo" suffix-icon="logo-flat">
+        Medium
       </CommonLabel>
 
       <br />
 
-      <CommonLabel size="large" prefix-icon="logo" suffix-icon="logo-flat"
-        >Large
+      <CommonLabel size="large" prefix-icon="logo" suffix-icon="logo-flat">
+        Large
       </CommonLabel>
 
       <br />
 
-      <CommonLabel size="xl" prefix-icon="logo" suffix-icon="logo-flat"
-        >Extra large
+      <CommonLabel size="xl" prefix-icon="logo" suffix-icon="logo-flat">
+        Extra large
       </CommonLabel>
     </div>
 
     <div>
       <h2>Badges</h2>
 
-      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="neutral"
-        >Neutral
+      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="neutral">
+        Neutral
       </CommonBadge>
 
       <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="info">Info</CommonBadge>
 
-      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="success"
-        >Success
+      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="success">
+        Success
       </CommonBadge>
 
-      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="warning"
-        >Warning
+      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="warning">
+        Warning
       </CommonBadge>
 
-      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="danger"
-        >Danger</CommonBadge
-      >
+      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="danger">
+        Danger
+      </CommonBadge>
 
       <CommonBadge
         class="bg-pink-300 text-white ltr:mr-2 rtl:ml-2 dark:bg-pink-300"
@@ -651,6 +753,23 @@ const appearance = ref('auto')
       </template>
     </div>
 
+    <h2 class="mb-2 mt-8">Flyout and Dialog</h2>
+    <div class="mb-6 flex gap-4">
+      <CommonButton variant="tertiary" @click="dialog.open()"
+        >Show Dialog
+      </CommonButton>
+      <CommonButton variant="primary" @click="flyout.open()">
+        Open Flyout
+      </CommonButton>
+    </div>
+
+    <h2 class="mb-2">Confirmation</h2>
+    <div class="mb-6 flex gap-4">
+      <CommonButton variant="tertiary" @click="deleteTest()"
+        >Delete
+      </CommonButton>
+    </div>
+
     <div class="w-1/2">
       <h2 class="text-lg">Form</h2>
 
@@ -678,5 +797,5 @@ const appearance = ref('auto')
         </template>
       </Form>
     </div>
-  </LayoutMain>
+  </LayoutContent>
 </template>

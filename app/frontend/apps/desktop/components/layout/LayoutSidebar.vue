@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { MaybeElement } from '@vueuse/core'
 import ResizeHandle from '#desktop/components/ResizeHandle/ResizeHandle.vue'
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
@@ -34,7 +34,18 @@ const { toggleCollapse, isCollapsed } = useCollapseHandler(emit, {
 
 const resizeHandle = ref<MaybeElement>()
 
-const { startResizing } = useResizeWidthHandle(emit, resizeHandle)
+const { startResizing, isResizingHorizontal } = useResizeWidthHandle(
+  (positionX) => emit('resize-horizontal', positionX),
+  resizeHandle,
+)
+
+watch(isResizingHorizontal, (isResizing) => {
+  if (isResizing) {
+    emit('resize-horizontal-start')
+  } else {
+    emit('resize-horizontal-end')
+  }
+})
 </script>
 
 <template>
@@ -50,7 +61,7 @@ const { startResizing } = useResizeWidthHandle(emit, resizeHandle)
       :is-collapsed="isCollapsed"
       :owner-id="id"
       group="sidebar"
-      class="absolute top-[49px] z-10 ltr:right-0 ltr:translate-x-1/2 rtl:left-0 rtl:-translate-x-1/2"
+      class="absolute top-[49px] z-20 ltr:right-0 ltr:translate-x-1/2 rtl:left-0 rtl:-translate-x-1/2"
       @toggle-collapse="toggleCollapse"
     />
     <ResizeHandle
@@ -61,8 +72,6 @@ const { startResizing } = useResizeWidthHandle(emit, resizeHandle)
       @mousedown="startResizing"
       @touchstart="startResizing"
       @dblclick="$emit('reset-width')"
-      @resize-horizontal-start="$emit('resize-horizontal-start')"
-      @resize-horizontal-end="$emit('resize-horizontal-end')"
     />
     <CommonButton
       v-if="iconCollapsed && isCollapsed"

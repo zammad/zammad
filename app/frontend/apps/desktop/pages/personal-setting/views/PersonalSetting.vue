@@ -8,7 +8,7 @@ import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.
 import PersonalSettingSidebar from '#desktop/pages/personal-setting/components/PersonalSettingSidebar/PersonalSettingSidebar.vue'
 
 const { userId } = useSessionStore()
-const storageKeyId = `${userId}-personalSetting`
+const storageKeyId = `${userId}-personal-setting`
 
 const { gridColumns, collapseSidebar, expandSidebar } =
   useResizeGridColumns(storageKeyId)

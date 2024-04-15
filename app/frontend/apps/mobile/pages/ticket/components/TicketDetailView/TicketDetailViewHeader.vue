@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { toRef } from 'vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { useDialog } from '#shared/composables/useDialog.ts'
+import { useDialog } from '#mobile/composables/useDialog.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
 import { useSessionStore } from '#shared/stores/session.ts'

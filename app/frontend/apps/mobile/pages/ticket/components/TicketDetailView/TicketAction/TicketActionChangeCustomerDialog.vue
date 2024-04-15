@@ -8,7 +8,7 @@ import {
   EnumObjectManagerObjects,
   type TicketCustomerUpdateInput,
 } from '#shared/graphql/types.ts'
-import { closeDialog } from '#shared/composables/useDialog.ts'
+import { closeDialog } from '#mobile/composables/useDialog.ts'
 import { useTicketFormOganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
@@ -25,7 +25,7 @@ import type {
   TicketById,
   TicketCustomerUpdateFormData,
 } from '#shared/entities/ticket/types.ts'
-import { waitForConfirmation } from '#shared/utils/confirmation.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 
 export interface Props {
   name: string
@@ -36,12 +36,14 @@ const props = defineProps<Props>()
 
 const { form, isDirty, canSubmit } = useForm()
 
+const { waitForConfirmation } = useConfirmation()
+
 const cancelDialog = async () => {
   if (isDirty.value) {
     const confirmed = await waitForConfirmation(
       __('Are you sure? You have unsaved changes that will get lost.'),
       {
-        buttonTitle: __('Discard changes'),
+        buttonLabel: __('Discard changes'),
         buttonVariant: 'danger',
       },
     )

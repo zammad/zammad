@@ -31,9 +31,9 @@ import type { TicketInformation } from '#mobile/entities/ticket/types.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
-import { getOpenedDialogs } from '#shared/composables/useDialog.ts'
+import { getOpenedDialogs } from '#mobile/composables/useDialog.ts'
 import { useCommonSelect } from '#mobile/components/CommonSelect/useCommonSelect.ts'
-import { waitForConfirmation } from '#shared/utils/confirmation.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useTicketEdit } from '../composable/useTicketEdit.ts'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation.ts'
 import { useTicketQuery } from '../graphql/queries/ticket.api.ts'
@@ -212,10 +212,12 @@ useOnlineNotificationSeen(ticket)
 onBeforeRouteLeave(async () => {
   if (!isDirty.value) return true
 
+  const { waitForConfirmation } = useConfirmation()
+
   const confirmed = await waitForConfirmation(
     __('Are you sure? You have unsaved changes that will get lost.'),
     {
-      buttonTitle: __('Discard changes'),
+      buttonLabel: __('Discard changes'),
       buttonVariant: 'danger',
     },
   )

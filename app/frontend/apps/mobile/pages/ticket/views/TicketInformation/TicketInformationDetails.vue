@@ -15,7 +15,7 @@ import CommonShowMoreButton from '#mobile/components/CommonShowMoreButton/Common
 import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import { waitForConfirmation } from '#shared/utils/confirmation.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import TicketObjectAttributes from '../../components/TicketDetailView/TicketObjectAttributes.vue'
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
@@ -39,13 +39,15 @@ const ticketFormGroupNode = computed(() => {
   return form.value?.formNode?.at('ticket')
 })
 
+const { waitForConfirmation } = useConfirmation()
+
 const discardTicketEditDialog = async () => {
   if (!ticketFormGroupNode.value) return
 
   const confirmed = await waitForConfirmation(
     __('Are you sure? You have unsaved changes that will get lost.'),
     {
-      buttonTitle: __('Discard changes'),
+      buttonLabel: __('Discard changes'),
       buttonVariant: 'danger',
     },
   )

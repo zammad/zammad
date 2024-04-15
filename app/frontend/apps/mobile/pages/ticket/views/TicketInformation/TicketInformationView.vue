@@ -7,7 +7,7 @@ import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButton
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { useSessionStore } from '#shared/stores/session.ts'
 import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
-import { useDialog } from '#shared/composables/useDialog.ts'
+import { useDialog } from '#mobile/composables/useDialog.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import CommonRefetch from '#mobile/components/CommonRefetch/CommonRefetch.vue'
 import { useRoute, useRouter } from 'vue-router'

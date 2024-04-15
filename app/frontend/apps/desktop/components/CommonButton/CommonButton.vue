@@ -3,9 +3,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { startCase } from 'lodash-es'
+
 import type { ButtonSize, ButtonType, ButtonVariant } from './types.ts'
 
-interface Props {
+export interface Props {
   variant?: ButtonVariant
   type?: ButtonType
   disabled?: boolean

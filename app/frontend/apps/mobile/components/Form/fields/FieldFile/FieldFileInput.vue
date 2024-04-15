@@ -6,7 +6,7 @@ import { convertFileList } from '#shared/utils/files.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useImageViewer } from '#shared/composables/useImageViewer.ts'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
-import { waitForConfirmation } from '#shared/utils/confirmation.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { useFileValidation } from '#mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts'
@@ -113,13 +113,15 @@ const onFileChanged = async ($event: Event) => {
   await loadFiles(files)
 }
 
+const { waitForConfirmation } = useConfirmation()
+
 const removeFile = async (file: FileUploaded) => {
   const fileId = file.id
   const confirmed = await waitForConfirmation(
     __('Are you sure you want to delete "%s"?'),
     {
-      headingPlaceholder: [file.name],
-      buttonTitle: __('Delete'),
+      textPlaceholder: [file.name],
+      buttonLabel: __('Delete'),
       buttonVariant: 'danger',
     },
   )

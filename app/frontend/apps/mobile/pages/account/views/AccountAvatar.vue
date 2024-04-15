@@ -27,7 +27,7 @@ import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/types.ts'
-import { waitForConfirmation } from '#shared/utils/confirmation.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useAccountAvatarActiveQuery } from '../avatar/graphql/queries/active.api.ts'
 import { useAccountAvatarAddMutation } from '../avatar/graphql/mutations/add.api.ts'
 import { useAccountAvatarDeleteMutation } from '../avatar/graphql/mutations/delete.api.ts'
@@ -144,6 +144,7 @@ const removeAvatar = () => {
     }
   })
 }
+const { waitForConfirmation } = useConfirmation()
 
 const confirmRemoveAvatar = async () => {
   if (!canRemoveAvatar()) return
@@ -151,7 +152,7 @@ const confirmRemoveAvatar = async () => {
   const confirmed = await waitForConfirmation(
     __('Do you really want to delete your current avatar?'),
     {
-      buttonTitle: __('Delete avatar'),
+      buttonLabel: __('Delete avatar'),
       buttonVariant: 'danger',
     },
   )
