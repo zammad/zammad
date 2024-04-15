@@ -10,7 +10,7 @@
     <%  permissions = @params.group_ids?[group.id] || [] %>
     <tr data-id="<%= group.id %>">
       <td class="settings-list-middle">
-        <%= @P(group, 'name') %>
+        <%- @P(group, 'name') %>
       <% for key, text of @groupAccesses: %>
         <td class="settings-list-middle">
           <label class="inline-label checkbox-replacement">
