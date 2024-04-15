@@ -1841,12 +1841,10 @@ msgstr "적용"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Apr"
 msgstr "4월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "April"
 msgstr "4월"
 
@@ -2193,12 +2191,10 @@ msgstr "필터 없음."
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Aug"
 msgstr "8월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "August"
 msgstr "8월"
 
@@ -2665,10 +2661,6 @@ msgstr ""
 msgid "CTI integration"
 msgstr "통합"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid "CW"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -2676,10 +2668,20 @@ msgstr ""
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
 msgid "Calendar"
+msgstr "달력"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Calendars"
+msgid "Calendar days"
+msgstr "달력"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Calendar"
+msgid "Calendar wrapper"
 msgstr "달력"
 
 #: app/assets/javascripts/app/controllers/calendar.coffee
@@ -2793,6 +2795,8 @@ msgstr "취소"
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
@@ -3201,12 +3205,6 @@ msgstr ""
 msgid "Clean up mobile taskbars."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-#, fuzzy
-#| msgid "clear"
-msgid "Clear"
-msgstr "명확한"
-
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
@@ -3215,9 +3213,11 @@ msgid "Clear Search"
 msgstr "검색"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
@@ -3312,6 +3312,18 @@ msgstr ""
 msgid "Close current tab"
 msgstr "현재 탭 닫기"
 
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue
+#, fuzzy
+#| msgid "Confirm/submit dialog"
+msgid "Close dialog"
+msgstr "대화 상자를 제출 / 확인"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+#, fuzzy
+#| msgid "Close tab"
+msgid "Close panel"
+msgstr "탭 닫기"
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
@@ -3323,6 +3335,12 @@ msgstr "탭 닫기"
 #: db/seeds/settings.rb
 msgid "Close tab on ticket close"
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Closed Tickets"
+msgid "Close time picker"
+msgstr "종료된 Ticket"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
@@ -3499,6 +3517,7 @@ msgstr "대화 상자를 제출 / 확인"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #, fuzzy
 #| msgid "Configuration"
 msgid "Confirmation"
@@ -4214,6 +4233,14 @@ msgstr ""
 msgid "Date field"
 msgstr "날짜 시간"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Datepicker input"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Datepicker menu"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Day"
@@ -4230,14 +4257,28 @@ msgstr "일"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Dec"
 msgstr "12월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "December"
 msgstr "12월"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Recent logs"
+msgid "Decrement hours"
+msgstr "최근 로그"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Average: %s minutes"
+msgid "Decrement minutes"
+msgstr "평균 : %s 분"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Decrement seconds"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -6821,12 +6862,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Feb"
 msgstr "2월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "February"
 msgstr "2월"
 
@@ -7146,7 +7185,6 @@ msgid "Freshdesk"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Fri"
 msgstr "금"
 
@@ -7154,7 +7192,6 @@ msgstr "금"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Friday"
 msgstr "금요일"
 
@@ -8299,6 +8336,22 @@ msgstr ""
 msgid "Increment (SystemID.Counter)"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "in hours"
+msgid "Increment hours"
+msgstr "시간"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "minutes"
+msgid "Increment minutes"
+msgstr "의사록"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Increment seconds"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Info: %s"
@@ -8640,12 +8693,10 @@ msgstr "페이지 당 항목"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jan"
 msgstr "월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "January"
 msgstr "1월"
 
@@ -8668,24 +8719,20 @@ msgstr "%s 가입"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jul"
 msgstr "7월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "July"
 msgstr "7월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jun"
 msgstr "6월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "June"
 msgstr "6월"
 
@@ -9291,12 +9338,10 @@ msgstr "지도 제작"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mar"
 msgstr "월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "March"
 msgstr "3월"
 
@@ -9394,7 +9439,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "May"
 msgstr "5월"
 
@@ -9615,7 +9659,6 @@ msgid "Module"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mon"
 msgstr "월"
 
@@ -9623,7 +9666,6 @@ msgstr "월"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Monday"
 msgstr "월요일"
 
@@ -10121,6 +10163,18 @@ msgstr "상태"
 msgid "Next in overview"
 msgstr "Overview에서 다음"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "State"
+msgid "Next month"
+msgstr "상태"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "State"
+msgid "Next year"
+msgstr "상태"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "No"
@@ -10538,12 +10592,10 @@ msgstr "알림"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Nov"
 msgstr "11월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "November"
 msgstr "11월"
 
@@ -10572,6 +10624,8 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "OK"
 msgstr ""
@@ -10634,12 +10688,10 @@ msgstr "사물"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Oct"
 msgstr "10월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "October"
 msgstr "10월"
 
@@ -10782,6 +10834,10 @@ msgstr "오픈 Ticket # %s을 (를)"
 msgid "Open Tickets"
 msgstr "오픈 Ticket"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open hours overlay"
+msgstr ""
+
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
 #| msgid "Next in tab"
@@ -10792,9 +10848,23 @@ msgstr "탭에서 다음"
 msgid "Open macro selection"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open minutes overlay"
+msgstr "노트 열기 상자"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open months overlay"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open note box"
 msgstr "노트 열기 상자"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open seconds overlay"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
@@ -10805,6 +10875,16 @@ msgstr ""
 #| msgid "Open Tickets"
 msgid "Open tickets"
 msgstr "오픈 Ticket"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open time picker"
+msgstr "오픈 Ticket"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open years overlay"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
@@ -11109,6 +11189,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Panel"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Panel footer"
 msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
@@ -11610,6 +11698,18 @@ msgstr "너무 이른"
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
 msgid "Previous in overview"
 msgstr "Overview에 이전"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Previous"
+msgid "Previous month"
+msgstr "너무 이른"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Previous"
+msgid "Previous year"
+msgstr "너무 이른"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #, fuzzy
@@ -12263,6 +12363,10 @@ msgid ""
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Resize panel"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
 msgstr ""
@@ -12515,7 +12619,6 @@ msgid "STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sat"
 msgstr "토"
 
@@ -12523,7 +12626,6 @@ msgstr "토"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Saturday"
 msgstr "토요일"
 
@@ -13062,7 +13164,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sep"
 msgstr "9월"
 
@@ -13071,7 +13172,6 @@ msgid "Separate multiple values by ;"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "September"
 msgstr "9월"
 
@@ -14000,7 +14100,6 @@ msgid "Summer holiday"
 msgstr "여름 휴가"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sun"
 msgstr "일"
 
@@ -14008,12 +14107,15 @@ msgstr "일"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sunday"
 msgstr "일요일"
 
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Switch AM/PM mode"
 msgstr ""
 
 #: db/seeds/schedulers.rb
@@ -16091,7 +16193,6 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thu"
 msgstr "목"
 
@@ -16099,7 +16200,6 @@ msgstr "목"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thursday"
 msgstr "목요일"
 
@@ -16784,13 +16884,18 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr "Ticket에서 작동합니다."
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "오늘"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Toggle overlay"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -16939,7 +17044,6 @@ msgid "Trying to reconnect…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tue"
 msgstr "화"
 
@@ -16947,7 +17051,6 @@ msgstr "화"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tuesday"
 msgstr "화요일"
 
@@ -17233,6 +17336,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
 msgid "Update"
 msgstr "최신 정보"
 
@@ -17960,7 +18064,6 @@ msgid "Websocket port"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wed"
 msgstr "금"
 
@@ -17968,7 +18071,6 @@ msgstr "금"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wednesday"
 msgstr "수요일"
 
@@ -20248,6 +20350,11 @@ msgstr "... 전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#, fuzzy
+#~| msgid "clear"
+#~ msgid "Clear"
+#~ msgstr "명확한"
 
 #, fuzzy
 #~| msgid "Proxy Settings"

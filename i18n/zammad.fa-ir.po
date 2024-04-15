@@ -1667,12 +1667,10 @@ msgstr "اعمال پیش‌نویس"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Apr"
 msgstr "آوریل"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "April"
 msgstr "آوریل"
 
@@ -2029,12 +2027,10 @@ msgstr "بدون فیلتر."
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Aug"
 msgstr "آگوست"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "August"
 msgstr "آگوست"
 
@@ -2477,10 +2473,6 @@ msgstr ""
 msgid "CTI integration"
 msgstr "یکپارچه‌سازی CTI"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid "CW"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -2488,10 +2480,20 @@ msgstr ""
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
 msgid "Calendar"
+msgstr "تقویم"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Calendars"
+msgid "Calendar days"
+msgstr "تقویم‌ها"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Calendar"
+msgid "Calendar wrapper"
 msgstr "تقویم"
 
 #: app/assets/javascripts/app/controllers/calendar.coffee
@@ -2603,6 +2605,8 @@ msgstr "لغو"
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
@@ -3005,12 +3009,6 @@ msgstr "پاکسازی نشست‌های منقضی‌شده."
 msgid "Clean up mobile taskbars."
 msgstr "پاکسازی نشست‌های پایان یافته."
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-#, fuzzy
-#| msgid "clear"
-msgid "Clear"
-msgstr "پاک کردن"
-
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
@@ -3019,9 +3017,11 @@ msgid "Clear Search"
 msgstr "جستجو"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
@@ -3116,6 +3116,18 @@ msgstr "بستن چت زمانی‌که حضار آفلاین هستند."
 msgid "Close current tab"
 msgstr "بستن برگه کنونی"
 
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue
+#, fuzzy
+#| msgid "Confirm/submit dialog"
+msgid "Close dialog"
+msgstr "پنجره تایید/ارسال"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+#, fuzzy
+#| msgid "Close tab"
+msgid "Close panel"
+msgstr "بستن برگه"
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
@@ -3127,6 +3139,12 @@ msgstr "بستن برگه"
 #: db/seeds/settings.rb
 msgid "Close tab on ticket close"
 msgstr "بستن برگه همزمان با بستن تیکت"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Closed Tickets"
+msgid "Close time picker"
+msgstr "تیکتهای بسته‌شده"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
@@ -3299,6 +3317,7 @@ msgstr "پنجره تایید/ارسال"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Confirmation"
 msgstr "تایید"
 
@@ -4016,6 +4035,14 @@ msgstr ""
 msgid "Date field"
 msgstr "فیلد تاریخ"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Datepicker input"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Datepicker menu"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Day"
@@ -4032,14 +4059,28 @@ msgstr "روز"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Dec"
 msgstr "دسامبر"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "December"
 msgstr "دسامبر"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Recent Logs"
+msgid "Decrement hours"
+msgstr "لاگ‌های اخیر"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Average: %s minutes"
+msgid "Decrement minutes"
+msgstr "میانگین : %s دقیقه"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Decrement seconds"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -6498,12 +6539,10 @@ msgstr "تنظیمات ویژگی انجام نشده است٬ لطفا با ا�
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Feb"
 msgstr "فوریه"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "February"
 msgstr "فوریه"
 
@@ -6807,7 +6846,6 @@ msgid "Freshdesk"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Fri"
 msgstr "جمعه"
 
@@ -6815,7 +6853,6 @@ msgstr "جمعه"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Friday"
 msgstr "جمعه"
 
@@ -7940,6 +7977,22 @@ msgstr "نام‌کاربری و رمزعبور ناقص"
 msgid "Increment (SystemID.Counter)"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "in hours"
+msgid "Increment hours"
+msgstr "برحسب ساعت"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "in %s minutes"
+msgid "Increment minutes"
+msgstr "در %s دقیقه"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Increment seconds"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Info: %s"
@@ -8277,12 +8330,10 @@ msgstr "اقلام هر صفحه"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jan"
 msgstr "ژانویه"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "January"
 msgstr "ژانویه"
 
@@ -8303,24 +8354,20 @@ msgstr "پیوستن به %s"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jul"
 msgstr "جولای"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "July"
 msgstr "جولای"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jun"
 msgstr "ژوئن"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "June"
 msgstr "ژوئن"
 
@@ -8912,12 +8959,10 @@ msgstr "Mapping"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mar"
 msgstr "مارس"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "March"
 msgstr "مارس"
 
@@ -9013,7 +9058,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "May"
 msgstr "می"
 
@@ -9234,7 +9278,6 @@ msgid "Module"
 msgstr "ماژول"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mon"
 msgstr "دوشنبه"
 
@@ -9242,7 +9285,6 @@ msgstr "دوشنبه"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Monday"
 msgstr "دوشنبه"
 
@@ -9726,6 +9768,18 @@ msgstr "شروع به کار"
 msgid "Next in overview"
 msgstr "تیکت بعدی"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "last month"
+msgid "Next month"
+msgstr "ماه گذشته"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Get Started"
+msgid "Next year"
+msgstr "شروع به کار"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "No"
@@ -10145,12 +10199,10 @@ msgstr "اعلان ها"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Nov"
 msgstr "نوامبر"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "November"
 msgstr "نوامبر"
 
@@ -10179,6 +10231,8 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "OK"
 msgstr ""
@@ -10227,12 +10281,10 @@ msgstr "آبجکت‌ها"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Oct"
 msgstr "اکتبر"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "October"
 msgstr "اکتبر"
 
@@ -10375,6 +10427,10 @@ msgstr "تعداد تیکت‌های باز %s"
 msgid "Open Tickets"
 msgstr "تیکت‌های باز"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open hours overlay"
+msgstr ""
+
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
 #| msgid "Next in tab"
@@ -10385,9 +10441,23 @@ msgstr "تیکت بعدی در صفحه جدید"
 msgid "Open macro selection"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open minutes overlay"
+msgstr "جعبه یادداشت را باز کن"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open months overlay"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open note box"
 msgstr "جعبه یادداشت را باز کن"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open seconds overlay"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
@@ -10398,6 +10468,16 @@ msgstr ""
 #| msgid "Open Tickets"
 msgid "Open tickets"
 msgstr "تیکت‌های باز"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open time picker"
+msgstr "تیکت‌های باز"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open years overlay"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
@@ -10695,6 +10775,14 @@ msgstr "صفحه یافت نشد"
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
 msgstr "صفحات"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Panel"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Panel footer"
+msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
 msgid "Parameter 'data' or 'file' required."
@@ -11193,6 +11281,18 @@ msgstr "قبلی"
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
 msgid "Previous in overview"
 msgstr "قبلی در نگاه کلی"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Previous"
+msgid "Previous month"
+msgstr "قبلی"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Previous"
+msgid "Previous year"
+msgstr "قبلی"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #, fuzzy
@@ -11840,6 +11940,10 @@ msgid ""
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Resize panel"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
 msgstr "پاسخ"
@@ -12090,7 +12194,6 @@ msgid "STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sat"
 msgstr "شنبه"
 
@@ -12098,7 +12201,6 @@ msgstr "شنبه"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Saturday"
 msgstr "شنبه"
 
@@ -12633,7 +12735,6 @@ msgstr "ارسال موفقیت‌آمیز بود!"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sep"
 msgstr "سپتامبر"
 
@@ -12642,7 +12743,6 @@ msgid "Separate multiple values by ;"
 msgstr "مقادیر را با ; جدا کنید"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "September"
 msgstr "سپتامبر"
 
@@ -13542,7 +13642,6 @@ msgid "Summer holiday"
 msgstr "تعطیلی تابستان"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sun"
 msgstr "یکشنبه"
 
@@ -13550,13 +13649,16 @@ msgstr "یکشنبه"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sunday"
 msgstr "یکشنبه"
 
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
 msgstr "پشتیبانی از پایگاه دانش چند زبانه."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Switch AM/PM mode"
+msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Sync calendars with iCal feeds."
@@ -15660,7 +15762,6 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thu"
 msgstr "پنجشنبه"
 
@@ -15668,7 +15769,6 @@ msgstr "پنجشنبه"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thursday"
 msgstr "پنجشنبه"
 
@@ -16333,13 +16433,18 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr "که روی پرونده ها کار میکند."
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "امروز"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Toggle overlay"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -16488,7 +16593,6 @@ msgid "Trying to reconnect…"
 msgstr "تلاش برای برقراری ارتباط مجدد…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tue"
 msgstr "سه‌شنبه"
 
@@ -16496,7 +16600,6 @@ msgstr "سه‌شنبه"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tuesday"
 msgstr "سه‌شنبه"
 
@@ -16785,6 +16888,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
 msgid "Update"
 msgstr "بروزرسانی"
 
@@ -17506,7 +17610,6 @@ msgid "Websocket port"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wed"
 msgstr "چهارشنبه"
 
@@ -17514,7 +17617,6 @@ msgstr "چهارشنبه"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wednesday"
 msgstr "چهارشنبه"
 
@@ -19726,6 +19828,11 @@ msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
 
 #, fuzzy
+#~| msgid "clear"
+#~ msgid "Clear"
+#~ msgstr "پاک کردن"
+
+#, fuzzy
 #~| msgid "Proxy Settings"
 #~ msgid "Filter settings…"
 #~ msgstr "تنظیمات پروکسی"
@@ -20131,9 +20238,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~ "productivity."
 #~ msgstr ""
 #~ "روحیه مشتری مداری یک ابزار قدرتمند برای پیگیری و ترسیم کارایی شماست."
-
-#~ msgid "last month"
-#~ msgstr "ماه گذشته"
 
 #~ msgid "last week"
 #~ msgstr "هفته گذشته"

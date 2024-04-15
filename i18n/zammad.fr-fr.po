@@ -1842,12 +1842,10 @@ msgstr "Appliquer le filtre…"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Apr"
 msgstr "Avr"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "April"
 msgstr "Avril"
 
@@ -2178,12 +2176,10 @@ msgstr "Fichier audio"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Aug"
 msgstr "Aoû"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "August"
 msgstr "Août"
 
@@ -2630,10 +2626,6 @@ msgstr "Dernière activité du client CTI"
 msgid "CTI integration"
 msgstr "Intégration CTI"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid "CW"
-msgstr "Calendaire"
-
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -2641,10 +2633,20 @@ msgstr "Calendaire"
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
 msgid "Calendar"
+msgstr "Calendrier"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Calendars"
+msgid "Calendar days"
+msgstr "Calendriers"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Calendar"
+msgid "Calendar wrapper"
 msgstr "Calendrier"
 
 #: app/assets/javascripts/app/controllers/calendar.coffee
@@ -2750,6 +2752,8 @@ msgstr "Annuler"
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
@@ -3148,19 +3152,17 @@ msgstr "Supprimer les sessions expirées."
 msgid "Clean up mobile taskbars."
 msgstr "Supprimer les barres de tâches mobiles."
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid "Clear"
-msgstr "Effacer"
-
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Clear Search"
 msgstr "Effacer la recherche"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Clear Selection"
@@ -3252,6 +3254,18 @@ msgstr "Fermer les sessions de chat dont les participants sont hors ligne."
 msgid "Close current tab"
 msgstr "Fermer l'onglet actif"
 
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue
+#, fuzzy
+#| msgid "Confirm dialog"
+msgid "Close dialog"
+msgstr "Fenêtre de confirmation"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+#, fuzzy
+#| msgid "Close tab"
+msgid "Close panel"
+msgstr "Fermer l'onglet"
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
@@ -3263,6 +3277,12 @@ msgstr "Fermer l'onglet"
 #: db/seeds/settings.rb
 msgid "Close tab on ticket close"
 msgstr "Fermer l'onglet à la fermeture du ticket"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Closed Tickets"
+msgid "Close time picker"
+msgstr "Tickets fermés"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
@@ -3433,6 +3453,7 @@ msgstr "Fenêtre de confirmation"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Confirmation"
 msgstr "Confirmation"
 
@@ -4128,6 +4149,16 @@ msgstr "Date (Année.Mois.Jour.IDSystème.Compteur)"
 msgid "Date field"
 msgstr "Champ date"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Datepicker input"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Datetime"
+msgid "Datepicker menu"
+msgstr "Date et heure"
+
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Day"
@@ -4144,14 +4175,28 @@ msgstr "Jours"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Dec"
 msgstr "Déc"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "December"
 msgstr "Décembre"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Recent Logs"
+msgid "Decrement hours"
+msgstr "Logs récents"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Average: %s minutes"
+msgid "Decrement minutes"
+msgstr "Moyenne : %s minutes"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Decrement seconds"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -6778,12 +6823,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Feb"
 msgstr "Fév"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "February"
 msgstr "Février"
 
@@ -7076,7 +7119,6 @@ msgid "Freshdesk"
 msgstr "Freshdesk"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Fri"
 msgstr "Ven"
 
@@ -7084,7 +7126,6 @@ msgstr "Ven"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Friday"
 msgstr "Vendredi"
 
@@ -8207,6 +8248,24 @@ msgstr "Identifiants incomplets"
 msgid "Increment (SystemID.Counter)"
 msgstr "Incrément (SystemID.Counter)"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "in hours"
+msgid "Increment hours"
+msgstr "dans quelques heures"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Increment (SystemID.Counter)"
+msgid "Increment minutes"
+msgstr "Incrément (SystemID.Counter)"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Increment (SystemID.Counter)"
+msgid "Increment seconds"
+msgstr "Incrément (SystemID.Counter)"
+
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Info: %s"
@@ -8557,12 +8616,10 @@ msgstr "Eléments par page"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jan"
 msgstr "Jan"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "January"
 msgstr "Janvier"
 
@@ -8583,24 +8640,20 @@ msgstr "Rejoindre %s"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jul"
 msgstr "Juil"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "July"
 msgstr "Juillet"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jun"
 msgstr "Juin"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "June"
 msgstr "Juin"
 
@@ -9172,12 +9225,10 @@ msgstr "Cartographie"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mar"
 msgstr "Mar"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "March"
 msgstr "Mars"
 
@@ -9267,7 +9318,6 @@ msgstr "Nombre maximal de tickets affichés dans les aperçus"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "May"
 msgstr "Mai"
 
@@ -9462,7 +9512,6 @@ msgid "Module"
 msgstr "Module"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mon"
 msgstr "Lun"
 
@@ -9470,7 +9519,6 @@ msgstr "Lun"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Monday"
 msgstr "Lundi"
 
@@ -9957,6 +10005,18 @@ msgstr "Prochain état"
 msgid "Next in overview"
 msgstr "Suivant dans l'aperçu"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "last month"
+msgid "Next month"
+msgstr "Le mois dernier"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Next State"
+msgid "Next year"
+msgstr "Prochain état"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "No"
@@ -10349,12 +10409,10 @@ msgstr "Notifications"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Nov"
 msgstr "Nov"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "November"
 msgstr "Novembre"
 
@@ -10381,6 +10439,8 @@ msgstr "Les URLs d'OAuth sont :"
 msgid "OAuth2 token is expired!"
 msgstr "Le token OAuth2 a expiré !"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "OK"
 msgstr "OK"
@@ -10434,12 +10494,10 @@ msgstr "Objets"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Oct"
 msgstr "Oct"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "October"
 msgstr "Octobre"
 
@@ -10578,6 +10636,10 @@ msgstr "Ouvrir le ticket #%s"
 msgid "Open Tickets"
 msgstr "Tickets ouverts"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open hours overlay"
+msgstr ""
+
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Open in new tab"
 msgstr "Ouvrir dans un nouvel onglet"
@@ -10586,9 +10648,23 @@ msgstr "Ouvrir dans un nouvel onglet"
 msgid "Open macro selection"
 msgstr "Ouvrir la sélection de macro"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open minutes overlay"
+msgstr "Ouvrir la section commentaire"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open months overlay"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open note box"
 msgstr "Ouvrir la section commentaire"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open seconds overlay"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
@@ -10597,6 +10673,16 @@ msgstr "Ouvrir l'indicateur de ticket"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 msgid "Open tickets"
 msgstr "Tickets ouverts"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open tickets"
+msgid "Open time picker"
+msgstr "Tickets ouverts"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open years overlay"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
@@ -10878,6 +10964,14 @@ msgstr "Page non trouvée"
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
 msgstr "Pages"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Panel"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Panel footer"
+msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
 msgid "Parameter 'data' or 'file' required."
@@ -11307,7 +11401,8 @@ msgstr "Webhook prédéfini pour %s."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
 msgid "Prefer color scheme as indicated by the operating system."
-msgstr "Utiliser la palette de couleurs indiquée par le système d’exploitation."
+msgstr ""
+"Utiliser la palette de couleurs indiquée par le système d’exploitation."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Press the button below to finish the setup."
@@ -11370,6 +11465,18 @@ msgstr "Précédent"
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
 msgid "Previous in overview"
 msgstr "Précédent dans l'aperçu"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Previous"
+msgid "Previous month"
+msgstr "Précédent"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Previous"
+msgid "Previous year"
+msgstr "Précédent"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Previously owned tickets (%s in total):"
@@ -12000,6 +12107,10 @@ msgstr ""
 "<br>\n"
 "<div>L'équipe #{config.product_name}</div>\n"
 
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Resize panel"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
 msgstr "Réponse"
@@ -12245,7 +12356,6 @@ msgid "STARTTLS"
 msgstr "STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sat"
 msgstr "Sam"
 
@@ -12253,7 +12363,6 @@ msgstr "Sam"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Saturday"
 msgstr "Samedi"
 
@@ -12752,7 +12861,6 @@ msgstr "Envoyé avec succès !"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sep"
 msgstr "Sep"
 
@@ -12761,7 +12869,6 @@ msgid "Separate multiple values by ;"
 msgstr "Séparez les valeurs multiples par ;"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "September"
 msgstr "Septembre"
 
@@ -13608,7 +13715,6 @@ msgid "Summer holiday"
 msgstr "Vacances d'été"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sun"
 msgstr "Dim"
 
@@ -13616,13 +13722,16 @@ msgstr "Dim"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sunday"
 msgstr "Dimanche"
 
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
 msgstr "Support de la base de connaissances multilingue."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Switch AM/PM mode"
+msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Sync calendars with iCal feeds."
@@ -15605,7 +15714,6 @@ msgstr ""
 "tentatives de connexion infructueuses."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thu"
 msgstr "Jeu"
 
@@ -15613,7 +15721,6 @@ msgstr "Jeu"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thursday"
 msgstr "Jeudi"
 
@@ -16295,13 +16402,20 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr "Pour travailler sur des tickets."
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "Aujourd'hui"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
+msgstr "Basculer en mode sombre"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Toggle dark mode"
+msgid "Toggle overlay"
 msgstr "Basculer en mode sombre"
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -16442,7 +16556,6 @@ msgid "Trying to reconnect…"
 msgstr "Tentative de reconnexion…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tue"
 msgstr "Mar"
 
@@ -16450,7 +16563,6 @@ msgstr "Mar"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tuesday"
 msgstr "Mardi"
 
@@ -16721,6 +16833,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
 msgid "Update"
 msgstr "Mise à jour"
 
@@ -17467,7 +17580,6 @@ msgid "Websocket port"
 msgstr "Port websocket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wed"
 msgstr "Mer"
 
@@ -17475,7 +17587,6 @@ msgstr "Mer"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wednesday"
 msgstr "Mercredi"
 
@@ -19662,6 +19773,12 @@ msgstr "... de toute la zone de texte"
 msgid "∅ Waiting time today"
 msgstr "∅ Temps d'attente aujourd'hui"
 
+#~ msgid "CW"
+#~ msgstr "Calendaire"
+
+#~ msgid "Clear"
+#~ msgstr "Effacer"
+
 #, fuzzy
 #~| msgid "Proxy Settings"
 #~ msgid "Filter settings…"
@@ -20249,9 +20366,6 @@ msgstr "∅ Temps d'attente aujourd'hui"
 #~ "Le Karma Zammad est un outil puissant qui suit et visualise votre "
 #~ "productivité."
 
-#~ msgid "last month"
-#~ msgstr "Le mois dernier"
-
 #~ msgid "last week"
 #~ msgstr "La semaine dernière"
 
@@ -20399,9 +20513,6 @@ msgstr "∅ Temps d'attente aujourd'hui"
 
 #~ msgid "sent to"
 #~ msgstr "envoyé à"
-
-#~ msgid "Datetime"
-#~ msgstr "Date et heure"
 
 #~ msgid "Browser too old!"
 #~ msgstr "Navigateur trop ancien !"

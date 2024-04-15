@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-10 01:05+0000\n"
+"PO-Revision-Date: 2024-04-15 11:50+0000\n"
 "Last-Translator: IT SMBDA <it@smb.gov.az>\n"
 "Language-Team: Azerbaijani <https://translations.zammad.org/projects/zammad/"
 "zammad-development/az/>\n"
@@ -1688,12 +1688,10 @@ msgstr "Qaralama tətbiq et"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Apr"
 msgstr "Aprel"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "April"
 msgstr "Aprel"
 
@@ -2023,12 +2021,10 @@ msgstr "Audio fayl"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Aug"
 msgstr "Avqust"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "August"
 msgstr "Avqust"
 
@@ -2471,11 +2467,6 @@ msgstr "Müştərinin son fəaliyyəti"
 msgid "CTI integration"
 msgstr "CTI inteqrasiyası"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-#, fuzzy
-msgid "CW"
-msgstr "CW"
-
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -2483,10 +2474,20 @@ msgstr "CW"
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
 msgid "Calendar"
+msgstr "Təqvim"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Calendars"
+msgid "Calendar days"
+msgstr "Təqvim"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Calendar"
+msgid "Calendar wrapper"
 msgstr "Təqvim"
 
 #: app/assets/javascripts/app/controllers/calendar.coffee
@@ -2597,6 +2598,8 @@ msgstr "Ləğv et"
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
@@ -2997,10 +3000,6 @@ msgstr "Vaxtı keçmiş seansları təmizləyin."
 msgid "Clean up mobile taskbars."
 msgstr "Mobil cihazların tapşırıq panelini təmizləyin."
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-msgid "Clear"
-msgstr "Təmizləmək"
-
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
@@ -3008,9 +3007,11 @@ msgid "Clear Search"
 msgstr "Axtarış panelini təmizlə"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Clear Selection"
@@ -3105,6 +3106,18 @@ msgstr "İştirakçılar onlayn olmadıqda söhbət sessiyalarını bağlayın."
 msgid "Close current tab"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue
+#, fuzzy
+#| msgid "Confirm dialog"
+msgid "Close dialog"
+msgstr "Dialoqu təsdiqləyin"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+#, fuzzy
+#| msgid "Choose date"
+msgid "Close panel"
+msgstr "Tarixi seçin"
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
@@ -3116,6 +3129,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Close tab on ticket close"
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Closed Tickets"
+msgid "Close time picker"
+msgstr "Qapalı Biletlər"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
@@ -3288,6 +3307,7 @@ msgstr "Təsdiqləmək/göndərmək dialoqu"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Confirmation"
 msgstr "Təsdiq"
 
@@ -4002,6 +4022,14 @@ msgstr "Tarix (Year.Month.Day.SystemID.Counter)"
 msgid "Date field"
 msgstr "Tarix sahəsi"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Datepicker input"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Datepicker menu"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Day"
@@ -4018,14 +4046,26 @@ msgstr "Günlər"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Dec"
 msgstr "Dekabr"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "December"
 msgstr "Dekabr"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Decrement hours"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Average: %s minutes"
+msgid "Decrement minutes"
+msgstr "Ortalama: %s dəqiqə"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Decrement seconds"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -6644,12 +6684,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Feb"
 msgstr "Fevral"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "February"
 msgstr "Fevral"
 
@@ -6947,7 +6985,6 @@ msgid "Freshdesk"
 msgstr "Freshdesk"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Fri"
 msgstr "Cümə"
 
@@ -6955,7 +6992,6 @@ msgstr "Cümə"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Friday"
 msgstr "Cümə"
 
@@ -8115,6 +8151,22 @@ msgstr "Natamam hesab məlumatları"
 msgid "Increment (SystemID.Counter)"
 msgstr "Artım (SystemID.Counter)"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Increment (SystemID.Counter)"
+msgid "Increment hours"
+msgstr "Artım (SystemID.Counter)"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Increment (SystemID.Counter)"
+msgid "Increment minutes"
+msgstr "Artım (SystemID.Counter)"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Increment seconds"
+msgstr "Saniyə sayını artır"
+
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Info: %s"
@@ -8176,79 +8228,87 @@ msgid "Inserts a horizontal rule"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
 msgid "Inserts a mention for a user"
-msgstr ""
+msgstr "İstifadəçi üçün qeyd əlavə edir"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts knowledge base answer"
-msgstr ""
+msgstr "Məlumat bazasından cavab əlavə edir"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts text module"
-msgstr ""
+msgstr "Mətn modulunu daxil edir"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Install App"
-msgstr ""
+msgstr "Tətbiqi quraşdır"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Install Package"
-msgstr ""
+msgstr "Paketi quraşdır"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Installed"
-msgstr ""
+msgstr "Quraşdırılıb"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
 msgid "Integer field"
-msgstr ""
+msgstr "Tam sahə"
 
 #: app/assets/javascripts/app/controllers/integrations.coffee
 #: db/seeds/permissions.rb
 msgid "Integrations"
-msgstr ""
+msgstr "İnteqrasiya"
 
 #: lib/whatsapp/incoming/media.rb
 msgid "Integrity verification of the downloaded WhatsApp media failed."
-msgstr ""
+msgstr "Yüklənmiş WhatsApp mediasının bütövlüyünün yoxlanılması uğursuz oldu."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Internal"
-msgstr ""
+msgstr "Daxili"
 
 #: app/frontend/shared/errors/useErrorHandler.ts
+#, fuzzy
 msgid "Internal Error"
-msgstr ""
+msgstr "Daxili səhv"
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+#, fuzzy
 msgid "Internal Knowledge Base feed:"
-msgstr ""
+msgstr "Daxili məlumat bazası kanalı:"
 
 #: app/models/import_job.rb
+#, fuzzy
 msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
 "manually or wait until the next execution time."
 msgstr ""
+"Arxa plan iş axınının yenidən başlaması ilə dayandırıldı. Zəhmət olmasa, əl "
+"ilə yenidən başladın və ya növbəti icra vaxtına qədər gözləyin."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Intro"
-msgstr ""
+msgstr "Giriş"
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid 'direction'!"
-msgstr ""
+msgstr "Yanlış 'istiqamət'!"
 
 #: app/controllers/application_controller/authenticates.rb
+#, fuzzy
 msgid "Invalid BasicAuth credentials"
-msgstr ""
+msgstr "BasicAuth üçün etibarsız istifadəçi məlumatları"
 
 #: lib/github/credentials.rb
 msgid "Invalid GitHub GraphQL API token"
-msgstr ""
+msgstr "Yanlış GitHub GraphQL API token"
 
 #: lib/github/linked_issue.rb
 msgid "Invalid GitHub issue link format"
@@ -8256,7 +8316,7 @@ msgstr ""
 
 #: lib/gitlab/credentials.rb
 msgid "Invalid GitLab GraphQL API token"
-msgstr ""
+msgstr "Yanlış GitLab GraphQL API token"
 
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
@@ -8268,67 +8328,71 @@ msgstr ""
 
 #: app/controllers/long_polling_controller.rb
 msgid "Invalid client_id in receive loop!"
-msgstr ""
+msgstr "Qəbul dövrəsində yanlış client_id!"
 
 #: app/controllers/long_polling_controller.rb
 msgid "Invalid client_id received!"
-msgstr ""
+msgstr "Yanlış client_id qəbul edildi!"
 
 #: app/models/user.rb
 msgid "Invalid email '%{email}'"
-msgstr ""
+msgstr "Yanlış email '%{email}'"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
-msgstr ""
+msgstr "Yanlış link strukturu"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure (Object → LinkType)"
-msgstr ""
+msgstr "Yanlış link strukturu (Obyekt → LinkType)"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure (Object)"
-msgstr ""
+msgstr "Yanlış link strukturu (Obyekt)"
 
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid object selector conditions"
-msgstr ""
+msgstr "Obyekt seçm şərtləri doğru deyil"
 
 #: lib/password_policy/min_length.rb
 msgid "Invalid password, it must be at least %s characters long!"
-msgstr ""
+msgstr "Yanlış şifrə, ən azı %s simvol uzunluğunda olmalıdır!"
 
 #: lib/password_policy/max_length.rb
 msgid "Invalid password, it must be shorter than %s characters!"
-msgstr ""
+msgstr "Yanlış şifrə, %s simvoldan qısa olmalıdır!"
 
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
-msgstr ""
+msgstr "Yanlış şifrə, ən azı 1 rəqəmdən ibarət olmalıdır!"
 
 #: lib/password_policy/special_character.rb
 msgid "Invalid password, it must contain at least 1 special character!"
-msgstr ""
+msgstr "Yanlış şifrə, ən azı 1 xüsusi simvoldan ibarət olmalıdır!"
 
 #: lib/password_policy/upper_and_lower_case_characters.rb
 msgid ""
 "Invalid password, it must contain at least 2 lowercase and 2 uppercase "
 "characters!"
-msgstr ""
+msgstr "Yanlış şifrə, ən azı 2 kiçik və 2 böyük hərfdən ibarət olmalıdır!"
 
 #: lib/knowledge_base/permissions_update.rb
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
 #: lib/knowledge_base/permissions_update.rb
+#, fuzzy
 msgid "Invalid permissions."
-msgstr ""
+msgstr "Yanlış icazələr."
 
 #: lib/knowledge_base/permissions_update.rb
+#, fuzzy
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
 msgstr ""
+"Yanlış icazələr. Rolun bu kateqoriyaya girişi yoxdur, çünki əsas kateqoriya "
+"onun üçün görünmür."
 
 #: lib/knowledge_base/permissions_update.rb
 msgid ""
@@ -8338,26 +8402,28 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 msgid "Invalid security code! Please try again with a new code."
-msgstr ""
+msgstr "Yanlış təhlükəsizlik kodu! Zəhmət olmasa yeni kodla yenidən cəhd edin."
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
-msgstr ""
+msgstr "Yanlış token, zəhmət olmasa administratorunuzla əlaqə saxlayın!"
 
 #: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+#, fuzzy
 msgid "Invalid values in step %s"
-msgstr ""
+msgstr "%s addımında etibarsız dəyərlər"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
-msgstr ""
+msgstr "Yanlış video URL"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
+#, fuzzy
 msgid "Invitation sent!"
-msgstr ""
+msgstr "Dəvət göndərildi!"
 
 #. This is the template file app/views/mailer/user_invite/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -8384,26 +8450,26 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "Invite"
-msgstr ""
+msgstr "Dəvət"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
 msgid "Invite Agents"
-msgstr ""
+msgstr "Agentləri dəvət et"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps.coffee
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
 msgid "Invite Colleagues"
-msgstr ""
+msgstr "Həmkarları dəvət et"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps.coffee
 msgid "Invite Customer"
-msgstr ""
+msgstr "Müştəri dəvət et"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Invite agents/colleagues to help working on tickets"
-msgstr ""
+msgstr "Biletlər üzərində işləmək üçün agentləri/həmkarları dəvət et"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Invite customers to create issues in Zammad"
@@ -8411,86 +8477,86 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
-msgstr ""
+msgstr "İonikonlar"
 
 #: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
 msgid "It is not possible to delete the last account with admin permissions."
-msgstr ""
+msgstr "Admin icazəsi ilə sonuncu hesabı silmək mümkün deyil."
 
 #: lib/validations/data_privacy_task_validator.rb
 msgid "It is not possible to delete the system user."
-msgstr ""
+msgstr "Sistem istifadəçisini silmək mümkün deyil."
 
 #: lib/validations/data_privacy_task_validator.rb
 msgid "It is not possible to delete your current account."
-msgstr ""
+msgstr "Cari hesabınızı silmək mümkün deyil."
 
 #: app/models/ticket.rb
+#, fuzzy
 msgid "It is not possible to merge into an already merged ticket."
-msgstr ""
+msgstr "Artıq birləşdirilmiş biletlə birləşmək mümkün deyil."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 msgid "Items per page"
-msgstr ""
+msgstr "Səhifədəki elementlərin sayı"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jan"
-msgstr ""
+msgstr "Yanvar"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "January"
-msgstr ""
+msgstr "Yanvar"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
+#, fuzzy
 msgid "Job is waiting to get started…"
-msgstr ""
+msgstr "İş başlamağını gözləyir…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
 msgid "John Smith"
-msgstr ""
+msgstr "John Smith"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Join %s"
-msgstr ""
+msgstr "%s qoşul"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jul"
-msgstr ""
+msgstr "İyul"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "July"
-msgstr ""
+msgstr "İyul"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jun"
-msgstr ""
+msgstr "İyun"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "June"
-msgstr ""
+msgstr "İyun"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco
+#, fuzzy
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
-msgstr ""
+msgstr "Yalnızca seçilmiş sahəyə klikləyin və sözləri dəyişdirin. Zövq alın!"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
+#, fuzzy
 msgid "Kayako"
-msgstr ""
+msgstr "Kayako"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -8498,7 +8564,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "Keep messages on server"
-msgstr ""
+msgstr "Mesajları serverdə saxlayın"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
@@ -8506,90 +8572,97 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 msgid "Key"
-msgstr ""
+msgstr "Açar"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 msgid "Key ID"
-msgstr ""
+msgstr "Açar ID"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee
+#, fuzzy
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Klaviatura Qısayolları"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts
+#, fuzzy
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Klaviatura qısayolları"
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Keywords"
-msgstr ""
+msgstr "Açar sözlər"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 #: app/models/knowledge_base.rb db/seeds/permissions.rb
+#, fuzzy
 msgid "Knowledge Base"
-msgstr ""
+msgstr "Məlumat bazası"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 msgid "Knowledge Base Answer"
-msgstr ""
+msgstr "Məlumat bazasından cavab"
 
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Editor"
-msgstr ""
+msgstr "Məlumat bazası redaktoru"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 msgid "Knowledge Base Feed"
-msgstr ""
+msgstr "Məlumat bazası kanalı"
 
 #: db/seeds/permissions.rb
+#, fuzzy
 msgid "Knowledge Base Reader"
-msgstr ""
+msgstr "Məlumat bazası oxucusu"
 
 #: db/seeds/settings.rb
 msgid "Knowledge Base active"
-msgstr ""
+msgstr "Məlumat bazası aktivdir"
 
 #: db/seeds/settings.rb
 msgid "Knowledge Base active publicly"
-msgstr ""
+msgstr "Məlumat Bazası açıq şəkildə aktivdir"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Knowledge Base multilingual support"
-msgstr ""
+msgstr "Çoxdilli məlumat bazası dəstəyi"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "LDAP"
-msgstr ""
+msgstr "LDAP"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#, fuzzy
 msgid "LDAP Host"
-msgstr ""
+msgstr "LDAP Host"
 
 #: db/seeds/settings.rb
 msgid "LDAP integration"
-msgstr ""
+msgstr "LDAP inteqrasiyası"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "LDAP integration for user management."
-msgstr ""
+msgstr "İstifadəçiləri idarə etmək üçün LDAP inteqrasiyası."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Label"
-msgstr ""
+msgstr "Etiket"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Labels"
-msgstr ""
+msgstr "Etiketlər"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Landing page layout"
-msgstr ""
+msgstr "Açılış səhifəsinin tərtibatı"
 
 #: app/assets/javascripts/app/controllers/_profile/language.coffee
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
@@ -8600,101 +8673,104 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Language"
-msgstr ""
+msgstr "Dil"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Languages"
-msgstr ""
+msgstr "Dillər"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 msgid "Last Article"
-msgstr ""
+msgstr "Son məqalə"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Agent At"
-msgstr ""
+msgstr "Agentlə son əlaqə"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact At"
-msgstr ""
+msgstr "Son əlaqə"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
-msgstr ""
+msgstr "Müştəri ilə son əlaqə"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 msgid "Last External Article"
-msgstr ""
+msgstr "Son xarici məqalə"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
 msgid "Last Internal Article"
-msgstr ""
+msgstr "Son daxili məqalə"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
+#, fuzzy
 msgid "Last change %s %s by %s"
-msgstr ""
+msgstr "Son dəyişiklik %s % s % s"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 msgid "Last changed"
-msgstr ""
+msgstr "Son dəyişiklik"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Last closing time"
-msgstr ""
+msgstr "Son bağlanma vaxtı"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Last contact"
-msgstr ""
+msgstr "Son əlaqə"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Last contact (agent)"
-msgstr ""
+msgstr "Son əlaqə (agent)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Last contact (customer)"
-msgstr ""
+msgstr "Son əlaqə (müştəri)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "Last login"
-msgstr ""
+msgstr "Son giriş"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Last name"
-msgstr ""
+msgstr "Soyad"
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Last run"
-msgstr ""
+msgstr "Son giriş"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Last searches"
-msgstr ""
+msgstr "Son axtarış"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Last sync"
-msgstr ""
+msgstr "Son sinxronizasiya"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Last sync at:"
-msgstr ""
+msgstr "Son sinxronizasiya:"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Last used"
-msgstr ""
+msgstr "Sonuncu dəfə istifadə olunub"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
+#, fuzzy
 msgid "Layout"
-msgstr ""
+msgstr "Yer"
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee
 msgid "Layout Reference"
@@ -8702,16 +8778,17 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Library"
-msgstr ""
+msgstr "Kitabxana"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+#, fuzzy
 msgid "Light"
-msgstr ""
+msgstr "İşıq"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
-msgstr ""
+msgstr "Qrupları məhdudlaşdır"
 
 #: db/seeds/settings.rb
 msgid "Limit tickets by IP per day"
@@ -8723,7 +8800,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Limit tickets per day"
-msgstr ""
+msgstr "Gün üçün bilet sayını məhdudlaşdırın"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
@@ -8732,12 +8809,13 @@ msgstr ""
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue
+#, fuzzy
 msgid "Link %s"
-msgstr ""
+msgstr "Link %s"
 
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
 msgid "Link %s %s as %s of Ticket# %s"
@@ -8745,48 +8823,52 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
 msgid "Link Accounts"
-msgstr ""
+msgstr "Hesabları bağla"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee
+#, fuzzy
 msgid "Link Answer"
-msgstr ""
+msgstr "Link cavab"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 msgid "Link GitHub issues to your tickets."
-msgstr ""
+msgstr "GitHub problemlərini biletlərinizə bağla."
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
+#, fuzzy
 msgid "Link GitLab issues to your tickets."
-msgstr ""
+msgstr "GitLab problemlərini biletlərinizə bağla."
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco
+#, fuzzy
 msgid "Link Related Answer"
-msgstr ""
+msgstr "Link ilə əlaqəli cavab"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
-msgstr ""
+msgstr "Link problemi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Link template"
-msgstr ""
+msgstr "Link şablonu"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco db/seeds/permissions.rb
 msgid "Linked Accounts"
-msgstr ""
+msgstr "Əlaqəli hesablar"
 
 #: app/assets/javascripts/app/views/knowledge_base/_reader_linked_tickets.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/linked_tickets.jst.eco
 msgid "Linked Tickets"
-msgstr ""
+msgstr "Əlaqəli Biletlər"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: db/seeds/settings.rb
 msgid "LinkedIn App Credentials"
@@ -8794,32 +8876,35 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "LinkedIn Developer Site"
-msgstr ""
+msgstr "LinkedIn Developer Saytı"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Links"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
 msgid "List of shortcuts"
-msgstr ""
+msgstr "Qısayolların siyahısı"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Load"
-msgstr ""
+msgstr "Yüklə"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Load more"
-msgstr ""
+msgstr "Daha çox yüklə"
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
 #: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
+#, fuzzy
 msgid "Loading content"
-msgstr ""
+msgstr "Məzmun yüklənir"
 
 #: app/views/init/spinner-loading.html.erb
+#, fuzzy
 msgid "Loading failed, please try again later."
-msgstr ""
+msgstr "Yükləmə uğursuz oldu, zəhmət olmasa yenidən cəhd edin."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
@@ -8830,7 +8915,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 msgid "Loading failed."
-msgstr ""
+msgstr "Yükləmə uğursuz oldu."
 
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
@@ -8839,7 +8924,7 @@ msgstr ""
 #: app/frontend/shared/form/i18n/locales.ts
 #: app/views/init/spinner-loading.html.erb
 msgid "Loading…"
-msgstr ""
+msgstr "Yüklənir…"
 
 #: lib/email_helper.rb
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
@@ -8847,12 +8932,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee db/seeds/settings.rb
+#, fuzzy
 msgid "Locale"
-msgstr ""
+msgstr "Fəaliyyət yeri"
 
 #: app/graphql/gql/mutations/account/locale.rb
+#, fuzzy
 msgid "Locale could not be found."
-msgstr ""
+msgstr "Yerli dili tapmaq mümkün olmadı."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
@@ -8860,35 +8947,35 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
-#, fuzzy
-#| msgid "Action execution"
 msgid "Localization of execution changes"
-msgstr "Hərəkətin icrası"
+msgstr "İcra zamanı dəyişikliklərin lokalizasiyası"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Location"
-msgstr ""
+msgstr "Yer"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
+#, fuzzy
 msgid "Location of an external chat.css file."
-msgstr ""
+msgstr "Xarici chat.css faylının yeri."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Log in to %s"
-msgstr ""
+msgstr "%s hesabına daxil ol"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb
 msgid "Login"
-msgstr ""
+msgstr "Daxil ol"
 
 #: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
 msgid "Login Screen"
-msgstr ""
+msgstr "Giriş Ekranı"
 
 #: lib/auth/error/authentication_failed.rb
 msgid ""
@@ -8900,42 +8987,49 @@ msgstr ""
 msgid ""
 "Login failed. Please double-check your two-factor authentication method."
 msgstr ""
+"Giriş xətası. Zəhmət olmasa iki faktorlu identifikasiya metodunuzu yenidən "
+"yoxlayın."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 #: db/seeds/settings.rb
 msgid "Logo"
-msgstr ""
+msgstr "Logo"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Logout"
-msgstr ""
+msgstr "Sistemdən çıx"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Lost Password"
-msgstr ""
+msgstr "İtirilmiş parol"
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Lost network connection!"
-msgstr ""
+msgstr "Şəbəkə bağlantısı itirildi!"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
+#, fuzzy
 msgid "Low priority"
-msgstr ""
+msgstr "Aşağı prioritet"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
+#, fuzzy
 msgid "Macro"
-msgstr ""
+msgstr "Macro"
 
 #: app/controllers/tickets_mass_controller.rb
+#, fuzzy
 msgid "Macro group restrictions do not cover all tickets"
-msgstr ""
+msgstr "Makro qrupun məhdudiyyətləri bütün biletlərə şamil edilmir"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/permissions.rb
+#, fuzzy
 msgid "Macros"
-msgstr ""
+msgstr "Macros"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid ""
@@ -8949,51 +9043,54 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco db/seeds/permissions.rb
 msgid "Maintenance"
-msgstr ""
+msgstr "Dəstək"
 
 #: db/seeds/settings.rb
 msgid "Maintenance Login"
-msgstr ""
+msgstr "Dəstək sisteminə giriş"
 
 #: db/seeds/settings.rb
 msgid "Maintenance Mode"
-msgstr ""
+msgstr "Dəstək rejimi"
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "Maintenance mode enabled!"
-msgstr ""
+msgstr "Dəstək rejimi aktivdir!"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Manage"
-msgstr ""
+msgstr "İdarə et"
 
 #: db/seeds/permissions.rb
 msgid "Manage %s"
-msgstr ""
+msgstr "İdarə et %s"
 
 #: db/seeds/permissions.rb
 msgid "Manage %s Settings"
-msgstr ""
+msgstr "%s parametrləri idarə et"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
-msgstr ""
+msgstr "Teqləri idarə et"
 
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Manage Two-Factor Authentication"
-msgstr ""
+msgstr "İki faktorlu identifikasiyanı idarə et"
 
 #: app/assets/javascripts/app/views/api.jst.eco
+#, fuzzy
 msgid ""
 "Manage applications that can use Zammad as an OAuth provider and "
 "applications that you've authorized to use your account."
 msgstr ""
+"Zammad-ı OAuth provayderi kimi istifadə edə bilən proqramları və "
+"hesabınızdan istifadə etməyə icazə verdiyiniz proqramları idarə edin."
 
 #: app/views/mailer/application.html.erb
 msgid "Manage your notification settings"
-msgstr ""
+msgstr "Bildiriş parametrlərinizi idarə edin"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -9003,13 +9100,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Management"
-msgstr ""
+msgstr "İdarəetmə"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Manually open chat"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#, fuzzy
 msgid ""
 "Many dynamic fields were found. This is not a common pattern in Zammad, "
 "which takes a different approach to ticket attributes. Zammad also uses tags "
@@ -9017,256 +9115,275 @@ msgid ""
 "a new philosophy of your ticket attributes / tags compared to your current "
 "use of dynamic fields in OTRS."
 msgstr ""
+"Bir çox dinamik sahə tapıldı.Zammad-da bilet atributlarına fərqli bir "
+"yanaşma tətbiq edən ümumi bir şablon deyil.Zammad, biletləri təsnif etmək "
+"üçün xüsusi sahələrə əlavə olaraq etiketlərdən də istifadə edir.Bu fərq, "
+"OTRS-də dinamik sahələrin cari istifadəsi ilə müqayisədə tətbiq "
+"atributlarınız /teqləriniz üçün yeni bir fəlsəfə yarada bilər."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#, fuzzy
 msgid "Mapping"
-msgstr ""
+msgstr "Görünüş"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mar"
-msgstr ""
+msgstr "Mart"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "March"
-msgstr ""
+msgstr "Mart"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#, fuzzy
 msgid "Mark all as read"
-msgstr ""
+msgstr "Bütününü oxunmuş kimi qeyd et"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "Match all (AND)"
-msgstr ""
+msgstr "Bütününü uyğunlaşdır (və)"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
-msgstr ""
+msgstr "Bütün aşağıdakı tələblərə cavab verir"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "Match any (OR)"
-msgstr ""
+msgstr "Hər hansı birinə uyğun (və ya)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
+#, fuzzy
 msgid "Match none (NOT)"
-msgstr ""
+msgstr "Uyğunluq yoxdur (yox)"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
 msgid "Match tickets in following states"
-msgstr ""
+msgstr "Qeyd olunmuş vəziyyətlərdəki biletləri tutuşdur"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: app/models/webhook/pre_defined/mattermost.rb
 msgid "Mattermost Notifications"
-msgstr ""
+msgstr "Mattermost bildirişlər"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
 msgid "Mattermost, RocketChat"
-msgstr ""
+msgstr "Mattermost, RocketChat"
 
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 msgid "Max. clients on waitlist"
-msgstr ""
+msgstr "Gözləmə siyahısında maksimum müştəri sayı"
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Max. concurrent chats"
-msgstr ""
+msgstr "Sinxron söhbətlərin maksimum sayı"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Max. length"
-msgstr ""
+msgstr "Maksimum uzunluq"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Max. length of the subject in an email reply."
-msgstr ""
+msgstr "E-poçt cavabında maksimum mövzu uzunluğu."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Maximal"
-msgstr ""
+msgstr "Maksimum"
 
 #: db/seeds/settings.rb
 msgid "Maximum Email Size"
-msgstr ""
+msgstr "Maksimum e-poçt ölçüsü"
 
 #: db/seeds/settings.rb
 msgid "Maximum Recursive Ticket Triggers Depth"
-msgstr ""
+msgstr "Maksimum rekursiv bilet tətikləyici dərinliyi"
 
 #: db/seeds/settings.rb
 msgid "Maximum failed logins"
-msgstr ""
+msgstr "Uğursuz girişlərin maksimum sayı"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Maximum number of open tabs."
-msgstr ""
+msgstr "Açıq nişanların maksimum sayı."
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Maximum number of recursively executed triggers."
-msgstr ""
+msgstr "Rekursiv şəkildə yerinə yetirilən trigerlərin maksimum sayı."
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Maximum number of ticket shown in overviews"
-msgstr ""
+msgstr "Rəylərdə göstərilən biletlərin maksimum sayı"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#, fuzzy
 msgid "May"
-msgstr ""
+msgstr "May"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Me"
-msgstr ""
+msgstr "Mənə"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
 msgid "Media Download Error"
-msgstr ""
+msgstr "Media yükləmə xətası"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
 msgid "Media download failed. Please try again later."
 msgstr ""
+"Media yükləmək mümkün olmadı. Zəhmət olmasa daha sonra yenidən cəhd edin."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue
 msgid "Media download was successful."
-msgstr ""
+msgstr "Medianın yüklənməsi uğurlu oldu."
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue
 msgid "Members"
-msgstr ""
+msgstr "Üzvlər"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Mention user"
-msgstr ""
+msgstr "İstifadəçi qeyd et"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Mentions"
-msgstr ""
+msgstr "Qeyd edir"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Mentions Group"
-msgstr ""
+msgstr "Qeyd Qrupu"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 msgid "Merge"
-msgstr ""
+msgstr "Birləşdir"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Merge tickets"
-msgstr ""
+msgstr "Biletlərin birləşdirilməsi"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
-msgstr ""
+msgstr "Biletlə birləşdir#"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: public/assets/form/form.js
 msgid "Message"
-msgstr ""
+msgstr "Mesaj"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Message Status"
-msgstr ""
+msgstr "Mesaj statusu"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Message after sending form"
-msgstr ""
+msgstr "Form göndərildikdən sonra mesaj"
 
 #: db/seeds/settings.rb
 msgid "Message for login page."
-msgstr ""
+msgstr "Giriş səhifəsi üçün mesaj."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 msgid "Messages"
-msgstr ""
+msgstr "Mesajlar"
 
 #: app/models/webhook/pre_defined/mattermost.rb
 msgid "Messaging Channel"
-msgstr ""
+msgstr "Xəbərləşmə Kanalı"
 
 #: app/models/webhook/pre_defined/mattermost.rb
 msgid "Messaging Icon URL"
-msgstr ""
+msgstr "Xəbərləşmə ikon URL"
 
 #: app/models/webhook/pre_defined/mattermost.rb
 msgid "Messaging Username"
-msgstr ""
+msgstr "Xəbərləşmə istifadəçi adı"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
 msgid "Meta Data"
-msgstr ""
+msgstr "Meta Data"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Method"
-msgstr ""
+msgstr "Metod"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
 msgid "Method (AJAX endpoint)"
-msgstr ""
+msgstr "Metod (AJAX son nöqtəsi)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Microsoft"
-msgstr ""
+msgstr "Microsoft"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
 msgid "Microsoft 365"
-msgstr ""
+msgstr "Microsoft 365"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Microsoft 365 App Credentials"
-msgstr ""
+msgstr "Microsoft 365 tətbiq hesab məlumatları"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Microsoft Application Registration Portal"
-msgstr ""
+msgstr "Microsoft tətbiq qeydiyyat portalı"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Microsoft Authenticator"
-msgstr ""
+msgstr "Microsoft identifikatoru"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb
 msgid "Microsoft Teams Notifications"
-msgstr ""
+msgstr "Microsoft Teams Bildirişləri"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "Migrate %s Data"
-msgstr ""
+msgstr "Məlumatları köçür %s"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#, fuzzy
 msgid "Migrate now!"
-msgstr ""
+msgstr "İndi köçür!"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRSDownloadButtons.vue
 msgid "Migration Plugin for %s"
-msgstr ""
+msgstr "%s üçün miqrasiya plugin"
 
 #: app/controllers/import_otrs_controller.rb
 msgid "Migrator can't read OTRS output!"
@@ -9274,7 +9391,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Milestone"
-msgstr ""
+msgstr "Mərhələ"
 
 #: db/seeds/settings.rb
 msgid "Min. size of number"
@@ -9282,92 +9399,95 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Minimal"
-msgstr ""
+msgstr "Minimum"
 
 #: db/seeds/settings.rb
 msgid "Minimum length"
-msgstr ""
+msgstr "Minimum uzunluq"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Minute"
-msgstr ""
+msgstr "Dəqiqə"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
 msgid "Minute(s)"
-msgstr ""
+msgstr "Dəqiqə"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Minutes"
-msgstr ""
+msgstr "Dəqiqə"
 
 #: lib/whatsapp/webhook/payload.rb
+#, fuzzy
 msgid "Mismatching phone number id."
-msgstr ""
+msgstr "Telefon nömrəsi id uyğun gəlmir."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
-msgstr ""
+msgstr "Mobil"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Mode"
-msgstr ""
+msgstr "Rejim"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "Module"
-msgstr ""
+msgstr "Modul"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mon"
-msgstr ""
+msgstr "Bazar ertəsi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Monday"
-msgstr ""
+msgstr "Bazar ertəsi"
 
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
+#, fuzzy
 msgid "Monit"
-msgstr ""
+msgstr "Monit"
 
 #: db/seeds/settings.rb
 msgid "Monit integration"
-msgstr ""
+msgstr "Monit inteqrasiyası"
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee
 #: app/assets/javascripts/app/views/monitoring.jst.eco db/seeds/permissions.rb
 msgid "Monitoring"
-msgstr ""
+msgstr "Monitorinq"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Monitoring Token"
-msgstr ""
+msgstr "Token Monitorinq"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Month"
-msgstr ""
+msgstr "Ay"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
 msgid "Month(s)"
-msgstr ""
+msgstr "Ay"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
+#, fuzzy
 msgid "Mood"
-msgstr ""
+msgstr "Əhval"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 msgid "More information can be found here."
-msgstr ""
+msgstr "Daha çox məlumatı burada tapa bilərsiniz."
 
 #: app/models/user.rb
+#, fuzzy
 msgid "More than 250 secondary organizations are not allowed."
-msgstr ""
+msgstr "250-dən çox kiçik təşkilata icazə verilmir."
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "More ticket overviews"
@@ -9375,19 +9495,20 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "Most recent activity"
-msgstr ""
+msgstr "Ən son fəaliyyət"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Move all from \"%s\" to \"%s\":"
-msgstr ""
+msgstr "Bütününü \"%s\"-dən \"%s\"-ə köçür:"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Move down"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
 msgid "Move left and right"
-msgstr ""
+msgstr "Sola və sağa hərəkət et"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Move up"
@@ -9398,66 +9519,73 @@ msgid "Move up and down"
 msgstr ""
 
 #: app/models/report.rb
+#, fuzzy
 msgid "Moved in"
-msgstr ""
+msgstr "Köçdü"
 
 #: app/models/report.rb
+#, fuzzy
 msgid "Moved out"
-msgstr ""
+msgstr "Köçüb"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
 msgid "Multiple selection field"
-msgstr ""
+msgstr "Çoxsaylı seçim sahəsi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Multiple tree selection field"
-msgstr ""
+msgstr "Çoxsaylı ağac seçim sahəsi"
 
 #: db/seeds/overviews.rb
 msgid "My Assigned Tickets"
-msgstr ""
+msgstr "Təyin olunmuş biletlərim"
 
 #: db/seeds/overviews.rb
 msgid "My Organization Tickets"
-msgstr ""
+msgstr "Təşkilatımın biletləri"
 
 #: db/seeds/overviews.rb
+#, fuzzy
 msgid "My Pending Reached Tickets"
-msgstr ""
+msgstr "Gözlənilən Biletlərim"
 
 #: db/seeds/overviews.rb
+#, fuzzy
 msgid "My Replacement Tickets"
-msgstr ""
+msgstr "Ehtiyat biletlərim"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "My Stats"
-msgstr ""
+msgstr "Mənim statistikam"
 
 #: db/seeds/overviews.rb
 msgid "My Subscribed Tickets"
-msgstr ""
+msgstr "İmzalanmış biletlərim"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: db/seeds/overviews.rb
 msgid "My Tickets"
-msgstr ""
+msgstr "Mənim biletlərim"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
+#, fuzzy
 msgid "My handling time: %s minutes"
-msgstr ""
+msgstr "İdarəetmə vaxtım: %s dəqiqə"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "My tickets in process"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
+#, fuzzy
 msgid "Nagios"
-msgstr ""
+msgstr "Nagios"
 
 #: db/seeds/settings.rb
 msgid "Nagios integration"
-msgstr ""
+msgstr "Nagios inteqrasiya"
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -9514,45 +9642,47 @@ msgstr ""
 #: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #: db/seeds/settings.rb
 msgid "Name Identifier Format"
-msgstr ""
+msgstr "Ad identifikator formatı"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Name for this security key"
-msgstr ""
+msgstr "Təhlükəsizlik açarı üçün ad"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
+#, fuzzy
 msgid "Name of form submit button"
-msgstr ""
+msgstr "Forma göndərmə düyməsinin adı"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Navigate through article"
-msgstr ""
+msgstr "Məqalədə naviqasiya"
 
 #: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco
+#, fuzzy
 msgid "Navigate to %s"
-msgstr ""
+msgstr "%s -ə keçin"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue
 msgid "Navigation"
-msgstr ""
+msgstr "Naviqasiya"
 
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
-msgstr ""
+msgstr "Yeni formaya əlavələr əlavə etmək üçün 'form_id' lazımdır."
 
 #: app/controllers/concerns/creates_ticket_articles.rb
 #: lib/validations/ticket_article_validator/default.rb
 msgid "Need at least an 'article body' field."
-msgstr ""
+msgstr "Ən azı bir \"məqalənin əsas hissəsi\" sahəsi lazımdır."
 
 #: app/controllers/application_controller/handles_devices.rb
 msgid "Need fingerprint param!"
-msgstr ""
+msgstr "Barmaq izi parametri lazımdır!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
@@ -9560,25 +9690,28 @@ msgstr ""
 
 #: lib/sessions/event/chat_base.rb
 msgid "Need session_id."
-msgstr ""
+msgstr "Session_id lazımdır."
 
 #: app/controllers/tickets_controller.rb
 msgid "Need user_id or organization_id as param"
-msgstr ""
+msgstr "Parametr olaraq user_id və ya organization_id lazımdır"
 
 #: db/seeds/settings.rb
 msgid "Needed"
-msgstr ""
+msgstr "Zəruri"
 
 #: app/controllers/sessions_controller.rb
+#, fuzzy
 msgid ""
 "Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' "
 "header could be found."
 msgstr ""
+"Nə 'REMOTE_USER' SSO mühit dəyişəni, nə də 'X-Forwarded-User' başlığı "
+"tapılmadı."
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Network"
-msgstr ""
+msgstr "Şəbəkə"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -9588,67 +9721,69 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
-msgstr ""
+msgstr "Yeni"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
-msgstr ""
+msgstr "Yeni giriş tokeni"
 
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 msgid "New Activity Type"
-msgstr ""
+msgstr "Yeni fəaliyyət növü"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "New Application"
-msgstr ""
+msgstr "Yeni tətbiq"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "New Attribute"
-msgstr ""
+msgstr "Yeni atribut"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "New Calendar"
-msgstr ""
+msgstr "Yeni təqvim"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
+#, fuzzy
 msgid "New Deletion Task"
-msgstr ""
+msgstr "Yeni silmə tapşırığı"
 
 #: app/assets/javascripts/app/controllers/group.coffee
 msgid "New Group"
-msgstr ""
+msgstr "Yeni qrup"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "New Macro"
-msgstr ""
+msgstr "Yeni Macro"
 
 #: app/assets/javascripts/app/controllers/organization.coffee
 msgid "New Organization"
-msgstr ""
+msgstr "Yeni təşkilat"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "New Overview"
-msgstr ""
+msgstr "Yeni xülasə"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
 msgid "New Priority"
-msgstr ""
+msgstr "Yeni prioritet"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
-msgstr ""
+msgstr "Yeni profil"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee
+#, fuzzy
 msgid "New Public Link"
-msgstr ""
+msgstr "Yeni ictimai link"
 
 #: app/assets/javascripts/app/controllers/role.coffee
 msgid "New Role"
-msgstr ""
+msgstr "Yeni rol"
 
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "New SLA"
-msgstr ""
+msgstr "Yeni SLA"
 
 #: app/assets/javascripts/app/controllers/job.coffee
 msgid "New Scheduler"
@@ -9656,15 +9791,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "New Source"
-msgstr ""
+msgstr "Yeni mənbə"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco db/seeds/settings.rb
 msgid "New Tags"
-msgstr ""
+msgstr "Yeni Teqlər"
 
 #: app/assets/javascripts/app/controllers/template.coffee
 msgid "New Template"
-msgstr ""
+msgstr "Yeni şablon"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
@@ -9675,63 +9810,64 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
-msgstr ""
+msgstr "Yeni bilet"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee
 msgid "New Ticket State"
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
-#, fuzzy
-#| msgid "Alternative Translations"
 msgid "New Translation"
-msgstr "Alternativ tərcümələr"
+msgstr "Yeni tərcümə"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
-msgstr ""
+msgstr "Yeni Trigger"
 
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New User"
-msgstr ""
+msgstr "Yeni istifadəçi"
 
 #: db/seeds/settings.rb
 msgid "New User Accounts"
-msgstr ""
+msgstr "Yeni istifadəçi hesabları"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "New Version"
-msgstr ""
+msgstr "Yeni versiya"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "New Webhook"
-msgstr ""
+msgstr "Yeni Webhook"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
-msgstr ""
+msgstr "Yeni Workflow"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
+#, fuzzy
 msgid "New organizations are shared."
-msgstr ""
+msgstr "Yeni təşkilatlar haqqında məlumat paylaşılır."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "New password"
-msgstr ""
+msgstr "Yeni şifrə"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item_row.jst.eco
+#, fuzzy
 msgid "New tab"
-msgstr ""
+msgstr "Yeni nişan"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "New text module"
-msgstr ""
+msgstr "Yeni mətn modulu"
 
 #. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_create/en.html.erb
+#, fuzzy
 msgid ""
 "New ticket (#{ticket.title})\n"
 "\n"
@@ -9760,11 +9896,37 @@ msgid ""
 "target=\"zammad_app\">View this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
+"Yeni bilet (#{ticket.title})\n"
+"\n"
+"<div > Salam #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>yeni bilet  (#{ticket.title}) istifadəçi tərəfindən "
+"yaradılmışdır\"<b>#{current_user.longname}</b>\".</div>\n"
+"<br>\n"
+"<div>\n"
+"Qrup: #{ticket.group.name}<br>\n"
+"Sahibi: #{ticket.owner.fullname}<br>\n"
+"Vəziyyət:  #{t(ticket.state.name)}<br>\n"
+"</div>\n"
+"<br>\n"
+"<% əgər @objects[:article] %>\n"
+"  <div>\n"
+"  Məlumat:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">View this in #{config.product_name}</a>\n"
+"</div>\n"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 msgid "New user?"
-msgstr ""
+msgstr "Yeni istifadəçi?"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
@@ -9775,7 +9937,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
-msgstr ""
+msgstr "Növbəti"
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid "Next State"
@@ -9787,14 +9949,22 @@ msgstr ""
 msgid "Next in overview"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Next month"
+msgstr "Növbəti ay"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Next year"
+msgstr "Növbəti il"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "No"
-msgstr ""
+msgstr "Xeyr"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "No %s configured."
-msgstr ""
+msgstr "%s konfiqurasiya edilmir."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
@@ -9817,136 +9987,146 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 msgid "No Entries"
-msgstr ""
+msgstr "Qeydlər yoxdur"
 
 #: lib/external_credential/exchange.rb
 msgid "No Exchange app configured!"
-msgstr ""
+msgstr "Exchange tətbiqi konfiqurasiya edilməyib!"
 
 #: lib/external_credential/facebook.rb
 msgid "No Facebook app configured!"
-msgstr ""
+msgstr "Facebook proqramı konfiqurasiya edilməyib!"
 
 #: lib/external_credential/microsoft365.rb
 msgid "No Microsoft 365 app configured!"
-msgstr ""
+msgstr "Microsoft 365 proqramı konfiqurasiya olunmayıb!"
 
 #: db/seeds/settings.rb
 msgid "No Proxy"
-msgstr ""
+msgstr "Proxy server yoxdur"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "No SSL"
-msgstr ""
+msgstr "SSL protokolu yoxdur"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
+#, fuzzy
 msgid "No Thanks!"
-msgstr ""
+msgstr "Xeyr, təşəkkür edirəm!"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
+"Bu tip media ilə heç bir əlavə mətn göndərilə bilməz. Zəhmət olmasa mətni "
+"silin."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
-msgstr ""
+msgstr "Cavab yoxdur"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "No camera found."
-msgstr ""
+msgstr "Kamera tapılmadı."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "No categories"
-msgstr ""
+msgstr "Kateqoriyalar yoxdur"
 
 #: app/models/setting/validation/saml/security.rb
 msgid "No certificate found."
-msgstr ""
+msgstr "Sertifikat tapılmadı."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
-msgstr ""
+msgstr "Konfiqurasiya təyin edilməyib."
 
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
+#, fuzzy
 msgid "No content to show"
-msgstr ""
+msgstr "Göstəriləcək məzmun yoxdur"
 
 #: app/models/group.rb
+#, fuzzy
 msgid "No double colons (::) allowed, reserved delimiter"
-msgstr ""
+msgstr "Qoşa nöqtələrə (::) icazə verilmir,"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "No drafts"
-msgstr ""
+msgstr "Qaralama yoxdur"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
-msgstr ""
+msgstr "E-poçt yoxdur!"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "No entries"
-msgstr ""
+msgstr "Qeydlər yoxdur"
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No entries were found in the selected folder(s)."
-msgstr ""
+msgstr "Seçilmiş qovluqlarda heç bir giriş tapılmadı."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "No file chosen."
-msgstr ""
+msgstr "Fayl seçilməyib."
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
 msgid "No file formats allowed."
-msgstr ""
+msgstr "Fayl formatlarına icazə verilmir."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "No filter was configured."
-msgstr ""
+msgstr "Filtr konfiqurasiya edilməyib."
 
 #: app/controllers/integration/exchange_controller.rb
+#, fuzzy
 msgid "No folders were found for the given user credentials."
-msgstr ""
+msgstr "Qeyd edilmiş istifadəçi məlumatları üçün qovluq tapılmadı."
 
 #: app/services/service/system/import/check_status.rb
 msgid "No import in progress."
-msgstr ""
+msgstr "Import edilmir."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
-msgstr ""
+msgstr "Əlaqədar problem yoxdur"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco
+#, fuzzy
 msgid "No macros available."
-msgstr ""
+msgstr "Macros mövcud deyil."
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+#, fuzzy
 msgid "No previous searches"
-msgstr ""
+msgstr "Əvvəlki axtarışlar yoxdur"
 
 #: app/models/setting/validation/saml/security.rb
 msgid "No private key found."
-msgstr ""
+msgstr "Şəxsi açar tapılmadı."
 
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
-msgstr ""
+msgstr "Aşağıdakı hostlar üçün proksi yoxdur."
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
-msgstr ""
+msgstr "Heç bir qeyd tapılmadı!"
 
 #: lib/whatsapp/webhook/message/status.rb
+#, fuzzy
 msgid "No related article found to process the status message on."
-msgstr ""
+msgstr "Status mesajını emal etmək üçün heç bir əlaqəli məqalə tapılmadı."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
@@ -9956,30 +10136,30 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
 msgid "No results found"
-msgstr ""
+msgstr "Heç bir nəticə tapılmadı"
 
 #: app/views/layouts/knowledge_base.html.erb
 msgid "No results were found."
-msgstr ""
+msgstr "Heç bir nəticə tapılmadı."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "No security information available."
-msgstr ""
+msgstr "Təhlükəsizlik məlumatı yoxdur."
 
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
-msgstr ""
+msgstr "Sessiya mövcud deyil."
 
 #: lib/stats.rb
 msgid "No settings with area 'Dashboard::Stats' defined"
-msgstr ""
+msgstr "'Dashboard::Stats' sahəsi üçün heç bir parametr müəyyən edilməyib"
 
 #: app/controllers/organizations_controller.rb
 #: app/controllers/text_modules_controller.rb
 #: app/controllers/ticket_articles_controller.rb
 #: app/controllers/tickets_controller.rb app/controllers/users_controller.rb
 msgid "No source data submitted!"
-msgstr ""
+msgstr "İlkin məlumatlar təqdim edilməyib!"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "No template created yet."
@@ -9987,25 +10167,29 @@ msgstr ""
 
 #: app/controllers/users_controller.rb
 msgid "No token!"
-msgstr ""
+msgstr "Token yoxdur!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 msgid "No translation for this locale available"
-msgstr ""
+msgstr "Bu dil üçün tərcümə mövcud deyil"
 
 #: app/models/ticket.rb
+#, fuzzy
 msgid "No triggers active"
-msgstr ""
+msgstr "Tətikləyicilər aktiv deyil"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#, fuzzy
 msgid "No unread notifications for you. :)"
-msgstr ""
+msgstr "Sizin üçün oxunmamış bildirişlər yoxdur. :)"
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
 msgid ""
 "No webhook available, please create a new one or activate an existing one at "
 "\"Manage > Webhook\""
 msgstr ""
+"Əlçatan webhook yoxdur, lütfən yenisini yaradın və ya mövcud olanı \"Manage "
+"> Webhook\" bölməsində aktivləşdirin."
 
 #: app/models/channel/email_parser.rb
 msgid "No x-zammad-session-user-id, no sender set!"
@@ -10014,22 +10198,24 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/graphql/gql/types/ticket_type.rb db/seeds/settings.rb
+#, fuzzy
 msgid "None"
-msgstr ""
+msgstr "Yoxdur"
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee
+#, fuzzy
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Not Assigned"
-msgstr ""
+msgstr "Təyin edilməyib"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Not Available"
-msgstr ""
+msgstr "Mövcud deyil"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
@@ -10037,11 +10223,11 @@ msgstr ""
 #: app/frontend/shared/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
-msgstr ""
+msgstr "Tapılmadı"
 
 #: app/policies/controllers/taskbar_controller_policy.rb
 msgid "Not allowed to access this task."
-msgstr ""
+msgstr "Bu tapşırığa daxil olmaq qadağandır."
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid ""
@@ -10052,36 +10238,40 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/controllers/application_controller/handles_errors.rb
 #: app/services/service/ticket/article/create.rb
+#, fuzzy
 msgid "Not authorized"
-msgstr ""
+msgstr "Səlahiyyətli deyil"
 
 #: app/controllers/settings_controller.rb
+#, fuzzy
 msgid "Not authorized (feature not possible)"
-msgstr ""
+msgstr "Səlahiyyətli deyil (funksiya mövcud deyil)"
 
 #: app/controllers/application_controller/authenticates.rb
+#, fuzzy
 msgid "Not authorized (token expired)!"
-msgstr ""
+msgstr "İcazə verilmir (Token müddəti bitdi)!"
 
 #: app/models/token.rb
+#, fuzzy
 msgid "Not authorized (token)!"
-msgstr ""
+msgstr "İcazə verilmir (token)!"
 
 #: app/models/user.rb
 msgid "Not authorized (user)!"
-msgstr ""
+msgstr "İcazə verilmir (istifadəçi)!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Not available in selected language"
-msgstr ""
+msgstr "Seçilmiş dildə mövcud deyil"
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "Not configured"
-msgstr ""
+msgstr "Konfiqurasiya edilməyib"
 
 #: app/frontend/shared/errors/useErrorHandler.ts
 msgid "Not found"
-msgstr ""
+msgstr "Tapılmadı"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
@@ -10106,15 +10296,16 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Note"
-msgstr ""
+msgstr "Qeyd"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Note - default visibility"
-msgstr ""
+msgstr "Qeyd - standart görünmə"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Note:"
-msgstr ""
+msgstr "Qeyd:"
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10127,23 +10318,24 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/column_select.jst.eco
 msgid "Nothing selected"
-msgstr ""
+msgstr "Heç nə seçilməyib"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#, fuzzy
 msgid "Notice"
-msgstr ""
+msgstr "Xəbərdarlıq"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Notice:"
-msgstr ""
+msgstr "Xəbərdarlıq:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/views/mailer/application.html.erb
 msgid "Notification"
-msgstr ""
+msgstr "Bildiriş"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 #: db/seeds/settings.rb
@@ -10152,11 +10344,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Notification Sound"
-msgstr ""
+msgstr "Bildiriş səsi"
 
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 msgid "Notification read"
-msgstr ""
+msgstr "Bildiriş oxundu"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -10167,19 +10359,17 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
-msgstr ""
+msgstr "Bildirişlər"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Nov"
-msgstr ""
+msgstr "Noyabr"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "November"
-msgstr ""
+msgstr "Noyabr"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
@@ -10188,38 +10378,46 @@ msgid "Number"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#, fuzzy
 msgid "OAuth"
-msgstr ""
+msgstr "OAuth"
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
+#, fuzzy
 msgid "OAuth Configuration"
-msgstr ""
+msgstr "OAuth Konfiqurasiyası"
 
 #: app/assets/javascripts/app/views/api.jst.eco
+#, fuzzy
 msgid "OAuth URLs are:"
-msgstr ""
+msgstr "OAuth URL-ləri bunlardır:"
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "OAuth2 token is expired!"
-msgstr ""
+msgstr "OAuth2 token vaxtı bitdi!"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+#, fuzzy
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
+#, fuzzy
 msgid "OK, I've copied my token"
-msgstr ""
+msgstr "OK, tokeni kopyaladım"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "OK, I've saved my recovery codes"
-msgstr ""
+msgstr "OK, bərpa kodlarımı yadda saxladım"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
+#, fuzzy
 msgid "OTRS"
-msgstr ""
+msgstr "OTRS"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid ""
@@ -10228,51 +10426,54 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#, fuzzy
 msgid ""
 "OTRS BPM processes were found. They cannot be imported into Zammad as these "
 "kind of workflows are currently not supported."
 msgstr ""
+"OTRS BPM prosesləri tapıldı. Onlar Zammad-a import edilə bilməz, çünki bu "
+"cür iş axınları hazırda dəstəklənmir."
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 msgid "Object"
-msgstr ""
+msgstr "Obyekt"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Object Manager"
-msgstr ""
+msgstr "Obyekt meneceri"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: db/seeds/permissions.rb
 msgid "Objects"
-msgstr ""
+msgstr "Obyektlər"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Oct"
-msgstr ""
+msgstr "Oktyabr"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "October"
-msgstr ""
+msgstr "Oktyabr"
 
 #: public/assets/chat/chat.coffee
 msgid "Offline"
-msgstr ""
+msgstr "Oflayn"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+#, fuzzy
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts
+#, fuzzy
 msgid "On %s, %s wrote:"
-msgstr ""
+msgstr "%s tarixində %s yazdı:"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco
 #, fuzzy
@@ -10282,32 +10483,34 @@ msgstr "Alternativ tərcümələr"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
-msgstr ""
+msgstr "Tamamlandıqdan sonra…"
 
 #: app/models/application_model/can_creates_and_updates.rb
 msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
+"Tələb olunan parametrlərdən biri göstərilməlidir, lakin heç biri tapılmadı."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: public/assets/chat/chat.coffee
 msgid "Online"
-msgstr ""
+msgstr "Onlayn"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Online Forms"
-msgstr ""
+msgstr "Onlayn formalar"
 
 #: db/seeds/settings.rb
 msgid "Online Service"
-msgstr ""
+msgstr "Onlayn xidmət"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
+#, fuzzy
 msgid "Only %s attachment allowed"
-msgstr ""
+msgstr "Yalnız %s qoşmasına icazə verilir"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Only %s attachment allowed."
-msgstr ""
+msgstr "Yalnız %s qoşmasına icazə verilir."
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 msgid ""
@@ -10316,30 +10519,35 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Only Encrypting"
-msgstr ""
+msgstr "Yalnız Şifrələmə"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Only Signing"
-msgstr ""
+msgstr "Yalnız İmza"
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
 "Only available for users which are absence replacements for other users."
 msgstr ""
+"Yalnız digər istifadəçiləri əvəz edə bilməyən istifadəçilər üçün mövcuddur."
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Only available for users with shared organizations"
-msgstr ""
+msgstr "Yalnız ümumi təşkilatları olan istifadəçilər üçün mövcuddur"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Only for these groups."
-msgstr ""
+msgstr "Yalnız bu qruplar üçün."
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
 "Only packages from known, trusted, and verified sources should be installed."
 msgstr ""
+"Yalnız tanınmış, etibarlı və təsdiqlənmiş mənbələrdən paketlər "
+"quraşdırılmalıdır."
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
@@ -10348,7 +10556,7 @@ msgstr ""
 msgid ""
 "Only the 20 most recent records are displayed. Download to view the full "
 "list."
-msgstr ""
+msgstr "Yalnız ən son 20 qeyd göstərilir. Tam siyahıya baxmaq üçün yükləyin."
 
 #: db/seeds/settings.rb
 msgid "Only used internally to propagate current web app version to clients."
@@ -10356,57 +10564,90 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Only visible to editors"
-msgstr ""
+msgstr "Yalnız redaktorlar üçün mövcuddur"
 
 #: app/assets/javascripts/app/views/generic/error/not_found.jst.eco
+#, fuzzy
 msgid "Oops.. I'm sorry, but I can't find this %s."
-msgstr ""
+msgstr "Oops.. Bağışlayın, lakin bu %s-i tapa bilmirəm."
 
 #: app/assets/javascripts/app/views/generic/error/unauthorized.jst.eco
 msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr ""
+"Oops.. Bağışlayın, lakin bu %s faylını açmaq üçün kifayət qədər hüququnuz "
+"yoxdur."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Open"
-msgstr ""
+msgstr "Açıq"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Open %s"
-msgstr ""
+msgstr "Açıq %s"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco
+#, fuzzy
 msgid "Open Ticket# %s"
-msgstr ""
+msgstr "Açıq Bilet# %s"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 #: db/seeds/overviews.rb
 msgid "Open Tickets"
-msgstr ""
+msgstr "Açıq Biletlər"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open hours overlay"
+msgstr "İş saatlarının üst-üstə düşməsi"
 
 #: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
 msgid "Open in new tab"
-msgstr ""
+msgstr "Yeni tabda açın"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
 msgid "Open macro selection"
+msgstr "Macro seçimini açın"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open minutes overlay"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open months overlay"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
 msgid "Open note box"
+msgstr "Qeyd qutusunu açın"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open seconds overlay"
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Open ticket indicator"
-msgstr ""
+msgstr "Açıq bilet göstəricisi"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 msgid "Open tickets"
+msgstr "Açıq biletlər"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open time picker"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Open years overlay"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#, fuzzy
 msgid "Open your authenticator app and scan the QR code below:"
-msgstr ""
+msgstr "Doğrulayıcı tətbiqinizi açın və aşağıdakı QR kodunu skan edin:"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
@@ -10420,25 +10661,26 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_number_date.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number_increment.jst.eco
 msgid "Options"
-msgstr ""
+msgstr "Seçimlər"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Or migrate from another system"
-msgstr ""
+msgstr "Və ya başqa bir sistemdən köçürün"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Or migrate from another system."
-msgstr ""
+msgstr "Və ya başqa bir sistemdən köçürün."
 
 #: app/frontend/apps/desktop/pages/authentication/components/LoginThirdParty.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginThirdParty.vue
+#, fuzzy
 msgid "Or sign in using"
-msgstr ""
+msgstr "Və ya istifadə edərək daxil olun"
 
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactorMethods.vue
 msgid "Or use one of your recovery codes."
-msgstr ""
+msgstr "Və ya bərpa kodlarınızdan birini istifadə edin."
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco
 msgid "Or, use one of your"
@@ -10475,40 +10717,43 @@ msgstr ""
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
-msgstr ""
+msgstr "Təşkilat"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 msgid "Organization & Department Name"
-msgstr ""
+msgstr "Təşkilat & Şöbə adı"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Organization Logo"
-msgstr ""
+msgstr "Təşkilat loqosu"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
 msgid "Organization Name"
-msgstr ""
+msgstr "Təşkilatın adı"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts
+#, fuzzy
 msgid "Organization Support"
-msgstr ""
+msgstr "Təşkilat dəstəyi"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts
 msgid "Organization could not be updated."
-msgstr ""
+msgstr "Təşkilatı yeniləmək mümkün olmadı."
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "Organization tickets"
-msgstr ""
+msgstr "Təşkilat biletləri"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
+#, fuzzy
 msgid ""
 "Organization with specified ID was not found. Try checking the URL for "
 "errors."
 msgstr ""
+"Göstərilən ID ilə təşkilat tapılmadı. Xətalar üçün URL-i yoxlamağa çalışın."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
@@ -10523,24 +10768,25 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 #: db/seeds/permissions.rb
 msgid "Organizations"
-msgstr ""
+msgstr "Təşkilatlar"
 
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 msgid "Organizations with \"%s\""
-msgstr ""
+msgstr "\"%s\" ilə təşkilatlar"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Organizer"
-msgstr ""
+msgstr "Təşkilatçı"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#, fuzzy
 msgid "Origin By"
-msgstr ""
+msgstr "Mənbəyə görə"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
-msgstr ""
+msgstr "Orijinal formatlaşdırma"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 #, fuzzy
@@ -10552,22 +10798,23 @@ msgstr "Alternativ tərcümələr"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Other Settings"
-msgstr ""
+msgstr "Digər parametrlər"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: db/seeds/permissions.rb
+#, fuzzy
 msgid "Out of Office"
-msgstr ""
+msgstr "Ofisdən kənarda"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
-msgstr ""
+msgstr "Bütün açıq biletlərdən (şirkət üzrə) neçəsi sizə təyin edilmişdir?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "Out of office replacement"
-msgstr ""
+msgstr "Ofisdən kənar dəyişdirmə"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -10576,23 +10823,25 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
 msgid "Outbound"
-msgstr ""
+msgstr "Gedən"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
+#, fuzzy
 msgid "Outbound Call"
-msgstr ""
+msgstr "Gedən zəng"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Outbound:"
-msgstr ""
+msgstr "Gedən:"
 
 #: app/assets/javascripts/app/lib/app_post/browser.coffee
 msgid "Outdated Browser"
-msgstr ""
+msgstr "Köhnəlmiş brauzer"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10630,7 +10879,7 @@ msgstr ""
 #: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
-msgstr ""
+msgstr "Sahib"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid ""
@@ -10642,55 +10891,66 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts
+#, fuzzy
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "PGP Recipient Alias Configuration"
-msgstr ""
+msgstr "PGP Alıcı Tələb Konfiqurasiyası"
 
 #: db/seeds/settings.rb
 msgid "PGP config"
-msgstr ""
+msgstr "PGP konfiqurasiyası"
 
 #: db/seeds/settings.rb
 msgid "PGP integration"
-msgstr ""
+msgstr "PGP inteqrasiyası"
 
 #: lib/email_helper.rb
+#, fuzzy
 msgid "POP3"
-msgstr ""
+msgstr "POP3"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Package"
-msgstr ""
+msgstr "Paket"
 
 #: app/assets/javascripts/app/controllers/package.coffee
 #: db/seeds/permissions.rb
 msgid "Packages"
-msgstr ""
+msgstr "Paketlər"
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "Page not found"
-msgstr ""
+msgstr "səhifə tapılmadı"
 
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
+msgstr "Səhifələr"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Panel"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Panel footer"
 msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
 msgid "Parameter 'data' or 'file' required."
-msgstr ""
+msgstr "\"Məlumat\" və ya \"fayl\" parametrini göstərməlisiniz."
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
 msgid "Parent"
-msgstr ""
+msgstr "Valideyn"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Parent group"
-msgstr ""
+msgstr "Valideyn qrupu"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -10714,53 +10974,54 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
-msgstr ""
+msgstr "Şifrə"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Password & Authentication"
-msgstr ""
+msgstr "Şifrə & İdentifikasiya"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Password Access"
-msgstr ""
+msgstr "Şifrə ilə giriş"
 
 #: db/seeds/settings.rb
 msgid "Password Login"
-msgstr ""
+msgstr "Giriş şifrəsi"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Password changed successfully!"
-msgstr ""
+msgstr "Şifrə uğurla dəyişdirildi!"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Password for proxy connection"
-msgstr ""
+msgstr "Proxy serverə qoşulmaq üçün şifrə"
 
 #: db/seeds/settings.rb
 msgid "Password for proxy connection."
-msgstr ""
+msgstr "Proxy serverə qoşulmaq üçün şifrə."
 
 #: db/seeds/settings.rb
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
-msgstr ""
+msgstr "Şifrə 2 kiçik və 2 böyük simvoldan ibarət olmalıdır."
 
 #: db/seeds/settings.rb
 msgid "Password needs to contain at least one digit."
-msgstr ""
+msgstr "Şifrə ən azı bir rəqəmdən ibarət olmalıdır."
 
 #: db/seeds/settings.rb
 msgid "Password needs to contain at least one special character."
-msgstr ""
+msgstr "Şifrə ən azı bir xüsusi simvoldan ibarət olmalıdır."
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Password needs to have at least a minimal number of characters."
-msgstr ""
+msgstr "Şifrədə ən azı minimum simvol sayı olmalıdır."
 
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 msgid "Password reset instructions were sent to your email address."
-msgstr ""
+msgstr "Şifrənin sıfırlanması üçün təlimatlar e-poçt ünvanınıza göndərildi."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -10769,12 +11030,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco
+#, fuzzy
 msgid "Paste Certificate"
-msgstr ""
+msgstr "Sertifikatı daxil edin"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Paste Private Key"
-msgstr ""
+msgstr "Şəxsi açarı daxil edin"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Paste from clipboard"
@@ -10786,42 +11048,46 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Paste in CSV data"
-msgstr ""
+msgstr "CSV formatında məlumatları daxil edin"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 msgid "Paste key"
-msgstr ""
+msgstr "Açarı daxil et"
 
 #: db/seeds/overviews.rb
 msgid "Pending Reached Tickets"
-msgstr ""
+msgstr "Gözlənilən Biletlər"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
+#, fuzzy
 msgid "Pending reminder reached for ticket |%s|"
-msgstr ""
+msgstr "Bilet üçün gözlənilən xatırlatma çatdı |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
+#, fuzzy
 msgid "Pending till"
-msgstr ""
+msgstr "Gözləmə"
 
 #: db/seeds/roles.rb
+#, fuzzy
 msgid "People who create Tickets ask for help."
-msgstr ""
+msgstr "Biletləri yaradan insanlar kömək istəyirlər."
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Perform actions"
-msgstr ""
+msgstr "Fəaliyyət göstərin"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
-msgstr ""
+msgstr "Məlumat bazasını həmişəlik silin"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Permission level for looking up tickets"
-msgstr ""
+msgstr "Biletləri axtarmaq üçün icazə səviyyəsi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -10829,15 +11095,15 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Permissions"
-msgstr ""
+msgstr "İcazələr"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Personal Access Tokens"
-msgstr ""
+msgstr "Şəxsi Giriş Tokenləri"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid "Personal Settings"
-msgstr ""
+msgstr "Şəxsi Parametrlər"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Personal overview order was reset."
@@ -10847,11 +11113,11 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #: app/models/report.rb
 msgid "Phone (in)"
-msgstr ""
+msgstr "Telefon (daxil)"
 
 #: app/models/report.rb
 msgid "Phone (out)"
@@ -10864,37 +11130,40 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco
 msgid "Phone number"
-msgstr ""
+msgstr "Telefon nömrəsi"
 
 #: app/models/channel/area/whatsapp.rb
 msgid "Phone number is already in use by another WhatsApp account."
-msgstr ""
+msgstr "Telefon nömrəsi artıq başqa bir hesab tərəfindən istifadə olunur."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#, fuzzy
 msgid "Pick a name for the application, and we'll give you a unique token."
-msgstr ""
+msgstr "Tətbiq üçün ad seçin və sizə unikal token təqdim ediləcək."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Pink"
-msgstr ""
+msgstr "Çəhrayı"
 
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/controllers/cti_controller.rb
+#, fuzzy
 msgid "Placetel"
-msgstr ""
+msgstr "Placetel"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Placetel Token"
-msgstr ""
+msgstr "Placetel Token"
 
 #: db/seeds/settings.rb
 msgid "Placetel config"
-msgstr ""
+msgstr "Placetel Konfiqurasiyası"
 
 #: db/seeds/settings.rb
 msgid "Placetel integration"
-msgstr ""
+msgstr "Placetel ilə inteqrasiya"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Play user interface sound effects"
@@ -10902,11 +11171,12 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Please accept the %s."
-msgstr ""
+msgstr "%s-i qəbul edin."
 
 #: app/views/knowledge_base/public/categories/index.html.erb
+#, fuzzy
 msgid "Please add categories and/or answers"
-msgstr ""
+msgstr "Zəhmət olmasa kateqoriyalar və/və ya cavablar əlavə edin"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Please click on the button below to create your first one."
@@ -10917,33 +11187,40 @@ msgid "Please click on the link in the verification email."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
+#, fuzzy
 msgid ""
 "Please click on the link in the verification email. If you don't see the "
 "email, check other places it might be, like your junk, spam, social, or "
 "other folders."
 msgstr ""
+"Zəhmət olmasa, təsdiq e-poçtunda olan linkə klikləyin. E-poçtu "
+"görmürsünüzsə, zibil, spam, sosial və ya digər qovluqlarınız kimi digər "
+"yerləri yoxlayın."
 
 #: app/services/service/system/import/run.rb
 msgid "Please configure import source before running."
-msgstr ""
+msgstr "Zəhmət olmasa başlamazdan əvvəl import mənbəyini konfiqurasiya edin."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 msgid "Please contact your administrator."
-msgstr ""
+msgstr "Zəhmət olmasa administratorunuzla əlaqə saxlayın."
 
 #: lib/selector/sql.rb
+#, fuzzy
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
 msgstr ""
+"Zəhmət olmasa istifadə etmək üçün execution_time funksiyasını aktivləşdirin "
+"(hazırda yalnız tətikləyicilər və planlaşdırıcılar üçün icazə verilir)."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Please enter a text."
-msgstr ""
+msgstr "Zəhmət olmasa mətn daxil edin."
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "Please enter a valid JSON string."
-msgstr ""
+msgstr "Zəhmət olmasa, düzgün JSON sətri daxil edin."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Please enter a valid email address."
@@ -11140,6 +11417,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
 msgid "Previous in overview"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Previous month"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Previous year"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
@@ -11720,6 +12005,10 @@ msgid ""
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Resize panel"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
 msgstr ""
@@ -11960,7 +12249,6 @@ msgid "STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sat"
 msgstr ""
 
@@ -11968,7 +12256,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Saturday"
 msgstr ""
 
@@ -12443,7 +12730,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sep"
 msgstr ""
 
@@ -12452,7 +12738,6 @@ msgid "Separate multiple values by ;"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "September"
 msgstr ""
 
@@ -13264,7 +13549,6 @@ msgid "Summer holiday"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sun"
 msgstr ""
 
@@ -13272,12 +13556,15 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sunday"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Switch AM/PM mode"
 msgstr ""
 
 #: db/seeds/schedulers.rb
@@ -15073,7 +15360,6 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thu"
 msgstr ""
 
@@ -15081,7 +15367,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thursday"
 msgstr ""
 
@@ -15677,13 +15962,18 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Toggle overlay"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -15822,7 +16112,6 @@ msgid "Trying to reconnect…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tue"
 msgstr ""
 
@@ -15830,7 +16119,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tuesday"
 msgstr ""
 
@@ -16086,6 +16374,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue
 msgid "Update"
 msgstr ""
 
@@ -16769,7 +17058,6 @@ msgid "Websocket port"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wed"
 msgstr ""
 
@@ -16777,7 +17065,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wednesday"
 msgstr ""
 
@@ -18839,6 +19126,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr ""
+
+#, fuzzy
+#~ msgid "CW"
+#~ msgstr "CW"
+
+#~ msgid "Clear"
+#~ msgstr "Təmizləmək"
 
 #, fuzzy
 #~| msgid "Configure Basic Settings"
