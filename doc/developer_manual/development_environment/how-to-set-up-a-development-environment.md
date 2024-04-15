@@ -154,7 +154,7 @@ $ bundle install
 
 ## Using HTTPS
 
-Zammad uses the gem `localhost` to automatically generate self-signed certificates. This will place `~./localhost/localhost.crt` and `~/.localhost/localhost.key` files if needed. Then you can use one of the following commands to start the development server:
+Zammad uses the gem `localhost` to automatically generate self-signed certificates. This will place `~/.local/state/localhost.rb/localhost.crt` and `~/.local/state/localhost.rb/localhost.key` files if needed. Then you can use one of the following commands to start the development server:
 
 ```sh
 $ VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -f Procfile.dev-https
@@ -195,11 +195,11 @@ Then, press Enter to continue the challenge process. If the certbot identifies y
 Next, backup your current self-signed certificate files (if they exist) and create symbolic links to the new ones:
 
 ```sh
-$ cd ~/.localhost
+$ cd ~/.local/state/localhost.rb
 $ mv localhost.crt localhost.crt.self-signed
 $ mv localhost.key localhost.key.self-signed
-$ ln -s /path/to/certs/live/localhost.example.com/cert.pem ~/.localhost/localhost.crt
-$ ln -s /path/to/certs/live/localhost.example.com/privkey.pem ~/.localhost/localhost.key
+$ ln -s /path/to/certs/live/localhost.example.com/cert.pem ~/.local/state/localhost.rb/localhost.crt
+$ ln -s /path/to/certs/live/localhost.example.com/privkey.pem ~/.local/state/localhost.rb/localhost.key
 ```
 
 You may need to adjust the paths depending on your subdomain name.

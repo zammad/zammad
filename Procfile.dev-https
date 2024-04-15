@@ -1,4 +1,4 @@
 vite: bundle exec script/vite-server.rb dev
 web: bundle exec script/rails server -b "ssl://${ZAMMAD_BIND_IP:=127.0.0.1}" -p ${ZAMMAD_RAILS_PORT:=3000}
-websocket: bundle exec script/websocket-server.rb -b ${ZAMMAD_BIND_IP:=127.0.0.1} -p ${ZAMMAD_WEBSOCKET_PORT:=6042} -k ~/.localhost/localhost.key -c ~/.localhost/localhost.crt -s start
+websocket: bundle exec script/websocket-server.rb -b ${ZAMMAD_BIND_IP:=127.0.0.1} -p ${ZAMMAD_WEBSOCKET_PORT:=6042} -k ~/.local/state/localhost.rb/localhost.key -c ~/.local/state/localhost.rb/localhost.crt -s start
 worker: bundle exec script/background-worker.rb start

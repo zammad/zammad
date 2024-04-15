@@ -15,7 +15,7 @@ import tsconfig from './tsconfig.base.json' assert { type: 'json' }
 
 const dir = dirname(fileURLToPath(import.meta.url))
 
-const SSL_PATH = resolve(homedir(), '.localhost')
+const SSL_PATH = resolve(homedir(), '.local/state/localhost.rb')
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default defineConfig(({ mode, command }) => {
