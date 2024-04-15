@@ -27,6 +27,7 @@ class App.TicketZoomChannel
     # Otherwise, return a warning alert with a "humanized" end time of the window.
     return {
       text: __('You have a 24 hour window to send WhatsApp messages in this conversation. The customer service window closes %s.')
-      textPlaceholder: App.PrettyDate.humanTime(timeWindowEnd)
+      textPlaceholder: App.ViewHelpers.humanTime(timeWindowEnd)
+      noQuote: true
       type: 'warning'
     }

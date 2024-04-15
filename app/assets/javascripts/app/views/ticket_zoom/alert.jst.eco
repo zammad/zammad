@@ -1,3 +1,7 @@
 <div class="alert alert--<%= @alert.type %>" role="alert">
-  <%- @T(@alert.text, @alert.textPlaceholder) %>
+  <% if @alert.noQuote: %>
+    <%- @Tp(@alert.text, @alert.textPlaceholder) %>
+  <% else: %>
+    <%- @T(@alert.text, @alert.textPlaceholder) %>
+  <% end %>
 </div>
