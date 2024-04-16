@@ -204,7 +204,7 @@ onMounted(() => {
     :show-backdrop="showBackdrop"
     :style="{ width: `${flyoutContainerWidth}px` }"
     :class="{ 'transition-all': !isResizingHorizontal }"
-    :aria-label="$t('Panel')"
+    :aria-label="$t('Side panel')"
     :aria-labelledby="`${flyoutId}-title`"
     @click-background="close()"
   >
@@ -235,7 +235,7 @@ onMounted(() => {
         class="ltr:ml-auto rtl:mr-auto"
         variant="neutral"
         size="medium"
-        :aria-label="$t('Close panel')"
+        :aria-label="$t('Close side panel')"
         icon="x-lg"
         @click="close()"
       />
@@ -252,7 +252,7 @@ onMounted(() => {
     <footer
       v-if="$slots.footer || !hideFooter"
       ref="footerElement"
-      :aria-label="$t('Panel footer')"
+      :aria-label="$t('Side panel footer')"
       class="sticky bottom-0 border-t border-t-transparent bg-white p-3 ltr:rounded-bl-xl rtl:rounded-br-xl dark:bg-gray-500"
       :class="{
         'border-t-neutral-100 dark:border-t-gray-900':
@@ -272,7 +272,7 @@ onMounted(() => {
       v-if="resizable"
       ref="resizeHandleComponent"
       class="absolute top-1/2 -translate-y-1/2 ltr:left-0 rtl:right-0"
-      :aria-label="$t('Resize panel')"
+      :aria-label="$t('Resize side panel')"
       role="separator"
       aria-orientation="horizontal"
       :aria-valuenow="flyoutContainerWidth"

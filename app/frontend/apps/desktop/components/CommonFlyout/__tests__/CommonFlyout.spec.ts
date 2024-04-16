@@ -57,7 +57,7 @@ describe('CommonFlyout', () => {
     })
 
     it('renders the resize handle as a default', () => {
-      expect(flyout.queryByLabelText('Resize panel')).toBeInTheDocument()
+      expect(flyout.queryByLabelText('Resize side panel')).toBeInTheDocument()
     })
 
     it('does not render the resize handle when allowResizing is false', async () => {
@@ -65,7 +65,7 @@ describe('CommonFlyout', () => {
         resizable: false,
       })
 
-      expect(flyout.queryByLabelText('Resize panel')).not.toBeInTheDocument()
+      expect(flyout.queryByLabelText('Resize side panel')).not.toBeInTheDocument()
     })
 
     it('renders slot content', async () => {
@@ -111,7 +111,7 @@ describe('CommonFlyout', () => {
     })
 
     it('has a default container width of 500px', async () => {
-      expect(flyout.getByLabelText('Panel')).toHaveStyle({
+      expect(flyout.getByLabelText('Side panel')).toHaveStyle({
         width: '500px',
       })
     })
@@ -125,7 +125,7 @@ describe('CommonFlyout', () => {
 
       it('emits close event when x button is clicked', async () => {
         await flyout.events.click(
-          flyout.getAllByLabelText('Close panel').at(-1) as HTMLElement,
+          flyout.getAllByLabelText('Close side panel').at(-1) as HTMLElement,
         )
 
         expect(flyout.emitted('close')).toHaveLength(1)

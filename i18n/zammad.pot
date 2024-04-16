@@ -2649,7 +2649,7 @@ msgid "Close dialog"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Close panel"
+msgid "Close side panel"
 msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee
@@ -9342,14 +9342,6 @@ msgstr ""
 msgid "Pages"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel footer"
-msgstr ""
-
 #: app/controllers/integration/smime_controller.rb
 msgid "Parameter 'data' or 'file' required."
 msgstr ""
@@ -10337,7 +10329,7 @@ msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},<
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Resize panel"
+msgid "Resize side panel"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -11355,6 +11347,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Shown when the chat is closed."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Side panel"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Side panel footer"
 msgstr ""
 
 #: db/seeds/settings.rb
