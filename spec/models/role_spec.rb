@@ -283,4 +283,17 @@ RSpec.describe Role do
       end
     end
   end
+
+  # https://github.com/zammad/zammad/issues/5123
+  describe 'Removing KB editor permission with existing KB' do
+    it 'allows to remove editor but keep reader permission' do
+      role = create(:role, permission_names: %w[knowledge_base.reader knowledge_base.editor])
+
+      kb_permission = create(:knowledge_base_permission, role: role)
+
+      role.permission_revoke('knowledge_base.editor')
+
+      expect(kb_permission.reload).to have_attributes(access: 'reader')
+    end
+  end
 end
