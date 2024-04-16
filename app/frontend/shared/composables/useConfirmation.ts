@@ -5,13 +5,18 @@ import type { Except } from 'type-fest'
 
 import type { ButtonVariant } from '#shared/types/button.ts'
 
+export type ConfirmationVariant = 'delete' | 'unsaved' | 'confirm'
+
 export interface ConfirmationOptions {
   headerTitle?: string
   headerTitlePlaceholder?: string[]
-  text: string
+  headerIcon?: string
+  text?: string
   textPlaceholder?: string[]
   buttonLabel?: string
   buttonVariant?: ButtonVariant
+  // TODO: should maybe also be implemented for mobile, so that we have a better alignment for the code
+  confirmationVariant?: ConfirmationVariant
   confirmCallback: () => void
   cancelCallback: () => void
 }
@@ -41,9 +46,23 @@ export const useConfirmation = () => {
     })
   }
 
+  const waitForVariantConfirmation = (
+    variant: ConfirmationVariant = 'confirm',
+    options: Except<
+      ConfirmationOptions,
+      'text' | 'confirmCallback' | 'cancelCallback'
+    > = {},
+  ) => {
+    return waitForConfirmation('', {
+      ...options,
+      confirmationVariant: variant,
+    })
+  }
+
   return {
     showConfirmation,
     confirmationOptions,
     waitForConfirmation,
+    waitForVariantConfirmation,
   }
 }

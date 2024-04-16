@@ -47,6 +47,7 @@
 - `assets/square.svg`
 - `assets/sun.svg`
 - `assets/upload.svg`
+- `assets/trash3.svg`
 - `assets/x-circle.svg`
 - `assets/x-lg.svg`
 

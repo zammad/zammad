@@ -38,9 +38,35 @@ describe('dialog confirm behaviour', () => {
     await waitForNextTick()
 
     expect(wrapper.getByText('Test heading')).toBeInTheDocument()
-    expect(wrapper.getByText('OK')).toBeInTheDocument()
+    expect(wrapper.getByText('Yes')).toBeInTheDocument()
 
-    await wrapper.events.click(wrapper.getByRole('button', { name: 'OK' }))
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Yes' }))
+    expect(confirmCallbackSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders confirmation dialog with variant', async () => {
+    const confirmCallbackSpy = vi.fn()
+
+    const wrapper = renderComponent(CommonConfirmationDialog)
+
+    confirmationOptions.value = {
+      confirmationVariant: 'delete',
+      confirmCallback: confirmCallbackSpy,
+      cancelCallback: vi.fn(),
+    }
+
+    await waitForNextTick()
+
+    expect(
+      wrapper.getByRole('dialog', { name: 'Delete Object' }),
+    ).toBeInTheDocument()
+    expect(
+      wrapper.getByText('Are you sure you want to delete this object?'),
+    ).toBeInTheDocument()
+
+    await wrapper.events.click(
+      wrapper.getByRole('button', { name: 'Delete Object' }),
+    )
     expect(confirmCallbackSpy).toHaveBeenCalledTimes(1)
   })
 

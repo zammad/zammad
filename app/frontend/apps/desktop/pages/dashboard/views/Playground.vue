@@ -416,11 +416,9 @@ const dialog = useDialog({
     }),
 })
 
-const { waitForConfirmation } = useConfirmation()
+const { waitForVariantConfirmation } = useConfirmation()
 const deleteTest = async () => {
-  const confirmed = await waitForConfirmation(
-    'Do you really want to delete this item?',
-  )
+  const confirmed = await waitForVariantConfirmation('delete')
 
   if (confirmed) {
     console.log('Item deleted!')

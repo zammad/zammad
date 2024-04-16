@@ -93,7 +93,7 @@ onMounted(() => {
           <div
             class="flex items-center gap-2 text-xl leading-6 text-gray-100 dark:text-neutral-400"
           >
-            <CommonIcon v-if="headerIcon" size="xs" :name="headerIcon" />
+            <CommonIcon v-if="headerIcon" size="small" :name="headerIcon" />
             <h3 :id="`${dialogId}-title`">{{ $t(headerTitle) }}</h3>
           </div>
         </slot>
