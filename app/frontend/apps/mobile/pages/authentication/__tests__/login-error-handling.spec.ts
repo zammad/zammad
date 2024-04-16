@@ -20,9 +20,14 @@ describe('testing login error handling', () => {
   it('check required login fields', async () => {
     const view = await visitView('/login')
     await view.events.click(view.getByText('Sign in'))
-    const error = view.getAllByText('This field is required.')
 
-    expect(error).toHaveLength(2)
+    expect(view.getByLabelText('Username / Email')).toBeDescribedBy(
+      'This field is required.',
+    )
+
+    expect(view.getByLabelText('Password')).toBeDescribedBy(
+      'This field is required.',
+    )
   })
 
   it('check that login request error is visible', async () => {
