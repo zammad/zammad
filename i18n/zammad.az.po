@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-15 11:57+0000\n"
+"PO-Revision-Date: 2024-04-16 09:28+0000\n"
 "Last-Translator: IT SMBDA <it@smb.gov.az>\n"
 "Language-Team: Azerbaijani <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/az/>\n"
@@ -11106,6 +11106,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Please enter the endpoint for accessing Exchange Web Services."
 msgstr ""
+"Zəhmət olmasa, Exchange veb xidmətlərinə daxil olmaq üçün son nöqtəni daxil "
+"edin."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Please enter your Exchange credentials."
@@ -11114,10 +11116,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Please execute database changes only in a maintenance window."
 msgstr ""
+"Zəhmət olmasa verilənlər bazası dəyişikliklərini yalnız texniki xidmət "
+"pəncərəsində yerinə yetirin."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form_item.coffee
 msgid "Please fill in all fields"
-msgstr ""
+msgstr "Zəhmət olmasa bütün sahələri doldurun"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #: app/services/service/system/set_system_information.rb
@@ -11125,28 +11129,35 @@ msgid "Please include a valid url."
 msgstr ""
 
 #: app/services/service/system/import/apply_otrs_configuration.rb
+#, fuzzy
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
 msgstr ""
+"Zəhmət olmasa, OTRS miqrasiya plaginini quraşdırın və əsaslandırılmış URL "
+"təqdim edin."
 
 #: db/seeds/settings.rb
 msgid ""
 "Please note that this attribute is deprecated within one of the next "
 "versions of Zammad. Use the IDP certificate instead."
 msgstr ""
+"Xahiş edirik unutmayın ki, Zammad-ın aşağıdakı versiyalarından biri bu "
+"atributu köhnəlmiş hesab edəcəkdir. Bunun əvəzinə IDP sertifikatından "
+"istifadə edin."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
-msgstr ""
+msgstr "Zəhmət olmasa alıcını \"TO\" və ya \"CC\"sahəsinə daxil edin."
 
 #: app/controllers/users_controller.rb
 msgid "Please provide your current password."
-msgstr ""
+msgstr "Zəhmət olmasa cari şifrənizi daxil edin."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 #: app/controllers/users_controller.rb
 msgid "Please provide your new password."
-msgstr ""
+msgstr "Zəhmət olmasa yeni şifrənizi daxil edin."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
 msgid ""
@@ -11156,11 +11167,11 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Please select a ticket to merge into."
-msgstr ""
+msgstr "Zəhmət olmasa birləşdirmək üçün bilet seçin."
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
-msgstr ""
+msgstr "Xahiş edirik ən azı bir qovluq seçin."
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Please select at least one ticket overview"
@@ -11171,46 +11182,56 @@ msgid ""
 "Please select the authentication method that should be used to establish the "
 "connection to your Exchange server."
 msgstr ""
+"Zəhmət olmasa Exchange serverinizlə əlaqə yaratmaq üçün istifadə etməli "
+"olduğunuz identifikasiya metodunu seçin."
 
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco
+#, fuzzy
 msgid ""
 "Please start the reauthentication again and enter the correct credentials."
 msgstr ""
+"Zəhmət olmasa identifikasiyanı yenidən işə salın və düzgün şəxsi məlumatları "
+"daxil edin."
 
 #: app/controllers/knowledge_base/manage_controller.rb
+#, fuzzy
 msgid "Please submit custom address before generating the snippet"
-msgstr ""
+msgstr "Zəhmət olmasa kod parçasını yaratmadan əvvəl xüsusi ünvanı göstərin"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
 msgid "Please use the provided URL."
-msgstr ""
+msgstr "Zəhmət olmasa göstərilən URL-dən istifadə edin."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+#, fuzzy
 msgid "Please wait until you received the notification email of the approval."
-msgstr ""
+msgstr "Zəhmət olmasa təsdiq bildirişi e-poçtu alana qədər gözləyin."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
-msgstr ""
+msgstr "Zəhmət olmasa, gözləyin…"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts
+#, fuzzy
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
+#, fuzzy
 msgid "Position"
-msgstr ""
+msgstr "Vəzifə"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
+#, fuzzy
 msgid "Postmaster Filter"
-msgstr ""
+msgstr "Poçtmeyster filtri"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
@@ -11223,21 +11244,22 @@ msgstr ""
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
+#, fuzzy
 msgid "Powered by"
-msgstr ""
+msgstr "İlə işləyir"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
 msgid "Pre-defined Webhook"
-msgstr ""
+msgstr "Əvvəlcədən təyin edilmiş Webhook"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "Pre-defined webhook for %s."
-msgstr ""
+msgstr "%s üçün əvvəlcədən təyin edilmiş webhook."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Press the button below to finish the setup."
-msgstr ""
+msgstr "Quraşdırmanı bitirmək üçün aşağıdakı düyməni basın."
 
 #: db/seeds/settings.rb
 msgid "Pretty Date"
@@ -11248,13 +11270,19 @@ msgid ""
 "Pretty Good Privacy (PGP) enables you to send digitally signed and encrypted "
 "messages."
 msgstr ""
+"Pretty Good Privacy (PGP) sizə rəqəmsal imzalanmış və şifrələnmiş mesajlar "
+"göndərməyə imkan verir."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
+#, fuzzy
 msgid ""
 "Pretty Good Privacy (PGP) is an encryption program that can be used for "
 "signing, encrypting and decrypting messages and to increase the security of "
 "email communication."
 msgstr ""
+"Pretty Good Privacy (PGP) mesajları imzalamaq, şifrələmək , deşifrə etmək və "
+"e-poçt rabitəsinin təhlükəsizliyini artırmaq üçün istifadə edilə bilən "
+"şifrələmə proqramıdır."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -11264,20 +11292,23 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#, fuzzy
 msgid "Preview"
-msgstr ""
+msgstr "Önizləmə"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+#, fuzzy
 msgid "Preview %s"
-msgstr ""
+msgstr "Önizləmə %s"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
 msgid "Preview Width"
-msgstr ""
+msgstr "Önizləmə genişliyi"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "Preview customer tickets"
-msgstr ""
+msgstr "Müştəri biletlərini əvvəlcədən nəzərdən keçir"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "Preview owner tickets"
@@ -11286,7 +11317,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Previous"
-msgstr ""
+msgstr "Əvvəlki"
 
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
 msgid "Previous in overview"
@@ -11294,11 +11325,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Previously owned tickets (%s in total):"
-msgstr ""
+msgstr "Əvvəlki biletlər (cəmi %s):"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+#, fuzzy
 msgid "Print"
-msgstr ""
+msgstr "Çap et"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -11314,7 +11346,7 @@ msgstr ""
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Priority"
-msgstr ""
+msgstr "Prioritet"
 
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
@@ -11322,19 +11354,21 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Private key (PEM)"
-msgstr ""
+msgstr "Şəxsi açar (PEM)"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Private key secret"
-msgstr ""
+msgstr "Gizli şəxsi açar"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
-msgstr ""
+msgstr "Problem"
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
+#, fuzzy
 msgid "Proceed"
-msgstr ""
+msgstr "Başlamaq"
 
 #: db/seeds/schedulers.rb
 msgid "Process automatic ticket unassignments."
@@ -11346,115 +11380,131 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Process ticket escalations."
-msgstr ""
+msgstr "Biletlərin artırılması prosesi."
 
 #: db/seeds/settings.rb
 msgid "Product Name"
-msgstr ""
+msgstr "Məhsul adı"
 
 #: app/assets/javascripts/app/controllers/profile.coffee
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: app/assets/javascripts/app/views/report/sidebar.jst.eco
 msgid "Profiles"
-msgstr ""
+msgstr "Profillər"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid "Protocol"
-msgstr ""
+msgstr "Protokol"
 
 #: app/controllers/knowledge_base/categories_controller.rb
 #: lib/knowledge_base/menu_item_update_action.rb
 msgid "Provide position of all items in scope"
-msgstr ""
+msgstr "Əhatə dairəsindəki bütün elementlərin yerini təmin edin"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Provider"
-msgstr ""
+msgstr "Provayder"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Proxy Password"
-msgstr ""
+msgstr "Proxy server şifrəsi"
 
 #: db/seeds/settings.rb
 msgid "Proxy Settings"
-msgstr ""
+msgstr "Proxy Parametrləri"
 
 #: db/seeds/settings.rb
 msgid "Proxy User"
-msgstr ""
+msgstr "Proxy İstifadəçi"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Proxy address"
-msgstr ""
+msgstr "Proxy ünvanı"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#, fuzzy
 msgid "Public"
-msgstr ""
+msgstr "İctimai"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco
+#, fuzzy
 msgid "Public & Private Keys"
-msgstr ""
+msgstr "İctimai & Şəxsi Açarlar"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee
+#, fuzzy
 msgid "Public Link"
-msgstr ""
+msgstr "İctimai Link"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee
 #: db/seeds/permissions.rb
 msgid "Public Links"
-msgstr ""
+msgstr "İctimai Link"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
+#, fuzzy
 msgid "Public Menu"
-msgstr ""
+msgstr "İctimai Menyu"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
+#, fuzzy
 msgid "Publish"
-msgstr ""
+msgstr "Dərc et"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
+#, fuzzy
 msgid "Publish Article"
-msgstr ""
+msgstr "Məqalə dərc et"
 
 #: app/views/knowledge_base/public/answers/show.html.erb
+#, fuzzy
 msgid "Published %s"
-msgstr ""
+msgstr "Nəşr olunan %s"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
+#, fuzzy
 msgid "Published at"
-msgstr ""
+msgstr "Nəşr olundu"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Purple"
-msgstr ""
+msgstr "Bənövşəyi"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco db/seeds/settings.rb
 msgid ""
 "Put a message on the login page. To change it, click on the text area below "
 "and change it in-line."
 msgstr ""
+"Giriş səhifəsinə mesaj göndərin. Dəyişdirmək üçün aşağıdakı mətn sahəsinə "
+"klikləyin və onu sətirdə dəyişdirin."
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Puts Zammad into import mode (disables some triggers)."
-msgstr ""
+msgstr "Zammad import rejiminə keçirilir (bəzi tətikləyiciləri deaktiv edir)."
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Queue"
-msgstr ""
+msgstr "Növbə"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
+#, fuzzy
 msgid "Queue already exists!"
-msgstr ""
+msgstr "Növbə artıq mövcuddur!"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
+#, fuzzy
 msgid ""
 "REST API access using the username/email address and password is currently "
 "disabled. Please contact your administrator."
 msgstr ""
+"İstifadəçi adı/e-poçt ünvanı və şifrə istifadə edilərək REST API-yə giriş "
+"hazırda deaktiv edilmişdir. Zəhmət olmasa administratorunuzla əlaqə saxlayın."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -11464,27 +11514,28 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 msgid "Read"
-msgstr ""
+msgstr "Oxu"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Real-time"
-msgstr ""
+msgstr "Real vaxt rejimi"
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Reauthenticate"
-msgstr ""
+msgstr "Yenidən identifikasiya"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
+#, fuzzy
 msgid "Received Call"
-msgstr ""
+msgstr "Qəbul edilən zəng"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
 msgid "Recent Customer Tickets"
-msgstr ""
+msgstr "Son Müştəri Biletləri"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 msgid "Recent Logs"
@@ -11493,43 +11544,52 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
 msgid "Recently Viewed Tickets"
-msgstr ""
+msgstr "Son baxılan biletlər"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee
+#, fuzzy
 msgid "Recently viewed"
-msgstr ""
+msgstr "Bu yaxınlarda baxılıb"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
+#, fuzzy
 msgid "Recipient"
-msgstr ""
+msgstr "Alıcı"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
+#, fuzzy
 msgid ""
 "Records that exist in the import data (but not in Zammad) will always be "
 "created."
 msgstr ""
+"İmport olunan məlumatlarda mövcud olan qeydlər (lakin Zammad-da deyil) "
+"həmişə yaradılacaqdır."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/recovery_codes.coffee
 #: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue
 #: app/frontend/shared/composables/authentication/useLoginTwoFactor.ts
+#, fuzzy
 msgid "Recovery Code"
-msgstr ""
+msgstr "Bərpa kodu"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee
 msgid "Recovery Codes"
-msgstr ""
+msgstr "Bərpa kodu"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#, fuzzy
 msgid ""
 "Recovery codes can be used to access your account in the event you lose "
 "access to other two-factor authentication methods."
 msgstr ""
+"Bərpa kodları, digər iki faktorlu identifikasiya metodlarına girişi "
+"itirdiyiniz təqdirdə hesabınıza daxil olmaq üçün istifadə edilə bilər."
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
-msgstr ""
+msgstr "Rekursiv tətbiq tətikləyiciləri"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -11543,20 +11603,21 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 msgid "Register"
-msgstr ""
+msgstr "Qeydiyyat"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Register as a new customer"
-msgstr ""
+msgstr "Yeni müştəri kimi qeydiyyatdan keçin"
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
 msgid "Registration successful!"
-msgstr ""
+msgstr "Qeydiyyat uğurla başa çatdı!"
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco
+#, fuzzy
 msgid "Related Answers"
-msgstr ""
+msgstr "Oxşar cavablar"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue
 msgid "Relax, your system is being set up…"
@@ -11564,19 +11625,20 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Reload application"
-msgstr ""
+msgstr "Tətbiqi yenidən başladın"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
+#, fuzzy
 msgid "Remember me"
-msgstr ""
+msgstr "Məni xatırla"
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
 msgid "Remote"
-msgstr ""
+msgstr "Uzaqdan"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
@@ -11603,55 +11665,57 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
-msgstr ""
+msgstr "Sil"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Remove %s"
-msgstr ""
+msgstr "Sil %s"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Remove a configured two-factor authentication method"
-msgstr ""
+msgstr "Konfiqurasiya edilmiş iki faktorlu identifikasiya metodunu sil"
 
 #: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
 msgid "Remove all"
-msgstr ""
+msgstr "Hamısını sil"
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 msgid "Remove all methods"
-msgstr ""
+msgstr "Bütün metodları sil"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all values"
-msgstr ""
+msgstr "Bütün dəyərləri sil"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
-msgstr ""
+msgstr "Formatlaşdırmanı sil"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "Remove image"
-msgstr ""
+msgstr "Şəkli sil"
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 msgid "Remove method"
-msgstr ""
+msgstr "Metodu sil"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
-msgstr ""
+msgstr "Seçilmiş dəyərləri sil"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Remove two-factor authentication"
-msgstr ""
+msgstr "İki faktorlu autentifikasiyanı sil"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
-msgstr ""
+msgstr "İstənilən hiperlinkləri sil"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
 msgid "Removes the formatting"
-msgstr ""
+msgstr "Formatlaşdırmanı aradan qaldır"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Removes the shadows for a flat look."
@@ -11659,15 +11723,17 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 msgid "Renew Access Token"
-msgstr ""
+msgstr "Giriş Tokenini yeniləyin"
 
 #: app/models/report.rb
+#, fuzzy
 msgid "Reopened"
-msgstr ""
+msgstr "Yenidən açıldı"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
+#, fuzzy
 msgid "Reopening rate"
-msgstr ""
+msgstr "Yenidən açma tezliyi"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -11675,8 +11741,9 @@ msgid "Reopening time in days"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
+#, fuzzy
 msgid "Replacement"
-msgstr ""
+msgstr "Yerdəyişmə"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
@@ -11685,11 +11752,12 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 msgid "Reply"
-msgstr ""
+msgstr "Cavab ver"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
+#, fuzzy
 msgid "Reply All"
-msgstr ""
+msgstr "Bütününə cavab ver"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Reply allowed only for open tickets"
@@ -11697,44 +11765,48 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
-msgstr ""
+msgstr "Son məqaləyə cavab ver"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Reply-To"
-msgstr ""
+msgstr "Cavab ver"
 
 #: db/seeds/permissions.rb
 msgid "Report Interface"
-msgstr ""
+msgstr "Hesabat interfeysi"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
+#, fuzzy
 msgid "Report Profile"
-msgstr ""
+msgstr "Hesabat profilı"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 #: db/seeds/permissions.rb
+#, fuzzy
 msgid "Report Profiles"
-msgstr ""
+msgstr "Hesabat profilləri"
 
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/views/report/main.jst.eco
 msgid "Reporting"
-msgstr ""
+msgstr "Hesabat"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Request"
-msgstr ""
+msgstr "Sorğu"
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
 msgid "Request Admin Consent"
-msgstr ""
+msgstr "Administrator icazəsi üçün sorğu"
 
 #: db/seeds/object_manager_attributes.rb
+#, fuzzy
 msgid "Request for Change"
-msgstr ""
+msgstr "Dəyişiklik üçün sorğu"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -11744,8 +11816,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue
+#, fuzzy
 msgid "Request the password login here."
-msgstr ""
+msgstr "Daxil olmaq üçün şifrə tələb olunur."
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Requesting the Grant"
@@ -11753,21 +11826,24 @@ msgstr ""
 
 #: app/controllers/reports_controller.rb
 msgid "Required parameter 'downloadBackendSelected' is missing."
-msgstr ""
+msgstr "Tələb olunan 'downloadBackendSelected' parametri yoxdur."
 
 #: app/controllers/reports_controller.rb
 msgid "Required parameter 'profile' is missing."
-msgstr ""
+msgstr "Tələb olunan 'profil' parametri yoxdur."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Requirements"
-msgstr ""
+msgstr "Tələblər"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
+"Müəyyən istifadəçi rolları üçün iki faktorlu autentifikasiyanın qurulmasını "
+"tələb edir."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -11783,12 +11859,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 msgid "Reset"
-msgstr ""
+msgstr "Sıfırla"
 
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password"
-msgstr ""
+msgstr "Şifrənin sıfırlanması"
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password failed!"
