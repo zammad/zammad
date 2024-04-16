@@ -22,7 +22,7 @@
       <td class="js-groupListItemAction settings-list-middle">
         <a class="btn btn--text btn--primary js-remove">
           <%- @Icon('trash') %>
-          <%= @T('Remove') %>
+          <%- @T('Remove') %>
         </a>
     </tr>
   <% end %>
@@ -39,7 +39,7 @@
     <td class="js-groupListItemAction settings-list-middle">
       <a class="btn btn--text btn--primary js-remove">
         <%- @Icon('trash') %>
-        <%= @T('Remove') %>
+        <%- @T('Remove') %>
       </a>
   </tr>
   <tr class="js-groupListNewItemRow">
@@ -55,7 +55,7 @@
     <td class="js-groupListItemAction settings-list-middle">
       <a class="btn btn--text btn--create js-add">
         <%- @Icon('plus-small') %>
-        <%= @T('Add') %>
+        <%- @T('Add') %>
       </a>
   </tr>
 </table>

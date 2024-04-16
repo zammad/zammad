@@ -1,3 +1,3 @@
-<p><%= @T('Security keys are hardware or software credentials that can be used as your two-factor authentication method.') %></p>
+<p><%- @T('Security keys are hardware or software credentials that can be used as your two-factor authentication method.') %></p>
 <div class="js-table"></div>
-<p><%= @T('To register a new security key with your account, press the button below.') %></p>
+<p><%- @T('To register a new security key with your account, press the button below.') %></p>

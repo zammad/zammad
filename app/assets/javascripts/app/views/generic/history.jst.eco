@@ -10,7 +10,7 @@
       <% for source_user in source.users: %>
         <span<% if !source.sourceable_name && source_user.id != 1: %> class="user-popover" data-id="<%= source_user.id %>"<% end %>>
         <% if source.sourceable_name: %>
-          <%= @T(source.sourceable_type) %>: <%= @T(source.sourceable_name) %>
+          <%- @T(source.sourceable_type) %>: <%- @T(source.sourceable_name) %>
         <% else if source_user.id == 1: %>
           <%- @T('System') %>
         <% else: %>

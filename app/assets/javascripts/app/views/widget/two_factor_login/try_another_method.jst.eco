@@ -1,5 +1,5 @@
 <h3 class="text-center">
-  <%= @T('Try Another Method') %>
+  <%- @T('Try Another Method') %>
 </h3>
 <div class="two-factor-auth">
   <div class="two-factor-auth-method-buttons">
@@ -9,7 +9,7 @@
         <%- @Icon(method.icon) %>
         <%- @T(method.label) %>
       </button>
-      <p class="help-block"><%= @T(method.description) %></p>
+      <p class="help-block"><%- @T(method.description) %></p>
     </div>
   <% end %>
   </div>

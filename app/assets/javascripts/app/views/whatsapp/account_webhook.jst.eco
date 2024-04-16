@@ -11,7 +11,7 @@
     </div>
     <div class="controls controls--button ignore-readonly">
       <input readonly id="callback_url" name="callback_url" name="callback_url" type="text" value="<%= @callback_url %>" class="form-control">
-      <div class="controls-button u-clickable js-copy" role="button" data-target-field="callback_url" aria-label="<%= @T('Copy to clipboard') %>">
+      <div class="controls-button u-clickable js-copy" role="button" data-target-field="callback_url" aria-label="<%- @T('Copy to clipboard') %>">
         <span class="controls-button-inner">
           <%- @Icon('clipboard') %>
         </span>
@@ -25,7 +25,7 @@
     </div>
     <div class="controls controls--button ignore-readonly">
       <input readonly id="verify_token" type="text" name="verify_token" value="<%= @channel?.options?.verify_token %>" class="form-control">
-      <div class="controls-button u-clickable js-copy" role="button" data-target-field="verify_token" aria-label="<%= @T('Copy to clipboard') %>">
+      <div class="controls-button u-clickable js-copy" role="button" data-target-field="verify_token" aria-label="<%- @T('Copy to clipboard') %>">
         <span class="controls-button-inner">
           <%- @Icon('clipboard') %>
         </span>

@@ -52,7 +52,7 @@
     <span class="searchableSelect-autocomplete-visible js-autocomplete-visible"></span>
   </div>
   <% if @attribute.ajax and not @attribute.multiple and not @attribute.disabled: %>
-    <div role="button" title="<%= @T('Clear Selection') %>" tabindex="0" class="dropdown-clear <% if @attribute.showArrowIcon: %>dropdown-clear--with-arrow-icon<% end %> js-clear <% if not @attribute.value or _.isEmpty(@attribute.value): %>hide<% end %>">
+    <div role="button" title="<%- @T('Clear Selection') %>" tabindex="0" class="dropdown-clear <% if @attribute.showArrowIcon: %>dropdown-clear--with-arrow-icon<% end %> js-clear <% if not @attribute.value or _.isEmpty(@attribute.value): %>hide<% end %>">
       <%- @Icon('diagonal-cross') %>
     </div>
   <% end %>
