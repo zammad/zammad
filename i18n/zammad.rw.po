@@ -243,6 +243,7 @@ msgid "%s (option)"
 msgstr "kwemeza"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
@@ -1787,6 +1788,12 @@ msgstr "wizeye ko ushaka gusiba ibi bintu"
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "wizeye ko ushaka gusiba ibi bintu"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Are you sure you want to delete this object?"
+msgstr "wizeye ko ushaka gusiba ibi bintu"
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
 msgstr ""
@@ -1856,6 +1863,7 @@ msgstr ""
 msgid "Are you sure? You have changes that will get lost."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -1866,6 +1874,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Are you sure? Your notifications settings will be reset to default."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar days display"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar month display"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -2590,18 +2606,6 @@ msgstr "ibihujwe n'ibindi"
 msgid "Calendar"
 msgstr "ingengabihe"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendars"
-msgid "Calendar days"
-msgstr "ingengabihe"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendar"
-msgid "Calendar wrapper"
-msgstr "ingengabihe"
-
 #: app/assets/javascripts/app/controllers/calendar.coffee
 #: db/seeds/permissions.rb
 msgid "Calendars"
@@ -3149,6 +3153,7 @@ msgid "Clear Search"
 msgstr "shakisha"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3257,7 +3262,7 @@ msgstr "kwemeza/kohereza ikiganiro"
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 #, fuzzy
 #| msgid "Close tab"
-msgid "Close panel"
+msgid "Close side panel"
 msgstr "funga ibyo ubona"
 
 #: app/assets/javascripts/app/models/macro.coffee
@@ -3275,7 +3280,7 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Closed Tickets"
-msgid "Close time picker"
+msgid "Close the time picker"
 msgstr "amatike afunze"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
@@ -4168,8 +4173,10 @@ msgid "Date field"
 msgstr "itariki & igihe"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Datepicker input"
-msgstr ""
+#, fuzzy
+#| msgid "Date & Time"
+msgid "Datepicker input field"
+msgstr "itariki & igihe"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Datepicker menu"
@@ -4201,18 +4208,20 @@ msgstr "ukuboza"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Recent logs"
-msgid "Decrement hours"
+msgid "Decrement hours value"
 msgstr "ibyakozwe bya vuba"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Average: %s minutes"
-msgid "Decrement minutes"
+msgid "Decrement minutes value"
 msgstr "impuzandengo muminota %s"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Decrement seconds"
-msgstr ""
+#, fuzzy
+#| msgid "Average: %s minutes"
+msgid "Decrement seconds value"
+msgstr "impuzandengo muminota %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -5245,6 +5254,12 @@ msgstr "gusiba dosiye"
 msgid "Delete Knowledge Base"
 msgstr "Siba ububiko bw ibanze"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Delete Object"
+msgstr "guhimba itike y'igeragezwa"
+
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #, fuzzy
 #| msgid "Create a Test Ticket"
@@ -5498,6 +5513,7 @@ msgstr "guta"
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Discard Changes"
 msgstr "anga impinduka"
 
@@ -5592,6 +5608,12 @@ msgstr "wizeye ko ushaka gusiba ibi bintu"
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
+msgstr "wizeye ko ushaka gusiba ibi bintu"
+
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Do you want to continue?"
 msgstr "wizeye ko ushaka gusiba ibi bintu"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
@@ -8335,18 +8357,20 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "in hours"
-msgid "Increment hours"
+msgid "Increment hours value"
 msgstr "mu masaha"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "minutes"
-msgid "Increment minutes"
+msgid "Increment minutes value"
 msgstr "iminota"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Increment seconds"
-msgstr ""
+#, fuzzy
+#| msgid "minutes"
+msgid "Increment seconds value"
+msgstr "iminota"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -10635,7 +10659,6 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "OK"
@@ -10847,10 +10870,6 @@ msgstr "Fungura tike # %s "
 msgid "Open Tickets"
 msgstr "fungura/amatike afunguye"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open hours overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
 #| msgid "Next in tab"
@@ -10861,23 +10880,45 @@ msgstr "ibikurikira ahagaragara"
 msgid "Open macro selection"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open note box"
-msgid "Open minutes overlay"
-msgstr "fungura agasanduku k inyandiko"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open months overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open note box"
 msgstr "fungura agasanduku k inyandiko"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open seconds overlay"
-msgstr ""
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the hours overlay"
+msgstr "fungura agasanduku k inyandiko"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the minutes overlay"
+msgstr "fungura agasanduku k inyandiko"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the months overlay"
+msgstr "fungura agasanduku k inyandiko"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the seconds overlay"
+msgstr "fungura agasanduku k inyandiko"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open the time picker"
+msgstr "fungura/amatike afunguye"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the years overlay"
+msgstr "fungura agasanduku k inyandiko"
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
@@ -10888,16 +10929,6 @@ msgstr ""
 #| msgid "Open Tickets"
 msgid "Open tickets"
 msgstr "fungura/amatike afunguye"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open Tickets"
-msgid "Open time picker"
-msgstr "fungura/amatike afunguye"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open years overlay"
-msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
@@ -11202,14 +11233,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel footer"
 msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
@@ -12386,7 +12409,7 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Resize panel"
+msgid "Resize side panel"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -13557,6 +13580,16 @@ msgstr ""
 msgid "Shown when the chat is closed."
 msgstr "Yerekanwa igihe ikiganiro gifunzwe"
 
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+#, fuzzy
+#| msgid "Close tab"
+msgid "Side panel"
+msgstr "funga ibyo ubona"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Side panel footer"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr ""
@@ -13911,6 +13944,7 @@ msgstr "shaka abakoresha ikintu"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "shaka abakoresha ikintu"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #, fuzzy
 #| msgid "Search for users"
@@ -14136,10 +14170,6 @@ msgstr "ku cyumweru"
 
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Switch AM/PM mode"
 msgstr ""
 
 #: db/seeds/schedulers.rb
@@ -16923,13 +16953,19 @@ msgstr "gukora ku matike"
 msgid "Today"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Toggle AM/PM mode"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Toggle overlay"
-msgstr ""
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle the overlay"
+msgstr "fungura agasanduku k inyandiko"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -17327,6 +17363,13 @@ msgstr "Kumenyesha"
 msgid "Unread notifications"
 msgstr "Kumenyesha"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Unsaved Changes"
+msgstr "anga impinduka"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Unselect Option"
@@ -18354,6 +18397,7 @@ msgstr "umuhondo"
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Yes"
 msgstr ""
 
@@ -20411,6 +20455,16 @@ msgstr "umwandiko wose"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "igihe cyo gutegereza uyu munsi"
+
+#, fuzzy
+#~| msgid "Calendars"
+#~ msgid "Calendar days"
+#~ msgstr "ingengabihe"
+
+#, fuzzy
+#~| msgid "Calendar"
+#~ msgid "Calendar wrapper"
+#~ msgstr "ingengabihe"
 
 #, fuzzy
 #~| msgid "clear"

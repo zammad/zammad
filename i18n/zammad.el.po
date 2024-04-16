@@ -377,6 +377,7 @@ msgid "%s (option)"
 msgstr "%s (επιλογή)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
@@ -1894,6 +1895,12 @@ msgstr "Ειστε σιγουρος για την διαγραφη του αντ
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Ειστε σιγουρος για την διαγραφη του αντικειμένου;"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Are you sure you want to delete this object?"
+msgstr "Ειστε σιγουρος για την διαγραφη του αντικειμένου;"
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
 msgstr ""
@@ -1963,6 +1970,7 @@ msgstr ""
 msgid "Are you sure? You have changes that will get lost."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -1973,6 +1981,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Are you sure? Your notifications settings will be reset to default."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar days display"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar month display"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -2704,18 +2720,6 @@ msgstr "Ενσωματώσεις"
 msgid "Calendar"
 msgstr "Ημερολόγιο"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendars"
-msgid "Calendar days"
-msgstr "Ημερολόγια"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendar"
-msgid "Calendar wrapper"
-msgstr "Ημερολόγιο"
-
 #: app/assets/javascripts/app/controllers/calendar.coffee
 #: db/seeds/permissions.rb
 msgid "Calendars"
@@ -3264,6 +3268,7 @@ msgid "Clear Search"
 msgstr "Αναζήτηση"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3372,7 +3377,7 @@ msgstr "Επιβεβαίωση / υποβολή διαλόγου"
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 #, fuzzy
 #| msgid "Close tab"
-msgid "Close panel"
+msgid "Close side panel"
 msgstr "Κλεισιμο Καρτελας"
 
 #: app/assets/javascripts/app/models/macro.coffee
@@ -3390,7 +3395,7 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Closed Tickets"
-msgid "Close time picker"
+msgid "Close the time picker"
 msgstr "Κλειστά δελτία"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
@@ -4302,8 +4307,10 @@ msgid "Date field"
 msgstr "Ημερομηνία και ώρα"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Datepicker input"
-msgstr ""
+#, fuzzy
+#| msgid "Date & Time"
+msgid "Datepicker input field"
+msgstr "Ημερομηνία και ώρα"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Datepicker menu"
@@ -4335,18 +4342,20 @@ msgstr "Δεκέμβριος"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Recent logs"
-msgid "Decrement hours"
+msgid "Decrement hours value"
 msgstr "Πρόσφατα αρχεία καταγραφής"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Average: %s minutes"
-msgid "Decrement minutes"
+msgid "Decrement minutes value"
 msgstr " Μέση τιμή: %s λεπτά"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Decrement seconds"
-msgstr ""
+#, fuzzy
+#| msgid "Average: %s minutes"
+msgid "Decrement seconds value"
+msgstr " Μέση τιμή: %s λεπτά"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -5386,6 +5395,12 @@ msgstr "Διαγραφή Αρχείου"
 msgid "Delete Knowledge Base"
 msgstr "Διαγραφή βάσης γνώσεων"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Delete Object"
+msgstr "Δημιουργία Δοκιμαστικού Δελτίου"
+
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #, fuzzy
 #| msgid "Create a Test Ticket"
@@ -5641,6 +5656,7 @@ msgstr "Απόρριψη"
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Discard Changes"
 msgstr "Απόρριψη Αλλαγών"
 
@@ -5736,6 +5752,12 @@ msgstr "Ειστε σιγουρος για την διαγραφη του αντ
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
+msgstr "Ειστε σιγουρος για την διαγραφη του αντικειμένου;"
+
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Do you want to continue?"
 msgstr "Ειστε σιγουρος για την διαγραφη του αντικειμένου;"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
@@ -8501,18 +8523,20 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "in hours"
-msgid "Increment hours"
+msgid "Increment hours value"
 msgstr "σε ώρες"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "minutes"
-msgid "Increment minutes"
+msgid "Increment minutes value"
 msgstr "λεπτά"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Increment seconds"
-msgstr ""
+#, fuzzy
+#| msgid "minutes"
+msgid "Increment seconds value"
+msgstr "λεπτά"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -10805,7 +10829,6 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "OK"
@@ -11003,10 +11026,6 @@ msgstr "Ανοιχτό αίτημα #%s"
 msgid "Open Tickets"
 msgstr "Ανοικτά Αιτήματα"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open hours overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
 #| msgid "Next in tab"
@@ -11017,23 +11036,45 @@ msgstr "Επόμενο στην καρτέλα"
 msgid "Open macro selection"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open note box"
-msgid "Open minutes overlay"
-msgstr "Ανοίξτε το κουτί σημειώσεων"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open months overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open note box"
 msgstr "Ανοίξτε το κουτί σημειώσεων"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open seconds overlay"
-msgstr ""
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the hours overlay"
+msgstr "Ανοίξτε το κουτί σημειώσεων"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the minutes overlay"
+msgstr "Ανοίξτε το κουτί σημειώσεων"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the months overlay"
+msgstr "Ανοίξτε το κουτί σημειώσεων"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the seconds overlay"
+msgstr "Ανοίξτε το κουτί σημειώσεων"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open the time picker"
+msgstr "Ανοικτά Αιτήματα"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the years overlay"
+msgstr "Ανοίξτε το κουτί σημειώσεων"
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
@@ -11044,16 +11085,6 @@ msgstr ""
 #| msgid "Open Tickets"
 msgid "Open tickets"
 msgstr "Ανοικτά Αιτήματα"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open Tickets"
-msgid "Open time picker"
-msgstr "Ανοικτά Αιτήματα"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open years overlay"
-msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
@@ -11358,14 +11389,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel footer"
 msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
@@ -12547,7 +12570,7 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Resize panel"
+msgid "Resize side panel"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -13705,6 +13728,16 @@ msgstr ""
 msgid "Shown when the chat is closed."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+#, fuzzy
+#| msgid "Close tab"
+msgid "Side panel"
+msgstr "Κλεισιμο Καρτελας"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Side panel footer"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr ""
@@ -14063,6 +14096,7 @@ msgstr ""
 msgid "Start typing to search in Knowledge Base…"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Start typing to search…"
 msgstr ""
@@ -14286,10 +14320,6 @@ msgstr "Κυριακή"
 
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Switch AM/PM mode"
 msgstr ""
 
 #: db/seeds/schedulers.rb
@@ -17015,13 +17045,19 @@ msgstr ""
 msgid "Today"
 msgstr "Σήμερα"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Toggle AM/PM mode"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Toggle overlay"
-msgstr ""
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle the overlay"
+msgstr "Ανοίξτε το κουτί σημειώσεων"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -17416,6 +17452,13 @@ msgstr "Ειδοποίηση"
 msgid "Unread notifications"
 msgstr "Ειδοποίηση"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Unsaved Changes"
+msgstr "Απόρριψη Αλλαγών"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Unselect Option"
@@ -18416,6 +18459,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Yes"
 msgstr ""
 
@@ -20374,6 +20418,16 @@ msgstr "... ολόκληρης της περιοχής κειμένου"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
+
+#, fuzzy
+#~| msgid "Calendars"
+#~ msgid "Calendar days"
+#~ msgstr "Ημερολόγια"
+
+#, fuzzy
+#~| msgid "Calendar"
+#~ msgid "Calendar wrapper"
+#~ msgstr "Ημερολόγιο"
 
 #, fuzzy
 #~| msgid "clear"

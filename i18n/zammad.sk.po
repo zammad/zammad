@@ -369,6 +369,7 @@ msgid "%s (option)"
 msgstr "%s (možnosť)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
@@ -1788,6 +1789,10 @@ msgstr ""
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+msgid "Are you sure you want to delete this object?"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
 msgstr ""
@@ -1853,6 +1858,7 @@ msgstr ""
 msgid "Are you sure? You have changes that will get lost."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -1863,6 +1869,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Are you sure? Your notifications settings will be reset to default."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar days display"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar month display"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -2573,18 +2587,6 @@ msgstr "Integrácie"
 msgid "Calendar"
 msgstr "Kalendár"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendars"
-msgid "Calendar days"
-msgstr "Kalendáre"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendar"
-msgid "Calendar wrapper"
-msgstr "Kalendár"
-
 #: app/assets/javascripts/app/controllers/calendar.coffee
 #: db/seeds/permissions.rb
 msgid "Calendars"
@@ -3102,6 +3104,7 @@ msgid "Clear Search"
 msgstr "Hľadať"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3210,7 +3213,7 @@ msgstr "Potvrdiť/povoliť dialog"
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 #, fuzzy
 #| msgid "Close tab"
-msgid "Close panel"
+msgid "Close side panel"
 msgstr "Zavrieť záložku"
 
 #: app/assets/javascripts/app/models/macro.coffee
@@ -3228,7 +3231,7 @@ msgstr "Zatvoriť záložku po zatvorení tiketu"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Closed Tickets"
-msgid "Close time picker"
+msgid "Close the time picker"
 msgstr "Zatvorené Tikety"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
@@ -4093,8 +4096,10 @@ msgid "Date field"
 msgstr "Dátum a čas"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Datepicker input"
-msgstr ""
+#, fuzzy
+#| msgid "Date & Time"
+msgid "Datepicker input field"
+msgstr "Dátum a čas"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Datepicker menu"
@@ -4124,18 +4129,22 @@ msgid "December"
 msgstr "December"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Decrement hours"
-msgstr ""
+#, fuzzy
+#| msgid "Average: %s minutes"
+msgid "Decrement hours value"
+msgstr "Priemer: %s minút"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Average: %s minutes"
-msgid "Decrement minutes"
+msgid "Decrement minutes value"
 msgstr "Priemer: %s minút"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Decrement seconds"
-msgstr ""
+#, fuzzy
+#| msgid "Average: %s minutes"
+msgid "Decrement seconds value"
+msgstr "Priemer: %s minút"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -5105,6 +5114,12 @@ msgstr ""
 msgid "Delete Knowledge Base"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Delete Object"
+msgstr "Vytvoriť testovací tiket"
+
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #, fuzzy
 #| msgid "Create a Test Ticket"
@@ -5348,6 +5363,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Discard Changes"
 msgstr ""
 
@@ -5426,6 +5442,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
 msgid "Do you really want to set the visibility of this article to \"public\"?"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+msgid "Do you want to continue?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
@@ -7963,18 +7983,22 @@ msgid "Increment (SystemID.Counter)"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Increment hours"
-msgstr ""
+#, fuzzy
+#| msgid "minutes"
+msgid "Increment hours value"
+msgstr "minuty"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "minutes"
-msgid "Increment minutes"
+msgid "Increment minutes value"
 msgstr "minuty"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Increment seconds"
-msgstr ""
+#, fuzzy
+#| msgid "minutes"
+msgid "Increment seconds value"
+msgstr "minuty"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -10182,7 +10206,6 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "OK"
@@ -10370,10 +10393,6 @@ msgstr ""
 msgid "Open Tickets"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open hours overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
 #| msgid "Next in tab"
@@ -10384,23 +10403,45 @@ msgstr "Ďalej v kartách"
 msgid "Open macro selection"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open note box"
-msgid "Open minutes overlay"
-msgstr "Otvoriť poznámkový box"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open months overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open note box"
 msgstr "Otvoriť poznámkový box"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open seconds overlay"
-msgstr ""
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the hours overlay"
+msgstr "Otvoriť poznámkový box"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the minutes overlay"
+msgstr "Otvoriť poznámkový box"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the months overlay"
+msgstr "Otvoriť poznámkový box"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the seconds overlay"
+msgstr "Otvoriť poznámkový box"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "assign tickets"
+msgid "Open the time picker"
+msgstr "priradiť požiadavky"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the years overlay"
+msgstr "Otvoriť poznámkový box"
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
@@ -10411,16 +10452,6 @@ msgstr ""
 #| msgid "assign tickets"
 msgid "Open tickets"
 msgstr "priradiť požiadavky"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "assign tickets"
-msgid "Open time picker"
-msgstr "priradiť požiadavky"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open years overlay"
-msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
@@ -10715,14 +10746,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel footer"
 msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
@@ -11846,7 +11869,7 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Resize panel"
+msgid "Resize side panel"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -12952,6 +12975,16 @@ msgstr ""
 msgid "Shown when the chat is closed."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+#, fuzzy
+#| msgid "Close tab"
+msgid "Side panel"
+msgstr "Zavrieť záložku"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Side panel footer"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr ""
@@ -13280,6 +13313,7 @@ msgstr "Začnite písať pre hľadanie používateľov…"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Začnite písať pre hľadanie v báze znalostí…"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Start typing to search…"
 msgstr "Začnite písať pre hľadanie…"
@@ -13497,10 +13531,6 @@ msgstr "Nedeľa"
 
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Switch AM/PM mode"
 msgstr ""
 
 #: db/seeds/schedulers.rb
@@ -16100,13 +16130,19 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Toggle AM/PM mode"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Toggle overlay"
-msgstr ""
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle the overlay"
+msgstr "Otvoriť poznámkový box"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -16491,6 +16527,13 @@ msgstr "Emailová notifikácia"
 msgid "Unread notifications"
 msgstr "Emailová notifikácia"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Unable to save changes."
+msgid "Unsaved Changes"
+msgstr "Nieje možné uložiť zmeny"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Unselect Option"
@@ -17462,6 +17505,7 @@ msgstr "Žltá"
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Yes"
 msgstr ""
 
@@ -19400,6 +19444,16 @@ msgstr "...celej textovej plochy"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ čakacia doba dnes"
+
+#, fuzzy
+#~| msgid "Calendars"
+#~ msgid "Calendar days"
+#~ msgstr "Kalendáre"
+
+#, fuzzy
+#~| msgid "Calendar"
+#~ msgid "Calendar wrapper"
+#~ msgstr "Kalendár"
 
 #, fuzzy
 #~| msgid "clear"

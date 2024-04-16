@@ -379,6 +379,7 @@ msgid "%s (option)"
 msgstr "beállítás választhatónak"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
@@ -1911,6 +1912,12 @@ msgstr "Biztos, hogy el szeretné távolítani ezt a cikket?"
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Biztos, hogy törölni szeretné a következőt: \"%s\"?"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Do you really want to delete this object?"
+msgid "Are you sure you want to delete this object?"
+msgstr "Tényleg törölni szeretné ezt az objektumot?"
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
 msgstr ""
@@ -1987,6 +1994,7 @@ msgstr ""
 msgid "Are you sure? You have changes that will get lost."
 msgstr "Biztos benne? Vannak olyan változtatásai, amelyek el fognak veszni."
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -2000,6 +2008,14 @@ msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 "Biztos benne? Az értesítések beállításai alapértelmezettre lesznek "
 "visszaállítva."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar days display"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar month display"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -2685,18 +2701,6 @@ msgstr "CTI integráció"
 msgid "Calendar"
 msgstr "Naptár"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendars"
-msgid "Calendar days"
-msgstr "Naptárak"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendar"
-msgid "Calendar wrapper"
-msgstr "Naptár"
-
 #: app/assets/javascripts/app/controllers/calendar.coffee
 #: db/seeds/permissions.rb
 msgid "Calendars"
@@ -3211,6 +3215,7 @@ msgid "Clear Search"
 msgstr "Keresés törlése"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3319,7 +3324,7 @@ msgstr "Megerősítő párbeszédpanel"
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 #, fuzzy
 #| msgid "Close tab"
-msgid "Close panel"
+msgid "Close side panel"
 msgstr "Lap bezárása"
 
 #: app/assets/javascripts/app/models/macro.coffee
@@ -3337,7 +3342,7 @@ msgstr "Lap bezárása a jegy lezárásakor"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Closed Tickets"
-msgid "Close time picker"
+msgid "Close the time picker"
 msgstr "Lezárt jegyek"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
@@ -4233,8 +4238,10 @@ msgid "Date field"
 msgstr "Dátum mező"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Datepicker input"
-msgstr ""
+#, fuzzy
+#| msgid "Date field"
+msgid "Datepicker input field"
+msgstr "Dátum mező"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Datepicker menu"
@@ -4266,18 +4273,20 @@ msgstr "december"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Recent Logs"
-msgid "Decrement hours"
+msgid "Decrement hours value"
 msgstr "Legutóbbi naplók"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Average: %s minutes"
-msgid "Decrement minutes"
+msgid "Decrement minutes value"
 msgstr "Átlagosan: %s perc"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Decrement seconds"
-msgstr ""
+#, fuzzy
+#| msgid "Increment (SystemID.Counter)"
+msgid "Decrement seconds value"
+msgstr "Növekedés (Rendszerazonosító.Számláló)"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -5433,6 +5442,12 @@ msgstr "Fájl törtlése"
 msgid "Delete Knowledge Base"
 msgstr "Tudásbázis törlése"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Create Ticket"
+msgid "Delete Object"
+msgstr "Jegy létrehozása"
+
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #, fuzzy
 #| msgid "Create Ticket"
@@ -5673,6 +5688,7 @@ msgstr "Elvet"
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Discard Changes"
 msgstr "Változások elvetése"
 
@@ -5749,6 +5765,12 @@ msgstr "Tényleg törölni szeretné a jelenlegi avatarját?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr ""
 "Tényleg \"nyilvános\"-ra szeretné állítani ennek a cikknek a láthatóságát?"
+
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Do you really want to delete \"%s\"?"
+msgid "Do you want to continue?"
+msgstr "Valóban törölni szeretné a következőt: \"%s\"?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
@@ -8466,19 +8488,19 @@ msgstr "Növekedés (Rendszerazonosító.Számláló)"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "in hours"
-msgid "Increment hours"
+msgid "Increment hours value"
 msgstr "órákon belül"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Increment (SystemID.Counter)"
-msgid "Increment minutes"
+msgid "Increment minutes value"
 msgstr "Növekedés (Rendszerazonosító.Számláló)"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Increment (SystemID.Counter)"
-msgid "Increment seconds"
+msgid "Increment seconds value"
 msgstr "Növekedés (Rendszerazonosító.Számláló)"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
@@ -10697,7 +10719,6 @@ msgstr "OAuth URL címek:"
 msgid "OAuth2 token is expired!"
 msgstr "Az OAuth2 token lejárt!"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "OK"
@@ -10912,10 +10933,6 @@ msgstr "Jegy# %s megnyitása"
 msgid "Open Tickets"
 msgstr "Nyitott jegyek"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open hours overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Open in new tab"
 msgstr "Megnyitás új lapon"
@@ -10924,23 +10941,45 @@ msgstr "Megnyitás új lapon"
 msgid "Open macro selection"
 msgstr "Makró kiválasztás megnyitása"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open note box"
-msgid "Open minutes overlay"
-msgstr "Megjegyzés mező megnyitása"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open months overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open note box"
 msgstr "Megjegyzés mező megnyitása"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open seconds overlay"
-msgstr ""
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the hours overlay"
+msgstr "Megjegyzés mező megnyitása"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the minutes overlay"
+msgstr "Megjegyzés mező megnyitása"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the months overlay"
+msgstr "Megjegyzés mező megnyitása"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the seconds overlay"
+msgstr "Megjegyzés mező megnyitása"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open tickets"
+msgid "Open the time picker"
+msgstr "Nyitott jegyek"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the years overlay"
+msgstr "Megjegyzés mező megnyitása"
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
@@ -10949,16 +10988,6 @@ msgstr "Nyitott jegy jelző"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 msgid "Open tickets"
 msgstr "Nyitott jegyek"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open tickets"
-msgid "Open time picker"
-msgstr "Nyitott jegyek"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open years overlay"
-msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
@@ -11248,14 +11277,6 @@ msgstr "Az oldal nem található"
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
 msgstr "Oldalak"
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel footer"
-msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
 msgid "Parameter 'data' or 'file' required."
@@ -12472,7 +12493,7 @@ msgstr ""
 "<div>Az Ön #{config.product_name} csapata</div>\n"
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Resize panel"
+msgid "Resize side panel"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -13570,6 +13591,16 @@ msgstr "Megjelenített bejegyzések a hívásnaplóban."
 msgid "Shown when the chat is closed."
 msgstr "Akkor jelenik meg, amikor a csevegés zárva van."
 
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+#, fuzzy
+#| msgid "Close tab"
+msgid "Side panel"
+msgstr "Lap bezárása"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Side panel footer"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr "Oldalsáv csatolmányok"
@@ -13906,6 +13937,7 @@ msgstr "Kezdjen el gépelni a felhasználók kereséséhez…"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Kezdjen el gépelni a Tudásbázisban való kereséshez…"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Start typing to search…"
 msgstr "Kezdjen el gépelni a kereséshez…"
@@ -14124,10 +14156,6 @@ msgstr "vasárnap"
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
 msgstr "Többnyelvű Tudásbázis támogatása."
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Switch AM/PM mode"
-msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Sync calendars with iCal feeds."
@@ -16941,6 +16969,12 @@ msgstr "Jegyekkel való foglalkozáshoz."
 msgid "Today"
 msgstr "Ma"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Toggle dark mode"
+msgid "Toggle AM/PM mode"
+msgstr "Sötét üzemmód bekapcsolása"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
 msgstr "Sötét üzemmód bekapcsolása"
@@ -16948,7 +16982,7 @@ msgstr "Sötét üzemmód bekapcsolása"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Toggle dark mode"
-msgid "Toggle overlay"
+msgid "Toggle the overlay"
 msgstr "Sötét üzemmód bekapcsolása"
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -17326,6 +17360,13 @@ msgstr "Olvasatlan értesítés"
 msgid "Unread notifications"
 msgstr "Olvasatlan értesítések"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Unsaved Changes"
+msgstr "Változások elvetése"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
@@ -18387,6 +18428,7 @@ msgstr "Sárga"
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Yes"
 msgstr "Igen"
 
@@ -20362,6 +20404,16 @@ msgstr "...a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#, fuzzy
+#~| msgid "Calendars"
+#~ msgid "Calendar days"
+#~ msgstr "Naptárak"
+
+#, fuzzy
+#~| msgid "Calendar"
+#~ msgid "Calendar wrapper"
+#~ msgstr "Naptár"
 
 #~ msgid "CW"
 #~ msgstr "NH"

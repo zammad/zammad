@@ -369,6 +369,7 @@ msgid "%s (option)"
 msgstr "%s (opción)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
@@ -1864,6 +1865,12 @@ msgstr "¿Está seguro de que desea eliminar este artículo?"
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "¿Seguro que desea eliminar \"%s\"?"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Do you really want to delete this object?"
+msgid "Are you sure you want to delete this object?"
+msgstr "¿Confirma que desea eliminar este objeto?"
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
 msgstr ""
@@ -1937,6 +1944,7 @@ msgstr ""
 msgid "Are you sure? You have changes that will get lost."
 msgstr "¿Seguro? Tiene cambios que se perderán."
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -1949,6 +1957,14 @@ msgstr "¿Seguro? Tienes cambios sin guardar que se perderán."
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 "¿Seguro? Los ajustes de notificaciones volverán a los valores por defecto."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar days display"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar month display"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -2623,18 +2639,6 @@ msgstr "Integraciones CTI"
 msgid "Calendar"
 msgstr "Calendario"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendars"
-msgid "Calendar days"
-msgstr "Calendarios"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendar"
-msgid "Calendar wrapper"
-msgstr "Calendario"
-
 #: app/assets/javascripts/app/controllers/calendar.coffee
 #: db/seeds/permissions.rb
 msgid "Calendars"
@@ -3140,6 +3144,7 @@ msgid "Clear Search"
 msgstr "Limpiar Búsqueda"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3247,7 +3252,7 @@ msgstr "Diálogo de confirmación"
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 #, fuzzy
 #| msgid "Close tab"
-msgid "Close panel"
+msgid "Close side panel"
 msgstr "Cerrar pestaña"
 
 #: app/assets/javascripts/app/models/macro.coffee
@@ -3265,7 +3270,7 @@ msgstr "Cerrar la pestaña al cerrar el ticket"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Closed Tickets"
-msgid "Close time picker"
+msgid "Close the time picker"
 msgstr "Cerrar Tickets"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
@@ -4127,8 +4132,10 @@ msgid "Date field"
 msgstr "Campo de Fecha"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Datepicker input"
-msgstr ""
+#, fuzzy
+#| msgid "Date field"
+msgid "Datepicker input field"
+msgstr "Campo de Fecha"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Datepicker menu"
@@ -4160,18 +4167,20 @@ msgstr "Diciembre"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Recent Logs"
-msgid "Decrement hours"
+msgid "Decrement hours value"
 msgstr "Logs recientes"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Average: %s minutes"
-msgid "Decrement minutes"
+msgid "Decrement minutes value"
 msgstr "Promedio: %s minutos"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Decrement seconds"
-msgstr ""
+#, fuzzy
+#| msgid "Increment (SystemID.Counter)"
+msgid "Decrement seconds value"
+msgstr "Incremento (SystemID.Counter)"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -5291,6 +5300,12 @@ msgstr "Borrar archivo"
 msgid "Delete Knowledge Base"
 msgstr "Borrar Base de Conocimiento"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Delete Ticket"
+msgid "Delete Object"
+msgstr "Borrar Ticket"
+
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Delete Ticket"
 msgstr "Borrar Ticket"
@@ -5532,6 +5547,7 @@ msgstr "Descartar"
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Discard Changes"
 msgstr "Descartar Cambios"
 
@@ -5609,6 +5625,12 @@ msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr ""
 "¿Confirma que desea establecer la visibilidad de este artículo como "
 "\"público\"?"
+
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Do you really want to delete \"%s\"?"
+msgid "Do you want to continue?"
+msgstr "¿Confirma que desea eliminar el objeto \"%s\"?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
@@ -8229,19 +8251,19 @@ msgstr "Incremento (SystemID.Counter)"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "in hours"
-msgid "Increment hours"
+msgid "Increment hours value"
 msgstr "en horas"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Increment (SystemID.Counter)"
-msgid "Increment minutes"
+msgid "Increment minutes value"
 msgstr "Incremento (SystemID.Counter)"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Increment (SystemID.Counter)"
-msgid "Increment seconds"
+msgid "Increment seconds value"
 msgstr "Incremento (SystemID.Counter)"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
@@ -10421,7 +10443,6 @@ msgstr "Las URL para OAuth son:"
 msgid "OAuth2 token is expired!"
 msgstr "¡Token de OAuth2 caducado!"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "OK"
@@ -10614,10 +10635,6 @@ msgstr "Abrir Ticket# %s"
 msgid "Open Tickets"
 msgstr "Tickets abiertos"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open hours overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Open in new tab"
 msgstr "Abrir en nueva pestaña"
@@ -10626,23 +10643,45 @@ msgstr "Abrir en nueva pestaña"
 msgid "Open macro selection"
 msgstr "Abrir selector de macros"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open note box"
-msgid "Open minutes overlay"
-msgstr "Abrir el cuaderno de notas"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open months overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open note box"
 msgstr "Abrir el cuaderno de notas"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open seconds overlay"
-msgstr ""
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the hours overlay"
+msgstr "Abrir el cuaderno de notas"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the minutes overlay"
+msgstr "Abrir el cuaderno de notas"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the months overlay"
+msgstr "Abrir el cuaderno de notas"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the seconds overlay"
+msgstr "Abrir el cuaderno de notas"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open tickets"
+msgid "Open the time picker"
+msgstr "Casos abiertos"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the years overlay"
+msgstr "Abrir el cuaderno de notas"
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
@@ -10651,16 +10690,6 @@ msgstr "Abrir indicador de tickets"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 msgid "Open tickets"
 msgstr "Casos abiertos"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open tickets"
-msgid "Open time picker"
-msgstr "Casos abiertos"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open years overlay"
-msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
@@ -10941,14 +10970,6 @@ msgstr "Página no encontrada"
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
 msgstr "Páginas"
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel footer"
-msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
 msgid "Parameter 'data' or 'file' required."
@@ -12078,8 +12099,10 @@ msgstr ""
 "<div>Su equipo #{config.product_name}</div>\n"
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Resize panel"
-msgstr ""
+#, fuzzy
+#| msgid "resize sidebar"
+msgid "Resize side panel"
+msgstr "redimensionar la barra lateral"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
@@ -13162,6 +13185,16 @@ msgstr "Registros mostrados en el registro de llamadas."
 msgid "Shown when the chat is closed."
 msgstr "Mostrar cuando el chat está cerrado."
 
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+#, fuzzy
+#| msgid "Close tab"
+msgid "Side panel"
+msgstr "Cerrar pestaña"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Side panel footer"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr "Adjuntos del menú lateral"
@@ -13483,6 +13516,7 @@ msgstr "Comienza a escribir para buscar usuarios…"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Comienza a escribir para buscar en la base de datos de conocimiento…"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Start typing to search…"
 msgstr "Comience a escribir para buscar…"
@@ -13691,10 +13725,6 @@ msgstr "Domingo"
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
 msgstr "Soporte de Base de Conocimientos multilenguaje."
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Switch AM/PM mode"
-msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Sync calendars with iCal feeds."
@@ -16359,6 +16389,12 @@ msgstr "Para trabajar en tickets."
 msgid "Today"
 msgstr "Hoy"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Toggle dark mode"
+msgid "Toggle AM/PM mode"
+msgstr "Activar modo oscuro"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
 msgstr "Activar modo oscuro"
@@ -16366,7 +16402,7 @@ msgstr "Activar modo oscuro"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Toggle dark mode"
-msgid "Toggle overlay"
+msgid "Toggle the overlay"
 msgstr "Activar modo oscuro"
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -16742,6 +16778,13 @@ msgstr "Notificación sin leer"
 msgid "Unread notifications"
 msgstr "Notificaciones sin leer"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Unsaved Changes"
+msgstr "Descartar Cambios"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Unselect Option"
@@ -17778,6 +17821,7 @@ msgstr "Amarillo"
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Yes"
 msgstr "Sí"
 
@@ -19719,6 +19763,16 @@ msgstr "...de toda la zona de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ tiempo de espera de hoy"
+
+#, fuzzy
+#~| msgid "Calendars"
+#~ msgid "Calendar days"
+#~ msgstr "Calendarios"
+
+#, fuzzy
+#~| msgid "Calendar"
+#~ msgid "Calendar wrapper"
+#~ msgstr "Calendario"
 
 #~ msgid "CW"
 #~ msgstr "CW"

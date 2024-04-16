@@ -384,6 +384,7 @@ msgid "%s (option)"
 msgstr "%s ตัวเลือก"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
@@ -1878,6 +1879,12 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "คุณต้องการลบ \"%s\" หรือไม่?"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Do you really want to delete this object?"
+msgid "Are you sure you want to delete this object?"
+msgstr "คุณต้องการลบ object นี้จริงหรือ?"
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการรวมตั๋วนี้ (#%s) เป็น #%s?"
@@ -1951,6 +1958,7 @@ msgstr "คุณแน่ใจหรือไม่? ผู้ใช้จะ�
 msgid "Are you sure? You have changes that will get lost."
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -1970,6 +1978,14 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 #| "lost"
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar days display"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Area for calendar month display"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -2649,18 +2665,6 @@ msgstr "CTI integration"
 msgid "Calendar"
 msgstr "ปฏิทิน"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendars"
-msgid "Calendar days"
-msgstr "ปฏิทิน"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Calendar"
-msgid "Calendar wrapper"
-msgstr "ปฏิทิน"
-
 #: app/assets/javascripts/app/controllers/calendar.coffee
 #: db/seeds/permissions.rb
 msgid "Calendars"
@@ -3172,6 +3176,7 @@ msgid "Clear Search"
 msgstr "ล้างการค้นหา"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -3278,7 +3283,7 @@ msgstr "ยืนยัน/ส่งกล่องโต้ตอบ"
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 #, fuzzy
 #| msgid "Close tab"
-msgid "Close panel"
+msgid "Close side panel"
 msgstr "ปิดแท็บ"
 
 #: app/assets/javascripts/app/models/macro.coffee
@@ -3296,7 +3301,7 @@ msgstr "ปิดแท็บบน ticket ที่ปิดแล้ว"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Closed Tickets"
-msgid "Close time picker"
+msgid "Close the time picker"
 msgstr "Tickets ที่ปิดแล้ว"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
@@ -4181,8 +4186,10 @@ msgid "Date field"
 msgstr "ช่องวัน"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Datepicker input"
-msgstr ""
+#, fuzzy
+#| msgid "Datetime"
+msgid "Datepicker input field"
+msgstr "วันเวลา"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
@@ -4216,18 +4223,20 @@ msgstr "ธันวาคม"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Recent Logs"
-msgid "Decrement hours"
+msgid "Decrement hours value"
 msgstr "บันทึกล่าสุด"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Average: %s minutes"
-msgid "Decrement minutes"
+msgid "Decrement minutes value"
 msgstr "เฉลี่ย: %s นาที"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Decrement seconds"
-msgstr ""
+#, fuzzy
+#| msgid "Increment (SystemID.Counter)"
+msgid "Decrement seconds value"
+msgstr "การเพิ่มขึ้น (SystemID.Counter)"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -5237,6 +5246,12 @@ msgstr "ลบ ไฟล์"
 msgid "Delete Knowledge Base"
 msgstr "ลบ ศูนย์การเรียนรู้"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Delete Object"
+msgstr "ทดสอบสร้าง Ticket"
+
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #, fuzzy
 #| msgid "Create a Test Ticket"
@@ -5476,6 +5491,7 @@ msgstr "ทิ้ง"
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Discard Changes"
 msgstr "ยกเลิกการเปลี่ยนแปลง"
 
@@ -5559,6 +5575,12 @@ msgstr "คุณต้องการลบอวาตาร์ปัจจุ
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "คุณต้องการตั้งค่าการเปิดเผยบทความนี้เป็น \"สาธารณะ\" หรือไม่?"
+
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Do you really want to delete \"%s\"?"
+msgid "Do you want to continue?"
+msgstr "คุณต้องการลบ \"%s\" หรือไม่?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
@@ -8174,19 +8196,19 @@ msgstr "การเพิ่มขึ้น (SystemID.Counter)"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "in hours"
-msgid "Increment hours"
+msgid "Increment hours value"
 msgstr "ในชั่วโมง"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Increment (SystemID.Counter)"
-msgid "Increment minutes"
+msgid "Increment minutes value"
 msgstr "การเพิ่มขึ้น (SystemID.Counter)"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 #, fuzzy
 #| msgid "Increment (SystemID.Counter)"
-msgid "Increment seconds"
+msgid "Increment seconds value"
 msgstr "การเพิ่มขึ้น (SystemID.Counter)"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
@@ -10388,7 +10410,6 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "OK"
@@ -10580,10 +10601,6 @@ msgstr "เปิด Ticket# %s"
 msgid "Open Tickets"
 msgstr "เปิด Ticket"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open hours overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
 #| msgid "Open Tickets"
@@ -10594,23 +10611,45 @@ msgstr "เปิด Ticket"
 msgid "Open macro selection"
 msgstr "เปิดการเลือกมาโคร"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open note box"
-msgid "Open minutes overlay"
-msgstr "เปิดกล่องโน้ต"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open months overlay"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open note box"
 msgstr "เปิดกล่องโน้ต"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open seconds overlay"
-msgstr ""
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the hours overlay"
+msgstr "เปิดกล่องโน้ต"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the minutes overlay"
+msgstr "เปิดกล่องโน้ต"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the months overlay"
+msgstr "เปิดกล่องโน้ต"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the seconds overlay"
+msgstr "เปิดกล่องโน้ต"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open the time picker"
+msgstr "เปิด Ticket"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+#, fuzzy
+#| msgid "Open note box"
+msgid "Open the years overlay"
+msgstr "เปิดกล่องโน้ต"
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
@@ -10621,16 +10660,6 @@ msgstr ""
 #| msgid "Open Tickets"
 msgid "Open tickets"
 msgstr "เปิด Ticket"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open Tickets"
-msgid "Open time picker"
-msgstr "เปิด Ticket"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Open years overlay"
-msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 msgid "Open your authenticator app and scan the QR code below:"
@@ -10920,14 +10949,6 @@ msgstr "ไม่พบหน้า"
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 msgid "Pages"
 msgstr "หน้า"
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Panel footer"
-msgstr ""
 
 #: app/controllers/integration/smime_controller.rb
 msgid "Parameter 'data' or 'file' required."
@@ -12137,7 +12158,7 @@ msgstr ""
 "<div>ทีม #{config.product_name} ของคุณ</div>\n"
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-msgid "Resize panel"
+msgid "Resize side panel"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -13247,6 +13268,16 @@ msgstr "แสดงบันทึก ในบันทึกการโท�
 msgid "Shown when the chat is closed."
 msgstr "แสดงเมื่อแชทถูกปิด"
 
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+#, fuzzy
+#| msgid "Close tab"
+msgid "Side panel"
+msgstr "ปิดแท็บ"
+
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
+msgid "Side panel footer"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
 msgstr "ไฟล์แนบแถบด้านข้าง"
@@ -13585,6 +13616,7 @@ msgstr ""
 msgid "Start typing to search in Knowledge Base…"
 msgstr "พิมพ์ค้นหาใน ศูนย์การเรียนรู้…"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Start typing to search…"
 msgstr "เริ่มพิมพ์เพื่อค้นหา…"
@@ -13805,10 +13837,6 @@ msgstr "วันอาทิตย์"
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
 msgstr "การสนับสนุน ศูนย์การเรียนรู้หลายภาษา"
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Switch AM/PM mode"
-msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Sync calendars with iCal feeds."
@@ -16549,13 +16577,19 @@ msgstr ""
 msgid "Today"
 msgstr "วันนี้"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
+msgid "Toggle AM/PM mode"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-msgid "Toggle overlay"
-msgstr ""
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle the overlay"
+msgstr "เปิดกล่องโน้ต"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -16958,6 +16992,13 @@ msgstr "การแจ้งเตือน"
 msgid "Unread notifications"
 msgstr "การแจ้งเตือน"
 
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Unsaved Changes"
+msgstr "ยกเลิกการเปลี่ยนแปลง"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
@@ -17971,6 +18012,7 @@ msgstr "เหลือง"
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Yes"
 msgstr "ใช่"
 
@@ -19958,6 +20000,16 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#, fuzzy
+#~| msgid "Calendars"
+#~ msgid "Calendar days"
+#~ msgstr "ปฏิทิน"
+
+#, fuzzy
+#~| msgid "Calendar"
+#~ msgid "Calendar wrapper"
+#~ msgstr "ปฏิทิน"
 
 #~ msgid "CW"
 #~ msgstr "ย่อมาจาก \"สัปดาห์ปฏิทิน\""
