@@ -20,7 +20,7 @@
         <select id="timeAccountingUnit" class="form-control">
           <% if @timeUnits: %>
             <% for row in @timeUnits: %>
-              <option value="<%= row.value %>" <% if row.value is @timeAccountingUnit: %>selected<%end %>><%= @T(row.display) %></option>
+              <option value="<%= row.value %>" <% if row.value is @timeAccountingUnit: %>selected<%end %>><%- @T(row.display) %></option>
             <% end %>
           <% end %>
         </select>

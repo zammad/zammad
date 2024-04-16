@@ -12,7 +12,7 @@
     </div>
     <% for entry in @list: %>
     <div class="accounted-time-value-row">
-      <div class="accounted-time-value-item" title="<%= @T(entry[0]) %>"><%= @T(entry[0]) %></div>
+      <div class="accounted-time-value-item" title="<%- @T(entry[0]) %>"><%- @T(entry[0]) %></div>
       <div class="accounted-time-value-item"><%= parseFloat(entry[1]).toFixed(1) %></div>
       <% if @displayUnit: %>
       <div class="accounted-time-value-item">

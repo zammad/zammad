@@ -1,4 +1,4 @@
 <div class="main two-factor-auth flex">
-  <p class="text-center"><%= @T('Getting key information from the browser…') %></p>
+  <p class="text-center"><%- @T('Getting key information from the browser…') %></p>
   <div class="loading icon"></div>
 </div>

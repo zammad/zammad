@@ -75,13 +75,13 @@
         <%- value %>
         <% if @object.constructor.configure_set_as_default && header.name == @object.constructor.configure_set_as_default_marker_attribute: %>
           <% if @object.constructor.is_default(@object): %>
-            <span class="badge badge--primary"><%= @T('Default') %></span>
+            <span class="badge badge--primary"><%- @T('Default') %></span>
           <% end %>
          <% end %>
         <% if @object.constructor.badges && @object.constructor.badges.length > 0: %>
           <% for badge in @object.constructor.badges: %>
             <% if badge.attribute == header.name && badge.active(@object): %>
-              <span class="badge badge--<%= badge.class %>"><%= @T(badge.display) %></span>
+              <span class="badge badge--<%= badge.class %>"><%- @T(badge.display) %></span>
             <% end %>
           <% end %>
         <% end %>

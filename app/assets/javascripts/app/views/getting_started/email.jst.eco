@@ -68,7 +68,7 @@
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
         <div class="alert alert--warning js-sslVerifyAlert hide" role="alert">
-          <%= @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+          <%- @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
         </div>
         <div class="base-inbound-settings"></div>
       </div>
@@ -85,7 +85,7 @@
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
         <div class="alert alert--warning js-sslVerifyAlert hide" role="alert">
-          <%= @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+          <%- @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
         </div>
         <p class="js-messageFound"><%- @T('%s email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.', 'x') %></p>
 
@@ -118,7 +118,7 @@
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
         <div class="alert alert--warning js-sslVerifyAlert hide" role="alert">
-          <%= @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+          <%- @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
         </div>
         <div class="base-outbound-type"></div>
         <div class="base-outbound-settings"></div>

@@ -2,7 +2,7 @@
   <h2><%- @T('Settings') %></h2>
   <div class="settings-entry">
     <div class="alert alert--warning js-sslVerifyAlert hide" role="alert">
-      <%= @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+      <%- @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
     </div>
     <table class="settings-list" style="width: 100%;">
       <thead>

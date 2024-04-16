@@ -1,6 +1,6 @@
 <ul class="dropdown-submenu js-optionsSubmenu" role="menu" data-parent-value="<%= @parentValue %>" hidden>
   <% if @title: %>
-  <li role="button" class="dropdown-controls js-back" title="<%= @T('Go Back') %>">
+  <li role="button" class="dropdown-controls js-back" title="<%- @T('Go Back') %>">
     <%- @Icon('arrow-left') %>
     <div class="dropdown-title">
       <%= @title %>

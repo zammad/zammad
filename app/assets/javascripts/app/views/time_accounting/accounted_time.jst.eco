@@ -9,7 +9,7 @@
 
     <div class="btn-group btn-group--full" role="group" aria-label="">
       <% for month, i in @timeRangeMonth: %>
-        <div class="btn btn--text btn--large js-timePickerMonth<%- ' is-selected' if @month is i+1 %>" data-type="<%= i+1 %>"><%= @T(month) %></div>
+        <div class="btn btn--text btn--large js-timePickerMonth<%- ' is-selected' if @month is i+1 %>" data-type="<%= i+1 %>"><%- @T(month) %></div>
       <% end %>
     </div>
   </div>

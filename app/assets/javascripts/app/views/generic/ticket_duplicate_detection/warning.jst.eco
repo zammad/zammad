@@ -1,8 +1,8 @@
-<button type="button" class="close js-close" aria-label="<%= @T('Close') %>">
+<button type="button" class="close js-close" aria-label="<%- @T('Close') %>">
   <%- @Icon('diagonal-cross') %>
 </button>
-<h4><%= @T(@C('ticket_duplicate_detection_title')) %></h4>
-<p><%= @T(@C('ticket_duplicate_detection_body')) %></p>
+<h4><%- @T(@C('ticket_duplicate_detection_title')) %></h4>
+<p><%- @T(@C('ticket_duplicate_detection_body')) %></p>
 <% if @items.length: %>
   <ul>
     <% for [id, number, title] in @items.slice(0, 2): %>

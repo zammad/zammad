@@ -4,7 +4,7 @@
     <%= @option.name %><% if @detail: %><span class="dropdown-detail"><%= @detail %></span><% end %>
   </span>
   <% if @option.children: %>
-  <span role="button" class="searchableSelect-option-arrow" title="<%= @T('Navigate to %s', @option.name) %>">
+  <span role="button" class="searchableSelect-option-arrow" title="<%- @T('Navigate to %s', @option.name) %>">
     <%- @Icon('arrow-right', 'recipientList-arrow') %>
   </span>
   <% end %>

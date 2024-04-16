@@ -12,7 +12,7 @@
 <div class="form-controls">
 
 <% if @errorMessage: %>
-  <p class="text-center"><%= @T('Try using your security key again.') %></p>
+  <p class="text-center"><%- @T('Try using your security key again.') %></p>
   <button class="btn btn--primary js-retry" type="button"><%- @T('Retry') %></button>
 <% else: %>
   <input name="username" type="hidden" value="<%= @formPayload.username %>" />
@@ -21,7 +21,7 @@
   <input name="two_factor_method" type="hidden" value="<%= @twoFactorMethodDetails.key %>" />
 
   <div class="double-spacer"></div>
-  <p class="text-center"><%= @T('Verifying key information…') %></p>
+  <p class="text-center"><%- @T('Verifying key information…') %></p>
   <div class="double-spacer"></div>
   <div class="centered">
     <div class="loading icon"></div>

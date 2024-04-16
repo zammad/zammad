@@ -7,7 +7,7 @@
   <div class="sidebar-git-issue-content">
     <div class="sidebar-block">
       <a href="<%- issue.url %>" target="_blank">
-        <span class="icon-holder" title="<%= @T(issue.icon_state) %>">
+        <span class="icon-holder" title="<%- @T(issue.icon_state) %>">
           <%- @Icon('task-state', issue.icon_state) %>
         </span>
         #<%= issue.id %> <%= issue.title %>
@@ -16,7 +16,7 @@
   <% if issue.milestone: %>
     <div class="sidebar-block">
       <label><%- @T('Milestone') %></label>
-      <%= @T(issue.milestone) %>
+      <%- @T(issue.milestone) %>
     </div>
   <% end %>
   <% if issue.assignees.length > 0: %>

@@ -1,5 +1,5 @@
 <div class="two-factor-auth flex">
-  <p><%= @T('Please save your recovery codes listed below somewhere safe. You can use them to sign in if you lose access to another two-factor method:') %></p>
+  <p><%- @T('Please save your recovery codes listed below somewhere safe. You can use them to sign in if you lose access to another two-factor method:') %></p>
 
   <pre><code readonly><% for elem, i in @recovery_codes: %><%= elem %><% if i == @recovery_codes.length - 1: %><% else if i % 2: %>
 

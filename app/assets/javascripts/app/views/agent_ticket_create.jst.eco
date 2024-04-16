@@ -34,8 +34,8 @@
                 <label for=""><%- @T('Security') %></label>
               </div>
               <div class="horizontal">
-                <div class="btn btn--action btn--split--first js-active-toggle-type js-securityType" data-type="PGP"><%= @T('PGP') %></div>
-                <div class="btn btn--action btn--split--last js-active-toggle-type js-securityType" data-type="S/MIME"><%= @T('S/MIME') %></div>
+                <div class="btn btn--action btn--split--first js-active-toggle-type js-securityType" data-type="PGP"><%- @T('PGP') %></div>
+                <div class="btn btn--action btn--split--last js-active-toggle-type js-securityType" data-type="S/MIME"><%- @T('S/MIME') %></div>
                 <div class="spacer js-securityType"></div>
                 <span class="js-securityEncryptComment">
                   <div class="btn btn--action btn--split--first js-securityEncrypt js-active-toggle" disabled><%- @Icon('lock-open', 'btn-inactive-icon') %><%- @Icon('lock', 'btn-active-icon') %><%- @T('Encrypt') %></div>

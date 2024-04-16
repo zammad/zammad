@@ -10,7 +10,7 @@
   <h2><%- @T('Settings %s', @item.name) %></h2>
 <% if (@config.ssl is 'ssl' or @config.ssl is 'starttls') and not @config.ssl_verify: %>
   <div class="alert alert--warning" role="alert">
-    <%= @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+    <%- @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
   </div>
 <% end %>
   <table class="settings-list" style="width: 100%;">
@@ -25,11 +25,11 @@
         <td class="settings-list-row-control"><%= @config.host %>
       <tr>
         <td class="settings-list-row-control"><%- @T('SSL/STARTTLS') %>
-        <td class="settings-list-row-control"><%= @T(@config.ssl_humanized) %>
+        <td class="settings-list-row-control"><%- @T(@config.ssl_humanized) %>
     <% if @config.ssl is 'ssl' or @config.ssl is 'starttls': %>
       <tr>
         <td class="settings-list-row-control"><%- @T('SSL verification') %>
-        <td class="settings-list-row-control"><% if @config.ssl_verify: %><%= @T('yes') %><% else: %><%= @T('no') %><% end %>
+        <td class="settings-list-row-control"><% if @config.ssl_verify: %><%- @T('yes') %><% else: %><%- @T('no') %><% end %>
     <% end %>
       <tr>
         <td class="settings-list-row-control"><%- @T('Base DN') %>

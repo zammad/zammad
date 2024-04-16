@@ -8,7 +8,7 @@
 
 <% for location in @locations: %>
   <div class="settings-entry kb-menu-settings-entry">
-    <h3><%= @T(location.headline) %></h3>
+    <h3><%- @T(location.headline) %></h3>
 
     <% for kb_locale in @locales: %>
       <div class="kb-menu-preview">

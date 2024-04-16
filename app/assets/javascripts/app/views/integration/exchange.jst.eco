@@ -25,7 +25,7 @@
   <h2><%- @T('Settings') %></h2>
 <% if @config.disable_ssl_verify: %>
   <div class="alert alert--warning" role="alert">
-    <%= @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+    <%- @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
   </div>
 <% end %>
   <table class="settings-list" style="width: 100%;">

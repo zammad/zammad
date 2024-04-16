@@ -35,7 +35,7 @@
   <div class="columnSelect-pool js-pool">
     <% for option in @attribute.options: %>
       <% if option.group != undefined: %>
-        <div class="columnSelect-group-label" title="<%= @T(option.label) %>"><%= @T(option.label) %></div>
+        <div class="columnSelect-group-label" title="<%- @T(option.label) %>"><%- @T(option.label) %></div>
         <% for o in option.group: %>
         <div class="columnSelect-option js-select js-option<%= ' is-hidden' if o.selected %>" data-value="<%= o.value %>" title="<%= o.title || o.name %>"><%= o.name %></div>
         <% end %>
