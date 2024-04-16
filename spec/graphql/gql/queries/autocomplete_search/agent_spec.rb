@@ -2,15 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::AutocompleteSearch::User, authenticated_as: :agent, type: :graphql do
+RSpec.describe Gql::Queries::AutocompleteSearch::Agent, authenticated_as: :agent, type: :graphql do
 
-  context 'when searching for users' do
-    let(:agent)        { create(:agent) }
-    let(:users)        { create_list(:customer, 3, lastname: 'AutocompleteSearch') }
-    let(:query)        do
+  context 'when searching for agents' do
+    let(:agent)     { create(:agent) }
+    let(:agents)    { create_list(:agent, 3, lastname: 'AutocompleteSearch') }
+    let(:customers) { create_list(:customer, 3, lastname: 'AutocompleteSearch') } # must not be found
+    let(:query)     do
       <<~QUERY
-        query autocompleteSearchUser($input: AutocompleteSearchInput!)  {
-          autocompleteSearchUser(input: $input) {
+        query autocompleteSearchAgent($input: AutocompleteSearchInput!)  {
+          autocompleteSearchAgent(input: $input) {
             value
             label
             labelPlaceholder
@@ -23,16 +24,17 @@ RSpec.describe Gql::Queries::AutocompleteSearch::User, authenticated_as: :agent,
       QUERY
     end
     let(:variables)    { { input: { query: query_string, limit: limit } } }
-    let(:query_string) { users.last.lastname }
+    let(:query_string) { agents.last.lastname }
     let(:limit)        { nil }
 
     before do
+      agents && customers
       gql.execute(query, variables: variables)
     end
 
     context 'without limit' do
-      it 'finds all users' do
-        expect(gql.result.data.length).to eq(users.length)
+      it 'finds all agents' do
+        expect(gql.result.data.length).to eq(agents.length)
       end
     end
 
@@ -47,8 +49,8 @@ RSpec.describe Gql::Queries::AutocompleteSearch::User, authenticated_as: :agent,
     context 'with exact search' do
       let(:first_user_payload) do
         {
-          'value'              => users.first.id,
-          'label'              => users.first.fullname,
+          'value'              => agents.first.id,
+          'label'              => agents.first.fullname,
           'labelPlaceholder'   => nil,
           'heading'            => nil,
           'headingPlaceholder' => nil,
@@ -56,7 +58,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::User, authenticated_as: :agent,
           'disabled'           => nil,
         }
       end
-      let(:query_string) { users.first.login }
+      let(:query_string) { agents.first.login }
 
       it 'has data' do
         expect(gql.result.data).to eq([first_user_payload])

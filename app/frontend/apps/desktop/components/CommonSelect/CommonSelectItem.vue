@@ -2,12 +2,13 @@
 
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
-import { computed } from 'vue'
+import { computed, type ConcreteComponent } from 'vue'
 import { i18n } from '#shared/i18n.ts'
 import type {
   MatchedSelectOption,
   SelectOption,
 } from '#shared/components/CommonSelect/types.ts'
+import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types'
 
 const props = defineProps<{
   option: MatchedSelectOption | SelectOption
@@ -15,6 +16,7 @@ const props = defineProps<{
   multiple?: boolean
   noLabelTranslate?: boolean
   filter?: string
+  optionIconComponent?: ConcreteComponent
 }>()
 
 const emit = defineEmits<{
@@ -38,6 +40,19 @@ const label = computed(() => {
     option.value.toString()
   )
 })
+
+const heading = computed(() => {
+  const { option } = props
+
+  if (props.noLabelTranslate) return (option as AutoCompleteOption).heading
+
+  return i18n.t(
+    (option as AutoCompleteOption).heading,
+    ...((option as AutoCompleteOption).headingPlaceholder || []),
+  )
+})
+
+const OptionIconComponent = props.optionIconComponent
 </script>
 
 <template>
@@ -67,8 +82,9 @@ const label = computed(() => {
       :name="selected ? 'check-square' : 'square'"
       class="shrink-0"
     />
+    <OptionIconComponent v-if="optionIconComponent" :option="option" />
     <CommonIcon
-      v-if="option.icon"
+      v-else-if="option.icon"
       :name="option.icon"
       size="tiny"
       :class="{
@@ -92,9 +108,12 @@ const label = computed(() => {
         'text-stone-200 dark:text-neutral-500': option.disabled,
       }"
       class="grow truncate"
-      :title="label"
+      :title="label + (heading ? ` – ${heading}` : '')"
     >
       {{ label }}
+      <span v-if="heading" class="text-stone-200 dark:text-neutral-500"
+        >– {{ heading }}</span
+      >
     </span>
     <CommonIcon
       v-if="!multiple"

@@ -175,4 +175,25 @@ describe('CommonSelect.vue', () => {
 
     expect(view.getByRole('listbox')).toHaveAccessibleName('Select…')
   })
+
+  it('supports optional headings', async () => {
+    const view = renderSelect({
+      options: [
+        {
+          value: 0,
+          label: 'foo (%s)',
+          labelPlaceholder: ['1'],
+          heading: 'bar (%s)',
+          headingPlaceholder: ['2'],
+        },
+      ],
+    })
+
+    await view.events.click(view.getByText('Open Select'))
+
+    const option = view.getByRole('option')
+
+    expect(option).toHaveTextContent('foo (1) – bar (2)')
+    expect(option.children[0]).toHaveAttribute('title', 'foo (1) – bar (2)')
+  })
 })

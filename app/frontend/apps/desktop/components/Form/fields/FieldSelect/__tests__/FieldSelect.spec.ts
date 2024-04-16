@@ -77,7 +77,6 @@ describe('Form - Field - Select - Dropdown', () => {
       props: {
         ...commonProps,
         options: testOptions,
-        clearable: true,
       },
     })
 

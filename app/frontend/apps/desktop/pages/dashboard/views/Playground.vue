@@ -5,6 +5,7 @@
 import { computed, h, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { reset } from '@formkit/core'
+import gql from 'graphql-tag'
 
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -174,6 +175,32 @@ const formSchema = [
         },
       },
     ],
+  },
+  {
+    type: 'autocomplete',
+    name: 'autocomplete',
+    label: 'Autocomplete',
+    props: {
+      clearable: true,
+      gqlQuery: gql`
+        query autocompleteSearchUser($input: AutocompleteSearchInput!) {
+          autocompleteSearchUser(input: $input) {
+            value
+            label
+            disabled
+            icon
+          }
+        }
+      `,
+    },
+  },
+  {
+    type: 'agent',
+    name: 'agent',
+    label: 'Agent',
+    props: {
+      clearable: true,
+    },
   },
   {
     name: 'date_0',

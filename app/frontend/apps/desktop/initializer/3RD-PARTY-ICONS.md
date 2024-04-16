@@ -4,7 +4,6 @@
 - `assets/arrow-bar-right.svg`
 - `assets/arrows-collapse.svg`
 - `assets/arrows-expand.svg`
-- `assets/backspace.svg`
 - `assets/box-arrow-in-right.svg`
 - `assets/box-arrow-up-right.svg`
 - `assets/brightness-alt-high.svg`

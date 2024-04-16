@@ -16,13 +16,15 @@ module Gql::Queries
 
       return [] if query.strip.empty?
 
-      results = Service::Search.new(current_user: context.current_user).execute(
-        term:    query,
-        objects: [::User],
-        options: { limit: limit },
-      )
+      post_process(find_users(query:, limit:), input: input)
+    end
 
-      post_process(results, input: input)
+    def find_users(query:, limit:)
+      ::User.search(
+        query:,
+        limit:,
+        current_user: context.current_user,
+      )
     end
 
     def post_process(results, input:)

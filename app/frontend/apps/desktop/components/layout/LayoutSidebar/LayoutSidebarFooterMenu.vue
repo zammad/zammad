@@ -57,7 +57,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
       <CommonUserAvatar
         v-if="user"
         :entity="user"
-        class="!flex"
+        class="!flex border-gray-900"
         :size="avatarSize"
         personal
       />

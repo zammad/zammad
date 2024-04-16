@@ -21,11 +21,13 @@ export type AutoCompleteOption = {
   headingPlaceholder?: string[]
   disabled?: boolean
   icon?: string
+  match?: RegExpExecArray
 }
 
 export type AutoCompleteProps = FormFieldContext<{
   gqlQuery: DocumentNode
   action?: RouteLocationRaw
+  alternativeBackground?: boolean
   actionIcon?: string
   actionLabel?: string
   allowUnknownValues?: boolean

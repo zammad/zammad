@@ -21,6 +21,12 @@ const textInputClasses = (classes: Classes = {}) => {
   })
 }
 
+const selectInputClasses = (classes: Classes = {}) =>
+  extendClasses(classes, {
+    inner:
+      'w-full formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
+  })
+
 export const getCoreDesktopClasses: FormThemeExtension = (
   classes: FormThemeClasses,
 ) => {
@@ -69,14 +75,9 @@ export const getCoreDesktopClasses: FormThemeExtension = (
       inner:
         'w-full bg-blue-200 dark:bg-gray-700 formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
     }),
-    select: extendClasses(classes.select, {
-      inner:
-        'w-full formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
-    }),
-    treeselect: extendClasses(classes.treeselect, {
-      inner:
-        'w-full formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
-    }),
+    select: selectInputClasses(classes.select),
+    treeselect: selectInputClasses(classes.treeselect),
+    autocomplete: selectInputClasses(classes.autocomplete),
     toggle: extendClasses(classes.toggle, {
       wrapper: 'h-10 flex flex-row-reverse items-center gap-1.5',
       label: '!mb-0 grow',

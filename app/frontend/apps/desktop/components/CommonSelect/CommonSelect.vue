@@ -1,8 +1,15 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { Ref } from 'vue'
-import { onUnmounted, computed, nextTick, ref, toRef } from 'vue'
+import {
+  computed,
+  type ConcreteComponent,
+  nextTick,
+  onUnmounted,
+  ref,
+  type Ref,
+  toRef,
+} from 'vue'
 import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
@@ -16,7 +23,9 @@ import {
 import type {
   MatchedSelectOption,
   SelectOption,
+  SelectValue,
 } from '#shared/components/CommonSelect/types.ts'
+import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import { i18n } from '#shared/i18n.ts'
@@ -25,10 +34,12 @@ import { useCommonSelect } from './useCommonSelect.ts'
 import type { CommonSelectInternalInstance } from './types.ts'
 
 export interface Props {
-  // we cannot move types into separate file, because Vue would not be able to
-  // transform these into runtime types
-  modelValue?: string | number | boolean | (string | number | boolean)[] | null
-  options: SelectOption[]
+  modelValue?:
+    | SelectValue
+    | SelectValue[]
+    | { value: SelectValue; label: string }
+    | null
+  options: AutoCompleteOption[] | SelectOption[]
   /**
    * Do not modify local value
    */
@@ -39,6 +50,8 @@ export interface Props {
   owner?: string
   noOptionsLabelTranslation?: boolean
   filter?: string
+  optionIconComponent?: ConcreteComponent
+  initiallyEmpty?: boolean
 }
 
 const props = defineProps<Props>()
@@ -287,6 +300,11 @@ const highlightedOptions = computed(() =>
   }),
 )
 
+const emptyLabelText = computed(() => {
+  if (!props.initiallyEmpty) return __('No results found')
+  return props.filter ? __('No results found') : __('Start typing to search…')
+})
+
 const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
 </script>
 
@@ -357,12 +375,13 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
                 :option="option"
                 :no-label-translate="noOptionsLabelTranslation"
                 :filter="filter"
+                :option-icon-component="optionIconComponent"
                 @select="select($event)"
               />
               <CommonSelectItem
                 v-if="!options.length"
                 :option="{
-                  label: __('No results found'),
+                  label: emptyLabelText,
                   value: '',
                   disabled: true,
                 }"
