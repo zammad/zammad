@@ -86,8 +86,8 @@ const allFilteredEntries = computed<NavigationMenuEntry[]>(() => {
   <CommonLabel
     v-else-if="allFilteredEntries.length == 0"
     class="px-2 py-1 text-stone-200 dark:text-neutral-500"
-    >{{ __('No results found') }}</CommonLabel
-  >
+    >{{ __('No results found') }}
+  </CommonLabel>
   <ul v-else>
     <li
       v-for="category in categories"
@@ -113,6 +113,7 @@ const allFilteredEntries = computed<NavigationMenuEntry[]>(() => {
               !collapsedCategories.has(category.label)
             "
             :id="category.id"
+            :aria-label="$t(category.label)"
             :items="permittedEntries[category.label]"
           />
         </Transition>

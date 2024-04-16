@@ -1968,6 +1968,10 @@ msgstr ""
 msgid "Branding"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue
+msgid "Breadcrumb navigation"
+msgstr ""
+
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
 msgstr ""
@@ -7636,6 +7640,10 @@ msgstr ""
 msgid "Macros make it easy to automate common, multi-step tasks within Zammad.\n\nYou can use macros in Zammad to automate recurring sequences, saving time (and nerves). This allows a combined sequence of actions on the ticket to be executed with just one click."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue
+msgid "Main sidebar"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: db/seeds/permissions.rb
@@ -10332,6 +10340,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 msgid "Resize side panel"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
+msgid "Resize sidebar"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -16710,10 +16722,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "required"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
-msgid "resize sidebar"
 msgstr ""
 
 #: db/seeds/settings.rb

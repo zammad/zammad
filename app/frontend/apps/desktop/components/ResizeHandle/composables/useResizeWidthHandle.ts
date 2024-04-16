@@ -4,6 +4,7 @@ import { ref, onUnmounted } from 'vue'
 import {
   type MaybeComputedElementRef,
   type MaybeElement,
+  onKeyStroke,
   useElementBounding,
   useWindowSize,
 } from '@vueuse/core'
@@ -13,6 +14,7 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 export const useResizeWidthHandle = (
   resizeCallback: (positionX: number) => void,
   handleRef: MaybeComputedElementRef<MaybeElement>,
+  keyStrokeCallback: (e: KeyboardEvent, adjustment: number) => void,
   options?: {
     calculateFromRight?: boolean
   },
@@ -81,6 +83,23 @@ export const useResizeWidthHandle = (
 
   onUnmounted(() => {
     removeListeners()
+  })
+
+  // a11y keyboard navigation horizontal resize
+  onKeyStroke('ArrowLeft', (e: KeyboardEvent) => {
+    if (options?.calculateFromRight) {
+      keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
+    } else {
+      keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
+    }
+  })
+
+  onKeyStroke('ArrowRight', (e: KeyboardEvent) => {
+    if (options?.calculateFromRight) {
+      keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
+    } else {
+      keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
+    }
   })
 
   return {

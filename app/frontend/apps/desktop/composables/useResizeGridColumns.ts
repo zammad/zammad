@@ -1,44 +1,40 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref, computed, type Ref } from 'vue'
+import { shallowRef, computed, type Ref } from 'vue'
 import { useLocalStorage, useWindowSize } from '@vueuse/core'
 
-// :TODO - Move to a global config file or something
 export const DEFAULT_SIDEBAR_WIDTH = 260
 export const MINIMUM_SIDEBAR_WIDTH = 200
 export const SIDEBAR_COLLAPSED_WIDTH = 48
-export const useResizeGridColumns = (storageKey?: string) => {
-  const isSidebarCollapsed = ref(false)
 
-  let sidebarLocalStorage: Ref<number>
+export const useResizeGridColumns = (storageKey?: string) => {
+  const isSidebarCollapsed = shallowRef(false)
+
+  let currentSidebarWidth: Ref<number>
+  const storageId = `${storageKey}-sidebar-width`
   if (storageKey) {
-    sidebarLocalStorage = useLocalStorage(
-      `${storageKey}-sidebar-width`,
-      DEFAULT_SIDEBAR_WIDTH,
-    )
+    currentSidebarWidth = useLocalStorage(storageId, DEFAULT_SIDEBAR_WIDTH)
   } else {
-    sidebarLocalStorage = ref(DEFAULT_SIDEBAR_WIDTH)
+    currentSidebarWidth = shallowRef(DEFAULT_SIDEBAR_WIDTH)
   }
 
   const { width: screenWidth } = useWindowSize()
+  const maxWidth = computed(() => screenWidth.value / 3)
 
   const gridColumns = computed(() => {
-    const sidebarWidth = isSidebarCollapsed.value
+    const width = isSidebarCollapsed.value
       ? SIDEBAR_COLLAPSED_WIDTH
-      : sidebarLocalStorage.value
+      : currentSidebarWidth.value
 
     return {
-      gridTemplateColumns: `${sidebarWidth}px 1fr`,
+      gridTemplateColumns: `${width}px 1fr`,
     }
   })
 
-  const resizeSidebar = (sidebarWidth: number) => {
-    const maxWidth = screenWidth.value / 3
+  const resizeSidebar = (width: number) => {
+    if (width <= MINIMUM_SIDEBAR_WIDTH || width >= maxWidth.value) return
 
-    if (sidebarWidth <= MINIMUM_SIDEBAR_WIDTH || sidebarWidth >= maxWidth)
-      return
-
-    sidebarLocalStorage.value = sidebarWidth
+    currentSidebarWidth.value = width
   }
 
   const collapseSidebar = () => {
@@ -50,10 +46,13 @@ export const useResizeGridColumns = (storageKey?: string) => {
   }
 
   const resetSidebarWidth = () => {
-    sidebarLocalStorage.value = DEFAULT_SIDEBAR_WIDTH
+    currentSidebarWidth.value = DEFAULT_SIDEBAR_WIDTH
   }
 
   return {
+    currentSidebarWidth,
+    maxSidebarWidth: maxWidth,
+    minSidebarWidth: MINIMUM_SIDEBAR_WIDTH,
     gridColumns,
     isSidebarCollapsed,
     resizeSidebar,

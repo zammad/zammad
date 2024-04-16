@@ -1,12 +1,21 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { nextTick, onMounted, type Ref, ref, watch } from 'vue'
+import {
+  computed,
+  nextTick,
+  onMounted,
+  type Ref,
+  ref,
+  shallowRef,
+  watch,
+} from 'vue'
 import {
   useWindowSize,
   useLocalStorage,
   useScroll,
   onKeyUp,
+  useActiveElement,
 } from '@vueuse/core'
 
 import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
@@ -18,6 +27,7 @@ import { useResizeWidthHandle } from '#desktop/components/ResizeHandle/composabl
 import type { FlyoutSizes } from '#desktop/components/CommonFlyout/types.ts'
 
 import stopEvent from '#shared/utils/events.ts'
+import { i18n } from '#shared/i18n.ts'
 import { closeFlyout } from './useFlyout.ts'
 
 import CommonFlyoutActionFooter, {
@@ -87,6 +97,9 @@ const flyoutSize = { medium: 500 }
 
 // Width control over flyout
 let flyoutContainerWidth: Ref<number>
+const commonOverlayContainer =
+  ref<InstanceType<typeof CommonOverlayContainer>>()
+
 const gap = 16 // Gap between sidebar and flyout
 
 const storageKeys = Object.keys(localStorage).filter((key) =>
@@ -94,6 +107,16 @@ const storageKeys = Object.keys(localStorage).filter((key) =>
 )
 
 const leftSideBarKey = storageKeys.find((key) => key.includes('left'))
+
+const leftSidebarWidth = leftSideBarKey
+  ? useLocalStorage(leftSideBarKey, 0)
+  : shallowRef(0)
+
+const { width: screenWidth } = useWindowSize()
+// Calculate the viewport width minus the left sidebar width and a threshold gap
+const flyoutMaxWidth = computed(
+  () => screenWidth.value - leftSidebarWidth.value - gap,
+)
 
 if (props.persistResizeWidth) {
   flyoutContainerWidth = useLocalStorage(
@@ -105,23 +128,37 @@ if (props.persistResizeWidth) {
 }
 
 const resizeHandleComponent = ref<InstanceType<typeof ResizeHandle>>()
-const { width: screenWidth } = useWindowSize()
 
 const resizeCallback = (valueX: number) => {
-  const leftSidebarWidth = leftSideBarKey
-    ? Number(localStorage.getItem(leftSideBarKey))
-    : 0
-
-  // Calculate the viewport width minus the left sidebar width and a threshold gap
-  const totalAllowedWidth = screenWidth.value - leftSidebarWidth - gap
-
-  if (valueX >= totalAllowedWidth) return
+  if (valueX >= flyoutMaxWidth.value) return
   flyoutContainerWidth.value = valueX
+}
+
+// a11y keyboard navigation
+const activeElement = useActiveElement()
+
+const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
+  e.preventDefault()
+
+  if (
+    !flyoutContainerWidth.value ||
+    activeElement.value?.getAttribute('aria-label') !==
+      i18n.t('Resize side panel')
+  )
+    return
+
+  const newWidth = flyoutContainerWidth.value + adjustment
+
+  // :TODO check of how we could add the min width
+  if (newWidth >= flyoutMaxWidth.value) return
+
+  resizeCallback(newWidth)
 }
 
 const { startResizing, isResizingHorizontal } = useResizeWidthHandle(
   resizeCallback,
   resizeHandleComponent,
+  handleKeyStroke,
   {
     calculateFromRight: true,
   },
@@ -197,6 +234,7 @@ onMounted(() => {
 <template>
   <CommonOverlayContainer
     :id="flyoutId"
+    ref="commonOverlayContainer"
     tag="aside"
     tabindex="-1"
     class="overflow-clip-x fixed bottom-0 top-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-white ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
@@ -274,8 +312,10 @@ onMounted(() => {
       class="absolute top-1/2 -translate-y-1/2 ltr:left-0 rtl:right-0"
       :aria-label="$t('Resize side panel')"
       role="separator"
+      tabindex="0"
       aria-orientation="horizontal"
       :aria-valuenow="flyoutContainerWidth"
+      :aria-valuemax="flyoutMaxWidth"
       @mousedown="startResizing"
       @touchstart="startResizing"
       @dblclick="resetWidth()"

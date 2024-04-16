@@ -12,6 +12,9 @@ const noTransition = ref(false)
 const { userId } = useSessionStore()
 const storageKeyId = `${userId}-left`
 const {
+  currentSidebarWidth,
+  maxSidebarWidth,
+  minSidebarWidth,
   gridColumns,
   collapseSidebar,
   resizeSidebar,
@@ -30,6 +33,10 @@ const {
     <LayoutSidebar
       id="main-sidebar"
       :name="storageKeyId"
+      :aria-label="$t('Main sidebar')"
+      :current-width="currentSidebarWidth"
+      :max-width="maxSidebarWidth"
+      :min-width="minSidebarWidth"
       collapsible
       resizable
       @collapse="collapseSidebar"

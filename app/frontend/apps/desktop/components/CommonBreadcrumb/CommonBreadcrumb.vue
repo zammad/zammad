@@ -13,8 +13,8 @@ const locale = useLocaleStore()
 </script>
 
 <template>
-  <div class="max-w-full">
-    <ul class="flex">
+  <nav :aria-label="$t('Breadcrumb navigation')" class="max-w-full">
+    <ol class="flex">
       <li v-for="(item, idx) in items" :key="item.label">
         <CommonIcon
           v-if="item.icon"
@@ -28,9 +28,9 @@ const locale = useLocaleStore()
             $t(item.label)
           }}</CommonLabel>
         </CommonLink>
-        <CommonLabel v-else size="large">
+        <h1 v-else aria-current="page">
           {{ $t(item.label) }}
-        </CommonLabel>
+        </h1>
 
         <CommonIcon
           v-if="idx !== items.length - 1"
@@ -41,6 +41,6 @@ const locale = useLocaleStore()
           class="mx-1 inline-flex"
         />
       </li>
-    </ul>
-  </div>
+    </ol>
+  </nav>
 </template>

@@ -57,14 +57,14 @@ describe('LayoutSidebar', () => {
       })
     })
     it('shows ResizeHandle when resizable is true', async () => {
-      expect(view.queryByLabelText('resize sidebar')).toBeInTheDocument()
+      expect(view.queryByLabelText('Resize sidebar')).toBeInTheDocument()
     })
     it('does not show ResizeHandle when resizable is false', async () => {
       await view.rerender({ resizable: false })
-      expect(view.queryByLabelText('resize sidebar')).not.toBeInTheDocument()
+      expect(view.queryByLabelText('Resize sidebar')).not.toBeInTheDocument()
     })
     it('resizes sidebar when ResizeHandle is clicked and dragged', async () => {
-      const resizeHandle = await view.findByLabelText('resize sidebar')
+      const resizeHandle = await view.findByLabelText('Resize sidebar')
       await view.events.click(resizeHandle)
 
       // Emulate mouse down on resize handle and mouse move on document
@@ -75,7 +75,7 @@ describe('LayoutSidebar', () => {
       expect(view.emitted('resize-horizontal')).toEqual([[100]])
     })
     it('resizes sidebar when ResizeHandle is touched and dragged', async () => {
-      const resizeHandle = await view.findByLabelText('resize sidebar')
+      const resizeHandle = await view.findByLabelText('Resize sidebar')
       await view.events.click(resizeHandle)
       // Touch device
       await fireEvent.touchStart(resizeHandle, { pageX: 0 })
@@ -85,7 +85,7 @@ describe('LayoutSidebar', () => {
       expect(view.emitted('resize-horizontal')).toBeTruthy()
     })
     it('resets width when ResizeHandle is double clicked', async () => {
-      const resizeHandle = await view.findByLabelText('resize sidebar')
+      const resizeHandle = await view.findByLabelText('Resize sidebar')
       await fireEvent.dblClick(resizeHandle)
       expect(view.emitted('reset-width')).toBeTruthy()
     })
@@ -93,7 +93,7 @@ describe('LayoutSidebar', () => {
       await view.rerender({ collapsible: true })
       const collapseButton = await view.findByLabelText('Collapse this element')
       await view.events.click(collapseButton)
-      expect(view.queryByLabelText('resize sidebar')).not.toBeInTheDocument()
+      expect(view.queryByLabelText('Resize sidebar')).not.toBeInTheDocument()
     })
   })
 })

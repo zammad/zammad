@@ -55,7 +55,12 @@ const onClickItem = (event: MouseEvent, item: MenuItem) => {
 
 <template>
   <section class="min-w-58 flex flex-col gap-0.5">
-    <div v-if="showHeaderLabel" role="heading" class="p-2 leading-3">
+    <div
+      v-if="showHeaderLabel"
+      role="heading"
+      aria-level="2"
+      class="p-2 leading-3"
+    >
       <slot name="header"
         ><CommonLabel
           size="small"

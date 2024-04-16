@@ -92,7 +92,7 @@ describe('Left sidebar', () => {
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
-      const resizeHandle = getByLabelText(aside, 'resize sidebar')
+      const resizeHandle = getByLabelText(aside, 'Resize sidebar')
 
       await fireEvent.mouseDown(resizeHandle, { clientX: 260 })
       await fireEvent.mouseMove(document, { clientX: 216 })
@@ -109,7 +109,7 @@ describe('Left sidebar', () => {
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
-      const resizeHandle = getByLabelText(aside, 'resize sidebar')
+      const resizeHandle = getByLabelText(aside, 'Resize sidebar')
 
       await view.events.dblClick(resizeHandle)
 

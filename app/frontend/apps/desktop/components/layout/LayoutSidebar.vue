@@ -2,15 +2,25 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import type { MaybeElement } from '@vueuse/core'
+import { useActiveElement } from '@vueuse/core'
 import ResizeHandle from '#desktop/components/ResizeHandle/ResizeHandle.vue'
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useCollapseHandler } from '#desktop/components/CollapseButton/composables/useCollapseHandler.ts'
 import { useResizeWidthHandle } from '#desktop/components/ResizeHandle/composables/useResizeWidthHandle.ts'
+import { i18n } from '#shared/i18n.ts'
 
 interface Props {
   name: string
+  /**
+   @property currentWidth
+   @property minWidth
+   @property maxWidth
+   - used for accessibility
+   / */
+  currentWidth?: number
+  minWidth?: number
+  maxWidth?: number
   collapsible?: boolean
   iconCollapsed?: string
   resizable?: boolean
@@ -32,11 +42,32 @@ const { toggleCollapse, isCollapsed } = useCollapseHandler(emit, {
   storageKey: `${props.name}-sidebar-collapsed`,
 })
 
-const resizeHandle = ref<MaybeElement>()
+// a11y keyboard navigation
+const activeElement = useActiveElement()
+
+const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
+  e.preventDefault()
+  if (
+    !props.currentWidth ||
+    activeElement.value?.getAttribute('aria-label') !== i18n.t('Resize sidebar')
+  )
+    return
+  const newWidth = props.currentWidth + adjustment
+  if (
+    props.maxWidth &&
+    props.minWidth &&
+    (newWidth >= props.maxWidth || newWidth <= props.minWidth)
+  )
+    return
+  emit('resize-horizontal', newWidth)
+}
+
+const resizeHandleComponent = ref<InstanceType<typeof ResizeHandle>>()
 
 const { startResizing, isResizingHorizontal } = useResizeWidthHandle(
   (positionX) => emit('resize-horizontal', positionX),
-  resizeHandle,
+  resizeHandleComponent,
+  handleKeyStroke,
 )
 
 watch(isResizingHorizontal, (isResizing) => {
@@ -66,9 +97,15 @@ watch(isResizingHorizontal, (isResizing) => {
     />
     <ResizeHandle
       v-if="resizable && !isCollapsed"
-      ref="resizeHandle"
+      ref="resizeHandleComponent"
       class="absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0"
-      :aria-label="$t('resize sidebar')"
+      :aria-label="$t('Resize sidebar')"
+      :aria-valuenow="currentWidth"
+      :aria-valuemax="maxWidth?.toFixed(2)"
+      :aria-valuemin="minWidth"
+      role="separator"
+      aria-orientation="horizontal"
+      tabindex="0"
       @mousedown="startResizing"
       @touchstart="startResizing"
       @dblclick="$emit('reset-width')"
