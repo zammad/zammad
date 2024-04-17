@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { createMessage, getNode, type FormKitNode } from '@formkit/core'
+
 import Form from '#shared/components/Form/Form.vue'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { createMessage, getNode, type FormKitNode } from '@formkit/core'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 import type { FormRef, FormValues } from '../types.ts'
@@ -19,6 +20,7 @@ const schema = [
     type: 'text',
     name: 'title',
     label: 'Title',
+    delay: 20, // Add default delay to simulate live situation.
   },
   {
     type: 'textarea',
@@ -227,5 +229,25 @@ describe('submitting form rules', () => {
     // will work, only if @submit is async
     // or manually called "resetForm"
     expect(canSubmit.value).toBeFalsy()
+  })
+
+  it('can register on change event of singlem field', async () => {
+    const onChangedFieldCallbackSpy = vi.fn()
+
+    const { view, utils } = renderForm()
+    const { form, onChangedField } = utils
+
+    // Register callback on changed title field.
+    onChangedField('title', onChangedFieldCallbackSpy)
+
+    await view.events.debounced(() =>
+      view.events.type(view.getByLabelText('Title'), 'Some title'),
+    )
+
+    expect(onChangedFieldCallbackSpy).toHaveBeenCalledWith(
+      'Some title',
+      '',
+      form.value?.getNodeByName('title'),
+    )
   })
 })

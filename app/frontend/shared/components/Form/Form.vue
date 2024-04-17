@@ -57,7 +57,11 @@ import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 import { parseGraphqlId } from '#shared/graphql/utils.ts'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api.ts'
 import { FormHandlerExecution, FormValidationVisibility } from './types.ts'
-import { getNodeByName as getFormkitFieldNode, setErrors } from './utils.ts'
+import {
+  getNodeByName as getFormkitFieldNode,
+  getNodeId,
+  setErrors,
+} from './utils.ts'
 import { getFormClasses } from './initializeFormClasses.ts'
 import type {
   ChangedField,
@@ -874,12 +878,19 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
         oldValue,
       })
     }
+
     emit('changed', node.name, newValue, oldValue)
+    formNode.value?.emit(`changed:${node.name}`, {
+      newValue,
+      oldValue,
+      fieldNode: node,
+    })
     executeFormHandler(FormHandlerExecution.FieldChange, values.value, {
       name: node.name,
       newValue,
       oldValue,
     })
+
     previousValues.set(node, cloneDeep(newValue))
     updaterChangedFields.delete(node.name)
   })
@@ -909,7 +920,7 @@ const buildStaticSchema = () => {
   const buildFormKitField = (
     field: FormSchemaField,
   ): FormKitSchemaComponent => {
-    const fieldId = field.id || `${field.name}-${formId}`
+    const fieldId = field.id || getNodeId(formId, field.name)
 
     const plugins = [changedInputValueHandling]
 

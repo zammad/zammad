@@ -33,7 +33,6 @@ const {
   formEmailOutbound,
   emailOutboundSchema,
   emailOutboundFormChangeFields,
-  emailOutboundFormOnChanged,
 } = useEmailOutboundForm()
 
 const emailNotificationSchema = [
@@ -105,7 +104,6 @@ const probeEmailNotification = async (data: EmailNotificationData) => {
       :schema="emailNotificationSchema"
       :handlers="[useSSLVerificationWarningHandler()]"
       :change-fields="emailOutboundFormChangeFields"
-      @changed="emailOutboundFormOnChanged"
       @submit="
         probeEmailNotification($event as FormSubmitData<EmailNotificationData>)
       "

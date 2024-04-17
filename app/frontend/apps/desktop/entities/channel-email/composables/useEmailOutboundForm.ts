@@ -3,11 +3,7 @@
 import type { ShallowRef } from 'vue'
 import { shallowRef, reactive } from 'vue'
 
-import type {
-  FormFieldValue,
-  FormRef,
-  FormSchemaField,
-} from '#shared/components/Form/types.ts'
+import type { FormRef, FormSchemaField } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 
 import type { EmailOutboundData } from '../types/email-inbound-outbound.ts'
@@ -15,7 +11,7 @@ import type { EmailOutboundData } from '../types/email-inbound-outbound.ts'
 export const useEmailOutboundForm = () => {
   const formEmailOutbound: ShallowRef<FormRef | undefined> = shallowRef()
 
-  const { updateFieldValues, values, formSetErrors } =
+  const { updateFieldValues, values, formSetErrors, onChangedField } =
     useForm<EmailOutboundData>(formEmailOutbound)
 
   const emailOutboundFormChangeFields = reactive<
@@ -24,24 +20,19 @@ export const useEmailOutboundForm = () => {
     sslVerify: {},
   })
 
-  const emailOutboundFormOnChanged = (
-    fieldName: string,
-    newValue: FormFieldValue,
-  ) => {
-    if (fieldName === 'port') {
-      const disabled = Boolean(
-        newValue && !(newValue === '465' || newValue === '587'),
-      )
+  onChangedField('port', (newValue) => {
+    const disabled = Boolean(
+      newValue && !(newValue === '465' || newValue === '587'),
+    )
 
-      emailOutboundFormChangeFields.sslVerify = {
-        disabled,
-      }
-
-      updateFieldValues({
-        sslVerify: !disabled,
-      })
+    emailOutboundFormChangeFields.sslVerify = {
+      disabled,
     }
-  }
+
+    updateFieldValues({
+      sslVerify: !disabled,
+    })
+  })
 
   const emailOutboundSchema = [
     {
@@ -137,7 +128,6 @@ export const useEmailOutboundForm = () => {
   return {
     formEmailOutbound,
     emailOutboundSchema,
-    emailOutboundFormOnChanged,
     emailOutboundFormChangeFields,
     updateEmailOutboundFieldValues: updateFieldValues,
     formEmailOutboundSetErrors: formSetErrors,

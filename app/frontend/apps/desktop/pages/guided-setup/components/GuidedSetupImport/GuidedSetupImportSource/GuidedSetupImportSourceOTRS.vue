@@ -77,11 +77,11 @@ const { configureSystemImportSource } = useImportSourceConfiguration(
   EnumSystemImportSource.Otrs,
 )
 
-const { updateFieldValues } = useForm(form)
+const { updateFieldValues, onChangedField } = useForm(form)
 const formChangeFields = reactive<Record<string, Partial<FormSchemaField>>>({})
 
-const onChangedURL = (fieldName: string, newValue: FormFieldValue) => {
-  if (fieldName === 'url' && newValue && typeof newValue === 'string') {
+onChangedField('url', (newValue: FormFieldValue) => {
+  if (newValue && typeof newValue === 'string') {
     const disabled = newValue.startsWith('http://')
 
     formChangeFields.sslVerify = {
@@ -92,7 +92,7 @@ const onChangedURL = (fieldName: string, newValue: FormFieldValue) => {
       sslVerify: !disabled,
     })
   }
-}
+})
 </script>
 
 <template>
@@ -116,7 +116,6 @@ const onChangedURL = (fieldName: string, newValue: FormFieldValue) => {
     :handlers="[useSSLVerificationWarningHandler()]"
     :schema="formSchema"
     :change-fields="formChangeFields"
-    @changed="onChangedURL"
     @submit="
       configureSystemImportSource(
         $event as FormSubmitData<ImportSourceConfigurationOtrsData>,

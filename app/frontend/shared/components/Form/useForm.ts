@@ -88,6 +88,29 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     })
   }
 
+  const onChangedField = (
+    name: string,
+    callback: (
+      newValue: FormFieldValue,
+      oldValue: FormFieldValue,
+      node: FormKitNode,
+    ) => void,
+  ) => {
+    const registerChangeEvent = (node: FormKitNode) => {
+      node.on(`changed:${name}`, ({ payload }) => {
+        callback(payload.newValue, payload.oldValue, payload.fieldNode)
+      })
+    }
+
+    if (node.value) {
+      registerChangeEvent(node.value)
+    } else {
+      waitForFormSettled().then((node) => {
+        registerChangeEvent(node)
+      })
+    }
+  }
+
   const updateFieldValues = (fieldValues: Record<string, FormFieldValue>) => {
     const changedFieldValues: Record<
       string,
@@ -133,5 +156,6 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     formSubmit,
     waitForFormSettled,
     updateFieldValues,
+    onChangedField,
   }
 }

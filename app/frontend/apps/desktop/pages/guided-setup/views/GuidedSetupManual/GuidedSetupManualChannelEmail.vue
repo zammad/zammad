@@ -48,7 +48,6 @@ const {
   formEmailInboundValues,
   formEmailInboundSetErrors,
   updateEmailInboundFieldValues,
-  emailInboundFormOnChanged,
   metaInformationInbound,
   emailInboundFormChangeFields,
   updateMetaInformationInbound,
@@ -67,7 +66,6 @@ const {
   formEmailOutboundSetErrors,
   updateEmailOutboundFieldValues,
   emailOutboundFormChangeFields,
-  emailOutboundFormOnChanged,
 } = useEmailOutboundForm()
 
 const {
@@ -213,7 +211,6 @@ const emailConfigurationCheck = computed(() => {
         "
         :schema="emailInboundSchema"
         :change-fields="emailInboundFormChangeFields"
-        @changed="emailInboundFormOnChanged"
         @submit="
           validateEmailInbound($event as FormSubmitData<EmailInboundData>)
         "
@@ -247,7 +244,6 @@ const emailConfigurationCheck = computed(() => {
         "
         :schema="emailOutboundSchema"
         :change-fields="emailOutboundFormChangeFields"
-        @changed="emailOutboundFormOnChanged"
         @submit="
           validateEmailOutbound($event as FormSubmitData<EmailOutboundData>)
         "

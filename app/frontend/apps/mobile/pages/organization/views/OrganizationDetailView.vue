@@ -62,7 +62,6 @@ const ticketData = computed(() => getTicketData(organization.value))
         <CommonOrganizationAvatar
           :entity="organization as AvatarOrganization"
           size="xl"
-          personal
         />
       </div>
       <div class="mt-2 text-xl font-bold">
