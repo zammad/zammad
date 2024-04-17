@@ -507,6 +507,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
                     disabled: true,
                   } as MatchedFlatSelectOption
                 "
+                no-selection-indicator
               />
               <slot name="footer" />
             </div>

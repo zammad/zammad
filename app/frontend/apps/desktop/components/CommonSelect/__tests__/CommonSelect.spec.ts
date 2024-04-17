@@ -194,6 +194,6 @@ describe('CommonSelect.vue', () => {
     const option = view.getByRole('option')
 
     expect(option).toHaveTextContent('foo (1) – bar (2)')
-    expect(option.children[0]).toHaveAttribute('title', 'foo (1) – bar (2)')
+    expect(option.children[1]).toHaveAttribute('title', 'foo (1) – bar (2)')
   })
 })

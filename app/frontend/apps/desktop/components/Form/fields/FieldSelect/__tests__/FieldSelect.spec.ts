@@ -649,12 +649,12 @@ describe('Form - Field - Select - Options', () => {
 
     selectOptions.forEach((selectOption) => {
       if (selectOption.textContent === 'Ítem D') {
-        expect(selectOption.children[0].children[0]).toHaveTextContent('Ítem')
+        expect(selectOption.children[1].children[0]).toHaveTextContent('Ítem')
       } else {
-        expect(selectOption.children[0].children[0]).toHaveTextContent('Item')
+        expect(selectOption.children[1].children[0]).toHaveTextContent('Item')
       }
 
-      expect(selectOption.children[0].children[0]).toHaveClasses([
+      expect(selectOption.children[1].children[0]).toHaveClasses([
         'bg-blue-600',
         'dark:bg-blue-900',
       ])

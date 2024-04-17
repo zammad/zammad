@@ -17,6 +17,7 @@ const props = defineProps<{
   noLabelTranslate?: boolean
   filter?: string
   optionIconComponent?: ConcreteComponent
+  noSelectionIndicator?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -71,7 +72,7 @@ const OptionIconComponent = props.optionIconComponent
     @keypress.enter.prevent="select(option)"
   >
     <CommonIcon
-      v-if="multiple"
+      v-if="multiple && !noSelectionIndicator"
       :class="{
         'fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white':
           !option.disabled,
@@ -80,7 +81,18 @@ const OptionIconComponent = props.optionIconComponent
       size="xs"
       decorative
       :name="selected ? 'check-square' : 'square'"
-      class="shrink-0"
+      class="m-0.5 shrink-0"
+    />
+    <CommonIcon
+      v-else-if="!noSelectionIndicator"
+      class="shrink-0 fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white"
+      :class="{
+        invisible: !selected,
+        'fill-stone-200 dark:fill-neutral-500': option.disabled,
+      }"
+      decorative
+      size="tiny"
+      name="check2"
     />
     <OptionIconComponent v-if="optionIconComponent" :option="option" />
     <CommonIcon
@@ -115,16 +127,5 @@ const OptionIconComponent = props.optionIconComponent
         >– {{ heading }}</span
       >
     </span>
-    <CommonIcon
-      v-if="!multiple"
-      class="shrink-0 fill-stone-200 group-hover:fill-black group-focus:fill-white dark:fill-neutral-500 dark:group-hover:fill-white"
-      :class="{
-        invisible: !selected,
-        'fill-gray-100 dark:fill-neutral-400': option.disabled,
-      }"
-      decorative
-      size="tiny"
-      name="check2"
-    />
   </div>
 </template>

@@ -385,6 +385,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
                   value: '',
                   disabled: true,
                 }"
+                no-selection-indicator
               />
               <slot name="footer" />
             </div>

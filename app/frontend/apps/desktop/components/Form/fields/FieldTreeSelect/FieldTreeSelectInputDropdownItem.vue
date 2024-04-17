@@ -16,6 +16,7 @@ const props = defineProps<{
   multiple?: boolean
   noLabelTranslate?: boolean
   filter?: string
+  noSelectionIndicator?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -69,7 +70,7 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     @keypress.enter.prevent="select(option)"
   >
     <CommonIcon
-      v-if="multiple"
+      v-if="multiple && !noSelectionIndicator"
       :class="{
         'fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white':
           !option.disabled,
@@ -78,7 +79,18 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
       size="xs"
       decorative
       :name="selected ? 'check-square' : 'square'"
-      class="shrink-0"
+      class="m-0.5 shrink-0"
+    />
+    <CommonIcon
+      v-else-if="!noSelectionIndicator"
+      class="shrink-0 fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white"
+      :class="{
+        invisible: !selected,
+        'fill-stone-200 dark:fill-neutral-500': option.disabled,
+      }"
+      decorative
+      size="tiny"
+      name="check2"
     />
     <CommonIcon
       v-if="option.icon"
@@ -111,17 +123,6 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     >
       {{ label }}
     </span>
-    <CommonIcon
-      v-if="!multiple"
-      class="shrink-0 fill-stone-200 group-hover:fill-black group-focus:fill-white dark:fill-neutral-500 dark:group-hover:fill-white"
-      :class="{
-        invisible: !selected,
-        'fill-gray-100 dark:fill-neutral-400': option.disabled,
-      }"
-      decorative
-      size="tiny"
-      name="check2"
-    />
     <div
       v-if="option.hasChildren && !filter"
       class="group/nav -me-2 shrink-0 flex-nowrap items-center justify-center gap-x-2.5 rounded-[5px] p-2.5 hover:bg-blue-800 group-focus:hover:bg-blue-600 dark:group-focus:hover:bg-blue-900"
