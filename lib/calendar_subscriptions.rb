@@ -46,7 +46,10 @@ class CalendarSubscriptions
       sub_class_name = object_name.to_s.capitalize
       object         = "CalendarSubscriptions::#{sub_class_name}".constantize
       instance       = object.new(@user, @preferences[ object_name ], @time_zone)
-      method         = instance.method(method_name)
+
+      raise Exceptions::UnprocessableEntity, __('An unknown method name was requested.') if object::ALLOWED_METHODS.exclude?(method_name)
+
+      method = instance.method(method_name)
       events_data += method.call
     end
     events_data

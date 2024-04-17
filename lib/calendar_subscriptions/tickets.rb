@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class CalendarSubscriptions::Tickets
+  ALLOWED_METHODS = %w[all new_open pending escalation].freeze
 
   def initialize(user, preferences, time_zone)
     @user        = user
