@@ -453,6 +453,8 @@ const deleteTest = async () => {
     console.log('Item not deleted!')
   }
 }
+
+const vip = ref(false)
 </script>
 
 <template>
@@ -638,15 +640,23 @@ const deleteTest = async () => {
     <div class="w-1/2">
       <h2 class="text-lg">Avatar</h2>
 
-      <div class="flex gap-4">
+      <div class="my-4 flex items-center gap-4">
         <CommonUserAvatar
           class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
           tabindex="0"
           :entity="{
             id: 'gid://zammad/User/1',
+            vip,
           }"
           size="medium"
         />
+
+        <CommonButton :variant="vip ? 'neutral' : 'subtle'" @click="vip = !vip">
+          {{ vip ? 'Make us unimportant :(' : 'Make us important :)' }}
+        </CommonButton>
+      </div>
+
+      <div class="flex gap-4">
         <CommonUserAvatar
           class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
           tabindex="0"
@@ -654,8 +664,9 @@ const deleteTest = async () => {
             id: 'gid://zammad/User/2',
             firstname: 'Alfa',
             lastname: 'Bravo',
+            vip,
           }"
-          size="medium"
+          size="xs"
         />
         <CommonUserAvatar
           class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
@@ -664,8 +675,9 @@ const deleteTest = async () => {
             id: 'gid://zammad/User/3',
             firstname: 'Charlie',
             lastname: 'Delta',
+            vip,
           }"
-          size="medium"
+          size="small"
         />
         <CommonUserAvatar
           class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
@@ -674,6 +686,7 @@ const deleteTest = async () => {
             id: 'gid://zammad/User/4',
             firstname: 'Echo',
             lastname: 'Foxtrot',
+            vip,
           }"
           size="medium"
         />
@@ -684,8 +697,9 @@ const deleteTest = async () => {
             id: 'gid://zammad/User/5',
             firstname: 'Golf',
             lastname: 'Hotel',
+            vip,
           }"
-          size="medium"
+          size="normal"
         />
         <CommonUserAvatar
           class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
@@ -694,8 +708,9 @@ const deleteTest = async () => {
             id: 'gid://zammad/User/6',
             firstname: 'India',
             lastname: 'Juliett',
+            vip,
           }"
-          size="medium"
+          size="large"
         />
         <CommonUserAvatar
           class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
@@ -704,8 +719,9 @@ const deleteTest = async () => {
             id: 'gid://zammad/User/7',
             firstname: 'Kilo',
             lastname: 'Lima',
+            vip,
           }"
-          size="medium"
+          size="xl"
         />
       </div>
     </div>

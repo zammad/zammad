@@ -49,7 +49,7 @@ const classMap = getAvatarClasses()
 
 <template>
   <span
-    class="relative inline-flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-full bg-cover bg-center"
+    class="relative inline-flex shrink-0 select-none items-center justify-center rounded-full bg-cover bg-center"
     :class="[`size-${size}`, classMap.base]"
     :style="{
       backgroundImage: image ? `url(${image})` : undefined,
@@ -62,14 +62,14 @@ const classMap = getAvatarClasses()
   >
     <CommonIcon
       v-if="vipIcon"
-      size="xl"
-      class="vip pointer-events-none absolute -top-[48px] w-10 ltr:left-1/2 ltr:-ml-5 rtl:right-1/2 rtl:-mr-5"
+      class="vip pointer-events-none absolute"
       :class="
         vipIcon === 'vip-organization'
           ? classMap.vipOrganization
           : classMap.vipUser
       "
       :name="vipIcon"
+      :size="iconSizes[props.size]"
       decorative
     />
     <CommonIcon v-if="icon" :name="icon" :size="iconSize" />
@@ -84,7 +84,7 @@ const classMap = getAvatarClasses()
   @apply h-6 w-6 text-xs leading-6;
 
   .vip {
-    @apply -top-[49px] -ml-2 w-4;
+    @apply -translate-y-3;
   }
 }
 
@@ -92,7 +92,15 @@ const classMap = getAvatarClasses()
   @apply h-8 w-8 text-xs leading-8;
 
   .vip {
-    @apply -top-[49px] -ml-3 w-6;
+    @apply -translate-y-4;
+  }
+}
+
+.size-medium {
+  @apply h-10 w-10 text-base leading-10;
+
+  .vip {
+    @apply -translate-y-5;
   }
 }
 
@@ -100,7 +108,7 @@ const classMap = getAvatarClasses()
   @apply h-14 w-14 text-2xl leading-[5rem];
 
   .vip {
-    @apply -top-[49px] -ml-6 w-12;
+    @apply -translate-y-[1.85rem];
   }
 }
 
@@ -108,7 +116,7 @@ const classMap = getAvatarClasses()
   @apply h-20 w-20 text-4xl leading-[5rem];
 
   .vip {
-    @apply -top-[51px] -ml-8 w-16;
+    @apply -translate-y-[2.65rem];
   }
 }
 
@@ -116,7 +124,7 @@ const classMap = getAvatarClasses()
   @apply h-36 w-36 text-6xl leading-[5rem];
 
   .vip {
-    @apply -top-[55px] -ml-12 w-24;
+    @apply -translate-y-[4.85rem];
   }
 }
 </style>

@@ -17,6 +17,5 @@ defineProps<{
       'opacity-30': option.disabled,
     }"
     size="xs"
-    personal
   />
 </template>
