@@ -8,7 +8,6 @@ import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vu
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useCollapseHandler } from '#desktop/components/CollapseButton/composables/useCollapseHandler.ts'
 import { useResizeWidthHandle } from '#desktop/components/ResizeHandle/composables/useResizeWidthHandle.ts'
-import { i18n } from '#shared/i18n.ts'
 
 interface Props {
   name: string
@@ -43,13 +42,15 @@ const { toggleCollapse, isCollapsed } = useCollapseHandler(emit, {
 })
 
 // a11y keyboard navigation
+const resizeHandleComponent = ref<InstanceType<typeof ResizeHandle>>()
+
 const activeElement = useActiveElement()
 
 const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
   e.preventDefault()
   if (
     !props.currentWidth ||
-    activeElement.value?.getAttribute('aria-label') !== i18n.t('Resize sidebar')
+    activeElement.value !== resizeHandleComponent.value?.$el
   )
     return
   const newWidth = props.currentWidth + adjustment
@@ -61,8 +62,6 @@ const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
     return
   emit('resize-horizontal', newWidth)
 }
-
-const resizeHandleComponent = ref<InstanceType<typeof ResizeHandle>>()
 
 const { startResizing, isResizingHorizontal } = useResizeWidthHandle(
   (positionX) => emit('resize-horizontal', positionX),

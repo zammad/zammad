@@ -27,7 +27,6 @@ import { useResizeWidthHandle } from '#desktop/components/ResizeHandle/composabl
 import type { FlyoutSizes } from '#desktop/components/CommonFlyout/types.ts'
 
 import stopEvent from '#shared/utils/events.ts'
-import { i18n } from '#shared/i18n.ts'
 import { closeFlyout } from './useFlyout.ts'
 
 import CommonFlyoutActionFooter, {
@@ -142,14 +141,12 @@ const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
 
   if (
     !flyoutContainerWidth.value ||
-    activeElement.value?.getAttribute('aria-label') !==
-      i18n.t('Resize side panel')
+    activeElement.value !== resizeHandleComponent.value?.$el
   )
     return
 
   const newWidth = flyoutContainerWidth.value + adjustment
 
-  // :TODO check of how we could add the min width
   if (newWidth >= flyoutMaxWidth.value) return
 
   resizeCallback(newWidth)
