@@ -15,7 +15,7 @@ namespace :zammad do
         FileUtils.ln(source, dest, force: true)
       end
 
-      AutoWizard.setup
+      AutoWizard.run
 
       Setting.set('system_init_done', true)
     end
