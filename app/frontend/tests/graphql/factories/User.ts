@@ -24,6 +24,10 @@ export default (
     phone: '+49 #### ######'.replace(/#+/g, (m) =>
       faker.string.numeric(m.length),
     ),
+    outOfOffice: null,
+    outOfOfficeStartAt: null,
+    outOfOfficeEndAt: null,
+    outOfOfficeReplacement: null,
     objectAttributeValues: [],
     createdBy: null,
     secondaryOrganizations: {

@@ -9,7 +9,6 @@ fragment userDetailAttributes on User {
   web
   vip
   phone
-  outOfOffice
   mobile
   fax
   note

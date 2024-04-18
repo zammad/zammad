@@ -165,7 +165,7 @@ class ProfileOutOfOffice extends App.ControllerSubContent
       message     = '» ' + App.i18n.translateInline('Error') + ' «'
     @notify
       type:      'error'
-      msg:       App.i18n.translateContent(message)
+      msg:       message
       removeAll: true
 
 App.Config.set('OutOfOffice', { prio: 2800, name: __('Out of Office'), parent: '#profile', target: '#profile/out_of_office', permission: ['user_preferences.out_of_office+ticket.agent'], controller: ProfileOutOfOffice }, 'NavBarProfile')

@@ -22,22 +22,6 @@ module.exports = {
     zammadTailwind,
     daisyTailwind,
     unimportantTailwind,
-    ({ addComponents, theme }) => {
-      addComponents({
-        // NB: Used by FieldDateTimeInput.vue component, within its style section.
-        //   Since all component styles are processed in isolation, we have to provide the classes below within the
-        //   configuration, otherwise we risk running into build issues since class definitions in imported stylesheets
-        //   might not be available.
-        '.date-selection': {
-          borderColor: theme('colors.blue.800'),
-          backgroundColor: theme('colors.blue.800'),
-          backgroundImage: 'none',
-        },
-        '.date-navigation': {
-          color: theme('colors.blue.800'),
-        },
-      })
-    },
   ],
   theme: {
     colors: {

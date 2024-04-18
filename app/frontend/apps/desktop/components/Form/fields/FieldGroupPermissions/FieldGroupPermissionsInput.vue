@@ -208,6 +208,7 @@ const ensureGranularOrFullAccess = (
     role="list"
     :tabindex="context.disabled ? '-1' : '0'"
     :aria-disabled="context.disabled"
+    :aria-describedby="context.describedBy"
     v-bind="context.attrs"
     @focus="delegateFocus"
   >

@@ -4,7 +4,7 @@ import { getByTestId, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '#tests/support/components/index.ts'
 import type { AutocompleteSearchUserEntry } from '#shared/graphql/types.ts'
-import { getNode } from '@formkit/core'
+import { getNode, type FormKitNode } from '@formkit/core'
 import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 import {
   mockAutocompleteSearchAgentQuery,
@@ -106,21 +106,38 @@ describe('Form - Field - Agent - Features', () => {
         name: 'agent_id',
         value: 123,
         belongsToObjectField: 'user',
+        // Add manually the "initialEntityObject" which is normally coming
+        // from the root node (for a single field root node === own node).
+        plugins: [
+          (node: FormKitNode) => {
+            node.context!.initialEntityObject = {
+              user: {
+                internalId: 123,
+                fullname: 'John Doe',
+              },
+            }
+          },
+        ],
       },
     })
-
-    const node = getNode('agent')
-
-    node!.context!.initialEntityObject = {
-      user: {
-        internalId: 123,
-        fullname: 'John Doe',
-      },
-    }
 
     await waitForNextTick(true)
 
     expect(wrapper.getByRole('listitem')).toHaveTextContent('John Doe')
+
+    // Reset the field with new value and before change the initial entity object.
+    const node = getNode('agent')!
+    node.context!.initialEntityObject = {
+      user: {
+        internalId: 456,
+        fullname: 'Jane Doe',
+      },
+    }
+    node.reset('456')
+
+    await waitForNextTick(true)
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Jane Doe')
   })
 })
 

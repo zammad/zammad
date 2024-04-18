@@ -108,14 +108,12 @@ useEventListener('click', (e) => {
       :action-row="actionRow"
       :config="config"
       :input-class-name="context.classes.input"
-      :aria-describedby="context.describedBy"
       :aria-labels="ariaLabels"
       :inline="{ input: true }"
       :month-change-on-scroll="false"
       auto-apply
       dark
       text-input
-      v-bind="context.attrs"
       @open="expandPicker"
       @close="collapsePicker"
       @blur="context.handlers.blur"
@@ -138,6 +136,8 @@ useEventListener('click', (e) => {
           :name="context.node.name"
           :class="context.classes.input"
           :disabled="context.disabled"
+          :aria-describedby="context.describedBy"
+          v-bind="context.attrs"
           type="text"
           @input="onInput"
           @keypress.enter="onEnter"
@@ -208,6 +208,7 @@ useEventListener('click', (e) => {
   --dp-range-between-dates-text-color: theme(colors.white);
   --dp-range-between-border-color: theme(colors.transparent);
 
+  &:where([data-errors='true'] *),
   &:where([data-invalid='true'] *) {
     --dp-background-color: theme(colors.red.dark);
   }

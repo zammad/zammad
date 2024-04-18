@@ -20,7 +20,7 @@ describe('testing input for searching', () => {
 
     expect(search).toHaveAttribute('placeholder', 'Search…')
 
-    const clearButton = view.getByIconName('backspace')
+    const clearButton = view.getByIconName('backspace2')
 
     expect(clearButton).toHaveClass('invisible')
 

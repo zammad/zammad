@@ -783,6 +783,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr ""
@@ -6824,6 +6825,10 @@ msgstr ""
 msgid "In order to be able to influence the desired behavior in this regard, you can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Inactive"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -9257,8 +9262,22 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/permissions.rb
 msgid "Out of Office"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Out of Office settings could not be saved."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Out of Office settings have been saved successfully"
+msgstr ""
+
+#: lib/validations/out_of_office_validator.rb
+msgid "Out of Office start date has to be earlier than or equal to end date"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
@@ -9902,7 +9921,16 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
 msgid "Profile"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+msgid "Profile appearance updated successfully."
+msgstr ""
+
+#: app/frontend/shared/composables/useLocaleUpdate.ts
+msgid "Profile language updated successfully."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
@@ -10018,6 +10046,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Real-time"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Reason for absence"
 msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -10221,6 +10253,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Replacement"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Replacement agent"
 msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
@@ -10655,6 +10691,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Save Out of Office"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
@@ -11676,6 +11716,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Start Import from Source"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Start and end date"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -13022,6 +13066,10 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 msgid "The source ticket could not be found."
+msgstr ""
+
+#: app/frontend/shared/form/validation/rules/date-range.ts
+msgid "The start date must precede or match end date."
 msgstr ""
 
 #: app/services/service/system/check_setup.rb
@@ -16105,6 +16153,10 @@ msgstr ""
 msgid "e.g."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "e.g. Easter holiday"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/drox.jst.eco
 msgid "edit"
 msgstr ""
@@ -17049,6 +17101,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "updated"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+msgid "vacation,holiday,replacement,time off"
 msgstr ""
 
 #: db/seeds/ticket_article_types.rb

@@ -42,6 +42,7 @@ const selectOption = (option: RadioListOption, event?: Event) => {
     :class="context.classes.input"
     :name="context.node.name"
     :aria-disabled="context.disabled"
+    :aria-describedby="context.describedBy"
     :tabindex="context.disabled ? '-1' : '0'"
     v-bind="context.attrs"
     @focus="delegateFocus"

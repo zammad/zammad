@@ -35,6 +35,10 @@ const userData = {
     names: ['admin'],
   },
   hasSecondaryOrganizations: false,
+  outOfOffice: false,
+  outOfOfficeStartAt: null,
+  outOfOfficeEndAt: null,
+  outOfOfficeReplacement: null,
 }
 
 describe('Session Store', () => {

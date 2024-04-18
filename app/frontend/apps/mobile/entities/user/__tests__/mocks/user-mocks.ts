@@ -31,7 +31,6 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
     active: true,
     vip: false,
     image: null,
-    outOfOffice: false,
     ticketsCount: {
       open: 4,
       closed: 2,

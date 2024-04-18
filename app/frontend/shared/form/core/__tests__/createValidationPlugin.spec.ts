@@ -16,6 +16,8 @@ describe('getValidationRuleMessages', () => {
   it('get validation messages from custom rules', () => {
     const validationRuleMessages = getValidationRuleMessages()
 
-    expect(validationRuleMessages).toEqual({})
+    expect(validationRuleMessages).toEqual({
+      date_range: expect.any(Function),
+    })
   })
 })

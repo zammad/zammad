@@ -56,6 +56,8 @@ export const getCoreDesktopClasses: FormThemeExtension = (
     tel: textInputClasses(classes.tel),
     time: textInputClasses(classes.time),
     search: textInputClasses(classes.search),
+    date: textInputClasses(classes.date),
+    datetime: textInputClasses(classes.datetime),
     checkbox: {
       outer: 'leading-none',
       wrapper: 'inline-flex items-center cursor-pointer select-none',
@@ -78,6 +80,7 @@ export const getCoreDesktopClasses: FormThemeExtension = (
     select: selectInputClasses(classes.select),
     treeselect: selectInputClasses(classes.treeselect),
     autocomplete: selectInputClasses(classes.autocomplete),
+    agent: selectInputClasses(classes.agent),
     toggle: extendClasses(classes.toggle, {
       wrapper: 'h-10 flex flex-row-reverse items-center gap-1.5',
       label: '!mb-0 grow',

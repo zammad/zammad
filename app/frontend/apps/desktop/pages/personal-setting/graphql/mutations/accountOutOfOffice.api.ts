@@ -7,8 +7,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const AccountOutOfOfficeDocument = gql`
-    mutation accountOutOfOffice($settings: OutOfOfficeInput!) {
-  accountOutOfOffice(settings: $settings) {
+    mutation accountOutOfOffice($input: OutOfOfficeInput!) {
+  accountOutOfOffice(input: $input) {
     success
     errors {
       ...errors

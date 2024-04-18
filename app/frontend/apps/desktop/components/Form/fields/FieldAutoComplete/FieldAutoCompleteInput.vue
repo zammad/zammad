@@ -21,6 +21,7 @@ import {
   watchOnce,
 } from '@vueuse/core'
 import { useLazyQuery } from '@vue/apollo-composable'
+import type { FormKitNode } from '@formkit/core'
 import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonSelect from '#desktop/components/CommonSelect/CommonSelect.vue'
@@ -82,20 +83,47 @@ watch(
 // Remember current optionValueLookup in node context.
 contextReactive.value.optionValueLookup = optionValueLookup
 
-// Initial options prefill for non-multiple fields (multiple fields needs to be handled in the form updater).
-if (
-  !props.context.multiple &&
-  hasValue.value &&
-  props.context.initialOptionBuilder &&
-  !getSelectedOptionLabel(currentValue.value)
-) {
-  const initialOption = props.context.initialOptionBuilder(
-    props.context.node.at('$root')?.context?.initialEntityObject as ObjectLike,
-    currentValue.value,
-    props.context,
-  )
+// Initial options prefill for non-multiple fields (multiple fields needs to be handled in
+// the form updater or via options prop).
+let rememberedInitialOptionFromBuilder: AutoCompleteOption | undefined
+const initialOptionBuilderHandler = (rootNode: FormKitNode) => {
+  if (
+    hasValue.value &&
+    props.context.initialOptionBuilder &&
+    !getSelectedOptionLabel(currentValue.value)
+  ) {
+    const initialOption = props.context.initialOptionBuilder(
+      rootNode?.context?.initialEntityObject as ObjectLike,
+      currentValue.value,
+      props.context,
+    )
 
-  if (initialOption) localOptions.value.push(initialOption)
+    if (initialOption) {
+      localOptions.value.push(initialOption)
+
+      if (rememberedInitialOptionFromBuilder) {
+        const rememberedOptionValue = rememberedInitialOptionFromBuilder.value
+
+        localOptions.value = localOptions.value.filter(
+          (option) => option.value !== rememberedOptionValue,
+        )
+      }
+
+      rememberedInitialOptionFromBuilder = initialOption
+    }
+  }
+}
+
+if (!props.context.multiple && props.context.initialOptionBuilder) {
+  const rootNode = props.context.node.at('$root')
+
+  if (rootNode) {
+    initialOptionBuilderHandler(rootNode)
+
+    rootNode?.on('reset', ({ origin }) => {
+      initialOptionBuilderHandler(origin)
+    })
+  }
 }
 
 const input = ref<HTMLDivElement>()
@@ -377,6 +405,7 @@ useFormBlock(contextReactive, openSelectDropdown)
         class="formkit-disabled:pointer-events-none flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-none dark:text-white"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled"
+        :aria-describedby="context.describedBy"
         aria-autocomplete="none"
         :data-multiple="context.multiple"
         :tabindex="context.disabled ? '-1' : '0'"

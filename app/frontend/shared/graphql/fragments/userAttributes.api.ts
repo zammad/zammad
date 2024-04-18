@@ -10,6 +10,19 @@ export const UserAttributesFragmentDoc = gql`
   lastname
   fullname
   image
+  outOfOffice
+  outOfOfficeStartAt
+  outOfOfficeEndAt
+  outOfOfficeReplacement {
+    id
+    internalId
+    firstname
+    lastname
+    fullname
+    login
+    phone
+    email
+  }
   preferences
   objectAttributeValues {
     ...objectAttributeValues

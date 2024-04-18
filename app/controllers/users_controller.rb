@@ -712,16 +712,16 @@ curl http://localhost/api/v1/users/out_of_office -v -u #{login}:#{password} -H "
 
   def out_of_office
     user = User.find(current_user.id)
-    user.with_lock do
-      user.assign_attributes(
-        out_of_office:                params[:out_of_office],
-        out_of_office_start_at:       params[:out_of_office_start_at],
-        out_of_office_end_at:         params[:out_of_office_end_at],
-        out_of_office_replacement_id: params[:out_of_office_replacement_id],
-      )
-      user.preferences[:out_of_office_text] = params[:out_of_office_text]
-      user.save!
-    end
+
+    Service::User::OutOfOffice
+      .new(user,
+           enabled:     params[:out_of_office],
+           start_at:    params[:out_of_office_start_at],
+           end_at:      params[:out_of_office_end_at],
+           replacement: User.find_by(id: params[:out_of_office_replacement_id]),
+           text:        params[:out_of_office_text])
+      .execute
+
     render json: { message: 'ok' }, status: :ok
   end
 

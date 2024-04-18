@@ -257,6 +257,7 @@ setupMissingOrDisabledOptionHandling()
         aria-owns="field-tree-select-input-dropdown"
         aria-haspopup="menu"
         :aria-expanded="expanded"
+        :aria-describedby="context.describedBy"
         @keydown.escape.prevent="closeDropdown()"
         @keypress.enter.prevent="openSelectDropdown()"
         @keydown.down.prevent="openOrMoveFocusToDropdown()"

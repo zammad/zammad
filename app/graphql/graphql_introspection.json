@@ -341,13 +341,9 @@
 
               ],
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -7549,8 +7545,8 @@
               "description": "Update user profile out of office settings",
               "args": [
                 {
-                  "name": "settings",
-                  "description": "Theme to set",
+                  "name": "input",
+                  "description": "Out of Office settings",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
@@ -10738,55 +10734,39 @@
               "name": "text",
               "description": "Out of office message",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               },
               "defaultValue": null
             },
             {
               "name": "startAt",
-              "description": "Out of office start date",
+              "description": "Out of office date range",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ISO8601DateTime",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "ISO8601Date",
+                "ofType": null
               },
               "defaultValue": null
             },
             {
               "name": "endAt",
-              "description": "Out of office end date",
+              "description": "Out of office date range",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ISO8601DateTime",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "ISO8601Date",
+                "ofType": null
               },
               "defaultValue": null
             },
             {
-              "name": "replacement",
+              "name": "replacementId",
               "description": "User ID of replacement",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
               },
               "defaultValue": null
             }
@@ -19350,14 +19330,14 @@
               "deprecationReason": null
             },
             {
-              "name": "outOfOfficeReplacementId",
-              "description": null,
+              "name": "outOfOfficeReplacement",
+              "description": "Replacement agent if this user is out of office",
               "args": [
 
               ],
               "type": {
-                "kind": "SCALAR",
-                "name": "Int",
+                "kind": "OBJECT",
+                "name": "User",
                 "ofType": null
               },
               "isDeprecated": false,

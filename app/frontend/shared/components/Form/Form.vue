@@ -199,13 +199,19 @@ const autofocusFirstInput = (node: FormKitNode) => {
   })
 }
 
+const setInitialEntityObjectToContext = (
+  node: FormKitNode,
+  object = props.initialEntityObject,
+) => {
+  if (node.context && object) {
+    node.context.initialEntityObject = object
+  }
+}
+
 const setFormNode = (node: FormKitNode) => {
   formNode.value = node
 
-  // Save the initial entity object in the form node context, so that fields can use it.
-  if (node.context && props.initialEntityObject) {
-    node.context.initialEntityObject = props.initialEntityObject
-  }
+  setInitialEntityObjectToContext(node)
 
   node.settled.then(() => {
     showInitialLoadingAnimation.value = false
@@ -537,7 +543,10 @@ const resetForm = (
 
   const rootNode = formNode.value
 
-  if (object) setInitialEntityObjectAttributeMap(object)
+  if (object) {
+    setInitialEntityObjectAttributeMap(object)
+    setInitialEntityObjectToContext(rootNode, object)
+  }
 
   const { dirtyNodes, dirtyValues, resetValues } = getResetFormValues(
     rootNode,

@@ -183,6 +183,7 @@ setupMissingOrDisabledOptionHandling()
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled"
         :data-multiple="context.multiple"
+        :aria-describedby="context.describedBy"
         :tabindex="
           context.disabled || (expanded && !context.noFiltering) ? '-1' : '0'
         "

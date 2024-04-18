@@ -120,6 +120,7 @@ const classMap = getToggleClasses()
     :aria-labelledby="`label-${context.id}`"
     :aria-disabled="disabled"
     :aria-checked="ariaChecked"
+    :aria-describedby="context.describedBy"
     :tabindex="context.disabled ? '-1' : '0'"
     :v-bind="context.attrs"
     @click="updateLocalValue"

@@ -7,8 +7,8 @@ RSpec.describe Gql::Mutations::Account::OutOfOffice, type: :graphql do
 
   let(:mutation) do
     <<~GQL
-      mutation accountOutOfOffice($settings: OutOfOfficeInput!) {
-        accountOutOfOffice(settings: $settings) {
+      mutation accountOutOfOffice($input: OutOfOfficeInput!) {
+        accountOutOfOffice(input: $input) {
           success
           errors {
             message
@@ -21,14 +21,13 @@ RSpec.describe Gql::Mutations::Account::OutOfOffice, type: :graphql do
 
   let(:variables) do
     {
-      settings:
-                {
-                  enabled:     true,
-                  text:        'Out of office message',
-                  startAt:     1.day.from_now.iso8601,
-                  endAt:       2.days.from_now.iso8601,
-                  replacement: create(:agent).id
-                }
+      input: {
+        enabled:       true,
+        text:          'Out of office message',
+        startAt:       '2011-02-03',
+        endAt:         '2011-03-03',
+        replacementId: gql.id(create(:agent))
+      }
     }
   end
 
@@ -46,25 +45,34 @@ RSpec.describe Gql::Mutations::Account::OutOfOffice, type: :graphql do
     context 'with invalid settings' do
       let(:variables) do
         {
-          settings:
-                    {
-                      enabled:     true,
-                      text:        'Out of office message',
-                      startAt:     1.day.from_now.iso8601,
-                      endAt:       2.days.from_now.iso8601,
-                      replacement: nil
-                    }
+          input: {
+            enabled:       true,
+            text:          'Out of office message',
+            startAt:       '2011-02-03',
+            endAt:         '2011-03-03',
+            replacementId: nil
+          }
         }
       end
 
       it 'returns an error' do
-        expect(execute_graphql_query.error_message).to eq('Variable $settings of type OutOfOfficeInput! was provided invalid value for replacement (Expected value to not be null)')
+        execute_graphql_query
+
+        expect(gql.result.data).to include('errors' => include(
+          include(
+            'field'   => 'outOfOfficeReplacementId',
+            'message' => 'This field can\'t be blank'
+          )
+        ))
       end
     end
 
     context 'with valid setting' do
-      it 'updates user profile out of office settings' do
-        expect { execute_graphql_query }.to change { user.reload.preferences['out_of_office_text'] }.from(nil).to('Out of office message')
+      it 'updates user profile out of office input' do
+        expect { execute_graphql_query }
+          .to change { user.reload.preferences['out_of_office_text'] }
+          .from(nil)
+          .to('Out of office message')
       end
     end
   end

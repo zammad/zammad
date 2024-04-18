@@ -50,13 +50,19 @@ const actionRow = computed(() => ({
   showPreview: false,
 }))
 
+const inputIcon = computed(() => {
+  if (contextReactive.value.range) return 'calendar-range'
+  if (timePicker.value) return 'calendar-date-time'
+  return 'calendar-event'
+})
+
 const { theme } = storeToRefs(useAppTheme())
 
 const dark = computed(() => theme.value === 'dark')
 </script>
 
 <template>
-  <div>
+  <div class="w-full">
     <VueDatePicker
       v-model="localValue"
       :uid="context.id"
@@ -81,20 +87,44 @@ const dark = computed(() => theme.value === 'dark')
       :action-row="actionRow"
       :config="config"
       :input-class-name="context.classes.input"
-      :aria-describedby="context.describedBy"
       :aria-labels="ariaLabels"
       auto-apply
       text-input
       offset="12"
-      v-bind="context.attrs"
       @blur="context.handlers.blur"
     >
-      <template #input-icon>
-        <CommonIcon
-          :name="context.range ? 'calendar-range' : 'calendar-event'"
-          size="tiny"
-          decorative
+      <template
+        #dp-input="{
+          value,
+          onInput,
+          onEnter,
+          onTab,
+          onFocus,
+          onBlur,
+          onKeypress,
+          onPaste,
+        }"
+      >
+        <input
+          :id="context.id"
+          :value="value"
+          :name="context.node.name"
+          :class="context.classes.input"
+          :disabled="context.disabled"
+          :aria-describedby="context.describedBy"
+          v-bind="context.attrs"
+          type="text"
+          @input="onInput"
+          @keypress.enter="onEnter"
+          @keypress.tab="onTab"
+          @keypress="onKeypress"
+          @paste="onPaste"
+          @blur="onBlur"
+          @focus="onFocus"
         />
+      </template>
+      <template #input-icon>
+        <CommonIcon :name="inputIcon" size="tiny" decorative />
       </template>
       <template #clear-icon="{ clear }">
         <CommonIcon
@@ -160,10 +190,6 @@ const dark = computed(() => theme.value === 'dark')
   --dp-input-background-color: theme(colors.blue.200);
 
   .dp {
-    &__input:hover {
-      outline-color: theme(colors.blue.600);
-    }
-
     &__clear_icon:hover {
       color: theme(colors.black);
     }
@@ -218,10 +244,6 @@ const dark = computed(() => theme.value === 'dark')
   --dp-input-background-color: theme(colors.gray.700);
 
   .dp {
-    &__input:hover {
-      outline-color: theme(colors.blue.900);
-    }
-
     &__clear_icon:hover {
       color: theme(colors.white);
     }
@@ -273,28 +295,8 @@ const dark = computed(() => theme.value === 'dark')
   --dp-time-font-size: theme(fontSize.base);
 
   .dp {
-    &__input {
-      background-color: var(--dp-input-background-color);
-
-      &:hover {
-        outline-width: 1px;
-        outline-style: solid;
-        outline-offset: 1px;
-      }
-
-      &:focus {
-        outline-width: 1px;
-        outline-style: solid;
-        outline-offset: 1px;
-        outline-color: theme(colors.blue.800);
-      }
-
-      &:where([data-invalid='true'] *) {
-        outline-width: 1px;
-        outline-style: solid;
-        outline-offset: 1px;
-        outline-color: theme(colors.red.500) !important;
-      }
+    &__input_wrap {
+      display: flex;
     }
 
     &__input_icon {
@@ -332,6 +334,11 @@ const dark = computed(() => theme.value === 'dark')
     &__date_hover:hover,
     &__inc_dec_button {
       background: theme(colors.transparent);
+      transition: none;
+    }
+
+    &__date_hover.dp__cell_offset:hover {
+      color: var(--dp-secondary-color);
     }
 
     &__menu_inner {
@@ -340,6 +347,7 @@ const dark = computed(() => theme.value === 'dark')
 
     &__action_row {
       padding-top: 0;
+      margin-top: theme(space[0.5]);
     }
 
     &__btn,
@@ -364,7 +372,7 @@ const dark = computed(() => theme.value === 'dark')
     }
 
     &__calendar_row {
-      gap: theme(gap.1);
+      gap: theme(gap[1.5]);
     }
 
     &__month_year_wrap {

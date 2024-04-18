@@ -6,6 +6,10 @@ import { storeToRefs } from 'pinia'
 import { useAccountLocaleMutation } from '#shared/entities/account/graphql/mutations/locale.api.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
+import {
+  NotificationTypes,
+  useNotifications,
+} from '#shared/components/CommonNotifications/index.ts'
 import MutationHandler from '../server/apollo/handler/MutationHandler.ts'
 
 const ZAMMAD_TRANSLATION_LINK = 'https://translations.zammad.org/'
@@ -17,6 +21,8 @@ export const useLocaleUpdate = () => {
     errorNotificationMessage: __('The language could not be updated.'),
   })
 
+  const { notify } = useNotifications()
+
   const localeStore = useLocaleStore()
   const { localeData, locales } = storeToRefs(localeStore)
   const { setLocale } = localeStore
@@ -26,11 +32,17 @@ export const useLocaleUpdate = () => {
     set: (locale) => {
       if (!locale || localeData.value?.locale === locale) return
       isSavingLocale.value = true
-      Promise.all([setLocale(locale), localeMutation.send({ locale })]).finally(
-        () => {
+      Promise.all([setLocale(locale), localeMutation.send({ locale })])
+        .then(() => {
+          notify({
+            id: 'locale-update',
+            message: __('Profile language updated successfully.'),
+            type: NotificationTypes.Success,
+          })
+        })
+        .finally(() => {
           isSavingLocale.value = false
-        },
-      )
+        })
     },
   })
 

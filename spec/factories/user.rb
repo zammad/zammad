@@ -99,7 +99,7 @@ FactoryBot.define do
       out_of_office { true }
       out_of_office_start_at { 1.day.ago }
       out_of_office_end_at { 1.day.from_now }
-      out_of_office_replacement_id { ooo_agent.id }
+      out_of_office_replacement_id { ooo_agent&.id }
     end
 
     trait :with_org do

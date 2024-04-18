@@ -11,16 +11,6 @@ import { addFloatingTextareaLabel } from './addFloatingTextareaLabel.ts'
 import { addBlockFloatingLabel } from './addBlockFloatingLabel.ts'
 import { addStaticFloatingLabel } from './addStaticFloatingLabel.ts'
 
-export const addDateLabel = (classes: Classes = {}): Classes => {
-  const newClasses = addAbsoluteFloatingLabel(classes)
-  // remove padding since we implement it differently for the calendar
-  const inner = newClasses.inner.replace(' ltr:pr-2 rtl:pl-2', '')
-  return {
-    ...newClasses,
-    inner: `${inner} flex-col items-center`,
-  }
-}
-
 export const addButtonVariants = (classes: Classes = {}): Classes => {
   return extendClasses(classes, {
     wrapper: 'relative',
@@ -54,8 +44,8 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     tel: addAbsoluteFloatingLabel(classes.tel),
     time: addAbsoluteFloatingLabel(classes.time),
     password: addAbsoluteFloatingLabel(classes.password),
-    date: addDateLabel(classes.date),
-    datetime: addDateLabel(classes.datetime),
+    date: addAbsoluteFloatingLabel(classes.date),
+    datetime: addAbsoluteFloatingLabel(classes.datetime),
     editor: addFloatingTextareaLabel(
       extendClasses(classes.editor, {
         input: 'min-h-[80px]',

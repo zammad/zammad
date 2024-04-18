@@ -146,6 +146,7 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
       :class="context.classes.input"
       tabindex="-1"
       aria-hidden="true"
+      :aria-describedby="context.describedBy"
       accept="image/*"
       v-bind="context.attrs"
       @change="!context.disabled && onFileChanged($event)"

@@ -116,7 +116,7 @@ export default {
         }"
         :aria-label="i18n.t('Clear Search')"
         :aria-hidden="!filter?.length ? 'true' : undefined"
-        name="backspace"
+        name="backspace2"
         size="tiny"
         role="button"
         :tabindex="!filter?.length ? '-1' : '0'"
