@@ -1,5 +1,5 @@
 <h3 class="text-center">
-  <%= @T @twoFactorMethodDetails.label %>
+  <%- @T @twoFactorMethodDetails.label %>
 </h3>
 
 <% if @errorMessage: %>

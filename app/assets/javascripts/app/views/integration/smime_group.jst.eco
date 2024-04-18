@@ -15,7 +15,7 @@
   <% else: %>
     <% for group in @groups: %>
       <tr data-id="<%= group.id %>">
-        <td><%= @P(group, 'name') %>
+        <td><%- @P(group, 'name') %>
         <td class="settings-list-control-cell js-signDefault">
         <td class="settings-list-control-cell js-encryptionDefault">
     <% end %>

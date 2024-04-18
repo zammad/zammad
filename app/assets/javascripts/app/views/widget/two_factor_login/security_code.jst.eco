@@ -1,5 +1,5 @@
 <h3 class="text-center">
-  <%= @T @twoFactorMethodDetails.label %>
+  <%- @T @twoFactorMethodDetails.label %>
 </h3>
 
 <% if @errorMessage: %>
@@ -19,7 +19,7 @@
   </div>
   <input id="security_code" name="two_factor_payload" type="text" class="form-control" autocomplete="off"/>
 
-  <p class="help-text"><%= @T @twoFactorMethodDetails.helpMessage  %></p>
+  <p class="help-text"><%- @T @twoFactorMethodDetails.helpMessage  %></p>
 </div>
 
 <div class="form-controls">

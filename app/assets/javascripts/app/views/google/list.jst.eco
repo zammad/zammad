@@ -60,7 +60,7 @@
           <% if channel.group.active is false: %>
             <%- @T('%s is inactive, please select an active one.', @P(channel.group, 'name')) %>
           <% else: %>
-            <%= @P(channel.group, 'name') %>
+            <%- @P(channel.group, 'name') %>
           <% end %>
         </a>
       </div>

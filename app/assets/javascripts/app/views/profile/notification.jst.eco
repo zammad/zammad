@@ -32,7 +32,7 @@
           <tbody>
           <% for group in @groups: %>
             <tr>
-              <td><%= @P(group, 'name') %>
+              <td><%- @P(group, 'name') %>
               <td class="u-positionOrigin">
                 <label class="checkbox-replacement checkbox-replacement--fullscreen">
                   <input type="checkbox" name="group_ids" value="<%= group.id %>" <% if _.include(@config.group_ids, group.id.toString()): %>checked<% end %>/>
