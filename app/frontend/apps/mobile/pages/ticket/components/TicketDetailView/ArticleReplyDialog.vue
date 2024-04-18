@@ -24,10 +24,10 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'showArticleForm'): void
-  (e: 'hideArticleForm'): void
-  (e: 'discard'): void
-  (e: 'done'): void
+  showArticleForm: []
+  hideArticleForm: []
+  discard: []
+  done: []
 }>()
 
 const label = computed(() =>

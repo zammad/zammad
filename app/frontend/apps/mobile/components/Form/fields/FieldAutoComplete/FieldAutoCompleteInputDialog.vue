@@ -38,8 +38,8 @@ const contextReactive = toRef(props, 'context')
 const { isCurrentValue } = useValue<AutocompleteSelectValue>(contextReactive)
 
 const emit = defineEmits<{
-  (e: 'updateOptions', options: AutoCompleteOption[]): void
-  (e: 'action'): void
+  updateOptions: [AutoCompleteOption[]]
+  action: []
 }>()
 
 const { sortedOptions, selectOption, appendedOptions } = useSelectOptions<

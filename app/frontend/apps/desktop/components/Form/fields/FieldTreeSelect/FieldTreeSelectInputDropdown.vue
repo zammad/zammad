@@ -49,12 +49,12 @@ export interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', option: string | number | (string | number)[]): void
-  (e: 'select', option: FlatSelectOption): void
-  (e: 'close'): void
-  (e: 'push', option: FlatSelectOption): void
-  (e: 'pop'): void
-  (e: 'clear-filter'): void
+  'update:modelValue': [option: string | number | (string | number)[]]
+  select: [option: FlatSelectOption]
+  close: []
+  push: [option: FlatSelectOption]
+  pop: []
+  'clear-filter': []
 }>()
 
 const locale = useLocaleStore()

@@ -13,9 +13,9 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'select', twoFactorMethod: EnumTwoFactorAuthenticationMethod): void
-  (e: 'cancel'): void
-  (e: 'use-recovery-code'): void
+  select: [twoFactorMethod: EnumTwoFactorAuthenticationMethod]
+  cancel: []
+  'use-recovery-code': []
 }>()
 </script>
 

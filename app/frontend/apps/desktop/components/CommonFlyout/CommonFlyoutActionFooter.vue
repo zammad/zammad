@@ -26,8 +26,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  cancel: [void]
-  action: [void]
+  cancel: []
+  action: []
 }>()
 
 // ** Form // **

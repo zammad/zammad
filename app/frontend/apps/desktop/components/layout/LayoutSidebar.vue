@@ -31,9 +31,9 @@ const props = defineProps<Props>()
 
 const emit = defineEmits<{
   'resize-horizontal': [number]
-  'resize-horizontal-start': [void]
-  'resize-horizontal-end': [void]
-  'reset-width': [void]
+  'resize-horizontal-start': []
+  'resize-horizontal-end': []
+  'reset-width': []
   collapse: [boolean]
   expand: [boolean]
 }>()

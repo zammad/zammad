@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value?: string | number): void
+  'update:modelValue': [value?: string | number]
 }>()
 
 const session = useSessionStore()

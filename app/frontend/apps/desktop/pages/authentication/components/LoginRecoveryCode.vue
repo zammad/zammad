@@ -20,9 +20,9 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'finish'): void
-  (e: 'error', error: UserError): void
-  (e: 'clear-error'): void
+  finish: []
+  error: [error: UserError]
+  'clear-error': []
 }>()
 
 const schema: FormSchemaNode[] = [

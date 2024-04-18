@@ -23,7 +23,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  (event: 'refetch', status: boolean): void
+  refetch: [status: boolean]
 }>()
 const TICKETS_COUNT = 10
 

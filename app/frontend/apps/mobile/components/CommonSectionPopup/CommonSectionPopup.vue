@@ -23,8 +23,8 @@ defineOptions({
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  (e: 'close', isCancel: boolean): void
-  (e: 'update:state', state: boolean): void
+  close: [isCancel: boolean]
+  'update:state': [state: boolean]
 }>()
 
 const localState = useVModel(props, 'state', emit)

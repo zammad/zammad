@@ -24,8 +24,8 @@ export interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'remove', id: Scalars['ID']['output']): void
-  (e: 'seen', id: Scalars['ID']['output']): void
+  remove: [id: Scalars['ID']['output']]
+  seen: [id: Scalars['ID']['output']]
 }>()
 
 const updateCacheAfterRemoving = (

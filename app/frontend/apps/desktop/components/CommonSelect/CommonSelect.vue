@@ -57,9 +57,9 @@ export interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', option: string | number | (string | number)[]): void
-  (e: 'select', option: SelectOption): void
-  (e: 'close'): void
+  'update:modelValue': [option: string | number | (string | number)[]]
+  select: [option: SelectOption]
+  close: []
 }>()
 
 const dropdownElement = ref<HTMLElement>()

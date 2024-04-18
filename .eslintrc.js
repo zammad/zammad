@@ -150,6 +150,9 @@ module.exports = {
       },
     ],
 
+    // Enforce Vue v3.3+ tuple syntax for defineEmits.
+    'vue/define-emits-declaration': ['error', 'type-literal'],
+
     'vue/script-setup-uses-vars': 'error',
 
     // Don't require a default value for the props.

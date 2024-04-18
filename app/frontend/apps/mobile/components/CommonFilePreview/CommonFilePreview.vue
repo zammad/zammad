@@ -33,8 +33,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'remove'): void
-  (e: 'preview', $event: Event): void
+  remove: []
+  preview: [$event: Event]
 }>()
 
 const imageFailed = ref(false)

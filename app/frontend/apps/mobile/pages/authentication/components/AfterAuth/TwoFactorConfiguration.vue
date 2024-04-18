@@ -7,7 +7,7 @@ defineProps<{
 }>()
 
 defineEmits<{
-  (event: 'redirect', url: string): void
+  redirect: [url: string]
 }>()
 
 const { forceDesktop } = useForceDesktop()

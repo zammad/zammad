@@ -18,7 +18,7 @@ withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'showMore'): void
+  showMore: []
 }>()
 </script>
 

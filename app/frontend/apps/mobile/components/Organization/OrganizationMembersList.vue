@@ -15,7 +15,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  (e: 'load-more'): void
+  'load-more': []
 }>()
 
 const members = computed(() => {

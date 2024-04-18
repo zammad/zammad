@@ -45,7 +45,7 @@ if (builder.value && !message) {
 }
 
 defineEmits<{
-  (e: 'seen'): void
+  seen: []
 }>()
 </script>
 

@@ -15,11 +15,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (
-    event: 'update:modelValue',
-    value: string | number | (string | number)[],
-  ): void
-  (e: 'select', option: SelectOption): void
+  'update:modelValue': [string | number | (string | number)[]]
+  select: [SelectOption]
 }>()
 
 const dialogProps = computed(() => {

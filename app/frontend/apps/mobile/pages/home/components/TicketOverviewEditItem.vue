@@ -11,7 +11,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'action'): void
+  action: []
 }>()
 
 const icon = computed(() => {

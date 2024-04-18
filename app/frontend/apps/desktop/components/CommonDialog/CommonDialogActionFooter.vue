@@ -19,8 +19,8 @@ withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'cancel'): void
-  (e: 'action'): void
+  cancel: []
+  action: []
 }>()
 
 const cancel = () => {

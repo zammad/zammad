@@ -16,13 +16,12 @@ import type { LoginCredentials } from '#shared/entities/two-factor/types.ts'
 import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
 
 const emit = defineEmits<{
-  (e: 'error', error: UserError): void
-  (e: 'finish'): void
-  (
-    e: 'askTwoFactor',
+  error: [UserError]
+  finish: []
+  askTwoFactor: [
     twoFactor: Required<UserTwoFactorMethods>,
     formData: FormSubmitData<LoginCredentials>,
-  ): void
+  ]
 }>()
 
 const application = useApplicationStore()

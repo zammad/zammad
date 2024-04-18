@@ -18,8 +18,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'hide'): void
-  (e: 'blur'): void
+  hide: []
+  blur: []
 }>()
 
 const actionBar = ref<HTMLElement>()

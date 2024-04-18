@@ -38,14 +38,13 @@ export interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  (e: 'success', data: unknown): void
-  (e: 'error'): void
-  (
-    e: 'changedField',
+  success: [data: unknown]
+  error: []
+  changedField: [
     fieldName: string,
     newValue: FormFieldValue,
     oldValue: FormFieldValue,
-  ): void
+  ]
 }>()
 
 const updateMutation = new MutationHandler(props.mutation({}), {

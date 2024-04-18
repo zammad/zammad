@@ -32,8 +32,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'open'): void
-  (e: 'close'): void
+  open: []
+  close: []
 }>()
 
 const popoverElement = ref<HTMLElement>()
@@ -295,7 +295,9 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
         :style="popoverStyle"
         :aria-labelledby="owner?.id"
       >
-        <div class="overflow-y-auto"><slot /></div>
+        <div class="overflow-y-auto">
+          <slot />
+        </div>
         <div
           v-if="!hideArrow"
           class="absolute -z-10 h-[22px] w-[22px] -rotate-45 transform border border-neutral-100 bg-white dark:border-gray-900 dark:bg-gray-500"

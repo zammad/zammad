@@ -14,7 +14,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'select', option: SelectOption): void
+  select: [option: SelectOption]
 }>()
 
 const select = (option: SelectOption) => {

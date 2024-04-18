@@ -6,7 +6,7 @@ defineProps<{
 }>()
 
 defineEmits<{
-  (event: 'redirect', url: string): void
+  redirect: [url: string]
 }>()
 </script>
 

@@ -25,7 +25,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  (e: 'loadPrevious'): void
+  loadPrevious: []
 }>()
 
 const { contextOptions, articleContextShown, showArticleContext } =

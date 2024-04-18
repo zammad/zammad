@@ -152,15 +152,14 @@ if (!hasSchema.value) {
 const localClass = toRef(props, 'class')
 
 const emit = defineEmits<{
-  (
-    e: 'changed',
+  changed: [
     fieldName: string,
     newValue: FormFieldValue,
     oldValue: FormFieldValue,
-  ): void
-  (e: 'node', node: FormKitNode): void
-  (e: 'settled'): void
-  (e: 'focused'): void
+  ]
+  node: [node: FormKitNode]
+  settled: []
+  focused: []
 }>()
 
 const showInitialLoadingAnimation = ref(false)

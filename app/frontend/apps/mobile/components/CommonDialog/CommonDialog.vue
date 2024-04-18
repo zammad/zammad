@@ -25,7 +25,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'close'): void
+  close: []
 }>()
 
 const PX_SWIPE_CLOSE = -150

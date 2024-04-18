@@ -18,7 +18,7 @@ export interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'action-click', event: MouseEvent): void
+  'action-click': [MouseEvent]
 }>()
 
 const clickOnAction = (event: MouseEvent) => {

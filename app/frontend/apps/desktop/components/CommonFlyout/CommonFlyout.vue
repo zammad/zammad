@@ -77,8 +77,8 @@ defineOptions({
 })
 
 const emit = defineEmits<{
-  action: [void]
-  close: [void]
+  action: []
+  close: []
 }>()
 
 const close = async () => {

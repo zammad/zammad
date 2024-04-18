@@ -20,11 +20,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'select', option: FlatSelectOption): void
-  (
-    e: 'next',
-    { option, noFocus }: { option: FlatSelectOption; noFocus?: boolean },
-  ): void
+  select: [option: FlatSelectOption]
+  next: [{ option: FlatSelectOption; noFocus?: boolean }]
 }>()
 
 const locale = useLocaleStore()

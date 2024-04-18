@@ -28,8 +28,8 @@ const props = defineProps<{
 const { isCurrentValue } = useValue(toRef(props, 'context'))
 
 const emit = defineEmits<{
-  (e: 'push', option: FlatSelectOption): void
-  (e: 'pop'): void
+  push: [FlatSelectOption]
+  pop: []
 }>()
 
 const locale = useLocaleStore()

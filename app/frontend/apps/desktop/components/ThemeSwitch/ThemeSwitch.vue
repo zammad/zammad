@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
+  'update:modelValue': [value: string]
 }>()
 
 const localValue = useVModel(props, 'modelValue', emit)

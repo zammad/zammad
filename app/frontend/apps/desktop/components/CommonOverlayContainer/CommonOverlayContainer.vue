@@ -21,7 +21,7 @@ withDefaults(
 )
 
 defineEmits<{
-  (e: 'click-background'): void
+  'click-background': []
 }>()
 </script>
 

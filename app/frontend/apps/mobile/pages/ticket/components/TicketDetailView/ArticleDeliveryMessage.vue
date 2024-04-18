@@ -10,7 +10,7 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'seen'): void
+  seen: []
 }>()
 
 const articleElement = ref<HTMLDivElement>()

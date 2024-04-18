@@ -21,8 +21,8 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'update:orderBy', value: string): void
-  (e: 'update:direction', value: EnumOrderDirection): void
+  'update:orderBy': [string]
+  'update:direction': [EnumOrderDirection]
 }>()
 
 const localOrderBy = useVModel(props, 'orderBy', emit)

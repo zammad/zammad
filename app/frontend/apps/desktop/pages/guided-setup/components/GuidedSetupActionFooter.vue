@@ -35,10 +35,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'submit'): void
-  (e: 'back'): void
-  (e: 'skip'): void
-  (e: 'continue'): void
+  submit: []
+  back: []
+  skip: []
+  continue: []
 }>()
 
 const router = useRouter()

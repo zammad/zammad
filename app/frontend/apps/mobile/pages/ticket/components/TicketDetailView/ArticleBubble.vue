@@ -43,8 +43,8 @@ interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  (e: 'showContext'): void
-  (e: 'seen'): void
+  showContext: []
+  seen: []
 }>()
 
 const session = useSessionStore()

@@ -12,7 +12,7 @@ interface Props {
 defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'seen'): void
+  seen: []
 }>()
 
 const articleElement = ref<HTMLDivElement>()
