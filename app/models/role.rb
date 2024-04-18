@@ -261,7 +261,7 @@ returns
         if !has_editor && !has_reader
           elem.destroy!
         elsif !has_editor && has_reader
-          elem.update!(access: 'reader') if permission.access == 'editor'
+          elem.update!(access: 'reader') if elem.access == 'editor'
         end
 
       end
