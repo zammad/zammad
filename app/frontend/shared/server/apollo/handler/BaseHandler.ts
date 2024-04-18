@@ -18,6 +18,7 @@ import {
   useNotifications,
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 
 export default abstract class BaseHandler<
   TResult = OperationResult,
@@ -38,6 +39,8 @@ export default abstract class BaseHandler<
 
   public handlerOptions!: CommonHandlerOptions<THandlerOptions>
 
+  private handlerId: string
+
   constructor(
     operationResult: TOperationReturn,
     handlerOptions?: CommonHandlerOptionsParameter<THandlerOptions>,
@@ -45,6 +48,8 @@ export default abstract class BaseHandler<
     this.operationResult = operationResult
 
     this.handlerOptions = this.mergedHandlerOptions(handlerOptions)
+
+    this.handlerId = getUuid()
 
     this.initialize()
   }
@@ -118,6 +123,7 @@ export default abstract class BaseHandler<
       //   console.error(error)
       // }
       useNotifications().notify({
+        id: this.handlerId,
         message: this.errorNotificationMessage(
           errorHandler.type,
           errorHandler.message,

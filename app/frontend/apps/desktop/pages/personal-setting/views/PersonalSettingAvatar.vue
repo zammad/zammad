@@ -172,6 +172,7 @@ const storeAvatar = (image: ImageFileData) => {
       }
 
       notify({
+        id: 'avatar-upload-success',
         type: NotificationTypes.Success,
         message: __('Your avatar has been uploaded!'),
       })
@@ -230,6 +231,7 @@ const selectAvatar = (avatar: Avatar) => {
 
   accountAvatarSelectMutation.send().then(() => {
     notify({
+      id: 'avatar-select-success',
       type: NotificationTypes.Success,
       message: __('Your avatar has been changed!'),
     })
@@ -263,6 +265,7 @@ const deleteAvatar = (avatar: Avatar) => {
 
   accountAvatarDeleteMutation.send().then(() => {
     notify({
+      id: 'avatar-delete-success',
       type: NotificationTypes.Success,
       message: __('Your avatar has been deleted!'),
     })

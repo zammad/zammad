@@ -60,6 +60,7 @@ const tryAgain = async () => {
   const security = result?.ticketArticleRetrySecurityProcess?.retryResult
   if (!security) {
     notify({
+      id: 'retry-security-error',
       type: NotificationTypes.Error,
       message: __('The retried security process failed!'),
       timeout: 2000,
@@ -69,6 +70,7 @@ const tryAgain = async () => {
   if (security.type !== props.security.type) {
     // shouldn't be possible, we only support S/MIME
     notify({
+      id: 'security-mechanism-error',
       type: NotificationTypes.Error,
       message: __('Article uses different security mechanism.'),
       timeout: 2000,
@@ -81,11 +83,13 @@ const tryAgain = async () => {
 
   if (security.signingSuccess) {
     notify({
+      id: 'signature-verified',
       type: NotificationTypes.Success,
       message: __('The signature was successfully verified.'),
     })
   } else if (security.signingMessage) {
     notify({
+      id: 'signature-verification-failed',
       type: NotificationTypes.Error,
       message: __('Signature verification failed! %s'),
       messagePlaceholder: [i18n.t(security.signingMessage)],
@@ -96,11 +100,13 @@ const tryAgain = async () => {
 
   if (security.encryptionSuccess) {
     notify({
+      id: 'decryption-success',
       type: NotificationTypes.Success,
       message: __('Decryption was successful.'),
     })
   } else if (security.encryptionMessage) {
     notify({
+      id: 'decryption-failed',
       type: NotificationTypes.Error,
       message: __('Decryption failed! %s'),
       messagePlaceholder: [i18n.t(security.encryptionMessage)],

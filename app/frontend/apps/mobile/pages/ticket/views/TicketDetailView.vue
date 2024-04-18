@@ -127,6 +127,7 @@ const saveTicketForm = async (formData: FormSubmitData) => {
 
     if (result?.ticketUpdate?.ticket) {
       notify({
+        id: 'ticket-update',
         type: NotificationTypes.Success,
         message: __('Ticket updated successfully.'),
       })
@@ -144,6 +145,7 @@ const saveTicketForm = async (formData: FormSubmitData) => {
   } catch (errors) {
     if (errors instanceof UserError) {
       notify({
+        id: 'ticket-update-error',
         message: errors.generalErrors[0],
         type: NotificationTypes.Error,
       })

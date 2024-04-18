@@ -97,6 +97,7 @@ const changeCustomer = async (
     if (result) {
       closeDialog(props.name)
       notify({
+        id: 'ticket-customer-updated',
         type: NotificationTypes.Success,
         message: __('Ticket customer updated successfully.'),
       })
@@ -104,6 +105,7 @@ const changeCustomer = async (
   } catch (errors) {
     if (errors instanceof UserError) {
       notify({
+        id: 'ticket-customer-update-error',
         message: errors.generalErrors[0],
         type: NotificationTypes.Error,
       })

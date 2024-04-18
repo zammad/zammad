@@ -108,6 +108,7 @@ const createTag = () => {
   if (!tag) return
   if (tagExists(tag)) {
     notify({
+      id: 'tag-exists',
       type: NotificationTypes.Warn,
       message: __('Tag "%s" already exists.'),
       messagePlaceholder: [tag],

@@ -87,6 +87,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
     await view.events.click(view.getByRole('button', { name: 'Confirm merge' }))
 
     expect(notify).toHaveBeenCalledWith({
+      id: 'merge-ticket-error',
       type: NotificationTypes.Error,
       message: 'Please select a ticket to merge into.',
     })

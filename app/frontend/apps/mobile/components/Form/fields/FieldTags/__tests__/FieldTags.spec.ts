@@ -164,6 +164,7 @@ describe('Form - Field - Tags', () => {
     const { notify } = useNotifications()
 
     expect(notify).toHaveBeenCalledWith({
+      id: 'tag-exists',
       message: 'Tag "%s" already exists.',
       messagePlaceholder: ['paid'],
       type: NotificationTypes.Warn,

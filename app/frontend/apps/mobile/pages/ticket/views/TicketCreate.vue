@@ -362,6 +362,7 @@ const { notify } = useNotifications()
 
 const notifySuccess = () => {
   notify({
+    id: 'ticket-create-success',
     type: NotificationTypes.Success,
     message: __('Ticket has been created successfully.'),
   })
@@ -378,11 +379,13 @@ const handleTicketCreateError = (error: UserError | ApolloError) => {
     }
 
     notify({
+      id: 'ticket-create-error',
       message: __('Ticket could not be created.'),
       type: NotificationTypes.Error,
     })
   } else {
     notify({
+      id: 'ticket-create-error',
       message: error.generalErrors[0],
       type: NotificationTypes.Error,
     })

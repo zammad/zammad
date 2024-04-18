@@ -80,6 +80,7 @@ watch(
     } else {
       log.debug('Application connection just went down.')
       connectionNotificationId = notifications.notify({
+        id: 'connection-lost',
         message: __('The connection to the server was lost.'),
         type: NotificationTypes.Error,
         persistent: true,

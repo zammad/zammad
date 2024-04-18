@@ -51,6 +51,7 @@ export const useTicketsMerge = (
 
     if (!targetTicketId || !targetTicketOption) {
       notify({
+        id: 'merge-ticket-error',
         type: NotificationTypes.Error,
         message: __('Please select a ticket to merge into.'),
       })
@@ -81,6 +82,7 @@ export const useTicketsMerge = (
     } catch (errors) {
       if (errors instanceof UserError) {
         notify({
+          id: 'merge-ticket-error',
           message: errors.generalErrors[0],
           type: NotificationTypes.Error,
         })

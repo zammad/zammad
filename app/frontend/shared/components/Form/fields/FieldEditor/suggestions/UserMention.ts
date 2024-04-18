@@ -92,7 +92,6 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
           const notifications = useNotifications()
           notifications.notify({
             id: 'mention-user-required-group',
-            unique: true,
             message: __('Before you mention a user, please select a group.'),
             type: NotificationTypes.Warn,
           })

@@ -86,6 +86,7 @@ const resendVerifyEmail = () => {
     .send()
     .then(() => {
       notify({
+        id: 'resend-verify-email',
         type: NotificationTypes.Success,
         message: __('Email sent to "%s". Please verify your email account.'),
         messagePlaceholder: [signupEmail.value],
@@ -93,6 +94,7 @@ const resendVerifyEmail = () => {
     })
     .catch(() => {
       notify({
+        id: 'resend-verify-email-error',
         type: NotificationTypes.Error,
         message: __('The verification email could not be resent.'),
       })

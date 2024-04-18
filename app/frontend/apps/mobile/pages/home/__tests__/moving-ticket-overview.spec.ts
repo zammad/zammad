@@ -111,6 +111,7 @@ describe('playing with overviews', () => {
     const { notify } = useNotifications()
 
     expect(notify).toHaveBeenCalledWith({
+      id: 'overview-save',
       type: NotificationTypes.Success,
       message: 'Ticket Overview settings are saved.',
     })
@@ -129,6 +130,7 @@ describe('playing with overviews', () => {
     const { notify } = useNotifications()
 
     expect(notify).toHaveBeenCalledWith({
+      id: 'no-overview',
       type: NotificationTypes.Error,
       message: 'Please select at least one ticket overview',
     })

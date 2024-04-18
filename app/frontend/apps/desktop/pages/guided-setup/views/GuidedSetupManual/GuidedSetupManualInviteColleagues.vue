@@ -93,6 +93,7 @@ const inviteUser = async (formData: FormSubmitData) => {
     .then(async (result) => {
       if (result?.userAdd?.user) {
         notify({
+          id: 'invite-colleagues',
           type: NotificationTypes.Success,
           message: __('Invitation sent!'),
         })

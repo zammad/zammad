@@ -39,6 +39,7 @@ const tryAgain = async () => {
 
   if (result?.ticketArticleRetryMediaDownload?.success) {
     notify({
+      id: 'media-download-success',
       type: NotificationTypes.Success,
       message: __('Media download was successful.'),
     })
@@ -46,6 +47,7 @@ const tryAgain = async () => {
     showPopup.value = false
   } else {
     notify({
+      id: 'media-download-failed',
       type: NotificationTypes.Error,
       message: __('Media download failed. Please try again later.'),
     })

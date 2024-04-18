@@ -62,6 +62,7 @@ const resetPassword = async (form: FormSubmitData<FormValues>) => {
   } catch (error) {
     if (error instanceof UserError) {
       notify({
+        id: 'password-reset',
         type: NotificationTypes.Error,
         message: error.generalErrors[0],
       })

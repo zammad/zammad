@@ -111,6 +111,7 @@ const addAvatar = () => {
     })
     .catch((errors: UserError) => {
       notify({
+        id: 'avatar-add-error',
         message: errors.generalErrors[0],
         type: NotificationTypes.Error,
       })

@@ -56,6 +56,7 @@ useHeader({
   onAction() {
     if (!includedOverviews.value.length) {
       notify({
+        id: 'no-overview',
         message: __('Please select at least one ticket overview'),
         type: NotificationTypes.Error,
       })
@@ -64,6 +65,7 @@ useHeader({
 
     overviewStore.saveOverviews(includedOverviews.value)
     notify({
+      id: 'overview-save',
       message: __('Ticket Overview settings are saved.'),
       type: NotificationTypes.Success,
     })

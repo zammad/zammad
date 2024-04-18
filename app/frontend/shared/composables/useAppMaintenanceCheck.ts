@@ -40,6 +40,7 @@ const useAppMaintenanceCheck = (
 ) => {
   const notify = (message: string, callback?: () => void) => {
     useNotifications().notify({
+      id: 'app-maintenance',
       message,
       type: NotificationTypes.Warn,
       persistent: true,

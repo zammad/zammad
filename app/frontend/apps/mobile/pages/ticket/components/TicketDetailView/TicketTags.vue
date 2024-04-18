@@ -54,6 +54,7 @@ const handleChangedTicketTags = (node: FormKitNode) => {
       })
       .then(() => {
         notify({
+          id: 'ticket-tags-updated',
           type: NotificationTypes.Success,
           message: __('Ticket tags updated successfully.'),
         })

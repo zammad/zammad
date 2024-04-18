@@ -121,6 +121,7 @@ const updatePassword = async (form: FormSubmitData<FormValues>) => {
   })
 
   notify({
+    id: 'password-change',
     type: NotificationTypes.Success,
     message: __('Woo hoo! Your password has been changed!'),
   })

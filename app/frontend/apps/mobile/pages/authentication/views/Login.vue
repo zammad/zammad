@@ -31,6 +31,7 @@ const { notify, clearAllNotifications } = useNotifications()
 // This could happen because the session was deleted on the server.
 if (route.query.invalidatedSession === '1') {
   notify({
+    id: 'invalid-session',
     message: __('The session is no longer valid. Please log in again.'),
     type: NotificationTypes.Warn,
   })
@@ -75,6 +76,7 @@ const finishLogin = () => {
 
 const showError = (error: UserError) => {
   notify({
+    id: 'login-error',
     message: error.generalErrors[0],
     type: NotificationTypes.Error,
   })
