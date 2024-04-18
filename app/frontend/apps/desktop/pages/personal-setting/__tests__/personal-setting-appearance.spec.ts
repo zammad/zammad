@@ -1,8 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import { expect } from 'vitest'
-import { waitForAccountAppearanceMutationCalls } from '../../graphql/mutations/accountAppearance.mocks.ts'
+import { waitForAccountAppearanceMutationCalls } from '../graphql/mutations/accountAppearance.mocks.ts'
 
 describe('appearance page', () => {
   it('update appearance to dark', async () => {

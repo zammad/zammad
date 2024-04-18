@@ -23,6 +23,7 @@ export interface Props {
   size?: AvatarSize
   personal?: boolean
   decorative?: boolean
+  initialsOnly?: boolean
 }
 
 const props = defineProps<Props>()
@@ -64,7 +65,7 @@ const icon = computed(() => {
 const application = useApplicationStore()
 
 const image = computed(() => {
-  if (icon.value) return null
+  if (icon.value || props.initialsOnly) return null
   if (props.entity.id === SYSTEM_USER_ID) return logo
   if (!props.entity.image) return null
 

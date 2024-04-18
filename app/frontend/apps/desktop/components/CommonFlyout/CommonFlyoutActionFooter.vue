@@ -45,7 +45,7 @@ const execute = () => {
 <template>
   <div class="flex items-center justify-end gap-2">
     <CommonButton
-      size="medium"
+      size="large"
       :disabled="isDisabled || cancelButton?.disabled"
       :prefix-icon="cancelButton?.prefixIcon"
       :variant="cancelButton?.variant || 'secondary'"
@@ -55,7 +55,7 @@ const execute = () => {
     </CommonButton>
     <CommonButton
       v-if="!hideActionButton"
-      size="medium"
+      size="large"
       :disabled="isDisabled || actionButton?.disabled"
       :form="formNodeId"
       :type="actionButton?.type"

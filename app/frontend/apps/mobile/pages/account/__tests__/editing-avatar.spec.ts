@@ -1,13 +1,16 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { defineComponent } from 'vue'
+
 import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockAccount } from '#tests/support/mock-account.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
-import { defineComponent } from 'vue'
+
+import { AccountAvatarAddDocument } from '#shared/entities/account/graphql/mutations/accountAvatarAdd.api.ts'
+import { AccountAvatarDeleteDocument } from '#shared/entities/account/graphql/mutations/accountAvatarDelete.api.ts'
+
 import { AccountAvatarActiveDocument } from '../avatar/graphql/queries/active.api.ts'
-import { AccountAvatarAddDocument } from '../avatar/graphql/mutations/add.api.ts'
-import { AccountAvatarDeleteDocument } from '../avatar/graphql/mutations/delete.api.ts'
 
 vi.mock('vue-advanced-cropper', () => {
   const Cropper = defineComponent({
@@ -40,6 +43,7 @@ const getAvatarObject = (deletable: boolean) => {
     initial: false,
     imageFull: mockAvatarImage,
     imageResize: mockAvatarImage,
+    imageHash: '123456',
     createdAt: '2022-07-12T06:54:45Z',
     updatedAt: '2022-07-12T06:54:45Z',
   }

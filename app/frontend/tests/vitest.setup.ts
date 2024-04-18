@@ -74,6 +74,8 @@ Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
       drawImage: (img: HTMLImageElement) => {
         this.__image_src = img.src
       },
+      translate: vi.fn(),
+      scale: vi.fn(),
     }
   },
 })

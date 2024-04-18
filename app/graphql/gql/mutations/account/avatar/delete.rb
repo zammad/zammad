@@ -24,6 +24,12 @@ module Gql::Mutations
     private
 
     def set_default_avatar
+      return if Avatar.find_by(
+        object_lookup_id: ObjectLookup.by_name('User'),
+        o_id:             context.current_user.id,
+        default:          true,
+      ).present?
+
       Avatar.find_by(
         object_lookup_id: ObjectLookup.by_name('User'),
         o_id:             context.current_user.id,

@@ -38,7 +38,7 @@ const action = () => {
     class="flex items-center gap-2 ltr:justify-end rtl:flex-row-reverse rtl:justify-start"
   >
     <CommonButton
-      size="medium"
+      size="large"
       :prefix-icon="cancelButton?.prefixIcon"
       :variant="cancelButton?.variant || 'secondary'"
       @click="cancel()"
@@ -47,7 +47,7 @@ const action = () => {
     </CommonButton>
     <CommonButton
       v-if="!hideActionButton"
-      size="medium"
+      size="large"
       :prefix-icon="actionButton?.prefixIcon"
       :variant="actionButton?.variant || 'primary'"
       @click="action()"

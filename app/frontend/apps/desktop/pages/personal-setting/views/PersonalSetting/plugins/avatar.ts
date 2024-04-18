@@ -3,23 +3,23 @@
 import type { PersonalSettingPlugin } from './types.ts'
 
 export default <PersonalSettingPlugin>{
-  label: __('Language'),
+  label: __('Avatar'),
   category: {
     label: __('Profile'),
     id: 'category-profile',
     order: 1000,
   },
   route: {
-    path: 'locale',
-    name: 'PersonalSettingLocale',
-    component: () => import('../../PersonalSettingLocale.vue'),
+    path: 'avatar',
+    name: 'PersonalSettingAvatar',
+    component: () => import('../../PersonalSettingAvatar.vue'),
     level: 2,
     meta: {
-      title: __('Language'),
+      title: __('Avatar'),
       requiresAuth: true,
-      requiredPermission: 'user_preferences.language',
+      requiredPermission: 'user_preferences.avatar',
     },
   },
-  order: 2000,
-  keywords: __('translation,locale,localization'),
+  order: 3000,
+  keywords: __('camera,image,photo,picture'),
 }

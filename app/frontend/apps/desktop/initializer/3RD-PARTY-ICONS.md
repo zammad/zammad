@@ -12,6 +12,9 @@
 - `assets/calendar-event.svg`
 - `assets/calendar-range.svg`
 - `assets/calendar.svg`
+- `assets/camera-video.svg`
+- `assets/camera-video-off.svg`
+- `assets/camera.svg`
 - `assets/check-all.svg`
 - `assets/check-circle-outline.svg`
 - `assets/check-square.svg`

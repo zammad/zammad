@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import type { NavigationMenuCategory } from '#desktop/components/NavigationMenu/types.ts'
-import type { PersonalSettingPlugin } from '../../../components/PersonalSettingSidebar/types.ts'
+import type { PersonalSettingPlugin } from './types.ts'
 
 const plugins = import.meta.glob<PersonalSettingPlugin>(
-  ['./**/*.ts', '!./**/index.ts', '!./__tests__/**/*.ts'],
+  ['./**/*.ts', '!./**/index.ts', '!./types.ts', '!./__tests__/**/*.ts'],
   {
     eager: true,
     import: 'default',

@@ -2,6 +2,7 @@
 
 class Avatar < ApplicationModel
   include HasDefaultModelUserRelations
+  include Avatar::TriggersSubscriptions
 
   belongs_to :object_lookup, optional: true
 
@@ -334,9 +335,11 @@ return all avatars of an user
 
   avatars = Avatar.list('User', 123, no_init_add_as_boolean) # per default true
 
+  avatars = Avatar.list('User', 123, no_init_add_as_boolean, raw: true)
+
 =end
 
-  def self.list(object_name, o_id, no_init_add_as_boolean = true)
+  def self.list(object_name, o_id, no_init_add_as_boolean = true, raw: false)
     object_id = ObjectLookup.by_name(object_name)
     avatars = Avatar.where(
       object_lookup_id: object_id,
@@ -347,6 +350,8 @@ return all avatars of an user
     if no_init_add_as_boolean
       _add_init_avatar(object_id, o_id)
     end
+
+    return avatars if raw
 
     avatar_list = []
     avatars.each do |avatar|

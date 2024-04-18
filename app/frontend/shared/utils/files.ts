@@ -213,15 +213,20 @@ export const canDownloadFile = (type?: Maybe<string>) => {
   return Boolean(type && type !== 'text/html')
 }
 
+export const allowedImageTypes = () => {
+  const { config } = useApplicationStore()
+
+  return config['active_storage.web_image_content_types'] || []
+}
+
+export const allowedImageTypesString = () => {
+  return allowedImageTypes().join(',')
+}
+
 export const canPreviewFile = (type?: Maybe<string>) => {
   if (!type) return false
 
-  const { config } = useApplicationStore()
-
-  const allowedPreviewContentTypes =
-    config['active_storage.web_image_content_types'] || []
-
-  return allowedPreviewContentTypes.includes(type)
+  return allowedImageTypes().includes(type)
 }
 
 export const convertFilesToAttachmentInput = (

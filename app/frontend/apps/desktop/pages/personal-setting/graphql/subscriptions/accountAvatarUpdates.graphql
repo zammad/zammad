@@ -1,0 +1,13 @@
+subscription accountAvatarUpdates($userId: ID!) {
+  accountAvatarUpdates(userId: $userId) {
+    avatars {
+      id
+      default
+      deletable
+      initial
+      imageHash
+      createdAt
+      updatedAt
+    }
+  }
+}

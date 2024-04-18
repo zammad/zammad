@@ -1,0 +1,8 @@
+mutation accountAvatarSelect($id: ID!) {
+  accountAvatarSelect(id: $id) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

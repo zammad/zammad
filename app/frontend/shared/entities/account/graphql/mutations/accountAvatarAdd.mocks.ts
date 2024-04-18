@@ -1,7 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import * as Mocks from '#tests/graphql/builders/mocks.ts'
-import * as Operations from './add.api.ts'
+import * as Operations from './accountAvatarAdd.api.ts'
 
 export function mockAccountAvatarAddMutation(defaults: Mocks.MockDefaultsValue<Types.AccountAvatarAddMutation, Types.AccountAvatarAddMutationVariables>) {
   return Mocks.mockGraphQLResult(Operations.AccountAvatarAddDocument, defaults)

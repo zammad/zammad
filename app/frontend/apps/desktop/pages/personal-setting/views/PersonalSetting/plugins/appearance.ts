@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { PersonalSettingPlugin } from '../../../components/PersonalSettingSidebar/types.ts'
+import type { PersonalSettingPlugin } from './types.ts'
 
 export default <PersonalSettingPlugin>{
   label: __('Appearance'),

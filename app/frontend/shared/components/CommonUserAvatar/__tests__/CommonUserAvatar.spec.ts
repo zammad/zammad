@@ -159,4 +159,27 @@ describe('CommonUserAvatar', () => {
 
     expect(view.queryByIconName('crown')).not.toBeInTheDocument()
   })
+
+  it('can render initials only', async () => {
+    const view = renderComponent(CommonUserAvatar, {
+      props: <Props>{
+        entity: {
+          id: USER_ID,
+          image: '100.png',
+          firstname: 'John',
+          lastname: 'Doe',
+        },
+        initialsOnly: true,
+      },
+    })
+
+    const avatar = view.getByTestId('common-avatar')
+
+    expect(avatar).toHaveTextContent('JD')
+    expect(avatar).toHaveClass('bg-blue')
+
+    expect(avatar).not.toHaveStyle(
+      'background-image: url(/api/users/image/100.png)',
+    )
+  })
 })

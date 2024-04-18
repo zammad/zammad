@@ -1,0 +1,11 @@
+query accountAvatarList {
+  accountAvatarList {
+    id
+    default
+    deletable
+    initial
+    imageHash
+    createdAt
+    updatedAt
+  }
+}

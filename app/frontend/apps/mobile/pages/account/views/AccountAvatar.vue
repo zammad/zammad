@@ -2,35 +2,42 @@
 
 <script setup lang="ts">
 import { reactive, shallowRef, watch, ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { Cropper, type CropperResult } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
-import type { ImageFileData } from '#shared/utils/files.ts'
-import { convertFileList } from '#shared/utils/files.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
-import {
-  useNotifications,
-  NotificationTypes,
-} from '#shared/components/CommonNotifications/index.ts'
+
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import type UserError from '#shared/errors/UserError.ts'
-import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import CommonAvatar from '#shared/components/CommonAvatar/CommonAvatar.vue'
+import type { ImageFileData } from '#shared/utils/files.ts'
+import {
+  convertFileList,
+  allowedImageTypesString,
+} from '#shared/utils/files.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+
 import {
   MutationHandler,
   QueryHandler,
 } from '#shared/server/apollo/handler/index.ts'
 import type { AccountAvatarActiveQuery } from '#shared/graphql/types.ts'
-import { useRouter } from 'vue-router'
+import { useAccountAvatarAddMutation } from '#shared/entities/account/graphql/mutations/accountAvatarAdd.api.ts'
+import { useAccountAvatarDeleteMutation } from '#shared/entities/account/graphql/mutations/accountAvatarDelete.api.ts'
+
+import {
+  useNotifications,
+  NotificationTypes,
+} from '#shared/components/CommonNotifications/index.ts'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import CommonAvatar from '#shared/components/CommonAvatar/CommonAvatar.vue'
+
 import { useHeader } from '#mobile/composables/useHeader.ts'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/types.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+
 import { useAccountAvatarActiveQuery } from '../avatar/graphql/queries/active.api.ts'
-import { useAccountAvatarAddMutation } from '../avatar/graphql/mutations/add.api.ts'
-import { useAccountAvatarDeleteMutation } from '../avatar/graphql/mutations/delete.api.ts'
 
 const router = useRouter()
 
@@ -98,7 +105,7 @@ const addAvatar = () => {
         avatarImage.value = undefined
 
         if (user.value) {
-          user.value.image = activeAvatar.value?.imageResize
+          user.value.image = data.accountAvatarAdd.avatar.imageHash
         }
       }
     })
@@ -182,6 +189,9 @@ const loadAvatar = async (input?: HTMLInputElement) => {
   if (!files) return
   const [avatar] = await convertFileList(files)
   avatarImage.value = avatar
+
+  // Reset input value to allow selecting the same file again
+  input.value = ''
 }
 
 const imageCropped = (crop: CropperResult) => {
@@ -193,18 +203,6 @@ const cancelCropping = () => {
   avatarImage.value = undefined
   state.resizedImage = activeAvatar.value?.imageResize || ''
 }
-
-const application = useApplicationStore()
-const allowedImageTypes = computed(() => {
-  if (!application.config['active_storage.web_image_content_types'])
-    return 'image/*'
-
-  const types = application.config[
-    'active_storage.web_image_content_types'
-  ] as Array<string>
-
-  return types.join(',')
-})
 
 const actions = computed<CommonButtonOption[]>(() => [
   {
@@ -251,7 +249,7 @@ const actions = computed<CommonButtonOption[]>(() => [
         type="file"
         class="hidden"
         aria-hidden="true"
-        :accept="allowedImageTypes"
+        :accept="allowedImageTypesString()"
         @change="loadAvatar(fileGalleryInput)"
       />
 
@@ -261,7 +259,7 @@ const actions = computed<CommonButtonOption[]>(() => [
         type="file"
         class="hidden"
         aria-hidden="true"
-        :accept="allowedImageTypes"
+        :accept="allowedImageTypesString()"
         capture="user"
         @change="loadAvatar(fileCameraInput)"
       />
@@ -274,7 +272,7 @@ const actions = computed<CommonButtonOption[]>(() => [
           class="mb-4 mt-4 !max-h-[250px] !max-w-[400px]"
           :src="avatarImage.content"
           :stencil-props="{
-            aspectRatio: 1 / 1,
+            aspectRatio: 1,
           }"
           :transitions="false"
           background-class="!bg-black"
