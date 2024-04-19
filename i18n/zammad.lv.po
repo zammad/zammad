@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-16 02:09+0000\n"
+"PO-Revision-Date: 2024-04-18 01:05+0000\n"
 "Last-Translator: Aivars Miška <allefm@gmail.com>\n"
 "Language-Team: Latvian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/lv/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= "
 "19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2);\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.4.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -852,6 +852,10 @@ msgstr ""
 msgid "Access token"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+msgid "Accessing your camera is forbidden. Please check your settings."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -941,7 +945,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "Actions"
-msgstr ""
+msgstr "Darbības"
 
 #: db/seeds/settings.rb
 msgid "Activate the recursive processing of ticket triggers."
@@ -984,6 +988,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Aktīvs"
@@ -1226,7 +1231,7 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
-msgstr ""
+msgstr "Adrese"
 
 #: db/seeds/settings.rb
 msgid "Address of the proxy server for http and https resources."
@@ -1336,11 +1341,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
-msgstr ""
+msgstr "Aģenti"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Alarm"
-msgstr ""
+msgstr "Paziņojums"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -1481,6 +1486,10 @@ msgstr ""
 msgid "An unexpected error occurred during system setup."
 msgstr ""
 
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Analyzing entries with given configuration…"
@@ -1517,11 +1526,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee
 msgid "Answer"
-msgstr ""
+msgstr "Atbildēt"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "Answers"
-msgstr ""
+msgstr "Atbildes"
 
 #: app/assets/javascripts/app/views/knowledge_base/_reader_list_item.jst.eco
 msgid "Answers: %s"
@@ -1583,7 +1592,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
-msgstr ""
+msgstr "Lietotne"
 
 #: db/seeds/settings.rb
 msgid "Application secret"
@@ -1591,7 +1600,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Applications"
-msgstr ""
+msgstr "Lietotnes"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Apply"
@@ -1625,11 +1634,11 @@ msgstr "Aprīlis"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Archive"
-msgstr ""
+msgstr "Arhīvs"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Archived"
-msgstr ""
+msgstr "Arhivēts"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Archived at"
@@ -1793,7 +1802,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Assigned"
-msgstr ""
+msgstr "Nozīmēti"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Assignee"
@@ -1869,7 +1878,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
 #: public/assets/form/form.js
 msgid "Attachments"
-msgstr ""
+msgstr "Pielikumi"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in a Simple Storage Service."
@@ -1949,7 +1958,7 @@ msgstr "Augusts"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Authentication"
-msgstr ""
+msgstr "Autentifikācija"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Authentication Token"
@@ -2082,6 +2091,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -2090,7 +2101,14 @@ msgstr ""
 msgid "Avatar"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
+#, fuzzy
+#| msgid "Preview"
+msgid "Avatar Preview"
+msgstr "Priekšapskate"
+
 #: app/graphql/gql/mutations/account/avatar/delete.rb
+#: app/graphql/gql/mutations/account/avatar/select.rb
 #, fuzzy
 #| msgid "Ticket %s merged!"
 msgid "Avatar could not be found."
@@ -2120,7 +2138,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 msgid "Back"
-msgstr ""
+msgstr "Atpakaļ"
 
 #: app/assets/javascripts/app/views/widget/switch_back_to_user.jst.eco
 msgid "Back to my view"
@@ -2237,7 +2255,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Blue"
-msgstr ""
+msgstr "Zils"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
@@ -2264,9 +2282,15 @@ msgstr ""
 msgid "Branding"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue
+#, fuzzy
+#| msgid "Location"
+msgid "Breadcrumb navigation"
+msgstr "Vieta"
+
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
-msgstr ""
+msgstr "Pārlūks"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
@@ -2329,7 +2353,7 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "CMDB to document complex relations of your network components."
@@ -2380,7 +2404,7 @@ msgstr "Kalendārs"
 #: app/assets/javascripts/app/controllers/calendar.coffee
 #: db/seeds/permissions.rb
 msgid "Calendars"
-msgstr ""
+msgstr "Kalendāri"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -2427,6 +2451,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Camera"
 msgstr ""
@@ -2531,14 +2557,20 @@ msgstr ""
 msgid "Cannot upload file"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid "Signature"
+msgid "Capture"
+msgstr "Paraksts"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
-msgstr ""
+msgstr "Kategorijas"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Category"
-msgstr ""
+msgstr "Kategorija"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Category page layout"
@@ -2639,7 +2671,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
-msgstr ""
+msgstr "Kanāls"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Chat"
@@ -2691,7 +2723,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Channels"
-msgstr ""
+msgstr "Kanāli"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
@@ -2764,7 +2796,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Checksum"
-msgstr ""
+msgstr "Kontrolsumma"
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee
 msgid "Child"
@@ -2935,11 +2967,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Clients"
-msgstr ""
+msgstr "Klienti"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 msgid "Clone"
-msgstr ""
+msgstr "Kopēt"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
@@ -3080,7 +3112,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 msgid "Config"
-msgstr ""
+msgstr "Iestatījumi"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "Config has changed"
@@ -3093,7 +3125,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "Configuration"
-msgstr ""
+msgstr "Iestatījumi"
 
 #: app/assets/javascripts/app/views/knowledge_base/server_snippet.jst.eco
 msgid "Configuration for %s"
@@ -3281,7 +3313,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Context"
-msgstr ""
+msgstr "Konteksts"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
@@ -3339,7 +3371,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Copy"
-msgstr ""
+msgstr "Kopēt"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
@@ -3395,7 +3427,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
-msgstr ""
+msgstr "Skaits"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -3671,6 +3703,7 @@ msgid "Creation mask"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 msgid "Crop Image"
 msgstr ""
 
@@ -3780,7 +3813,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
-msgstr ""
+msgstr "Izgriezt"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
@@ -3821,7 +3854,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Database"
-msgstr ""
+msgstr "Datubāze"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Database Update Required"
@@ -3860,7 +3893,7 @@ msgstr "Diena"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
 msgid "Day(s)"
-msgstr ""
+msgstr "Diena(s)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Days"
@@ -4901,6 +4934,12 @@ msgstr ""
 msgid "Delete records"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Delete"
+msgid "Delete this avatar"
+msgstr "Dzēst"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
 #| msgid "Delete"
@@ -5071,6 +5110,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 msgid "Discard"
 msgstr ""
 
@@ -7575,6 +7615,12 @@ msgid ""
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Active"
+msgid "Inactive"
+msgstr "Aktīvs"
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -8482,6 +8528,10 @@ msgid ""
 "You can use macros in Zammad to automate recurring sequences, saving time "
 "(and nerves). This allows a combined sequence of actions on the ticket to be "
 "executed with just one click."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue
+msgid "Main sidebar"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
@@ -10164,8 +10214,24 @@ msgstr "Iestatījumi"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/permissions.rb
 msgid "Out of Office"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Ticket %s merged!"
+msgid "Out of Office settings could not be saved."
+msgstr "Biļete %s apvienojās!"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Out of Office settings have been saved successfully"
+msgstr ""
+
+#: lib/validations/out_of_office_validator.rb
+msgid "Out of Office start date has to be earlier than or equal to end date"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
@@ -10838,9 +10904,23 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
 #: app/frontend/apps/desktop/pages/personal-setting/routes.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
 msgid "Profile"
 msgstr "Profils"
+
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#, fuzzy
+#| msgid "Ticket %s merged!"
+msgid "Profile appearance updated successfully."
+msgstr "Biļete %s apvienojās!"
+
+#: app/frontend/shared/composables/useLocaleUpdate.ts
+#, fuzzy
+#| msgid "Ticket %s merged!"
+msgid "Profile language updated successfully."
+msgstr "Biļete %s apvienojās!"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
 #, fuzzy
@@ -10960,6 +11040,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Real-time"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Reason for absence"
 msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
@@ -11182,6 +11266,10 @@ msgstr ""
 msgid "Replacement"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Replacement agent"
+msgstr ""
+
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
@@ -11372,6 +11460,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 msgid "Resize side panel"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
+msgid "Resize sidebar"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -11643,6 +11735,8 @@ msgstr "Sestdiena"
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
@@ -11660,6 +11754,10 @@ msgstr "Statuss"
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Save Out of Office"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
@@ -11998,6 +12096,12 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Select the type of ticket your are creating"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Delete"
+msgid "Select this avatar"
+msgstr "Dzēst"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -12747,6 +12851,10 @@ msgstr ""
 msgid "Start Import from Source"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Start and end date"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Start modal dialog for form."
 msgstr ""
@@ -13448,6 +13556,7 @@ msgstr ""
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #, fuzzy
 #| msgid "Ticket %s merged!"
@@ -13460,6 +13569,13 @@ msgstr "Biļete %s apvienojās!"
 msgid "The avatar could not be fetched."
 msgstr "Biļete %s apvienojās!"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Ticket %s merged!"
+msgid "The avatar could not be selected."
+msgstr "Biļete %s apvienojās!"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #, fuzzy
 #| msgid "Ticket %s merged!"
@@ -14268,6 +14384,10 @@ msgstr ""
 #| msgid "Ticket %s merged!"
 msgid "The source ticket could not be found."
 msgstr "Biļete %s apvienojās!"
+
+#: app/frontend/shared/form/validation/rules/date-range.ts
+msgid "The start date must precede or match end date."
+msgstr ""
 
 #: app/services/service/system/check_setup.rb
 msgid ""
@@ -16173,6 +16293,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 msgid "Upload"
 msgstr "Augšupielādēt"
 
@@ -16241,6 +16362,10 @@ msgstr ""
 msgid ""
 "Use subject field for emails. If disabled, the ticket title will be used as "
 "subject."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+msgid "Use the camera to take a photo for the avatar."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -17285,6 +17410,28 @@ msgid ""
 "verification email."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Name"
+msgid "Your avatar"
+msgstr "Vārds"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+msgid "Your avatar has been changed!"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Ticket %s merged!"
+msgid "Your avatar has been deleted!"
+msgstr "Biļete %s apvienojās!"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Ticket %s merged!"
+msgid "Your avatar has been uploaded!"
+msgstr "Biļete %s apvienojās!"
+
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
@@ -17517,6 +17664,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "busy"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
+msgid "camera,image,photo,picture"
 msgstr ""
 
 #: app/models/object_manager/attribute.rb
@@ -17765,6 +17916,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "e.g."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "e.g. Easter holiday"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/drox.jst.eco
@@ -18473,10 +18628,6 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
-msgid "resize sidebar"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "right"
 msgstr ""
@@ -18741,6 +18892,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "updated"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+msgid "vacation,holiday,replacement,time off"
 msgstr ""
 
 #: db/seeds/ticket_article_types.rb

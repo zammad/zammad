@@ -967,6 +967,12 @@ msgstr "تذاكر العملاء الأخيرة"
 msgid "Access token"
 msgstr "الوصول إلى%s"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid "Agent limit exceeded, please check your account settings."
+msgid "Accessing your camera is forbidden. Please check your settings."
+msgstr "تم تجاوز حد الوكيل ، يرجى التحقق من إعدادات حسابك."
+
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -1101,6 +1107,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "نشيط"
@@ -1621,6 +1628,10 @@ msgstr ""
 msgid "An unexpected error occurred during system setup."
 msgstr ""
 "غير قادر على التحقق من البريد الإلكتروني. يرجى الاتصال بالمسؤول الخاص بك."
+
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2304,6 +2315,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -2312,7 +2325,14 @@ msgstr ""
 msgid "Avatar"
 msgstr "الصورة الرمزية"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
+#, fuzzy
+#| msgid "Preview"
+msgid "Avatar Preview"
+msgstr "معاينة"
+
 #: app/graphql/gql/mutations/account/avatar/delete.rb
+#: app/graphql/gql/mutations/account/avatar/select.rb
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "Avatar could not be found."
@@ -2489,6 +2509,12 @@ msgstr "الروبوتات"
 #: app/controllers/first_steps_controller.rb db/seeds/permissions.rb
 msgid "Branding"
 msgstr "العلامة التجارية"
+
+#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue
+#, fuzzy
+#| msgid "Shared organization"
+msgid "Breadcrumb navigation"
+msgstr "منظمة مشتركة"
 
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
@@ -2678,6 +2704,8 @@ msgstr "سجل المتصل"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Camera"
 msgstr "الة تصوير"
@@ -2785,6 +2813,12 @@ msgstr "إدارة إعدادات الإخطارات الخاصة بك"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid "Signature"
+msgid "Capture"
+msgstr "التوقيع"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -4014,6 +4048,7 @@ msgid "Creation mask"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 msgid "Crop Image"
 msgstr ""
 
@@ -5352,6 +5387,12 @@ msgstr "حذف المنظمة؟ "
 msgid "Delete records"
 msgstr "حذف السجلات"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete this avatar"
+msgstr "مسح المستخدم "
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
 #| msgid "Delete"
@@ -5536,6 +5577,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 msgid "Discard"
 msgstr "تجاهل"
 
@@ -8331,6 +8373,12 @@ msgid ""
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "inactive"
+msgid "Inactive"
+msgstr "غير نشط"
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -9299,6 +9347,10 @@ msgid ""
 "You can use macros in Zammad to automate recurring sequences, saving time "
 "(and nerves). This allows a combined sequence of actions on the ticket to be "
 "executed with just one click."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue
+msgid "Main sidebar"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
@@ -11136,9 +11188,27 @@ msgstr "تصدير الااعدادات"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/permissions.rb
 msgid "Out of Office"
 msgstr "خارج المكتب"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Out of Office settings could not be saved."
+msgstr "يتم تحديث كائن (كائنات)%s."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Out of Office settings have been saved successfully"
+msgstr "تم تشغيل الاختبار بنجاح."
+
+#: lib/validations/out_of_office_validator.rb
+msgid "Out of Office start date has to be earlier than or equal to end date"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
@@ -11860,9 +11930,23 @@ msgstr "اسم المنتج"
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
 #: app/frontend/apps/desktop/pages/personal-setting/routes.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
 msgid "Profile"
 msgstr "الملف الشخصي"
+
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Profile appearance updated successfully."
+msgstr "تم تشغيل الاختبار بنجاح."
+
+#: app/frontend/shared/composables/useLocaleUpdate.ts
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Profile language updated successfully."
+msgstr "تم تشغيل الاختبار بنجاح."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
 #, fuzzy
@@ -12001,6 +12085,10 @@ msgstr ""
 #| msgid "Realtime"
 msgid "Real-time"
 msgstr "في الوقت الحالى"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Reason for absence"
+msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -12241,6 +12329,12 @@ msgstr "معدل إعادة الفتح"
 msgid "Replacement"
 msgstr "إستبدال"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Replacement"
+msgid "Replacement agent"
+msgstr "إستبدال"
+
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
@@ -12447,6 +12541,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 msgid "Resize side panel"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
+msgid "Resize sidebar"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -12728,6 +12826,8 @@ msgstr "يوم السبت"
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
@@ -12748,6 +12848,12 @@ msgstr "الأمان"
 #| msgid "Draft"
 msgid "Save Draft"
 msgstr "مشروع"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Out of Office"
+msgid "Save Out of Office"
+msgstr "خارج المكتب"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
@@ -13123,6 +13229,12 @@ msgstr "اختار عميل لتذكرة أو أنشئ واحدة جديدة."
 #| msgid "Select the customer of the ticket or create one."
 msgid "Select the type of ticket your are creating"
 msgstr "اختار عميل لتذكرة أو أنشئ واحدة جديدة."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Delete User"
+msgid "Select this avatar"
+msgstr "مسح المستخدم "
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -13960,6 +14072,10 @@ msgstr "الاستيراد من"
 msgid "Start Import from Source"
 msgstr "الاستيراد من"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Start and end date"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Start modal dialog for form."
 msgstr "بدء مربع حوار مشروط للنموذج."
@@ -14702,6 +14818,7 @@ msgstr ""
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #, fuzzy
 #| msgid "%s Object(s) are updated."
@@ -14714,6 +14831,13 @@ msgstr "يتم تحديث كائن (كائنات)%s."
 msgid "The avatar could not be fetched."
 msgstr "يتم إنشاء %s كائن (كائنات)."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The avatar could not be selected."
+msgstr "يتم تحديث كائن (كائنات)%s."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -15568,6 +15692,10 @@ msgstr "تم تشغيل الاختبار بنجاح."
 #| msgid "%s Object(s) are created."
 msgid "The source ticket could not be found."
 msgstr "يتم إنشاء %s كائن (كائنات)."
+
+#: app/frontend/shared/form/validation/rules/date-range.ts
+msgid "The start date must precede or match end date."
+msgstr ""
 
 #: app/services/service/system/check_setup.rb
 msgid ""
@@ -17644,6 +17772,7 @@ msgstr "تحديث قاعدة البيانات"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 msgid "Upload"
 msgstr "تحميل"
 
@@ -17715,6 +17844,10 @@ msgid ""
 msgstr ""
 "استخدم حقل الموضوع لرسائل البريد الإلكتروني. إذا تم تعطيله ، فسيتم استخدام "
 "عنوان التذكرة كموضوع."
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+msgid "Use the camera to take a photo for the avatar."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -18851,6 +18984,30 @@ msgid ""
 "verification email."
 msgstr "لم يتم التحقق من حسابك. يرجى النقر على الرابط في رسالة التحقق."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Full Name"
+msgid "Your avatar"
+msgstr "الاسم الكامل"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Woo hoo! Your password has been changed!"
+msgid "Your avatar has been changed!"
+msgstr "تم تغيير كلمة السر الخاصة بك!"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Your avatar has been deleted!"
+msgstr "يتم تحديث كائن (كائنات)%s."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "Your avatar has been uploaded!"
+msgstr "يتم إنشاء %s كائن (كائنات)."
+
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
@@ -19113,6 +19270,10 @@ msgstr "آخر التحديثات"
 msgid "busy"
 msgstr "مشغول"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
+msgid "camera,image,photo,picture"
+msgstr ""
+
 #: app/models/object_manager/attribute.rb
 msgid "can only be created on postgresql databases"
 msgstr ""
@@ -19369,6 +19530,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "e.g."
 msgstr "على سبيل المثال"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Easter holiday"
+msgid "e.g. Easter holiday"
+msgstr "عطلة عيد الفصح"
 
 #: app/assets/javascripts/app/views/generic/drox.jst.eco
 msgid "edit"
@@ -20117,10 +20284,6 @@ msgstr "الرد"
 msgid "required"
 msgstr "مطلوب%s!"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
-msgid "resize sidebar"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "right"
 msgstr ""
@@ -20404,6 +20567,10 @@ msgstr "لم يمسها شيء"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "updated"
 msgstr "محدث"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+msgid "vacation,holiday,replacement,time off"
+msgstr ""
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"

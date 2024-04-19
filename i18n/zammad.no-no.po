@@ -1029,6 +1029,14 @@ msgstr "Siste kundehenvendelser"
 msgid "Access token"
 msgstr "Tilgang til %s"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid "Agent limit exceeded, please check your account settings."
+msgid "Accessing your camera is forbidden. Please check your settings."
+msgstr ""
+"Inaktivitetsgrense for saksbehandlere er overskredet. Vennligst sjekk "
+"kontoinnstillingene dine."
+
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -1161,6 +1169,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Aktiv"
@@ -1705,6 +1714,10 @@ msgstr "En feil har oppstått"
 #| msgid "An error has occurred"
 msgid "An unexpected error occurred during system setup."
 msgstr "En feil har oppstått"
+
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2383,6 +2396,8 @@ msgstr "Tilgjengelige typer for nye saker"
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -2391,7 +2406,14 @@ msgstr "Tilgjengelige typer for nye saker"
 msgid "Avatar"
 msgstr "Avatar"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
+#, fuzzy
+#| msgid "Preview"
+msgid "Avatar Preview"
+msgstr "Forhåndsvis"
+
 #: app/graphql/gql/mutations/account/avatar/delete.rb
+#: app/graphql/gql/mutations/account/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr "Avatar ble ikke funnet."
 
@@ -2564,6 +2586,12 @@ msgstr "Bot-er"
 #: app/controllers/first_steps_controller.rb db/seeds/permissions.rb
 msgid "Branding"
 msgstr "Branding"
+
+#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue
+#, fuzzy
+#| msgid "Shared organization"
+msgid "Breadcrumb navigation"
+msgstr "Delt organisasjon"
 
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
@@ -2761,6 +2789,8 @@ msgstr "Samtalelogg"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Camera"
 msgstr "Kamera"
@@ -2868,6 +2898,12 @@ msgstr "Administrer meldingsinnstillingene dine"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid "Signature"
+msgid "Capture"
+msgstr "Signatur"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -4110,6 +4146,7 @@ msgid "Creation mask"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 msgid "Crop Image"
 msgstr ""
 
@@ -5448,6 +5485,12 @@ msgstr "Slette organisasjon?"
 msgid "Delete records"
 msgstr "Slett oppføringer"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete this avatar"
+msgstr "Slett bruker"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
 #| msgid "Delete"
@@ -5630,6 +5673,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 msgid "Discard"
 msgstr "Kast"
 
@@ -8428,6 +8472,12 @@ msgid ""
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "inactive"
+msgid "Inactive"
+msgstr "inaktiv"
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -9394,6 +9444,10 @@ msgid ""
 "You can use macros in Zammad to automate recurring sequences, saving time "
 "(and nerves). This allows a combined sequence of actions on the ticket to be "
 "executed with just one click."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue
+msgid "Main sidebar"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
@@ -11216,9 +11270,27 @@ msgstr "Andre innstillinger"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/permissions.rb
 msgid "Out of Office"
 msgstr "Borte fra kontoret"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Out of Office settings could not be saved."
+msgstr "%s objekt(er) er oppdatert."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Out of Office settings have been saved successfully"
+msgstr "Testkjøringen var vellykket."
+
+#: lib/validations/out_of_office_validator.rb
+msgid "Out of Office start date has to be earlier than or equal to end date"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
@@ -11944,9 +12016,23 @@ msgstr "Produkt navn"
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
 #: app/frontend/apps/desktop/pages/personal-setting/routes.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
 msgid "Profile"
 msgstr "Profil"
+
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Profile appearance updated successfully."
+msgstr "Testkjøringen var vellykket."
+
+#: app/frontend/shared/composables/useLocaleUpdate.ts
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Profile language updated successfully."
+msgstr "Testkjøringen var vellykket."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
 #, fuzzy
@@ -12088,6 +12174,10 @@ msgstr ""
 #| msgid "Realtime"
 msgid "Real-time"
 msgstr "Sanntid"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Reason for absence"
+msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -12321,6 +12411,12 @@ msgstr "Gjennåpning sats"
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Replacement"
+msgstr "Erstatning"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Replacement"
+msgid "Replacement agent"
 msgstr "Erstatning"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
@@ -12611,6 +12707,10 @@ msgstr ""
 msgid "Resize side panel"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
+msgid "Resize sidebar"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
 msgstr "Respons"
@@ -12890,6 +12990,8 @@ msgstr "lørdag"
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
@@ -12908,6 +13010,12 @@ msgstr "Sikkerhet"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
 msgstr "Lagre utkast"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Out of Office"
+msgid "Save Out of Office"
+msgstr "Borte fra kontoret"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
@@ -13284,6 +13392,12 @@ msgstr "Velg eller opprett kunde som saken skal knyttes til."
 #| msgid "Select the customer of the ticket or create one."
 msgid "Select the type of ticket your are creating"
 msgstr "Velg eller opprett kunde som saken skal knyttes til."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Delete User"
+msgid "Select this avatar"
+msgstr "Slett bruker"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -14125,6 +14239,10 @@ msgstr "Importer fra"
 msgid "Start Import from Source"
 msgstr "Importer fra"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Start and end date"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Start modal dialog for form."
 msgstr "Start modal dialog for skjema."
@@ -14866,6 +14984,7 @@ msgstr ""
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #, fuzzy
 #| msgid "%s Object(s) are updated."
@@ -14878,6 +14997,13 @@ msgstr "%s objekt(er) er oppdatert."
 msgid "The avatar could not be fetched."
 msgstr "%s objekt(er) er opprettet."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The avatar could not be selected."
+msgstr "%s objekt(er) er oppdatert."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -15742,6 +15868,10 @@ msgstr "Testkjøringen var vellykket."
 #| msgid "%s Object(s) are created."
 msgid "The source ticket could not be found."
 msgstr "%s objekt(er) er opprettet."
+
+#: app/frontend/shared/form/validation/rules/date-range.ts
+msgid "The start date must precede or match end date."
+msgstr ""
 
 #: app/services/service/system/check_setup.rb
 msgid ""
@@ -17824,6 +17954,7 @@ msgstr "Oppdaterer database"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 msgid "Upload"
 msgstr "Last opp"
 
@@ -17895,6 +18026,10 @@ msgid ""
 msgstr ""
 "Bruk emnefelt for e-poster. Hvis deaktivert, vil sakstittelen brukes som "
 "emne."
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+msgid "Use the camera to take a photo for the avatar."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -19048,6 +19183,30 @@ msgstr ""
 "Kontoen din er ikke bekreftet. Vennligst klikk på lenken i e-posten du har "
 "mottatt."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Full Name"
+msgid "Your avatar"
+msgstr "Fullt Navn"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Woo hoo! Your password has been changed!"
+msgid "Your avatar has been changed!"
+msgstr "Flott! Ditt passord har blitt endret!"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Your avatar has been deleted!"
+msgstr "%s objekt(er) er oppdatert."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "Your avatar has been uploaded!"
+msgstr "%s objekt(er) er opprettet."
+
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
@@ -19313,6 +19472,10 @@ msgstr "Siste oppdateringer"
 msgid "busy"
 msgstr "opptatt"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
+msgid "camera,image,photo,picture"
+msgstr ""
+
 #: app/models/object_manager/attribute.rb
 msgid "can only be created on postgresql databases"
 msgstr ""
@@ -19569,6 +19732,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "e.g."
 msgstr "for eksempel"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Easter holiday"
+msgid "e.g. Easter holiday"
+msgstr "Påskeferie"
 
 #: app/assets/javascripts/app/views/generic/drox.jst.eco
 msgid "edit"
@@ -20321,10 +20490,6 @@ msgstr "svar"
 msgid "required"
 msgstr "%s er obligatorisk!"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
-msgid "resize sidebar"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "right"
 msgstr ""
@@ -20604,6 +20769,10 @@ msgstr "Uåpnet"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "updated"
 msgstr "oppdatert"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+msgid "vacation,holiday,replacement,time off"
+msgstr ""
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"

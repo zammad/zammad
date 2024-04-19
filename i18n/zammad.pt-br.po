@@ -1032,6 +1032,16 @@ msgstr "Acesso a chamados de clientes"
 msgid "Access token"
 msgstr "Token de acesso"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid ""
+#| "Email sending and receiving could not be verified. Please check your "
+#| "settings."
+msgid "Accessing your camera is forbidden. Please check your settings."
+msgstr ""
+"O envio e recebimento de e-mail não pôde ser verificado. Por favor, "
+"verifique suas configurações."
+
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -1164,6 +1174,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Ativo"
@@ -1684,6 +1695,10 @@ msgstr "Ocorreu um erro inesperado."
 #: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
 msgid "An unexpected error occurred during system setup."
 msgstr "Ocorreu um erro inesperado durante a configuração do sistema."
+
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2328,6 +2343,8 @@ msgstr "Tipos disponíveis para um novo ticket"
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -2336,7 +2353,14 @@ msgstr "Tipos disponíveis para um novo ticket"
 msgid "Avatar"
 msgstr "Avatar"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
+#, fuzzy
+#| msgid "Preview"
+msgid "Avatar Preview"
+msgstr "Pré-Visualizar"
+
 #: app/graphql/gql/mutations/account/avatar/delete.rb
+#: app/graphql/gql/mutations/account/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr "O avatar não foi encontrado."
 
@@ -2507,6 +2531,12 @@ msgstr "Robôs"
 #: app/controllers/first_steps_controller.rb db/seeds/permissions.rb
 msgid "Branding"
 msgstr "Sua empresa"
+
+#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue
+#, fuzzy
+#| msgid "Send Invitation"
+msgid "Breadcrumb navigation"
+msgstr "Enviar Convite"
 
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
@@ -2680,6 +2710,8 @@ msgstr "Log de chamadas"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Camera"
 msgstr "Câmera"
@@ -2788,6 +2820,12 @@ msgstr "Não é possível definir notificações online como lidas"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
 msgstr "Não é possível enviar o arquivo"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid "Signature"
+msgid "Capture"
+msgstr "Assinatura"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -3934,6 +3972,7 @@ msgid "Creation mask"
 msgstr "Máscara de criação"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 msgid "Crop Image"
 msgstr "Cortar Imagem"
 
@@ -5330,6 +5369,12 @@ msgstr "Apagar organização ?"
 msgid "Delete records"
 msgstr "Deletar Registros"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Delete avatar"
+msgid "Delete this avatar"
+msgstr "Excluir avatar"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Delete:"
 msgstr "Excluir:"
@@ -5503,6 +5548,7 @@ msgstr ""
 "disso, para desativar as notificações, utilize as configurações acima."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 msgid "Discard"
 msgstr "Descartar"
 
@@ -8140,6 +8186,12 @@ msgstr ""
 "Para poder influenciar o comportamento desejado a esse respeito, você pode "
 "influenciar a ordem das fontes LDAP via arrastar e soltar."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "inactive"
+msgid "Inactive"
+msgstr "desativado"
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -9066,6 +9118,12 @@ msgstr ""
 "Você pode usar macros no Zammad para automatizar sequências recorrentes, e "
 "assim poupar tempo. Com isso uma combinação de ações em sequência no ticket "
 "são executadas com apenas um clique."
+
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue
+#, fuzzy
+#| msgid "resize sidebar"
+msgid "Main sidebar"
+msgstr "redimensionar barra lateral"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco db/seeds/permissions.rb
@@ -10774,9 +10832,27 @@ msgstr "Outras Configurações"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/permissions.rb
 msgid "Out of Office"
 msgstr "Out of Office"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "The setting could not be updated."
+msgid "Out of Office settings could not be saved."
+msgstr "A configuração não pôde ser atualizada."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Ticket has been created successfully."
+msgid "Out of Office settings have been saved successfully"
+msgstr "O ticket foi criado com sucesso."
+
+#: lib/validations/out_of_office_validator.rb
+msgid "Out of Office start date has to be earlier than or equal to end date"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
@@ -11465,9 +11541,23 @@ msgstr "Nome deste produto/sistema"
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
 #: app/frontend/apps/desktop/pages/personal-setting/routes.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
 msgid "Profile"
 msgstr "Perfil"
+
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#, fuzzy
+#| msgid "Ticket updated successfully."
+msgid "Profile appearance updated successfully."
+msgstr "Ticket atualizado com sucesso."
+
+#: app/frontend/shared/composables/useLocaleUpdate.ts
+#, fuzzy
+#| msgid "Ticket tags updated successfully."
+msgid "Profile language updated successfully."
+msgstr "Etiquetas do tickets atualizadas com sucesso."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
 msgid "Profile settings"
@@ -11590,6 +11680,12 @@ msgstr "Ler"
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Real-time"
 msgstr "Tempo Real"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Request for Change"
+msgid "Reason for absence"
+msgstr "Pedido de mudança"
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -11803,6 +11899,12 @@ msgstr "Tempo de reabertura em dias"
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Replacement"
+msgstr "Replacement"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Replacement"
+msgid "Replacement agent"
 msgstr "Replacement"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
@@ -12031,6 +12133,12 @@ msgstr ""
 #, fuzzy
 #| msgid "resize sidebar"
 msgid "Resize side panel"
+msgstr "redimensionar barra lateral"
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
+#, fuzzy
+#| msgid "resize sidebar"
+msgid "Resize sidebar"
 msgstr "redimensionar barra lateral"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -12302,6 +12410,8 @@ msgstr "Sábado"
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
@@ -12318,6 +12428,12 @@ msgstr "Salvar Códigos"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
 msgstr "Salvar Rascunho"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Out of Office"
+msgid "Save Out of Office"
+msgstr "Out of Office"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
@@ -12655,6 +12771,12 @@ msgstr "Selecionar o cliente do ticket ou criar um."
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Select the type of ticket your are creating"
 msgstr "Selecione o tipo de ticket que você está criando"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Delete avatar"
+msgid "Select this avatar"
+msgstr "Excluir avatar"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -13412,6 +13534,10 @@ msgstr "Iniciar Importação de %s"
 msgid "Start Import from Source"
 msgstr "Iniciar Importação da Fonte"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Start and end date"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Start modal dialog for form."
 msgstr "Diálogo modal padrão de formulário."
@@ -14096,6 +14222,7 @@ msgstr ""
 "O assistente automático está ativado. Por favor, use a URL do assistente "
 "automático fornecida."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr "O avatar não pôde ser excluído."
@@ -14104,6 +14231,13 @@ msgstr "O avatar não pôde ser excluído."
 msgid "The avatar could not be fetched."
 msgstr "Não foi possível buscar o avatar."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "The avatar could not be deleted."
+msgid "The avatar could not be selected."
+msgstr "O avatar não pôde ser excluído."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr "O avatar não pôde ser carregado."
@@ -14921,6 +15055,10 @@ msgstr "A assinatura foi verificada com sucesso."
 #: app/controllers/tickets_controller.rb
 msgid "The source ticket could not be found."
 msgstr "O ticket fonte não pôde ser encontrado."
+
+#: app/frontend/shared/form/validation/rules/date-range.ts
+msgid "The start date must precede or match end date."
+msgstr ""
 
 #: app/services/service/system/check_setup.rb
 msgid ""
@@ -16932,6 +17070,7 @@ msgstr "Atualizando Base de Dados"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 msgid "Upload"
 msgstr "Enviar"
 
@@ -17001,6 +17140,10 @@ msgid ""
 msgstr ""
 "Use o campo de assunto para e-mails. Se desativado, o título do ingresso "
 "será usado como assunto."
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+msgid "Use the camera to take a photo for the avatar."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -18120,6 +18263,30 @@ msgstr ""
 "Sua conta não foi verificada. Por favor, clique no link de verificação "
 "enviado para o seu e-mail."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Your Name"
+msgid "Your avatar"
+msgstr "Seu nome"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Woo hoo! Your password has been changed!"
+msgid "Your avatar has been changed!"
+msgstr "Agora sim! Sua senha foi modificada!"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "The avatar could not be deleted."
+msgid "Your avatar has been deleted!"
+msgstr "O avatar não pôde ser excluído."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "The avatar could not be uploaded."
+msgid "Your avatar has been uploaded!"
+msgstr "O avatar não pôde ser carregado."
+
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
@@ -18378,6 +18545,10 @@ msgstr "entre atualizações de agentes"
 msgid "busy"
 msgstr "ocupado"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
+msgid "camera,image,photo,picture"
+msgstr ""
+
 #: app/models/object_manager/attribute.rb
 msgid "can only be created on postgresql databases"
 msgstr "só pode ser criado em bancos de dados postgresql"
@@ -18619,6 +18790,12 @@ msgstr "ex. usuario@exemplo.com"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "e.g."
 msgstr "por exemplo."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Easter holiday"
+msgid "e.g. Easter holiday"
+msgstr "Feriado da Páscoa"
 
 #: app/assets/javascripts/app/views/generic/drox.jst.eco
 msgid "edit"
@@ -19305,10 +19482,6 @@ msgstr "responder a todos"
 msgid "required"
 msgstr "obrigatório"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
-msgid "resize sidebar"
-msgstr "redimensionar barra lateral"
-
 #: db/seeds/settings.rb
 msgid "right"
 msgstr "direita"
@@ -19571,6 +19744,10 @@ msgstr "intocado"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "updated"
 msgstr "atualizado"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+msgid "vacation,holiday,replacement,time off"
+msgstr ""
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"

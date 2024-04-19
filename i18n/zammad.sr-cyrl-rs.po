@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-15 11:50+0000\n"
+"PO-Revision-Date: 2024-04-18 12:33+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -1012,6 +1012,16 @@ msgstr "Приступ клијент тикетима"
 msgid "Access token"
 msgstr "Приступни кључ"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid ""
+#| "Email sending and receiving could not be verified. Please check your "
+#| "settings."
+msgid "Accessing your camera is forbidden. Please check your settings."
+msgstr ""
+"Није било могуће проверити слање и примање имејл порука. Молимо проверите "
+"подешавања."
+
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -1144,6 +1154,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Активно"
@@ -1661,6 +1672,10 @@ msgstr "Дошло је до неочекиване грешке."
 msgid "An unexpected error occurred during system setup."
 msgstr "Дошло је до неочекиване грешке при поставци система."
 
+#: lib/calendar_subscriptions.rb
+msgid "An unknown method name was requested."
+msgstr "Затражен је непознат назив метода."
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Analyzing entries with given configuration…"
@@ -1837,8 +1852,6 @@ msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Да ли сте сигурни да желите да обришете „%s”?"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
-#, fuzzy
-#| msgid "Do you really want to delete this object?"
 msgid "Are you sure you want to delete this object?"
 msgstr "Да ли сте сигурни да желите да обришете овај објекат?"
 
@@ -1930,11 +1943,11 @@ msgstr "Да ли сте сигурни? Ваша подешавања обав�
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Area for calendar days display"
-msgstr ""
+msgstr "Одељак за приказ дана календара"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Area for calendar month display"
-msgstr ""
+msgstr "Одељак за приказ месеца календара"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -2300,6 +2313,8 @@ msgstr "Доступни типови нових тикета"
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -2308,7 +2323,14 @@ msgstr "Доступни типови нових тикета"
 msgid "Avatar"
 msgstr "Аватар"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
+#, fuzzy
+#| msgid "Preview"
+msgid "Avatar Preview"
+msgstr "Приказ"
+
 #: app/graphql/gql/mutations/account/avatar/delete.rb
+#: app/graphql/gql/mutations/account/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr "Није било могуће пронаћи аватар."
 
@@ -2479,6 +2501,10 @@ msgstr "Ботови"
 #: app/controllers/first_steps_controller.rb db/seeds/permissions.rb
 msgid "Branding"
 msgstr "Брендинг"
+
+#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue
+msgid "Breadcrumb navigation"
+msgstr "Путања навигације"
 
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
@@ -2652,6 +2678,8 @@ msgstr "Евиденција позива"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Camera"
 msgstr "Камера"
@@ -2757,6 +2785,12 @@ msgstr "Није било могуће означити обавештења к�
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
 msgstr "Није било могуће отпремити датотеку"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid "Signature"
+msgid "Capture"
+msgstr "Потпис"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -3198,16 +3232,12 @@ msgid "Close current tab"
 msgstr "Затвори тренутни прозор"
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue
-#, fuzzy
-#| msgid "Confirm dialog"
 msgid "Close dialog"
-msgstr "Дијалог потврде"
+msgstr "Затвори дијалог"
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-#, fuzzy
-#| msgid "Close tab"
 msgid "Close side panel"
-msgstr "Затвори прозор"
+msgstr "Затвори бочни панел"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -3222,8 +3252,6 @@ msgid "Close tab on ticket close"
 msgstr "Затвори прозор по затварању тикета"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Close time picker"
 msgid "Close the time picker"
 msgstr "Затвори одабир времена"
 
@@ -3899,6 +3927,7 @@ msgid "Creation mask"
 msgstr "Форма за отварање"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 msgid "Crop Image"
 msgstr "Изрежи слику"
 
@@ -4080,10 +4109,8 @@ msgid "Date field"
 msgstr "Поље датума"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Datepicker input"
 msgid "Datepicker input field"
-msgstr "Унос датума"
+msgstr "Поље уноса датума"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Datepicker menu"
@@ -4113,22 +4140,16 @@ msgid "December"
 msgstr "децембар"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Decrement hours"
 msgid "Decrement hours value"
-msgstr "Умањи сате"
+msgstr "Умањи вредност сата"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Decrement minutes"
 msgid "Decrement minutes value"
-msgstr "Умањи минуте"
+msgstr "Умањи вредност минута"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Decrement seconds"
 msgid "Decrement seconds value"
-msgstr "Умањи секунде"
+msgstr "Умањи вредност секунди"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
@@ -5198,10 +5219,8 @@ msgid "Delete Knowledge Base"
 msgstr "Избриши чланак базе знања"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
-#, fuzzy
-#| msgid "Delete Ticket"
 msgid "Delete Object"
-msgstr "Брисање тикета"
+msgstr "Брисање објекта"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Delete Ticket"
@@ -5262,6 +5281,12 @@ msgstr "Избриши организацију?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Delete records"
 msgstr "Избриши записе"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Delete avatar"
+msgid "Delete this avatar"
+msgstr "Избриши аватар"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Delete:"
@@ -5436,6 +5461,7 @@ msgstr ""
 "искључивање обавештења користите подешавања изнад."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 msgid "Discard"
 msgstr "Откажи"
 
@@ -5520,10 +5546,8 @@ msgstr ""
 "Да ли сте сигурни да желите да поставите видљивост овог чланка на „јавно”?"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
-#, fuzzy
-#| msgid "Do you really want to delete \"%s\"?"
 msgid "Do you want to continue?"
-msgstr "Да ли сте сигурни да желите да обришете „%s”?"
+msgstr "Да ли желите да наставите?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
@@ -8049,6 +8073,12 @@ msgstr ""
 "Да бисте могли да утичете на жељено понашање у том погледу, можете одредити "
 "редослед LDAP извора путем превлачења и испуштања."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "inactive"
+msgid "Inactive"
+msgstr "искључено"
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -8098,22 +8128,16 @@ msgid "Increment (SystemID.Counter)"
 msgstr "Увећање (SystemID.бројач)"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Increment hours"
 msgid "Increment hours value"
-msgstr "Увећај сате"
+msgstr "Увећај вредност сата"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Increment minutes"
 msgid "Increment minutes value"
-msgstr "Увећај минуте"
+msgstr "Увећај вредност минута"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Increment seconds"
 msgid "Increment seconds value"
-msgstr "Увећај секунде"
+msgstr "Увећај вредност секунди"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -8971,6 +8995,10 @@ msgstr ""
 "Можете их користити за аутоматизацију поновних акција, притом штедећи време "
 "(и живце). Омогућавају извршавање комбиноване секвенце радњи на тикету само "
 "једним кликом."
+
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue
+msgid "Main sidebar"
+msgstr "Основна бочна трака"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco db/seeds/permissions.rb
@@ -10471,38 +10499,26 @@ msgid "Open note box"
 msgstr "Отвори поље напомене"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open hours overlay"
 msgid "Open the hours overlay"
 msgstr "Отвори одабир сата"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open minutes overlay"
 msgid "Open the minutes overlay"
 msgstr "Отвори одабир минута"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open months overlay"
 msgid "Open the months overlay"
 msgstr "Отвори одабир месеца"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open seconds overlay"
 msgid "Open the seconds overlay"
 msgstr "Отвори одабир секунди"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open time picker"
 msgid "Open the time picker"
 msgstr "Отвори одабир времена"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Open years overlay"
 msgid "Open the years overlay"
 msgstr "Отвори одабир година"
 
@@ -10666,9 +10682,27 @@ msgstr "Додатна подешавања"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #: db/seeds/permissions.rb
 msgid "Out of Office"
 msgstr "Ван канцеларије"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "The setting could not be updated."
+msgid "Out of Office settings could not be saved."
+msgstr "Није било могуће освежити подешавање."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Ticket has been created successfully."
+msgid "Out of Office settings have been saved successfully"
+msgstr "Тикет је успешно отворен."
+
+#: lib/validations/out_of_office_validator.rb
+msgid "Out of Office start date has to be earlier than or equal to end date"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
@@ -11345,9 +11379,23 @@ msgstr "Назив производа"
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
 #: app/frontend/apps/desktop/pages/personal-setting/routes.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
 msgid "Profile"
 msgstr "Профил"
+
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#, fuzzy
+#| msgid "Ticket updated successfully."
+msgid "Profile appearance updated successfully."
+msgstr "Тикет је успешно освежен."
+
+#: app/frontend/shared/composables/useLocaleUpdate.ts
+#, fuzzy
+#| msgid "Ticket tags updated successfully."
+msgid "Profile language updated successfully."
+msgstr "Означе тикета су успешно освежене."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
 msgid "Profile settings"
@@ -11470,6 +11518,12 @@ msgstr "Читање"
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Real-time"
 msgstr "У реалном времену"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Request for Change"
+msgid "Reason for absence"
+msgstr "Захтев за промену"
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -11681,6 +11735,12 @@ msgstr "Време поновног отварања у данима"
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Replacement"
+msgstr "Замена"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Replacement"
+msgid "Replacement agent"
 msgstr "Замена"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
@@ -11903,10 +11963,12 @@ msgstr ""
 "<div>Ваш #{config.product_name} тим</div>\n"
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-#, fuzzy
-#| msgid "resize sidebar"
 msgid "Resize side panel"
-msgstr "промени ширину бочне траке"
+msgstr "Промени ширину бочног панела"
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
+msgid "Resize sidebar"
+msgstr "Промени ширину бочне траке"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
@@ -12176,6 +12238,8 @@ msgstr "субота"
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
@@ -12192,6 +12256,12 @@ msgstr "Сачувај шифре"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
 msgstr "Сачувај нацрт"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Out of Office"
+msgid "Save Out of Office"
+msgstr "Ван канцеларије"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
@@ -12529,6 +12599,12 @@ msgstr "Изабери клијента тикета или додај ново�
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Select the type of ticket your are creating"
 msgstr "Изабери тип новог тикета"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Delete avatar"
+msgid "Select this avatar"
+msgstr "Избриши аватар"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -12981,14 +13057,12 @@ msgid "Shown when the chat is closed."
 msgstr "Приказује се када је ћаскање затворено."
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
-#, fuzzy
-#| msgid "Close tab"
 msgid "Side panel"
-msgstr "Затвори прозор"
+msgstr "Бочни панел"
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 msgid "Side panel footer"
-msgstr ""
+msgstr "Подножје бочног панела"
 
 #: db/seeds/settings.rb
 msgid "Sidebar Attachments"
@@ -13282,6 +13356,10 @@ msgstr "Започни увоз из %s"
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 msgid "Start Import from Source"
 msgstr "Започни увоз из извора"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+msgid "Start and end date"
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Start modal dialog for form."
@@ -13965,6 +14043,7 @@ msgstr ""
 "Аутоматски асистент је укључен. Молимо користите наведени URL аутоматског "
 "асистента."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr "Није било могуће обрисати аватар."
@@ -13973,6 +14052,13 @@ msgstr "Није било могуће обрисати аватар."
 msgid "The avatar could not be fetched."
 msgstr "Није било могуће преузети аватар."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "The avatar could not be deleted."
+msgid "The avatar could not be selected."
+msgstr "Није било могуће обрисати аватар."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr "Није било могуће отпремити аватар."
@@ -14775,6 +14861,10 @@ msgstr "Потпис је успешно потврђен."
 #: app/controllers/tickets_controller.rb
 msgid "The source ticket could not be found."
 msgstr "Није пронађен изворни тикет."
+
+#: app/frontend/shared/form/validation/rules/date-range.ts
+msgid "The start date must precede or match end date."
+msgstr ""
 
 #: app/services/service/system/check_setup.rb
 msgid ""
@@ -16119,20 +16209,16 @@ msgid "Today"
 msgstr "Данас"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Toggle dark mode"
 msgid "Toggle AM/PM mode"
-msgstr "Укључи/искључи тамни изглед"
+msgstr "Укључи/искључи AM/PM индикатор"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
 msgstr "Укључи/искључи тамни изглед"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
-#, fuzzy
-#| msgid "Toggle overlay"
 msgid "Toggle the overlay"
-msgstr "Укључи/искључи одабир"
+msgstr "Укључи/искључи прозорчић"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -16498,10 +16584,8 @@ msgid "Unread notifications"
 msgstr "Непрочитана обавештења"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "Unsaved Changes"
-msgstr "Откажи промене"
+msgstr "Несачуване измене"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue
@@ -16745,6 +16829,7 @@ msgstr "Освежавање базе података"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 msgid "Upload"
 msgstr "Отпреми"
 
@@ -16814,6 +16899,10 @@ msgid ""
 msgstr ""
 "Користи поље предмета за имејл поруке. Уколико је искључено, наслов тикета "
 "ће бити коришћен као предмет."
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+msgid "Use the camera to take a photo for the avatar."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -17925,6 +18014,30 @@ msgid ""
 msgstr ""
 "Ваш налог није потврђен. Молимо кликните на линк у имејл поруци са потврдом."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Your Name"
+msgid "Your avatar"
+msgstr "Ваше име"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "Woo hoo! Your password has been changed!"
+msgid "Your avatar has been changed!"
+msgstr "Јуху! Ваша лозинка је промењена!"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "The avatar could not be deleted."
+msgid "Your avatar has been deleted!"
+msgstr "Није било могуће обрисати аватар."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
+#, fuzzy
+#| msgid "The avatar could not be uploaded."
+msgid "Your avatar has been uploaded!"
+msgstr "Није било могуће отпремити аватар."
+
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
@@ -18181,6 +18294,10 @@ msgstr "између два одговора оператера"
 msgid "busy"
 msgstr "заузет(а)"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
+msgid "camera,image,photo,picture"
+msgstr ""
+
 #: app/models/object_manager/attribute.rb
 msgid "can only be created on postgresql databases"
 msgstr "могуће је додати само за postgresql базе података"
@@ -18422,6 +18539,12 @@ msgstr "нпр. user@example.com"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "e.g."
 msgstr "нпр."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#, fuzzy
+#| msgid "Easter holiday"
+msgid "e.g. Easter holiday"
+msgstr "Ускршњи празници"
 
 #: app/assets/javascripts/app/views/generic/drox.jst.eco
 msgid "edit"
@@ -19107,10 +19230,6 @@ msgstr "одговори свима"
 msgid "required"
 msgstr "обавезно"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue
-msgid "resize sidebar"
-msgstr "промени ширину бочне траке"
-
 #: db/seeds/settings.rb
 msgid "right"
 msgstr "десно"
@@ -19372,6 +19491,10 @@ msgstr "нетакнуто"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "updated"
 msgstr "освежено"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
+msgid "vacation,holiday,replacement,time off"
+msgstr ""
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"
