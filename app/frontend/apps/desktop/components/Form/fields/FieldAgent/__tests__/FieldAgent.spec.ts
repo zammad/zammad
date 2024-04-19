@@ -278,4 +278,33 @@ describe('Form - Field - Agent - Query', () => {
 
     expect(wrapper.getByIconName('check2')).toBeInTheDocument()
   })
+
+  it('supports filtering out specific user', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+        exceptUserInternalId: 999,
+      },
+    })
+
+    await wrapper.events.click(await wrapper.findByLabelText('Select…'))
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    mockAutocompleteSearchAgentQuery({
+      autocompleteSearchAgent: [...testOptions.slice(0, 1)],
+    })
+
+    await wrapper.events.type(filterElement, '*')
+
+    const calls = await waitForAutocompleteSearchAgentQueryCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      input: expect.objectContaining({
+        exceptInternalId: 999,
+      }),
+    })
+  })
 })

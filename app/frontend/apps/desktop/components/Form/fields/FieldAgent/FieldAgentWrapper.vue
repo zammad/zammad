@@ -16,6 +16,7 @@ interface Props {
   context: FormFieldContext<
     AutoCompleteProps & {
       options?: AutoCompleteAgentOption[]
+      exceptUserInternalId?: number
     }
   >
 }
@@ -47,6 +48,9 @@ Object.assign(props.context, {
     return buildEntityOption(belongsToObject)
   },
   gqlQuery: AutocompleteSearchAgentDocument,
+  additionalQueryParams: {
+    exceptInternalId: props.context.exceptUserInternalId,
+  },
 })
 </script>
 

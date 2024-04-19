@@ -481,6 +481,35 @@ describe('Form - Field - AutoComplete - Query', () => {
       },
     ])
   })
+
+  it('supports passing additional query parameters', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+        additionalQueryParams: {
+          limit: 2,
+        },
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    mockAutocompleteSearchUserQuery({
+      autocompleteSearchUser: testOptions,
+    })
+
+    await wrapper.events.type(wrapper.getByRole('searchbox'), '*')
+
+    const calls = await waitForAutocompleteSearchUserQueryCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      input: expect.objectContaining({
+        limit: 2,
+      }),
+    })
+  })
 })
 
 describe('Form - Field - AutoComplete - Initial Options', () => {

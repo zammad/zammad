@@ -1,4 +1,4 @@
-query autocompleteSearchUser($input: AutocompleteSearchInput!) {
+query autocompleteSearchUser($input: AutocompleteSearchUserInput!) {
   autocompleteSearchUser(input: $input) {
     value
     label

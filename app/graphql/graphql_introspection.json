@@ -1706,6 +1706,16 @@
               "defaultValue": null
             },
             {
+              "name": "exceptInternalId",
+              "description": "Optional user ID to be filtered out from results",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
               "name": "contact",
               "description": "User contact type option, i.e. email or phone",
               "type": {
@@ -1870,6 +1880,51 @@
           "interfaces": [
 
           ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "AutocompleteSearchUserInput",
+          "description": "The default fields for user autocomplete searches.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "query",
+              "description": "Query from the autocomplete field",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "limit",
+              "description": "Limit for the amount of entries",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "exceptInternalId",
+              "description": "Optional user ID to be filtered out from results",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -11755,7 +11810,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "AutocompleteSearchInput",
+                      "name": "AutocompleteSearchUserInput",
                       "ofType": null
                     }
                   },
@@ -11989,7 +12044,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "AutocompleteSearchInput",
+                      "name": "AutocompleteSearchUserInput",
                       "ofType": null
                     }
                   },

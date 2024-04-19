@@ -10,7 +10,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Agent, authenticated_as: :agent
     let(:customers) { create_list(:customer, 3, lastname: 'AutocompleteSearch') } # must not be found
     let(:query)     do
       <<~QUERY
-        query autocompleteSearchAgent($input: AutocompleteSearchInput!)  {
+        query autocompleteSearchAgent($input: AutocompleteSearchUserInput!)  {
           autocompleteSearchAgent(input: $input) {
             value
             label
@@ -23,9 +23,10 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Agent, authenticated_as: :agent
         }
       QUERY
     end
-    let(:variables)    { { input: { query: query_string, limit: limit } } }
+    let(:variables)    { { input: { query: query_string, limit: limit, exceptInternalId: except } } }
     let(:query_string) { agents.last.lastname }
     let(:limit)        { nil }
+    let(:except)       { nil }
 
     before do
       agents && customers
@@ -70,6 +71,38 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Agent, authenticated_as: :agent
 
       it 'returns nothing' do
         expect(gql.result.data.length).to eq(0)
+      end
+    end
+
+    context 'when a specific agent is excepted' do
+      let(:except) { agents.first.id }
+
+      let(:second_user_payload) do
+        {
+          'value'              => agents.second.id,
+          'label'              => agents.second.fullname,
+          'labelPlaceholder'   => nil,
+          'heading'            => nil,
+          'headingPlaceholder' => nil,
+          'icon'               => nil,
+          'disabled'           => nil,
+        }
+      end
+
+      let(:third_user_payload) do
+        {
+          'value'              => agents.third.id,
+          'label'              => agents.third.fullname,
+          'labelPlaceholder'   => nil,
+          'heading'            => nil,
+          'headingPlaceholder' => nil,
+          'icon'               => nil,
+          'disabled'           => nil,
+        }
+      end
+
+      it 'filters out provided agent' do
+        expect(gql.result.data).to eq([third_user_payload, second_user_payload])
       end
     end
 

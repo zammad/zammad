@@ -65,6 +65,12 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Recipient, authenticated_as: :a
       let(:query_string) { recipient.email }
 
       it_behaves_like 'returning expected recipient payload', contact: 'email'
+
+      context 'when a specific recipient is excepted' do
+        let(:variables) { { input: { query: query_string, exceptInternalId: recipient.id } } }
+
+        it_behaves_like 'returning empty data set'
+      end
     end
 
     context 'with explicit contact' do
@@ -139,6 +145,13 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Recipient, authenticated_as: :a
 
       context 'with empty value' do
         let(:user_contact) { 'phone' }
+
+        it_behaves_like 'returning empty data set'
+      end
+
+      context 'when a specific recipient is excepted' do
+        let(:variables)    { { input: { query: query_string, contact: user_contact, exceptInternalId: recipient.id } } }
+        let(:user_contact) { 'email' }
 
         it_behaves_like 'returning empty data set'
       end

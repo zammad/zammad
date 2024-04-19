@@ -5,7 +5,7 @@ module Gql::Queries
 
     description 'Search for users'
 
-    argument :input, Gql::Types::Input::AutocompleteSearch::InputType, required: true, description: 'The input object for the autocomplete search'
+    argument :input, Gql::Types::Input::AutocompleteSearch::UserInputType, required: true, description: 'The input object for the autocomplete search'
 
     type [Gql::Types::AutocompleteSearch::UserEntryType], null: false
 
@@ -16,7 +16,9 @@ module Gql::Queries
 
       return [] if query.strip.empty?
 
-      post_process(find_users(query:, limit:), input: input)
+      users = find_users(query:, limit:)
+      users = reject_user(users, input:)
+      post_process(users, input:)
     end
 
     def find_users(query:, limit:)
@@ -25,6 +27,12 @@ module Gql::Queries
         limit:,
         current_user: context.current_user,
       )
+    end
+
+    def reject_user(results, input:)
+      return results if input[:except_internal_id].blank?
+
+      results.reject { |user| user.id == input[:except_internal_id] }
     end
 
     def post_process(results, input:)

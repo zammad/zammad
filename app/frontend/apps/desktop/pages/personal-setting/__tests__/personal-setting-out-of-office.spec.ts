@@ -43,6 +43,8 @@ describe('Out of Office page', () => {
   describe('when enabled', () => {
     beforeEach(() => {
       mockAccount({
+        id: '123',
+        internalId: 1,
         firstname: 'John',
         lastname: 'Doe',
         outOfOffice: true,
@@ -172,8 +174,6 @@ describe('Out of Office page', () => {
     it('cannot set replacement agent to blank', async () => {
       const view = await visitView('/personal-setting/out-of-office')
 
-      await vi.dynamicImportSettled()
-
       const input = view.getByLabelText('Replacement agent')
       const button = getByRole(input, 'button')
       await view.events.click(button)
@@ -181,6 +181,30 @@ describe('Out of Office page', () => {
       await view.events.click(view.getByText('Save Out of Office'))
 
       expect(input).toBeDescribedBy('This field is required.')
+    })
+
+    it('cannot set replacement agent to themselves', async () => {
+      const view = await visitView('/personal-setting/out-of-office')
+
+      const inputAgent = view.getByLabelText('Replacement agent')
+
+      await view.events.click(inputAgent)
+
+      const filterElement = getByRole(inputAgent, 'searchbox')
+
+      mockAutocompleteSearchAgentQuery({
+        autocompleteSearchAgent: agentAutocompleteOptions,
+      })
+
+      await view.events.type(filterElement, '*')
+
+      const calls = await waitForAutocompleteSearchAgentQueryCalls()
+
+      expect(calls.at(-1)?.variables).toEqual({
+        input: expect.objectContaining({
+          exceptInternalId: 1,
+        }),
+      })
     })
 
     it('can disable Out of Office', async () => {
@@ -204,7 +228,6 @@ describe('Out of Office page', () => {
 
     it('can disable Out of Office and unset settings', async () => {
       const view = await visitView('/personal-setting/out-of-office')
-      await vi.dynamicImportSettled()
 
       const inputActivated = view.getByLabelText('Active')
       await view.events.click(inputActivated)
@@ -252,7 +275,6 @@ describe('Out of Office page', () => {
 
     it('loads current Out of Office settings', async () => {
       const view = await visitView('/personal-setting/out-of-office')
-      await vi.dynamicImportSettled()
 
       expect(view.getByLabelText('Reason for absence')).toHaveValue('')
       expect(view.getByLabelText('Start and end date')).toHaveValue('')
@@ -283,7 +305,6 @@ describe('Out of Office page', () => {
 
     it('can set replacement agent', async () => {
       const view = await visitView('/personal-setting/out-of-office')
-      await vi.dynamicImportSettled()
 
       const inputAgent = view.getByLabelText('Replacement agent')
 

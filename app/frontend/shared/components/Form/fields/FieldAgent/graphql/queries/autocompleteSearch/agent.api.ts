@@ -7,7 +7,7 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const AutocompleteSearchAgentDocument = gql`
-    query autocompleteSearchAgent($input: AutocompleteSearchInput!) {
+    query autocompleteSearchAgent($input: AutocompleteSearchUserInput!) {
   autocompleteSearchAgent(input: $input) {
     value
     label

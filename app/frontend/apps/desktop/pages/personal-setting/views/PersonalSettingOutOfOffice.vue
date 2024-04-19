@@ -59,6 +59,7 @@ const schema = defineFormSchema([
         props: {
           clearable: true,
           belongsToObjectField: 'outOfOfficeReplacement',
+          exceptUserInternalId: user.value?.internalId,
         },
       },
       {

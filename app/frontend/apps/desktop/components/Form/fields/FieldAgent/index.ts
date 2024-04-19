@@ -6,9 +6,13 @@ import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 import FieldAgentWrapper from './FieldAgentWrapper.vue'
 import { autoCompleteProps } from '../FieldAutoComplete/index.ts'
 
-const fieldDefinition = createInput(FieldAgentWrapper, autoCompleteProps, {
-  features: [addLink, formUpdaterTrigger()],
-})
+const fieldDefinition = createInput(
+  FieldAgentWrapper,
+  [...autoCompleteProps, 'exceptUserInternalId'],
+  {
+    features: [addLink, formUpdaterTrigger()],
+  },
+)
 
 export default {
   fieldType: 'agent',

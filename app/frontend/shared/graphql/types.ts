@@ -249,6 +249,8 @@ export type AutocompleteSearchRecipientEntry = {
 export type AutocompleteSearchRecipientInput = {
   /** User contact type option, i.e. email or phone */
   contact?: InputMaybe<EnumUserContact>;
+  /** Optional user ID to be filtered out from results */
+  exceptInternalId?: InputMaybe<Scalars['Int']['input']>;
   /** Limit for the amount of entries */
   limit?: InputMaybe<Scalars['Int']['input']>;
   /** Query from the autocomplete field */
@@ -266,6 +268,16 @@ export type AutocompleteSearchUserEntry = {
   labelPlaceholder?: Maybe<Array<Scalars['String']['output']>>;
   user: User;
   value: Scalars['Int']['output'];
+};
+
+/** The default fields for user autocomplete searches. */
+export type AutocompleteSearchUserInput = {
+  /** Optional user ID to be filtered out from results */
+  exceptInternalId?: InputMaybe<Scalars['Int']['input']>;
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String']['input'];
 };
 
 /** Avatar for users */
@@ -2020,7 +2032,7 @@ export type Queries = {
 
 /** All available queries */
 export type QueriesAutocompleteSearchAgentArgs = {
-  input: AutocompleteSearchInput;
+  input: AutocompleteSearchUserInput;
 };
 
 
@@ -2056,7 +2068,7 @@ export type QueriesAutocompleteSearchTagArgs = {
 
 /** All available queries */
 export type QueriesAutocompleteSearchUserArgs = {
-  input: AutocompleteSearchInput;
+  input: AutocompleteSearchUserInput;
 };
 
 
@@ -3754,14 +3766,14 @@ export type UserUpdateMutationVariables = Exact<{
 export type UserUpdateMutation = { __typename?: 'Mutations', userUpdate?: { __typename?: 'UserUpdatePayload', user?: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, outOfOffice?: boolean | null, outOfOfficeStartAt?: string | null, outOfOfficeEndAt?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, outOfOfficeReplacement?: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, login?: string | null, phone?: string | null, email?: string | null } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type AutocompleteSearchAgentQueryVariables = Exact<{
-  input: AutocompleteSearchInput;
+  input: AutocompleteSearchUserInput;
 }>;
 
 
 export type AutocompleteSearchAgentQuery = { __typename?: 'Queries', autocompleteSearchAgent: Array<{ __typename?: 'AutocompleteSearchUserEntry', value: number, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, user: { __typename?: 'User', vip?: boolean | null, outOfOffice?: boolean | null, active?: boolean | null, id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, outOfOfficeStartAt?: string | null, outOfOfficeEndAt?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, outOfOfficeReplacement?: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, login?: string | null, phone?: string | null, email?: string | null } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null } }> };
 
 export type AutocompleteSearchUserQueryVariables = Exact<{
-  input: AutocompleteSearchInput;
+  input: AutocompleteSearchUserInput;
 }>;
 
 
