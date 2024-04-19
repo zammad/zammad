@@ -31,6 +31,7 @@ class ReportsController < ApplicationController
         backend[:condition] = condition
       end
       next if !backend[:adapter]
+      next if params['backends'][backend[:name]].blank?
 
       result[backend[:name]] = backend[:adapter].aggs(
         range_start:     get_params[:start],
