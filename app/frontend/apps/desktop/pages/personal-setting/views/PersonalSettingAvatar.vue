@@ -174,7 +174,7 @@ const storeAvatar = (image: ImageFileData) => {
       notify({
         id: 'avatar-upload-success',
         type: NotificationTypes.Success,
-        message: __('Your avatar has been uploaded!'),
+        message: __('Your avatar has been uploaded.'),
       })
     }
   })
@@ -233,7 +233,7 @@ const selectAvatar = (avatar: Avatar) => {
     notify({
       id: 'avatar-select-success',
       type: NotificationTypes.Success,
-      message: __('Your avatar has been changed!'),
+      message: __('Your avatar has been changed.'),
     })
   })
 }
@@ -267,7 +267,7 @@ const deleteAvatar = (avatar: Avatar) => {
     notify({
       id: 'avatar-delete-success',
       type: NotificationTypes.Success,
-      message: __('Your avatar has been deleted!'),
+      message: __('Your avatar has been deleted.'),
     })
   })
 }

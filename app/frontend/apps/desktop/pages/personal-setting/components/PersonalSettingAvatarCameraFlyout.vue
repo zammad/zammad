@@ -150,7 +150,7 @@ const captureImage = () => {
           variant="primary"
           size="medium"
           @click="captureImage"
-          >{{ $t('Capture') }}</CommonButton
+          >{{ $t('Capture From Camera') }}</CommonButton
         >
         <CommonButton
           :disabled="!image"
@@ -158,7 +158,7 @@ const captureImage = () => {
           size="medium"
           @click="discardImage"
         >
-          {{ $t('Discard') }}
+          {{ $t('Discard Snapshot') }}
         </CommonButton>
       </div>
     </div>

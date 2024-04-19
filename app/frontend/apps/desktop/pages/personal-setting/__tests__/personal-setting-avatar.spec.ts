@@ -313,7 +313,7 @@ describe('avatar personal settings', () => {
       ).toBeInTheDocument()
 
       const captureButton = view.getByRole('button', {
-        name: 'Capture',
+        name: 'Capture From Camera',
       })
 
       await view.events.click(captureButton)
