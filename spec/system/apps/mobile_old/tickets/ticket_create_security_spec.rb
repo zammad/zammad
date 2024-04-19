@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'system/apps/mobile/examples/article_security_examples'
+require 'system/apps/mobile_old/examples/article_security_examples'
 
 RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, authenticated_as: :authenticate, type: :system do
   def prepare_phone_article

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-require 'system/apps/mobile/examples/core_workflow_examples'
+require 'system/apps/mobile_old/examples/core_workflow_examples'
 
 RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, type: :system do
   let(:organization)        { create(:organization, domain: 'domain.com', note: '') }

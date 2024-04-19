@@ -3,42 +3,38 @@
 require 'rails_helper'
 
 RSpec.describe 'Mobile > App Account Page', app: :mobile, type: :system do
-  context 'when on account page' do
-    let(:admin) { create(:admin) }
-    let(:agent) { create(:agent) }
-
+  describe 'language selection' do
     before do
       visit '/account'
     end
 
-    context 'when updating locale', authenticated_as: :agent do
-      it 'check that user can see and change locale' do
-        locale = find_treeselect('Language')
+    it 'user can change language' do
+      locale = find_treeselect('Language')
+      locale.select_option('Deutsch')
+      expect(page).to have_text('Sprache')
+    end
+  end
 
-        # current locale is visible
-        expect(locale).to have_selected_option('English (United States)')
+  describe 'avatar handling', authenticated_as: :agent do
+    let(:agent) { create(:agent, firstname: 'Jane', lastname: 'Doe') }
 
-        locale.select_option('Dansk')
-        wait_for_gql('shared/entities/account/graphql/mutations/locale.graphql')
-        agent.reload
-        expect(agent.preferences[:locale]).to eq('da')
-      end
+    before do
+      visit '/account/avatar'
     end
 
-    context 'when checking about information' do
-      context 'when permitted', authenticated_as: :admin do
-        it 'shows about information' do
-          wait_for_gql('shared/graphql/queries/about.graphql')
+    it 'user can upload avatar' do
+      expect(page).to have_text('JD')
+      find('input[data-test-id="fileGalleryInput"]', visible: :all).set(Rails.root.join('test/data/image/1000x1000.png'))
 
-          expect(page).to have_content(Version.get)
-        end
-      end
+      expect(page).to have_css('.vue-advanced-cropper')
+      click_on 'Save'
 
-      context 'when forbidden', authenticated_as: :agent do
-        it 'does not show about information' do
-          expect(page).to have_no_content(Version.get)
-        end
-      end
+      wait.until { Avatar.last.present? }
+      store   = Store.find(Avatar.last.store_resize_id)
+      img_url = "data:#{store.preferences['Mime-Type']};base64,#{Base64.strict_encode64(store.content)}"
+
+      avatar_element_style = find('[data-test-id="common-avatar"]').style('background-image')
+      expect(avatar_element_style['background-image']).to eq("url(\"#{img_url}\")")
     end
   end
 end

@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'system/apps/mobile/examples/core_workflow_examples'
+require 'system/apps/mobile_old/examples/core_workflow_examples'
 
 RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: :authenticate, type: :system do
   let(:user)   { create(:customer, :with_org, address: 'Berlin') }

@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'system/apps/mobile/examples/create_article_examples'
-require 'system/apps/mobile/examples/article_security_examples'
+require 'system/apps/mobile_old/examples/create_article_examples'
+require 'system/apps/mobile_old/examples/article_security_examples'
 
 RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated_as: :agent, type: :system do
   let(:group)     { Group.find_by(name: 'Users') }

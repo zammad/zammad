@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'system/apps/mobile/examples/reply_article_examples'
+require 'system/apps/mobile_old/examples/reply_article_examples'
 
 RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_as: :agent, type: :system do
   let(:group)              { Group.find_by(name: 'Users') }
