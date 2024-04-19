@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-16 02:09+0000\n"
+"PO-Revision-Date: 2024-04-19 01:05+0000\n"
 "Last-Translator: Aivars Miška <allefm@gmail.com>\n"
 "Language-Team: Latvian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/lv/>\n"
+"zammad-stable/lv/>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= "
 "19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2);\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.4.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -932,7 +932,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "Actions"
-msgstr ""
+msgstr "Darbības"
 
 #: db/seeds/settings.rb
 msgid "Activate the recursive processing of ticket triggers."
@@ -1217,7 +1217,7 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
-msgstr ""
+msgstr "Adrese"
 
 #: db/seeds/settings.rb
 msgid "Address of the proxy server for http and https resources."
@@ -1327,11 +1327,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
-msgstr ""
+msgstr "Aģenti"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Alarm"
-msgstr ""
+msgstr "Paziņojums"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -1512,11 +1512,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee
 msgid "Answer"
-msgstr ""
+msgstr "Atbildēt"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "Answers"
-msgstr ""
+msgstr "Atbildes"
 
 #: app/assets/javascripts/app/views/knowledge_base/_reader_list_item.jst.eco
 msgid "Answers: %s"
@@ -1575,7 +1575,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
-msgstr ""
+msgstr "Lietotne"
 
 #: db/seeds/settings.rb
 msgid "Application secret"
@@ -1583,7 +1583,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Applications"
-msgstr ""
+msgstr "Lietotnes"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Apply"
@@ -1615,11 +1615,11 @@ msgstr "Aprīlis"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Archive"
-msgstr ""
+msgstr "Arhīvs"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Archived"
-msgstr ""
+msgstr "Arhivēts"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Archived at"
@@ -1770,7 +1770,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Assigned"
-msgstr ""
+msgstr "Nozīmēti"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Assignee"
@@ -1846,7 +1846,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
 #: public/assets/form/form.js
 msgid "Attachments"
-msgstr ""
+msgstr "Pielikumi"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in a Simple Storage Service."
@@ -1928,7 +1928,7 @@ msgstr "Augusts"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Authentication"
-msgstr ""
+msgstr "Autentifikācija"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Authentication Token"
@@ -2099,7 +2099,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue
 msgid "Back"
-msgstr ""
+msgstr "Atpakaļ"
 
 #: app/assets/javascripts/app/views/widget/switch_back_to_user.jst.eco
 msgid "Back to my view"
@@ -2216,7 +2216,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Blue"
-msgstr ""
+msgstr "Zils"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
@@ -2245,7 +2245,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
-msgstr ""
+msgstr "Pārlūks"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
@@ -2308,7 +2308,7 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "CMDB to document complex relations of your network components."
@@ -2365,7 +2365,7 @@ msgstr "Kalendārs"
 #: app/assets/javascripts/app/controllers/calendar.coffee
 #: db/seeds/permissions.rb
 msgid "Calendars"
-msgstr ""
+msgstr "Kalendāri"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -2516,12 +2516,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
-msgstr ""
+msgstr "Kategorijas"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Category"
-msgstr ""
+msgstr "Kategorija"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Category page layout"
@@ -2622,7 +2622,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
-msgstr ""
+msgstr "Kanāls"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Chat"
@@ -2674,7 +2674,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Channels"
-msgstr ""
+msgstr "Kanāli"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
@@ -2747,7 +2747,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Checksum"
-msgstr ""
+msgstr "Kontrolsumma"
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee
 msgid "Child"
@@ -2913,11 +2913,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Clients"
-msgstr ""
+msgstr "Klienti"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 msgid "Clone"
-msgstr ""
+msgstr "Kopēt"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
@@ -3036,7 +3036,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 msgid "Config"
-msgstr ""
+msgstr "Iestatījumi"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "Config has changed"
@@ -3049,7 +3049,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "Configuration"
-msgstr ""
+msgstr "Iestatījumi"
 
 #: app/assets/javascripts/app/views/knowledge_base/server_snippet.jst.eco
 msgid "Configuration for %s"
@@ -3236,7 +3236,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Context"
-msgstr ""
+msgstr "Konteksts"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
@@ -3294,7 +3294,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Copy"
-msgstr ""
+msgstr "Kopēt"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
@@ -3350,7 +3350,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
-msgstr ""
+msgstr "Skaits"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -3735,7 +3735,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
-msgstr ""
+msgstr "Izgriezt"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Dark"
@@ -3773,7 +3773,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Database"
-msgstr ""
+msgstr "Datubāze"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Database Update Required"
@@ -3804,7 +3804,7 @@ msgstr "Diena"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
 msgid "Day(s)"
-msgstr ""
+msgstr "Diena(s)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Days"

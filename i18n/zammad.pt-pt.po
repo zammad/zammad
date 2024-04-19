@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-01-08 09:46+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-04-19 01:05+0000\n"
+"Last-Translator: Francisco Rocha <francisco@rocha.com.pt>\n"
 "Language-Team: Portuguese (Portugal) <https://translations.zammad.org/"
-"projects/zammad/zammad-development/pt_PT/>\n"
+"projects/zammad/zammad-stable/pt_PT/>\n"
 "Language: pt-pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 5.4.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -534,7 +534,7 @@ msgstr "%s requerido!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
-msgstr ""
+msgstr "%s é enviado sem legenda de texto"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
@@ -694,7 +694,7 @@ msgstr "%s% foram reabertos"
 
 #: app/models/concerns/has_group_relation_definition.rb
 msgid "%{model} can have full or granular access to group"
-msgstr ""
+msgstr "%{model} pode ter acesso completo ou em parte ao grupo"
 
 #: app/models/object_manager/attribute.rb
 #, fuzzy
@@ -704,7 +704,7 @@ msgstr "Conta já existe!"
 
 #: app/models/object_manager/attribute.rb
 msgid "%{name} is a reserved word"
-msgstr ""
+msgstr "%{name} é uma palavra reservada"
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
 #, fuzzy
@@ -886,7 +886,7 @@ msgstr ""
 
 #: lib/validations/mention_validator.rb
 msgid "A mentioned user has no agent access to this ticket"
-msgstr ""
+msgstr "O utilizador referido não tem acesso de agente a este ticket"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -944,12 +944,17 @@ msgid ""
 "A ticket's priority is simply a ranking of how urgent or important it is. "
 "Different priorities allow you to see the importance of your tickets better."
 msgstr ""
+"A prioridade de um ticket é simplesmente uma classificação de quão urgente "
+"ou importante ele é. Diferentes prioridades permitem que você veja melhor a "
+"importância dos seus tickets."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid ""
 "A ticket's state is used to categorize and manage the lifecycle of a ticket "
 "or customer inquiry."
 msgstr ""
+"O estado de um ticket é usado para categorizar e gerir o ciclo de vida de um "
+"ticket ou a consulta de cliente."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
@@ -960,6 +965,8 @@ msgid ""
 "A webhook can be fired by triggers and schedulers, don't forget to define "
 "them!"
 msgstr ""
+"Um webhook pode ser acionado por gatilhos e agendadores, não esqueça de "
+"defini-los!"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -1298,7 +1305,7 @@ msgstr "Adicionar um Token de Acesso Pessoal"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid "Add a data privacy deletion task"
-msgstr ""
+msgstr "Adicionar uma tarefa para exclusão de dados privados"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #, fuzzy
@@ -1362,7 +1369,7 @@ msgstr "Adicionar cabeçalho de segundo nível"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Add selected values"
-msgstr ""
+msgstr "Adicionar valores selecionados"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -1371,7 +1378,7 @@ msgstr "Adicionar as iniciais do remetente no fim de um tweet."
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
 msgid "Add subclause"
-msgstr ""
+msgstr "Adicionar sub-clausula"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
@@ -1403,7 +1410,7 @@ msgstr "Bloco de Notificações"
 
 #: db/seeds/settings.rb
 msgid "Additional notes for ticket create types."
-msgstr ""
+msgstr "Notas adicionais para criação de tipos de tickets."
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
@@ -1529,6 +1536,8 @@ msgid ""
 "After the import is completed, the account associated with the API token "
 "will become your username, and the token itself will be your password."
 msgstr ""
+"Após a conclusão da importação, a conta associada ao token da API será "
+"transformada no seu nome de utilizador e o token será a sua senha."
 
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Age"
@@ -1576,6 +1585,9 @@ msgid ""
 "All affected tickets will be deleted immediately when this job is run, "
 "without a history entry. There is no rollback of this deletion possible."
 msgstr ""
+"Todos os tickets afetados serão excluídos imediatamente quando esta tarefa "
+"for efectuada sem registo no histórico. Não há possibilidade de reversão "
+"desta exclusão."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid ""
@@ -1583,6 +1595,10 @@ msgid ""
 "Once the data privacy task is executed, tickets will be deleted and a "
 "history entry preserved. There is no rollback of this deletion possible."
 msgstr ""
+"Todos os tickets afetados serão agendados para exclusão quando esta tarefa "
+"for executada. Assim que a tarefa de privacidade de dados for executada, os "
+"tickets serão excluídos e uma entrada no histórico preservada. Não há "
+"possibilidade de reversão desta exclusão."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid ""
@@ -1591,6 +1607,11 @@ msgid ""
 "tickets will be deleted and a history entry preserved. There is no rollback "
 "of this deletion possible."
 msgstr ""
+"Todos os utilizadores afetados e os seus tickets de clientes serão agendados "
+"para exclusão quando esta tarefa for executada. Depois que a tarefa de "
+"privacidade de dados for executada, os usuários e tickets serão excluídos e "
+"uma entrada do histórico será preservada. Não há possibilidade de reversão "
+"desta exclusão."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "All agents"
@@ -1669,13 +1690,15 @@ msgstr "Em alternativa, pode usar a API do Zammad para importar dados."
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Always"
-msgstr ""
+msgstr "Sempre"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid ""
 "An email was sent to _%s_. Click the link in the email to verify your "
 "account."
 msgstr ""
+"Um e-mail foi enviado para _%s_. Clique no link enviado no e-mail para "
+"verificar a sua conta."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1712,7 +1735,7 @@ msgstr "Ocorreu um erro"
 
 #: lib/calendar_subscriptions.rb
 msgid "An unknown method name was requested."
-msgstr ""
+msgstr "O nome de um método desconhecido foi solicitado."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -1852,7 +1875,7 @@ msgstr "Aplicar Rascunho Partilhado"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Apply current defaults to all agents"
-msgstr ""
+msgstr "Aplicar os padrões atuais a todos os agentes"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1948,6 +1971,8 @@ msgid ""
 "Are you sure? The agent default notifications settings will be reset to the "
 "system default."
 msgstr ""
+"Tem certeza? As configurações de notificações padrão do agente serão "
+"redefinidas para o padrão do sistema."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #, fuzzy
@@ -1960,6 +1985,8 @@ msgid ""
 "Are you sure? The user will have to to reconfigure all two-factor "
 "authentication methods."
 msgstr ""
+"Tem certeza? O utilizador terá que reconfigurar todos os métodos de "
+"autenticação de dois fatores."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? You have changes that will get lost."
@@ -2076,6 +2103,8 @@ msgstr ""
 #: app/models/postmaster_filter.rb
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
+"Pelo menos uma regra de correspondência é necessária, mas não foi fornecida "
+"nenhuma."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "At least one object must be selected."
@@ -2083,7 +2112,7 @@ msgstr "Deve selecionar pelo menos um objeto."
 
 #: app/models/role.rb app/models/user.rb
 msgid "At least one user needs to have admin permissions."
-msgstr ""
+msgstr "Pelo menos um utilizador tem de ter permissões de administrador."
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach another file"
@@ -2127,15 +2156,15 @@ msgstr "Anexos"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in a Simple Storage Service."
-msgstr ""
+msgstr "Os anexos são guardados num serviço de storage simples."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the database."
-msgstr ""
+msgstr "Os anexos são guardados numa base de dados."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Attachments are stored in the filesystem."
-msgstr ""
+msgstr "Os anexos são guardados no sistema de ficheiros."
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Attendees"
@@ -2147,6 +2176,8 @@ msgid ""
 "Attention! Changing the organization will update the user's most recent "
 "tickets to the new organization."
 msgstr ""
+"Atenção! A alteração da organização atualizará os tickets mais recentes do "
+"utilizador para a nova organização."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -2167,17 +2198,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 msgid "Attribute"
-msgstr ""
+msgstr "Atributo"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Attribute '%s' is required in the mapping"
-msgstr ""
+msgstr "O atributo '%s' é obrigatório no mapeamento"
 
 #: db/seeds/settings.rb
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
 msgstr ""
+"Atributo que identifica exclusivamente o utilizador. Se não for definido, o "
+"identificador de nome devolvido pelo IDP será utilizado."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -2264,7 +2297,7 @@ msgstr "Authentication via %s"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"

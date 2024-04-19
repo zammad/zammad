@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-10 13:23+0000\n"
+"PO-Revision-Date: 2024-04-19 01:05+0000\n"
 "Last-Translator: Rowdy van der Veen <rowdy@rowdyengeesje.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/nl/>\n"
@@ -648,7 +648,7 @@ msgstr "%s gebruiker aan %s gebruiker"
 
 #: lib/whatsapp/webhook/message.rb
 msgid "%s via WhatsApp"
-msgstr "%s via WhatApp"
+msgstr "%s via WhatsApp"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s weeks ago"
@@ -1663,20 +1663,16 @@ msgid "An open-source monitoring tool."
 msgstr "Een open source monitoring tool."
 
 #: app/frontend/shared/components/Form/utils.ts
-#, fuzzy
-#| msgid "An error has occurred"
 msgid "An unexpected error has occurred."
-msgstr "Er is een fout opgetreden"
+msgstr "Er is een onverwachte fout opgetreden."
 
 #: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
-#, fuzzy
-#| msgid "An error has occurred"
 msgid "An unexpected error occurred during system setup."
-msgstr "Er is een fout opgetreden"
+msgstr "Er is een fout opgetreden tijdens de setup."
 
 #: lib/calendar_subscriptions.rb
 msgid "An unknown method name was requested."
-msgstr ""
+msgstr "Er is een onbekende methode name opgevraagd."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -1778,10 +1774,8 @@ msgid "App credentials for Twitter."
 msgstr "App inloggegevens voor Twitter."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
-#, fuzzy
-#| msgid "App Secret"
 msgid "App secret"
-msgstr "App Secret"
+msgstr "App secret"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
@@ -1862,16 +1856,12 @@ msgstr ""
 "gaan verloren"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-#, fuzzy
-#| msgid "Are you sure you want to delete \"%s\"?"
 msgid "Are you sure you want to set \"%s\" as default?"
-msgstr "Wil je echt \"%s\" verwijderen?"
+msgstr "Weet je zeker dat je \"%s\" als standaard wil instellen?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-#, fuzzy
-#| msgid "Are you sure you want to delete \"%s\"?"
 msgid "Are you sure you want to unset \"%s\" as default?"
-msgstr "Wil je echt \"%s\" verwijderen?"
+msgstr "Weet je zeker dat je \"%s\" niet langer als standaard wilt instellen?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -2152,10 +2142,8 @@ msgstr "Attributen om te vergelijken"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
-#, fuzzy
-#| msgid "No filter."
 msgid "Audio file"
-msgstr "Geen filter."
+msgstr "Audiobestand"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -2174,10 +2162,8 @@ msgid "Authentication"
 msgstr "Authenticatie"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Authentication"
 msgid "Authentication Token"
-msgstr "Authenticatie"
+msgstr "Authenticatietoken"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication failed due to incorrect credentials."
@@ -2217,10 +2203,8 @@ msgid "Authenticator app secret"
 msgstr "Authenticator app geheim"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco
-#, fuzzy
-#| msgid "Authy"
 msgid "Author"
-msgstr "Authy"
+msgstr "Auteur"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
@@ -2261,10 +2245,8 @@ msgid "Auto-close state"
 msgstr "Automatisch sluiten status"
 
 #: lib/auto_wizard.rb
-#, fuzzy
-#| msgid "Mobile frontend is disabled."
 msgid "AutoWizard is disabled"
-msgstr "Mobiele frontend is uitgeschakeld."
+msgstr "AutoWizard is uitgeschakeld"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue
@@ -2639,10 +2621,8 @@ msgid "Call Settings"
 msgstr "Oproepinstellingen"
 
 #: app/models/cti/driver/base.rb
-#, fuzzy
-#| msgid "Call from %s for %s"
 msgid "Call from %s"
-msgstr "Oproep van %s voor %s"
+msgstr "Oproep van %s"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
@@ -2807,10 +2787,8 @@ msgid "Caution!"
 msgstr "Let op!"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Add Certificate"
 msgid "Certificate (PEM)"
-msgstr "Voeg certificaat toe"
+msgstr "Certificaat (PEM)"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
@@ -2934,10 +2912,8 @@ msgid "Channel - Web"
 msgstr "Kanaal - Web"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel - Chat"
 msgid "Channel - WhatsApp"
-msgstr "Kanaal - Chat"
+msgstr "Kanaal - WhatsApp"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
@@ -3038,6 +3014,9 @@ msgid ""
 "signing or encrypting is not possible, the setting has no effect. Agents can "
 "always manually alter the behavior for each article."
 msgstr ""
+"Kies het standaardgedrag van de PGP-integratie per groep. Als ondertekenen "
+"of versleutelen niet mogelijk is, dan heeft de instelling geen effect. "
+"Agenten kunnen altijd handmatig de instelling per artikel aanpassen."
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid ""
@@ -3045,6 +3024,9 @@ msgid ""
 "signing or encrypting is not possible, the setting has no effect. Agents can "
 "always manually alter the behavior for each article."
 msgstr ""
+"Kies het standaardgedrag van de S/MIME-integratie per groep. Als "
+"ondertekenen of versleutelen niet mogelijk is, dan heeft de instelling geen "
+"effect. Agenten kunnen altijd handmatig de instelling per artikel aanpassen."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose the group to which direct messages will get added."
@@ -3069,10 +3051,8 @@ msgid "Choose your language."
 msgstr "Kies je taal."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#, fuzzy
-#| msgid "Choose your new password."
 msgid "Choose your new password"
-msgstr "Kies je nieuwe wachtwoord."
+msgstr "Kies je nieuwe wachtwoord"
 
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 msgid "Choose your new password."
@@ -3471,10 +3451,8 @@ msgid "Connect Twitter App"
 msgstr "Verbind Twitter app"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "Connect and Continue"
-msgstr "Opgeslagen voorwaarden"
+msgstr "Verbinden en doorgaan"
 
 #: public/assets/chat/views/loader.eco
 msgid "Connecting"
@@ -3587,10 +3565,8 @@ msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Huidig objectnummer kopiëren (bijv. Ticket#) naar klembord"
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
-#, fuzzy
-#| msgid "Copied to clipboard!"
 msgid "Copy to clipboard"
-msgstr "Gekopieerd naar klembord!"
+msgstr "Kopieer naar klembord"
 
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
@@ -3616,7 +3592,7 @@ msgstr ""
 
 #: app/services/service/channel/whatsapp/base.rb
 msgid "Could not fetch WhatsApp phone number details."
-msgstr ""
+msgstr "Kon WhatsApp-telefoonnummerdetails niet ophalen."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid ""
@@ -3678,10 +3654,8 @@ msgstr "Creëer Admin"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Create Administrator Account"
-msgstr "Administrator Account"
+msgstr "Maak Administrator Account"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
@@ -3768,10 +3742,8 @@ msgid "Create a translation"
 msgstr "Maak een vertaling"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
-#, fuzzy
-#| msgid "Create my account"
 msgid "Create account"
-msgstr "Maak mijn account aan"
+msgstr "Maak account aan"
 
 #: db/seeds/permissions.rb
 msgid "Create and set up %s"
@@ -3979,10 +3951,8 @@ msgid "Custom Payload"
 msgstr "Aangepaste Payload"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Translations"
 msgid "Custom Translation"
-msgstr "Vertalingen"
+msgstr "Aangepaste vertaling"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -4045,6 +4015,8 @@ msgid ""
 "Customize the default locale and timezone during replacement of template "
 "variables."
 msgstr ""
+"Pas de standaard locale en tijdzone aan tijdens het vervangen van template "
+"variabelen."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
@@ -4072,11 +4044,10 @@ msgid "Data Privacy"
 msgstr "Gegevensprivacy"
 
 #: lib/validations/data_privacy_task_validator.rb
-#, fuzzy
-#| msgid "%s created data privacy task to delete user ID |%s|"
 msgid "Data privacy task allows to delete a user or a ticket only."
 msgstr ""
-"%s heeft de data privacy taak gemaakt om gebruiker ID |%s| te verwijderen"
+"Dataprivacy-taken stellen je alleen in staat om een gebruiker of ticket te "
+"verwijderen."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
@@ -4197,14 +4168,12 @@ msgstr "Standaard Caller ID voor uitgaande gesprekken."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid "Default for follow-ups"
-msgstr ""
+msgstr "Standaard voor opvolging"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
-#, fuzzy
-#| msgid "Default type for a new ticket"
 msgid "Default for new tickets"
-msgstr "Standaardtype voor een nieuw ticket"
+msgstr "Standaard voor nieuwe tickets"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
@@ -4281,10 +4250,8 @@ msgid "Define the maximum number of ticket shown in overviews."
 msgstr "Definieer het maximum aantal getoonde tickets in overzichten."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines Elasticsearch index name."
 msgid "Defines Elasticsearch SSL verification."
-msgstr "Definieert Elasticsearch-indexnaam."
+msgstr "Definieert Elasticsearch SSL-verificatie."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."

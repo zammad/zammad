@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-15 11:57+0000\n"
+"PO-Revision-Date: 2024-04-19 01:05+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -1680,7 +1680,7 @@ msgstr "Während der Systemeinrichtung ist ein unerwarteter Fehler aufgetreten."
 
 #: lib/calendar_subscriptions.rb
 msgid "An unknown method name was requested."
-msgstr "Ein unbekannter Methodenname wurde angefragt."
+msgstr "Ein unbekannter Methodenname wurde angefordert."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -4021,7 +4021,8 @@ msgstr ""
 msgid ""
 "Customize the default locale and timezone during replacement of template "
 "variables."
-msgstr "Passen Sie die Sprache und die Zeitzone beim Ersetzen von Variablen an."
+msgstr ""
+"Passen Sie die Sprache und die Zeitzone beim Ersetzen von Variablen an."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
