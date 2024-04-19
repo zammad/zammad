@@ -14,6 +14,7 @@ class Channel::Driver::Sms::Massenversand
 
       true
     rescue => e
+      url     = build_url(options, attr)
       message = "Error while performing request to gateway URL '#{url}'"
       Rails.logger.error message
       Rails.logger.error e
