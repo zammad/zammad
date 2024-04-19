@@ -7,7 +7,7 @@
     "dev:https": "VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -f Procfile.dev-https",
     "i18n": "rails generate zammad:translation_catalog",
     "lint": "vue-tsc --noEmit && eslint --cache --cache-location ./tmp/eslintcache.js  --cache-strategy content -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint-plugin-zammad/",
-    "lint:fix": "yarn lint -- --fix",
+    "lint:fix": "yarn lint --fix",
     "lint:css": "stylelint **/*.{css,vue,scss}",
     "lint:css:fix": "stylelint **/*.{css,vue,scss} --fix",
     "test": "VTL_SKIP_AUTO_CLEANUP=true TZ=utc vitest",

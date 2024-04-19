@@ -179,6 +179,9 @@ module.exports = {
     'sonarjs/prefer-immediate-return': 'off',
 
     'sonarjs/prefer-single-boolean-return': 'off',
+
+    // Consider prettier offenses as errors.
+    'prettier/prettier': ['error'],
   },
   overrides: [
     {

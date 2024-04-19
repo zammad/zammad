@@ -18,23 +18,23 @@ export const addFloatingTextareaLabel = (classes: Classes = {}) => {
     // text-base ensures there is no zoom when you click on the input on iOS
     input: clean(`
       w-full
-      text-base
-      bg-transparent
       border-none
-      focus:outline-none
+      bg-transparent
+      text-base
       placeholder:text-transparent
+      focus:outline-none
     `),
     label: clean(`
+      formkit-populated:translate-y-0
+      formkit-populated:text-xs
+      formkit-populated:opacity-75
       flex
-      items-end
-      px-2
-      pt-5
       h-2
+      origin-left
       translate-y-4
-      text-base
       cursor-text
-      transition-all duration-100 ease-in-out origin-left
-      formkit-populated:translate-y-0 formkit-populated:text-xs formkit-populated:opacity-75
+      items-end px-2 pt-5 text-base
+      transition-all duration-100 ease-in-out
     `),
   })
 }

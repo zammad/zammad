@@ -13,18 +13,18 @@ const textInputClasses = (classes: Classes = {}) => {
   const innerErrorsClasses = innerInvalidClasses.replace(/invalid/g, 'errors')
 
   return extendClasses(classes, {
-    wrapper: 'flex flex-col items-start justify-start mb-1.5 last:mb-0',
+    wrapper: 'mb-1.5 flex flex-col items-start justify-start last:mb-0',
     input:
-      'grow bg-transparent py-2 px-2.5 placeholder:text-stone-200 dark:placeholder:text-neutral-500',
-    label: 'block mb-1 text-sm text-gray-100 dark:text-neutral-400',
-    inner: `flex items-center w-full h-10 bg-blue-200 dark:bg-gray-700 text-black dark:text-white hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900 focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 focus-within:outline-blue-800 hover:focus-within:outline-blue-800 dark:hover:focus-within:outline-blue-800 ${innerInvalidClasses} ${innerErrorsClasses}`,
+      'grow bg-transparent px-2.5 py-2 placeholder:text-stone-200 dark:placeholder:text-neutral-500',
+    label: 'mb-1 block text-sm text-gray-100 dark:text-neutral-400',
+    inner: `flex h-10 w-full items-center bg-blue-200 text-black focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 focus-within:outline-blue-800 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 hover:focus-within:outline-blue-800 dark:bg-gray-700 dark:text-white dark:hover:outline-blue-900 dark:hover:focus-within:outline-blue-800 ${innerInvalidClasses} ${innerErrorsClasses}`,
   })
 }
 
 const selectInputClasses = (classes: Classes = {}) =>
   extendClasses(classes, {
     inner:
-      'w-full formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
+      'formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500 w-full',
   })
 
 export const getCoreDesktopClasses: FormThemeExtension = (
@@ -33,20 +33,20 @@ export const getCoreDesktopClasses: FormThemeExtension = (
   return {
     global: extendClasses(classes.global, {
       wrapper:
-        'flex-grow formkit-disabled:opacity-50 formkit-disabled:pointer-events-none',
+        'formkit-disabled:opacity-50 formkit-disabled:pointer-events-none flex-grow',
       block: 'flex items-end',
       label:
-        'block -:mb-1 text-sm text-gray-100 dark:text-neutral-400 formkit-required:required formkit-invalid:text-red-500 formkit-errors:text-red-500',
+        '-:mb-1 formkit-required:required formkit-invalid:text-red-500 formkit-errors:text-red-500 block text-sm text-gray-100 dark:text-neutral-400',
       inner: 'rounded-lg text-sm',
-      messages: 'mt-1 formkit-invalid:text-red-500 formkit-errors:text-red-500',
-      help: 'text-stone-200 dark:text-neutral-500 mt-1',
+      messages: 'formkit-invalid:text-red-500 formkit-errors:text-red-500 mt-1',
+      help: 'mt-1 text-stone-200 dark:text-neutral-500',
       prefixIcon:
-        'relative h-5 w-5 flex justify-center items-center fill-current text-stone-200 dark:text-neutral-500 ltr:ml-2.5 rtl:mr-2.5',
+        'relative flex h-5 w-5 items-center justify-center fill-current text-stone-200 ltr:ml-2.5 rtl:mr-2.5 dark:text-neutral-500',
       suffixIcon:
-        'relative h-5 w-5 flex justify-center items-center fill-current text-stone-200 dark:text-neutral-500 ltr:mr-2.5 rtl:ml-2.5',
+        'relative flex h-5 w-5 items-center justify-center fill-current text-stone-200 ltr:mr-2.5 rtl:ml-2.5 dark:text-neutral-500',
     }),
     form: extendClasses(classes.form, {
-      messages: 'mb-2.5 space-y-2 flex-wrap',
+      messages: 'mb-2.5 flex-wrap space-y-2',
     }),
     text: textInputClasses(classes.text),
     password: textInputClasses(classes.password),
@@ -75,20 +75,20 @@ export const getCoreDesktopClasses: FormThemeExtension = (
     }),
     imageUpload: extendClasses(classes.imageUpload, {
       inner:
-        'w-full bg-blue-200 dark:bg-gray-700 formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
+        'formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500 w-full bg-blue-200 dark:bg-gray-700',
     }),
     select: selectInputClasses(classes.select),
     treeselect: selectInputClasses(classes.treeselect),
     autocomplete: selectInputClasses(classes.autocomplete),
     agent: selectInputClasses(classes.agent),
     toggle: extendClasses(classes.toggle, {
-      wrapper: 'h-10 flex flex-row-reverse items-center gap-1.5',
+      wrapper: 'flex h-10 flex-row-reverse items-center gap-1.5',
       label: '!mb-0 grow',
       inner: 'leading-[0]',
     }),
     groupPermissions: extendClasses(classes.groupPermissions, {
       inner:
-        'w-full bg-blue-200 dark:bg-gray-700 formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500',
+        'formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500 w-full bg-blue-200 dark:bg-gray-700',
     }),
   }
 }

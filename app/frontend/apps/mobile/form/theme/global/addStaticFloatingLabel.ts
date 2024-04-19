@@ -11,29 +11,29 @@ import { clean, extendClasses } from '#shared/form/plugins/utils.ts'
 export const addStaticFloatingLabel = (classes: Classes = {}): Classes => {
   return extendClasses(classes, {
     outer: clean(`
-      relative flex flex-col px-2
-      focus-within:bg-blue-highlight
+      focus-within:bg-blue-highlight relative flex flex-col
+      px-2
     `),
-    wrapper: 'relative py-1 flex-1 flex self-start justify-center flex-col',
-    inner: 'flex ltr:pr-2 rtl:pl-2 pb-1 relative',
-    block: 'flex min-h-[3.5rem] cursor-pointer formkit-disabled:cursor-default',
+    wrapper: 'relative flex flex-1 flex-col justify-center self-start py-1',
+    inner: 'relative flex pb-1 ltr:pr-2 rtl:pl-2',
+    block: 'formkit-disabled:cursor-default flex min-h-[3.5rem] cursor-pointer',
     // text-base ensures there is no zoom when you click on the input on iOS
     input: clean(`
-      w-full
-      ltr:pl-2 rtl:pr-2
-      text-base
-      bg-transparent
-      border-none
-      focus:outline-none
-      placeholder:text-transparent
-      pt-6
       formkit-label-hidden:pt-4
+      w-full border-none
+      bg-transparent
+      pt-6
+      text-base
+      placeholder:text-transparent
+      focus:outline-none
+      ltr:pl-2
+      rtl:pr-2
     `),
     label: clean(`
-      absolute top-0 ltr:left-0 rtl:right-0
-      py-4 px-2 h-14
-      transition-all duration-100 ease-in-out origin-left
-      pointer-events-none
+      pointer-events-none absolute top-0 h-14
+      origin-left px-2 py-4
+      transition-all duration-100 ease-in-out ltr:left-0
+      rtl:right-0
     `),
   })
 }
