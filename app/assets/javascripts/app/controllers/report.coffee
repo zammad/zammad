@@ -354,10 +354,8 @@ class Download extends App.Controller
         number:
           [ callbackLinkToTicket, callbackTicketTitleAdd ]
 
-    if !@table
-      @table = new App.ControllerTable(params)
-    else
-      @table.update(objects: tickets)
+    @table.releaseController() if @table
+    @table = new App.ControllerTable(params)
 
   tableUpdate: =>
     state = {
@@ -368,11 +366,10 @@ class Download extends App.Controller
       day:                     @params.day
       timeRange:               @params.timeRange
       profiles:                @params.profileSelected
-      backends:                @params.backendSelected
       downloadBackendSelected: @params.downloadBackendSelected
     }
     return if _.isEqual(@lastState, state)
-    @lastState = state
+    @lastState = $.extend(true, {}, state)
 
     @ajax(
       id: 'report_download'
