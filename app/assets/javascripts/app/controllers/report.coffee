@@ -361,21 +361,25 @@ class Download extends App.Controller
       @table.update(objects: tickets)
 
   tableUpdate: =>
+    state = {
+      metric:                  @params.metric
+      year:                    @params.year
+      month:                   @params.month
+      week:                    @params.week
+      day:                     @params.day
+      timeRange:               @params.timeRange
+      profiles:                @params.profileSelected
+      backends:                @params.backendSelected
+      downloadBackendSelected: @params.downloadBackendSelected
+    }
+    return if _.isEqual(@lastState, state)
+    @lastState = state
+
     @ajax(
       id: 'report_download'
       type:  'POST'
       url:   @apiPath + '/reports/sets'
-      data: JSON.stringify(
-        metric:                  @params.metric
-        year:                    @params.year
-        month:                   @params.month
-        week:                    @params.week
-        day:                     @params.day
-        timeRange:               @params.timeRange
-        profiles:                @params.profileSelected
-        backends:                @params.backendSelected
-        downloadBackendSelected: @params.downloadBackendSelected
-      )
+      data: JSON.stringify(state)
       processData: true
       success: (data) =>
         App.Collection.loadAssets(data.assets)
