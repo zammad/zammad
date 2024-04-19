@@ -295,6 +295,11 @@ class Download extends App.Controller
     @tableUpdate()
 
   tableRender: (tickets, count) =>
+    if !@params.downloadBackendSelected
+      @$('.js-dataDownloadButton').html('')
+      @$('.js-dataDownloadTable').html('')
+      return
+
     profile_id = 0
     for key, value of @params.profileSelected
       if value
@@ -358,6 +363,8 @@ class Download extends App.Controller
     @table = new App.ControllerTable(params)
 
   tableUpdate: =>
+    return @tableRender([], 0) if !@params.downloadBackendSelected
+
     state = {
       metric:                  @params.metric
       year:                    @params.year
@@ -582,7 +589,8 @@ class Sidebar extends App.Controller
     return if $(e.target).closest('.panel').find('.collapse.in').get(0)
     metric = $(e.target).closest('.panel').data('metric')
     return if @params.metric is metric
-    @params.metric = metric
+    @params.metric                  = metric
+    @params.downloadBackendSelected = undefined
     App.Event.trigger('ui:report:rerender')
     @ui.storeParams()
 
