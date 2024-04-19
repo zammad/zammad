@@ -7,9 +7,9 @@ class Setting < ApplicationModel
   store         :preferences
   before_validation :state_check
   before_create :set_initial
-  after_create  :reset_change_id, :reset_cache, :check_broadcast
-  after_update  :reset_change_id, :reset_cache, :check_broadcast
-  after_commit  :check_refresh
+  after_create  :reset_change_id
+  after_update  :reset_change_id
+  after_commit  :reset_cache, :broadcast_frontend, :check_refresh
 
   validates_with Setting::Validator
 
@@ -139,11 +139,9 @@ reload config settings
   # set initial value in state_initial
   def set_initial
     self.state_initial = state_current
-    true
   end
 
   def reset_change_id
-    @@current[name] = state_current[:value]
     change_id = SecureRandom.uuid
     logger.debug { "Setting.reset_change_id: set new cache, #{change_id}" }
     Rails.cache.write('Setting::ChangeId', change_id, { expires_in: 24.hours })
@@ -152,12 +150,11 @@ reload config settings
   end
 
   def reset_cache
-    return true if preferences[:cache].blank?
+    return if preferences[:cache].blank?
 
-    preferences[:cache].each do |key|
+    Array(preferences[:cache]).each do |key|
       Rails.cache.delete(key)
     end
-    true
   end
 
   # check if cache is still valid
@@ -180,21 +177,19 @@ reload config settings
 
   # convert state into hash to be able to store it as store
   def state_check
-    return true if state.nil? # allow false value
-    return true if state.try(:key?, :value)
+    return if state.nil? # allow false value
+    return if state.try(:key?, :value)
 
     self.state_current = { value: state }
-    true
   end
 
   # Notify clients about config changes.
-  def check_broadcast
-    return true if frontend != true
+  def broadcast_frontend
+    return if !frontend
 
-    value = state_current
-    if state_current.key?(:value)
-      value = state_current[:value]
-    end
+    # Some setting values use interpolation to reference other settings.
+    # This is applied in `Setting.get`, thus direct reading of the value should be avoided.
+    value = self.class.get(name)
 
     Sessions.broadcast(
       {
@@ -203,8 +198,8 @@ reload config settings
       },
       preferences[:authentication] ? 'authenticated' : 'public'
     )
+
     Gql::Subscriptions::ConfigUpdates.trigger(self)
-    true
   end
 
   # NB: Force users to reload on SAML credentials config changes

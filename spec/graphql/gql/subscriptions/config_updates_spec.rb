@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::ConfigUpdates, type: :graphql do
+  let(:setting) { build(:setting, name: 'broadcast_test', state: setting_value, frontend: true) }
 
   let(:subscription) do
     <<~QUERY
@@ -23,8 +24,8 @@ RSpec.describe Gql::Subscriptions::ConfigUpdates, type: :graphql do
         'data' => {
           'configUpdates' => {
             'setting' => {
-              'key'   => 'product_name',
-              'value' => 'subscription_test'
+              'key'   => 'broadcast_test',
+              'value' => expected_value
             }
           }
         }
@@ -33,9 +34,25 @@ RSpec.describe Gql::Subscriptions::ConfigUpdates, type: :graphql do
     }
   end
 
-  it 'broadcasts config update events' do
-    gql.execute(subscription, context: { channel: mock_channel })
-    Setting.set('product_name', 'subscription_test')
-    expect(mock_channel.mock_broadcasted_messages).to eq([expected_msg])
+  context 'when using static value' do
+    let(:setting_value)  { 'subscription_test' }
+    let(:expected_value) { setting_value }
+
+    it 'broadcasts config update events' do
+      gql.execute(subscription, context: { channel: mock_channel })
+      setting.save
+      expect(mock_channel.mock_broadcasted_messages).to eq([expected_msg])
+    end
+  end
+
+  context 'when using interpolated value' do
+    let(:setting_value)  { 'test #{config.fqdn}' } # rubocop:disable Lint/InterpolationCheck
+    let(:expected_value) { "test #{Setting.get('fqdn')}" }
+
+    it 'broadcasts config update events with interpolated string' do
+      gql.execute(subscription, context: { channel: mock_channel })
+      setting.save
+      expect(mock_channel.mock_broadcasted_messages).to eq([expected_msg])
+    end
   end
 end
