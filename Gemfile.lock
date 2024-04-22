@@ -318,6 +318,8 @@ GEM
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
+    macaddr (1.7.2)
+      systemu (~> 2.6.5)
     mail (2.8.1)
       mini_mime (>= 0.1.1)
       net-imap
@@ -626,6 +628,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    systemu (2.6.5)
     tcr (0.4.0)
     telegram-bot-ruby (2.0.0)
       dry-struct (~> 1.6)
@@ -771,6 +774,7 @@ DEPENDENCIES
   koala
   listen
   localhost
+  macaddr
   mail
   messagebird-rest
   mime-types

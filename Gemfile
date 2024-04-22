@@ -197,6 +197,9 @@ gem 'pry-rescue'
 gem 'pry-stack_explorer'
 gem 'pry-theme'
 
+# monitoring / system report
+gem 'macaddr'
+
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do

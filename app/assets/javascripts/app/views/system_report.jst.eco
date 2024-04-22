@@ -1,0 +1,22 @@
+<div class="page-header-title">
+  <h1><%- @T('System Report') %></h1>
+</div>
+<div class="page-content">
+  <p>
+    <%- @T('The system report provides a summarized version of the system state and configuration for support and analyzing purposes. You can download the report by clicking the Download-button. Zammad then provides a JSON file as you can see in the preview below. If you get in touch with the Zammad support, this JSON file is helpful identifying your issue.') %>
+  </p>
+  <p>
+    <%- @T('Note: Zammad never sends this data automatically and this data doesn\'t include personal account names or passwords. However, please have a look after downloading the file to avoid leaking personal data which could be included in comments or notes.') %>
+  </p>
+  <h2><%- @T('Contents') %></h2>
+  <p>
+    The following contents are provided in the system report:
+  </p>
+  <ul>
+  <% for description in @descriptions.map((desc) => @T(desc)).sort(): %>
+    <li><%= description %></li>
+  <% end %>
+  </ul>
+  <h2><%- @T('Preview') %> <a href="<%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/system_report/download" class="btn btn--action" data-type="attachment" download><%- @Icon('download') %><span><%- @T('Download') %></span></a></h2>
+  <div class="js-previewSystemReport"></div>
+</div>

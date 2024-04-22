@@ -929,8 +929,14 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.binary  :data,         null: false
       t.integer :retries,      null: false, default: 1
       t.text    :parsing_error
+    end
 
+    create_table :system_reports do |t|
+      t.text :data
+      t.string :uuid, limit: 50, null: false
+      t.integer :created_by_id, null: false
       t.timestamps limit: 3, null: false
     end
+    add_index :system_reports, [:uuid], unique: true
   end
 end

@@ -314,6 +314,13 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name:        'admin.system_report',
+  note:        __('Manage %s'),
+  preferences: {
+    translations: [__('System Report')]
+  },
+)
+Permission.create_if_not_exists(
   name:         'user_preferences',
   note:         __('User Preferences'),
   preferences:  {},

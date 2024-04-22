@@ -881,7 +881,8 @@ RSpec.describe User, type: :model do
                      'Calendar'                           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'UserGroup'                          => { 'user_id' => 1 },
                      'Signature'                          => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-                     'Authorization'                      => { 'user_id' => 1 } }
+                     'Authorization'                      => { 'user_id' => 1 },
+                     'SystemReport'                       => { 'created_by_id' => 0 } }
 
       # delete objects
       token                      = create(:token, user: user)
