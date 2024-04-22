@@ -58,6 +58,60 @@ RSpec.describe Setting, type: :model do
     end
   end
 
+  describe '.cache_valid?' do
+    context 'when loading first time' do
+      before do
+        # ensure no cache checks are set
+        described_class.class_variable_set(:@@lookup_at, nil) # rubocop:disable Style/ClassVars
+        described_class.class_variable_set(:@@query_cache_key, nil) # rubocop:disable Style/ClassVars
+      end
+
+      it 'cache is not valid' do
+        expect(described_class).not_to be_cache_valid
+      end
+    end
+
+    context 'when cache is valid' do
+      before do
+        # ensure cache is warm
+        described_class.send(:load)
+
+        # ensure cache is not touched by broadcasting the new value
+        allow_any_instance_of(described_class).to receive(:broadcast_frontend)
+      end
+
+      it 'cache is valid' do
+        expect(described_class).to be_cache_valid
+      end
+
+      it 'cache is still valid after some time' do
+        travel 1.minute
+        expect(described_class).to be_cache_valid
+      end
+
+      context 'when Setting is updated in the same process' do
+        before { described_class.set('maintenance_login', 'sample message') }
+
+        it 'cache is not valid' do
+          expect(described_class).not_to be_cache_valid
+        end
+      end
+
+      context 'when Setting updated outside of the process and class variables were not touched' do
+        before { described_class.all.sample.touch }
+
+        it 'cache is seen as valid' do
+          expect(described_class).to be_cache_valid
+        end
+
+        it 'cache is seen as invalid after some time' do
+          travel 1.minute
+          expect(described_class).not_to be_cache_valid
+        end
+      end
+    end
+  end
+
   describe 'attributes' do
     describe '#state_initial' do
       subject(:setting) { build(:setting, state: 'foo') }
