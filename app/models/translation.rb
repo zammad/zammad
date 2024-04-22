@@ -74,7 +74,7 @@ translate strings in Ruby context, e. g. for notifications
 =end
 
   def self.translate(locale, string, *args)
-    translated = find_source(locale, string)&.target || string
+    translated = find_source(locale, string)&.target.presence || string
 
     translated %= args if args.any?
 

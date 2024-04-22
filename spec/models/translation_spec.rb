@@ -36,6 +36,17 @@ RSpec.describe Translation do
     end
   end
 
+  context 'default string translations with fallback' do
+    before do
+      create(:translation, locale: 'de-de', source: 'dummy message', target: '', target_initial: '')
+      described_class.sync_locale_from_po('de-de')
+    end
+
+    it 'fallbacks to provided message/string when de-de is empty' do
+      expect(described_class.translate('de-de', 'dummy message')).to eq('dummy message')
+    end
+  end
+
   context 'when using find_source' do
     it 'de-de with existing title case word' do
       expect(described_class.find_source('de-de', 'New')).to have_attributes(source: 'New', target_initial: 'Neu', target: 'Neu')
