@@ -46,5 +46,17 @@ RSpec.describe Sequencer::Unit::Import::Common::User::Skip::IsLdapSource, sequen
         expect(result).not_to include(action: :skipped)
       end
     end
+
+    context 'when user is empty' do
+      let(:user) { nil }
+
+      it 'does not skip' do
+        result = process({
+                           instance: user,
+                         })
+
+        expect(result).not_to include(action: :skipped)
+      end
+    end
   end
 end

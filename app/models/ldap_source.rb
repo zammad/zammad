@@ -10,6 +10,7 @@ class LdapSource < ApplicationModel
   store :preferences
 
   def self.by_user(user)
+    return if user.blank? || user.source.blank?
     return if !%r{^Ldap::(\d+)$}.match?(user.source)
 
     LdapSource.find(user.source.split('::')[1])
