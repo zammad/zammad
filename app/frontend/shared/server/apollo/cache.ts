@@ -36,7 +36,6 @@ const createCache = (
   additionalCacheInitializerModules: CacheInitializerModules = {},
 ): InMemoryCache => {
   registerInitializeModules(additionalCacheInitializerModules)
-
   return new InMemoryCache(cacheConfig)
 }
 

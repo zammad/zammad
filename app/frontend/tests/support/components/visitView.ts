@@ -17,21 +17,6 @@ import renderComponent, {
 } from './renderComponent.ts'
 import { getTestAppName } from './app.ts'
 
-vi.mock('#shared/server/apollo/client.ts', () => {
-  return {
-    clearApolloClientStore: () => {
-      return Promise.resolve()
-    },
-    getApolloClient: () => {
-      return {
-        cache: {
-          gc: () => [],
-        },
-      }
-    },
-  }
-})
-
 Object.defineProperty(window, 'fetch', {
   value: (path: string) => {
     throw new Error(`calling fetch on ${path}`)
@@ -58,6 +43,21 @@ export const visitView = async (
     : await import('#mobile/router/index.ts')
 
   if (options.mockApollo) {
+    vi.mock('#shared/server/apollo/client.ts', () => {
+      return {
+        clearApolloClientStore: () => {
+          return Promise.resolve()
+        },
+        getApolloClient: () => {
+          return {
+            cache: {
+              gc: () => [],
+            },
+          }
+        },
+      }
+    })
+
     mockApolloClient([])
   } else if (isDesktop) {
     // automocking is enabled when this file is imported because it happens on the top level

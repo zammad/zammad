@@ -3,7 +3,9 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { storeToRefs } from 'pinia'
+import type { ApolloCache, NormalizedCacheObject } from '@apollo/client'
 
+import { getApolloClient } from '#shared/server/apollo/client.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 
@@ -105,6 +107,23 @@ const cropImageFlyout = useFlyout({
     import('../components/PersonalSettingAvatarCropImageFlyout.vue'),
 })
 
+const modifyDefaultAvatarCache = (
+  cache: ApolloCache<NormalizedCacheObject>,
+  avatar: Avatar | undefined,
+  newValue: boolean,
+) => {
+  if (!avatar) return
+
+  cache.modify({
+    id: cache.identify(avatar),
+    fields: {
+      default() {
+        return newValue
+      },
+    },
+  })
+}
+
 const storeAvatar = (image: ImageFileData) => {
   if (!image) return
 
@@ -131,16 +150,7 @@ const storeAvatar = (image: ImageFileData) => {
         })
         if (newIdPresent) return
 
-        if (currentDefaultAvatar.value) {
-          cache.modify({
-            id: cache.identify(currentDefaultAvatar.value),
-            fields: {
-              default() {
-                return false
-              },
-            },
-          })
-        }
+        modifyDefaultAvatarCache(cache, currentDefaultAvatar.value, false)
 
         let existingAvatars = cache.readQuery<AccountAvatarListQuery>({
           query: AccountAvatarListDocument,
@@ -208,34 +218,36 @@ const loadAvatar = async (input?: HTMLInputElement) => {
 }
 
 const selectAvatar = (avatar: Avatar) => {
+  // Update the cache already before the
+  const { cache } = getApolloClient()
+  const oldDefaultAvatar = currentDefaultAvatar.value
+
+  modifyDefaultAvatarCache(cache, oldDefaultAvatar, false)
+  modifyDefaultAvatarCache(cache, avatar, true)
+
   const accountAvatarSelectMutation = new MutationHandler(
     useAccountAvatarSelectMutation(() => ({
       variables: { id: avatar.id },
-      update(cache) {
-        currentAvatars.value.forEach((currentAvatar) => {
-          cache.modify({
-            id: cache.identify(currentAvatar),
-            fields: {
-              default() {
-                return currentAvatar.id === avatar.id
-              },
-            },
-          })
-        })
-      },
     })),
     {
       errorNotificationMessage: __('The avatar could not be selected.'),
     },
   )
 
-  accountAvatarSelectMutation.send().then(() => {
-    notify({
-      id: 'avatar-select-success',
-      type: NotificationTypes.Success,
-      message: __('Your avatar has been changed.'),
+  accountAvatarSelectMutation
+    .send()
+    .then(() => {
+      notify({
+        id: 'avatar-select-success',
+        type: NotificationTypes.Success,
+        message: __('Your avatar has been changed.'),
+      })
     })
-  })
+    .catch(() => {
+      // Reset the cache again if the mutation fails.
+      modifyDefaultAvatarCache(cache, oldDefaultAvatar, true)
+      modifyDefaultAvatarCache(cache, avatar, false)
+    })
 }
 
 const deleteAvatar = (avatar: Avatar) => {
@@ -244,14 +256,7 @@ const deleteAvatar = (avatar: Avatar) => {
       variables: { id: avatar.id },
       update(cache) {
         if (avatar.default) {
-          cache.modify({
-            id: cache.identify(currentAvatars.value[0]),
-            fields: {
-              default() {
-                return true
-              },
-            },
-          })
+          modifyDefaultAvatarCache(cache, currentAvatars.value[0], true)
         }
 
         cache.evict({ id: cache.identify(avatar) })

@@ -23,7 +23,7 @@ RSpec.describe Gql::Subscriptions::AccountAvatarUpdates, type: :graphql do
   end
   let(:mock_channel) { build_mock_channel }
   let(:target)       { create(:user) }
-  let(:avatar)       { create(:avatar, o_id: target.id, default: false) }
+  let(:avatar)       { create(:avatar, o_id: target.id, default: false, initial: true) }
   let(:variables)    { { userId: gql.id(target) } }
 
   context 'with authenticated user', authenticated_as: :target do

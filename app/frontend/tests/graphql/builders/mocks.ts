@@ -372,13 +372,14 @@ class MockLink extends ApolloLink {
 }
 
 const cacheInitializerModules: CacheInitializerModules = import.meta.glob(
-  '../../../../mobile/server/apollo/cache/initializer/*.ts',
+  '../../../shared/server/apollo/cache/initializer/*.ts',
   { eager: true },
 )
 
 const createMockClient = () => {
   const link = new MockLink()
   const cache = createCache(cacheInitializerModules)
+
   const client = new ApolloClient({
     cache,
     link,
@@ -389,6 +390,17 @@ const createMockClient = () => {
 
 // this enabled automocking - if this file is not imported somehow, fetch request will throw an error
 export const mockedApolloClient = createMockClient()
+
+vi.mock('#shared/server/apollo/client.ts', () => {
+  return {
+    clearApolloClientStore: async () => {
+      await mockedApolloClient.clearStore()
+    },
+    getApolloClient: () => {
+      return mockedApolloClient
+    },
+  }
+})
 
 afterEach(() => {
   mockedApolloClient.clearStore()
