@@ -15,4 +15,5 @@ export type NavigationMenuEntry = {
   icon?: string
   keywords?: string
   route: RouteRecordRaw & { name: string }
+  show?: () => boolean
 }

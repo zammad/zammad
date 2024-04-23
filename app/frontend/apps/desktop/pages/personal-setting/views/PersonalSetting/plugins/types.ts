@@ -10,4 +10,5 @@ export interface PersonalSettingPlugin {
   route: RouteRecordRaw & { name: string }
   order: number
   keywords: string
+  show?: () => boolean
 }

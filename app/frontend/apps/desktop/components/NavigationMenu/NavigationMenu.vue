@@ -27,9 +27,15 @@ const permittedEntries = computed(() => {
     props.entries,
     (memo, entries, category) => {
       memo[category] = entries.filter((entry) => {
-        if (!entry.route.meta?.requiredPermission) return true
+        if (
+          entry.route.meta?.requiredPermission &&
+          !session.hasPermission(entry.route.meta.requiredPermission)
+        )
+          return false
 
-        return session.hasPermission(entry.route.meta.requiredPermission)
+        if (typeof entry.show === 'function') return entry.show()
+
+        return true
       })
     },
     {} as Record<string, NavigationMenuEntry[]>,
