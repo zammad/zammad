@@ -21,6 +21,7 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'vue',
+    'vuejs-accessibility',
     'prettier',
     'sonarjs',
     'security',
@@ -29,6 +30,7 @@ module.exports = {
   extends: [
     'airbnb-base',
     'plugin:vue/vue3-recommended',
+    'plugin:vuejs-accessibility/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',

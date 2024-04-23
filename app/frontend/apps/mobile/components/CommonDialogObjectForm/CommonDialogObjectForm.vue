@@ -139,7 +139,7 @@ const saveObject = async (formData: FormSubmitData) => {
       :id="name"
       ref="form"
       class="w-full p-4"
-      autofocus
+      should-autofocus
       :schema="schema"
       :initial-entity-object="initialFlatObject"
       :change-fields="formChangeFields"

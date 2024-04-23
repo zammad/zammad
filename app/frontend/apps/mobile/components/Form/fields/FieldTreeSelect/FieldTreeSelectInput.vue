@@ -169,7 +169,7 @@ setupMissingOrDisabledOptionHandling()
       role="combobox"
       :name="context.node.name"
       class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-none"
-      :tabindex="context.disabled ? '-1' : '0'"
+      tabindex="0"
       :aria-labelledby="`label-${context.id}`"
       :aria-disabled="context.disabled ? 'true' : undefined"
       v-bind="context.attrs"

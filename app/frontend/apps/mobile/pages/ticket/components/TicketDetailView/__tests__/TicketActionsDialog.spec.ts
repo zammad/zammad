@@ -79,12 +79,12 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
       router: true,
     })
 
-    const mergeButton = view.getByRole('button', { name: 'Merge tickets' })
+    const mergeButton = view.getByText('Merge tickets')
     await view.events.click(mergeButton)
 
     await waitUntil(() => view.queryByRole('dialog', { name: 'Find a ticket' }))
 
-    await view.events.click(view.getByRole('button', { name: 'Confirm merge' }))
+    await view.events.click(view.getByLabelText('Confirm merge'))
 
     expect(notify).toHaveBeenCalledWith({
       id: 'merge-ticket-error',
@@ -134,7 +134,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
       confirmation: true,
     })
 
-    const mergeButton = view.getByRole('button', { name: 'Merge tickets' })
+    const mergeButton = view.getByText('Merge tickets')
     expect(mergeButton).toBeInTheDocument()
 
     await view.events.click(mergeButton)
@@ -158,7 +158,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
 
     await view.events.click(option)
     await view.events.click(view.getByRole('button', { name: 'Confirm merge' }))
-    await view.events.click(view.getByRole('button', { name: 'OK' }))
+    await view.events.click(view.getByText('OK'))
 
     await waitUntil(() => mergeMock.calls.resolve)
 

@@ -37,6 +37,9 @@ const icon = computed(() => {
     <div
       class="shrink-0 cursor-pointer items-center justify-center ltr:mr-2 rtl:ml-2"
       :class="icon.class"
+      role="button"
+      tabindex="0"
+      @keydown.enter="emit('action')"
       @click="emit('action')"
     >
       <CommonIcon :name="icon.name" size="base" />

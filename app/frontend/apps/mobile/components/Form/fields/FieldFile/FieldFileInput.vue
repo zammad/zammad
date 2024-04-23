@@ -201,7 +201,7 @@ useTraverseOptions(filesContainer, {
       'opacity-60': !canInteract,
       'pb-4': reachedUploadLimit,
     }"
-    @scroll.passive="onFilesScroll"
+    @scroll.passive="onFilesScroll($event as UIEvent)"
   >
     <CommonFilePreview
       v-for="(uploadFile, idx) of uploadFiles"

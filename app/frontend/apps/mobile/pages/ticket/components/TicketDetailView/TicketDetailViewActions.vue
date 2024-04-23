@@ -61,14 +61,14 @@ const scrollDown = () => {
               @click="scrollDown"
             >
               <CommonIcon name="arrow-down" size="small" decorative />
-              <div
+              <span
                 v-if="newRepliesCount"
                 aria-hidden="true"
                 data-test-id="new-replies-count"
                 class="bg-yellow absolute top-0 z-10 h-4 min-w-[1rem] rounded-full px-1 text-center text-xs text-black ltr:ml-4 rtl:mr-4"
               >
                 {{ newRepliesCount }}
-              </div>
+              </span>
             </button>
           </Transition>
         </div>
@@ -99,20 +99,20 @@ const scrollDown = () => {
           >
             {{ $t('Save') }}
           </FormKit>
-          <div
-            v-if="formInvalid"
-            role="status"
-            :aria-label="$t('Validation failed')"
-            class="bg-red absolute bottom-7 h-5 w-5 cursor-pointer rounded-full text-center text-xs leading-5 text-black ltr:right-2 rtl:left-2"
-            @click="emit('save')"
-          >
-            <CommonIcon
-              class="mx-auto h-5"
-              name="close"
-              size="tiny"
-              decorative
-            />
-          </div>
+          <button v-if="formInvalid" @click="emit('save')">
+            <span
+              role="status"
+              :aria-label="$t('Validation failed')"
+              class="bg-red absolute bottom-7 h-5 w-5 cursor-pointer rounded-full text-center text-xs leading-5 text-black ltr:right-2 rtl:left-2"
+            >
+              <CommonIcon
+                class="mx-auto h-5"
+                name="close"
+                size="tiny"
+                decorative
+              />
+            </span>
+          </button>
         </div>
       </div>
     </div>

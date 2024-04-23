@@ -989,7 +989,7 @@ describe('Form - Field - AutoComplete - Accessibility', () => {
     })
   })
 
-  it('prevents focusing of disabled field', async () => {
+  it('allows focusing of disabled field for a11y', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
@@ -999,7 +999,7 @@ describe('Form - Field - AutoComplete - Accessibility', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('tabindex', '-1')
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('tabindex', '0')
   })
 
   it("clicking disabled field doesn't select dialog", async () => {

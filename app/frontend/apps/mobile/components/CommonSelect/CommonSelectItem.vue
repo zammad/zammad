@@ -39,7 +39,7 @@ const label = computed(() => {
     :class="{
       'pointer-events-none': option.disabled,
     }"
-    :tabindex="option.disabled ? '-1' : '0'"
+    tabindex="0"
     :aria-selected="selected"
     class="focus:bg-blue-highlight flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:outline-none"
     role="option"

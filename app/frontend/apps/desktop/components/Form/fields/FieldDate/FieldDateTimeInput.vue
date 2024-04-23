@@ -63,6 +63,7 @@ const dark = computed(() => theme.value === 'dark')
 
 <template>
   <div class="w-full">
+    <!-- eslint-disable vuejs-accessibility/aria-props   -->
     <VueDatePicker
       v-model="localValue"
       :uid="context.id"
@@ -86,7 +87,6 @@ const dark = computed(() => theme.value === 'dark')
       :position="position"
       :action-row="actionRow"
       :config="config"
-      :input-class-name="context.classes.input"
       :aria-labels="ariaLabels"
       auto-apply
       text-input

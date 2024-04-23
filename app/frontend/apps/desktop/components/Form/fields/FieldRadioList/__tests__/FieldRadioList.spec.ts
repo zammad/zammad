@@ -61,7 +61,7 @@ describe('Form - Field - Radio List', () => {
   it('renders given options', async () => {
     const wrapper = await renderRadioListInput()
 
-    const selectOptions = wrapper.getAllByRole('option')
+    const selectOptions = wrapper.getAllByRole('radio')
 
     expect(selectOptions).toHaveLength(testOptions.length)
 
@@ -75,7 +75,7 @@ describe('Form - Field - Radio List', () => {
       options: testOptionsWithDescription,
     })
 
-    const selectOptions = wrapper.getAllByRole('option')
+    const selectOptions = wrapper.getAllByRole('radio')
 
     expect(selectOptions).toHaveLength(testOptionsWithDescription.length)
 
@@ -127,7 +127,7 @@ describe('Fields - Field Radio List - Input Checklist', () => {
     const wrapper = await renderRadioListInput()
 
     for await (const [i, item] of [testOptions[1], testOptions[2]].entries()) {
-      wrapper.events.click(wrapper.getByRole('option', { name: item.label }))
+      wrapper.events.click(wrapper.getByRole('radio', { name: item.label }))
 
       await waitFor(() => {
         expect(wrapper.emitted().inputRaw[i]).toBeTruthy()
@@ -144,13 +144,13 @@ describe('Fields - Field Radio List - Input Checklist', () => {
       value: [testOptions[1].value],
     })
 
-    const radio1 = wrapper.getByRole('option', { name: testOptions[0].label })
+    const radio1 = wrapper.getByRole('radio', { name: testOptions[0].label })
     expect(radio1).toHaveAttribute('aria-checked', 'false')
 
-    const radio2 = wrapper.getByRole('option', { name: testOptions[1].label })
+    const radio2 = wrapper.getByRole('radio', { name: testOptions[1].label })
     expect(radio2).toHaveAttribute('aria-checked', 'true')
 
-    const radio3 = wrapper.getByRole('option', { name: testOptions[2].label })
+    const radio3 = wrapper.getByRole('radio', { name: testOptions[2].label })
     expect(radio3).toHaveAttribute('aria-checked', 'false')
   })
 
@@ -162,7 +162,7 @@ describe('Fields - Field Radio List - Input Checklist', () => {
     expect(view.getByLabelText('Radio list')).toBeDisabled()
 
     for (const option of testOptions) {
-      expect(view.getByRole('option', { name: option.label })).toBeDisabled()
+      expect(view.getByRole('radio', { name: option.label })).toBeDisabled()
     }
   })
 

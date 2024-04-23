@@ -110,9 +110,7 @@ describe('updating ticket information', () => {
 
     await view.events.click(view.getByRole('link', { name: 'open 4' }))
 
-    await expect(
-      view.findByRole('alert', { name: 'Confirm dialog' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByText('Confirm dialog')).resolves.toBeInTheDocument()
   })
 
   it('show save banner when some field was changed', async () => {

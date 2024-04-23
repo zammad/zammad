@@ -104,7 +104,7 @@ export interface Props {
   queryParams?: Record<string, unknown>
   validationVisibility?: FormValidationVisibility
   disabled?: boolean
-  autofocus?: boolean
+  shouldAutofocus?: boolean
 
   // Some special properties for working with object attribute fields inside of a form schema.
   useObjectAttributes?: boolean
@@ -233,7 +233,7 @@ const setFormNode = (node: FormKitNode) => {
       emit('settled')
       executeFormHandler(FormHandlerExecution.InitialSettled, values.value)
 
-      if (props.autofocus) autofocusFirstInput(node)
+      if (props.shouldAutofocus) autofocusFirstInput(node)
     })
   })
 

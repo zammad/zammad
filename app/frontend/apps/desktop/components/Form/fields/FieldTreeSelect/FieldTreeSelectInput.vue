@@ -247,7 +247,7 @@ setupMissingOrDisabledOptionHandling()
         role="combobox"
         :name="context.node.name"
         class="flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-none dark:text-white"
-        :tabindex="context.disabled ? '-1' : '0'"
+        tabindex="0"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled ? 'true' : undefined"
         v-bind="context.attrs"

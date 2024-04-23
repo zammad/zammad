@@ -6,11 +6,17 @@ export interface Props {
   max?: string
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 </script>
 
 <template>
-  <progress class="progress" :value="props.value" :max="props.max"></progress>
+  <progress
+    class="progress"
+    tabindex="0"
+    :aria-label="$t('Indicating progress')"
+    :value="value"
+    :max="max"
+  />
 </template>
 
 <style scoped>

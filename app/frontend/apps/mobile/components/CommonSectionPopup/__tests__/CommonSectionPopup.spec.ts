@@ -110,19 +110,19 @@ describe('popup behaviour', () => {
     await flushPromises()
 
     // auto focused on first item
-    expect(view.getByRole('link', { name: 'Link' })).toHaveFocus()
+    expect(view.getByText('Link')).toHaveFocus()
 
     await view.events.keyboard('{Tab}')
 
-    expect(view.getByRole('button', { name: 'Action' })).toHaveFocus()
+    expect(view.getByText('Action')).toHaveFocus()
 
     await view.events.keyboard('{Tab}')
 
-    expect(view.getByRole('button', { name: 'Cancel' })).toHaveFocus()
+    expect(view.getByText('Cancel')).toHaveFocus()
 
     await view.events.keyboard('{Tab}')
 
-    expect(view.getByRole('link', { name: 'Link' })).toHaveFocus()
+    expect(view.getByText('Link')).toHaveFocus()
   })
 
   it('refocuses on the last element that opened popup', async () => {

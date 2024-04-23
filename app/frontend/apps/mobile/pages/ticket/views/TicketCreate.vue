@@ -603,7 +603,7 @@ export default {
       :flatten-form-groups="Object.keys(allSteps)"
       :schema-data="schemaData"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
-      :autofocus="true"
+      should-autofocus
       use-object-attributes
       @submit="createTicket($event as FormSubmitData<TicketFormData>)"
     />

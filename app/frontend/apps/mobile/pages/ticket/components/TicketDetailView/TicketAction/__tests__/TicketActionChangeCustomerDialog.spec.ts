@@ -108,9 +108,7 @@ describe('TicketAction - change customer dialog', () => {
     await view.events.click(view.getByText('Nicole Braun'))
     await view.events.click(view.getByRole('button', { name: 'Cancel' }))
 
-    await expect(
-      view.findByRole('alert', { name: 'Confirm dialog' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByText('Confirm dialog')).resolves.toBeInTheDocument()
   })
 
   test('can change customer', async () => {

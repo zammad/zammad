@@ -21,13 +21,11 @@ describe('rendering media error badge for Whatsapp', () => {
     })
 
     expect(view.getByIconName('update')).toBeInTheDocument()
-    expect(
-      view.getByRole('button', { name: 'Media Download Error' }),
-    ).toBeInTheDocument()
+    expect(view.getByText('Media Download Error')).toBeInTheDocument()
 
     await view.events.click(view.getByRole('button'))
 
-    expect(view.getByRole('button', { name: 'Try again' })).toBeInTheDocument()
+    expect(view.getByText('Try again')).toBeInTheDocument()
 
     mockTicketArticleRetryMediaDownloadMutation({
       ticketArticleRetryMediaDownload: {
@@ -35,7 +33,7 @@ describe('rendering media error badge for Whatsapp', () => {
       },
     })
 
-    await view.events.click(view.getByRole('button', { name: 'Try again' }))
+    await view.events.click(view.getByText('Try again'))
 
     expect(
       view.queryByRole('button', { name: 'Try again' }),

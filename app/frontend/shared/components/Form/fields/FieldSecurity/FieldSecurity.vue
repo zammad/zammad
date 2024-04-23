@@ -159,7 +159,7 @@ const changeSecurityState = (method: EnumSecurityStateType) => {
         v-for="securityType of securityMethods"
         :key="securityType"
         type="button"
-        tabindex="1"
+        tabindex="0"
         role="option"
         class="flex flex-1 select-none items-center justify-center rounded-md px-2 py-1"
         :aria-selected="previewMethod === securityType"

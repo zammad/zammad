@@ -408,7 +408,7 @@ useFormBlock(contextReactive, openSelectDropdown)
         :aria-describedby="context.describedBy"
         aria-autocomplete="none"
         :data-multiple="context.multiple"
-        :tabindex="context.disabled ? '-1' : '0'"
+        tabindex="0"
         v-bind="context.attrs"
         @keydown.escape.prevent="closeDropdown()"
         @keypress.enter.prevent="openSelectDropdown()"

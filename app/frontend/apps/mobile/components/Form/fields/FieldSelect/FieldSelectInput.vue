@@ -86,7 +86,7 @@ setupMissingOrDisabledOptionHandling()
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled"
         :data-multiple="context.multiple"
-        :tabindex="context.disabled ? '-1' : '0'"
+        tabindex="0"
         v-bind="context.attrs"
         @keyup.shift.down.prevent="openSelectDialog()"
         @keypress.space.prevent="openSelectDialog()"

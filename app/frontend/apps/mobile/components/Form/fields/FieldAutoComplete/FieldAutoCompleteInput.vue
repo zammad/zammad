@@ -123,7 +123,7 @@ useFormBlock(contextReactive, onInputClick)
       :aria-controls="`dialog-${nameDialog}`"
       :aria-owns="`dialog-${nameDialog}`"
       :aria-expanded="dialog.isOpened.value"
-      :tabindex="context.disabled ? '-1' : '0'"
+      tabindex="0"
       :data-multiple="context.multiple ? 'true' : undefined"
       v-bind="context.attrs"
       @keyup.shift.down.prevent="toggleDialog(true)"

@@ -273,17 +273,20 @@ export default {
             v-for="searchItem in [...lastSearches].reverse()"
             :key="searchItem"
             class="pb-4"
-            @click="selectLastSearch(searchItem)"
           >
-            <button type="button" class="flex items-center">
-              <div>
+            <button
+              type="button"
+              class="flex items-center"
+              @click="selectLastSearch(searchItem)"
+            >
+              <span>
                 <CommonIcon
                   name="clock"
                   size="small"
                   class="mx-2 text-white/50"
                   decorative
                 />
-              </div>
+              </span>
               <span class="text-left text-base">{{ searchItem }}</span>
             </button>
           </li>

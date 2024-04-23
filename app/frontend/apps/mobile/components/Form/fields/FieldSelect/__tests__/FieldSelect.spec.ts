@@ -1021,6 +1021,20 @@ describe('Form - Field - Select - Accessibility', () => {
     })
   })
 
+  it('allows focusing of disabled field for a11y', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...commonProps,
+        type: 'select',
+        options: testOptions,
+        disabled: true,
+      },
+    })
+
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('tabindex', '0')
+  })
+
   it('restores focus on close', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
@@ -1044,20 +1058,6 @@ describe('Form - Field - Select - Accessibility', () => {
     await wrapper.events.type(selectOptions[0], '{Space}')
 
     expect(selectButton).toHaveFocus()
-  })
-
-  it('prevents focusing of disabled field', async () => {
-    const wrapper = renderComponent(FormKit, {
-      ...wrapperParameters,
-      props: {
-        ...commonProps,
-        type: 'select',
-        options: testOptions,
-        disabled: true,
-      },
-    })
-
-    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('tabindex', '-1')
   })
 
   it("clicking disabled field doesn't select dialog", async () => {

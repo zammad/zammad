@@ -97,19 +97,26 @@ const wrapperStyle = computed(() => {
 
 <template>
   <NodeViewWrapper as="div" class="inline-block" :style="wrapperStyle">
-    <img
+    <button
       v-if="!isResizing && src"
       class="inline-block"
-      :style="style"
-      :src="src"
-      :alt="node.attrs.alt"
-      :width="node.attrs.width"
-      :height="node.attrs.height"
-      :title="node.attrs.title"
-      :draggable="isDraggable"
-      @load="onLoadImage"
       @click="isResizing = true"
-    />
+      @keydown.space.prevent="isResizing = true"
+      @keydown.enter.prevent="isResizing = true"
+    >
+      <img
+        v-if="!isResizing && src"
+        class="inline-block"
+        :style="style"
+        :src="src"
+        :alt="node.attrs.alt"
+        :width="node.attrs.width"
+        :height="node.attrs.height"
+        :title="node.attrs.title"
+        :draggable="isDraggable"
+        @load="onLoadImage"
+      />
+    </button>
     <DraggableResizable
       v-else-if="src"
       v-model:active="isResizing"
@@ -121,7 +128,12 @@ const wrapperStyle = computed(() => {
       class="!relative !inline-block"
       @resize-end="stopResizing"
     >
-      <img class="inline-block" :src="src" :draggable="isDraggable" />
+      <img
+        class="inline-block"
+        :alt="$t('Resize frame')"
+        :src="src"
+        :draggable="isDraggable"
+      />
     </DraggableResizable>
   </NodeViewWrapper>
 </template>

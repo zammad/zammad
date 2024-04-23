@@ -170,6 +170,7 @@ setupMissingOrDisabledOptionHandling()
       @select="selectOption"
       @close="onCloseDropdown"
     >
+      <!-- eslint-disable vuejs-accessibility/interactive-supports-focus-->
       <output
         :id="context.id"
         ref="outputElement"
@@ -184,9 +185,7 @@ setupMissingOrDisabledOptionHandling()
         :aria-disabled="context.disabled"
         :data-multiple="context.multiple"
         :aria-describedby="context.describedBy"
-        :tabindex="
-          context.disabled || (expanded && !context.noFiltering) ? '-1' : '0'
-        "
+        :tabindex="expanded && !context.noFiltering ? '-1' : '0'"
         v-bind="context.attrs"
         @keydown.escape.prevent="closeDropdown()"
         @keypress.enter.prevent="openSelectDropdown()"

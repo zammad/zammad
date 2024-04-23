@@ -277,9 +277,7 @@ describe('Creating new ticket as agent', () => {
 
     expect(view.queryByTestId('popupWindow')).toBeInTheDocument()
 
-    await expect(
-      view.findByRole('alert', { name: 'Confirm dialog' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByText('Confirm dialog')).resolves.toBeInTheDocument()
   })
 
   it('shows the CC field for type "Email"', async () => {

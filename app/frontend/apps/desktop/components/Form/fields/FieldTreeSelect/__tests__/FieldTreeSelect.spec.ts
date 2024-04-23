@@ -1260,7 +1260,7 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
       name: 'select all options',
     })
 
-    expect(selectAllButton).toHaveAttribute('tabindex', '2')
+    expect(selectAllButton).toHaveAttribute('tabindex', '0')
 
     const listbox = getByRole(menu, 'listbox')
 
@@ -1282,23 +1282,21 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
 
     expect(
       getByRole(menu, 'button', { name: 'Back to previous page' }),
-    ).toHaveAttribute('tabindex', '1')
+    ).toHaveAttribute('tabindex', '0')
   })
 
-  it('prevents focusing of disabled field', async () => {
+  it('allows focusing of disabled field for a11y', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
-        ...commonProps,
+        label: 'Select…',
+        type: 'treeselect',
         options: testOptions,
         disabled: true,
       },
     })
 
-    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute(
-      'tabindex',
-      '-1',
-    )
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('tabindex', '0')
   })
 
   it('restores focus on close', async () => {

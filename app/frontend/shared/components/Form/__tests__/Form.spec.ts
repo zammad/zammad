@@ -538,7 +538,7 @@ describe('Form.vue - Edge Cases', () => {
   it('focuses the first focusable input, if autofocus is enabled', async () => {
     const view = await renderForm({
       props: {
-        autofocus: true,
+        shouldAutofocus: true,
       },
     })
 
@@ -655,7 +655,7 @@ describe('Form.vue - with object attributes', () => {
     const view = renderComponent(Form, {
       ...wrapperParameters,
       props: {
-        autofocus: true,
+        shouldAutofocus: true,
         useObjectAttributes: true,
         schema: [
           {

@@ -377,7 +377,7 @@ describe('calling API to retry encryption', () => {
       },
     })
 
-    await view.events.click(view.getByRole('button', { name: 'Try again' }))
+    await view.events.click(view.getByText('Try again'))
 
     expect(mutation.spies.resolve).toHaveBeenCalled()
 
@@ -436,7 +436,7 @@ describe('calling API to retry encryption', () => {
       },
     })
 
-    await view.events.click(view.getByRole('button', { name: 'Try again' }))
+    await view.events.click(view.getByText('Try again'))
 
     expect(mutation.spies.resolve).toHaveBeenCalled()
 

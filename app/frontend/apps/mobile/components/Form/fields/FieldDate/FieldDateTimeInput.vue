@@ -83,6 +83,7 @@ useEventListener('click', (e) => {
 
 <template>
   <div class="flex w-full">
+    <!-- eslint-disable vuejs-accessibility/aria-props -->
     <VueDatePicker
       ref="picker"
       v-model="localValue"
@@ -107,7 +108,6 @@ useEventListener('click', (e) => {
       :position="position"
       :action-row="actionRow"
       :config="config"
-      :input-class-name="context.classes.input"
       :aria-labels="ariaLabels"
       :inline="{ input: true }"
       :month-change-on-scroll="false"
@@ -135,10 +135,10 @@ useEventListener('click', (e) => {
           :value="value"
           :name="context.node.name"
           :class="context.classes.input"
-          :disabled="context.disabled"
           :aria-describedby="context.describedBy"
-          v-bind="context.attrs"
+          :disabled="context.disabled"
           type="text"
+          v-bind="context.attrs"
           @input="onInput"
           @keypress.enter="onEnter"
           @keypress.tab="onTab"

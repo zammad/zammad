@@ -1141,7 +1141,7 @@ describe('Form - Field - Select - Accessibility', () => {
       name: 'select all options',
     })
 
-    expect(selectAllButton).toHaveAttribute('tabindex', '1')
+    expect(selectAllButton).toHaveAttribute('tabindex', '0')
 
     const listbox = getByRole(menu, 'listbox')
 
@@ -1180,17 +1180,18 @@ describe('Form - Field - Select - Accessibility', () => {
     expect(selectField).toHaveFocus()
   })
 
-  it('prevents focusing of disabled field', async () => {
+  it('allows focusing of disabled field for a11y', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         ...commonProps,
+        type: 'select',
         options: testOptions,
         disabled: true,
       },
     })
 
-    expect(wrapper.getByLabelText('Select')).toHaveAttribute('tabindex', '-1')
+    expect(wrapper.getByLabelText('Select')).toHaveAttribute('tabindex', '0')
   })
 
   it('prevents opening of dropdown in disabled field', async () => {

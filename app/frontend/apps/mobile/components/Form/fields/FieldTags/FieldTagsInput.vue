@@ -61,7 +61,7 @@ useFormBlock(reactiveContext, onInputClick)
       role="combobox"
       class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-none"
       :aria-disabled="context.disabled ? 'true' : undefined"
-      :tabindex="context.disabled ? '-1' : '0'"
+      tabindex="0"
       v-bind="context.attrs"
       aria-haspopup="dialog"
       data-multiple="true"

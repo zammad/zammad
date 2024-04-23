@@ -47,6 +47,9 @@ const clickHandler = (notification: Notification) => {
                 notificationTypeClassMap.base,
                 getClassName(notification),
               ]"
+              role="button"
+              tabindex="0"
+              @keydown.enter="clickHandler(notification)"
               @click="clickHandler(notification)"
             >
               <CommonIcon

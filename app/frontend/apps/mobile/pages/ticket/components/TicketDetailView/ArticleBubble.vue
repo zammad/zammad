@@ -231,6 +231,8 @@ const onContextClick = () => {
 </script>
 
 <template>
+  <!-- It is the correct role comment -->
+  <!-- eslint-disable vuejs-accessibility/aria-role -->
   <div
     :id="`article-${articleInternalId}`"
     role="comment"

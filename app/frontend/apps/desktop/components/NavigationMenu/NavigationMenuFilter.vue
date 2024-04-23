@@ -69,6 +69,7 @@ watchEffect(() => {
       ref="searchTextField"
       v-model.trim="searchText"
       :placeholder="$t('Apply filter…')"
+      :aria-label="$t('Navigation filter')"
       class="w-0 bg-transparent text-sm text-black transition-[width] duration-200 focus:outline-none dark:text-white"
       :class="{ 'w-full': filterFieldOpen }"
       type="text"

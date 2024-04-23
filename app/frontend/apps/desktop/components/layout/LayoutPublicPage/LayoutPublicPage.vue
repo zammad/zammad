@@ -68,6 +68,8 @@ const hoverPoweredByLogo = ref(false)
           open-in-new-tab
           external
           class="flex items-center gap-1 text-neutral-500"
+          @focus="hoverPoweredByLogo = true"
+          @blur="hoverPoweredByLogo = false"
           @mouseover="hoverPoweredByLogo = true"
           @mouseleave="hoverPoweredByLogo = false"
         >

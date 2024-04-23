@@ -120,6 +120,9 @@ const haveUnread = computed(() => unseenCount.value > 0)
         v-if="haveUnread"
         class="text-blue flex flex-1 cursor-pointer justify-center px-4 py-3 text-base"
         :class="{ 'text-red': markingAsSeen }"
+        role="button"
+        tabindex="0"
+        @keydown.enter="markAllRead"
         @click="markAllRead"
       >
         {{ $t('Mark all as read') }}

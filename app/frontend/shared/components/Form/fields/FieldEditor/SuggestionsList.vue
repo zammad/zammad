@@ -61,6 +61,8 @@ defineExpose({
       class="cursor-pointer px-6 py-2 hover:bg-gray-400"
       :class="{ 'bg-gray-400': selectedIndex === index }"
       role="option"
+      :aria-selected="selectedIndex === index"
+      tabindex="0"
       @click="selectItem(index)"
       @keydown.space.prevent="selectItem(index)"
     >

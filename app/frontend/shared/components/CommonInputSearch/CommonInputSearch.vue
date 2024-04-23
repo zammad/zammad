@@ -67,6 +67,7 @@ export default {
         'focus:border-white focus:ring-0': !noBorder,
         'focus:border-transparent': noBorder,
       }"
+      :aria-label="$t('Search…')"
       type="text"
       role="searchbox"
     />

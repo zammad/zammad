@@ -89,6 +89,8 @@ useTraverseOptions(actionBar, { direction: 'horizontal', ignoreTabindex: true })
 
 <template>
   <div v-show="visible" class="relative">
+    <!-- :TODO move events on node which allows interaction toolbar does not allow interaction  -->
+    <!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
     <div
       ref="actionBar"
       data-test-id="action-bar"

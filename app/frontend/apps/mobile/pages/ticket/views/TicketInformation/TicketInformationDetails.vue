@@ -223,6 +223,8 @@ const hasEscalation = computed(() => {
       @input-raw="handleToggleInput"
     >
       <template #label="context">
+        <!-- id is available on the toggle element  -->
+        <!-- eslint-disable vuejs-accessibility/label-has-for -->
         <label :for="context.id" :class="context.classes.label">
           <CommonUserAvatar
             v-if="session.user"

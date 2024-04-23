@@ -141,7 +141,7 @@ const changeCustomer = async (
       :id="name"
       ref="form"
       class="w-full p-4"
-      autofocus
+      should-autofocus
       :schema="formSchema"
       :handlers="[useTicketFormOganizationHandler()]"
       :initial-entity-object="ticket"

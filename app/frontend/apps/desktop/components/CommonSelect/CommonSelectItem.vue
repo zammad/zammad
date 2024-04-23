@@ -61,7 +61,7 @@ const OptionIconComponent = props.optionIconComponent
     :class="{
       'pointer-events-none': option.disabled,
     }"
-    :tabindex="option.disabled ? '-1' : '0'"
+    tabindex="0"
     :aria-selected="selected"
     :aria-disabled="option.disabled ? 'true' : undefined"
     class="group flex h-9 cursor-pointer items-center gap-1.5 self-stretch px-2.5 text-sm text-black outline-none hover:bg-blue-600 focus:bg-blue-800 focus:text-white hover:focus:focus:bg-blue-800 dark:text-white dark:hover:bg-blue-900"

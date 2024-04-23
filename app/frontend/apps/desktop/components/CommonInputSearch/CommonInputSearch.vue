@@ -84,6 +84,7 @@ export default {
           v-model="filter"
           v-bind="$attrs"
           :placeholder="i18n.t(placeholder)"
+          :aria-label="$t('Search…')"
           class="w-full min-w-16 text-black outline-none dark:text-white"
           :class="{
             'bg-blue-200 dark:bg-gray-700': !alternativeBackground,

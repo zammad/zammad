@@ -38,30 +38,32 @@ const selectOption = (option: RadioListOption, event?: Event) => {
   <output
     :id="context.id"
     class="flex flex-col items-start rounded-lg bg-blue-200 focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800 dark:bg-gray-700"
-    role="listbox"
+    role="radiogroup"
     :class="context.classes.input"
     :name="context.node.name"
     :aria-disabled="context.disabled"
     :aria-describedby="context.describedBy"
-    :tabindex="context.disabled ? '-1' : '0'"
+    tabindex="0"
     v-bind="context.attrs"
     @focus="delegateFocus"
   >
+    <!-- eslint-disable vuejs-accessibility/interactive-supports-focus   -->
     <div
       v-for="option in context.options"
       :key="`option-${option.value}`"
       class="group inline-flex cursor-pointer gap-2.5 px-3 py-2.5"
-      role="option"
+      role="radio"
       :aria-disabled="context.disabled"
       :aria-checked="option.value == localValue"
       :aria-label="option.label"
       @click.stop="selectOption(option, $event)"
+      @keydown.enter.stop="selectOption(option, $event)"
     >
       <CommonIcon
         :id="`radio_list_radio_${context.id}_${option.value}`"
         size="small"
+        tabindex="0"
         class="formkit-disabled:pointer-events-none formkit-invalid:outline-red-500 dark:hover:formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 dark:hover:formkit-errors:outline-red-500 shrink-0 self-start rounded-full focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-blue-800 group-hover:outline group-hover:outline-1 group-hover:-outline-offset-1 group-hover:outline-blue-600 group-hover:focus:outline-blue-800 dark:group-hover:outline-blue-900 dark:group-hover:focus:outline-blue-800"
-        :tabindex="context.disabled ? '-1' : '0'"
         :name="option.value == localValue ? 'radio-yes' : 'radio-no'"
         @keydown.space.prevent="selectOption(option)"
       />

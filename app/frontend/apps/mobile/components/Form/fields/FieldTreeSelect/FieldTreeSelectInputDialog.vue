@@ -226,7 +226,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
           'pointer-events-none': option.disabled,
         }"
         class="focus:bg-blue-highlight relative flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:outline-none"
-        :tabindex="option.disabled ? '-1' : '0'"
+        tabindex="0"
         role="option"
         :aria-selected="
           option.disabled ? undefined : isCurrentValue(option.value)
