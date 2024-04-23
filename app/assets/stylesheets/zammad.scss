@@ -9237,6 +9237,10 @@ li.list-item-none {
   background: var(--background-secondary-hover);
 }
 
+.user-menu li.add .dropdown-menu.dropdown-menu--light li > a:hover {
+  color: var(--text-normal);
+}
+
 .dropdown-menu.dropdown-menu--light li:hover {
   background: none;
 }
