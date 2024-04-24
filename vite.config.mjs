@@ -17,6 +17,17 @@ const dir = dirname(fileURLToPath(import.meta.url))
 
 const SSL_PATH = resolve(homedir(), '.local/state/localhost.rb')
 
+const isEnvBooleanSet = (value) => {
+  if (value === 'true' || value === '1') {
+    return true;
+  }
+  else if (value === 'false' || value === '0') {
+    return false;
+  }
+
+  return false;
+}
+
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default defineConfig(({ mode, command }) => {
   const isTesting = ['test', 'cypress'].includes(mode)
@@ -29,7 +40,7 @@ export default defineConfig(({ mode, command }) => {
       template: {
         compilerOptions: {
           nodeTransforms:
-            isTesting || !!process.env.VITE_TEST_MODE
+            isTesting || isEnvBooleanSet(process.env.VITE_TEST_MODE)
               ? []
               : [require('./app/frontend/build/transforms/transformTestId.js')],
         },
@@ -45,7 +56,7 @@ export default defineConfig(({ mode, command }) => {
 
     plugins.push(
       ...VitePWA({
-        disable: isTesting || !!process.env.VITE_TEST_MODE,
+        disable: isTesting || isEnvBooleanSet(process.env.VITE_TEST_MODE),
         // should be generated on ruby side
         manifest: false,
         registerType: 'prompt',
@@ -62,7 +73,7 @@ export default defineConfig(({ mode, command }) => {
   let https = false
 
   // vite-ruby controlls this variable, it's either "true" or "false"
-  if (process.env.VITE_RUBY_HTTPS === 'true') {
+  if (isEnvBooleanSet(process.env.VITE_RUBY_HTTPS)) {
     const SSL_CERT = readFileSync(resolve(SSL_PATH, 'localhost.crt'))
     const SSL_KEY = readFileSync(resolve(SSL_PATH, 'localhost.key'))
 
@@ -84,6 +95,7 @@ export default defineConfig(({ mode, command }) => {
       target: isTesting ? 'esnext' : tsconfig.compilerOptions.target,
     },
     resolve: {
+      preserveSymlinks: isEnvBooleanSet(process.env.PRESERVE_SYMLINKS),
       alias: {
         '^vue-easy-lightbox$':
           'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.esm.min.js',
@@ -104,7 +116,7 @@ export default defineConfig(({ mode, command }) => {
       },
     },
     define: {
-      VITE_TEST_MODE: !!process.env.VITEST || !!process.env.VITE_TEST_MODE,
+      VITE_TEST_MODE: isEnvBooleanSet(process.env.VITEST) || isEnvBooleanSet(process.env.VITE_TEST_MODE),
     },
     test: {
       globals: true,
@@ -114,7 +126,7 @@ export default defineConfig(({ mode, command }) => {
       environment: 'jsdom',
       clearMocks: true,
       css: false,
-      testTimeout: process.env.CI ? 30_000 : 5_000,
+      testTimeout: isEnvBooleanSet(process.env.CI) ? 30_000 : 5_000,
       unstubGlobals: true,
       onConsoleLog(log) {
         if (log.includes('Not implemented: navigation')) return false
