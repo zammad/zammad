@@ -1,0 +1,119 @@
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+
+import type { ExtendedRenderResult } from '#tests/support/components/renderComponent.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
+import { mockAccountChangePasswordMutation } from '../graphql/mutations/accountChangePassword.mocks.ts'
+
+const changePassword = async (
+  view: ExtendedRenderResult,
+  currentPassword: string,
+  newPassword: string,
+  newPasswordConfirm?: string,
+) => {
+  await view.events.type(
+    await view.findByLabelText('Current password'),
+    currentPassword,
+  )
+  await view.events.type(
+    await view.findByLabelText('New password'),
+    newPassword,
+  )
+  await view.events.type(
+    await view.findByLabelText('Confirm new password'),
+    newPasswordConfirm || newPassword,
+  )
+  await view.events.click(view.getByRole('button', { name: 'Change Password' }))
+}
+
+describe('password personal settings', () => {
+  beforeEach(() => {
+    mockAccount({
+      firstname: 'John',
+      lastname: 'Doe',
+    })
+
+    mockApplicationConfig({
+      user_show_password_login: true,
+    })
+  })
+
+  it('redirects to the error page when password login is disabled', async () => {
+    mockApplicationConfig({
+      user_show_password_login: false,
+    })
+
+    const view = await visitView('/personal-setting/password')
+
+    await vi.waitFor(() => {
+      expect(view, 'correctly redirects to error page').toHaveCurrentUrl(
+        '/error',
+      )
+    })
+  })
+
+  it('shows the form to change the password', async () => {
+    const view = await visitView('/personal-setting/password')
+
+    expect(view.getByText('Current password')).toBeInTheDocument()
+    expect(view.getByText('New password')).toBeInTheDocument()
+    expect(view.getByText('Confirm new password')).toBeInTheDocument()
+
+    expect(
+      view.getByRole('button', { name: 'Change Password' }),
+    ).toBeInTheDocument()
+  })
+
+  it('shows an error message when e.g. current password is incorrect', async () => {
+    mockAccountChangePasswordMutation({
+      accountChangePassword: {
+        success: false,
+        errors: [
+          {
+            message: 'The current password you provided is incorrect.',
+            field: 'current_password',
+          },
+        ],
+      },
+    })
+
+    const view = await visitView('/personal-setting/password')
+
+    await changePassword(view, 'wrong-password', 'new-password')
+
+    expect(
+      await view.findByText('The current password you provided is incorrect.'),
+    ).toBeInTheDocument()
+  })
+
+  it('shows an error message when new password and confirmation do not match', async () => {
+    const view = await visitView('/personal-setting/password')
+
+    await changePassword(view, 'old-password', 'new-password', 'wrong-password')
+
+    expect(
+      await view.findByText(
+        "This field doesn't correspond to the expected value.",
+      ),
+    ).toBeInTheDocument()
+  })
+
+  it('shows a success message when password was changed successfully', async () => {
+    mockAccountChangePasswordMutation({
+      accountChangePassword: {
+        success: true,
+        errors: null,
+      },
+    })
+
+    const view = await visitView('/personal-setting/password')
+
+    await changePassword(view, 'old-password', 'new-password')
+
+    expect(
+      await view.findByText('Password changed successfully.'),
+    ).toBeInTheDocument()
+  })
+})

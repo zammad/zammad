@@ -3,6 +3,8 @@
 module PasswordHash
   include ApplicationLib
 
+  class PasswordHash::Error < StandardError; end
+
   extend self
 
   def crypt(password)
@@ -14,6 +16,12 @@ module PasswordHash
     Argon2::Password.verify_password(password, pw_hash, secret)
   rescue
     false
+  end
+
+  def verified!(pw_hash, password)
+    return if verified?(pw_hash, password)
+
+    raise PasswordHash::Error, __('The password is invalid.')
   end
 
   def crypted?(pw_hash)

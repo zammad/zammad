@@ -577,16 +577,9 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
 =end
 
   def password_change
-
     # check old password
     if !params[:password_old] || !PasswordPolicy::MaxLength.valid?(params[:password_old])
       render json: { message: 'failed', notice: [__('Please provide your current password.')] }, status: :unprocessable_entity
-      return
-    end
-
-    current_password_verified = PasswordHash.verified?(current_user.password, params[:password_old])
-    if !current_password_verified
-      render json: { message: 'failed', notice: [__('The current password you provided is incorrect.')] }, status: :unprocessable_entity
       return
     end
 
@@ -596,22 +589,18 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
       return
     end
 
-    result = PasswordPolicy.new(params[:password_new])
-    if !result.valid?
-      render json: { message: 'failed', notice: result.error }, status: :unprocessable_entity
+    begin
+      Service::User::ChangePassword.new(
+        user:             current_user,
+        current_password: params[:password_old],
+        new_password:     params[:password_new]
+      ).execute
+    rescue PasswordPolicy::Error => e
+      render json: { message: 'failed', notice: [e.message] }, status: :unprocessable_entity
       return
-    end
-
-    current_user.update!(password: params[:password_new])
-
-    if current_user.email.present?
-      NotificationFactory::Mailer.notification(
-        template: 'password_change',
-        user:     current_user,
-        objects:  {
-          user: current_user,
-        }
-      )
+    rescue PasswordHash::Error
+      render json: { message: 'failed', notice: [__('The current password you provided is incorrect.')] }, status: :unprocessable_entity
+      return
     end
 
     render json: { message: 'ok', user_login: current_user.login }, status: :ok
