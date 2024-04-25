@@ -194,6 +194,51 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
     end
   end
 
+  context 'when text module refers external data source', authenticated_as: :authenticate, db_strategy: :reset do
+    let(:custom_attribute) { create(:object_manager_attribute_autocompletion_ajax_external_data_source) }
+    let(:text_module_external) do
+      create(:text_module,
+             name:    'external data source',
+             content: "external \#{ticket.#{custom_attribute.name}.value}")
+    end
+
+    def authenticate
+      text_module_external
+      custom_attribute
+      ObjectManager::Attribute.migration_execute
+      true
+    end
+
+    context 'when ticket external field value is not set' do
+      it 'inserts text module with placeholder' do
+        visit path
+        within(:active_content) do
+          find(:richtext).send_keys('::ext')
+          page.send_keys(:enter)
+          expect(find(:richtext)).to have_text 'external -'
+        end
+      end
+    end
+
+    if path.starts_with? '#ticket/zoom'
+      context 'when ticket external field value is set' do
+        before do
+          ticket.reload[custom_attribute.name] = { value: 'aaa', label: 'AAA' }
+          ticket.save!
+        end
+
+        it 'inserts text module with external value' do
+          visit path
+          within(:active_content) do
+            find(:richtext).send_keys('::ext')
+            page.send_keys(:enter)
+            expect(find(:richtext)).to have_text 'external aaa'
+          end
+        end
+      end
+    end
+  end
+
   context 'when Group restriction for text modules not working on ticket creation (specific scenario only) #4358', authenticated_as: :authenticate do
     let(:agent) { create(:agent, groups: [group1]) }
 

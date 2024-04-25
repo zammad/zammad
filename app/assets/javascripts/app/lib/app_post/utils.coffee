@@ -880,10 +880,10 @@ class App.Utils
       dataRef = objects
       dataRefLast = undefined
       for level in levels
-        if typeof dataRef is 'object' && level of dataRef
+        if _.isObject(dataRef) && dataRef && level of dataRef
           dataRefLast = dataRef
           dataRef = dataRef[level]
-        else if typeof dataRef is 'object' && typeof level is 'string' && matches = level.match(/(?<functionName>\w+)\((?<params>.*?)\)/)
+        else if _.isObject(dataRef) && typeof level is 'string' && matches = level.match(/(?<functionName>\w+)\((?<params>.*?)\)/)
           dataRefLast = dataRef
           { functionName, params } = matches.groups
           parameters = params.split(',').map((param) -> param.trim())
