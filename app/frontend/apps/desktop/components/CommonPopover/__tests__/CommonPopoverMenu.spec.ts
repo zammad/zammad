@@ -9,6 +9,7 @@ import { usePopover } from '../usePopover.ts'
 import type { MenuItem } from '../types.ts'
 
 const html = String.raw
+const fn = vi.fn()
 
 describe('rendering section', () => {
   it('no output without default slot and items', () => {
@@ -186,5 +187,31 @@ describe('rendering section', () => {
     })
 
     expect(view.getByText('Example Menu item')).toBeInTheDocument()
+  })
+
+  it('yields entity data on show if prop is passed', async () => {
+    renderComponent(CommonPopoverMenu, {
+      props: {
+        popover: null,
+        headerLabel: 'Test Header',
+        entity: {
+          id: 'example',
+          name: 'vitest',
+        },
+        items: [
+          {
+            label: 'Example',
+            show: (event: { id: string; name: string }) => {
+              fn(event)
+              return true
+            },
+          },
+        ],
+      },
+      router: true,
+      store: true,
+    })
+
+    expect(fn).toBeCalledWith({ id: 'example', name: 'vitest' })
   })
 })

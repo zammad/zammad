@@ -1,7 +1,13 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, nextTick, onUnmounted, ref } from 'vue'
+import {
+  type ComponentPublicInstance,
+  computed,
+  nextTick,
+  onUnmounted,
+  ref,
+} from 'vue'
 import { onClickOutside, type UseElementBoundingReturn } from '@vueuse/core'
 import { onKeyUp, useElementBounding, useWindowSize } from '@vueuse/core'
 
@@ -19,7 +25,7 @@ import type {
 } from './types'
 
 export interface Props {
-  owner: HTMLElement | undefined
+  owner: HTMLElement | ComponentPublicInstance | undefined
   orientation?: Orientation
   placement?: Placement
   hideArrow?: boolean
@@ -209,7 +215,9 @@ const updateOwnerAriaExpandedState = () => {
   const element = props.owner
   if (!element) return
 
-  element.ariaExpanded = showPopover.value ? 'true' : 'false'
+  if ('ariaExpanded' in element) {
+    element.ariaExpanded = showPopover.value ? 'true' : 'false'
+  }
 }
 
 const closePopover = (isInteractive = false) => {
@@ -219,7 +227,10 @@ const closePopover = (isInteractive = false) => {
   emit('close')
 
   nextTick(() => {
-    if (!isInteractive) props.owner?.focus()
+    if (!isInteractive && props.owner) {
+      // eslint-disable-next-line no-unused-expressions
+      '$el' in props.owner ? props.owner.$el?.focus?.() : props.owner?.focus?.()
+    }
     updateOwnerAriaExpandedState()
     testFlags.set('common-select.closed')
   })
@@ -293,7 +304,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
         role="region"
         class="popover fixed z-50 flex min-h-9 rounded-xl border border-neutral-100 bg-white antialiased dark:border-gray-900 dark:bg-gray-500"
         :style="popoverStyle"
-        :aria-labelledby="owner?.id"
+        :aria-labelledby="owner && '$el' in owner ? owner.$el?.id : owner?.id"
       >
         <div class="overflow-y-auto">
           <slot />

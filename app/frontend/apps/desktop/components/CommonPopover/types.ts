@@ -4,6 +4,7 @@ import type { Ref, Component } from 'vue'
 
 import type { RequiredPermission } from '#shared/types/permission.ts'
 
+import type { ObjectLike } from '#shared/types/utils.ts'
 import { type Props as ItemProps } from './CommonPopoverMenuItem.vue'
 
 export interface CommonPopoverInstance {
@@ -28,12 +29,15 @@ export type Orientation =
 
 export type Placement = 'start' | 'end'
 
+export type Variant = 'danger'
+
 export interface MenuItem extends ItemProps {
   key: string
   permission?: RequiredPermission
-  show?: () => boolean
+  show?: (entity?: ObjectLike) => boolean
   separatorTop?: boolean
-  onClick?(event: MouseEvent): void
+  onClick?: (entity?: ObjectLike) => void
   noCloseOnClick?: boolean
   component?: Component
+  variant?: Variant
 }

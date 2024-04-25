@@ -2,7 +2,7 @@
 <!-- eslint-disable zammad/zammad-detect-translatable-string -->
 
 <script setup lang="ts">
-import { computed, h, onMounted, ref, watch } from 'vue'
+import { computed, h, onMounted, reactive, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { reset } from '@formkit/core'
 import gql from 'graphql-tag'
@@ -32,6 +32,9 @@ import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import { useDialog } from '#desktop/components/CommonDialog/useDialog.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
+import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
+import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -455,6 +458,94 @@ const deleteTest = async () => {
 }
 
 const vip = ref(false)
+
+const tableHeaders = [
+  {
+    key: 'name',
+    label: 'User name',
+  },
+  {
+    key: 'title',
+    label: 'Job position',
+  },
+  {
+    key: 'email',
+    label: 'Email',
+  },
+  {
+    key: 'role',
+    label: 'Role',
+  },
+]
+
+const tableItems = reactive([
+  {
+    id: 1,
+    name: 'Lindsay Walton',
+    title: 'Front-end Developer',
+    email: 'lindsay.walton@example.com',
+    role: 'Member',
+  },
+  {
+    id: 2,
+    name: 'Courtney Henry',
+    title: 'Designer',
+    email: 'courtney.henry@example.com',
+    role: 'Admin',
+  },
+  {
+    id: 3,
+    name: 'Tom Cook',
+    title: 'Director of Product',
+    email: 'tom.cook@example.com',
+    role: 'Member',
+  },
+  {
+    id: 4,
+    name: 'Whitney Francis',
+    title: 'Copywriter',
+    email: 'whitney.francis@example.com',
+    role: 'Admin',
+  },
+  {
+    id: 5,
+    name: 'Leonard Krasner',
+    title: 'Senior Designer',
+    email: 'leonard.krasner@example.com',
+    role: 'Owner',
+  },
+  {
+    id: 6,
+    name: 'Floyd Miles',
+    title: 'Principal Designer',
+    email: 'floyd.miles@example.com',
+    role: 'Member',
+  },
+])
+
+const tableActions: MenuItem[] = [
+  {
+    key: 'delete',
+    label: 'Delete this row',
+    icon: 'trash3',
+    show: (data) => !!data?.role,
+    onClick: (data) => {
+      console.log(data)
+    },
+  },
+  {
+    key: 'download',
+    label: 'Download this row',
+    icon: 'download',
+    onClick: (data) => {
+      console.log(data)
+    },
+  },
+]
+
+const changeRow = () => {
+  tableItems[0].role = tableItems[0].role ? '' : 'Member'
+}
 </script>
 
 <template>
@@ -637,6 +728,18 @@ const vip = ref(false)
       </div>
     </div>
 
+    <h2 class="mb-2 mt-8">Table</h2>
+    <div class="mb-6 flex flex-col gap-4">
+      <CommonButton variant="primary" @click="changeRow()"
+        >Change row</CommonButton
+      >
+      <CommonSimpleTable
+        :headers="tableHeaders"
+        :items="tableItems"
+        :actions="tableActions"
+      ></CommonSimpleTable>
+    </div>
+
     <div class="w-1/2">
       <h2 class="text-lg">Avatar</h2>
 
@@ -793,6 +896,46 @@ const vip = ref(false)
         </button>
       </template>
     </div>
+
+    <section>
+      <h2>Common Action Menu</h2>
+      <CommonActionMenu
+        :entity="{ id: 'test-me', name: 'playground' }"
+        :actions="[
+          {
+            key: 'delete-customer',
+            label: 'Delete Customer',
+            variant: 'danger',
+            icon: 'trash3',
+            onClick: (data) => {
+              console.log(data?.id, data?.name, 'Delete customer')
+            },
+          },
+          {
+            key: 'change-customer',
+            label: 'Change Customer',
+            icon: 'person-gear',
+            onClick: (data) => {
+              console.log(data?.id, data?.name, 'Change customer')
+            },
+          },
+        ]"
+      />
+      <h3>Single Action Item</h3>
+      <CommonActionMenu
+        :entity="{ id: 'test-me', name: 'playground' }"
+        :actions="[
+          {
+            key: 'change-customer',
+            label: 'Change Customer',
+            icon: 'person-gear',
+            onClick: (id) => {
+              console.log(id, 'Delete customer')
+            },
+          },
+        ]"
+      />
+    </section>
 
     <h2 class="mb-2 mt-8">Flyout and Dialog</h2>
     <div class="mb-6 flex gap-4">

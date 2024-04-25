@@ -1,15 +1,34 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import type { Variant } from '#desktop/components/CommonPopover/types.ts'
+import { computed } from 'vue'
+
 export interface Props {
   label?: string
   labelPlaceholder?: string[]
   link?: string
   linkExternal?: boolean
+  variant?: Variant
   icon?: string
+  labelClass?: string
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const variantClass = computed(() => {
+  if (props.variant === 'danger') {
+    return 'text-red-500'
+  }
+  return 'group-focus-within:text-white group-hover:text-black group-hover:group-focus-within:text-white dark:group-hover:text-white'
+})
+
+const iconColor = computed(() => {
+  if (props.variant === 'danger') {
+    return 'text-red-500'
+  }
+  return 'text-stone-200 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white group-focus-within:text-white group-hover:group-focus-within:text-white'
+})
 </script>
 
 <template>
@@ -21,9 +40,10 @@ defineProps<Props>()
     data-test-id="popover-menu-item"
   >
     <CommonLabel
-      class="gap-2 group-focus-within:text-white group-hover:text-black group-hover:group-focus-within:text-white dark:group-hover:text-white"
+      class="gap-2"
+      :class="[labelClass, variantClass]"
       :prefix-icon="icon"
-      icon-color="text-stone-200 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white group-focus-within:text-white group-hover:group-focus-within:text-white"
+      :icon-color="iconColor"
     >
       <slot>{{ i18n.t(label, ...(labelPlaceholder || [])) }}</slot>
     </CommonLabel>

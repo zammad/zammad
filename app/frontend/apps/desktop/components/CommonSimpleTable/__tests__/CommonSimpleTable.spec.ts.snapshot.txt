@@ -1,0 +1,83 @@
+<table
+  class="pb-3"
+>
+  <thead>
+    
+    <th
+      class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
+    >
+      <span>
+        User name
+      </span>
+    </th>
+    <th
+      class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
+    >
+      <span>
+        Rolle
+      </span>
+    </th>
+    
+    <th
+      class="h-10 p-2.5 text-xs font-normal text-stone-200 dark:text-neutral-500"
+    >
+      <span>
+        Actions
+      </span>
+    </th>
+  </thead>
+  <tbody>
+    
+    <tr>
+      
+      <td
+        class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400 bg-blue-200 dark:bg-gray-700"
+      >
+        <span>
+          Lindsay Walton
+        </span>
+      </td>
+      <td
+        class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400 bg-blue-200 dark:bg-gray-700"
+      >
+        <span>
+          Member
+        </span>
+      </td>
+      
+      <td
+        class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md bg-blue-200 dark:bg-gray-700"
+      >
+        <div
+          class="inline-block"
+        >
+          <button
+            aria-controls="popover-1"
+            aria-haspopup="true"
+            aria-label="Action menu button"
+            class="btn h-min min-h-min flex-nowrap gap-x-1 border-0 font-normal shadow-none hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:hover:outline-blue-900 btn-secondary bg-transparent hover:bg-transparent text-gray-100 dark:text-neutral-400 btn-lg text-base p-1 rounded-lg w-min"
+            id="1"
+            type="button"
+          >
+            <!--v-if-->
+            <svg
+              aria-hidden="true"
+              class="icon fill-current icon-three-dots-vertical shrink-0"
+              height="20"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <use
+                href="#icon-three-dots-vertical"
+              />
+            </svg>
+            <!--v-if-->
+          </button>
+          <!--teleport start-->
+          <!--teleport end-->
+        </div>
+      </td>
+    </tr>
+    
+  </tbody>
+</table>

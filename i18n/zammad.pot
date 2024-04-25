@@ -738,11 +738,16 @@ msgstr ""
 msgid "Action execution"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue
+msgid "Action menu button"
+msgstr ""
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue
 msgid "Actions"
 msgstr ""
 
