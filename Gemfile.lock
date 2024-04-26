@@ -606,7 +606,7 @@ GEM
       activesupport (>= 5.2.0)
     simple_oauth (0.3.1)
     simple_po_parser (1.1.6)
-    simpleidn (0.2.1)
+    simpleidn (0.2.2)
       unf (~> 0.1.4)
     slack-notifier (2.4.0)
     slack-ruby-client (2.3.0)
