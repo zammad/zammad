@@ -2,8 +2,8 @@
 
 <div>Merhaba #{user.firstname},</div>
 <br>
-<div>#{config.product_name} hesabınızı tamamlamak için e-posta adresinizi onaylayın. Çok kolay, aşağıdaki bağlantıya tıklamanız yeterli.</div>
+<div>#{config.product_name} kaydınızı tamamlamak için e-posta adresinizi onaylayın. Aşağıdaki bağlantıya tıklamanız yeterli.</div>
 <br>
-<div><a href="#{url}">#{url}</a></div>
+<div><a href="#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</a></div>
 <br>
 <div>#{config.product_name} Ekibiniz</div>

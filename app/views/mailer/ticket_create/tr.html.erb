@@ -1,0 +1,24 @@
+Yeni bilet (#{ticket.title})
+
+<div>Merhaba #{recipient.firstname},</div>
+<br>
+<div>Yeni bilet (#{ticket.title}), "<b>#{current_user.longname}</b>" tarafından oluşturuldu.</div>
+<br>
+<div>
+Grup: #{ticket.group.name}<br>
+Sahip: #{ticket.owner.fullname}<br>
+Konum: #{t(ticket.state.name)}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+   <div>
+   Bilgi:
+   <blockquote type="cite">
+   #{article.body_as_html}
+   </blockquote>
+   </div>
+<% end %>
+<br>
+<div>
+<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Görüntüle #{config.product_name}</a>
+</div>
