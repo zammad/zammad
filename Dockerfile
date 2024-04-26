@@ -1,7 +1,7 @@
 FROM node:20-slim as node
 
 
-FROM ruby:3.2.3-slim AS builder
+FROM ruby:3.2.4-slim AS builder
 ARG DEBIAN_FRONTEND=noninteractive
 ARG RAILS_ENV=production
 ARG ZAMMAD_DIR=/opt/zammad
@@ -15,7 +15,7 @@ RUN contrib/docker/setup.sh builder
 
 # note: zammad is currently incompatible to alpine because of:
 # https://github.com/docker-library/ruby/issues/113
-FROM ruby:3.2.3-slim
+FROM ruby:3.2.4-slim
 ARG DEBIAN_FRONTEND=noninteractive
 ARG ZAMMAD_USER=zammad
 ENV RAILS_ENV=production
