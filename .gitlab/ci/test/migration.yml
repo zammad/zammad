@@ -24,7 +24,7 @@
     - !reference [.scripts, zammad_db_init]
     # Then, switch to the current commit, migrate to it and run a few selected tests.
     - git checkout $CI_COMMIT_SHA
-    # - rvm use 3.2.3
+    # - rvm use 3.2.4
     - !reference [.scripts, bundle_install]
     # Force redis usage, even if it was disabled by the initial configure_environment script of stable.
     - export REDIS_URL=redis://redis

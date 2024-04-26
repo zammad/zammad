@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # core - base
-ruby '3.2.3'
+ruby '3.2.4'
 gem 'rails', '~> 7.0.8'
 
 # core - rails additions

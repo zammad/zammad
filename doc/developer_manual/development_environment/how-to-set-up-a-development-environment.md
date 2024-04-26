@@ -55,8 +55,8 @@ For Linux and macOS:
 
 ```screen
 curl -sSL https://get.rvm.io | bash -s stable --rails
-rvm install ruby-3.2.3
-rvm --default use 3.2.3
+rvm install ruby-3.2.4
+rvm --default use 3.2.4
 ```
 
 ## NVM, Node.js and Yarn
