@@ -35,7 +35,7 @@ returns
 
   def self.data
     auto_wizard_file_location = file_location
-    raise "So such file #{auto_wizard_file_location}" if !File.file?(auto_wizard_file_location)
+    raise "The required file #{auto_wizard_file_location} was not found." if !File.file?(auto_wizard_file_location)
 
     JSON.parse(File.read(auto_wizard_file_location))
   end
