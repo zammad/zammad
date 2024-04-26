@@ -1258,11 +1258,18 @@ msgstr "操作"
 msgid "Action execution"
 msgstr "批量操作已執行！"
 
+#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Action menu button"
+msgstr "批量操作已執行！"
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue
 msgid "Actions"
 msgstr "操作"
 
@@ -3086,10 +3093,8 @@ msgid "Cannot upload file"
 msgstr "不能上传文件"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
-#, fuzzy
-#| msgid "Signature"
-msgid "Capture"
-msgstr "回复签名"
+msgid "Capture From Camera"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -3141,6 +3146,12 @@ msgstr "更改用户单位"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 msgid "Change Objects"
 msgstr "變更物件"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+#, fuzzy
+#| msgid "Change Your Password"
+msgid "Change Password"
+msgstr "修改登录密码"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Change Your Password"
@@ -3686,6 +3697,10 @@ msgstr "配置"
 msgid "Configuration for %s"
 msgstr "%s的配置"
 
+#: app/models/system_report/plugin/environment.rb
+msgid "Configuration of performance settings via environment variables."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "Configure"
@@ -3728,6 +3743,12 @@ msgstr "确认/提交对话框"
 #| msgid "Configure"
 msgid "Confirm merge"
 msgstr "配置"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+#, fuzzy
+#| msgid "Bind Password"
+msgid "Confirm new password"
+msgstr "绑定密码"
 
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
@@ -3902,6 +3923,12 @@ msgstr "％s 对象已创建。"
 msgid "Content was changed since loading"
 msgstr "加载后内容已更改"
 
+#: app/assets/javascripts/app/views/system_report.jst.eco
+#, fuzzy
+#| msgid "Content"
+msgid "Contents"
+msgstr "值"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Context"
@@ -4036,6 +4063,10 @@ msgstr "登录失败。 您是否仔细检查了凭据并完成了电子邮件�
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
 msgstr "数量"
+
+#: app/models/system_report/plugin/failed_emails.rb
+msgid "Count of failed emails"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -4368,8 +4399,13 @@ msgid "Current User"
 msgstr "当前用户"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Current password"
 msgstr "当前密码"
+
+#: app/models/system_report/plugin/setting.rb
+msgid "Current state of configured settings (excluding passwords and tokens)"
+msgstr ""
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -4436,6 +4472,10 @@ msgstr "用户单位"
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco
 msgid "Customer Chat"
 msgstr "客户对话"
+
+#: app/models/system_report/plugin/entities/user.rb
+msgid "Customer and agent ratio (role based user counts)"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
@@ -4589,7 +4629,7 @@ msgstr "平均: %s minutes"
 msgid "Decrement seconds value"
 msgstr "平均: %s minutes"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr "解密失败！"
 
@@ -4599,7 +4639,7 @@ msgstr "解密失败！"
 msgid "Decryption failed! %s"
 msgstr "傳送失敗"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
 msgstr "解密成功。"
@@ -5886,7 +5926,6 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 msgid "Discard"
 msgstr "放弃"
 
@@ -5894,6 +5933,12 @@ msgstr "放弃"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Discard Changes"
+msgstr "放弃更改"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Discard Snapshot"
 msgstr "放弃更改"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
@@ -6033,6 +6078,7 @@ msgid "Done"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
+#: app/assets/javascripts/app/views/system_report.jst.eco
 msgid "Download"
 msgstr ""
 
@@ -6072,7 +6118,7 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "在您的 ％s 系統上下載並安裝 ％s 遷移插件"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "select attachment…"
 msgid "Downloading attachments…"
@@ -6260,6 +6306,12 @@ msgstr ""
 #: app/controllers/reports_controller.rb
 msgid "Elasticsearch needs to be configured!"
 msgstr ""
+
+#: app/models/system_report/plugin/search_index.rb
+#, fuzzy
+#| msgid "Last sync"
+msgid "Elasticsearch version"
+msgstr "最后同步"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -6866,6 +6918,10 @@ msgstr ""
 msgid "Enter your username or email address"
 msgstr "请输入您的用户名或邮件地址"
 
+#: app/models/system_report/plugin/entities/counts.rb
+msgid "Entity counts of database objects (e.g. ticket count, user count, etc.)"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
@@ -7279,6 +7335,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
+msgstr ""
+
+#: app/models/system_report/plugin/rails_root.rb
+msgid "Filepath to Zammad directory"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
@@ -8029,6 +8089,10 @@ msgstr "HTTP 類型"
 msgid "Handle data privacy tasks."
 msgstr ""
 
+#: app/models/system_report/plugin/hardware.rb
+msgid "Hardware (e.g. CPU cores, memory, disk space)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
 msgstr "任務進行中"
@@ -8769,6 +8833,12 @@ msgstr "分钟"
 msgid "Increment seconds value"
 msgstr "分钟"
 
+#: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue
+#, fuzzy
+#| msgid "Your tickets in process"
+msgid "Indicating progress"
+msgstr "正在处理"
+
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Info: %s"
@@ -9388,6 +9458,11 @@ msgstr "上一次聯繫 (客服人員)"
 msgid "Last contact (customer)"
 msgstr "上ㄧ次聯繫 (客戶)"
 
+#: app/models/system_report/plugin/entities/last_created_at.rb
+msgid ""
+"Last created at of database objects (e.g. when was the last trigger created)"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #, fuzzy
 #| msgid "Last run"
@@ -9537,9 +9612,19 @@ msgstr ""
 msgid "Links"
 msgstr "链接"
 
+#: app/models/system_report/plugin/addons.rb
+msgid "List of installed addons"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "List of shortcuts"
 msgstr "列出所有快捷键"
+
+#: app/models/system_report/plugin/channel.rb
+msgid ""
+"Lists active channels (e.g. 1 Telegram channel, 2 Microsoft channels and 1 "
+"Google channel)"
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Load"
@@ -9675,6 +9760,10 @@ msgstr ""
 #| msgid "Priority"
 msgid "Low priority"
 msgstr "优先级"
+
+#: app/models/system_report/plugin/mac_address.rb
+msgid "MAC address (unique identifier of the report)"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
@@ -10364,6 +10453,12 @@ msgstr "导航"
 msgid "Navigation"
 msgstr "导航"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Navigation"
+msgid "Navigation filter"
+msgstr "导航"
+
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
 msgstr ""
@@ -10553,6 +10648,7 @@ msgid "New organizations are shared."
 msgstr "共享了新的组织。"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "New password"
 msgstr "新密码"
 
@@ -11051,6 +11147,14 @@ msgstr "備註-預設可見性"
 msgid "Note:"
 msgstr "备注"
 
+#: app/assets/javascripts/app/views/system_report.jst.eco
+msgid ""
+"Note: Zammad never sends this data automatically and this data doesn't "
+"include personal account names or passwords. However, please have a look "
+"after downloading the file to avoid leaking personal data which could be "
+"included in comments or notes."
+msgstr ""
+
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/job.coffee
@@ -11157,6 +11261,10 @@ msgstr "好，我已經複製 token"
 #| msgid "OK, I've copied my token"
 msgid "OK, I've saved my recovery codes"
 msgstr "好，我已經複製 token"
+
+#: app/models/system_report/plugin/os.rb
+msgid "OS"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
@@ -11345,6 +11453,10 @@ msgstr "打开 Ticket# %s"
 #: db/seeds/overviews.rb
 msgid "Open Tickets"
 msgstr "处理中的工单"
+
+#: app/models/system_report/plugin/entities/ticket.rb
+msgid "Open and closed tickets ratio (ticket counts based on state)"
+msgstr ""
 
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
@@ -11559,7 +11671,7 @@ msgstr "组织"
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "原始格式"
@@ -11761,6 +11873,8 @@ msgstr "父"
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -11786,6 +11900,18 @@ msgstr "密码"
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Password changed successfully!"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Password changed successfully."
+msgstr "測試運行成功"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "Password could not be changed."
+msgstr "％s 对象已创建。"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
@@ -12143,6 +12269,10 @@ msgstr "端口"
 msgid "Position"
 msgstr ""
 
+#: app/models/system_report/plugin/postgre_sql.rb
+msgid "PostgresSQL server version"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 msgid "Postmaster Filter"
@@ -12207,6 +12337,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/assets/javascripts/app/views/system_report.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Preview"
 msgstr "预览"
@@ -12465,7 +12596,7 @@ msgid ""
 "disabled. Please contact your administrator."
 msgstr "身份驗證使用者的 使用者名稱/電子郵件地址 和 密碼 來啟用存取REST API"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr ""
@@ -12553,6 +12684,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
 msgstr ""
+
+#: app/models/system_report/plugin/redis.rb
+#, fuzzy
+#| msgid "New Version"
+msgid "Redis version"
+msgstr "新版本"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -13017,6 +13154,10 @@ msgstr ""
 "<br>\n"
 "<div>您的 #{config.product_name} 团队</div>\n"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue
+msgid "Resize frame"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 msgid "Resize side panel"
 msgstr ""
@@ -13124,6 +13265,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Rows"
+msgstr ""
+
+#: app/models/system_report/plugin/ruby.rb
+msgid "Ruby information (version and installed gems)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
@@ -13562,6 +13707,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -13636,15 +13782,15 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "显示更少"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -14280,7 +14426,7 @@ msgstr "标志"
 msgid "Signature"
 msgstr "回复签名"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Signature verification failed!"
 msgstr "签名验证失败！"
 
@@ -14824,6 +14970,14 @@ msgstr "阻止通知"
 #: db/seeds/settings.rb
 msgid "System Init Done"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/system_report.coffee
+#: app/assets/javascripts/app/views/system_report.jst.eco
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "System URL"
+msgid "System Report"
+msgstr "系统网址"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
@@ -15486,6 +15640,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
+#: app/graphql/gql/mutations/account/change_password.rb
 msgid "The current password you provided is incorrect."
 msgstr ""
 
@@ -15770,6 +15925,12 @@ msgstr ""
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "The password could not be set. Please contact your administrator."
 msgstr "無法驗證電子郵件 請與您的管理員聯繫"
+
+#: lib/password_hash.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "The password is invalid."
+msgstr "回复签名"
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #, fuzzy
@@ -16086,7 +16247,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr ""
@@ -16154,7 +16315,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
 #| msgid "The test run was successful."
@@ -16169,6 +16330,15 @@ msgstr "％s 对象已创建。"
 
 #: app/frontend/shared/form/validation/rules/date-range.ts
 msgid "The start date must precede or match end date."
+msgstr ""
+
+#: app/assets/javascripts/app/views/system_report.jst.eco
+msgid ""
+"The system report provides a summarized version of the system state and "
+"configuration for support and analyzing purposes. You can download the "
+"report by clicking the Download-button. Zammad then provides a JSON file as "
+"you can see in the preview below. If you get in touch with the Zammad "
+"support, this JSON file is helpful identifying your issue."
 msgstr ""
 
 #: app/services/service/system/check_setup.rb
@@ -19659,19 +19829,19 @@ msgstr "您的尊姓大名"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "Woo hoo! Your password has been changed!"
-msgid "Your avatar has been changed!"
+msgid "Your avatar has been changed."
 msgstr "太棒了！您的密码修改成功了！"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "%s Object(s) are updated."
-msgid "Your avatar has been deleted!"
+msgid "Your avatar has been deleted."
 msgstr "％s 对象已更新。"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "%s Object(s) are created."
-msgid "Your avatar has been uploaded!"
+msgid "Your avatar has been uploaded."
 msgstr "％s 对象已创建。"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
@@ -19786,6 +19956,12 @@ msgid ""
 "or closed states. Take a look at our system object documentation for more "
 "information."
 msgstr ""
+
+#: app/models/system_report/plugin/version.rb
+#, fuzzy
+#| msgid "This is Zammad version %s"
+msgid "Zammad version"
+msgstr "当前系统的版本为 %s"
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
@@ -20060,6 +20236,12 @@ msgstr "当前用户"
 msgid "current user organization"
 msgstr "当前用户组织"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+msgid ""
+"current,new,confirm,change,current password,new password,confirm password,"
+"change password"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/translation.coffee
 #, fuzzy
 #| msgid "customer"
@@ -20112,7 +20294,7 @@ msgstr ""
 msgid "delete"
 msgstr "刪除"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Delete Customer"
@@ -20901,7 +21083,7 @@ msgstr ""
 msgid "reached"
 msgstr "已達"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"
@@ -20996,7 +21178,7 @@ msgstr "增加附件…"
 msgid "select visible options"
 msgstr "选择"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"
@@ -21349,6 +21531,11 @@ msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
 
 #, fuzzy
+#~| msgid "Signature"
+#~ msgid "Capture"
+#~ msgstr "回复签名"
+
+#, fuzzy
 #~| msgid "Calendars"
 #~ msgid "Calendar days"
 #~ msgstr "日程"
@@ -21667,11 +21854,6 @@ msgstr "∅轮候时间"
 #~| msgid "Ticket %s created!"
 #~ msgid "Ticket Create"
 #~ msgstr "工單 ％s已建立 ！"
-
-#, fuzzy
-#~| msgid "Last sync"
-#~ msgid "Elasticsearch Excludes"
-#~ msgstr "最后同步"
 
 #~ msgid "Choose attributes and then save them as a new template."
 #~ msgstr "选择好工单参数并保存为新模板."

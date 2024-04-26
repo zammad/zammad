@@ -1027,11 +1027,18 @@ msgstr "פעולה"
 msgid "Action execution"
 msgstr "הפעולה הגורפת הוצאה לפועל!"
 
+#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Action menu button"
+msgstr "הפעולה הגורפת הוצאה לפועל!"
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue
 msgid "Actions"
 msgstr "פעולות"
 
@@ -2769,10 +2776,8 @@ msgid "Cannot upload file"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
-#, fuzzy
-#| msgid "Signature"
-msgid "Capture"
-msgstr "חתימה"
+msgid "Capture From Camera"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -2824,6 +2829,12 @@ msgstr "שנה לקוח"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 msgid "Change Objects"
 msgstr "שנה אובייקט"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+#, fuzzy
+#| msgid "Change your password"
+msgid "Change Password"
+msgstr "החלפת סיסמא"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #, fuzzy
@@ -3376,6 +3387,10 @@ msgstr "הגדרות"
 msgid "Configuration for %s"
 msgstr ""
 
+#: app/models/system_report/plugin/environment.rb
+msgid "Configuration of performance settings via environment variables."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "Configure"
@@ -3418,6 +3433,12 @@ msgstr "אשר/הגש דיאלוג"
 #| msgid "Configure"
 msgid "Confirm merge"
 msgstr "הגדר"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+#, fuzzy
+#| msgid "Bind Password"
+msgid "Confirm new password"
+msgstr "Bind סיסמת"
 
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
@@ -3565,6 +3586,12 @@ msgstr "%s% נפתחו מחדש"
 msgid "Content was changed since loading"
 msgstr ""
 
+#: app/assets/javascripts/app/views/system_report.jst.eco
+#, fuzzy
+#| msgid "Content"
+msgid "Contents"
+msgstr "תוכן"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Context"
@@ -3689,6 +3716,10 @@ msgstr "אימות"
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
 msgstr "מספר"
+
+#: app/models/system_report/plugin/failed_emails.rb
+msgid "Count of failed emails"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -4001,8 +4032,13 @@ msgid "Current User"
 msgstr "משתמש נוכחי"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Current password"
 msgstr "סיסמא נוכחית"
+
+#: app/models/system_report/plugin/setting.rb
+msgid "Current state of configured settings (excluding passwords and tokens)"
+msgstr ""
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -4069,6 +4105,10 @@ msgstr "לקוח"
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco
 msgid "Customer Chat"
 msgstr "צ'אט לקוח"
+
+#: app/models/system_report/plugin/entities/user.rb
+msgid "Customer and agent ratio (role based user counts)"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
@@ -4220,7 +4260,7 @@ msgstr "ממוצע: %s דקות"
 msgid "Decrement seconds value"
 msgstr "ממוצע: %s דקות"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr ""
 
@@ -4230,7 +4270,7 @@ msgstr ""
 msgid "Decryption failed! %s"
 msgstr "משלוח נכשל"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
 #| msgid "Update successful!"
@@ -5489,7 +5529,6 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 msgid "Discard"
 msgstr "בטל"
 
@@ -5497,6 +5536,12 @@ msgstr "בטל"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Discard Changes"
+msgstr "התעלם משינויים"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Discard Snapshot"
 msgstr "התעלם משינויים"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
@@ -5634,6 +5679,7 @@ msgid "Done"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
+#: app/assets/javascripts/app/views/system_report.jst.eco
 msgid "Download"
 msgstr "הורדה"
 
@@ -5673,7 +5719,7 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "הורד והתקן את הפלאגין %s Migration במקרה של מופע %s."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "select attachment..."
 msgid "Downloading attachments…"
@@ -5857,6 +5903,12 @@ msgstr ""
 #: app/controllers/reports_controller.rb
 msgid "Elasticsearch needs to be configured!"
 msgstr ""
+
+#: app/models/system_report/plugin/search_index.rb
+#, fuzzy
+#| msgid "Last sync"
+msgid "Elasticsearch version"
+msgstr "סנכרון אחרון"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -6465,6 +6517,10 @@ msgstr ""
 msgid "Enter your username or email address"
 msgstr "הקלד את שם המשתמש שלך או את כתובת המייל שלך"
 
+#: app/models/system_report/plugin/entities/counts.rb
+msgid "Entity counts of database objects (e.g. ticket count, user count, etc.)"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
@@ -6827,6 +6883,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
+msgstr ""
+
+#: app/models/system_report/plugin/rails_root.rb
+msgid "Filepath to Zammad directory"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
@@ -7580,6 +7640,10 @@ msgstr "סוג HTTP"
 msgid "Handle data privacy tasks."
 msgstr ""
 
+#: app/models/system_report/plugin/hardware.rb
+msgid "Hardware (e.g. CPU cores, memory, disk space)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
 msgstr "עובד"
@@ -8282,6 +8346,12 @@ msgstr "דקות"
 msgid "Increment seconds value"
 msgstr "דקות"
 
+#: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue
+#, fuzzy
+#| msgid "Your tickets in process"
+msgid "Indicating progress"
+msgstr "הכרטיסים שלך בתהליך"
+
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Info: %s"
@@ -8859,6 +8929,11 @@ msgstr "איש קשר אחרון (טכנאי)"
 msgid "Last contact (customer)"
 msgstr "איש קשר אחרון (לקוח)"
 
+#: app/models/system_report/plugin/entities/last_created_at.rb
+msgid ""
+"Last created at of database objects (e.g. when was the last trigger created)"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 #, fuzzy
 #| msgid "Last run"
@@ -9008,9 +9083,19 @@ msgstr ""
 msgid "Links"
 msgstr "קישורים"
 
+#: app/models/system_report/plugin/addons.rb
+msgid "List of installed addons"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "List of shortcuts"
 msgstr "רשימת קיצורי דרך"
+
+#: app/models/system_report/plugin/channel.rb
+msgid ""
+"Lists active channels (e.g. 1 Telegram channel, 2 Microsoft channels and 1 "
+"Google channel)"
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Load"
@@ -9142,6 +9227,10 @@ msgstr ""
 #| msgid "Priority"
 msgid "Low priority"
 msgstr "עדיפות"
+
+#: app/models/system_report/plugin/mac_address.rb
+msgid "MAC address (unique identifier of the report)"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
@@ -9831,6 +9920,12 @@ msgstr "נווט במאמר"
 msgid "Navigation"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Navigation filter"
+msgstr "הפעולה הגורפת הוצאה לפועל!"
+
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
 msgstr ""
@@ -10020,6 +10115,7 @@ msgid "New organizations are shared."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "New password"
 msgstr "סיסמא חדשה"
 
@@ -10462,6 +10558,14 @@ msgstr "פתק - נראות ברירת מחדל"
 msgid "Note:"
 msgstr "הערה"
 
+#: app/assets/javascripts/app/views/system_report.jst.eco
+msgid ""
+"Note: Zammad never sends this data automatically and this data doesn't "
+"include personal account names or passwords. However, please have a look "
+"after downloading the file to avoid leaking personal data which could be "
+"included in comments or notes."
+msgstr ""
+
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/job.coffee
@@ -10568,6 +10672,10 @@ msgstr "בסדר, העתקתי את הטוקן שלי"
 #| msgid "OK, I've copied my token"
 msgid "OK, I've saved my recovery codes"
 msgstr "בסדר, העתקתי את הטוקן שלי"
+
+#: app/models/system_report/plugin/os.rb
+msgid "OS"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
@@ -10762,6 +10870,10 @@ msgstr "פתח כרטיס #%s"
 #: db/seeds/overviews.rb
 msgid "Open Tickets"
 msgstr "כרטיסים פתוחים"
+
+#: app/models/system_report/plugin/entities/ticket.rb
+msgid "Open and closed tickets ratio (ticket counts based on state)"
+msgstr ""
 
 #: app/assets/javascripts/app/models/public_link.coffee
 #, fuzzy
@@ -10976,7 +11088,7 @@ msgstr "ארגון"
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "תצורה מקורית"
@@ -11180,6 +11292,8 @@ msgstr "אב"
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -11205,6 +11319,18 @@ msgstr "סיסמא"
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Password changed successfully!"
 msgstr "סיסמא שונתה בהצלחה!"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+#, fuzzy
+#| msgid "Password changed successfully!"
+msgid "Password changed successfully."
+msgstr "סיסמא שונתה בהצלחה!"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+#, fuzzy
+#| msgid "%s% have been reopened"
+msgid "Password could not be changed."
+msgstr "%s% נפתחו מחדש"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Password for proxy connection"
@@ -11542,6 +11668,10 @@ msgstr "שער"
 msgid "Position"
 msgstr ""
 
+#: app/models/system_report/plugin/postgre_sql.rb
+msgid "PostgresSQL server version"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 msgid "Postmaster Filter"
@@ -11604,6 +11734,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/assets/javascripts/app/views/system_report.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Preview"
 msgstr "תצוגה מקדימה"
@@ -11857,7 +11988,7 @@ msgstr ""
 "אפשר גישה ל- REST API באמצעות שם המשתמש / כתובת הדוא\"ל והסיסמה עבור משתמש "
 "האימות."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr ""
@@ -11945,6 +12076,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
 msgstr ""
+
+#: app/models/system_report/plugin/redis.rb
+#, fuzzy
+#| msgid "New Version"
+msgid "Redis version"
+msgstr "גרסא חדשה"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -12321,6 +12458,10 @@ msgid ""
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue
+msgid "Resize frame"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 msgid "Resize side panel"
 msgstr ""
@@ -12426,6 +12567,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Rows"
+msgstr ""
+
+#: app/models/system_report/plugin/ruby.rb
+msgid "Ruby information (version and installed gems)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
@@ -12870,6 +13015,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -12940,15 +13086,15 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "ראה פחות"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -13587,7 +13733,7 @@ msgstr "חתימה"
 msgid "Signature"
 msgstr "חתימה"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed!"
@@ -14137,6 +14283,14 @@ msgstr "חסום התראות"
 #: db/seeds/settings.rb
 msgid "System Init Done"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/system_report.coffee
+#: app/assets/javascripts/app/views/system_report.jst.eco
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "System URL"
+msgid "System Report"
+msgstr "כתובת URL של המערכת"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
@@ -14769,6 +14923,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
+#: app/graphql/gql/mutations/account/change_password.rb
 msgid "The current password you provided is incorrect."
 msgstr ""
 
@@ -15049,6 +15204,12 @@ msgstr ""
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "The password could not be set. Please contact your administrator."
 msgstr "לא מצליח לאמת את המייל. נא ליצור קשר עם מנהל הIT שלך."
+
+#: lib/password_hash.rb
+#, fuzzy
+#| msgid "Signature"
+msgid "The password is invalid."
+msgstr "חתימה"
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 #, fuzzy
@@ -15365,7 +15526,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr ""
@@ -15433,7 +15594,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
 #| msgid "The test run was successful."
@@ -15448,6 +15609,15 @@ msgstr "%s% נפתחו מחדש"
 
 #: app/frontend/shared/form/validation/rules/date-range.ts
 msgid "The start date must precede or match end date."
+msgstr ""
+
+#: app/assets/javascripts/app/views/system_report.jst.eco
+msgid ""
+"The system report provides a summarized version of the system state and "
+"configuration for support and analyzing purposes. You can download the "
+"report by clicking the Download-button. Zammad then provides a JSON file as "
+"you can see in the preview below. If you get in touch with the Zammad "
+"support, this JSON file is helpful identifying your issue."
 msgstr ""
 
 #: app/services/service/system/check_setup.rb
@@ -18674,19 +18844,19 @@ msgstr "שם מלא"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "Woo hoo! Your password has been changed!"
-msgid "Your avatar has been changed!"
+msgid "Your avatar has been changed."
 msgstr "ואו! הסיסמא שלך הוחלפה!"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "%s% have been reopened"
-msgid "Your avatar has been deleted!"
+msgid "Your avatar has been deleted."
 msgstr "%s% נפתחו מחדש"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "%s% have been reopened"
-msgid "Your avatar has been uploaded!"
+msgid "Your avatar has been uploaded."
 msgstr "%s% נפתחו מחדש"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
@@ -18802,6 +18972,12 @@ msgid ""
 "or closed states. Take a look at our system object documentation for more "
 "information."
 msgstr ""
+
+#: app/models/system_report/plugin/version.rb
+#, fuzzy
+#| msgid "This is Zammad version %s"
+msgid "Zammad version"
+msgstr "זוהי גרסת Zammad %s"
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
@@ -19074,6 +19250,12 @@ msgstr "משתמש נוכחי"
 msgid "current user organization"
 msgstr "ארגון המשתמש הנוכחי"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+msgid ""
+"current,new,confirm,change,current password,new password,confirm password,"
+"change password"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/translation.coffee
 #, fuzzy
 #| msgid "customer"
@@ -19126,7 +19308,7 @@ msgstr "ברירת מחדל"
 msgid "delete"
 msgstr "מחק"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Delete Customer"
@@ -19910,7 +20092,7 @@ msgstr ""
 msgid "reached"
 msgstr "הגיע"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"
@@ -20007,7 +20189,7 @@ msgstr "בחר קובץ מצורף ..."
 msgid "select visible options"
 msgstr "השב"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"
@@ -20350,6 +20532,11 @@ msgid "∅ Waiting time today"
 msgstr "∅ זמן המתנה היום"
 
 #, fuzzy
+#~| msgid "Signature"
+#~ msgid "Capture"
+#~ msgstr "חתימה"
+
+#, fuzzy
 #~| msgid "Calendars"
 #~ msgid "Calendar days"
 #~ msgstr "ילוחות שנה"
@@ -20597,11 +20784,6 @@ msgstr "∅ זמן המתנה היום"
 #~| msgid "Ticket %s created!"
 #~ msgid "Ticket Create"
 #~ msgstr "כרטיס %s נוצר!"
-
-#, fuzzy
-#~| msgid "Last sync"
-#~ msgid "Elasticsearch Excludes"
-#~ msgstr "סנכרון אחרון"
 
 #~ msgid "Choose attributes and then save them as a new template."
 #~ msgstr "בחר מאפיינים ואז שמור אותם כתבנית חדשה."

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-18 12:33+0000\n"
-"Last-Translator: Ninn Langel <info@ninnlangel.com>\n"
+"PO-Revision-Date: 2024-04-26 01:05+0000\n"
+"Last-Translator: Misha <misha@association-enoria.org>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
 "Language: fr-fr\n"
@@ -1038,14 +1038,8 @@ msgid "Access token"
 msgstr "Jeton d'accès"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
-#, fuzzy
-#| msgid ""
-#| "Email sending and receiving could not be verified. Please check your "
-#| "settings."
 msgid "Accessing your camera is forbidden. Please check your settings."
-msgstr ""
-"L'envoi et la réception des emails n'a pas pu être vérifiée. Merci de "
-"vérifier les paramètres."
+msgstr "L'accès à votre caméra est interdit. Vérifiez vos paramètres."
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -1130,11 +1124,18 @@ msgstr "Action"
 msgid "Action execution"
 msgstr "Exécution de l'action"
 
+#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue
+#, fuzzy
+#| msgid "Action execution"
+msgid "Action menu button"
+msgstr "Exécution de l'action"
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue
 msgid "Actions"
 msgstr "Actions"
 
@@ -1708,7 +1709,7 @@ msgstr "Une erreur inattendue est survenue durant la configuration du système."
 
 #: lib/calendar_subscriptions.rb
 msgid "An unknown method name was requested."
-msgstr ""
+msgstr "Une méthode inconnue a été appelée."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2366,10 +2367,8 @@ msgid "Avatar"
 msgstr "Avatar"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
-#, fuzzy
-#| msgid "Preview"
 msgid "Avatar Preview"
-msgstr "Aperçu"
+msgstr "Aperçu de l'avatar"
 
 #: app/graphql/gql/mutations/account/avatar/delete.rb
 #: app/graphql/gql/mutations/account/avatar/select.rb
@@ -2841,10 +2840,8 @@ msgid "Cannot upload file"
 msgstr "Impossible d'envoyer le fichier"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
-#, fuzzy
-#| msgid "Signature"
-msgid "Capture"
-msgstr "Signature"
+msgid "Capture From Camera"
+msgstr "Photographier avec la caméra"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -2892,6 +2889,10 @@ msgstr "Modifier le client"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 msgid "Change Objects"
 msgstr "Modifier les objets"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+msgid "Change Password"
+msgstr "Modifier votre mot de passe"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Change Your Password"
@@ -3408,6 +3409,12 @@ msgstr "Configuration"
 msgid "Configuration for %s"
 msgstr "Configuration pour %s"
 
+#: app/models/system_report/plugin/environment.rb
+msgid "Configuration of performance settings via environment variables."
+msgstr ""
+"Configuration des paramètres de performance via les variables "
+"d'environnement."
+
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "Configure"
@@ -3440,6 +3447,10 @@ msgstr "Fenêtre de confirmation"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Confirm merge"
 msgstr "Confirmer la fusion"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+msgid "Confirm new password"
+msgstr "Confirmez le nouveau mot de passe"
 
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
@@ -3585,6 +3596,10 @@ msgstr "L'aperçu du contenu n'a pas pu être généré."
 msgid "Content was changed since loading"
 msgstr "Contenu modifié depuis son chargement"
 
+#: app/assets/javascripts/app/views/system_report.jst.eco
+msgid "Contents"
+msgstr "Contenus"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Context"
@@ -3714,6 +3729,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
 msgstr "Compte"
+
+#: app/models/system_report/plugin/failed_emails.rb
+msgid "Count of failed emails"
+msgstr "Nombre d'emails en échec"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -4015,8 +4034,13 @@ msgid "Current User"
 msgstr "Utilisateur actuel"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Current password"
 msgstr "Mot de passe actuel"
+
+#: app/models/system_report/plugin/setting.rb
+msgid "Current state of configured settings (excluding passwords and tokens)"
+msgstr "État courant des paramètres (sans les mots de passe et jetons)"
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -4042,7 +4066,7 @@ msgstr "Personnalisé"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "Custom Payload"
-msgstr "Charge utile (payload) d'exemple"
+msgstr "Payload personnalisé"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "Custom Translation"
@@ -4085,6 +4109,11 @@ msgstr "Client"
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco
 msgid "Customer Chat"
 msgstr "Chat client"
+
+#: app/models/system_report/plugin/entities/user.rb
+msgid "Customer and agent ratio (role based user counts)"
+msgstr ""
+"Proportion d'agents et de clients (basé sur les rôles des utilisateurs)"
 
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
@@ -4226,7 +4255,7 @@ msgstr "Décrémenter la valeur des minutes"
 msgid "Decrement seconds value"
 msgstr "Décrémenter la valeur des secondes"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr "Échec du déchiffrement !"
 
@@ -4234,7 +4263,7 @@ msgstr "Échec du déchiffrement !"
 msgid "Decryption failed! %s"
 msgstr "Le déchiffrement a échoué ! %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
 msgstr "Déchiffrement réussi."
@@ -5401,8 +5430,6 @@ msgid "Delete records"
 msgstr "Supprimer les enregistrements"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#, fuzzy
-#| msgid "Delete avatar"
 msgid "Delete this avatar"
 msgstr "Supprimer l'avatar"
 
@@ -5582,7 +5609,6 @@ msgstr ""
 "dessus."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 msgid "Discard"
 msgstr "Annuler"
 
@@ -5591,6 +5617,10 @@ msgstr "Annuler"
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Discard Changes"
 msgstr "Annuler les modifications"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
+msgid "Discard Snapshot"
+msgstr "Supprimer le cliché"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Discard article"
@@ -5708,6 +5738,7 @@ msgid "Done"
 msgstr "Terminé"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
+#: app/assets/javascripts/app/views/system_report.jst.eco
 msgid "Download"
 msgstr "Télécharger"
 
@@ -5748,7 +5779,7 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 "Télécharger et installer le plugin de migration %s pour votre instance %s."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Downloading attachments…"
 msgstr "Téléchargement des pièces jointes…"
 
@@ -5920,6 +5951,10 @@ msgstr ""
 #: app/controllers/reports_controller.rb
 msgid "Elasticsearch needs to be configured!"
 msgstr "Elasticsearch doit être configuré !"
+
+#: app/models/system_report/plugin/search_index.rb
+msgid "Elasticsearch version"
+msgstr "Version d'Elasticsearch"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -6321,7 +6356,7 @@ msgstr "Chiffré"
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 msgid "Encryption"
-msgstr "Chiffrement"
+msgstr "Cryptage"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -6530,6 +6565,12 @@ msgstr ""
 msgid "Enter your username or email address"
 msgstr "Saisir votre nom d'utilisateur ou votre adresse email"
 
+#: app/models/system_report/plugin/entities/counts.rb
+msgid "Entity counts of database objects (e.g. ticket count, user count, etc.)"
+msgstr ""
+"Nombre d'entités dans la base de données (ex. nombre de tickets, nombre "
+"d'utilisateurs, ...)"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
@@ -6674,7 +6715,7 @@ msgstr "Exemple de fichier CSV à télécharger."
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 msgid "Example Payload"
-msgstr "Charge utile (payload) d'exemple"
+msgstr "Payload d'exemple"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Example:"
@@ -6894,13 +6935,17 @@ msgstr "Le format de fichier %s n'est pas autorisé"
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "File is too big. %s has to be %s or smaller."
-msgstr "Le fichier est trop gros. Les fichiers %s ne doivent pas dépasser %s."
+msgstr "Le fichier est trop gros. %s doit être inférieur à %s."
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
 msgstr "Le fichier est trop gros. Taille max. %s Mo."
+
+#: app/models/system_report/plugin/rails_root.rb
+msgid "Filepath to Zammad directory"
+msgstr "Chemin vers le dossier de Zammad"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -6988,7 +7033,7 @@ msgstr "Première réponse"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid "Fixed Email Accounts"
-msgstr "Comptes email fixes"
+msgstr "Comptes email définis"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Flat Design"
@@ -7591,6 +7636,10 @@ msgstr "Type HTTP"
 #: db/seeds/schedulers.rb
 msgid "Handle data privacy tasks."
 msgstr "Gérer les tâches liées à la confidentialité des données."
+
+#: app/models/system_report/plugin/hardware.rb
+msgid "Hardware (e.g. CPU cores, memory, disk space)"
+msgstr "Matériel (ex. nombre de cœurs du processeur, mémoire, espace disque)"
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
@@ -8245,10 +8294,8 @@ msgstr ""
 "l'ordre des sources LDAP par glisser-déposer."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
-#, fuzzy
-#| msgid "inactive"
 msgid "Inactive"
-msgstr "inactif"
+msgstr "Inactif"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -8309,6 +8356,10 @@ msgstr "Incrémenter la valeur des minutes"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Increment seconds value"
 msgstr "Incrémenter la valeur des secondes"
+
+#: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue
+msgid "Indicating progress"
+msgstr "Avancement"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -8881,6 +8932,12 @@ msgstr "Dernier contact (agent)"
 msgid "Last contact (customer)"
 msgstr "Dernier contact (client)"
 
+#: app/models/system_report/plugin/entities/last_created_at.rb
+msgid ""
+"Last created at of database objects (e.g. when was the last trigger created)"
+msgstr ""
+"Dernier objet créé en base de données (quand était la dernière création)"
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "Last login"
 msgstr "Dernière connexion"
@@ -9020,9 +9077,21 @@ msgstr "Site des développeurs LinkedIn"
 msgid "Links"
 msgstr "Liens"
 
+#: app/models/system_report/plugin/addons.rb
+msgid "List of installed addons"
+msgstr "Liste des plugins installés"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "List of shortcuts"
 msgstr "Liste des raccourcis"
+
+#: app/models/system_report/plugin/channel.rb
+msgid ""
+"Lists active channels (e.g. 1 Telegram channel, 2 Microsoft channels and 1 "
+"Google channel)"
+msgstr ""
+"Liste des canaux actifs (ex. 1 canal Telegram, 2 canaux Microsoft et 1 canal "
+"Google)"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Load"
@@ -9145,6 +9214,10 @@ msgstr "Connexion réseau perdue !"
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid "Low priority"
 msgstr "Priorité basse"
+
+#: app/models/system_report/plugin/mac_address.rb
+msgid "MAC address (unique identifier of the report)"
+msgstr "Adresse MAC (identifiant unique du rapport)"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
@@ -9291,7 +9364,7 @@ msgstr "Correspondance totale (AND)"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
-msgstr "Correspond à l’ensemble des critères suivants"
+msgstr "Remplit toutes les conditions suivantes"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "Match any (OR)"
@@ -9780,6 +9853,10 @@ msgstr "Navigation vers %s"
 msgid "Navigation"
 msgstr "Navigation"
 
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
+msgid "Navigation filter"
+msgstr "Filtre de navigation"
+
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
 msgstr ""
@@ -9958,6 +10035,7 @@ msgid "New organizations are shared."
 msgstr "Les nouvelles organisations sont partagées."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "New password"
 msgstr "Nouveau mot de passe"
 
@@ -10396,6 +10474,18 @@ msgstr "Note - visibilité par défaut"
 msgid "Note:"
 msgstr "Note :"
 
+#: app/assets/javascripts/app/views/system_report.jst.eco
+msgid ""
+"Note: Zammad never sends this data automatically and this data doesn't "
+"include personal account names or passwords. However, please have a look "
+"after downloading the file to avoid leaking personal data which could be "
+"included in comments or notes."
+msgstr ""
+"Note : Zammad n'enverra jamais ces données automatiquement et elle ne "
+"contiendront pas les noms d'utilisateurs ou les mots de passe. Merci de "
+"vérifier malgré tout une fois le fichier téléchargé pour éviter une fuite de "
+"données personnelles présentes dans les commentaires ou notes."
+
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/job.coffee
@@ -10495,6 +10585,10 @@ msgstr "OK, j'ai copié mon jeton d'accès"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "OK, I've saved my recovery codes"
 msgstr "OK, j'ai copié mes codes de récupération"
+
+#: app/models/system_report/plugin/os.rb
+msgid "OS"
+msgstr "OS"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
@@ -10679,6 +10773,10 @@ msgstr "Ouvrir le ticket #%s"
 msgid "Open Tickets"
 msgstr "Tickets ouverts"
 
+#: app/models/system_report/plugin/entities/ticket.rb
+msgid "Open and closed tickets ratio (ticket counts based on state)"
+msgstr "Proportion de tickets ouverts et fermés (basé sur l'état du ticket)"
+
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Open in new tab"
 msgstr "Ouvrir dans un nouvel onglet"
@@ -10860,7 +10958,7 @@ msgstr "Organisateur"
 msgid "Origin By"
 msgstr "Provenant de"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Formatage original"
@@ -10884,20 +10982,17 @@ msgid "Out of Office"
 msgstr "Message d'absence"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
-#, fuzzy
-#| msgid "The setting could not be updated."
 msgid "Out of Office settings could not be saved."
-msgstr "Le paramètre n'a pas pu être mis à jour."
+msgstr "Le message d'absence n'a pas pu être enregistré."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
-#, fuzzy
-#| msgid "Ticket has been created successfully."
 msgid "Out of Office settings have been saved successfully"
-msgstr "Le ticket a bien été créé."
+msgstr "Le message d'absence a bien été sauvegardé"
 
 #: lib/validations/out_of_office_validator.rb
 msgid "Out of Office start date has to be earlier than or equal to end date"
 msgstr ""
+"La date de début d'absence doit être antérieure ou égale à la date de fin"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
@@ -11054,6 +11149,8 @@ msgstr "Groupe parent"
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -11075,6 +11172,14 @@ msgstr "Connexion par mot de passe"
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Password changed successfully!"
 msgstr "Mot de passe modifié !"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+msgid "Password changed successfully."
+msgstr "Mot de passe modifié !"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
+msgid "Password could not be changed."
+msgstr "Le mot de passe n'a pas pu être modifié."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Password for proxy connection"
@@ -11420,6 +11525,10 @@ msgstr "Port"
 msgid "Position"
 msgstr "Emplacement"
 
+#: app/models/system_report/plugin/postgre_sql.rb
+msgid "PostgresSQL server version"
+msgstr "Version du serveur PostrgreSQL"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 msgid "Postmaster Filter"
@@ -11486,6 +11595,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/assets/javascripts/app/views/system_report.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Preview"
 msgstr "Aperçu"
@@ -11594,16 +11704,12 @@ msgid "Profile"
 msgstr "Profil"
 
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
-#, fuzzy
-#| msgid "Ticket updated successfully."
 msgid "Profile appearance updated successfully."
-msgstr "Ticket mis à jour."
+msgstr "L'apparence du profil a bien été mise à jour."
 
 #: app/frontend/shared/composables/useLocaleUpdate.ts
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Profile language updated successfully."
-msgstr "Les étiquettes du tickets ont été mises à jour."
+msgstr "Le paramétrage de langue a bien été mis à jour."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
 msgid "Profile settings"
@@ -11713,7 +11819,7 @@ msgstr ""
 "L'accès à l'API REST à l'aide du nom d'utilisateur/adresse email et du mot "
 "de passe est actuellement désactivé. Veuillez contacter votre administrateur."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "Brut"
@@ -11728,10 +11834,8 @@ msgid "Real-time"
 msgstr "Temps réel"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
-#, fuzzy
-#| msgid "Request for Change"
 msgid "Reason for absence"
-msgstr "Demande de modification"
+msgstr "Motif de l'absence"
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -11798,6 +11902,10 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
 msgstr "Déclencheurs récursifs de ticket"
+
+#: app/models/system_report/plugin/redis.rb
+msgid "Redis version"
+msgstr "Version de Redis"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -11949,10 +12057,8 @@ msgid "Replacement"
 msgstr "Remplacement"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
-#, fuzzy
-#| msgid "Replacement"
 msgid "Replacement agent"
-msgstr "Remplacement"
+msgstr "Agent remplaçant"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
@@ -12178,6 +12284,10 @@ msgstr ""
 "<br>\n"
 "<div>L'équipe #{config.product_name}</div>\n"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue
+msgid "Resize frame"
+msgstr "Redimensionner la fenêtre"
+
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 msgid "Resize side panel"
 msgstr "Redimensionner le panneau latéral"
@@ -12280,6 +12390,10 @@ msgstr "L'annulation de la migration des canaux a réussi !"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Rows"
 msgstr "Lignes"
+
+#: app/models/system_report/plugin/ruby.rb
+msgid "Ruby information (version and installed gems)"
+msgstr "Information sur le Ruby (version et dépendances installées)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 msgid "Run every %s at %s in %s time"
@@ -12476,10 +12590,8 @@ msgid "Save Draft"
 msgstr "Enregistrer le brouillon"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
-#, fuzzy
-#| msgid "Out of Office"
 msgid "Save Out of Office"
-msgstr "Message d'absence"
+msgstr "Enregistrer le message d'absence"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
@@ -12702,6 +12814,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -12762,15 +12875,15 @@ msgid "See HTTPLog for details."
 msgstr "Regardez HTTPLog pour les détails."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Voir moins"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -12823,10 +12936,8 @@ msgid "Select the type of ticket your are creating"
 msgstr "Sélectionner le type du ticket que vous créez"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#, fuzzy
-#| msgid "Delete avatar"
 msgid "Select this avatar"
-msgstr "Supprimer l'avatar"
+msgstr "Choisir cet avatar"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -13363,7 +13474,7 @@ msgstr "Signer :"
 msgid "Signature"
 msgstr "Signature"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Signature verification failed!"
 msgstr "Vérification de la signature échouée !"
 
@@ -13593,7 +13704,7 @@ msgstr "Lancer l'import à partir de la source"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 msgid "Start and end date"
-msgstr ""
+msgstr "Date de début et de fin"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Start modal dialog for form."
@@ -13657,7 +13768,7 @@ msgstr "Lancement de l'import…"
 #: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
-msgstr "Pays"
+msgstr "État"
 
 #: db/seeds/settings.rb
 msgid "Stats Backend"
@@ -13860,6 +13971,12 @@ msgstr "Information du système"
 #: db/seeds/settings.rb
 msgid "System Init Done"
 msgstr "Initialisation du système terminée"
+
+#: app/assets/javascripts/app/controllers/system_report.coffee
+#: app/assets/javascripts/app/views/system_report.jst.eco
+#: db/seeds/permissions.rb
+msgid "System Report"
+msgstr "Rapport du système"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
@@ -14297,10 +14414,8 @@ msgid "The avatar could not be fetched."
 msgstr "L'avatar n'a pas pu être récupéré."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#, fuzzy
-#| msgid "The avatar could not be deleted."
 msgid "The avatar could not be selected."
-msgstr "L'avatar n'a pas pu être supprimé."
+msgstr "L'avatar ne peut pas être sélectionné."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -14466,6 +14581,7 @@ msgstr "La connexion a été refusée."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
+#: app/graphql/gql/mutations/account/change_password.rb
 msgid "The current password you provided is incorrect."
 msgstr "Le mot de passe actuel fourni est incorrect."
 
@@ -14736,6 +14852,10 @@ msgstr ""
 "Le mot de passe n'a pas pu être défini. Veuillez contacter votre "
 "administrateur."
 
+#: lib/password_hash.rb
+msgid "The password is invalid."
+msgstr "Le mot de passe est invalide."
+
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 msgid "The password reset request was successful."
 msgstr "La demande de réinitialisation du mot de passe a réussi."
@@ -14822,9 +14942,7 @@ msgstr "L'opérateur de correspondance fourni est manquant ou non valide."
 
 #: app/models/webhook.rb
 msgid "The provided payload is invalid. Please check your syntax."
-msgstr ""
-"La charge utile (payload) fournie n'est pas valide. Veuillez vérifier votre "
-"syntaxe."
+msgstr "La charge fournie 'payload) est invalide. Vérifiez votre syntaxe."
 
 #: app/controllers/application_controller/authenticates.rb
 #: app/controllers/integration/check_mk_controller.rb
@@ -15057,7 +15175,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "La nouvelle tentative de téléchargement de la pièce jointe a échoué."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr "Le processus de sécurité réessayé a échoué !"
@@ -15123,7 +15241,7 @@ msgstr ""
 "La partie signature de cet email PGP est manquante ou présente un type de "
 "contenu incorrect selon la RFC 3156."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
 msgstr "La signature a été vérifiée avec succès."
@@ -15134,7 +15252,21 @@ msgstr "Le ticket source est introuvable."
 
 #: app/frontend/shared/form/validation/rules/date-range.ts
 msgid "The start date must precede or match end date."
+msgstr "La date de début doit être antérieure ou égale à la date de fin."
+
+#: app/assets/javascripts/app/views/system_report.jst.eco
+msgid ""
+"The system report provides a summarized version of the system state and "
+"configuration for support and analyzing purposes. You can download the "
+"report by clicking the Download-button. Zammad then provides a JSON file as "
+"you can see in the preview below. If you get in touch with the Zammad "
+"support, this JSON file is helpful identifying your issue."
 msgstr ""
+"Le rapport du système fournit un résumé de son état et de sa configuration "
+"pour le support et l'analyse d'erreurs. Vous pouvez télécharger le rapport "
+"en cliquant sur le bouton. Zammad fournit un fichier JSON comme vous pouvez "
+"le voir dans l'aperçu ci-dessous. Si vous voulez contacter le support de "
+"Zammad, ce fichier JSON sera très utile pour qualifier le problème."
 
 #: app/services/service/system/check_setup.rb
 msgid ""
@@ -15658,9 +15790,9 @@ msgid ""
 "This is an example payload for your installation, including any custom "
 "objects. It is possible to further customize payload of each webhook."
 msgstr ""
-"Il s'agit d'un exemple de charge utile (payload) pour votre installation, "
-"comprenant tous les objets personnalisés. Il est possible de personnaliser "
-"davantage la charge utile (payload) de chaque webhook."
+"Voici un exemple de payload pour votre installation, incluant n'importe quel "
+"objet personnalisé. Il est possible d'encore plus personnaliser les payloads "
+"pour chaque intégration."
 
 #: app/controllers/integration/pgp_controller.rb
 msgid "This is not a private PGP key."
@@ -16479,7 +16611,7 @@ msgid ""
 "Payload\" switch above."
 msgstr ""
 "Pour revenir à la charge utile (payload) par défaut, désactiver simplement "
-"le bouton ci-dessus \"Charge utile (payload) personnalisée\"."
+"le bouton ci-dessus \"Payload personnalisé\"."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -17223,7 +17355,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 msgid "Use the camera to take a photo for the avatar."
-msgstr ""
+msgstr "Utiliser la caméra pour prendre une photo à mettre en avatar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -18355,28 +18487,20 @@ msgstr ""
 "présent dans l'email de vérification."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#, fuzzy
-#| msgid "Your Name"
 msgid "Your avatar"
-msgstr "Votre nom"
+msgstr "Votre avatar"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#, fuzzy
-#| msgid "Woo hoo! Your password has been changed!"
-msgid "Your avatar has been changed!"
-msgstr "Wahoo ! Votre mot de passe a été changé !"
+msgid "Your avatar has been changed."
+msgstr "Votre avatar à été changé."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#, fuzzy
-#| msgid "The avatar could not be deleted."
-msgid "Your avatar has been deleted!"
-msgstr "L'avatar n'a pas pu être supprimé."
+msgid "Your avatar has been deleted."
+msgstr "Votre avatar a été supprimé."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#, fuzzy
-#| msgid "The avatar could not be uploaded."
-msgid "Your avatar has been uploaded!"
-msgstr "L'avatar n'a pas pu être envoyé."
+msgid "Your avatar has been uploaded."
+msgstr "Votre avatar a été téléversé."
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
@@ -18483,6 +18607,10 @@ msgstr ""
 "état. Cela vous permet d'avoir différents types comme des actions en "
 "attente, des rappels en attente ou des états fermés. Jetez un œil à notre "
 "documentation sur les objets système pour plus d’informations."
+
+#: app/models/system_report/plugin/version.rb
+msgid "Zammad version"
+msgstr "Version de Zammad"
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
@@ -18637,7 +18765,7 @@ msgstr "occupé"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 msgid "camera,image,photo,picture"
-msgstr ""
+msgstr "caméra,image,photo,dessin"
 
 #: app/models/object_manager/attribute.rb
 msgid "can only be created on postgresql databases"
@@ -18758,6 +18886,14 @@ msgstr "utilisateur courant"
 msgid "current user organization"
 msgstr "organisation de l'utilisateur actuel"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+msgid ""
+"current,new,confirm,change,current password,new password,confirm password,"
+"change password"
+msgstr ""
+"courant,nouveau,confirmé,changement,mot de passe actuel,nouveau mot de passe,"
+"confirmez le mot de passe,modifiez le mot de passe"
+
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "custom"
 msgstr "personnalisé"
@@ -18806,7 +18942,7 @@ msgstr "défaut"
 msgid "delete"
 msgstr "effacer"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "delivered to the customer"
 msgstr "remis au client"
@@ -18883,10 +19019,8 @@ msgid "e.g."
 msgstr "par ex."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
-#, fuzzy
-#| msgid "Easter holiday"
 msgid "e.g. Easter holiday"
-msgstr "Vacances de Pâques"
+msgstr "ex. Vacances de Pâques"
 
 #: app/assets/javascripts/app/views/generic/drox.jst.eco
 msgid "edit"
@@ -19502,7 +19636,7 @@ msgstr "en attente de clôture"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "pending reminder"
-msgstr "en attente de rappel"
+msgstr "rappel en attente"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee
 #: db/seeds/ticket_article_types.rb
@@ -19526,7 +19660,7 @@ msgstr "quart(s) d'heure"
 msgid "reached"
 msgstr "atteint"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "read by the customer"
 msgstr "lu par le client"
@@ -19611,7 +19745,7 @@ msgstr "sélectionner une pièce jointe…"
 msgid "select visible options"
 msgstr "sélectionner les options visibles"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "sent to the customer"
 msgstr "envoyé au client"
@@ -19639,12 +19773,12 @@ msgstr "en lecture seule"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to internal"
-msgstr "basculer en visibilité interne"
+msgstr "Rendre interne"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to public"
-msgstr "basculer en visibilité publique"
+msgstr "Rendre public"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "show"
@@ -19841,7 +19975,7 @@ msgstr "mis à jour"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts
 msgid "vacation,holiday,replacement,time off"
-msgstr ""
+msgstr "vacances,remplacement,pause,récupération"
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"
@@ -19929,6 +20063,11 @@ msgstr "... de toute la zone de texte"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Temps d'attente aujourd'hui"
+
+#, fuzzy
+#~| msgid "Signature"
+#~ msgid "Capture"
+#~ msgstr "Signature"
 
 #, fuzzy
 #~| msgid "Calendars"
