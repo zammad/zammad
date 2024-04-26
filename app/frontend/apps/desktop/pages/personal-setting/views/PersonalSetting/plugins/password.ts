@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { useApplicationStore } from '#shared/stores/application.ts'
-
+import { useCheckChangePassword } from '../../../composables/useCheckChangePassword.ts'
 import type { PersonalSettingPlugin } from './types.ts'
 
 export default <PersonalSettingPlugin>{
@@ -27,9 +26,8 @@ export default <PersonalSettingPlugin>{
     'current,new,confirm,change,current password,new password,confirm password,change password',
   ),
   show: () => {
-    const { config } = useApplicationStore()
+    const { canChangePassword } = useCheckChangePassword()
 
-    if (!config.user_show_password_login) return false
-    return true
+    return canChangePassword.value
   },
 }

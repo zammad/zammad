@@ -13,22 +13,24 @@ import {
 
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
-import { useApplicationStore } from '#shared/stores/application.ts'
-
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { useCheckChangePassword } from '../composables/useCheckChangePassword.ts'
+
 import type { ChangePasswordFormData } from '../types/change-password.ts'
 import { useAccountChangePasswordMutation } from '../graphql/mutations/accountChangePassword.api.ts'
 
 defineOptions({
   beforeRouteEnter() {
-    const application = useApplicationStore()
-    if (!application.config.user_show_password_login) {
+    const { canChangePassword } = useCheckChangePassword()
+
+    if (!canChangePassword.value) {
       // TODO: Redirect to error page using redirectToError or something similar.
       return '/error'
     }
+
     return true
   },
 })

@@ -4,6 +4,7 @@ import type { ExtendedRenderResult } from '#tests/support/components/renderCompo
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockAccount } from '#tests/support/mock-account.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { mockAccountChangePasswordMutation } from '../graphql/mutations/accountChangePassword.mocks.ts'
 
@@ -34,6 +35,8 @@ describe('password personal settings', () => {
       firstname: 'John',
       lastname: 'Doe',
     })
+
+    mockPermissions(['user_preferences.password'])
 
     mockApplicationConfig({
       user_show_password_login: true,
