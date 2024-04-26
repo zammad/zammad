@@ -4273,7 +4273,7 @@ msgstr "des"
 msgid "December"
 msgstr "desember"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr ""
 
@@ -4283,7 +4283,7 @@ msgstr ""
 msgid "Decryption failed! %s"
 msgstr "Levering feilet"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
 msgstr "Dekrypteringen var vellykket."
@@ -5710,7 +5710,7 @@ msgstr "Last ned alle oppføringer"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Download and install the %s Migration Plugin on your %s instance."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "select attachment…"
 msgid "Downloading attachments…"
@@ -11040,7 +11040,7 @@ msgstr "Organisator"
 msgid "Origin By"
 msgstr "Opprinnelse av"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Original formatering"
@@ -11890,7 +11890,7 @@ msgstr ""
 "Aktiver REST API-tilgang ved å bruke brukernavn/e-postadresse og passord for "
 "autentiseringsbrukeren."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "Rå"
@@ -13035,15 +13035,15 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Se mindre"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -13673,7 +13673,7 @@ msgstr "Tegn"
 msgid "Signature"
 msgstr "Signatur"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed!"
@@ -15465,7 +15465,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr ""
@@ -15533,7 +15533,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
 #| msgid "The test run was successful."
@@ -19248,7 +19248,7 @@ msgstr "standard"
 msgid "delete"
 msgstr "slett"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Delete Customer"
@@ -20028,7 +20028,7 @@ msgstr ""
 msgid "reached"
 msgstr "nådd"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"
@@ -20123,7 +20123,7 @@ msgstr "velg vedlegg…"
 msgid "select visible options"
 msgstr "svar"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"

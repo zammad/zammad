@@ -4147,7 +4147,7 @@ msgstr "Ukuboza"
 msgid "December"
 msgstr "ukuboza"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr ""
 
@@ -4157,7 +4157,7 @@ msgstr ""
 msgid "Decryption failed! %s"
 msgstr "iyohereza ryanze"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
 #| msgid "Registration successful!"
@@ -5600,7 +5600,7 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Shyiramo plugin %s yo kwimura muri instance %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "select attachment..."
 msgid "Downloading attachments…"
@@ -10926,7 +10926,7 @@ msgstr "Ikigo"
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Ihanagura ry'umwimerere"
@@ -11769,7 +11769,7 @@ msgstr ""
 "emeza kugeraho ukoresheje REST API hakoreshejwe izina ukoresha/imeri "
 "n'ijambo ry'ibanga kugira ngo wemererwe nk'umukoresha"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr ""
@@ -12829,15 +12829,15 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Reba bike"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -13474,7 +13474,7 @@ msgstr "injira"
 msgid "Signature"
 msgstr "umukono"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed!"
@@ -15242,7 +15242,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr ""
@@ -15310,7 +15310,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
 #| msgid "The test run was successful."
@@ -19002,7 +19002,7 @@ msgstr ""
 msgid "delete"
 msgstr "hanagura"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"
@@ -19779,7 +19779,7 @@ msgstr ""
 msgid "reached"
 msgstr "byageze"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"
@@ -19876,7 +19876,7 @@ msgstr "Hitamo inyomeko"
 msgid "select visible options"
 msgstr "subiza"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"

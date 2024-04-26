@@ -4213,7 +4213,7 @@ msgstr "12월"
 msgid "December"
 msgstr "12월"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr ""
 
@@ -4223,7 +4223,7 @@ msgstr ""
 msgid "Decryption failed! %s"
 msgstr "배송 실패"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
 #| msgid "Connection test successful"
@@ -5653,7 +5653,7 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "다운로드하여 %s 예에서 %s 마이그레이션 플러그인을 설치합니다."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "select attachment..."
 msgid "Downloading attachments…"
@@ -10913,7 +10913,7 @@ msgstr "조직"
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "원래 서식"
@@ -11749,7 +11749,7 @@ msgstr ""
 "인증 사용자에 대한 사용자 이름 / 이메일 주소와 비밀번호를 사용하여 REST API "
 "액세스를 활성화합니다."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr ""
@@ -12807,15 +12807,15 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "참조 이하"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -13450,7 +13450,7 @@ msgstr "로그인"
 msgid "Signature"
 msgstr "서명"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed!"
@@ -15219,7 +15219,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr ""
@@ -15287,7 +15287,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
 #| msgid "The test run was successful."
@@ -18939,7 +18939,7 @@ msgstr ""
 msgid "delete"
 msgstr "지우다"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Delete Customer"
@@ -19719,7 +19719,7 @@ msgstr ""
 msgid "reached"
 msgstr "도달"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"
@@ -19816,7 +19816,7 @@ msgstr "선택 첨부 ..."
 msgid "select visible options"
 msgstr "댓글"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"

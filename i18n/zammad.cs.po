@@ -4166,7 +4166,7 @@ msgstr "Pro"
 msgid "December"
 msgstr "Prosinec"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr "Dešifrování se nezdařilo!"
 
@@ -4174,7 +4174,7 @@ msgstr "Dešifrování se nezdařilo!"
 msgid "Decryption failed! %s"
 msgstr "Dekódování selhalo! %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
 msgstr "Dešifrování bylo úspěšné."
@@ -5657,7 +5657,7 @@ msgstr "Stáhnout %s záznamů"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Stáhněte a nainstalujte %s Migration Plugin do vaší instance %s."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "select attachment…"
 msgid "Downloading attachments…"
@@ -10832,7 +10832,7 @@ msgstr "Organizátor"
 msgid "Origin By"
 msgstr "Původně od"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Původní formátování"
@@ -11647,7 +11647,7 @@ msgstr ""
 "Povolit REST API pro autentizaci uživatele pomocí uživatelského jména/"
 "emailové adresy a hesla."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "Surová data"
@@ -12752,15 +12752,15 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Zobrazit méně"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -13348,7 +13348,7 @@ msgstr "Podepsat:"
 msgid "Signature"
 msgstr "Podpis"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Signature verification failed!"
 msgstr "Ověření podpisu se nezdařilo!"
 
@@ -15124,7 +15124,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "Opakovaný bezpečnostní proces se nezdařil!"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr "Opakovaný bezpečnostní proces se nezdařil!"
@@ -15190,7 +15190,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
 msgstr "Podpis byl úspěšně ověřen."
@@ -18889,7 +18889,7 @@ msgstr "výchozí"
 msgid "delete"
 msgstr "smazat"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Delete Customer"
@@ -19616,7 +19616,7 @@ msgstr ""
 msgid "reached"
 msgstr "dosažen"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"
@@ -19706,7 +19706,7 @@ msgstr "zvolte přílohu…"
 msgid "select visible options"
 msgstr "Vybrat vše"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"

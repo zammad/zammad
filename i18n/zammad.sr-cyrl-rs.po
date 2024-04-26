@@ -4056,7 +4056,7 @@ msgstr "дец"
 msgid "December"
 msgstr "децембар"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr "Неуспело дешифровање!"
 
@@ -4064,7 +4064,7 @@ msgstr "Неуспело дешифровање!"
 msgid "Decryption failed! %s"
 msgstr "Неуспело дешифровање! %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
 msgstr "Успешно дешифровање."
@@ -5509,7 +5509,7 @@ msgstr "Преузми све записе"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Преузми и инсталирај %s миграциони додатак на свом %s систему."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Downloading attachments…"
 msgstr "Преузимање прилога…"
 
@@ -10500,7 +10500,7 @@ msgstr "Организатор"
 msgid "Origin By"
 msgstr "Потиче од"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Оригиналан формат"
@@ -11288,7 +11288,7 @@ msgstr ""
 "REST API приступ путем корисничког имена/имејл адресе и лозинке је тренутно "
 "искључен. Молимо контактирајте администратора."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "Сирово"
@@ -12296,15 +12296,15 @@ msgid "See HTTPLog for details."
 msgstr "Погледајте HTTPLog за детаље."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Прикажи мање"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -12881,7 +12881,7 @@ msgstr "Потпис:"
 msgid "Signature"
 msgstr "Потпис"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Signature verification failed!"
 msgstr "Неуспела потврда потписа!"
 
@@ -14520,7 +14520,7 @@ msgstr "Није пронађена обавезна вредност external_c
 msgid "The retried attachment download failed."
 msgstr "Неуспешно поновно преузимање прилога."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr "Неуспешан поновљени безбедносни процес!"
@@ -14584,7 +14584,7 @@ msgstr ""
 "Део потписа ове PGP имејл поруке недостаје или има погрешан тип садржаја "
 "према RFC 3156."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
 msgstr "Потпис је успешно потврђен."
@@ -18131,7 +18131,7 @@ msgstr "подразумевано"
 msgid "delete"
 msgstr "избриши"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "delivered to the customer"
 msgstr "испоручено клијенту"
@@ -18842,7 +18842,7 @@ msgstr "четврт сат(а)"
 msgid "reached"
 msgstr "достигнуто"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "read by the customer"
 msgstr "прочитано од стране клијента"
@@ -18925,7 +18925,7 @@ msgstr "изабери прилог…"
 msgid "select visible options"
 msgstr "изабери видљиве опције"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "sent to the customer"
 msgstr "послато клијенту"

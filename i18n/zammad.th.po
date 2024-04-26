@@ -4158,7 +4158,7 @@ msgstr "ธ.ค."
 msgid "December"
 msgstr "ธันวาคม"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr "การถอดรหัสล้มเหลว!"
 
@@ -4166,7 +4166,7 @@ msgstr "การถอดรหัสล้มเหลว!"
 msgid "Decryption failed! %s"
 msgstr "การถอดรหัสล้มเหลว! %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
 msgstr "ถอดรหัสสำเร็จ"
@@ -5564,7 +5564,7 @@ msgstr "ดาวน์โหลด %s บันทึก"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "ดาวน์โหลดและติดตั้ง %s Migration Plugin บนอินสแตนซ์ %s ของคุณ"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #, fuzzy
 #| msgid "select attachment…"
 msgid "Downloading attachments…"
@@ -10643,7 +10643,7 @@ msgstr "ผู้ประสานงาน"
 msgid "Origin By"
 msgstr "ที่มาโดย"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "การจัดรูปแบบเดิม"
@@ -11454,7 +11454,7 @@ msgid ""
 msgstr ""
 "เปิดใช้งานการเข้าถึง REST API โดยใช้ชื่อผู้ใช้/ที่อยู่อีเมลและรหัสผ่านสำหรับผู้ใช้การตรวจสอบสิทธิ์"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "ข้อมูลดิบ"
@@ -12560,15 +12560,15 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -13154,7 +13154,7 @@ msgstr "เซ็นกำกับ:"
 msgid "Signature"
 msgstr "ลายเซ็น"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Signature verification failed!"
 msgstr "การตรวจสอบลายเซ็นล้มเหลว!"
 
@@ -14914,7 +14914,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "กระบวนการรักษาความปลอดภัยที่ลองใหม่ล้มเหลว!"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr "กระบวนการรักษาความปลอดภัยที่ลองใหม่ล้มเหลว!"
@@ -14984,7 +14984,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
 msgstr "ตรวจสอบลายเซ็นเรียบร้อยแล้ว"
@@ -18580,7 +18580,7 @@ msgstr "ค่าปริยาย"
 msgid "delete"
 msgstr "ลบ"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Delete Customer"
@@ -19333,7 +19333,7 @@ msgstr ""
 msgid "reached"
 msgstr "ถึง"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"
@@ -19426,7 +19426,7 @@ msgstr "เลือกไฟล์แนบ…"
 msgid "select visible options"
 msgstr "เลือกทั้งหมด"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #, fuzzy
 #| msgid "Create new Customer"

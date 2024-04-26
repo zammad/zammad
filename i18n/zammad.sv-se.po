@@ -4052,7 +4052,7 @@ msgstr "dec"
 msgid "December"
 msgstr "December"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr "Avkrypteringen misslyckades!"
 
@@ -4060,7 +4060,7 @@ msgstr "Avkrypteringen misslyckades!"
 msgid "Decryption failed! %s"
 msgstr "Dekryptering misslyckades! %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
 msgstr "Avkrypteringen lyckades."
@@ -5520,7 +5520,7 @@ msgstr "Ladda ner samtliga poster"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Hämta och installera %s Migrationsplugin på din %s instans."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Downloading attachments…"
 msgstr "Laddar ner bilagor…"
 
@@ -10518,7 +10518,7 @@ msgstr "Organisatör"
 msgid "Origin By"
 msgstr "Ursprung av"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Ursprunglig Formattering"
@@ -11305,7 +11305,7 @@ msgstr ""
 "REST API-åtkomst med användarnamnet / e-postadressen och lösenord är för "
 "närvarande inaktiverat. Kontakta din administratör."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "Raw"
@@ -12314,15 +12314,15 @@ msgid "See HTTPLog for details."
 msgstr "Se HTTPLog för mer information."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Se mindre"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -12895,7 +12895,7 @@ msgstr "Signera:"
 msgid "Signature"
 msgstr "Signatur"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Signature verification failed!"
 msgstr "Verifieringen av signaturen misslyckades!"
 
@@ -14535,7 +14535,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "Nedladdningen av bilagan misslyckades."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr "Den återupptagna säkerhetsprocessen misslyckades!"
@@ -14599,7 +14599,7 @@ msgstr ""
 "Signaturdelen av detta PGP e-postmeddelande saknas eller har fel "
 "innehållstyp enligt RFC 3156."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
 msgstr "Signaturen verifierades framgångsrikt."
@@ -18154,7 +18154,7 @@ msgstr "standard"
 msgid "delete"
 msgstr "radera"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "delivered to the customer"
 msgstr "Levererat till kunden"
@@ -18866,7 +18866,7 @@ msgstr "kvart/kvartar"
 msgid "reached"
 msgstr "uppnådd"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "read by the customer"
 msgstr "Läst av kunden"
@@ -18951,7 +18951,7 @@ msgstr "Välj bilagor …"
 msgid "select visible options"
 msgstr "Välj synliga alternativ"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "sent to the customer"
 msgstr "Skickat till kunden"

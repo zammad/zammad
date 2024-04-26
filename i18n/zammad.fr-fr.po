@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-19 01:05+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-04-25 01:05+0000\n"
+"Last-Translator: Misha <misha@association-enoria.org>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -1684,7 +1684,7 @@ msgstr "Une erreur inattendue est survenue durant la configuration du système."
 
 #: lib/calendar_subscriptions.rb
 msgid "An unknown method name was requested."
-msgstr "Un nom de méthode inconnu a été demandé."
+msgstr "Une méthode inconnue a été appelée."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -3964,7 +3964,7 @@ msgstr "Personnalisé"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "Custom Payload"
-msgstr "Charge utile (payload) d'exemple"
+msgstr "Payload personnalisé"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "Custom Translation"
@@ -4127,7 +4127,7 @@ msgstr "Déc"
 msgid "December"
 msgstr "Décembre"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr "Échec du déchiffrement !"
 
@@ -4135,7 +4135,7 @@ msgstr "Échec du déchiffrement !"
 msgid "Decryption failed! %s"
 msgstr "Le déchiffrement a échoué ! %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
 msgstr "Déchiffrement réussi."
@@ -5627,7 +5627,7 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 "Télécharger et installer le plugin de migration %s pour votre instance %s."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Downloading attachments…"
 msgstr "Téléchargement des pièces jointes…"
 
@@ -6200,7 +6200,7 @@ msgstr "Chiffré"
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 msgid "Encryption"
-msgstr "Chiffrement"
+msgstr "Cryptage"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -6553,7 +6553,7 @@ msgstr "Exemple de fichier CSV à télécharger."
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 msgid "Example Payload"
-msgstr "Charge utile (payload) d'exemple"
+msgstr "Payload d'exemple"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Example:"
@@ -6771,7 +6771,7 @@ msgstr "Le format de fichier %s n'est pas autorisé"
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "File is too big. %s has to be %s or smaller."
-msgstr "Le fichier est trop gros. Les fichiers %s ne doivent pas dépasser %s."
+msgstr "Le fichier est trop gros. %s doit être inférieur à %s."
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
@@ -6865,7 +6865,7 @@ msgstr "Première réponse"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid "Fixed Email Accounts"
-msgstr "Comptes email fixes"
+msgstr "Comptes email définis"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Flat Design"
@@ -9150,7 +9150,7 @@ msgstr "Correspondance totale (AND)"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
-msgstr "Correspond à l’ensemble des critères suivants"
+msgstr "Remplit toutes les conditions suivantes"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
 msgid "Match any (OR)"
@@ -10691,7 +10691,7 @@ msgstr "Organisateur"
 msgid "Origin By"
 msgstr "Provenant de"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Formatage original"
@@ -11491,7 +11491,7 @@ msgstr ""
 "L'accès à l'API REST à l'aide du nom d'utilisateur/adresse email et du mot "
 "de passe est actuellement désactivé. Veuillez contacter votre administrateur."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "Brut"
@@ -12513,15 +12513,15 @@ msgid "See HTTPLog for details."
 msgstr "Regardez HTTPLog pour les détails."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Voir moins"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -13105,7 +13105,7 @@ msgstr "Signer :"
 msgid "Signature"
 msgstr "Signature"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Signature verification failed!"
 msgstr "Vérification de la signature échouée !"
 
@@ -13394,7 +13394,7 @@ msgstr "Lancement de l'import…"
 #: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
-msgstr "Pays"
+msgstr "État"
 
 #: db/seeds/settings.rb
 msgid "Stats Backend"
@@ -14548,9 +14548,7 @@ msgstr "L'opérateur de correspondance fourni est manquant ou non valide."
 
 #: app/models/webhook.rb
 msgid "The provided payload is invalid. Please check your syntax."
-msgstr ""
-"La charge utile (payload) fournie n'est pas valide. Veuillez vérifier votre "
-"syntaxe."
+msgstr "La charge fournie 'payload) est invalide. Vérifiez votre syntaxe."
 
 #: app/controllers/application_controller/authenticates.rb
 #: app/controllers/integration/check_mk_controller.rb
@@ -14783,7 +14781,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "La nouvelle tentative de téléchargement de la pièce jointe a échoué."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr "Le processus de sécurité réessayé a échoué !"
@@ -14849,7 +14847,7 @@ msgstr ""
 "La partie signature de cet email PGP est manquante ou présente un type de "
 "contenu incorrect selon la RFC 3156."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
 msgstr "La signature a été vérifiée avec succès."
@@ -15379,9 +15377,9 @@ msgid ""
 "This is an example payload for your installation, including any custom "
 "objects. It is possible to further customize payload of each webhook."
 msgstr ""
-"Il s'agit d'un exemple de charge utile (payload) pour votre installation, "
-"comprenant tous les objets personnalisés. Il est possible de personnaliser "
-"davantage la charge utile (payload) de chaque webhook."
+"Voici un exemple de payload pour votre installation, incluant n'importe quel "
+"objet personnalisé. Il est possible d'encore plus personnaliser les payloads "
+"pour chaque intégration."
 
 #: app/controllers/integration/pgp_controller.rb
 msgid "This is not a private PGP key."
@@ -16202,7 +16200,7 @@ msgid ""
 "Payload\" switch above."
 msgstr ""
 "Pour revenir à la charge utile (payload) par défaut, désactiver simplement "
-"le bouton ci-dessus \"Charge utile (payload) personnalisée\"."
+"le bouton ci-dessus \"Payload personnalisé\"."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -18467,7 +18465,7 @@ msgstr "défaut"
 msgid "delete"
 msgstr "effacer"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "delivered to the customer"
 msgstr "remis au client"
@@ -19157,7 +19155,7 @@ msgstr "en attente de clôture"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "pending reminder"
-msgstr "en attente de rappel"
+msgstr "rappel en attente"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee
 #: db/seeds/ticket_article_types.rb
@@ -19181,7 +19179,7 @@ msgstr "quart(s) d'heure"
 msgid "reached"
 msgstr "atteint"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "read by the customer"
 msgstr "lu par le client"
@@ -19266,7 +19264,7 @@ msgstr "sélectionner une pièce jointe…"
 msgid "select visible options"
 msgstr "sélectionner les options visibles"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "sent to the customer"
 msgstr "envoyé au client"
@@ -19290,12 +19288,12 @@ msgstr "en lecture seule"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to internal"
-msgstr "basculer en visibilité interne"
+msgstr "Rendre interne"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to public"
-msgstr "basculer en visibilité publique"
+msgstr "Rendre public"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "show"

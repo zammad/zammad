@@ -4092,7 +4092,7 @@ msgstr "Gru"
 msgid "December"
 msgstr "Grudzień"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
 msgstr "Odszyfrowanie nie powiodło się!"
 
@@ -4100,7 +4100,7 @@ msgstr "Odszyfrowanie nie powiodło się!"
 msgid "Decryption failed! %s"
 msgstr "Odszyfrowanie nie powiodło się! %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
 msgstr "Odszyfrowanie powiodło się."
@@ -5584,7 +5584,7 @@ msgstr "Pobierz wszystkie rekordy"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Pobierz i zainstaluj wtyczkę %s Migration Plugin na instancji %s."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Downloading attachments…"
 msgstr "Pobieranie załączników…"
 
@@ -10606,7 +10606,7 @@ msgstr "Organizator"
 msgid "Origin By"
 msgstr "Pochodzenie przez"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Oryginalne formatowanie"
@@ -11396,7 +11396,7 @@ msgstr ""
 "Dostęp do API REST przy użyciu nazwy użytkownika/adresu e-mail i hasła jest "
 "obecnie wyłączony. Skontaktuj się ze swoim administratorem."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "Surowe"
@@ -12412,15 +12412,15 @@ msgid "See HTTPLog for details."
 msgstr "Aby uzyskać szczegółowe informacje, zobacz dziennik HTTP."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Pokaż mniej"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -13002,7 +13002,7 @@ msgstr "Logowanie:"
 msgid "Signature"
 msgstr "Podpis"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Signature verification failed!"
 msgstr "Weryfikacja podpisu nieudana!"
 
@@ -14652,7 +14652,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "Ponowna próba pobrania załącznika nie powiodła się."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr "Ponowny proces zabezpieczeń nie powiódł się!"
@@ -14716,7 +14716,7 @@ msgstr ""
 "Brakuje podpisu tej wiadomości e-mail PGP lub ma ona nieprawidłowy typ "
 "zawartości zgodnie z RFC 3156."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
 msgstr "Podpis został pomyślnie zweryfikowany."
@@ -18291,7 +18291,7 @@ msgstr "domyślnie"
 msgid "delete"
 msgstr "usuń"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "delivered to the customer"
 msgstr "dostarczone do klienta"
@@ -19004,7 +19004,7 @@ msgstr "kwadrans(y)"
 msgid "reached"
 msgstr "osiągnięto"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "read by the customer"
 msgstr "odczytane przez klienta"
@@ -19087,7 +19087,7 @@ msgstr "wybierz załącznik…"
 msgid "select visible options"
 msgstr "wybierz widoczne opcje"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "sent to the customer"
 msgstr "wysłane do klienta"
