@@ -68,6 +68,9 @@
     - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
     - echo "Checking if yard can generate documentation…"
     - bundle exec yard --no-output --no-progress
+    - echo "Verify that vendored gems are not world writable"
+    - GEM_FILES=$(find vendor/ -name "*.rb" -perm -002)
+    - if [[ ! -z "$GEM_FILES" ]]; then echo $GEM_FILES; exit 1; fi # Raise error if files were found.
     - echo "Finally, ensure cleanup.sh passes…"
     - script/build/cleanup.sh
 
