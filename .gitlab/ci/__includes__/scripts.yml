@@ -3,8 +3,7 @@
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
   bundle_install:
     - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
-    - bundle config set --local frozen 'true'
-    - bundle config set --local path 'vendor'
+    - bundle config set --local deployment 'true'
     - bundle install -j $(nproc)
     - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
   yarn_install:
