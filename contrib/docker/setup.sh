@@ -20,7 +20,8 @@ if [ "$1" = 'builder' ]; then
   su - postgres bash -c "createdb --encoding=utf8 --owner=zammad zammad"
 
   cd "${ZAMMAD_DIR}"
-  bundle config set without 'test development mysql'
+  bundle config set --local without 'test development mysql'
+  bundle config set --local deployment 'true'
   bundle install
 
   touch db/schema.rb
