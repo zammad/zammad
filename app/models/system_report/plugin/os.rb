@@ -3,7 +3,7 @@
 class SystemReport::Plugin::Os < SystemReport::Plugin
   OS_RELEASE_FILE = '/etc/os-release'.freeze
 
-  DESCRIPTION = __('OS').freeze
+  DESCRIPTION = __('Operating system').freeze
 
   def fetch
     os_release.merge(platform: RUBY_PLATFORM).deep_symbolize_keys

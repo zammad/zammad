@@ -8997,10 +8997,6 @@ msgstr ""
 msgid "OK, I've saved my recovery codes"
 msgstr ""
 
-#: app/models/system_report/plugin/os.rb
-msgid "OS"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "OTRS"
@@ -9209,6 +9205,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
+msgstr ""
+
+#: app/models/system_report/plugin/os.rb
+msgid "Operating system"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
