@@ -525,6 +525,57 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe '.fullname' do
+      context 'with firstname' do
+        let!(:user) { create(:customer, firstname: 'some firstname', lastname: nil, email: nil) }
+
+        it 'show firstname only' do
+          expect(user.fullname).to eq('Some Firstname')
+        end
+      end
+
+      context 'with lastname' do
+        let!(:user) { create(:customer, firstname: nil, lastname: 'some lastname', email: nil) }
+
+        it 'show lastname only' do
+          expect(user.fullname).to eq('Some Lastname')
+        end
+      end
+
+      context 'with email' do
+        let!(:user) { create(:customer, email: 'some@example.com', firstname: nil, lastname: nil) }
+
+        it 'show email only' do
+          expect(user.fullname).to eq('some@example.com')
+        end
+      end
+
+      context 'with phone' do
+        let!(:user) { create(:customer, phone: '123456', firstname: nil, lastname: nil, email: nil) }
+
+        it 'show phone only' do
+          expect(user.fullname).to eq('123456')
+        end
+      end
+
+      context 'with mobile' do
+        let!(:user) { create(:customer, mobile: '7890123', firstname: nil, lastname: nil, email: nil) }
+
+        it 'show mobile only' do
+          expect(user.fullname).to eq('7890123')
+        end
+      end
+
+      context 'with firstname & phone' do
+        let!(:user) { create(:customer, firstname: 'some firstname', lastname: nil, phone: '123456', email: nil) }
+
+        it 'show firstname only' do
+          expect(user.fullname).to eq('Some Firstname')
+        end
+      end
+    end
+
   end
 
   describe 'Attributes:' do

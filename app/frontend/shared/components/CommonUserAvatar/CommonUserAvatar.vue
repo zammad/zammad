@@ -29,15 +29,17 @@ export interface Props {
 const props = defineProps<Props>()
 
 const initials = computed(() => {
-  const { lastname, firstname, email } = props.entity
+  const { lastname, firstname, email, phone, mobile } = props.entity
 
-  return getInitials(firstname, lastname, email)
+  return getInitials(firstname, lastname, email, phone, mobile)
 })
 
 const { backgroundColors } = getUserAvatarClasses()
 
 const fullName = computed(() => {
-  const { lastname, firstname } = props.entity
+  const { lastname, firstname, fullname } = props.entity
+
+  if (fullname) return fullname
 
   return [firstname, lastname].filter(Boolean).join(' ')
 })
@@ -49,7 +51,7 @@ const colorClass = computed(() => {
 
   if (internalId === SYSTEM_USER_INTERNAL_ID) return 'bg-white'
 
-  // get color based on mod of the fullname length
+  // get color based on mod of the integer ID
   // so it stays consistent between different interfaces and logins
   return backgroundColors[internalId % (backgroundColors.length - 1)]
 })

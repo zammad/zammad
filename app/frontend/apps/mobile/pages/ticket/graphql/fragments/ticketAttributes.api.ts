@@ -25,6 +25,7 @@ export const TicketAttributesFragmentDoc = gql`
     lastname
     fullname
     phone
+    mobile
     image
     vip
     active

@@ -40,18 +40,27 @@ class App.User extends App.Model
   initials: ->
     if @firstname && @lastname && @firstname[0] && @lastname[0]
       return @firstname[0] + @lastname[0]
-    else if @firstname && @firstname[0] && !@lastname
+
+    if @firstname && @firstname[0] && !@lastname
       if @firstname[1]
         return @firstname[0] + @firstname[1]
       return @firstname[0]
-    else if !@firstname && @lastname && @lastname[0]
+
+    if !@firstname && @lastname && @lastname[0]
       if @lastname[1]
         return @lastname[0] + @lastname[1]
       return @lastname[0]
-    else if @email
+
+    if @email
       return @email[0] + @email[1]
-    else
-      return '??'
+
+    if @phone
+      return @phone.slice(-2)
+
+    if @mobile
+      return @mobile.slice(-2)
+
+    return '??'
 
   avatar: (size = 40, placement = '', cssClass = '', unique = false, avatar, type = undefined) ->
     baseSize = 40
@@ -448,6 +457,8 @@ class App.User extends App.Model
       return @email
     if @phone
       return @phone
+    if @mobile
+      return @mobile
     if @login
       return @login
     return '-'
@@ -474,6 +485,8 @@ class App.User extends App.Model
       return @email
     if @phone
       return @phone
+    if @mobile
+      return @mobile
     if @login
       return @login
     return '-'

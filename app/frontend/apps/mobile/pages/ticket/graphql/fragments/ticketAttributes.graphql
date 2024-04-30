@@ -20,6 +20,7 @@ fragment ticketAttributes on Ticket {
     lastname
     fullname
     phone
+    mobile
     image
     vip
     active

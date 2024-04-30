@@ -55,31 +55,34 @@ export const phoneify = (phone: string) => {
   return phone.replace(/[^0-9,+,#,*]+/g, '').replace(/(.)\+/, '$1')
 }
 
-export const getFullName = (
-  firstname?: Maybe<string>,
-  lastname?: Maybe<string>,
-): string => {
-  const fullname = [firstname, lastname].filter(Boolean).join(' ')
-  if (fullname === '-') return ''
-  return fullname
-}
-
 /**
  * Returns user's initials based on their first name, last name and email, if any present.
  * @param firstname - user's first name
  * @param lastname - user's last name
  * @param email - user's email address
+ * @param phone - user's phone number
+ * @param mobile - user's mobile number
  */
 export const getInitials = (
   firstname?: Maybe<string>,
   lastname?: Maybe<string>,
   email?: Maybe<string>,
+  phone?: Maybe<string>,
+  mobile?: Maybe<string>,
 ) => {
   if (firstname && lastname) {
     return firstname[0] + lastname[0]
   }
 
-  return (firstname || lastname || email)?.substring(0, 2).toUpperCase() || '??'
+  if (firstname || lastname || email) {
+    return (firstname || lastname || email)?.substring(0, 2).toUpperCase()
+  }
+
+  if (phone || mobile) {
+    return (phone || mobile)?.slice(-2).toUpperCase()
+  }
+
+  return '??'
 }
 
 /**

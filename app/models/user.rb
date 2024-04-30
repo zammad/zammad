@@ -145,6 +145,14 @@ returns
       return email
     end
 
+    return name if name.present?
+
+    %w[phone mobile].each do |item|
+      next if self[item].blank?
+
+      return self[item]
+    end
+
     name
   end
 
@@ -908,9 +916,9 @@ try to find correct name
 
   def ensure_identifier
     return if login.present? && !login.start_with?('auto-')
-    return if [email, firstname, lastname, phone].any?(&:present?)
+    return if [email, firstname, lastname, phone, mobile].any?(&:present?)
 
-    errors.add :base, __('At least one identifier (firstname, lastname, phone or email) for user is required.')
+    errors.add :base, __('At least one identifier (firstname, lastname, phone, mobile or email) for user is required.')
   end
 
   def ensure_uniq_email
@@ -1176,14 +1184,14 @@ raise 'At least one user need to have admin permissions'
     true
   end
 
-  # When adding/removing a phone number from the User table,
+  # When adding/removing a phone/mobile number from the User table,
   # update caller ID table
   # to adopt/orphan matching Cti::Logs accordingly
   # (see https://github.com/zammad/zammad/issues/2057)
   def update_caller_id
     # skip if "phone/mobile" does not change, or changes like [nil, ""]
     return if persisted? && previous_changes.slice(:phone, :mobile).values.flatten.none?(&:present?)
-    return if destroyed? && phone.blank?
+    return if destroyed? && phone.blank? && mobile.blank?
 
     Cti::CallerId.build(self)
   end

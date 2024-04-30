@@ -1554,7 +1554,7 @@ msgid "Assignment timeout in minutes if assigned agent is not working on it. Tic
 msgstr ""
 
 #: app/models/user.rb
-msgid "At least one identifier (firstname, lastname, phone or email) for user is required."
+msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
 #: app/models/postmaster_filter.rb

@@ -174,6 +174,6 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
   end
 
   def display_name_fallback(user)
-    user.email.presence || user.phone.presence || user.login.presence || '-'
+    user.email.presence || user.phone.presence || user.mobile.presence || user.login.presence || '-'
   end
 end
