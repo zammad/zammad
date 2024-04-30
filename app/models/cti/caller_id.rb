@@ -283,7 +283,7 @@ returns
       preferences_maybe = {}
       preferences_maybe[direction] = []
 
-      lookup(extract_numbers(caller_id)).each do |record|
+      lookup(extract_numbers(caller_id)).each do |record| # rubocop:disable Metrics/BlockLength
         if record.level == 'known'
           preferences_known[direction].push record.attributes
         else
@@ -294,6 +294,16 @@ returns
           user = User.lookup(id: record.user_id)
           if user
             comment += user.fullname
+
+            if comment.blank?
+              %w[phone mobile].each do |item| # rubocop:disable Performance/CollectionLiteralInLoop
+                next if user[item].blank? # rubocop:disable Metrics/BlockNesting
+
+                comment += user[item]
+                break
+              end
+            end
+
           end
         elsif record.comment.present?
           comment += record.comment

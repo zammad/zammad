@@ -111,6 +111,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
           expect(page).to have_text('New Ticket')
           expect(page).to have_css('input[name="title"][value="Call from 0190333"]', visible: :all)
           expect(page).to have_css('.tabsSidebar-tab[data-tab="customer"]', visible: :all)
+          expect(page).to have_css("input[name=customer_id][value='#{customer.id}']", visible: :hide)
         end
       end
     end
@@ -146,6 +147,31 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
         end
       end
     end
+
+    context 'with phone number only known customer and without active tickets' do
+      let(:customer_phone) { '0190444' }
+      let(:customer)       { create(:customer, phone: customer_phone, email: nil, firstname: nil, lastname: nil) }
+
+      before do
+        travel(-2.months)
+        create(:ticket, customer: customer)
+        travel_back
+
+        visit_cti
+        place_call
+      end
+
+      it 'opens a new ticket after phone call inbound' do
+        within(:active_content) do
+          expect(page).to have_text('New Ticket')
+          expect(page).to have_css('input[name="title"][value="Call from 0190444"]', visible: :all)
+          expect(page).to have_css('.tabsSidebar-tab[data-tab="customer"]', visible: :all)
+          expect(page).to have_css("input[name=customer_id][value='#{customer.id}']", visible: :hide)
+          expect(find('[name=customer_id_completion]').value).to eq '0190444'
+        end
+      end
+    end
+
   end
 
   context 'with incoming call' do
