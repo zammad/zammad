@@ -1140,6 +1140,7 @@ msgid "All colleagues are busy."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 
@@ -4406,6 +4407,10 @@ msgstr ""
 msgid "Delete this avatar"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "Delete this device"
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Delete:"
 msgstr ""
@@ -4500,6 +4505,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "Device"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "Device has been revoked."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee
@@ -7672,6 +7681,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "Location"
 msgstr ""
 
@@ -8168,6 +8178,7 @@ msgid "More ticket overviews"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "Most recent activity"
 msgstr ""
 
@@ -8306,6 +8317,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 #: db/seeds/object_manager_attributes.rb
 #: public/assets/form/form.js
 msgid "Name"
@@ -12637,6 +12649,10 @@ msgstr ""
 msgid "The default font size is 12px."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "The device could not be deleted."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
@@ -13472,6 +13488,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "This class gets added to the button on initialization and will be removed once the chat connection is established."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "This device"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
@@ -15037,6 +15057,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
 msgid "User with specified ID was not found. Try checking the URL for errors."
+msgstr ""
+
+#: app/services/service/user/device/delete.rb
+msgid "UserDevice could not be found."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee

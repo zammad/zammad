@@ -29,7 +29,7 @@ export type Orientation =
 
 export type Placement = 'start' | 'end'
 
-export type Variant = 'danger'
+export type Variant = 'secondary' | 'danger'
 
 export interface MenuItem extends ItemProps {
   key: string

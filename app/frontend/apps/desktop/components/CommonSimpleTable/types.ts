@@ -4,6 +4,7 @@ export interface TableHeader {
   key: string
   label: string
   labelPlaceholder?: string[]
+  type?: 'timestamp'
 }
 
 export interface TableItem {

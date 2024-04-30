@@ -10,10 +10,7 @@ import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonPopoverMenu from '#desktop/components/CommonPopover/CommonPopoverMenu.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
-import type {
-  ButtonSize,
-  ButtonVariant,
-} from '#desktop/components/CommonButton/types.ts'
+import type { ButtonSize } from '#desktop/components/CommonButton/types.ts'
 import type {
   MenuItem,
   Orientation,
@@ -25,16 +22,14 @@ interface Props {
   actions: MenuItem[]
   entity?: ObjectLike
   buttonSize?: ButtonSize
-  buttonVariant?: ButtonVariant
   placement?: Placement
   orientation?: Orientation
   noSingleActionMode?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  buttonSize: 'large',
-  buttonVariant: 'neutral',
-  placement: 'start',
+  buttonSize: 'medium',
+  placement: 'end',
   orientation: 'autoVertical',
 })
 
@@ -54,14 +49,23 @@ const singleActionMode = computed(() => {
 
   return singleMenuItemPresent.value
 })
+
+const buttonVariantClass = computed(() => {
+  if (singleMenuItem.value?.variant === 'secondary') return 'text-blue-800'
+  if (singleMenuItem.value?.variant === 'danger') return 'text-red-500'
+  return 'text-stone-200 dark:text-neutral-500'
+})
 </script>
 
 <template>
-  <div v-if="filteredMenuItems" class="inline-block">
+  <div
+    v-if="filteredMenuItems && filteredMenuItems.length > 0"
+    class="inline-block"
+  >
     <CommonButton
       v-if="singleActionMode"
+      :class="buttonVariantClass"
       :size="buttonSize"
-      :variant="buttonVariant"
       :aria-label="$t(singleMenuItem?.label)"
       :icon="singleMenuItem?.icon"
       @click="singleMenuItem?.onClick?.(entity as ObjectLike)"
@@ -73,11 +77,11 @@ const singleActionMode = computed(() => {
       :aria-label="$t('Action menu button')"
       aria-haspopup="true"
       :aria-controls="menuId"
+      class="text-stone-200 dark:text-neutral-500"
       :class="{
         'outline outline-1 outline-offset-1 outline-blue-800': popoverIsOpen,
       }"
       :size="buttonSize"
-      :variant="buttonVariant"
       icon="three-dots-vertical"
       @click="toggle"
     />

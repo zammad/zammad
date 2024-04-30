@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class UserDevice < ApplicationModel
+  include UserDevice::TriggersSubscriptions
+
   store     :device_details
   store     :location_details
   validates :name, presence: true

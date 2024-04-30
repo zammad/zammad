@@ -37,8 +37,10 @@ const tableActions: MenuItem[] = [
   },
 ]
 
-const renderTable = (props: Props) => {
+const renderTable = (props: Props, options = {}) => {
   return renderComponent(CommonSimpleTable, {
+    shallow: false,
+    ...options,
     props,
   })
 }
@@ -72,13 +74,33 @@ describe('CommonSimpleTable.vue', () => {
     expect(view.getByLabelText('Action menu button')).toBeInTheDocument()
   })
 
+  it('displays the additional data with the item suffix slot', async () => {
+    const view = renderTable(
+      {
+        headers: tableHeaders,
+        items: tableItems,
+        actions: tableActions,
+      },
+      {
+        slots: {
+          'item-suffix-role': '<span>Additional Example</span>',
+        },
+      },
+    )
+
+    expect(view.getByText('Additional Example')).toBeInTheDocument()
+  })
+
   it('generates expected DOM', async () => {
     // TODO: check if such snappshot test is really the way we want to go.
-    const view = renderTable({
-      headers: tableHeaders,
-      items: tableItems,
-      actions: tableActions,
-    })
+    const view = renderTable(
+      {
+        headers: tableHeaders,
+        items: tableItems,
+        actions: tableActions,
+      },
+      true,
+    )
 
     expect(view.baseElement.querySelector('table')).toMatchFileSnapshot(
       `${__filename}.snapshot.txt`,

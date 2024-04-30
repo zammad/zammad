@@ -93,8 +93,15 @@ module.exports = {
       },
     },
     extend: {
+      width: {
+        150: '600px',
+      },
       minWidth: {
         58: '232px',
+        150: '600px',
+      },
+      maxWidth: {
+        150: '600px',
       },
       // NB: daisyUI overrides `neutral` color as a last step.
       //   Here we apply our original theme values by using the same way they were overridden (via full class name).

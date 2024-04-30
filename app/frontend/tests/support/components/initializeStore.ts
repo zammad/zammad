@@ -24,6 +24,7 @@ export const initializeStore = () => {
   app.config.ui_ticket_overview_ticket_limit = 5
   app.config.product_name = 'Zammad'
   app.config.api_path = '/api'
+  app.config.pretty_date_format = 'relative'
   return pinia
 }
 

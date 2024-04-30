@@ -6,23 +6,48 @@
     <th
       class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
     >
-      <span>
+      <span
+        class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start text-xs leading-3 font-normal text-stone-200 dark:text-neutral-500"
+        data-test-id="common-label"
+      >
+        <!--v-if-->
+        
         User name
+        
+        <!--v-if-->
       </span>
+      
+      
     </th>
     <th
       class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
     >
-      <span>
+      <span
+        class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start text-xs leading-3 font-normal text-stone-200 dark:text-neutral-500"
+        data-test-id="common-label"
+      >
+        <!--v-if-->
+        
         Rolle
+        
+        <!--v-if-->
       </span>
+      
+      
     </th>
     
     <th
-      class="h-10 p-2.5 text-xs font-normal text-stone-200 dark:text-neutral-500"
+      class="h-10 w-0 p-2.5 text-center"
     >
-      <span>
+      <span
+        class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start text-xs leading-3 font-normal text-stone-200 dark:text-neutral-500"
+        data-test-id="common-label"
+      >
+        <!--v-if-->
+        
         Actions
+        
+        <!--v-if-->
       </span>
     </th>
   </thead>
@@ -33,29 +58,51 @@
       <td
         class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400 bg-blue-200 dark:bg-gray-700"
       >
-        <span>
+        <span
+          class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start text-sm leading-4 text-black dark:text-white"
+          data-test-id="common-label"
+        >
+          <!--v-if-->
+          
+          
           Lindsay Walton
+          
+          
+          <!--v-if-->
         </span>
+        
+        
       </td>
       <td
         class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400 bg-blue-200 dark:bg-gray-700"
       >
-        <span>
+        <span
+          class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start text-sm leading-4 text-black dark:text-white"
+          data-test-id="common-label"
+        >
+          <!--v-if-->
+          
+          
           Member
+          
+          
+          <!--v-if-->
         </span>
+        
+        
       </td>
       
       <td
-        class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md bg-blue-200 dark:bg-gray-700"
+        class="h-10 w-0 px-2.5 first:rounded-s-md last:rounded-e-md bg-blue-200 dark:bg-gray-700"
       >
         <div
-          class="inline-block"
+          class="inline-block flex items-center justify-center"
         >
           <button
             aria-controls="popover-1"
             aria-haspopup="true"
             aria-label="Action menu button"
-            class="btn h-min min-h-min flex-nowrap gap-x-1 border-0 font-normal shadow-none hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:hover:outline-blue-900 btn-secondary bg-transparent hover:bg-transparent text-gray-100 dark:text-neutral-400 btn-lg text-base p-1 rounded-lg w-min"
+            class="btn h-min min-h-min flex-nowrap gap-x-1 border-0 font-normal shadow-none hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:hover:outline-blue-900 btn-secondary bg-transparent hover:bg-transparent text-blue-800 btn-md text-sm p-1 rounded-lg w-min text-stone-200 dark:text-neutral-500"
             id="1"
             type="button"
           >
@@ -63,8 +110,8 @@
             <svg
               aria-hidden="true"
               class="icon fill-current icon-three-dots-vertical shrink-0"
-              height="20"
-              width="20"
+              height="16"
+              width="16"
               xmlns="http://www.w3.org/2000/svg"
             >
               <use

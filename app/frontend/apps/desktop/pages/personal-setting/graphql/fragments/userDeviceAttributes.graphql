@@ -1,0 +1,15 @@
+fragment userDeviceAttributes on UserDevice {
+  id
+  userId
+  name
+  os
+  browser
+  location
+  deviceDetails
+  locationDetails
+  fingerprint
+  userAgent
+  ip
+  createdAt
+  updatedAt
+}

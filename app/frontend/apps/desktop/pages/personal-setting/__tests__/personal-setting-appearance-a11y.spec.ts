@@ -3,7 +3,7 @@
 import { axe } from 'vitest-axe'
 import { visitView } from '#tests/support/components/visitView.ts'
 
-describe('testing locale a11y view', async () => {
+describe('testing appearance a11y view', async () => {
   it('has no accessibility violations', async () => {
     const view = await visitView('/personal-setting/appearance')
     const results = await axe(view.html())

@@ -40,9 +40,14 @@ const onClickItem = (event: MouseEvent, item: MenuItem) => {
 }
 
 const getHoverFocusStyles = (variant?: Variant) => {
-  if (variant === 'danger') {
-    return 'focus-within:bg-red-50 hover:bg-red-50 hover:focus-within:bg-red-50 dark:focus-within:bg-red-900 dark:hover:bg-red-900 dark:hover:focus-within:bg-red-900'
+  if (variant === 'secondary') {
+    return 'focus-within:bg-blue-500 hover:bg-blue-500 hover:focus-within:bg-blue-500 dark:focus-within:bg-blue-950 dark:hover:bg-blue-950 dark:hover:focus-within:bg-blue-950'
   }
+
+  if (variant === 'danger') {
+    return 'focus-within:bg-pink-100 hover:bg-pink-100 hover:focus-within:bg-pink-100 dark:focus-within:bg-red-900 dark:hover:bg-red-900 dark:hover:focus-within:bg-red-900'
+  }
+
   return 'focus-within:bg-blue-800 focus-within:text-white hover:bg-blue-600 hover:focus-within:bg-blue-800 dark:hover:bg-blue-900 dark:hover:focus-within:bg-blue-800'
 }
 </script>

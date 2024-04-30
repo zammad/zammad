@@ -26,21 +26,12 @@ class UserDevicesController < ApplicationController
   end
 
   def destroy
-
-    # find device
-    user_device = UserDevice.find_by(user_id: current_user.id, id: params[:id])
-
-    # delete device and session's
-    if user_device
-      SessionHelper.list.each do |session|
-        next if !session.data['user_id']
-        next if !session.data['user_device_id']
-        next if session.data['user_device_id'] != user_device.id
-
-        SessionHelper.destroy(session.id)
-      end
-      user_device.destroy
+    begin
+      Service::User::Device::Delete.new(user: current_user, device: UserDevice.find_by(user_id: current_user.id, id: params[:id])).execute
+    rescue Exceptions::UnprocessableEntity
+      # noop
     end
+
     render json: {}, status: :ok
   end
 

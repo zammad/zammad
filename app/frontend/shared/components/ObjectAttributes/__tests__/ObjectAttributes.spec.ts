@@ -17,6 +17,12 @@ vi.hoisted(() => {
 const attributesByKey = keyBy(attributes, 'name')
 
 describe('common object attributes interface', () => {
+  beforeEach(() => {
+    mockApplicationConfig({
+      pretty_date_format: 'absolute',
+    })
+  })
+
   test('renders all available attributes', () => {
     mockPermissions(['admin.user', 'ticket.agent'])
 
