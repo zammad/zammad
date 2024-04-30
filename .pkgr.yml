@@ -86,6 +86,19 @@ targets:
       - libimlib2
       - libimlib2-dev
       - shared-mime-info
+  ubuntu-24.04:
+    dependencies:
+      - curl
+      - elasticsearch|elasticsearch-oss
+      - nginx|apache2
+      - postgresql|mysql-server|mariadb-server
+      - libimlib2
+      - shared-mime-info
+      - redis-server
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
+      - shared-mime-info
   sles-15:
     dependencies:
       - curl
