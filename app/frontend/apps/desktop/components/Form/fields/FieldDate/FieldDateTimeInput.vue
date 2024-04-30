@@ -1,9 +1,9 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef } from 'vue'
+import { computed, ref, toRef } from 'vue'
 import { storeToRefs } from 'pinia'
-import VueDatePicker from '@vuepic/vue-datepicker'
+import VueDatePicker, { type DatePickerInstance } from '@vuepic/vue-datepicker'
 import { i18n } from '#shared/i18n.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import { useAppTheme } from '#shared/stores/theme.ts'
@@ -56,6 +56,8 @@ const inputIcon = computed(() => {
   return 'calendar-event'
 })
 
+const picker = ref<DatePickerInstance>()
+
 const { theme } = storeToRefs(useAppTheme())
 
 const dark = computed(() => theme.value === 'dark')
@@ -65,6 +67,7 @@ const dark = computed(() => theme.value === 'dark')
   <div class="w-full">
     <!-- eslint-disable vuejs-accessibility/aria-props   -->
     <VueDatePicker
+      ref="picker"
       v-model="localValue"
       :uid="context.id"
       :model-type="valueFormat"
@@ -99,7 +102,6 @@ const dark = computed(() => theme.value === 'dark')
           onInput,
           onEnter,
           onTab,
-          onFocus,
           onBlur,
           onKeypress,
           onPaste,
@@ -120,13 +122,12 @@ const dark = computed(() => theme.value === 'dark')
           @keypress="onKeypress"
           @paste="onPaste"
           @blur="onBlur"
-          @focus="onFocus"
         />
       </template>
       <template #input-icon>
         <CommonIcon :name="inputIcon" size="tiny" decorative />
       </template>
-      <template #clear-icon="{ clear }">
+      <template #clear-icon>
         <CommonIcon
           class="me-3"
           name="x-lg"
@@ -134,7 +135,7 @@ const dark = computed(() => theme.value === 'dark')
           tabindex="0"
           role="button"
           :aria-label="$t('Clear Selection')"
-          @click="clear"
+          @click.stop="picker?.clearValue()"
         />
       </template>
       <template #clock-icon>

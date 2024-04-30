@@ -1,9 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { waitForNextTick } from '#tests/support/utils.ts'
-
 const { FormKit } = await import('@formkit/vue')
 const { renderComponent } = await import('#tests/support/components/index.ts')
+const { waitForNextTick } = await import('#tests/support/utils.ts')
 const { i18n } = await import('#shared/i18n.ts')
 
 export {}

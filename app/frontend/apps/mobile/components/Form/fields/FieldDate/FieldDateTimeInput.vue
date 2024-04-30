@@ -151,7 +151,7 @@ useEventListener('click', (e) => {
           <div class="h-[1px] w-full bg-white/10"></div>
         </div>
       </template>
-      <template #clear-icon="{ clear }">
+      <template #clear-icon>
         <CommonIcon
           class="text-gray absolute -mt-5 shrink-0 ltr:right-2 rtl:left-2"
           :aria-label="i18n.t('Clear Selection')"
@@ -159,8 +159,8 @@ useEventListener('click', (e) => {
           size="base"
           role="button"
           tabindex="0"
-          @click.stop="clear"
-          @keypress.space.prevent.stop="clear"
+          @click.stop="picker?.clearValue()"
+          @keypress.space.prevent.stop="picker?.clearValue()"
         />
       </template>
       <template #clock-icon>
