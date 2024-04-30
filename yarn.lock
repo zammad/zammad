@@ -8545,10 +8545,10 @@ prosemirror-transform@1.8.0, prosemirror-transform@^1.0.0, prosemirror-transform
   dependencies:
     prosemirror-model "^1.0.0"
 
-prosemirror-view@1.33.4, prosemirror-view@^1.0.0, prosemirror-view@^1.1.0, prosemirror-view@^1.13.3, prosemirror-view@^1.27.0, prosemirror-view@^1.31.0, prosemirror-view@^1.32.7:
-  version "1.33.4"
-  resolved "https://registry.yarnpkg.com/prosemirror-view/-/prosemirror-view-1.33.4.tgz#ff75e7ea3948f1bc00877e4f19150410f9ab5d52"
-  integrity sha512-xQqAhH8/HGleVpKDhQsrd+oqdyeKMxFtdCWDxWMmP+n0k27fBpyUqa8pA+RB5cFY8rqDDc1hll69aRZQa7UaAw==
+prosemirror-view@1.33.5, prosemirror-view@^1.0.0, prosemirror-view@^1.1.0, prosemirror-view@^1.13.3, prosemirror-view@^1.27.0, prosemirror-view@^1.31.0, prosemirror-view@^1.32.7:
+  version "1.33.5"
+  resolved "https://registry.yarnpkg.com/prosemirror-view/-/prosemirror-view-1.33.5.tgz#6b41ad9f3de64d8a836ea9cf9999376586af217c"
+  integrity sha512-AbYYLgg2h5CLARLcTtbNrMARlMwV51jTrezcJkV0NS9J4vi28+rhJ45iIWVSjCcRY209BoySDuJ58b8wIFqdmQ==
   dependencies:
     prosemirror-model "^1.20.0"
     prosemirror-state "^1.0.0"
