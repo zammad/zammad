@@ -14,14 +14,15 @@ import initializeStore from '#shared/stores/index.ts'
 import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
 import { initializeAppName } from '#shared/composables/useAppName.ts'
 import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
+import { initializeTwoFactorPlugins } from '#shared/entities/two-factor/composables/initializeTwoFactorPlugins.ts'
 
 import { initializeDesktopIcons } from '#desktop/initializer/initializeDesktopIcons.ts'
 import { initializeGlobalComponentStyles } from '#desktop/initializer/initializeGlobalComponentStyles.ts'
 import initializeApolloClient from '#desktop/server/apollo/index.ts'
 import initializeRouter from '#desktop/router/index.ts'
 import { initializeForm, initializeFormFields } from '#desktop/form/index.ts'
-
-import { ensureAfterAuth } from './pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
+import { twoFactorConfigurationPluginLookup } from '#desktop/entities/two-factor-configuration/plugins/index.ts'
+import { ensureAfterAuth } from '#desktop/pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
 
 import App from './AppDesktop.vue'
 
@@ -39,6 +40,7 @@ export const mountApp = async () => {
   initializeAppName('desktop')
   initializeGlobalProperties(app)
   initializeStoreSubscriptions()
+  initializeTwoFactorPlugins(twoFactorConfigurationPluginLookup)
 
   const session = useSessionStore()
   const authentication = useAuthenticationStore()

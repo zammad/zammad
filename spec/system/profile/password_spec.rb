@@ -5,7 +5,7 @@ require 'system/examples/security_keys_setup_examples'
 require 'system/examples/authenticator_app_setup_examples'
 
 RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
-  let(:user) { create(:agent, :with_valid_password) }
+  let(:user) { create(:customer, :with_valid_password) }
 
   describe 'visibility' do
     it 'not available if both two factor and password changing disabled' do
@@ -33,6 +33,29 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
       expect(page)
         .to have_no_text('Change Your Password')
         .and have_text('Two-factor Authentication')
+    end
+
+    context 'when user has no two factor permission' do
+      before do
+        user.roles.each { |role| role.permission_revoke('user_preferences.two_factor_authentication') }
+      end
+
+      it 'not available if only two factor is enabled' do
+        password_and_authenticate(password: false, two_factor: true)
+
+        visit 'profile/'
+        expect(page).to have_no_text('Password & Authentication')
+      end
+
+      it 'shows only password changing form even if two factor enabled' do
+        password_and_authenticate(password: true, two_factor: true)
+
+        visit 'profile/password'
+
+        expect(page)
+          .to have_text('Change Your Password')
+          .and have_no_text('Two-factor Authentication')
+      end
     end
 
     def password_and_authenticate(password:, two_factor:)

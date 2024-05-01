@@ -1,0 +1,8 @@
+mutation accountTwoFactorRecoveryCodesGenerate {
+  accountTwoFactorRecoveryCodesGenerate {
+    recoveryCodes
+    errors {
+      ...errors
+    }
+  }
+}

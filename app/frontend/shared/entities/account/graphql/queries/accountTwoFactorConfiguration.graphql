@@ -1,0 +1,10 @@
+query accountTwoFactorConfiguration {
+  accountTwoFactorConfiguration {
+    recoveryCodesExist
+    enabledAuthenticationMethods {
+      configured
+      default
+      authenticationMethod
+    }
+  }
+}

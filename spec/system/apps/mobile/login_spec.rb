@@ -11,6 +11,8 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
     let(:token)                { 'token' }
 
     before do
+      Setting.set('two_factor_authentication_method_authenticator_app', true)
+
       visit '/login'
 
       login(

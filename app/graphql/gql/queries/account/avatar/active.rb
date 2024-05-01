@@ -3,7 +3,7 @@
 module Gql::Queries
   class Account::Avatar::Active < BaseQuery
 
-    description 'Fetch actively used avatar of the currently logged-in user'
+    description 'Fetch actively used avatar of the currently logged-in user.'
 
     type Gql::Types::AvatarType, null: true
 

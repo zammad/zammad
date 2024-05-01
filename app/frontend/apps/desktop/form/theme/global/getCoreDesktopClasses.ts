@@ -41,9 +41,9 @@ export const getCoreDesktopClasses: FormThemeExtension = (
       messages: 'formkit-invalid:text-red-500 formkit-errors:text-red-500 mt-1',
       help: 'mt-1 text-stone-200 dark:text-neutral-500',
       prefixIcon:
-        'relative flex h-5 w-5 items-center justify-center fill-current text-stone-200 ltr:ml-2.5 rtl:mr-2.5 dark:text-neutral-500',
+        'relative flex h-4 w-4 items-center justify-center fill-current text-stone-200 hover:text-black focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 ltr:ml-2.5 rtl:mr-2.5 dark:text-neutral-500 dark:hover:text-white',
       suffixIcon:
-        'relative flex h-5 w-5 items-center justify-center fill-current text-stone-200 ltr:mr-2.5 rtl:ml-2.5 dark:text-neutral-500',
+        'relative flex h-4 w-4 items-center justify-center fill-current text-stone-200 hover:text-black focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 ltr:mr-2.5 rtl:ml-2.5 dark:text-neutral-500 dark:hover:text-white',
     }),
     form: extendClasses(classes.form, {
       messages: 'mb-2.5 flex-wrap space-y-2',

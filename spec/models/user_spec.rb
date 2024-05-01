@@ -15,6 +15,7 @@ require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/user/can_lookup_search_index_attributes_examples'
 require 'models/user/performs_geo_lookup_examples'
 require 'models/concerns/has_taskbars_examples'
+require 'models/concerns/has_two_factor_examples'
 
 RSpec.describe User, type: :model do
   subject(:user) { create(:user) }
@@ -41,6 +42,7 @@ RSpec.describe User, type: :model do
   it_behaves_like 'UserPerformsGeoLookup'
   it_behaves_like 'Association clears cache', association: :roles
   it_behaves_like 'Association clears cache', association: :organizations
+  it_behaves_like 'User::HasTwoFactor'
 
   describe 'Class methods:' do
     describe '.identify' do
@@ -504,78 +506,6 @@ RSpec.describe User, type: :model do
         expect(user).to have_attributes(firstname: 'Perkūnas', lastname: 'Ąžuolas')
       end
     end
-
-    describe '#two_factor_configured?' do
-      let(:user) { create(:user) }
-
-      context 'with no two factor configured' do
-        it 'returns false' do
-          expect(user.two_factor_configured?).to be(false)
-        end
-      end
-
-      context 'with two factor configured' do
-        before do
-          create(:user_two_factor_preference, :authenticator_app, user: user)
-        end
-
-        it 'returns true' do
-          # 'user' variable is cached + was created before the preference was set.
-          expect(user.reload.two_factor_configured?).to be(true)
-        end
-      end
-    end
-
-    describe '.fullname' do
-      context 'with firstname' do
-        let!(:user) { create(:customer, firstname: 'some firstname', lastname: nil, email: nil) }
-
-        it 'show firstname only' do
-          expect(user.fullname).to eq('Some Firstname')
-        end
-      end
-
-      context 'with lastname' do
-        let!(:user) { create(:customer, firstname: nil, lastname: 'some lastname', email: nil) }
-
-        it 'show lastname only' do
-          expect(user.fullname).to eq('Some Lastname')
-        end
-      end
-
-      context 'with email' do
-        let!(:user) { create(:customer, email: 'some@example.com', firstname: nil, lastname: nil) }
-
-        it 'show email only' do
-          expect(user.fullname).to eq('some@example.com')
-        end
-      end
-
-      context 'with phone' do
-        let!(:user) { create(:customer, phone: '123456', firstname: nil, lastname: nil, email: nil) }
-
-        it 'show phone only' do
-          expect(user.fullname).to eq('123456')
-        end
-      end
-
-      context 'with mobile' do
-        let!(:user) { create(:customer, mobile: '7890123', firstname: nil, lastname: nil, email: nil) }
-
-        it 'show mobile only' do
-          expect(user.fullname).to eq('7890123')
-        end
-      end
-
-      context 'with firstname & phone' do
-        let!(:user) { create(:customer, firstname: 'some firstname', lastname: nil, phone: '123456', email: nil) }
-
-        it 'show firstname only' do
-          expect(user.fullname).to eq('Some Firstname')
-        end
-      end
-    end
-
   end
 
   describe 'Attributes:' do

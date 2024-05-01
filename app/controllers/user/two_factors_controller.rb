@@ -4,7 +4,9 @@ class User::TwoFactorsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
   def two_factor_remove_authentication_method
-    params_user.two_factor_destroy_authentication_method(params[:method])
+    Service::User::TwoFactor::RemoveMethod
+      .new(user: params_user, method_name: params[:method])
+      .execute
 
     render json: {}, status: :ok
   end
@@ -29,62 +31,60 @@ class User::TwoFactorsController < ApplicationController
   end
 
   def two_factor_verify_configuration
-    raise Exceptions::UnprocessableEntity, __('The required parameter "method" is missing.')  if !params[:method]
-    raise Exceptions::UnprocessableEntity, __('The required parameter "payload" is missing.') if !params[:payload]
+    raise Exceptions::UnprocessableEntity, __('The required parameter "method" is missing.')  if params[:method].blank?
+    raise Exceptions::UnprocessableEntity, __('The required parameter "payload" is missing.') if params[:payload].blank?
 
-    verified = two_factor_verify_configuration?
+    verify_method_configuration = Service::User::TwoFactor::VerifyMethodConfiguration.new(user: current_user, method_name: params[:method], payload: params[:payload], configuration: params[:configuration].permit!.to_h)
 
-    result = {
-      verified: verified,
-    }
-
-    if verified
-      result[:recovery_codes] = current_user.two_factor_recovery_codes_generate
+    begin
+      render json: verify_method_configuration.execute.merge({ verified: true }), status: :ok
+    rescue Service::User::TwoFactor::VerifyMethodConfiguration::Failed
+      render json: { verified: false }, status: :ok
     end
-
-    render json: result, status: :ok
   end
 
   def two_factor_authentication_method_initiate_configuration
     check_method!
-    check_two_factor_method!
 
-    render json: { configuration: @two_factor_method.initiate_configuration }, status: :ok
+    initiate_authentication_method_configuration = Service::User::TwoFactor::InitiateMethodConfiguration.new(user: current_user, method_name: @method_name)
+
+    render json: { configuration: initiate_authentication_method_configuration.execute }, status: :ok
   end
 
   def two_factor_recovery_codes_generate
-    render json: current_user.two_factor_recovery_codes_generate(force: true), status: :ok
+    codes = Service::User::TwoFactor::GenerateRecoveryCodes
+      .new(user: current_user, force: true)
+      .execute
+
+    render json: codes, status: :ok
   end
 
   def two_factor_default_authentication_method
     check_method!
-    check_two_factor_method!
 
-    current_user.two_factor_update_default_method(@method_name)
+    Service::User::TwoFactor::SetDefaultMethod
+      .new(user: current_user, method_name: @method_name)
+      .execute
 
     render json: {}, status: :ok
   end
 
   def two_factor_authentication_method_configuration
     check_method!
-    check_two_factor_method!
-    fetch_user_two_factor_preference!(raise_exception: false)
 
-    return render json: { configuration: {} }, status: :ok if @user_two_factor_preference.nil?
+    configuration = Service::User::TwoFactor::GetMethodConfiguration
+      .new(user: current_user, method_name: @method_name)
+      .execute
 
-    render json: { configuration: @user_two_factor_preference.configuration }, status: :ok
+    render json: { configuration: configuration || {} }, status: :ok
   end
 
-  def two_factor_authentication_method_configuration_save
+  def two_factor_authentication_remove_credentials
     check_method!
-    check_two_factor_method!
-    fetch_user_two_factor_preference!
 
-    if params[:configuration].nil?
-      current_user.two_factor_destroy_authentication_method(params[:method])
-    else
-      @user_two_factor_preference.update!(configuration: params[:configuration].permit!.to_h)
-    end
+    Service::User::TwoFactor::RemoveMethodCredentials
+      .new(user: current_user, method_name: @method_name, credential_id: params[:credential_id])
+      .execute
 
     render json: {}, status: :ok
   end
@@ -99,34 +99,7 @@ class User::TwoFactorsController < ApplicationController
     true
   end
 
-  def check_two_factor_method!
-    two_factor_method = current_user.auth_two_factor.authentication_method_object(@method_name)
-    raise Exceptions::UnprocessableEntity, __('The two-factor authentication method is not enabled.') if !two_factor_method&.enabled? || !two_factor_method&.available?
-
-    @two_factor_method ||= two_factor_method
-
-    true
-  end
-
-  def fetch_user_two_factor_preference!(raise_exception: true)
-    pref = @two_factor_method.user_two_factor_preference
-
-    if pref.blank? || pref.configuration.blank?
-      raise Exceptions::UnprocessableEntity, __('There is no stored configuration for this two-factor authentication method.') if raise_exception
-
-      return
-    end
-
-    @user_two_factor_preference ||= pref
-
-    true
-  end
-
   def params_user
     User.find(params[:id])
-  end
-
-  def two_factor_verify_configuration?
-    current_user.two_factor_verify_configuration?(params[:method], params[:payload], params[:configuration].permit!.to_h)
   end
 end

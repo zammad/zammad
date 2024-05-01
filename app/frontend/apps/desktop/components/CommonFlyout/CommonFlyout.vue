@@ -52,10 +52,11 @@ export interface Props {
   headerIcon?: string
   resizable?: boolean
   showBackdrop?: boolean
-  closeOnBackdropClick?: boolean
-  closeOnEscape?: boolean
+  noCloseOnBackdropClick?: boolean
+  noCloseOnEscape?: boolean
   hideFooter?: boolean
   footerActionOptions?: ActionFooterProps
+  noCloseOnAction?: boolean
   /**
    * @property noAutofocus
    * Don't focus the first element inside a Flyout after being mounted
@@ -67,8 +68,8 @@ export interface Props {
 const props = withDefaults(defineProps<Props>(), {
   resizable: true,
   showBackdrop: true,
-  closeOnBackdropClick: true,
-  closeOnEscape: true,
+  noCloseOnBackdropClick: true,
+  noCloseOnEscape: true,
 })
 
 defineOptions({
@@ -87,6 +88,9 @@ const close = async () => {
 
 const action = async () => {
   emit('action')
+
+  if (props.noCloseOnAction) return
+
   await closeFlyout(props.name)
 }
 
@@ -181,7 +185,7 @@ onMounted(async () => {
 
 // Keyboard
 onKeyUp('Escape', (e) => {
-  if (!props.closeOnEscape) return
+  if (props.noCloseOnEscape) return
   stopEvent(e)
   close()
 })
@@ -235,7 +239,7 @@ onMounted(() => {
     tag="aside"
     tabindex="-1"
     class="overflow-clip-x fixed bottom-0 top-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-white ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
-    :close-on-backdrop-click="closeOnBackdropClick"
+    :no-close-on-backdrop-click="noCloseOnBackdropClick"
     :show-backdrop="showBackdrop"
     :style="{ width: `${flyoutContainerWidth}px` }"
     :class="{ 'transition-all': !isResizingHorizontal }"
@@ -261,9 +265,9 @@ onMounted(() => {
             size="small"
             :name="headerIcon"
           />
-          <h3 v-if="headerTitle" :id="`${flyoutId}-title`">
+          <h2 v-if="headerTitle" :id="`${flyoutId}-title`">
             {{ headerTitle }}
-          </h3>
+          </h2>
         </div>
       </slot>
       <CommonButton

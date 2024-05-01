@@ -1,0 +1,11 @@
+subscription userCurrentTwoFactorUpdates($userId: ID!) {
+  userCurrentTwoFactorUpdates(userId: $userId) {
+    configuration {
+      recoveryCodesExist
+      enabledAuthenticationMethods {
+        configured
+        authenticationMethod
+      }
+    }
+  }
+}

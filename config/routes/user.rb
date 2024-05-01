@@ -10,7 +10,7 @@ Zammad::Application.routes.draw do
   match api_path + '/users/two_factor_personal_configuration',                               to: 'user/two_factors#two_factor_personal_configuration',                       via: :get
   match api_path + '/users/two_factor_authentication_method_initiate_configuration/:method', to: 'user/two_factors#two_factor_authentication_method_initiate_configuration', via: :get
   match api_path + '/users/two_factor_authentication_method_configuration/:method',          to: 'user/two_factors#two_factor_authentication_method_configuration',          via: :get
-  match api_path + '/users/two_factor_authentication_method_configuration/:method',          to: 'user/two_factors#two_factor_authentication_method_configuration_save',     via: :put
+  match api_path + '/users/two_factor_authentication_remove_credentials/:method',            to: 'user/two_factors#two_factor_authentication_remove_credentials',             via: :delete
   match api_path + '/users/two_factor_verify_configuration',                                 to: 'user/two_factors#two_factor_verify_configuration',                         via: :post
   match api_path + '/users/two_factor_default_authentication_method',                        to: 'user/two_factors#two_factor_default_authentication_method',                via: :post
   match api_path + '/users/two_factor_recovery_codes_generate',                              to: 'user/two_factors#two_factor_recovery_codes_generate',                      via: :post

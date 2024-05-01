@@ -9,6 +9,7 @@ RSpec.describe Gql::Mutations::TwoFactorMethodInitiateAuthentication, :aggregate
   let(:two_factor_method)          { 'security_keys' }
   let(:user_two_factor_preference) { nil }
   let(:graphql_response)           { json_response }
+  let(:enabled)                    { true }
 
   let(:query) do
     <<~QUERY
@@ -41,6 +42,7 @@ RSpec.describe Gql::Mutations::TwoFactorMethodInitiateAuthentication, :aggregate
   end
 
   before do
+    Setting.set('two_factor_authentication_method_security_keys', enabled)
     stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
 
     if defined?(user_two_factor_preference)
@@ -74,6 +76,21 @@ RSpec.describe Gql::Mutations::TwoFactorMethodInitiateAuthentication, :aggregate
       it 'returns options for initiation phase', :aggregate_failures do
         expect(graphql_response['data']['twoFactorMethodInitiateAuthentication']['errors']).to be_blank
         expect(graphql_response['data']['twoFactorMethodInitiateAuthentication']['initiationData']).to include('challenge')
+      end
+
+      context 'with disabled authenticator method' do
+        let(:enabled) { false }
+
+        it 'fails with error message' do
+          pending 'What is the expected behavior?'
+
+          expect(graphql_response['data']['login']['errors']).to eq(
+            [{
+              'message' => 'Please double-check your two-factor authentication method.',
+              'field'   => nil
+            }]
+          )
+        end
       end
     end
   end

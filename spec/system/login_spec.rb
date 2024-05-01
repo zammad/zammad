@@ -27,6 +27,11 @@ RSpec.describe 'Login', authenticated_as: false, type: :system do
   context 'with enabled two factor authentication' do
     let(:user) { User.find_by(login: 'admin@example.com') }
 
+    before do
+      Setting.set('two_factor_authentication_method_security_keys', true)
+      Setting.set('two_factor_authentication_method_authenticator_app', true)
+    end
+
     context 'with security keys method' do
       before do
         skip('Mocking of Web Authentication API is currently supported only in Chrome.') if Capybara.current_driver != :zammad_chrome

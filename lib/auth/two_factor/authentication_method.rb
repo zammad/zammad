@@ -7,7 +7,6 @@ class Auth::TwoFactor::AuthenticationMethod < Auth::TwoFactor::Method
   # This needs to be used for e.g. sending out emails or SMS.
   def initiate_authentication; end
 
-  # TODO: Add documentation.
   def verify(payload, configuration = user_two_factor_preference_configuration)
     raise NotImplementedError
   end

@@ -3,9 +3,11 @@
 <script setup lang="ts">
 import type { Variant } from '#desktop/components/CommonPopover/types.ts'
 import { computed } from 'vue'
+import type { ObjectLike } from '#shared/types/utils.ts'
 
 export interface Props {
   label?: string
+  ariaLabel?: string | ((entity?: ObjectLike) => string)
   labelPlaceholder?: string[]
   link?: string
   linkExternal?: boolean

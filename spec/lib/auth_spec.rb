@@ -94,6 +94,11 @@ RSpec.describe Auth do
 
       context 'with valid user and required two factor' do
         let!(:two_factor_pref) { create(:user_two_factor_preference, :authenticator_app, user: user) }
+        let(:enabled)          { true }
+
+        before do
+          Setting.set('two_factor_authentication_method_authenticator_app', enabled)
+        end
 
         context 'without valid two factor token' do
           it 'raises an error and does not the failed login count' do
@@ -115,6 +120,18 @@ RSpec.describe Auth do
 
           it 'allows the log-in' do
             expect(instance.valid!).to be true
+          end
+
+          context 'with disabled authenticator method' do
+            let(:enabled) { false }
+
+            it 'fails with error message' do
+              pending 'What is the expected behavior?'
+
+              expect { instance.valid! }
+                .to raise_error(Auth::Error::TwoFactorFailed)
+                .and(not_change { user.reload.login_failed })
+            end
           end
         end
 

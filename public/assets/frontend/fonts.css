@@ -37,3 +37,33 @@
   font-weight: 300;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Fira Mono';
+  src: url('/assets/fonts/FiraMono-Regular.eot');
+  src: url('/assets/fonts/FiraMono-Regular.woff2') format('woff2'),
+    url('/assets/fonts/FiraMono-Regular.woff') format('woff'),
+    url('/assets/fonts/FiraMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Mono';
+  src: url('/assets/fonts/FiraMono-Medium.eot');
+  src: url('/assets/fonts/FiraMono-Medium.woff2') format('woff2'),
+    url('/assets/fonts/FiraMono-Medium.woff') format('woff'),
+    url('/assets/fonts/FiraMono-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Mono';
+  src: url('/assets/fonts/FiraMono-Bold.eot');
+  src: url('/assets/fonts/FiraMono-Bold.woff2') format('woff2'),
+    url('/assets/fonts/FiraMono-Bold.woff') format('woff'),
+    url('/assets/fonts/FiraMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}

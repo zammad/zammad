@@ -93,17 +93,16 @@
       </td>
       
       <td
-        class="h-10 w-0 px-2.5 first:rounded-s-md last:rounded-e-md bg-blue-200 dark:bg-gray-700"
+        class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md bg-blue-200 dark:bg-gray-700"
       >
         <div
           class="inline-block flex items-center justify-center"
         >
           <button
-            aria-controls="popover-1"
             aria-haspopup="true"
             aria-label="Action menu button"
             class="btn h-min min-h-min flex-nowrap gap-x-1 border-0 font-normal shadow-none hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:hover:outline-blue-900 btn-secondary bg-transparent hover:bg-transparent text-blue-800 btn-md text-sm p-1 rounded-lg w-min text-stone-200 dark:text-neutral-500"
-            id="1"
+            id="action-menu-1"
             type="button"
           >
             <!--v-if-->

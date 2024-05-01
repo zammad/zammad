@@ -10,13 +10,15 @@ class TwoFactorDefaultAuthenticationMethod < ActiveRecord::Migration[6.1]
 
       next if user_has_default_two_factor_authentication_method?(user)
 
-      user.two_factor_update_default_method(two_factor_preferences.first.method)
+      Service::User::TwoFactor::SetDefaultMethod
+        .new(user: user, method_name: two_factor_preferences.first.method, force: true)
+        .execute
     end
   end
 
   private
 
   def user_has_default_two_factor_authentication_method?(user)
-    user.auth_two_factor.user_default_authentication_method.present?
+    user.preferences.dig(:two_factor_authentication, :default).present?
   end
 end

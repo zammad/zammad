@@ -37,6 +37,8 @@ import type { FormFieldTypeImportModules } from '#shared/types/form.ts'
 import { provideIcons } from '#shared/components/CommonIcon/useIcons.ts'
 import mobileIconsAliases from '#mobile/initializer/mobileIconsAliasesMap.ts'
 import desktopIconsAliases from '#desktop/initializer/desktopIconsAliasesMap.ts'
+import { twoFactorConfigurationPluginLookup } from '#desktop/entities/two-factor-configuration/plugins/index.ts'
+import { initializeTwoFactorPlugins } from '#shared/entities/two-factor/composables/initializeTwoFactorPlugins.ts'
 import buildIconsQueries from './iconQueries.ts'
 import buildLinksQueries from './linkQueries.ts'
 import { setTestState, waitForNextTick } from '../utils.ts'
@@ -288,6 +290,10 @@ const initializeApplicationConfig = () => {
   initializePiniaStore()
 
   plugins.push(applicationConfigPlugin)
+
+  if (isDesktop) {
+    initializeTwoFactorPlugins(twoFactorConfigurationPluginLookup)
+  }
 
   applicationConfigInitialized = true
 }

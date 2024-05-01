@@ -54,14 +54,14 @@ class App.TwoFactorConfigurationModalSecurityKeys extends App.TwoFactorConfigura
       ]
       objects: _.map(@credentials, (credential) ->
         _.extend(credential,
-          id: credential.external_id
+          id: credential.public_key
         )
       )
       pagerEnabled: false
     )
 
   confirmRemoval: (id) =>
-    credential = @credentials.find((credential) -> credential.external_id is id)
+    credential = @credentials.find((credential) -> credential.public_key is id)
 
     new App.ControllerConfirm(
       head:        __('Are you sure?')
@@ -74,21 +74,12 @@ class App.TwoFactorConfigurationModalSecurityKeys extends App.TwoFactorConfigura
     )
 
   removeSecurityKey: (id) =>
-    newConfiguration             = _.extend({}, @config)
-    newConfiguration.credentials = _.filter(@credentials, (credential) -> credential.external_id isnt id)
-
-    data =
-      configuration: _.extend({}, @config,
-        credentials: _.filter(@credentials, (credential) -> credential.external_id isnt id)
-      )
-
-    # Remove the complete configuration if it's the last key.
-    data.configuration = null if not data.configuration.credentials.length
+    data = { credential_id: id }
 
     @ajax(
       id:          'two_factor_authentication_method_configuration'
-      type:        'PUT'
-      url:         "#{@apiPath}/users/two_factor_authentication_method_configuration/security_keys"
+      type:        'DELETE'
+      url:         "#{@apiPath}/users/two_factor_authentication_remove_credentials/security_keys"
       data:        JSON.stringify(data)
       processData: true
       success: =>

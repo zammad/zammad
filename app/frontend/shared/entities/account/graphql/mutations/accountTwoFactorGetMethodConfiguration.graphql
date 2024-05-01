@@ -1,0 +1,3 @@
+query accountTwoFactorGetMethodConfiguration($methodName: String!) {
+  accountTwoFactorGetMethodConfiguration(methodName: $methodName)
+}

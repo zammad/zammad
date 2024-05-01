@@ -3,7 +3,7 @@
 module Gql::Queries
   class Account::Avatar::List < BaseQuery
 
-    description 'Fetch available avatar list of the currently logged-in user'
+    description 'Fetch available avatar list of the currently logged-in user.'
 
     type [Gql::Types::AvatarType], null: true
 

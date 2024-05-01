@@ -15,7 +15,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import { useTwoFactorMethodInitiateAuthenticationMutation } from '#shared/graphql/mutations/twoFactorMethodInitiateAuthentication.api.ts'
 import type {
-  TwoFactorFormData,
+  TwoFactorLoginFormData,
   LoginCredentials,
   TwoFactorPlugin,
 } from '#shared/entities/two-factor/types.ts'
@@ -33,6 +33,8 @@ const emit = defineEmits<{
   'clear-error': []
 }>()
 
+const twoFactorLoginOptions = computed(() => props.twoFactor.loginOptions)
+
 const schema: FormSchemaNode[] = [
   {
     type: 'text',
@@ -40,7 +42,7 @@ const schema: FormSchemaNode[] = [
     label: __('Security Code'),
     required: true,
     props: {
-      help: computed(() => props.twoFactor.helpMessage),
+      help: computed(() => twoFactorLoginOptions.value.helpMessage),
       autocomplete: 'one-time-code',
       autofocus: true,
       inputmode: 'numeric',
@@ -82,7 +84,7 @@ const login = (payload: unknown) => {
 }
 
 const tryMethod = async () => {
-  if (!props.twoFactor.setup) return
+  if (!twoFactorLoginOptions.value.setup) return
 
   const initialDataMutation = new MutationHandler(
     useTwoFactorMethodInitiateAuthenticationMutation(),
@@ -104,7 +106,7 @@ const tryMethod = async () => {
       )
       return
     }
-    const result = await props.twoFactor.setup(
+    const result = await twoFactorLoginOptions.value.setup(
       initiated.twoFactorMethodInitiateAuthentication.initiationData,
     )
     canRetry.value = result.retry ?? true
@@ -129,9 +131,9 @@ onMounted(async () => {
 
 <template>
   <Form
-    v-if="twoFactor.form !== false"
+    v-if="twoFactorLoginOptions.form !== false"
     :schema="schema"
-    @submit="login(($event as FormSubmitData<TwoFactorFormData>).code)"
+    @submit="login(($event as FormSubmitData<TwoFactorLoginFormData>).code)"
   >
     <template #after-fields>
       <CommonButton
@@ -147,15 +149,18 @@ onMounted(async () => {
     </template>
   </Form>
   <section
-    v-else-if="twoFactor.setup"
+    v-else-if="twoFactorLoginOptions.setup"
     class="flex flex-col items-center justify-center"
   >
-    <CommonLabel v-if="error && twoFactor.errorHelpMessage" class="mt-5">
-      {{ $t(twoFactor.errorHelpMessage) }}
+    <CommonLabel
+      v-if="error && twoFactorLoginOptions.errorHelpMessage"
+      class="mt-5"
+    >
+      {{ $t(twoFactorLoginOptions.errorHelpMessage) }}
     </CommonLabel>
 
-    <CommonLabel v-else-if="twoFactor.helpMessage" class="mt-5">
-      {{ $t(twoFactor.helpMessage) }}
+    <CommonLabel v-else-if="twoFactorLoginOptions.helpMessage" class="mt-5">
+      {{ $t(twoFactorLoginOptions.helpMessage) }}
     </CommonLabel>
 
     <CommonLoader class="mb-3 mt-8" :loading="loading" :error="error" />

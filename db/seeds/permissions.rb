@@ -335,6 +335,14 @@ Permission.create_if_not_exists(
   allow_signup: true,
 )
 Permission.create_if_not_exists(
+  name:         'user_preferences.two_factor_authentication',
+  note:         __('Change %s'),
+  preferences:  {
+    translations: [__('Two-factor Authentication')]
+  },
+  allow_signup: true,
+)
+Permission.create_if_not_exists(
   name:         'user_preferences.notifications',
   note:         __('Manage %s'),
   preferences:  {
@@ -519,6 +527,7 @@ agent.permission_grant('knowledge_base.reader')
 
 customer = Role.find_by(name: 'Customer')
 customer.permission_grant('user_preferences.password')
+customer.permission_grant('user_preferences.two_factor_authentication')
 customer.permission_grant('user_preferences.language')
 customer.permission_grant('user_preferences.linked_accounts')
 customer.permission_grant('user_preferences.avatar')

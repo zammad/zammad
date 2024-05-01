@@ -35,7 +35,7 @@ const emit = defineEmits<{
       {{ $t(method.label) }}
     </CommonButton>
 
-    <div class="mt-2.5 text-center">
+    <div v-if="method.description" class="mt-2.5 text-center">
       <CommonLabel>
         {{ $t(method.description) }}
       </CommonLabel>

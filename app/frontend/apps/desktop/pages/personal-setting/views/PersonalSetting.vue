@@ -5,7 +5,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
 import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.ts'
-import PersonalSettingSidebar from '#desktop/pages/personal-setting/components/PersonalSettingSidebar/PersonalSettingSidebar.vue'
+import PersonalSettingSidebar from '#desktop/pages/personal-setting/components/PersonalSettingSidebar.vue'
 
 const { userId } = useSessionStore()
 const storageKeyId = `${userId}-personal-setting`

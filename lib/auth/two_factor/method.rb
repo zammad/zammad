@@ -41,7 +41,7 @@ class Auth::TwoFactor::Method
   end
 
   def destroy_user_config
-    user.two_factor_preferences.find_by(method: method_name)&.destroy
+    user.two_factor_preferences.find_by(method: method_name)&.destroy!
   end
 
   def user_two_factor_preference

@@ -62,7 +62,7 @@ defineProps<Props>()
         </td>
         <td
           v-if="actions"
-          class="h-10 w-0 px-2.5 first:rounded-s-md last:rounded-e-md"
+          class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md"
           :class="{ 'bg-blue-200 dark:bg-gray-700': (index + 1) % 2 }"
         >
           <CommonActionMenu

@@ -15,6 +15,7 @@ export interface Props {
     ButtonProps,
     'prefixIcon' | 'variant' | 'type' | 'disabled'
   >
+  hideCancelButton?: boolean
   cancelLabel?: string
   cancelButton?: Pick<ButtonProps, 'prefixIcon' | 'variant' | 'disabled'>
   form?: FormRef
@@ -45,6 +46,7 @@ const execute = () => {
 <template>
   <div class="flex items-center justify-end gap-2">
     <CommonButton
+      v-if="!hideCancelButton"
       size="large"
       :disabled="isDisabled || cancelButton?.disabled"
       :prefix-icon="cancelButton?.prefixIcon"

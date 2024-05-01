@@ -45,7 +45,7 @@ const redirect = async (route: RouteLocationRaw) => {
 
 <template>
   <LayoutPublicPage box-size="small" :title="currentPlugin?.title">
-    <main data-test-id="loginAfterAuth" class="m-auto w-full max-w-md">
+    <div class="m-auto w-full max-w-md">
       <div class="flex grow flex-col justify-center">
         <div v-if="currentPlugin" class="grow">
           <component
@@ -55,6 +55,6 @@ const redirect = async (route: RouteLocationRaw) => {
           />
         </div>
       </div>
-    </main>
+    </div>
   </LayoutPublicPage>
 </template>

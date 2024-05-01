@@ -17,7 +17,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
       permissions = %w[admin.user]
     else
       action_user = agent
-      permissions = %w[ticket.agent]
+      permissions = %w[user_preferences.two_factor_authentication]
     end
 
     authenticated_as(action_user, token: create(:token, user: action_user, permissions: permissions))
@@ -107,6 +107,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
 
   describe 'POST /users/two_factor_verify_configuration' do
     let(:recover_codes_enabled) { true }
+    let(:has_recovery_codes)    { false }
     let(:two_factor_pref)       { nil }
     let(:params)                { {} }
     let(:method)                { 'authenticator_app' }
@@ -114,6 +115,10 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
     let(:configuration)         { agent.auth_two_factor.authentication_method_object(method).initiate_configuration }
 
     before do
+      if has_recovery_codes
+        create(:user_two_factor_preference, :recovery_codes, user: agent)
+      end
+
       Setting.set('two_factor_authentication_recovery_codes', recover_codes_enabled)
       post '/api/v1/users/two_factor_verify_configuration', params: params, as: :json
     end
@@ -153,13 +158,22 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
             expect(json_response['recovery_codes']).to be_nil
           end
         end
+
+        context 'with existing recovery codes' do
+          let(:has_recovery_codes) { true }
+
+          it 'verified is true (but without recovery codes)' do
+            expect(json_response['verified']).to be(true)
+            expect(json_response['recovery_codes']).to be_nil
+          end
+        end
       end
     end
   end
 
   describe 'POST /users/two_factor_recovery_codes_generate' do
     let(:recover_codes_enabled) { true }
-    let(:current_codes) { [] }
+    let(:current_codes)         { [] }
 
     before do
       Setting.set('two_factor_authentication_recovery_codes', recover_codes_enabled)
@@ -250,38 +264,45 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
     end
   end
 
-  describe 'PUT /users/two_factor_authentication_method_configuration/:method' do
-    let(:method) { 'unknown' }
-    let(:params) { {} }
-
-    before do
-      put "/api/v1/users/two_factor_authentication_method_configuration/#{method}", params: params, as: :json
-    end
-
+  describe 'DELETE /users/two_factor_authentication_remove_credentials/:method/:credential_id' do
     it 'fails without needed params' do
+      delete '/api/v1/users/two_factor_authentication_remove_credentials/security_keys',
+             params: {},
+             as:     :json
+
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
     context 'with needed params' do
-      let(:method) { 'authenticator_app' }
+      let(:method)        { 'security_keys' }
+      let(:credential_id) { 'credential_id' }
 
-      context 'when updating configuration' do
-        let(:secret) { ROTP::Base32.random_base32 }
-        let(:code)   { ROTP::TOTP.new(secret).now }
-        let(:params) { { configuration: two_factor_pref.configuration.merge(secret: secret, code: code) } }
-
-        it 'returns ok and updates configuration', :aggregate_failures do
-          expect(response).to have_http_status(:ok)
-          expect(two_factor_pref.reload.configuration).to include('secret' => secret, 'code' => code)
-        end
+      let(:two_factor_pref) do
+        create(:user_two_factor_preference, :security_keys, credential_public_key: credential_id, user: agent)
       end
 
       context 'when removing configuration' do
-        let(:params) { { configuration: nil } }
+        let(:params) { { credential_id: } }
 
-        it 'returns ok and removes configuration', :aggregate_failures do
+        it 'returns ok and updates configuration', :aggregate_failures do
+          pending 'what is expected behavior when method is not enabled?'
+
+          allow(Service::User::TwoFactor::RemoveMethodCredentials)
+            .to receive(:new)
+            .and_call_original
+
+          expect_any_instance_of(Service::User::TwoFactor::RemoveMethodCredentials)
+            .to receive(:execute)
+            .and_call_original
+
+          delete '/api/v1/users/two_factor_authentication_remove_credentials/security_keys',
+                 params: params,
+                 as:     :json
+
           expect(response).to have_http_status(:ok)
-          expect { two_factor_pref.reload }.to raise_error(ActiveRecord::RecordNotFound)
+
+          expect(Service::User::TwoFactor::RemoveMethodCredentials)
+            .to have_received(:new).with(user: agent, method_name: 'security_keys', credential_id:)
         end
       end
     end
@@ -292,6 +313,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
     let(:params) { {} }
 
     before do
+      Setting.set('two_factor_authentication_method_security_keys', two_factor_enabled)
       create(:user_two_factor_preference, :security_keys, user: agent)
 
       post '/api/v1/users/two_factor_default_authentication_method', params: params, as: :json

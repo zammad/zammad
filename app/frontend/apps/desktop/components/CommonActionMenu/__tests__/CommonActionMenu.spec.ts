@@ -2,6 +2,7 @@
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 
 const fn = vi.fn()
 describe('CommonActionMenu', () => {
@@ -53,15 +54,22 @@ describe('CommonActionMenu', () => {
   })
 
   it('finds corresponding a11y controls', async () => {
+    await view.events.click(view.getByIconName('three-dots-vertical'))
     const id = view
       .getByLabelText('Action menu button')
       .getAttribute('aria-controls')
 
-    await view.events.click(view.getByIconName('three-dots-vertical'))
-
     const popover = document.getElementById(id as string)
 
     expect(popover?.getAttribute('id')).toEqual(id)
+  })
+
+  it('sets a custom aria label on single action button', async () => {
+    await view.rerender({
+      customMenuButtonLabel: 'Custom Action Menu Label',
+    })
+
+    expect(view.getByLabelText('Custom Action Menu Label')).toBeInTheDocument()
   })
 
   describe('single action mode', () => {
@@ -99,6 +107,39 @@ describe('CommonActionMenu', () => {
       await view.events.click(view.getByIconName('three-dots-vertical'))
 
       expect(view.getByIconName('trash3')).toBeInTheDocument()
+    })
+
+    it('sets a custom aria label on single action', async () => {
+      await view.rerender({
+        actions: [
+          {
+            key: 'delete-foo',
+            label: 'Delete Foo',
+            ariaLabel: 'Custom Delete Foo',
+            icon: 'trash3',
+            onClick: ({ id }: { id: string }) => {
+              fn(id)
+            },
+          },
+        ],
+      })
+
+      expect(view.getByLabelText('Custom Delete Foo')).toBeInTheDocument()
+
+      await view.rerender({
+        actions: [
+          {
+            key: 'delete-foo',
+            label: 'Delete Foo',
+            ariaLabel: (entity: ObjectLike) => `label ${entity.id}`,
+            icon: 'trash3',
+            onClick: ({ id }: { id: string }) => {
+              fn(id)
+            },
+          },
+        ],
+      })
+      expect(view.getByLabelText('label foo-test-action')).toBeInTheDocument()
     })
   })
 })

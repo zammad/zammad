@@ -11,6 +11,8 @@ RSpec.describe 'Desktop > Login', app: :desktop_view, authenticated_as: false, t
     let(:token)                { 'token' }
 
     before do
+      Setting.set('two_factor_authentication_method_authenticator_app', true)
+
       visit '/login'
 
       login(

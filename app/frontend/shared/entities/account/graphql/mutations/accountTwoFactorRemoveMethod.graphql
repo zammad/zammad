@@ -1,0 +1,8 @@
+mutation accountTwoFactorRemoveMethod($methodName: String!) {
+  accountTwoFactorRemoveMethod(methodName: $methodName) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

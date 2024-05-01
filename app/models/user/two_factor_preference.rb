@@ -2,6 +2,7 @@
 
 class User::TwoFactorPreference < ApplicationModel
   include HasDefaultModelUserRelations
+  include User::TwoFactorPreference::TriggersSubscriptions
 
   belongs_to :user, class_name: 'User', touch: true
 
@@ -28,25 +29,22 @@ class User::TwoFactorPreference < ApplicationModel
 
   def update_user_preferences
     count = user.two_factor_preferences.authentication_methods.count
-    return true if count > 1
+    return if count > 1
 
-    current_prefs               = user.preferences
-    current_pref_default_method = current_prefs.dig(:two_factor_authentication, :default)
+    current_default_method = user.preferences.dig(:two_factor_authentication, :default)
 
     case count
     when 0
-      return true if current_pref_default_method.nil?
+      return if current_default_method.nil?
 
-      current_prefs = remove_default_method_from_preferences(current_prefs)
+      remove_default_method_from_preferences(user.preferences)
     when 1
-      return true if method_is_default_for_user?(current_pref_default_method)
+      return if method_is_default_for_user?(current_default_method)
 
-      current_prefs = add_default_method_to_preferences(current_prefs)
+      add_default_method_to_preferences(user.preferences)
     end
 
-    user.update!(preferences: current_prefs)
-
-    true
+    user.save!
   end
 
   def remove_default_method_from_preferences(preferences)

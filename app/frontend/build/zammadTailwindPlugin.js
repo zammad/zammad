@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 const plugin = require('tailwindcss/plugin')
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = plugin(
   ({ addVariant, matchUtilities, theme }) => {
@@ -69,6 +70,7 @@ module.exports = plugin(
             'Arial',
             'sans-serif',
           ],
+          mono: ['"Fira Mono"', ...defaultTheme.fontFamily.mono],
         },
         colors: {
           transparent: 'transparent',

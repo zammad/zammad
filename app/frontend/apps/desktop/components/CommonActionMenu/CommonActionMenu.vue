@@ -25,6 +25,7 @@ interface Props {
   placement?: Placement
   orientation?: Orientation
   noSingleActionMode?: boolean
+  customMenuButtonLabel?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -44,6 +45,14 @@ const { filteredMenuItems, singleMenuItemPresent, singleMenuItem } =
 const entityId = computed(() => props.entity?.id || getUuid())
 const menuId = computed(() => `popover-${entityId.value}`)
 
+const singleActionAriaLabel = computed(() => {
+  if (typeof singleMenuItem.value?.ariaLabel === 'function') {
+    return singleMenuItem.value.ariaLabel(props.entity)
+  }
+
+  return singleMenuItem.value?.ariaLabel || singleMenuItem.value?.label
+})
+
 const singleActionMode = computed(() => {
   if (props.noSingleActionMode) return false
 
@@ -58,25 +67,22 @@ const buttonVariantClass = computed(() => {
 </script>
 
 <template>
-  <div
-    v-if="filteredMenuItems && filteredMenuItems.length > 0"
-    class="inline-block"
-  >
+  <div v-if="filteredMenuItems" class="inline-block">
     <CommonButton
       v-if="singleActionMode"
       :class="buttonVariantClass"
       :size="buttonSize"
-      :aria-label="$t(singleMenuItem?.label)"
+      :aria-label="$t(singleActionAriaLabel)"
       :icon="singleMenuItem?.icon"
       @click="singleMenuItem?.onClick?.(entity as ObjectLike)"
     />
     <CommonButton
       v-else
-      :id="entity?.id || entityId"
+      :id="`action-menu-${entityId}`"
       ref="popoverTarget"
-      :aria-label="$t('Action menu button')"
+      :aria-label="$t(customMenuButtonLabel || 'Action menu button')"
       aria-haspopup="true"
-      :aria-controls="menuId"
+      :aria-controls="popoverIsOpen ? menuId : undefined"
       class="text-stone-200 dark:text-neutral-500"
       :class="{
         'outline outline-1 outline-offset-1 outline-blue-800': popoverIsOpen,

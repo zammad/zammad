@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import type { Component } from 'vue'
+
 import type {
   EnumTwoFactorAuthenticationMethod,
   Scalars,
@@ -22,19 +24,38 @@ export interface TwoFactorSetupResult {
   retry?: boolean
 }
 
-export interface TwoFactorPlugin {
-  name: EnumTwoFactorAuthenticationMethod
-  label: string
-  description?: string
-  order: number
-  icon: string
+export interface TwoFactorLoginOptions {
   setup?(data: Scalars['JSON']['input']): Promise<TwoFactorSetupResult>
   form?: boolean
   helpMessage?: string
   errorHelpMessage?: string
 }
 
-export interface TwoFactorFormData {
+export type TwoFactorActionTypes = 'setup' | 'edit' | 'default' | 'remove'
+export interface TwoFactorConfigurationOptions {
+  setup?(data: Scalars['JSON']['input']): Promise<TwoFactorSetupResult>
+  component: Component
+  editable?: boolean
+  actionButtonA11yLabel: string
+  getActionA11yLabel(type: TwoFactorActionTypes): string
+}
+
+export interface TwoFactorConfigurationPlugin
+  extends TwoFactorConfigurationOptions {
+  name: EnumTwoFactorAuthenticationMethod
+}
+
+export interface TwoFactorPlugin {
+  name: EnumTwoFactorAuthenticationMethod
+  label: string
+  description?: string
+  order: number
+  icon: string
+  loginOptions: TwoFactorLoginOptions
+  configurationOptions?: TwoFactorConfigurationOptions
+}
+
+export interface TwoFactorLoginFormData {
   code: string
 }
 

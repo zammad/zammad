@@ -47,7 +47,7 @@ describe('CommonOverlayContainer', () => {
       props: {
         tag: 'div',
         teleportTo: '#test-backdrop',
-        closeOnBackdropClick: true,
+        noCloseOnBackdropClick: true,
       },
     })
 

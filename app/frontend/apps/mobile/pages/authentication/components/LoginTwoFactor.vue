@@ -8,7 +8,7 @@ import type {
   FormSchemaNode,
 } from '#shared/components/Form/types.ts'
 import type {
-  TwoFactorFormData,
+  TwoFactorLoginFormData,
   TwoFactorPlugin,
   LoginCredentials,
 } from '#shared/entities/two-factor/types.ts'
@@ -32,12 +32,14 @@ const emit = defineEmits<{
   error: [UserError]
 }>()
 
+const twoFactorLoginOptions = computed(() => props.twoFactor.loginOptions)
+
 const schema: FormSchemaNode[] = [
   {
     isLayout: true,
     component: 'FormGroup',
     props: {
-      help: computed(() => props.twoFactor.helpMessage),
+      help: computed(() => twoFactorLoginOptions.value.helpMessage),
     },
     children: [
       {
@@ -89,7 +91,7 @@ const login = (payload: unknown) => {
 }
 
 const tryMethod = async () => {
-  if (!props.twoFactor.setup) return
+  if (!twoFactorLoginOptions.value.setup) return
 
   const initialDataMutation = new MutationHandler(
     useTwoFactorMethodInitiateAuthenticationMutation(),
@@ -109,7 +111,7 @@ const tryMethod = async () => {
       )
       return
     }
-    const result = await props.twoFactor.setup(
+    const result = await twoFactorLoginOptions.value.setup(
       initiated.twoFactorMethodInitiateAuthentication.initiationData,
     )
     canRetry.value = result.retry ?? true
@@ -134,9 +136,9 @@ onMounted(async () => {
 
 <template>
   <Form
-    v-if="twoFactor.form !== false"
+    v-if="twoFactorLoginOptions.form !== false"
     :schema="schema"
-    @submit="login(($event as FormSubmitData<TwoFactorFormData>).code)"
+    @submit="login(($event as FormSubmitData<TwoFactorLoginFormData>).code)"
   >
     <template #after-fields>
       <FormKit
@@ -150,17 +152,17 @@ onMounted(async () => {
     </template>
   </Form>
   <section
-    v-else-if="twoFactor.setup"
+    v-else-if="twoFactorLoginOptions.setup"
     class="flex flex-col items-center justify-center"
   >
     <CommonLoader :loading="loading" :error="error" />
 
     <div class="text-gray pb-2 pt-2 font-medium leading-4">
-      <template v-if="error && twoFactor.errorHelpMessage">
-        {{ $t(twoFactor.errorHelpMessage) }}
+      <template v-if="error && twoFactorLoginOptions.errorHelpMessage">
+        {{ $t(twoFactorLoginOptions.errorHelpMessage) }}
       </template>
-      <template v-else-if="twoFactor.helpMessage">
-        {{ $t(twoFactor.helpMessage) }}
+      <template v-else-if="twoFactorLoginOptions.helpMessage">
+        {{ $t(twoFactorLoginOptions.helpMessage) }}
       </template>
     </div>
 

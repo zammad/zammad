@@ -1,5 +1,5 @@
 class ProfilePassword extends App.ControllerSubContent
-  @requiredPermission: 'user_preferences.password'
+  @requiredPermission: ['user_preferences.password', 'user_preferences.two_factor_authentication']
   header: __('Password & Authentication')
   events:
     'submit form':                       'update'
@@ -47,9 +47,13 @@ class ProfilePassword extends App.ControllerSubContent
     )
 
   allowsChangePassword: ->
+    return false if !@permissionCheck('user_preferences.password')
+
     App.Config.get('user_show_password_login') || @permissionCheck('admin.*')
 
   allowsTwoFactor: ->
+    return false if !@permissionCheck('user_preferences.two_factor_authentication')
+
     _.some(
       App.Config.all(),
       (state, setting) -> /^two_factor_authentication_method_/.test(setting) and state
@@ -245,9 +249,12 @@ App.Config.set('Password', {
   target: '#profile/password',
   controller: ProfilePassword,
   permission: (controller) ->
-    canChangePassword = App.Config.get('user_show_password_login') || controller.permissionCheck('admin.*')
-    twoFactorEnabled  = App.Config.get('two_factor_authentication_method_authenticator_app')
+    canChangePassword = App.Config.get('user_show_password_login') ||
+      controller.permissionCheck('admin.*')
+
+    twoFactorEnabled  = App.Config.get('two_factor_authentication_method_authenticator_app') &&
+      controller.permissionCheck('user_preferences.two_factor_authentication')
 
     return false if !canChangePassword && !twoFactorEnabled
-    return controller.permissionCheck('user_preferences.password')
+    return controller.permissionCheck('user_preferences.password') || twoFactorEnabled
 }, 'NavBarProfile')

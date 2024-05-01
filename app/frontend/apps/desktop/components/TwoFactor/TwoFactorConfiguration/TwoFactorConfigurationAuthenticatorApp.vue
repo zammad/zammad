@@ -1,0 +1,283 @@
+<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import QRCode from 'qrcode'
+import Form from '#shared/components/Form/Form.vue'
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
+import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import { useAccountTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/account/graphql/mutations/accountTwoFactorVerifyMethodConfiguration.api.ts'
+import { useAccountTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/account/graphql/queries/accountTwoFactorInitiateMethodConfiguration.api.ts'
+
+import UserError from '#shared/errors/UserError.ts'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import {
+  NotificationTypes,
+  useNotifications,
+} from '#shared/components/CommonNotifications/index.ts'
+import type { TwoFactorConfigurationComponentProps } from '../types.ts'
+
+const props = defineProps<TwoFactorConfigurationComponentProps>()
+
+const { twoFactorMethodLookup } = useTwoFactorPlugins()
+const twoFactorPlugin = twoFactorMethodLookup[props.type]
+
+const headerIcon = computed(() => twoFactorPlugin.icon)
+
+const initiationQuery = new QueryHandler(
+  useAccountTwoFactorInitiateMethodConfigurationQuery(
+    {
+      methodName: twoFactorPlugin.name,
+    },
+    {
+      fetchPolicy: 'no-cache',
+    },
+  ),
+)
+
+const initiationResult = initiationQuery.result()
+
+const { notify } = useNotifications()
+
+const canvasElement = ref<HTMLCanvasElement>()
+const showSecretOverlay = ref(false)
+const initiationError = ref<string | null>(null)
+
+// Form handling
+const { form, formSetErrors } = useForm()
+
+const mutateMethodConfiguration = new MutationHandler(
+  useAccountTwoFactorVerifyMethodConfigurationMutation(),
+)
+
+const verifyMethodConfiguration = async (securityCode: string) => {
+  return mutateMethodConfiguration.send({
+    methodName: twoFactorPlugin.name,
+    payload: securityCode,
+    configuration: {
+      ...initiationResult.value?.accountTwoFactorInitiateMethodConfiguration,
+    },
+  })
+}
+
+const submitForm = async ({
+  securityCode,
+}: FormSubmitData<{ securityCode: string }>) => {
+  try {
+    const response = await verifyMethodConfiguration(securityCode)
+
+    props.successCallback?.()
+
+    notify({
+      type: NotificationTypes.Success,
+      message: __('Two-factor method has been configured successfully.'),
+    })
+
+    if (response?.accountTwoFactorVerifyMethodConfiguration?.recoveryCodes) {
+      props.formSubmitCallback?.({
+        nextState: 'recovery_codes',
+        options: {
+          recoveryCodes:
+            response?.accountTwoFactorVerifyMethodConfiguration?.recoveryCodes,
+          headerIcon: headerIcon.value,
+        },
+      })
+      return
+    }
+
+    props.formSubmitCallback?.({})
+  } catch (err) {
+    formSetErrors(
+      new UserError([
+        {
+          field: 'securityCode',
+          message: __(
+            'Invalid security code! Please try again with a new code.',
+          ),
+        },
+      ]),
+    )
+  }
+}
+
+// Flyout configuration
+const authenticatorApps = [
+  {
+    label: __('Google Authenticator'),
+    key: 'google-authenticator',
+    link: 'https://support.google.com/accounts/answer/1066447',
+  },
+  {
+    label: __('Authy'),
+    key: 'authy',
+    link: 'https://support.authy.com/hc/en-us/articles/115001945848-Installing-Authy-apps/',
+  },
+  {
+    label: __('Microsoft Authenticator'),
+    key: 'microsoft-authenticator',
+    link: 'https://support.microsoft.com/en-us/account-billing/download-and-install-the-microsoft-authenticator-app-351498fc-850a-45da-b7b6-27e523b8702a',
+  },
+]
+
+const footerActionOptions = computed(() => ({
+  actionLabel: __('Set Up'),
+  actionButton: { variant: 'submit', type: 'submit' },
+  form: form.value,
+}))
+
+const { copyToClipboard } = useCopyToClipboard()
+
+const toggleSecretCodeOverlay = () => {
+  showSecretOverlay.value = !showSecretOverlay.value
+}
+
+// Set up QR code
+const secretCode = ref<string | null>(null)
+const loading = ref(true)
+
+const setupQrCode = async (provisioningUri: string, secret: string) => {
+  secretCode.value = secret
+
+  return QRCode.toCanvas(canvasElement.value, provisioningUri, {
+    margin: 1,
+    width: 307,
+  })
+}
+
+initiationQuery.onResult(({ data }) => {
+  if (data?.accountTwoFactorInitiateMethodConfiguration) {
+    // eslint-disable-next-line camelcase
+    const { provisioning_uri, secret } =
+      // eslint-disable-next-line no-unsafe-optional-chaining
+      data?.accountTwoFactorInitiateMethodConfiguration
+
+    setupQrCode(provisioning_uri, secret)
+      .catch(() => {
+        initiationError.value = __(
+          'Failed to set up QR code. Please try again.',
+        )
+      })
+      .finally(() => {
+        loading.value = false
+      })
+  }
+})
+
+defineExpose({
+  headerSubtitle: computed(() => twoFactorPlugin.label),
+  headerIcon: headerIcon.value,
+  footerActionOptions,
+})
+</script>
+
+<template>
+  <CommonLoader :loading="loading" :error="initiationError" />
+  <div
+    v-show="!loading"
+    class="space-y-2 text-sm text-gray-100 dark:text-neutral-400"
+  >
+    <CommonLabel
+      >{{
+        $t(
+          'To set up Authenticator App for your account, follow the steps below:',
+        )
+      }}
+    </CommonLabel>
+    <ol class="list-decimal space-y-3 ltr:pl-4 rtl:pr-4">
+      <li>
+        <CommonLabel class="mb-2"
+          >{{
+            $t(
+              'Unless you already have it, install one of the following authenticator apps on your mobile device:',
+            )
+          }}
+        </CommonLabel>
+        <ul class="list-disc ltr:pl-5 rtl:pr-5">
+          <li v-for="app in authenticatorApps" :key="app.key">
+            <CommonLink external :link="app.link" open-in-new-tab>
+              {{ $t(app.label) }}
+            </CommonLink>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <CommonLabel class="mb-2"
+          >{{ $t('Open your authenticator app and scan the QR code below:') }}
+        </CommonLabel>
+        <div
+          tabindex="0"
+          role="button"
+          aria-haspopup="true"
+          data-test-id="secret-overlay"
+          aria-controls="qr-code-secret-overlay"
+          class="relative mx-auto w-fit cursor-pointer rounded-lg hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 has-[button:hover,span:hover]:outline-0 dark:hover:outline-blue-900"
+          @click="toggleSecretCodeOverlay"
+          @keydown.enter="toggleSecretCodeOverlay"
+        >
+          <canvas
+            ref="canvasElement"
+            class="rounded-lg"
+            role="img"
+            :aria-label="$t('Authenticator app QR code')"
+          />
+          <Transition name="fade">
+            <div
+              v-show="showSecretOverlay"
+              id="qr-code-secret-overlay"
+              class="absolute bottom-0 left-0 right-0 top-0 flex flex-col items-center justify-center gap-1.5 rounded-lg bg-black bg-opacity-90"
+              role="presentation"
+            >
+              <span
+                class="cursor-text font-mono text-white"
+                :aria-label="$t('Authenticator app secret')"
+                @click.stop
+              >
+                {{ secretCode }}
+              </span>
+              <CommonButton
+                prefix-icon="files"
+                size="medium"
+                @click.stop="copyToClipboard(secretCode)"
+                >{{ $t('Copy Secret') }}</CommonButton
+              >
+            </div>
+          </Transition>
+        </div>
+      </li>
+
+      <li>
+        <CommonLabel id="security-code-description" class="mb-2">{{
+          $t('Enter the security code generated by the authenticator app:')
+        }}</CommonLabel>
+
+        <Form
+          ref="form"
+          should-autofocus
+          @submit="
+            submitForm($event as FormSubmitData<{ securityCode: string }>)
+          "
+        >
+          <FormKit
+            name="securityCode"
+            type="text"
+            :placeholder="$t('Security Code')"
+            aria-labelledby="security-code-description"
+            required
+          />
+        </Form>
+      </li>
+
+      <li>
+        <CommonLabel>{{
+          $t('Press the button below to finish the setup.')
+        }}</CommonLabel>
+      </li>
+    </ol>
+  </div>
+</template>

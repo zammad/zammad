@@ -134,7 +134,7 @@ describe('CommonFlyout', () => {
       })
 
       it('emits close event when escape key is pressed', async () => {
-        await flyout.rerender({ closeOnEscape: true })
+        await flyout.rerender({ noCloseOnEscape: false })
 
         await flyout.events.keyboard('{Escape}')
 

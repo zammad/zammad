@@ -23,7 +23,9 @@ RSpec.describe TwoFactorDefaultAuthenticationMethod, db_strategy: :reset, type: 
     create(:user_two_factor_preference, :authenticator_app, user: user)
     security_key_pref = create(:user_two_factor_preference, :security_keys, user: user)
 
-    user.reload.two_factor_update_default_method(security_key_pref.method)
+    Service::User::TwoFactor::SetDefaultMethod
+      .new(user: user.reload, method_name: security_key_pref.method, force: true)
+      .execute
 
     user
   end

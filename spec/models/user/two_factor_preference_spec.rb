@@ -15,7 +15,7 @@ RSpec.describe User::TwoFactorPreference, type: :model do
         it 'removes the default method from user preferences' do
           user.reload.two_factor_preferences.destroy_all
 
-          expect(user.preferences).not_to include(two_factor_authentication: { default: 'authenticator_app' })
+          expect(user.reload.preferences).not_to include(two_factor_authentication: { default: 'authenticator_app' })
         end
       end
 
@@ -29,7 +29,7 @@ RSpec.describe User::TwoFactorPreference, type: :model do
           it 'updates the default method in user preferences' do
             user.reload.two_factor_preferences.last.destroy
 
-            expect(user.preferences.dig(:two_factor_authentication, :default)).to eq('authenticator_app')
+            expect(user.reload.preferences.dig(:two_factor_authentication, :default)).to eq('authenticator_app')
           end
         end
       end

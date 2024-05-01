@@ -27,11 +27,7 @@ class Auth::TwoFactor::RecoveryCodes < Auth::TwoFactor::Method
 
     hashed_codes = codes.map { |code| PasswordHash.crypt(code) }
 
-    if exists?
-      update_user_config({ codes: hashed_codes })
-    else
-      create_user_config({ codes: hashed_codes })
-    end
+    create_user_config({ codes: hashed_codes })
 
     codes
   end

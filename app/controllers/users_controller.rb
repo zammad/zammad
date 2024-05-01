@@ -609,13 +609,9 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
   def password_check
     raise Exceptions::UnprocessableEntity, __("The required parameter 'password' is missing.") if params[:password].blank?
 
-    begin
-      Auth.new(current_user.login, params[:password], only_verify_password: true).valid!
+    password_check = Service::User::PasswordCheck.new(user: current_user, password: params[:password])
 
-      render json: { success: true }, status: :ok
-    rescue Auth::Error::AuthenticationFailed
-      render json: { success: false }, status: :ok
-    end
+    render json: { success: password_check.execute }, status: :ok
   end
 
 =begin

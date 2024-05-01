@@ -22,10 +22,6 @@ FactoryBot.define do
         code   { ROTP::TOTP.new(secret).now }
       end
 
-      before(:create) do
-        Setting.set('two_factor_authentication_method_authenticator_app', true)
-      end
-
       configuration do
         {
           secret:           secret,
@@ -39,21 +35,19 @@ FactoryBot.define do
       add_attribute(:method) { 'security_keys' }
 
       transient do
+        credential_external_id { Faker::Alphanumeric.alpha(number: 70) }
+        credential_public_key  { Faker::Alphanumeric.alpha(number: 128) }
 
         # A fake static key is enough for most of the tests.
         credential do
           {
-            external_id: Faker::Alphanumeric.alpha(number: 70),
-            public_key:  Faker::Alphanumeric.alpha(number: 128),
+            external_id: credential_external_id,
+            public_key:  credential_public_key,
             nickname:    Faker::Lorem.unique.word,
             sign_count:  '0',
             created_at:  Time.zone.now,
           }
         end
-      end
-
-      before(:create) do
-        Setting.set('two_factor_authentication_method_security_keys', true)
       end
 
       configuration do
@@ -122,10 +116,6 @@ FactoryBot.define do
         end
       end
 
-      before(:create) do
-        Setting.set('two_factor_authentication_method_security_keys', true)
-      end
-
       configuration do
         {
           credentials: [credential],
@@ -139,10 +129,6 @@ FactoryBot.define do
       transient do
         user          { association :user }
         recovery_code { 'example' }
-      end
-
-      before(:create) do
-        Setting.set('two_factor_authentication_recovery_codes', true)
       end
 
       configuration do

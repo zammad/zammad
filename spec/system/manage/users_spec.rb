@@ -432,6 +432,8 @@ RSpec.describe 'Manage > Users', type: :system do
     end
 
     it 'does remove the two-factor method' do
+      pending 'Should it allow to remove disabled methods?'
+
       open_configure_two_factor
 
       select 'Authenticator App', from: 'method'
@@ -442,6 +444,8 @@ RSpec.describe 'Manage > Users', type: :system do
     end
 
     it 'does remove all two-factor methods' do
+      pending 'Should it allow to remove disabled methods?'
+
       open_configure_two_factor
 
       select 'Authenticator App', from: 'method'

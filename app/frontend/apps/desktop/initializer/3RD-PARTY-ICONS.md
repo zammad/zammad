@@ -2,6 +2,7 @@
 
 - `assets/arrow-bar-left.svg`
 - `assets/arrow-bar-right.svg`
+- `assets/arrow-repeat.svg`
 - `assets/arrows-collapse.svg`
 - `assets/arrows-expand.svg`
 - `assets/box-arrow-in-right.svg`
@@ -12,8 +13,8 @@
 - `assets/calendar-event.svg`
 - `assets/calendar-range.svg`
 - `assets/calendar.svg`
-- `assets/camera-video.svg`
 - `assets/camera-video-off.svg`
+- `assets/camera-video.svg`
 - `assets/camera.svg`
 - `assets/check-all.svg`
 - `assets/check-circle-outline.svg`
@@ -32,25 +33,31 @@
 - `assets/exclamation-triangle.svg`
 - `assets/eye-slash.svg`
 - `assets/eye.svg`
+- `assets/files.svg`
 - `assets/filter.svg`
 - `assets/image.svg`
 - `assets/info-circle.svg`
 - `assets/key.svg`
 - `assets/keyboard.svg`
+- `assets/pencil.svg`
 - `assets/person-add.svg`
 - `assets/person-gear.svg`
 - `assets/phone.svg`
 - `assets/plus-circle.svg`
+- `assets/printer.svg`
 - `assets/radio-no.svg`
 - `assets/radio-yes.svg`
 - `assets/search.svg`
+- `assets/shield-lock.svg`
 - `assets/speedometer2.svg`
 - `assets/spinner.svg`
 - `assets/square.svg`
 - `assets/sun.svg`
-- `assets/upload.svg`
 - `assets/three-dots-vertical.svg`
 - `assets/trash3.svg`
+- `assets/upload.svg`
+- `assets/upload.svg`
+- `assets/wrench.svg`
 - `assets/x-circle.svg`
 - `assets/x-lg.svg`
 

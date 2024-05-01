@@ -9,7 +9,7 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
-import type { UserTwoFactorMethods } from '#shared/graphql/types.ts'
+import type { UserLoginTwoFactorMethods } from '#shared/graphql/types.ts'
 import { useRouter } from 'vue-router'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 import type { LoginCredentials } from '#shared/entities/two-factor/types.ts'
@@ -19,7 +19,7 @@ const emit = defineEmits<{
   error: [UserError]
   finish: []
   askTwoFactor: [
-    twoFactor: Required<UserTwoFactorMethods>,
+    twoFactor: Required<UserLoginTwoFactorMethods>,
     formData: FormSubmitData<LoginCredentials>,
   ]
 }>()
@@ -109,7 +109,7 @@ const sendCredentials = (formData: FormSubmitData<LoginCredentials>) => {
       } else {
         emit(
           'askTwoFactor',
-          twoFactor as Required<UserTwoFactorMethods>,
+          twoFactor as Required<UserLoginTwoFactorMethods>,
           formData,
         )
       }

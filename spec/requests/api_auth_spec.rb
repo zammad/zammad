@@ -15,18 +15,15 @@ RSpec.describe 'Api Auth', type: :request do
     end
   end
 
-  let(:admin) do
-    create(:admin)
-  end
-  let(:agent) do
-    create(:agent)
-  end
-  let(:customer) do
-    create(:customer)
-  end
+  let(:admin)    { create(:admin) }
+  let(:agent)    { create(:agent) }
+  let(:customer) { create(:customer) }
+
+  let(:two_factor_method_enabled) { true }
 
   before do
     stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
+    Setting.set('two_factor_authentication_method_authenticator_app', two_factor_method_enabled)
   end
 
   describe 'request handling' do
@@ -453,6 +450,16 @@ RSpec.describe 'Api Auth', type: :request do
 
         it 'accepts the log-in' do
           expect(response).to have_http_status(:created)
+        end
+
+        context 'with disabled authenticator method' do
+          let(:two_factor_method_enabled) { false }
+
+          it 'rejects the log-in' do
+            pending 'What is the expected behavior?'
+
+            expect(response).to have_http_status(:unauthorized)
+          end
         end
       end
     end

@@ -44,6 +44,7 @@ RSpec.describe Role do
         expect(described_class.find_by(name: 'Customer').permissions.pluck(:name))
           .to match_array(
             %w[
+              user_preferences.two_factor_authentication
               user_preferences.password
               user_preferences.language
               user_preferences.linked_accounts

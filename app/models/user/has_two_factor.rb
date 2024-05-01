@@ -32,14 +32,9 @@ module User::HasTwoFactor
           method:     method.method_name,
           configured: two_factor_authentication_method_configured?(method),
           default:    two_factor_authentication_method_default?(method),
-
-          # configuration_possible: method.configuration_possible?, # TODO: For the e-mail/sms method (like a health check), for later.
+          # configuration_possible: method.configuration_possible?, # Maybe needed for the e-mail/sms method (like a health check), for later.
         }
       end
-  end
-
-  def two_factor_destroy_authentication_method(method)
-    auth_two_factor.authentication_method_object(method).destroy_user_config
   end
 
   def two_factor_destroy_all_authentication_methods
@@ -50,21 +45,6 @@ module User::HasTwoFactor
 
   def two_factor_verify_configuration?(authentication_method, payload, configuration)
     auth_two_factor.verify_configuration?(authentication_method, payload, configuration)
-  end
-
-  def two_factor_recovery_codes_generate(force: false)
-    return if !auth_two_factor.recovery_codes_enabled? || (auth_two_factor.user_recovery_codes_exists? && !force)
-
-    Auth::TwoFactor::RecoveryCodes.new(self).generate
-  end
-
-  def two_factor_update_default_method(method_name)
-    current_prefs = preferences
-
-    current_prefs[:two_factor_authentication] ||= {}
-    current_prefs[:two_factor_authentication][:default] = method_name
-
-    update!(preferences: current_prefs)
   end
 
   private

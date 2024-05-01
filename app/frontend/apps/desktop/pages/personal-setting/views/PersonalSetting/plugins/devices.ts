@@ -7,7 +7,7 @@ export default <PersonalSettingPlugin>{
   category: {
     label: __('Security'),
     id: 'category-security',
-    order: 9000,
+    order: 2000,
   },
   route: {
     path: 'devices',
@@ -20,6 +20,6 @@ export default <PersonalSettingPlugin>{
       requiredPermission: 'user_preferences.language',
     },
   },
-  order: 9000,
+  order: 3000,
   keywords: __('session,sessions,computer,computers,browser,browsers,access'),
 }

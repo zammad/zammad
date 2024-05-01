@@ -38,7 +38,7 @@ class Controllers::User::TwoFactorsControllerPolicy < Controllers::ApplicationCo
     true
   end
 
-  def two_factor_authentication_method_configuration_save?
+  def two_factor_authentication_remove_credentials?
     true
   end
 
@@ -49,6 +49,8 @@ class Controllers::User::TwoFactorsControllerPolicy < Controllers::ApplicationCo
   end
 
   def access?
-    record.params['id']&.to_i == user.id
+    return false if record.params['id']&.to_i != user.id
+
+    user.permissions?('user_preferences.two_factor_authentication')
   end
 end

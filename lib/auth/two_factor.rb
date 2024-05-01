@@ -11,7 +11,8 @@ class Auth::TwoFactor
   def initialize(user)
     @user = user
 
-    @all_authentication_methods = self.class.authentication_method_classes.map { |authentication_method| authentication_method.new(user) }
+    @all_authentication_methods = self.class.authentication_method_classes
+      .map { |authentication_method| authentication_method.new(user) }
   end
 
   def enabled?

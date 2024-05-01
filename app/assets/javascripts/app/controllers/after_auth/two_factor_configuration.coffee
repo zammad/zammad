@@ -31,7 +31,12 @@ class App.AfterAuthTwoFactorConfiguration extends App.ControllerAfterAuthModal
       type:    'GET'
       url:     "#{@apiPath}/users/#{App.User.current().id}/two_factor_enabled_authentication_methods"
       success: @renderAvailableMethods
-    )
+      error: (xhr, status, error) =>
+        return if xhr.status != 403
+
+        @message = __("Two-factor authentication is required, but you don't have sufficient permissions to set it up. Please contact your administrator.")
+        @update()
+      )
 
   renderAvailableMethods: (data, status, xhr) =>
     methodButtons = $(App.view('after_auth/two_factor_configuration/method_buttons')(

@@ -7,7 +7,7 @@ require 'system/examples/authenticator_app_setup_examples'
 
 RSpec.describe 'After Auth', type: :system do
   context 'with after auth module for 2FA', authenticated_as: :agent do
-    let(:agent) { create(:agent, roles: [role]) }
+    let(:agent) { create(:agent).tap { |user| user.roles << role } }
     let(:role)  { create(:role, :agent, name: '2FA') }
 
     before do
@@ -60,6 +60,17 @@ RSpec.describe 'After Auth', type: :system do
 
         include_examples 'authenticator app setup' do
           let(:password_check) { false }
+        end
+      end
+
+      context 'when user does not have sufficient permissions' do
+        let(:agent) { create(:agent, roles: [role]) }
+
+        it 'shows error message' do
+          expect_current_route 'dashboard'
+          in_modal do
+            expect(page).to have_text("Two-factor authentication is required, but you don't have sufficient permissions to set it up. Please contact your administrator.")
+          end
         end
       end
     end
