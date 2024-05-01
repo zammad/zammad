@@ -17,7 +17,7 @@ describe('testing visuals for "FieldDate"', () => {
       mountFormField(type, {
         id: 'datetime',
         label: 'Date',
-        maxDate: '2021-02-01',
+        maxDate: '2021-01-31',
       })
       checkFormMatchesSnapshot({ type })
       cy.findByLabelText('Date')
@@ -36,7 +36,7 @@ describe('testing visuals for "FieldDate"', () => {
       mountFormField(type, {
         id: 'datetime',
         label: 'Date',
-        maxDate: '2021-02-01',
+        maxDate: '2021-01-31',
         help: 'Help message!',
       })
       cy.findByLabelText('Date').then(() => {
@@ -49,7 +49,7 @@ describe('testing visuals for "FieldDate"', () => {
         id: 'datetime',
         label: 'Date',
         required: true,
-        maxDate: '2021-02-01',
+        maxDate: '2021-01-31',
       })
       checkFormMatchesSnapshot({ type })
       cy.findByLabelText('Date')
@@ -69,7 +69,7 @@ describe('testing visuals for "FieldDate"', () => {
         id: 'datetime',
         label: 'Date',
         required: true,
-        maxDate: '2021-02-01',
+        maxDate: '2021-01-31',
         validationVisibility: FormValidationVisibility.Live,
       })
       checkFormMatchesSnapshot({ type })
@@ -80,7 +80,7 @@ describe('testing visuals for "FieldDate"', () => {
         id: 'datetime',
         label: 'Date',
         link: '/',
-        maxDate: '2021-02-01',
+        maxDate: '2021-01-31',
       })
       checkFormMatchesSnapshot({ type })
       cy.findByLabelText('Date')
@@ -100,7 +100,7 @@ describe('testing visuals for "FieldDate"', () => {
         id: 'datetime',
         label: 'Date',
         disabled: true,
-        maxDate: '2021-02-01',
+        maxDate: '2021-01-31',
       })
       checkFormMatchesSnapshot({ type })
     })

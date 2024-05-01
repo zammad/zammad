@@ -100,6 +100,7 @@ useEventListener('click', (e) => {
       :locale="i18n.locale()"
       :max-date="context.maxDate"
       :min-date="minDate"
+      :start-date="minDate || context.maxDate"
       :ignore-time-validation="!timePicker"
       :prevent-min-max-navigation="
         Boolean(minDate || context.maxDate || context.futureOnly)
