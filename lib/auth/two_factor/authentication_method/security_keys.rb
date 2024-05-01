@@ -7,7 +7,7 @@ class Auth::TwoFactor::AuthenticationMethod::SecurityKeys < Auth::TwoFactor::Aut
 
     configure_webauthn
 
-    WebAuthn::Credential.options_for_get(allow: stored_credentials.pluck(:external_id))
+    WebAuthn::Credential.options_for_get(allow: stored_credentials.pluck(:external_id), user_verification: 'discouraged')
   end
 
   def verify(payload, configuration = user_two_factor_preference_configuration)
@@ -24,12 +24,13 @@ class Auth::TwoFactor::AuthenticationMethod::SecurityKeys < Auth::TwoFactor::Aut
     configure_webauthn
 
     WebAuthn::Credential.options_for_create(
-      user:    {
+      user:                    {
         id:           WebAuthn.generate_user_id,
         display_name: user.login,
         name:         user.login,
       },
-      exclude: stored_credentials.pluck(:external_id),
+      exclude:                 stored_credentials.pluck(:external_id),
+      authenticator_selection: { user_verification: 'discouraged' },
     )
   end
 
