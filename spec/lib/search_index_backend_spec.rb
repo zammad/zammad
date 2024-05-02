@@ -349,6 +349,30 @@ RSpec.describe SearchIndexBackend do
         expect(result).to eq({ count: 7, object_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
+      # https://github.com/zammad/zammad/issues/5105
+      context 'with non-overlapping aggs_interval' do
+        before do
+          travel_to 18.months.from_now
+          create(:ticket)
+          searchindex_model_reload([Ticket])
+          travel_back
+        end
+
+        it 'finds no records' do
+          result = described_class.selectors('Ticket',
+                                             { 'ticket.created_at'=>{ 'operator' => 'till (relative)', 'value' => '30', 'range' => 'minute' } },
+                                             {},
+                                             {
+                                               from:     1.year.from_now,
+                                               to:       2.years.from_now,
+                                               interval: 'month', # year, quarter, month, week, day, hour, minute, second
+                                               field:    'created_at',
+                                             })
+
+          expect(result['hits']['total']['value']).to eq(0)
+        end
+      end
+
       it 'finds records with from (relative)' do
         result = described_class.selectors('Ticket',
                                            { 'ticket.created_at'=>{ 'operator' => 'from (relative)', 'value' => '30', 'range' => 'minute' } },
