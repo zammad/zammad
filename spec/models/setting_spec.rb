@@ -98,7 +98,7 @@ RSpec.describe Setting, type: :model do
       end
 
       context 'when Setting updated outside of the process and class variables were not touched' do
-        before { described_class.all.sample.touch }
+        before { described_class.find_by(name: 'maintenance_login').touch }
 
         it 'cache is seen as valid' do
           expect(described_class).to be_cache_valid
