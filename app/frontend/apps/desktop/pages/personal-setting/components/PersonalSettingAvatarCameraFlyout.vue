@@ -94,7 +94,17 @@ const captureImage = () => {
 
   context.translate(canvasWidth, 0)
   context.scale(-1, 1)
-  context.drawImage(video, 0, 0, canvasHeight, canvasWidth)
+  context.drawImage(
+    video,
+    (video.videoWidth - video.videoHeight) / 2,
+    0,
+    video.videoHeight,
+    video.videoHeight,
+    0,
+    0,
+    canvasWidth,
+    canvasHeight,
+  )
 
   image.value = {
     content: canvas.toDataURL('image/png'),
@@ -116,19 +126,31 @@ const captureImage = () => {
     @action="$emit('avatarCaptured', image)"
     @close="stop"
   >
-    <div class="flex flex-col items-center gap-6">
-      <CommonIcon
-        v-if="!image"
-        :name="cameraIcon"
-        size="xl"
-        class="fixed top-32"
-      />
-
+    <div class="flex flex-col items-center gap-6 pb-10 pt-12">
       <canvas
-        v-show="cameraIsDisabled || image"
-        class="h-64 min-h-64 w-64 min-w-64 rounded-full border-[1px] border-black dark:border-white"
+        v-show="image"
+        class="h-64 min-h-64 w-64 min-w-64 rounded-full border border-black dark:border-white"
       >
       </canvas>
+
+      <div
+        v-if="!image"
+        class="relative h-64 min-h-64 w-64 min-w-64 overflow-hidden rounded-full border border-black bg-blue-200 text-stone-200 dark:border-white dark:bg-gray-700 dark:text-neutral-500"
+      >
+        <CommonIcon
+          :name="cameraIcon"
+          size="xl"
+          class="absolute top-1/2 -translate-y-1/2 ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2"
+        />
+        <!-- eslint-disable vuejs-accessibility/media-has-caption -->
+        <video
+          v-show="!cameraIsDisabled"
+          class="h-full w-full object-cover"
+          :aria-label="$t('Use the camera to take a photo for the avatar.')"
+          :srcObject="stream"
+          autoplay
+        />
+      </div>
 
       <CommonAlert v-if="cameraIsDisabled" variant="danger">
         {{
@@ -136,26 +158,17 @@ const captureImage = () => {
         }}
       </CommonAlert>
 
-      <!-- No Track required for video tag since it is static image     -->
-      <!--  eslint-disable vuejs-accessibility/media-has-caption     -->
-      <video
-        v-show="!cameraIsDisabled && !image"
-        :aria-label="$t('Use the camera to take a photo for the avatar.')"
-        :srcObject="stream"
-        autoplay
-        class="h-64 min-h-64 w-64 min-w-64 rounded-full border-[1px] border-black dark:border-white"
-      />
-
-      <div v-if="!cameraIsDisabled" class="flex flex-row gap-2">
+      <div v-else class="flex flex-row gap-2">
         <CommonButton
-          :disabled="!!image"
+          v-if="!image"
           variant="primary"
           size="medium"
           @click="captureImage"
-          >{{ $t('Capture From Camera') }}</CommonButton
         >
+          {{ $t('Capture From Camera') }}
+        </CommonButton>
         <CommonButton
-          :disabled="!image"
+          v-else
           variant="remove"
           size="medium"
           @click="discardImage"
