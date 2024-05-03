@@ -1,0 +1,19 @@
+#{config.product_name} התחברות ממכשיר חדש
+
+<div>שלום #{user.firstname},</div>
+<br>
+<div>נראה שנכנסת לחשבון שלך <b>באמצעות מכשיר חדש</b> ב-"#{user_device.created_at}":</div>
+<br>
+<div>
+המכשיר שלך: #{user_device.name}<br>
+המיקום שלך (יחסי): #{user_device.location}<br>
+ה-IP שלך: #{user_device.ip}<br>
+</div>
+<br>
+<div>המכשיר שלך נוסף לרשימת המכשירים המוכרים שלך, שאותה תוכל להציג כאן:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices </a></div>
+<br>
+<div>אם זה לא היית אתה, אנא הסר את המכשיר, שנה את סיסמת החשבון שלך ופנה למנהל המערכת שלך. ייתכן שמישהו קיבל גישה לא מורשית לחשבון שלך.</div>
+<br>
+<div>צוות #{config.product_name} שלך</div>
