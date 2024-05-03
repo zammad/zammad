@@ -5,7 +5,7 @@
     files:
       - Gemfile.lock
   paths:
-    - vendor/ruby
+    - vendor/bundle
 
 # Cache node_modules likewise
 .cache_nodejs: &cache_nodejs

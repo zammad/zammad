@@ -101,11 +101,20 @@
   before_script:
     - cp yarn.lock tmp/yarn.lock  # Save original state of yarn.lock
     - !reference [.scripts, yarn_install]
+    - !reference [.scripts, source_rvm]
   script:
     - echo "Checking if yarn.lock is up-to-date"
     - "if ! diff yarn.lock tmp/yarn.lock; then echo 'Error: yarn.lock is not up-to-date'; exit 1; fi"
     - echo "ESLint check…"
     - yarn lint
+    - yarn analyse:vite-bundle -t list -o ./tmp/vite-bundle-stats.yml
+    - .gitlab/verify_vite_bundle_size.rb
+    # Artifacts are stored for failed jobs
+  artifacts:
+    expire_in: 1 week
+    when: on_failure
+    paths:
+      - tmp/vite-bundle-stats.yml
 
 # Must be a separate job because it may fail and is only executed manually.
 'lint: orphaned ruby gems':

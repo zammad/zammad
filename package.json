@@ -14,7 +14,8 @@
     "test:ct": "CY_OPEN=true yarn --cwd ./.cypress cypress open --component --project ../ --config-file .cypress/cypress.config.mjs",
     "test:ci:ct": "CI=true yarn --cwd ./.cypress cypress run --component --project ../ --config-file .cypress/cypress.config.mjs --browser electron",
     "cypress:snapshots": "sh .cypress/visual-regression/snapshots.sh",
-    "cypress:install": "yarn --cwd ./.cypress install"
+    "cypress:install": "yarn --cwd ./.cypress install",
+    "analyse:vite-bundle": "npx vite-bundle-visualizer"
   },
   "engines": {
     "node": ">=18.12.0"
@@ -140,6 +141,7 @@
     "tiptap-text-direction": "^0.3.1",
     "ua-parser-js": "^1.0.37",
     "uuid": "^9.0.1",
+    "vite-bundle-visualizer": "^1.1.0",
     "vue": "^3.4.21",
     "vue-advanced-cropper": "^2.8.8",
     "vue-easy-lightbox": "1.19.0",
