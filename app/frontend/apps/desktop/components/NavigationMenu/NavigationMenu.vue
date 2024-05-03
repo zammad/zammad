@@ -10,6 +10,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import NavigationMenuHeader from '#desktop/components/NavigationMenu/NavigationMenuHeader.vue'
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
 import NavigationMenuFilter from '#desktop/components/NavigationMenu/NavigationMenuFilter.vue'
+import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
 import type { NavigationMenuCategory, NavigationMenuEntry } from './types'
 
 interface Props {
@@ -81,6 +82,9 @@ const allFilteredEntries = computed<NavigationMenuEntry[]>(() => {
     .flat()
     .filter((entry) => isMatchingFilter(entry))
 })
+
+const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
+  useTransitionCollapse()
 </script>
 
 <template>
@@ -112,7 +116,13 @@ const allFilteredEntries = computed<NavigationMenuEntry[]>(() => {
           @toggle-collapsed="toggleCategory"
         />
 
-        <Transition name="slide" mode="out-in">
+        <Transition
+          name="collapse"
+          :duration="collapseDuration"
+          @enter="collapseEnter"
+          @after-enter="collapseAfterEnter"
+          @leave="collapseLeave"
+        >
           <NavigationMenuList
             v-show="
               permittedEntries[category.label] &&

@@ -28,23 +28,17 @@
   }
 }
 
-.slide {
+.collapse {
   &-enter-active,
   &-leave-active {
     transition:
-      transform 0.2s ease,
-      max-height 0.2s ease-out;
+      height 0.2s ease-in-out,
+      opacity 0.2s ease;
+    overflow: hidden;
   }
 
   &-enter-from,
   &-leave-to {
-    transform: translateY(-5px);
-    max-height: 0; /* Set start value otherwise transition is not working */
-  }
-
-  &-enter-to,
-  &-leave-from {
-    transform: translateY(0);
-    max-height: 100px; /* We need a fix value here to work maybe custom property or via JS */
+    opacity: 0;
   }
 }

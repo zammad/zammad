@@ -18,6 +18,7 @@ import testFlags from '#shared/utils/testFlags.ts'
 import { i18n } from '#shared/i18n.ts'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import { useCommonSelect } from '#desktop/components/CommonSelect/useCommonSelect.ts'
+import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
 import type {
   FlatSelectOption,
   MatchedFlatSelectOption,
@@ -391,7 +392,8 @@ const highlightedOptions = computed(() =>
   }),
 )
 
-const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
+const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
+  useTransitionCollapse()
 </script>
 
 <template>
@@ -402,7 +404,13 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
     :focus="moveFocusToDropdown"
   />
   <Teleport to="body">
-    <Transition :duration="duration">
+    <Transition
+      name="collapse"
+      :duration="collapseDuration"
+      @enter="collapseEnter"
+      @after-enter="collapseAfterEnter"
+      @leave="collapseLeave"
+    >
       <div
         v-if="showDropdown"
         id="field-tree-select-input-dropdown"
@@ -410,14 +418,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
         class="fixed z-10 flex min-h-9 antialiased"
         :style="dropdownStyle"
       >
-        <div
-          class="select-dialog w-full"
-          role="menu"
-          :class="{
-            'select-dialog--up': hasDirectionUp,
-            'select-dialog--down': !hasDirectionUp,
-          }"
-        >
+        <div class="w-full" role="menu">
           <div
             class="flex h-full flex-col items-start border-x border-neutral-100 bg-white dark:border-gray-900 dark:bg-gray-500"
             :class="{
@@ -517,41 +518,3 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
     </Transition>
   </Teleport>
 </template>
-
-<style scoped>
-.select-dialog {
-  &--down {
-    @apply origin-top;
-  }
-
-  &--up {
-    @apply origin-bottom;
-  }
-}
-
-.v-enter-active {
-  .select-dialog {
-    @apply duration-200 ease-out;
-  }
-}
-
-.v-leave-active {
-  .select-dialog {
-    @apply duration-200 ease-in;
-  }
-}
-
-.v-enter-to,
-.v-leave-from {
-  .select-dialog {
-    @apply scale-y-100 opacity-100;
-  }
-}
-
-.v-enter-from,
-.v-leave-to {
-  .select-dialog {
-    @apply scale-y-50 opacity-0;
-  }
-}
-</style>

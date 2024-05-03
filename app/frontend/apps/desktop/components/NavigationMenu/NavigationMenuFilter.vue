@@ -38,6 +38,8 @@ watchEffect(() => {
 
   closeFilterField()
 })
+
+const duration = VITE_TEST_MODE ? undefined : 500
 </script>
 
 <template>
@@ -75,7 +77,7 @@ watchEffect(() => {
       type="text"
       role="searchbox"
     />
-    <Transition name="fade-out-delay">
+    <Transition name="fade-move" :duration="duration">
       <CommonButton
         v-if="filterFieldOpen"
         icon="x-lg"
@@ -87,32 +89,3 @@ watchEffect(() => {
     </Transition>
   </div>
 </template>
-
-<style scoped>
-.fade-out-delay {
-  &-enter-active,
-  &-leave-active {
-    transition: opacity 0.3s ease;
-  }
-
-  &-enter-active {
-    transition-delay: 50ms;
-  }
-
-  &-enter-from {
-    opacity: 0;
-  }
-
-  &-enter-to {
-    opacity: 1;
-  }
-
-  &-leave-from {
-    opacity: 1;
-  }
-
-  &-leave-to {
-    opacity: 0;
-  }
-}
-</style>
