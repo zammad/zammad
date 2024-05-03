@@ -48,7 +48,7 @@ module Avatar::TriggersSubscriptions
   def trigger_user_subscription
     return if ObjectLookup.by_id(object_lookup_id) != 'User'
 
-    Gql::Subscriptions::AccountAvatarUpdates.trigger(
+    Gql::Subscriptions::User::Current::AvatarUpdates.trigger(
       nil,
       arguments: {
         user_id: Gql::ZammadSchema.id_from_internal_id('User', o_id)

@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import LayoutSidebarFooterMenu from '../LayoutSidebarFooterMenu.vue'
 
 describe('layout sidebar footer menu', () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
     })

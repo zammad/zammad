@@ -1,0 +1,5 @@
+query userCurrentDeviceList {
+  userCurrentDeviceList {
+    ...userDeviceAttributes
+  }
+}

@@ -3,7 +3,7 @@
 import { getByRole } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import type { AutocompleteSearchUserEntry } from '#shared/graphql/types.ts'
@@ -12,7 +12,7 @@ import {
   waitForAutocompleteSearchAgentQueryCalls,
 } from '#shared/components/Form/fields/FieldAgent/graphql/queries/autocompleteSearch/agent.mocks.ts'
 
-import { waitForAccountOutOfOfficeMutationCalls } from '../graphql/mutations/accountOutOfOffice.mocks.ts'
+import { waitForUserCurrentOutOfOfficeMutationCalls } from '../graphql/mutations/userCurrentOutOfOffice.mocks.ts'
 
 const agentAutocompleteOptions = [
   {
@@ -42,7 +42,7 @@ const agentAutocompleteOptions = [
 describe('Out of Office page', () => {
   describe('when enabled', () => {
     beforeEach(() => {
-      mockAccount({
+      mockUserCurrent({
         id: '123',
         internalId: 1,
         firstname: 'John',
@@ -81,7 +81,7 @@ describe('Out of Office page', () => {
         'OOF holiday',
       )
 
-      mockAccount({
+      mockUserCurrent({
         firstname: 'John',
         lastname: 'Doe',
         outOfOffice: true,
@@ -111,7 +111,7 @@ describe('Out of Office page', () => {
       await view.events.clear(input)
       await view.events.type(input, 'new label')
 
-      mockAccount({
+      mockUserCurrent({
         firstname: 'John II',
         lastname: 'Doe',
         outOfOffice: true,
@@ -148,7 +148,7 @@ describe('Out of Office page', () => {
 
       await view.events.click(view.getByText('Save Out of Office'))
 
-      const calls = await waitForAccountOutOfOfficeMutationCalls()
+      const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
       expect(calls.at(-1)?.variables).toEqual(
         expect.objectContaining({
@@ -215,7 +215,7 @@ describe('Out of Office page', () => {
 
       await view.events.click(view.getByText('Save Out of Office'))
 
-      const calls = await waitForAccountOutOfOfficeMutationCalls()
+      const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
       expect(calls.at(-1)?.variables).toEqual(
         expect.objectContaining({
@@ -245,7 +245,7 @@ describe('Out of Office page', () => {
 
       await view.events.click(view.getByText('Save Out of Office'))
 
-      const calls = await waitForAccountOutOfOfficeMutationCalls()
+      const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
       expect(calls.at(-1)?.variables).toEqual(
         expect.objectContaining({
@@ -263,7 +263,7 @@ describe('Out of Office page', () => {
 
   describe('when disabled', () => {
     beforeEach(() => {
-      mockAccount({
+      mockUserCurrent({
         firstname: 'John',
         lastname: 'Doe',
         outOfOffice: false,
@@ -291,7 +291,7 @@ describe('Out of Office page', () => {
 
       await view.events.click(view.getByText('Save Out of Office'))
 
-      const calls = await waitForAccountOutOfOfficeMutationCalls()
+      const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
       expect(calls.at(-1)?.variables).toEqual(
         expect.objectContaining({
@@ -324,7 +324,7 @@ describe('Out of Office page', () => {
 
       await view.events.click(view.getByText('Save Out of Office'))
 
-      const calls = await waitForAccountOutOfOfficeMutationCalls()
+      const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
       expect(calls.at(-1)?.variables).toEqual(
         expect.objectContaining({
@@ -366,7 +366,7 @@ describe('Out of Office page', () => {
 
       await view.events.click(view.getByText('Save Out of Office'))
 
-      const calls = await waitForAccountOutOfOfficeMutationCalls()
+      const calls = await waitForUserCurrentOutOfOfficeMutationCalls()
 
       expect(calls.at(-1)?.variables).toEqual(
         expect.objectContaining({

@@ -1,8 +1,0 @@
-mutation accountAppearance($theme: EnumAppearanceTheme!) {
-  accountAppearance(theme: $theme) {
-    success
-    errors {
-      ...errors
-    }
-  }
-}

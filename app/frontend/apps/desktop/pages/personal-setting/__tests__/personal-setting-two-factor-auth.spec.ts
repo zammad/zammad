@@ -2,9 +2,9 @@
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
-import { waitForAccountTwoFactorRemoveMethodMutationCalls } from '#shared/entities/account/graphql/mutations/accountTwoFactorRemoveMethod.mocks.ts'
+import { waitForUserCurrentTwoFactorRemoveMethodMutationCalls } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethod.mocks.ts'
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
-import { waitForAccountTwoFactorSetDefaultMethodMutationCalls } from '#shared/entities/account/graphql/mutations/accountTwoFactorSetDefaultMethod.mocks.ts'
+import { waitForUserCurrentTwoFactorSetDefaultMethodMutationCalls } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorSetDefaultMethod.mocks.ts'
 import { visitViewAndMockPasswordConfirmation } from '#desktop/pages/personal-setting/__tests__/support/personal-setting-two-factor-auth.ts'
 import { getUserCurrentTwoFactorUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.mocks.ts'
 
@@ -75,7 +75,8 @@ describe('password personal settings', () => {
           /Remove Two-factor Authentication: Confirm Password/i,
         )
 
-        const calls = await waitForAccountTwoFactorRemoveMethodMutationCalls()
+        const calls =
+          await waitForUserCurrentTwoFactorRemoveMethodMutationCalls()
 
         expect(calls.at(-1)?.variables).toEqual({
           methodName: 'authenticator_app',
@@ -132,7 +133,7 @@ describe('password personal settings', () => {
         )
 
         const calls =
-          await waitForAccountTwoFactorSetDefaultMethodMutationCalls()
+          await waitForUserCurrentTwoFactorSetDefaultMethodMutationCalls()
 
         expect(calls.at(-1)?.variables).toEqual({ methodName: 'security_keys' })
       })

@@ -17,17 +17,17 @@ import { NotificationTypes } from '#shared/components/CommonNotifications/types.
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 
-import { useAccountAvatarDeleteMutation } from '#shared/entities/account/graphql/mutations/accountAvatarDelete.api.ts'
-import { useAccountAvatarAddMutation } from '#shared/entities/account/graphql/mutations/accountAvatarAdd.api.ts'
+import { useUserCurrentAvatarDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.api.ts'
+import { useUserCurrentAvatarAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.api.ts'
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import type {
-  AccountAvatarUpdatesSubscriptionVariables,
-  AccountAvatarUpdatesSubscription,
+  UserCurrentAvatarUpdatesSubscriptionVariables,
+  UserCurrentAvatarUpdatesSubscription,
   Avatar,
-  AccountAvatarListQuery,
+  UserCurrentAvatarListQuery,
 } from '#shared/graphql/types.ts'
 import type { ImageFileData } from '#shared/utils/files.ts'
 
@@ -45,11 +45,11 @@ import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 
 import {
-  useAccountAvatarListQuery,
-  AccountAvatarListDocument,
-} from '../graphql/queries/accountAvatarList.api.ts'
-import { useAccountAvatarSelectMutation } from '../graphql/mutations/accountAvatarSelect.api.ts'
-import { AccountAvatarUpdatesDocument } from '../graphql/subscriptions/accountAvatarUpdates.api.ts'
+  useUserCurrentAvatarListQuery,
+  UserCurrentAvatarListDocument,
+} from '../graphql/queries/userCurrentAvatarList.api.ts'
+import { useUserCurrentAvatarSelectMutation } from '../graphql/mutations/userCurrentAvatarSelect.api.ts'
+import { UserCurrentAvatarUpdatesDocument } from '../graphql/subscriptions/userCurrentAvatarUpdates.api.ts'
 
 const { user } = storeToRefs(useSessionStore())
 
@@ -62,31 +62,32 @@ const apiUrl = String(application.config.api_path)
 
 const { isTouchDevice } = useTouchDevice()
 
-const avatarListQuery = new QueryHandler(useAccountAvatarListQuery())
+const avatarListQuery = new QueryHandler(useUserCurrentAvatarListQuery())
 const avatarListQueryResult = avatarListQuery.result()
 const avatarListQueryLoading = avatarListQuery.loading()
 
 avatarListQuery.subscribeToMore<
-  AccountAvatarUpdatesSubscriptionVariables,
-  AccountAvatarUpdatesSubscription
+  UserCurrentAvatarUpdatesSubscriptionVariables,
+  UserCurrentAvatarUpdatesSubscription
 >({
-  document: AccountAvatarUpdatesDocument,
+  document: UserCurrentAvatarUpdatesDocument,
   variables: {
     userId: user.value?.id || '',
   },
   updateQuery: (prev, { subscriptionData }) => {
-    if (!subscriptionData.data?.accountAvatarUpdates.avatars) {
-      return null as unknown as AccountAvatarListQuery
+    if (!subscriptionData.data?.userCurrentAvatarUpdates.avatars) {
+      return null as unknown as UserCurrentAvatarListQuery
     }
 
     return {
-      accountAvatarList: subscriptionData.data.accountAvatarUpdates.avatars,
+      userCurrentAvatarList:
+        subscriptionData.data.userCurrentAvatarUpdates.avatars,
     }
   },
 })
 
 const currentAvatars = computed(() => {
-  return avatarListQueryResult.value?.accountAvatarList || []
+  return avatarListQueryResult.value?.userCurrentAvatarList || []
 })
 
 const currentDefaultAvatar = computed(() => {
@@ -128,7 +129,7 @@ const storeAvatar = (image: ImageFileData) => {
   if (!image) return
 
   const addAvatarMutation = new MutationHandler(
-    useAccountAvatarAddMutation({
+    useUserCurrentAvatarAddMutation({
       variables: {
         images: {
           original: image,
@@ -142,30 +143,30 @@ const storeAvatar = (image: ImageFileData) => {
       update: (cache, { data }) => {
         if (!data) return
 
-        const { accountAvatarAdd } = data
-        if (!accountAvatarAdd?.avatar) return
+        const { userCurrentAvatarAdd } = data
+        if (!userCurrentAvatarAdd?.avatar) return
 
         const newIdPresent = currentAvatars.value.find((avatar) => {
-          return avatar.id === accountAvatarAdd.avatar?.id
+          return avatar.id === userCurrentAvatarAdd.avatar?.id
         })
         if (newIdPresent) return
 
         modifyDefaultAvatarCache(cache, currentDefaultAvatar.value, false)
 
-        let existingAvatars = cache.readQuery<AccountAvatarListQuery>({
-          query: AccountAvatarListDocument,
+        let existingAvatars = cache.readQuery<UserCurrentAvatarListQuery>({
+          query: UserCurrentAvatarListDocument,
         })
 
         existingAvatars = {
           ...existingAvatars,
-          accountAvatarList: [
-            ...(existingAvatars?.accountAvatarList || []),
-            accountAvatarAdd.avatar,
+          userCurrentAvatarList: [
+            ...(existingAvatars?.userCurrentAvatarList || []),
+            userCurrentAvatarAdd.avatar,
           ],
         }
 
         cache.writeQuery({
-          query: AccountAvatarListDocument,
+          query: UserCurrentAvatarListDocument,
           data: existingAvatars,
         })
       },
@@ -176,9 +177,9 @@ const storeAvatar = (image: ImageFileData) => {
   )
 
   addAvatarMutation.send().then((data) => {
-    if (data?.accountAvatarAdd?.avatar) {
+    if (data?.userCurrentAvatarAdd?.avatar) {
       if (user.value) {
-        user.value.image = data.accountAvatarAdd.avatar.imageHash
+        user.value.image = data.userCurrentAvatarAdd.avatar.imageHash
       }
 
       notify({
@@ -226,7 +227,7 @@ const selectAvatar = (avatar: Avatar) => {
   modifyDefaultAvatarCache(cache, avatar, true)
 
   const accountAvatarSelectMutation = new MutationHandler(
-    useAccountAvatarSelectMutation(() => ({
+    useUserCurrentAvatarSelectMutation(() => ({
       variables: { id: avatar.id },
     })),
     {
@@ -252,7 +253,7 @@ const selectAvatar = (avatar: Avatar) => {
 
 const deleteAvatar = (avatar: Avatar) => {
   const accountAvatarDeleteMutation = new MutationHandler(
-    useAccountAvatarDeleteMutation(() => ({
+    useUserCurrentAvatarDeleteMutation(() => ({
       variables: { id: avatar.id },
       update(cache) {
         if (avatar.default) {

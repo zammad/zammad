@@ -14,7 +14,7 @@ import { getAllByTestId, getByLabelText, getByRole } from '@testing-library/vue'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
@@ -454,7 +454,7 @@ describe('ticket viewers inside a ticket', () => {
     const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } =
       mockTicketDetailViewGql()
 
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
       fullname: 'John Doe',
@@ -596,7 +596,7 @@ describe('ticket viewers inside a ticket', () => {
     const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } =
       mockTicketDetailViewGql()
 
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
       fullname: 'John Doe',
@@ -660,7 +660,7 @@ describe('ticket viewers inside a ticket', () => {
     const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } =
       mockTicketDetailViewGql()
 
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
       fullname: 'John Doe',
@@ -721,7 +721,7 @@ describe('ticket viewers inside a ticket', () => {
   })
 
   it('customer should only add live user entry but not subscribe', async () => {
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Braun',
       firstname: 'Nicole',
       fullname: 'Nicole Braun',

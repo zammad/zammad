@@ -1,8 +1,0 @@
-mutation accountTwoFactorSetDefaultMethod($methodName: String!) {
-  accountTwoFactorSetDefaultMethod(methodName: $methodName) {
-    success
-    errors {
-      ...errors
-    }
-  }
-}

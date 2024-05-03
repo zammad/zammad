@@ -2,12 +2,12 @@
 
 import { axe } from 'vitest-axe'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 describe('testing out of office a11y view', async () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       firstname: 'John',
       lastname: 'Doe',
       outOfOffice: true,

@@ -15,12 +15,12 @@ import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
 import type { TwoFactorConfigurationType } from '#desktop/components/TwoFactor/types.ts'
 import { useConfigurationTwoFactor } from '#desktop/entities/two-factor-configuration/composables/useConfigurationTwoFactor.ts'
-import { useAccountTwoFactorRemoveMethodMutation } from '#shared/entities/account/graphql/mutations/accountTwoFactorRemoveMethod.api.ts'
+import { useUserCurrentTwoFactorRemoveMethodMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethod.api.ts'
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { useAccountTwoFactorSetDefaultMethodMutation } from '#shared/entities/account/graphql/mutations/accountTwoFactorSetDefaultMethod.api.ts'
+import { useUserCurrentTwoFactorSetDefaultMethodMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorSetDefaultMethod.api.ts'
 import type { TwoFactorActionTypes } from '#shared/entities/two-factor/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -71,7 +71,7 @@ const openTwoFactorConfigurationFlyout = async (
 }
 
 const setDefaultTwoFactorMethod = new MutationHandler(
-  useAccountTwoFactorSetDefaultMethodMutation(),
+  useUserCurrentTwoFactorSetDefaultMethodMutation(),
   {
     errorNotificationMessage: __(
       'Could not set two-factor authentication method as default',
@@ -101,7 +101,7 @@ const submitTwoFactorDefaultMethod = (entity?: ObjectLike) => {
 }
 
 const removeTwoFactorMethod = new MutationHandler(
-  useAccountTwoFactorRemoveMethodMutation(),
+  useUserCurrentTwoFactorRemoveMethodMutation(),
   {
     errorNotificationMessage: __(
       'Could not remove two-factor authentication method.',
@@ -119,7 +119,7 @@ const submitTwoFactorMethodRemoval = async (entity?: ObjectLike) => {
         methodName: entity.name,
       })
 
-      if (data?.accountTwoFactorRemoveMethod?.success) {
+      if (data?.userCurrentTwoFactorRemoveMethod?.success) {
         notify({
           id: 'two-factor-method-removed',
           type: NotificationTypes.Success,

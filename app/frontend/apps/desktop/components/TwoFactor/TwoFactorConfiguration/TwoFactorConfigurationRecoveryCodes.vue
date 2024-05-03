@@ -2,13 +2,14 @@
 
 <script setup lang="ts">
 import { computed, onBeforeMount, ref } from 'vue'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import UserError from '#shared/errors/UserError.ts'
+import { useUserCurrentTwoFactorRecoveryCodesGenerateMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRecoveryCodesGenerate.api.ts'
+
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import { usePrintMode } from '#desktop/composables/usePrintMode.ts'
 import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { useAccountTwoFactorRecoveryCodesGenerateMutation } from '#shared/entities/account/graphql/mutations/accountTwoFactorRecoveryCodesGenerate.api.ts'
-import UserError from '#shared/errors/UserError.ts'
 import type { TwoFactorConfigurationComponentProps } from '../types.ts'
 
 const props = defineProps<TwoFactorConfigurationComponentProps>()
@@ -29,7 +30,7 @@ onBeforeMount(async () => {
   loading.value = true
 
   const recoveryCodesGenerate = new MutationHandler(
-    useAccountTwoFactorRecoveryCodesGenerateMutation(),
+    useUserCurrentTwoFactorRecoveryCodesGenerateMutation(),
     {
       errorNotificationMessage: __('Could not generate recovery codes'),
     },
@@ -39,7 +40,7 @@ onBeforeMount(async () => {
     .send()
     .then((data) => {
       recoveryCodes.value =
-        data?.accountTwoFactorRecoveryCodesGenerate?.recoveryCodes
+        data?.userCurrentTwoFactorRecoveryCodesGenerate?.recoveryCodes
     })
     .catch((err) => {
       if (err instanceof UserError) {

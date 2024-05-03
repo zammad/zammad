@@ -1,0 +1,8 @@
+mutation userCurrentOutOfOffice($input: OutOfOfficeInput!) {
+  userCurrentOutOfOffice(input: $input) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

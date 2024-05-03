@@ -20,9 +20,9 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/account/avatar',
-    name: 'AccountAvatar',
+    name: 'PersonalSettingAvatar',
     props: true,
-    component: () => import('./views/AccountAvatar.vue'),
+    component: () => import('./views/PersonalSettingAvatar.vue'),
     alias: '/profile/avatar',
     meta: {
       title: __('Avatar'),

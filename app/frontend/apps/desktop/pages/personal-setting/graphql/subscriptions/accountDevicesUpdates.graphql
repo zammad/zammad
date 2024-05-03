@@ -1,7 +1,0 @@
-subscription accountDevicesUpdates($userId: ID!) {
-  accountDevicesUpdates(userId: $userId) {
-    devices {
-      ...userDeviceAttributes
-    }
-  }
-}

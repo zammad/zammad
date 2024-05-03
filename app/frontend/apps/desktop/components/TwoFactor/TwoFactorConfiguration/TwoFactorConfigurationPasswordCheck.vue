@@ -7,7 +7,7 @@ import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { useAccountPasswordCheckMutation } from '#desktop/entities/account/graphql/mutations/accountPasswordCheck.api.ts'
+import { useUserCurrentPasswordCheckMutation } from '#desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.api.ts'
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import type { TwoFactorConfigurationComponentProps } from '../types.ts'
 
@@ -29,7 +29,7 @@ const schema = defineFormSchema([
 ])
 
 const passwordCheckMutation = new MutationHandler(
-  useAccountPasswordCheckMutation(),
+  useUserCurrentPasswordCheckMutation(),
   {
     errorNotificationMessage: __('Password could not be checked'),
   },

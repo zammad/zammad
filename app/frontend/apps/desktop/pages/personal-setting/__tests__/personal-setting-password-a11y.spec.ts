@@ -3,13 +3,13 @@
 import { axe } from 'vitest-axe'
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 describe('testing password a11y view', async () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       firstname: 'John',
       lastname: 'Doe',
     })

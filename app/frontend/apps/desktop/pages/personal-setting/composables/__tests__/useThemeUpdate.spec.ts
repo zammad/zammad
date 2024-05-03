@@ -1,15 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { EnumAppearanceTheme } from '#shared/graphql/types.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { flushPromises } from '@vue/test-utils'
 
-import { mockAccountAppearanceMutation } from '../../graphql/mutations/accountAppearance.mocks.ts'
+import { mockUserCurrentAppearanceMutation } from '../../graphql/mutations/userCurrentAppearance.mocks.ts'
 import { useThemeUpdate } from '../useThemeUpdate.ts'
 
 describe('useThemeUpdate', () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
       preferences: {},
@@ -23,11 +23,13 @@ describe('useThemeUpdate', () => {
   })
 
   it('should change theme value', async () => {
-    const mockerAccountAppearanceUpdate = mockAccountAppearanceMutation({
-      accountAppearance: {
-        success: true,
+    const mockerUserCurrentAppearanceUpdate = mockUserCurrentAppearanceMutation(
+      {
+        userCurrentAppearance: {
+          success: true,
+        },
       },
-    })
+    )
 
     const { currentTheme, savingTheme } = useThemeUpdate()
 
@@ -36,7 +38,7 @@ describe('useThemeUpdate', () => {
 
     expect(savingTheme.value).toBe(true)
 
-    const mockCalls = await mockerAccountAppearanceUpdate.waitForCalls()
+    const mockCalls = await mockerUserCurrentAppearanceUpdate.waitForCalls()
     expect(mockCalls).toHaveLength(1)
 
     await flushPromises()
@@ -45,15 +47,17 @@ describe('useThemeUpdate', () => {
   })
 
   it('should change theme value back to old value when update fails', async () => {
-    const mockerAccountAppearanceUpdate = mockAccountAppearanceMutation({
-      accountAppearance: {
-        errors: [
-          {
-            message: 'Failed to update.',
-          },
-        ],
+    const mockerUserCurrentAppearanceUpdate = mockUserCurrentAppearanceMutation(
+      {
+        userCurrentAppearance: {
+          errors: [
+            {
+              message: 'Failed to update.',
+            },
+          ],
+        },
       },
-    })
+    )
 
     const { currentTheme, savingTheme } = useThemeUpdate()
 
@@ -62,7 +66,7 @@ describe('useThemeUpdate', () => {
     expect(currentTheme.value).toBe(EnumAppearanceTheme.Dark)
     expect(savingTheme.value).toBe(true)
 
-    const mockCalls = await mockerAccountAppearanceUpdate.waitForCalls()
+    const mockCalls = await mockerUserCurrentAppearanceUpdate.waitForCalls()
     expect(mockCalls).toHaveLength(1)
 
     await flushPromises()

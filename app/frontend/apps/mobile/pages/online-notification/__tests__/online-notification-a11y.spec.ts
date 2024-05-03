@@ -10,7 +10,7 @@ import { OnlineNotificationsDocument } from '#shared/entities/online-notificatio
 import { OnlineNotificationsCountDocument } from '#shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.api.ts'
 import { waitUntil } from '#tests/support/utils.ts'
 import { mockOnlineNotificationQuery } from '#shared/entities/online-notification/__tests__/mocks/online-notification-mocks.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
 const testNotifications: any[] = [
   {
@@ -42,7 +42,7 @@ const testNotifications: any[] = [
 
 describe('testing online notification a11y', () => {
   beforeEach(async () => {
-    mockAccount({
+    mockUserCurrent({
       firstname: 'John',
       lastname: 'Doe',
     })

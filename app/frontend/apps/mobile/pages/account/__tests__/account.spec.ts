@@ -6,13 +6,13 @@ import type { LocalesQuery } from '#shared/graphql/types.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
-import { AccountLocaleDocument } from '#shared/entities/account/graphql/mutations/locale.api.ts'
+import { UserCurrentLocaleDocument } from '#shared/entities/user/current/graphql/mutations/userCurrentLocale.api.ts'
 
 const locales: Record<string, LocalesQuery['locales'][number]> = {
   de: {
@@ -33,7 +33,7 @@ const locales: Record<string, LocalesQuery['locales'][number]> = {
 
 describe('account page', () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
     })
@@ -72,8 +72,10 @@ describe('account page', () => {
 
     const view = await visitView('/account')
 
-    const mutationUpdate = mockGraphQLApi(AccountLocaleDocument).willResolve({
-      accountLocale: { success: true, errors: null },
+    const mutationUpdate = mockGraphQLApi(
+      UserCurrentLocaleDocument,
+    ).willResolve({
+      userCurrentLocale: { success: true, errors: null },
     })
     const translationsMock = mockGraphQLApi(TranslationsDocument).willResolve({
       translations: {
@@ -147,5 +149,5 @@ test('correctly redirects from hash-based routes', async () => {
   await visitView('/#profile/avatar')
   const router = getTestRouter()
   const route = router.currentRoute.value
-  expect(route.name).toBe('AccountAvatar')
+  expect(route.name).toBe('PersonalSettingAvatar')
 })

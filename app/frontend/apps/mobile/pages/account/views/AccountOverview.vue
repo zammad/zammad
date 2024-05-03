@@ -121,7 +121,7 @@ const { forceDesktop } = useForceDesktop()
         v-if="session.hasPermission('user_preferences.avatar')"
         :icon="{ name: 'person', size: 'base' }"
         icon-bg="bg-pink"
-        link="/account/avatar"
+        link="/user/current/avatar"
       >
         {{ $t('Avatar') }}
       </CommonSectionMenuLink>

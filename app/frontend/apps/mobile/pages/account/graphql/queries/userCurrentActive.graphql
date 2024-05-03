@@ -1,0 +1,12 @@
+query userCurrentAvatarActive {
+  userCurrentAvatarActive {
+    id
+    default
+    deletable
+    initial
+    imageFull
+    imageResize
+    createdAt
+    updatedAt
+  }
+}

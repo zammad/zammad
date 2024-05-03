@@ -3,7 +3,7 @@
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockLocalesQuery } from '#shared/graphql/queries/locales.mocks.ts'
-import { waitForAccountLocaleMutationCalls } from '#shared/entities/account/graphql/mutations/locale.mocks.ts'
+import { waitForUserCurrentLocaleMutationCalls } from '#shared/entities/user/current/graphql/mutations/userCurrentLocale.mocks.ts'
 
 describe('locale page', () => {
   it('can change language', async () => {
@@ -35,7 +35,7 @@ describe('locale page', () => {
 
     await view.events.click(arabicLocale)
 
-    const calls = await waitForAccountLocaleMutationCalls()
+    const calls = await waitForUserCurrentLocaleMutationCalls()
 
     expect(calls.at(-1)?.variables).toEqual({ locale: 'ar' })
 

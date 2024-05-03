@@ -2,11 +2,11 @@
 
 import type { ExtendedRenderResult } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import { mockAccountChangePasswordMutation } from '../graphql/mutations/accountChangePassword.mocks.ts'
+import { mockUserCurrentChangePasswordMutation } from '../graphql/mutations/userCurrentChangePassword.mocks.ts'
 
 const changePassword = async (
   view: ExtendedRenderResult,
@@ -31,7 +31,7 @@ const changePassword = async (
 
 describe('password personal settings', () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       firstname: 'John',
       lastname: 'Doe',
     })
@@ -70,8 +70,8 @@ describe('password personal settings', () => {
   })
 
   it('shows an error message when e.g. current password is incorrect', async () => {
-    mockAccountChangePasswordMutation({
-      accountChangePassword: {
+    mockUserCurrentChangePasswordMutation({
+      userCurrentChangePassword: {
         success: false,
         errors: [
           {
@@ -104,8 +104,8 @@ describe('password personal settings', () => {
   })
 
   it('shows a success message when password was changed successfully', async () => {
-    mockAccountChangePasswordMutation({
-      accountChangePassword: {
+    mockUserCurrentChangePasswordMutation({
+      userCurrentChangePassword: {
         success: true,
         errors: null,
       },

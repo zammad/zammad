@@ -4,13 +4,13 @@ import { within } from '@testing-library/vue'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import {
-  mockAccountPasswordCheckMutation,
-  waitForAccountPasswordCheckMutationCalls,
-} from '#desktop/entities/account/graphql/mutations/accountPasswordCheck.mocks.ts'
+  mockUserCurrentPasswordCheckMutation,
+  waitForUserCurrentPasswordCheckMutationCalls,
+} from '#desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.mocks.ts'
 import {
-  mockAccountTwoFactorGetMethodConfigurationQuery,
-  waitForAccountTwoFactorGetMethodConfigurationQueryCalls,
-} from '#shared/entities/account/graphql/mutations/accountTwoFactorGetMethodConfiguration.mocks.ts'
+  mockUserCurrentTwoFactorGetMethodConfigurationQuery,
+  waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls,
+} from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorGetMethodConfiguration.mocks.ts'
 
 describe('Two-factor Authentication - Password Check', () => {
   beforeEach(() => {
@@ -36,21 +36,21 @@ describe('Two-factor Authentication - Password Check', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorGetMethodConfigurationQuery({
-      accountTwoFactorGetMethodConfiguration: null,
+    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+      userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorGetMethodConfigurationQueryCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     expect(passwordInput).not.toBeInTheDocument()
 
@@ -76,15 +76,15 @@ describe('Two-factor Authentication - Password Check', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
     await view.events.type(passwordInput, 'test{Enter}')
 
-    await waitForAccountPasswordCheckMutationCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
 
     expect(passwordInput).not.toBeInTheDocument()
   })
@@ -128,8 +128,8 @@ describe('Two-factor Authentication - Password Check', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: false,
         errors: [
           {

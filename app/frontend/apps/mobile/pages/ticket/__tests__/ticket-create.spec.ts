@@ -11,7 +11,7 @@ import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { flushPromises } from '@vue/test-utils'
@@ -325,7 +325,7 @@ describe('Creating new ticket as customer', () => {
   })
 
   it('does not show the organization field without secondary organizations', async () => {
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
       organization: defaultOrganization(),
@@ -345,7 +345,7 @@ describe('Creating new ticket as customer', () => {
   })
 
   it('does show the organization field with secondary organizations', async () => {
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
       organization: defaultOrganization(),

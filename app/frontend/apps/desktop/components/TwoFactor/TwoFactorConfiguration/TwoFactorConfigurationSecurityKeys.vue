@@ -13,10 +13,10 @@ import {
   MutationHandler,
   QueryHandler,
 } from '#shared/server/apollo/handler/index.ts'
-import { useAccountTwoFactorGetMethodConfigurationQuery } from '#shared/entities/account/graphql/mutations/accountTwoFactorGetMethodConfiguration.api.ts'
-import { useAccountTwoFactorInitiateMethodConfigurationLazyQuery } from '#shared/entities/account/graphql/queries/accountTwoFactorInitiateMethodConfiguration.api.ts'
-import { useAccountTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/account/graphql/mutations/accountTwoFactorVerifyMethodConfiguration.api.ts'
-import { useAccountTwoFactorRemoveMethodCredentialsMutation } from '#shared/entities/account/graphql/mutations/accountTwoFactorRemoveMethodCredentials.api.ts'
+import { useUserCurrentTwoFactorGetMethodConfigurationQuery } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorGetMethodConfiguration.api.ts'
+import { useUserCurrentTwoFactorInitiateMethodConfigurationLazyQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.api.ts'
+import { useUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.api.ts'
+import { useUserCurrentTwoFactorRemoveMethodCredentialsMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethodCredentials.api.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -73,7 +73,7 @@ const footerActionOptions = computed(() => {
 })
 
 const configurationQuery = new QueryHandler(
-  useAccountTwoFactorGetMethodConfigurationQuery({
+  useUserCurrentTwoFactorGetMethodConfigurationQuery({
     methodName: twoFactorPlugin.name,
   }),
   {
@@ -83,7 +83,8 @@ const configurationQuery = new QueryHandler(
 
 const configuration = computed<ObjectLike>(
   () =>
-    configurationQuery.result().value?.accountTwoFactorGetMethodConfiguration,
+    configurationQuery.result().value
+      ?.userCurrentTwoFactorGetMethodConfiguration,
 )
 
 const credentials = computed<ObjectLike[]>(
@@ -113,7 +114,7 @@ const tableItems = computed(() =>
 const { notify } = useNotifications()
 
 const removeCredentialsMutation = new MutationHandler(
-  useAccountTwoFactorRemoveMethodCredentialsMutation(),
+  useUserCurrentTwoFactorRemoveMethodCredentialsMutation(),
   {
     errorNotificationMessage: __(
       'Could not remove two-factor authentication method.',
@@ -136,7 +137,7 @@ const tableActions: MenuItem[] = [
       })
 
       if (
-        !removeCredentialsResult?.accountTwoFactorRemoveMethodCredentials
+        !removeCredentialsResult?.userCurrentTwoFactorRemoveMethodCredentials
           ?.success
       )
         return
@@ -159,7 +160,7 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 
 const initiateQuery = new QueryHandler(
-  useAccountTwoFactorInitiateMethodConfigurationLazyQuery(
+  useUserCurrentTwoFactorInitiateMethodConfigurationLazyQuery(
     {
       methodName: twoFactorPlugin.name,
     },
@@ -177,7 +178,7 @@ const setupCredential = async () => {
   })
 
   const initiateData =
-    initiateQueryResult.data?.accountTwoFactorInitiateMethodConfiguration
+    initiateQueryResult.data?.userCurrentTwoFactorInitiateMethodConfiguration
 
   if (!initiateData)
     throw new Error(
@@ -192,7 +193,7 @@ const setupCredential = async () => {
 }
 
 const verifyMutation = new MutationHandler(
-  useAccountTwoFactorVerifyMethodConfigurationMutation(),
+  useUserCurrentTwoFactorVerifyMethodConfigurationMutation(),
 )
 
 const verifyCredential = async (
@@ -209,7 +210,7 @@ const verifyCredential = async (
         type: 'registration',
       },
     })
-  )?.accountTwoFactorVerifyMethodConfiguration
+  )?.userCurrentTwoFactorVerifyMethodConfiguration
 
   return verifyResult
 }

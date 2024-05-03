@@ -2,14 +2,14 @@
 
 import { getByTestId } from '@testing-library/vue'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
 import { getTicketOverviewStorage } from '#mobile/entities/ticket/helpers/ticketOverviewStorage.ts'
 
 describe('home page', () => {
   beforeEach(() => {
-    mockAccount({ id: '666' })
+    mockUserCurrent({ id: '666' })
     mockTicketOverviews()
   })
 

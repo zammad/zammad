@@ -12,7 +12,7 @@ import { OnlineNotificationMarkAllAsSeenDocument } from '#shared/entities/online
 import { OnlineNotificationDeleteDocument } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
 import { mockOnlineNotificationQuery } from '#shared/entities/online-notification/__tests__/mocks/online-notification-mocks.ts'
 import { waitUntil } from '#tests/support/utils.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
 let onlineNotificationCountSubscription: ExtendedIMockSubscription
 
@@ -29,7 +29,7 @@ const triggerNextOnlineNotificationCount = async (newCount = 0) => {
 
 describe('selecting a online notification', () => {
   beforeEach(async () => {
-    mockAccount({
+    mockUserCurrent({
       firstname: 'John',
       lastname: 'Doe',
     })

@@ -72,11 +72,11 @@ describe('guided setup admin user creation', () => {
       await view.events.type(passwordField, 'planetexpress')
       await view.events.type(confirmPasswordField, 'planetexpress')
 
-      const createAccountButton = view.getByRole('button', {
+      const createUserCurrentButton = view.getByRole('button', {
         name: 'Create account',
       })
 
-      await view.events.click(createAccountButton)
+      await view.events.click(createUserCurrentButton)
 
       await vi.waitFor(() => {
         expect(

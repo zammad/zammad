@@ -1,0 +1,19 @@
+import * as Types from '#shared/graphql/types.ts';
+
+import gql from 'graphql-tag';
+import * as VueApolloComposable from '@vue/apollo-composable';
+import * as VueCompositionApi from 'vue';
+export type ReactiveFunction<TParam> = () => TParam;
+
+export const UserCurrentTwoFactorInitiateMethodConfigurationDocument = gql`
+    query userCurrentTwoFactorInitiateMethodConfiguration($methodName: EnumTwoFactorAuthenticationMethod!) {
+  userCurrentTwoFactorInitiateMethodConfiguration(methodName: $methodName)
+}
+    `;
+export function useUserCurrentTwoFactorInitiateMethodConfigurationQuery(variables: Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables | VueCompositionApi.Ref<Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables> | ReactiveFunction<Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>(UserCurrentTwoFactorInitiateMethodConfigurationDocument, variables, options);
+}
+export function useUserCurrentTwoFactorInitiateMethodConfigurationLazyQuery(variables?: Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables | VueCompositionApi.Ref<Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables> | ReactiveFunction<Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>(UserCurrentTwoFactorInitiateMethodConfigurationDocument, variables, options);
+}
+export type UserCurrentTwoFactorInitiateMethodConfigurationQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>;

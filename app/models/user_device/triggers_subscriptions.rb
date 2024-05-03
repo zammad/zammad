@@ -11,7 +11,7 @@ module UserDevice::TriggersSubscriptions
   private
 
   def trigger_subscriptions
-    Gql::Subscriptions::AccountDevicesUpdates.trigger(
+    Gql::Subscriptions::User::Current::DevicesUpdates.trigger(
       nil,
       arguments: {
         user_id: Gql::ZammadSchema.id_from_internal_id('User', user_id)

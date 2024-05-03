@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import '#tests/graphql/builders/mocks.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import { EnumAppearanceTheme } from '#shared/graphql/types.ts'
@@ -11,7 +11,7 @@ import AvatarMenuAppearanceItem from '../AvatarMenuAppearanceItem.vue'
 
 describe('avatar menu apperance item', () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
       preferences: {},

@@ -1,0 +1,8 @@
+mutation userCurrentAppearance($theme: EnumAppearanceTheme!) {
+  userCurrentAppearance(theme: $theme) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

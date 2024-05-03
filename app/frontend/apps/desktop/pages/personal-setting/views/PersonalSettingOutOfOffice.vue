@@ -23,7 +23,7 @@ import {
 } from '#shared/components/CommonNotifications/index.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { OutOfOfficeInput } from '#shared/graphql/types.ts'
-import { useAccountOutOfOfficeMutation } from '../graphql/mutations/accountOutOfOffice.api.ts'
+import { useUserCurrentOutOfOfficeMutation } from '../graphql/mutations/userCurrentOutOfOffice.api.ts'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import type { OutOfOfficeFormData } from '../types/out-of-office.ts'
 
@@ -149,7 +149,7 @@ const showSuccessNotification = () => {
 }
 
 const outOfOfficeMutation = new MutationHandler(
-  useAccountOutOfOfficeMutation(),
+  useUserCurrentOutOfOfficeMutation(),
   {
     errorNotificationMessage: __('Out of Office settings could not be saved.'),
   },

@@ -4,10 +4,10 @@ import { axe } from 'vitest-axe'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import { mockAccountDeviceListQuery } from '../graphql/queries/accountDeviceList.mocks.ts'
+import { mockUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.mocks.ts'
 
 const generateFingerprintSpy = vi.fn()
 
@@ -20,7 +20,7 @@ vi.mock('#shared/utils/browser.ts', () => {
   }
 })
 
-const accountDeviceList = [
+const userCurrentDeviceList = [
   {
     id: '1',
     name: 'Chrome on Mac',
@@ -39,14 +39,14 @@ const accountDeviceList = [
 
 describe('testing devices a11y view', async () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       firstname: 'John',
       lastname: 'Doe',
     })
 
     mockPermissions(['user_preferences.device'])
 
-    mockAccountDeviceListQuery({ accountDeviceList })
+    mockUserCurrentDeviceListQuery({ userCurrentDeviceList })
   })
 
   it('has no accessibility violations', async () => {

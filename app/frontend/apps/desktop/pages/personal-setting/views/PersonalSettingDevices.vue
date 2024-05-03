@@ -12,9 +12,9 @@ import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type {
-  AccountDevicesUpdatesSubscription,
-  AccountDevicesUpdatesSubscriptionVariables,
-  AccountDeviceListQuery,
+  UserCurrentDevicesUpdatesSubscription,
+  UserCurrentDevicesUpdatesSubscriptionVariables,
+  UserCurrentDeviceListQuery,
   UserDevice,
 } from '#shared/graphql/types.ts'
 
@@ -28,9 +28,9 @@ import type {
 } from '#desktop/components/CommonSimpleTable/types.ts'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
-import { useAccountDeviceListQuery } from '../graphql/queries/accountDeviceList.api.ts'
-import { useAccountDeviceDeleteMutation } from '../graphql/mutations/accountDeviceDelete.api.ts'
-import { AccountDevicesUpdatesDocument } from '../graphql/subscriptions/accountDevicesUpdates.api.ts'
+import { useUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.api.ts'
+import { useUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.api.ts'
+import { UserCurrentDevicesUpdatesDocument } from '../graphql/subscriptions/userCurrentDevicesUpdates.api.ts'
 
 const { user } = storeToRefs(useSessionStore())
 
@@ -40,25 +40,26 @@ const { notify } = useNotifications()
 
 const { fingerprint } = useFingerprint()
 
-const deviceListQuery = new QueryHandler(useAccountDeviceListQuery())
+const deviceListQuery = new QueryHandler(useUserCurrentDeviceListQuery())
 const deviceListQueryResult = deviceListQuery.result()
 const deviceListQueryLoading = deviceListQuery.loading()
 
 deviceListQuery.subscribeToMore<
-  AccountDevicesUpdatesSubscriptionVariables,
-  AccountDevicesUpdatesSubscription
+  UserCurrentDevicesUpdatesSubscriptionVariables,
+  UserCurrentDevicesUpdatesSubscription
 >({
-  document: AccountDevicesUpdatesDocument,
+  document: UserCurrentDevicesUpdatesDocument,
   variables: {
     userId: user.value?.id || '',
   },
   updateQuery: (prev, { subscriptionData }) => {
-    if (!subscriptionData.data?.accountDevicesUpdates.devices) {
-      return null as unknown as AccountDeviceListQuery
+    if (!subscriptionData.data?.userCurrentDevicesUpdates.devices) {
+      return null as unknown as UserCurrentDeviceListQuery
     }
 
     return {
-      accountDeviceList: subscriptionData.data.accountDevicesUpdates.devices,
+      userCurrentDeviceList:
+        subscriptionData.data.userCurrentDevicesUpdates.devices,
     }
   },
 })
@@ -67,7 +68,7 @@ const { waitForVariantConfirmation } = useConfirmation()
 
 const deleteDevice = (device: UserDevice) => {
   const deviceDeleteMutation = new MutationHandler(
-    useAccountDeviceDeleteMutation(() => ({
+    useUserCurrentDeviceDeleteMutation(() => ({
       variables: {
         deviceId: device.id,
       },
@@ -125,7 +126,7 @@ const tableActions: MenuItem[] = [
 ]
 
 const currentDevices = computed<TableItem[]>(() => {
-  return (deviceListQueryResult.value?.accountDeviceList || []).map(
+  return (deviceListQueryResult.value?.userCurrentDeviceList || []).map(
     (device) => {
       return {
         ...device,

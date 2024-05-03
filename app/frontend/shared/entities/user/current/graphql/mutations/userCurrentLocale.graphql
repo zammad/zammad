@@ -1,0 +1,8 @@
+mutation userCurrentLocale($locale: String!) {
+  userCurrentLocale(locale: $locale) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

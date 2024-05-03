@@ -4,19 +4,19 @@ import { within } from '@testing-library/vue'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import {
-  mockAccountPasswordCheckMutation,
-  waitForAccountPasswordCheckMutationCalls,
-} from '#desktop/entities/account/graphql/mutations/accountPasswordCheck.mocks.ts'
+  mockUserCurrentPasswordCheckMutation,
+  waitForUserCurrentPasswordCheckMutationCalls,
+} from '#desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.mocks.ts'
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 import {
-  mockAccountTwoFactorRecoveryCodesGenerateMutation,
-  waitForAccountTwoFactorRecoveryCodesGenerateMutationCalls,
-} from '#shared/entities/account/graphql/mutations/accountTwoFactorRecoveryCodesGenerate.mocks.ts'
+  mockUserCurrentTwoFactorRecoveryCodesGenerateMutation,
+  waitForUserCurrentTwoFactorRecoveryCodesGenerateMutationCalls,
+} from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRecoveryCodesGenerate.mocks.ts'
 import {
-  mockAccountTwoFactorGetMethodConfigurationQuery,
-  waitForAccountTwoFactorGetMethodConfigurationQueryCalls,
-} from '#shared/entities/account/graphql/mutations/accountTwoFactorGetMethodConfiguration.mocks.ts'
-import { mockAccountTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/account/graphql/mutations/accountTwoFactorVerifyMethodConfiguration.mocks.ts'
+  mockUserCurrentTwoFactorGetMethodConfigurationQuery,
+  waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls,
+} from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorGetMethodConfiguration.mocks.ts'
+import { mockUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.mocks.ts'
 import { getUserCurrentTwoFactorUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.mocks.ts'
 
 const recoveryCodes = [
@@ -85,14 +85,14 @@ describe('Two-factor Authentication - Recovery Codes', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorRecoveryCodesGenerateMutation({
-      accountTwoFactorRecoveryCodesGenerate: {
+    mockUserCurrentTwoFactorRecoveryCodesGenerateMutation({
+      userCurrentTwoFactorRecoveryCodesGenerate: {
         recoveryCodes,
       },
     })
@@ -100,8 +100,8 @@ describe('Two-factor Authentication - Recovery Codes', () => {
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorRecoveryCodesGenerateMutationCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorRecoveryCodesGenerateMutationCalls()
 
     expect(flyout).toHaveAccessibleName('Generate Recovery Codes: Save Codes')
 
@@ -133,21 +133,21 @@ describe('Two-factor Authentication - Recovery Codes', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorGetMethodConfigurationQuery({
-      accountTwoFactorGetMethodConfiguration: null,
+    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+      userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorGetMethodConfigurationQueryCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     await view.events.click(view.getByRole('button', { name: 'Set Up' }))
 
@@ -165,8 +165,8 @@ describe('Two-factor Authentication - Recovery Codes', () => {
       create: vi.fn(),
     }))
 
-    mockAccountTwoFactorVerifyMethodConfigurationMutation({
-      accountTwoFactorVerifyMethodConfiguration: {
+    mockUserCurrentTwoFactorVerifyMethodConfigurationMutation({
+      userCurrentTwoFactorVerifyMethodConfiguration: {
         recoveryCodes,
       },
     })
@@ -212,14 +212,14 @@ describe('Two-factor Authentication - Recovery Codes', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorRecoveryCodesGenerateMutation({
-      accountTwoFactorRecoveryCodesGenerate: {
+    mockUserCurrentTwoFactorRecoveryCodesGenerateMutation({
+      userCurrentTwoFactorRecoveryCodesGenerate: {
         recoveryCodes,
       },
     })
@@ -227,8 +227,8 @@ describe('Two-factor Authentication - Recovery Codes', () => {
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorRecoveryCodesGenerateMutationCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorRecoveryCodesGenerateMutationCalls()
 
     const printArea = flyoutContent.getByTestId('print-area')
 
@@ -273,14 +273,14 @@ describe('Two-factor Authentication - Recovery Codes', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorRecoveryCodesGenerateMutation({
-      accountTwoFactorRecoveryCodesGenerate: {
+    mockUserCurrentTwoFactorRecoveryCodesGenerateMutation({
+      userCurrentTwoFactorRecoveryCodesGenerate: {
         recoveryCodes,
       },
     })
@@ -288,8 +288,8 @@ describe('Two-factor Authentication - Recovery Codes', () => {
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorRecoveryCodesGenerateMutationCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorRecoveryCodesGenerateMutationCalls()
 
     await view.events.click(view.getByRole('button', { name: 'Copy Codes' }))
 

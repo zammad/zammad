@@ -20,7 +20,7 @@ import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import { useCheckChangePassword } from '../composables/useCheckChangePassword.ts'
 
 import type { ChangePasswordFormData } from '../types/change-password.ts'
-import { useAccountChangePasswordMutation } from '../graphql/mutations/accountChangePassword.api.ts'
+import { useUserCurrentChangePasswordMutation } from '../graphql/mutations/userCurrentChangePassword.api.ts'
 
 defineOptions({
   beforeRouteEnter() {
@@ -88,7 +88,7 @@ const { breadcrumbItems } = useBreadcrumb(__('Password'))
 const { notify } = useNotifications()
 
 const changePasswordMutation = new MutationHandler(
-  useAccountChangePasswordMutation(),
+  useUserCurrentChangePasswordMutation(),
   {
     errorNotificationMessage: __('Password could not be changed.'),
   },
@@ -101,7 +101,7 @@ const submitForm = async (formData: FormSubmitData<ChangePasswordFormData>) => {
       newPassword: formData.new_password as string,
     })
     .then((data) => {
-      if (data?.accountChangePassword?.success) {
+      if (data?.userCurrentChangePassword?.success) {
         notify({
           id: 'password-changed',
           type: NotificationTypes.Success,

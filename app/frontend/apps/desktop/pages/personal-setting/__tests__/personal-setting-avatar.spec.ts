@@ -5,19 +5,19 @@ import * as VueUse from '@vueuse/core'
 import { within } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import {
-  mockAccountAvatarDeleteMutation,
-  waitForAccountAvatarDeleteMutationCalls,
-} from '#shared/entities/account/graphql/mutations/accountAvatarDelete.mocks.ts'
-import { mockAccountAvatarAddMutation } from '#shared/entities/account/graphql/mutations/accountAvatarAdd.mocks.ts'
-import { mockAccountAvatarListQuery } from '../graphql/queries/accountAvatarList.mocks.ts'
+  mockUserCurrentAvatarDeleteMutation,
+  waitForUserCurrentAvatarDeleteMutationCalls,
+} from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.mocks.ts'
+import { mockUserCurrentAvatarAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.mocks.ts'
+import { mockUserCurrentAvatarListQuery } from '../graphql/queries/userCurrentAvatarList.mocks.ts'
 import {
-  mockAccountAvatarSelectMutation,
-  waitForAccountAvatarSelectMutationCalls,
-} from '../graphql/mutations/accountAvatarSelect.mocks.ts'
+  mockUserCurrentAvatarSelectMutation,
+  waitForUserCurrentAvatarSelectMutationCalls,
+} from '../graphql/mutations/userCurrentAvatarSelect.mocks.ts'
 
 vi.mock('vue-advanced-cropper', () => {
   const Cropper = defineComponent({
@@ -41,15 +41,15 @@ vi.mock('vue-advanced-cropper', () => {
 
 describe('avatar personal settings', () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       firstname: 'John',
       lastname: 'Doe',
     })
   })
 
   it('shows all the avatars of the current user', async () => {
-    mockAccountAvatarListQuery({
-      accountAvatarList: [
+    mockUserCurrentAvatarListQuery({
+      userCurrentAvatarList: [
         {
           default: true,
           initial: true,
@@ -80,8 +80,8 @@ describe('avatar personal settings', () => {
   })
 
   it('can select an avatar to be the new default one', async () => {
-    mockAccountAvatarListQuery({
-      accountAvatarList: [
+    mockUserCurrentAvatarListQuery({
+      userCurrentAvatarList: [
         {
           default: true,
           initial: true,
@@ -107,15 +107,15 @@ describe('avatar personal settings', () => {
 
     expect(avatars[0]).toHaveClass('avatar-selected')
 
-    mockAccountAvatarSelectMutation({
-      accountAvatarSelect: {
+    mockUserCurrentAvatarSelectMutation({
+      userCurrentAvatarSelect: {
         success: true,
       },
     })
 
     await view.events.click(avatars[1])
 
-    const calls = await waitForAccountAvatarSelectMutationCalls()
+    const calls = await waitForUserCurrentAvatarSelectMutationCalls()
     expect(calls).toHaveLength(1)
 
     avatars = await mainContent.findAllByTestId('common-avatar')
@@ -125,8 +125,8 @@ describe('avatar personal settings', () => {
   })
 
   it('can delete an avatar', async () => {
-    mockAccountAvatarListQuery({
-      accountAvatarList: [
+    mockUserCurrentAvatarListQuery({
+      userCurrentAvatarList: [
         {
           default: true,
           initial: true,
@@ -152,8 +152,8 @@ describe('avatar personal settings', () => {
     })
     expect(deleteButton).toBeInTheDocument()
 
-    mockAccountAvatarDeleteMutation({
-      accountAvatarDelete: {
+    mockUserCurrentAvatarDeleteMutation({
+      userCurrentAvatarDelete: {
         success: true,
       },
     })
@@ -168,7 +168,7 @@ describe('avatar personal settings', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Delete Object' }))
 
-    const calls = await waitForAccountAvatarDeleteMutationCalls()
+    const calls = await waitForUserCurrentAvatarDeleteMutationCalls()
     expect(calls).toHaveLength(1)
 
     avatars = await mainContent.findAllByTestId('common-avatar')
@@ -178,8 +178,8 @@ describe('avatar personal settings', () => {
   })
 
   it('upload new avatar by file', async () => {
-    mockAccountAvatarListQuery({
-      accountAvatarList: [
+    mockUserCurrentAvatarListQuery({
+      userCurrentAvatarList: [
         {
           default: true,
           initial: true,
@@ -216,8 +216,8 @@ describe('avatar personal settings', () => {
       await flyoutContent.findByTestId('common-avatar'),
     ).toBeInTheDocument()
 
-    mockAccountAvatarAddMutation({
-      accountAvatarAdd: {
+    mockUserCurrentAvatarAddMutation({
+      userCurrentAvatarAdd: {
         avatar: {
           default: true,
           initial: true,
@@ -275,8 +275,8 @@ describe('avatar personal settings', () => {
     })
 
     beforeEach(() => {
-      mockAccountAvatarListQuery({
-        accountAvatarList: [
+      mockUserCurrentAvatarListQuery({
+        userCurrentAvatarList: [
           {
             default: true,
             initial: true,
@@ -318,8 +318,8 @@ describe('avatar personal settings', () => {
 
       await view.events.click(captureButton)
 
-      mockAccountAvatarAddMutation({
-        accountAvatarAdd: {
+      mockUserCurrentAvatarAddMutation({
+        userCurrentAvatarAdd: {
           avatar: {
             default: true,
             initial: false,

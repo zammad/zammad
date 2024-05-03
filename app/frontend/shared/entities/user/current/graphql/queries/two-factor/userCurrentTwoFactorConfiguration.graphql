@@ -1,0 +1,10 @@
+query userCurrentTwoFactorConfiguration {
+  userCurrentTwoFactorConfiguration {
+    recoveryCodesExist
+    enabledAuthenticationMethods {
+      configured
+      default
+      authenticationMethod
+    }
+  }
+}

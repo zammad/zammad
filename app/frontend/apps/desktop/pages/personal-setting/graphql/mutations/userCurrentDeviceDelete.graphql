@@ -1,0 +1,8 @@
+mutation userCurrentDeviceDelete($deviceId: ID!) {
+  userCurrentDeviceDelete(deviceId: $deviceId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

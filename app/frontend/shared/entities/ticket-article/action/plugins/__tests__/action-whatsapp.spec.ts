@@ -5,7 +5,7 @@
 //   TicketById,
 // } from '#shared/entities/ticket/types.ts'
 // import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-// import { mockAccount } from '#tests/support/mock-account.ts'
+// import { mockUserCurrent } from '#tests/support/mock-account.ts'
 // import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 // import { setupView } from '#tests/support/mock-user.ts'
 // import { nextTick } from 'vue'

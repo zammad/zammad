@@ -10,12 +10,15 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { useAccountAppearanceMutation } from '../graphql/mutations/accountAppearance.api.ts'
+import { useUserCurrentAppearanceMutation } from '../graphql/mutations/userCurrentAppearance.api.ts'
 
 export const useThemeUpdate = (showSuccessNotification = false) => {
-  const setThemeMutation = new MutationHandler(useAccountAppearanceMutation(), {
-    errorNotificationMessage: __('The appearance could not be updated.'),
-  })
+  const setThemeMutation = new MutationHandler(
+    useUserCurrentAppearanceMutation(),
+    {
+      errorNotificationMessage: __('The appearance could not be updated.'),
+    },
+  )
 
   const savingTheme = ref(false)
 

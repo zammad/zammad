@@ -41,8 +41,8 @@ describe('calling queries without mocking document works correctly', () => {
     expect(mocked).toMatchObject(data!)
     expect(data).not.toMatchObject(mocked)
 
-    expect(mocked).toHaveProperty('accountAvatarActive.updatedBy')
-    expect(data).not.toHaveProperty('accountAvatarActive.updatedBy')
+    expect(mocked).toHaveProperty('userCurrentAvatarActive.updatedBy')
+    expect(data).not.toHaveProperty('userCurrentAvatarActive.updatedBy')
   })
 
   it('when user is already created, return it if variable is referencing it', async () => {
@@ -93,7 +93,7 @@ describe('calling queries with mocked data works correctly', () => {
     const exampleImage = 'https://example.com/image.png'
 
     mockGraphQLResult<TestAvatarQuery>(TestAvatarDocument, {
-      accountAvatarActive: {
+      userCurrentAvatarActive: {
         imageFull: exampleImage,
       },
     })
@@ -102,13 +102,19 @@ describe('calling queries with mocked data works correctly', () => {
     const { data } = await handler.query()
     const { data: mock } = handler.getMockedData()
 
-    expect(data).toHaveProperty('accountAvatarActive.imageFull', exampleImage)
-    expect(mock).toHaveProperty('accountAvatarActive.imageFull', exampleImage)
+    expect(data).toHaveProperty(
+      'userCurrentAvatarActive.imageFull',
+      exampleImage,
+    )
+    expect(mock).toHaveProperty(
+      'userCurrentAvatarActive.imageFull',
+      exampleImage,
+    )
 
     const exampleImage2 = 'https://example.com/image2.png'
 
     mockGraphQLResult<TestAvatarQuery>(TestAvatarDocument, {
-      accountAvatarActive: {
+      userCurrentAvatarActive: {
         imageFull: exampleImage2,
       },
     })
@@ -116,8 +122,14 @@ describe('calling queries with mocked data works correctly', () => {
     const { data: data2 } = await handler.query({ fetchPolicy: 'network-only' })
     const { data: mock2 } = handler.getMockedData()
 
-    expect(mock2).toHaveProperty('accountAvatarActive.imageFull', exampleImage2)
-    expect(data2).toHaveProperty('accountAvatarActive.imageFull', exampleImage2)
+    expect(mock2).toHaveProperty(
+      'userCurrentAvatarActive.imageFull',
+      exampleImage2,
+    )
+    expect(data2).toHaveProperty(
+      'userCurrentAvatarActive.imageFull',
+      exampleImage2,
+    )
   })
 
   it('query correctly uses default data when updating the same object', async () => {
@@ -126,7 +138,7 @@ describe('calling queries with mocked data works correctly', () => {
     const exampleImage = 'https://example.com/image.png'
 
     mockGraphQLResult<TestAvatarQuery>(TestAvatarDocument, {
-      accountAvatarActive: {
+      userCurrentAvatarActive: {
         imageFull: exampleImage,
       },
     })
@@ -135,14 +147,20 @@ describe('calling queries with mocked data works correctly', () => {
     const { data } = await handler.query()
     const { data: mock } = handler.getMockedData()
 
-    expect(data).toHaveProperty('accountAvatarActive.imageFull', exampleImage)
-    expect(mock).toHaveProperty('accountAvatarActive.imageFull', exampleImage)
+    expect(data).toHaveProperty(
+      'userCurrentAvatarActive.imageFull',
+      exampleImage,
+    )
+    expect(mock).toHaveProperty(
+      'userCurrentAvatarActive.imageFull',
+      exampleImage,
+    )
 
     const exampleImage2 = 'https://example.com/image2.png'
 
     mockGraphQLResult<TestAvatarQuery>(TestAvatarDocument, {
-      accountAvatarActive: {
-        id: data?.accountAvatarActive.id,
+      userCurrentAvatarActive: {
+        id: data?.userCurrentAvatarActive.id,
         imageFull: exampleImage2,
       },
     })
@@ -150,8 +168,14 @@ describe('calling queries with mocked data works correctly', () => {
     const { data: data2 } = await handler.query({ fetchPolicy: 'network-only' })
     const { data: mock2 } = handler.getMockedData()
 
-    expect(mock2).toHaveProperty('accountAvatarActive.imageFull', exampleImage2)
-    expect(data2).toHaveProperty('accountAvatarActive.imageFull', exampleImage2)
+    expect(mock2).toHaveProperty(
+      'userCurrentAvatarActive.imageFull',
+      exampleImage2,
+    )
+    expect(data2).toHaveProperty(
+      'userCurrentAvatarActive.imageFull',
+      exampleImage2,
+    )
   })
 
   it('when operation requests an array inside the first level, it correctly returns an array', async () => {

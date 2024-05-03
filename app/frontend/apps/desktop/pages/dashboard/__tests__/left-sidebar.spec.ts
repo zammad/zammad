@@ -7,12 +7,12 @@ import {
   getByRole,
 } from '@testing-library/vue'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockLogoutMutation } from '#shared/graphql/mutations/logout.mocks.ts'
 
 describe('Left sidebar', () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       id: 'gid://zammad/User/999',
       firstname: 'Nicole',
       lastname: 'Braun',

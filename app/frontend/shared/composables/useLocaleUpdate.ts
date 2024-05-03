@@ -3,7 +3,7 @@
 import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 
-import { useAccountLocaleMutation } from '#shared/entities/account/graphql/mutations/locale.api.ts'
+import { useUserCurrentLocaleMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentLocale.api.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import {
@@ -17,7 +17,7 @@ const ZAMMAD_TRANSLATION_LINK = 'https://translations.zammad.org/'
 export const useLocaleUpdate = () => {
   const isSavingLocale = ref(false)
 
-  const localeMutation = new MutationHandler(useAccountLocaleMutation({}), {
+  const localeMutation = new MutationHandler(useUserCurrentLocaleMutation({}), {
     errorNotificationMessage: __('The language could not be updated.'),
   })
 

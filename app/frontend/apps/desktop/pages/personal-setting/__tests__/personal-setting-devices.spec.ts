@@ -6,12 +6,12 @@ import { visitView } from '#tests/support/components/visitView.ts'
 
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import { mockAccountDeviceListQuery } from '../graphql/queries/accountDeviceList.mocks.ts'
-import { mockAccountDeviceDeleteMutation } from '../graphql/mutations/accountDeviceDelete.mocks.ts'
-import { getAccountDevicesUpdatesSubscriptionHandler } from '../graphql/subscriptions/accountDevicesUpdates.mocks.ts'
+import { mockUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.mocks.ts'
+import { mockUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.mocks.ts'
+import { getUserCurrentDevicesUpdatesSubscriptionHandler } from '../graphql/subscriptions/userCurrentDevicesUpdates.mocks.ts'
 
 vi.hoisted(() => {
   vi.setSystemTime(new Date('2024-04-25T10:00:00Z'))
@@ -28,7 +28,7 @@ vi.mock('#shared/utils/browser.ts', () => {
   }
 })
 
-const accountDeviceList = [
+const userCurrentDeviceList = [
   {
     id: '1',
     name: 'Chrome on Mac',
@@ -60,7 +60,7 @@ const rowContents = [
 
 describe('devices personal settings', () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       firstname: 'John',
       lastname: 'Doe',
     })
@@ -73,7 +73,7 @@ describe('devices personal settings', () => {
   })
 
   it('shows the list of all devices', async () => {
-    mockAccountDeviceListQuery({ accountDeviceList })
+    mockUserCurrentDeviceListQuery({ userCurrentDeviceList })
 
     const view = await visitView('/personal-setting/devices')
 
@@ -117,7 +117,7 @@ describe('devices personal settings', () => {
   })
 
   it('can delete a device', async () => {
-    mockAccountDeviceListQuery({ accountDeviceList })
+    mockUserCurrentDeviceListQuery({ userCurrentDeviceList })
 
     const view = await visitView('/personal-setting/devices')
 
@@ -127,8 +127,8 @@ describe('devices personal settings', () => {
       name: 'Delete this device',
     })
 
-    mockAccountDeviceDeleteMutation({
-      accountDeviceDelete: {
+    mockUserCurrentDeviceDeleteMutation({
+      userCurrentDeviceDelete: {
         success: true,
       },
     })
@@ -155,19 +155,19 @@ describe('devices personal settings', () => {
   })
 
   it('updates the device list when a new device is added', async () => {
-    mockAccountDeviceListQuery({ accountDeviceList })
+    mockUserCurrentDeviceListQuery({ userCurrentDeviceList })
 
     const view = await visitView('/personal-setting/devices')
 
     const devicesUpdateSubscription =
-      getAccountDevicesUpdatesSubscriptionHandler()
+      getUserCurrentDevicesUpdatesSubscriptionHandler()
 
     const table = within(view.getByRole('table'))
 
     devicesUpdateSubscription.trigger({
-      accountDevicesUpdates: {
+      userCurrentDevicesUpdates: {
         devices: [
-          ...accountDeviceList,
+          ...userCurrentDeviceList,
           {
             id: '3',
             name: 'Safari on Mac',

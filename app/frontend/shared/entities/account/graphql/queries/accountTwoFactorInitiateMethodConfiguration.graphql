@@ -1,3 +1,0 @@
-query accountTwoFactorInitiateMethodConfiguration($methodName: EnumTwoFactorAuthenticationMethod!) {
-  accountTwoFactorInitiateMethodConfiguration(methodName: $methodName)
-}

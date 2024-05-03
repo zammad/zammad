@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { MutationsAccountAvatarAddArgs } from '#shared/graphql/types.ts'
+import type { MutationsUserCurrentAvatarAddArgs } from '#shared/graphql/types.ts'
 import { faker } from '@faker-js/faker'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import UserError from '#shared/errors/UserError.ts'
@@ -29,7 +29,7 @@ describe('calling mutation without mocking document works correctly', () => {
 
     const handler = getMutationHandler<
       TestAvatarMutation,
-      MutationsAccountAvatarAddArgs
+      MutationsUserCurrentAvatarAddArgs
     >(TestAvatarActiveMutationDocument)
     const data = await handler.send({
       images: {
@@ -40,12 +40,12 @@ describe('calling mutation without mocking document works correctly', () => {
     const { data: mocked } = handler.getMockedData()
 
     // errors is always null by default
-    expect(data?.accountAvatarAdd?.errors).toBeNull()
+    expect(data?.userCurrentAvatarAdd?.errors).toBeNull()
     expect(mocked).toMatchObject(data!)
     expect(data).not.toMatchObject(mocked)
 
-    expect(mocked).toHaveProperty('accountAvatarAdd.avatar.createdAt')
-    expect(data).not.toHaveProperty('accountAvatarAdd.avatar.createdAt')
+    expect(mocked).toHaveProperty('userCurrentAvatarAdd.avatar.createdAt')
+    expect(data).not.toHaveProperty('userCurrentAvatarAdd.avatar.createdAt')
   })
 
   it('mutation correctly processed data with arrays', async () => {
@@ -137,7 +137,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
     const avatarId = convertToGraphQLId('Avatar', 42)
     const imageFull = 'https://example.com/image.png'
     mockGraphQLResult(TestAvatarActiveMutationDocument, {
-      accountAvatarAdd: {
+      userCurrentAvatarAdd: {
         avatar: {
           id: avatarId,
           imageFull,
@@ -147,7 +147,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
 
     const handler = getMutationHandler<
       TestAvatarMutation,
-      MutationsAccountAvatarAddArgs
+      MutationsUserCurrentAvatarAddArgs
     >(TestAvatarActiveMutationDocument)
     const data = await handler.send({
       images: {
@@ -156,7 +156,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
       },
     })
 
-    expect(data?.accountAvatarAdd?.avatar).toEqual({
+    expect(data?.userCurrentAvatarAdd?.avatar).toEqual({
       __typename: 'Avatar',
       id: avatarId,
       imageFull,
@@ -164,8 +164,8 @@ describe('calling mutation with mocked return data correctly returns data', () =
 
     const { data: mocked } = handler.getMockedData()
 
-    expect(mocked.accountAvatarAdd.avatar).toHaveProperty('id', avatarId)
-    expect(mocked.accountAvatarAdd.avatar).toHaveProperty(
+    expect(mocked.userCurrentAvatarAdd.avatar).toHaveProperty('id', avatarId)
+    expect(mocked.userCurrentAvatarAdd.avatar).toHaveProperty(
       'imageFull',
       imageFull,
     )
@@ -173,7 +173,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
 
   it('correctly returns errors if provided', async () => {
     mockGraphQLResult(TestAvatarActiveMutationDocument, {
-      accountAvatarAdd: {
+      userCurrentAvatarAdd: {
         errors: [
           {
             message: 'Some error',
@@ -184,7 +184,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
 
     const handler = getMutationHandler<
       TestAvatarMutation,
-      MutationsAccountAvatarAddArgs
+      MutationsUserCurrentAvatarAddArgs
     >(TestAvatarActiveMutationDocument)
     const data = await handler
       .send({

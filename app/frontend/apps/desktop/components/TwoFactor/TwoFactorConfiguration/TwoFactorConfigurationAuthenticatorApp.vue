@@ -11,8 +11,8 @@ import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useAccountTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/account/graphql/mutations/accountTwoFactorVerifyMethodConfiguration.api.ts'
-import { useAccountTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/account/graphql/queries/accountTwoFactorInitiateMethodConfiguration.api.ts'
+import { useUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.api.ts'
+import { useUserCurrentTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.api.ts'
 
 import UserError from '#shared/errors/UserError.ts'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
@@ -30,7 +30,7 @@ const twoFactorPlugin = twoFactorMethodLookup[props.type]
 const headerIcon = computed(() => twoFactorPlugin.icon)
 
 const initiationQuery = new QueryHandler(
-  useAccountTwoFactorInitiateMethodConfigurationQuery(
+  useUserCurrentTwoFactorInitiateMethodConfigurationQuery(
     {
       methodName: twoFactorPlugin.name,
     },
@@ -52,7 +52,7 @@ const initiationError = ref<string | null>(null)
 const { form, formSetErrors } = useForm()
 
 const mutateMethodConfiguration = new MutationHandler(
-  useAccountTwoFactorVerifyMethodConfigurationMutation(),
+  useUserCurrentTwoFactorVerifyMethodConfigurationMutation(),
 )
 
 const verifyMethodConfiguration = async (securityCode: string) => {
@@ -60,7 +60,8 @@ const verifyMethodConfiguration = async (securityCode: string) => {
     methodName: twoFactorPlugin.name,
     payload: securityCode,
     configuration: {
-      ...initiationResult.value?.accountTwoFactorInitiateMethodConfiguration,
+      ...initiationResult.value
+        ?.userCurrentTwoFactorInitiateMethodConfiguration,
     },
   })
 }
@@ -78,12 +79,15 @@ const submitForm = async ({
       message: __('Two-factor method has been configured successfully.'),
     })
 
-    if (response?.accountTwoFactorVerifyMethodConfiguration?.recoveryCodes) {
+    if (
+      response?.userCurrentTwoFactorVerifyMethodConfiguration?.recoveryCodes
+    ) {
       props.formSubmitCallback?.({
         nextState: 'recovery_codes',
         options: {
           recoveryCodes:
-            response?.accountTwoFactorVerifyMethodConfiguration?.recoveryCodes,
+            response?.userCurrentTwoFactorVerifyMethodConfiguration
+              ?.recoveryCodes,
           headerIcon: headerIcon.value,
         },
       })
@@ -150,11 +154,11 @@ const setupQrCode = async (provisioningUri: string, secret: string) => {
 }
 
 initiationQuery.onResult(({ data }) => {
-  if (data?.accountTwoFactorInitiateMethodConfiguration) {
+  if (data?.userCurrentTwoFactorInitiateMethodConfiguration) {
     // eslint-disable-next-line camelcase
     const { provisioning_uri, secret } =
       // eslint-disable-next-line no-unsafe-optional-chaining
-      data?.accountTwoFactorInitiateMethodConfiguration
+      data?.userCurrentTwoFactorInitiateMethodConfiguration
 
     setupQrCode(provisioning_uri, secret)
       .catch(() => {

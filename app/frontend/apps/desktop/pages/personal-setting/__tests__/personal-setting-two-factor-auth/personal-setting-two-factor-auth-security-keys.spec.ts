@@ -4,20 +4,20 @@ import { within } from '@testing-library/vue'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import {
-  mockAccountPasswordCheckMutation,
-  waitForAccountPasswordCheckMutationCalls,
-} from '#desktop/entities/account/graphql/mutations/accountPasswordCheck.mocks.ts'
+  mockUserCurrentPasswordCheckMutation,
+  waitForUserCurrentPasswordCheckMutationCalls,
+} from '#desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.mocks.ts'
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 import {
-  mockAccountTwoFactorGetMethodConfigurationQuery,
-  waitForAccountTwoFactorGetMethodConfigurationQueryCalls,
-} from '#shared/entities/account/graphql/mutations/accountTwoFactorGetMethodConfiguration.mocks.ts'
+  mockUserCurrentTwoFactorGetMethodConfigurationQuery,
+  waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls,
+} from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorGetMethodConfiguration.mocks.ts'
 import {
-  mockAccountTwoFactorRemoveMethodCredentialsMutation,
-  waitForAccountTwoFactorRemoveMethodCredentialsMutationCalls,
-} from '#shared/entities/account/graphql/mutations/accountTwoFactorRemoveMethodCredentials.mocks.ts'
-import { mockAccountTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/account/graphql/queries/accountTwoFactorInitiateMethodConfiguration.mocks.ts'
-import { mockAccountTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/account/graphql/mutations/accountTwoFactorVerifyMethodConfiguration.mocks.ts'
+  mockUserCurrentTwoFactorRemoveMethodCredentialsMutation,
+  waitForUserCurrentTwoFactorRemoveMethodCredentialsMutationCalls,
+} from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethodCredentials.mocks.ts'
+import { mockUserCurrentTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.mocks.ts'
+import { mockUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.mocks.ts'
 import { getUserCurrentTwoFactorUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.mocks.ts'
 
 describe('Two-factor Authentication - Security Keys', () => {
@@ -51,21 +51,21 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorGetMethodConfigurationQuery({
-      accountTwoFactorGetMethodConfiguration: null,
+    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+      userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorGetMethodConfigurationQueryCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     expect(flyout).toHaveAccessibleName(
       'Set Up Two-factor Authentication: Security Keys',
@@ -130,14 +130,14 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorGetMethodConfigurationQuery({
-      accountTwoFactorGetMethodConfiguration: {
+    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+      userCurrentTwoFactorGetMethodConfiguration: {
         credentials: [
           {
             nickname: 'foobar',
@@ -151,26 +151,26 @@ describe('Two-factor Authentication - Security Keys', () => {
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorGetMethodConfigurationQueryCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     expect(flyout).toHaveTextContent('foobar')
     expect(flyout).toHaveTextContent('2024-01-01 00:00')
 
-    mockAccountTwoFactorRemoveMethodCredentialsMutation({
-      accountTwoFactorRemoveMethodCredentials: {
+    mockUserCurrentTwoFactorRemoveMethodCredentialsMutation({
+      userCurrentTwoFactorRemoveMethodCredentials: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorGetMethodConfigurationQuery({
-      accountTwoFactorGetMethodConfiguration: null,
+    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+      userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
     await view.events.click(view.getByRole('button', { name: 'Remove' }))
 
-    await waitForAccountTwoFactorRemoveMethodCredentialsMutationCalls()
-    await waitForAccountTwoFactorGetMethodConfigurationQueryCalls()
+    await waitForUserCurrentTwoFactorRemoveMethodCredentialsMutationCalls()
+    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     expect(flyout).not.toHaveTextContent('foobar')
     expect(flyout).not.toHaveTextContent('just now')
@@ -193,21 +193,21 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorGetMethodConfigurationQuery({
-      accountTwoFactorGetMethodConfiguration: null,
+    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+      userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorGetMethodConfigurationQueryCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     await view.events.click(view.getByRole('button', { name: 'Set Up' }))
 
@@ -243,21 +243,21 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorGetMethodConfigurationQuery({
-      accountTwoFactorGetMethodConfiguration: null,
+    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+      userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorGetMethodConfigurationQueryCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     await view.events.click(view.getByRole('button', { name: 'Set Up' }))
 
@@ -287,21 +287,21 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorGetMethodConfigurationQuery({
-      accountTwoFactorGetMethodConfiguration: null,
+    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+      userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorGetMethodConfigurationQueryCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     await view.events.click(view.getByRole('button', { name: 'Set Up' }))
 
@@ -315,8 +315,8 @@ describe('Two-factor Authentication - Security Keys', () => {
       value: true,
     })
 
-    mockAccountTwoFactorInitiateMethodConfigurationQuery({
-      accountTwoFactorInitiateMethodConfiguration: 'mock-error',
+    mockUserCurrentTwoFactorInitiateMethodConfigurationQuery({
+      userCurrentTwoFactorInitiateMethodConfiguration: 'mock-error',
     })
 
     await view.events.click(view.getByRole('button', { name: 'Next' }))
@@ -325,8 +325,8 @@ describe('Two-factor Authentication - Security Keys', () => {
       'Security key setup failed.',
     )
 
-    mockAccountTwoFactorInitiateMethodConfigurationQuery({
-      accountTwoFactorInitiateMethodConfiguration: {},
+    mockUserCurrentTwoFactorInitiateMethodConfigurationQuery({
+      userCurrentTwoFactorInitiateMethodConfiguration: {},
     })
 
     await view.events.click(view.getByRole('button', { name: 'Retry' }))
@@ -353,21 +353,21 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorGetMethodConfigurationQuery({
-      accountTwoFactorGetMethodConfiguration: null,
+    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+      userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorGetMethodConfigurationQueryCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     await view.events.click(view.getByRole('button', { name: 'Set Up' }))
 
@@ -381,8 +381,8 @@ describe('Two-factor Authentication - Security Keys', () => {
       value: true,
     })
 
-    mockAccountTwoFactorVerifyMethodConfigurationMutation({
-      accountTwoFactorVerifyMethodConfiguration: {
+    mockUserCurrentTwoFactorVerifyMethodConfigurationMutation({
+      userCurrentTwoFactorVerifyMethodConfiguration: {
         errors: [
           {
             message:
@@ -398,8 +398,8 @@ describe('Two-factor Authentication - Security Keys', () => {
       'The verification of the two-factor authentication method configuration failed.',
     )
 
-    mockAccountTwoFactorVerifyMethodConfigurationMutation({
-      accountTwoFactorVerifyMethodConfiguration: {
+    mockUserCurrentTwoFactorVerifyMethodConfigurationMutation({
+      userCurrentTwoFactorVerifyMethodConfiguration: {
         recoveryCodes: [],
       },
     })
@@ -428,21 +428,21 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     const passwordInput = flyoutContent.getByLabelText('Current password')
 
-    mockAccountPasswordCheckMutation({
-      accountPasswordCheck: {
+    mockUserCurrentPasswordCheckMutation({
+      userCurrentPasswordCheck: {
         success: true,
       },
     })
 
-    mockAccountTwoFactorGetMethodConfigurationQuery({
-      accountTwoFactorGetMethodConfiguration: null,
+    mockUserCurrentTwoFactorGetMethodConfigurationQuery({
+      userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    await waitForAccountPasswordCheckMutationCalls()
-    await waitForAccountTwoFactorGetMethodConfigurationQueryCalls()
+    await waitForUserCurrentPasswordCheckMutationCalls()
+    await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     await view.events.click(view.getByRole('button', { name: 'Set Up' }))
 
@@ -456,8 +456,8 @@ describe('Two-factor Authentication - Security Keys', () => {
       value: true,
     })
 
-    mockAccountTwoFactorVerifyMethodConfigurationMutation({
-      accountTwoFactorVerifyMethodConfiguration: {
+    mockUserCurrentTwoFactorVerifyMethodConfigurationMutation({
+      userCurrentTwoFactorVerifyMethodConfiguration: {
         recoveryCodes: null,
       },
     })

@@ -2,9 +2,9 @@
 
 import { axe } from 'vitest-axe'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
-import { AccountAvatarActiveDocument } from '../avatar/graphql/queries/active.api.ts'
+import { UserCurrentAvatarActiveDocument } from '../graphql/queries/userCurrentActive.api.ts'
 
 const mockAvatarImage =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
@@ -23,14 +23,14 @@ const getAvatarObject = (deletable: boolean) => {
 }
 
 const mockActiveAvatar = async (deletable = true) => {
-  mockGraphQLApi(AccountAvatarActiveDocument).willResolve({
-    accountAvatarActive: getAvatarObject(deletable),
+  mockGraphQLApi(UserCurrentAvatarActiveDocument).willResolve({
+    userCurrentAvatarActive: getAvatarObject(deletable),
   })
 }
 
 describe('testing account a11y', () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
     })
@@ -44,7 +44,7 @@ describe('testing account a11y', () => {
 
   test('avatar editor has no accessibility violations', async () => {
     mockActiveAvatar()
-    const view = await visitView('/account/avatar')
+    const view = await visitView('/user/current/avatar')
     const results = await axe(view.html())
     expect(results).toHaveNoViolations()
   })

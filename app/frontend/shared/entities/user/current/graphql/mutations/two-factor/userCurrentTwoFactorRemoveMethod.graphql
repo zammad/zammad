@@ -1,0 +1,8 @@
+mutation userCurrentTwoFactorRemoveMethod($methodName: String!) {
+  userCurrentTwoFactorRemoveMethod(methodName: $methodName) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

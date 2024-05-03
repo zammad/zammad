@@ -1,0 +1,8 @@
+mutation userCurrentTwoFactorSetDefaultMethod($methodName: String!) {
+  userCurrentTwoFactorSetDefaultMethod(methodName: $methodName) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

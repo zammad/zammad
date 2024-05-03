@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import { waitForAccountAppearanceMutationCalls } from '../graphql/mutations/accountAppearance.mocks.ts'
+import { waitForUserCurrentAppearanceMutationCalls } from '../graphql/mutations/userCurrentAppearance.mocks.ts'
 
 describe('appearance page', () => {
   it('update appearance to dark', async () => {
@@ -13,7 +13,7 @@ describe('appearance page', () => {
 
     await view.events.click(darkMode)
     expect(view.getByLabelText('Dark')).toBeChecked()
-    const calls = await waitForAccountAppearanceMutationCalls()
+    const calls = await waitForUserCurrentAppearanceMutationCalls()
     expect(calls.at(-1)?.variables).toEqual({ theme: 'dark' })
     expect(window.matchMedia('(prefers-color-scheme: light)').matches).toBe(
       false,

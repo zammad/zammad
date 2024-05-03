@@ -1,0 +1,18 @@
+mutation userCurrentAvatarAdd($images: AvatarInput!) {
+  userCurrentAvatarAdd(images: $images) {
+    avatar {
+      id
+      default
+      deletable
+      initial
+      imageFull
+      imageResize
+      imageHash
+      createdAt
+      updatedAt
+    }
+    errors {
+      ...errors
+    }
+  }
+}

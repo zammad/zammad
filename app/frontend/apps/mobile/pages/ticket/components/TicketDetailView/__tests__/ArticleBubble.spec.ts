@@ -5,7 +5,7 @@ import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 import { getByAltText, queryByAltText } from '@testing-library/vue'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { routes } from '#mobile/router/index.ts'
 import { isStandalone } from '#shared/utils/pwa.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -53,7 +53,7 @@ const renderArticleBubble = (props = {}) => {
 
 describe('component for displaying text article', () => {
   beforeEach(() => {
-    mockAccount({
+    mockUserCurrent({
       id: '2',
     })
 

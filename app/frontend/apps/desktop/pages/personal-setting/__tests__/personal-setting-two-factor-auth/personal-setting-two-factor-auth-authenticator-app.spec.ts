@@ -2,8 +2,8 @@
 
 import { within } from '@testing-library/vue'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
-import { mockAccountTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/account/graphql/mutations/accountTwoFactorVerifyMethodConfiguration.mocks.ts'
-import { mockAccountTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/account/graphql/queries/accountTwoFactorInitiateMethodConfiguration.mocks.ts'
+import { mockUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.mocks.ts'
+import { mockUserCurrentTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.mocks.ts'
 import { visitViewAndMockPasswordConfirmation } from '#desktop/pages/personal-setting/__tests__/support/personal-setting-two-factor-auth.ts'
 
 const copyToClipboardMock = vi.fn()
@@ -46,8 +46,8 @@ describe('Two-factor Authentication - Authenticator App', () => {
   it('shows secret-code and supports copying to clipboard', async () => {
     const dummySecret = 'AAV7Z6PLEK7'
 
-    mockAccountTwoFactorInitiateMethodConfigurationQuery({
-      accountTwoFactorInitiateMethodConfiguration: {
+    mockUserCurrentTwoFactorInitiateMethodConfigurationQuery({
+      userCurrentTwoFactorInitiateMethodConfiguration: {
         secret: dummySecret,
       },
     })
@@ -72,8 +72,8 @@ describe('Two-factor Authentication - Authenticator App', () => {
   it('supports a11y copying secret code to clipboard', async () => {
     const dummySecret = 'AAV7Z6PLEK7'
 
-    mockAccountTwoFactorInitiateMethodConfigurationQuery({
-      accountTwoFactorInitiateMethodConfiguration: {
+    mockUserCurrentTwoFactorInitiateMethodConfigurationQuery({
+      userCurrentTwoFactorInitiateMethodConfiguration: {
         secret: dummySecret,
       },
     })
@@ -112,8 +112,8 @@ describe('Two-factor Authentication - Authenticator App', () => {
       '123456',
     )
 
-    mockAccountTwoFactorVerifyMethodConfigurationMutation({
-      accountTwoFactorVerifyMethodConfiguration: {
+    mockUserCurrentTwoFactorVerifyMethodConfigurationMutation({
+      userCurrentTwoFactorVerifyMethodConfiguration: {
         errors: [
           {
             field: null,
@@ -149,8 +149,8 @@ describe('Two-factor Authentication - Authenticator App', () => {
       '123456',
     )
 
-    mockAccountTwoFactorVerifyMethodConfigurationMutation({
-      accountTwoFactorVerifyMethodConfiguration: {
+    mockUserCurrentTwoFactorVerifyMethodConfigurationMutation({
+      userCurrentTwoFactorVerifyMethodConfiguration: {
         errors: null,
         recoveryCodes: ['232'],
       },

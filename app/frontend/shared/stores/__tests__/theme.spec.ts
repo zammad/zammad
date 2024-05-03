@@ -2,12 +2,12 @@
 
 // mounted makes store to reinitiate on each test
 import { mounted } from '#tests/support/components/mounted.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { nextTick } from 'vue'
 import { useAppTheme } from '../theme.ts'
 
 const haveUserPreference = (theme: string | undefined) => {
-  mockAccount({
+  mockUserCurrent({
     preferences: {
       theme,
     },

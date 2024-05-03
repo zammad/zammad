@@ -1,0 +1,3 @@
+query userCurrentTwoFactorGetMethodConfiguration($methodName: String!) {
+  userCurrentTwoFactorGetMethodConfiguration(methodName: $methodName)
+}

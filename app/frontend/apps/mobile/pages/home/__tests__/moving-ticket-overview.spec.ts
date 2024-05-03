@@ -6,7 +6,7 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
 import { getTicketOverviewStorage } from '#mobile/entities/ticket/helpers/ticketOverviewStorage.ts'
@@ -15,7 +15,7 @@ const actualLocalStorage = window.localStorage
 
 describe('playing with overviews', () => {
   beforeEach(() => {
-    mockAccount({ id: '666' })
+    mockUserCurrent({ id: '666' })
     mockTicketOverviews()
   })
 

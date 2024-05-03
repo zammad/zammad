@@ -18,12 +18,12 @@ RSpec.describe 'Desktop > Account', app: :desktop_view, authenticated_as: :agent
 
       # Switch to 'dark'
       click_on 'Appearance'
-      wait_for_mutation('accountAppearance')
+      wait_for_mutation('userCurrentAppearance')
       expect(page).to have_css('html[data-theme=dark]')
 
       # Switch to 'light'
       click_on 'Appearance'
-      wait_for_mutation('accountAppearance', number: 2)
+      wait_for_mutation('userCurrentAppearance', number: 2)
       expect(page).to have_css('html[data-theme=light]')
 
     end

@@ -1,0 +1,17 @@
+mutation userCurrentTwoFactorVerifyMethodConfiguration(
+  $methodName: EnumTwoFactorAuthenticationMethod!
+  $payload: JSON!
+  $configuration: JSON!
+) {
+  userCurrentTwoFactorVerifyMethodConfiguration(
+    methodName: $methodName
+    payload: $payload
+    configuration: $configuration
+  ) {
+    recoveryCodes
+    errors {
+      message
+      field
+    }
+  }
+}

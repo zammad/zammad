@@ -4,9 +4,9 @@ import { visitView } from '#tests/support/components/visitView.ts'
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 import { within } from '@testing-library/vue'
 import {
-  mockAccountPasswordCheckMutation,
-  waitForAccountPasswordCheckMutationCalls,
-} from '#desktop/entities/account/graphql/mutations/accountPasswordCheck.mocks.ts'
+  mockUserCurrentPasswordCheckMutation,
+  waitForUserCurrentPasswordCheckMutationCalls,
+} from '#desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.mocks.ts'
 import type { TwoFactorActionTypes } from '#shared/entities/two-factor/types.ts'
 import { faker } from '@faker-js/faker'
 import { getUserCurrentTwoFactorUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.mocks.ts'
@@ -125,8 +125,8 @@ export const visitViewAndMockPasswordConfirmation = async (
     faker.number.binary({ min: 10000, max: 99999 }).toString(),
   )
 
-  mockAccountPasswordCheckMutation({
-    accountPasswordCheck: {
+  mockUserCurrentPasswordCheckMutation({
+    userCurrentPasswordCheck: {
       success: true,
     },
   })
@@ -135,7 +135,7 @@ export const visitViewAndMockPasswordConfirmation = async (
 
   await view.events.click(view.getByRole('button', { name: buttonLabel }))
 
-  await waitForAccountPasswordCheckMutationCalls()
+  await waitForUserCurrentPasswordCheckMutationCalls()
 
   return {
     view,

@@ -1,0 +1,7 @@
+subscription userCurrentDevicesUpdates($userId: ID!) {
+  userCurrentDevicesUpdates(userId: $userId) {
+    devices {
+      ...userDeviceAttributes
+    }
+  }
+}
