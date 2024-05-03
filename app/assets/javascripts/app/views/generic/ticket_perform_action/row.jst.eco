@@ -1,6 +1,6 @@
 <div class="horizontal-filter js-filterElement">
   <div class="horizontal-filter-body">
-    <div class="controls flex-no-shrink">
+    <div class="controls flex-no-shrink horizontal-filter-attribute">
       <div class="u-positionOrigin js-attributeSelector">
         <%- @Icon('arrow-down', 'dropdown-arrow') %>
       </div>
