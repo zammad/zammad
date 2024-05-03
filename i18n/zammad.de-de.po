@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-23 01:05+0000\n"
+"PO-Revision-Date: 2024-05-03 01:05+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -3280,7 +3280,7 @@ msgstr "Unternehmen GmbH"
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 #: db/seeds/settings.rb
 msgid "Complete the sign-in with your security key."
-msgstr "Schließen Sie die Anmeldung mit Ihrem Sicherheitsschlüssel ab."
+msgstr "Schließen Sie die Anmeldung mit Ihrem Sicherheits-Schlüssel ab."
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Complete translations"
@@ -4628,7 +4628,7 @@ msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
 msgstr ""
-"Definiert, ob Methode \"Sicherheitsschlüssel\" für Zwei-Faktor-"
+"Definiert, ob Methode \"Sicherheits-Schlüssel\" für Zwei-Faktor-"
 "Authentifizierung aktiviert ist oder nicht."
 
 #: db/seeds/settings.rb
@@ -9613,7 +9613,7 @@ msgstr "Name Identifizierer Format"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Name for this security key"
-msgstr "Name für diesen Sicherheitsschlüssel"
+msgstr "Name für diesen Sicherheits-Schlüssel"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Name of form submit button"
@@ -12480,23 +12480,23 @@ msgstr "Sicherheits-Schlüssel"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Security key \"%s\" will be removed."
-msgstr "Der Sicherheitsschlüssel \"%s\" wird entfernt werden."
+msgstr "Der Sicherheits-Schlüssel \"%s\" wird entfernt werden."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Security key setup failed."
-msgstr "Die Einrichtung des Sicherheitsschlüssels ist fehlgeschlagen."
+msgstr "Die Einrichtung des Sicherheits-Schlüssels ist fehlgeschlagen."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 msgid "Security key verification failed."
-msgstr "Die Verifizierung des Sicherheitsschlüssels ist fehlgeschlagen."
+msgstr "Die Verifizierung des Sicherheits-Schlüssels ist fehlgeschlagen."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
 msgid ""
 "Security keys are hardware or software credentials that can be used as your "
 "two-factor authentication method."
 msgstr ""
-"Sicherheitsschlüssel sind Hardware- oder Software-Berechtigungsnachweise, "
+"Sicherheits-Schlüssel sind Hardware- oder Software-Berechtigungsnachweise, "
 "die als Methode für Zwei-Faktor-Authentifizierung verwendet werden können."
 
 #: lib/external_data_source/errors.rb
@@ -16186,7 +16186,7 @@ msgstr ""
 msgid ""
 "To register a new security key with your account, press the button below."
 msgstr ""
-"Verwenden Sie die Schaltfläche unten, um einen neuen Sicherheitsschlüssel "
+"Verwenden Sie die Schaltfläche unten, um einen neuen Sicherheits-Schlüssel "
 "für Ihr Konto zu registrieren."
 
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -16367,7 +16367,7 @@ msgstr "Eine andere Methode verwenden"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
 msgid "Try using your security key again."
-msgstr "Versuchen Sie, Ihren Sicherheitsschlüssel erneut zu verwenden."
+msgstr "Versuchen Sie, Ihren Sicherheits-Schlüssel erneut zu verwenden."
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"

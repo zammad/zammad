@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-10 13:23+0000\n"
+"PO-Revision-Date: 2024-05-03 01:05+0000\n"
 "Last-Translator: Benjamin Scharf <bs@zammad.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/es/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1677,7 +1677,7 @@ msgstr "Se ha producido un error durante la configuración del sistema."
 
 #: lib/calendar_subscriptions.rb
 msgid "An unknown method name was requested."
-msgstr ""
+msgstr "Se ha solicitado un nombre de método desconocido."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -14843,7 +14843,7 @@ msgstr "La prueba se ha realizado con éxito."
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
 msgstr ""
-"Texto al inicio del asunto en un reenvío de correo electrónico, p.e. FWD."
+"Texto al inicio del asunto en un reenvío de correo electrónico, p. ej. FWD."
 
 #: db/seeds/settings.rb
 msgid ""

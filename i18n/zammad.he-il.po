@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-19 01:05+0000\n"
+"PO-Revision-Date: 2024-05-02 01:05+0000\n"
 "Last-Translator: YosefAdPro <yosef@adpronet.com>\n"
 "Language-Team: Hebrew (Israel) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/he_IL/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -54,6 +54,10 @@ msgid ""
 "compatible object filesystem. You can switch between the modules even on a "
 "system that is already in production without any loss of data."
 msgstr ""
+"\"בסיס נתונים\" מאחסן את כל הקבצים המצורפים במסד הנתונים (לא מומלץ לאחסון "
+"כמויות גדולות של נתונים). \"מערכת קבצים\" מאחסנת את הנתונים במערכת הקבצים. "
+"\"אחסון פשוט (S3)\" מאחסן את הנתונים במערכת קבצים מרוחקת של אובייקטים תואמת "
+"S3. ניתן לעבור בין המודולים גם במערכת שכבר נמצאת בייצור ללא כל אובדן נתונים."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -71,6 +75,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|כרטיס##{ticket.number}>: נוצר על ידי #{current_user.longname} ב-# {ticket"
+".updated_at}_\n"
+"* קבוצה: #{ticket.group.name}\n"
+"* בעלים: #{ticket.owner.fullname}\n"
+"* סטטוס: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -229,6 +244,29 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} התחברות ממכשיר חדש\n"
+"\n"
+"<div>שלום #{user.firstname},</div>\n"
+"<br>\n"
+"<div>נראה שנכנסת לחשבון שלך <b>באמצעות מכשיר חדש</b> ב-\"#{user_device."
+"created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"המכשיר שלך: #{user_device.name}<br>\n"
+"המיקום שלך (יחסי): #{user_device.location}<br>\n"
+"ה-IP שלך: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>המכשיר שלך נוסף לרשימת המכשירים המוכרים שלך, שאותה תוכל להציג כאן:</div>"
+"\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices </a></div>\n"
+"<br>\n"
+"<div>אם זה לא היית אתה, אנא הסר את המכשיר, שנה את סיסמת החשבון שלך ופנה "
+"למנהל המערכת שלך. ייתכן שמישהו קיבל גישה לא מורשית לחשבון שלך.</div>\n"
+"<br>\n"
+"<div>צוות #{config.product_name} שלך</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "%s (confirm)"
@@ -236,7 +274,7 @@ msgstr "%s (אישור)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (שיטה)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue
 #, fuzzy
@@ -257,10 +295,8 @@ msgstr "%s לא ידוע"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#, fuzzy
-#| msgid "API token"
 msgid "%s API Token"
-msgstr "אסימון API"
+msgstr "%s מפתח API"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -407,10 +443,8 @@ msgid "%s is inactive, please select an active one."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "%s required!"
 msgid "%s is required."
-msgstr "% s נדרש!"
+msgstr "% s נדרש!."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
@@ -442,7 +476,7 @@ msgstr "%s% נפתחו מחדש"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) were deleted."
-msgstr ""
+msgstr "%s אובייקט(ים) נמחקו."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
@@ -475,8 +509,6 @@ msgid "%s of my tickets are currently in process."
 msgstr "%s מהכרטיסים שלך נמצאים כעת בתהליך."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
-#, fuzzy
-#| msgid "%s of my tickets escalated."
 msgid "%s of my tickets escalated"
 msgstr "%s מכרטיסים שלי הוסלמו."
 
@@ -502,7 +534,7 @@ msgstr "%s התחיל מופע חדש"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s subdomain"
-msgstr ""
+msgstr "סאב-דומיין של %s"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
@@ -670,23 +702,19 @@ msgstr "קבצים מצורפים"
 
 #: db/seeds/settings.rb
 msgid "1 day"
-msgstr "1 day"
+msgstr "יום"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 day"
 msgid "1 day ago"
-msgstr "1 day"
+msgstr "לפני יום אחד"
 
 #: db/seeds/settings.rb
 msgid "1 hour"
-msgstr "1 hour"
+msgstr "שעה"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 hour"
 msgid "1 hour ago"
-msgstr "1 hour"
+msgstr "לפני שעה אחת"
 
 #: db/seeds/ticket_priorities.rb
 msgid "1 low"
@@ -700,21 +728,19 @@ msgstr "דקה"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
-msgstr ""
+msgstr "חודש"
 
 #: db/seeds/settings.rb
 msgid "1 week"
-msgstr "1 week"
+msgstr "שבוע"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 week"
 msgid "1 week ago"
-msgstr "1 week"
+msgstr "לפני שבוע"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 year ago"
-msgstr ""
+msgstr "לפני שנה"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #, fuzzy
@@ -872,7 +898,7 @@ msgstr "API"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "API Key"
-msgstr ""
+msgstr "מפתח API"
 
 #: db/seeds/settings.rb
 msgid "API Password Access"
@@ -931,7 +957,7 @@ msgstr "גישה אל %s"
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Account"
-msgstr ""
+msgstr "חשבון"
 
 #: app/models/channel/driver/sms/twilio.rb
 msgid "Account SID"
@@ -945,7 +971,7 @@ msgstr "זמן החשבון"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/controllers/channels_email_controller.rb
 msgid "Account already exists!"
-msgstr ""
+msgstr "החשבון כבר קיים!"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid "Account not verified"
@@ -1099,7 +1125,7 @@ msgstr "פעיל"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
-msgstr ""
+msgstr "מתאם"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
@@ -1431,7 +1457,7 @@ msgstr "טכנאים"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Alarm"
-msgstr ""
+msgstr "אזעקה"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -1624,7 +1650,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee
 msgid "Answer"
-msgstr ""
+msgstr "תשובה"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "Answers"
@@ -1638,7 +1664,7 @@ msgstr "תגובות"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Anticon"
-msgstr ""
+msgstr "פעולה"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #, fuzzy
@@ -1695,7 +1721,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
-msgstr ""
+msgstr "אפליקציה"
 
 #: db/seeds/settings.rb
 msgid "Application secret"
@@ -2578,7 +2604,7 @@ msgstr "ייבוא מ"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
-msgstr ""
+msgstr "שיחה מ-%s עבור %s"
 
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco
@@ -5975,7 +6001,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Enabled"
-msgstr ""
+msgstr "מופעל"
 
 #: db/seeds/settings.rb
 msgid "Enables a sidebar to show an overview of all attachments."
@@ -6103,12 +6129,12 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Encrypted"
-msgstr ""
+msgstr "מוצפן"
 
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 msgid "Encryption"
-msgstr ""
+msgstr "הצפנה"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -6335,7 +6361,7 @@ msgstr "הקלד את שם המשתמש שלך או את כתובת המייל �
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/frontend/apps/mobile/pages/error/views/Error.vue
 msgid "Error"
-msgstr ""
+msgstr "שגיאה"
 
 #: app/services/service/system/run_auto_wizard.rb
 msgid "Error during execution of auto wizard."
@@ -6444,7 +6470,7 @@ msgstr "דוגמא"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Examples"
-msgstr ""
+msgstr "דוגמאות"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #, fuzzy
@@ -6693,7 +6719,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
 msgid "Filesystem"
-msgstr ""
+msgstr "מערכת קבצים"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -6962,7 +6988,7 @@ msgstr "עצב כ |bold|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as ||italic||"
-msgstr "עצב כ  ||italic||"
+msgstr "עצב כ ||italic||"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 msgid "Forward"
@@ -7906,10 +7932,8 @@ msgid "Image file"
 msgstr "שרות תמונה"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "Manage %s"
 msgid "Image of %s"
-msgstr "נהל  %s"
+msgstr "נהל %s"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 #, fuzzy
@@ -8085,7 +8109,7 @@ msgstr "פנימי"
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "Inbound Call"
-msgstr ""
+msgstr "שיחה נכנסת"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 #, fuzzy
@@ -9027,7 +9051,7 @@ msgstr "ניהול"
 
 #: db/seeds/permissions.rb
 msgid "Manage %s"
-msgstr "נהל  %s"
+msgstr "נהל %s"
 
 #: db/seeds/permissions.rb
 msgid "Manage %s Settings"
@@ -9572,8 +9596,6 @@ msgid "My handling time: %s minutes"
 msgstr "זמן הטיפול שלי: %s דקות"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "Your tickets in process"
 msgid "My tickets in process"
 msgstr "הכרטיסים שלך בתהליך"
 
@@ -10165,7 +10187,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
 msgid "No unread notifications for you. :)"
-msgstr "אין הודעות עבורך שטרם נקראו  :)"
+msgstr "אין הודעות עבורך שטרם נקראו :)"
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
 msgid ""
@@ -11524,10 +11546,8 @@ msgstr "תפריט פומבי"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Public Menu"
 msgid "Public Links"
-msgstr "תפריט פומבי"
+msgstr "קישורים ציבוריים"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -11552,7 +11572,7 @@ msgstr "פורסם"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
-msgstr ""
+msgstr "פורסם ב"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Purple"
@@ -11572,11 +11592,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Queue"
-msgstr ""
+msgstr "תור"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Queue already exists!"
-msgstr ""
+msgstr "תור כבר קיים!"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #, fuzzy
@@ -11752,10 +11772,8 @@ msgid "Remove"
 msgstr "הסרה"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "Remove"
 msgid "Remove %s"
-msgstr "הסרה"
+msgstr "הסרה %s"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Remove a configured two-factor authentication method"
