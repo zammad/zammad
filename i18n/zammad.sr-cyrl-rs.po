@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-26 01:05+0000\n"
+"PO-Revision-Date: 2024-05-03 08:19+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1099,11 +1099,13 @@ msgstr "Радња"
 msgid "Action execution"
 msgstr "Извршавање радње"
 
-#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue
-#, fuzzy
-#| msgid "Action execution"
-msgid "Action menu button"
-msgstr "Извршавање радње"
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+msgid "Action menu button for authenticator app"
+msgstr "Дугме менија радње апликације за аутентификацију"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+msgid "Action menu button for security keys"
+msgstr "Дугме менија радње безбедносних кључева"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
@@ -1156,6 +1158,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Активно"
@@ -1567,6 +1570,7 @@ msgid "All colleagues are busy."
 msgstr "Све колеге су заузете."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 "Сви рачунари и претраживачи којима се приступа Zammad-у ће бити излистани "
@@ -2036,11 +2040,11 @@ msgstr ""
 
 #: app/models/user.rb
 msgid ""
-"At least one identifier (firstname, lastname, phone or email) for user is "
-"required."
+"At least one identifier (firstname, lastname, phone, mobile or email) for "
+"user is required."
 msgstr ""
-"Неопходан је бар један идентификатор корисника (име, презиме, телефон или "
-"имејл)."
+"Неопходан је бар један идентификатор корисника (име, презиме, телефон, "
+"мобилни или имејл)."
 
 #: app/models/postmaster_filter.rb
 msgid "At least one match rule is required, but none was provided."
@@ -2211,12 +2215,17 @@ msgstr "Аутентификација путем %s"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
-#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts
 #: db/seeds/settings.rb
 msgid "Authenticator App"
 msgstr "Апликација за аутентификацију"
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+msgid "Authenticator app QR code"
+msgstr "QR код апликације за аутентификацију"
+
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Authenticator app secret"
 msgstr "Шифра апликације за аутентификацију"
 
@@ -2229,6 +2238,7 @@ msgid "Authorization failed"
 msgstr "Неуспела ауторизација"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Authy"
 msgstr "Authy"
 
@@ -2304,6 +2314,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Available for the following roles"
 msgstr "Доступно следећим улогама"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+msgid "Available methods"
+msgstr "Доступни методи"
 
 #: db/seeds/settings.rb
 msgid "Available types for a new ticket"
@@ -2746,6 +2760,10 @@ msgstr "Откажи"
 msgid "Cancel & Go Back"
 msgstr "Откажи и иди назад"
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
+msgid "Cancel & Sign Out"
+msgstr "Откажи и одјави се"
+
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
 msgid "Cancel & Sign out"
 msgstr "Откажи и одјави се"
@@ -3083,6 +3101,7 @@ msgid "Choose your new password."
 msgstr "Изабери своју нову лозинку."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
 msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr "Изабери свој пожељни метод двофакторске аутентификације за поставку."
 
@@ -3168,7 +3187,6 @@ msgstr "Clearbit интеграција"
 msgid "Click here"
 msgstr "Кликни овде"
 
-#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Кликни овде за поставку метода двофакторске аутентификације."
@@ -3298,7 +3316,7 @@ msgid "Company Inc."
 msgstr "Предузеће д.о.о."
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 #: db/seeds/settings.rb
 msgid "Complete the sign-in with your security key."
 msgstr "Завршите пријаву уз помоћ вашег безбедносног кључа."
@@ -3373,6 +3391,7 @@ msgid "Confirm"
 msgstr "Потврди"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
 msgid "Confirm Password"
 msgstr "Потврдите лозинку"
 
@@ -3589,6 +3608,7 @@ msgid "Conversion of retweets into tickets is turned off."
 msgstr "Отварање тикета на ретвитове је искључено."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
+#: app/frontend/apps/desktop/composables/useCopyToClipboard.ts
 msgid "Copied!"
 msgstr "Ископирано!"
 
@@ -3596,6 +3616,14 @@ msgstr "Ископирано!"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Copy"
 msgstr "Копирај"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+msgid "Copy Codes"
+msgstr "Ископирај шифре"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+msgid "Copy Secret"
+msgstr "Ископирај шифру"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
@@ -3631,6 +3659,15 @@ msgstr ""
 msgid "Could not fetch WhatsApp phone number details."
 msgstr "Није било могуће учитати податке о WhatsApp броју телефона."
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+msgid "Could not fetch security keys"
+msgstr "Није било могуће учитати безбедносне кључеве"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+msgid "Could not generate recovery codes"
+msgstr "Није било могуће генерисати шифре за опоравак"
+
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid ""
 "Could not load the two-factor authentication configuration for this user."
@@ -3652,7 +3689,13 @@ msgstr ""
 msgid "Could not remove two-factor authentication method"
 msgstr "Није било могуће уклонити метод двофакторске аутентификације"
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+msgid "Could not remove two-factor authentication method."
+msgstr "Није било могуће уклонити метод двофакторске аутентификације."
+
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Could not set two-factor authentication method as default"
 msgstr ""
 "Није било могуће поставити метод двофакторске аутентификације као "
@@ -3904,6 +3947,7 @@ msgstr "Додат интерни чланак"
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created at"
 msgstr "Додато у"
@@ -3963,6 +4007,7 @@ msgid "Current User"
 msgstr "Тренутни корисник"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Current password"
 msgstr "Тренутна лозинка"
@@ -4199,6 +4244,7 @@ msgstr "Успешно дешифровање."
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: db/seeds/settings.rb
 msgid "Default"
 msgstr "Подразумевано"
@@ -5312,6 +5358,10 @@ msgstr "Избриши записе"
 msgid "Delete this avatar"
 msgstr "Избриши овај аватар"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "Delete this device"
+msgstr "Избриши овај уређај"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Delete:"
 msgstr "Избриши:"
@@ -5407,6 +5457,10 @@ msgstr "Развојни систем"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "Device"
 msgstr "Уређај"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "Device has been revoked."
+msgstr "Уређај је опозван."
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -5736,6 +5790,7 @@ msgstr "Ускршњи празници"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
@@ -5754,6 +5809,10 @@ msgstr "Измени клијента"
 msgid "Edit Organization"
 msgstr "Измени организацију"
 
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+msgid "Edit authenticator app"
+msgstr "Уреди апликацију за аутентификацију"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr "Форма за измену"
@@ -5762,6 +5821,10 @@ msgstr "Форма за измену"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Edit reply"
 msgstr "Измени одговор"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+msgid "Edit security keys"
+msgstr "Уреди безбедносне кључеве"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 msgid "Editing"
@@ -6330,7 +6393,7 @@ msgid "Enter the URL of your %s system."
 msgstr "Унеси URL твог %s система."
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
-#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts
 msgid "Enter the code from your two-factor authenticator app."
 msgstr "Унеси код из своје двофакторске апликације за аутентификацију."
 
@@ -6350,6 +6413,7 @@ msgstr ""
 "система."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Enter the security code generated by the authenticator app:"
 msgstr ""
 "Унеси сигурносни код генерисан од стране апликације за аутентификацију:"
@@ -6738,6 +6802,10 @@ msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr ""
 "Неуспешно слање имејл поруке за „%s”. Молимо контактирајте администратора."
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+msgid "Failed to set up QR code. Please try again."
+msgstr "Није било могуће приказати QR код. Молимо покушајте поново."
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Fax"
 msgstr "Факс"
@@ -7122,6 +7190,14 @@ msgstr "Генерише ’Session’ информације."
 msgid "Generate Access Token for |%s|"
 msgstr "Генериши приступни кључ за |%s|"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+msgid "Generate Recovery Codes"
+msgstr "Генериши шифре за опоравак"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue
+msgid "Generate Recovery Codes: %s"
+msgstr "Генерација шифри за опоравак: %s"
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Generate Token"
 msgstr "Генериши кључ"
@@ -7134,6 +7210,10 @@ msgstr "Генериши шифре за опоравак"
 #: db/seeds/schedulers.rb
 msgid "Generate user-based stats."
 msgstr "Генерише статистике корисника."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+msgid "Generating recovery codes…"
+msgstr "Генерисање шифри за опоравак…"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Generic API to integrate VoIP service provider with real-time push."
@@ -7162,7 +7242,7 @@ msgid "Get notified"
 msgstr "Буди обавештен(а)"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
-#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts
 #: db/seeds/settings.rb
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
@@ -7173,6 +7253,7 @@ msgid "Getting an Access Token"
 msgstr "Добијање приступног кључа"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Getting key information from the browser…"
 msgstr "Учитавање информација о кључу из претраживача…"
 
@@ -7260,6 +7341,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Go Back"
 msgstr "Иди назад"
@@ -7302,6 +7384,7 @@ msgid "Google App Credentials"
 msgstr "Креденцијали Google апликације"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Google Authenticator"
 msgstr "Google Authenticator"
 
@@ -7891,6 +7974,7 @@ msgstr ""
 "захтев за пријаву преко привремене лозинке администратора."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid ""
 "If you lose your recovery codes it's possible to generate new ones. This "
 "action is going to invalidate previous recovery codes."
@@ -8415,6 +8499,7 @@ msgstr ""
 "Ограничавање приступа није могуће."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Invalid security code! Please try again with a new code."
 msgstr "Неважећи сигурни код! Молимо покушајте поново са новим кодом."
 
@@ -8973,6 +9058,7 @@ msgstr "Локализација при извршавању радње"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "Location"
 msgstr "Локација"
 
@@ -9373,6 +9459,7 @@ msgid "Microsoft Application Registration Portal"
 msgstr "Регистрациони портал Microsoft 365 апликације"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Microsoft Authenticator"
 msgstr "Microsoft Authenticator"
 
@@ -9500,6 +9587,7 @@ msgid "More ticket overviews"
 msgstr "Још прегледа тикета"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "Most recent activity"
 msgstr "Последња активност"
 
@@ -9638,6 +9726,8 @@ msgstr "Nagios интеграција"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "Назив"
@@ -9647,6 +9737,7 @@ msgid "Name Identifier Format"
 msgstr "Формат идентификатора назива"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Name for this security key"
 msgstr "Назив овог безбедносног кључа"
 
@@ -9930,6 +10021,8 @@ msgstr "Нови корисник?"
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "Следеће"
@@ -10395,12 +10488,9 @@ msgid "OK, I've copied my token"
 msgstr "У реду, копирао сам свој кључ"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
 msgid "OK, I've saved my recovery codes"
 msgstr "У реду, копирао сам своје шифре за опоравак"
-
-#: app/models/system_report/plugin/os.rb
-msgid "OS"
-msgstr "OS"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
@@ -10625,6 +10715,7 @@ msgid "Open tickets"
 msgstr "Отворени тикети"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Open your authenticator app and scan the QR code below:"
 msgstr ""
 "Отворите своју апликацију за аутентификацију и скенирајте QR код испод:"
@@ -10632,6 +10723,10 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
 msgstr "Отворено у прозорима"
+
+#: app/models/system_report/plugin/os.rb
+msgid "Operating system"
+msgstr "Оперативни систем"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -10979,6 +11074,10 @@ msgstr "Успешно промењена лозинка."
 msgid "Password could not be changed."
 msgstr "Није било могуће променити лозинку."
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
+msgid "Password could not be checked"
+msgstr "Није било могуће проверити лозинку"
+
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Password for proxy connection"
 msgstr "Лозинка за прокси конекцију"
@@ -11250,6 +11349,7 @@ msgid "Please provide your new password."
 msgstr "Молимо унесите своју нову лозинку."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
 msgid ""
 "Please save your recovery codes listed below somewhere safe. You can use "
 "them to sign in if you lose access to another two-factor method:"
@@ -11350,6 +11450,7 @@ msgid "Prefer color scheme as indicated by the operating system."
 msgstr "Користи изглед који одређује оперативни систем."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Press the button below to finish the setup."
 msgstr "Кликните на дугме испод за довршавање поставке."
 
@@ -11427,6 +11528,10 @@ msgstr "Претходни тикети у власништву (укупно %s
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Print"
 msgstr "Штампај"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+msgid "Print Codes"
+msgstr "Штампај шифре"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -11677,6 +11782,7 @@ msgid "Recovery Codes"
 msgstr "Шифре за опоравак"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid ""
 "Recovery codes can be used to access your account in the event you lose "
 "access to other two-factor authentication methods."
@@ -11697,6 +11803,10 @@ msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 "Референце - Претрага наставка и по In-Reply-To и References заглављима."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+msgid "Regenerate Recovery Codes"
+msgstr "Регенериши шифре за опоравак"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Regenerate recovery codes"
@@ -11763,6 +11873,9 @@ msgstr "Удаљено"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
 msgstr "Обриши"
@@ -11770,6 +11883,10 @@ msgstr "Обриши"
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Remove %s"
 msgstr "Обриши %s"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue
+msgid "Remove Two-factor Authentication: %s"
+msgstr "Уклањање двофакторске аутентификације: %s"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Remove a configured two-factor authentication method"
@@ -11787,6 +11904,10 @@ msgstr "Уклони све методе"
 msgid "Remove all values"
 msgstr "Избриши све вредности"
 
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+msgid "Remove authenticator app"
+msgstr "Уклони апликацију за аутентификацију"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
 msgstr "Уклони форматирање"
@@ -11798,6 +11919,10 @@ msgstr "Уклони слику"
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 msgid "Remove method"
 msgstr "Уклони метод"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+msgid "Remove security keys"
+msgstr "Уклони безбедносне кључеве"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
@@ -12097,6 +12222,8 @@ msgstr "Резултат:"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
@@ -12358,6 +12485,7 @@ msgid "Save"
 msgstr "Сачувај"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
 msgid "Save Codes"
 msgstr "Сачувај шифре"
 
@@ -12588,6 +12716,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -12597,6 +12726,7 @@ msgstr "Безбедност"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 msgid "Security Code"
@@ -12617,7 +12747,7 @@ msgstr "Безбедносни кључ"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 #: db/seeds/settings.rb
 msgid "Security Keys"
 msgstr "Безбедносни кључеви"
@@ -12627,15 +12757,17 @@ msgid "Security key \"%s\" will be removed."
 msgstr "Безбедносни кључ „%s” ће бити уклоњен."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
 msgid "Security key setup failed."
 msgstr "Поставка безбедносног кључа није успела."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "Security key verification failed."
 msgstr "Провера безбедносног кључа није успела."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid ""
 "Security keys are hardware or software credentials that can be used as your "
 "two-factor authentication method."
@@ -12887,8 +13019,18 @@ msgstr "Сесије"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Set Up"
 msgstr "Постави"
+
+#: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/twoFactorSetup.ts
+msgid "Set Up Two-factor Authentication"
+msgstr "Постављање двофакторске аутентификације"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue
+msgid "Set Up Two-factor Authentication: %s"
+msgstr "Постављање двофакторске аутентификације: %s"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Set a title for your ticket"
@@ -12908,8 +13050,13 @@ msgstr "Подеси као подразумевано"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Set as default"
 msgstr "Подеси као подразумевано"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+msgid "Set authenticator app as default"
+msgstr "Подеси апликацију за аутентификацију као подразумевано"
 
 #: db/seeds/settings.rb
 msgid "Set available ticket types"
@@ -12940,6 +13087,10 @@ msgstr "Постави као подразумевано за нове тике�
 msgid "Set outbound caller ID"
 msgstr "Подеси одлазећи ID позиваоца"
 
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+msgid "Set security keys as default"
+msgstr "Подеси безбедносне кључеве као подразумевано"
+
 #: db/seeds/settings.rb
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
@@ -12956,10 +13107,22 @@ msgstr "Постави на интерно"
 msgid "Set to public"
 msgstr "Постави на јавно"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+msgid "Set up"
+msgstr "Постави"
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Set up a new system"
 msgstr "Подеси нови систем"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+msgid "Set up authenticator app"
+msgstr "Постави апликацију за аутентификацију"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+msgid "Set up security keys"
+msgstr "Постави безбедносне кључеве"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
@@ -14129,7 +14292,8 @@ msgstr "Није било могуће освежити изглед."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "The application is not running in a secure context."
 msgstr "Апликација се не извршава у безбедном контексту."
 
@@ -14353,6 +14517,10 @@ msgstr ""
 msgid "The default font size is 12px."
 msgstr "Стандардна величина фонта је 12px."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "The device could not be deleted."
+msgstr "Није било могуће обрисати уређај."
+
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Сепаратор између прикључка и броја тикета. Нпр. ’: ’."
@@ -14450,6 +14618,23 @@ msgstr "Формат предмета."
 #: lib/whatsapp/retry/media.rb
 msgid "The given article is not a media article."
 msgstr "Задат чланак не садржи медијски прилог."
+
+#: app/services/service/user/two_factor/set_default_method.rb
+msgid "The given two-factor authentication method is not configured."
+msgstr "Дата двофакторска аутентификација још није постављена."
+
+#: app/services/service/user/two_factor/remove_method_credentials.rb
+#: app/services/service/user/two_factor/set_default_method.rb
+msgid "The given two-factor authentication method is not enabled."
+msgstr "Дати метод двофакторске аутентификације није укључен."
+
+#: app/services/service/user/two_factor/base.rb
+msgid "The given two-factor method does not exist."
+msgstr "Дати метод двофакторске аутентификације не постоји."
+
+#: app/services/service/user/two_factor/remove_method_credentials.rb
+msgid "The given two-factor method is not configured yet."
+msgstr "Дати метод двофакторске аутентификација још није постављен."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -14671,6 +14856,10 @@ msgstr "Достављена путања је неисправна."
 #: app/models/postmaster_filter.rb
 msgid "The provided match operator is missing or invalid."
 msgstr "Наведени оператор подударања недостаје или је неисправан."
+
+#: app/graphql/gql/mutations/account/password_check.rb
+msgid "The provided password is incorrect."
+msgstr "Унета лозинка није исправна."
 
 #: app/models/webhook.rb
 msgid "The provided payload is invalid. Please check your syntax."
@@ -15057,7 +15246,6 @@ msgstr ""
 "Потврђена је исправност кључа. Сада се можете пријавити једанпут путем "
 "лозинке."
 
-#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "The two-factor authentication is not configured yet."
 msgstr "Двофакторска аутентификација још није постављена."
@@ -15067,10 +15255,15 @@ msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "Метод двофакторске аутентификације корисника „%s” је уклоњен."
 
 #: app/controllers/sessions_controller.rb
-#: app/controllers/user/two_factors_controller.rb
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
+#: app/services/service/user/two_factor/initiate_method_configuration.rb
+#: app/services/service/user/two_factor/verify_method_configuration.rb
 msgid "The two-factor authentication method is not enabled."
 msgstr "Метод двофакторске аутентификације није омогућен."
+
+#: app/services/service/user/two_factor/remove_method_credentials.rb
+msgid "The two-factor credentials you're trying to delete do not exist"
+msgstr "Двофактоска аутентификација коју покушавате да обришете не постоји"
 
 #: app/models/setting/validation/saml/security.rb
 msgid "The type of the private key is wrong."
@@ -15107,6 +15300,12 @@ msgid ""
 "The verification of the TLS connection failed. Please check the IDP "
 "certificate."
 msgstr "Провера TLS конекције је неуспела. Молимо проверите IDP сертификат."
+
+#: app/services/service/user/two_factor/verify_method_configuration.rb
+msgid ""
+"The verification of the two-factor authentication method configuration "
+"failed."
+msgstr "Провера метода двофакторске аутентификације није успела."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -15211,12 +15410,6 @@ msgstr ""
 msgid "There is no route to this host."
 msgstr "Не постоји рута до овог сервера."
 
-#: app/controllers/user/two_factors_controller.rb
-msgid ""
-"There is no stored configuration for this two-factor authentication method."
-msgstr ""
-"Нема снимљене конфигурације за овај метод двофакторске аутентификације."
-
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "There is no valid PGP email recipient."
 msgstr "Без важећег примаоца PGP имејл поруке."
@@ -15317,6 +15510,10 @@ msgid ""
 msgstr ""
 "Ова класа ће бити додата дугмету приликом иницијализације и биће уклоњена "
 "када се веза за ћаскање успостави."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "This device"
+msgstr "Овај уређај"
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
@@ -16291,6 +16488,7 @@ msgstr ""
 "непосредног превода притиском на „%s” у било ком тренутку."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid ""
 "To register a new security key with your account, press the button below."
 msgstr ""
@@ -16310,6 +16508,7 @@ msgid "To select placeholders from a list, just enter \"::\"."
 msgstr "За избор вредности са списка, унесите „::”."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "To set up Authenticator App for your account, follow the steps below:"
 msgstr ""
 "За постављање апликације за аутентификацију за ваш налог, пратите кораке "
@@ -16477,7 +16676,7 @@ msgid "Try another method"
 msgstr "Покушајте други метод"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "Try using your security key again."
 msgstr "Покушајте поново искористити ваш безбедносни кључ."
 
@@ -16588,13 +16787,15 @@ msgstr "Twitter кључ"
 msgid "Twitter Secret"
 msgstr "Twitter шифра"
 
-#: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/twoFactorSetup.ts
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/twoFactorSetup.ts
 msgid "Two-Factor Authentication Configuration Is Required"
 msgstr "Поставка двофакторске аутентификације је обавезна"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+#: db/seeds/permissions.rb
 msgid "Two-factor Authentication"
 msgstr "Двофакторска аутентификација"
 
@@ -16606,21 +16807,43 @@ msgstr "Методи двофакторске аутентификације"
 msgid "Two-factor authentication is not supported with HTTP BasicAuth."
 msgstr "Двофакторска аутентификација не подржава HTTP BasicAuth."
 
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
+msgid ""
+"Two-factor authentication is required, but you don't have sufficient "
+"permissions to set it up. Please contact your administrator."
+msgstr ""
+"Двофакторска аутентификација је обавезна, али тренутно немате одговарајућу "
+"дозволу да је поставите. Молимо контактирајте свог администратора."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 msgid "Two-factor authentication method could not be initiated."
 msgstr "Није било могуће покренути метод двофакторске аутентификације."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Two-factor authentication method was removed."
 msgstr "Метод двофакторске аутентификације је уклоњен."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Two-factor authentication method was set as default."
 msgstr "Метод двофакторске аутентификације је постављен као подразумеван."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Two-factor authentication method was set up successfully."
+msgstr "Метод двофакторске аутентификације је успешно постављен."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+msgid "Two-factor method could not be configured."
+msgstr "Није било могуће поставити метод двофакторске аутентификације."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+msgid "Two-factor method has been configured successfully."
 msgstr "Метод двофакторске аутентификације је успешно постављен."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -16693,6 +16916,7 @@ msgid "Unknown error: Could not create a ticket from this email."
 msgstr "Непозната грешка: није било могуће отворити тикет од ове имејл поруке."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid ""
 "Unless you already have it, install one of the following authenticator apps "
 "on your mobile device:"
@@ -17173,6 +17397,10 @@ msgid "User with specified ID was not found. Try checking the URL for errors."
 msgstr ""
 "Није пронађен корисник под траженим ID. Проверите URL путању на грешке."
 
+#: app/services/service/user/device/delete.rb
+msgid "UserDevice could not be found."
+msgstr "Кориснички уређај није пронађен."
+
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"
 msgstr "Корисничко име"
@@ -17313,7 +17541,7 @@ msgid "Verifying and saving your import configuration…"
 msgstr "Провера и снимање ваших подешавања увоза…"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "Verifying key information…"
 msgstr "Провера информација о кључу…"
 
@@ -18016,6 +18244,7 @@ msgid "You have to allow access to your webcam."
 msgstr "Морате да дозволите приступ вашој камери."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
 msgid "You must protect your account with two-factor authentication."
 msgstr "Морате заштитити ваш налог двофакторском аутентификацијом."
 
@@ -19599,6 +19828,10 @@ msgstr "директна Twitter порука"
 msgid "twitter status"
 msgstr "twitter статус"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
+msgid "twofactor,2fa,security key,passkey,authenticator app"
+msgstr "други фактор,2fa,безбедносни кључ,passkey,апликација за аутентификацију"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "unassign user"
 msgstr "скини доделу корисника"
@@ -19713,6 +19946,15 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid ""
+#~ "There is no stored configuration for this two-factor authentication "
+#~ "method."
+#~ msgstr ""
+#~ "Нема снимљене конфигурације за овај метод двофакторске аутентификације."
+
+#~ msgid "OS"
+#~ msgstr "OS"
 
 #~ msgid "Capture"
 #~ msgstr "Сними"

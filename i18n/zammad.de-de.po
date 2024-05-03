@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-23 01:07+0000\n"
+"PO-Revision-Date: 2024-05-03 01:05+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1118,11 +1118,13 @@ msgstr "Aktion"
 msgid "Action execution"
 msgstr "Aktions-Ausführung"
 
-#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue
-#, fuzzy
-#| msgid "Action execution"
-msgid "Action menu button"
-msgstr "Aktions-Ausführung"
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+msgid "Action menu button for authenticator app"
+msgstr "Schaltfläche Aktionsmenü für Authentifizierungs-App"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+msgid "Action menu button for security keys"
+msgstr "Schaltfläche Aktionsmenü für Sicherheits-Schlüssel"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
@@ -1175,6 +1177,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Aktiv"
@@ -1595,6 +1598,7 @@ msgid "All colleagues are busy."
 msgstr "Alle Kollegen sind beschäftigt."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 "Alle Computer und Browser, die Zugriff auf Ihr Zammad haben, werden hier "
@@ -2074,11 +2078,11 @@ msgstr ""
 
 #: app/models/user.rb
 msgid ""
-"At least one identifier (firstname, lastname, phone or email) for user is "
-"required."
+"At least one identifier (firstname, lastname, phone, mobile or email) for "
+"user is required."
 msgstr ""
-"Mindestens eine Kennung (Vorname, Nachname, Telefon oder E-Mail) ist für "
-"Benutzer notwendig."
+"Mindestens eine Kennung (Vorname, Nachname, Telefon, Mobil oder E-Mail) ist "
+"für Benutzer notwendig."
 
 #: app/models/postmaster_filter.rb
 msgid "At least one match rule is required, but none was provided."
@@ -2255,12 +2259,17 @@ msgstr "Anmeldung über %s"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
-#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts
 #: db/seeds/settings.rb
 msgid "Authenticator App"
 msgstr "Authentifizierungs-App"
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+msgid "Authenticator app QR code"
+msgstr "QR-Code der Authentifizierungs-App"
+
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Authenticator app secret"
 msgstr "Geheimnis der Authentifizierungs-App"
 
@@ -2273,6 +2282,7 @@ msgid "Authorization failed"
 msgstr "Autorisierung fehlgeschlagen"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Authy"
 msgstr "Authy"
 
@@ -2348,6 +2358,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Available for the following roles"
 msgstr "Verfügbar für die folgenden Rollen"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+msgid "Available methods"
+msgstr "Verfügbare Methoden"
 
 #: db/seeds/settings.rb
 msgid "Available types for a new ticket"
@@ -2790,6 +2804,10 @@ msgstr "Abbrechen"
 msgid "Cancel & Go Back"
 msgstr "Abbrechen & Zurück"
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
+msgid "Cancel & Sign Out"
+msgstr "Abbrechen & abmelden"
+
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
 msgid "Cancel & Sign out"
 msgstr "Abbrechen & abmelden"
@@ -2883,10 +2901,8 @@ msgid "Change Objects"
 msgstr "Objekte ändern"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
-#, fuzzy
-#| msgid "Change Your Password"
 msgid "Change Password"
-msgstr "Ändern Sie Ihr Passwort"
+msgstr "Passwort ändern"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Change Your Password"
@@ -3138,6 +3154,7 @@ msgid "Choose your new password."
 msgstr "Wählen Sie Ihr neues Passwort."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
 msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr ""
 "Wählen Sie Ihre bevorzugte Methode für Zwei-Faktor-Authentifizierung zur "
@@ -3225,7 +3242,6 @@ msgstr "Clearbit-Integration"
 msgid "Click here"
 msgstr "Klicken Sie hier"
 
-#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "Click here to set up a two-factor authentication method."
 msgstr ""
@@ -3356,10 +3372,10 @@ msgid "Company Inc."
 msgstr "Unternehmen GmbH"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 #: db/seeds/settings.rb
 msgid "Complete the sign-in with your security key."
-msgstr "Schließen Sie die Anmeldung mit Ihrem Sicherheitsschlüssel ab."
+msgstr "Schließen Sie die Anmeldung mit Ihrem Sicherheits-Schlüssel ab."
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Complete translations"
@@ -3407,7 +3423,7 @@ msgstr "Konfiguration für %s"
 
 #: app/models/system_report/plugin/environment.rb
 msgid "Configuration of performance settings via environment variables."
-msgstr ""
+msgstr "Konfiguration der Leistungseinstellungen über Umgebungsvariablen."
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -3431,6 +3447,7 @@ msgid "Confirm"
 msgstr "Bestätigen"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
 msgid "Confirm Password"
 msgstr "Passwort bestätigen"
 
@@ -3443,10 +3460,8 @@ msgid "Confirm merge"
 msgstr "Zusammenfassen bestätigen"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
-#, fuzzy
-#| msgid "Confirm password"
 msgid "Confirm new password"
-msgstr "Passwort bestätigen"
+msgstr "Bestätigen Sie das neue Passwort"
 
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
@@ -3593,8 +3608,6 @@ msgid "Content was changed since loading"
 msgstr "Der Inhalt hat sich seit dem Laden geändert"
 
 #: app/assets/javascripts/app/views/system_report.jst.eco
-#, fuzzy
-#| msgid "Content"
 msgid "Contents"
 msgstr "Inhalt"
 
@@ -3652,6 +3665,7 @@ msgid "Conversion of retweets into tickets is turned off."
 msgstr "Retweets werden nicht in Tickets umgewandelt."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
+#: app/frontend/apps/desktop/composables/useCopyToClipboard.ts
 msgid "Copied!"
 msgstr "Kopiert!"
 
@@ -3659,6 +3673,14 @@ msgstr "Kopiert!"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Copy"
 msgstr "Kopieren"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+msgid "Copy Codes"
+msgstr "Codes kopieren"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+msgid "Copy Secret"
+msgstr "Geheimnis kopieren"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
@@ -3694,6 +3716,15 @@ msgstr ""
 msgid "Could not fetch WhatsApp phone number details."
 msgstr "Die Details der WhatsApp-Telefonnummer konnten nicht abgerufen werden."
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+msgid "Could not fetch security keys"
+msgstr "Sicherheits-Schlüssel konnten nicht abgerufen werden"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+msgid "Could not generate recovery codes"
+msgstr "Wiederherstellungscodes konnten nicht erzeugt werden"
+
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid ""
 "Could not load the two-factor authentication configuration for this user."
@@ -3717,7 +3748,13 @@ msgstr ""
 msgid "Could not remove two-factor authentication method"
 msgstr "Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden"
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+msgid "Could not remove two-factor authentication method."
+msgstr "Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden."
+
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Could not set two-factor authentication method as default"
 msgstr ""
 "Konnte Methode für Zwei-Faktor-Authentifizierung nicht als Standard "
@@ -3729,7 +3766,7 @@ msgstr "Anzahl"
 
 #: app/models/system_report/plugin/failed_emails.rb
 msgid "Count of failed emails"
-msgstr ""
+msgstr "Anzahl der fehlgeschlagenen E-Mails"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -3969,6 +4006,7 @@ msgstr "Interner Artikel erstellt"
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created at"
 msgstr "Erstellt am"
@@ -4028,6 +4066,7 @@ msgid "Current User"
 msgstr "Aktueller Benutzer"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Current password"
 msgstr "Aktuelles Passwort"
@@ -4035,6 +4074,7 @@ msgstr "Aktuelles Passwort"
 #: app/models/system_report/plugin/setting.rb
 msgid "Current state of configured settings (excluding passwords and tokens)"
 msgstr ""
+"Aktueller Status der konfigurierten Einstellungen (ohne Passwörter und Token)"
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -4107,6 +4147,7 @@ msgstr "Kunden-Chat"
 #: app/models/system_report/plugin/entities/user.rb
 msgid "Customer and agent ratio (role based user counts)"
 msgstr ""
+"Verhältnis zwischen Kunden und Agenten (rollenbasierte Zählung der Benutzer)"
 
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
@@ -4268,6 +4309,7 @@ msgstr "Die Entschlüsselung war erfolgreich."
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: db/seeds/settings.rb
 msgid "Default"
 msgstr "Standard"
@@ -4759,7 +4801,7 @@ msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
 msgstr ""
-"Definiert, ob Methode \"Sicherheitsschlüssel\" für Zwei-Faktor-"
+"Definiert, ob Methode \"Sicherheits-Schlüssel\" für Zwei-Faktor-"
 "Authentifizierung aktiviert ist oder nicht."
 
 #: db/seeds/settings.rb
@@ -5427,6 +5469,10 @@ msgstr "Datensätze löschen"
 msgid "Delete this avatar"
 msgstr "Diesen Avatar löschen"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "Delete this device"
+msgstr "Dieses Gerät löschen"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Delete:"
 msgstr "Löschen:"
@@ -5522,6 +5568,10 @@ msgstr "Entwicklersystem"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "Device"
 msgstr "Gerät"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "Device has been revoked."
+msgstr "Das Gerät wurde widerrufen."
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -5858,6 +5908,7 @@ msgstr "Osterferien"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
@@ -5876,6 +5927,10 @@ msgstr "Kunden bearbeiten"
 msgid "Edit Organization"
 msgstr "Organisation bearbeiten"
 
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+msgid "Edit authenticator app"
+msgstr "Authentifizierungs-App bearbeiten"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr "Bearbeitungsmaske"
@@ -5884,6 +5939,10 @@ msgstr "Bearbeitungsmaske"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Edit reply"
 msgstr "Antwort bearbeiten"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+msgid "Edit security keys"
+msgstr "Sicherheits-Schlüssel bearbeiten"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 msgid "Editing"
@@ -5946,10 +6005,8 @@ msgid "Elasticsearch needs to be configured!"
 msgstr "Elasticsearch muss konfiguriert werden!"
 
 #: app/models/system_report/plugin/search_index.rb
-#, fuzzy
-#| msgid "Elasticsearch SSL verification"
 msgid "Elasticsearch version"
-msgstr "SSL-Verizifierung für Elasticsearch"
+msgstr "Elasticsearch-Version"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -6465,7 +6522,7 @@ msgid "Enter the URL of your %s system."
 msgstr "Geben Sie die URL Ihres %s-Systems ein."
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
-#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts
 msgid "Enter the code from your two-factor authenticator app."
 msgstr "Geben Sie den Code aus Ihrer Authentifizierungs-App ein."
 
@@ -6486,6 +6543,7 @@ msgstr ""
 "bereitstellt, um die beiden Systeme zu verknüpfen."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Enter the security code generated by the authenticator app:"
 msgstr "Geben Sie den Sicherheits-Code aus der Authentifizierungs-App ein:"
 
@@ -6572,6 +6630,8 @@ msgstr "Bitte geben Sie Ihren Benutzernamen oder E-Mail-Adresse ein"
 #: app/models/system_report/plugin/entities/counts.rb
 msgid "Entity counts of database objects (e.g. ticket count, user count, etc.)"
 msgstr ""
+"Anzahl der Entitäten von Datenbankobjekten (z. B. Anzahl der Tickets, Anzahl "
+"der Benutzer usw.)"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
@@ -6884,6 +6944,11 @@ msgstr ""
 "Fehler beim Senden der E-Mail an \"%s\". Bitte kontaktieren Sie einen "
 "Administrator."
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+msgid "Failed to set up QR code. Please try again."
+msgstr ""
+"QR-Code konnte nicht eingerichtet werden. Bitte versuchen Sie es erneut."
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Fax"
 msgstr "Fax"
@@ -6947,7 +7012,7 @@ msgstr "Die Datei ist zu groß, maximal %s MB sind zulässig."
 
 #: app/models/system_report/plugin/rails_root.rb
 msgid "Filepath to Zammad directory"
-msgstr ""
+msgstr "Dateipfad zum Zammad-Verzeichnis"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -7271,6 +7336,14 @@ msgstr "Sitzungsdaten generieren."
 msgid "Generate Access Token for |%s|"
 msgstr "Zugangstoken für |%s| generieren"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+msgid "Generate Recovery Codes"
+msgstr "Wiederherstellungs-Codes erzeugen"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue
+msgid "Generate Recovery Codes: %s"
+msgstr "Wiederherstellungs-Codes erzeugen: %s"
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Generate Token"
 msgstr "Token generieren"
@@ -7283,6 +7356,10 @@ msgstr "Wiederherstellungs-Codes erzeugen"
 #: db/seeds/schedulers.rb
 msgid "Generate user-based stats."
 msgstr "Generiert Benutzer-spezifische Statistiken."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+msgid "Generating recovery codes…"
+msgstr "Wiederherstellungs-Codes erzeugen…"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Generic API to integrate VoIP service provider with real-time push."
@@ -7311,7 +7388,7 @@ msgid "Get notified"
 msgstr "Benachrichtigt werden"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
-#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts
 #: db/seeds/settings.rb
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
@@ -7323,6 +7400,7 @@ msgid "Getting an Access Token"
 msgstr "Ein Access Token erhalten"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Getting key information from the browser…"
 msgstr "Schlüssel-Information vom Browser abfragen…"
 
@@ -7412,6 +7490,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Go Back"
 msgstr "Zurück"
@@ -7454,6 +7533,7 @@ msgid "Google App Credentials"
 msgstr "Google App-Zugangsdaten"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Google Authenticator"
 msgstr "Google Authenticator"
 
@@ -7632,7 +7712,7 @@ msgstr "Datenschutz-Aufgaben ausführen."
 
 #: app/models/system_report/plugin/hardware.rb
 msgid "Hardware (e.g. CPU cores, memory, disk space)"
-msgstr ""
+msgstr "Hardware (z. B. CPU-Kerne, Speicher, Festplattenplatz)"
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
@@ -8057,6 +8137,7 @@ msgstr ""
 "einmalige Passwort-Anmeldung als Administrator anfordern."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid ""
 "If you lose your recovery codes it's possible to generate new ones. This "
 "action is going to invalidate previous recovery codes."
@@ -8352,10 +8433,8 @@ msgid "Increment seconds value"
 msgstr "Sekundenwert erhöhen"
 
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue
-#, fuzzy
-#| msgid "No import in progress."
 msgid "Indicating progress"
-msgstr "Kein Import im Gange."
+msgstr "Fortschritt wird angezeigt"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -8592,6 +8671,7 @@ msgstr ""
 "wirksam."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Invalid security code! Please try again with a new code."
 msgstr ""
 "Ungültiger Sicherheitscode! Bitte versuchen Sie es mit einem neuen Code noch "
@@ -8935,6 +9015,8 @@ msgstr "Letzter Kontakt (Kunde)"
 msgid ""
 "Last created at of database objects (e.g. when was the last trigger created)"
 msgstr ""
+"Letztes Erstellungsdatum von Datenbankobjekten (z. B. wann wurde der letzte "
+"Trigger erstellt)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
 msgid "Last login"
@@ -9077,7 +9159,7 @@ msgstr "Verknüpfungen"
 
 #: app/models/system_report/plugin/addons.rb
 msgid "List of installed addons"
-msgstr ""
+msgstr "Liste der installierten Addons"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "List of shortcuts"
@@ -9088,6 +9170,8 @@ msgid ""
 "Lists active channels (e.g. 1 Telegram channel, 2 Microsoft channels and 1 "
 "Google channel)"
 msgstr ""
+"Listet aktive Kanäle auf (z. B. 1 Telegram-Kanal, 2 Microsoft-Kanäle und 1 "
+"Google-Kanal)"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Load"
@@ -9151,6 +9235,7 @@ msgstr "Lokalisierung für ausgeführte Aktionen"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "Location"
 msgstr "Ort"
 
@@ -9212,7 +9297,7 @@ msgstr "Niedrige Priorität"
 
 #: app/models/system_report/plugin/mac_address.rb
 msgid "MAC address (unique identifier of the report)"
-msgstr ""
+msgstr "MAC-Adresse (eindeutige Kennung des Berichts)"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
@@ -9551,6 +9636,7 @@ msgid "Microsoft Application Registration Portal"
 msgstr "Microsoft Application Registration Portal"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Microsoft Authenticator"
 msgstr "Microsoft Authenticator"
 
@@ -9678,6 +9764,7 @@ msgid "More ticket overviews"
 msgstr "Weitere Ticket-Übersichten"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "Most recent activity"
 msgstr "Neueste Aktivität"
 
@@ -9816,6 +9903,8 @@ msgstr "Nagios-Integration"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "Name"
@@ -9825,8 +9914,9 @@ msgid "Name Identifier Format"
 msgstr "Name Identifizierer Format"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Name for this security key"
-msgstr "Name für diesen Sicherheitsschlüssel"
+msgstr "Name für diesen Sicherheits-Schlüssel"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Name of form submit button"
@@ -9846,10 +9936,8 @@ msgid "Navigation"
 msgstr "Navigation"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue
-#, fuzzy
-#| msgid "Navigation"
 msgid "Navigation filter"
-msgstr "Navigation"
+msgstr "Filter für die Navigation"
 
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
@@ -10110,6 +10198,8 @@ msgstr "Neuer Benutzer?"
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "Weiter"
@@ -10477,6 +10567,11 @@ msgid ""
 "after downloading the file to avoid leaking personal data which could be "
 "included in comments or notes."
 msgstr ""
+"Hinweis: Zammad sendet diese Daten niemals automatisch und diese Daten "
+"enthalten keine persönlichen Kontonamen oder Passwörter. Bitte schauen Sie "
+"jedoch nach dem Herunterladen der Datei nach, um das Durchsickern "
+"persönlicher Daten zu vermeiden, die in Kommentaren oder Notizen enthalten "
+"sein könnten."
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10574,14 +10669,9 @@ msgid "OK, I've copied my token"
 msgstr "Ja, ich habe den Token kopiert"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
 msgid "OK, I've saved my recovery codes"
 msgstr "Ja, ich habe meine Wiederherstellungs-Codes gesichert"
-
-#: app/models/system_report/plugin/os.rb
-#, fuzzy
-#| msgid "OTRS"
-msgid "OS"
-msgstr "OTRS"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
@@ -10768,6 +10858,8 @@ msgstr "Offene Tickets"
 #: app/models/system_report/plugin/entities/ticket.rb
 msgid "Open and closed tickets ratio (ticket counts based on state)"
 msgstr ""
+"Verhältnis offene und geschlossene Tickets (Anzahl der Tickets je nach "
+"Status)"
 
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Open in new tab"
@@ -10814,6 +10906,7 @@ msgid "Open tickets"
 msgstr "Offene Tickets"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Open your authenticator app and scan the QR code below:"
 msgstr ""
 "Öffnen Sie Ihre Authentifizierungs-App und scannen Sie den QR-Code unten:"
@@ -10821,6 +10914,10 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
 msgstr "In Tabs geöffnet"
+
+#: app/models/system_report/plugin/os.rb
+msgid "Operating system"
+msgstr "Betriebssystem"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -11164,16 +11261,16 @@ msgid "Password changed successfully!"
 msgstr "Passwort erfolgreich geändert!"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
-#, fuzzy
-#| msgid "Password changed successfully!"
 msgid "Password changed successfully."
-msgstr "Passwort erfolgreich geändert!"
+msgstr "Passwort erfolgreich geändert."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
-#, fuzzy
-#| msgid "User could not be created."
 msgid "Password could not be changed."
-msgstr "Nutzer konnte nicht erzeugt werden."
+msgstr "Das Passwort konnte nicht geändert werden."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
+msgid "Password could not be checked"
+msgstr "Passwort konnte nicht überprüft werden"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Password for proxy connection"
@@ -11454,6 +11551,7 @@ msgid "Please provide your new password."
 msgstr "Bitte geben Sie Ihr neues Passwort ein."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
 msgid ""
 "Please save your recovery codes listed below somewhere safe. You can use "
 "them to sign in if you lose access to another two-factor method:"
@@ -11523,7 +11621,7 @@ msgstr "Position"
 
 #: app/models/system_report/plugin/postgre_sql.rb
 msgid "PostgresSQL server version"
-msgstr ""
+msgstr "PostgresSQL-Server-Version"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
@@ -11558,6 +11656,7 @@ msgid "Prefer color scheme as indicated by the operating system."
 msgstr "Das vom Betriebssystem vorgegebenen Farbschema verwenden."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Press the button below to finish the setup."
 msgstr "Klicken Sie die untere Schaltfläche, um die Einrichtung abzuschließen."
 
@@ -11635,6 +11734,10 @@ msgstr "Zuvor besessene Tickets (%s gesamt):"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Print"
 msgstr "Drucken"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+msgid "Print Codes"
+msgstr "Codes drucken"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -11886,6 +11989,7 @@ msgid "Recovery Codes"
 msgstr "Wiederherstellungs-Codes"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid ""
 "Recovery codes can be used to access your account in the event you lose "
 "access to other two-factor authentication methods."
@@ -11899,10 +12003,8 @@ msgid "Recursive Ticket Triggers"
 msgstr "Rekursive Ticket-Trigger"
 
 #: app/models/system_report/plugin/redis.rb
-#, fuzzy
-#| msgid "New Version"
 msgid "Redis version"
-msgstr "Neue Version"
+msgstr "Redis-Version"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -11910,6 +12012,10 @@ msgid ""
 msgstr ""
 "Referenzen - Durchsuche auch \"In-Reply-To\"- und \"References\"-Felder im "
 "Mailheader."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+msgid "Regenerate Recovery Codes"
+msgstr "Wiederherstellungs-Codes neu erzeugen"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Regenerate recovery codes"
@@ -11976,6 +12082,9 @@ msgstr "Remote"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
 msgstr "Entfernen"
@@ -11983,6 +12092,10 @@ msgstr "Entfernen"
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Remove %s"
 msgstr "%s entfernen"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue
+msgid "Remove Two-factor Authentication: %s"
+msgstr "Zwei-Faktor-Authentifizierung entfernen: %s"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Remove a configured two-factor authentication method"
@@ -12000,6 +12113,10 @@ msgstr "Alle Methoden entfernen"
 msgid "Remove all values"
 msgstr "Alle Werte entfernen"
 
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+msgid "Remove authenticator app"
+msgstr "Authentifizierungs-App entfernen"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
 msgstr "Formatierung entfernen"
@@ -12011,6 +12128,10 @@ msgstr "Bild entfernen"
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 msgid "Remove method"
 msgstr "Methode entfernen"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+msgid "Remove security keys"
+msgstr "Sicherheits-Schlüssel entfernen"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
@@ -12280,10 +12401,8 @@ msgstr ""
 "<div>Ihr #{config.product_name}-Team</div>\n"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue
-#, fuzzy
-#| msgid "Resize side panel"
 msgid "Resize frame"
-msgstr "Größe des Seitenpanels ändern"
+msgstr "Rahmengröße ändern"
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue
 msgid "Resize side panel"
@@ -12315,6 +12434,8 @@ msgstr "Ergebnis:"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
@@ -12391,7 +12512,7 @@ msgstr "Zeilen"
 
 #: app/models/system_report/plugin/ruby.rb
 msgid "Ruby information (version and installed gems)"
-msgstr ""
+msgstr "Ruby-Informationen (Version und installierte Gems)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 msgid "Run every %s at %s in %s time"
@@ -12581,6 +12702,7 @@ msgid "Save"
 msgstr "Speichern"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
 msgid "Save Codes"
 msgstr "Codes speichern"
 
@@ -12815,6 +12937,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -12824,6 +12947,7 @@ msgstr "Sicherheit"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 msgid "Security Code"
@@ -12844,30 +12968,32 @@ msgstr "Sicherheits-Schlüssel"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 #: db/seeds/settings.rb
 msgid "Security Keys"
 msgstr "Sicherheits-Schlüssel"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 msgid "Security key \"%s\" will be removed."
-msgstr "Der Sicherheitsschlüssel \"%s\" wird entfernt werden."
+msgstr "Der Sicherheits-Schlüssel \"%s\" wird entfernt werden."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
 msgid "Security key setup failed."
-msgstr "Die Einrichtung des Sicherheitsschlüssels ist fehlgeschlagen."
+msgstr "Die Einrichtung des Sicherheits-Schlüssels ist fehlgeschlagen."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "Security key verification failed."
-msgstr "Die Verifizierung des Sicherheitsschlüssels ist fehlgeschlagen."
+msgstr "Die Verifizierung des Sicherheits-Schlüssels ist fehlgeschlagen."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid ""
 "Security keys are hardware or software credentials that can be used as your "
 "two-factor authentication method."
 msgstr ""
-"Sicherheitsschlüssel sind Hardware- oder Software-Berechtigungsnachweise, "
+"Sicherheits-Schlüssel sind Hardware- oder Software-Berechtigungsnachweise, "
 "die als Methode für Zwei-Faktor-Authentifizierung verwendet werden können."
 
 #: lib/external_data_source/errors.rb
@@ -13117,8 +13243,18 @@ msgstr "Sitzungen"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Set Up"
 msgstr "Einrichten"
+
+#: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/twoFactorSetup.ts
+msgid "Set Up Two-factor Authentication"
+msgstr "Zwei-Faktor-Authentifizierung einrichten"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue
+msgid "Set Up Two-factor Authentication: %s"
+msgstr "Zwei-Faktor-Authentifizierung einrichten: %s"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Set a title for your ticket"
@@ -13138,8 +13274,13 @@ msgstr "Als Standard setzen"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Set as default"
 msgstr "Als Standard einstellen"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+msgid "Set authenticator app as default"
+msgstr "Authentifizierungs-App als Standard festlegen"
 
 #: db/seeds/settings.rb
 msgid "Set available ticket types"
@@ -13172,6 +13313,10 @@ msgstr "Als Standard bei neuen Tickets setzen"
 msgid "Set outbound caller ID"
 msgstr "Setzt ausgehende Caller-ID"
 
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+msgid "Set security keys as default"
+msgstr "Sicherheits-Schlüssel als Standard festlegen"
+
 #: db/seeds/settings.rb
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
@@ -13188,10 +13333,22 @@ msgstr "Auf intern setzen"
 msgid "Set to public"
 msgstr "Auf öffentlich setzen"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+msgid "Set up"
+msgstr "Einrichten"
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Set up a new system"
 msgstr "Ein neues System einrichten"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+msgid "Set up authenticator app"
+msgstr "Authentifizierungs-App einrichten"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+msgid "Set up security keys"
+msgstr "Sicherheits-Schlüssel einrichten"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
@@ -13972,10 +14129,8 @@ msgstr "Systeminitialisierung abgeschlossen"
 #: app/assets/javascripts/app/controllers/system_report.coffee
 #: app/assets/javascripts/app/views/system_report.jst.eco
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "System URL"
 msgid "System Report"
-msgstr "System-URL"
+msgstr "System-Bericht"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue
@@ -14372,7 +14527,8 @@ msgstr "Das Aussehen konnte nicht aktualisiert werden."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "The application is not running in a secure context."
 msgstr "Die Applikation läuft nicht in einer sicheren Umgebung."
 
@@ -14608,6 +14764,10 @@ msgstr ""
 msgid "The default font size is 12px."
 msgstr "Die Standard-Schriftgröße ist 12px."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "The device could not be deleted."
+msgstr "Das Gerät konnte nicht gelöscht werden."
+
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
@@ -14709,6 +14869,29 @@ msgstr "Das Format für den Betreff."
 msgid "The given article is not a media article."
 msgstr ""
 "Bei dem vorliegenden Artikel handelt es sich nicht um einen Medienartikel."
+
+#: app/services/service/user/two_factor/set_default_method.rb
+msgid "The given two-factor authentication method is not configured."
+msgstr ""
+"Die angegebene Methode für Zwei-Faktor-Authentifizierung ist nicht "
+"konfiguriert."
+
+#: app/services/service/user/two_factor/remove_method_credentials.rb
+#: app/services/service/user/two_factor/set_default_method.rb
+msgid "The given two-factor authentication method is not enabled."
+msgstr ""
+"Die angegebene Methode für Zwei-Faktor-Authentifizierung ist nicht aktiviert."
+
+#: app/services/service/user/two_factor/base.rb
+msgid "The given two-factor method does not exist."
+msgstr ""
+"Die angegebene Methode für Zwei-Faktor-Authentifizierung existiert nicht."
+
+#: app/services/service/user/two_factor/remove_method_credentials.rb
+msgid "The given two-factor method is not configured yet."
+msgstr ""
+"Die angegebene Methode für Zwei-Faktor-Authentifizierung ist nicht noch "
+"nicht konfiguriert."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -14851,10 +15034,8 @@ msgstr ""
 "Administrator."
 
 #: lib/password_hash.rb
-#, fuzzy
-#| msgid "The PGP passphrase is invalid."
 msgid "The password is invalid."
-msgstr "Die PGP-Passphrase ist ungültig."
+msgstr "Das Passwort ist ungültig."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 msgid "The password reset request was successful."
@@ -14939,6 +15120,10 @@ msgstr "Der angegebene Endpunkt ist ungültig."
 #: app/models/postmaster_filter.rb
 msgid "The provided match operator is missing or invalid."
 msgstr "Der angegebene Übereinstimmungs-Operator fehlt oder ist ungültig."
+
+#: app/graphql/gql/mutations/account/password_check.rb
+msgid "The provided password is incorrect."
+msgstr "Das angegebene Passwort ist falsch."
 
 #: app/models/webhook.rb
 msgid "The provided payload is invalid. Please check your syntax."
@@ -15265,6 +15450,12 @@ msgid ""
 "you can see in the preview below. If you get in touch with the Zammad "
 "support, this JSON file is helpful identifying your issue."
 msgstr ""
+"Der Bericht enthält eine zusammengefasste Version des Status und der "
+"Konfiguration des Systems für Support- und Analysezwecke. Sie können den "
+"Bericht herunterladen, indem Sie auf den Download-Button klicken. Zammad "
+"stellt dann eine JSON-Datei zur Verfügung, wie Sie in der Vorschau unten "
+"sehen können. Wenn Sie sich mit dem Zammad-Support in Verbindung setzen, ist "
+"diese JSON-Datei hilfreich bei der Identifizierung Ihres Problems."
 
 #: app/services/service/system/check_setup.rb
 msgid ""
@@ -15333,7 +15524,6 @@ msgid "The token is valid. You are now able to login via password once."
 msgstr ""
 "Das Token ist gültig. Sie können sich nun einmalig mit dem Passwort anmelden."
 
-#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "The two-factor authentication is not configured yet."
 msgstr "Die Zwei-Faktor-Authentifizierung ist noch nicht eingerichtet."
@@ -15345,10 +15535,15 @@ msgstr ""
 "Benutzer entfernt."
 
 #: app/controllers/sessions_controller.rb
-#: app/controllers/user/two_factors_controller.rb
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
+#: app/services/service/user/two_factor/initiate_method_configuration.rb
+#: app/services/service/user/two_factor/verify_method_configuration.rb
 msgid "The two-factor authentication method is not enabled."
 msgstr "Die Methode für Zwei-Faktor-Authentifizierung ist nicht aktiviert."
+
+#: app/services/service/user/two_factor/remove_method_credentials.rb
+msgid "The two-factor credentials you're trying to delete do not exist"
+msgstr "Die zu löschenden Zwei-Faktor-Zugangsdaten existieren nicht"
 
 #: app/models/setting/validation/saml/security.rb
 msgid "The type of the private key is wrong."
@@ -15387,6 +15582,14 @@ msgid ""
 msgstr ""
 "Die Prüfung der TLS-Verbindung ist fehlgeschlagen. Bitte prüfen Sie das IDP-"
 "Zertifikat."
+
+#: app/services/service/user/two_factor/verify_method_configuration.rb
+msgid ""
+"The verification of the two-factor authentication method configuration "
+"failed."
+msgstr ""
+"Die Konfigurations-Überprüfung der Methode für Zwei-Faktor-Authentifizierung "
+"ist fehlgeschlagen."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -15492,13 +15695,6 @@ msgstr ""
 msgid "There is no route to this host."
 msgstr "Es existiert keine Route zu diesem Host."
 
-#: app/controllers/user/two_factors_controller.rb
-msgid ""
-"There is no stored configuration for this two-factor authentication method."
-msgstr ""
-"Für diese Methode für Zwei-Faktor-Authentifizierung wurde keine "
-"Konfiguration gespeichert."
-
 #: lib/secure_mailing/pgp/tool/error.rb
 msgid "There is no valid PGP email recipient."
 msgstr "Es liegt kein gültiger Empfänger der PGP-E-Mail vor."
@@ -15603,6 +15799,10 @@ msgid ""
 msgstr ""
 "Diese Klasse wird der Schaltfläche bei der Initialisierung hinzugefügt und "
 "wieder entfernt, sobald die Chat-Verbindung hergestellt wurde."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "This device"
+msgstr "Dieses Gerät"
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
@@ -16602,10 +16802,11 @@ msgstr ""
 "deaktivieren."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid ""
 "To register a new security key with your account, press the button below."
 msgstr ""
-"Verwenden Sie die Schaltfläche unten, um einen neuen Sicherheitsschlüssel "
+"Verwenden Sie die Schaltfläche unten, um einen neuen Sicherheits-Schlüssel "
 "für Ihr Konto zu registrieren."
 
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -16623,6 +16824,7 @@ msgstr ""
 "auszuwählen."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "To set up Authenticator App for your account, follow the steps below:"
 msgstr ""
 "Folgen Sie den Schritten unten, um die Authentifizierungs-App für Ihr Konto "
@@ -16793,9 +16995,9 @@ msgid "Try another method"
 msgstr "Eine andere Methode verwenden"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "Try using your security key again."
-msgstr "Versuchen Sie, Ihren Sicherheitsschlüssel erneut zu verwenden."
+msgstr "Versuchen Sie, Ihren Sicherheits-Schlüssel erneut zu verwenden."
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
@@ -16906,13 +17108,15 @@ msgstr "Twitter-Key"
 msgid "Twitter Secret"
 msgstr "Twitter-Secret"
 
-#: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/twoFactorSetup.ts
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/twoFactorSetup.ts
 msgid "Two-Factor Authentication Configuration Is Required"
 msgstr "Zwei-Faktor-Authentifizierung muss eingerichtet werden"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+#: db/seeds/permissions.rb
 msgid "Two-factor Authentication"
 msgstr "Zwei-Faktor-Authentifizierung"
 
@@ -16925,6 +17129,17 @@ msgid "Two-factor authentication is not supported with HTTP BasicAuth."
 msgstr ""
 "Zwei-Faktor-Authentifizierung wird nicht mit HTTP BasicAuth unterstützt."
 
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
+msgid ""
+"Two-factor authentication is required, but you don't have sufficient "
+"permissions to set it up. Please contact your administrator."
+msgstr ""
+"Die Zwei-Faktor-Authentifizierung ist erforderlich, aber Sie haben nicht "
+"genügend Berechtigungen, um sie einzurichten. Bitte wenden Sie sich an Ihren "
+"Administrator."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 msgid "Two-factor authentication method could not be initiated."
@@ -16932,18 +17147,33 @@ msgstr ""
 "Die Methode für Zwei-Faktor-Authentifizierung konnte nicht gestartet werden."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Two-factor authentication method was removed."
 msgstr "Die Methode für die Zwei-Faktor-Authentifizierung wurde entfernt."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Two-factor authentication method was set as default."
 msgstr ""
 "Die Methode für Zwei-Faktor-Authentifizierung wurde als Standard eingestellt."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Two-factor authentication method was set up successfully."
 msgstr ""
 "Die Methode für Zwei-Faktor-Authentifizierung wurde erfolgreich eingerichtet."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+msgid "Two-factor method could not be configured."
+msgstr ""
+"Die Methode für Zwei-Faktor-Authentifizierung konnte nicht konfiguriert "
+"werden."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+msgid "Two-factor method has been configured successfully."
+msgstr ""
+"Die Methode für Zwei-Faktor-Authentifizierung wurde erfolgreich konfiguriert."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -17018,6 +17248,7 @@ msgstr ""
 "Unbekannter Fehler: Es konnte kein Ticket aus dieser E-Mail erstellt werden."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid ""
 "Unless you already have it, install one of the following authenticator apps "
 "on your mobile device:"
@@ -17503,6 +17734,10 @@ msgstr ""
 "Der Benutzer mit der angegebenen ID konnte nicht gefunden werden. Prüfen Sie "
 "die URL auf Fehler."
 
+#: app/services/service/user/device/delete.rb
+msgid "UserDevice could not be found."
+msgstr "UserDevice konnte nicht gefunden werden."
+
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"
 msgstr "Benutzername"
@@ -17644,7 +17879,7 @@ msgid "Verifying and saving your import configuration…"
 msgstr "Überprüfen und Speichern Ihrer Importkonfiguration…"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "Verifying key information…"
 msgstr "Schlüssel-Information prüfen…"
 
@@ -18358,6 +18593,7 @@ msgid "You have to allow access to your webcam."
 msgstr "Sie müssen den Zugriff auf Ihre Webcam genehmigen."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
 msgid "You must protect your account with two-factor authentication."
 msgstr "Sie müssen Ihr Konto mit Zwei-Faktor-Authentifizierung schützen."
 
@@ -18612,10 +18848,8 @@ msgstr ""
 "Informationen."
 
 #: app/models/system_report/plugin/version.rb
-#, fuzzy
-#| msgid "This is Zammad version %s"
 msgid "Zammad version"
-msgstr "Dies ist Zammad Version %s"
+msgstr "Zammad-Version"
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
@@ -18897,6 +19131,8 @@ msgid ""
 "current,new,confirm,change,current password,new password,confirm password,"
 "change password"
 msgstr ""
+"aktuell,neu,bestätigen,ändern,aktuelles Passwort,neues Passwort,Passwort "
+"bestätigen,Passwort ändern"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "custom"
@@ -19950,6 +20186,12 @@ msgstr "Twitter-Direktnachricht"
 msgid "twitter status"
 msgstr "Twitter-Statusmeldung"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
+msgid "twofactor,2fa,security key,passkey,authenticator app"
+msgstr ""
+"Zweifaktor,2fa,2FA,Sicherheitsschlüssel,Sicherheits-Schlüssel,Passkey"
+",Authentifizierungs-app"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "unassign user"
 msgstr "Benutzerzuweisung entfernen"
@@ -20064,6 +20306,18 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid ""
+#~ "There is no stored configuration for this two-factor authentication "
+#~ "method."
+#~ msgstr ""
+#~ "Für diese Methode für Zwei-Faktor-Authentifizierung wurde keine "
+#~ "Konfiguration gespeichert."
+
+#, fuzzy
+#~| msgid "OTRS"
+#~ msgid "OS"
+#~ msgstr "OTRS"
 
 #, fuzzy
 #~| msgid "Signature"

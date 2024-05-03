@@ -1135,10 +1135,16 @@ msgstr "Művelet"
 msgid "Action execution"
 msgstr "Művelet végrehajtás"
 
-#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
 #, fuzzy
 #| msgid "Action execution"
-msgid "Action menu button"
+msgid "Action menu button for authenticator app"
+msgstr "Művelet végrehajtás"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+#, fuzzy
+#| msgid "Action execution"
+msgid "Action menu button for security keys"
 msgstr "Művelet végrehajtás"
 
 #: app/assets/javascripts/app/models/macro.coffee
@@ -1192,6 +1198,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Aktív"
@@ -1635,6 +1642,7 @@ msgid "All colleagues are busy."
 msgstr "Minden munkatársunk foglalt."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 "Itt jelenik meg az összes olyan számítógép és böngésző, amely hozzáfér a "
@@ -2124,9 +2132,13 @@ msgstr ""
 "A jegy nem hozzárendeltként jelenik meg."
 
 #: app/models/user.rb
+#, fuzzy
+#| msgid ""
+#| "At least one identifier (firstname, lastname, phone or email) for user is "
+#| "required."
 msgid ""
-"At least one identifier (firstname, lastname, phone or email) for user is "
-"required."
+"At least one identifier (firstname, lastname, phone, mobile or email) for "
+"user is required."
 msgstr ""
 "Legalább egy azonosító (keresztnév, vezetéknév, telefon vagy e-mail) "
 "szükséges a felhasználóhoz."
@@ -2309,12 +2321,19 @@ msgstr "Hitelesítés ezzel: %s"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
-#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts
 #: db/seeds/settings.rb
 msgid "Authenticator App"
 msgstr "Hitelesítő alkalmazás"
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+#, fuzzy
+#| msgid "Authenticator app secret"
+msgid "Authenticator app QR code"
+msgstr "Hitelesítő alkalmazás titok"
+
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Authenticator app secret"
 msgstr "Hitelesítő alkalmazás titok"
 
@@ -2329,6 +2348,7 @@ msgid "Authorization failed"
 msgstr "Az engedélyezés nem sikerült"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Authy"
 msgstr "Authy"
 
@@ -2406,6 +2426,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Available for the following roles"
 msgstr "A következő szerepkörökre áll rendelkezésre"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+#, fuzzy
+#| msgid "Remove all methods"
+msgid "Available methods"
+msgstr "Minden módszer eltávolítása"
 
 #: db/seeds/settings.rb
 msgid "Available types for a new ticket"
@@ -2859,6 +2885,12 @@ msgstr "Mégse"
 msgid "Cancel & Go Back"
 msgstr "Mégse és visszalépés"
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
+#, fuzzy
+#| msgid "Cancel & Sign out"
+msgid "Cancel & Sign Out"
+msgstr "Mégsem & Kijelentkezés"
+
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
 msgid "Cancel & Sign out"
 msgstr "Mégsem & Kijelentkezés"
@@ -3211,6 +3243,7 @@ msgid "Choose your new password."
 msgstr "Válassza ki az új jelszavát."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
 msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr "A beállításhoz válassza ki a kívánt kétfaktoros hitelesítési módszert."
 
@@ -3298,7 +3331,6 @@ msgstr "Clearbit integráció"
 msgid "Click here"
 msgstr "Kattintson ide"
 
-#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Kattintson ide a kétfaktoros hitelesítési módszer beállításához."
@@ -3436,7 +3468,7 @@ msgid "Company Inc."
 msgstr "Cég Zrt."
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 #: db/seeds/settings.rb
 msgid "Complete the sign-in with your security key."
 msgstr "Fejezze be a bejelentkezést a biztonsági kulcsával."
@@ -3511,6 +3543,7 @@ msgid "Confirm"
 msgstr "Megerősítés"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
 msgid "Confirm Password"
 msgstr "Jelszó megerősítése"
 
@@ -3752,6 +3785,7 @@ msgid "Conversion of retweets into tickets is turned off."
 msgstr "A retweetek jegyekké való átalakítása ki van kapcsolva."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
+#: app/frontend/apps/desktop/composables/useCopyToClipboard.ts
 msgid "Copied!"
 msgstr "Másolva!"
 
@@ -3759,6 +3793,18 @@ msgstr "Másolva!"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Copy"
 msgstr "Másolás"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+#, fuzzy
+#| msgid "Recovery Codes"
+msgid "Copy Codes"
+msgstr "Visszaállítási kódok"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+#, fuzzy
+#| msgid "App Secret"
+msgid "Copy Secret"
+msgstr "Alkalmazás titok"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
@@ -3796,6 +3842,19 @@ msgstr ""
 msgid "Could not fetch WhatsApp phone number details."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#, fuzzy
+#| msgid "Name for this security key"
+msgid "Could not fetch security keys"
+msgstr "Ennek a biztonsági kulcsnak a neve"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+#, fuzzy
+#| msgid "Regenerate recovery codes"
+msgid "Could not generate recovery codes"
+msgstr "Visszaállítási kódok újragenerálása"
+
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid ""
 "Could not load the two-factor authentication configuration for this user."
@@ -3819,7 +3878,15 @@ msgstr ""
 msgid "Could not remove two-factor authentication method"
 msgstr "Nem sikerült eltávolítani a kétfaktoros hitelesítési módszert"
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+#, fuzzy
+#| msgid "Could not remove two-factor authentication method"
+msgid "Could not remove two-factor authentication method."
+msgstr "Nem sikerült eltávolítani a kétfaktoros hitelesítési módszert"
+
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Could not set two-factor authentication method as default"
 msgstr ""
 "Nem sikerült alapértelmezettként beállítani a kétfaktoros hitelesítési "
@@ -4080,6 +4147,7 @@ msgstr "Létrehozott belső cikk"
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created at"
 msgstr "Létrehozva ekkor"
@@ -4139,6 +4207,7 @@ msgid "Current User"
 msgstr "Aktuális felhasználó"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Current password"
 msgstr "Aktuális jelszó"
@@ -4389,6 +4458,7 @@ msgstr "A dekódolás sikeres volt."
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: db/seeds/settings.rb
 msgid "Default"
 msgstr "Alapértelmezett"
@@ -5598,6 +5668,12 @@ msgstr "Bejegyzések törlése"
 msgid "Delete this avatar"
 msgstr "Avatár törlése"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#, fuzzy
+#| msgid "Delete avatar"
+msgid "Delete this device"
+msgstr "Avatár törlése"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Delete:"
 msgstr "Törlés:"
@@ -5693,6 +5769,12 @@ msgstr "Fejlesztői rendszer"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "Device"
 msgstr "Eszköz"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#, fuzzy
+#| msgid "The API token could not be found."
+msgid "Device has been revoked."
+msgstr "Az API-token nem található."
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -6039,6 +6121,7 @@ msgstr "Húsvét"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
@@ -6057,6 +6140,12 @@ msgstr "Ügyfél szerkesztés"
 msgid "Edit Organization"
 msgstr "Szervezet szerkesztése"
 
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+#, fuzzy
+#| msgid "Authenticator App"
+msgid "Edit authenticator app"
+msgstr "Hitelesítő alkalmazás"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr "Maszk szerkesztése"
@@ -6065,6 +6154,12 @@ msgstr "Maszk szerkesztése"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
 msgid "Edit reply"
 msgstr "Válasz szerkesztése"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+#, fuzzy
+#| msgid "Security Keys"
+msgid "Edit security keys"
+msgstr "Biztonsági kulcsok"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 msgid "Editing"
@@ -6662,7 +6757,7 @@ msgid "Enter the URL of your %s system."
 msgstr "Adja meg %s rendszerének URL címét"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
-#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts
 msgid "Enter the code from your two-factor authenticator app."
 msgstr "Írja be a kódot a kétfaktoros hitelesítési alkalmazásból."
 
@@ -6687,6 +6782,7 @@ msgstr ""
 "rendszer összekapcsolásához"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Enter the security code generated by the authenticator app:"
 msgstr "Írja be a hitelesítő alkalmazás által generált biztonsági kódot:"
 
@@ -7103,6 +7199,12 @@ msgstr ""
 "Nem sikerült e-mailt küldeni a következő címre: \"%s\". Kérjük, lépjen "
 "kapcsolatba egy rendszergazdával."
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+#, fuzzy
+#| msgid "Invalid security code! Please try again with a new code."
+msgid "Failed to set up QR code. Please try again."
+msgstr "Érvénytelen biztonsági kód! Kérjük, próbálja meg újra egy új kóddal."
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Fax"
 msgstr "Fax"
@@ -7499,6 +7601,18 @@ msgstr "'Munkamenet' adatok generálása."
 msgid "Generate Access Token for |%s|"
 msgstr "Hozzáférési token generálása |%s| számára"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+#, fuzzy
+#| msgid "Generate recovery codes"
+msgid "Generate Recovery Codes"
+msgstr "Visszaállítási kódok generálása"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue
+#, fuzzy
+#| msgid "Generate recovery codes"
+msgid "Generate Recovery Codes: %s"
+msgstr "Visszaállítási kódok generálása"
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Generate Token"
 msgstr "Token generálása"
@@ -7511,6 +7625,12 @@ msgstr "Visszaállítási kódok generálása"
 #: db/seeds/schedulers.rb
 msgid "Generate user-based stats."
 msgstr "Felhasználó-alapú statisztikák generálása."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+#, fuzzy
+#| msgid "Generate recovery codes"
+msgid "Generating recovery codes…"
+msgstr "Visszaállítási kódok generálása"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Generic API to integrate VoIP service provider with real-time push."
@@ -7540,7 +7660,7 @@ msgid "Get notified"
 msgstr "Kapjon értesítést"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
-#: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
+#: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts
 #: db/seeds/settings.rb
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
@@ -7551,6 +7671,7 @@ msgid "Getting an Access Token"
 msgstr "Hozzáférési token beszerzése"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #, fuzzy
 #| msgid "Getting key information from the browser..."
 msgid "Getting key information from the browser…"
@@ -7644,6 +7765,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue
 msgid "Go Back"
 msgstr "Vissza"
@@ -7690,6 +7812,7 @@ msgid "Google App Credentials"
 msgstr "Google alkalmazás hitelesítő adatok"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Google Authenticator"
 msgstr "Google Hitelesítő"
 
@@ -8294,6 +8417,7 @@ msgstr ""
 "kérhet egyszeri jelszavas bejelentkezést rendszergazdaként."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid ""
 "If you lose your recovery codes it's possible to generate new ones. This "
 "action is going to invalidate previous recovery codes."
@@ -8854,6 +8978,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Invalid security code! Please try again with a new code."
 msgstr "Érvénytelen biztonsági kód! Kérjük, próbálja meg újra egy új kóddal."
 
@@ -9429,6 +9554,7 @@ msgstr "Művelet végrehajtás"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "Location"
 msgstr "Hely"
 
@@ -9849,6 +9975,7 @@ msgid "Microsoft Application Registration Portal"
 msgstr "Microsoft alkalmazás regisztrációs portál"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Microsoft Authenticator"
 msgstr "Microsoft Authenticator"
 
@@ -9976,6 +10103,7 @@ msgid "More ticket overviews"
 msgstr "További jegyek áttekintése"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "Most recent activity"
 msgstr "Legutóbbi tevékenység"
 
@@ -10114,6 +10242,8 @@ msgstr "Nagios integráció"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "Név"
@@ -10123,6 +10253,7 @@ msgid "Name Identifier Format"
 msgstr "Név azonosító formátum"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Name for this security key"
 msgstr "Ennek a biztonsági kulcsnak a neve"
 
@@ -10416,6 +10547,8 @@ msgstr "Új felhasználó?"
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "Következő"
@@ -10889,14 +11022,9 @@ msgid "OK, I've copied my token"
 msgstr "OK, lemásoltam a tokenemet"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
 msgid "OK, I've saved my recovery codes"
 msgstr "Rendben, elmentettem a visszaállítási kódjaimat"
-
-#: app/models/system_report/plugin/os.rb
-#, fuzzy
-#| msgid "OTRS"
-msgid "OS"
-msgstr "OTRS"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
@@ -11160,6 +11288,7 @@ msgid "Open tickets"
 msgstr "Nyitott jegyek"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Open your authenticator app and scan the QR code below:"
 msgstr ""
 "Nyissa meg a hitelesítési alkalmazását, és olvassa be az alábbi QR-kódot:"
@@ -11167,6 +11296,10 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
 msgstr "Lapokon megnyitva"
+
+#: app/models/system_report/plugin/os.rb
+msgid "Operating system"
+msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -11536,6 +11669,12 @@ msgstr "A jelszó sikeresen megváltoztatva!"
 msgid "Password could not be changed."
 msgstr "A felhasználót nem sikerült létrehozni."
 
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
+#, fuzzy
+#| msgid "User could not be created."
+msgid "Password could not be checked"
+msgstr "A felhasználót nem sikerült létrehozni."
+
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Password for proxy connection"
 msgstr "Jelszó a proxy kapcsolathoz"
@@ -11818,6 +11957,7 @@ msgid "Please provide your new password."
 msgstr "Kérjük, adja meg új jelszavát!"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
 msgid ""
 "Please save your recovery codes listed below somewhere safe. You can use "
 "them to sign in if you lose access to another two-factor method:"
@@ -11920,6 +12060,7 @@ msgid "Prefer color scheme as indicated by the operating system."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "Press the button below to finish the setup."
 msgstr "Kattintson az alábbi gombra a beállítás befejezéséhez."
 
@@ -12008,6 +12149,12 @@ msgstr "Korábban birtokolt jegyek (összesen %s):"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "Print"
 msgstr "Nyomtatás"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+#, fuzzy
+#| msgid "Security Code"
+msgid "Print Codes"
+msgstr "Biztonsági kód"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -12279,6 +12426,7 @@ msgid "Recovery Codes"
 msgstr "Visszaállítási kódok"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid ""
 "Recovery codes can be used to access your account in the event you lose "
 "access to other two-factor authentication methods."
@@ -12300,6 +12448,12 @@ msgstr "Új verzió"
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+#, fuzzy
+#| msgid "Regenerate recovery codes"
+msgid "Regenerate Recovery Codes"
+msgstr "Visszaállítási kódok újragenerálása"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Regenerate recovery codes"
@@ -12366,6 +12520,9 @@ msgstr "Távoli"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
 msgstr "Eltávolítás"
@@ -12373,6 +12530,12 @@ msgstr "Eltávolítás"
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Remove %s"
 msgstr "%s eltávolítása"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue
+#, fuzzy
+#| msgid "Remove two-factor authentication"
+msgid "Remove Two-factor Authentication: %s"
+msgstr "Kétfaktoros hitelesítés eltávolítása"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Remove a configured two-factor authentication method"
@@ -12390,6 +12553,12 @@ msgstr "Minden módszer eltávolítása"
 msgid "Remove all values"
 msgstr "Minden érték eltávolítása"
 
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+#, fuzzy
+#| msgid "Authenticator App"
+msgid "Remove authenticator app"
+msgstr "Hitelesítő alkalmazás"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
 msgstr "Formázás eltávolítása"
@@ -12403,6 +12572,12 @@ msgstr "Az összes eltávolítása"
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco
 msgid "Remove method"
 msgstr "Módszer eltávolítása"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+#, fuzzy
+#| msgid "Retry security process"
+msgid "Remove security keys"
+msgstr "Biztonsági folyamat megismétlése"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove selected values"
@@ -12765,6 +12940,8 @@ msgstr "Eredmény:"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
@@ -13032,6 +13209,7 @@ msgid "Save"
 msgstr "Mentés"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
 msgid "Save Codes"
 msgstr "Kódok mentése"
 
@@ -13274,6 +13452,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
@@ -13283,6 +13462,7 @@ msgstr "Biztonság"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 msgid "Security Code"
@@ -13303,7 +13483,7 @@ msgstr "Biztonsági kulcs"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 #: db/seeds/settings.rb
 msgid "Security Keys"
 msgstr "Biztonsági kulcsok"
@@ -13313,15 +13493,17 @@ msgid "Security key \"%s\" will be removed."
 msgstr "A következő biztonsági kulcs eltávolításra kerül: \"%s\"."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
 msgid "Security key setup failed."
 msgstr "A biztonsági kulcs beállítása nem sikerült."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "Security key verification failed."
 msgstr "A biztonsági kulcs ellenőrzése nem sikerült."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid ""
 "Security keys are hardware or software credentials that can be used as your "
 "two-factor authentication method."
@@ -13576,8 +13758,22 @@ msgstr "Munkamenetek"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Set Up"
 msgstr "Beállítás"
+
+#: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/twoFactorSetup.ts
+#, fuzzy
+#| msgid "Set up two-factor authentication"
+msgid "Set Up Two-factor Authentication"
+msgstr "Kétfaktoros hitelesítés beállítása"
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue
+#, fuzzy
+#| msgid "Set up two-factor authentication"
+msgid "Set Up Two-factor Authentication: %s"
+msgstr "Kétfaktoros hitelesítés beállítása"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Set a title for your ticket"
@@ -13597,8 +13793,15 @@ msgstr "Beállítás alapértelmezettként"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Set as default"
 msgstr "Beállítás alapértelmezettként"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+#, fuzzy
+#| msgid "Hide authenticator app secret"
+msgid "Set authenticator app as default"
+msgstr "Hitelesítő alkalmazás titkának elrejtése"
 
 #: db/seeds/settings.rb
 msgid "Set available ticket types"
@@ -13631,6 +13834,12 @@ msgstr "Az új jegy alapértelmezett típusa"
 msgid "Set outbound caller ID"
 msgstr "Kimenő hívó azonosító beállítása"
 
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+#, fuzzy
+#| msgid "Set as default"
+msgid "Set security keys as default"
+msgstr "Beállítás alapértelmezettként"
+
 #: db/seeds/settings.rb
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
@@ -13647,10 +13856,28 @@ msgstr "beállítás belsőként"
 msgid "Set to public"
 msgstr "Beállítva nyilvánosra"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+#, fuzzy
+#| msgid "Set Up"
+msgid "Set up"
+msgstr "Beállítás"
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue
 msgid "Set up a new system"
 msgstr "Új rendszer beállítása"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
+#, fuzzy
+#| msgid "Authenticator App"
+msgid "Set up authenticator app"
+msgstr "Hitelesítő alkalmazás"
+
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+#, fuzzy
+#| msgid "Security Keys"
+msgid "Set up security keys"
+msgstr "Biztonsági kulcsok"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
@@ -14902,7 +15129,8 @@ msgstr "A nyelvet nem lehetett frissíteni."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "The application is not running in a secure context."
 msgstr "Az alkalmazás nem biztonságos környezetben fut."
 
@@ -15165,6 +15393,12 @@ msgstr ""
 msgid "The default font size is 12px."
 msgstr "Az alapértelmezett betűméret 12px."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#, fuzzy
+#| msgid "The article could not be deleted."
+msgid "The device could not be deleted."
+msgstr "A cikket nem lehetett törölni."
+
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "A TicketHook és a jegy száma közötti elválasztó. Például ': '."
@@ -15273,6 +15507,31 @@ msgstr "A tárgy formátuma."
 #| msgid "The article does not belong to the specified ticket."
 msgid "The given article is not a media article."
 msgstr "A cikk nem tartozik a megadott jegyhez."
+
+#: app/services/service/user/two_factor/set_default_method.rb
+#, fuzzy
+#| msgid "The two-factor authentication is not configured yet."
+msgid "The given two-factor authentication method is not configured."
+msgstr "A kétfaktoros hitelesítés még nincs beállítva."
+
+#: app/services/service/user/two_factor/remove_method_credentials.rb
+#: app/services/service/user/two_factor/set_default_method.rb
+#, fuzzy
+#| msgid "The two-factor authentication method is not enabled."
+msgid "The given two-factor authentication method is not enabled."
+msgstr "A kétfaktoros hitelesítési módszer nincs engedélyezve."
+
+#: app/services/service/user/two_factor/base.rb
+#, fuzzy
+#| msgid "The page you were looking for does not exist."
+msgid "The given two-factor method does not exist."
+msgstr "Az Ön által keresett oldal nem létezik."
+
+#: app/services/service/user/two_factor/remove_method_credentials.rb
+#, fuzzy
+#| msgid "The two-factor authentication is not configured yet."
+msgid "The given two-factor method is not configured yet."
+msgstr "A kétfaktoros hitelesítés még nincs beállítva."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -15511,6 +15770,12 @@ msgstr "A megadott végpont érvénytelen."
 #: app/models/postmaster_filter.rb
 msgid "The provided match operator is missing or invalid."
 msgstr "A megadott egyeztető operátor hiányzik vagy érvénytelen."
+
+#: app/graphql/gql/mutations/account/password_check.rb
+#, fuzzy
+#| msgid "The username or password is incorrect."
+msgid "The provided password is incorrect."
+msgstr "A felhasználónév vagy a jelszó helytelen."
 
 #: app/models/webhook.rb
 msgid "The provided payload is invalid. Please check your syntax."
@@ -15920,7 +16185,6 @@ msgstr ""
 msgid "The token is valid. You are now able to login via password once."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/TwoFactorConfiguration.vue
 msgid "The two-factor authentication is not configured yet."
 msgstr "A kétfaktoros hitelesítés még nincs beállítva."
@@ -15932,10 +16196,15 @@ msgstr ""
 "került: %s."
 
 #: app/controllers/sessions_controller.rb
-#: app/controllers/user/two_factors_controller.rb
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb
+#: app/services/service/user/two_factor/initiate_method_configuration.rb
+#: app/services/service/user/two_factor/verify_method_configuration.rb
 msgid "The two-factor authentication method is not enabled."
 msgstr "A kétfaktoros hitelesítési módszer nincs engedélyezve."
+
+#: app/services/service/user/two_factor/remove_method_credentials.rb
+msgid "The two-factor credentials you're trying to delete do not exist"
+msgstr ""
 
 #: app/models/setting/validation/saml/security.rb
 #, fuzzy
@@ -15985,6 +16254,17 @@ msgid ""
 msgstr ""
 "A tanúsítvány nem érvényes S/MIME használatra. Kérjük, ellenőrizze a "
 "tanúsítvány formátumát."
+
+#: app/services/service/user/two_factor/verify_method_configuration.rb
+#, fuzzy
+#| msgid ""
+#| "Could not load the two-factor authentication configuration for this user."
+msgid ""
+"The verification of the two-factor authentication method configuration "
+"failed."
+msgstr ""
+"Nem sikerült betölteni a kétfaktoros hitelesítési konfigurációt ehhez a "
+"felhasználóhoz."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -16090,11 +16370,6 @@ msgstr ""
 #: lib/email_helper/probe.rb
 msgid "There is no route to this host."
 msgstr "Nincs útvonal ehhez a gazdagéphez."
-
-#: app/controllers/user/two_factors_controller.rb
-msgid ""
-"There is no stored configuration for this two-factor authentication method."
-msgstr "Ehhez a kétfaktoros hitelesítési módszerhez nincs tárolt konfiguráció."
 
 #: lib/secure_mailing/pgp/tool/error.rb
 #, fuzzy
@@ -16220,6 +16495,10 @@ msgid ""
 msgstr ""
 "Ez az osztály az inicializáláskor hozzáadódik a gombhoz, és a csevegési "
 "kapcsolat létrejötte után eltávolításra kerül."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid "This device"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
@@ -17230,6 +17509,7 @@ msgstr ""
 "és letilthatja a beépített fordítási funkciót."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid ""
 "To register a new security key with your account, press the button below."
 msgstr ""
@@ -17249,6 +17529,7 @@ msgstr ""
 "\"::\"."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid "To set up Authenticator App for your account, follow the steps below:"
 msgstr "A Hitelesítő alkalmazás beállításához kövesse az alábbi lépéseket:"
 
@@ -17430,7 +17711,7 @@ msgid "Try another method"
 msgstr "Próbáljon meg egy másik módszert"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 msgid "Try using your security key again."
 msgstr "Próbálja meg újra használni a biztonsági kulcsát."
 
@@ -17539,13 +17820,15 @@ msgstr "Twitter Kulcs"
 msgid "Twitter Secret"
 msgstr "Twitter Titok"
 
-#: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/twoFactorSetup.ts
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/twoFactorSetup.ts
 msgid "Two-Factor Authentication Configuration Is Required"
 msgstr "Kétfaktoros hitelesítési konfiguráció szükséges"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
+#: db/seeds/permissions.rb
 msgid "Two-factor Authentication"
 msgstr "Kétfaktoros hitelesítés"
 
@@ -17558,22 +17841,46 @@ msgid "Two-factor authentication is not supported with HTTP BasicAuth."
 msgstr ""
 "A kétfaktoros hitelesítés nem támogatott a HTTP BasicAuth használatával."
 
+#: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
+msgid ""
+"Two-factor authentication is required, but you don't have sufficient "
+"permissions to set it up. Please contact your administrator."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue
 msgid "Two-factor authentication method could not be initiated."
 msgstr "A kétfaktoros hitelesítési módszert nem lehetett elindítani."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Two-factor authentication method was removed."
 msgstr "A kétfaktoros hitelesítési módszer eltávolításra került."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Two-factor authentication method was set as default."
 msgstr "A kétfaktoros hitelesítési módszer alapértelmezettként lett beállítva."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 msgid "Two-factor authentication method was set up successfully."
 msgstr "A kétfaktoros hitelesítési módszer beállítása sikeresen megtörtént."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#, fuzzy
+#| msgid "Two-factor authentication method could not be initiated."
+msgid "Two-factor method could not be configured."
+msgstr "A kétfaktoros hitelesítési módszert nem lehetett elindítani."
+
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
+#, fuzzy
+#| msgid "Ticket has been created successfully."
+msgid "Two-factor method has been configured successfully."
+msgstr "A jegy sikeresen létrejött."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -17647,6 +17954,7 @@ msgid "Unknown error: Could not create a ticket from this email."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
 msgid ""
 "Unless you already have it, install one of the following authenticator apps "
 "on your mobile device:"
@@ -18141,6 +18449,12 @@ msgstr ""
 "A megadott azonosítóval rendelkező felhasználó nem található. Próbálja meg "
 "ellenőrizni az URL címet a hibák kiszűrésére."
 
+#: app/services/service/user/device/delete.rb
+#, fuzzy
+#| msgid "Locale could not be found."
+msgid "UserDevice could not be found."
+msgstr "A nyelvterület nem található."
+
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"
 msgstr "Felhasználónév"
@@ -18287,7 +18601,7 @@ msgid "Verifying and saving your import configuration…"
 msgstr "Kulcsinformációk ellenőrzése..."
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco
-#: app/frontend/shared/entities/two-factor/plugins/security_keys.ts
+#: app/frontend/shared/entities/two-factor/plugins/security-keys.ts
 #, fuzzy
 #| msgid "Verifying key information..."
 msgid "Verifying key information…"
@@ -19019,6 +19333,7 @@ msgid "You have to allow access to your webcam."
 msgstr "Engedélyeznie kell az Ön webkamerájához való hozzáférést."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
 msgid "You must protect your account with two-factor authentication."
 msgstr "Fiókját kétfaktoros hitelesítéssel kell védenie."
 
@@ -20644,6 +20959,10 @@ msgstr "twitter közvetlen üzenet"
 msgid "twitter status"
 msgstr "twitter státusz"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
+msgid "twofactor,2fa,security key,passkey,authenticator app"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "unassign user"
 msgstr "felhasználó hozzárendelésének feloldása"
@@ -20761,6 +21080,17 @@ msgstr "...a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#~ msgid ""
+#~ "There is no stored configuration for this two-factor authentication "
+#~ "method."
+#~ msgstr ""
+#~ "Ehhez a kétfaktoros hitelesítési módszerhez nincs tárolt konfiguráció."
+
+#, fuzzy
+#~| msgid "OTRS"
+#~ msgid "OS"
+#~ msgstr "OTRS"
 
 #, fuzzy
 #~| msgid "Signature"
