@@ -32,7 +32,7 @@ module KnowledgeBaseBreadcrumbHelper
   def calculate_breadcrumb_to_category(category)
     return [] if category.blank?
 
-    output = [category]
+    output = [find_category(category)]
 
     parent = category
     while (parent = find_category(parent&.parent_id))
