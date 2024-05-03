@@ -3,7 +3,7 @@
   <div class="draggable"><%- @Icon('draggable') %></div>
 <% end %>
   <div class="horizontal-filter-body">
-    <div class="controls">
+    <div class="controls horizontal-filter-attribute">
       <div class="u-positionOrigin js-attributeSelector">
         <%- @Icon('arrow-down', 'dropdown-arrow') %>
       </div>

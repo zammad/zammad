@@ -10781,6 +10781,14 @@ label + .wizard-buttonList {
     border-top: none;
   }
 
+  &-attribute {
+    max-width: 250px;
+
+    .modal--veryLarge & {
+      max-width: 400px;
+    }
+  }
+
   select,
   input {
     border-color: var(--border-alt);
