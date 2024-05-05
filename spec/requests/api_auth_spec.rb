@@ -455,10 +455,8 @@ RSpec.describe 'Api Auth', type: :request do
         context 'with disabled authenticator method' do
           let(:two_factor_method_enabled) { false }
 
-          it 'rejects the log-in' do
-            pending 'What is the expected behavior?'
-
-            expect(response).to have_http_status(:unauthorized)
+          it 'accepts the log-in' do
+            expect(response).to have_http_status(:created)
           end
         end
       end

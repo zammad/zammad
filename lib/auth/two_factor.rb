@@ -5,7 +5,9 @@ class Auth::TwoFactor
   attr_reader :user, :all_authentication_methods
 
   def self.authentication_method_classes
-    @authentication_method_classes ||= Auth::TwoFactor::AuthenticationMethod.descendants.sort_by(&:name)
+    @authentication_method_classes ||= Auth::TwoFactor::AuthenticationMethod
+      .descendants
+      .sort_by { |elem| elem.const_get(:ORDER) }
   end
 
   def initialize(user)
@@ -30,13 +32,11 @@ class Auth::TwoFactor
   def verify?(method, payload)
     return false if method.nil?
 
-    method_object = begin
-      if method.eql?('recovery_codes')
-        recovery_codes_object
-      else
-        authentication_method_object(method)
-      end
-    end
+    method_object = if method == 'recovery_codes'
+                      recovery_codes_object
+                    else
+                      authentication_method_object(method)
+                    end
 
     return false if method_object.nil?
 
@@ -76,19 +76,22 @@ class Auth::TwoFactor
     true
   end
 
-  def authentication_method_object(method)
-    all_authentication_methods.find { |all_authentication_method| all_authentication_method.method_name.eql?(method) }
+  def authentication_method_object(method_name)
+    all_authentication_methods.find { |method| method.method_name == method_name }
   end
 
   def user_authentication_methods
-    enabled_authentication_methods.select { |method| user_two_factor_configuration.key?(method.method_name.to_sym) }
+    enabled_authentication_methods
+      .select { |method| user_two_factor_configuration.include?(method.method_name) }
   end
 
   def user_default_authentication_method
-    default_method = user.preferences.dig(:two_factor_authentication, :default)
-    return if default_method.nil?
+    default_method = user_authentication_methods
+      .find { |method| method.method_name == user.two_factor_default }
 
-    user_authentication_methods.find { |method| method.method_name.eql?(default_method) }
+    return default_method if default_method
+
+    user_authentication_methods.first
   end
 
   def user_setup_required?
@@ -116,13 +119,6 @@ class Auth::TwoFactor
   end
 
   def user_two_factor_configuration
-    return if user.two_factor_preferences.authentication_methods.nil?
-
-    user.two_factor_preferences.authentication_methods.to_h do |two_factor_pref|
-      [
-        two_factor_pref.method.to_sym,
-        two_factor_pref.configuration,
-      ]
-    end
+    user.two_factor_preferences.authentication_methods.pluck(:method)
   end
 end

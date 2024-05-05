@@ -12886,7 +12886,6 @@ msgstr ""
 msgid "The given two-factor authentication method is not configured."
 msgstr ""
 
-#: app/services/service/user/two_factor/remove_method_credentials.rb
 #: app/services/service/user/two_factor/set_default_method.rb
 msgid "The given two-factor authentication method is not enabled."
 msgstr ""

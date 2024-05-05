@@ -10,44 +10,106 @@ RSpec.describe Auth::TwoFactor, current_user_id: 1 do
     Setting.set('two_factor_authentication_method_authenticator_app', true)
   end
 
-  shared_examples 'responding to provided instance method' do |method|
-    it "responds to '.#{method}'" do
-      expect(instance).to respond_to(method)
+  describe '#all_authentication_methods' do
+    it 'returns all methods, including disabled and not setup for user' do
+      expect(instance.all_authentication_methods.map { |elem| elem.class.name })
+        .to eq([
+                 Auth::TwoFactor::AuthenticationMethod::SecurityKeys.name,
+                 Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp.name,
+               ])
+    end
+
+    it 'returns instance for current user' do
+      expect(instance.all_authentication_methods.first).to have_attributes(user: user)
     end
   end
 
-  it_behaves_like 'responding to provided instance method', :enabled?
-  it_behaves_like 'responding to provided instance method', :available_authentication_methods
-  it_behaves_like 'responding to provided instance method', :enabled_authentication_methods
-  it_behaves_like 'responding to provided instance method', :verify?
-  it_behaves_like 'responding to provided instance method', :verify_configuration?
-  it_behaves_like 'responding to provided instance method', :all_authentication_methods
-  it_behaves_like 'responding to provided instance method', :authentication_method_object
-  it_behaves_like 'responding to provided instance method', :user_authentication_methods
-  it_behaves_like 'responding to provided instance method', :user_default_authentication_method
-  it_behaves_like 'responding to provided instance method', :user_setup_required?
-  it_behaves_like 'responding to provided instance method', :user_configured?
+  describe '.authentication_method_classes' do
+    it 'returns sorted methods' do
+      expect(described_class.authentication_method_classes)
+        .to eq([
+                 Auth::TwoFactor::AuthenticationMethod::SecurityKeys,
+                 Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp,
+               ])
+    end
+  end
 
-  shared_examples 'returning expected value' do |method, value, assertion: 'be'|
-    context 'when checking array value', if: assertion == 'include' do
-      it "returns expected value for '##{method}'" do
-        expect(instance.method(method).call).to include(value)
-      end
+  describe '#enabled_authentication_methods' do
+    it 'returns only enabled method' do
+      expect(instance.enabled_authentication_methods)
+        .to contain_exactly(be_a(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp))
+    end
+  end
+
+  describe '#available_authentication_methods' do
+    it 'returns available methods' do
+      expect(instance.available_authentication_methods)
+        .to contain_exactly(be_a(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp))
     end
 
-    context 'when checking array value', if: assertion == 'be' do
-      it "returns expected value for '##{method}'" do
-        expect(instance.method(method).call).to be(value)
+    context 'when enabled method is not available' do
+      before do
+        allow_any_instance_of(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
+          .to receive(:available?)
+          .and_return(false)
+      end
+
+      it 'returns available methods' do
+        expect(instance.available_authentication_methods).to be_empty
       end
     end
   end
 
-  it_behaves_like 'returning expected value', :enabled?, true
-  it_behaves_like 'returning expected value', :available_authentication_methods, Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp, assertion: 'include'
-  it_behaves_like 'returning expected value', :enabled_authentication_methods, Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp, assertion: 'include'
-  it_behaves_like 'returning expected value', :all_authentication_methods, Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp, assertion: 'include'
+  describe '#enabled?' do
+    it 'returns true' do
+      expect(instance).to be_enabled
+    end
 
-  describe '#method_object' do
+    context 'without enabled methods' do
+      before do
+        Setting.set('two_factor_authentication_method_authenticator_app', false)
+      end
+
+      it 'returns false' do
+        expect(instance).not_to be_enabled
+      end
+    end
+  end
+
+  describe '#verify_configuration?' do
+    it 'returns false if invalid method name given' do
+      expect(instance)
+        .not_to be_verify_configuration('nonexistantmethod', {}, {})
+    end
+
+    it 'returns false if invalid payload or configuration given' do
+      expect(instance)
+        .not_to be_verify_configuration('authenticator_app', {}, {})
+    end
+
+    context 'when payload and configuration are valid' do
+      before do
+        allow_any_instance_of(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
+          .to receive(:verify)
+          .and_return({ config: :yes, verified: true })
+      end
+
+      it 'returns true' do
+        expect(instance)
+          .to be_verify_configuration('authenticator_app', {}, {})
+      end
+
+      it 'creates uer configuration' do
+        expect_any_instance_of(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
+          .to receive(:create_user_config)
+          .with({ config: :yes })
+
+        instance.verify_configuration?('authenticator_app', {}, {})
+      end
+    end
+  end
+
+  describe '#authentication_method_object' do
     before { create(:user_two_factor_preference, :authenticator_app, user: user) }
 
     it 'returns expected value' do
@@ -55,7 +117,7 @@ RSpec.describe Auth::TwoFactor, current_user_id: 1 do
     end
   end
 
-  describe '#user_methods' do
+  describe '#user_authentication_methods' do
     before { create(:user_two_factor_preference, :authenticator_app, user: user) }
 
     it 'returns expected value' do
@@ -70,6 +132,36 @@ RSpec.describe Auth::TwoFactor, current_user_id: 1 do
       # 'user' variable is cached + was created before the preference was set.
       user.reload
       expect(instance.user_default_authentication_method).to be_a(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
+    end
+
+    context 'when two methods exist' do
+      let(:another_method) { create(:user_two_factor_preference, :security_keys, user: user) }
+
+      before do
+        Setting.set('two_factor_authentication_method_security_keys', true)
+        another_method
+        user.reload
+        user.preferences[:two_factor_authentication][:default] = 'security_keys'
+        user.save!
+      end
+
+      it 'returns selected method' do
+        user.reload
+        expect(instance.user_default_authentication_method)
+          .to be_a(Auth::TwoFactor::AuthenticationMethod::SecurityKeys)
+      end
+
+      context 'when default method disabled' do
+        before do
+          Setting.set('two_factor_authentication_method_security_keys', false)
+        end
+
+        it 'returns another method' do
+          user.reload
+          expect(instance.user_default_authentication_method)
+            .to be_a(Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp)
+        end
+      end
     end
   end
 

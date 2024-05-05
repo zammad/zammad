@@ -24,6 +24,10 @@ module User::HasTwoFactor
     auth_two_factor.user_configured?
   end
 
+  def two_factor_default
+    preferences.dig(:two_factor_authentication, :default)
+  end
+
   def two_factor_enabled_authentication_methods
     auth_two_factor
       .enabled_authentication_methods
@@ -38,8 +42,8 @@ module User::HasTwoFactor
   end
 
   def two_factor_destroy_all_authentication_methods
-    auth_two_factor.user_authentication_methods.each do |method|
-      auth_two_factor.authentication_method_object(method.method_name).destroy_user_config
+    auth_two_factor.all_authentication_methods.each do |method|
+      auth_two_factor.authentication_method_object(method.method_name)&.destroy_user_config
     end
   end
 
@@ -54,6 +58,7 @@ module User::HasTwoFactor
   end
 
   def two_factor_authentication_method_default?(method)
-    auth_two_factor.user_authentication_methods.include?(method) && auth_two_factor.user_default_authentication_method == method
+    auth_two_factor.user_authentication_methods.include?(method) &&
+      auth_two_factor.user_default_authentication_method == method
   end
 end

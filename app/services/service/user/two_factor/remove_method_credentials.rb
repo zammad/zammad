@@ -28,10 +28,6 @@ class Service::User::TwoFactor::RemoveMethodCredentials < Service::User::TwoFact
   end
 
   def validate
-    if !method_available?
-      raise Exceptions::UnprocessableEntity, __('The given two-factor authentication method is not enabled.')
-    end
-
     if !user_preference
       raise Exceptions::UnprocessableEntity, __('The given two-factor method is not configured yet.')
     end

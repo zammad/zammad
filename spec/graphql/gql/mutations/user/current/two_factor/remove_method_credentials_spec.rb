@@ -51,8 +51,6 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::RemoveMethodCredentials
 
     context 'when given method exists' do
       it 'returns success' do
-        pending 'Can user remove method that is no longer enabled?'
-
         gql.execute(mutation, variables: variables)
         expect(gql.result.data).to include('success' => be_truthy)
       end

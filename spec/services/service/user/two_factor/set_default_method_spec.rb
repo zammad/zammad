@@ -19,6 +19,7 @@ RSpec.describe Service::User::TwoFactor::SetDefaultMethod do
     context 'when the given method enabled' do
       before do
         Setting.set('two_factor_authentication_method_authenticator_app', true)
+        Setting.set('two_factor_authentication_method_security_keys', true)
       end
 
       context 'when user has the given method configured' do

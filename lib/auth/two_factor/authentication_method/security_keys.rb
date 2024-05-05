@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Auth::TwoFactor::AuthenticationMethod::SecurityKeys < Auth::TwoFactor::AuthenticationMethod
+  ORDER = 1000
+
   def initiate_authentication
     return if user_two_factor_preference_configuration.blank?
     return if stored_credentials.blank?
@@ -94,12 +96,8 @@ class Auth::TwoFactor::AuthenticationMethod::SecurityKeys < Auth::TwoFactor::Aut
   def verification_configuration(webauthn_credential, stored_credential, configuration)
     stored_credential[:sign_count] = webauthn_credential.sign_count.to_s # for storage
 
-    configuration[:credentials].map do |c|
-      if c[:external_id].eql?(stored_credential[:external_id])
-        return stored_credential
-      end
-
-      c
+    if configuration[:credentials].any? { |c| c[:external_id] == stored_credential[:external_id] }
+      return stored_credential
     end
 
     configuration
@@ -135,11 +133,8 @@ class Auth::TwoFactor::AuthenticationMethod::SecurityKeys < Auth::TwoFactor::Aut
     user_two_factor_preference_configuration[:credentials] || []
   end
 
-  def external_id_match?(stored_credential, webauthn_credential)
-    stored_credential[:external_id].eql?(webauthn_credential.id)
-  end
-
   def find_stored_credential(configuration, webauthn_credential)
-    configuration[:credentials].find { |stored_credential| external_id_match?(stored_credential, webauthn_credential) }
+    configuration[:credentials]
+      .find { |stored_credential| stored_credential[:external_id] == webauthn_credential.id }
   end
 end

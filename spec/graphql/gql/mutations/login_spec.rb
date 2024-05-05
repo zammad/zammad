@@ -158,6 +158,37 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
               }]
             )
           end
+
+          context 'when default method is disabled, but another exists' do
+            let(:enabled) { true }
+
+            before do
+              two_factor_pref
+
+              create(:user_two_factor_preference, :security_keys, user: agent)
+
+              agent.reload
+              agent.preferences[:two_factor_authentication][:default] = 'security_keys'
+              agent.save!
+            end
+
+            it 'fails with error message' do
+              expect(graphql_response['data']['login']['errors']).to eq(
+                [{
+                  'message' => 'Login failed. Please double-check your two-factor authentication method.',
+                  'field'   => nil
+                }]
+              )
+            end
+          end
+
+          context 'with disabled authenticator method' do
+            let(:enabled) { false }
+
+            it 'returns session data' do
+              expect(graphql_response['data']['login']['session']['id']).to be_present
+            end
+          end
         end
 
         context 'with correct token' do
@@ -175,15 +206,8 @@ RSpec.describe Gql::Mutations::Login, :aggregate_failures, type: :request do
           context 'with disabled authenticator method' do
             let(:enabled) { false }
 
-            it 'fails with error message' do
-              pending 'What is the expected behavior?'
-
-              expect(graphql_response['data']['login']['errors']).to eq(
-                [{
-                  'message' => 'Login failed. Please double-check your two-factor authentication method.',
-                  'field'   => nil
-                }]
-              )
+            it 'returns session data' do
+              expect(graphql_response['data']['login']['session']['id']).to be_present
             end
           end
         end

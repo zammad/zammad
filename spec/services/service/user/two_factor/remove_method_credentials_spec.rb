@@ -78,9 +78,10 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
     context 'when method is not enabled' do
       let(:enabled) { false }
 
-      it 'raises an error' do
+      it 'removes whole user preference' do
         expect { service.execute }
-          .to raise_error(Exceptions::UnprocessableEntity)
+          .to change { User::TwoFactorPreference.exists?(user_preference.id) }
+          .to be_falsey
       end
     end
   end

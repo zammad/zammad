@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp < Auth::TwoFactor::AuthenticationMethod
+  ORDER = 2000
+
   def verify(payload, configuration = user_two_factor_preference_configuration)
     return verify_result(false) if payload.blank? || configuration.blank?
 

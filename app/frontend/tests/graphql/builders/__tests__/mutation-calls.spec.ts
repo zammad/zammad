@@ -337,7 +337,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
           },
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `[ApolloError: (Variables error for mutation login) twoFactorMethod should be one of "authenticator_app", "security_keys", but instead got "unknown_method_to_test_error"]`,
+        `[ApolloError: (Variables error for mutation login) twoFactorMethod should be one of "security_keys", "authenticator_app", but instead got "unknown_method_to_test_error"]`,
       )
     })
   })

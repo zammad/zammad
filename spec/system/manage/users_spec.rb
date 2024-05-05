@@ -407,11 +407,15 @@ RSpec.describe 'Manage > Users', type: :system do
     let(:admin)              { create(:admin) }
     let(:agent)              { create(:agent) }
     let(:two_factor_pref)    { create(:user_two_factor_preference, :authenticator_app, user: agent) }
+    let(:enabled)            { true }
 
     def authenticate
+      Setting.set('two_factor_authentication_method_authenticator_app', true)
       Setting.set('two_factor_authentication_enforce_role_ids', [])
 
       two_factor_pref
+      agent.reload
+      Setting.set('two_factor_authentication_method_authenticator_app', enabled)
       admin
     end
 
@@ -432,8 +436,6 @@ RSpec.describe 'Manage > Users', type: :system do
     end
 
     it 'does remove the two-factor method' do
-      pending 'Should it allow to remove disabled methods?'
-
       open_configure_two_factor
 
       select 'Authenticator App', from: 'method'
@@ -444,16 +446,27 @@ RSpec.describe 'Manage > Users', type: :system do
     end
 
     it 'does remove all two-factor methods' do
-      pending 'Should it allow to remove disabled methods?'
-
       open_configure_two_factor
 
-      select 'Authenticator App', from: 'method'
       click_on 'Remove all methods'
       click_on 'Yes'
       wait.until { !User::TwoFactorPreference.exists?(id: two_factor_pref.id) }
 
       expect_no_two_factor
+    end
+
+    describe 'when Two-Factor is disabled' do
+      let(:enabled) { false }
+
+      it 'does remove all two-factor methods' do
+        open_configure_two_factor
+
+        click_on 'Remove all methods'
+        click_on 'Yes'
+        wait.until { !User::TwoFactorPreference.exists?(id: two_factor_pref.id) }
+
+        expect_no_two_factor
+      end
     end
   end
 end

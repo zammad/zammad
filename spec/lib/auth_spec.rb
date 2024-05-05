@@ -112,6 +112,14 @@ RSpec.describe Auth do
           it 'raises an error and does not increase the failed login count' do
             expect { instance.valid! }.to raise_error(Auth::Error::TwoFactorFailed).and(not_change { user.reload.login_failed })
           end
+
+          context 'with disabled authenticator method' do
+            let(:enabled) { false }
+
+            it 'allows the log-in' do
+              expect(instance.valid!).to be true
+            end
+          end
         end
 
         context 'with a valid two factor token' do
@@ -125,12 +133,8 @@ RSpec.describe Auth do
           context 'with disabled authenticator method' do
             let(:enabled) { false }
 
-            it 'fails with error message' do
-              pending 'What is the expected behavior?'
-
-              expect { instance.valid! }
-                .to raise_error(Auth::Error::TwoFactorFailed)
-                .and(not_change { user.reload.login_failed })
+            it 'allows the log-in' do
+              expect(instance.valid!).to be true
             end
           end
         end

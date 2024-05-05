@@ -9,62 +9,34 @@ class User::TwoFactorPreference < ApplicationModel
   scope :authentication_methods, -> { where.not(method: 'recovery_codes') }
   scope :recovery_codes_methods, -> { where(method: 'recovery_codes') }
 
-  after_destroy :remove_recovery_codes, :update_user_preferences
-  after_save :update_user_preferences
+  after_destroy :remove_recovery_codes, :update_user_default
+  after_save :update_user_default
 
   store :configuration
 
   private
 
   def remove_recovery_codes
-    return if method.eql?('recovery_codes')
+    return if method == 'recovery_codes'
+    return if user.two_factor_preferences.authentication_methods.exists?
 
-    current_user_two_factor_preferences = user.two_factor_preferences
-
-    return if current_user_two_factor_preferences.recovery_codes.blank?
-    return if current_user_two_factor_preferences.authentication_methods.present?
-
-    current_user_two_factor_preferences.recovery_codes.destroy!
+    user.two_factor_preferences.recovery_codes&.destroy!
   end
 
-  def update_user_preferences
-    count = user.two_factor_preferences.authentication_methods.count
-    return if count > 1
+  def update_user_default
+    return if user.two_factor_preferences.authentication_methods.exists?(method: user.two_factor_default)
 
-    current_default_method = user.preferences.dig(:two_factor_authentication, :default)
+    new_default = user.auth_two_factor.user_authentication_methods.first&.method_name
 
-    case count
-    when 0
-      return if current_default_method.nil?
+    return if new_default == user.two_factor_default
 
-      remove_default_method_from_preferences(user.preferences)
-    when 1
-      return if method_is_default_for_user?(current_default_method)
-
-      add_default_method_to_preferences(user.preferences)
+    if new_default.nil?
+      user.preferences[:two_factor_authentication]&.delete :default
+    else
+      user.preferences[:two_factor_authentication] ||= {}
+      user.preferences[:two_factor_authentication][:default] = new_default
     end
 
     user.save!
-  end
-
-  def remove_default_method_from_preferences(preferences)
-    preferences[:two_factor_authentication] = preferences[:two_factor_authentication].except(:default)
-
-    preferences
-  end
-
-  def add_default_method_to_preferences(preferences)
-    preferences[:two_factor_authentication] ||= {}
-    preferences[:two_factor_authentication][:default] = first_configured_user_method
-
-    preferences
-  end
-
-  def method_is_default_for_user?(method)
-    method.present? && first_configured_user_method.eql?(method)
-  end
-
-  def first_configured_user_method
-    user.two_factor_preferences&.authentication_methods&.first&.method
   end
 end

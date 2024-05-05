@@ -51,6 +51,18 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
         expect(response).to have_http_status(:ok)
         expect { two_factor_pref.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
+
+      context 'with disabled method' do
+        let(:other_two_factor_pref) { create(:user_two_factor_preference, :security_keys, user: agent) }
+
+        before { other_two_factor_pref }
+
+        it 'removes all methods', :aggregate_failures do
+          expect { delete "/api/v1/users/#{agent.id}/two_factor_remove_all_authentication_methods", as: :json }
+            .to change { agent.two_factor_preferences.exists? }
+            .to false
+        end
+      end
     end
 
     context 'when admin', as: :admin do
@@ -285,8 +297,6 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
         let(:params) { { credential_id: } }
 
         it 'returns ok and updates configuration', :aggregate_failures do
-          pending 'what is expected behavior when method is not enabled?'
-
           allow(Service::User::TwoFactor::RemoveMethodCredentials)
             .to receive(:new)
             .and_call_original

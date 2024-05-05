@@ -10,9 +10,10 @@ RSpec.describe TwoFactorDefaultAuthenticationMethod, db_strategy: :reset, type: 
 
     create(:user_two_factor_preference, :authenticator_app, user: user)
 
-    user_preferences = user.reload.preferences
-    user_preferences[:two_factor_authentication] = user.preferences[:two_factor_authentication].except(:default)
-    user.update!(preferences: user_preferences)
+    user.reload
+    user.preferences[:two_factor_authentication] ||= {}
+    user.preferences[:two_factor_authentication].delete :default
+    user.save!
 
     user
   end
@@ -28,6 +29,11 @@ RSpec.describe TwoFactorDefaultAuthenticationMethod, db_strategy: :reset, type: 
       .execute
 
     user
+  end
+
+  before do
+    Setting.set('two_factor_authentication_method_security_keys', true)
+    Setting.set('two_factor_authentication_method_authenticator_app', true)
   end
 
   context 'when there are no users with two-factor authentication' do

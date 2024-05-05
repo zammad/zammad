@@ -82,11 +82,9 @@ RSpec.describe Gql::Mutations::TwoFactorMethodInitiateAuthentication, :aggregate
         let(:enabled) { false }
 
         it 'fails with error message' do
-          pending 'What is the expected behavior?'
-
-          expect(graphql_response['data']['login']['errors']).to eq(
+          expect(graphql_response['data']['twoFactorMethodInitiateAuthentication']['errors']).to eq(
             [{
-              'message' => 'Please double-check your two-factor authentication method.',
+              'message' => 'The two-factor authentication method is not enabled.',
               'field'   => nil
             }]
           )
