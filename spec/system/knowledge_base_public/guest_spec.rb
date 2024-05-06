@@ -58,6 +58,30 @@ RSpec.describe 'Public Knowledge Base for guest', authenticated_as: false, type:
       it { expect(page).to have_breadcrumb_item(knowledge_base.translation.title).at_index(0) }
       it { expect(page).to have_breadcrumb_item(category.translation.title).at_index(1) }
     end
+
+    context 'when looking at translated subcategory' do
+      let(:translated_title) { Faker::Lorem.sentence }
+
+      before do
+        create(:knowledge_base_translation,
+               knowledge_base:, kb_locale: alternative_locale)
+
+        create(:knowledge_base_category_translation,
+               category: category, title:  translated_title, kb_locale: alternative_locale)
+
+        create(:knowledge_base_category_translation,
+               category: subcategory, kb_locale: alternative_locale)
+
+        create(:knowledge_base_answer_translation,
+               answer: published_answer_in_subcategory, kb_locale: alternative_locale)
+
+        visit help_category_path(alternative_locale.system_locale.locale, subcategory)
+      end
+
+      it 'shows translated parent category in breadcrumb' do
+        expect(page).to have_breadcrumb_item(translated_title).at_index(1)
+      end
+    end
   end
 
   context 'answer' do
