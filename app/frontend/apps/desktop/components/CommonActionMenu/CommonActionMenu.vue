@@ -18,7 +18,7 @@ import type {
 } from '#desktop/components/CommonPopover/types.ts'
 import { usePopoverMenu } from '#desktop/components/CommonPopover/usePopoverMenu.ts'
 
-interface Props {
+export interface Props {
   actions: MenuItem[]
   entity?: ObjectLike
   buttonSize?: ButtonSize
@@ -67,7 +67,10 @@ const buttonVariantClass = computed(() => {
 </script>
 
 <template>
-  <div v-if="filteredMenuItems" class="inline-block">
+  <div
+    v-if="filteredMenuItems && filteredMenuItems.length > 0"
+    class="inline-block"
+  >
     <CommonButton
       v-if="singleActionMode"
       :class="buttonVariantClass"
@@ -76,35 +79,35 @@ const buttonVariantClass = computed(() => {
       :icon="singleMenuItem?.icon"
       @click="singleMenuItem?.onClick?.(entity as ObjectLike)"
     />
-    <CommonButton
-      v-else
-      :id="`action-menu-${entityId}`"
-      ref="popoverTarget"
-      :aria-label="$t(customMenuButtonLabel || 'Action menu button')"
-      aria-haspopup="true"
-      :aria-controls="popoverIsOpen ? menuId : undefined"
-      class="text-stone-200 dark:text-neutral-500"
-      :class="{
-        'outline outline-1 outline-offset-1 outline-blue-800': popoverIsOpen,
-      }"
-      :size="buttonSize"
-      icon="three-dots-vertical"
-      @click="toggle"
-    />
-
-    <CommonPopover
-      v-if="!singleActionMode"
-      :id="menuId"
-      ref="popover"
-      :placement="placement"
-      :orientation="orientation"
-      :owner="popoverTarget"
-    >
-      <CommonPopoverMenu
-        ref="popoverMenu"
-        :entity="entity"
-        :popover="popover"
+    <template v-else>
+      <CommonButton
+        :id="`action-menu-${entityId}`"
+        ref="popoverTarget"
+        :aria-label="$t(customMenuButtonLabel || 'Action menu button')"
+        aria-haspopup="true"
+        :aria-controls="popoverIsOpen ? menuId : undefined"
+        class="text-stone-200 dark:text-neutral-500"
+        :class="{
+          'outline outline-1 outline-offset-1 outline-blue-800': popoverIsOpen,
+        }"
+        :size="buttonSize"
+        icon="three-dots-vertical"
+        @click="toggle"
       />
-    </CommonPopover>
+
+      <CommonPopover
+        :id="menuId"
+        ref="popover"
+        :placement="placement"
+        :orientation="orientation"
+        :owner="popoverTarget"
+      >
+        <CommonPopoverMenu
+          ref="popoverMenu"
+          :entity="entity"
+          :popover="popover"
+        />
+      </CommonPopover>
+    </template>
   </div>
 </template>

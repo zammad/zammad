@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
@@ -30,11 +30,11 @@ export const useConfigurationTwoFactor = () => {
     },
   )
 
-  const userCurrenttwoFactorSubscription = new SubscriptionHandler(
+  const userCurrentTwoFactorSubscription = new SubscriptionHandler(
     useUserCurrentTwoFactorUpdatesSubscription({ userId: session.userId }),
   )
 
-  const userCurrentTwoFactorResult = userCurrenttwoFactorSubscription.result()
+  const userCurrentTwoFactorResult = userCurrentTwoFactorSubscription.result()
 
   const twoFactorConfigurationResult = computed(
     () =>
@@ -85,6 +85,11 @@ export const useConfigurationTwoFactor = () => {
   const hasRecoveryCodes = computed(() => {
     return Boolean(twoFactorConfigurationResult.value?.recoveryCodesExist)
   })
+
+  // We need to restart the subscription when enabled two factor method list changed.
+  watch(twoFactorEnabledMethods, () =>
+    userCurrentTwoFactorSubscription.operationResult.restart(),
+  )
 
   return {
     twoFactorConfigurationMethods,
