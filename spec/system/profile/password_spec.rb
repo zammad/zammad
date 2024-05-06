@@ -35,6 +35,16 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
         .and have_text('Two-factor Authentication')
     end
 
+    it 'shows two factor if another two factor method enabled' do
+      password_and_authenticate(password: false, two_factor: false, alternative_two_factor: true)
+
+      visit 'profile/password'
+
+      expect(page)
+        .to have_no_text('Change Your Password')
+        .and have_text('Two-factor Authentication')
+    end
+
     context 'when user has no two factor permission' do
       before do
         user.roles.each { |role| role.permission_revoke('user_preferences.two_factor_authentication') }
@@ -58,8 +68,9 @@ RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
       end
     end
 
-    def password_and_authenticate(password:, two_factor:)
+    def password_and_authenticate(password:, two_factor:, alternative_two_factor: false)
       Setting.set('two_factor_authentication_method_authenticator_app', two_factor)
+      Setting.set('two_factor_authentication_method_security_keys', alternative_two_factor)
       Setting.set('two_factor_authentication_enforce_role_ids', [])
       Setting.set('user_show_password_login', password)
     end

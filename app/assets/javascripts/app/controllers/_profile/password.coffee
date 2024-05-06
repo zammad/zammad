@@ -252,7 +252,7 @@ App.Config.set('Password', {
     canChangePassword = App.Config.get('user_show_password_login') ||
       controller.permissionCheck('admin.*')
 
-    twoFactorEnabled  = App.Config.get('two_factor_authentication_method_authenticator_app') &&
+    twoFactorEnabled  = App.TwoFactorMethods.isAnyAuthenticationMethodEnabled() &&
       controller.permissionCheck('user_preferences.two_factor_authentication')
 
     return false if !canChangePassword && !twoFactorEnabled
