@@ -626,14 +626,14 @@ class ChatTest < ActiveSupport::TestCase
       name:          'country test',
       max_queue:     5,
       note:          '',
-      block_country: 'AU;CH',
+      block_country: 'AU;CH;DE',
       active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     assert_not(chat.blocked_country?('127.0.0.1'))
-    assert(chat.blocked_country?('1.1.1.8'))
+    assert(chat.blocked_country?('116.203.82.166'))
   end
 
 end
