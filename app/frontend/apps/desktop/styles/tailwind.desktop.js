@@ -2,7 +2,6 @@
 
 const formKitTailwind = require('@formkit/themes/tailwindcss')
 const path = require('path')
-const daisyTailwind = require('daisyui')
 const unimportantTailwind = require('tailwindcss-unimportant')
 
 const zammadTailwind = require('../../../build/zammadTailwindPlugin.js')
@@ -17,12 +16,7 @@ module.exports = {
     `${desktopDir}/**/*.{js,jsx,ts,tsx,vue,css}`,
     `${sharedDir}/**/*.{js,jsx,ts,tsx,vue,css}`,
   ],
-  plugins: [
-    formKitTailwind,
-    zammadTailwind,
-    daisyTailwind,
-    unimportantTailwind,
-  ],
+  plugins: [formKitTailwind, zammadTailwind, unimportantTailwind],
   theme: {
     colors: {
       alpha: {
@@ -91,6 +85,14 @@ module.exports = {
         300: '#EA4D84',
         500: '#FF006B',
       },
+      neutral: {
+        100: '#E5E5E5',
+        200: '#E3E3E3',
+        300: '#DCDCDC',
+        400: '#D1D1D1',
+        500: '#999999',
+        950: '#191919',
+      },
     },
     extend: {
       width: {
@@ -103,26 +105,6 @@ module.exports = {
       maxWidth: {
         150: '600px',
       },
-      // NB: daisyUI overrides `neutral` color as a last step.
-      //   Here we apply our original theme values by using the same way they were overridden (via full class name).
-      //   https://github.com/saadeghi/daisyui/issues/2368
-      colors: {
-        'neutral-100': '#E5E5E5',
-        'neutral-200': '#E3E3E3',
-        'neutral-300': '#DCDCDC',
-        'neutral-400': '#D1D1D1',
-        'neutral-500': '#999999',
-        'neutral-950': '#191919',
-      },
     },
-  },
-  // XXX: daisyUI is used only in desktop view, so its classes CANNOT be used in "shared" components.
-  daisyui: {
-    base: false,
-    // Do not show info about daisyUI version and used config in the console when building CSS.
-    logs: false,
-    // Disable all daisyUI themes which in turn disables all built-in colors.
-    //   https://daisyui.com/docs/themes/#-2
-    themes: [],
   },
 }

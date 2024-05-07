@@ -25,7 +25,7 @@ const {
 
 <template>
   <div
-    class="grid h-full transition-[grid-template-columns] duration-100"
+    class="grid h-full duration-100"
     :class="{ 'transition-none': noTransition }"
     :style="gridColumns"
   >

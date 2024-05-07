@@ -90,7 +90,7 @@ describe('dialog confirm behaviour', () => {
     ).toBeInTheDocument()
     expect(
       wrapper.getByRole('button', { name: 'Custom button title' }),
-    ).toHaveClass('btn-error')
+    ).toHaveClass('bg-pink-100')
   })
 
   it('closes the confirmation dialog by using cancel', async () => {

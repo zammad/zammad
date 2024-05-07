@@ -15,10 +15,7 @@ const { gridColumns, collapseSidebar, expandSidebar } =
 </script>
 
 <template>
-  <div
-    class="grid h-full transition-[grid-template-columns] duration-100"
-    :style="gridColumns"
-  >
+  <div class="grid h-full duration-100" :style="gridColumns">
     <LayoutSidebar
       id="personal-settings-sidebar"
       :name="storageKeyId"

@@ -21,14 +21,14 @@ defineProps<Props>()
 
 <style scoped>
 .progress {
-  @apply rounded-box h-2 bg-blue-200 dark:bg-gray-700;
+  @apply h-2 rounded-2xl bg-blue-200 dark:bg-gray-700;
 
   &::-moz-progress-bar {
     @apply rounded-none bg-blue-800;
   }
 
   &::-webkit-progress-bar {
-    @apply rounded-box;
+    @apply rounded-2xl;
   }
 
   &::-webkit-progress-value {

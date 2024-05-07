@@ -102,7 +102,7 @@
           <button
             aria-haspopup="true"
             aria-label="Action menu button"
-            class="btn h-min min-h-min flex-nowrap gap-x-1 border-0 font-normal shadow-none hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:hover:outline-blue-900 btn-secondary bg-transparent hover:bg-transparent text-blue-800 btn-md text-sm p-1 rounded-lg w-min text-stone-200 dark:text-neutral-500"
+            class="inline-flex h-min min-h-min flex-shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0 font-normal shadow-none transition duration-200 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-none focus:outline-0 focus:outline-offset-0 focus:hover:outline focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] dark:hover:outline-blue-900 bg-transparent hover:bg-transparent text-blue-800 btn-md text-sm p-1 rounded-lg w-min text-stone-200 dark:text-neutral-500"
             id="action-menu-1"
             type="button"
           >

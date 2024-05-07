@@ -173,7 +173,7 @@ const dark = computed(() => theme.value === 'dark')
   --dp-primary-text-color: theme(colors.white);
   --dp-secondary-color: theme(colors.stone.200);
   --dp-border-color: theme(colors.transparent);
-  --dp-menu-border-color: theme(colors[neutral-100]);
+  --dp-menu-border-color: theme(colors.neutral.100);
   --dp-border-color-hover: theme(colors.transparent);
   --dp-disabled-color: theme(colors.transparent);
   --dp-disabled-color-text: theme(colors.stone.200);
@@ -188,7 +188,7 @@ const dark = computed(() => theme.value === 'dark')
   --dp-highlight-color: theme(colors.blue.800);
   --dp-range-between-dates-background-color: theme(colors.blue.500);
   --dp-range-between-dates-text-color: theme(colors.blue.800);
-  --dp-range-between-border-color: theme(colors[neutral-100]);
+  --dp-range-between-border-color: theme(colors.neutral.100);
   --dp-input-background-color: theme(colors.blue.200);
 
   .dp {
@@ -225,17 +225,17 @@ const dark = computed(() => theme.value === 'dark')
   --dp-primary-color: theme(colors.blue.800);
   --dp-primary-disabled-color: theme(colors.blue.950);
   --dp-primary-text-color: theme(colors.white);
-  --dp-secondary-color: theme(colors[neutral-500]);
+  --dp-secondary-color: theme(colors.neutral.500);
   --dp-border-color: theme(colors.transparent);
   --dp-menu-border-color: theme(colors.gray.900);
   --dp-border-color-hover: theme(colors.transparent);
   --dp-disabled-color: theme(colors.transparent);
-  --dp-disabled-color-text: theme(colors[neutral-500]);
+  --dp-disabled-color-text: theme(colors.neutral.500);
   --dp-scroll-bar-background: theme(colors.gray.700);
   --dp-scroll-bar-color: theme(colors.gray.400);
   --dp-success-color: theme(colors.green.500);
   --dp-success-color-disabled: theme(colors.green.900);
-  --dp-icon-color: theme(colors[neutral-500]);
+  --dp-icon-color: theme(colors.neutral.500);
   --dp-danger-color: theme(colors.red.500);
   --dp-marker-color: theme(colors.blue.700);
   --dp-tooltip-color: theme(colors.gray.700);
@@ -264,7 +264,7 @@ const dark = computed(() => theme.value === 'dark')
 
     &__button,
     &__action_button {
-      color: theme(colors[neutral-400]);
+      color: theme(colors.neutral.400);
       background: theme(colors.gray.600);
     }
   }

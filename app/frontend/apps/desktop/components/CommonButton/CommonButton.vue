@@ -27,10 +27,9 @@ const props = withDefaults(defineProps<Props>(), {
 const variantClasses = computed(() => {
   switch (props.variant) {
     case 'primary':
-      return ['btn-primary', 'bg-blue-800', 'hover:bg-blue-800', 'text-white']
+      return ['bg-blue-800', 'hover:bg-blue-800', 'text-white']
     case 'tertiary':
       return [
-        'btn-neutral',
         'bg-green-200',
         'hover:bg-green-200',
         'dark:bg-gray-600',
@@ -39,15 +38,9 @@ const variantClasses = computed(() => {
         'dark:text-neutral-400',
       ]
     case 'submit':
-      return [
-        'btn-accent',
-        'bg-yellow-300',
-        'hover:bg-yellow-300',
-        'text-black',
-      ]
+      return ['bg-yellow-300', 'hover:bg-yellow-300', 'text-black']
     case 'danger':
       return [
-        'btn-error',
         'bg-pink-100',
         'hover:bg-pink-100',
         'dark:bg-red-900',
@@ -56,7 +49,6 @@ const variantClasses = computed(() => {
       ]
     case 'remove':
       return [
-        'btn-info',
         'bg-red-400',
         'hover:bg-red-400',
         'dark:bg-red-600',
@@ -65,7 +57,6 @@ const variantClasses = computed(() => {
       ]
     case 'subtle':
       return [
-        'btn-ghost',
         'bg-blue-600',
         'dark:bg-blue-900',
         'hover:bg-blue-600',
@@ -75,7 +66,6 @@ const variantClasses = computed(() => {
       ]
     case 'neutral':
       return [
-        'btn-secondary',
         'bg-transparent',
         'hover:bg-transparent',
         'text-gray-100',
@@ -83,12 +73,7 @@ const variantClasses = computed(() => {
       ]
     case 'secondary':
     default:
-      return [
-        'btn-secondary',
-        'bg-transparent',
-        'hover:bg-transparent',
-        'text-blue-800',
-      ]
+      return ['bg-transparent', 'hover:bg-transparent', 'text-blue-800']
   }
 })
 
@@ -152,7 +137,7 @@ const iconSizeClass = computed(() => {
 
 <template>
   <button
-    class="btn h-min min-h-min flex-nowrap gap-x-1 border-0 font-normal shadow-none hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:hover:outline-blue-900"
+    class="inline-flex h-min min-h-min flex-shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0 font-normal shadow-none transition duration-200 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-none focus:outline-0 focus:outline-offset-0 focus:hover:outline focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] dark:hover:outline-blue-900"
     :class="[
       ...variantClasses,
       ...sizeClasses,
