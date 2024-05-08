@@ -2076,8 +2076,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
@@ -2087,8 +2087,8 @@ msgstr ""
 msgid "Avatar Preview"
 msgstr ""
 
-#: app/graphql/gql/mutations/account/avatar/delete.rb
-#: app/graphql/gql/mutations/account/avatar/select.rb
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb
+#: app/graphql/gql/mutations/user/current/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr ""
 
@@ -2421,7 +2421,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Camera"
 msgstr ""
 
@@ -2459,7 +2459,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -3367,7 +3367,7 @@ msgid "Could not fetch security keys"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
-#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb
 msgid "Could not generate recovery codes"
 msgstr ""
 
@@ -4797,7 +4797,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete"
 msgstr ""
 
@@ -4841,7 +4841,7 @@ msgstr ""
 msgid "Delete all existing records first."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete avatar"
 msgstr ""
 
@@ -5143,7 +5143,7 @@ msgstr ""
 msgid "Do you really want to delete this object?"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Do you really want to delete your current avatar?"
 msgstr ""
 
@@ -5185,7 +5185,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Done"
 msgstr ""
@@ -8207,7 +8207,7 @@ msgstr ""
 msgid "Layout Reference"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Library"
 msgstr ""
 
@@ -8367,7 +8367,7 @@ msgstr ""
 msgid "Locale"
 msgstr ""
 
-#: app/graphql/gql/mutations/account/locale.rb
+#: app/graphql/gql/mutations/user/current/locale.rb
 msgid "Locale could not be found."
 msgstr ""
 
@@ -11665,7 +11665,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -13440,11 +13440,11 @@ msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be fetched."
 msgstr ""
 
@@ -13453,7 +13453,7 @@ msgid "The avatar could not be selected."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr ""
 
@@ -13592,7 +13592,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
-#: app/graphql/gql/mutations/account/change_password.rb
+#: app/graphql/gql/mutations/user/current/change_password.rb
 msgid "The current password you provided is incorrect."
 msgstr ""
 
@@ -13710,7 +13710,6 @@ msgstr ""
 msgid "The given two-factor authentication method is not configured."
 msgstr ""
 
-#: app/services/service/user/two_factor/remove_method_credentials.rb
 #: app/services/service/user/two_factor/set_default_method.rb
 msgid "The given two-factor authentication method is not enabled."
 msgstr ""
@@ -13930,7 +13929,7 @@ msgstr ""
 msgid "The provided match operator is missing or invalid."
 msgstr ""
 
-#: app/graphql/gql/mutations/account/password_check.rb
+#: app/graphql/gql/mutations/user/current/password_check.rb
 msgid "The provided password is incorrect."
 msgstr ""
 
@@ -15477,6 +15476,10 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Toggle AM/PM mode"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue
+msgid "Toggle Group"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee

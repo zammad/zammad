@@ -2357,8 +2357,8 @@ msgstr "Mogući tipovi za novi ticket"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
@@ -2370,8 +2370,8 @@ msgstr "Avatar"
 msgid "Avatar Preview"
 msgstr "Pregled"
 
-#: app/graphql/gql/mutations/account/avatar/delete.rb
-#: app/graphql/gql/mutations/account/avatar/select.rb
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb
+#: app/graphql/gql/mutations/user/current/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr "Nije bilo moguće pronaći avatar."
 
@@ -2721,7 +2721,7 @@ msgstr "Zapisnik pozivatelja"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Camera"
 msgstr "Kamera"
 
@@ -2761,7 +2761,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -3718,7 +3718,7 @@ msgid "Could not fetch security keys"
 msgstr "Ime za ovaj sigurnosni ključ"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
-#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb
 #, fuzzy
 #| msgid "Regenerate recovery codes"
 msgid "Could not generate recovery codes"
@@ -5343,7 +5343,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete"
 msgstr "Obrisati"
 
@@ -5389,7 +5389,7 @@ msgstr "Obrišite sve potkategorije i odgovore, a zatim pokušajte ponovno."
 msgid "Delete all existing records first."
 msgstr "Najprije obrišite sve postojeće zapise."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete avatar"
 msgstr "Obriši avatar"
 
@@ -5704,7 +5704,7 @@ msgstr "Želite li zaista izbrisati ovaj nacrt?"
 msgid "Do you really want to delete this object?"
 msgstr "Želite li zaista izbrisati ovaj objekt?"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Do you really want to delete your current avatar?"
 msgstr "Jeste li sigurni da želite obrisati svoj trenutni avatar?"
 
@@ -5749,7 +5749,7 @@ msgstr "Nemoj sinkronizirati"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Done"
 msgstr "Gotovo"
@@ -8988,7 +8988,7 @@ msgstr "Izgled"
 msgid "Layout Reference"
 msgstr "Referenca izgleda"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Library"
 msgstr "Knjižnica"
 
@@ -9148,7 +9148,7 @@ msgstr "Lokalni MTA (Sendmail/Postfix/Exim/…) - koristi postavke servera"
 msgid "Locale"
 msgstr "Jezik"
 
-#: app/graphql/gql/mutations/account/locale.rb
+#: app/graphql/gql/mutations/user/current/locale.rb
 msgid "Locale could not be found."
 msgstr "Lokalna verzija nije pronađena."
 
@@ -12641,7 +12641,7 @@ msgstr "subota"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -14504,11 +14504,11 @@ msgstr ""
 "čarobnjaka."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr "Avatar nije moguće obrisati."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be fetched."
 msgstr "Nije moguće dohvatiti avatar."
 
@@ -14519,7 +14519,7 @@ msgid "The avatar could not be selected."
 msgstr "Avatar nije moguće obrisati."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr "Nije moguće učitati avatar."
 
@@ -14677,7 +14677,7 @@ msgstr "Veza je odbijena."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
-#: app/graphql/gql/mutations/account/change_password.rb
+#: app/graphql/gql/mutations/user/current/change_password.rb
 msgid "The current password you provided is incorrect."
 msgstr "Unesena lozinka nije ispravna."
 
@@ -14814,7 +14814,6 @@ msgstr "Navedeni članak nije medijski članak."
 msgid "The given two-factor authentication method is not configured."
 msgstr "Dvofaktorska autentifikacija nije još konfigurirana."
 
-#: app/services/service/user/two_factor/remove_method_credentials.rb
 #: app/services/service/user/two_factor/set_default_method.rb
 #, fuzzy
 #| msgid "The two-factor authentication method is not enabled."
@@ -15053,7 +15052,7 @@ msgstr "Navedena putanja nije valjana."
 msgid "The provided match operator is missing or invalid."
 msgstr "Navedeni operator podudaranja nedostaje ili nije valjan."
 
-#: app/graphql/gql/mutations/account/password_check.rb
+#: app/graphql/gql/mutations/user/current/password_check.rb
 #, fuzzy
 #| msgid "The username or password is incorrect."
 msgid "The provided password is incorrect."
@@ -16741,6 +16740,12 @@ msgstr "Danas"
 #| msgid "Toggle dark mode"
 msgid "Toggle AM/PM mode"
 msgstr "Uključi/isključi tamni način rada"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue
+#, fuzzy
+#| msgid "Parent group"
+msgid "Toggle Group"
+msgstr "Nadređena grupa"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
@@ -20308,11 +20313,6 @@ msgstr "∅ vrijeme čekanja danas"
 
 #~ msgid "not translated"
 #~ msgstr "nije prevedeno"
-
-#, fuzzy
-#~| msgid "Parent group"
-#~ msgid "Target Group"
-#~ msgstr "Nadređena grupa"
 
 #~ msgid ""
 #~ "We detected OTRS BPM processes that can't get imported into Zammad since "

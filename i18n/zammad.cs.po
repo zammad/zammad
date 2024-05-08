@@ -2410,8 +2410,8 @@ msgstr "Dostupné typy nového ticketu"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
@@ -2423,8 +2423,8 @@ msgstr "Avatar"
 msgid "Avatar Preview"
 msgstr "Zobrazit"
 
-#: app/graphql/gql/mutations/account/avatar/delete.rb
-#: app/graphql/gql/mutations/account/avatar/select.rb
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb
+#: app/graphql/gql/mutations/user/current/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr "Avatar se nepodařilo najít."
 
@@ -2777,7 +2777,7 @@ msgstr "Výpis volání"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Camera"
 msgstr "Kamera"
 
@@ -2821,7 +2821,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -3798,7 +3798,7 @@ msgid "Could not fetch security keys"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
-#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb
 #, fuzzy
 #| msgid "Delete records"
 msgid "Could not generate recovery codes"
@@ -5469,7 +5469,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete"
 msgstr "Vymazat"
 
@@ -5517,7 +5517,7 @@ msgstr "Smažte všechny podřízené kategorie a odpověďi, pak to zkuste znov
 msgid "Delete all existing records first."
 msgstr "Nejprve smažte všechny existující záznamy."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete avatar"
 msgstr "Smazat avatar"
 
@@ -5833,7 +5833,7 @@ msgstr "Opravdu si přejete smazat tento koncept?"
 msgid "Do you really want to delete this object?"
 msgstr "Opravdu si přejete smazat tento objekt?"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Do you really want to delete your current avatar?"
 msgstr "Opravdu si přejete smazat váš současný avatar?"
 
@@ -5878,7 +5878,7 @@ msgstr "Nesynchronizovat"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Done"
 msgstr "Hotovo"
@@ -9239,7 +9239,7 @@ msgstr "Rozložení"
 msgid "Layout Reference"
 msgstr "Nápověda k rozložení"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Library"
 msgstr "Knihovna"
 
@@ -9401,7 +9401,7 @@ msgstr "Místní MTA (Sendmail/Postfix/Exim/...) - použít nastavení serveru"
 msgid "Locale"
 msgstr "Lokalizace"
 
-#: app/graphql/gql/mutations/account/locale.rb
+#: app/graphql/gql/mutations/user/current/locale.rb
 msgid "Locale could not be found."
 msgstr "Národní prostředí se nepodařilo najít."
 
@@ -13049,7 +13049,7 @@ msgstr "Sobota"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -15019,11 +15019,11 @@ msgstr ""
 "Auto průvodce je povolen. Použijte prosím poskytnutou URL auto průvodce."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr "Avatar se nepodařilo smazat."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be fetched."
 msgstr "Avatar se nepodařilo stáhnout."
 
@@ -15034,7 +15034,7 @@ msgid "The avatar could not be selected."
 msgstr "Avatar se nepodařilo smazat."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr "Avatar se nepodařilo nahrát."
 
@@ -15212,7 +15212,7 @@ msgstr "Připojení bylo odmítnuto."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
-#: app/graphql/gql/mutations/account/change_password.rb
+#: app/graphql/gql/mutations/user/current/change_password.rb
 #, fuzzy
 #| msgid "The required parameter 'params' is missing."
 msgid "The current password you provided is incorrect."
@@ -15362,7 +15362,6 @@ msgstr "Článek nepatří uvedenému ticketu."
 msgid "The given two-factor authentication method is not configured."
 msgstr "Nastavení 'ticket_number' není nakonfigurováno."
 
-#: app/services/service/user/two_factor/remove_method_credentials.rb
 #: app/services/service/user/two_factor/set_default_method.rb
 #, fuzzy
 #| msgid ""
@@ -15615,7 +15614,7 @@ msgstr "Poskytnutý koncový bod je neplatný."
 msgid "The provided match operator is missing or invalid."
 msgstr "Poskytnutý operátor shody chybí nebo je neplatný."
 
-#: app/graphql/gql/mutations/account/password_check.rb
+#: app/graphql/gql/mutations/user/current/password_check.rb
 #, fuzzy
 #| msgid "The required parameter 'params' is missing."
 msgid "The provided password is incorrect."
@@ -17404,6 +17403,12 @@ msgstr "Dnes"
 #| msgid "Toggle dark mode"
 msgid "Toggle AM/PM mode"
 msgstr "Přepnout tmavý režim"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue
+#, fuzzy
+#| msgid "Parent"
+msgid "Toggle Group"
+msgstr "Nadřazený"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
@@ -21087,11 +21092,6 @@ msgstr "dnešní ∅ čekací doby"
 
 #~ msgid "not translated"
 #~ msgstr "nepřeložená"
-
-#, fuzzy
-#~| msgid "Parent"
-#~ msgid "Target Group"
-#~ msgstr "Nadřazený"
 
 #~ msgid ""
 #~ "We detected OTRS BPM processes that can't get imported into Zammad since "

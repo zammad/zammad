@@ -2445,8 +2445,8 @@ msgstr "Új jegyhez rendelkezésre álló típusok"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
@@ -2458,8 +2458,8 @@ msgstr "Avatár"
 msgid "Avatar Preview"
 msgstr "Előnézet"
 
-#: app/graphql/gql/mutations/account/avatar/delete.rb
-#: app/graphql/gql/mutations/account/avatar/select.rb
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb
+#: app/graphql/gql/mutations/user/current/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr "Az avatár nem található."
 
@@ -2814,7 +2814,7 @@ msgstr "Hívásnapló"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Camera"
 msgstr "Kamera"
 
@@ -2858,7 +2858,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -3849,7 +3849,7 @@ msgid "Could not fetch security keys"
 msgstr "Ennek a biztonsági kulcsnak a neve"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
-#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb
 #, fuzzy
 #| msgid "Regenerate recovery codes"
 msgid "Could not generate recovery codes"
@@ -5567,7 +5567,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete"
 msgstr "Törlés"
 
@@ -5616,7 +5616,7 @@ msgstr ""
 msgid "Delete all existing records first."
 msgstr "Először törölje az összes meglévő rekordot."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete avatar"
 msgstr "Avatár törlése"
 
@@ -5930,7 +5930,7 @@ msgstr "Tényleg törölni szeretné ezt a piszkozatot?"
 msgid "Do you really want to delete this object?"
 msgstr "Tényleg törölni szeretné ezt az objektumot?"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Do you really want to delete your current avatar?"
 msgstr "Tényleg törölni szeretné a jelenlegi avatarját?"
 
@@ -5978,7 +5978,7 @@ msgstr "Ne szinkronizáljon"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Done"
 msgstr "Kész"
@@ -9374,7 +9374,7 @@ msgstr "Elrendezés"
 msgid "Layout Reference"
 msgstr "Elrendezési hivatkozás"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Library"
 msgstr "Könyvtár"
 
@@ -9536,7 +9536,7 @@ msgstr "Helyi MTA (Sendmail/Postfix/Exim/...) - szerver beállítás használata
 msgid "Locale"
 msgstr "Nyelvterület"
 
-#: app/graphql/gql/mutations/account/locale.rb
+#: app/graphql/gql/mutations/user/current/locale.rb
 msgid "Locale could not be found."
 msgstr "A nyelvterület nem található."
 
@@ -13201,7 +13201,7 @@ msgstr "szombat"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -15157,11 +15157,11 @@ msgstr ""
 "automatikus varázsló URL címet."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr "Az avatárt nem lehetett törölni."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be fetched."
 msgstr "Az avatárt nem lehetett lekérdezni."
 
@@ -15172,7 +15172,7 @@ msgid "The avatar could not be selected."
 msgstr "Az avatárt nem lehetett törölni."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr "Az avatárt nem sikerült feltölteni."
 
@@ -15360,7 +15360,7 @@ msgstr "A kapcsolat visszautasításra került."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
-#: app/graphql/gql/mutations/account/change_password.rb
+#: app/graphql/gql/mutations/user/current/change_password.rb
 #, fuzzy
 #| msgid "The username or password is incorrect."
 msgid "The current password you provided is incorrect."
@@ -15514,7 +15514,6 @@ msgstr "A cikk nem tartozik a megadott jegyhez."
 msgid "The given two-factor authentication method is not configured."
 msgstr "A kétfaktoros hitelesítés még nincs beállítva."
 
-#: app/services/service/user/two_factor/remove_method_credentials.rb
 #: app/services/service/user/two_factor/set_default_method.rb
 #, fuzzy
 #| msgid "The two-factor authentication method is not enabled."
@@ -15771,7 +15770,7 @@ msgstr "A megadott végpont érvénytelen."
 msgid "The provided match operator is missing or invalid."
 msgstr "A megadott egyeztető operátor hiányzik vagy érvénytelen."
 
-#: app/graphql/gql/mutations/account/password_check.rb
+#: app/graphql/gql/mutations/user/current/password_check.rb
 #, fuzzy
 #| msgid "The username or password is incorrect."
 msgid "The provided password is incorrect."
@@ -17561,6 +17560,12 @@ msgstr "Ma"
 #| msgid "Toggle dark mode"
 msgid "Toggle AM/PM mode"
 msgstr "Sötét üzemmód bekapcsolása"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue
+#, fuzzy
+#| msgid "Parent"
+msgid "Toggle Group"
+msgstr "Szülő"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
@@ -21214,11 +21219,6 @@ msgstr "Várakozási idő ma"
 
 #~ msgid "not translated"
 #~ msgstr "nincs lefordítva"
-
-#, fuzzy
-#~| msgid "Parent"
-#~ msgid "Target Group"
-#~ msgstr "Szülő"
 
 #~ msgid ""
 #~ "We detected OTRS BPM processes that can't get imported into Zammad since "

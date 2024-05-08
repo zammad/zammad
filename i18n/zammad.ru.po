@@ -2432,8 +2432,8 @@ msgstr "Доступные типы для новой заявки"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
@@ -2445,8 +2445,8 @@ msgstr "Аватар"
 msgid "Avatar Preview"
 msgstr "Предпросмотр"
 
-#: app/graphql/gql/mutations/account/avatar/delete.rb
-#: app/graphql/gql/mutations/account/avatar/select.rb
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb
+#: app/graphql/gql/mutations/user/current/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr "Не удалось найти аватар."
 
@@ -2805,7 +2805,7 @@ msgstr "Журнал звонков"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Camera"
 msgstr "Камера"
 
@@ -2849,7 +2849,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -3834,7 +3834,7 @@ msgid "Could not fetch security keys"
 msgstr "Название для этого ключа безопасности"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
-#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb
 #, fuzzy
 #| msgid "Regenerate recovery codes"
 msgid "Could not generate recovery codes"
@@ -5518,7 +5518,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete"
 msgstr "Удалить"
 
@@ -5566,7 +5566,7 @@ msgstr "Удалите все дочерние категории и ответ�
 msgid "Delete all existing records first."
 msgstr "Сначала удалите все существующие записи."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete avatar"
 msgstr "Удалить аватар"
 
@@ -5882,7 +5882,7 @@ msgstr "Вы действительно хотите удалить этот ч�
 msgid "Do you really want to delete this object?"
 msgstr "Вы действительно хотите удалить этот объект?"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Do you really want to delete your current avatar?"
 msgstr "Вы действительно хотите удалить свой текущий аватар?"
 
@@ -5928,7 +5928,7 @@ msgstr "Не синхронизировать"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Done"
 msgstr "Готово"
@@ -9324,7 +9324,7 @@ msgstr "Макет"
 msgid "Layout Reference"
 msgstr "Ссылка на макет"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Library"
 msgstr "Библиотека"
 
@@ -9488,7 +9488,7 @@ msgstr ""
 msgid "Locale"
 msgstr "Локализация"
 
-#: app/graphql/gql/mutations/account/locale.rb
+#: app/graphql/gql/mutations/user/current/locale.rb
 msgid "Locale could not be found."
 msgstr "Не удалось найти локализацию."
 
@@ -13143,7 +13143,7 @@ msgstr "Суббота"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -15150,11 +15150,11 @@ msgstr ""
 "адрес автоматического мастера."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr "Не удалось удалить аватар."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be fetched."
 msgstr "Не удалось получить аватар."
 
@@ -15165,7 +15165,7 @@ msgid "The avatar could not be selected."
 msgstr "Не удалось удалить аватар."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr "Не удалось загрузить аватар."
 
@@ -15333,7 +15333,7 @@ msgstr "В подключении было отказано."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
-#: app/graphql/gql/mutations/account/change_password.rb
+#: app/graphql/gql/mutations/user/current/change_password.rb
 #, fuzzy
 #| msgid "The required parameter 'params' is missing."
 msgid "The current password you provided is incorrect."
@@ -15482,7 +15482,6 @@ msgstr "Статья не относится к указанной заявке.
 msgid "The given two-factor authentication method is not configured."
 msgstr "Параметр «номер_заявки» (ticket_number) не был настроен."
 
-#: app/services/service/user/two_factor/remove_method_credentials.rb
 #: app/services/service/user/two_factor/set_default_method.rb
 #, fuzzy
 #| msgid ""
@@ -15743,7 +15742,7 @@ msgstr "Указанная конечная точка (endpoint) недейст
 msgid "The provided match operator is missing or invalid."
 msgstr "Указанный оператор соответствия отсутствует или недействителен."
 
-#: app/graphql/gql/mutations/account/password_check.rb
+#: app/graphql/gql/mutations/user/current/password_check.rb
 #, fuzzy
 #| msgid "The required parameter 'params' is missing."
 msgid "The provided password is incorrect."
@@ -17672,6 +17671,12 @@ msgstr "Сегодня"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Toggle AM/PM mode"
 msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue
+#, fuzzy
+#| msgid "Parent"
+msgid "Toggle Group"
+msgstr "Родитель"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
@@ -21476,11 +21481,6 @@ msgstr "∅ Сегодня время ожидания"
 
 #~ msgid "not translated"
 #~ msgstr "не переведены"
-
-#, fuzzy
-#~| msgid "Parent"
-#~ msgid "Target Group"
-#~ msgstr "Родитель"
 
 #~ msgid ""
 #~ "We detected OTRS BPM processes that can't get imported into Zammad since "

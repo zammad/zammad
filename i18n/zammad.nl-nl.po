@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-23 01:07+0000\n"
-"Last-Translator: Rowdy van der Veen <rowdy@rowdyengeesje.nl>\n"
+"PO-Revision-Date: 2024-05-04 01:11+0000\n"
+"Last-Translator: Leroy Aronds <leroy@nimbizz.com>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
 "development/nl/>\n"
 "Language: nl-nl\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2366,8 +2366,8 @@ msgstr "Beschikbare types voor een nieuw ticket"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
@@ -2377,8 +2377,8 @@ msgstr "Avatar"
 msgid "Avatar Preview"
 msgstr "Avatar voorvertoning"
 
-#: app/graphql/gql/mutations/account/avatar/delete.rb
-#: app/graphql/gql/mutations/account/avatar/select.rb
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb
+#: app/graphql/gql/mutations/user/current/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr "Avatar kon niet worden gevonden."
 
@@ -2729,7 +2729,7 @@ msgstr "Oproeplogboek"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Camera"
 msgstr "Camera"
 
@@ -2773,7 +2773,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -3743,7 +3743,7 @@ msgid "Could not fetch security keys"
 msgstr "Naam voor deze beveiligingssleutel"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
-#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb
 #, fuzzy
 #| msgid "Regenerate recovery codes"
 msgid "Could not generate recovery codes"
@@ -4574,6 +4574,9 @@ msgid ""
 "priority will be rendered in an indian red, while low priority in a baby "
 "blue color."
 msgstr ""
+"Defineert een optionele kleur om de prioriteit van tickets in de tabel te "
+"markeren. Hoge prioriteit zal worden gemarkeerd met de kleur rood, terwijl "
+"een lage prioriteit met baby blauw zal worden gemarkeerd."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid ""
@@ -4581,6 +4584,10 @@ msgid ""
 "be rendered with an exclamation point, while low priority with a downwards "
 "arrow."
 msgstr ""
+"Defineert een optionele icoon voor de bijbehorende prioriteit in de ticket "
+"tabellen/overzichten. Hoge prioriteit zal met een uitroepteken aangegeven "
+"worden, terwijl een lage prioriteit met een neerwaartse pijl wordt "
+"aangegeven."
 
 #: db/seeds/settings.rb
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
@@ -4753,6 +4760,8 @@ msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
 msgstr ""
+"Defineert of de wijziging van de hoofdorganisatie van een gebruiker, ook de "
+"laatste 100 tickets van deze gebruiker zal bijwerken."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5386,7 +5395,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -5434,7 +5443,7 @@ msgstr "Verwijder alle subcategorieën en antwoorden, en probeer dan opnieuw."
 msgid "Delete all existing records first."
 msgstr "Verwijder eerst alle huidige records."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete avatar"
 msgstr "Avatar verwijderen"
 
@@ -5751,7 +5760,7 @@ msgstr "Wil je dit concept echt verwijderen?"
 msgid "Do you really want to delete this object?"
 msgstr "Wil je dit object echt verwijderen?"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Do you really want to delete your current avatar?"
 msgstr "Wil je jouw huidige avatar echt verwijderen?"
 
@@ -5799,7 +5808,7 @@ msgstr "Niet sychroniseren"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Done"
 msgstr "Klaar"
@@ -9180,7 +9189,7 @@ msgstr "Layout"
 msgid "Layout Reference"
 msgstr "Lay-outreferentie"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Library"
 msgstr "Bibliotheek"
 
@@ -9342,7 +9351,7 @@ msgstr "Lokale MTA (Sendmail/Postfix/Exim/…) - gebruik server setup"
 msgid "Locale"
 msgstr "Taal"
 
-#: app/graphql/gql/mutations/account/locale.rb
+#: app/graphql/gql/mutations/user/current/locale.rb
 msgid "Locale could not be found."
 msgstr "Locale kon niet worden gevonden."
 
@@ -12986,7 +12995,7 @@ msgstr "zaterdag"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -14944,11 +14953,11 @@ msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr "De Auto Wizard is ingeschakeld. Gebruik de verstrekte Auto Wizard URL."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr "De avatar kon niet worden verwijderd."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be fetched."
 msgstr "De avatar kon niet worden opgehaald."
 
@@ -14959,7 +14968,7 @@ msgid "The avatar could not be selected."
 msgstr "De avatar kon niet worden verwijderd."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr "De avatar kon niet worden geüpload."
 
@@ -15129,7 +15138,7 @@ msgstr "De verbinding werd geweigerd."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
-#: app/graphql/gql/mutations/account/change_password.rb
+#: app/graphql/gql/mutations/user/current/change_password.rb
 #, fuzzy
 #| msgid "The username or password is incorrect."
 msgid "The current password you provided is incorrect."
@@ -15279,7 +15288,6 @@ msgstr "De notitie behoort niet tot het opgegeven ticket."
 msgid "The given two-factor authentication method is not configured."
 msgstr "Twee-factor-authenticatie is nog niet geconfigureerd."
 
-#: app/services/service/user/two_factor/remove_method_credentials.rb
 #: app/services/service/user/two_factor/set_default_method.rb
 #, fuzzy
 #| msgid "The two-factor authentication method is not enabled."
@@ -15533,7 +15541,7 @@ msgstr "Het verstrekte endpoint is ongeldig."
 msgid "The provided match operator is missing or invalid."
 msgstr "De verstrekte vergelijkingsoperator ontbreekt of is foutief."
 
-#: app/graphql/gql/mutations/account/password_check.rb
+#: app/graphql/gql/mutations/user/current/password_check.rb
 #, fuzzy
 #| msgid "The username or password is incorrect."
 msgid "The provided password is incorrect."
@@ -17342,6 +17350,12 @@ msgstr "Vandaag"
 #| msgid "Toggle dark mode"
 msgid "Toggle AM/PM mode"
 msgstr "Schakel donkere modus in"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue
+#, fuzzy
+#| msgid "Parent"
+msgid "Toggle Group"
+msgstr "Hoofdticket"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
@@ -21009,11 +21023,6 @@ msgstr "∅ Wachttijd vandaag"
 
 #~ msgid "not translated"
 #~ msgstr "niet vertaald"
-
-#, fuzzy
-#~| msgid "Parent"
-#~ msgid "Target Group"
-#~ msgstr "Hoofdticket"
 
 #~ msgid ""
 #~ "We detected OTRS BPM processes that can't get imported into Zammad since "

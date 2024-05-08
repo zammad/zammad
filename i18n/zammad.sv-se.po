@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-03 08:19+0000\n"
+"PO-Revision-Date: 2024-05-06 12:18+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -2333,8 +2333,8 @@ msgstr "Tillgängliga typer för nytt ärende"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
@@ -2344,8 +2344,8 @@ msgstr "Avatar"
 msgid "Avatar Preview"
 msgstr "Förhandsgranska Avatar"
 
-#: app/graphql/gql/mutations/account/avatar/delete.rb
-#: app/graphql/gql/mutations/account/avatar/select.rb
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb
+#: app/graphql/gql/mutations/user/current/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr "Avatar kunde inte hittas."
 
@@ -2694,7 +2694,7 @@ msgstr "Samtalslogg"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Camera"
 msgstr "Kamera"
 
@@ -2734,7 +2734,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -3665,7 +3665,7 @@ msgid "Could not fetch security keys"
 msgstr "Det gick inte att hämta säkerhetsnycklar"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
-#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb
 msgid "Could not generate recovery codes"
 msgstr "Det gick inte att generera återställningskoder"
 
@@ -5282,7 +5282,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete"
 msgstr "Radera"
 
@@ -5326,7 +5326,7 @@ msgstr "Ta bort samtliga underkategorier och svar, prova sen på nytt."
 msgid "Delete all existing records first."
 msgstr "Ta bort alla befintliga poster först."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete avatar"
 msgstr "Ta bort avatar"
 
@@ -5633,7 +5633,7 @@ msgstr "Vill du ta bort utkastet?"
 msgid "Do you really want to delete this object?"
 msgstr "Vill du ta bort objektet?"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Do you really want to delete your current avatar?"
 msgstr "Vill du ta bort den nuvarande avataren?"
 
@@ -5676,7 +5676,7 @@ msgstr "Synkronisera inte"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Done"
 msgstr "Färdig"
@@ -8899,7 +8899,7 @@ msgstr "Layout"
 msgid "Layout Reference"
 msgstr "Layoutreferens"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Library"
 msgstr "Library"
 
@@ -9061,7 +9061,7 @@ msgstr "Lokal MTA (Sendmail/Postfix/Exim/...) - använd serverinstallation"
 msgid "Locale"
 msgstr "Lokalisering"
 
-#: app/graphql/gql/mutations/account/locale.rb
+#: app/graphql/gql/mutations/user/current/locale.rb
 msgid "Locale could not be found."
 msgstr "Platsinställningar kunde inte hittas."
 
@@ -12503,7 +12503,7 @@ msgstr "Lördag"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -14335,11 +14335,11 @@ msgstr ""
 "automatiska guiden."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr "Avataren kunde inte tas bort."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be fetched."
 msgstr "Avataren kunde inte hämtas."
 
@@ -14348,7 +14348,7 @@ msgid "The avatar could not be selected."
 msgstr "Avataren kunde inte väljas."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr "Avataren kunde inte läsas in."
 
@@ -14503,7 +14503,7 @@ msgstr "Anslutningen nekades."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
-#: app/graphql/gql/mutations/account/change_password.rb
+#: app/graphql/gql/mutations/user/current/change_password.rb
 msgid "The current password you provided is incorrect."
 msgstr "Det nuvarande lösenordet är felaktigt."
 
@@ -14641,7 +14641,6 @@ msgstr "Den angivna artikeln är inte en medieartikel."
 msgid "The given two-factor authentication method is not configured."
 msgstr "Den angivna metoden för två-faktorsautentisering är inte konfigurerad."
 
-#: app/services/service/user/two_factor/remove_method_credentials.rb
 #: app/services/service/user/two_factor/set_default_method.rb
 msgid "The given two-factor authentication method is not enabled."
 msgstr "Den angivna Två-faktorsautentiseringmetoden är inte aktiverad."
@@ -14876,7 +14875,7 @@ msgstr "Den angivna slutpunkten är ogiltig."
 msgid "The provided match operator is missing or invalid."
 msgstr "Den angivna matchningsoperatören saknas eller är ogiltig."
 
-#: app/graphql/gql/mutations/account/password_check.rb
+#: app/graphql/gql/mutations/user/current/password_check.rb
 msgid "The provided password is incorrect."
 msgstr "Det angivna Lösenordet är felaktigt."
 
@@ -15323,14 +15322,10 @@ msgstr ""
 "certifikatet."
 
 #: app/services/service/user/two_factor/verify_method_configuration.rb
-#, fuzzy
-#| msgid ""
-#| "Could not load the two-factor authentication configuration for this user."
 msgid ""
 "The verification of the two-factor authentication method configuration "
 "failed."
-msgstr ""
-"Kunde inte ladda två-faktorautentiseringskonfigurationen för denna användare."
+msgstr "Verifieringen av två-faktorautentiseringsmetoden misslyckades."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -15538,7 +15533,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
 msgid "This device"
-msgstr ""
+msgstr "Denna enhet"
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
@@ -16573,6 +16568,10 @@ msgstr "Idag"
 msgid "Toggle AM/PM mode"
 msgstr "Växla mellan AM/PM-läge"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue
+msgid "Toggle Group"
+msgstr "Växla Grupp"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
 msgstr "Växla till mörkt läge"
@@ -16846,6 +16845,8 @@ msgid ""
 "Two-factor authentication is required, but you don't have sufficient "
 "permissions to set it up. Please contact your administrator."
 msgstr ""
+"Två-faktorsautentisering krävs, men du har inte tillräckliga behörigheter "
+"för att konfigurera den. Vänligen kontakta din administratör."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue
@@ -16870,16 +16871,12 @@ msgid "Two-factor authentication method was set up successfully."
 msgstr "Konfiguration av tvåfaktorsautentiseringsmetoden lyckades."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
-#, fuzzy
-#| msgid "Two-factor authentication method could not be initiated."
 msgid "Two-factor method could not be configured."
-msgstr "Två-faktorautentiseringsmetoden kunde inte initieras."
+msgstr "Två-faktorautentiseringsmetoden kunde inte konfigureras."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
-#, fuzzy
-#| msgid "Ticket has been created successfully."
 msgid "Two-factor method has been configured successfully."
-msgstr "Ärendet skapades."
+msgstr "Två-faktorsmetoden har konfigurerats."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -17436,10 +17433,8 @@ msgstr ""
 "i webbadressen."
 
 #: app/services/service/user/device/delete.rb
-#, fuzzy
-#| msgid "Locale could not be found."
 msgid "UserDevice could not be found."
-msgstr "Platsinställningar kunde inte hittas."
+msgstr "Användarenhet kunde inte hittas."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"
@@ -19869,7 +19864,7 @@ msgstr "twitterstatus"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
 msgid "twofactor,2fa,security key,passkey,authenticator app"
-msgstr ""
+msgstr "tvåfaktor,2fa,säkerhetsnyckel,passnyckel,authenticator app"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "unassign user"
@@ -20142,9 +20137,6 @@ msgstr "∅ Väntetid idag"
 
 #~ msgid "not translated"
 #~ msgstr "ej översatta"
-
-#~ msgid "Target Group"
-#~ msgstr "Målgrupp"
 
 #~ msgid ""
 #~ "We detected OTRS BPM processes that can't get imported into Zammad since "

@@ -2250,8 +2250,8 @@ msgstr "انواع موجود برای تیکت جدید"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
@@ -2263,8 +2263,8 @@ msgstr "آواتار"
 msgid "Avatar Preview"
 msgstr "پیش‌نمایش"
 
-#: app/graphql/gql/mutations/account/avatar/delete.rb
-#: app/graphql/gql/mutations/account/avatar/select.rb
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb
+#: app/graphql/gql/mutations/user/current/avatar/select.rb
 #, fuzzy
 #| msgid "The object could not be updated."
 msgid "Avatar could not be found."
@@ -2609,7 +2609,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Camera"
 msgstr "دوربین"
 
@@ -2653,7 +2653,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -3635,7 +3635,7 @@ msgid "Could not fetch security keys"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
-#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb
 #, fuzzy
 #| msgid "Delete records"
 msgid "Could not generate recovery codes"
@@ -5177,7 +5177,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete"
 msgstr "حذف"
 
@@ -5227,7 +5227,7 @@ msgstr "تمام زیردسته‌ها و پاسخ‌ها را حذف و مجد�
 msgid "Delete all existing records first."
 msgstr "ابتدا تمام رکوردهای موجود را حذف نمایید."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "Delete Avatar?"
 msgid "Delete avatar"
@@ -5561,7 +5561,7 @@ msgstr "آیا واقعا مایل به حذف این پیش‌نویس هستی
 msgid "Do you really want to delete this object?"
 msgstr "آیا واقعا مایل به حذف این آبجکت هستید؟"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "Do you really want to delete this draft?"
 msgid "Do you really want to delete your current avatar?"
@@ -5610,7 +5610,7 @@ msgstr "عدم همگام‌سازی"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Done"
 msgstr ""
@@ -8880,7 +8880,7 @@ msgstr "چیدمان"
 msgid "Layout Reference"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Library"
 msgstr ""
 
@@ -9046,7 +9046,7 @@ msgstr ""
 msgid "Locale"
 msgstr "زبان محلی"
 
-#: app/graphql/gql/mutations/account/locale.rb
+#: app/graphql/gql/mutations/user/current/locale.rb
 #, fuzzy
 #| msgid "The object could not be updated."
 msgid "Locale could not be found."
@@ -12669,7 +12669,7 @@ msgstr "شنبه"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -14684,13 +14684,13 @@ msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "The entry could not be created."
 msgid "The avatar could not be deleted."
 msgstr "امکان ایجاداین ورودی وجود ندارد."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "The entry could not be created."
 msgid "The avatar could not be fetched."
@@ -14703,7 +14703,7 @@ msgid "The avatar could not be selected."
 msgstr "امکان ایجاداین ورودی وجود ندارد."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #, fuzzy
 #| msgid "The issue could not be saved."
 msgid "The avatar could not be uploaded."
@@ -14869,7 +14869,7 @@ msgstr "خودداری از برقراری ارتباط"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
-#: app/graphql/gql/mutations/account/change_password.rb
+#: app/graphql/gql/mutations/user/current/change_password.rb
 #, fuzzy
 #| msgid "The resized image is invalid."
 msgid "The current password you provided is incorrect."
@@ -15001,7 +15001,6 @@ msgstr "این یادداشت به تیکت مشخص شده تعلق ندارد.
 msgid "The given two-factor authentication method is not configured."
 msgstr "احراز هویت"
 
-#: app/services/service/user/two_factor/remove_method_credentials.rb
 #: app/services/service/user/two_factor/set_default_method.rb
 #, fuzzy
 #| msgid "Authentication"
@@ -15255,7 +15254,7 @@ msgstr ""
 msgid "The provided match operator is missing or invalid."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
-#: app/graphql/gql/mutations/account/password_check.rb
+#: app/graphql/gql/mutations/user/current/password_check.rb
 #, fuzzy
 #| msgid "The resized image is invalid."
 msgid "The provided password is incorrect."
@@ -17042,6 +17041,12 @@ msgstr "امروز"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Toggle AM/PM mode"
 msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue
+#, fuzzy
+#| msgid "Parent"
+msgid "Toggle Group"
+msgstr "اصلی"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
@@ -20634,11 +20639,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 
 #~ msgid "not translated"
 #~ msgstr "ترجمه نشده"
-
-#, fuzzy
-#~| msgid "Parent"
-#~ msgid "Target Group"
-#~ msgstr "اصلی"
 
 #, fuzzy
 #~| msgid "Have a nice day."

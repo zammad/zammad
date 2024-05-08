@@ -2375,8 +2375,8 @@ msgstr "Verfügbare Typen für ein neues Ticket"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
@@ -2386,8 +2386,8 @@ msgstr "Avatar"
 msgid "Avatar Preview"
 msgstr "Avatar-Vorschau"
 
-#: app/graphql/gql/mutations/account/avatar/delete.rb
-#: app/graphql/gql/mutations/account/avatar/select.rb
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb
+#: app/graphql/gql/mutations/user/current/avatar/select.rb
 msgid "Avatar could not be found."
 msgstr "Avatar konnte nicht gefunden werden."
 
@@ -2737,7 +2737,7 @@ msgstr "Anrufprotokoll"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Camera"
 msgstr "Kamera"
 
@@ -2777,7 +2777,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -3721,7 +3721,7 @@ msgid "Could not fetch security keys"
 msgstr "Sicherheits-Schlüssel konnten nicht abgerufen werden"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
-#: app/graphql/gql/mutations/account/two_factor/recovery_codes_generate.rb
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb
 msgid "Could not generate recovery codes"
 msgstr "Wiederherstellungscodes konnten nicht erzeugt werden"
 
@@ -3751,7 +3751,8 @@ msgstr "Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden"
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
 msgid "Could not remove two-factor authentication method."
-msgstr "Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden."
+msgstr ""
+"Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
@@ -5375,7 +5376,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete"
 msgstr "Löschen"
 
@@ -5421,7 +5422,7 @@ msgstr ""
 msgid "Delete all existing records first."
 msgstr "Lösche zuerst alle vorhandenen Datensätze."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete avatar"
 msgstr "Avatar löschen"
 
@@ -5730,7 +5731,7 @@ msgstr "Wollen Sie diesen Entwurf wirklich löschen?"
 msgid "Do you really want to delete this object?"
 msgstr "Wollen Sie dieses Objekt wirklich löschen?"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Do you really want to delete your current avatar?"
 msgstr "Wollen Sie Ihren aktuellen Avatar wirklich löschen?"
 
@@ -5776,7 +5777,7 @@ msgstr "Nicht synchronisieren"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Done"
 msgstr "Erledigt"
@@ -9057,7 +9058,7 @@ msgstr "Layout"
 msgid "Layout Reference"
 msgstr "Layout-Referenz"
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Library"
 msgstr "Gallerie"
 
@@ -9219,7 +9220,7 @@ msgstr "Lokaler MTA (Sendmail/Postfix/Exim/...) - Servereinrichtung verwenden"
 msgid "Locale"
 msgstr "Sprache"
 
-#: app/graphql/gql/mutations/account/locale.rb
+#: app/graphql/gql/mutations/user/current/locale.rb
 msgid "Locale could not be found."
 msgstr "Gebietsschema konnte nicht gefunden werden."
 
@@ -12694,7 +12695,7 @@ msgstr "Samstag"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -14555,11 +14556,11 @@ msgstr ""
 "bereitgestellte URL."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr "Der Avatar konnte nicht gelöscht werden."
 
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be fetched."
 msgstr "Der Avatar konnte nicht geladen werden."
 
@@ -14568,7 +14569,7 @@ msgid "The avatar could not be selected."
 msgstr "Der Avatar konnte nicht ausgewählt werden."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr "Der Avatar konnte nicht hochgeladen werden."
 
@@ -14733,7 +14734,7 @@ msgstr "Die Verbindung wurde abgelehnt."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee
 #: app/controllers/users_controller.rb
-#: app/graphql/gql/mutations/account/change_password.rb
+#: app/graphql/gql/mutations/user/current/change_password.rb
 msgid "The current password you provided is incorrect."
 msgstr "Das aktuelle Passwort, das Sie angegeben haben, ist falsch."
 
@@ -14876,7 +14877,6 @@ msgstr ""
 "Die angegebene Methode für Zwei-Faktor-Authentifizierung ist nicht "
 "konfiguriert."
 
-#: app/services/service/user/two_factor/remove_method_credentials.rb
 #: app/services/service/user/two_factor/set_default_method.rb
 msgid "The given two-factor authentication method is not enabled."
 msgstr ""
@@ -15121,7 +15121,7 @@ msgstr "Der angegebene Endpunkt ist ungültig."
 msgid "The provided match operator is missing or invalid."
 msgstr "Der angegebene Übereinstimmungs-Operator fehlt oder ist ungültig."
 
-#: app/graphql/gql/mutations/account/password_check.rb
+#: app/graphql/gql/mutations/user/current/password_check.rb
 msgid "The provided password is incorrect."
 msgstr "Das angegebene Passwort ist falsch."
 
@@ -16858,6 +16858,12 @@ msgstr "Heute"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Toggle AM/PM mode"
 msgstr "AM/PM-Modus umschalten"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue
+#, fuzzy
+#| msgid "Target Group"
+msgid "Toggle Group"
+msgstr "Gruppe"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
@@ -20189,8 +20195,8 @@ msgstr "Twitter-Statusmeldung"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
 msgid "twofactor,2fa,security key,passkey,authenticator app"
 msgstr ""
-"Zweifaktor,2fa,2FA,Sicherheitsschlüssel,Sicherheits-Schlüssel,Passkey"
-",Authentifizierungs-app"
+"Zweifaktor,2fa,2FA,Sicherheitsschlüssel,Sicherheits-Schlüssel,Passkey,"
+"Authentifizierungs-app"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "unassign user"
@@ -20467,9 +20473,6 @@ msgstr "∅ Wartezeit heute"
 
 #~ msgid "not translated"
 #~ msgstr "nicht übersetzt"
-
-#~ msgid "Target Group"
-#~ msgstr "Gruppe"
 
 #~ msgid ""
 #~ "We detected OTRS BPM processes that can't get imported into Zammad since "
