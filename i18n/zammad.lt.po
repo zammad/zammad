@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-10 13:23+0000\n"
+"PO-Revision-Date: 2024-05-08 04:57+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/lt/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
 "19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
 "1 : 2);\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -822,10 +822,8 @@ msgid "API Token Access"
 msgstr "API prieiga su žetonu"
 
 #: lib/whatsapp/webhook/payload.rb
-#, fuzzy
-#| msgid "Sign out"
 msgid "API error."
-msgstr "Atsijungti"
+msgstr "API klaida."
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
@@ -1403,10 +1401,8 @@ msgid "All tickets"
 msgstr "Visi Bilietai"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
-#, fuzzy
-#| msgid "Authentication"
 msgid "All two-factor authentication methods were removed for this user."
-msgstr "Autentifikacija"
+msgstr "Visi šio vartotojo dviejių veiksnių autentifikacijos metodai pašalinti."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1490,16 +1486,12 @@ msgid "An open-source monitoring tool."
 msgstr "Atviro kodo stebėjimo įrankis."
 
 #: app/frontend/shared/components/Form/utils.ts
-#, fuzzy
-#| msgid "An error occurred: %s"
 msgid "An unexpected error has occurred."
-msgstr "Įvyko klaida: %s"
+msgstr "Įvyko netikėta klaida."
 
 #: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb
-#, fuzzy
-#| msgid "An error occurred: %s"
 msgid "An unexpected error occurred during system setup."
-msgstr "Įvyko klaida: %s"
+msgstr "Sistemos sąrankos metu įvyko netikėta klaida."
 
 #: lib/calendar_subscriptions.rb
 msgid "An unknown method name was requested."
@@ -1584,18 +1576,16 @@ msgstr "Aplikacijos versija"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
-#, fuzzy
-#| msgid "Account not verified"
 msgid "App could not be verified."
-msgstr "Paskyra nepatvirtinta"
+msgstr "Nepavyko patikrinti aplikacijos."
 
 #: db/seeds/settings.rb
 msgid "App credentials for Facebook."
-msgstr "Aplikacijos Facebook prisijungimai."
+msgstr "Facebook aplikacijos prisijungimai."
 
 #: db/seeds/settings.rb
 msgid "App credentials for Twitter."
-msgstr "Aplikacijos Twitter prisijungimai."
+msgstr "Twitter aplikacijos prisijungimai."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 msgid "App secret"
@@ -1774,10 +1764,8 @@ msgid "Article actions"
 msgstr "Aplikacijos"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Article could not be deleted."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko ištrinti įrašo."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Article uses different security mechanism."
@@ -1998,10 +1986,8 @@ msgid "Authentication failed due to incorrect username."
 msgstr ""
 
 #: app/controllers/import_otrs_controller.rb lib/email_helper/probe.rb
-#, fuzzy
-#| msgid "Authentication"
 msgid "Authentication failed."
-msgstr "Autentifikacija"
+msgstr "Autentifikacija nepavyko."
 
 #: lib/email_helper/probe.rb
 msgid "Authentication not possible (not offered by the service)"
@@ -2135,10 +2121,8 @@ msgid "Avatar"
 msgstr "Avataras"
 
 #: app/graphql/gql/mutations/account/avatar/delete.rb
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Avatar could not be found."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko rasti avataro."
 
 #: app/frontend/shared/components/CommonAvatar/CommonAvatar.vue
 msgid "Avatar with initials %s"
@@ -2275,7 +2259,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Blocked IPs (separated by ;)"
-msgstr "Užblokuoti IP adresai (atskirti ;)"
+msgstr "Užblokuoti IP adresai (atskirti su ;)"
 
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Blocked countries"
@@ -2603,10 +2587,8 @@ msgid "Category page layout"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee
-#, fuzzy
-#| msgid "Duration"
 msgid "Caution!"
-msgstr "Trukmė"
+msgstr "Atsargiai!"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -2678,17 +2660,13 @@ msgstr "Pakeitimai"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Changes could not be loaded."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko įkelti pakeitimų."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Changes could not be saved."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko išsaugoti pakeitimų."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changes were made that require a database update."
@@ -3303,16 +3281,12 @@ msgid "Content"
 msgstr "Turinys"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Content could not be loaded."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko įkelti turinio."
 
 #: app/models/store.rb
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Content preview could not be generated."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko sugeneruoti turinio peržiūros."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Content was changed since loading"
@@ -3713,10 +3687,8 @@ msgid "Created by"
 msgstr "Sukūrė"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Create new records"
 msgid "Creating new tickets via web is disabled."
-msgstr "Sukurti naują įrašą"
+msgstr "Naujų trikčių kūrimas naršyklėje išjungtas."
 
 #: app/models/report.rb
 #, fuzzy
@@ -3982,7 +3954,7 @@ msgstr "Pranešimas"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
-msgstr "Numatytoji užsiregistravus"
+msgstr "Numatytoji registruojantis"
 
 #: db/seeds/settings.rb
 msgid "Default calendar tickets subscriptions"
@@ -4071,7 +4043,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch SSL verification."
-msgstr "Nurodo Elasticsearch SSL verifikavimą."
+msgstr "Nurodo ar verifikuojamas Elasticsearch SSL."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -4250,10 +4222,8 @@ msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Authentication"
 msgid "Defines if PGP encryption is enabled or not."
-msgstr "Autentifikacija"
+msgstr "Nurodo ar PGP šifravimas įjungtas"
 
 #: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
@@ -4310,10 +4280,8 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Authentication"
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
-msgstr "Autentifikacija"
+msgstr "Nurodo ar PGP gavėjų alternatyvių vardų konfigūracija įjungta."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4363,10 +4331,8 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Authentication"
 msgid "Defines if the time accounting types are enabled."
-msgstr "Autentifikacija"
+msgstr "Nurodo ar laiko apskaitos tipai įjungti."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4375,12 +4341,10 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Authentication"
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
-msgstr "Autentifikacija"
+msgstr "Nurodo ar dviejų veiksnių autentifikacija su saugumo raktais įjungta."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -5271,10 +5235,8 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee
-#, fuzzy
-#| msgid "select attachment..."
 msgid "Downloading attachments…"
-msgstr "pasirinkti priedą"
+msgstr "Pparsisiunčiami prisegtukai…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -5301,13 +5263,13 @@ msgstr "Padėkite paveiksliuką čia"
 
 #: app/assets/javascripts/app/controllers/login.coffee
 msgid "Due to inactivity, you have been automatically logged out."
-msgstr "Nieko nedarėte, todėl buvote automatiškai atjungtas."
+msgstr "Buvote automatiškai atjungtas, nes nieko nedarėte."
 
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee
 msgid ""
 "Due to inactivity, you will be automatically logged out within the next 30 "
 "seconds."
-msgstr "Nieko nedarote, todėl būsite automatiškai atjungtas po 30 sekundžių."
+msgstr "Būsite automatiškai atjungtas po 30 sekundžių, nes nieko nedarote."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 msgid "Duplicate Detection"
@@ -5373,7 +5335,7 @@ msgstr "Redaguoti organizaciją"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
-msgstr "Redagavimo sąsają"
+msgstr "Redagavimo sąsaja"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -5390,7 +5352,7 @@ msgstr "Redaguoti"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 msgid "Editing on Desktop"
-msgstr "Redaguojama Darbalaukio aplikacijoje"
+msgstr "Redaguojama Darbalaukyje"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
@@ -5410,7 +5372,7 @@ msgstr "Elasticsearch prieigos slaptažodis"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint URL"
-msgstr "Elasticsearch prieigos URL"
+msgstr "Elasticsearch prieigos adresas"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
@@ -5439,8 +5401,8 @@ msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
 msgstr ""
-"Elasticsearch nepasiekiamas. Patikrinkite ar Elasticsearch įdiegtas arba "
-"išjungtas."
+"Elasticsearch nepasiekiamas. Patikrinkite ar Elasticsearch įdiegtas ir "
+"įjungtas."
 
 #: app/controllers/reports_controller.rb
 msgid "Elasticsearch needs to be configured!"
@@ -5529,7 +5491,7 @@ msgstr "Pranešimas el. paštu"
 
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 msgid "Email Notifications"
-msgstr "El. pašto pranešimai"
+msgstr "Pranešimai el. paštu"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -5546,7 +5508,7 @@ msgstr "El. pašto pranešimas"
 
 #: app/models/user.rb
 msgid "Email address '%{email}' is already used for another user."
-msgstr "El. pašto adresas „%{email}“ jau nauduojamas kito naudotojo."
+msgstr "El. pašto adresas „%{email}“ jau naudojamas."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
@@ -5571,7 +5533,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
-"El. laiškas išsiųstas į „%s“. Paprašykite naudotojo patvirtinti el. pašto "
+"El. laiškas išsiųstas į „%s“. Palaukite kol naudotojas patvirtins el. pašto "
 "paskyrą."
 
 #: app/assets/javascripts/app/controllers/signup.coffee
@@ -5621,7 +5583,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enable Recovery Codes"
-msgstr ""
+msgstr "Įjungti atsarginius prisijungimo kodus"
 
 #: db/seeds/settings.rb
 msgid "Enable Ticket creation"
@@ -5746,10 +5708,8 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Authentication via %s"
 msgid "Enables user authentication via GitHub."
-msgstr "Autentifikacija per %s"
+msgstr "Įjungia naudotojų autentifikaciją per GitHub."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via GitLab."
@@ -5764,10 +5724,8 @@ msgid "Enables user authentication via LinkedIn."
 msgstr ""
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Authentication via %s"
 msgid "Enables user authentication via Microsoft 365."
-msgstr "Autentifikacija per %s"
+msgstr "Įjungia naudotojų autentifikaciją per Microsoft 365."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via SAML."
@@ -5933,7 +5891,7 @@ msgstr "Įveskite savo %s sistemos adresą."
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee
 #: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts
 msgid "Enter the code from your two-factor authenticator app."
-msgstr "Į"
+msgstr "Įveskite kodą iš dviejų veiksnių autentifikacijos programėlės."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid ""
@@ -6154,7 +6112,7 @@ msgstr "Pasikeitė"
 
 #: db/seeds/settings.rb
 msgid "Exchange config"
-msgstr "Exchange"
+msgstr "Exchange konfigūracija"
 
 #: db/seeds/settings.rb
 msgid "Exchange integration"
@@ -6357,7 +6315,7 @@ msgstr "Failas per didelis. %s turi būti %s arba mažesnis."
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue
 msgid "File too big, max. %s MB allowed."
-msgstr "Failas per didelis. Leidžiamas dydis yra %s MB."
+msgstr "Failas per didelis. Leidžiama %s MB."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -6546,10 +6504,8 @@ msgid "Form"
 msgstr "Forma"
 
 #: app/graphql/gql/queries/form_updater.rb
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "FormSchema could not be found."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko rasti formos schemos."
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 msgid "Format"
@@ -7011,10 +6967,8 @@ msgid "Groups"
 msgstr "Grupės"
 
 #: app/assets/javascripts/app/controllers/group.coffee
-#, fuzzy
-#| msgid "Groups"
 msgid "Groups are …"
-msgstr "Grupės"
+msgstr "Grupės yra…"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HMAC SHA1 Signature Token"
@@ -7758,10 +7712,8 @@ msgid ""
 msgstr ""
 
 #: app/models/store.rb
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Inline content could not be generated."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko sugeneruoti įterptinio turinio."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
@@ -7938,10 +7890,8 @@ msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
 #: lib/knowledge_base/permissions_update.rb
-#, fuzzy
-#| msgid "Recipient"
 msgid "Invalid permissions."
-msgstr "Gavėjas"
+msgstr "Netinkami leidimai."
 
 #: lib/knowledge_base/permissions_update.rb
 msgid ""
@@ -8117,7 +8067,7 @@ msgstr "Kayako"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "Keep messages on server"
-msgstr "Laikyti žinutes serveryje"
+msgstr "Palikti žinutes serveryje"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
@@ -8446,10 +8396,8 @@ msgstr "Žiūrėti daugiau"
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
 #: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
-#, fuzzy
-#| msgid "Loading..."
 msgid "Loading content"
-msgstr "Kraunasi..."
+msgstr "Kraunama…"
 
 #: app/views/init/spinner-loading.html.erb
 msgid "Loading failed, please try again later."
@@ -8472,10 +8420,8 @@ msgstr "Nepavyko įkelti."
 #: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue
 #: app/frontend/shared/form/i18n/locales.ts
 #: app/views/init/spinner-loading.html.erb
-#, fuzzy
-#| msgid "Loading..."
 msgid "Loading…"
-msgstr "Kraunasi..."
+msgstr "Kraunama…"
 
 #: lib/email_helper.rb
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
@@ -8487,10 +8433,8 @@ msgid "Locale"
 msgstr "Lokalė"
 
 #: app/graphql/gql/mutations/account/locale.rb
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Locale could not be found."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko rasti lokalės."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
@@ -8843,11 +8787,11 @@ msgstr "Žinutės"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Message after sending form"
-msgstr "Žinutė po formos išsiuntimo"
+msgstr "Žinutė po formos užpildymo"
 
 #: db/seeds/settings.rb
 msgid "Message for login page."
-msgstr "Žinutė prisijungimo lape."
+msgstr "Žinutė prisijungimo lange."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
@@ -9509,10 +9453,8 @@ msgid "No Entries"
 msgstr "Nėra įrašų"
 
 #: lib/external_credential/exchange.rb
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "No Exchange app configured!"
-msgstr "%s% iš naujo atidarytas"
+msgstr "Exchange aplikacija nesukonfigūruota!"
 
 #: lib/external_credential/facebook.rb
 msgid "No Facebook app configured!"
@@ -9556,16 +9498,12 @@ msgid "No categories"
 msgstr ""
 
 #: app/models/setting/validation/saml/security.rb
-#, fuzzy
-#| msgid "Notification Sound"
 msgid "No certificate found."
-msgstr "Pranešimo garsas"
+msgstr "Sertifikatas nerastas."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
-#, fuzzy
-#| msgid "Configuration"
 msgid "No configuration set."
-msgstr "Konfiguracija"
+msgstr "Nesukonfigūruota."
 
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
@@ -9615,10 +9553,8 @@ msgid "No folders were found for the given user credentials."
 msgstr ""
 
 #: app/services/service/system/import/check_status.rb
-#, fuzzy
-#| msgid "Your tickets in process"
 msgid "No import in progress."
-msgstr "Jūsų Bilietų apdorojime"
+msgstr "Importavimas nevykdomas."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
@@ -9915,7 +9851,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "OK, I've copied my token"
-msgstr "Gerai, nusikopijavau savo žetoną"
+msgstr "Gerai, nusikopijavau žetoną"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee
 msgid "OK, I've saved my recovery codes"
@@ -10074,7 +10010,7 @@ msgstr "Matomas tik redaktoriams"
 
 #: app/assets/javascripts/app/views/generic/error/not_found.jst.eco
 msgid "Oops.. I'm sorry, but I can't find this %s."
-msgstr "Ups… Deja nepavyko rasti %s."
+msgstr "Ups… Deja nepavyko rasti šio %s."
 
 #: app/assets/javascripts/app/views/generic/error/unauthorized.jst.eco
 msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
@@ -10485,11 +10421,11 @@ msgstr "Slaptažodis pakeistas!"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Password for proxy connection"
-msgstr "Slaptažodis proxy ryšiui"
+msgstr "Proxy ryšio slaptažodis"
 
 #: db/seeds/settings.rb
 msgid "Password for proxy connection."
-msgstr "Slaptažodis proxy ryšiui."
+msgstr "Proxy ryšio slaptažodis."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -13532,7 +13468,7 @@ msgstr ""
 
 #: app/graphql/gql/queries/system/import/state.rb
 msgid "The OTRS import failed."
-msgstr "OTRS importas nepavyko."
+msgstr "OTRS importavimas nepavyko."
 
 #: app/services/service/system/import/apply_otrs_configuration.rb
 msgid "The OTRS migrator plugin is not accessable. Please verify the API key."
