@@ -34,3 +34,6 @@ rm -rf .yard
 
 # developer manual
 rm -rf doc/developer_manual
+
+# Various development files
+rm -rf .dev

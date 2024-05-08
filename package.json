@@ -15,7 +15,8 @@
     "test:ci:ct": "CI=true yarn --cwd ./.cypress cypress run --component --project ../ --config-file .cypress/cypress.config.mjs --browser electron",
     "cypress:snapshots": "sh .cypress/visual-regression/snapshots.sh",
     "cypress:install": "yarn --cwd ./.cypress install",
-    "analyse:vite-bundle": "npx vite-bundle-visualizer"
+    "analyse:vite-bundle": "npx vite-bundle-visualizer",
+    "generate:component": "cd .dev/hygen; npx hygen component new"
   },
   "engines": {
     "node": ">=18.12.0"
