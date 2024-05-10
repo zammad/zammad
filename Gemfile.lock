@@ -28,7 +28,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    PoParser (3.2.6)
+    PoParser (3.2.8)
       simple_po_parser (~> 1.1.6)
     aasm (5.5.0)
       concurrent-ruby (~> 1.0)
