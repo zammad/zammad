@@ -24,7 +24,6 @@ rm .gitlab-ci.yml
 rm .rubocop.yml
 rm .stylelintrc.json .eslintignore .eslintrc .eslintrc.js .prettierrc.json
 rm coffeelint.json
-rm -rf .coffeelint
 rm .overcommit.*
 
 # Yard

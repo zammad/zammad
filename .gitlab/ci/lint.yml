@@ -82,7 +82,7 @@
     - !reference [.scripts, yarn_install]
   script:
     - echo "Coffeelint check…"
-    - coffeelint --rules ./.coffeelint/rules/* app/
+    - coffeelint --rules ./.dev/coffeelint/rules/* app/
     - echo "Stylelint check…"
     - yarn lint:css
     - echo "Checking if chat assets need a rebuild…"

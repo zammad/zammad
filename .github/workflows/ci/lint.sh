@@ -21,7 +21,7 @@ echo "Rubocop check…"
 bundle exec .dev/rubocop/validate_todos.rb
 bundle exec rubocop --parallel
 echo "Coffeelint check…"
-coffeelint --rules ./.coffeelint/rules/* app/
+coffeelint --rules ./.dev/coffeelint/rules/* app/
 echo "Stylelint check…"
 yarn lint:css
 echo "ESLint check…"

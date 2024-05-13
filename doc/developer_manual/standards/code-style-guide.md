@@ -27,7 +27,7 @@ $ yarn lint
 $ yarn lint:css
 
 # Coffeelint
-$ coffeelint --rules ./.coffeelint/rules/* app/
+$ coffeelint --rules ./.dev/coffeelint/rules/* app/
 ```
 
 ### Wording
