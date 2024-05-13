@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require_relative '../../../../.rubocop/cop/zammad/migration_scheduler_last_run'
+require_relative '../../../../.dev/rubocop/cop/zammad/migration_scheduler_last_run'
 
 RSpec.describe RuboCop::Cop::Zammad::MigrationSchedulerLastRun, type: :rubocop do
 

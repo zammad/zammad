@@ -18,7 +18,7 @@ echo "Rails zeitwerk:check autoloader check…"
 bundle exec rails zeitwerk:check
 .gitlab/check_graphql_api_consistency.sh
 echo "Rubocop check…"
-bundle exec .rubocop/validate_todos.rb
+bundle exec .dev/rubocop/validate_todos.rb
 bundle exec rubocop --parallel
 echo "Coffeelint check…"
 coffeelint --rules ./.coffeelint/rules/* app/

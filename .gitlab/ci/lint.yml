@@ -58,7 +58,7 @@
     when: on_failure
   script:
     - echo "Rubocop check…"
-    - bundle exec .rubocop/validate_todos.rb
+    - bundle exec .dev/rubocop/validate_todos.rb
     - bundle exec rubocop --parallel
     - echo "bundler-audit security check…"
     - gem install bundler-audit

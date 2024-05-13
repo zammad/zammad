@@ -11,7 +11,7 @@ require:
   - rubocop-rails
   - rubocop-rspec
   - rubocop-rspec_rails
-  - ../config/initializers/inflections.rb
+  - ../../config/initializers/inflections.rb
   - ./rubocop_zammad.rb
 
 inherit_from:
@@ -28,7 +28,7 @@ AllCops:
   Include:
     - '.gitlab/**/*.rb'
     - '.github/**/*.rb'
-    - '.rubocop/**/*.rb'
+    - '.dev/rubocop/**/*.rb'
   Exclude:
     - 'bin/*'
     - 'db/schema.rb'

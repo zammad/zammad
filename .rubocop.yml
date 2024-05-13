@@ -2,4 +2,4 @@
 # a) don't spam the root directory with rubocop files
 # b) work around an issue with absolute excludes and custom development (https://github.com/rubocop-hq/rubocop/issues/4621)
 inherit_from:
-  - .rubocop/default.yml
+  - .dev/rubocop/default.yml

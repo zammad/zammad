@@ -17,7 +17,7 @@ Dir.glob("#{__dir__}/todo*.yml").each do |f|
     section['Exclude'].each do |file|
       next if file.include? '*'
 
-      obsolete_excludes.push(file) if !File.exist? "#{__dir__}/../#{file}"
+      obsolete_excludes.push(file) if !File.exist? "#{__dir__}/../../#{file}"
     end
   end
 end

@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require_relative '../../../../.rubocop/cop/zammad/to_forbid_over_not_to_permit'
+require_relative '../../../../.dev/rubocop/cop/zammad/to_forbid_over_not_to_permit'
 
 RSpec.describe RuboCop::Cop::Zammad::ToForbidOverNotToPermit, type: :rubocop do
 

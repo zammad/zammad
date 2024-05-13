@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require_relative '../../../../.rubocop/cop/zammad/forbid_default_scope'
+require_relative '../../../../.dev/rubocop/cop/zammad/forbid_default_scope'
 
 RSpec.describe RuboCop::Cop::Zammad::ForbidDefaultScope, type: :rubocop do
   it 'accepts simple order' do

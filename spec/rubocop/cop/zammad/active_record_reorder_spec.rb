@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require_relative '../../../../.rubocop/cop/zammad/active_record_reorder'
+require_relative '../../../../.dev/rubocop/cop/zammad/active_record_reorder'
 
 RSpec.describe RuboCop::Cop::Zammad::ActiveRecordReorder, :aggregate_failures, type: :rubocop do
 
