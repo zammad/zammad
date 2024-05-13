@@ -1,2 +1,2 @@
 --db tmp/yardoc
---load .yard/autovivify_extension.rb
+--load .dev/yard/autovivify_extension.rb
