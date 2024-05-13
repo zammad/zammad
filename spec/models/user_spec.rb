@@ -506,6 +506,52 @@ RSpec.describe User, type: :model do
         expect(user).to have_attributes(firstname: 'Perkūnas', lastname: 'Ąžuolas')
       end
     end
+
+    describe '#permissions_with_child_and_parent_elements' do
+      let(:user) { create(:user, roles: [role]) }
+      let(:role) { create(:role, permission_names: role_permission_names) }
+
+      context 'when user has parent permission' do
+        let(:role_permission_names) { %w[admin] }
+
+        it 'returns parent and all children permissions' do
+          expect(user.permissions_with_child_and_parent_elements)
+            .to include(
+              have_attributes(name: 'admin'),
+              have_attributes(name: 'admin.user'),
+              have_attributes(name: 'admin.group'),
+            )
+        end
+
+        it 'does not include other permissions' do
+          expect(user.permissions_with_child_and_parent_elements)
+            .to all(have_attributes(name: start_with('admin')))
+        end
+      end
+
+      context 'when user has child permission' do
+        let(:role_permission_names) { %w[admin.user] }
+
+        it 'returns only child permission and disabled parent permission' do
+          expect(user.permissions_with_child_and_parent_elements)
+            .to contain_exactly(
+              have_attributes(name: 'admin.user'),
+              have_attributes(name: 'admin', preferences: include(disabled: true)),
+            )
+        end
+      end
+
+      context 'when user has top-level deadend permission' do
+        let(:role_permission_names) { %w[report] }
+
+        it 'returns that permission only' do
+          expect(user.permissions_with_child_and_parent_elements)
+            .to contain_exactly(
+              have_attributes(name: 'report')
+            )
+        end
+      end
+    end
   end
 
   describe 'Attributes:' do

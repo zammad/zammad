@@ -104,6 +104,7 @@ export interface ExtendedMountingOptions<Props>
   formField?: boolean
   unmount?: boolean
   dialog?: boolean
+  flyout?: boolean
   /**
    * @default 'mobile'
    */
@@ -331,6 +332,22 @@ const mountDialog = () => {
   dialogMounted = true
 }
 
+let flyoutMounted = false
+
+const mountFlyout = () => {
+  if (flyoutMounted) return
+
+  const Dialog = {
+    components: { DynamicInitializer },
+    template: '<DynamicInitializer name="flyout" />',
+  } as any
+
+  const { element } = mount(Dialog, defaultWrapperOptions)
+  document.body.appendChild(element)
+
+  flyoutMounted = true
+}
+
 setTestState({
   imageViewerOptions,
 })
@@ -424,6 +441,9 @@ const renderComponent = <Props>(
   }
   if (wrapperOptions?.dialog) {
     mountDialog()
+  }
+  if (wrapperOptions?.flyout) {
+    mountFlyout()
   }
   if (wrapperOptions?.confirmation) {
     mountConfirmation()

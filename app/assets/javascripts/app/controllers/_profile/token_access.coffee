@@ -81,6 +81,8 @@ class Create extends App.ControllerModal
   buttonSubmit: __('Create')
   buttonCancel: true
   shown: true
+  events:
+    'change input[name=permission]': 'onToggle'
 
   content: ->
     content = $(App.view('profile/token_access_create')(
@@ -92,6 +94,12 @@ class Create extends App.ControllerModal
     datepicker.find('.js-datepicker').attr('id', 'token-expires-at')
     content.find('.js-date').html(datepicker)
     content
+
+  onToggle: (e) =>
+    isChecked = e.currentTarget.checked
+    prefix    = e.currentTarget.value + '.'
+
+    @$(".js-subPermissionList:has(input[value^='#{prefix}'])").toggle(!isChecked)
 
   onSubmit: (e) =>
     e.preventDefault()
@@ -107,6 +115,12 @@ class Create extends App.ControllerModal
 
     if !_.isArray(params['permission'])
       params['permission'] = [params['permission']]
+
+    params['permission'] = _.reduce(params['permission'], (memo, permissionName) ->
+      startsWithRegex = '^'+permissionName + '\\.'
+
+      _.filter(memo, (elem) -> !elem.match(startsWithRegex))
+    , params['permission'])
 
     @ajax(
       id:          'user_access_token_create'

@@ -9,6 +9,7 @@ export interface Props {
   hideActionButton?: boolean
   actionLabel?: string
   actionButton?: Pick<ButtonProps, 'prefixIcon' | 'variant'>
+  hideCancelButton?: boolean
   cancelLabel?: string
   cancelButton?: Pick<ButtonProps, 'prefixIcon' | 'variant'>
 }
@@ -38,6 +39,7 @@ const action = () => {
     class="flex items-center gap-2 ltr:justify-end rtl:flex-row-reverse rtl:justify-start"
   >
     <CommonButton
+      v-if="!hideCancelButton"
       size="large"
       :prefix-icon="cancelButton?.prefixIcon"
       :variant="cancelButton?.variant || 'secondary'"

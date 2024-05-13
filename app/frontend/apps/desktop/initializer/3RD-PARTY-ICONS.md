@@ -45,6 +45,7 @@
 - `assets/phone.svg`
 - `assets/plus-circle.svg`
 - `assets/printer.svg`
+- `assets/question-circle.svg`
 - `assets/radio-no.svg`
 - `assets/radio-yes.svg`
 - `assets/search.svg`

@@ -1,25 +1,12 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonButton, {
-  type Props as ButtonProps,
-} from '#desktop/components/CommonButton/CommonButton.vue'
-import { useForm } from '#shared/components/Form/useForm.ts'
 import { toRef } from 'vue'
-import type { FormRef } from '#shared/components/Form/types.ts'
 
-export interface Props {
-  hideActionButton?: boolean
-  actionLabel?: string
-  actionButton?: Pick<
-    ButtonProps,
-    'prefixIcon' | 'variant' | 'type' | 'disabled'
-  >
-  hideCancelButton?: boolean
-  cancelLabel?: string
-  cancelButton?: Pick<ButtonProps, 'prefixIcon' | 'variant' | 'disabled'>
-  form?: FormRef
-}
+import { useForm } from '#shared/components/Form/useForm.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import type { ActionFooterOptions as Props } from './types.ts'
 
 const props = withDefaults(defineProps<Props>(), {
   actionLabel: __('Update'),

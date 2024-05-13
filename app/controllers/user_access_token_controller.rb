@@ -27,28 +27,12 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
 =end
 
   def index
-    tokens = Token.select(Token.column_names - %w[persistent token])
-                  .where(action: 'api', persistent: true, user_id: current_user.id)
-                  .reorder(updated_at: :desc, name: :asc)
-
-    base_query       = Permission.reorder(:name).where(active: true)
-    permission_names = current_user.permissions.pluck(:name)
-    ancestor_names   = permission_names.flat_map { |name| Permission.with_parents(name) }.uniq -
-                       permission_names
-    descendant_names = permission_names.map { |name| "#{SqlHelper.quote_like(name)}.%" }
-
-    permissions = base_query.where(name: [*ancestor_names, *permission_names])
-
-    descendant_names.each do |name|
-      permissions = permissions.or(base_query.where('permissions.name LIKE ?', name))
-    end
-
-    permissions.select { |permission| permission.name.in?(ancestor_names) }
-               .each { |permission| permission.preferences['disabled'] = true }
+    tokens      = Service::User::AccessToken::List.new(current_user).execute
+    permissions = current_user.permissions_with_child_and_parent_elements
 
     render json: {
-      tokens:      tokens.map(&:attributes),
-      permissions: permissions.map(&:attributes),
+      tokens:      tokens,
+      permissions: permissions,
     }, status: :ok
   end
 
@@ -82,16 +66,10 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password} -H "Co
       raise Exceptions::UnprocessableEntity, __("The required parameter 'name' is missing.")
     end
 
-    token = Token.create!(
-      action:      'api',
-      name:        params[:name],
-      persistent:  true,
-      user_id:     current_user.id,
-      expires_at:  params[:expires_at],
-      preferences: {
-        permission: params[:permission]
-      }
-    )
+    token = Service::User::AccessToken::Create
+      .new(current_user, **params.permit(:name, :expires_at, permission: []).to_h.to_options)
+      .execute
+
     render json: {
       token: token.token,
     }, status: :ok

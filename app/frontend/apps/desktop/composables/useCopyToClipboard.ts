@@ -17,7 +17,7 @@ export const useCopyToClipboard = () => {
     notify({
       id: 'copied-to-clipboard',
       type: NotificationTypes.Success,
-      message: __('Copied!'),
+      message: __('Copied!'), // TODO should this not be something given to the composable for a more meaningful message?
     })
   })
 

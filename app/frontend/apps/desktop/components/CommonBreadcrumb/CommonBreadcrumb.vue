@@ -10,6 +10,7 @@ defineProps<{
 }>()
 
 const locale = useLocaleStore()
+// TODO: Missing handling when there is not enough space for the breadcrumb
 </script>
 
 <template>

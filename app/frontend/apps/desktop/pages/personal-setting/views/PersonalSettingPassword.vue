@@ -1,8 +1,6 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-
 import Form from '#shared/components/Form/Form.vue'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
@@ -10,14 +8,13 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
-import { useCheckChangePassword } from '../composables/useCheckChangePassword.ts'
+import { useCheckChangePassword } from '../composables/permission/useCheckChangePassword.ts'
 
 import type { ChangePasswordFormData } from '../types/change-password.ts'
 import { useUserCurrentChangePasswordMutation } from '../graphql/mutations/userCurrentChangePassword.api.ts'
@@ -37,7 +34,7 @@ defineOptions({
 
 const { form, isDisabled } = useForm()
 
-const schema = defineFormSchema([
+const schema = [
   {
     isLayout: true,
     element: 'div',
@@ -81,7 +78,7 @@ const schema = defineFormSchema([
       },
     ],
   },
-])
+]
 
 const { breadcrumbItems } = useBreadcrumb(__('Password'))
 
@@ -113,8 +110,8 @@ const submitForm = async (formData: FormSubmitData<ChangePasswordFormData>) => {
 </script>
 
 <template>
-  <LayoutContent provide-default :breadcrumb-items="breadcrumbItems">
-    <div class="mb-4 max-w-[600px]">
+  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+    <div class="mb-4">
       <Form
         ref="form"
         :schema="schema"

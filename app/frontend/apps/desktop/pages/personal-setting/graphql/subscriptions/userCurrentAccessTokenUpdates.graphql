@@ -1,0 +1,7 @@
+subscription userCurrentAccessTokenUpdates($userId: ID!) {
+  userCurrentAccessTokenUpdates(userId: $userId) {
+    tokens {
+      ...tokenAttributes
+    }
+  }
+}

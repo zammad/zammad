@@ -36,8 +36,8 @@ const { breadcrumbItems } = useBreadcrumb(__('Appearance'))
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems">
-    <div class="mb-4 max-w-[600px]">
+  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+    <div class="mb-4">
       <FormKit
         v-model="currentTheme"
         type="radioList"

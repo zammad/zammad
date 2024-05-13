@@ -1,7 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormKitTypeDefinition } from '@formkit/core'
-import type { FormKitSchemaExtendableSection } from '@formkit/inputs'
+import type {
+  FormKitSchemaExtendableSection,
+  FormKitInputs,
+  FormKitSlotData,
+} from '@formkit/inputs'
 import { mergeArray } from '#shared/utils/helpers.ts'
 import {
   outer,
@@ -19,6 +23,13 @@ import { block } from '../sections/block.ts'
 import { arrow } from '../sections/arrow.ts'
 import { link } from '../sections/link.ts'
 import defaulfFieldDefinition from './defaultFieldDefinition.ts'
+
+declare module '@formkit/inputs' {
+  interface FormKitBaseSlots<Props extends FormKitInputs<Props>> {
+    // Add new slots or modify existing ones directly here
+    link: FormKitSlotData<Props>
+  }
+}
 
 export interface FieldsCustomOptions {
   addDefaultProps?: boolean

@@ -8,7 +8,17 @@ export const useBreadcrumb = (currentItem: string | BreadcrumbItem) => {
     route: '/personal-setting',
   }
 
-  const breadcrumbItems: BreadcrumbItem[] = [baseBreadcrumbItem]
+  const breadcrumbItems: BreadcrumbItem[] = [
+    baseBreadcrumbItem,
+    // {
+    //   label: __('Profile ASDa sdasf sdfasdf  safsaf safsadf'),
+    //   route: '/personal-setting',
+    // },
+    // {
+    //   label: __('Profile ASDa sdasf sdfasdf  safsaf safsadf'),
+    //   route: '/personal-setting',
+    // },
+  ]
 
   if (typeof currentItem === 'string') {
     breadcrumbItems.push({

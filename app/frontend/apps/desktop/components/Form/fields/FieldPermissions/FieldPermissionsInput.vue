@@ -15,7 +15,7 @@ const props = defineProps<{
 
 const contextReactive = toRef(props, 'context')
 
-const { localValue } = useValue(contextReactive)
+const { localValue } = useValue<string[] | undefined>(contextReactive)
 
 const valueLookup = computed<Record<string, boolean>>(() => {
   const values: string[] = localValue.value || []
@@ -38,7 +38,7 @@ const parentChildLookup = ref(
 )
 
 const initializeCollapseState = (key: string) =>
-  localValue.value.some((value: string) =>
+  !!localValue.value?.some((value: string) =>
     parentChildLookup.value[key]?.some((option) => option.value === value),
   )
 
@@ -124,7 +124,23 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
                   props: {
                     class: 'text-black dark:text-white',
                   },
-                  children: i18n.t(option.label, option.value),
+                  children: [
+                    {
+                      $el: 'div',
+                      attrs: {
+                        class: 'shrink-0',
+                      },
+                      children: i18n.t(option.label),
+                    },
+                    {
+                      $cmp: 'CommonBadge',
+                      props: {
+                        class: 'inline truncate',
+                        variant: 'neutral',
+                      },
+                      children: option.value,
+                    },
+                  ],
                 },
                 {
                   $cmp: 'CommonLabel',
@@ -196,7 +212,23 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
                       props: {
                         class: 'text-black dark:text-white',
                       },
-                      children: i18n.t(childOption.label, childOption.value),
+                      children: [
+                        {
+                          $el: 'div',
+                          attrs: {
+                            class: 'shrink-0',
+                          },
+                          children: i18n.t(childOption.label),
+                        },
+                        {
+                          $cmp: 'CommonBadge',
+                          props: {
+                            class: 'inline truncate',
+                            variant: 'neutral',
+                          },
+                          children: childOption.value,
+                        },
+                      ],
                     },
                     {
                       $cmp: 'CommonLabel',

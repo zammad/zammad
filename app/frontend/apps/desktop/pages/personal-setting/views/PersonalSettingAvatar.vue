@@ -305,8 +305,8 @@ const activeAvatarButtonClass = (active: boolean) => {
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems">
-    <div class="mb-4 max-w-[600px]">
+  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+    <div class="mb-4">
       <CommonLoader :loading="avatarListQueryLoading">
         <CommonLabel class="!mt-0.5 mb-1 !block"
           >{{ $t('Your avatar') }}

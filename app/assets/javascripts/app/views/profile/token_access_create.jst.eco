@@ -13,15 +13,21 @@
 </div>
 
 <div class="permission form-group checkbox">
-  <div class="checkbox">
+  <div class="controls checkbox">
   <% for permission in @permissions: %>
     <% if !permission.name.match(/\./): %>
     <label class="inline-label checkbox-replacement">
       <input type="checkbox" value="<%= permission.name %>" name="permission" <% if @params && _.contains(@params.permissions, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %>/>
       <%- @Icon('checkbox', 'icon-unchecked') %>
       <%- @Icon('checkbox-checked', 'icon-checked') %>
-      <span class="label-text"><%= permission.name %></span>
-      <span class="help-text"><%- @T(permission.note, @T(permission.preferences.translations)) %></span>
+      <span class="label-text">
+        <% - if permission.label: %>
+          <%- @T(permission.label) %> (<%= permission.name %>)
+        <% else: %>
+          <%= permission.name %>
+        <% end %>
+      </span>
+      <span class="help-text"><%- @T(permission.description) %></span>
     </label>
     <% else: %>
       <div class="checkbox-child js-subPermissionList">
@@ -29,8 +35,14 @@
           <input type="checkbox" value="<%= permission.name %>" name="permission" <% if @params && _.contains(@params.permissions, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %>/>
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
-          <span class="label-text"><%= permission.name.replace(/^.+?\./, '') %></span>
-          <span class="help-text"><%- @T(permission.note, @T(permission.preferences.translations)) %></span>
+          <span class="label-text">
+            <% - if permission.label: %>
+              <%- @T(permission.label) %> (<%= permission.name %>)
+            <% else: %>
+              <%= permission.name %>
+            <% end %>
+          </span>
+          <span class="help-text"><%- @T(permission.description) %></span>
         </label>
       </div>
     <% end %>

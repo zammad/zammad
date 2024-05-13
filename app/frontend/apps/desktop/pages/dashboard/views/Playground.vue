@@ -35,6 +35,7 @@ import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -53,373 +54,373 @@ const longOption = ref({
 const permissions = [
   {
     value: 'admin',
-    label: 'Admin interface (%s)',
+    label: 'Admin interface',
     description: 'To configure your system.',
     children: [
       {
         value: 'admin.user',
-        label: 'Users (%s)',
+        label: 'Users',
         description: 'To manage all users of your system.',
       },
       {
         value: 'admin.group',
-        label: 'Groups (%s)',
+        label: 'Groups',
         description: 'To manage groups of your system.',
       },
       {
         value: 'admin.role',
-        label: 'Roles (%s)',
+        label: 'Roles',
         description: 'To manage roles of your system.',
       },
       {
         value: 'admin.organization',
-        label: 'Organizations (%s)',
+        label: 'Organizations',
         description: 'To manage all organizations of your system.',
       },
       {
         value: 'admin.overview',
-        label: 'Overviews (%s)',
+        label: 'Overviews',
         description: 'To manage ticket overviews of your system.',
       },
       {
         value: 'admin.text_module',
-        label: 'Text modules (%s)',
+        label: 'Text modules',
         description: 'To manage text modules of your system.',
       },
       {
         value: 'admin.macro',
-        label: 'Macros (%s)',
+        label: 'Macros',
         description: 'To manage ticket macros of your system.',
       },
       {
         value: 'admin.template',
-        label: 'Templates (%s)',
+        label: 'Templates',
         description: 'To manage ticket templates of your system.',
       },
       {
         value: 'admin.tag',
-        label: 'Tags (%s)',
+        label: 'Tags',
         description: 'To manage ticket tags of your system.',
       },
       {
         value: 'admin.calendar',
-        label: 'Calendar (%s)',
+        label: 'Calendar',
         description: 'To manage calendars of your system.',
       },
       {
         value: 'admin.sla',
-        label: 'SLAs (%s)',
+        label: 'SLAs',
         description: 'To manage Service Level Agreements of your system.',
       },
       {
         value: 'admin.trigger',
-        label: 'Trigger (%s)',
+        label: 'Trigger',
         description: 'To manage triggers of your system.',
       },
       {
         value: 'admin.public_links',
-        label: 'Public Links (%s)',
+        label: 'Public Links',
         description: 'To manage public links of your system.',
       },
       {
         value: 'admin.webhook',
-        label: 'Webhook (%s)',
+        label: 'Webhook',
         description: 'To manage webhooks of your system.',
       },
       {
         value: 'admin.scheduler',
-        label: 'Scheduler (%s)',
+        label: 'Scheduler',
         description: 'To manage schedulers of your system.',
       },
       {
         value: 'admin.report_profile',
-        label: 'Report Profiles (%s)',
+        label: 'Report Profiles',
         description: 'To manage report profiles of your system.',
       },
       {
         value: 'admin.time_accounting',
-        label: 'Time Accounting (%s)',
+        label: 'Time Accounting',
         description: 'To manage time accounting settings of your system.',
       },
       {
         value: 'admin.knowledge_base',
-        label: 'Knowledge Base (%s)',
+        label: 'Knowledge Base',
         description: 'To create and set up Knowledge Base.',
       },
       {
         value: 'admin.channel_web',
-        label: 'Web (%s)',
+        label: 'Web',
         description: 'To manage web channel of your system.',
       },
       {
         value: 'admin.channel_formular',
-        label: 'Form (%s)',
+        label: 'Form',
         description: 'To manage form channel of your system.',
       },
       {
         value: 'admin.channel_email',
-        label: 'Email (%s)',
+        label: 'Email',
         description: 'To manage email channel of your system.',
       },
       {
         value: 'admin.channel_sms',
-        label: 'SMS (%s)',
+        label: 'SMS',
         description: 'To manage SMS channel of your system.',
       },
       {
         value: 'admin.channel_chat',
-        label: 'Chat (%s)',
+        label: 'Chat',
         description: 'To manage chat channel of your system.',
       },
       {
         value: 'admin.channel_google',
-        label: 'Google (%s)',
+        label: 'Google',
         description: 'To manage Google channel of your system.',
       },
       {
         value: 'admin.channel_microsoft365',
-        label: ' Microsoft 365 (%s)',
+        label: ' Microsoft 365',
         description: 'To manage Microsoft 365 channel of your system.',
       },
       {
         value: 'admin.channel_twitter',
-        label: 'Twitter (%s)',
+        label: 'Twitter',
         description: 'To manage Twitter channel of your system.',
       },
       {
         value: 'admin.channel_facebook',
-        label: 'Facebook (%s)',
+        label: 'Facebook',
         description: 'To manage Facebook channel of your system.',
       },
       {
         value: 'admin.channel_telegram',
-        label: 'Telegram (%s)',
+        label: 'Telegram',
         description: 'To manage Telegram channel of your system.',
       },
       {
         value: 'admin.channel_whatsapp',
-        label: 'WhatsApp (%s)',
+        label: 'WhatsApp',
         description: 'To manage WhatsApp channel of your system.',
       },
       {
         value: 'admin.branding',
-        label: 'Branding (%s)',
+        label: 'Branding',
         description: 'To manage branding settings of your system.',
       },
       {
         value: 'admin.setting_system',
-        label: 'System (%s)',
+        label: 'System',
         description: 'To manage core system settings.',
       },
       {
         value: 'admin.security',
-        label: 'Security (%s)',
+        label: 'Security',
         description: 'To manage security settings of your system.',
       },
       {
         value: 'admin.ticket',
-        label: 'Ticket (%s)',
+        label: 'Ticket',
         description: 'To manage ticket settings of your system.',
       },
       {
         value: 'admin.integration',
-        label: 'Integrations (%s)',
+        label: 'Integrations',
         description: 'To manage integrations of your system.',
       },
       {
         value: 'admin.api',
-        label: 'API (%s)',
+        label: 'API',
         description: 'To manage API of your system.',
       },
       {
         value: 'admin.object',
-        label: 'Objects (%s)',
+        label: 'Objects',
         description: 'To manage object attributes of your system.',
       },
       {
         value: 'admin.ticket_state',
-        label: 'Ticket States (%s)',
+        label: 'Ticket States',
         description: 'To manage ticket states of your system.',
       },
       {
         value: 'admin.ticket_priority',
-        label: 'Ticket Priorities (%s)',
+        label: 'Ticket Priorities',
         description: 'To manage ticket priorities of your system.',
       },
       {
         value: 'admin.core_workflow',
-        label: 'Core Workflows (%s)',
+        label: 'Core Workflows',
         description: 'To manage core workflows of your system.',
       },
       {
         value: 'admin.translation',
-        label: 'Translations (%s)',
+        label: 'Translations',
         description: 'To manage translations of your system.',
       },
       {
         value: 'admin.data_privacy',
-        label: 'Data Privacy (%s)',
+        label: 'Data Privacy',
         description: 'To delete existing data of your system.',
       },
       {
         value: 'admin.maintenance',
-        label: 'Maintenance (%s)',
+        label: 'Maintenance',
         description: 'To manage maintenance mode of your system.',
       },
       {
         value: 'admin.monitoring',
-        label: 'Monitoring (%s)',
+        label: 'Monitoring',
         description: 'To manage monitoring of your system.',
       },
       {
         value: 'admin.package',
-        label: 'Packages (%s)',
+        label: 'Packages',
         description: 'To manage packages of your system.',
       },
 
       {
         value: 'admin.session',
-        label: 'Sessions (%s)',
+        label: 'Sessions',
         description: 'To manage active user sessions of your system.',
       },
       {
         value: 'admin.system_report',
-        label: 'System Report (%s)',
+        label: 'System Report',
         description: 'To manage system report of your system.',
       },
     ],
   },
   {
     value: 'chat',
-    label: 'Chat (%s)',
+    label: 'Chat',
     description: 'To access the chat interface.',
     disabled: true,
     children: [
       {
         value: 'chat.agent',
-        label: 'Agent Chat (%s)',
+        label: 'Agent Chat',
         description: 'To access the agent chat features.',
       },
     ],
   },
   {
     value: 'cti',
-    label: 'Phone (%s)',
+    label: 'Phone',
     description: 'To access the phone interface.',
     disabled: true,
     children: [
       {
         value: 'cti.agent',
-        label: 'Agent Phone (%s)',
+        label: 'Agent Phone',
         description: 'To access the agent phone features.',
       },
     ],
   },
   {
     value: 'knowledge_base',
-    label: 'Knowledge Base (%s)',
+    label: 'Knowledge Base',
     description: 'To access the knowledge base interface.',
     disabled: true,
     children: [
       {
         value: 'knowledge_base.editor',
-        label: 'Knowledge Base Editor (%s)',
+        label: 'Knowledge Base Editor',
         description: 'To access the knowledge base editor features.',
       },
       {
         value: 'knowledge_base.reader',
-        label: 'Knowledge Base Reader (%s)',
+        label: 'Knowledge Base Reader',
         description: 'To access the knowledge base reader features.',
       },
     ],
   },
   {
     value: 'report',
-    label: 'Report (%s)',
+    label: 'Report',
     description: 'To access the report interface.',
   },
   {
     value: 'ticket',
-    label: 'Ticket (%s)',
+    label: 'Ticket',
     description: 'To access the ticket interface.',
     disabled: true,
     children: [
       {
         value: 'ticket.agent',
-        label: 'Agent Tickets (%s)',
+        label: 'Agent Tickets',
         description: 'To access the agent tickets based on group access.',
       },
       {
         value: 'ticket.customer',
-        label: 'Customer Tickets (%s)',
+        label: 'Customer Tickets',
         description: 'To access the customer tickets.',
       },
     ],
   },
   {
     value: 'user_preferences',
-    label: 'Profile settings (%s)',
+    label: 'Profile settings',
     description: 'To access the personal settings.',
     children: [
       {
         value: 'user_preferences.appearance',
-        label: 'Appearance (%s)',
+        label: 'Appearance',
         description: 'To access the appearance personal setting.',
       },
       {
         value: 'user_preferences.language',
-        label: 'Language (%s)',
+        label: 'Language',
         description: 'To access the language personal setting.',
       },
       {
         value: 'user_preferences.avatar',
-        label: 'Avatar (%s)',
+        label: 'Avatar',
         description: 'To access the avatar personal setting.',
       },
       {
         value: 'user_preferences.out_of_office',
-        label: 'Out of Office (%s)',
+        label: 'Out of Office',
         description: 'To access the out of office personal setting.',
       },
       {
         value: 'user_preferences.password',
-        label: 'Password (%s)',
+        label: 'Password',
         description: 'To access the change password personal setting.',
       },
       {
         value: 'user_preferences.two_factor_authentication',
-        label: 'Two-factor Authentication (%s)',
+        label: 'Two-factor Authentication',
         description:
           'To access the two-factor authentication personal setting.',
       },
       {
         value: 'user_preferences.device',
-        label: 'Devices (%s)',
+        label: 'Devices',
         description: 'To access the devices personal setting.',
       },
       {
         value: 'user_preferences.access_token',
-        label: 'Token Access (%s)',
+        label: 'Token Access',
         description: 'To access the API token personal setting.',
       },
       {
         value: 'user_preferences.linked_accounts',
-        label: 'Linked Accounts (%s)',
+        label: 'Linked Accounts',
         description: 'To access the linked accounts personal setting.',
       },
       {
         value: 'user_preferences.notifications',
-        label: 'Notifications (%s)',
+        label: 'Notifications',
         description: 'To access the notifications personal setting.',
       },
       {
         value: 'user_preferences.overview_sorting',
-        label: 'Overviews (%s)',
+        label: 'Overviews',
         description: 'To access the overviews personal setting.',
       },
       {
         value: 'user_preferences.calendar',
-        label: 'Calendar (%s)',
+        label: 'Calendar',
         description: 'To access the calendar personal setting.',
       },
     ],
@@ -1323,21 +1324,28 @@ const changeRow = () => {
       />
     </section>
 
-    <h2 class="mb-2 mt-8">Flyout and Dialog</h2>
-    <div class="mb-6 flex gap-4">
-      <CommonButton variant="tertiary" @click="dialog.open()"
-        >Show Dialog
-      </CommonButton>
-      <CommonButton variant="primary" @click="flyout.open()">
-        Open Flyout
-      </CommonButton>
-    </div>
+    <div class="w-1/2">
+      <h2 class="mb-2 mt-8">Flyout and Dialog</h2>
+      <div class="mb-6 flex gap-4">
+        <CommonButton variant="tertiary" @click="dialog.open()"
+          >Show Dialog
+        </CommonButton>
+        <CommonButton variant="primary" @click="flyout.open()">
+          Open Flyout
+        </CommonButton>
+      </div>
 
-    <h2 class="mb-2">Confirmation</h2>
-    <div class="mb-6 flex gap-4">
-      <CommonButton variant="tertiary" @click="deleteTest()"
-        >Delete
-      </CommonButton>
+      <h2 class="mb-2">Confirmation</h2>
+      <div class="mb-6 flex gap-4">
+        <CommonButton variant="tertiary" @click="deleteTest()"
+          >Delete
+        </CommonButton>
+      </div>
+
+      <h2 class="mb-2 mt-8">Input Copy To Clipboard</h2>
+      <div class="mb-6">
+        <CommonInputCopyToClipboard value="some text to copy" label="A label" />
+      </div>
     </div>
 
     <div class="w-1/2">

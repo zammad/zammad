@@ -275,7 +275,14 @@ const deepMerge = (target: any, source: any): any => {
     if (typeof value === 'object' && value !== null) {
       if (Array.isArray(value)) {
         target[key] = value.map((v, index) => {
-          return deepMerge(target[key]?.[index] || {}, v)
+          if (
+            typeof target[key]?.[index] === 'object' &&
+            target[key]?.[index] !== null
+          ) {
+            return deepMerge(target[key]?.[index] || {}, v)
+          }
+
+          return v
         })
       } else {
         target[key] = deepMerge(target[key] || {}, value)

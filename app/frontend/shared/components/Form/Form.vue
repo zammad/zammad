@@ -86,6 +86,7 @@ export interface Props {
   handlers?: FormHandler[]
   changeFields?: Record<string, Partial<FormSchemaField>>
   formUpdaterId?: EnumFormUpdaterId
+  formUpdaterInitialOnly?: boolean
   // Maybe in the future this is no longer needed, when FormKit supports group
   // without value grouping below group name (https://github.com/formkit/formkit/issues/461).
   flattenFormGroups?: string[]
@@ -833,7 +834,12 @@ const handlesFormUpdater = (
   changedField?: FormUpdaterChangedFieldInput,
 ) => {
   if (!props.formUpdaterId || !formUpdaterQueryHandler) return
-  if (trigger !== 'form-reset' && !changedField) return
+  // When formUpdaterInitial is set, trigger only on initial rendering and when the form was reseted.
+  if (
+    trigger !== 'form-reset' &&
+    (!changedField || props.formUpdaterInitialOnly)
+  )
+    return
 
   const meta: FormUpdaterMetaInput = {
     // We need a unique requestId, so that the query will always be executed on changes, also when the variables

@@ -19,19 +19,16 @@ import {
 } from '@vueuse/core'
 
 import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
+import stopEvent from '#shared/utils/events.ts'
 
 import ResizeHandle from '#desktop/components/ResizeHandle/ResizeHandle.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
 import { useResizeWidthHandle } from '#desktop/components/ResizeHandle/composables/useResizeWidthHandle.ts'
-import type { FlyoutSizes } from '#desktop/components/CommonFlyout/types.ts'
 
-import stopEvent from '#shared/utils/events.ts'
+import type { ActionFooterOptions, FlyoutSizes } from './types.ts'
 import { closeFlyout } from './useFlyout.ts'
-
-import CommonFlyoutActionFooter, {
-  type Props as ActionFooterProps,
-} from './CommonFlyoutActionFooter.vue'
+import CommonFlyoutActionFooter from './CommonFlyoutActionFooter.vue'
 
 export interface Props {
   /**
@@ -55,7 +52,7 @@ export interface Props {
   noCloseOnBackdropClick?: boolean
   noCloseOnEscape?: boolean
   hideFooter?: boolean
-  footerActionOptions?: ActionFooterProps
+  footerActionOptions?: ActionFooterOptions
   noCloseOnAction?: boolean
   /**
    * @property noAutofocus
@@ -86,6 +83,7 @@ const close = async () => {
   await closeFlyout(props.name)
 }
 
+// TODO: maybe we could add a better handling in combination with a form....
 const action = async () => {
   emit('action')
 

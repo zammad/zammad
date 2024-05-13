@@ -24,7 +24,6 @@ class FormUpdater::Updater::User::Edit < FormUpdater::Updater
       initialValue: object.organization_ids,
       options:      ::Organization.where(id: object.organization_ids).each_with_object([]) do |organization, options|
                       options << {
-                        # TODO: needs to be aligned during the autocomplete query implementation
                         value:        organization.id,
                         label:        organization.name,
                         organization: {

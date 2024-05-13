@@ -14,8 +14,12 @@ const { breadcrumbItems } = useBreadcrumb(__('Language'))
 </script>
 
 <template>
-  <LayoutContent provide-default :breadcrumb-items="breadcrumbItems">
-    <div class="mb-4 max-w-[600px]">
+  <LayoutContent
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+    provide-default
+  >
+    <div class="mb-4">
       <FormKit
         v-model="modelCurrentLocale"
         type="select"

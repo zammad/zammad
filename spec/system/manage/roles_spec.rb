@@ -107,9 +107,9 @@ RSpec.describe 'Manage > Role', type: :system do
           scroll_into_view '[data-attribute-name="group_ids"]'
 
           expect(page).to have_css('[data-attribute-name="group_ids"]')
-          click 'span', text: 'Agent'
+          click 'span', text: 'Agent tickets'
           expect(page).to have_no_css('[data-attribute-name="group_ids"]')
-          click 'span', text: 'Agent'
+          click 'span', text: 'Agent tickets'
           expect(page).to have_css('[data-attribute-name="group_ids"]')
         end
       end

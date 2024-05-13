@@ -3,11 +3,14 @@
 import { within } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
-
 import { waitForNextTick } from '#tests/support/utils.ts'
-
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import {
+  checkSimpleTableContent,
+  checkSimpleTableHeader,
+} from '#tests/support/components/checkSimpleTableContent.ts'
 
 import { mockUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.mocks.ts'
 import { mockUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.mocks.ts'
@@ -30,14 +33,14 @@ vi.mock('#shared/utils/browser.ts', () => {
 
 const userCurrentDeviceList = [
   {
-    id: '1',
+    id: convertToGraphQLId('UserDevice', 1),
     name: 'Chrome on Mac',
     fingerprint: 'dummy',
     location: 'Germany, Berlin',
     updatedAt: '2024-02-01T12:00:00Z',
   },
   {
-    id: '2',
+    id: convertToGraphQLId('UserDevice', 2),
     name: 'Firefox on Mac',
     fingerprint: 'random',
     location: 'Germany, Frankfurt',
@@ -46,11 +49,7 @@ const userCurrentDeviceList = [
 ]
 
 const rowContents = [
-  [
-    'Chrome on Mac This device',
-    'Germany, Berlin',
-    ['2024-02-01 12:00', '2 months ago'],
-  ],
+  ['Chrome on Mac', 'Germany, Berlin', ['2024-02-01 12:00', '2 months ago']],
   [
     'Firefox on Mac',
     'Germany, Frankfurt',
@@ -77,39 +76,15 @@ describe('devices personal settings', () => {
 
     const view = await visitView('/personal-setting/devices')
 
+    const tableHeaders = ['Name', 'Location', 'Most recent activity', 'Actions']
+    checkSimpleTableHeader(view, tableHeaders)
+    checkSimpleTableContent(view, rowContents)
+
     const table = within(view.getByRole('table'))
 
-    expect(table.getAllByRole('columnheader')).toHaveLength(4)
-
-    const tableHeaders = ['Name', 'Location', 'Most recent activity', 'Actions']
-
-    tableHeaders.forEach((header) => {
-      expect(
-        table.getByRole('columnheader', { name: header }),
-      ).toBeInTheDocument()
-    })
-
     expect(
-      table.getByRole('cell', { name: 'Chrome on Mac This device' }),
-    ).toBeInTheDocument()
-
-    rowContents[0].forEach((content) => {
-      if (Array.isArray(content)) {
-        const dateTime = table.getByTitle(content[0])
-        expect(dateTime).toHaveTextContent(content[1])
-      } else {
-        expect(table.getByRole('cell', { name: content })).toBeInTheDocument()
-      }
-    })
-
-    rowContents[1].forEach((content) => {
-      if (Array.isArray(content)) {
-        const dateTime = table.getByTitle(content[0])
-        expect(dateTime).toHaveTextContent(content[1])
-      } else {
-        expect(table.getByRole('cell', { name: content })).toBeInTheDocument()
-      }
-    })
+      within(table.getAllByRole('row')[0]).getAllByRole('cell')[0],
+    ).toHaveTextContent(/This device/)
 
     expect(
       table.getAllByRole('button', { name: 'Delete this device' }),
@@ -143,15 +118,7 @@ describe('devices personal settings', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Delete Object' }))
 
-    rowContents[1].forEach(async (content) => {
-      if (Array.isArray(content)) {
-        expect(await table.findByTitle(content[0])).not.toBeInTheDocument()
-      } else {
-        expect(
-          await table.findByRole('cell', { name: content }),
-        ).not.toBeInTheDocument()
-      }
-    })
+    checkSimpleTableContent(view, [rowContents[0]])
   })
 
   it('updates the device list when a new device is added', async () => {
@@ -162,14 +129,12 @@ describe('devices personal settings', () => {
     const devicesUpdateSubscription =
       getUserCurrentDevicesUpdatesSubscriptionHandler()
 
-    const table = within(view.getByRole('table'))
-
     devicesUpdateSubscription.trigger({
       userCurrentDevicesUpdates: {
         devices: [
           ...userCurrentDeviceList,
           {
-            id: '3',
+            id: convertToGraphQLId('UserDevice', 3),
             name: 'Safari on Mac',
             fingerprint: 'new',
             location: 'Germany, Munich',
@@ -187,14 +152,9 @@ describe('devices personal settings', () => {
       ['2024-04-25 09:59', 'just now'],
     ]
 
-    newDeviceRowContents.forEach((content) => {
-      if (Array.isArray(content)) {
-        const dateTime = table.getByTitle(content[0])
-        expect(dateTime).toHaveTextContent(content[1])
-      } else {
-        expect(table.getByRole('cell', { name: content })).toBeInTheDocument()
-      }
-    })
+    checkSimpleTableContent(view, [...rowContents, newDeviceRowContents])
+
+    const table = within(view.getByRole('table'))
     expect(
       table.getAllByRole('button', { name: 'Delete this device' }),
     ).toHaveLength(2)

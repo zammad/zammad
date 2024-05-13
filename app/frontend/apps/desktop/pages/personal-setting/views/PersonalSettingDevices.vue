@@ -2,7 +2,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
 
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
@@ -32,7 +31,7 @@ import { useUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDev
 import { useUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.api.ts'
 import { UserCurrentDevicesUpdatesDocument } from '../graphql/subscriptions/userCurrentDevicesUpdates.api.ts'
 
-const { user } = storeToRefs(useSessionStore())
+const session = useSessionStore()
 
 const { breadcrumbItems } = useBreadcrumb(__('Devices'))
 
@@ -50,7 +49,7 @@ deviceListQuery.subscribeToMore<
 >({
   document: UserCurrentDevicesUpdatesDocument,
   variables: {
-    userId: user.value?.id || '',
+    userId: session.user?.id || '',
   },
   updateQuery: (prev, { subscriptionData }) => {
     if (!subscriptionData.data?.userCurrentDevicesUpdates.devices) {
@@ -138,10 +137,14 @@ const currentDevices = computed<TableItem[]>(() => {
 </script>
 
 <template>
-  <LayoutContent provide-default :breadcrumb-items="breadcrumbItems">
-    <div class="max-w-150 mb-4">
+  <LayoutContent
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+    provide-default
+  >
+    <div class="mb-4">
       <CommonLoader :loading="deviceListQueryLoading">
-        <CommonLabel class="!mt-0.5 mb-1 !block">{{
+        <CommonLabel id="device-list-description" class="!mt-0.5 mb-1 !block">{{
           $t(
             'All computers and browsers that have access to your Zammad appear here.',
           )
@@ -151,12 +154,12 @@ const currentDevices = computed<TableItem[]>(() => {
           :headers="tableHeaders"
           :items="currentDevices"
           :actions="tableActions"
-          class="w-150"
+          class="min-w-150"
+          aria-describedby="device-list-description"
         >
           <template #item-suffix-name="{ item }">
             <CommonBadge
               v-if="item.current"
-              size="medium"
               variant="info"
               class="ltr:ml-2 rtl:mr-2"
               >{{ $t('This device') }}</CommonBadge

@@ -796,6 +796,25 @@ try to find correct name
     preferences[:notification_config][:matrix] = Setting.get('ticket_agent_default_notifications')
   end
 
+  def permissions_with_child_and_parent_elements
+    permission_names         = permissions.pluck(:name)
+    names_including_ancestor = permission_names.flat_map { |name| Permission.with_parents(name) }.uniq
+
+    base_query = Permission.reorder(:name).where(active: true)
+
+    permission_names
+      .reduce(base_query.where(name: names_including_ancestor)) do |memo, name|
+        memo.or(base_query.where('permissions.name LIKE ?', "#{SqlHelper.quote_like(name)}.%"))
+      end
+      .tap do |permissions|
+        ancestor_names = names_including_ancestor - permission_names
+
+        permissions
+          .select { |permission| permission.name.in?(ancestor_names) }
+          .each { |permission| permission.preferences['disabled'] = true }
+      end
+  end
+
   private
 
   def organization_history_log(org, type)

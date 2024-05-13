@@ -185,8 +185,8 @@ const actions = computed<MenuItem[]>(() => [
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems">
-    <div class="flex max-w-[600px] flex-col gap-2.5">
+  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+    <div class="flex flex-col gap-2.5">
       <div>
         <CommonLabel class="mb-1.5">{{ $t('Available methods') }}</CommonLabel>
         <div class="flex flex-col rounded-lg bg-blue-200 p-1 dark:bg-gray-700">

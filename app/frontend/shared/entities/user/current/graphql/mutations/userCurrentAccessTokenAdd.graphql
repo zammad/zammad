@@ -1,0 +1,11 @@
+mutation userCurrentAccessTokenAdd($input: UserAccessTokenInput!) {
+  userCurrentAccessTokenAdd(input: $input) {
+    token {
+      ...tokenAttributes
+    }
+    tokenValue
+    errors {
+      ...errors
+    }
+  }
+}

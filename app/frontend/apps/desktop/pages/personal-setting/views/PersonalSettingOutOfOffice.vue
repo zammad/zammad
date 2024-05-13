@@ -163,8 +163,8 @@ const submitForm = async (formData: FormSubmitData<OutOfOfficeFormData>) => {
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems">
-    <div class="mb-4 max-w-[600px]">
+  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+    <div class="mb-4">
       <Form
         ref="form"
         :initial-values="initialFormValues"

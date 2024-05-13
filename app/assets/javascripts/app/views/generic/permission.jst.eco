@@ -5,8 +5,14 @@
         <input type="checkbox" value="<%= permission.id %>" name="permission_ids" <% if _.contains(@params.permission_ids, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %> data-permission-name="<%= permission.name %>"/>
         <%- @Icon('checkbox', 'icon-unchecked') %>
         <%- @Icon('checkbox-checked', 'icon-checked') %>
-        <span class="label-text"><%= permission.displayName() %></span>
-        <span class="help-text"><%- @T(permission.note, @T(permission.preferences.translations)) %></span>
+        <span class="label-text">
+          <% - if permission.label: %>
+            <%- @T(permission.label) %> (<%= permission.name %>)
+          <% else: %>
+            <%= permission.name %>
+          <% end %>
+        </span>
+        <span class="help-text"><%- @T(permission.description) %></span>
       </label>
     <% else: %>
       <div class="checkbox-child js-subPermissionList">
@@ -14,8 +20,14 @@
           <input type="checkbox" value="<%= permission.id %>" name="permission_ids" <% if _.contains(@params.permission_ids, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %> data-permission-name="<%= permission.name %>"/>
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
-          <span class="label-text"><%= permission.displayName().replace(/^.+?\./, '') %></span>
-          <span class="help-text"><%- @T(permission.note, @T(permission.preferences.translations)) %></span>
+          <span class="label-text">
+            <% - if permission.label: %>
+              <%- @T(permission.label) %> (<%= permission.name %>)
+            <% else: %>
+              <%= permission.name %>
+            <% end %>
+          </span>
+          <span class="help-text"><%- @T(permission.description) %></span>
         </label>
       </div>
     <% end %>

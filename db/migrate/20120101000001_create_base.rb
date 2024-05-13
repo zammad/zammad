@@ -158,7 +158,8 @@ class CreateBase < ActiveRecord::Migration[4.2]
 
     create_table :permissions do |t|
       t.string :name,          limit: 255, null: false
-      t.string :note,          limit: 500, null: true
+      t.string :label,         limit: 255, null: true
+      t.string :description,   limit: 500, null: true
       t.string :preferences,   limit: 10_000, null: true
       t.boolean :active,       null: false, default: true
       t.boolean :allow_signup, null: false, default: false

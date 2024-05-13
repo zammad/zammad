@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { type Props as ActionFooterProps } from '#desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue'
 import type { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
+import type { ActionFooterOptions } from '../CommonFlyout/types.ts'
 
 export type TwoFactorConfigurationType =
   | EnumTwoFactorAuthenticationMethod
@@ -32,5 +32,5 @@ export interface TwoFactorConfigurationComponentInstance {
   executeAction?: () => Promise<TwoFactorConfigurationActionPayload>
   headerSubtitle?: string
   headerIcon?: string
-  footerActionOptions?: ActionFooterProps
+  footerActionOptions?: ActionFooterOptions
 }

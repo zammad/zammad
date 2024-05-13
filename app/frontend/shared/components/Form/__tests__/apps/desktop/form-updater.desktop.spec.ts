@@ -1424,3 +1424,50 @@ describe('Form.vue - Form Updater - special situtations', () => {
     await checkDisplayValue(wrapper, 'Multi Select', ['-', 'Key 1', 'Key 4'])
   })
 })
+
+describe('Form.vue - Form Updater - reacts not on updates when it is in initial form updater', () => {
+  const formFields = {
+    type: 'Type',
+    multiselect: 'Multi Select',
+    treeselect: 'Treeselect',
+    example: 'Example',
+  }
+
+  test('only calls form updater for initial request', async () => {
+    const { wrapper, mockFormUpdaterApi } = await renderForm(
+      [
+        {
+          formUpdater: Object.keys(formFields).reduce(
+            (
+              showFields: Record<string, Partial<FormSchemaField>>,
+              fieldName,
+            ) => {
+              showFields[fieldName] = {
+                show: true,
+              }
+              return showFields
+            },
+            {},
+          ),
+        },
+      ],
+      {
+        props: {
+          formUpdaterInitialOnly: true,
+        },
+      },
+    )
+
+    Object.values(formFields).forEach((fieldLabel) => {
+      expect(wrapper.getByLabelText(fieldLabel)).toBeInTheDocument()
+    })
+
+    await selectValue(wrapper, 'Type', 'Incident')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.resolve === 1)
+
+    Object.values(formFields).forEach((fieldLabel) => {
+      expect(wrapper.queryByLabelText(fieldLabel)).toBeInTheDocument()
+    })
+  })
+})

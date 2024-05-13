@@ -10,20 +10,19 @@ import { initializeNotificationClasses } from '#shared/initializer/initializeNot
 
 export const initializeGlobalComponentStyles = () => {
   initializeBadgeClasses({
-    base: 'inline-flex justify-center items-center border-0',
+    base: '-:inline-flex justify-center items-center border-0',
     success:
       'bg-green-300 text-green-500 dark:bg-green-900 dark:text-green-500',
     info: 'bg-blue-500 text-blue-800 dark:bg-blue-950 dark:text-blue-800',
     warning:
       'bg-yellow-50 text-yellow-600 dark:bg-yellow-900 dark:text-yellow-600',
     danger: 'bg-pink-100 text-red-500 dark:bg-red-900 dark:text-red-500',
-    neutral:
-      'bg-blue-200 text-stone-200 dark:bg-gray-700 dark:text-neutral-500',
+    neutral: 'text-gray-100 bg-white dark:text-neutral-400 dark:bg-gray-500',
     custom: 'badge-custom',
   })
 
   initializeAlertClasses({
-    base: 'grid gap-4 text-center md:text-start text-sm items-center justify-center md:justify-start grid-flow-row md:grid-flow-col md:grid-cols-[auto_minmax(auto,_1fr)] w-full md:w-auto',
+    base: 'grid gap-1.5 text-center md:text-start text-sm items-center justify-center md:justify-start grid-flow-row md:grid-flow-col md:grid-cols-[auto_minmax(auto,_1fr)] w-full md:w-auto',
     success: 'bg-green-300 dark:bg-green-900 text-green-500',
     info: 'bg-blue-500 dark:bg-blue-950 text-blue-800',
     warning: 'bg-yellow-50 dark:bg-yellow-900 text-yellow-600',

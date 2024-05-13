@@ -2,11 +2,15 @@
 
 require 'rails_helper'
 
+# Later migration changes structure of Permission model
+# This adds a field that is now missing to check if old migration still works for upgrades from older systems
+Permission.attr_accessor :note
+
 RSpec.describe Add2faPermission, type: :db_migration do
   let(:role) { create(:role, permission_names:) }
 
   before do
-    fa_permission&.destroy!
+    Permission.find(fa_permission_id).destroy!
     role
   end
 
@@ -15,7 +19,7 @@ RSpec.describe Add2faPermission, type: :db_migration do
 
     it 'does not add two_factor_authentication permission' do
       expect { migrate }
-        .not_to change { role.reload.permission_ids.include? fa_permission&.id }
+        .not_to change { role.reload.permission_ids.include? fa_permission_id }
     end
   end
 
@@ -24,7 +28,7 @@ RSpec.describe Add2faPermission, type: :db_migration do
 
     it 'does not add two_factor_authentication permission' do
       expect { migrate }
-        .not_to change { role.reload.permission_ids.include? fa_permission&.id }
+        .not_to change { role.reload.permission_ids.include? fa_permission_id }
     end
   end
 
@@ -33,7 +37,7 @@ RSpec.describe Add2faPermission, type: :db_migration do
 
     it 'adds two_factor_authentication permission' do
       expect { migrate }
-        .to change { role.reload.permission_ids.include? fa_permission&.id }
+        .to change { role.reload.permission_ids.include? fa_permission_id }
         .to be_truthy
     end
   end
@@ -43,12 +47,15 @@ RSpec.describe Add2faPermission, type: :db_migration do
 
     it 'does not add two_factor_authentication permission' do
       expect { migrate }
-        .not_to change { role.reload.permission_ids.include? fa_permission&.id }
+        .not_to change { role.reload.permission_ids.include? fa_permission_id }
     end
   end
 
-  # this cannot be a let block since permission does not exist before migration
-  def fa_permission
-    Permission.find_by(name: 'user_preferences.two_factor_authentication')
+  # This cannot be a let block since permission does not exist before migration
+  # Later migration changes structure of Permission model so it's safer to use ID only
+  def fa_permission_id
+    Permission
+      .where(name: 'user_preferences.two_factor_authentication')
+      .pick(:id)
   end
 end

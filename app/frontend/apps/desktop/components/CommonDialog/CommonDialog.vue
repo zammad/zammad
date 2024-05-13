@@ -78,7 +78,7 @@ onMounted(() => {
   <CommonOverlayContainer
     :id="dialogId"
     tag="div"
-    class="fixed top-[50%] z-50 min-w-[500px] translate-y-[-50%] ltr:left-[50%] ltr:translate-x-[-50%] rtl:right-[50%] rtl:-translate-x-[-50%]"
+    class="fixed top-[50%] z-50 w-[500px] translate-y-[-50%] ltr:left-[50%] ltr:translate-x-[-50%] rtl:right-[50%] rtl:-translate-x-[-50%]"
     role="dialog"
     :aria-labelledby="`${dialogId}-title`"
     @click-background="close()"

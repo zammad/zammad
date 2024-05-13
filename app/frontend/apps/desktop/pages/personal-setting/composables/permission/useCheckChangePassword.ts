@@ -9,14 +9,9 @@ export const useCheckChangePassword = () => {
   const { config } = useApplicationStore()
   const { hasPermission } = useSessionStore()
 
-  const canChangePassword = computed(() => {
-    const canChangePassword =
-      config.user_show_password_login || hasPermission('admin.*')
-
-    if (!canChangePassword) return false
-
-    return hasPermission('user_preferences.password')
-  })
+  const canChangePassword = computed(
+    () => config.user_show_password_login || hasPermission('admin.*'),
+  )
 
   return {
     canChangePassword,

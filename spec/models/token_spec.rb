@@ -327,4 +327,94 @@ RSpec.describe Token, type: :model do
       end
     end
   end
+
+  describe '#visible_in_frontend?' do
+    it 'persistent api token is visible in frontend' do
+      token = create(:token)
+
+      expect(token).to be_visible_in_frontend
+    end
+
+    it 'persistent non-api token is not visible in frontend' do
+      token = create(:token, action: :nonapi)
+
+      expect(token).not_to be_visible_in_frontend
+    end
+
+    it 'non-persistent api token is not visible in frontend' do
+      token = create(:token, persistent: false)
+
+      expect(token).not_to be_visible_in_frontend
+    end
+  end
+
+  describe '#trigger_user_subscription' do
+    it 'triggers subscription when token is created' do
+      allow(Gql::Subscriptions::User::Current::AccessTokenUpdates).to receive(:trigger)
+
+      create(:token)
+
+      expect(Gql::Subscriptions::User::Current::AccessTokenUpdates).to have_received(:trigger)
+    end
+
+    it 'triggers subscription when token is destroyed' do
+      token = create(:token)
+
+      allow(Gql::Subscriptions::User::Current::AccessTokenUpdates).to receive(:trigger)
+
+      token.destroy
+
+      expect(Gql::Subscriptions::User::Current::AccessTokenUpdates).to have_received(:trigger)
+    end
+
+    it 'does not trigger subscription when token is updated' do
+      token = create(:token)
+
+      allow(Gql::Subscriptions::User::Current::AccessTokenUpdates).to receive(:trigger)
+
+      token.touch
+
+      expect(Gql::Subscriptions::User::Current::AccessTokenUpdates).not_to have_received(:trigger)
+    end
+
+    it 'does not trigger subscription when non-api token is created' do
+      allow(Gql::Subscriptions::User::Current::AccessTokenUpdates).to receive(:trigger)
+
+      create(:token, action: :nonapi)
+
+      expect(Gql::Subscriptions::User::Current::AccessTokenUpdates).not_to have_received(:trigger)
+    end
+  end
+
+  describe '.cleanup' do
+    context 'when token is non persistent and old' do
+      let(:token) { create(:token, persistent: false, created_at: 1.year.ago) }
+
+      it 'is removed' do
+        expect { described_class.cleanup }
+          .to change { described_class.exists? token.id }
+          .to false
+      end
+    end
+
+    context 'when token is non persistent and fresh' do
+      let(:token) { create(:token, persistent: false, created_at: 1.day.ago) }
+
+      it 'is not removed' do
+        expect { described_class.cleanup }
+          .not_to change { described_class.exists? token.id }
+          .from true
+      end
+    end
+
+    context 'when token is persistent and old' do
+      let(:token) { create(:token, persistent: true, created_at: 1.day.ago) }
+
+      it 'is not removed' do
+        expect { described_class.cleanup }
+          .not_to change { described_class.exists? token.id }
+          .from true
+      end
+    end
+  end
 end

@@ -16,38 +16,38 @@ import type { PermissionsParentOption } from '../types.ts'
 const testOptions: PermissionsParentOption[] = [
   {
     value: 'admin',
-    label: 'Admin interface (%s)',
-    description: 'To configure your system.',
+    label: 'Admin interface',
+    description: 'Configure your system.',
     children: [
       {
         value: 'admin.user',
-        label: 'Users (%s)',
-        description: 'To manage all users of your system.',
+        label: 'Users',
+        description: 'Manage all users of your system.',
       },
     ],
   },
   {
     value: 'ticket',
-    label: 'Ticket (%s)',
-    description: 'To access the ticket interface.',
+    label: 'Ticket',
+    description: 'Access the ticket interface.',
     disabled: true,
     children: [
       {
         value: 'ticket.agent',
-        label: 'Agent Tickets (%s)',
-        description: 'To access the agent tickets based on group access.',
+        label: 'Agent Tickets',
+        description: 'Access the agent tickets based on group access.',
       },
       {
         value: 'ticket.customer',
-        label: 'Customer Tickets (%s)',
-        description: 'To access the customer tickets.',
+        label: 'Customer Tickets',
+        description: 'Access the customer tickets.',
       },
     ],
   },
   {
     value: 'user_preferences',
-    label: 'Profile settings (%s)',
-    description: 'To access the personal settings.',
+    label: 'Profile settings',
+    description: 'Access the personal settings.',
   },
 ]
 
@@ -88,11 +88,13 @@ describe('Form - Field - Permissions', () => {
 
       const labels = getAllByTestId(permission, 'common-label')
 
-      expect(labels[0]).toHaveTextContent(
-        i18n.t(testOptions[index].label, testOptions[index].value),
-      )
+      expect(labels[0]).toHaveTextContent(i18n.t(testOptions[index].label))
 
       expect(labels[1]).toHaveTextContent(testOptions[index].description!)
+
+      const badges = getAllByTestId(permission, 'common-badge')
+
+      expect(badges[0]).toHaveTextContent(testOptions[index].value)
     })
   })
 
@@ -226,7 +228,7 @@ describe('Form - Field - Permissions - Input Checklist', () => {
     for await (const [i, item] of [testOptions[0], testOptions[2]].entries()) {
       wrapper.events.click(
         wrapper.getByLabelText(
-          `${i18n.t(item.label, item.value)}${item.description}`,
+          `${i18n.t(item.label)}${item.value}${item.description}`,
         ),
       )
 
@@ -249,19 +251,19 @@ describe('Form - Field - Permissions - Input Checklist', () => {
     })
 
     const toggleSwitch1 = wrapper.getByLabelText(
-      `${i18n.t(testOptions[0].label, testOptions[0].value)}${testOptions[0].description}`,
+      `${i18n.t(testOptions[0].label)}${testOptions[0].value}${testOptions[0].description}`,
     )
 
     expect(toggleSwitch1).not.toBeChecked()
 
     const toggleSwitch2 = wrapper.getByLabelText(
-      `${i18n.t(testOptions[1].label, testOptions[1].value)}${testOptions[1].description}`,
+      `${i18n.t(testOptions[1].label)}${testOptions[1].value}${testOptions[1].description}`,
     )
 
     expect(toggleSwitch2).not.toBeChecked()
 
     const toggleSwitch3 = wrapper.getByLabelText(
-      `${i18n.t(testOptions[2].label, testOptions[2].value)}${testOptions[2].description}`,
+      `${i18n.t(testOptions[2].label)}${testOptions[2].value}${testOptions[2].description}`,
     )
 
     expect(toggleSwitch3).toBeChecked()
@@ -277,7 +279,7 @@ describe('Form - Field - Permissions - Input Checklist', () => {
     for (const option of testOptions) {
       expect(
         view.getByLabelText(
-          `${i18n.t(option.label, option.value)}${option.description}`,
+          `${i18n.t(option.label)}${option.value}${option.description}`,
         ),
       ).toBeDisabled()
     }

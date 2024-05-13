@@ -46,7 +46,7 @@ const dismissed = ref(false)
     role="alert"
     data-test-id="common-alert"
   >
-    <CommonIcon class="mx-auto md:mx-0" size="small" decorative :name="icon" />
+    <CommonIcon class="mx-auto md:mx-0" :name="icon" size="tiny" decorative />
 
     <slot />
 
@@ -66,10 +66,10 @@ const dismissed = ref(false)
 
       <CommonIcon
         v-if="props.dismissible"
-        size="small"
+        size="tiny"
         decorative
         name="common-alert-dismiss"
-        class="mx-auto cursor-pointer md:mx-0 ltr:mr-2 rtl:ml-2"
+        class="mx-auto cursor-pointer md:mx-0"
         @click="dismissed = true"
       />
     </div>
