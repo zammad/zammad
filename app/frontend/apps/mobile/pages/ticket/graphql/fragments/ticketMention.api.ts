@@ -11,6 +11,8 @@ export const TicketMentionFragmentDoc = gql`
     fullname
     vip
     outOfOffice
+    outOfOfficeStartAt
+    outOfOfficeEndAt
     active
     image
   }

@@ -41,6 +41,8 @@ export const SearchDocument = gql`
       image
       active
       outOfOffice
+      outOfOfficeStartAt
+      outOfOfficeEndAt
       vip
       organization {
         id

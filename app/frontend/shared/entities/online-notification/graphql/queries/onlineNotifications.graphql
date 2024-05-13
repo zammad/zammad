@@ -13,6 +13,8 @@ query onlineNotifications {
           email
           vip
           outOfOffice
+          outOfOfficeStartAt
+          outOfOfficeEndAt
           active
           image
         }

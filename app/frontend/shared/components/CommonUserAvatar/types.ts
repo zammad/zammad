@@ -9,6 +9,8 @@ export interface AvatarUser {
   mobile?: Maybe<string>
   vip?: Maybe<boolean>
   outOfOffice?: Maybe<boolean>
+  outOfOfficeEndAt?: Maybe<string>
+  outOfOfficeStartAt?: Maybe<string>
   active?: Maybe<boolean>
   image?: Maybe<string>
   id: string

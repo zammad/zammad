@@ -144,6 +144,8 @@ describe('static organization', () => {
                   lastname: 'Hunter',
                   fullname: 'Jane Hunter',
                   outOfOffice: false,
+                  outOfOfficeStartAt: null,
+                  outOfOfficeEndAt: null,
                   active: true,
                   image: null,
                 },

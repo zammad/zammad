@@ -5,9 +5,14 @@ import { SYSTEM_USER_ID } from '#shared/utils/constants.ts'
 import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 
+import { useDateFormat } from '@vueuse/shared'
 import CommonUserAvatar, { type Props } from '../CommonUserAvatar.vue'
 
 const USER_ID = convertToGraphQLId('User', '123')
+
+vi.hoisted(() => {
+  vi.setSystemTime(new Date('2024-11-11T00:00:00Z'))
+})
 
 initializeUserAvatarClasses({
   backgroundColors: [
@@ -101,7 +106,7 @@ describe('CommonUserAvatar', () => {
     expect(view.queryByIconName('some-unknown-source')).not.toBeInTheDocument()
   })
 
-  it('renders active and outOfOffice', async () => {
+  it('renders active', async () => {
     const view = renderComponent(CommonUserAvatar, {
       props: <Props>{
         entity: {
@@ -120,17 +125,6 @@ describe('CommonUserAvatar', () => {
       entity: {
         id: USER_ID,
         active: false,
-        outOfOffice: true,
-      },
-    })
-
-    expect(avatar).toHaveClass('grayscale-[70%]')
-
-    await view.rerender(<Props>{
-      entity: {
-        id: USER_ID,
-        active: false,
-        outOfOffice: false,
       },
     })
 
@@ -181,5 +175,88 @@ describe('CommonUserAvatar', () => {
     expect(avatar).not.toHaveStyle(
       'background-image: url(/api/users/image/100.png)',
     )
+  })
+
+  describe('out of office state', () => {
+    let today: string
+    beforeAll(() => {
+      today = useDateFormat(new Date(), 'YYYY-MM-DD').value
+    })
+
+    it('out of office date is in presentence', async () => {
+      const view = renderComponent(CommonUserAvatar, {
+        props: <Props>{
+          entity: {
+            id: USER_ID,
+            active: true,
+          },
+        },
+      })
+
+      await view.rerender(<Props>{
+        entity: {
+          id: USER_ID,
+          outOfOffice: true,
+          outOfOfficeStartAt: '2024-10-11',
+          outOfOfficeEndAt: '2024-12-11',
+        },
+      })
+
+      const avatar = view.getByTestId('common-avatar')
+
+      expect(avatar).toHaveClass('grayscale-[70%]')
+    })
+
+    it('out of office date is in past', async () => {
+      const view = renderComponent(CommonUserAvatar, {
+        props: <Props>{
+          entity: {
+            id: USER_ID,
+            active: true,
+          },
+        },
+      })
+
+      const [year, month, day] = today.split('-')
+      const outOfOfficeStartAt = `${year}-${(+month - 2).toString().padStart(2, '0')}-${day}`
+      const outOfOfficeEndAt = `${year}-${(+month - 1).toString().padStart(2, '0')}-${day}`
+
+      await view.rerender(<Props>{
+        entity: {
+          id: USER_ID,
+          outOfOffice: true,
+          outOfOfficeStartAt,
+          outOfOfficeEndAt,
+        },
+      })
+
+      const avatar = view.getByTestId('common-avatar')
+
+      expect(avatar).not.toHaveClass('grayscale-[70%]')
+    })
+
+    it('out of office date is in future', async () => {
+      const view = renderComponent(CommonUserAvatar, {
+        props: <Props>{
+          entity: {
+            id: USER_ID,
+            active: true,
+          },
+        },
+      })
+
+      await view.rerender(<Props>{
+        entity: {
+          id: USER_ID,
+          outOfOffice: true,
+          outOfOfficeStartAt: '2024-12-11',
+          outOfOfficeEndAt: '2025-01-11',
+        },
+      })
+
+      const avatar = view.getByTestId('common-avatar')
+
+      expect(avatar).not.toHaveClass('grayscale-[70%]')
+    })
   })
 })

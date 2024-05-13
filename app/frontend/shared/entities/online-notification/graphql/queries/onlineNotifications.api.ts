@@ -21,6 +21,8 @@ export const OnlineNotificationsDocument = gql`
           email
           vip
           outOfOffice
+          outOfOfficeStartAt
+          outOfOfficeEndAt
           active
           image
         }

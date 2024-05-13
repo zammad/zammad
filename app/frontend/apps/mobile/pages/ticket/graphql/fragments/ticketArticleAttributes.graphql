@@ -61,6 +61,8 @@ fragment ticketArticleAttributes on TicketArticle {
     image
     vip
     outOfOffice
+    outOfOfficeStartAt
+    outOfOfficeEndAt
     authorizations {
       provider
       uid

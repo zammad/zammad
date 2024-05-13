@@ -9,6 +9,8 @@ fragment organizationMembers on Organization {
         lastname
         fullname
         outOfOffice
+        outOfOfficeStartAt
+        outOfOfficeEndAt
         active
         vip
       }

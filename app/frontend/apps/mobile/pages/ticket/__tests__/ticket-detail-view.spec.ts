@@ -214,6 +214,8 @@ describe('user avatars', () => {
       type: 'user',
       image: 'avatar.png',
       outOfOffice: false,
+      outOfOfficeStartAt: null,
+      outOfOfficeEndAt: null,
       vip: false,
       active: false,
     })
@@ -222,7 +224,10 @@ describe('user avatars', () => {
   it('renders article user when he is out of office', async () => {
     const articles = defaultArticles()
     const { author } = articles.description!.edges[0].node
+
     author.outOfOffice = true
+    author.outOfOfficeStartAt = '2021-12-01'
+    author.outOfOfficeEndAt = '2022-02-01'
     author.active = true
     author.vip = true
     author.firstname = 'Max'
@@ -240,6 +245,8 @@ describe('user avatars', () => {
     ).toBeAvatarElement({
       type: 'user',
       outOfOffice: true,
+      outOfOfficeStartAt: '2021-12-01',
+      outOfOfficeEndAt: '2022-02-01',
       vip: true,
       active: true,
     })

@@ -13,6 +13,8 @@ import {
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { getUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
 
+import { useReactiveNow } from '#shared/composables/useReactiveNow.ts'
+import { useDateFormat } from '@vueuse/shared'
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 import type { AvatarSize } from '../CommonAvatar/index.ts'
 import type { AvatarUser } from './types.ts'
@@ -84,10 +86,27 @@ const isVip = computed(() => {
   return !props.personal && props.entity.vip
 })
 
+const currentDate = useReactiveNow()
+
+const isOutOfOffice = computed(() => {
+  if (
+    props.entity.outOfOffice &&
+    props.entity.outOfOfficeStartAt &&
+    props.entity.outOfOfficeEndAt
+  ) {
+    const today = useDateFormat(currentDate.value, 'YYYY-MM-DD')
+    const startDate = props.entity?.outOfOfficeStartAt
+    const endDate = props.entity?.outOfOfficeEndAt
+
+    return startDate <= today.value && endDate >= today.value // Today is between start and end date
+  }
+  return false
+})
+
 const className = computed(() => {
   const classes = [colorClass.value]
 
-  if (props.entity.outOfOffice) {
+  if (isOutOfOffice.value) {
     classes.push('opacity-100 grayscale-[70%]')
   } else if (props.entity.active === false) {
     classes.push('opacity-20 grayscale')

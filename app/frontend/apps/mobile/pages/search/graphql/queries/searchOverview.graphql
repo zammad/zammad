@@ -37,6 +37,8 @@ query search(
       image
       active
       outOfOffice
+      outOfOfficeStartAt
+      outOfOfficeEndAt
       vip
       organization {
         id

@@ -4,6 +4,9 @@ fragment userDetailAttributes on User {
   firstname
   lastname
   fullname
+  outOfOffice
+  outOfOfficeStartAt
+  outOfOfficeEndAt
   image
   email
   web

@@ -9,6 +9,9 @@ export const UserDetailAttributesFragmentDoc = gql`
   firstname
   lastname
   fullname
+  outOfOffice
+  outOfOfficeStartAt
+  outOfOfficeEndAt
   image
   email
   web

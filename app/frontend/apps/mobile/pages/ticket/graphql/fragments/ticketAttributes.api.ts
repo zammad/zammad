@@ -30,6 +30,8 @@ export const TicketAttributesFragmentDoc = gql`
     vip
     active
     outOfOffice
+    outOfOfficeStartAt
+    outOfOfficeEndAt
     email
     organization {
       id

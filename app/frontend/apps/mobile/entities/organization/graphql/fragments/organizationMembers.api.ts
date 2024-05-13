@@ -13,6 +13,8 @@ export const OrganizationMembersFragmentDoc = gql`
         lastname
         fullname
         outOfOffice
+        outOfOfficeStartAt
+        outOfOfficeEndAt
         active
         vip
       }

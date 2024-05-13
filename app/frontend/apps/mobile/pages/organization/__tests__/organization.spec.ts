@@ -37,6 +37,10 @@ beforeEach(() => {
   mockOnlineNotificationSeenGql()
 })
 
+vi.hoisted(() => {
+  vi.setSystemTime(new Date('2024-11-11T00:00:00Z'))
+})
+
 describe('static organization', () => {
   it('shows organization', async () => {
     mockPermissions(['admin.organization'])
@@ -146,6 +150,8 @@ describe('static organization', () => {
                   internalId: 300,
                   vip: true,
                   outOfOffice: false,
+                  outOfOfficeStartAt: null,
+                  outOfOfficeEndAt: null,
                   firstname: 'Jane',
                   lastname: 'Hunter',
                   fullname: 'Jane Hunter',
@@ -161,6 +167,8 @@ describe('static organization', () => {
                   internalId: 400,
                   vip: true,
                   outOfOffice: true,
+                  outOfOfficeStartAt: '2024-11-10',
+                  outOfOfficeEndAt: '2024-11-20',
                   firstname: 'Max',
                   lastname: 'Mustermann',
                   fullname: 'Max Mustermann',

@@ -11,6 +11,8 @@ export const TicketLiveUserAttributesFragmentDoc = gql`
     email
     vip
     outOfOffice
+    outOfOfficeStartAt
+    outOfOfficeEndAt
     active
     image
   }

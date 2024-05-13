@@ -11,6 +11,8 @@ query autocompleteSearchAgent($input: AutocompleteSearchUserInput!) {
       ...userAttributes
       vip
       outOfOffice
+      outOfOfficeStartAt
+      outOfOfficeEndAt
       active
     }
   }

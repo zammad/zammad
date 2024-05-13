@@ -25,6 +25,8 @@ fragment ticketAttributes on Ticket {
     vip
     active
     outOfOffice
+    outOfOfficeStartAt
+    outOfOfficeEndAt
     email
     organization {
       id

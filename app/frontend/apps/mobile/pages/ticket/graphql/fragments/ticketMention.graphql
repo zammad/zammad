@@ -7,6 +7,8 @@ fragment ticketMention on Mention {
     fullname
     vip
     outOfOffice
+    outOfOfficeStartAt
+    outOfOfficeEndAt
     active
     image
   }

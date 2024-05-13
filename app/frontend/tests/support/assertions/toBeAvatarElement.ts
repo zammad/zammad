@@ -1,10 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { prettyDOM } from '@testing-library/vue'
+import { useDateFormat } from '@vueuse/shared'
 
 export interface ToBeAvatarOptions {
   vip?: boolean
   outOfOffice?: boolean
+  outOfOfficeStartAt?: string | null
+  outOfOfficeEndAt?: string | null
   active?: boolean
   image?: string
   type: 'user' | 'organization'
@@ -52,17 +55,27 @@ export default function toBeAvatar(
     pass = pass && localPass
   }
 
-  if (options.outOfOffice != null) {
-    const isOutOfOffice =
-      received.classList.contains('opacity-100') &&
-      received.classList.contains('grayscale-[70%]')
-    const localPass = options.outOfOffice ? isOutOfOffice : !isOutOfOffice
-    if (!localPass) {
-      errors.push(
-        `out of office class is ${options.outOfOffice ? 'missing' : 'present'}`,
-      )
+  if (
+    options.outOfOffice != null &&
+    options.outOfOfficeEndAt != null &&
+    options.outOfOfficeStartAt != null
+  ) {
+    const today = useDateFormat(new Date(), 'YYYY-MM-DD')
+    const startDate = options.outOfOfficeStartAt
+    const endDate = options.outOfOfficeEndAt
+
+    if (startDate <= today.value && endDate >= today.value) {
+      const isOutOfOffice =
+        received.classList.contains('opacity-100') &&
+        received.classList.contains('grayscale-[70%]')
+      const localPass = options.outOfOffice ? isOutOfOffice : !isOutOfOffice
+      if (!localPass) {
+        errors.push(
+          `out of office class is ${options.outOfOffice ? 'missing' : 'present'}`,
+        )
+      }
+      pass = pass && localPass
     }
-    pass = pass && localPass
   }
 
   if (options.active != null) {

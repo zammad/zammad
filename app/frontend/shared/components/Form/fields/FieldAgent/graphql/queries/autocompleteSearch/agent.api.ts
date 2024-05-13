@@ -20,6 +20,8 @@ export const AutocompleteSearchAgentDocument = gql`
       ...userAttributes
       vip
       outOfOffice
+      outOfOfficeStartAt
+      outOfOfficeEndAt
       active
     }
   }

@@ -65,6 +65,8 @@ export const TicketArticleAttributesFragmentDoc = gql`
     image
     vip
     outOfOffice
+    outOfOfficeStartAt
+    outOfOfficeEndAt
     authorizations {
       provider
       uid
