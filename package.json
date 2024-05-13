@@ -122,7 +122,7 @@
     "@tiptap/suggestion": "^2.3.2",
     "@tiptap/vue-3": "^2.3.2",
     "@vue/apollo-composable": "^4.0.2",
-    "@vuepic/vue-datepicker": "^8.5.1",
+    "@vuepic/vue-datepicker": "^8.6.0",
     "@vueuse/core": "^10.9.0",
     "@vueuse/router": "^10.9.0",
     "@vueuse/shared": "^10.9.0",
