@@ -51,6 +51,9 @@ class App.GenericHistory extends App.ControllerModal
     for item in items
       if item.object is 'Ticket::Article'
         item.object = 'Article'
+        if item.attribute is 'body'
+          item.value_from = App.Utils.html2text(item.value_from)
+          item.value_to   = App.Utils.html2text(item.value_to)
       if item.object is 'Ticket::SharedDraftZoom'
         item.object = 'Draft'
 
