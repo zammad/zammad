@@ -1018,17 +1018,59 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 
 #: db/seeds/permissions.rb
-msgid "Access to %s"
-msgstr "%s에 액세스"
+msgid "Access the agent chat features."
+msgstr ""
 
 #: db/seeds/permissions.rb
-msgid "Access to Agent Tickets based on Group Access"
+msgid "Access the agent phone features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Access the knowledge base editor features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Access the knowledge base reader features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Access to Agent Tickets based on Group Access"
+msgid "Access the tickets as agent based on group access."
 msgstr "그룹 액세스를 기반으로 에이전트 Ticket 액세스"
 
 #: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Recent Customer Tickets"
-msgid "Access to customer tickets"
+msgid "Access tickets as customer."
+msgstr "최근 고객 Ticket"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the chat interface."
+msgstr "최근 고객 Ticket"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Delete Knowledge Base"
+msgid "Access to the knowledge base interface."
+msgstr "지식 삭제"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the phone interface."
+msgstr "최근 고객 Ticket"
+
+#: db/seeds/permissions.rb
+msgid "Access to the report interface."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the ticket interface."
 msgstr "최근 고객 Ticket"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
@@ -1459,16 +1501,16 @@ msgstr "관리자"
 msgid "Admin Consent"
 msgstr ""
 
-#: db/seeds/permissions.rb
-msgid "Admin Interface"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
 #, fuzzy
 #| msgid "Bind Password"
 msgid "Admin Password Login"
 msgstr "바인드 비밀번호"
+
+#: db/seeds/permissions.rb
+msgid "Admin interface"
+msgstr ""
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -1548,6 +1590,12 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Agent"
+msgid "Agent chat"
+msgstr "에이전트"
+
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
 msgstr ""
@@ -1555,6 +1603,18 @@ msgstr ""
 #: app/models/role.rb app/models/user.rb
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "에이전트 한도 초과, 계정 설정을 확인하시기 바랍니다."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Agent"
+msgid "Agent phone"
+msgstr "에이전트"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Agent tickets"
+msgstr "오픈 Ticket"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #, fuzzy
@@ -2703,7 +2763,7 @@ msgstr ""
 "12 픽셀과 같은 단위, 1.5em와 CSS 폰트 크기. 정의되지 않은 왼쪽 경우 웹 사이트"
 "의 글꼴 크기를 상속합니다."
 
-#: app/assets/javascripts/app/controllers/cti.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/cti.coffee
 msgid "CTI"
 msgstr "CTI"
 
@@ -2954,10 +3014,6 @@ msgstr "인증서 & 개인 키"
 msgid "Change"
 msgstr "바꾸기"
 
-#: db/seeds/permissions.rb
-msgid "Change %s"
-msgstr "%s 바꾸기"
-
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
@@ -2991,6 +3047,12 @@ msgstr "날짜 바꾸기"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
 msgstr "주문 바꾸기"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Change Your Password"
+msgid "Change personal account password."
+msgstr "내 암호 바꾸기"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed:"
@@ -3031,54 +3093,6 @@ msgstr "변경 내용은 데이터베이스 업데이트를 필요로 하였다.
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
-msgstr "채널"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Chat"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Email"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Facebook"
-msgstr ""
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel"
-msgid "Channel - Form"
-msgstr "채널"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Google"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Microsoft 365"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - SMS"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Telegram"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Twitter"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Web"
-msgstr ""
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel"
-msgid "Channel - WhatsApp"
 msgstr "채널"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
@@ -3540,6 +3554,12 @@ msgstr "앱 설정"
 msgid "Configure Basic Settings"
 msgstr "기본설정"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "To configure your system."
+msgid "Configure your system."
+msgstr "시스템을 구성합니다."
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #, fuzzy
 #| msgid "Config"
@@ -3801,6 +3821,18 @@ msgstr "보안"
 msgid "Copy Secret"
 msgstr "앱의 비밀"
 
+#: app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue
+#, fuzzy
+#| msgid "App Secret"
+msgid "Copy Text"
+msgstr "앱의 비밀"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Security"
+msgid "Copy Token"
+msgstr "보안"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "클립 보드에 현재의 개체 번호 (예 : Ticket #)을 복사합니다"
@@ -3811,15 +3843,12 @@ msgstr "클립 보드에 현재의 개체 번호 (예 : Ticket #)을 복사합�
 msgid "Copy to clipboard"
 msgstr "클립 보드에 복사 : Ctrl + C를 입력"
 
-#: db/seeds/permissions.rb
-msgid "Core Workflow"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
+#: db/seeds/permissions.rb
 msgid "Core Workflows"
 msgstr ""
 
@@ -3906,6 +3935,7 @@ msgstr "국가"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "생성"
@@ -3996,7 +4026,7 @@ msgstr "내 계정 만들기"
 #: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Create and setup %s"
-msgid "Create and set up %s"
+msgid "Create and set up Knowledge Base."
 msgstr "지식 생성 및 설정(%s)"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
@@ -4092,6 +4122,7 @@ msgstr "생성"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
@@ -4278,6 +4309,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
 msgstr "송신자와 수신자 목록을 기반으로 고객 선택"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Customer tickets"
+msgstr "최근 고객 Ticket"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid ""
@@ -5475,6 +5512,12 @@ msgstr "먼저 기존의 모든 기록을 삭제합니다."
 msgid "Delete avatar"
 msgstr "사용자 삭제"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Delete all existing records first."
+msgid "Delete existing data of your system."
+msgstr "먼저 기존의 모든 기록을 삭제합니다."
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #, fuzzy
 #| msgid "Delete File"
@@ -5516,6 +5559,12 @@ msgstr "소속 삭제?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Delete records"
 msgstr "기록 삭제"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Getting an Access Token"
+msgid "Delete this access token"
+msgstr "액세스 토큰을 얻기"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
@@ -6131,7 +6180,8 @@ msgstr "마지막 동기화"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
-#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
+#: public/assets/form/form.js
 msgid "Email"
 msgstr "이메일"
 
@@ -6962,10 +7012,17 @@ msgstr "전문가"
 msgid "Experts"
 msgstr "전문가"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Expires"
+msgid "Expiration date"
+msgstr "만료"
+
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Expires"
 msgstr "만료"
 
@@ -6996,7 +7053,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Facebook"
 msgstr "페이스 북"
 
@@ -7280,6 +7337,7 @@ msgid "For more details, please check out our online documentation %l."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #, fuzzy
 #| msgid ""
 #| "For security reasons, the API token is shown only once. You'll need to "
@@ -7316,6 +7374,7 @@ msgstr "비밀번호를 잊어 버렸습니까?"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
+#: db/seeds/permissions.rb
 msgid "Form"
 msgstr "형태"
 
@@ -7671,7 +7730,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Google"
 msgstr ""
 
@@ -7963,6 +8022,11 @@ msgstr ""
 msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
 "please reply to keep it open."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue
+#: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue
+msgid "Help"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
@@ -9156,6 +9220,12 @@ msgstr ""
 msgid "Last Internal Article"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Last used"
+msgid "Last Used"
+msgstr "마지막으로 사용"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
 msgstr ""
@@ -9544,16 +9614,48 @@ msgid "Manage"
 msgstr "관리영역"
 
 #: db/seeds/permissions.rb
-msgid "Manage %s"
-msgstr "%s 관리"
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage API of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
 
 #: db/seeds/permissions.rb
-msgid "Manage %s Settings"
-msgstr "%s 설정 관리"
+msgid "Manage Facebook channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage Google mail channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage Microsoft 365 mail channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage SMS channel of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+msgid "Manage Service Level Agreements of your system."
+msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
 msgstr "태그 관리"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage Telegram channel of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage Twitter channel of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
 
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
@@ -9562,6 +9664,26 @@ msgstr "태그 관리"
 msgid "Manage Two-Factor Authentication"
 msgstr "인증"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage WhatsApp channel of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+msgid "Manage active user sessions of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage all organizations of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage all users of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
 "Manage applications that can use Zammad as an OAuth provider and "
@@ -9569,6 +9691,250 @@ msgid ""
 msgstr ""
 "OAuth를 제공하고 당신이 당신의 계정을 사용하도록 허가 한 응용 프로그램으로 "
 "Zammad을 사용할 수있는 응용 프로그램을 관리 할 수 ​​있습니다."
+
+#: db/seeds/permissions.rb
+msgid "Manage branding settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage calendars of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage chat channel of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage core system settings."
+msgstr "%s 설정 관리"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage core workflows of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage email channel of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage form channel of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "To configure your system."
+msgid "Manage groups of your system."
+msgstr "시스템을 구성합니다."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage integrations of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage maintenance mode of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "To configure your system."
+msgid "Manage monitoring of your system."
+msgstr "시스템을 구성합니다."
+
+#: db/seeds/permissions.rb
+msgid "Manage object attributes of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage packages of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Manage personal API tokens."
+msgstr "개인 액세스 토큰"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal appearance settings."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal avatar settings."
+msgstr "%s 설정 관리"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal calendar."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Manage personal devices and sessions."
+msgstr "세션을 계속"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal language settings."
+msgstr "%s 설정 관리"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal linked accounts."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage your notifications settings"
+msgid "Manage personal notifications settings."
+msgstr "알림 설정 관리"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage your notifications settings"
+msgid "Manage personal out of office settings."
+msgstr "알림 설정 관리"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal overviews."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal settings."
+msgstr "%s 설정 관리"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Authentication"
+msgid "Manage personal two-factor authentication methods."
+msgstr "인증"
+
+#: db/seeds/permissions.rb
+msgid "Manage public links of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "To configure your system."
+msgid "Manage report profiles of your system."
+msgstr "시스템을 구성합니다."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage roles of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage schedulers of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+msgid "Manage security settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage system report of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage text modules of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket macros of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Overviews"
+msgid "Manage ticket overviews of your system."
+msgstr "Overviews"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket priorities of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket settings of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket states of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket tags of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket templates of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+msgid "Manage time accounting settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage translations of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage triggers of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage web channel of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage webhooks of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
 
 #: app/views/mailer/application.html.erb
 #, fuzzy
@@ -9850,6 +10216,7 @@ msgstr "매크로"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: db/seeds/permissions.rb
 msgid "Microsoft 365"
 msgstr ""
 
@@ -10156,7 +10523,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "이름"
@@ -10285,6 +10654,13 @@ msgstr "새 조직"
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "New Overview"
 msgstr "새로운 Overview"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Your New Personal Access Token"
+msgid "New Personal Access Token"
+msgstr "귀하의 새 개인 액세스 토큰"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
 #, fuzzy
@@ -10934,6 +11310,12 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "OK, I've copied my token"
+msgid "OK, I have copied my token"
+msgstr "OK, 내 토큰을 복사 한"
+
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "OK, I've copied my token"
 msgstr "OK, 내 토큰을 복사 한"
@@ -11257,7 +11639,6 @@ msgid "Or, use one of your"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "New Overview"
 msgid "Order of Overviews"
@@ -11718,10 +12099,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Permissions"
 msgstr "권한"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Personal Access Tokens"
 msgstr "개인 액세스 토큰"
 
@@ -11729,13 +12112,19 @@ msgstr "개인 액세스 토큰"
 msgid "Personal Settings"
 msgstr "개인 설정"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Personal access token has been deleted."
+msgstr "개인 액세스 토큰"
+
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Personal overview order was reset."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Phone"
 msgstr "전화"
 
@@ -11763,6 +12152,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 "응용 프로그램의 이름을 선택하고, 우리는 당신에게 고유 한 토큰을 줄 것이다."
@@ -12152,6 +12542,10 @@ msgstr "공급 이름"
 msgid "Profile"
 msgstr "설정"
 
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
+msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
 #, fuzzy
 #| msgid "The test run was successful."
@@ -12165,6 +12559,7 @@ msgid "Profile language updated successfully."
 msgstr "테스트 실행 성공했습니다."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -12619,8 +13014,10 @@ msgid "Reply-To"
 msgstr "답장하다"
 
 #: db/seeds/permissions.rb
-msgid "Report Interface"
-msgstr ""
+#, fuzzy
+#| msgid "Reporting"
+msgid "Report"
+msgstr "보고"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "Report Profile"
@@ -12959,7 +13356,7 @@ msgid "SAML App Credentials"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/sla.coffee
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "SLA"
 msgstr "SLA"
 
@@ -12967,13 +13364,14 @@ msgstr "SLA"
 msgid "SLA Times"
 msgstr "SLA 시간"
 
-#: app/assets/javascripts/app/controllers/sla.coffee
+#: app/assets/javascripts/app/controllers/sla.coffee db/seeds/permissions.rb
 msgid "SLAs"
 msgstr "SLA를"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#: db/seeds/permissions.rb
 msgid "SMS"
 msgstr "SMS"
 
@@ -13347,6 +13745,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
@@ -14751,6 +15150,7 @@ msgstr "언어"
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
+#: db/seeds/permissions.rb
 msgid "Telegram"
 msgstr "Telegram"
 
@@ -14836,7 +15236,6 @@ msgid "Text"
 msgstr "본문"
 
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: db/seeds/permissions.rb
 msgid "Text Modules"
 msgstr ""
 
@@ -14863,6 +15262,7 @@ msgid "Text module"
 msgstr "텍스트 모듈"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
+#: db/seeds/permissions.rb
 msgid "Text modules"
 msgstr "텍스트 모듈"
 
@@ -15061,6 +15461,12 @@ msgstr "%s 객체 (들)이 생성된다."
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The WhatsApp webhook payload could not be validated."
+msgstr "%s 객체 (들)이 생성된다."
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The access token could not be created."
 msgstr "%s 객체 (들)이 생성된다."
 
 #: app/controllers/reports_controller.rb
@@ -15637,6 +16043,12 @@ msgstr "서명"
 #| msgid "The test run was successful."
 msgid "The password reset request was successful."
 msgstr "테스트 실행 성공했습니다."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The personal access token could not be deleted."
+msgstr "%s 객체 (들)이 생성된다."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
@@ -16413,6 +16825,7 @@ msgstr ""
 "이 클래스는 초기화의 버튼에 추가됩니다 및 채팅 연결이있어 일단 제거됩니다."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "This device"
 msgstr ""
 
@@ -16875,10 +17288,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Ticket Hook Position"
 msgstr "Ticket 후크 위치"
-
-#: db/seeds/permissions.rb
-msgid "Ticket Interface"
-msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Ticket Last Contact Behaviour"
@@ -17514,6 +17923,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: db/seeds/permissions.rb
 msgid "Token Access"
 msgstr "토큰 액세스"
@@ -17605,11 +18016,11 @@ msgstr "번역"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/trigger.coffee
+#: db/seeds/permissions.rb
 msgid "Trigger"
 msgstr "트리거"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
-#: db/seeds/permissions.rb
 msgid "Triggers"
 msgstr "트리거"
 
@@ -17692,7 +18103,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Twitter"
 msgstr "지저귀다"
 
@@ -18311,10 +18722,6 @@ msgstr ""
 msgid "User Organization Selector - email"
 msgstr ""
 
-#: db/seeds/permissions.rb
-msgid "User Preferences"
-msgstr "사용자 환경 설정"
-
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
@@ -18653,7 +19060,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Web"
 msgstr "편물"
 
@@ -18672,6 +19079,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: db/seeds/permissions.rb
 msgid "Webhook"
 msgstr "Webhook"
 
@@ -18682,7 +19090,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook.jst.eco
-#: db/seeds/permissions.rb
 msgid "Webhooks"
 msgstr ""
 
@@ -18789,6 +19196,7 @@ msgstr "%s에 어떤 값은 사용자에 동기화해야합니다."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+#: db/seeds/permissions.rb
 msgid "WhatsApp"
 msgstr ""
 
@@ -19069,6 +19477,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -19318,6 +19727,12 @@ msgstr "전체 이름"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
+msgstr "귀하의 새 개인 액세스 토큰"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Your New Personal Access Token"
+msgid "Your Personal Access Token"
 msgstr "귀하의 새 개인 액세스 토큰"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -20888,6 +21303,10 @@ msgstr ""
 msgid "today"
 msgstr "오늘"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
+msgid "token access,token,api,access token,application"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 msgid "translation,locale,localization"
 msgstr ""
@@ -21052,6 +21471,28 @@ msgstr "... 전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#~ msgid "Access to %s"
+#~ msgstr "%s에 액세스"
+
+#~ msgid "Change %s"
+#~ msgstr "%s 바꾸기"
+
+#, fuzzy
+#~| msgid "Channel"
+#~ msgid "Channel - Form"
+#~ msgstr "채널"
+
+#, fuzzy
+#~| msgid "Channel"
+#~ msgid "Channel - WhatsApp"
+#~ msgstr "채널"
+
+#~ msgid "Manage %s"
+#~ msgstr "%s 관리"
+
+#~ msgid "User Preferences"
+#~ msgstr "사용자 환경 설정"
 
 #, fuzzy
 #~| msgid "Signature"

@@ -1038,17 +1038,59 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 
 #: db/seeds/permissions.rb
-msgid "Access to %s"
-msgstr "Προσβαση σε %s"
+msgid "Access the agent chat features."
+msgstr ""
 
 #: db/seeds/permissions.rb
-msgid "Access to Agent Tickets based on Group Access"
+msgid "Access the agent phone features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Access the knowledge base editor features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Access the knowledge base reader features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Access to Agent Tickets based on Group Access"
+msgid "Access the tickets as agent based on group access."
 msgstr "Access to Agent Tickets based on Group Access"
 
 #: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Recent Customer Tickets"
-msgid "Access to customer tickets"
+msgid "Access tickets as customer."
+msgstr "Πρόσφατα αιτήματα πελατών"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the chat interface."
+msgstr "Πρόσφατα αιτήματα πελατών"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Delete Knowledge Base"
+msgid "Access to the knowledge base interface."
+msgstr "Διαγραφή βάσης γνώσεων"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the phone interface."
+msgstr "Πρόσφατα αιτήματα πελατών"
+
+#: db/seeds/permissions.rb
+msgid "Access to the report interface."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the ticket interface."
 msgstr "Πρόσφατα αιτήματα πελατών"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
@@ -1482,16 +1524,16 @@ msgstr "Διαχειριστης"
 msgid "Admin Consent"
 msgstr ""
 
-#: db/seeds/permissions.rb
-msgid "Admin Interface"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
 #, fuzzy
 #| msgid "Bind Password"
 msgid "Admin Password Login"
 msgstr "Δεσμευμένος κωδικός πρόσβασης"
+
+#: db/seeds/permissions.rb
+msgid "Admin interface"
+msgstr ""
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -1569,6 +1611,12 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Agent"
+msgid "Agent chat"
+msgstr "Συνεργάτης"
+
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
 msgstr ""
@@ -1576,6 +1624,18 @@ msgstr ""
 #: app/models/role.rb app/models/user.rb
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Υπέρβαση του ορίου εκπροσώπου, ελέγξτε τις ρυθμίσεις λογαριασμού σας."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Agent"
+msgid "Agent phone"
+msgstr "Συνεργάτης"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Agent tickets"
+msgstr "Ανοικτά Αιτήματα"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
@@ -2735,7 +2795,7 @@ msgstr ""
 "Μέγεθος γραμματοσειράς CSS με μονάδα όπως 12px, 1,5 em. Εάν μείνει "
 "απροσδιόριστο, κληρονομεί το μέγεθος της γραμματοσειράς του ιστότοπου."
 
-#: app/assets/javascripts/app/controllers/cti.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/cti.coffee
 msgid "CTI"
 msgstr "CTI"
 
@@ -2989,10 +3049,6 @@ msgstr ""
 msgid "Change"
 msgstr "Αλλαγη"
 
-#: db/seeds/permissions.rb
-msgid "Change %s"
-msgstr "Αλλαγή %s"
-
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
@@ -3032,6 +3088,12 @@ msgstr "Αλλαγή σειράς"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
 msgstr "Αλλαγή σειράς"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Change your password"
+msgid "Change personal account password."
+msgstr "Αλλαγή του κωδικού πρόσβασης"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
@@ -3074,54 +3136,6 @@ msgstr "Πραγματοποιήθηκαν αλλαγές που απαιτού�
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
-msgstr "Καναλι"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Chat"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Email"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Facebook"
-msgstr ""
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel"
-msgid "Channel - Form"
-msgstr "Καναλι"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Google"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Microsoft 365"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - SMS"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Telegram"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Twitter"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Web"
-msgstr ""
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel"
-msgid "Channel - WhatsApp"
 msgstr "Καναλι"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
@@ -3591,6 +3605,12 @@ msgstr "Διαμορφώστε την εφαρμογή"
 msgid "Configure Basic Settings"
 msgstr "Βασικές ρυθμίσεις"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Configure Base"
+msgid "Configure your system."
+msgstr "Διαμορφώστε τη βάση"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #, fuzzy
 #| msgid "Config"
@@ -3854,6 +3874,18 @@ msgstr "Ασφάλεια"
 msgid "Copy Secret"
 msgstr "App Secret"
 
+#: app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue
+#, fuzzy
+#| msgid "App Secret"
+msgid "Copy Text"
+msgstr "App Secret"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Security"
+msgid "Copy Token"
+msgstr "Ασφάλεια"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
@@ -3865,15 +3897,12 @@ msgstr ""
 msgid "Copy to clipboard"
 msgstr "Αντιγραφή στο πρόχειρο: Ctrl + C, Enter"
 
-#: db/seeds/permissions.rb
-msgid "Core Workflow"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
+#: db/seeds/permissions.rb
 msgid "Core Workflows"
 msgstr ""
 
@@ -3974,6 +4003,7 @@ msgstr "Χώρα"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Δημιουργία"
@@ -4064,7 +4094,7 @@ msgstr "Δημιουργήστε τον λογαριασμό μου"
 #: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Create and setup %s"
-msgid "Create and set up %s"
+msgid "Create and set up Knowledge Base."
 msgstr "Δημιουργία και ρύθμιση %s"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
@@ -4159,6 +4189,7 @@ msgstr "Δημιουργία"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
@@ -4345,6 +4376,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
 msgstr "Επιλογή πελατών βάσει λίστας αποστολέων και παραληπτών"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Customer tickets"
+msgstr "Πρόσφατα αιτήματα πελατών"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid ""
@@ -5568,6 +5605,12 @@ msgstr "Διαγραφή πρώτα όλων των υπαρχουσών εγγ�
 msgid "Delete avatar"
 msgstr "Διαγραφή Χρήστη"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Delete all existing records first."
+msgid "Delete existing data of your system."
+msgstr "Διαγραφή πρώτα όλων των υπαρχουσών εγγραφών."
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #, fuzzy
 #| msgid "Delete File"
@@ -5609,6 +5652,12 @@ msgstr "διαγραφή της οργάνωσης;"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Delete records"
 msgstr "Διαγραφή εγγραφών"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Getting an Access Token"
+msgid "Delete this access token"
+msgstr "Λήψη token πρόσβασης"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
@@ -6216,7 +6265,8 @@ msgstr " Τελευταίος συγχρονισμός"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
-#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
+#: public/assets/form/form.js
 msgid "Email"
 msgstr "Email"
 
@@ -7067,10 +7117,17 @@ msgstr "Ειδικός"
 msgid "Experts"
 msgstr "Ειδικοί"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Escalation at"
+msgid "Expiration date"
+msgstr "Κλιμάκωση στις"
+
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Expires"
 msgstr "Λήγει"
 
@@ -7101,7 +7158,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -7385,6 +7442,7 @@ msgid "For more details, please check out our online documentation %l."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #, fuzzy
 #| msgid ""
 #| "For security reasons, the API token is shown only once. You'll need to "
@@ -7421,6 +7479,7 @@ msgstr "Ξεχάσατε τον κωδικό σας;"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
+#: db/seeds/permissions.rb
 msgid "Form"
 msgstr "Φόρμα"
 
@@ -7778,7 +7837,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Google"
 msgstr ""
 
@@ -8066,6 +8125,11 @@ msgstr ""
 msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
 "please reply to keep it open."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue
+#: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue
+msgid "Help"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
@@ -9336,6 +9400,12 @@ msgstr ""
 msgid "Last Internal Article"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Last used"
+msgid "Last Used"
+msgstr "Τελευταία χρήση"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
 msgstr ""
@@ -9734,16 +9804,48 @@ msgid "Manage"
 msgstr "Διαχειριστείτε"
 
 #: db/seeds/permissions.rb
-msgid "Manage %s"
-msgstr "Διαχειριστείτε %s"
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage API of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
 
 #: db/seeds/permissions.rb
-msgid "Manage %s Settings"
-msgstr "Διαχειριστείτε %s Ρυθμίσεις"
+msgid "Manage Facebook channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage Google mail channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage Microsoft 365 mail channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage SMS channel of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+msgid "Manage Service Level Agreements of your system."
+msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
 msgstr "Διαχειριστείτε ετικέτες"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage Telegram channel of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage Twitter channel of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
 
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
@@ -9751,6 +9853,28 @@ msgstr "Διαχειριστείτε ετικέτες"
 #| msgid "Authentication"
 msgid "Manage Two-Factor Authentication"
 msgstr "Authentication"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage WhatsApp channel of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+msgid "Manage active user sessions of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "New organizations are shared."
+msgid "Manage all organizations of your system."
+msgstr "Kοινοποιούνται νέοι οργανισμοί"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage all users of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
@@ -9760,6 +9884,254 @@ msgstr ""
 "Διαχειριστείτε εφαρμογές που μπορούν να χρησιμοποιήσουν το Zammad ως πάροχο "
 "OAuth και εφαρμογές που έχετε εξουσιοδοτήσει να χρησιμοποιούν τον λογαριασμό "
 "σας."
+
+#: db/seeds/permissions.rb
+msgid "Manage branding settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage calendars of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage chat channel of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage core system settings."
+msgstr "Διαχειριστείτε %s Ρυθμίσεις"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage core workflows of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage email channel of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage form channel of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage groups of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage integrations of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage maintenance mode of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage monitoring of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+msgid "Manage object attributes of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage packages of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Manage personal API tokens."
+msgstr "Προσωπικά διακριτικά πρόσβασης"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal appearance settings."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal avatar settings."
+msgstr "Διαχειριστείτε %s Ρυθμίσεις"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal calendar."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Manage personal devices and sessions."
+msgstr "Συνέχεια συνεδρίας"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal language settings."
+msgstr "Διαχειριστείτε %s Ρυθμίσεις"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal linked accounts."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage your notifications settings"
+msgid "Manage personal notifications settings."
+msgstr "Διαχειριστείτε τις ρυθμίσεις ειδοποιήσεων"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage your notifications settings"
+msgid "Manage personal out of office settings."
+msgstr "Διαχειριστείτε τις ρυθμίσεις ειδοποιήσεων"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal overviews."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal settings."
+msgstr "Διαχειριστείτε %s Ρυθμίσεις"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid ""
+#| "Login failed. Have you double-checked your credentials and completed the "
+#| "email verification step?"
+msgid "Manage personal two-factor authentication methods."
+msgstr ""
+"Η σύνδεση απέτυχε. Διπλοτσεκάρατε τα διαπιστευτήριά σας και ολοκληρώσατε το "
+"βήμα επαλήθευσης ηλεκτρονικού ταχυδρομείου;"
+
+#: db/seeds/permissions.rb
+msgid "Manage public links of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage report profiles of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage roles of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage schedulers of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+msgid "Manage security settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage system report of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage text modules of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket macros of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Overviews"
+msgid "Manage ticket overviews of your system."
+msgstr "Overviews"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket priorities of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket settings of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket states of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket tags of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket templates of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+msgid "Manage time accounting settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage translations of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage triggers of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage web channel of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage webhooks of your system."
+msgstr "Εισάγετε τη διεύθυνση URL του %s συστήματος"
 
 #: app/views/mailer/application.html.erb
 #, fuzzy
@@ -10030,6 +10402,7 @@ msgstr "Μακροεντολές"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: db/seeds/permissions.rb
 msgid "Microsoft 365"
 msgstr ""
 
@@ -10336,7 +10709,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "Όνομα"
@@ -10465,6 +10840,13 @@ msgstr "Νέα οργάνωση"
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "New Overview"
 msgstr "Νέα επισκόπηση"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "New Personal Access Token"
+msgstr "Προσωπικά διακριτικά πρόσβασης"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
 #, fuzzy
@@ -11119,6 +11501,12 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "OK, I've copied my token"
+msgid "OK, I have copied my token"
+msgstr "Εντάξει, έχω αντιγράψει το διακριτικό μου."
+
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "OK, I've copied my token"
 msgstr "Εντάξει, έχω αντιγράψει το διακριτικό μου."
@@ -11426,7 +11814,6 @@ msgid "Or, use one of your"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "New Overview"
 msgid "Order of Overviews"
@@ -11890,10 +12277,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Permissions"
 msgstr "Δικαιώματα"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Personal Access Tokens"
 msgstr "Προσωπικά διακριτικά πρόσβασης"
 
@@ -11901,13 +12290,19 @@ msgstr "Προσωπικά διακριτικά πρόσβασης"
 msgid "Personal Settings"
 msgstr "Προσωπικές ρυθμίσεις"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Personal access token has been deleted."
+msgstr "Προσωπικά διακριτικά πρόσβασης"
+
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Personal overview order was reset."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Phone"
 msgstr "Τηλέφωνο"
 
@@ -11935,6 +12330,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 "Διαλέξτε ένα όνομα για την εφαρμογή και θα σας δώσουμε ένα μοναδικό "
@@ -12335,6 +12731,10 @@ msgstr "Όνομα προιόντος"
 msgid "Profile"
 msgstr "Προφίλ"
 
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
+msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
 #, fuzzy
 #| msgid "Update successful!"
@@ -12348,6 +12748,7 @@ msgid "Profile language updated successfully."
 msgstr "Επιτυχής Ενημέρωση "
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -12802,8 +13203,10 @@ msgid "Reply-To"
 msgstr "Απαντηση σε"
 
 #: db/seeds/permissions.rb
-msgid "Report Interface"
-msgstr ""
+#, fuzzy
+#| msgid "Reporting"
+msgid "Report"
+msgstr "Reporting"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "Report Profile"
@@ -13146,7 +13549,7 @@ msgid "SAML App Credentials"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/sla.coffee
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "SLA"
 msgstr "SLA"
 
@@ -13154,13 +13557,14 @@ msgstr "SLA"
 msgid "SLA Times"
 msgstr "SLA Times"
 
-#: app/assets/javascripts/app/controllers/sla.coffee
+#: app/assets/javascripts/app/controllers/sla.coffee db/seeds/permissions.rb
 msgid "SLAs"
 msgstr "SLAs"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#: db/seeds/permissions.rb
 msgid "SMS"
 msgstr "SMS"
 
@@ -13534,6 +13938,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
@@ -14927,6 +15332,7 @@ msgstr "Γλώσσα"
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
+#: db/seeds/permissions.rb
 msgid "Telegram"
 msgstr "Telegram"
 
@@ -15012,7 +15418,6 @@ msgid "Text"
 msgstr "Κείμενο"
 
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: db/seeds/permissions.rb
 msgid "Text Modules"
 msgstr ""
 
@@ -15039,6 +15444,7 @@ msgid "Text module"
 msgstr "Text modules"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
+#: db/seeds/permissions.rb
 msgid "Text modules"
 msgstr "Text modules"
 
@@ -15234,6 +15640,12 @@ msgstr "%s Object(s) are created."
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The WhatsApp webhook payload could not be validated."
+msgstr "%s Object(s) are created."
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The access token could not be created."
 msgstr "%s Object(s) are created."
 
 #: app/controllers/reports_controller.rb
@@ -15795,6 +16207,12 @@ msgstr "Υπογραφή"
 #| msgid "Connection test successful"
 msgid "The password reset request was successful."
 msgstr "Η δοκιμή σύνδεσης ήταν επιτυχής"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The personal access token could not be deleted."
+msgstr "%s Object(s) are created."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
@@ -16556,6 +16974,7 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "This device"
 msgstr ""
 
@@ -17019,10 +17438,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Ticket Hook Position"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Ticket Interface"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -17635,6 +18050,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: db/seeds/permissions.rb
 msgid "Token Access"
 msgstr ""
@@ -17724,11 +18141,11 @@ msgstr "Μεταφράσεις"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/trigger.coffee
+#: db/seeds/permissions.rb
 msgid "Trigger"
 msgstr "Εκκίνητης"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
-#: db/seeds/permissions.rb
 msgid "Triggers"
 msgstr "Εκκινητές"
 
@@ -17811,7 +18228,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -18428,10 +18845,6 @@ msgstr ""
 msgid "User Organization Selector - email"
 msgstr ""
 
-#: db/seeds/permissions.rb
-msgid "User Preferences"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
@@ -18775,7 +19188,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Web"
 msgstr ""
 
@@ -18794,6 +19207,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: db/seeds/permissions.rb
 msgid "Webhook"
 msgstr ""
 
@@ -18804,7 +19218,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook.jst.eco
-#: db/seeds/permissions.rb
 msgid "Webhooks"
 msgstr ""
 
@@ -18910,6 +19323,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+#: db/seeds/permissions.rb
 msgid "WhatsApp"
 msgstr ""
 
@@ -19163,6 +19577,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -19385,6 +19800,12 @@ msgstr "Πλήρες όνομα"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Your Personal Access Token"
+msgstr "Προσωπικά διακριτικά πρόσβασης"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid ""
@@ -20920,6 +21341,10 @@ msgstr ""
 msgid "today"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
+msgid "token access,token,api,access token,application"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 msgid "translation,locale,localization"
 msgstr ""
@@ -21070,6 +21495,25 @@ msgstr "... ολόκληρης της περιοχής κειμένου"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
+
+#~ msgid "Access to %s"
+#~ msgstr "Προσβαση σε %s"
+
+#~ msgid "Change %s"
+#~ msgstr "Αλλαγή %s"
+
+#, fuzzy
+#~| msgid "Channel"
+#~ msgid "Channel - Form"
+#~ msgstr "Καναλι"
+
+#, fuzzy
+#~| msgid "Channel"
+#~ msgid "Channel - WhatsApp"
+#~ msgstr "Καναλι"
+
+#~ msgid "Manage %s"
+#~ msgstr "Διαχειριστείτε %s"
 
 #, fuzzy
 #~| msgid ""
@@ -21390,9 +21834,6 @@ msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
 
 #~ msgid "Order by Direction"
 #~ msgstr "Παραγγελία κατά κατεύθυνση"
-
-#~ msgid "Configure Base"
-#~ msgstr "Διαμορφώστε τη βάση"
 
 #~ msgid "Client storage"
 #~ msgstr "Client storage"

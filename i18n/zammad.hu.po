@@ -1023,17 +1023,59 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "Adatvédelmi szabályzat és Elfogadható felhasználási szabályzat"
 
 #: db/seeds/permissions.rb
-msgid "Access to %s"
-msgstr "Hozzáférés ehhez: %s"
+msgid "Access the agent chat features."
+msgstr ""
 
 #: db/seeds/permissions.rb
-msgid "Access to Agent Tickets based on Group Access"
+msgid "Access the agent phone features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Access the knowledge base editor features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Access the knowledge base reader features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Access to Agent Tickets based on Group Access"
+msgid "Access the tickets as agent based on group access."
 msgstr "Hozzáférés az ügynöki jegyekhez a Csoport hozzáférés alapján"
 
 #: db/seeds/permissions.rb
 #, fuzzy
+#| msgid "ticket.customer"
+msgid "Access tickets as customer."
+msgstr "jegy.ügyfél"
+
+#: db/seeds/permissions.rb
+#, fuzzy
 #| msgid "Recent Customer Tickets"
-msgid "Access to customer tickets"
+msgid "Access to the chat interface."
+msgstr "Legutóbbi ügyféljegyek"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Inserts knowledge base answer"
+msgid "Access to the knowledge base interface."
+msgstr "Tudásbázis válasz beszúrása"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the phone interface."
+msgstr "Legutóbbi ügyféljegyek"
+
+#: db/seeds/permissions.rb
+msgid "Access to the report interface."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the ticket interface."
 msgstr "Legutóbbi ügyféljegyek"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
@@ -1458,14 +1500,16 @@ msgstr "Rendszergazda"
 msgid "Admin Consent"
 msgstr "Rendszergazdai hozzájárulás"
 
-#: db/seeds/permissions.rb
-msgid "Admin Interface"
-msgstr "Rendszergazdai felület"
-
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Admin Password Login"
 msgstr "Rendszergazdai jelszavas bejelentkezés"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Admin Interface"
+msgid "Admin interface"
+msgstr "Rendszergazdai felület"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -1591,6 +1635,12 @@ msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 "Ügynök neve + From elválasztójel + A rendszer címének megjelenített neve"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Agent Name"
+msgid "Agent chat"
+msgstr "Ügynök neve"
+
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
 msgstr "Ügynök üresjárati időkorlát"
@@ -1598,6 +1648,18 @@ msgstr "Ügynök üresjárati időkorlát"
 #: app/models/role.rb app/models/user.rb
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Ügynöki limit túllépve, kérjük, ellenőrizze fiókja beállításait."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Agent Name"
+msgid "Agent phone"
+msgstr "Ügynök neve"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Open tickets"
+msgid "Agent tickets"
+msgstr "Nyitott jegyek"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
@@ -2728,7 +2790,7 @@ msgstr ""
 "CSS betűméret egy olyan egységgel, mint 12px, 1.5em. Amennyiben nem "
 "definiált, akkor a weboldal betűméretét örökli."
 
-#: app/assets/javascripts/app/controllers/cti.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/cti.coffee
 msgid "CTI"
 msgstr "CTI"
 
@@ -2970,10 +3032,6 @@ msgstr "Tanúsítványok és privát kulcsok"
 msgid "Change"
 msgstr "Változtatás"
 
-#: db/seeds/permissions.rb
-msgid "Change %s"
-msgstr "%s változtatás"
-
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
@@ -3007,6 +3065,12 @@ msgstr "Dátum módosítása"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
 msgstr "Sorrend változtatás"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Change Your Password"
+msgid "Change personal account password."
+msgstr "Változtassa meg jelszavát"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed:"
@@ -3044,52 +3108,6 @@ msgstr "Olyan változások történtek, amelyek adatbázis-frissítést igényel
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
 msgstr "Csatorna"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Chat"
-msgstr "Csatorna - Csevegés"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Email"
-msgstr "Csatorna - E-mail"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Facebook"
-msgstr "Csatorna - Facebook"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Form"
-msgstr "Csatorna - Űrlap"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Google"
-msgstr "Csatorna - Google"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Microsoft 365"
-msgstr "Csatorna - Microsoft 365"
-
-#: db/seeds/permissions.rb
-msgid "Channel - SMS"
-msgstr "Csatorna - SMS"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Telegram"
-msgstr "Csatorna - Telegram"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Twitter"
-msgstr "Csatorna - Twitter"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Web"
-msgstr "Csatorna - Web"
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel - Chat"
-msgid "Channel - WhatsApp"
-msgstr "Csatorna - Csevegés"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
@@ -3538,6 +3556,12 @@ msgstr "Alkalmazás konfigurálása"
 msgid "Configure Basic Settings"
 msgstr "Alap beállítások konfigurálása"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "To configure your system."
+msgid "Configure your system."
+msgstr "A rendszerének konfigurálásához."
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid "Confirm"
 msgstr "Megerősítés"
@@ -3806,6 +3830,18 @@ msgstr "Visszaállítási kódok"
 msgid "Copy Secret"
 msgstr "Alkalmazás titok"
 
+#: app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue
+#, fuzzy
+#| msgid "App Secret"
+msgid "Copy Text"
+msgstr "Alkalmazás titok"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "CTI Token"
+msgid "Copy Token"
+msgstr "CTI token"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Az aktuális objektumszám (pl. Jegy#) másolása a vágólapra"
@@ -3816,15 +3852,12 @@ msgstr "Az aktuális objektumszám (pl. Jegy#) másolása a vágólapra"
 msgid "Copy to clipboard"
 msgstr "Másolás vágólapra: Ctrl+C, Enter"
 
-#: db/seeds/permissions.rb
-msgid "Core Workflow"
-msgstr "Fő munkafolyamat"
-
 #: db/seeds/settings.rb
 msgid "Core Workflow Ajax Mode"
 msgstr "Fő munkafolyamat Ajax mód"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
+#: db/seeds/permissions.rb
 msgid "Core Workflows"
 msgstr "Fő munkafolyamatok"
 
@@ -3922,6 +3955,7 @@ msgstr "Ország"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Létrehozás"
@@ -4028,8 +4062,10 @@ msgid "Create account"
 msgstr "Fiókom létrehozása"
 
 #: db/seeds/permissions.rb
-msgid "Create and set up %s"
-msgstr "%s létrehozása és beállítása"
+#, fuzzy
+#| msgid "Create Knowledge Base"
+msgid "Create and set up Knowledge Base."
+msgstr "Tudásbázis létrehozása"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
@@ -4115,6 +4151,7 @@ msgstr "Létrehozás:"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
@@ -4293,6 +4330,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
 msgstr "Ügyfél kiválasztása a feladó és a címzett lista alapján"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Customer tickets"
+msgstr "Legutóbbi ügyféljegyek"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid ""
@@ -5620,6 +5663,12 @@ msgstr "Először törölje az összes meglévő rekordot."
 msgid "Delete avatar"
 msgstr "Avatár törlése"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Delete all existing records first."
+msgid "Delete existing data of your system."
+msgstr "Először törölje az összes meglévő rekordot."
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #, fuzzy
 #| msgid "Delete File"
@@ -5661,6 +5710,12 @@ msgstr "Szervezet törlése?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Delete records"
 msgstr "Bejegyzések törlése"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Getting an Access Token"
+msgid "Delete this access token"
+msgstr "Hozzáférési token beszerzése"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
@@ -6246,7 +6301,8 @@ msgstr "SSL ellenőrzés"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
-#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
+#: public/assets/form/form.js
 msgid "Email"
 msgstr "E-mail"
 
@@ -7121,10 +7177,17 @@ msgstr "Szakértő mód"
 msgid "Experts"
 msgstr "Szakértők"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Escalation at"
+msgid "Expiration date"
+msgstr "Eszkaláció ekkor"
+
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Expires"
 msgstr "Lejár"
 
@@ -7155,7 +7218,7 @@ msgstr "Zammad-csatolmány információk kinyerése tömbökből"
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -7429,6 +7492,7 @@ msgid "For more details, please check out our online documentation %l."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 msgid ""
 "For security reasons, the API token is shown only once. You'll need to save "
 "it somewhere secure before continuing."
@@ -7459,6 +7523,7 @@ msgstr "Elfelejtette jelszavát?"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
+#: db/seeds/permissions.rb
 msgid "Form"
 msgstr "Űrlap"
 
@@ -7799,7 +7864,7 @@ msgstr "Elköszönő üzenet"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Google"
 msgstr "Google"
 
@@ -8069,6 +8134,11 @@ msgstr "Üdvözlöm, a nevem %s, mit tehetek Önért?"
 msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
 "please reply to keep it open."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue
+#: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue
+msgid "Help"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
@@ -9294,6 +9364,12 @@ msgstr "Utolsó külső cikk"
 msgid "Last Internal Article"
 msgstr "Utolsó belső cikk"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Last used"
+msgid "Last Used"
+msgstr "Utolsó használat"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
 msgstr "Utolsó változtatás %s %s által %s"
@@ -9677,21 +9753,81 @@ msgid "Manage"
 msgstr "Kezelés"
 
 #: db/seeds/permissions.rb
-msgid "Manage %s"
-msgstr "%s kezelése"
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage API of your system."
+msgstr "Adja meg %s rendszerének URL címét"
 
 #: db/seeds/permissions.rb
-msgid "Manage %s Settings"
-msgstr "%s beállítások kezelése"
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage Facebook channel of your system."
+msgstr "Adja meg a %s rendszerének altartományát"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage Google mail channel of your system."
+msgstr "Adja meg a %s rendszerének altartományát"
+
+#: db/seeds/permissions.rb
+msgid "Manage Microsoft 365 mail channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage SMS channel of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+msgid "Manage Service Level Agreements of your system."
+msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
 msgstr "Címkék kezelése"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage Telegram channel of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage Twitter channel of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Manage Two-Factor Authentication"
 msgstr "Kétfaktoros hitelesítés kezelése"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage WhatsApp channel of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage active user sessions of your system."
+msgstr "Adja meg a %s rendszerének altartományát"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "New organizations are shared."
+msgid "Manage all organizations of your system."
+msgstr "Az új szervezetek megosztásra kerülnek."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage all users of your system."
+msgstr "Adja meg %s rendszerének URL címét"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
@@ -9701,6 +9837,258 @@ msgstr ""
 "Kezelje azokat az alkalmazásokat, amelyek OAuth-szolgáltatóként "
 "használhatják a Zammad rendszert, valamint azokat az alkalmazásokat, "
 "amelyeknek engedélyezte a fiókja használatát."
+
+#: db/seeds/permissions.rb
+msgid "Manage branding settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage calendars of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage chat channel of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage core system settings."
+msgstr "%s beállítások kezelése"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage core workflows of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage email channel of your system."
+msgstr "Adja meg a %s rendszerének altartományát"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage form channel of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "To configure your system."
+msgid "Manage groups of your system."
+msgstr "A rendszerének konfigurálásához."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage integrations of your system."
+msgstr "Adja meg a %s rendszerének altartományát"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage maintenance mode of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage monitoring of your system."
+msgstr "Adja meg a %s rendszerének altartományát"
+
+#: db/seeds/permissions.rb
+msgid "Manage object attributes of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage packages of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Manage personal API tokens."
+msgstr "Személyes hozzáférési tokenek"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal appearance settings."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal avatar settings."
+msgstr "%s beállítások kezelése"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal calendar."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Clean up dead sessions."
+msgid "Manage personal devices and sessions."
+msgstr "Halott munkamenetek kitakarítása."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal language settings."
+msgstr "%s beállítások kezelése"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal linked accounts."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage your notification settings"
+msgid "Manage personal notifications settings."
+msgstr "Értesítési beállításainak kezelése"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage your notification settings"
+msgid "Manage personal out of office settings."
+msgstr "Értesítési beállításainak kezelése"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Personal overview order was reset."
+msgid "Manage personal overviews."
+msgstr "A személyes áttekintési sorrend alaphelyzetbe került."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal settings."
+msgstr "%s beállítások kezelése"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Could not remove two-factor authentication method"
+msgid "Manage personal two-factor authentication methods."
+msgstr "Nem sikerült eltávolítani a kétfaktoros hitelesítési módszert"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage public links of your system."
+msgstr "Adja meg a %s rendszerének altartományát"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "To configure your system."
+msgid "Manage report profiles of your system."
+msgstr "A rendszerének konfigurálásához."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage roles of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage schedulers of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+msgid "Manage security settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage system report of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage text modules of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket macros of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "More ticket overviews"
+msgid "Manage ticket overviews of your system."
+msgstr "További jegyek áttekintése"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket priorities of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket settings of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket states of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket tags of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket templates of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enable time accounting for these tickets."
+msgid "Manage time accounting settings of your system."
+msgstr "Engedélyezze ezeknek a jegyeknek az időelszámolását."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage translations of your system."
+msgstr "Adja meg a %s rendszerének altartományát"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage triggers of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage web channel of your system."
+msgstr "Adja meg %s rendszerének URL címét"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage webhooks of your system."
+msgstr "Adja meg %s rendszerének URL címét"
 
 #: app/views/mailer/application.html.erb
 msgid "Manage your notification settings"
@@ -9963,6 +10351,7 @@ msgstr "Microsoft"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: db/seeds/permissions.rb
 msgid "Microsoft 365"
 msgstr "Microsoft 365"
 
@@ -10243,7 +10632,9 @@ msgstr "Nagios integráció"
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "Név"
@@ -10372,6 +10763,13 @@ msgstr "Új szervezet"
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "New Overview"
 msgstr "Új áttekintés"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Your New Personal Access Token"
+msgid "New Personal Access Token"
+msgstr "Az Ön új személyes hozzáférési tokenje"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
 #, fuzzy
@@ -11017,6 +11415,12 @@ msgstr "Az OAuth2 token lejárt!"
 msgid "OK"
 msgstr "OK"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "OK, I've copied my token"
+msgid "OK, I have copied my token"
+msgstr "OK, lemásoltam a tokenemet"
+
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "OK, I've copied my token"
 msgstr "OK, lemásoltam a tokenemet"
@@ -11336,7 +11740,6 @@ msgid "Or, use one of your"
 msgstr "Vagy használja az Ön egyik"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-#: db/seeds/permissions.rb
 msgid "Order of Overviews"
 msgstr "Az áttekintések sorrendje"
 
@@ -11775,10 +12178,12 @@ msgstr "Jegyek keresésének engedélyezési szintje"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Permissions"
 msgstr "Jogosultságok"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Personal Access Tokens"
 msgstr "Személyes hozzáférési tokenek"
 
@@ -11786,13 +12191,19 @@ msgstr "Személyes hozzáférési tokenek"
 msgid "Personal Settings"
 msgstr "Személyes beállítások"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Personal access token has been deleted."
+msgstr "Személyes hozzáférési tokenek"
+
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Personal overview order was reset."
 msgstr "A személyes áttekintési sorrend alaphelyzetbe került."
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Phone"
 msgstr "Telefon"
 
@@ -11820,6 +12231,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Válasszon egy nevet az alkalmazásnak, és mi adunk egy egyedi tokent."
 
@@ -12222,6 +12634,10 @@ msgstr "Termék neve"
 msgid "Profile"
 msgstr "Profil"
 
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
+msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
 #, fuzzy
 #| msgid "Ticket updated successfully."
@@ -12235,6 +12651,7 @@ msgid "Profile language updated successfully."
 msgstr "A jegycímkék sikeresen frissültek."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -12655,8 +13072,10 @@ msgid "Reply-To"
 msgstr "Válasz cím"
 
 #: db/seeds/permissions.rb
-msgid "Report Interface"
-msgstr "Jelentés felület"
+#, fuzzy
+#| msgid "Reporting"
+msgid "Report"
+msgstr "Jelentés"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "Report Profile"
@@ -13078,7 +13497,7 @@ msgid "SAML App Credentials"
 msgstr "SAML alkalmazás hitelesítő adatok"
 
 #: app/assets/javascripts/app/controllers/sla.coffee
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "SLA"
 msgstr "SLA"
 
@@ -13086,13 +13505,14 @@ msgstr "SLA"
 msgid "SLA Times"
 msgstr "SLA idők"
 
-#: app/assets/javascripts/app/controllers/sla.coffee
+#: app/assets/javascripts/app/controllers/sla.coffee db/seeds/permissions.rb
 msgid "SLAs"
 msgstr "SLAs"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#: db/seeds/permissions.rb
 msgid "SMS"
 msgstr "SMS"
 
@@ -13452,6 +13872,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
@@ -14776,6 +15197,7 @@ msgstr "Nyelv"
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
+#: db/seeds/permissions.rb
 msgid "Telegram"
 msgstr "Telegram"
 
@@ -14869,7 +15291,6 @@ msgid "Text"
 msgstr "Szöveg"
 
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: db/seeds/permissions.rb
 msgid "Text Modules"
 msgstr "Szövegmodulok"
 
@@ -14892,6 +15313,7 @@ msgid "Text module"
 msgstr "Szövegmodul"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
+#: db/seeds/permissions.rb
 msgid "Text modules"
 msgstr "Szövegmodulok"
 
@@ -15104,6 +15526,12 @@ msgstr "A feltöltött képet nem sikerült feldolgozni."
 #| msgid "The raw logo could not be read."
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "A nyers logó nem olvasható."
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "The report could not be generated"
+msgid "The access token could not be created."
+msgstr "A jelentést nem lehetett létrehozni"
 
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
@@ -15687,6 +16115,12 @@ msgstr "érvénytelen"
 #| msgid "Password changed successfully!"
 msgid "The password reset request was successful."
 msgstr "A jelszó sikeresen megváltoztatva!"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "The report could not be generated"
+msgid "The personal access token could not be deleted."
+msgstr "A jelentést nem lehetett létrehozni"
 
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
@@ -16496,6 +16930,7 @@ msgstr ""
 "kapcsolat létrejötte után eltávolításra kerül."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "This device"
 msgstr ""
 
@@ -16962,10 +17397,6 @@ msgstr "Jegy Hook elválasztó"
 #: db/seeds/settings.rb
 msgid "Ticket Hook Position"
 msgstr "Jegy Hook pozíció"
-
-#: db/seeds/permissions.rb
-msgid "Ticket Interface"
-msgstr "Jegy felület"
 
 #: db/seeds/settings.rb
 msgid "Ticket Last Contact Behaviour"
@@ -17588,6 +18019,8 @@ msgstr "Token"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: db/seeds/permissions.rb
 msgid "Token Access"
 msgstr "Token hozzáférés"
@@ -17679,11 +18112,11 @@ msgstr "Fordítások"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/trigger.coffee
+#: db/seeds/permissions.rb
 msgid "Trigger"
 msgstr "Eseményindító"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
-#: db/seeds/permissions.rb
 msgid "Triggers"
 msgstr "Eseményindítók"
 
@@ -17769,7 +18202,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -18404,10 +18837,6 @@ msgstr "Felhasználó eltérés"
 msgid "User Organization Selector - email"
 msgstr "Felhasználói szervezet választó - e-mail"
 
-#: db/seeds/permissions.rb
-msgid "User Preferences"
-msgstr "Felhasználó beállításai"
-
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
@@ -18740,7 +19169,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Web"
 msgstr "Web"
 
@@ -18759,6 +19188,7 @@ msgstr "Webkiszolgáló konfiguráció"
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: db/seeds/permissions.rb
 msgid "Webhook"
 msgstr "Webhook"
 
@@ -18769,7 +19199,6 @@ msgstr "Webhook token"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook.jst.eco
-#: db/seeds/permissions.rb
 msgid "Webhooks"
 msgstr "Webhookok"
 
@@ -18883,6 +19312,7 @@ msgstr "A %s milyen értékeit kell szinkronizálni a felhasználókkal."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Chats"
 msgid "WhatsApp"
@@ -19179,6 +19609,7 @@ msgid ""
 msgstr "A %s kezeléséről online dokumentációnkban %l talál egy útmutatót."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -19431,6 +19862,12 @@ msgstr "Az Ön neve"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
+msgstr "Az Ön új személyes hozzáférési tokenje"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Your New Personal Access Token"
+msgid "Your Personal Access Token"
 msgstr "Az Ön új személyes hozzáférési tokenje"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -20936,6 +21373,10 @@ msgstr "a kezdőlapra való lépéshez."
 msgid "today"
 msgstr "ma"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
+msgid "token access,token,api,access token,application"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 msgid "translation,locale,localization"
 msgstr ""
@@ -21085,6 +21526,65 @@ msgstr "...a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#~ msgid "Access to %s"
+#~ msgstr "Hozzáférés ehhez: %s"
+
+#~ msgid "Change %s"
+#~ msgstr "%s változtatás"
+
+#~ msgid "Channel - Chat"
+#~ msgstr "Csatorna - Csevegés"
+
+#~ msgid "Channel - Email"
+#~ msgstr "Csatorna - E-mail"
+
+#~ msgid "Channel - Facebook"
+#~ msgstr "Csatorna - Facebook"
+
+#~ msgid "Channel - Form"
+#~ msgstr "Csatorna - Űrlap"
+
+#~ msgid "Channel - Google"
+#~ msgstr "Csatorna - Google"
+
+#~ msgid "Channel - Microsoft 365"
+#~ msgstr "Csatorna - Microsoft 365"
+
+#~ msgid "Channel - SMS"
+#~ msgstr "Csatorna - SMS"
+
+#~ msgid "Channel - Telegram"
+#~ msgstr "Csatorna - Telegram"
+
+#~ msgid "Channel - Twitter"
+#~ msgstr "Csatorna - Twitter"
+
+#~ msgid "Channel - Web"
+#~ msgstr "Csatorna - Web"
+
+#, fuzzy
+#~| msgid "Channel - Chat"
+#~ msgid "Channel - WhatsApp"
+#~ msgstr "Csatorna - Csevegés"
+
+#~ msgid "Core Workflow"
+#~ msgstr "Fő munkafolyamat"
+
+#~ msgid "Create and set up %s"
+#~ msgstr "%s létrehozása és beállítása"
+
+#~ msgid "Manage %s"
+#~ msgstr "%s kezelése"
+
+#~ msgid "Report Interface"
+#~ msgstr "Jelentés felület"
+
+#~ msgid "Ticket Interface"
+#~ msgstr "Jegy felület"
+
+#~ msgid "User Preferences"
+#~ msgstr "Felhasználó beállításai"
 
 #~ msgid ""
 #~ "There is no stored configuration for this two-factor authentication "
@@ -21378,9 +21878,6 @@ msgstr "Várakozási idő ma"
 
 #~ msgid "1 new reply"
 #~ msgstr "1 új válasz"
-
-#~ msgid "Enable time accounting for these tickets."
-#~ msgstr "Engedélyezze ezeknek a jegyeknek az időelszámolását."
 
 #, fuzzy
 #~| msgid "Time Accounting Selector"

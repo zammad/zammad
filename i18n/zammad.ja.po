@@ -924,17 +924,59 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 
 #: db/seeds/permissions.rb
-msgid "Access to %s"
-msgstr "%sへのアクセス"
+msgid "Access the agent chat features."
+msgstr ""
 
 #: db/seeds/permissions.rb
-msgid "Access to Agent Tickets based on Group Access"
+msgid "Access the agent phone features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Access the knowledge base editor features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Access the knowledge base reader features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Access to Agent Tickets based on Group Access"
+msgid "Access the tickets as agent based on group access."
 msgstr "グループアクセスに基づいたエージェントチケットへのアクセス"
 
 #: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Recent Customer Tickets"
-msgid "Access to customer tickets"
+msgid "Access tickets as customer."
+msgstr "最近の顧客チケット"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the chat interface."
+msgstr "最近の顧客チケット"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Delete Knowledge Base"
+msgid "Access to the knowledge base interface."
+msgstr "ナレッジベースの削除"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the phone interface."
+msgstr "最近の顧客チケット"
+
+#: db/seeds/permissions.rb
+msgid "Access to the report interface."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Access to the ticket interface."
 msgstr "最近の顧客チケット"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
@@ -1365,16 +1407,16 @@ msgstr "管理"
 msgid "Admin Consent"
 msgstr ""
 
-#: db/seeds/permissions.rb
-msgid "Admin Interface"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
 #, fuzzy
 #| msgid "Bind Password"
 msgid "Admin Password Login"
 msgstr "ユーザに対するパスワード"
+
+#: db/seeds/permissions.rb
+msgid "Admin interface"
+msgstr ""
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -1454,6 +1496,12 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Agent"
+msgid "Agent chat"
+msgstr "担当者"
+
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
 msgstr ""
@@ -1461,6 +1509,18 @@ msgstr ""
 #: app/models/role.rb app/models/user.rb
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Agent limit exceeded, please check your account settings."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Agent"
+msgid "Agent phone"
+msgstr "担当者"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Agent tickets"
+msgstr "オープンチケット"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
@@ -2615,7 +2675,7 @@ msgstr ""
 "12px、1.5emのような単位のCSSフォントサイズ。 定義されていない場合は、ウェブサ"
 "イトのフォントサイズを継承します。"
 
-#: app/assets/javascripts/app/controllers/cti.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/cti.coffee
 msgid "CTI"
 msgstr "CTI"
 
@@ -2868,10 +2928,6 @@ msgstr ""
 msgid "Change"
 msgstr "変更"
 
-#: db/seeds/permissions.rb
-msgid "Change %s"
-msgstr "%s変更"
-
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
@@ -2911,6 +2967,12 @@ msgstr "順序を変更"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
 msgstr "順序を変更"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Change your password"
+msgid "Change personal account password."
+msgstr "パスワードを変更してください"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
@@ -2953,54 +3015,6 @@ msgstr "データベースのアップデートを要する変更がありまし
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
-msgstr "チャネル"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Chat"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Email"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Facebook"
-msgstr ""
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel"
-msgid "Channel - Form"
-msgstr "チャネル"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Google"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Microsoft 365"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - SMS"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Telegram"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Twitter"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Channel - Web"
-msgstr ""
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel"
-msgid "Channel - WhatsApp"
 msgstr "チャネル"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
@@ -3462,6 +3476,12 @@ msgstr "Appを設定する"
 msgid "Configure Basic Settings"
 msgstr "基本設定"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Configure Base"
+msgid "Configure your system."
+msgstr "ベースを設定"
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #, fuzzy
 #| msgid "Config"
@@ -3723,6 +3743,18 @@ msgstr "セキュリティー"
 msgid "Copy Secret"
 msgstr "アプリの秘訣"
 
+#: app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue
+#, fuzzy
+#| msgid "App Secret"
+msgid "Copy Text"
+msgstr "アプリの秘訣"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Security"
+msgid "Copy Token"
+msgstr "セキュリティー"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "現在のオブジェクト番号（Ticket#など）をクリップボードにコピー"
@@ -3733,15 +3765,12 @@ msgstr "現在のオブジェクト番号（Ticket#など）をクリップボ�
 msgid "Copy to clipboard"
 msgstr "クリップボードにコピー: Ctrl+C、Enter"
 
-#: db/seeds/permissions.rb
-msgid "Core Workflow"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
+#: db/seeds/permissions.rb
 msgid "Core Workflows"
 msgstr ""
 
@@ -3828,6 +3857,7 @@ msgstr "国"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "作成"
@@ -3918,7 +3948,7 @@ msgstr "アカウント作成"
 #: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Create Channels"
-msgid "Create and set up %s"
+msgid "Create and set up Knowledge Base."
 msgstr "チャンネル作成"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
@@ -4015,6 +4045,7 @@ msgstr "作成"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
@@ -4201,6 +4232,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
 msgstr "送受信リストによる顧客選択"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Customer tickets"
+msgstr "最近の顧客チケット"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid ""
@@ -5392,6 +5429,12 @@ msgstr "Delete all existing records first."
 msgid "Delete avatar"
 msgstr "ユーザー削除"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Delete all existing records first."
+msgid "Delete existing data of your system."
+msgstr "Delete all existing records first."
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #, fuzzy
 #| msgid "Delete File"
@@ -5433,6 +5476,12 @@ msgstr "オーガニゼーションを削除しますか？"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Delete records"
 msgstr "レコード削除"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Getting an Access Token"
+msgid "Delete this access token"
+msgstr "アクセストークンの取得"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
@@ -6051,7 +6100,8 @@ msgstr "最終同期"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
-#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
+#: public/assets/form/form.js
 msgid "Email"
 msgstr "メール"
 
@@ -6892,10 +6942,17 @@ msgstr "エキスパート"
 msgid "Experts"
 msgstr "エキスパート"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Expires"
+msgid "Expiration date"
+msgstr "期限切れ"
+
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Expires"
 msgstr "期限切れ"
 
@@ -6926,7 +6983,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -7206,6 +7263,7 @@ msgid "For more details, please check out our online documentation %l."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #, fuzzy
 #| msgid ""
 #| "For security reasons, the API token is shown only once. You'll need to "
@@ -7242,6 +7300,7 @@ msgstr "パスワードをお忘れですか？"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
+#: db/seeds/permissions.rb
 msgid "Form"
 msgstr "送信者"
 
@@ -7597,7 +7656,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Google"
 msgstr ""
 
@@ -7885,6 +7944,11 @@ msgstr ""
 msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
 "please reply to keep it open."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue
+#: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue
+msgid "Help"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
@@ -9088,6 +9152,12 @@ msgstr ""
 msgid "Last Internal Article"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Last used"
+msgid "Last Used"
+msgstr "直近の利用"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
 msgstr ""
@@ -9476,16 +9546,48 @@ msgid "Manage"
 msgstr "管理"
 
 #: db/seeds/permissions.rb
-msgid "Manage %s"
-msgstr "%sの管理"
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage API of your system."
+msgstr "お使いの%sシステムのURLを入力"
 
 #: db/seeds/permissions.rb
-msgid "Manage %s Settings"
-msgstr "%s設定の管理"
+msgid "Manage Facebook channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage Google mail channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage Microsoft 365 mail channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage SMS channel of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+msgid "Manage Service Level Agreements of your system."
+msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
 msgstr "タグの管理"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage Telegram channel of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage Twitter channel of your system."
+msgstr "お使いの%sシステムのURLを入力"
 
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
@@ -9494,6 +9596,26 @@ msgstr "タグの管理"
 msgid "Manage Two-Factor Authentication"
 msgstr "認証"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage WhatsApp channel of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+msgid "Manage active user sessions of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage all organizations of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage all users of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
 "Manage applications that can use Zammad as an OAuth provider and "
@@ -9501,6 +9623,250 @@ msgid ""
 msgstr ""
 "ZammadをOAuthプロバイダーとして使用するアプリケーションと、あなたのアカウント"
 "での使用を承認したアプリケーションを管理してください。"
+
+#: db/seeds/permissions.rb
+msgid "Manage branding settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage calendars of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage chat channel of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage core system settings."
+msgstr "%s設定の管理"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage core workflows of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage email channel of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage form channel of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage groups of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage integrations of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage maintenance mode of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage monitoring of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+msgid "Manage object attributes of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage packages of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Manage personal API tokens."
+msgstr "パーソナルアクセストークン"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal appearance settings."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal avatar settings."
+msgstr "%s設定の管理"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal calendar."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Manage personal devices and sessions."
+msgstr "セッションを継続"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal language settings."
+msgstr "%s設定の管理"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal linked accounts."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage your notifications settings"
+msgid "Manage personal notifications settings."
+msgstr "通知設定を管理"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage your notifications settings"
+msgid "Manage personal out of office settings."
+msgstr "通知設定を管理"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal overviews."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal settings."
+msgstr "%s設定の管理"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Authentication"
+msgid "Manage personal two-factor authentication methods."
+msgstr "認証"
+
+#: db/seeds/permissions.rb
+msgid "Manage public links of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage report profiles of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage roles of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage schedulers of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+msgid "Manage security settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage system report of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage text modules of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket macros of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Overviews"
+msgid "Manage ticket overviews of your system."
+msgstr "概要"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket priorities of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket settings of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket states of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket tags of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket templates of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+msgid "Manage time accounting settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Manage translations of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage triggers of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage web channel of your system."
+msgstr "お使いの%sシステムのURLを入力"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage webhooks of your system."
+msgstr "お使いの%sシステムのURLを入力"
 
 #: app/views/mailer/application.html.erb
 #, fuzzy
@@ -9780,6 +10146,7 @@ msgstr "マクロ"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: db/seeds/permissions.rb
 msgid "Microsoft 365"
 msgstr ""
 
@@ -10086,7 +10453,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "名前"
@@ -10215,6 +10584,13 @@ msgstr "新規組織"
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "New Overview"
 msgstr "新規概要"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Your New Personal Access Token"
+msgid "New Personal Access Token"
+msgstr "あなたの新規パーソナルアクセストークン"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
 #, fuzzy
@@ -10868,6 +11244,12 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "OK, I've copied my token"
+msgid "OK, I have copied my token"
+msgstr "マイトークンをコピーしました"
+
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "OK, I've copied my token"
 msgstr "マイトークンをコピーしました"
@@ -11193,7 +11575,6 @@ msgid "Or, use one of your"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "New Overview"
 msgid "Order of Overviews"
@@ -11652,10 +12033,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Permissions"
 msgstr "許可"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Personal Access Tokens"
 msgstr "パーソナルアクセストークン"
 
@@ -11663,13 +12046,19 @@ msgstr "パーソナルアクセストークン"
 msgid "Personal Settings"
 msgstr "個人設定"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Personal access token has been deleted."
+msgstr "パーソナルアクセストークン"
+
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Personal overview order was reset."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Phone"
 msgstr "電話"
 
@@ -11697,6 +12086,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 "アプリケーションに名称を付けていただくと、一意のトークンを差し上げます。"
@@ -12088,6 +12478,10 @@ msgstr "製品名"
 msgid "Profile"
 msgstr "プロファイル"
 
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
+msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
 #, fuzzy
 #| msgid "Update successful!"
@@ -12101,6 +12495,7 @@ msgid "Profile language updated successfully."
 msgstr "アップデートができました！"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -12555,8 +12950,10 @@ msgid "Reply-To"
 msgstr "Reply-To"
 
 #: db/seeds/permissions.rb
-msgid "Report Interface"
-msgstr ""
+#, fuzzy
+#| msgid "Reporting"
+msgid "Report"
+msgstr "報告"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "Report Profile"
@@ -12897,7 +13294,7 @@ msgid "SAML App Credentials"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/sla.coffee
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "SLA"
 msgstr "SLA"
 
@@ -12905,13 +13302,14 @@ msgstr "SLA"
 msgid "SLA Times"
 msgstr "SLA時間"
 
-#: app/assets/javascripts/app/controllers/sla.coffee
+#: app/assets/javascripts/app/controllers/sla.coffee db/seeds/permissions.rb
 msgid "SLAs"
 msgstr "SLA"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#: db/seeds/permissions.rb
 msgid "SMS"
 msgstr "SMS"
 
@@ -13285,6 +13683,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
@@ -14683,6 +15082,7 @@ msgstr "言語"
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
+#: db/seeds/permissions.rb
 msgid "Telegram"
 msgstr "Telegram"
 
@@ -14768,7 +15168,6 @@ msgid "Text"
 msgstr "本文"
 
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: db/seeds/permissions.rb
 msgid "Text Modules"
 msgstr ""
 
@@ -14795,6 +15194,7 @@ msgid "Text module"
 msgstr "テキストモジュール"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
+#: db/seeds/permissions.rb
 msgid "Text modules"
 msgstr "テキストモジュール"
 
@@ -14993,6 +15393,12 @@ msgstr "%s オブジェクトを作成。"
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The WhatsApp webhook payload could not be validated."
+msgstr "%s オブジェクトを作成。"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The access token could not be created."
 msgstr "%s オブジェクトを作成。"
 
 #: app/controllers/reports_controller.rb
@@ -15560,6 +15966,12 @@ msgstr "署名"
 #| msgid "Connection test successful"
 msgid "The password reset request was successful."
 msgstr "接続テスト成功"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The personal access token could not be deleted."
+msgstr "%s オブジェクトを作成。"
 
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
@@ -16326,6 +16738,7 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "This device"
 msgstr ""
 
@@ -16782,10 +17195,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Ticket Hook Position"
 msgstr "チケットフックの位置"
-
-#: db/seeds/permissions.rb
-msgid "Ticket Interface"
-msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Ticket Last Contact Behaviour"
@@ -17412,6 +17821,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: db/seeds/permissions.rb
 msgid "Token Access"
 msgstr "トークンアクセス"
@@ -17503,11 +17914,11 @@ msgstr "翻訳"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/trigger.coffee
+#: db/seeds/permissions.rb
 msgid "Trigger"
 msgstr "トリガー"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
-#: db/seeds/permissions.rb
 msgid "Triggers"
 msgstr "トリガー"
 
@@ -17590,7 +18001,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Twitter"
 msgstr "ツイッター"
 
@@ -18209,10 +18620,6 @@ msgstr ""
 msgid "User Organization Selector - email"
 msgstr ""
 
-#: db/seeds/permissions.rb
-msgid "User Preferences"
-msgstr "ユーザー基本設定"
-
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
@@ -18553,7 +18960,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Web"
 msgstr "ウェブ"
 
@@ -18572,6 +18979,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: db/seeds/permissions.rb
 msgid "Webhook"
 msgstr "Webhook"
 
@@ -18582,7 +18990,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook.jst.eco
-#: db/seeds/permissions.rb
 msgid "Webhooks"
 msgstr ""
 
@@ -18688,6 +19095,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+#: db/seeds/permissions.rb
 msgid "WhatsApp"
 msgstr ""
 
@@ -18971,6 +19379,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -19218,6 +19627,12 @@ msgstr "姓名"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
+msgstr "あなたの新規パーソナルアクセストークン"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Your New Personal Access Token"
+msgid "Your Personal Access Token"
 msgstr "あなたの新規パーソナルアクセストークン"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -20791,6 +21206,10 @@ msgstr ""
 msgid "today"
 msgstr "今日"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
+msgid "token access,token,api,access token,application"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 msgid "translation,locale,localization"
 msgstr ""
@@ -20955,6 +21374,28 @@ msgstr "... テキストエリア全体の"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Waiting time today"
+
+#~ msgid "Access to %s"
+#~ msgstr "%sへのアクセス"
+
+#~ msgid "Change %s"
+#~ msgstr "%s変更"
+
+#, fuzzy
+#~| msgid "Channel"
+#~ msgid "Channel - Form"
+#~ msgstr "チャネル"
+
+#, fuzzy
+#~| msgid "Channel"
+#~ msgid "Channel - WhatsApp"
+#~ msgstr "チャネル"
+
+#~ msgid "Manage %s"
+#~ msgstr "%sの管理"
+
+#~ msgid "User Preferences"
+#~ msgstr "ユーザー基本設定"
 
 #, fuzzy
 #~| msgid "Signature"
@@ -21378,9 +21819,6 @@ msgstr "∅ Waiting time today"
 #~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "選択"
-
-#~ msgid "Configure Base"
-#~ msgstr "ベースを設定"
 
 #~ msgid "Client storage"
 #~ msgstr "クライアントのストレージ"

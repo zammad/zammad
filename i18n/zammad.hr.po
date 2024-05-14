@@ -1000,15 +1000,59 @@ msgstr ""
 "Prihvatite politiku privatnosti podataka i politiku prihvatljive upotrebe"
 
 #: db/seeds/permissions.rb
-msgid "Access to %s"
-msgstr "Pristup %s"
+msgid "Access the agent chat features."
+msgstr ""
 
 #: db/seeds/permissions.rb
-msgid "Access to Agent Tickets based on Group Access"
+msgid "Access the agent phone features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Access the knowledge base editor features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Access the knowledge base reader features."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Access to Agent Tickets based on Group Access"
+msgid "Access the tickets as agent based on group access."
 msgstr "Pristup ticketima agenata na temelju grupnog pristupa"
 
 #: db/seeds/permissions.rb
-msgid "Access to customer tickets"
+#, fuzzy
+#| msgid "ticket.customer"
+msgid "Access tickets as customer."
+msgstr "ticket.customer"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Access to customer tickets"
+msgid "Access to the chat interface."
+msgstr "Pristup ticketima klijenata"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Inserts knowledge base answer"
+msgid "Access to the knowledge base interface."
+msgstr "Dodaje odgovor iz Knowledge Basea"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Access to customer tickets"
+msgid "Access to the phone interface."
+msgstr "Pristup ticketima klijenata"
+
+#: db/seeds/permissions.rb
+msgid "Access to the report interface."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Access to customer tickets"
+msgid "Access to the ticket interface."
 msgstr "Pristup ticketima klijenata"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
@@ -1414,14 +1458,16 @@ msgstr "Admin"
 msgid "Admin Consent"
 msgstr "Suglasnost administratora"
 
-#: db/seeds/permissions.rb
-msgid "Admin Interface"
-msgstr "Administracijsko sučelje"
-
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
 msgid "Admin Password Login"
 msgstr "Prijava administratora putem privremene lozinke"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Admin Interface"
+msgid "Admin interface"
+msgstr "Administracijsko sučelje"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -1521,6 +1567,12 @@ msgstr "Ime agenta"
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Ime agenta + FromSeparator + Zaslonsko ime adrese sustava"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Agent Name"
+msgid "Agent chat"
+msgstr "Ime agenta"
+
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
 msgstr "Prekoračenje vremena mirovanja agenta"
@@ -1528,6 +1580,18 @@ msgstr "Prekoračenje vremena mirovanja agenta"
 #: app/models/role.rb app/models/user.rb
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Limit broja agenata prekoračen, provjerite postavke računa."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Agent Name"
+msgid "Agent phone"
+msgstr "Ime agenta"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Open tickets"
+msgid "Agent tickets"
+msgstr "Otvoreni ticketi"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
@@ -2637,7 +2701,7 @@ msgstr ""
 "CSS veličina fonta s jedinicom poput 12px ili 1.5em. Ukoliko font nije "
 "definiran, koristi veličinu fonta web stranice."
 
-#: app/assets/javascripts/app/controllers/cti.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/cti.coffee
 msgid "CTI"
 msgstr "CTI"
 
@@ -2872,10 +2936,6 @@ msgstr "Certifikati i privatni ključevi"
 msgid "Change"
 msgstr "Promijeni"
 
-#: db/seeds/permissions.rb
-msgid "Change %s"
-msgstr "Promijeni %s"
-
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
@@ -2909,6 +2969,12 @@ msgstr "Promijeni datum"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
 msgstr "Promijeni poredak"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Change Your Password"
+msgid "Change personal account password."
+msgstr "Promijenite Vašu lozinku"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed:"
@@ -2946,50 +3012,6 @@ msgstr "Izvršene su promjene koje zahtijevaju ažuriranje baze podataka."
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
 msgstr "Kanal"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Chat"
-msgstr "Kanal - chat"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Email"
-msgstr "Kanal - e-mail"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Facebook"
-msgstr "Kanal - Facebook"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Form"
-msgstr "Kanal - formular"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Google"
-msgstr "Kanal - Google"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Microsoft 365"
-msgstr "Kanal - Microsoft 365"
-
-#: db/seeds/permissions.rb
-msgid "Channel - SMS"
-msgstr "Kanal - SMS"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Telegram"
-msgstr "Kanal - Telegram"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Twitter"
-msgstr "Kanal - Twitter"
-
-#: db/seeds/permissions.rb
-msgid "Channel - Web"
-msgstr "Kanal - Web"
-
-#: db/seeds/permissions.rb
-msgid "Channel - WhatsApp"
-msgstr "Kanal - WhatsApp"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
@@ -3431,6 +3453,12 @@ msgstr "Konfiguriranje aplikacije"
 msgid "Configure Basic Settings"
 msgstr "Konfiguriranje osnovnih postavki"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "To configure your system."
+msgid "Configure your system."
+msgstr "Konfigurirajte Vaš sustav."
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid "Confirm"
 msgstr "Potvrdi"
@@ -3677,6 +3705,18 @@ msgstr "Kodovi za oporavak"
 msgid "Copy Secret"
 msgstr "App tajna"
 
+#: app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue
+#, fuzzy
+#| msgid "App Secret"
+msgid "Copy Text"
+msgstr "App tajna"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "CTI Token"
+msgid "Copy Token"
+msgstr "CTI token"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopiraj trenutni broj objekta (npr. Ticket#) u međuspremnik"
@@ -3685,15 +3725,12 @@ msgstr "Kopiraj trenutni broj objekta (npr. Ticket#) u međuspremnik"
 msgid "Copy to clipboard"
 msgstr "Kopiraj u međuspremnik"
 
-#: db/seeds/permissions.rb
-msgid "Core Workflow"
-msgstr "Core Workflow"
-
 #: db/seeds/settings.rb
 msgid "Core Workflow Ajax Mode"
 msgstr "Core Workflow Ajax Mode"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
+#: db/seeds/permissions.rb
 msgid "Core Workflows"
 msgstr "Core Workflows"
 
@@ -3790,6 +3827,7 @@ msgstr "Država"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Otvori"
@@ -3892,8 +3930,10 @@ msgid "Create account"
 msgstr "Kreiraj račun"
 
 #: db/seeds/permissions.rb
-msgid "Create and set up %s"
-msgstr "Stvaranje i postavljanje %s"
+#, fuzzy
+#| msgid "Create Knowledge Base"
+msgid "Create and set up Knowledge Base."
+msgstr "Stvori Knowledge Base"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
@@ -3975,6 +4015,7 @@ msgstr "Kreiraj:"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/models/report.rb
 msgid "Created"
@@ -4149,6 +4190,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
 msgstr "Odabir klijenata na temelju popisa pošiljatelja i primatelja"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Recent Customer Tickets"
+msgid "Customer tickets"
+msgstr "Nedavni ticketi klijenta"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid ""
@@ -5393,6 +5440,12 @@ msgstr "Najprije obrišite sve postojeće zapise."
 msgid "Delete avatar"
 msgstr "Obriši avatar"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Delete all existing records first."
+msgid "Delete existing data of your system."
+msgstr "Najprije obrišite sve postojeće zapise."
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid "Delete immediately"
 msgstr "Obriši odmah"
@@ -5432,6 +5485,12 @@ msgstr "Obrisati organizaciju?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Delete records"
 msgstr "Brisanje zapisa"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Getting an Access Token"
+msgid "Delete this access token"
+msgstr "Kreiranje pristupnog tokena"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 #, fuzzy
@@ -5998,7 +6057,8 @@ msgstr "Elasticsearch SSL provjera"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
-#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
+#: public/assets/form/form.js
 msgid "Email"
 msgstr "E-pošta"
 
@@ -6814,10 +6874,17 @@ msgstr "Napredni način rada"
 msgid "Experts"
 msgstr "Napredni"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Escalation at"
+msgid "Expiration date"
+msgstr "Eskalacija u"
+
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Expires"
 msgstr "Ističe"
 
@@ -6844,7 +6911,7 @@ msgstr "Izdvoji informacije o Zammad privicima iz polja"
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -7105,6 +7172,7 @@ msgstr ""
 "Ukoliko želite znati više, molimo pogledajte našu online dokumentaciju %l."
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 msgid ""
 "For security reasons, the API token is shown only once. You'll need to save "
 "it somewhere secure before continuing."
@@ -7135,6 +7203,7 @@ msgstr "Zaboravili ste Vašu lozinku?"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
+#: db/seeds/permissions.rb
 msgid "Form"
 msgstr "Formular"
 
@@ -7465,7 +7534,7 @@ msgstr "Odjavna poruka"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Google"
 msgstr "Google"
 
@@ -7726,6 +7795,11 @@ msgid ""
 msgstr ""
 "Pozdrav, rok za korisničku podršku ovog razgovora će isteći, odgovorite kako "
 "bi ostao otvoren."
+
+#: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue
+#: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue
+msgid "Help"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -8914,6 +8988,12 @@ msgstr "Zadnji javni članak"
 msgid "Last Internal Article"
 msgstr "Zadnji interni članak"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Last used"
+msgid "Last Used"
+msgstr "Zadnji put korišten"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
 msgstr "Posljednja promjena %s %s od strane %s"
@@ -9286,21 +9366,81 @@ msgid "Manage"
 msgstr "Upravljanje"
 
 #: db/seeds/permissions.rb
-msgid "Manage %s"
-msgstr "Upravljanje %s"
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage API of your system."
+msgstr "Unesite URL Vašeg %s sustava."
 
 #: db/seeds/permissions.rb
-msgid "Manage %s Settings"
-msgstr "Upravljaj postavkama %s"
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage Facebook channel of your system."
+msgstr "Unesite poddomenu Vaše %s instance"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage Google mail channel of your system."
+msgstr "Unesite poddomenu Vaše %s instance"
+
+#: db/seeds/permissions.rb
+msgid "Manage Microsoft 365 mail channel of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage SMS channel of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+msgid "Manage Service Level Agreements of your system."
+msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
 msgstr "Upravljanje tagovima"
 
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage Telegram channel of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage Twitter channel of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Manage Two-Factor Authentication"
 msgstr "Upravljajte dvofaktorskom autentifikacijom"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage WhatsApp channel of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage active user sessions of your system."
+msgstr "Unesite poddomenu Vaše %s instance"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "New organizations are shared."
+msgid "Manage all organizations of your system."
+msgstr "Nove organizacije kreiraju se sa dijeljenim sadržajem."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage all users of your system."
+msgstr "Unesite URL Vašeg %s sustava."
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
@@ -9309,6 +9449,258 @@ msgid ""
 msgstr ""
 "Upravljanje aplikacijama koje mogu koristiti Zammad kao OAuth davatelja "
 "usluga i aplikacijama koje ste ovlastili za korištenje Vašeg računa."
+
+#: db/seeds/permissions.rb
+msgid "Manage branding settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage calendars of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage chat channel of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage core system settings."
+msgstr "Upravljaj postavkama %s"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage core workflows of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage email channel of your system."
+msgstr "Unesite poddomenu Vaše %s instance"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage form channel of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "To configure your system."
+msgid "Manage groups of your system."
+msgstr "Konfigurirajte Vaš sustav."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage integrations of your system."
+msgstr "Unesite poddomenu Vaše %s instance"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage maintenance mode of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage monitoring of your system."
+msgstr "Unesite poddomenu Vaše %s instance"
+
+#: db/seeds/permissions.rb
+msgid "Manage object attributes of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage packages of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Manage personal API tokens."
+msgstr "Tokeni za osobni pristup"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal appearance settings."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal avatar settings."
+msgstr "Upravljaj postavkama %s"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal calendar."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Clean up dead sessions."
+msgid "Manage personal devices and sessions."
+msgstr "Uredite neresponzivne sesije."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal language settings."
+msgstr "Upravljaj postavkama %s"
+
+#: db/seeds/permissions.rb
+msgid "Manage personal linked accounts."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage your notification settings"
+msgid "Manage personal notifications settings."
+msgstr "Podesite svoje postavke obavijesti"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage your notification settings"
+msgid "Manage personal out of office settings."
+msgstr "Podesite svoje postavke obavijesti"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Personal overview order was reset."
+msgid "Manage personal overviews."
+msgstr "Resetiran redoslijed vlastitih pregleda."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Manage %s Settings"
+msgid "Manage personal settings."
+msgstr "Upravljaj postavkama %s"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Could not remove two-factor authentication method"
+msgid "Manage personal two-factor authentication methods."
+msgstr "Nije moguće ukloniti dvofaktorsku autentifikacijsku metodu"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage public links of your system."
+msgstr "Unesite poddomenu Vaše %s instance"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "To configure your system."
+msgid "Manage report profiles of your system."
+msgstr "Konfigurirajte Vaš sustav."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage roles of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage schedulers of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+msgid "Manage security settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage system report of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage text modules of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage ticket macros of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "More ticket overviews"
+msgid "Manage ticket overviews of your system."
+msgstr "Više pregleda ticketa"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage ticket priorities of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage ticket settings of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage ticket states of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage ticket tags of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage ticket templates of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enable time accounting for these tickets."
+msgid "Manage time accounting settings of your system."
+msgstr "Omogući računanje vremena za ove tickete."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the Subdomain of your %s system"
+msgid "Manage translations of your system."
+msgstr "Unesite poddomenu Vaše %s instance"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage triggers of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage web channel of your system."
+msgstr "Unesite URL Vašeg %s sustava."
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Enter the URL of your %s system."
+msgid "Manage webhooks of your system."
+msgstr "Unesite URL Vašeg %s sustava."
 
 #: app/views/mailer/application.html.erb
 msgid "Manage your notification settings"
@@ -9555,6 +9947,7 @@ msgstr "Microsoft"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#: db/seeds/permissions.rb
 msgid "Microsoft 365"
 msgstr "Microsoft 365"
 
@@ -9835,7 +10228,9 @@ msgstr "Nagios integracija"
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "Ime"
@@ -9962,6 +10357,13 @@ msgstr "Nova organizacija"
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "New Overview"
 msgstr "Novi pregled"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Your New Personal Access Token"
+msgid "New Personal Access Token"
+msgstr "Vaš novi osobni pristupni token"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
 msgid "New Priority"
@@ -10593,6 +10995,12 @@ msgstr "OAuth2 token je istekao!"
 msgid "OK"
 msgstr "OK"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "OK, I've copied my token"
+msgid "OK, I have copied my token"
+msgstr "Ok, kopirao sam svoj token"
+
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "OK, I've copied my token"
 msgstr "Ok, kopirao sam svoj token"
@@ -10884,7 +11292,6 @@ msgid "Or, use one of your"
 msgstr "Ili koristite jedan od Vaših"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-#: db/seeds/permissions.rb
 msgid "Order of Overviews"
 msgstr "Redoslijed pregleda"
 
@@ -11308,10 +11715,12 @@ msgstr "Razina ovlasti za pretraživanje ticketa"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Permissions"
 msgstr "Dozvole"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Personal Access Tokens"
 msgstr "Tokeni za osobni pristup"
 
@@ -11319,13 +11728,19 @@ msgstr "Tokeni za osobni pristup"
 msgid "Personal Settings"
 msgstr "Osobne postavke"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Personal access token has been deleted."
+msgstr "Tokeni za osobni pristup"
+
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Personal overview order was reset."
 msgstr "Resetiran redoslijed vlastitih pregleda."
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Phone"
 msgstr "Telefon"
 
@@ -11351,6 +11766,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr "Telefonski broj se već koristi u drugom WhatsApp računu."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 "Odaberite naziv aplikacije, a zatim će se generirati jedinstveni token."
@@ -11735,6 +12151,10 @@ msgstr "Naziv proizvoda"
 msgid "Profile"
 msgstr "Profil"
 
+#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
+msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
 #, fuzzy
 #| msgid "Ticket updated successfully."
@@ -11748,6 +12168,7 @@ msgid "Profile language updated successfully."
 msgstr "Tagovi ticketa su uspješno ažurirani."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -12157,8 +12578,10 @@ msgid "Reply-To"
 msgstr "Odgovori na"
 
 #: db/seeds/permissions.rb
-msgid "Report Interface"
-msgstr "Sučelje izvješća"
+#, fuzzy
+#| msgid "Reporting"
+msgid "Report"
+msgstr "Izvješćivanje"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "Report Profile"
@@ -12520,7 +12943,7 @@ msgid "SAML App Credentials"
 msgstr "Prijavni podaci SAML aplikacije"
 
 #: app/assets/javascripts/app/controllers/sla.coffee
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "SLA"
 msgstr "SLA"
 
@@ -12528,13 +12951,14 @@ msgstr "SLA"
 msgid "SLA Times"
 msgstr "SLA rokovi"
 
-#: app/assets/javascripts/app/controllers/sla.coffee
+#: app/assets/javascripts/app/controllers/sla.coffee db/seeds/permissions.rb
 msgid "SLAs"
 msgstr "SLA"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
+#: db/seeds/permissions.rb
 msgid "SMS"
 msgstr "SMS"
 
@@ -12882,6 +13306,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
@@ -14170,6 +14595,7 @@ msgstr "Ciljani jezik"
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
+#: db/seeds/permissions.rb
 msgid "Telegram"
 msgstr "Telegram"
 
@@ -14262,7 +14688,6 @@ msgid "Text"
 msgstr "Tekst"
 
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: db/seeds/permissions.rb
 msgid "Text Modules"
 msgstr "Tekstni moduli"
 
@@ -14285,6 +14710,7 @@ msgid "Text module"
 msgstr "Tekstni modul"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
+#: db/seeds/permissions.rb
 msgid "Text modules"
 msgstr "Skraćenice pojmova"
 
@@ -14454,6 +14880,12 @@ msgstr "Payload WhatsApp webhooka nije moguće obraditi."
 #: lib/whatsapp/webhook/payload.rb
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "Nije moguće potvrditi payload WhatsApp webhooka."
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "The token could not be generated."
+msgid "The access token could not be created."
+msgstr "Nije moguće generirati token."
 
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
@@ -14977,6 +15409,12 @@ msgstr "PGP pristupna fraza nije valjana."
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue
 msgid "The password reset request was successful."
 msgstr "Zahtjev za ponovno postavljanje lozinke je bio uspješan."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
+#, fuzzy
+#| msgid "The user token could not be generated."
+msgid "The personal access token could not be deleted."
+msgstr "Nije moguće generirati korisnički token."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
@@ -15707,6 +16145,7 @@ msgstr ""
 "uspostavljanja veze za chat."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid "This device"
 msgstr ""
 
@@ -16146,10 +16585,6 @@ msgstr "Razdjelnik nastavka ticketa"
 #: db/seeds/settings.rb
 msgid "Ticket Hook Position"
 msgstr "Položaj nastavka ticketa"
-
-#: db/seeds/permissions.rb
-msgid "Ticket Interface"
-msgstr "Sučelje ticketa"
 
 #: db/seeds/settings.rb
 msgid "Ticket Last Contact Behaviour"
@@ -16768,6 +17203,8 @@ msgstr "Token"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 #: db/seeds/permissions.rb
 msgid "Token Access"
 msgstr "Pristup putem tokena"
@@ -16849,11 +17286,11 @@ msgstr "Prijevodi"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/trigger.coffee
+#: db/seeds/permissions.rb
 msgid "Trigger"
 msgstr "Trigger"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
-#: db/seeds/permissions.rb
 msgid "Triggers"
 msgstr "Triggeri"
 
@@ -16941,7 +17378,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -17564,10 +18001,6 @@ msgstr "Korisnik se ne podudara"
 msgid "User Organization Selector - email"
 msgstr "Odabir korisničke organizacije - e-mail"
 
-#: db/seeds/permissions.rb
-msgid "User Preferences"
-msgstr "Korisničke postavke"
-
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
@@ -17884,7 +18317,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Web"
 msgstr "Web"
 
@@ -17903,6 +18336,7 @@ msgstr "Konfiguracija web-poslužitelja"
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: db/seeds/permissions.rb
 msgid "Webhook"
 msgstr "Webhook"
 
@@ -17913,7 +18347,6 @@ msgstr "Webhook token"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook.jst.eco
-#: db/seeds/permissions.rb
 msgid "Webhooks"
 msgstr "Webhook-ovi"
 
@@ -18027,6 +18460,7 @@ msgstr "Koje vrijednosti %s treba sinkronizirati s korisnicima."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco
+#: db/seeds/permissions.rb
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
@@ -18312,6 +18746,7 @@ msgid ""
 msgstr "Uputu za korištenje %s možete pronaći u našoj online dokumentaciji %l."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -18554,6 +18989,12 @@ msgstr "Vaše ime"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
+msgstr "Vaš novi osobni pristupni token"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
+#, fuzzy
+#| msgid "Your New Personal Access Token"
+msgid "Your Personal Access Token"
 msgstr "Vaš novi osobni pristupni token"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -20030,6 +20471,10 @@ msgstr "za povratak na početnu stranicu."
 msgid "today"
 msgstr "danas"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
+msgid "token access,token,api,access token,application"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 msgid "translation,locale,localization"
 msgstr ""
@@ -20176,6 +20621,63 @@ msgstr "... cijelog tekstnog polja"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ vrijeme čekanja danas"
+
+#~ msgid "Access to %s"
+#~ msgstr "Pristup %s"
+
+#~ msgid "Change %s"
+#~ msgstr "Promijeni %s"
+
+#~ msgid "Channel - Chat"
+#~ msgstr "Kanal - chat"
+
+#~ msgid "Channel - Email"
+#~ msgstr "Kanal - e-mail"
+
+#~ msgid "Channel - Facebook"
+#~ msgstr "Kanal - Facebook"
+
+#~ msgid "Channel - Form"
+#~ msgstr "Kanal - formular"
+
+#~ msgid "Channel - Google"
+#~ msgstr "Kanal - Google"
+
+#~ msgid "Channel - Microsoft 365"
+#~ msgstr "Kanal - Microsoft 365"
+
+#~ msgid "Channel - SMS"
+#~ msgstr "Kanal - SMS"
+
+#~ msgid "Channel - Telegram"
+#~ msgstr "Kanal - Telegram"
+
+#~ msgid "Channel - Twitter"
+#~ msgstr "Kanal - Twitter"
+
+#~ msgid "Channel - Web"
+#~ msgstr "Kanal - Web"
+
+#~ msgid "Channel - WhatsApp"
+#~ msgstr "Kanal - WhatsApp"
+
+#~ msgid "Core Workflow"
+#~ msgstr "Core Workflow"
+
+#~ msgid "Create and set up %s"
+#~ msgstr "Stvaranje i postavljanje %s"
+
+#~ msgid "Manage %s"
+#~ msgstr "Upravljanje %s"
+
+#~ msgid "Report Interface"
+#~ msgstr "Sučelje izvješća"
+
+#~ msgid "Ticket Interface"
+#~ msgstr "Sučelje ticketa"
+
+#~ msgid "User Preferences"
+#~ msgstr "Korisničke postavke"
 
 #~ msgid ""
 #~ "There is no stored configuration for this two-factor authentication "
@@ -20463,9 +20965,6 @@ msgstr "∅ vrijeme čekanja danas"
 #~| msgid "reply"
 #~ msgid "1 new reply"
 #~ msgstr "odgovori"
-
-#~ msgid "Enable time accounting for these tickets."
-#~ msgstr "Omogući računanje vremena za ove tickete."
 
 #, fuzzy
 #~| msgid "Time Accounting Selector"
