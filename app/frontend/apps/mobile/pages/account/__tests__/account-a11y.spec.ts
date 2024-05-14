@@ -4,7 +4,7 @@ import { axe } from 'vitest-axe'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
-import { UserCurrentAvatarActiveDocument } from '../graphql/queries/userCurrentActive.api.ts'
+import { UserCurrentAvatarActiveDocument } from '../graphql/queries/userCurrentAvatarActive.api.ts'
 
 const mockAvatarImage =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='

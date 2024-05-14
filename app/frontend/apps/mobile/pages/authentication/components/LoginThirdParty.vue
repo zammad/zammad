@@ -44,7 +44,7 @@ const { fingerprint } = useFingerprint()
             class="shrink-0 ltr:mr-2.5 rtl:ml-2.5"
           />
           <span class="truncate text-xl leading-7">
-            {{ $t(provider.name) }}
+            {{ $t(provider.label) }}
           </span>
         </button>
       </form>

@@ -22,6 +22,7 @@ const userData = {
     locale: 'de-de',
   },
   objectAttributeValues: [],
+  authorizations: [],
   organization: {
     __typename: 'Organization',
     id: '234241',

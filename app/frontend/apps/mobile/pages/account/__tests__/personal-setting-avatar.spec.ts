@@ -10,7 +10,7 @@ import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { UserCurrentAvatarAddDocument } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.api.ts'
 import { UserCurrentAvatarDeleteDocument } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.api.ts'
 
-import { UserCurrentAvatarActiveDocument } from '../graphql/queries/userCurrentActive.api.ts'
+import { UserCurrentAvatarActiveDocument } from '../graphql/queries/userCurrentAvatarActive.api.ts'
 
 vi.mock('vue-advanced-cropper', () => {
   const Cropper = defineComponent({

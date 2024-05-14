@@ -5,6 +5,12 @@ import { UserAttributesFragmentDoc } from './userAttributes.api';
 export const CurrentUserAttributesFragmentDoc = gql`
     fragment currentUserAttributes on User {
   ...userAttributes
+  authorizations {
+    id
+    provider
+    uid
+    username
+  }
   email
   permissions {
     names

@@ -10,7 +10,7 @@ describe('CommonButton.vue', () => {
     const button = view.getByRole('button')
 
     expect(button).toHaveAttribute('type', 'button')
-    expect(button).toHaveClasses(['inline-flex', 'bg-transparent', 'btn-sm'])
+    expect(button).toHaveClasses(['-:inline-flex', 'bg-transparent', 'btn-sm'])
   })
 
   it('renders default slot as the button label', async () => {
@@ -60,7 +60,7 @@ describe('CommonButton.vue', () => {
       },
     })
 
-    expect(view.getByRole('button')).toHaveClasses(['btn-block'])
+    expect(view.getByRole('button')).toHaveClasses(['w-full'])
   })
 
   it.each([

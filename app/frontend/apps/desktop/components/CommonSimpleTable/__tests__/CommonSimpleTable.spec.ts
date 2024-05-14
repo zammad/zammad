@@ -92,14 +92,18 @@ describe('CommonSimpleTable.vue', () => {
   })
 
   it('generates expected DOM', async () => {
-    // TODO: check if such snappshot test is really the way we want to go.
+    // TODO: check if such snapshot test is really the way we want to go.
     const view = renderTable(
       {
         headers: tableHeaders,
         items: tableItems,
         actions: tableActions,
       },
-      true,
+      // NB: Please don't remove this, otherwise snapshot would contain markup of many more components other than the
+      //   one under the test, which can lead to false positives.
+      {
+        shallow: true,
+      },
     )
 
     expect(view.baseElement.querySelector('table')).toMatchFileSnapshot(

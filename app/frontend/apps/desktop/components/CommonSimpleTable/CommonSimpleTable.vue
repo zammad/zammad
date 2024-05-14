@@ -65,12 +65,14 @@ defineProps<Props>()
           class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md"
           :class="{ 'bg-blue-200 dark:bg-gray-700': (index + 1) % 2 }"
         >
-          <CommonActionMenu
-            class="flex items-center justify-center"
-            :actions="actions"
-            :entity="item"
-            button-size="medium"
-          />
+          <slot name="actions" v-bind="{ actions, item }">
+            <CommonActionMenu
+              class="flex items-center justify-center"
+              :actions="actions"
+              :entity="item"
+              button-size="medium"
+            />
+          </slot>
         </td>
       </tr>
     </tbody>

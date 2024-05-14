@@ -29,7 +29,8 @@ const confirmationVariant = computed<ConfirmationVariantOptions>(() => {
         headerIcon: 'trash3',
         content: __('Are you sure you want to delete this object?'),
         footerActionOptions: {
-          actionLabel: __('Delete Object'),
+          actionLabel:
+            confirmationOptions.value?.buttonLabel || __('Delete Object'),
           actionButton: {
             variant: 'danger',
           },

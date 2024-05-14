@@ -1379,6 +1379,7 @@ msgid "Appearance"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Application"
 msgstr ""
 
@@ -7687,6 +7688,10 @@ msgstr ""
 msgid "Link Related Answer"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+msgid "Link account on %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr ""
@@ -7698,6 +7703,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 #: db/seeds/permissions.rb
 msgid "Linked Accounts"
 msgstr ""
@@ -9076,10 +9083,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "No record found!"
 msgstr ""
 
 #: lib/whatsapp/webhook/message/status.rb
@@ -10696,6 +10699,10 @@ msgstr ""
 msgid "Remove a configured two-factor authentication method"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+msgid "Remove account link on %s"
+msgstr ""
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
 msgstr ""
@@ -11423,6 +11430,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
@@ -12891,6 +12899,10 @@ msgstr ""
 msgid "The access token could not be created."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+msgid "The account link was successfully removed!"
+msgstr ""
+
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
 msgstr ""
@@ -13240,6 +13252,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "The limit of displayable suggestions was reached, please narrow down your search."
+msgstr ""
+
+#: app/services/service/user/remove_linked_account.rb
+msgid "The linked account could not be found."
 msgstr ""
 
 #: app/services/service/auth/verify_admin_token.rb
@@ -15553,6 +15569,7 @@ msgid "UserDevice could not be found."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Username"
 msgstr ""
 
@@ -17187,6 +17204,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "left"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue

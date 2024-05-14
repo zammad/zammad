@@ -22,6 +22,7 @@ yarn generate-graphql-api
 serialize_graphql_api $TMP_FILE_AFTER
 if ! cmp $TMP_FILE_BEFORE $TMP_FILE_AFTER
 then
+  diff $TMP_FILE_BEFORE $TMP_FILE_AFTER
   echo "Use the command 'yarn run generate-graphql-api' to re-generate the API files."
   exit 1
 else

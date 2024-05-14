@@ -37,7 +37,7 @@ import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButton
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/types.ts'
 
-import { useUserCurrentAvatarActiveQuery } from '../graphql/queries/userCurrentActive.api.ts'
+import { useUserCurrentAvatarActiveQuery } from '../graphql/queries/userCurrentAvatarActive.api.ts'
 
 const router = useRouter()
 

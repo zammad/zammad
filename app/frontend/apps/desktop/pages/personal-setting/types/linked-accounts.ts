@@ -2,10 +2,13 @@
 
 import type { EnumAuthenticationProvider } from '#shared/graphql/types.ts'
 
-export interface ThirdPartyAuthProvider {
+export interface LinkedAccountTableItem {
+  id: number
+  application: string
+  username: string
+  uid: string
   name: EnumAuthenticationProvider
-  label: string
-  enabled: boolean
-  icon: string
   url: string
+  enabled: boolean
+  authorizationId: string
 }

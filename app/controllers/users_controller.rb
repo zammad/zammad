@@ -736,15 +736,8 @@ curl http://localhost/api/v1/users/account -v -u #{login}:#{password} -H "Conten
     raise Exceptions::UnprocessableEntity, 'provider needed!' if !params[:provider]
     raise Exceptions::UnprocessableEntity, 'uid needed!' if !params[:uid]
 
-    # remove from database
-    record = Authorization.where(
-      user_id:  current_user.id,
-      provider: params[:provider],
-      uid:      params[:uid],
-    )
-    raise Exceptions::UnprocessableEntity, __('No record found!') if !record.first
+    Service::User::RemoveLinkedAccount.new(provider: params[:provider], uid: params[:uid], current_user:).execute
 
-    record.destroy_all
     render json: { message: 'ok' }, status: :ok
   end
 

@@ -6,32 +6,20 @@
     <th
       class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
     >
-      <span
-        class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start text-xs leading-3 font-normal text-stone-200 dark:text-neutral-500"
-        data-test-id="common-label"
-      >
-        <!--v-if-->
-        
-        User name
-        
-        <!--v-if-->
-      </span>
+      <common-label-stub
+        class="font-normal text-stone-200 dark:text-neutral-500"
+        size="small"
+      />
       
       
     </th>
     <th
       class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
     >
-      <span
-        class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start text-xs leading-3 font-normal text-stone-200 dark:text-neutral-500"
-        data-test-id="common-label"
-      >
-        <!--v-if-->
-        
-        Rolle
-        
-        <!--v-if-->
-      </span>
+      <common-label-stub
+        class="font-normal text-stone-200 dark:text-neutral-500"
+        size="small"
+      />
       
       
     </th>
@@ -39,16 +27,10 @@
     <th
       class="h-10 w-0 p-2.5 text-center"
     >
-      <span
-        class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start text-xs leading-3 font-normal text-stone-200 dark:text-neutral-500"
-        data-test-id="common-label"
-      >
-        <!--v-if-->
-        
-        Actions
-        
-        <!--v-if-->
-      </span>
+      <common-label-stub
+        class="font-normal text-stone-200 dark:text-neutral-500"
+        size="small"
+      />
     </th>
   </thead>
   <tbody>
@@ -58,36 +40,20 @@
       <td
         class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400 bg-blue-200 dark:bg-gray-700"
       >
-        <span
-          class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start text-sm leading-4 text-black dark:text-white"
-          data-test-id="common-label"
-        >
-          <!--v-if-->
-          
-          
-          Lindsay Walton
-          
-          
-          <!--v-if-->
-        </span>
+        <common-label-stub
+          class="text-black dark:text-white"
+          size="medium"
+        />
         
         
       </td>
       <td
         class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400 bg-blue-200 dark:bg-gray-700"
       >
-        <span
-          class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start text-sm leading-4 text-black dark:text-white"
-          data-test-id="common-label"
-        >
-          <!--v-if-->
-          
-          
-          Member
-          
-          
-          <!--v-if-->
-        </span>
+        <common-label-stub
+          class="text-black dark:text-white"
+          size="medium"
+        />
         
         
       </td>
@@ -95,35 +61,17 @@
       <td
         class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md bg-blue-200 dark:bg-gray-700"
       >
-        <div
-          class="inline-block flex items-center justify-center"
-        >
-          
-          <button
-            aria-haspopup="true"
-            aria-label="Action menu button"
-            class="inline-flex h-min min-h-min flex-shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0 font-normal shadow-none transition duration-200 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-none focus:outline-0 focus:outline-offset-0 focus:hover:outline focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] dark:hover:outline-blue-900 bg-transparent hover:bg-transparent text-blue-800 btn-md text-sm p-1 rounded-lg w-min text-stone-200 dark:text-neutral-500"
-            id="action-menu-1"
-            type="button"
-          >
-            <!--v-if-->
-            <svg
-              aria-hidden="true"
-              class="icon fill-current icon-three-dots-vertical shrink-0"
-              height="16"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <use
-                href="#icon-three-dots-vertical"
-              />
-            </svg>
-            <!--v-if-->
-          </button>
-          <!--teleport start-->
-          <!--teleport end-->
-          
-        </div>
+        
+        <common-action-menu-stub
+          actions="[object Object],[object Object]"
+          buttonsize="medium"
+          class="flex items-center justify-center"
+          entity="[object Object]"
+          nosingleactionmode="false"
+          orientation="autoVertical"
+          placement="end"
+        />
+        
       </td>
     </tr>
     
