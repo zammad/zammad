@@ -9,8 +9,14 @@ class Permission < ApplicationModel
   store                   :preferences
 
   validates :name, presence: true
-  validates :label, length: { maximum: 255 }
-  validates :description, length: { maximum: 500 }
+
+  # This is added to handle migrations from before the columns were modified.
+  # For example when upgrading from pre-6.4.
+  # Otherwise older migrations fail since those columnsa are not yet available.
+  with_options if: -> { respond_to?(:label) && respond_to?(:description) } do
+    validates :label, length: { maximum: 255 }
+    validates :description, length: { maximum: 500 }
+  end
 
   sanitized_html :description
 
