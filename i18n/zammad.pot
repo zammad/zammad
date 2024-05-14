@@ -10414,10 +10414,6 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
-msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
-msgstr ""
-
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
 msgid "Profile appearance updated successfully."
 msgstr ""
