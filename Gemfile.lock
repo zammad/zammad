@@ -334,7 +334,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2024.0305)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.5)
+    mini_portile2 (2.8.6)
     minitest (5.22.3)
     minitest-profile (0.0.2)
     msgpack (1.7.2)
@@ -361,7 +361,7 @@ GEM
       net-protocol
     nio4r (2.7.0)
     nkf (0.2.0)
-    nokogiri (1.16.3)
+    nokogiri (1.16.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nori (2.7.0)
