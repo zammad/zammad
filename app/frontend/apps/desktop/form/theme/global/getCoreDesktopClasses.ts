@@ -67,7 +67,7 @@ export const getCoreDesktopClasses: FormThemeExtension = (
       input:
         'peer appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
       decorator:
-        'w-3 h-3 relative border peer-hover:border-blue-600 dark:peer-hover:border-blue-900 peer-focus:border-blue-800 peer-focus:outline peer-focus:outline-1 peer-focus:outline-offset-1 peer-focus:outline-blue-800 rounded-sm bg-transparent peer-hover:text-blue-600 dark:peer-hover:text-blue-900 peer-focus:text-blue-800',
+        'w-3 h-3 relative border peer-hover:border-blue-600 dark:peer-hover:border-blue-900 peer-focus:border-blue-800 peer-focus:outline peer-focus:outline-1 peer-focus:outline-offset-1 peer-focus:outline-blue-800 rounded-sm bg-transparent peer-hover:text-blue-600 dark:peer-hover:text-blue-900 peer-focus:text-blue-800 formkit-checked:peer-hover:border-blue-600 dark:formkit-checked:peer-hover:border-blue-900 formkit-checked:peer-focus:border-blue-800 formkit-checked:peer-focus:outline-blue-800 formkit-checked:peer-hover:text-blue-600 dark:formkit-checked:peer-hover:text-blue-900 formkit-checked:peer-focus:text-blue-800',
       decoratorIcon:
         'absolute invisible formkit-is-checked:visible -top-px ltr:-left-px rtl:-right-px',
     },

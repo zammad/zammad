@@ -32,10 +32,10 @@ const handleAlternativeBorder = (node: FormKitNode) => {
   const setClasses = (alternativeBorder: boolean) => {
     if (alternativeBorder) {
       props.decoratorClass =
-        'border-gray-300 dark:border-neutral-400 text-gray-300 dark:text-neutral-400'
+        'border-stone-200 dark:border-neutral-500 text-stone-200 dark:text-neutral-500 formkit-checked:border-gray-300 dark:formkit-checked:border-neutral-400 formkit-checked:text-gray-300 dark:formkit-checked:text-neutral-400'
     } else {
       props.decoratorClass =
-        'border-stone-200 dark:border-neutral-500 text-stone-200 dark:text-neutral-500'
+        'border-stone-200 dark:border-neutral-500 text-stone-200 dark:text-neutral-500 formkit-checked:border-gray-100 dark:formkit-checked:border-neutral-400 formkit-checked:text-gray-100 dark:formkit-checked:text-neutral-400'
     }
   }
 
