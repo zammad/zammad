@@ -1,0 +1,6 @@
+query userCurrentOverviewList {
+  userCurrentOverviewList {
+    id
+    name
+  }
+}

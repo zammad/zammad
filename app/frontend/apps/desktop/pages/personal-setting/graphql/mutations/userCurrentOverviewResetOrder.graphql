@@ -1,0 +1,12 @@
+mutation userCurrentOverviewResetOrder {
+  userCurrentOverviewResetOrder {
+    success
+    overviews {
+      id
+      name
+    }
+    errors {
+      ...errors
+    }
+  }
+}

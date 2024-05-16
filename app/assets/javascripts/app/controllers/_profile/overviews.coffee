@@ -12,8 +12,8 @@ class Overviews extends App.ControllerSubContent
       url:   "#{App.Config.get('api_path')}/user_overview_sortings"
       processData: true,
       success: (data, status, xhr) =>
-        App.UserOverviewSortingOverview.refresh(data.overviews)
-        App.UserOverviewSorting.refresh(data.overview_sortings)
+        App.UserOverviewSortingOverview.refresh(data.overviews, {clear: true})
+        App.UserOverviewSorting.refresh(data.overview_sortings, {clear: true})
         @render(data)
     )
 

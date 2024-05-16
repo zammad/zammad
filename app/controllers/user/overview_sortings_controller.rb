@@ -1,8 +1,6 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class User::OverviewSortingsController < ApplicationController
-  include CanPrioritize
-
   prepend_before_action :authenticate_and_authorize!
 
   def index
@@ -25,10 +23,29 @@ class User::OverviewSortingsController < ApplicationController
   end
 
   def destroy
-    model_destroy_render(User::OverviewSorting, params)
+    ActiveRecord::Base.transaction do
+      model_destroy_render(User::OverviewSorting, params)
+    end
+
+    Gql::Subscriptions::User::Current::OverviewOrderingUpdates
+        .trigger_by(current_user)
   end
 
-  def prio_find(entry_prio)
-    klass.find_by(overview_id: entry_prio[0], user: current_user)
+  def prio
+    overview_ids = params[:prios].map(&:first)
+
+    authorized_overviews = Ticket::Overviews
+      .all(current_user:)
+      .where(id: overview_ids)
+      .sort_by { |elem| overview_ids.index(elem.id) }
+
+    Service::User::Overview::UpdateOrder
+      .new(current_user, authorized_overviews)
+      .execute
+
+    Gql::Subscriptions::User::Current::OverviewOrderingUpdates
+      .trigger_by(current_user)
+
+    render json: { success: true }, status: :ok
   end
 end

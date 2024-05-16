@@ -1,0 +1,8 @@
+mutation userCurrentOverviewUpdateOrder($overviewIds: [ID!]!) {
+  userCurrentOverviewUpdateOrder(overviewIds: $overviewIds) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

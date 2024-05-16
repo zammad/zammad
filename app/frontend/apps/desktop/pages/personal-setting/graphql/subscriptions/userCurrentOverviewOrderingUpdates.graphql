@@ -1,0 +1,8 @@
+subscription userCurrentOverviewOrderingUpdates($userId: ID!) {
+  userCurrentOverviewOrderingUpdates(userId: $userId) {
+    overviews {
+      id
+      name
+    }
+  }
+}

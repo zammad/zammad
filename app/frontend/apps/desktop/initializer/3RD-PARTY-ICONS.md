@@ -35,6 +35,7 @@
 - `assets/eye.svg`
 - `assets/files.svg`
 - `assets/filter.svg`
+- `assets/grip-vertical.svg`
 - `assets/image.svg`
 - `assets/info-circle.svg`
 - `assets/key.svg`

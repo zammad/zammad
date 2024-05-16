@@ -19,6 +19,9 @@ class Overview < ApplicationModel
   validates :name, presence: true
   validates :roles, presence: true
 
+  has_many :overview_sortings, class_name: 'User::OverviewSorting', dependent: :destroy
+  association_attributes_ignored :overview_sortings
+
   before_create :fill_link_on_create
   before_update :fill_link_on_update
 
