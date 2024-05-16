@@ -1,37 +1,39 @@
-class App.UserTicketPopoverProvider extends App.PopoverProvider
+class UserTicket extends App.PopoverProviderAjax
   @templateName = 'user_ticket_list'
 
-  fetch: (buildParams) ->
+  fetch: (event, elem) ->
     @params.parentController.ajax(
       type:  'GET'
       url:   "#{App.Config.get('api_path')}/ticket_customer"
       data:
-        customer_id: buildParams.user_id
+        customer_id: @buildParams.user_id
       processData: true
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
 
-        ticketsList = { open: data.ticket_ids_open, closed: data.ticket_ids_closed }
-        @callback(ticketsList: ticketsList, selector: buildParams.selector)
+        ticketList = { open: data.ticket_ids_open, closed: data.ticket_ids_closed }
+        html       = @buildContentFor(elem, { ticketList: ticketList, selector: @buildParams.selector })
+
+        @replaceOnShow(event, html[0].outerHTML)
     )
 
   build: (buildParams) ->
     return if !@checkPermissions()
-    @fetch(buildParams)
-
-  callback: (supplementaryData) ->
-    @clear(@popovers)
-    @popovers = @buildPopovers(supplementaryData)
-
-  buildTitleFor: (elem) ->
-    $(elem).find('[title="*"]').val()
+    @buildParams = buildParams
+    @popovers    = @buildPopovers(ticketList: {}, selector: buildParams.selector)
 
   buildContentFor: (elem, supplementaryData) ->
+    return super if _.isEmpty(supplementaryData.ticketList)
+
     type = $(elem).filter('[data-type]').data('type')
-    ticket_ids = supplementaryData.ticketsList[type] || []
+    ticket_ids = supplementaryData.ticketList[type] || []
 
     tickets = ticket_ids.map (ticketId) -> App.Ticket.fullLocal(ticketId)
+    @buildHtmlContent(
+      ticketList: App.view('generic/ticket_list')(
+        tickets: tickets
+        show_id: true
+      )
+    )
 
-    # insert data
-    @buildHtmlContent(tickets: tickets)
-
+App.PopoverProvider.registerProvider('UserTicket', UserTicket)
