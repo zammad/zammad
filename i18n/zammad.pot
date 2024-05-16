@@ -13876,7 +13876,11 @@ msgid "The verification email could not be resent."
 msgstr ""
 
 #: app/models/setting/validation/saml/tls.rb
-msgid "The verification of the TLS connection failed. Please check the IDP certificate."
+msgid "The verification of the TLS connection failed. Please check the SAML IDP certificate."
+msgstr ""
+
+#: app/models/setting/validation/saml/tls.rb
+msgid "The verification of the TLS connection is not possible. Please check the SAML IDP connection."
 msgstr ""
 
 #: app/services/service/user/two_factor/verify_method_configuration.rb

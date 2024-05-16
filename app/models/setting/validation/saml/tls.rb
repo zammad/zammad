@@ -29,9 +29,14 @@ class Setting::Validation::Saml::TLS < Setting::Validation::Base
     )
 
     return nil if resp.error.nil?
+    return nil if resp.error.starts_with?('#<Net::HTTP')
 
     Rails.logger.error("SAML: TLS verification failed for '#{url}': #{resp.error}")
 
-    __('The verification of the TLS connection failed. Please check the IDP certificate.')
+    if resp.error.starts_with?('#<OpenSSL::SSL::SSLError')
+      __('The verification of the TLS connection failed. Please check the SAML IDP certificate.')
+    else
+      __('The verification of the TLS connection is not possible. Please check the SAML IDP connection.')
+    end
   end
 end
