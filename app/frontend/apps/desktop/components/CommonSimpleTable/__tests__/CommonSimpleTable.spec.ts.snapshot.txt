@@ -7,7 +7,7 @@
       class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
     >
       <common-label-stub
-        class="font-normal text-stone-200 dark:text-neutral-500"
+        class="font-normal text-stone-200 dark:text-neutral-500 text-left"
         size="small"
       />
       
@@ -17,7 +17,7 @@
       class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
     >
       <common-label-stub
-        class="font-normal text-stone-200 dark:text-neutral-500"
+        class="font-normal text-stone-200 dark:text-neutral-500 text-left"
         size="small"
       />
       
@@ -38,22 +38,26 @@
     <tr>
       
       <td
-        class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400 bg-blue-200 dark:bg-gray-700"
+        class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400 bg-blue-200 dark:bg-gray-700 text-left"
       >
+        
         <common-label-stub
           class="text-black dark:text-white"
           size="medium"
         />
+        
         
         
       </td>
       <td
-        class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400 bg-blue-200 dark:bg-gray-700"
+        class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400 bg-blue-200 dark:bg-gray-700 text-left"
       >
+        
         <common-label-stub
           class="text-black dark:text-white"
           size="medium"
         />
+        
         
         
       </td>

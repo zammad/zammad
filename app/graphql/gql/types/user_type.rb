@@ -49,7 +49,10 @@ module Gql::Types
       field :out_of_office_start_at, GraphQL::Types::ISO8601Date
       field :out_of_office_end_at, GraphQL::Types::ISO8601Date
       field :out_of_office_replacement, Gql::Types::UserType, description: 'Replacement agent if this user is out of office'
-      field :preferences, GraphQL::Types::JSON
+
+      field :personal_settings, Gql::Types::User::PersonalSettingsType, method: :preferences, description: 'Typed access to user preferences'
+      field :preferences, GraphQL::Types::JSON, description: 'Direct access to preferences store'
+
       field :permissions, Gql::Types::User::PermissionType, method: :itself
       field :tickets_count, Gql::Types::TicketCountType, method: :itself
     end

@@ -1,0 +1,10 @@
+mutation userCurrentNotificationPreferencesReset{
+  userCurrentNotificationPreferencesReset {
+    user {
+      ...userPersonalSettings
+    }
+    errors {
+      ...errors
+    }
+  }
+}

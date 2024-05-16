@@ -35,7 +35,7 @@
               <td><%- @P(group, 'name') %>
               <td class="u-positionOrigin">
                 <label class="checkbox-replacement checkbox-replacement--fullscreen">
-                  <input type="checkbox" name="group_ids" value="<%= group.id %>" <% if _.include(@config.group_ids, group.id.toString()): %>checked<% end %>/>
+                  <input type="checkbox" name="group_ids" value="<%= group.id %>" <% if _.include(_.map(@config.group_ids, (group_id) -> group_id.toString()), group.id.toString()): %>checked<% end %>/>
                   <%- @Icon('checkbox', 'icon-unchecked') %>
                   <%- @Icon('checkbox-checked', 'icon-checked') %>
                 </label>

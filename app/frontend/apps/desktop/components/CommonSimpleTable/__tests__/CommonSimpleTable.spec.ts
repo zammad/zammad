@@ -39,7 +39,6 @@ const tableActions: MenuItem[] = [
 
 const renderTable = (props: Props, options = {}) => {
   return renderComponent(CommonSimpleTable, {
-    shallow: false,
     ...options,
     props,
   })

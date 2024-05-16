@@ -243,8 +243,6 @@ describe('personal settings for token access', () => {
       name: 'New Personal Access Token',
     })
 
-    console.log('BEFORE-FLYOUT')
-
     await view.events.click(newAccessTokenButton)
 
     const flyout = await view.findByRole('complementary', {
@@ -252,23 +250,17 @@ describe('personal settings for token access', () => {
     })
     expect(flyout).toBeInTheDocument()
 
-    console.log('OPEN-FLYOUT')
-
     const name = await view.findByLabelText('Name')
     await view.events.type(name, 'A new token')
 
     const input = view.getByLabelText('Expiration date')
     await view.events.type(input, '2024-12-31{Enter}')
 
-    console.log('AFTER-DATE-INPUT')
-
     const permissionsField = within(view.getByLabelText('Permissions'))
     const permissions = permissionsField.getAllByRole('treeitem')
 
     const toggleSwitch = within(permissions[0]).getByRole('switch')
     await view.events.click(toggleSwitch)
-
-    console.log('AFTER-PERMISSIOn-TOGGLE')
 
     mockUserCurrentAccessTokenAddMutation({
       userCurrentAccessTokenAdd: {
@@ -292,13 +284,9 @@ describe('personal settings for token access', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Create' }))
 
-    console.log('AFTER-SUBMIT')
-
     expect(
       await view.findByLabelText('Your Personal Access Token'),
     ).toHaveValue('new-token-1234')
-
-    console.log('COPY-TOKEN')
 
     await view.events.click(
       view.getByRole('button', {
@@ -306,11 +294,7 @@ describe('personal settings for token access', () => {
       }),
     )
 
-    console.log('CLOSE-THE-FLYOUT')
-
     expect(flyout).not.toBeInTheDocument()
-
-    console.log('CLOSED-FLYOUT')
 
     checkSimpleTableContent(view, [
       [
@@ -322,7 +306,5 @@ describe('personal settings for token access', () => {
       ],
       ...rowContents,
     ])
-
-    console.log('TABLE-CHECK')
   })
 })

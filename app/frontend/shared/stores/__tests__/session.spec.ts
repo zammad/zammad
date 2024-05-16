@@ -21,6 +21,81 @@ const userData = {
   preferences: {
     locale: 'de-de',
   },
+  personalSettings: {
+    __typename: 'UserPersonalSettings',
+    notificationConfig: {
+      __typename: 'UserPersonalSettingsNotificationConfig',
+      groupIds: [1],
+      matrix: {
+        __typename: 'UserPersonalSettingsNotificationMatrix',
+        create: {
+          __typename: 'UserPersonalSettingsNotificationMatrixRow',
+          channel: {
+            __typename: 'UserPersonalSettingsNotificationMatrixChannel',
+            email: true,
+            online: true,
+          },
+          criteria: {
+            __typename: 'UserPersonalSettingsNotificationMatrixCriteria',
+            no: false,
+            ownedByMe: true,
+            ownedByNobody: true,
+            subscribed: true,
+          },
+        },
+        escalation: {
+          __typename: 'UserPersonalSettingsNotificationMatrixRow',
+          channel: {
+            __typename: 'UserPersonalSettingsNotificationMatrixChannel',
+            email: true,
+            online: true,
+          },
+          criteria: {
+            __typename: 'UserPersonalSettingsNotificationMatrixCriteria',
+            no: false,
+            ownedByMe: true,
+            ownedByNobody: true,
+            subscribed: true,
+          },
+        },
+        reminderReached: {
+          __typename: 'UserPersonalSettingsNotificationMatrixRow',
+          channel: {
+            __typename: 'UserPersonalSettingsNotificationMatrixChannel',
+            email: true,
+            online: true,
+          },
+          criteria: {
+            __typename: 'UserPersonalSettingsNotificationMatrixCriteria',
+            no: false,
+            ownedByMe: true,
+            ownedByNobody: true,
+            subscribed: true,
+          },
+        },
+        update: {
+          __typename: 'UserPersonalSettingsNotificationMatrixRow',
+          channel: {
+            __typename: 'UserPersonalSettingsNotificationMatrixChannel',
+            email: true,
+            online: true,
+          },
+          criteria: {
+            __typename: 'UserPersonalSettingsNotificationMatrixCriteria',
+            no: false,
+            ownedByMe: true,
+            ownedByNobody: true,
+            subscribed: true,
+          },
+        },
+      },
+    },
+    notificationSound: {
+      __typename: 'UserPersonalSettingsNotificationSound',
+      enabled: true,
+      file: 'Ring',
+    },
+  },
   objectAttributeValues: [],
   authorizations: [],
   organization: {

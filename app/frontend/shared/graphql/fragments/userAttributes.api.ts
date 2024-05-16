@@ -1,6 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
+import { UserPersonalSettingsFragmentDoc } from './userPersonalSettings.api';
 import { ObjectAttributeValuesFragmentDoc } from './objectAttributeValues.api';
 export const UserAttributesFragmentDoc = gql`
     fragment userAttributes on User {
@@ -24,6 +25,7 @@ export const UserAttributesFragmentDoc = gql`
     email
   }
   preferences
+  ...userPersonalSettings
   objectAttributeValues {
     ...objectAttributeValues
   }
@@ -38,4 +40,5 @@ export const UserAttributesFragmentDoc = gql`
   }
   hasSecondaryOrganizations
 }
-    ${ObjectAttributeValuesFragmentDoc}`;
+    ${UserPersonalSettingsFragmentDoc}
+${ObjectAttributeValuesFragmentDoc}`;

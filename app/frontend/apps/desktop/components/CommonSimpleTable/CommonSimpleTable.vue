@@ -12,6 +12,29 @@ export interface Props {
 }
 
 defineProps<Props>()
+
+// :INFO - This would only would work on runtime, when keys are computed
+// :TODO - Find a way to infer the types on compile time or remove it completely
+// defineSlots<{
+//   [key: `column-cell-${TableHeader['key']}`]: [
+//     { item: TableHeader; header: TableHeader },
+//   ]
+//   [key: `header-suffix-${TableHeader['key']}`]: [{ item: TableHeader }]
+//   [key: `item-suffix-${TableHeader['key']}`]: [{ item: TableHeader }]
+//   test: []
+// }>()
+
+//  Styling
+const cellAlignmentClasses = {
+  right: 'text-right',
+  center: 'text-center',
+  left: 'text-left',
+}
+
+const rowBackgroundClasses = 'bg-blue-200 dark:bg-gray-700'
+
+const columnSeparatorClasses =
+  'border-r border-neutral-100 dark:border-gray-900'
 </script>
 
 <template>
@@ -21,9 +44,14 @@ defineProps<Props>()
         v-for="header in headers"
         :key="header.key"
         class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
+        :class="[
+          header.columnClass,
+          header.columnSeparator && columnSeparatorClasses,
+        ]"
       >
         <CommonLabel
           class="font-normal text-stone-200 dark:text-neutral-500"
+          :class="[cellAlignmentClasses[header.alignContent || 'left']]"
           size="small"
           >{{
             $t(header.label, ...(header.labelPlaceholder || []))
@@ -46,17 +74,27 @@ defineProps<Props>()
           v-for="header in headers"
           :key="`${item.id}-${header.key}`"
           class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400"
-          :class="{ 'bg-blue-200 dark:bg-gray-700': (index + 1) % 2 }"
+          :class="[
+            (index + 1) % 2 && rowBackgroundClasses,
+            header.columnSeparator && columnSeparatorClasses,
+            cellAlignmentClasses[header.alignContent || 'left'],
+          ]"
         >
-          <CommonLabel class="text-black dark:text-white">
-            <template v-if="!item[header.key]">-</template>
-            <template v-else-if="header.type === 'timestamp'">
-              <CommonDateTime :date-time="item[header.key] as string" />
-            </template>
-            <template v-else>
-              {{ item[header.key] }}
-            </template>
-          </CommonLabel>
+          <slot
+            :name="`column-cell-${header.key}`"
+            :item="item"
+            :header="header"
+          >
+            <CommonLabel class="text-black dark:text-white">
+              <template v-if="!item[header.key]">-</template>
+              <template v-else-if="header.type === 'timestamp'">
+                <CommonDateTime :date-time="item[header.key] as string" />
+              </template>
+              <template v-else>
+                {{ item[header.key] }}
+              </template>
+            </CommonLabel>
+          </slot>
 
           <slot :name="`item-suffix-${header.key}`" :item="item" />
         </td>
