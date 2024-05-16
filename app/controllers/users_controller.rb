@@ -256,8 +256,14 @@ class UsersController < ApplicationController
       users = []
       user_all.each do |user|
         realname = user.fullname
+
+        # improve realname, if possible
         if user.email.present? && realname != user.email
-          realname = Channel::EmailBuild.recipient_line realname, user.email
+          begin
+            realname = Channel::EmailBuild.recipient_line(realname, user.email)
+          rescue Mail::Field::IncompleteParseError
+            # mute if parsing of recipient_line was not successful / #5166
+          end
         end
         a = if params[:term]
               { id: user.id, label: realname, value: user.email, inactive: !user.active }
