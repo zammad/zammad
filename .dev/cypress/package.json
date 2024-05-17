@@ -8,10 +8,10 @@
     "cypress-real-events": "^1.12.0"
   },
   "imports": {
-    "#tests/*": "../app/frontend/tests/*",
-    "#shared/*": "../app/frontend/shared/*",
-    "#mobile/*": "../app/frontend/apps/mobile/*",
-    "#desktop/*": "../app/frontend/apps/desktop/*",
+    "#tests/*": "../../app/frontend/tests/*",
+    "#shared/*": "../../app/frontend/shared/*",
+    "#mobile/*": "../../app/frontend/apps/mobile/*",
+    "#desktop/*": "../../app/frontend/apps/desktop/*",
     "#cy/*": "./*"
   }
 }

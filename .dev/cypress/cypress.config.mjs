@@ -3,22 +3,22 @@ import { rm } from 'node:fs/promises'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { initPlugin as initVisualRegressionPlugin } from '@frsource/cypress-plugin-visual-regression-diff/plugins'
-import pkg from '../package.json' with { type: 'json' }
+import pkg from '../../package.json' with { type: 'json' }
 
 const dir = dirname(fileURLToPath(import.meta.url))
 
 const isCYCI = !process.env.CY_OPEN
-const root = resolve(dir, '..')
+const root = resolve(dir, '../..')
 
 // we don't need to optimize graphql and apollo
 const skipDeps = ['graphql', 'apollo', '@tiptap/pm']
 
 export default defineConfig({
-  videosFolder: '.cypress/videos',
-  supportFolder: '.cypress/support/index.js',
-  fixturesFolder: '.cypress/fixtures',
-  downloadsFolder: '.cypress/downloads',
-  screenshotsFolder: '.cypress/screenshots',
+  videosFolder: '.dev/cypress/videos',
+  supportFolder: '.dev/cypress/support/index.js',
+  fixturesFolder: '.dev/cypress/fixtures',
+  downloadsFolder: '.dev/cypress/downloads',
+  screenshotsFolder: '.dev/cypress/screenshots',
   videoCompression: false,
   env: {
     CY_CI: isCYCI,
@@ -28,7 +28,7 @@ export default defineConfig({
     pluginVisualRegressionMaxDiffThreshold: 0.02,
   },
   component: {
-    supportFile: '.cypress/support/index.js',
+    supportFile: '.dev/cypress/support/index.js',
     setupNodeEvents(on, config) {
       on('after:spec', (spec, results) => {
         if (results && results.stats.failures === 0 && results.video) {
@@ -49,7 +49,7 @@ export default defineConfig({
       viteConfig: {
         mode: 'cypress',
         root,
-        configFile: resolve(dir, '..', 'vite.config.mjs'),
+        configFile: resolve(dir, '../..', 'vite.config.mjs'),
         cacheDir: resolve(dir, 'node_modules', '.vite'),
         server: {
           fs: {
@@ -77,7 +77,7 @@ export default defineConfig({
     viewportWidth: 390,
     viewportHeight: 844,
     fileServerFolder: '..',
-    indexHtmlFile: '.cypress/support/component-index.html',
+    indexHtmlFile: '.dev/cypress/support/component-index.html',
     specPattern: ['app/frontend/cypress/**/*.cy.{js,jsx,ts,tsx}'],
   },
   retries: 0,

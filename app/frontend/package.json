@@ -5,6 +5,6 @@
     "#shared/*": "./shared/*",
     "#mobile/*": "./apps/mobile/*",
     "#desktop/*": "./apps/desktop/*",
-    "#cy/*": "../../.cypress/*"
+    "#cy/*": "../../.dev/cypress/*"
   }
 }

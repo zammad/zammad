@@ -12,7 +12,7 @@ describe('resizing image within editor', () => {
       .then(() => {
         cy.findByTestId('editor-image-input').selectFile(
           {
-            contents: '.cypress/fixtures/example.png',
+            contents: '.dev/cypress/fixtures/example.png',
             fileName: 'file.png',
             mimeType: 'image/png',
             lastModified: Date.now(),

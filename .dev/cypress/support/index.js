@@ -5,7 +5,7 @@ import './prepare.js'
 import '#mobile/styles/main.css'
 import '#shared/components/CommonIcon/injectIcons.ts'
 
-import '../../public/assets/frontend/fonts.css'
+import '../../../public/assets/frontend/fonts.css'
 
 import './commands.js'
 

@@ -8,7 +8,7 @@
   "exclude": [
     "app/frontend/cypress/**/*",
     "**/*.cy.ts",
-    "**/.cypress/**/*",
+    "**/.dev/cypress/**/*",
     "node_modules",
     "public",
     "vendor"

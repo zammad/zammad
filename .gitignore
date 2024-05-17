@@ -103,9 +103,9 @@ yarn-error.log
 .yarn/cache
 
 # Cypress
-.cypress/screenshots/*
-.cypress/videos/*
-.cypress/**/__diff_output__/**
+.dev/cypress/screenshots/*
+.dev/cypress/videos/*
+.dev/cypress/**/__diff_output__/**
 **/__image_snapshots__/**/*.diff.png
 **/__image_snapshots__/**/*.actual.png
 

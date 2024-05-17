@@ -11,11 +11,11 @@ services:
     image: cypress/base:latest
     ipc: host
     volumes:
-      - ../..:/app
+      - ../../..:/app
       - visual-regression-dependencies-amd64:/app/node_modules
       - ~/.cache/Cypress:/root/.cache/Cypress
     working_dir: /app
     ports:
       - "8000:8000"
       - "443:443"
-    command: bash ./.cypress/visual-regression/run.sh
+    command: bash ./.dev/cypress/visual-regression/run.sh

@@ -50,6 +50,6 @@ frontend:cypress:
     when: on_failure
     paths:
       - app/frontend/cypress/**/__image_snapshots__/**/*
-      - .cypress/**/__diff_output__/*
-      - .cypress/videos/**/*
-      - .cypress/screenshots/**/*
+      - .dev/cypress/**/__diff_output__/*
+      - .dev/cypress/videos/**/*
+      - .dev/cypress/screenshots/**/*

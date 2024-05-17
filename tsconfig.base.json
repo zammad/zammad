@@ -20,7 +20,7 @@
       "#desktop/*": ["app/frontend/apps/desktop/*"],
       "#shared/*": ["app/frontend/shared/*"],
       "#tests/*": ["app/frontend/tests/*"],
-      "#cy/*": [".cypress/*"]
+      "#cy/*": [".dev/cypress/*"]
     },
     "types": [
       "vite/client",
