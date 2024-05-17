@@ -3309,6 +3309,10 @@ kbd {
   justify-content: center;
 }
 
+.popover .page-loading {
+  min-height: 100px;
+}
+
 .page-loading-label {
   @include bidi-style(margin-left, 10px, margin-right, 0);
 
