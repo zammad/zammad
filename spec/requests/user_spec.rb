@@ -1682,6 +1682,30 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
     end
   end
 
+  describe 'GET /api/v1/users/search, with invalid attributes', authenticated_as: :agent do
+    let(:agent) { create(:agent) }
+    let(:customer_invalid) do
+      create(
+        :customer,
+        login:     'customer1@example.com',
+        firstname: 'Some',
+        lastname:  'Customer1',
+        email:     'customer1@example.com',
+      )
+    end
+
+    context 'when email address is invalid' do
+      before do
+        customer_invalid.update_attribute(:email, 'eee lala')
+        post '/api/v1/users/search', params: { term: 'Customer1' }, as: :json
+      end
+
+      it 'succeeds' do
+        expect(response).to have_http_status(:success)
+      end
+    end
+  end
+
   describe 'PUT /api/v1/users/{id}', authenticated_as: :admin do
     let(:admin) { create(:admin) }
     let(:agent) { create(:agent) }
